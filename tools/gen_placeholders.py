@@ -1,0 +1,128 @@
+#!/usr/bin/env python3
+"""Generate the placeholder tiles, checkpoint and goal gate.
+
+Everything is drawn from code so it can be regenerated or replaced without
+any tooling beyond Python + Pillow:
+
+    python3 tools/gen_placeholders.py
+
+Characters (hero, imp, watcher, angel guard) are the prototype strips from
+the art thread, under assets/sprites/<name>/ with sprites.json.
+"""
+from __future__ import annotations
+
+import os
+import sys
+
+from PIL import Image, ImageDraw
+
+OUT_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "sprites")
+
+# Palette (RGBA)
+CLEAR = (0, 0, 0, 0)
+OUTLINE = (34, 24, 56, 255)
+
+
+STONE = (186, 198, 236, 255)
+STONE_DARK = (150, 166, 220, 255)
+STONE_LIGHT = (222, 230, 250, 255)
+CLOUD = (244, 247, 255, 255)
+CLOUD_EDGE = (255, 255, 255, 255)
+SPIKE = (255, 204, 84, 255)
+SPIKE_DARK = (176, 112, 30, 255)
+
+PEDESTAL = (130, 128, 170, 255)
+PEDESTAL_DARK = (84, 80, 120, 255)
+ORB_OFF = (120, 130, 170, 255)
+ORB_ON = (255, 222, 90, 255)
+ORB_GLOW = (255, 245, 180, 140)
+GATE = (58, 44, 96, 255)
+GATE_INNER = (150, 226, 255, 255)
+GATE_FRAME = (255, 206, 96, 255)
+
+
+def new(w: int, h: int) -> Image.Image:
+    return Image.new("RGBA", (w, h), CLEAR)
+
+
+def rect(d: ImageDraw.ImageDraw, x0: int, y0: int, x1: int, y1: int, color) -> None:
+    """Inclusive pixel rectangle."""
+    d.rectangle((x0, y0, x1, y1), fill=color)
+
+
+def save(img: Image.Image, name: str) -> None:
+    os.makedirs(OUT_DIR, exist_ok=True)
+    path = os.path.join(OUT_DIR, name)
+    img.save(path)
+    print("wrote", path)
+
+
+# --- Tiles --------------------------------------------------------------
+
+def gen_tiles() -> None:
+    # 0 = stone fill, 1 = stone top (cloud edge), 2 = spikes
+    img = new(48, 16)
+    d = ImageDraw.Draw(img)
+    speckles = [(2, 3), (9, 5), (13, 11), (5, 12), (11, 1), (7, 8), (1, 14), (14, 7)]
+    for t in range(2):
+        ox = t * 16
+        rect(d, ox, 0, ox + 15, 15, STONE)
+        for sx, sy in speckles:
+            rect(d, ox + sx, sy, ox + sx + 1, sy, STONE_DARK)
+        rect(d, ox + 3, 6, ox + 4, 6, STONE_LIGHT)
+        rect(d, ox + 10, 13, ox + 12, 13, STONE_LIGHT)
+    # Top variant: cloud-like edge in Heaven's colours
+    ox = 16
+    rect(d, ox, 0, ox + 15, 3, CLOUD)
+    rect(d, ox, 0, ox + 15, 0, CLOUD_EDGE)
+    rect(d, ox + 2, 1, ox + 4, 1, CLOUD_EDGE)
+    rect(d, ox + 9, 1, ox + 12, 1, CLOUD_EDGE)
+    rect(d, ox, 4, ox + 15, 4, STONE_DARK)
+    # Spikes
+    ox = 32
+    for cx in (4, 12):
+        for i in range(8):
+            y = 15 - i
+            half = 3 - i // 2 if i < 6 else 0
+            rect(d, ox + cx - half, y, ox + cx + half, y, SPIKE)
+            if half > 0:
+                rect(d, ox + cx + half, y, ox + cx + half, y, SPIKE_DARK)
+    save(img, "tiles.png")
+
+
+def gen_checkpoint() -> None:
+    img = new(32, 32)
+    d = ImageDraw.Draw(img)
+    for f in range(2):
+        ox = f * 16
+        if f == 1:
+            d.ellipse((ox + 2, 4, ox + 13, 20), fill=ORB_GLOW)
+        rect(d, ox + 3, 22, ox + 12, 31, PEDESTAL_DARK)
+        rect(d, ox + 4, 23, ox + 11, 30, PEDESTAL)
+        rect(d, ox + 2, 21, ox + 13, 22, PEDESTAL)
+        orb = ORB_ON if f == 1 else ORB_OFF
+        rect(d, ox + 5, 9, ox + 10, 20, OUTLINE)
+        rect(d, ox + 6, 10, ox + 9, 19, orb)
+        rect(d, ox + 7, 11, ox + 7, 13, CLOUD_EDGE if f == 1 else STONE_LIGHT)
+    save(img, "checkpoint.png")
+
+
+def gen_goal() -> None:
+    img = new(16, 32)
+    d = ImageDraw.Draw(img)
+    rect(d, 1, 6, 14, 31, GATE)
+    d.ellipse((1, 2, 14, 12), fill=GATE)
+    rect(d, 3, 10, 12, 31, GATE_INNER)
+    d.ellipse((3, 5, 12, 15), fill=GATE_INNER)
+    rect(d, 1, 6, 1, 31, GATE_FRAME)
+    rect(d, 14, 6, 14, 31, GATE_FRAME)
+    rect(d, 5, 3, 10, 3, GATE_FRAME)
+    rect(d, 0, 30, 15, 31, PEDESTAL_DARK)
+    save(img, "goal.png")
+
+
+if __name__ == "__main__":
+    gen_tiles()
+    gen_checkpoint()
+    gen_goal()

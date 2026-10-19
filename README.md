@@ -9,7 +9,7 @@ hero, movement, melee combat, enemies, a checkpoint and limited healing.
 
 ## Running it
 
-1. Install [Godot 4.4](https://godotengine.org/download) (standard build, no
+1. Install [Godot 4.7](https://godotengine.org/download) (standard build, no
    .NET needed).
 2. Open `project.godot` in the editor and press **F5**, or run
    `godot --path .` from this folder.
@@ -66,7 +66,8 @@ just over four tiles high; a seven tile pit needs a jump plus a dash.
 godot --headless --path . --script tests/smoke_test.gd
 ```
 
-Exits non-zero when a check fails.
+Exits non-zero when a check fails. The same test runs on every pull request
+through `.github/workflows/tests.yml`.
 
 ## Pull request reviews
 

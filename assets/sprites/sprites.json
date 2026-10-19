@@ -1,0 +1,232 @@
+{
+  "hero": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      30,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hero_idle.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "run": {
+        "file": "hero_run.png",
+        "frames": 6,
+        "fps": 12,
+        "loop": true
+      },
+      "attack": {
+        "file": "hero_attack.png",
+        "frames": 4,
+        "fps": 14,
+        "loop": false
+      },
+      "jump": {
+        "file": "hero_jump.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hero_hurt.png",
+        "frames": 1,
+        "fps": 8,
+        "loop": false
+      }
+    },
+    "sheet": {
+      "file": "hero_sheet.png",
+      "row_order": [
+        "idle",
+        "run",
+        "attack",
+        "jump",
+        "hurt"
+      ]
+    }
+  },
+  "angel_guard": {
+    "frame_size": [
+      96,
+      64
+    ],
+    "origin": [
+      36,
+      64
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "angel_guard_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "angel_guard_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "angel_guard_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "angel_guard_hurt.png",
+        "frames": 1,
+        "fps": 8,
+        "loop": false
+      }
+    },
+    "sheet": {
+      "file": "angel_guard_sheet.png",
+      "row_order": [
+        "idle",
+        "walk",
+        "attack",
+        "hurt"
+      ]
+    }
+  },
+  "watcher": {
+    "frame_size": [
+      72,
+      60
+    ],
+    "origin": [
+      30,
+      29
+    ],
+    "anchor": "centre",
+    "animations": {
+      "idle": {
+        "file": "watcher_idle.png",
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "attack": {
+        "file": "watcher_attack.png",
+        "frames": 5,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "watcher_hurt.png",
+        "frames": 1,
+        "fps": 8,
+        "loop": false
+      }
+    },
+    "sheet": {
+      "file": "watcher_sheet.png",
+      "row_order": [
+        "idle",
+        "attack",
+        "hurt"
+      ]
+    }
+  },
+  "imp": {
+    "frame_size": [
+      56,
+      40
+    ],
+    "origin": [
+      24,
+      40
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "imp_idle.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": true
+      },
+      "run": {
+        "file": "imp_run.png",
+        "frames": 4,
+        "fps": 12,
+        "loop": true
+      },
+      "attack": {
+        "file": "imp_attack.png",
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "file": "imp_hurt.png",
+        "frames": 1,
+        "fps": 8,
+        "loop": false
+      }
+    },
+    "sheet": {
+      "file": "imp_sheet.png",
+      "row_order": [
+        "idle",
+        "run",
+        "attack",
+        "hurt"
+      ]
+    }
+  },
+  "brute": {
+    "frame_size": [
+      112,
+      96
+    ],
+    "origin": [
+      44,
+      95
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "brute_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "brute_walk.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "attack": {
+        "file": "brute_attack.png",
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "brute_hurt.png",
+        "frames": 1,
+        "fps": 8,
+        "loop": false
+      }
+    },
+    "sheet": {
+      "file": "brute_sheet.png",
+      "row_order": [
+        "idle",
+        "walk",
+        "attack",
+        "hurt"
+      ]
+    }
+  }
+}
