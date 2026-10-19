@@ -20,6 +20,7 @@ var home := Vector2.ZERO
 var _time := 0.0
 var _hurt_timer := 0.0
 var _dead := false
+var _player: Player
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
@@ -33,6 +34,7 @@ func _ready() -> void:
 	health = max_health
 	home = global_position
 	_time = randf() * TAU
+	_player = get_tree().get_first_node_in_group("player") as Player
 
 
 func _physics_process(delta: float) -> void:
@@ -46,10 +48,9 @@ func _physics_process(delta: float) -> void:
 	else:
 		var target := home + Vector2(sin(_time * 1.6) * 24.0, sin(_time * 2.7) * 6.0)
 		var speed := HOVER_SPEED
-		var player := get_tree().get_first_node_in_group("player") as Player
-		if player and player.state != Player.State.DEAD \
-				and global_position.distance_to(player.global_position) < AGGRO_RANGE:
-			target = player.global_position + Vector2(0.0, -16.0)
+		if is_instance_valid(_player) and _player.state != Player.State.DEAD \
+				and global_position.distance_to(_player.global_position) < AGGRO_RANGE:
+			target = _player.global_position + Vector2(0.0, -16.0)
 			speed = CHASE_SPEED
 		var wanted := (target - global_position).limit_length(speed)
 		velocity = velocity.move_toward(wanted, ACCEL * delta)

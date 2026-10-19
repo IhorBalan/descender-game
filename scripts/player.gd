@@ -68,7 +68,8 @@ var respawn_position := Vector2.ZERO
 var last_safe_position := Vector2.ZERO
 ## Falling below this y counts as death (set by the level).
 var death_y := INF
-## Set when the level ends; input is ignored but physics keeps running.
+## Set when the level ends: input is ignored and the hero can no longer be
+## hurt, but gravity keeps running so he lands.
 var frozen := false
 
 var _coyote_timer := 0.0
@@ -108,7 +109,7 @@ func _physics_process(delta: float) -> void:
 			_process_normal(delta)
 	move_and_slide()
 	_track_safe_ground(delta)
-	if global_position.y > death_y and state != State.DEAD:
+	if global_position.y > death_y and state != State.DEAD and not frozen:
 		_die()
 	_update_sprite()
 
@@ -273,7 +274,7 @@ func _track_safe_ground(delta: float) -> void:
 
 ## Called by enemies. Dashing gives invulnerability frames.
 func take_damage(amount: int, source_position: Vector2) -> void:
-	if state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
+	if frozen or state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
 		return
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, MAX_HEALTH)
@@ -289,7 +290,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 ## Called by spikes: lose health and get put back on the last safe ground.
 ## Like enemy hits, a dash passes through unharmed.
 func take_hazard_damage(amount: int) -> void:
-	if state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
+	if frozen or state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
 		return
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, MAX_HEALTH)
