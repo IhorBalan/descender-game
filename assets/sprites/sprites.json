@@ -1,55 +1,45 @@
 {
   "hero": {
     "frame_size": [
-      64,
-      48
+      54,
+      44
     ],
     "origin": [
-      30,
-      48
+      27,
+      44
     ],
     "anchor": "feet",
     "animations": {
       "idle": {
         "file": "hero_idle.png",
-        "frames": 4,
-        "fps": 6,
+        "frames": 8,
+        "fps": 8,
         "loop": true
       },
       "run": {
         "file": "hero_run.png",
-        "frames": 6,
-        "fps": 12,
+        "frames": 8,
+        "fps": 10,
         "loop": true
       },
       "attack": {
         "file": "hero_attack.png",
-        "frames": 4,
-        "fps": 14,
+        "frames": 6,
+        "fps": 21,
         "loop": false
       },
       "jump": {
         "file": "hero_jump.png",
-        "frames": 2,
+        "frames": 3,
         "fps": 8,
         "loop": false
       },
       "hurt": {
         "file": "hero_hurt.png",
-        "frames": 1,
-        "fps": 8,
+        "frames": 2,
+        "fps": 10,
         "loop": false
       }
-    },
-    "sheet": {
-      "file": "hero_sheet.png",
-      "row_order": [
-        "idle",
-        "run",
-        "attack",
-        "jump",
-        "hurt"
-      ]
     }
   },
   "angel_guard": {

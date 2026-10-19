@@ -46,6 +46,7 @@ Spikes cost one heart and put the hero back on the last solid ground.
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
 | `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint and gate PNGs |
+| `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
 | `tests/smoke_test.gd` | Headless test that drives the hero and checks the basics |
 
