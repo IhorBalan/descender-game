@@ -78,6 +78,9 @@ var _dash_cooldown_timer := 0.0
 var _state_timer := 0.0
 var _invulnerable_timer := 0.0
 var _safe_ground_timer := 0.0
+## True from a jump until its rise ends; lets the jump cut apply once even if
+## the button was released during another state.
+var _jump_rising := false
 var _attack_hit: Array[Node] = []
 
 
@@ -94,6 +97,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_tick_timers(delta)
+	# Sampled before the state switch so a jump pressed near the end of an
+	# attack, dash, heal or hurt is buffered instead of dropped.
+	if not frozen and Input.is_action_just_pressed("jump"):
+		_jump_buffer_timer = JUMP_BUFFER_TIME
 	match state:
 		State.DEAD:
 			_process_dead(delta)
@@ -130,8 +137,6 @@ func _process_normal(delta: float) -> void:
 		facing = 1 if input_dir > 0.0 else -1
 	if is_on_floor():
 		_coyote_timer = COYOTE_TIME
-	if not frozen and Input.is_action_just_pressed("jump"):
-		_jump_buffer_timer = JUMP_BUFFER_TIME
 
 	_apply_gravity(delta)
 	_apply_horizontal(input_dir, delta)
@@ -140,8 +145,14 @@ func _process_normal(delta: float) -> void:
 		velocity.y = JUMP_VELOCITY
 		_jump_buffer_timer = 0.0
 		_coyote_timer = 0.0
-	elif not frozen and Input.is_action_just_released("jump") and velocity.y < 0.0:
+		_jump_rising = true
+	elif _jump_rising and velocity.y >= 0.0:
+		_jump_rising = false
+	elif _jump_rising and not frozen and not Input.is_action_pressed("jump"):
+		# Variable jump height: letting go while rising cuts the jump short,
+		# whichever state the button was released in.
 		velocity.y *= JUMP_CUT_MULTIPLIER
+		_jump_rising = false
 
 	if frozen:
 		state = State.IDLE if is_on_floor() else State.FALL
@@ -307,6 +318,15 @@ func take_hazard_damage(amount: int) -> void:
 	global_position = last_safe_position
 	velocity = Vector2.ZERO
 	_invulnerable_timer = INVULNERABLE_TIME
+
+
+## Ends the level: whatever the hero was doing stops, input is ignored and
+## nothing can hurt him any more. Gravity keeps running so he lands.
+func freeze() -> void:
+	frozen = true
+	if state != State.DEAD:
+		_set_state(State.IDLE, 0.0)
+		velocity.x = 0.0
 
 
 ## Resting at a checkpoint: full health, healing refilled, respawn point set.

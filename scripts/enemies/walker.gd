@@ -17,6 +17,9 @@ const PROFILES := {
 
 @export_enum("imp", "angel_guard") var character := "imp"
 @export var contact_damage := 1
+## Falling below this y (set by the level) removes the enemy, so one knocked
+## off its platform does not fall forever.
+var death_y := INF
 
 var health := 0
 var direction := -1
@@ -75,6 +78,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if is_on_wall() and _hurt_timer <= 0.0:
 		_face(-direction)
+	if global_position.y > death_y:
+		queue_free()
+		return
 	_hurt_player()
 
 

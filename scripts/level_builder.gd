@@ -137,7 +137,7 @@ func _build_row(y: int) -> void:
 				x += 1
 			"C":
 				var checkpoint: Checkpoint = CHECKPOINT_SCENE.instantiate()
-				checkpoint.position = _cell_center(x, y)
+				checkpoint.position = _cell_bottom(x, y)
 				_objects.add_child(checkpoint)
 				checkpoints.append(checkpoint)
 				x += 1
@@ -202,7 +202,9 @@ func spawn_enemies() -> void:
 		var enemy: Node2D = spawn.scene.instantiate()
 		enemy.position = spawn.position
 		if enemy is Walker:
-			(enemy as Walker).character = spawn.character
+			var walker := enemy as Walker
+			walker.character = spawn.character
+			walker.death_y = size_px.y + 64.0
 		_enemies.add_child(enemy)
 
 

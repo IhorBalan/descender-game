@@ -2,7 +2,8 @@ class_name Checkpoint
 extends Area2D
 
 ## Resting here refills health and healing and sets the respawn point.
-## The hero rests automatically on touch.
+## The hero rests automatically on touch. The node's origin is at the base,
+## like the hero's, so the respawn point puts his feet on the floor.
 
 signal rested(checkpoint: Checkpoint)
 
@@ -17,7 +18,9 @@ func _ready() -> void:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if body is Player:
+	# A dead hero falling past, or a respawn landing on an active checkpoint,
+	# is not a new rest.
+	if body is Player and not active and body.state != Player.State.DEAD:
 		body.rest_at(global_position)
 		for other in get_tree().get_nodes_in_group("checkpoint"):
 			other.set_active(other == self)

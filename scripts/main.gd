@@ -11,7 +11,6 @@ const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
 @onready var hud: Hud = $HUD
 
 var player: Player
-var level_complete := false
 
 
 func _ready() -> void:
@@ -62,6 +61,5 @@ func _on_checkpoint_rested(_checkpoint: Checkpoint) -> void:
 
 
 func _on_goal_reached() -> void:
-	level_complete = true
-	player.frozen = true
+	player.freeze()
 	hud.show_message("Level complete!   Press R to restart", -1.0)
