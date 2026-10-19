@@ -9,7 +9,7 @@ hero, movement, melee combat, enemies, a checkpoint and limited healing.
 
 ## Running it
 
-1. Install [Godot 4.4](https://godotengine.org/download) (standard build, no
+1. Install [Godot 4.7](https://godotengine.org/download) (standard build, no
    .NET needed).
 2. Open `project.godot` in the editor and press **F5**, or run
    `godot --path .` from this folder.
