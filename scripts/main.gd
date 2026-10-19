@@ -7,7 +7,7 @@ const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
 
 @onready var level: LevelBuilder = $Level
-@onready var camera: Camera2D = $Camera2D
+@onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
 
 var player: Player

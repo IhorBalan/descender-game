@@ -66,7 +66,8 @@ just over four tiles high; a seven tile pit needs a jump plus a dash.
 godot --headless --path . --script tests/smoke_test.gd
 ```
 
-Exits non-zero when a check fails.
+Exits non-zero when a check fails. The same test runs on every pull request
+through `.github/workflows/tests.yml`.
 
 ## Pull request reviews
 

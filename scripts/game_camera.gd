@@ -1,3 +1,4 @@
+class_name GameCamera
 extends Camera2D
 
 ## Follows the hero and stays inside the level bounds. The hero is spawned at

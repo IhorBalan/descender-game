@@ -272,14 +272,26 @@ func _track_safe_ground(delta: float) -> void:
 
 # --- Damage, death, checkpoints ----------------------------------------
 
-## Called by enemies. Dashing gives invulnerability frames.
-func take_damage(amount: int, source_position: Vector2) -> void:
-	if frozen or state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
-		return
+## True while nothing can hurt the hero: dead, dashing, blinking after a
+## hit, or standing at the gate after finishing the level.
+func _can_be_hurt() -> bool:
+	return not frozen and state != State.DEAD and state != State.DASH \
+			and _invulnerable_timer <= 0.0
+
+
+## Takes health away and dies at zero. Returns true when the hero survived.
+func _lose_health(amount: int) -> bool:
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, MAX_HEALTH)
 	if health == 0:
 		_die()
+		return false
+	return true
+
+
+## Called by enemies: knockback away from the attacker.
+func take_damage(amount: int, source_position: Vector2) -> void:
+	if not _can_be_hurt() or not _lose_health(amount):
 		return
 	var dir := 1.0 if global_position.x >= source_position.x else -1.0
 	_set_state(State.HURT, HURT_TIME)
@@ -287,15 +299,9 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	_invulnerable_timer = INVULNERABLE_TIME
 
 
-## Called by spikes: lose health and get put back on the last safe ground.
-## Like enemy hits, a dash passes through unharmed.
+## Called by spikes: put back on the last safe ground.
 func take_hazard_damage(amount: int) -> void:
-	if frozen or state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
-		return
-	health = maxi(health - amount, 0)
-	health_changed.emit(health, MAX_HEALTH)
-	if health == 0:
-		_die()
+	if not _can_be_hurt() or not _lose_health(amount):
 		return
 	_set_state(State.HURT, HURT_TIME)
 	global_position = last_safe_position

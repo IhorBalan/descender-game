@@ -3,7 +3,7 @@ extends CanvasLayer
 
 ## Health, healing charges and short messages.
 
-@onready var status: Control = $Status
+@onready var status: StatusBar = $Status
 @onready var message: Label = $Message
 
 var _message_timer := 0.0

@@ -1,3 +1,4 @@
+class_name StatusBar
 extends Control
 
 ## Draws hearts (health) and bars (healing charges) with plain rectangles.
