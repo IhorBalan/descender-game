@@ -9,14 +9,17 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 38
-const LAST_TICK := 640
+const EXPECTED_CHECKS := 45
+const LAST_TICK := 760
 
 var _ticks := 0
 var _main: Node
 var _player: Player
 var _start_x := 0.0
 var _start_position := Vector2.ZERO
+## Just left of the wall of light, on the ground, facing it.
+var _barrier_approach := Vector2.ZERO
+var _barrier_x := 0.0
 var _imp: Walker
 var _mark_x := 0.0
 var _camera_y := 0.0
@@ -47,7 +50,7 @@ func _physics_process(_delta: float) -> bool:
 			_check(_enemy_count >= 6, "enemies spawned (%d)" % _enemy_count)
 			_check(_main.level.checkpoints.size() == 1, "checkpoint built")
 			_check(_main.level.goal != null, "goal gate built")
-			_check(_main.level.pickup_count() == 1, "wings feather built")
+			_check(_main.level.pickup_count() == 2, "two ability feathers built")
 			_start_x = _player.global_position.x
 			_start_position = _player.global_position
 			_press("move_right", true)
@@ -136,7 +139,7 @@ func _physics_process(_delta: float) -> bool:
 			_player.velocity = Vector2.ZERO
 		544:
 			_check(_player.has_ability(Player.Ability.WINGS), "feather unlocks the wings")
-			_check(_main.level.pickup_count() == 0, "feather is used up")
+			_check(_main.level.pickup_count() == 1, "feather is used up")
 			# Back to the start, where there is headroom for two jumps.
 			_player.global_position = _start_position
 			_player.velocity = Vector2.ZERO
@@ -176,6 +179,50 @@ func _physics_process(_delta: float) -> bool:
 			_check(_imp.direction == -1, "imp turns to face the hero")
 		620:
 			_check(_player.health < Player.MAX_HEALTH, "imp's swing hurts the hero")
+		700:
+			# Light barrier: the enemies behind it would knock the hero about,
+			# so clear them first, then dash at the wall without the ability.
+			for enemy in _main.get_tree().get_nodes_in_group("enemy"):
+				enemy.queue_free()
+			_barrier_x = _main.level.barrier_rect().get_center().x
+			var ground_y: float = _main.level.barrier_rect().end.y
+			_barrier_approach = Vector2(_barrier_x - 32.0, ground_y)
+			_player.global_position = _barrier_approach
+			_player.velocity = Vector2.ZERO
+			_player.facing = 1
+		704:
+			_press("dash", true)
+		706:
+			_press("dash", false)
+			_check(_player.state == Player.State.DASH, "dash at the barrier starts")
+		722:
+			_check(
+				_player.global_position.x < _barrier_x - 8.0, "wall of light stops a normal dash"
+			)
+			_player.global_position = _main.level.pickups[1].global_position
+			_player.velocity = Vector2.ZERO
+		726:
+			_check(
+				_player.has_ability(Player.Ability.LIGHT_DASH),
+				"second feather unlocks the light dash"
+			)
+			_check(_main.level.pickup_count() == 0, "both feathers used up")
+			_player.global_position = _barrier_approach
+			_player.velocity = Vector2.ZERO
+			_player.facing = 1
+		734:
+			_press("dash", true)
+		736:
+			_press("dash", false)
+			_check(_player.state == Player.State.DASH, "light dash starts")
+		756:
+			_check(
+				_player.global_position.x > _barrier_x + 8.0, "light dash passes through the wall"
+			)
+			_check(
+				_player.collision_mask & LightBarrier.LAYER_BIT != 0,
+				"wall of light is solid again after the dash"
+			)
 		LAST_TICK:
 			_report()
 			return true

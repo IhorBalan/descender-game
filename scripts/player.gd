@@ -15,7 +15,7 @@ signal respawned
 enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD }
 ## The half-finished angel powers. Each is unlocked by a pickup in the world
 ## and stays unlocked for the rest of the run, including after death.
-enum Ability { WINGS }
+enum Ability { WINGS, LIGHT_DASH }
 
 const CHARACTER := "hero"
 
@@ -55,6 +55,9 @@ const CORNER_CORRECTION := 4
 # Dash
 const DASH_SPEED := 260.0
 const DASH_TIME := 0.14
+## Light dash: the same speed for longer, and it passes through light
+## barriers (see LightBarrier).
+const LIGHT_DASH_TIME := 0.22
 const DASH_COOLDOWN := 0.4
 ## Speed kept when the dash ends, so it eases out instead of stopping dead.
 const DASH_END_SPEED := 160.0
@@ -80,6 +83,7 @@ const DEATH_TIME := 1.2
 const SAFE_GROUND_TIME := 0.2
 
 const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
+const TINT_LIGHT_DASH := Color(1.0, 0.95, 0.7, 0.85)
 const TINT_HEAL := Color(1.0, 0.92, 0.6)
 const TINT_WINGS := Color(1.0, 1.0, 0.8)
 
@@ -109,6 +113,9 @@ var _dash_from_floor := false
 var _air_jump_available := false
 var _wing_flash_timer := 0.0
 var _dash_cooldown_timer := 0.0
+## True while light barriers are ignored: during a light dash, and after it
+## until the hero is clear of the barrier he ended inside.
+var _phasing := false
 var _state_timer := 0.0
 var _invulnerable_timer := 0.0
 var _safe_ground_timer := 0.0
@@ -158,6 +165,7 @@ func _physics_process(delta: float) -> void:
 		_:
 			_process_normal(delta)
 	_correct_corners(delta)
+	_update_phasing()
 	move_and_slide()
 	if is_on_floor() and state != State.DASH:
 		_dash_available = true
@@ -238,7 +246,10 @@ func _process_normal(delta: float) -> void:
 
 func _start_dash() -> void:
 	_dash_from_floor = is_on_floor()
-	_set_state(State.DASH, DASH_TIME)
+	var light := has_ability(Ability.LIGHT_DASH)
+	_set_state(State.DASH, LIGHT_DASH_TIME if light else DASH_TIME)
+	if light:
+		_phasing = true
 	_dash_buffer_timer = 0.0
 	_dash_cooldown_timer = DASH_COOLDOWN
 	_dash_available = false
@@ -358,6 +369,22 @@ func _apply_horizontal(input_dir: float, delta: float, speed_multiplier := 1.0) 
 	else:
 		var friction := GROUND_FRICTION if on_floor else AIR_FRICTION
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+
+
+## Light barriers are left out of the collision mask while light dashing,
+## and stay out until the hero is no longer inside one, so a dash that ends
+## in a barrier does not leave him stuck.
+func _update_phasing() -> void:
+	var dashing := state == State.DASH and has_ability(Ability.LIGHT_DASH)
+	if _phasing and not dashing:
+		collision_mask |= LightBarrier.LAYER_BIT
+		if test_move(global_transform, Vector2.ZERO):
+			# Still inside the barrier: keep passing through this tick.
+			collision_mask &= ~LightBarrier.LAYER_BIT
+		else:
+			_phasing = false
+	elif dashing:
+		collision_mask &= ~LightBarrier.LAYER_BIT
 
 
 ## Nudges the hero around corners he only just clips: sideways past a
@@ -521,7 +548,7 @@ func _update_sprite() -> void:
 			pass  # started once in _start_attack
 		State.DASH:
 			_pose("run", 1)
-			sprite.modulate = TINT_DASH
+			sprite.modulate = TINT_LIGHT_DASH if has_ability(Ability.LIGHT_DASH) else TINT_DASH
 		State.HURT:
 			_pose("hurt", 0)
 		State.HEAL:

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Generate the placeholder tiles, checkpoint, goal gate and ability feather.
+"""Generate the placeholder tiles, checkpoint, goal gate, ability feather and
+light barrier.
 
 Everything is drawn from code so it can be regenerated or replaced without
 any tooling beyond Python + Pillow:
@@ -44,6 +45,9 @@ FEATHER = (250, 250, 255, 255)
 FEATHER_SHADE = (190, 200, 240, 255)
 FEATHER_SHAFT = (255, 206, 96, 255)
 FEATHER_GLOW = (255, 245, 180, 110)
+LIGHT = (255, 240, 190, 230)
+LIGHT_CORE = (255, 255, 240, 255)
+LIGHT_HAZE = (255, 230, 150, 90)
 
 
 def new(w: int, h: int) -> Image.Image:
@@ -146,8 +150,25 @@ def gen_feather() -> None:
     save(img, "feather.png")
 
 
+def gen_light_barrier() -> None:
+    """One tile of a wall of angel light: bright vertical shafts in a haze.
+    Tiles stack vertically, so the pattern repeats top to bottom."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    rect(d, 2, 0, 13, 15, LIGHT_HAZE)
+    for x, core in ((4, False), (7, True), (11, False)):
+        rect(d, x, 0, x, 15, LIGHT)
+        if core:
+            rect(d, x, 0, x + 1, 15, LIGHT_CORE)
+    # Breaks in the shafts so they read as streaming light, not a pole.
+    for x, y in ((4, 5), (4, 6), (11, 11), (11, 12), (8, 2), (7, 14)):
+        rect(d, x, y, x, y, LIGHT_HAZE)
+    save(img, "light_barrier.png")
+
+
 if __name__ == "__main__":
     gen_tiles()
     gen_checkpoint()
     gen_goal()
     gen_feather()
+    gen_light_barrier()

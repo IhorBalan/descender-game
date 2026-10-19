@@ -7,6 +7,7 @@ const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
 const ABILITY_MESSAGES := {
 	Player.Ability.WINGS: "Wings: press jump again in the air",
+	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
 }
 
 var player: Player
