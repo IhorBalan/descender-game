@@ -199,7 +199,8 @@ func _process_attack(delta: float) -> void:
 	_apply_horizontal(0.0, delta)
 	var elapsed := ATTACK_TIME - _state_timer
 	var active := elapsed >= ATTACK_ACTIVE_FROM and elapsed <= ATTACK_ACTIVE_UNTIL
-	attack_shape.disabled = not active
+	if attack_shape.disabled == active:
+		attack_shape.disabled = not active
 	if active:
 		for body in attack_hitbox.get_overlapping_bodies():
 			if body in _attack_hit or not body.has_method("take_damage"):

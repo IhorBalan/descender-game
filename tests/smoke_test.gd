@@ -22,6 +22,8 @@ var _checks := 0
 
 
 func _initialize() -> void:
+	# Flyers pick a random hover phase; a fixed seed keeps every run identical.
+	seed(1)
 	var scene: PackedScene = load("res://scenes/main.tscn")
 	if scene == null:
 		printerr("FAIL main scene did not load")
