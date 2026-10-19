@@ -5,7 +5,12 @@ extends SceneTree
 ##
 ##   godot --headless --path . --script tests/smoke_test.gd
 ##
-## Exits with code 1 when a check fails.
+## Exits with code 1 when a check fails, when the scene does not load, or
+## when a script error stops the checks from running.
+
+## Every check the script makes; fewer at the end means something broke early.
+const EXPECTED_CHECKS := 20
+const LAST_TICK := 490
 
 var _ticks := 0
 var _main: Node
@@ -18,6 +23,10 @@ var _checks := 0
 
 func _initialize() -> void:
 	var scene: PackedScene = load("res://scenes/main.tscn")
+	if scene == null:
+		printerr("FAIL main scene did not load")
+		quit(1)
+		return
 	_main = scene.instantiate()
 	root.add_child(_main)
 
@@ -73,12 +82,17 @@ func _physics_process(_delta: float) -> bool:
 			_player.take_damage(99, _player.global_position)
 		402:
 			_check(_player.state == Player.State.DEAD, "hero dies")
-		490:
+		LAST_TICK:
 			_check(_player.state != Player.State.DEAD, "hero respawns")
 			_check(_player.health == Player.MAX_HEALTH, "respawn restores health")
 			_check(_main.level.enemy_count() == _enemy_count, "enemies respawn")
 			_report()
 			return true
+	if _ticks > LAST_TICK:
+		# A script error inside the last step kept _report from running.
+		printerr("FAIL the test did not finish")
+		quit(1)
+		return true
 	return false
 
 
@@ -99,5 +113,8 @@ func _check(ok: bool, label: String) -> void:
 
 
 func _report() -> void:
+	if _checks != EXPECTED_CHECKS:
+		_failures += 1
+		printerr("  FAIL expected %d checks, ran %d" % [EXPECTED_CHECKS, _checks])
 	print("%d checks, %d failed" % [_checks, _failures])
 	quit(1 if _failures > 0 else 0)

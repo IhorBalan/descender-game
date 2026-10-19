@@ -8,6 +8,7 @@ on:
 jobs:
   smoke-test:
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     env:
       GODOT_VERSION: 4.7.2
     steps:
