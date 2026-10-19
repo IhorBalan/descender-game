@@ -34,6 +34,9 @@ jump again in the air for a second, slightly lower jump. Abilities stay
 unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
 Spikes cost one heart and put the hero back on the last solid ground.
+Imps and angel guards swing when the hero stands close: they stop, glow
+orange while winding up, then strike in front of them and pause to recover.
+Hitting one during the wind-up cancels the swing.
 
 ## Layout
 
@@ -41,7 +44,7 @@ Spikes cost one heart and put the hero back on the last solid ground.
 | ---- | ---------- |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots the level, spawns the hero, wires HUD and camera |
 | `scripts/player.gd` | Hero state machine and tuning constants |
-| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) |
+| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
 | `scripts/level_builder.gd` | Builds tiles, collision, spikes, enemies and objects from an ASCII map |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |

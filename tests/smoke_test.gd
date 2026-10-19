@@ -9,14 +9,15 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 33
-const LAST_TICK := 572
+const EXPECTED_CHECKS := 38
+const LAST_TICK := 640
 
 var _ticks := 0
 var _main: Node
 var _player: Player
 var _start_x := 0.0
 var _start_position := Vector2.ZERO
+var _imp: Walker
 var _mark_x := 0.0
 var _camera_y := 0.0
 var _enemy_count := 0
@@ -156,6 +157,25 @@ func _physics_process(_delta: float) -> bool:
 		568:
 			_check(_player.velocity.y > -150.0, "only one extra jump per airtime")
 			_press("jump", false)
+		580:
+			# Enemy attacks: an imp placed just out of its reach, facing away.
+			_player.global_position = _start_position
+			_player.velocity = Vector2.ZERO
+			_imp = LevelBuilder.WALKER_SCENE.instantiate()
+			_imp.character = "imp"
+			_imp.direction = 1
+			_imp.position = _start_position + Vector2(40.0, 0.0)
+			_main.add_child(_imp)
+		586:
+			_check(_imp.state == Walker.State.PATROL, "imp patrols while the hero is far")
+			_check(_player.health == Player.MAX_HEALTH, "hero unhurt before the swing")
+			# Step the hero into range.
+			_player.global_position.x = _imp.global_position.x - 24.0
+		590:
+			_check(_imp.state == Walker.State.WINDUP, "imp winds up when the hero is close")
+			_check(_imp.direction == -1, "imp turns to face the hero")
+		620:
+			_check(_player.health < Player.MAX_HEALTH, "imp's swing hurts the hero")
 		LAST_TICK:
 			_report()
 			return true
