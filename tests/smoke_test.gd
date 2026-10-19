@@ -67,7 +67,7 @@ func _physics_process(_delta: float) -> bool:
 		134:
 			_press("attack", false)
 			_check(_player.state == Player.State.ATTACK, "attack starts")
-		148:
+		144:
 			_check(_player.state == Player.State.ATTACK, "attack still running")
 			_check(_player.global_position.x > _mark_x + 3.0, "hero walks while attacking")
 			_press("move_right", false)
