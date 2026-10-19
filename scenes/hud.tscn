@@ -1,0 +1,29 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/hud.gd" id="1_hud"]
+[ext_resource type="Script" path="res://scripts/status_bar.gd" id="2_status"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_hud")
+
+[node name="Status" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 120.0
+offset_bottom = 28.0
+mouse_filter = 2
+script = ExtResource("2_status")
+
+[node name="Message" type="Label" parent="."]
+visible = false
+offset_left = 4.0
+offset_top = 158.0
+offset_right = 316.0
+offset_bottom = 176.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 8
+text = "Message"
+horizontal_alignment = 1
+vertical_alignment = 2
