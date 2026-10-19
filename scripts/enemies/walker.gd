@@ -12,7 +12,8 @@ const KNOCKBACK := Vector2(90.0, -60.0)
 
 const PROFILES := {
 	"imp": {"body": Vector2(18, 24), "speed": 32.0, "health": 3, "walk": "run", "faces_left": true},
-	"angel_guard": {"body": Vector2(24, 56), "speed": 18.0, "health": 5, "walk": "walk", "faces_left": true},
+	"angel_guard":
+	{"body": Vector2(24, 56), "speed": 18.0, "health": 5, "walk": "walk", "faces_left": true},
 }
 
 @export_enum("imp", "angel_guard") var character := "imp"

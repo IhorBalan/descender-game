@@ -17,6 +17,7 @@ const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
 const HAZARD_SCENE := preload("res://scenes/hazard.tscn")
 
+
 class EnemySpawn:
 	var scene: PackedScene
 	var position: Vector2
@@ -130,7 +131,9 @@ func _build_row(y: int) -> void:
 				_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, _cell_bottom(x, y), "imp"))
 				x += 1
 			"g":
-				_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, _cell_bottom(x, y), "angel_guard"))
+				_enemy_spawns.append(
+					EnemySpawn.new(WALKER_SCENE, _cell_bottom(x, y), "angel_guard")
+				)
 				x += 1
 			"f":
 				_enemy_spawns.append(EnemySpawn.new(FLYER_SCENE, _cell_center(x, y)))

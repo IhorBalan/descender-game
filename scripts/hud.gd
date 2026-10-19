@@ -3,10 +3,10 @@ extends CanvasLayer
 
 ## Health, healing charges and short messages.
 
+var _message_timer := 0.0
+
 @onready var status: StatusBar = $Status
 @onready var message: Label = $Message
-
-var _message_timer := 0.0
 
 
 func _process(delta: float) -> void:

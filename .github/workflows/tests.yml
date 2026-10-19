@@ -6,6 +6,25 @@ on:
     branches: [main]
 
 jobs:
+  lint:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install gdtoolkit
+        run: pip install "gdtoolkit==4.5.0"
+
+      - name: Lint GDScript
+        run: gdlint scripts tests tools
+
+      - name: Check GDScript formatting
+        run: gdformat --check --diff scripts tests tools
+
   smoke-test:
     runs-on: ubuntu-latest
     timeout-minutes: 10

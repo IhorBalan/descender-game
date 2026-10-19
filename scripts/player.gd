@@ -54,10 +54,6 @@ const SAFE_GROUND_TIME := 0.2
 const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
 const TINT_HEAL := Color(1.0, 0.92, 0.6)
 
-@onready var sprite: AnimatedSprite2D = $Sprite
-@onready var attack_hitbox: Area2D = $AttackHitbox
-@onready var attack_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
-
 var state: State = State.IDLE
 var facing := 1
 var health := MAX_HEALTH
@@ -82,6 +78,10 @@ var _safe_ground_timer := 0.0
 ## the button was released during another state.
 var _jump_rising := false
 var _attack_hit: Array[Node] = []
+
+@onready var sprite: AnimatedSprite2D = $Sprite
+@onready var attack_hitbox: Area2D = $AttackHitbox
+@onready var attack_shape: CollisionShape2D = $AttackHitbox/CollisionShape2D
 
 
 func _ready() -> void:
@@ -131,6 +131,7 @@ func _tick_timers(delta: float) -> void:
 
 # --- States -------------------------------------------------------------
 
+
 func _process_normal(delta: float) -> void:
 	var input_dir := 0.0 if frozen else Input.get_axis("move_left", "move_right")
 	if input_dir != 0.0:
@@ -163,8 +164,12 @@ func _process_normal(delta: float) -> void:
 	if Input.is_action_just_pressed("attack"):
 		_start_attack()
 		return
-	if Input.is_action_just_pressed("heal") and is_on_floor() \
-			and heal_charges > 0 and health < MAX_HEALTH:
+	if (
+		Input.is_action_just_pressed("heal")
+		and is_on_floor()
+		and heal_charges > 0
+		and health < MAX_HEALTH
+	):
 		_start_heal()
 		return
 
@@ -254,6 +259,7 @@ func _set_state(new_state: State, duration: float) -> void:
 
 # --- Physics helpers ----------------------------------------------------
 
+
 func _apply_gravity(delta: float) -> void:
 	if is_on_floor():
 		return
@@ -284,11 +290,11 @@ func _track_safe_ground(delta: float) -> void:
 
 # --- Damage, death, checkpoints ----------------------------------------
 
+
 ## True while nothing can hurt the hero: dead, dashing, blinking after a
 ## hit, or standing at the gate after finishing the level.
 func _can_be_hurt() -> bool:
-	return not frozen and state != State.DEAD and state != State.DASH \
-			and _invulnerable_timer <= 0.0
+	return not frozen and state != State.DEAD and state != State.DASH and _invulnerable_timer <= 0.0
 
 
 ## Takes health away and dies at zero. Returns true when the hero survived.
@@ -368,6 +374,7 @@ func respawn() -> void:
 
 
 # --- Visuals ------------------------------------------------------------
+
 
 func _update_sprite() -> void:
 	sprite.flip_h = facing < 0
