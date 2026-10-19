@@ -33,8 +33,7 @@ func _ready() -> void:
 
 	camera.target = player
 	camera.set_limits(level.size_px)
-	camera.global_position = player.global_position
-	camera.reset_smoothing()
+	camera.snap_to_target()
 
 	hud.show_message(CONTROLS_HINT, 6.0)
 
@@ -52,8 +51,7 @@ func _on_player_respawned() -> void:
 	# The signal fires from the hero's physics tick; rebuild the enemies once
 	# the physics step is over.
 	level.spawn_enemies.call_deferred()
-	camera.global_position = player.global_position
-	camera.reset_smoothing()
+	camera.snap_to_target()
 
 
 func _on_checkpoint_rested(_checkpoint: Checkpoint) -> void:

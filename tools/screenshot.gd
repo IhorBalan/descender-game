@@ -36,8 +36,7 @@ func _physics_process(_delta: float) -> bool:
 	for shot in _shots:
 		if _ticks == shot["tick"] - 30 and shot["x"] >= 0.0:
 			_main.player.global_position = Vector2(shot["x"], shot["y"])
-			_main.camera.global_position = _main.player.global_position
-			_main.camera.reset_smoothing()
+			_main.camera.snap_to_target()
 		if _ticks == shot["tick"]:
 			_save(shot["name"])
 	if _ticks > _shots[-1]["tick"] + 5:

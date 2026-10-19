@@ -9,13 +9,15 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 20
-const LAST_TICK := 490
+const EXPECTED_CHECKS := 25
+const LAST_TICK := 540
 
 var _ticks := 0
 var _main: Node
 var _player: Player
 var _start_x := 0.0
+var _mark_x := 0.0
+var _camera_y := 0.0
 var _enemy_count := 0
 var _failures := 0
 var _checks := 0
@@ -50,15 +52,25 @@ func _physics_process(_delta: float) -> bool:
 			_check(_player.is_on_floor(), "hero stands on the floor")
 			_press("move_right", false)
 			_press("jump", true)
+			_camera_y = _main.camera.global_position.y
 		66:
 			_press("jump", false)
 			_check(not _player.is_on_floor() and _player.velocity.y < 0.0, "hero jumps")
+		80:
+			var camera_moved := absf(_main.camera.global_position.y - _camera_y)
+			_check(camera_moved < 2.0, "camera ignores a jump (moved %.1f)" % camera_moved)
 		130:
 			_check(_player.is_on_floor(), "hero lands again")
 			_press("attack", true)
+			_press("move_right", true)
+			_mark_x = _player.global_position.x
 		134:
 			_press("attack", false)
 			_check(_player.state == Player.State.ATTACK, "attack starts")
+		144:
+			_check(_player.state == Player.State.ATTACK, "attack still running")
+			_check(_player.global_position.x > _mark_x + 3.0, "hero walks while attacking")
+			_press("move_right", false)
 		160:
 			_press("dash", true)
 		163:
@@ -84,10 +96,27 @@ func _physics_process(_delta: float) -> bool:
 			_player.take_damage(99, _player.global_position)
 		402:
 			_check(_player.state == Player.State.DEAD, "hero dies")
-		LAST_TICK:
+		490:
 			_check(_player.state != Player.State.DEAD, "hero respawns")
 			_check(_player.health == Player.MAX_HEALTH, "respawn restores health")
 			_check(_main.level.enemy_count() == _enemy_count, "enemies respawn")
+			# Drop the hero from high up so he has time for two dashes.
+			_player.global_position.y -= 160.0
+			_player.velocity = Vector2.ZERO
+		500:
+			_press("dash", true)
+		502:
+			_press("dash", false)
+			_check(_player.state == Player.State.DASH, "air dash starts")
+		526:
+			_press("dash", true)
+		529:
+			_press("dash", false)
+			_check(
+				not _player.is_on_floor() and _player.state != Player.State.DASH,
+				"only one dash per airtime"
+			)
+		LAST_TICK:
 			_report()
 			return true
 	if _ticks > LAST_TICK:
