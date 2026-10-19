@@ -347,9 +347,16 @@ func _die() -> void:
 
 ## The angels' system resurrects the hero at the last checkpoint.
 func respawn() -> void:
+	if frozen:
+		return
 	global_position = respawn_position
 	last_safe_position = respawn_position
 	velocity = Vector2.ZERO
+	# Nothing pressed before the death carries over.
+	_jump_rising = false
+	_jump_buffer_timer = 0.0
+	_coyote_timer = 0.0
+	_dash_cooldown_timer = 0.0
 	health = MAX_HEALTH
 	heal_charges = MAX_HEAL_CHARGES
 	health_changed.emit(health, MAX_HEALTH)
