@@ -67,3 +67,9 @@ godot --headless --path . --script tests/smoke_test.gd
 ```
 
 Exits non-zero when a check fails.
+
+## Pull request reviews
+
+Every pull request gets an automatic review from Claude Code (see
+`.github/workflows/claude-code-review.yml`). It runs when a PR is opened,
+reopened, marked ready for review, or gets new commits; drafts are skipped.
