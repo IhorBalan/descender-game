@@ -6,6 +6,7 @@ extends Node2D
 ##   #  solid tile      ^  spikes           P  hero start
 ##   w  imp (walker)    g  angel guard      f  watcher (flyer)
 ##   C  checkpoint      G  goal gate        .  empty
+##   W  feather that unlocks the wings (double jump)
 ##
 ## Tiles are 16x16. Rows may have different lengths; missing cells are empty.
 
@@ -16,6 +17,7 @@ const FLYER_SCENE := preload("res://scenes/enemies/flyer.tscn")
 const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
 const HAZARD_SCENE := preload("res://scenes/hazard.tscn")
+const PICKUP_SCENE := preload("res://scenes/ability_pickup.tscn")
 
 
 class EnemySpawn:
@@ -40,6 +42,7 @@ var size_px := Vector2.ZERO
 var player_start := Vector2.ZERO
 var checkpoints: Array[Checkpoint] = []
 var goal: Goal = null
+var pickups: Array[AbilityPickup] = []
 
 var _enemy_spawns: Array[EnemySpawn] = []
 var _tiles: Node2D
@@ -91,6 +94,7 @@ func build(text: String) -> void:
 
 	checkpoints = []
 	goal = null
+	pickups = []
 	_enemy_spawns = []
 	for y in height:
 		_build_row(y)
@@ -149,8 +153,19 @@ func _build_row(y: int) -> void:
 				goal.position = _cell_center(x, y)
 				_objects.add_child(goal)
 				x += 1
+			"W":
+				_add_pickup(x, y, Player.Ability.WINGS)
+				x += 1
 			_:
 				x += 1
+
+
+func _add_pickup(x: int, y: int, ability: Player.Ability) -> void:
+	var pickup: AbilityPickup = PICKUP_SCENE.instantiate()
+	pickup.ability = ability
+	pickup.position = _cell_bottom(x, y)
+	_objects.add_child(pickup)
+	pickups.append(pickup)
 
 
 func _run_length(x: int, y: int, c: String) -> int:
@@ -213,3 +228,12 @@ func spawn_enemies() -> void:
 
 func enemy_count() -> int:
 	return _enemies.get_child_count()
+
+
+## Pickups still waiting in the level (collected ones are freed).
+func pickup_count() -> int:
+	var count := 0
+	for pickup in pickups:
+		if is_instance_valid(pickup) and not pickup.is_queued_for_deletion():
+			count += 1
+	return count
