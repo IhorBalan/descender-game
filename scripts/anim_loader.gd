@@ -11,9 +11,20 @@ static var _spec: Dictionary = {}
 static var _cache: Dictionary = {}
 
 
+## The sprite spec for one character. A missing file, bad JSON or unknown
+## character is reported once and yields an empty spec, so the game keeps
+## running with an invisible sprite instead of crashing on a lookup.
 static func spec(character: String) -> Dictionary:
 	if _spec.is_empty():
-		_spec = JSON.parse_string(FileAccess.get_file_as_string(SPEC_PATH))
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(SPEC_PATH))
+		if parsed is Dictionary:
+			_spec = parsed
+		else:
+			push_error("AnimLoader: could not read %s" % SPEC_PATH)
+			return {}
+	if not _spec.has(character):
+		push_error("AnimLoader: no sprite spec for '%s'" % character)
+		return {}
 	return _spec[character]
 
 
@@ -21,6 +32,8 @@ static func frames(character: String) -> SpriteFrames:
 	if _cache.has(character):
 		return _cache[character]
 	var s := spec(character)
+	if s.is_empty():
+		return SpriteFrames.new()
 	var frame_w := int(s["frame_size"][0])
 	var frame_h := int(s["frame_size"][1])
 	var result := SpriteFrames.new()
@@ -44,6 +57,8 @@ static func frames(character: String) -> SpriteFrames:
 ## centre) lands on the node's position.
 static func offset(character: String) -> Vector2:
 	var s := spec(character)
+	if s.is_empty():
+		return Vector2.ZERO
 	return Vector2(
 		float(s["frame_size"][0]) / 2.0 - float(s["origin"][0]),
 		float(s["frame_size"][1]) / 2.0 - float(s["origin"][1]))

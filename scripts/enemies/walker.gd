@@ -39,6 +39,9 @@ var _dead := false
 
 func _ready() -> void:
 	add_to_group("enemy")
+	if not PROFILES.has(character):
+		push_error("Walker: unknown character '%s', using imp" % character)
+		character = "imp"
 	var profile: Dictionary = PROFILES[character]
 	var body: Vector2 = profile["body"]
 	health = profile["health"]
