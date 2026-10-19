@@ -322,12 +322,14 @@ func take_hazard_damage(amount: int) -> void:
 
 
 ## Ends the level: whatever the hero was doing stops, input is ignored and
-## nothing can hurt him any more. Gravity keeps running so he lands.
+## nothing can hurt him any more. Gravity keeps running so he lands. A dead
+## hero is left to respawn as usual; the gate is still there afterwards.
 func freeze() -> void:
+	if state == State.DEAD:
+		return
 	frozen = true
-	if state != State.DEAD:
-		_set_state(State.IDLE, 0.0)
-		velocity.x = 0.0
+	_set_state(State.IDLE, 0.0)
+	velocity.x = 0.0
 
 
 ## Resting at a checkpoint: full health, healing refilled, respawn point set.
@@ -348,8 +350,6 @@ func _die() -> void:
 
 ## The angels' system resurrects the hero at the last checkpoint.
 func respawn() -> void:
-	if frozen:
-		return
 	global_position = respawn_position
 	last_safe_position = respawn_position
 	velocity = Vector2.ZERO
