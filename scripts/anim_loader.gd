@@ -61,7 +61,8 @@ static func offset(character: String) -> Vector2:
 		return Vector2.ZERO
 	return Vector2(
 		float(s["frame_size"][0]) / 2.0 - float(s["origin"][0]),
-		float(s["frame_size"][1]) / 2.0 - float(s["origin"][1]))
+		float(s["frame_size"][1]) / 2.0 - float(s["origin"][1])
+	)
 
 
 ## Applies frames and offset to a sprite in one go.

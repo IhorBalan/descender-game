@@ -48,8 +48,11 @@ func _physics_process(delta: float) -> void:
 	else:
 		var target := home + Vector2(sin(_time * 1.6) * 24.0, sin(_time * 2.7) * 6.0)
 		var speed := HOVER_SPEED
-		if is_instance_valid(_player) and _player.state != Player.State.DEAD \
-				and global_position.distance_to(_player.global_position) < AGGRO_RANGE:
+		if (
+			is_instance_valid(_player)
+			and _player.state != Player.State.DEAD
+			and global_position.distance_to(_player.global_position) < AGGRO_RANGE
+		):
 			target = _player.global_position + Vector2(0.0, -16.0)
 			speed = CHASE_SPEED
 		var wanted := (target - global_position).limit_length(speed)

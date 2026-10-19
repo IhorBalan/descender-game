@@ -69,6 +69,15 @@ godot --headless --path . --script tests/smoke_test.gd
 Exits non-zero when a check fails. The same test runs on every pull request
 through `.github/workflows/tests.yml`.
 
+The same workflow also lints and format-checks GDScript with
+[gdtoolkit](https://github.com/Scony/godot-gdscript-toolkit). To run it locally:
+
+```
+pip install "gdtoolkit==4.5.0"
+gdlint scripts tests tools
+gdformat scripts tests tools   # rewrites files; add --check to only report
+```
+
 ## Pull request reviews
 
 Every pull request gets an automatic review from Claude Code (see

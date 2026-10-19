@@ -6,11 +6,11 @@ const LEVEL_PATH := "res://levels/level_01.txt"
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
 
+var player: Player
+
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
-
-var player: Player
 
 
 func _ready() -> void:
