@@ -29,7 +29,9 @@ window is 1280x720 by default.
 | Restart | R                   | Start          |
 
 Jump height depends on how long the button is held. Dashing gives a few
-invulnerability frames. Healing has three charges that come back when the
+invulnerability frames. Picking up the feather unlocks the **wings**: press
+jump again in the air for a second, slightly lower jump. Abilities stay
+unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
 Spikes cost one heart and put the hero back on the last solid ground.
 
@@ -42,10 +44,11 @@ Spikes cost one heart and put the hero back on the last solid ground.
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
 | `scripts/level_builder.gd` | Builds tiles, collision, spikes, enemies and objects from an ASCII map |
+| `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `levels/level_01.txt` | The level. Edit it in any text editor |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
-| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint and gate PNGs |
+| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate and feather PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
 | `tests/smoke_test.gd` | Headless test that drives the hero and checks the basics |
@@ -56,10 +59,12 @@ Spikes cost one heart and put the hero back on the last solid ground.
 #  solid tile      ^  spikes           P  hero start
 w  imp (walker)    g  angel guard      f  watcher (flyer)
 C  checkpoint      G  goal gate        .  empty
+W  feather (unlocks the wings)
 ```
 
 Tiles are 16x16. The hero is about two and a half tiles tall and jumps
-just over four tiles high; a seven tile pit needs a jump plus a dash.
+just over four tiles high, or eight with the wings; a seven tile pit needs a
+jump plus a dash. The climb to the goal gate needs the wings.
 
 ## Tests
 

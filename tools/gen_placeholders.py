@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate the placeholder tiles, checkpoint and goal gate.
+"""Generate the placeholder tiles, checkpoint, goal gate and ability feather.
 
 Everything is drawn from code so it can be regenerated or replaced without
 any tooling beyond Python + Pillow:
@@ -40,6 +40,10 @@ ORB_GLOW = (255, 245, 180, 140)
 GATE = (58, 44, 96, 255)
 GATE_INNER = (150, 226, 255, 255)
 GATE_FRAME = (255, 206, 96, 255)
+FEATHER = (250, 250, 255, 255)
+FEATHER_SHADE = (190, 200, 240, 255)
+FEATHER_SHAFT = (255, 206, 96, 255)
+FEATHER_GLOW = (255, 245, 180, 110)
 
 
 def new(w: int, h: int) -> Image.Image:
@@ -122,7 +126,28 @@ def gen_goal() -> None:
     save(img, "goal.png")
 
 
+def gen_feather() -> None:
+    """The ability pickup: a white feather with a gold shaft, leaning right,
+    with a soft glow behind it."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((1, 1, 14, 14), fill=FEATHER_GLOW)
+    # Vane: a leaf from the quill at the bottom-left to the tip top-right.
+    vane = [(2, 11, 12), (3, 9, 12), (4, 8, 12), (5, 7, 12), (6, 6, 11), (7, 5, 10),
+            (8, 4, 9), (9, 3, 8), (10, 2, 7), (11, 2, 5), (12, 2, 3)]
+    for y, x0, x1 in vane:
+        rect(d, x0, y, x1, y, FEATHER)
+        rect(d, x1, y, x1, y, FEATHER_SHADE)
+    # Shaft along the middle of the vane, then the bare quill.
+    for i in range(10):
+        rect(d, 12 - i, 2 + i, 12 - i, 2 + i, FEATHER_SHAFT)
+    rect(d, 2, 12, 2, 12, FEATHER_SHAFT)
+    rect(d, 1, 13, 1, 14, OUTLINE)
+    save(img, "feather.png")
+
+
 if __name__ == "__main__":
     gen_tiles()
     gen_checkpoint()
     gen_goal()
+    gen_feather()

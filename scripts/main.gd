@@ -5,6 +5,9 @@ extends Node2D
 const LEVEL_PATH := "res://levels/level_01.txt"
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
+const ABILITY_MESSAGES := {
+	Player.Ability.WINGS: "Wings: press jump again in the air",
+}
 
 var player: Player
 
@@ -29,6 +32,7 @@ func _ready() -> void:
 		checkpoint.rested.connect(_on_checkpoint_rested)
 	if level.goal:
 		level.goal.reached.connect(_on_goal_reached)
+	player.ability_unlocked.connect(_on_ability_unlocked)
 	level.spawn_enemies()
 
 	camera.target = player
@@ -56,6 +60,10 @@ func _on_player_respawned() -> void:
 
 func _on_checkpoint_rested(_checkpoint: Checkpoint) -> void:
 	hud.show_message("Checkpoint: health and healing restored", 2.5)
+
+
+func _on_ability_unlocked(ability: Player.Ability) -> void:
+	hud.show_message(ABILITY_MESSAGES.get(ability, "New ability unlocked"), 3.5)
 
 
 func _on_goal_reached() -> void:

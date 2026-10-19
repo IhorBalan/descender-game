@@ -9,13 +9,14 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 25
-const LAST_TICK := 540
+const EXPECTED_CHECKS := 33
+const LAST_TICK := 572
 
 var _ticks := 0
 var _main: Node
 var _player: Player
 var _start_x := 0.0
+var _start_position := Vector2.ZERO
 var _mark_x := 0.0
 var _camera_y := 0.0
 var _enemy_count := 0
@@ -45,7 +46,9 @@ func _physics_process(_delta: float) -> bool:
 			_check(_enemy_count >= 6, "enemies spawned (%d)" % _enemy_count)
 			_check(_main.level.checkpoints.size() == 1, "checkpoint built")
 			_check(_main.level.goal != null, "goal gate built")
+			_check(_main.level.pickup_count() == 1, "wings feather built")
 			_start_x = _player.global_position.x
+			_start_position = _player.global_position
 			_press("move_right", true)
 		60:
 			_check(_player.global_position.x > _start_x + 40.0, "hero runs right")
@@ -116,6 +119,43 @@ func _physics_process(_delta: float) -> bool:
 				not _player.is_on_floor() and _player.state != Player.State.DASH,
 				"only one dash per airtime"
 			)
+		530:
+			_press("jump", true)
+		532:
+			_press("jump", false)
+		533:
+			_check(
+				not _player.is_on_floor() and _player.velocity.y > 0.0,
+				"no jump in the air without the wings"
+			)
+		540:
+			# Once the buffered press has expired, drop the hero onto the
+			# feather, which sits on a platform.
+			_player.global_position = _main.level.pickups[0].global_position
+			_player.velocity = Vector2.ZERO
+		544:
+			_check(_player.has_ability(Player.Ability.WINGS), "feather unlocks the wings")
+			_check(_main.level.pickup_count() == 0, "feather is used up")
+			# Back to the start, where there is headroom for two jumps.
+			_player.global_position = _start_position
+			_player.velocity = Vector2.ZERO
+		550:
+			_check(_player.is_on_floor(), "hero stands at the start again")
+			_press("jump", true)
+		553:
+			_press("jump", false)
+		557:
+			_check(not _player.is_on_floor(), "hero is in the air for the second jump")
+			_press("jump", true)
+		559:
+			_check(_player.velocity.y < -200.0, "wings give a second jump in the air")
+		560:
+			_press("jump", false)
+		562:
+			_press("jump", true)
+		568:
+			_check(_player.velocity.y > -150.0, "only one extra jump per airtime")
+			_press("jump", false)
 		LAST_TICK:
 			_report()
 			return true

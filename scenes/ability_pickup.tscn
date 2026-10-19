@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/ability_pickup.gd" id="1_pickup"]
+[ext_resource type="Texture2D" path="res://assets/sprites/feather.png" id="2_sprite"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_area"]
+size = Vector2(20, 28)
+
+[node name="AbilityPickup" type="Area2D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_pickup")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -16)
+scale = Vector2(2, 2)
+texture = ExtResource("2_sprite")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -14)
+shape = SubResource("RectangleShape2D_area")

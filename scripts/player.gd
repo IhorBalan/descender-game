@@ -1,16 +1,21 @@
 class_name Player
 extends CharacterBody2D
 
-## The hero: run, jump, melee attack, short dash and limited inner healing.
+## The hero: run, jump, melee attack, short dash and limited inner healing,
+## plus the angel abilities he unlocks along the way (see Ability).
 ## The node's origin is at the hero's feet. Tuning values live at the top so
 ## they are easy to tweak while playtesting.
 
 signal health_changed(current: int, max_value: int)
 signal heal_charges_changed(current: int, max_value: int)
+signal ability_unlocked(ability: Ability)
 signal died
 signal respawned
 
 enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD }
+## The half-finished angel powers. Each is unlocked by a pickup in the world
+## and stays unlocked for the rest of the run, including after death.
+enum Ability { WINGS }
 
 const CHARACTER := "hero"
 
@@ -37,6 +42,10 @@ const JUMP_CUT_MULTIPLIER := 0.45
 const APEX_SPEED_THRESHOLD := 30.0
 const APEX_GRAVITY_MULTIPLIER := 0.6
 const COYOTE_TIME := 0.1
+## Wings: one extra jump in the air, a little lower than the first.
+const DOUBLE_JUMP_HEIGHT := 56.0
+const DOUBLE_JUMP_VELOCITY := -sqrt(2.0 * GRAVITY * DOUBLE_JUMP_HEIGHT)
+const WING_FLASH_TIME := 0.15
 ## Jump, dash and attack presses are remembered this long.
 const INPUT_BUFFER_TIME := 0.12
 ## How far the hero is nudged sideways around a ceiling corner, or up onto a
@@ -72,11 +81,13 @@ const SAFE_GROUND_TIME := 0.2
 
 const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
 const TINT_HEAL := Color(1.0, 0.92, 0.6)
+const TINT_WINGS := Color(1.0, 1.0, 0.8)
 
 var state: State = State.IDLE
 var facing := 1
 var health := MAX_HEALTH
 var heal_charges := MAX_HEAL_CHARGES
+var abilities: Array[Ability] = []
 ## Where the hero comes back after dying (the last checkpoint rested at).
 var respawn_position := Vector2.ZERO
 ## Where the hero is put back after touching spikes.
@@ -94,6 +105,9 @@ var _attack_buffer_timer := 0.0
 ## One dash per airtime: spent on dashing, refilled on landing.
 var _dash_available := true
 var _dash_from_floor := false
+## The wings' extra jump: spent in the air, refilled on landing.
+var _air_jump_available := false
+var _wing_flash_timer := 0.0
 var _dash_cooldown_timer := 0.0
 var _state_timer := 0.0
 var _invulnerable_timer := 0.0
@@ -147,6 +161,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	if is_on_floor() and state != State.DASH:
 		_dash_available = true
+		_air_jump_available = true
 	_track_safe_ground(delta)
 	if global_position.y > death_y and state != State.DEAD and not frozen:
 		_die()
@@ -161,6 +176,7 @@ func _tick_timers(delta: float) -> void:
 	_dash_cooldown_timer = maxf(_dash_cooldown_timer - delta, 0.0)
 	_state_timer = maxf(_state_timer - delta, 0.0)
 	_invulnerable_timer = maxf(_invulnerable_timer - delta, 0.0)
+	_wing_flash_timer = maxf(_wing_flash_timer - delta, 0.0)
 
 
 # --- States -------------------------------------------------------------
@@ -181,6 +197,13 @@ func _process_normal(delta: float) -> void:
 		_jump_buffer_timer = 0.0
 		_coyote_timer = 0.0
 		_jump_rising = true
+	elif _jump_buffer_timer > 0.0 and _air_jump_available and has_ability(Ability.WINGS):
+		# Wings: a second jump from mid-air, with the same variable height.
+		velocity.y = DOUBLE_JUMP_VELOCITY
+		_jump_buffer_timer = 0.0
+		_air_jump_available = false
+		_jump_rising = true
+		_wing_flash_timer = WING_FLASH_TIME
 	elif _jump_rising and velocity.y >= 0.0:
 		_jump_rising = false
 	elif _jump_rising and not frozen and not Input.is_action_pressed("jump"):
@@ -371,6 +394,22 @@ func _track_safe_ground(delta: float) -> void:
 		_safe_ground_timer = 0.0
 
 
+# --- Abilities ----------------------------------------------------------
+
+
+func has_ability(ability: Ability) -> bool:
+	return ability in abilities
+
+
+## Unlocks an angel power for the rest of the run. Unlocking one the hero
+## already has does nothing.
+func unlock(ability: Ability) -> void:
+	if has_ability(ability):
+		return
+	abilities.append(ability)
+	ability_unlocked.emit(ability)
+
+
 # --- Damage, death, checkpoints ----------------------------------------
 
 
@@ -450,6 +489,7 @@ func respawn() -> void:
 	_coyote_timer = 0.0
 	_dash_cooldown_timer = 0.0
 	_dash_available = true
+	_air_jump_available = true
 	health = MAX_HEALTH
 	heal_charges = MAX_HEAL_CHARGES
 	health_changed.emit(health, MAX_HEALTH)
@@ -473,6 +513,8 @@ func _update_sprite() -> void:
 			_play("run")
 		State.JUMP:
 			_pose("jump", 0)
+			if _wing_flash_timer > 0.0:
+				sprite.modulate = TINT_WINGS
 		State.FALL:
 			_pose("jump", 1)
 		State.ATTACK:
