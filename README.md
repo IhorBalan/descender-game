@@ -72,5 +72,8 @@ through `.github/workflows/tests.yml`.
 ## Pull request reviews
 
 Every pull request gets an automatic review from Claude Code (see
-`.github/workflows/claude-code-review.yml`). It runs when a PR is opened,
-reopened, marked ready for review, or gets new commits; drafts are skipped.
+`.github/workflows/claude-code-review.yml`). The full review runs when a PR is
+opened, reopened or marked ready for review; drafts are skipped. Later pushes
+get a short follow-up that looks only at the new commits and reports blocking
+bugs only. What the reviewer checks, skips and how many nits it may post is set
+in [`REVIEW.md`](REVIEW.md).
