@@ -1,6 +1,8 @@
 extends Camera2D
 
-## Follows the hero and stays inside the level bounds.
+## Follows the hero and stays inside the level bounds. The hero is spawned at
+## runtime, so main.gd assigns `target`; the camera runs its smoothing in the
+## physics step (process_callback in main.tscn) to match the follow below.
 
 var target: Node2D
 

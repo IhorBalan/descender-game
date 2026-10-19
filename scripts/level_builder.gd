@@ -17,6 +17,17 @@ const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
 const HAZARD_SCENE := preload("res://scenes/hazard.tscn")
 
+class EnemySpawn:
+	var scene: PackedScene
+	var position: Vector2
+	var character: String
+
+	func _init(p_scene: PackedScene, p_position: Vector2, p_character: String = "") -> void:
+		scene = p_scene
+		position = p_position
+		character = p_character
+
+
 const TILE_FILL := 0
 const TILE_TOP := 1
 const TILE_SPIKE := 2
@@ -29,7 +40,7 @@ var player_start := Vector2.ZERO
 var checkpoints: Array[Checkpoint] = []
 var goal: Goal = null
 
-var _enemy_spawns: Array[Dictionary] = []
+var _enemy_spawns: Array[EnemySpawn] = []
 var _tiles: Node2D
 var _solids: StaticBody2D
 var _hazards: Node2D
@@ -43,6 +54,7 @@ func load_from_file(path: String) -> void:
 
 func build(text: String) -> void:
 	for child in get_children():
+		remove_child(child)
 		child.queue_free()
 	rows = []
 	for line in text.split("\n"):
@@ -115,13 +127,13 @@ func _build_row(y: int) -> void:
 				player_start = _cell_bottom(x, y)
 				x += 1
 			"w":
-				_enemy_spawns.append({"scene": WALKER_SCENE, "position": _cell_bottom(x, y), "character": "imp"})
+				_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, _cell_bottom(x, y), "imp"))
 				x += 1
 			"g":
-				_enemy_spawns.append({"scene": WALKER_SCENE, "position": _cell_bottom(x, y), "character": "angel_guard"})
+				_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, _cell_bottom(x, y), "angel_guard"))
 				x += 1
 			"f":
-				_enemy_spawns.append({"scene": FLYER_SCENE, "position": _cell_center(x, y)})
+				_enemy_spawns.append(EnemySpawn.new(FLYER_SCENE, _cell_center(x, y)))
 				x += 1
 			"C":
 				var checkpoint: Checkpoint = CHECKPOINT_SCENE.instantiate()
@@ -187,10 +199,10 @@ func spawn_enemies() -> void:
 		_enemies.remove_child(child)
 		child.queue_free()
 	for spawn in _enemy_spawns:
-		var enemy: Node2D = spawn["scene"].instantiate()
-		enemy.position = spawn["position"]
-		if spawn.has("character"):
-			enemy.character = spawn["character"]
+		var enemy: Node2D = spawn.scene.instantiate()
+		enemy.position = spawn.position
+		if enemy is Walker:
+			(enemy as Walker).character = spawn.character
 		_enemies.add_child(enemy)
 
 

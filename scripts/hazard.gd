@@ -7,6 +7,10 @@ extends Area2D
 
 
 func _physics_process(_delta: float) -> void:
+	# Polled rather than body_entered so a hero standing on the spikes after
+	# his invulnerability ends is hurt again. Cheap while nothing overlaps.
+	if not has_overlapping_bodies():
+		return
 	for body in get_overlapping_bodies():
 		if body is Player:
 			body.take_hazard_damage(damage)

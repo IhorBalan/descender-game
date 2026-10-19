@@ -58,6 +58,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _hurt_player() -> void:
+	if not hitbox.has_overlapping_bodies():
+		return
 	for body in hitbox.get_overlapping_bodies():
 		if body is Player:
 			body.take_damage(contact_damage, global_position)

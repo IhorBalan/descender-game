@@ -15,13 +15,14 @@ const PROFILES := {
 	"angel_guard": {"body": Vector2(24, 56), "speed": 18.0, "health": 5, "walk": "walk", "faces_left": true},
 }
 
-@export var character := "imp"
+@export_enum("imp", "angel_guard") var character := "imp"
 @export var contact_damage := 1
 
 var health := 0
 var direction := -1
 var speed := 30.0
 var _walk_anim := "run"
+var _half_width := 0.0
 var _faces_left := true
 var _hurt_timer := 0.0
 var _dead := false
@@ -44,6 +45,7 @@ func _ready() -> void:
 
 	AnimLoader.setup(sprite, character)
 	sprite.play(_walk_anim)
+	_half_width = body.x / 2.0
 	var shape := RectangleShape2D.new()
 	shape.size = body
 	body_shape.shape = shape
@@ -79,11 +81,13 @@ func _physics_process(delta: float) -> void:
 func _face(dir: int) -> void:
 	direction = dir
 	sprite.flip_h = (dir > 0) == _faces_left
-	floor_ray.position.x = (body_shape.shape.size.x / 2.0 + 2.0) * dir
+	floor_ray.position.x = (_half_width + 2.0) * dir
 	floor_ray.force_raycast_update()
 
 
 func _hurt_player() -> void:
+	if not hitbox.has_overlapping_bodies():
+		return
 	for body in hitbox.get_overlapping_bodies():
 		if body is Player:
 			body.take_damage(contact_damage, global_position)

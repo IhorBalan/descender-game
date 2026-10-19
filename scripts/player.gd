@@ -287,8 +287,9 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 
 
 ## Called by spikes: lose health and get put back on the last safe ground.
+## Like enemy hits, a dash passes through unharmed.
 func take_hazard_damage(amount: int) -> void:
-	if state == State.DEAD or _invulnerable_timer > 0.0:
+	if state == State.DEAD or state == State.DASH or _invulnerable_timer > 0.0:
 		return
 	health = maxi(health - amount, 0)
 	health_changed.emit(health, MAX_HEALTH)
@@ -347,7 +348,7 @@ func _update_sprite() -> void:
 		State.FALL:
 			_pose("jump", 1)
 		State.ATTACK:
-			_play("attack")
+			pass  # started once in _start_attack
 		State.DASH:
 			_pose("run", 1)
 			sprite.modulate = TINT_DASH
@@ -366,8 +367,13 @@ func _update_sprite() -> void:
 		sprite.visible = true
 
 
+## Switches to a looping animation, or restarts it if it was paused by _pose.
+## One-shot animations (attack) are started where the state begins, so a
+## finished strip is never replayed while the state lasts.
 func _play(anim_name: String) -> void:
-	if sprite.animation != anim_name or not sprite.is_playing():
+	if sprite.animation != anim_name:
+		sprite.play(anim_name)
+	elif not sprite.is_playing() and sprite.sprite_frames.get_animation_loop(anim_name):
 		sprite.play(anim_name)
 
 

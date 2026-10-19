@@ -50,7 +50,9 @@ func _on_player_died() -> void:
 
 
 func _on_player_respawned() -> void:
-	level.spawn_enemies()
+	# The signal fires from the hero's physics tick; rebuild the enemies once
+	# the physics step is over.
+	level.spawn_enemies.call_deferred()
 	camera.global_position = player.global_position
 	camera.reset_smoothing()
 
