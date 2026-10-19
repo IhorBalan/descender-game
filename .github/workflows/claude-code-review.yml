@@ -1,0 +1,53 @@
+name: Claude Code Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, ready_for_review, reopened]
+
+concurrency:
+  group: claude-review-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  review:
+    # Skip drafts; the review runs once the PR is marked ready, and on every push after that.
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 1
+
+      - uses: anthropics/claude-code-action@v1
+        with:
+          # Set ONE of these repository secrets: CLAUDE_CODE_OAUTH_TOKEN (Claude Pro/Max
+          # subscription, created by `/install-github-app`) or ANTHROPIC_API_KEY (Console API key).
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          anthropic_api_key: ${{ secrets.ANTHROPIC_API_KEY }}
+          prompt: |
+            REPO: ${{ github.repository }}
+            PR NUMBER: ${{ github.event.pull_request.number }}
+
+            This is a 2D game built with the Godot engine (GDScript, .tscn/.tres scenes and resources).
+
+            Review this pull request. Start with a short top-level summary of what changed, then cover:
+            - Bugs and logic errors (physics, collision, signals, state machines, input handling)
+            - Godot best practices: node/scene structure, signal usage, exported variables,
+              _process vs _physics_process, resource loading, typed GDScript
+            - Performance issues in per-frame code
+            - Broken references in scenes/resources (missing nodes, wrong paths, uid mismatches)
+            - Readability and maintainability
+
+            Be concise. Skip praise and nitpicks that don't change behavior.
+
+            Note: The PR branch is already checked out in the current working directory.
+
+            Use `gh pr comment` for the top-level summary.
+            Use `mcp__github_inline_comment__create_inline_comment` (with `confirmed: true`) to flag specific lines.
+            Only post GitHub comments; don't submit review text as messages.
+          claude_args: |
+            --allowedTools "mcp__github_inline_comment__create_inline_comment,Bash(gh pr comment:*),Bash(gh pr diff:*),Bash(gh pr view:*)"
