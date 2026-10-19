@@ -7,6 +7,7 @@ extends Node2D
 ##   w  imp (walker)    g  angel guard      f  watcher (flyer)
 ##   C  checkpoint      G  goal gate        .  empty
 ##   W  feather that unlocks the wings (double jump)
+##   L  feather that unlocks the light dash    |  light barrier
 ##
 ## Tiles are 16x16. Rows may have different lengths; missing cells are empty.
 
@@ -18,6 +19,7 @@ const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
 const HAZARD_SCENE := preload("res://scenes/hazard.tscn")
 const PICKUP_SCENE := preload("res://scenes/ability_pickup.tscn")
+const BARRIER_TEXTURE := preload("res://assets/sprites/light_barrier.png")
 
 
 class EnemySpawn:
@@ -48,6 +50,7 @@ var _enemy_spawns: Array[EnemySpawn] = []
 var _tiles: Node2D
 var _solids: StaticBody2D
 var _hazards: Node2D
+var _barriers: LightBarrier
 var _objects: Node2D
 var _enemies: Node2D
 
@@ -85,6 +88,11 @@ func build(text: String) -> void:
 	_hazards = Node2D.new()
 	_hazards.name = "Hazards"
 	add_child(_hazards)
+	_barriers = LightBarrier.new()
+	_barriers.name = "LightBarriers"
+	_barriers.collision_layer = LightBarrier.LAYER_BIT
+	_barriers.collision_mask = 0
+	add_child(_barriers)
 	_objects = Node2D.new()
 	_objects.name = "Objects"
 	add_child(_objects)
@@ -156,8 +164,27 @@ func _build_row(y: int) -> void:
 			"W":
 				_add_pickup(x, y, Player.Ability.WINGS)
 				x += 1
+			"L":
+				_add_pickup(x, y, Player.Ability.LIGHT_DASH)
+				x += 1
+			"|":
+				_add_barrier_cell(x, y)
+				x += 1
 			_:
 				x += 1
+
+
+func _add_barrier_cell(x: int, y: int) -> void:
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = Vector2(TILE, TILE)
+	shape.shape = rect
+	shape.position = _cell_center(x, y)
+	_barriers.add_child(shape)
+	var sprite := Sprite2D.new()
+	sprite.texture = BARRIER_TEXTURE
+	sprite.position = _cell_center(x, y)
+	_barriers.add_child(sprite)
 
 
 func _add_pickup(x: int, y: int, ability: Player.Ability) -> void:
@@ -228,6 +255,19 @@ func spawn_enemies() -> void:
 
 func enemy_count() -> int:
 	return _enemies.get_child_count()
+
+
+## The bounds of every light barrier cell, in level pixels (empty when the
+## level has none).
+func barrier_rect() -> Rect2:
+	var rect := Rect2()
+	var first := true
+	for child in _barriers.get_children():
+		if child is CollisionShape2D:
+			var cell := Rect2(child.position - Vector2(TILE, TILE) / 2.0, Vector2(TILE, TILE))
+			rect = cell if first else rect.merge(cell)
+			first = false
+	return rect
 
 
 ## Pickups still waiting in the level (collected ones are freed).
