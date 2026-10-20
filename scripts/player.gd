@@ -64,8 +64,10 @@ const DASH_END_SPEED := 160.0
 
 # Attack
 const ATTACK_TIME := 0.28
-const ATTACK_ACTIVE_FROM := 0.06
-const ATTACK_ACTIVE_UNTIL := 0.2
+## The swing frames of the attack strip (6 frames at 21 fps): the sword
+## passes through the arc from frame 2 to frame 4.
+const ATTACK_ACTIVE_FROM := 0.1
+const ATTACK_ACTIVE_UNTIL := 0.24
 const ATTACK_DAMAGE := 1
 const ATTACK_OFFSET_X := 20.0
 ## Share of run speed the hero can walk at while swinging on the ground.
@@ -80,6 +82,8 @@ const HURT_TIME := 0.25
 const INVULNERABLE_TIME := 0.9
 const KNOCKBACK := Vector2(110.0, -110.0)
 const DEATH_TIME := 1.2
+## Falling at least this fast makes a landing sound.
+const LAND_SOUND_SPEED := 120.0
 const SAFE_GROUND_TIME := 0.2
 
 const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
@@ -126,6 +130,9 @@ var _safe_ground_timer := 0.0
 ## the button was released during another state.
 var _jump_rising := false
 var _attack_hit: Array[Node] = []
+## Last tick's floor contact and fall speed, for the landing sound.
+var _was_on_floor := false
+var _last_fall_speed := 0.0
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var attack_hitbox: Area2D = $AttackHitbox
@@ -169,10 +176,15 @@ func _physics_process(delta: float) -> void:
 			_process_normal(delta)
 	_correct_corners(delta)
 	_update_phasing()
+	_last_fall_speed = velocity.y
 	move_and_slide()
 	if is_on_floor() and state != State.DASH:
 		_dash_available = true
 		_air_jump_available = true
+	if is_on_floor() and not _was_on_floor and _last_fall_speed >= LAND_SOUND_SPEED:
+		if state != State.DEAD:
+			Audio.play("land", -6.0)
+	_was_on_floor = is_on_floor()
 	_track_safe_ground(delta)
 	if global_position.y > death_y and state != State.DEAD and not frozen:
 		_die()
@@ -208,6 +220,7 @@ func _process_normal(delta: float) -> void:
 		_jump_buffer_timer = 0.0
 		_coyote_timer = 0.0
 		_jump_rising = true
+		Audio.play("jump")
 	elif _jump_buffer_timer > 0.0 and _air_jump_available and has_ability(Ability.WINGS):
 		# Wings: a second jump from mid-air, with the same variable height.
 		velocity.y = DOUBLE_JUMP_VELOCITY
@@ -215,6 +228,7 @@ func _process_normal(delta: float) -> void:
 		_air_jump_available = false
 		_jump_rising = true
 		_wing_flash_timer = WING_FLASH_TIME
+		Audio.play("double_jump")
 	elif _jump_rising and velocity.y >= 0.0:
 		_jump_rising = false
 	elif _jump_rising and not _input_blocked() and not Input.is_action_pressed("jump"):
@@ -257,6 +271,7 @@ func _start_dash() -> void:
 	_dash_cooldown_timer = DASH_COOLDOWN
 	_dash_available = false
 	velocity = Vector2(DASH_SPEED * facing, 0.0)
+	Audio.play("dash")
 
 
 func _process_dash(_delta: float) -> void:
@@ -276,6 +291,7 @@ func _start_attack() -> void:
 	_attack_hit.clear()
 	attack_hitbox.position.x = ATTACK_OFFSET_X * facing
 	sprite.play("attack")
+	Audio.play("swing")
 
 
 func _process_attack(delta: float) -> void:
@@ -295,6 +311,8 @@ func _process_attack(delta: float) -> void:
 				continue
 			_attack_hit.append(body)
 			body.take_damage(ATTACK_DAMAGE, global_position)
+			# A landed hit stops time for a moment so the swing has weight.
+			Feedback.hit_stop(0.05)
 	if _state_timer <= 0.0:
 		_end_attack()
 		state = State.IDLE
@@ -317,6 +335,7 @@ func _process_heal(delta: float) -> void:
 		health = mini(health + HEAL_AMOUNT, MAX_HEALTH)
 		health_changed.emit(health, MAX_HEALTH)
 		heal_charges_changed.emit(heal_charges, MAX_HEAL_CHARGES)
+		Audio.play("heal")
 		state = State.IDLE
 
 
@@ -436,6 +455,18 @@ func has_ability(ability: Ability) -> bool:
 	return ability in abilities
 
 
+## How much of the dash cooldown has passed, 0 to 1. Stays at 0 while the
+## one dash per airtime is spent, until the hero lands.
+func dash_readiness() -> float:
+	if not _dash_available and not is_on_floor():
+		return 0.0
+	return 1.0 - _dash_cooldown_timer / DASH_COOLDOWN
+
+
+func dash_ready() -> bool:
+	return _dash_available and _dash_cooldown_timer <= 0.0
+
+
 ## Unlocks an angel power for the rest of the run. Unlocking one the hero
 ## already has does nothing.
 func unlock(ability: Ability) -> void:
@@ -477,12 +508,14 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	_set_state(State.HURT, HURT_TIME)
 	velocity = Vector2(KNOCKBACK.x * dir, KNOCKBACK.y)
 	_invulnerable_timer = INVULNERABLE_TIME
+	_hurt_feedback()
 
 
 ## Called by spikes: put back on the last safe ground.
 func take_hazard_damage(amount: int) -> void:
 	if not _can_be_hurt() or not _lose_health(amount):
 		return
+	_hurt_feedback()
 	_set_state(State.HURT, HURT_TIME)
 	global_position = last_safe_position
 	velocity = Vector2.ZERO
@@ -500,6 +533,16 @@ func freeze() -> void:
 	velocity.x = 0.0
 
 
+## Heals from a pickup. Returns false when there is nothing to heal, so the
+## pickup can stay where it is.
+func restore_health(amount: int) -> bool:
+	if state == State.DEAD or health >= MAX_HEALTH:
+		return false
+	health = mini(health + amount, MAX_HEALTH)
+	health_changed.emit(health, MAX_HEALTH)
+	return true
+
+
 ## Resting at a checkpoint: full health, healing refilled, respawn point set.
 func rest_at(checkpoint_position: Vector2) -> void:
 	respawn_position = checkpoint_position
@@ -510,9 +553,19 @@ func rest_at(checkpoint_position: Vector2) -> void:
 	heal_charges_changed.emit(heal_charges, MAX_HEAL_CHARGES)
 
 
+## Taking a hit: a sound, a white flash, a shake and a short freeze.
+func _hurt_feedback() -> void:
+	Audio.play("hurt")
+	Feedback.flash(sprite, 0.12)
+	Feedback.shake(0.45)
+	Feedback.hit_stop(0.08)
+
+
 func _die() -> void:
 	_set_state(State.DEAD, DEATH_TIME)
 	velocity = Vector2(0.0, -90.0)
+	Audio.play("death")
+	Feedback.shake(0.6)
 	died.emit()
 
 

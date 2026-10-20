@@ -1,40 +1,51 @@
 extends Node2D
 
-## Boots the level, spawns the hero and wires up the HUD and camera, applies
+## Boots a level, spawns the hero and wires up the HUD and camera, applies
 ## the save the title screen chose and writes it back at every checkpoint.
+## Reaching the goal gate fades out, saves and boots the next level.
+##
+## Which level: the save's, else the `--level=<id>` user argument
+## (`godot --path . -- --level=heaven_2`), else the first in Levels.
 
-const LEVEL_PATH := "res://levels/level_01.txt"
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal   E talk"
+const DEATH_FADE_TIME := 0.4
 const ABILITY_MESSAGES := {
 	Player.Ability.WINGS: "Wings: press jump again in the air",
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
 }
 
 var player: Player
+## The id of the level being played (see Levels).
+var level_id := ""
 ## The level's dialogue, or null when it has no dialogue file.
 var dialogue: DialogueData
 ## Seconds played in this save, carried over from the loaded file.
 var play_time := 0.0
 ## Index into level.checkpoints of the one the hero last rested at.
 var _active_checkpoint := -1
+## Set once the goal is reached: the level is fading out, so pausing and
+## restarting are over for this scene.
+var _transitioning := false
 ## The NPC, relic or trigger whose dialogue is open.
 var _talking_to: Interactable
 
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
+@onready var fade: ScreenFade = $ScreenFade
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var dialogue_box: DialogueBox = $DialogueBox
 
 
 func _ready() -> void:
+	level_id = _pick_level()
 	# Story flags come first: the level leaves out relics the save already has.
 	if SaveManager.pending.is_empty():
 		Story.reset()
 	else:
 		Story.from_list(SaveManager.pending.get("flags", []))
-	level.load_from_file(LEVEL_PATH)
+	level.load_from_file(Levels.path(level_id))
 	if not level.dialogue_path.is_empty():
 		dialogue = DialogueData.new(level.dialogue_path)
 	for interactable in level.interactables:
@@ -60,6 +71,8 @@ func _ready() -> void:
 		_apply_save(SaveManager.pending)
 		SaveManager.pending = {}
 	player.ability_unlocked.connect(_on_ability_unlocked)
+	hud.player = player
+	hud.set_abilities(player.abilities)
 	level.spawn_enemies()
 	pause_menu.save_requested.connect(_on_save_requested)
 
@@ -67,7 +80,26 @@ func _ready() -> void:
 	camera.set_limits(level.size_px)
 	camera.snap_to_target()
 
-	hud.show_message(CONTROLS_HINT, 6.0)
+	fade.cover_now()
+	fade.fade_in()
+	Audio.play_ambient(Levels.ambient(level_id))
+	hud.show_message(Levels.display_name(level_id), 2.5)
+	if level_id == Levels.first_id:
+		hud.queue_message(CONTROLS_HINT, 6.0)
+
+
+## The level the save asks for, else the one named on the command line,
+## else the first.
+func _pick_level() -> String:
+	if SaveManager.pending.has("level"):
+		return Levels.resolve(str(SaveManager.pending["level"]))
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--level="):
+			var id := arg.trim_prefix("--level=")
+			if Levels.has(id):
+				return id
+			push_warning("Unknown level '%s', starting from the first" % id)
+	return Levels.first_id
 
 
 func _process(delta: float) -> void:
@@ -75,6 +107,8 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _transitioning:
+		return
 	if event.is_action_pressed("pause"):
 		pause_menu.open()
 		get_viewport().set_input_as_handled()
@@ -116,7 +150,7 @@ func capture_save() -> Dictionary:
 		abilities.append(ability)
 	return {
 		"version": SaveManager.VERSION,
-		"level": LEVEL_PATH,
+		"level": level_id,
 		"checkpoint": _active_checkpoint,
 		"abilities": abilities,
 		"flags": Story.to_list(),
@@ -143,15 +177,28 @@ func _on_save_requested() -> void:
 		pause_menu.show_saved(place)
 
 
+## Dying: the message shows while the hero falls, then the screen goes
+## black just before he comes back, so the respawn is never a visible snap.
 func _on_player_died() -> void:
 	hud.show_message("The angels' system pulls you back...", 1.2)
+	await get_tree().create_timer(Player.DEATH_TIME - DEATH_FADE_TIME - 0.05).timeout
+	if player.state == Player.State.DEAD:
+		fade.fade_out(DEATH_FADE_TIME)
 
 
 func _on_player_respawned() -> void:
 	# The signal fires from the hero's physics tick; rebuild the enemies once
 	# the physics step is over.
 	level.spawn_enemies.call_deferred()
+	_clear_motes()
 	camera.snap_to_target()
+	fade.fade_in()
+
+
+## Heal motes left by enemies go with the enemies when the fight resets.
+func _clear_motes() -> void:
+	for mote in get_tree().get_nodes_in_group("heal_mote"):
+		mote.queue_free()
 
 
 func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
@@ -164,11 +211,32 @@ func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 
 func _on_ability_unlocked(ability: Player.Ability) -> void:
 	hud.show_message(ABILITY_MESSAGES.get(ability, "New ability unlocked"), 3.5)
+	hud.set_abilities(player.abilities)
 
 
 func _on_goal_reached() -> void:
 	player.freeze()
-	hud.show_message("Level complete!   Press R to restart", -1.0)
+	Audio.play("level_complete")
+	var next := Levels.next_id(level_id)
+	if next.is_empty():
+		hud.show_message("You have reached the end of the prototype.   Press R to restart", -1.0)
+		return
+	_transitioning = true
+	hud.show_message("Level complete", -1.0)
+	await fade.fade_out()
+	_advance_to(next)
+
+
+## Boots the next level with the progress so far: same abilities and play
+## time, no checkpoint yet. Saves first, so Continue resumes there.
+func _advance_to(next_id: String) -> void:
+	var data := capture_save()
+	data["level"] = next_id
+	data["checkpoint"] = -1
+	if SaveManager.current_slot >= 0:
+		SaveManager.write(SaveManager.current_slot, data)
+	SaveManager.pending = data
+	get_tree().change_scene_to_file(scene_file_path)
 
 
 # --- Dialogue ------------------------------------------------------------
@@ -177,7 +245,12 @@ func _on_goal_reached() -> void:
 ## An NPC, relic or trigger asked for its dialogue: the first entry whose
 ## flags match plays, and the hero stands still until it is read.
 func _on_interacted(source: Interactable) -> void:
-	if dialogue == null or dialogue_box.is_open() or player.state == Player.State.DEAD:
+	if (
+		dialogue == null
+		or dialogue_box.is_open()
+		or _transitioning
+		or player.state == Player.State.DEAD
+	):
 		return
 	var entry := dialogue.pick(source.dialogue_ids)
 	if entry.is_empty():

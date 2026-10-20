@@ -1,0 +1,133 @@
+#!/usr/bin/env python3
+"""Generates the placeholder sounds under assets/audio from scratch.
+
+    python3 tools/gen_sounds.py
+
+Every sound is synthesised (sines, noise, simple envelopes) so the game has
+audio to wire up before real sound design happens. Rerun after changing a
+recipe below; the output files are committed.
+"""
+
+import os
+import wave
+
+import numpy as np
+
+RATE = 22050
+OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "audio")
+rng = np.random.default_rng(7)
+
+
+def t(seconds):
+    return np.arange(int(RATE * seconds)) / RATE
+
+
+def env(n, attack=0.005, decay=None, hold=0.0):
+    """Attack to full, optional hold, then exponential-ish decay to zero."""
+    out = np.ones(n)
+    a = int(RATE * attack)
+    out[:a] = np.linspace(0.0, 1.0, a)
+    h = a + int(RATE * hold)
+    if decay is None:
+        d = n - h
+    else:
+        d = min(int(RATE * decay), n - h)
+    if d > 0:
+        out[h : h + d] = np.linspace(1.0, 0.0, d) ** 2
+        out[h + d :] = 0.0
+    return out
+
+
+def sine(freq, dur):
+    x = t(dur)
+    freq = np.broadcast_to(freq, x.shape) if np.ndim(freq) else freq
+    phase = np.cumsum(np.ones_like(x) * freq) / RATE if np.ndim(freq) else freq * x
+    return np.sin(2 * np.pi * phase)
+
+
+def sweep(f0, f1, dur, curve=1.0):
+    x = t(dur)
+    f = f0 + (f1 - f0) * (x / x[-1]) ** curve
+    return sine(f, dur)
+
+
+def noise(dur):
+    return rng.uniform(-1.0, 1.0, int(RATE * dur))
+
+
+def lowpass(x, alpha):
+    out = np.empty_like(x)
+    acc = 0.0
+    for i, v in enumerate(x):
+        acc += alpha * (v - acc)
+        out[i] = acc
+    return out
+
+
+def square(freq, dur):
+    return np.sign(sine(freq, dur))
+
+
+def write(name, data, gain=0.8):
+    data = np.asarray(data, dtype=np.float64)
+    peak = np.max(np.abs(data)) or 1.0
+    pcm = (data / peak * gain * 32767).astype("<i2")
+    path = os.path.join(OUT, name)
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with wave.open(path, "wb") as f:
+        f.setnchannels(1)
+        f.setsampwidth(2)
+        f.setframerate(RATE)
+        f.writeframes(pcm.tobytes())
+    print("wrote", os.path.relpath(path, os.path.dirname(OUT)), len(pcm) / RATE, "s")
+
+
+def chord(freqs, dur, decay):
+    out = np.zeros(int(RATE * dur))
+    for i, f in enumerate(freqs):
+        start = int(RATE * i * 0.09)
+        note = sine(f, dur - i * 0.09) + 0.3 * sine(f * 2, dur - i * 0.09)
+        note *= env(len(note), decay=decay)
+        out[start : start + len(note)] += note
+    return out
+
+
+def main():
+    # Hero
+    write("sfx/jump.wav", sweep(260, 620, 0.14, 0.6) * env(int(RATE * 0.14), decay=0.12))
+    write("sfx/double_jump.wav", sweep(420, 980, 0.16, 0.6) * env(int(RATE * 0.16), decay=0.14))
+    land = lowpass(noise(0.09), 0.08) * 1.5 + sine(75, 0.09)
+    write("sfx/land.wav", land * env(int(RATE * 0.09), decay=0.08))
+    write("sfx/dash.wav", lowpass(noise(0.12), 0.35) * env(int(RATE * 0.12), 0.02, 0.09))
+    swing = lowpass(noise(0.16), 0.25) * sweep(1, 1, 0.16)
+    write("sfx/swing.wav", swing * env(int(RATE * 0.16), 0.03, 0.12))
+    hurt = sweep(420, 140, 0.22) * 0.7 + square(110, 0.22) * 0.3
+    write("sfx/hurt.wav", hurt * env(int(RATE * 0.22), decay=0.2))
+    write("sfx/heal.wav", chord([523.25, 659.25, 783.99], 0.6, 0.4))
+    death = sweep(330, 60, 0.9, 1.4) * (1 + 0.2 * sine(6, 0.9))
+    write("sfx/death.wav", death * env(int(RATE * 0.9), 0.01, 0.85))
+    # Enemies
+    hit = lowpass(noise(0.1), 0.5) + 0.6 * square(190, 0.1)
+    write("sfx/hit.wav", hit * env(int(RATE * 0.1), decay=0.09))
+    enemy_die = lowpass(noise(0.28), 0.2) * 1.2 + sweep(160, 40, 0.28)
+    write("sfx/enemy_die.wav", enemy_die * env(int(RATE * 0.28), decay=0.26))
+    # World
+    write("sfx/pickup.wav", chord([659.25, 987.77], 0.35, 0.25))
+    write("sfx/checkpoint.wav", chord([440, 554.37, 659.25, 880], 0.9, 0.6))
+    write("sfx/level_complete.wav", chord([392, 493.88, 587.33, 783.99, 987.77], 1.3, 0.9))
+    # Menus
+    write("sfx/menu_move.wav", sine(820, 0.045) * env(int(RATE * 0.045), 0.003, 0.04), 0.5)
+    confirm = np.concatenate([sine(660, 0.06) * env(int(RATE * 0.06)), sine(990, 0.1) * env(int(RATE * 0.1))])
+    write("sfx/menu_confirm.wav", confirm, 0.6)
+    # Ambient loop: a soft Heaven pad. Six seconds long; every frequency is a
+    # multiple of 1/6 Hz so the loop joins without a click.
+    dur = 6.0
+    pad = np.zeros(int(RATE * dur))
+    for f, g in ((220.0, 1.0), (1663 / 6, 0.7), (1978 / 6, 0.6), (440.0, 0.25)):
+        pad += g * sine(f, dur) * (0.8 + 0.2 * sine(1 / 6, dur))
+    pad += 0.08 * lowpass(noise(dur), 0.02) * (1.0 + 0.5 * sine(2 / 6, dur))
+    write("ambient_heaven.wav", pad, 0.35)
+
+
+if __name__ == "__main__":
+    main()
