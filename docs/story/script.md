@@ -285,10 +285,14 @@ Sets flag `opening_seen`.
 
 Sets flag `met_mereth`.
 
-### `mereth_again` (Mereth, later talks)
+### `mereth_again`, `mereth_count`, `mereth_orchard` (Mereth, repeat lines, in turn)
 
 > **MERETH:** Keep count. The sun never sets here; it's the only way to know how long it's been.
 > **MERETH:** I've been gathered twice. They put me back both times. "Not ripe." I don't ask what that means.
+
+> **MERETH:** Three thousand and twelve. Don't ask me what of. Suns, I suppose. Mine.
+
+> **MERETH:** The orchard's full again. It fills up the day after a gathering. Nobody plants it.
 
 ### `ithuriel_intro` (Ithuriel, first talk)
 
@@ -303,10 +307,14 @@ Sets flag `met_mereth`.
 
 Sets flag `met_ithuriel`.
 
-### `ithuriel_again` (Ithuriel, later talks)
+### `ithuriel_again`, `ithuriel_song`, `ithuriel_orders` (Ithuriel, repeat lines, in turn)
 
 > **ITHURIEL:** They say the Basin takes everything. It doesn't. Something stays in the hands.
 > **ITHURIEL:** Go on. I'll say I didn't see you. I'm good at not remembering.
+
+> **ITHURIEL:** (He hums. He stops when he notices you.) Still don't know it. Still can't stop.
+
+> **ITHURIEL:** My orders say 'none pass'. They don't say I have to stand up.
 
 ### `gate` (trigger, once, at the goal gate)
 
@@ -341,7 +349,179 @@ back to the last checkpoint.
 
 ---
 
-## 6. Script: later areas (drafted, not in the game yet)
+## 6. Script: Earth, Hollowmere (in the game)
+
+The hub under the hole in the sky, `levels/earth_hub.txt` and
+`dialogue/earth_hub.json`. Four survivors, three relics, a trigger on
+arrival and one at the churchyard hole that leads down.
+
+Every NPC has unique conversations that play once each, in order; some
+wait for a flag (a relic the hero has read, or `reveal` from Circle 5).
+After those, the NPC rotates through its repeat lines, one per talk, and
+goes back to a unique line the moment a new one unlocks. Dace hands over
+the clock face in talk (flag `clock_face`) rather than as a relic, so it
+cannot be missed on the floor.
+
+### `arrival` (once; sets `arrived_earth`)
+
+> **ANSEL:** Sky. Under me, then over me. So that is what the floor of Purgatory is.
+> *(A town under a torn sky. Fires. Something moving in the churchyard, and someone hammering.)*
+> **ANSEL:** Someone is still here.
+
+### `pell_intro` (once; sets `met_pell`)
+
+> **OLD PELL:** Don't stand in the light, lad. They see the light. ...You came down out of it, didn't you.
+> **OLD PELL:** One hand. A brute took the other. I can still hammer; I can't hold the tongs. You hold, I hit. Deal?
+> **ANSEL:** What are we making?
+> **OLD PELL:** Something that goes down and comes back. Nobody's managed the second part yet.
+
+### `pell_sky` (once; needs `met_pell`)
+
+> **OLD PELL:** The sky opened a year ago. First the demons came up out of the churchyard. Then the angels came down. We thought that was help.
+> **OLD PELL:** It wasn't help. They were gathering. Same as the demons, only cleaner about it.
+> **ANSEL:** I was one of them. Half of one.
+> **OLD PELL:** I know. I've seen the hands. Yours haven't learned to hold yet.
+
+### `pell_hook` (once; needs `item:hook`)
+
+> **OLD PELL:** That hook. Give it here.
+> **OLD PELL:** Thigh bone and a hinge. That hinge is off the church door. I hung that door.
+> **OLD PELL:** They're not animals, whatever Dace says. Animals don't use hinges.
+
+### `pell_warrant` (once; needs `item:warrant`)
+
+> **OLD PELL:** Forty names on that paper. My wife's is the ninth. 'Called to the Garden early.'
+> **OLD PELL:** When you get back up there, you tell me what garden.
+
+### `pell_forge`
+
+> **OLD PELL:** Hold it steady. Steadier. Right, now don't move.
+> **OLD PELL:** Good. That's one more they'll have to get through.
+
+### `pell_light`
+
+> **OLD PELL:** Keep your light down when you go in the ground. Both sides can see it.
+
+### `pell_boy`
+
+> **OLD PELL:** I've a boy about your age. Had. Go on, I'm busy.
+
+### `hanne_intro` (once; sets `met_hanne`)
+
+> **HANNE:** You're not from the sky. The sky ones don't jump, they just come down.
+> **HANNE:** I'm Hanne. I draw what I see so I don't have to keep seeing it.
+> **HANNE:** Want to see the big one's flag? Come back and I'll show you.
+
+### `hanne_drawing` (once; needs `met_hanne`; sets `hanne_drawing`)
+
+> **HANNE:** Here. It's not a picture. It's just lines.
+> *(A tally mark. Four strokes and a fifth across.)*
+> **ANSEL:** Where did you see this?
+> **HANNE:** On the ones that climb. They cut it into themselves.
+> **HANNE:** They say the Lowest says it means 'I'm still counting'.
+
+### `hanne_token` (once; needs `hanne_drawing`, `item:token`)
+
+> **HANNE:** That's the same lines. On your wooden coin. Did you cut them in yourself?
+> **ANSEL:** No. Someone counted me.
+> **HANNE:** Then he's down there. The one who counts. Say hello from the drawing girl.
+
+### `hanne_churchyard`
+
+> **HANNE:** Don't go near the churchyard. That's where they come up. I drew it. It's a bad one.
+
+### `hanne_draw_down`
+
+> **HANNE:** Pell says you're going down. Will you look at everything? I can't see down from here.
+
+### `hanne_count`
+
+> **HANNE:** I counted the angels this morning. Nine. Yesterday it was eleven. Where do they go?
+
+### `dace_intro` (once; sets `met_dace`)
+
+> **CORPORAL DACE:** Halt. ...Halt doesn't work on your kind, does it. Fine.
+> **CORPORAL DACE:** Corporal Dace, Third Company. What's left of it.
+> **ANSEL:** Where's the rest?
+> **CORPORAL DACE:** In the ground. Some of them walking about in it.
+
+### `dace_clock` (once; needs `met_dace`; sets `clock_face`)
+
+> **CORPORAL DACE:** Clock face. Church tower. Found it in a demon's pack. Don't know why it wanted it.
+> **CORPORAL DACE:** It's the only thing I've seen one of them carry that it didn't eat. Take it. Find out.
+> *(A brass clock face with no hands. Four shapes are punched around the rim, where the hands would be pinned.)*
+
+### `dace_letter` (once; needs `item:letter`)
+
+> **CORPORAL DACE:** You read Thorne's letter. He never sent it. I kept meaning to.
+> **CORPORAL DACE:** He's down there now. If you meet a lad in a red scarf, he was mine. Don't tell him I said so.
+
+### `dace_barricade`
+
+> **CORPORAL DACE:** Barricade's holding. Barricade's always holding, until it isn't.
+
+### `dace_waiting`
+
+> **CORPORAL DACE:** They don't rush. They climb a bit, look at us, climb back. Like they're waiting for an order.
+
+### `dace_ticking`
+
+> **CORPORAL DACE:** Clock's still ticking somewhere. I hear it at night. Nobody else does.
+
+### `ava_intro` (once; sets `met_ava`)
+
+> **SISTER AVA:** A church is where you go when you want to be heard. I stopped coming for that.
+> **SISTER AVA:** I stopped praying when I understood who was listening.
+> **ANSEL:** Who?
+> **SISTER AVA:** Someone who keeps a garden. And weeds it.
+
+### `ava_name` (once; needs `met_ava`)
+
+> **SISTER AVA:** The demons shout upward when they climb. Not at us. Past us. A name. Every time the same name.
+> **ANSEL:** What name?
+> **SISTER AVA:** I won't say it in a church.
+> **SISTER AVA:** Outside, perhaps. If you come back up.
+
+### `ava_reveal` (once; needs `reveal`)
+
+> **SISTER AVA:** You've heard it now. It's on your face.
+> **SISTER AVA:** Then I'll say it, church or no. Tobiah. They shout it like a prayer. Perhaps it is one.
+
+### `ava_hand`
+
+> **SISTER AVA:** The warrant on the door is in the Choir's hand. I used to copy that hand. I taught it.
+
+### `ava_listen`
+
+> **SISTER AVA:** Pell swears, Dace counts, Hanne draws. I listen. Someone has to.
+
+### `ava_below`
+
+> **SISTER AVA:** Go carefully. Below is only above with the lights put out.
+
+### `item_warrant`
+
+> **GATHERING WARRANT:** Nailed to the church door. 'By the Choir's need, the following are called to the Garden early.'
+> **GATHERING WARRANT:** Forty names. The ink is fresh.
+> **ANSEL:** Called early. Mereth was 'not ripe'. They're harvesting.
+
+### `item_hook`
+
+> **CLIMBING HOOK:** Demon-made, from a thigh bone and a hinge. The hinge is from a church door.
+> **ANSEL:** They came up with tools. Someone taught them.
+
+### `item_letter`
+
+> **SOLDIER'S LETTER:** Never sent. 'Mother, they say the ones in the ground were people once. I don't believe it. I don't want to.'
+
+### `hole` (once; sets `reached_hole`)
+
+> **ANSEL:** The churchyard. A hole, and warm air coming up out of it. Like a kitchen.
+> *(From far below, faint: 'Up! He said up!')*
+> **ANSEL:** Down, then.
+---
+
+## 7. Script: later areas (drafted, not in the game yet)
 
 These are the beats above as lines. They will change when the levels are
 designed, but the voice and the facts should hold.
@@ -389,32 +569,7 @@ on the inside, where they hold a head still.").
 
 ### Earth
 
-**Old Pell**
-> **PELL:** One hand. A brute took the other. I can still hammer; I can't hold the tongs. You hold, I hit. Deal?
-> **PELL:** The sky opened a year ago. First the demons came up out of the churchyard. Then the angels came down. We thought that was help.
-> **PELL:** It wasn't help. They were gathering. Same as the demons, only cleaner about it.
-
-**Hanne**
-> **HANNE:** I draw what I see so I don't have to keep seeing it. Want to see the big one's flag?
-> *(A tally mark.)*
-> **ANSEL:** Where did you see this?
-> **HANNE:** On the ones that climb. They cut it into themselves. They say the Lowest says it means "I'm still counting".
-
-**Corporal Dace**
-> **DACE:** Clock face. Church tower. Found it in a demon's pack. Don't know why it wanted it.
-> **DACE:** It's the only thing I've seen one of them carry that it didn't eat. Take it. Find out.
-
-**Sister Ava**
-> **AVA:** I stopped praying when I understood who was listening.
-> **AVA:** The demons shout upward when they climb. Not at us. Past us. A name. Every time the same name.
-> **ANSEL:** What name?
-> **AVA:** I won't say it in a church.
-
-**Items**: *Gathering warrant* ("Nailed to the church door. 'By the Choir's
-need, the following are called to the Garden early.' Forty names. The ink is
-fresh."); *Climbing hook* ("Demon-made, from a thigh bone and a hinge. The
-hinge is from a church door."); *Soldier's letter* ("Mother, they say the
-ones in the ground were people once. I don't believe it. I don't want to.").
+In the game now; see section 6.
 
 ### Circles 1 and 2
 
@@ -552,7 +707,7 @@ imp holds out a tally bone like a gift.
 
 ---
 
-## 7. Item descriptions, by area
+## 8. Item descriptions, by area
 
 Each one tells the player one true thing. Forty-five in total across the
 game; the ones for Heaven 1 are in the game.
@@ -592,21 +747,27 @@ The remaining seventeen are flavour for the level issues to place.
 
 ---
 
-## 8. How it is built (for the level issues)
+## 9. How it is built (for the level issues)
 
 - Dialogue for a level lives in `dialogue/<level>.json`: one entry per id
   with `lines` (speaker and text), and optional `requires` / `unless` flag
-  lists and `sets` (a flag set when it finishes).
+  lists, `sets` (a flag set when it finishes) and `once` (plays a single
+  time; every finished entry sets `seen:<id>`).
 - NPCs, relics and triggers are placed with digits `1` to `9` in the level's
   ASCII map, and described in `levels/<level>.json`: the digit maps to a
-  type (`npc`, `item`, `trigger`), a sprite, a name, and the dialogue ids to
-  try in order. The first entry whose flags match is the one that plays, so
-  an NPC's lines change as the story moves.
+  type (`npc`, `item`, `trigger`), a sprite, a name, the unique dialogue ids
+  to try in order and a `rotate` list of repeat lines. The first unique
+  entry whose flags match is the one that plays; when none does, the next
+  repeat line in turn plays. So an NPC's lines change as the story moves
+  and never run dry.
+- NPC sprites are drawn by `tools/npc_sprites/npcs.py` (a small rig: idle
+  and talk loops, 64x48 frames) and exported with `export.py` into
+  `assets/sprites/<name>/`; the Npc node plays `talk` while its box is open.
 - Story flags live in the `Story` autoload and are written to the save with
   everything else. Collected relics are flags (`item:<id>`), so a loaded
   save does not show them again.
 - The interact key is `E` (gamepad: Y is heal, so interact is the left
   bumper) and is rebindable in Settings like every other key.
 - Issues this draft answers: #16 (names), #17 (outline), #18 (delivery),
-  #21 (reveal). It gives first lines for #30 (NPCs). It does not decide #13
+  #21 (reveal), and #30 (NPCs) for the hub. It does not decide #13
   (circle names); the circle names above are placeholders.

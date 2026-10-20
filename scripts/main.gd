@@ -30,6 +30,7 @@ var _transitioning := false
 ## The NPC, relic or trigger whose dialogue is open.
 var _talking_to: Interactable
 
+@onready var sky: TextureRect = $Background/Sky
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
@@ -45,6 +46,8 @@ func _ready() -> void:
 		Story.reset()
 	else:
 		Story.from_list(SaveManager.pending.get("flags", []))
+	_paint_sky(Levels.sky(level_id))
+	level.tiles_texture = load(Levels.tiles(level_id))
 	level.load_from_file(Levels.path(level_id))
 	if not level.dialogue_path.is_empty():
 		dialogue = DialogueData.new(level.dialogue_path)
@@ -86,6 +89,18 @@ func _ready() -> void:
 	hud.show_message(Levels.display_name(level_id), 2.5)
 	if level_id == Levels.first_id:
 		hud.queue_message(CONTROLS_HINT, 6.0)
+
+
+## Recolours the background gradient for the level.
+func _paint_sky(colors: Array[Color]) -> void:
+	var texture := sky.texture as GradientTexture2D
+	if texture == null or colors.size() < 3:
+		return
+	# The gradient is shared by every instance of the scene, so it is
+	# copied before being changed.
+	texture = texture.duplicate(true)
+	texture.gradient.colors = PackedColorArray(colors)
+	sky.texture = texture
 
 
 ## The level the save asks for, else the one named on the command line,
@@ -254,9 +269,13 @@ func _on_interacted(source: Interactable) -> void:
 		return
 	var entry := dialogue.pick(source.dialogue_ids)
 	if entry.is_empty():
+		entry = dialogue.pick(source.rotation_ids())
+	if entry.is_empty():
 		return
 	_talking_to = source
 	player.talking = true
+	if source is Npc:
+		source.set_talking(true)
 	# The box covers the message line.
 	hud.hide_message()
 	dialogue_box.play(entry)
@@ -265,10 +284,13 @@ func _on_interacted(source: Interactable) -> void:
 
 func _on_dialogue_finished(entry: Dictionary) -> void:
 	Story.set_flag(str(entry.get("sets", "")))
+	Story.set_flag(DialogueData.seen_flag(str(entry.get("id", ""))))
 	# Released after this frame's physics step, so the press that closed the
 	# box is not also read as a jump.
 	player.set_deferred("talking", false)
 	var source := _talking_to
 	_talking_to = null
 	if is_instance_valid(source):
+		if source is Npc:
+			source.set_talking(false)
 		source.on_dialogue_finished(entry)

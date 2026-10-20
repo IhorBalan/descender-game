@@ -2,8 +2,9 @@ class_name Npc
 extends Interactable
 
 ## Someone to talk to. Uses one of the character strips from
-## assets/sprites with a tint, stands still on its idle animation and turns
-## to face the hero when he comes close.
+## assets/sprites with a tint, stands still on its idle animation, turns to
+## face the hero when he comes close and plays its `talk` loop, if it has
+## one, while its dialogue box is open.
 
 var npc_name := ""
 var character := "hero"
@@ -27,6 +28,13 @@ func _ready() -> void:
 	sprite.play("idle")
 	add_child(sprite)
 	move_child(sprite, 0)
+
+
+## Called by main.gd when this NPC's dialogue opens and closes.
+func set_talking(talking: bool) -> void:
+	var anim := "talk" if talking and sprite.sprite_frames.has_animation("talk") else "idle"
+	if sprite.animation != anim:
+		sprite.play(anim)
 
 
 func _process(_delta: float) -> void:

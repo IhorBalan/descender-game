@@ -1,0 +1,42 @@
+{
+	"dialogue": "res://dialogue/earth_hub.json",
+	"placements": {
+		"1": {"type": "trigger", "dialogue": ["arrival"]},
+		"2": {
+			"type": "npc",
+			"name": "Old Pell",
+			"character": "pell",
+			"faces_left": false,
+			"dialogue": ["pell_intro", "pell_sky", "pell_hook", "pell_warrant"],
+			"rotate": ["pell_forge", "pell_light", "pell_boy"]
+		},
+		"3": {
+			"type": "npc",
+			"name": "Hanne",
+			"character": "hanne",
+			"faces_left": false,
+			"dialogue": ["hanne_intro", "hanne_drawing", "hanne_token"],
+			"rotate": ["hanne_churchyard", "hanne_draw_down", "hanne_count"]
+		},
+		"4": {
+			"type": "npc",
+			"name": "Corporal Dace",
+			"character": "dace",
+			"faces_left": false,
+			"dialogue": ["dace_intro", "dace_clock", "dace_letter"],
+			"rotate": ["dace_barricade", "dace_waiting", "dace_ticking"]
+		},
+		"5": {"type": "item", "item": "letter", "dialogue": ["item_letter"]},
+		"6": {"type": "item", "item": "hook", "dialogue": ["item_hook"]},
+		"7": {
+			"type": "npc",
+			"name": "Sister Ava",
+			"character": "ava",
+			"faces_left": false,
+			"dialogue": ["ava_intro", "ava_name", "ava_reveal"],
+			"rotate": ["ava_hand", "ava_listen", "ava_below"]
+		},
+		"8": {"type": "item", "item": "warrant", "dialogue": ["item_warrant"]},
+		"9": {"type": "trigger", "dialogue": ["hole"]}
+	}
+}

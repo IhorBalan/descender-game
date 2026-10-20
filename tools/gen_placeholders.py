@@ -48,6 +48,13 @@ FEATHER_GLOW = (255, 245, 180, 110)
 LIGHT = (255, 240, 190, 230)
 LIGHT_CORE = (255, 255, 240, 255)
 LIGHT_HAZE = (255, 230, 150, 90)
+EARTH = (96, 78, 70, 255)
+EARTH_DARK = (70, 54, 50, 255)
+EARTH_LIGHT = (122, 102, 90, 255)
+RUBBLE = (138, 130, 126, 255)
+RUBBLE_EDGE = (166, 158, 150, 255)
+ASH = (176, 110, 60, 255)
+ASH_DARK = (120, 70, 36, 255)
 RELIC = (226, 206, 150, 255)
 RELIC_SHADE = (170, 140, 90, 255)
 RELIC_MARK = (90, 60, 40, 255)
@@ -101,6 +108,37 @@ def gen_tiles() -> None:
             if half > 0:
                 rect(d, ox + cx + half, y, ox + cx + half, y, SPIKE_DARK)
     save(img, "tiles.png")
+
+
+def gen_tiles_earth() -> None:
+    """The ruined Earth's tiles, same layout as tiles.png: fill, top, spikes.
+    Dark packed soil, a rubble edge on top and rusted spikes."""
+    img = new(48, 16)
+    d = ImageDraw.Draw(img)
+    speckles = [(3, 2), (10, 6), (14, 10), (6, 13), (12, 1), (8, 8), (1, 15), (13, 5)]
+    for t in range(2):
+        ox = t * 16
+        rect(d, ox, 0, ox + 15, 15, EARTH)
+        for sx, sy in speckles:
+            rect(d, ox + sx, sy, ox + sx + 1, sy, EARTH_DARK)
+        rect(d, ox + 4, 9, ox + 5, 9, EARTH_LIGHT)
+        rect(d, ox + 11, 3, ox + 12, 3, EARTH_LIGHT)
+    ox = 16
+    rect(d, ox, 0, ox + 15, 3, RUBBLE)
+    rect(d, ox, 0, ox + 15, 0, RUBBLE_EDGE)
+    rect(d, ox + 3, 1, ox + 5, 2, RUBBLE_EDGE)
+    rect(d, ox + 10, 1, ox + 11, 1, RUBBLE_EDGE)
+    rect(d, ox + 7, 2, ox + 8, 3, EARTH_DARK)
+    rect(d, ox, 4, ox + 15, 4, EARTH_DARK)
+    ox = 32
+    for cx in (4, 12):
+        for i in range(8):
+            y = 15 - i
+            half = 3 - i // 2 if i < 6 else 0
+            rect(d, ox + cx - half, y, ox + cx + half, y, ASH)
+            if half > 0:
+                rect(d, ox + cx + half, y, ox + cx + half, y, ASH_DARK)
+    save(img, "tiles_earth.png")
 
 
 def gen_checkpoint() -> None:
@@ -189,6 +227,7 @@ def gen_relic() -> None:
 
 if __name__ == "__main__":
     gen_tiles()
+    gen_tiles_earth()
     gen_checkpoint()
     gen_goal()
     gen_feather()
