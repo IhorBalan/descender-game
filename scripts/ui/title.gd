@@ -36,6 +36,8 @@ func _ready() -> void:
 	back_button.pressed.connect(_show_menu)
 	for slot in slot_buttons.size():
 		slot_buttons[slot].pressed.connect(_on_slot_pressed.bind(slot))
+	Audio.wire_menu(self)
+	Audio.stop_ambient()
 	_show_menu()
 
 

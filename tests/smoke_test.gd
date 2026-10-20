@@ -1,18 +1,22 @@
-extends SceneTree
+extends Node
 
 ## Headless smoke test: boots the main scene, drives the hero with fake
 ## input for a few seconds of physics ticks and checks that the basics work.
 ##
-##   godot --headless --path . --script tests/smoke_test.gd
+##   godot --headless --path . res://tests/smoke_test.tscn
 ##
-## Exits with code 1 when a check fails, when the scene does not load, or
-## when a script error stops the checks from running.
+## It runs as a scene rather than a --script so the autoloads (Audio,
+## Feedback, Levels, SaveManager, Settings) exist before the game scripts
+## compile. Exits with code 1 when a check fails, when the scene does not
+## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 83
+const EXPECTED_CHECKS := 97
 const LAST_TICK := 860
 
 var _ticks := 0
+## Set once the level is in the tree, where the checks can reach it.
+var _started := false
 var _main: Node
 var _player: Player
 var _start_x := 0.0
@@ -32,30 +36,42 @@ var _loaded: Node
 var _title: Node
 ## The slot the save/load/transition checks use.
 var _slot := -1
-## The SaveManager autoload; this script is compiled before autoloads
-## are registered, so it is looked up by node instead of by name.
-var _saves: Node
 var _main_scene: PackedScene
 
+@onready var root: Window = get_tree().root
 
-func _initialize() -> void:
+
+func _ready() -> void:
 	# Flyers pick a random hover phase; a fixed seed keeps every run identical.
 	seed(1)
+	# The pause checks need the test to keep ticking while the tree is paused.
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	# This node is the current scene; stepping aside lets the game change
+	# scenes (level transitions) without freeing the test.
+	get_tree().current_scene = null
 	_main_scene = load("res://scenes/main.tscn")
 	if _main_scene == null:
 		printerr("FAIL main scene did not load")
-		quit(1)
+		get_tree().quit(1)
 		return
 	_main = _main_scene.instantiate()
-	root.add_child(_main)
+	# The root is still adding this scene, so the level has to wait a frame.
+	root.add_child.call_deferred(_main)
 
 
-func _physics_process(_delta: float) -> bool:
+func _physics_process(_delta: float) -> void:
+	if not _started:
+		_started = _main.is_inside_tree()
+		if not _started:
+			return
 	_ticks += 1
 	match _ticks:
 		2:
 			_player = _main.player
 			_check(_player != null, "hero spawned")
+			_check(root.get_node_or_null("Audio") != null, "Audio autoload present")
+			_check(root.get_node_or_null("Feedback") != null, "Feedback autoload present")
+			_check(Audio.ambient_name == "heaven", "level starts its ambient loop")
 			_enemy_count = _main.level.enemy_count()
 			_check(_enemy_count >= 6, "enemies spawned (%d)" % _enemy_count)
 			_check(_main.level.checkpoints.size() == 1, "checkpoint built")
@@ -73,6 +89,7 @@ func _physics_process(_delta: float) -> bool:
 		66:
 			_press("jump", false)
 			_check(not _player.is_on_floor() and _player.velocity.y < 0.0, "hero jumps")
+			_check(Audio.last_played == "jump", "jump plays its sound")
 		80:
 			var camera_moved := absf(_main.camera.global_position.y - _camera_y)
 			_check(camera_moved < 2.0, "camera ignores a jump (moved %.1f)" % camera_moved)
@@ -95,9 +112,15 @@ func _physics_process(_delta: float) -> bool:
 			_check(_player.state == Player.State.DASH, "dash starts")
 		200:
 			_player.take_damage(2, _player.global_position + Vector2(8, 0))
+			_check(Audio.last_played == "hurt", "hurt plays its sound")
+			_check(_main.camera.trauma > 0.0, "hurt shakes the camera")
+			_check(Engine.time_scale < 1.0, "hurt stops time for a moment")
+			_check(_player.sprite.material is ShaderMaterial, "hurt flashes the hero")
 		202:
 			_check(_player.health == Player.MAX_HEALTH - 2, "damage applied")
 			_check(_player.state == Player.State.HURT, "hurt state")
+		215:
+			_check(is_equal_approx(Engine.time_scale, 1.0), "time runs again after the hit-stop")
 		260:
 			_press("heal", true)
 		263:
@@ -189,6 +212,16 @@ func _physics_process(_delta: float) -> bool:
 			_check(_imp.direction == -1, "imp turns to face the hero")
 		620:
 			_check(_player.health < Player.MAX_HEALTH, "imp's swing hurts the hero")
+		640:
+			# Hitting an enemy: sound, flash and sparks.
+			var imp_health: int = _imp.health
+			_imp.take_damage(1, _player.global_position)
+			_check(_imp.health == imp_health - 1, "imp takes damage")
+			_check(Audio.last_played == "hit", "hitting an enemy plays its sound")
+			_check(_imp.sprite.material is ShaderMaterial, "hit enemy flashes")
+			_check(Feedback.spark_count() >= 1, "hit enemy throws sparks")
+		670:
+			_check(Feedback.spark_count() == 0, "sparks clean themselves up")
 		700:
 			# Light barrier: the enemies behind it would knock the hero about,
 			# so clear them first, then dash at the wall without the ability.
@@ -237,7 +270,7 @@ func _physics_process(_delta: float) -> bool:
 			_press("pause", true)
 		762:
 			_press("pause", false)
-			_check(paused, "pause stops the tree")
+			_check(get_tree().paused, "pause stops the tree")
 			_check(_main.pause_menu.is_open(), "pause menu opens")
 			_mark_x = _player.global_position.x
 			_press("move_right", true)
@@ -250,29 +283,28 @@ func _physics_process(_delta: float) -> bool:
 			_press("pause", true)
 		768:
 			_press("pause", false)
-			_check(not paused, "pause again resumes")
+			_check(not get_tree().paused, "pause again resumes")
 			_check(not _main.pause_menu.is_open(), "pause menu closes")
 		770:
 			# Saving: rest at the checkpoint, write the slot and read it back.
-			_saves = root.get_node_or_null("SaveManager")
-			_check(_saves != null, "SaveManager autoload present")
+			_check(root.get_node_or_null("SaveManager") != null, "SaveManager autoload present")
 			var checkpoint: Checkpoint = _main.level.checkpoints[0]
 			_player.global_position = checkpoint.global_position
 			_player.velocity = Vector2.ZERO
 		774:
 			_check(_main._active_checkpoint == 0, "resting records the checkpoint")
-			_slot = _saves.SLOT_COUNT - 1
-			_saves.start_new_game(_slot)
+			_slot = SaveManager.SLOT_COUNT - 1
+			SaveManager.start_new_game(_slot)
 			_check(_main.save_game(), "save slot written")
-			_save = _saves.read(_slot)
+			_save = SaveManager.read(_slot)
 			_check(int(_save.get("checkpoint", -1)) == 0, "save holds the checkpoint")
 			_check(_save.get("abilities", []).size() == 2, "save holds both abilities")
 			_check(str(_save.get("level", "")) == "heaven_1", "save holds the level id")
-			_check(_saves.latest_slot() == _slot, "latest slot is the new save")
+			_check(SaveManager.latest_slot() == _slot, "latest slot is the new save")
 			# Loading: boot a fresh level from the save in place of this one.
 			root.remove_child(_main)
 			_main.free()
-			_check(_saves.load_slot(_slot), "save slot loads")
+			_check(SaveManager.load_slot(_slot), "save slot loads")
 			_loaded = _main_scene.instantiate()
 			root.add_child(_loaded)
 		778:
@@ -307,10 +339,10 @@ func _physics_process(_delta: float) -> bool:
 		830:
 			# The fade is over and the next level has booted as the current scene.
 			_check(_loaded.fade.is_covered(), "screen faded to black")
-			_save = _saves.read(_slot)
+			_save = SaveManager.read(_slot)
 			_check(str(_save.get("level", "")) == "heaven_2", "transition saves the next level")
 			_check(int(_save.get("checkpoint", 0)) == -1, "next level starts with no checkpoint")
-			var next: Node = current_scene
+			var next: Node = get_tree().current_scene
 			_check(next != null and next != _loaded, "next level scene booted")
 			if next:
 				_check(next.level_id == "heaven_2", "next level is heaven_2")
@@ -322,11 +354,11 @@ func _physics_process(_delta: float) -> bool:
 					next.player.global_position.distance_to(next.level.player_start) < 1.0,
 					"hero starts the next level at its start"
 				)
-				current_scene = null
+				get_tree().current_scene = null
 				root.remove_child(next)
 				next.free()
-			_saves.delete(_slot)
-			_saves.current_slot = -1
+			SaveManager.delete(_slot)
+			SaveManager.current_slot = -1
 			root.remove_child(_loaded)
 			_loaded.free()
 			_title = load("res://scenes/title.tscn").instantiate()
@@ -336,29 +368,25 @@ func _physics_process(_delta: float) -> bool:
 			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
 		838:
 			# Settings: rebinding changes the InputMap and is undone by reset.
-			var settings := root.get_node_or_null("Settings")
-			_check(settings != null, "Settings autoload present")
-			var before: Array = settings.action_keys(&"heal")
-			settings.bind_key(&"heal", KEY_G)
-			_check(settings.action_keys(&"heal") == [KEY_G], "key rebinds to G")
+			_check(root.get_node_or_null("Settings") != null, "Settings autoload present")
+			var before: Array = Settings.action_keys(&"heal")
+			Settings.bind_key(&"heal", KEY_G)
+			_check(Settings.action_keys(&"heal") == [KEY_G], "key rebinds to G")
 			var g := InputEventKey.new()
 			g.physical_keycode = KEY_G
 			_check(InputMap.action_has_event(&"heal", g), "InputMap takes the new key")
-			settings.reset_keys()
-			_check(settings.action_keys(&"heal") == before, "reset restores the default key")
+			Settings.reset_keys()
+			_check(Settings.action_keys(&"heal") == before, "reset restores the default key")
 			_title.get_node("Menu/Settings").pressed.emit()
 		840:
 			_check(_title.get_node("SettingsMenu").visible, "settings screen opens from the title")
 			_check(not _title.get_node("Menu").visible, "title menu hides behind settings")
 		LAST_TICK:
 			_report()
-			return true
 	if _ticks > LAST_TICK:
 		# A script error inside the last step kept _report from running.
 		printerr("FAIL the test did not finish")
-		quit(1)
-		return true
-	return false
+		get_tree().quit(1)
 
 
 func _press(action: String, pressed: bool) -> void:
@@ -382,4 +410,4 @@ func _report() -> void:
 		_failures += 1
 		printerr("  FAIL expected %d checks, ran %d" % [EXPECTED_CHECKS, _checks])
 	print("%d checks, %d failed" % [_checks, _failures])
-	quit(1 if _failures > 0 else 0)
+	get_tree().quit(1 if _failures > 0 else 0)

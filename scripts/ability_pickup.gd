@@ -36,5 +36,7 @@ func _on_body_entered(body: Node2D) -> void:
 	# collect the feather twice before queue_free runs.
 	set_deferred("monitoring", false)
 	body.unlock(ability)
+	Audio.play("pickup")
+	Feedback.spark(global_position + Vector2(0.0, -8.0), Color(1.0, 0.95, 0.6))
 	collected.emit(ability)
 	queue_free()

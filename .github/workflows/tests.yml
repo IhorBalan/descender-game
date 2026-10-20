@@ -44,4 +44,4 @@ jobs:
         run: ./godot --headless --path . --import
 
       - name: Run smoke test
-        run: ./godot --headless --path . --script tests/smoke_test.gd
+        run: ./godot --headless --path . res://tests/smoke_test.tscn

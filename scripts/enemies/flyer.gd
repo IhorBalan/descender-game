@@ -73,6 +73,9 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if _dead:
 		return
 	health -= amount
+	Audio.play("hit")
+	Feedback.flash(sprite, 0.1)
+	Feedback.spark(global_position)
 	_hurt_timer = HURT_TIME
 	sprite.modulate = Color(1.0, 0.5, 0.5)
 	sprite.play("hurt")
@@ -87,6 +90,8 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 func _die() -> void:
 	_dead = true
 	set_physics_process(false)
+	Audio.play("enemy_die")
+	Feedback.shake(0.3)
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	var tween := create_tween()

@@ -237,6 +237,9 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if _dead:
 		return
 	health -= amount
+	Audio.play("hit")
+	Feedback.flash(sprite, 0.1)
+	Feedback.spark(global_position + Vector2(0.0, -body_shape.shape.get_rect().size.y / 2.0))
 	if state != State.PATROL:
 		# Getting hit mid-swing cancels it (and starts the cooldown).
 		_end_attack()
@@ -252,6 +255,8 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 func _die() -> void:
 	_dead = true
 	set_physics_process(false)
+	Audio.play("enemy_die")
+	Feedback.shake(0.3)
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	attack_hitbox.set_deferred("monitoring", false)
