@@ -1,6 +1,7 @@
 extends Node2D
 
-## Boots the level, spawns the hero and wires up the HUD and camera.
+## Boots the level, spawns the hero and wires up the HUD and camera, applies
+## the save the title screen chose and writes it back at every checkpoint.
 
 const LEVEL_PATH := "res://levels/level_01.txt"
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
@@ -11,6 +12,10 @@ const ABILITY_MESSAGES := {
 }
 
 var player: Player
+## Seconds played in this save, carried over from the loaded file.
+var play_time := 0.0
+## Index into level.checkpoints of the one the hero last rested at.
+var _active_checkpoint := -1
 
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
@@ -33,6 +38,11 @@ func _ready() -> void:
 		checkpoint.rested.connect(_on_checkpoint_rested)
 	if level.goal:
 		level.goal.reached.connect(_on_goal_reached)
+	# Applied before the ability signal is wired, so loaded powers are
+	# restored quietly instead of announced again.
+	if not SaveManager.pending.is_empty():
+		_apply_save(SaveManager.pending)
+		SaveManager.pending = {}
 	player.ability_unlocked.connect(_on_ability_unlocked)
 	level.spawn_enemies()
 
@@ -43,9 +53,63 @@ func _ready() -> void:
 	hud.show_message(CONTROLS_HINT, 6.0)
 
 
+func _process(delta: float) -> void:
+	play_time += delta
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("restart"):
+		# Restart from the last checkpoint with the progress so far, so a
+		# reload never writes a fresh run over the slot.
+		SaveManager.pending = capture_save()
 		get_tree().reload_current_scene()
+
+
+# --- Saving -------------------------------------------------------------
+
+
+## Puts the hero at the saved checkpoint, as if he had just rested there,
+## with the saved abilities (their feathers gone from the level).
+func _apply_save(data: Dictionary) -> void:
+	play_time = float(data.get("play_time", 0.0))
+	var abilities: Array[Player.Ability] = []
+	for value in data.get("abilities", []):
+		var ability := int(value)
+		if ability in Player.Ability.values() and ability not in abilities:
+			abilities.append(ability as Player.Ability)
+	for ability in abilities:
+		player.unlock(ability)
+	level.remove_pickups(abilities)
+	var index := int(data.get("checkpoint", -1))
+	if index >= 0 and index < level.checkpoints.size():
+		_active_checkpoint = index
+		var checkpoint := level.checkpoints[index]
+		checkpoint.set_active(true)
+		player.global_position = checkpoint.global_position
+		player.rest_at(checkpoint.global_position)
+
+
+## Everything a save needs to put the hero back where he was.
+func capture_save() -> Dictionary:
+	var abilities: Array[int] = []
+	for ability in player.abilities:
+		abilities.append(ability)
+	return {
+		"version": SaveManager.VERSION,
+		"level": LEVEL_PATH,
+		"checkpoint": _active_checkpoint,
+		"abilities": abilities,
+		"play_time": play_time,
+		"saved_at": Time.get_unix_time_from_system(),
+	}
+
+
+## Writes the current progress to the slot the game was started from.
+## Returns false when there is no slot (the level was run directly).
+func save_game() -> bool:
+	if SaveManager.current_slot < 0:
+		return false
+	return SaveManager.write(SaveManager.current_slot, capture_save())
 
 
 func _on_player_died() -> void:
@@ -59,8 +123,12 @@ func _on_player_respawned() -> void:
 	camera.snap_to_target()
 
 
-func _on_checkpoint_rested(_checkpoint: Checkpoint) -> void:
-	hud.show_message("Checkpoint: health and healing restored", 2.5)
+func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
+	_active_checkpoint = level.checkpoints.find(checkpoint)
+	var text := "Checkpoint: health and healing restored"
+	if save_game():
+		text += "   Game saved"
+	hud.show_message(text, 2.5)
 
 
 func _on_ability_unlocked(ability: Player.Ability) -> void:

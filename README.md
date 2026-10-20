@@ -5,7 +5,8 @@ powers fights his way down from Heaven, through Purgatory and the nine
 circles of Hell, to rescue his brother.
 
 This repository holds the first playable prototype: one level with the
-hero, movement, melee combat, enemies, a checkpoint and limited healing.
+hero, movement, melee combat, enemies, a checkpoint and limited healing,
+behind a title screen with three save slots.
 
 ## Running it
 
@@ -28,6 +29,11 @@ window is 1280x720 by default.
 | Heal    | H                   | Y              |
 | Restart | R                   | Start          |
 
+The title screen is driven with the arrow keys or the left stick, Space or
+A to choose and Esc or B to go back. **New Game** picks a slot (an occupied
+one asks to be pressed twice before it is overwritten), **Continue** resumes
+the most recent save and **Load Game** picks any slot.
+
 Jump height depends on how long the button is held. Dashing gives a few
 invulnerability frames. Picking up the feather unlocks the **wings**: press
 jump again in the air for a second, slightly lower jump. The second feather,
@@ -35,6 +41,11 @@ by the checkpoint, unlocks the **light dash**: the dash goes further and
 passes through walls of angel light, which block everyone else. Abilities
 stay unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
+Resting at a checkpoint also saves the game: the checkpoint, the unlocked
+abilities and the time played go to the slot the game was started from,
+as JSON under `user://saves/`. Loading puts the hero back at that
+checkpoint, rested, with the feathers he already took gone from the level.
+Restarting with R does the same from the progress so far.
 Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
@@ -44,7 +55,9 @@ Hitting one during the wind-up cancels the swing.
 
 | Path | What it is |
 | ---- | ---------- |
-| `scenes/main.tscn`, `scripts/main.gd` | Boots the level, spawns the hero, wires HUD and camera |
+| `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
+| `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
+| `scenes/main.tscn`, `scripts/main.gd` | Boots the level, spawns the hero, wires HUD and camera, applies and writes saves |
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
@@ -54,6 +67,7 @@ Hitting one during the wind-up cancels the swing.
 | `levels/level_01.txt` | The level. Edit it in any text editor |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
+| `assets/ui_theme.tres` | The menus' font size and button styles |
 | `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather and light barrier PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
