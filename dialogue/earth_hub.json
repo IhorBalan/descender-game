@@ -1,0 +1,445 @@
+{
+  "arrival": {
+    "once": true,
+    "sets": "arrived_earth",
+    "lines": [
+      {
+        "who": "Ansel",
+        "text": "Sky. Under me, then over me. So that is what the floor of Purgatory is."
+      },
+      {
+        "who": "",
+        "text": "(A town under a torn sky. Fires. Something moving in the churchyard, and someone hammering.)"
+      },
+      {
+        "who": "Ansel",
+        "text": "Someone is still here."
+      }
+    ]
+  },
+  "pell_intro": {
+    "once": true,
+    "sets": "met_pell",
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "Don't stand in the light, lad. They see the light. ...You came down out of it, didn't you."
+      },
+      {
+        "who": "Old Pell",
+        "text": "One hand. A brute took the other. I can still hammer; I can't hold the tongs. You hold, I hit. Deal?"
+      },
+      {
+        "who": "Ansel",
+        "text": "What are we making?"
+      },
+      {
+        "who": "Old Pell",
+        "text": "Something that goes down and comes back. Nobody's managed the second part yet."
+      }
+    ]
+  },
+  "pell_sky": {
+    "once": true,
+    "requires": [
+      "met_pell"
+    ],
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "The sky opened a year ago. First the demons came up out of the churchyard. Then the angels came down. We thought that was help."
+      },
+      {
+        "who": "Old Pell",
+        "text": "It wasn't help. They were gathering. Same as the demons, only cleaner about it."
+      },
+      {
+        "who": "Ansel",
+        "text": "I was one of them. Half of one."
+      },
+      {
+        "who": "Old Pell",
+        "text": "I know. I've seen the hands. Yours haven't learned to hold yet."
+      }
+    ]
+  },
+  "pell_hook": {
+    "once": true,
+    "requires": [
+      "item:hook"
+    ],
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "That hook. Give it here."
+      },
+      {
+        "who": "Old Pell",
+        "text": "Thigh bone and a hinge. That hinge is off the church door. I hung that door."
+      },
+      {
+        "who": "Old Pell",
+        "text": "They're not animals, whatever Dace says. Animals don't use hinges."
+      }
+    ]
+  },
+  "pell_warrant": {
+    "once": true,
+    "requires": [
+      "item:warrant"
+    ],
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "Forty names on that paper. My wife's is the ninth. 'Called to the Garden early.'"
+      },
+      {
+        "who": "Old Pell",
+        "text": "When you get back up there, you tell me what garden."
+      }
+    ]
+  },
+  "pell_forge": {
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "Hold it steady. Steadier. Right, now don't move."
+      },
+      {
+        "who": "Old Pell",
+        "text": "Good. That's one more they'll have to get through."
+      }
+    ]
+  },
+  "pell_light": {
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "Keep your light down when you go in the ground. Both sides can see it."
+      }
+    ]
+  },
+  "pell_boy": {
+    "lines": [
+      {
+        "who": "Old Pell",
+        "text": "I've a boy about your age. Had. Go on, I'm busy."
+      }
+    ]
+  },
+  "hanne_intro": {
+    "once": true,
+    "sets": "met_hanne",
+    "lines": [
+      {
+        "who": "Hanne",
+        "text": "You're not from the sky. The sky ones don't jump, they just come down."
+      },
+      {
+        "who": "Hanne",
+        "text": "I'm Hanne. I draw what I see so I don't have to keep seeing it."
+      },
+      {
+        "who": "Hanne",
+        "text": "Want to see the big one's flag? Come back and I'll show you."
+      }
+    ]
+  },
+  "hanne_drawing": {
+    "once": true,
+    "requires": [
+      "met_hanne"
+    ],
+    "sets": "hanne_drawing",
+    "lines": [
+      {
+        "who": "Hanne",
+        "text": "Here. It's not a picture. It's just lines."
+      },
+      {
+        "who": "",
+        "text": "(A tally mark. Four strokes and a fifth across.)"
+      },
+      {
+        "who": "Ansel",
+        "text": "Where did you see this?"
+      },
+      {
+        "who": "Hanne",
+        "text": "On the ones that climb. They cut it into themselves."
+      },
+      {
+        "who": "Hanne",
+        "text": "They say the Lowest says it means 'I'm still counting'."
+      }
+    ]
+  },
+  "hanne_token": {
+    "once": true,
+    "requires": [
+      "hanne_drawing",
+      "item:token"
+    ],
+    "lines": [
+      {
+        "who": "Hanne",
+        "text": "That's the same lines. On your wooden coin. Did you cut them in yourself?"
+      },
+      {
+        "who": "Ansel",
+        "text": "No. Someone counted me."
+      },
+      {
+        "who": "Hanne",
+        "text": "Then he's down there. The one who counts. Say hello from the drawing girl."
+      }
+    ]
+  },
+  "hanne_churchyard": {
+    "lines": [
+      {
+        "who": "Hanne",
+        "text": "Don't go near the churchyard. That's where they come up. I drew it. It's a bad one."
+      }
+    ]
+  },
+  "hanne_draw_down": {
+    "lines": [
+      {
+        "who": "Hanne",
+        "text": "Pell says you're going down. Will you look at everything? I can't see down from here."
+      }
+    ]
+  },
+  "hanne_count": {
+    "lines": [
+      {
+        "who": "Hanne",
+        "text": "I counted the angels this morning. Nine. Yesterday it was eleven. Where do they go?"
+      }
+    ]
+  },
+  "dace_intro": {
+    "once": true,
+    "sets": "met_dace",
+    "lines": [
+      {
+        "who": "Corporal Dace",
+        "text": "Halt. ...Halt doesn't work on your kind, does it. Fine."
+      },
+      {
+        "who": "Corporal Dace",
+        "text": "Corporal Dace, Third Company. What's left of it."
+      },
+      {
+        "who": "Ansel",
+        "text": "Where's the rest?"
+      },
+      {
+        "who": "Corporal Dace",
+        "text": "In the ground. Some of them walking about in it."
+      }
+    ]
+  },
+  "dace_clock": {
+    "once": true,
+    "requires": [
+      "met_dace"
+    ],
+    "sets": "clock_face",
+    "lines": [
+      {
+        "who": "Corporal Dace",
+        "text": "Clock face. Church tower. Found it in a demon's pack. Don't know why it wanted it."
+      },
+      {
+        "who": "Corporal Dace",
+        "text": "It's the only thing I've seen one of them carry that it didn't eat. Take it. Find out."
+      },
+      {
+        "who": "",
+        "text": "(A brass clock face with no hands. Four shapes are punched around the rim, where the hands would be pinned.)"
+      }
+    ]
+  },
+  "dace_letter": {
+    "once": true,
+    "requires": [
+      "item:letter"
+    ],
+    "lines": [
+      {
+        "who": "Corporal Dace",
+        "text": "You read Thorne's letter. He never sent it. I kept meaning to."
+      },
+      {
+        "who": "Corporal Dace",
+        "text": "He's down there now. If you meet a lad in a red scarf, he was mine. Don't tell him I said so."
+      }
+    ]
+  },
+  "dace_barricade": {
+    "lines": [
+      {
+        "who": "Corporal Dace",
+        "text": "Barricade's holding. Barricade's always holding, until it isn't."
+      }
+    ]
+  },
+  "dace_waiting": {
+    "lines": [
+      {
+        "who": "Corporal Dace",
+        "text": "They don't rush. They climb a bit, look at us, climb back. Like they're waiting for an order."
+      }
+    ]
+  },
+  "dace_ticking": {
+    "lines": [
+      {
+        "who": "Corporal Dace",
+        "text": "Clock's still ticking somewhere. I hear it at night. Nobody else does."
+      }
+    ]
+  },
+  "ava_intro": {
+    "once": true,
+    "sets": "met_ava",
+    "lines": [
+      {
+        "who": "Sister Ava",
+        "text": "A church is where you go when you want to be heard. I stopped coming for that."
+      },
+      {
+        "who": "Sister Ava",
+        "text": "I stopped praying when I understood who was listening."
+      },
+      {
+        "who": "Ansel",
+        "text": "Who?"
+      },
+      {
+        "who": "Sister Ava",
+        "text": "Someone who keeps a garden. And weeds it."
+      }
+    ]
+  },
+  "ava_name": {
+    "once": true,
+    "requires": [
+      "met_ava"
+    ],
+    "lines": [
+      {
+        "who": "Sister Ava",
+        "text": "The demons shout upward when they climb. Not at us. Past us. A name. Every time the same name."
+      },
+      {
+        "who": "Ansel",
+        "text": "What name?"
+      },
+      {
+        "who": "Sister Ava",
+        "text": "I won't say it in a church."
+      },
+      {
+        "who": "Sister Ava",
+        "text": "Outside, perhaps. If you come back up."
+      }
+    ]
+  },
+  "ava_reveal": {
+    "once": true,
+    "requires": [
+      "reveal"
+    ],
+    "lines": [
+      {
+        "who": "Sister Ava",
+        "text": "You've heard it now. It's on your face."
+      },
+      {
+        "who": "Sister Ava",
+        "text": "Then I'll say it, church or no. Tobiah. They shout it like a prayer. Perhaps it is one."
+      }
+    ]
+  },
+  "ava_hand": {
+    "lines": [
+      {
+        "who": "Sister Ava",
+        "text": "The warrant on the door is in the Choir's hand. I used to copy that hand. I taught it."
+      }
+    ]
+  },
+  "ava_listen": {
+    "lines": [
+      {
+        "who": "Sister Ava",
+        "text": "Pell swears, Dace counts, Hanne draws. I listen. Someone has to."
+      }
+    ]
+  },
+  "ava_below": {
+    "lines": [
+      {
+        "who": "Sister Ava",
+        "text": "Go carefully. Below is only above with the lights put out."
+      }
+    ]
+  },
+  "item_warrant": {
+    "lines": [
+      {
+        "who": "Gathering warrant",
+        "text": "Nailed to the church door. 'By the Choir's need, the following are called to the Garden early.'"
+      },
+      {
+        "who": "Gathering warrant",
+        "text": "Forty names. The ink is fresh."
+      },
+      {
+        "who": "Ansel",
+        "text": "Called early. Mereth was 'not ripe'. They're harvesting."
+      }
+    ]
+  },
+  "item_hook": {
+    "lines": [
+      {
+        "who": "Climbing hook",
+        "text": "Demon-made, from a thigh bone and a hinge. The hinge is from a church door."
+      },
+      {
+        "who": "Ansel",
+        "text": "They came up with tools. Someone taught them."
+      }
+    ]
+  },
+  "item_letter": {
+    "lines": [
+      {
+        "who": "Soldier's letter",
+        "text": "Never sent. 'Mother, they say the ones in the ground were people once. I don't believe it. I don't want to.'"
+      }
+    ]
+  },
+  "hole": {
+    "once": true,
+    "sets": "reached_hole",
+    "lines": [
+      {
+        "who": "Ansel",
+        "text": "The churchyard. A hole, and warm air coming up out of it. Like a kitchen."
+      },
+      {
+        "who": "",
+        "text": "(From far below, faint: 'Up! He said up!')"
+      },
+      {
+        "who": "Ansel",
+        "text": "Down, then."
+      }
+    ]
+  }
+}

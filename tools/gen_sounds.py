@@ -127,6 +127,12 @@ def main():
         pad += g * sine(f, dur) * (0.8 + 0.2 * sine(1 / 6, dur))
     pad += 0.08 * lowpass(noise(dur), 0.02) * (1.0 + 0.5 * sine(2 / 6, dur))
     write("ambient_heaven.wav", pad, 0.35)
+    # Earth: wind over rubble, a low drone from the torn sky and a far-off
+    # rumble that comes and goes. Same six-second loop rule.
+    wind = lowpass(noise(dur), 0.06) * (0.6 + 0.4 * sine(1 / 6, dur)) * (0.8 + 0.2 * sine(5 / 6, dur))
+    drone = 0.5 * sine(55.0, dur) * (0.7 + 0.3 * sine(2 / 6, dur)) + 0.25 * sine(82.5, dur)
+    rumble = lowpass(noise(dur), 0.01) * np.clip(sine(1 / 6, dur) * 3.0 - 1.5, 0.0, 1.0)
+    write("ambient_earth.wav", wind * 1.4 + drone + rumble * 2.0, 0.3)
 
 
 if __name__ == "__main__":

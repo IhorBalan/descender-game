@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 146
-const LAST_TICK := 900
+const EXPECTED_CHECKS := 166
+const LAST_TICK := 930
 
 var _ticks := 0
 ## Set once the level is in the tree, where the checks can reach it.
@@ -39,6 +39,9 @@ var _slot := -1
 var _main_scene: PackedScene
 var _mereth: Npc
 var _token: LoreItem
+## The Earth hub booted at the end, and the blacksmith in it.
+var _hub: Node
+var _pell: Npc
 
 @onready var root: Window = get_tree().root
 
@@ -525,6 +528,97 @@ func _physics_process(_delta: float) -> void:
 			_check(attack_button.text == "J / X", "settings show the attack keys")
 			settings_menu.device_button.pressed.emit()
 			_check(attack_button.text == "X", "device button switches to gamepad names")
+		880:
+			# The Earth hub: its own sky and tiles, four NPCs, unique lines
+			# first and then the repeat lines in turn.
+			root.remove_child(_title)
+			_title.free()
+			var levels := root.get_node("Levels")
+			_check(levels.next_id("heaven_2") == "earth_hub", "the hub follows heaven_2")
+			SaveManager.pending = {"level": "earth_hub", "flags": []}
+			_hub = _main_scene.instantiate()
+			root.add_child(_hub)
+		884:
+			_check(_hub.level_id == "earth_hub", "hub booted from a save")
+			_check(_hub.level.interactables.size() == 9, "nine story objects in the hub")
+			_check(_hub.level.npc_count() == 4, "four survivors in the hub")
+			_check(_hub.level.item_count() == 3, "three relics in the hub")
+			_check(
+				_hub.level.tiles_texture.resource_path == Levels.EARTH_TILES,
+				"hub uses the Earth tiles"
+			)
+			_check(_hub.sky.texture.gradient.colors[0] == Levels.EARTH_SKY[0], "hub sky is painted")
+			for node in _hub.level.interactables:
+				if node is Npc and node.npc_name == "Old Pell":
+					_pell = node
+			_check(_pell != null, "Pell is placed")
+			_check(_pell.sprite.sprite_frames.has_animation("talk"), "Pell has a talk animation")
+			_check(_pell.rotate_ids.size() == 3, "Pell has three repeat lines")
+			_hub.player.global_position = _pell.global_position + Vector2(-20.0, 0.0)
+			_hub.player.velocity = Vector2.ZERO
+		888:
+			_press("interact", true)
+		890:
+			_press("interact", false)
+			_check(_hub.dialogue_box.current_id() == "pell_intro", "first talk is Pell's intro")
+			_check(_pell.sprite.animation == "talk", "NPC plays its talk animation")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+		892:
+			_check(_pell.sprite.animation == "idle", "NPC goes back to idle")
+			_check(Story.has_flag("seen:pell_intro"), "a finished entry is marked seen")
+			_press("interact", true)
+		894:
+			_press("interact", false)
+			_check(
+				_hub.dialogue_box.current_id() == "pell_sky", "second talk is the next unique line"
+			)
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+		896:
+			_press("interact", true)
+		898:
+			_press("interact", false)
+			_check(
+				_hub.dialogue_box.current_id() == "pell_forge", "unique lines used up, first repeat"
+			)
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+		900:
+			_press("interact", true)
+		902:
+			_press("interact", false)
+			_check(_hub.dialogue_box.current_id() == "pell_light", "second repeat line")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+		904:
+			_press("interact", true)
+		906:
+			_press("interact", false)
+			_check(_hub.dialogue_box.current_id() == "pell_boy", "third repeat line")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+		908:
+			_press("interact", true)
+		910:
+			_press("interact", false)
+			_check(_hub.dialogue_box.current_id() == "pell_forge", "repeat lines wrap around")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			Story.set_flag("item:hook")
+		912:
+			_press("interact", true)
+		914:
+			_press("interact", false)
+			_check(
+				_hub.dialogue_box.current_id() == "pell_hook",
+				"a newly unlocked line beats the repeats"
+			)
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			root.remove_child(_hub)
+			_hub.free()
+			Audio.play_ambient("")
 		LAST_TICK:
 			_report()
 	if _ticks > LAST_TICK:

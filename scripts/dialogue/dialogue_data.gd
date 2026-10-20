@@ -8,9 +8,14 @@ extends RefCounted
 ##   requires  flags that must all be set for the entry to play (optional)
 ##   unless    flags that must all be unset for the entry to play (optional)
 ##   sets      a flag set when the entry has been read to the end (optional)
+##   once      true for an entry that plays a single time per save (optional);
+##             every entry read to the end sets the flag `seen:<id>`, and a
+##             `once` entry is skipped when its flag is set
 ##
 ## An NPC or trigger lists several ids in priority order; `pick` returns the
-## first whose flags match, so lines change as the story moves on.
+## first whose flags match, so lines change as the story moves on. Once the
+## unique entries are used up, an NPC rotates through its repeat lines (see
+## Interactable.rotation_ids).
 
 var path := ""
 var entries: Dictionary = {}
@@ -42,7 +47,14 @@ func entry(id: String) -> Dictionary:
 func available(data: Dictionary) -> bool:
 	if data.is_empty():
 		return false
+	if bool(data.get("once", false)) and Story.has_flag(seen_flag(str(data.get("id", "")))):
+		return false
 	return Story.has_all(data.get("requires", [])) and not Story.has_any(data.get("unless", []))
+
+
+## The flag set once an entry has been read to the end.
+static func seen_flag(id: String) -> String:
+	return "seen:%s" % id
 
 
 ## The first of the ids whose conditions hold, or an empty dictionary when

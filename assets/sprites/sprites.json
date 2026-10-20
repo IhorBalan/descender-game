@@ -218,5 +218,130 @@
         "hurt"
       ]
     }
+  },
+  "mereth": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "mereth_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "mereth_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "pell": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "pell_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "pell_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "hanne": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hanne_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "hanne_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "dace": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "dace_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "dace_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "ava": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "ava_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "ava_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
   }
 }
