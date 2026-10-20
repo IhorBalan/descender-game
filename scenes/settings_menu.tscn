@@ -1,0 +1,113 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_settings"]
+[ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+
+[node name="SettingsMenu" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_settings")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.16, 0.13, 0.32, 1)
+
+[node name="Heading" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 6.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_font_sizes/font_size = 12
+text = "SETTINGS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.0
+offset_top = 24.0
+offset_right = 120.0
+offset_bottom = 164.0
+grow_horizontal = 2
+theme_override_constants/separation = 1
+
+[node name="Volume" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Volume"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Volume"
+
+[node name="Slider" type="HSlider" parent="Menu/Volume"]
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+max_value = 100.0
+step = 5.0
+value = 100.0
+scrollable = false
+
+[node name="Fullscreen" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Menu/Fullscreen"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="Toggle" type="CheckButton" parent="Menu/Fullscreen"]
+layout_mode = 2
+text = "Off"
+
+[node name="KeysLabel" type="Label" parent="Menu"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.68, 0.85, 1)
+text = "Keys"
+
+[node name="Keys" type="GridContainer" parent="Menu"]
+layout_mode = 2
+theme_override_constants/h_separation = 6
+theme_override_constants/v_separation = 1
+columns = 4
+
+[node name="Buttons" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+theme_override_constants/separation = 6
+alignment = 1
+
+[node name="ResetKeys" type="Button" parent="Menu/Buttons"]
+layout_mode = 2
+text = "Reset keys"
+
+[node name="Back" type="Button" parent="Menu/Buttons"]
+layout_mode = 2
+text = "Back"
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -14.0
+offset_bottom = -2.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
+text = "Arrows move   Space changes   Esc goes back"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/title.gd" id="1_title"]
 [ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+[ext_resource type="PackedScene" path="res://scenes/settings_menu.tscn" id="3_settings"]
 
 [node name="Title" type="Control"]
 layout_mode = 3
@@ -53,9 +54,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -40.0
-offset_top = -12.0
+offset_top = -16.0
 offset_right = 40.0
-offset_bottom = 48.0
+offset_bottom = 58.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 3
@@ -71,6 +72,10 @@ text = "Continue"
 [node name="Load" type="Button" parent="Menu"]
 layout_mode = 2
 text = "Load Game"
+
+[node name="Settings" type="Button" parent="Menu"]
+layout_mode = 2
+text = "Settings"
 
 [node name="Quit" type="Button" parent="Menu"]
 layout_mode = 2
@@ -129,3 +134,6 @@ theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
 text = "Arrows or stick to move   Space or A to choose   Esc or B to go back"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="SettingsMenu" parent="." instance=ExtResource("3_settings")]
+layout_mode = 1

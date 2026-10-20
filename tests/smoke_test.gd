@@ -9,7 +9,7 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 63
+const EXPECTED_CHECKS := 69
 const LAST_TICK := 800
 
 var _ticks := 0
@@ -297,6 +297,22 @@ func _physics_process(_delta: float) -> bool:
 		782:
 			_check(_title.get_node("Menu").visible, "title screen shows its menu")
 			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
+		786:
+			# Settings: rebinding changes the InputMap and is undone by reset.
+			var settings := root.get_node_or_null("Settings")
+			_check(settings != null, "Settings autoload present")
+			var before: Array = settings.action_keys(&"heal")
+			settings.bind_key(&"heal", KEY_G)
+			_check(settings.action_keys(&"heal") == [KEY_G], "key rebinds to G")
+			var g := InputEventKey.new()
+			g.physical_keycode = KEY_G
+			_check(InputMap.action_has_event(&"heal", g), "InputMap takes the new key")
+			settings.reset_keys()
+			_check(settings.action_keys(&"heal") == before, "reset restores the default key")
+			_title.get_node("Menu/Settings").pressed.emit()
+		788:
+			_check(_title.get_node("SettingsMenu").visible, "settings screen opens from the title")
+			_check(not _title.get_node("Menu").visible, "title menu hides behind settings")
 		LAST_TICK:
 			_report()
 			return true
