@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 106
+const EXPECTED_CHECKS := 111
 const LAST_TICK := 860
 
 var _ticks := 0
@@ -110,6 +110,10 @@ func _physics_process(_delta: float) -> void:
 		163:
 			_press("dash", false)
 			_check(_player.state == Player.State.DASH, "dash starts")
+			_check(not _player.dash_ready(), "dash goes on cooldown")
+		190:
+			_check(_player.dash_ready(), "dash comes back")
+			_check(_main.hud.status.dash_readiness >= 1.0, "HUD shows the dash ready")
 		200:
 			_player.take_damage(2, _player.global_position + Vector2(8, 0))
 			_check(Audio.last_played == "hurt", "hurt plays its sound")
@@ -175,6 +179,7 @@ func _physics_process(_delta: float) -> void:
 			_player.velocity = Vector2.ZERO
 		544:
 			_check(_player.has_ability(Player.Ability.WINGS), "feather unlocks the wings")
+			_check(_main.hud.status.abilities == [Player.Ability.WINGS], "HUD shows the wings")
 			_check(_main.level.pickup_count() == 1, "feather is used up")
 			# Back to the start, where there is headroom for two jumps.
 			_player.global_position = _start_position
@@ -345,6 +350,7 @@ func _physics_process(_delta: float) -> void:
 				"loaded hero keeps both abilities"
 			)
 			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
+			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
 			# Level transition: walk into the goal gate.
 			var levels := root.get_node_or_null("Levels")
 			_check(levels != null, "Levels autoload present")

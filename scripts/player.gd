@@ -447,6 +447,18 @@ func has_ability(ability: Ability) -> bool:
 	return ability in abilities
 
 
+## How much of the dash cooldown has passed, 0 to 1. Stays at 0 while the
+## one dash per airtime is spent, until the hero lands.
+func dash_readiness() -> float:
+	if not _dash_available and not is_on_floor():
+		return 0.0
+	return 1.0 - _dash_cooldown_timer / DASH_COOLDOWN
+
+
+func dash_ready() -> bool:
+	return _dash_available and _dash_cooldown_timer <= 0.0
+
+
 ## Unlocks an angel power for the rest of the run. Unlocking one the hero
 ## already has does nothing.
 func unlock(ability: Ability) -> void:
