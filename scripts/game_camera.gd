@@ -13,6 +13,9 @@ extends Camera2D
 ##   height, drops below the last ground, or climbs past UP_WINDOW, and leads
 ##   downward on fast falls.
 ## - The final position is rounded to whole pixels so tiles don't shimmer.
+## - Shake: hits add trauma, which decays; the view is offset by a random
+##   amount that grows with trauma squared, so small hits barely register and
+##   big ones kick. The offset never moves the follow position itself.
 
 # Horizontal
 const DEADZONE_X := 24.0
@@ -32,7 +35,13 @@ const FALL_LEAD_SPEED := 200.0
 const SMOOTH_Y := 4.0
 const SMOOTH_Y_FALLING := 10.0
 
+# Shake
+const MAX_SHAKE := 4.0
+const TRAUMA_DECAY := 2.2
+
 var target: Node2D
+## 0 to 1; see add_trauma.
+var trauma := 0.0
 
 var _level_size := Vector2.ZERO
 ## Unrounded camera position; global_position is this rounded.
@@ -49,7 +58,12 @@ var _look_extreme_x := 0.0
 var _fall_offset := 0.0
 
 
+func _ready() -> void:
+	add_to_group("game_camera")
+
+
 func _physics_process(delta: float) -> void:
+	_update_shake(delta)
 	if not is_instance_valid(target):
 		return
 	var focus := _focus_point()
@@ -84,6 +98,20 @@ func snap_to_target() -> void:
 	_smoothed = _clamp_to_level(Vector2(_window_x + _look_offset, _ground_y))
 	global_position = _smoothed.round()
 	reset_smoothing()
+
+
+## Adds shake; amounts add up and are capped at 1.
+func add_trauma(amount: float) -> void:
+	trauma = minf(trauma + amount, 1.0)
+
+
+func _update_shake(delta: float) -> void:
+	if trauma <= 0.0:
+		offset = Vector2.ZERO
+		return
+	trauma = maxf(trauma - TRAUMA_DECAY * delta, 0.0)
+	var strength := trauma * trauma * MAX_SHAKE
+	offset = Vector2(randf_range(-strength, strength), randf_range(-strength, strength)).round()
 
 
 func _focus_point() -> Vector2:

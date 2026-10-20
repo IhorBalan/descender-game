@@ -78,6 +78,9 @@ Hitting one during the wind-up cancels the swing.
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names and map paths |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |
+| `scripts/audio.gd` | The `Audio` autoload: sound effects and the ambient loop |
+| `scripts/feedback.gd` | The `Feedback` autoload: hit-stop, screen shake, hit flash and sparks |
+| `assets/audio/`, `tools/gen_sounds.py` | Placeholder sounds and the script that synthesises them |
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
@@ -91,7 +94,7 @@ Hitting one during the wind-up cancels the swing.
 | `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather and light barrier PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
-| `tests/smoke_test.gd` | Headless test that drives the hero and checks the basics |
+| `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
 
 ### Level legend
 
@@ -111,11 +114,19 @@ light in front of it needs the light dash.
 ## Tests
 
 ```
-godot --headless --path . --script tests/smoke_test.gd
+godot --headless --path . res://tests/smoke_test.tscn
 ```
 
 Exits non-zero when a check fails. The same test runs on every pull request
-through `.github/workflows/tests.yml`.
+through `.github/workflows/tests.yml`. It runs as a scene rather than a
+`--script` so the autoloads exist before the game scripts compile.
+
+## Sounds
+
+Every sound under `assets/audio/` is a synthesised placeholder. To change
+one, edit its recipe in `tools/gen_sounds.py` and run
+`python3 tools/gen_sounds.py` (needs numpy). Effects are played by name
+(`Audio.play("jump")`), so a real recording only has to keep the file name.
 
 The same workflow also lints and format-checks GDScript with
 [gdtoolkit](https://github.com/Scony/godot-gdscript-toolkit). To run it locally:

@@ -24,6 +24,7 @@ func _ready() -> void:
 	settings_button.pressed.connect(_on_settings_pressed)
 	settings_menu.closed.connect(_on_settings_closed)
 	quit_button.pressed.connect(_on_quit_pressed)
+	Audio.wire_menu(self)
 
 
 func _unhandled_input(event: InputEvent) -> void:

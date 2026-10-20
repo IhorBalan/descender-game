@@ -64,6 +64,7 @@ func _ready() -> void:
 
 	fade.cover_now()
 	fade.fade_in()
+	Audio.play_ambient(Levels.ambient(level_id))
 	hud.show_message(Levels.display_name(level_id), 2.5)
 	if level_id == Levels.first_id:
 		hud.queue_message(CONTROLS_HINT, 6.0)
@@ -182,6 +183,7 @@ func _on_ability_unlocked(ability: Player.Ability) -> void:
 
 func _on_goal_reached() -> void:
 	player.freeze()
+	Audio.play("level_complete")
 	var next := Levels.next_id(level_id)
 	if next.is_empty():
 		hud.show_message("You have reached the end of the prototype.   Press R to restart", -1.0)
