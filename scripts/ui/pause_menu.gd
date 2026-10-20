@@ -2,8 +2,8 @@ class_name PauseMenu
 extends CanvasLayer
 
 ## The pause menu: resume, save to the current slot, settings, or quit to
-## the title.
-## Keeps processing while the tree is paused; main.gd opens and closes it.
+## the title. Keeps processing while the tree is paused; main.gd opens it
+## and it closes itself.
 
 signal save_requested
 
