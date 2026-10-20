@@ -45,6 +45,7 @@ func _ready() -> void:
 		Story.reset()
 	else:
 		Story.from_list(SaveManager.pending.get("flags", []))
+	level.level_id = level_id
 	level.load_from_file(Levels.path(level_id))
 	if not level.dialogue_path.is_empty():
 		dialogue = DialogueData.new(level.dialogue_path)
@@ -70,10 +71,17 @@ func _ready() -> void:
 	if not SaveManager.pending.is_empty():
 		_apply_save(SaveManager.pending)
 		SaveManager.pending = {}
+	# Hearts and healing from the upgrades in the save, in every level.
+	player.restore_upgrades()
 	player.ability_unlocked.connect(_on_ability_unlocked)
+	player.upgrade_collected.connect(_on_upgrade_collected)
+	player.power_changed.connect(_on_power_changed)
 	hud.player = player
 	hud.set_abilities(player.abilities)
 	level.spawn_enemies()
+	level.spawn_power_ups()
+	for power_up in level.get_node("PowerUps").get_children():
+		power_up.collected.connect(_on_power_up_collected)
 	pause_menu.save_requested.connect(_on_save_requested)
 
 	camera.target = player
@@ -190,6 +198,7 @@ func _on_player_respawned() -> void:
 	# The signal fires from the hero's physics tick; rebuild the enemies once
 	# the physics step is over.
 	level.spawn_enemies.call_deferred()
+	_respawn_power_ups.call_deferred()
 	_clear_motes()
 	camera.snap_to_target()
 	fade.fade_in()
@@ -207,6 +216,33 @@ func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 	if save_game():
 		text += "   Game saved"
 	hud.show_message(text, 2.5)
+
+
+## The power-ups come back with the enemies.
+func _respawn_power_ups() -> void:
+	level.spawn_power_ups()
+	for power_up in level.get_node("PowerUps").get_children():
+		power_up.collected.connect(_on_power_up_collected)
+
+
+## A permanent upgrade reads like a relic: its lines open in the text box
+## and the hero stands still until they are read.
+func _on_upgrade_collected(kind: Player.UpgradeKind) -> void:
+	var entry := Upgrade.description(kind, player)
+	if dialogue_box.is_open() or _transitioning:
+		hud.show_message(str(entry["lines"][1]["text"]), 3.5)
+		return
+	player.talking = true
+	hud.hide_message()
+	dialogue_box.play(entry)
+
+
+func _on_power_up_collected(power: Player.Power) -> void:
+	hud.show_message(PowerUp.MESSAGES.get(power, "Power-up"), 3.0)
+
+
+func _on_power_changed() -> void:
+	hud.set_powers(player.powers)
 
 
 func _on_ability_unlocked(ability: Player.Ability) -> void:

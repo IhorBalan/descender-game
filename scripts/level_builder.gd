@@ -10,6 +10,8 @@ extends Node2D
 ##   L  feather that unlocks the light dash    |  light barrier
 ##   1-9  a story object (NPC, relic or trigger) described in the level's
 ##        .json sidecar under "placements" (see levels/level_01.json)
+##   H  Kept Light (one more heart)    V  Vial of the Basin (one more healing charge)
+##   O  Halo   B  Lit Blade   Z  Zeal   (timed power-ups; see docs/design/upgrades.md)
 ##
 ## Tiles are 16x16. Rows may have different lengths; missing cells are empty.
 
@@ -47,6 +49,11 @@ var player_start := Vector2.ZERO
 var checkpoints: Array[Checkpoint] = []
 var goal: Goal = null
 var pickups: Array[AbilityPickup] = []
+## Permanent upgrades still lying in the level (ones the save holds are
+## never built).
+var upgrades: Array[Upgrade] = []
+## Names the upgrade flags: set by main.gd before the level is loaded.
+var level_id := ""
 ## NPCs, relics and triggers from the sidecar, in map order.
 var interactables: Array[Interactable] = []
 ## The dialogue file the sidecar names, or "" when the level has none.
@@ -55,12 +62,17 @@ var dialogue_path := ""
 var placements: Dictionary = {}
 
 var _enemy_spawns: Array[EnemySpawn] = []
+## Where the power-ups lie; rebuilt with the enemies.
+var _power_spawns: Array = []
+## How many cells of each upgrade kind the map has had so far, for the flags.
+var _upgrade_counts: Dictionary = {}
 var _tiles: Node2D
 var _solids: StaticBody2D
 var _hazards: Node2D
 var _barriers: LightBarrier
 var _objects: Node2D
 var _enemies: Node2D
+var _power_ups: Node2D
 
 
 ## Builds the map at `path`; a .json file next to it, if any, places the
@@ -120,12 +132,18 @@ func build(text: String) -> void:
 	_enemies = Node2D.new()
 	_enemies.name = "Enemies"
 	add_child(_enemies)
+	_power_ups = Node2D.new()
+	_power_ups.name = "PowerUps"
+	add_child(_power_ups)
 
 	checkpoints = []
 	goal = null
 	pickups = []
 	interactables = []
+	upgrades = []
 	_enemy_spawns = []
+	_power_spawns = []
+	_upgrade_counts = {}
 	for y in height:
 		_build_row(y)
 
@@ -195,6 +213,21 @@ func _build_row(y: int) -> void:
 			"1", "2", "3", "4", "5", "6", "7", "8", "9":
 				_add_placement(x, y, c)
 				x += 1
+			"H":
+				_add_upgrade(x, y, Player.UpgradeKind.HEART)
+				x += 1
+			"V":
+				_add_upgrade(x, y, Player.UpgradeKind.VIAL)
+				x += 1
+			"O":
+				_power_spawns.append([Player.Power.HALO, _cell_bottom(x, y)])
+				x += 1
+			"B":
+				_power_spawns.append([Player.Power.BLADE, _cell_bottom(x, y)])
+				x += 1
+			"Z":
+				_power_spawns.append([Player.Power.ZEAL, _cell_bottom(x, y)])
+				x += 1
 			_:
 				x += 1
 
@@ -234,6 +267,25 @@ func _add_placement(x: int, y: int, key: String) -> void:
 	node.position = _cell_bottom(x, y)
 	_objects.add_child(node)
 	interactables.append(node)
+
+
+## Places a permanent upgrade, unless the save already holds it. Its flag
+## numbers the pickups of that kind in map order (top to bottom, left to
+## right), taken ones included, so a pickup keeps its identity as long as
+## the order in the map does not change.
+func _add_upgrade(x: int, y: int, kind: Player.UpgradeKind) -> void:
+	var index: int = _upgrade_counts.get(kind, 0)
+	_upgrade_counts[kind] = index + 1
+	var flag := Upgrade.flag_for(kind, level_id, index)
+	if Story.has_flag(flag):
+		return
+	var upgrade := Upgrade.new()
+	upgrade.kind = kind
+	upgrade.flag = flag
+	upgrade.name = "Upgrade%s%d" % [Upgrade.FLAG_NAMES[kind].capitalize(), index]
+	upgrade.position = _cell_bottom(x, y)
+	_objects.add_child(upgrade)
+	upgrades.append(upgrade)
 
 
 func _add_barrier_cell(x: int, y: int) -> void:
@@ -314,6 +366,38 @@ func spawn_enemies() -> void:
 			walker.character = spawn.character
 			walker.death_y = size_px.y + 64.0
 		_enemies.add_child(enemy)
+
+
+## (Re)creates every power-up from the map, alongside the enemies, so a
+## checkpoint run has the same tools for the same fight.
+func spawn_power_ups() -> void:
+	for child in _power_ups.get_children():
+		_power_ups.remove_child(child)
+		child.queue_free()
+	for spawn in _power_spawns:
+		var power_up := PowerUp.new()
+		power_up.power = spawn[0]
+		power_up.position = spawn[1]
+		_power_ups.add_child(power_up)
+
+
+## Power-ups still lying in the level (taken ones are freed).
+func power_up_count() -> int:
+	var count := 0
+	for power_up in _power_ups.get_children():
+		if not power_up.is_queued_for_deletion():
+			count += 1
+	return count
+
+
+## Permanent upgrades still lying in the level (taken ones are freed, ones
+## the save holds were never built).
+func upgrade_count() -> int:
+	var count := 0
+	for upgrade in upgrades:
+		if is_instance_valid(upgrade) and not upgrade.is_queued_for_deletion():
+			count += 1
+	return count
 
 
 ## Live enemies: the dying ones still fading out are not counted.

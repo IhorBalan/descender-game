@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 146
+const EXPECTED_CHECKS := 173
 const LAST_TICK := 900
 
 var _ticks := 0
@@ -79,6 +79,8 @@ func _physics_process(_delta: float) -> void:
 			_check(_main.level.checkpoints.size() == 1, "checkpoint built")
 			_check(_main.level.goal != null, "goal gate built")
 			_check(_main.level.pickup_count() == 2, "two ability feathers built")
+			_check(_main.level.upgrade_count() == 1, "one permanent upgrade built")
+			_check(_main.level.power_up_count() == 2, "two power-ups built")
 			_start_x = _player.global_position.x
 			_start_position = _player.global_position
 			# The opening dialogue would freeze the hero at the start; it is
@@ -251,6 +253,53 @@ func _physics_process(_delta: float) -> void:
 			_check(_imp._dead, "imp dies")
 			_check(Audio.last_played == "enemy_die", "enemy death plays its sound")
 			_check(not _imp.health_bar.visible, "health bar hides on death")
+		674:
+			# Upgrades: the Kept Light on the ledge adds a heart and reads
+			# like a relic.
+			_player.global_position = _main.level.upgrades[0].global_position
+			_player.velocity = Vector2.ZERO
+		678:
+			_check(_player.max_health == Player.MAX_HEALTH + 1, "Kept Light adds a heart")
+			_check(_player.health == _player.max_health, "Kept Light fills the hearts")
+			_check(Story.has_flag("upgrade:heart:heaven_1:0"), "taken upgrade is flagged")
+			_check(_main.level.upgrade_count() == 0, "taken upgrade is gone")
+			_check(
+				_main.dialogue_box.current_id() == "upgrade_heart", "upgrade shows its description"
+			)
+			_check(_player.talking, "hero stands still to read it")
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
+		680:
+			_check(not _main.dialogue_box.is_open(), "upgrade box closes")
+			# Power-ups: the Lit Blade, then the Halo.
+			_player.global_position = _power_up_position(Player.Power.BLADE)
+			_player.velocity = Vector2.ZERO
+		684:
+			_check(_player.has_power(Player.Power.BLADE), "Lit Blade is picked up")
+			_check(
+				_player.attack_damage() == Player.ATTACK_DAMAGE + 1, "Lit Blade raises the damage"
+			)
+			_check(_main.level.power_up_count() == 1, "taken power-up is gone")
+			_check(_main.hud.status.powers.has(Player.Power.BLADE), "HUD shows the power-up")
+			_player.global_position = _power_up_position(Player.Power.HALO)
+			_player.velocity = Vector2.ZERO
+		688:
+			_check(_player.has_power(Player.Power.HALO), "Halo is picked up")
+			_mark_x = _player.health
+			_player.take_damage(1, _player.global_position + Vector2(8, 0))
+			_check(_player.health == int(_mark_x), "Halo turns the hit aside")
+			_check(not _player.has_power(Player.Power.HALO), "Halo is spent by the hit")
+			_check(_player.state != Player.State.HURT, "a turned hit has no knockback")
+		690:
+			_player.grant_power(Player.Power.ZEAL)
+			_check(
+				_player.dash_cooldown() < Player.DASH_COOLDOWN, "Zeal shortens the dash cooldown"
+			)
+			_check(_player.run_speed() > Player.RUN_SPEED, "Zeal makes the hero faster")
+			_player.powers[Player.Power.ZEAL] = 0.01
+		692:
+			_check(not _player.has_power(Player.Power.ZEAL), "power-ups run out")
+			_check(_player.has_power(Player.Power.BLADE), "the others keep running")
 		695:
 			_check(_imp.sprite.modulate.a < 1.0, "dead imp fades out")
 		700:
@@ -446,6 +495,9 @@ func _physics_process(_delta: float) -> void:
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
 			_check(_loaded.level.item_count() == 2, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
+			_check(_loaded.level.upgrade_count() == 0, "taken upgrade stays taken")
+			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
+			_check(loaded_player.powers.is_empty(), "power-ups are not saved")
 			# Level transition: walk into the goal gate.
 			var levels := root.get_node_or_null("Levels")
 			_check(levels != null, "Levels autoload present")
@@ -476,6 +528,12 @@ func _physics_process(_delta: float) -> void:
 					next.player.global_position.distance_to(next.level.player_start) < 1.0,
 					"hero starts the next level at its start"
 				)
+				_check(
+					next.player.max_health == Player.MAX_HEALTH + 1,
+					"hearts carry over to the next level"
+				)
+				_check(next.level.upgrade_count() == 1, "next level has its own upgrade")
+				_check(next.level.power_up_count() == 1, "next level has its own power-up")
 				get_tree().current_scene = null
 				root.remove_child(next)
 				next.free()
@@ -531,6 +589,14 @@ func _physics_process(_delta: float) -> void:
 		# A script error inside the last step kept _report from running.
 		printerr("FAIL the test did not finish")
 		get_tree().quit(1)
+
+
+## Where the power-up of that kind lies in the level.
+func _power_up_position(power: Player.Power) -> Vector2:
+	for power_up in _main.level.get_node("PowerUps").get_children():
+		if power_up.power == power:
+			return power_up.global_position
+	return Vector2.ZERO
 
 
 func _press(action: String, pressed: bool) -> void:

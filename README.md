@@ -63,7 +63,16 @@ Resting at a checkpoint also saves the game: the level, the checkpoint, the
 unlocked abilities, the story flags and the time played go to the slot the
 game was started from, as JSON under `user://saves/`. Loading puts the hero back at that
 checkpoint, rested, with the feathers he already took gone from the level.
-Restarting with R does the same from the progress so far. Reaching the goal
+Restarting with R does the same from the progress so far.
+
+Hidden in the levels are **permanent upgrades**: a Kept Light adds a heart
+and a Vial of the Basin adds a healing charge, for the rest of the save. Each
+reads like a relic when it is taken, and a taken one stays gone. There are
+also **power-ups** lying in rooms: a Halo turns the next hit aside, a Lit
+Blade makes the sword hit harder and Zeal makes the hero run and dash faster,
+each for twenty seconds. Power-ups are lost on death and come back with the
+enemies. The design, with how many of each the whole game needs and where
+they go, is in [`docs/design/upgrades.md`](docs/design/upgrades.md). Reaching the goal
 gate fades out, saves, and starts the next level with the abilities so far;
 the gate of the last level ends the prototype.
 Spikes cost one heart and put the hero back on the last solid ground.
@@ -113,12 +122,14 @@ in [`docs/story/script.md`](docs/story/script.md).
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
 | `scripts/level_builder.gd` | Builds tiles, collision, spikes, enemies and objects from an ASCII map |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
+| `scripts/upgrade.gd`, `scripts/power_up.gd` | A permanent upgrade (heart, healing charge) and a timed power-up (Halo, Lit Blade, Zeal) |
+| `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
 | `levels/level_01.txt`, `levels/level_02.txt` | The levels. Edit them in any text editor |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
 | `assets/ui_theme.tres` | The menus' font size and button styles |
-| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather, light barrier and relic PNGs |
+| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
@@ -132,6 +143,8 @@ C  checkpoint      G  goal gate        .  empty
 W  feather (unlocks the wings)       L  feather (unlocks the light dash)
 |  wall of light (needs the light dash)
 1-9  a story object: an NPC, relic or trigger described in the level's .json
+H  Kept Light (+1 heart)             V  Vial of the Basin (+1 healing charge)
+O  Halo   B  Lit Blade   Z  Zeal     (timed power-ups)
 ```
 
 Tiles are 16x16. The hero is about two and a half tiles tall and jumps

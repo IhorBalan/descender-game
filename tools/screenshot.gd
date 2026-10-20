@@ -19,7 +19,19 @@ var _shots := [
 	{"tick": 190, "name": "goal.png", "x": 88 * 16 + 8.0, "y": 11 * 16.0},
 	# Next to Mereth, with her first line typed out: the hero is put there
 	# early, interact is pressed on arrival and the typing is given time.
-	{"tick": 340, "name": "dialogue.png", "x": 13 * 16 - 20.0, "y": 12 * 16.0, "lead": 120},
+	{
+		"tick": 340,
+		"name": "dialogue.png",
+		"x": 13 * 16 - 20.0,
+		"y": 12 * 16.0,
+		"lead": 120,
+		"talk": true
+	},
+	# On the ledge left of the Kept Light: the hero walks into it and its
+	# description opens with the sixth heart in the HUD.
+	{"tick": 440, "name": "upgrade.png", "x": 1 * 16 + 8.0, "y": 6 * 16.0, "lead": 70},
+	# Taking the Lit Blade, with the guard and the wall of light ahead.
+	{"tick": 490, "name": "power_up.png", "x": 70 * 16 + 8.0, "y": 12 * 16.0, "lead": 20},
 ]
 
 
@@ -42,13 +54,19 @@ func _physics_process(_delta: float) -> bool:
 	for shot in _shots:
 		var lead: int = shot.get("lead", 30)
 		if _ticks == shot["tick"] - lead and shot["x"] >= 0.0:
+			# A box left open by the previous shot would hold the hero still.
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
 			_main.player.global_position = Vector2(shot["x"], shot["y"])
 			_main.camera.snap_to_target()
-		if _ticks == shot["tick"] - lead + 30 and shot.has("lead"):
+		if _ticks == shot["tick"] - lead + 30 and shot.has("talk"):
 			Input.action_release("move_right")
 			_press("interact", true)
-		if _ticks == shot["tick"] - lead + 32 and shot.has("lead"):
+		if _ticks == shot["tick"] - lead + 32 and shot.has("talk"):
 			_press("interact", false)
+		if _ticks == shot["tick"] - lead and shot["name"] == "upgrade.png":
+			# The dialogue shot let go of the stick; walk again.
+			Input.action_press("move_right")
 		if _ticks == shot["tick"]:
 			_save(shot["name"])
 	if _ticks > _shots[-1]["tick"] + 5:

@@ -9,6 +9,8 @@ extends CharacterBody2D
 signal health_changed(current: int, max_value: int)
 signal heal_charges_changed(current: int, max_value: int)
 signal ability_unlocked(ability: Ability)
+signal upgrade_collected(kind: UpgradeKind)
+signal power_changed
 signal died
 signal respawned
 
@@ -16,6 +18,12 @@ enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD }
 ## The half-finished angel powers. Each is unlocked by a pickup in the world
 ## and stays unlocked for the rest of the run, including after death.
 enum Ability { WINGS, LIGHT_DASH }
+## Permanent upgrades picked up in the world (see Upgrade). Each one is a
+## story flag, so it stays collected in the save.
+enum UpgradeKind { HEART, VIAL }
+## Timed power-ups picked up in a room (see PowerUp). Lost on death and at
+## the end of the level.
+enum Power { HALO, BLADE, ZEAL }
 
 const CHARACTER := "hero"
 
@@ -59,6 +67,9 @@ const DASH_TIME := 0.14
 ## barriers (see LightBarrier).
 const LIGHT_DASH_TIME := 0.22
 const DASH_COOLDOWN := 0.4
+## Zeal: the dash comes back sooner and the hero runs faster while it lasts.
+const ZEAL_COOLDOWN_MULTIPLIER := 0.375
+const ZEAL_SPEED_MULTIPLIER := 1.25
 ## Speed kept when the dash ends, so it eases out instead of stopping dead.
 const DASH_END_SPEED := 160.0
 
@@ -69,13 +80,18 @@ const ATTACK_TIME := 0.28
 const ATTACK_ACTIVE_FROM := 0.1
 const ATTACK_ACTIVE_UNTIL := 0.24
 const ATTACK_DAMAGE := 1
+## Lit Blade: extra damage while the power-up lasts.
+const BLADE_BONUS_DAMAGE := 1
 const ATTACK_OFFSET_X := 20.0
 ## Share of run speed the hero can walk at while swinging on the ground.
 const ATTACK_MOVE_MULTIPLIER := 0.6
 
-# Health and healing
+# Health and healing. These are what a new game starts with; Kept Light
+# and Vial pickups raise max_health and max_heal_charges from there.
 const MAX_HEALTH := 5
 const MAX_HEAL_CHARGES := 3
+## How long a timed power-up lasts.
+const POWER_TIME := 20.0
 const HEAL_AMOUNT := 2
 const HEAL_TIME := 0.7
 const HURT_TIME := 0.25
@@ -90,12 +106,18 @@ const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
 const TINT_LIGHT_DASH := Color(1.0, 0.95, 0.7, 0.85)
 const TINT_HEAL := Color(1.0, 0.92, 0.6)
 const TINT_WINGS := Color(1.0, 1.0, 0.8)
+const TINT_BLADE := Color(1.0, 0.85, 0.5)
 
 var state: State = State.IDLE
 var facing := 1
+var max_health := MAX_HEALTH
+var max_heal_charges := MAX_HEAL_CHARGES
 var health := MAX_HEALTH
 var heal_charges := MAX_HEAL_CHARGES
 var abilities: Array[Ability] = []
+## Active power-ups: Power -> seconds left (INF for the Halo, which lasts
+## until it is spent).
+var powers: Dictionary = {}
 ## Where the hero comes back after dying (the last checkpoint rested at).
 var respawn_position := Vector2.ZERO
 ## Where the hero is put back after touching spikes.
@@ -146,8 +168,8 @@ func _ready() -> void:
 	respawn_position = global_position
 	last_safe_position = global_position
 	attack_shape.disabled = true
-	health_changed.emit(health, MAX_HEALTH)
-	heal_charges_changed.emit(heal_charges, MAX_HEAL_CHARGES)
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
 
 
 func _physics_process(delta: float) -> void:
@@ -200,6 +222,7 @@ func _tick_timers(delta: float) -> void:
 	_state_timer = maxf(_state_timer - delta, 0.0)
 	_invulnerable_timer = maxf(_invulnerable_timer - delta, 0.0)
 	_wing_flash_timer = maxf(_wing_flash_timer - delta, 0.0)
+	_tick_powers(delta)
 
 
 # --- States -------------------------------------------------------------
@@ -250,7 +273,7 @@ func _process_normal(delta: float) -> void:
 		Input.is_action_just_pressed("heal")
 		and is_on_floor()
 		and heal_charges > 0
-		and health < MAX_HEALTH
+		and health < max_health
 	):
 		_start_heal()
 		return
@@ -268,7 +291,7 @@ func _start_dash() -> void:
 	if light:
 		_phasing = true
 	_dash_buffer_timer = 0.0
-	_dash_cooldown_timer = DASH_COOLDOWN
+	_dash_cooldown_timer = dash_cooldown()
 	_dash_available = false
 	velocity = Vector2(DASH_SPEED * facing, 0.0)
 	Audio.play("dash")
@@ -310,7 +333,7 @@ func _process_attack(delta: float) -> void:
 			if body in _attack_hit or not body.has_method("take_damage"):
 				continue
 			_attack_hit.append(body)
-			body.take_damage(ATTACK_DAMAGE, global_position)
+			body.take_damage(attack_damage(), global_position)
 			# A landed hit stops time for a moment so the swing has weight.
 			Feedback.hit_stop(0.05)
 	if _state_timer <= 0.0:
@@ -332,9 +355,9 @@ func _process_heal(delta: float) -> void:
 	velocity.x = 0.0
 	if _state_timer <= 0.0:
 		heal_charges -= 1
-		health = mini(health + HEAL_AMOUNT, MAX_HEALTH)
-		health_changed.emit(health, MAX_HEALTH)
-		heal_charges_changed.emit(heal_charges, MAX_HEAL_CHARGES)
+		health = mini(health + HEAL_AMOUNT, max_health)
+		health_changed.emit(health, max_health)
+		heal_charges_changed.emit(heal_charges, max_heal_charges)
 		Audio.play("heal")
 		state = State.IDLE
 
@@ -391,7 +414,7 @@ func _apply_horizontal(input_dir: float, delta: float, speed_multiplier := 1.0) 
 			accel = GROUND_TURN if on_floor else AIR_TURN
 		else:
 			accel = GROUND_ACCEL if on_floor else AIR_ACCEL
-		var top_speed := input_dir * RUN_SPEED * speed_multiplier
+		var top_speed := input_dir * run_speed() * speed_multiplier
 		velocity.x = move_toward(velocity.x, top_speed, accel * delta)
 	else:
 		var friction := GROUND_FRICTION if on_floor else AIR_FRICTION
@@ -460,7 +483,7 @@ func has_ability(ability: Ability) -> bool:
 func dash_readiness() -> float:
 	if not _dash_available and not is_on_floor():
 		return 0.0
-	return 1.0 - _dash_cooldown_timer / DASH_COOLDOWN
+	return 1.0 - _dash_cooldown_timer / dash_cooldown()
 
 
 func dash_ready() -> bool:
@@ -474,6 +497,108 @@ func unlock(ability: Ability) -> void:
 		return
 	abilities.append(ability)
 	ability_unlocked.emit(ability)
+
+
+# --- Upgrades and power-ups ---------------------------------------------
+
+
+## A permanent pickup: raises the maximum and fills it, and records the
+## pickup as a story flag so it stays collected in the save.
+func apply_upgrade(kind: UpgradeKind, flag: String) -> void:
+	Story.set_flag(flag)
+	_raise_maximum(kind)
+	match kind:
+		UpgradeKind.HEART:
+			health = max_health
+		UpgradeKind.VIAL:
+			heal_charges = max_heal_charges
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
+	upgrade_collected.emit(kind)
+
+
+## Sets the maximums from the upgrade flags in the save, for a loaded or
+## continued hero, and fills them (he arrives rested).
+func restore_upgrades() -> void:
+	max_health = MAX_HEALTH
+	max_heal_charges = MAX_HEAL_CHARGES
+	for flag in Story.to_list():
+		for kind: UpgradeKind in UpgradeKind.values():
+			if flag.begins_with(Upgrade.flag_prefix(kind)):
+				_raise_maximum(kind)
+	health = max_health
+	heal_charges = max_heal_charges
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
+
+
+func _raise_maximum(kind: UpgradeKind) -> void:
+	match kind:
+		UpgradeKind.HEART:
+			max_health += 1
+		UpgradeKind.VIAL:
+			max_heal_charges += 1
+
+
+## A timed power-up. Picking up one the hero already has restarts its time.
+func grant_power(power: Power) -> void:
+	powers[power] = INF if power == Power.HALO else POWER_TIME
+	power_changed.emit()
+
+
+func has_power(power: Power) -> bool:
+	return powers.has(power)
+
+
+## Seconds left on a timed power-up, 0 when the hero does not have it.
+func power_time_left(power: Power) -> float:
+	return float(powers.get(power, 0.0))
+
+
+func attack_damage() -> int:
+	return ATTACK_DAMAGE + (BLADE_BONUS_DAMAGE if has_power(Power.BLADE) else 0)
+
+
+func dash_cooldown() -> float:
+	return DASH_COOLDOWN * (ZEAL_COOLDOWN_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
+
+
+func run_speed() -> float:
+	return RUN_SPEED * (ZEAL_SPEED_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
+
+
+func _tick_powers(delta: float) -> void:
+	var expired: Array[Power] = []
+	for power: Power in powers:
+		if powers[power] != INF:
+			powers[power] -= delta
+			if powers[power] <= 0.0:
+				expired.append(power)
+	for power in expired:
+		powers.erase(power)
+	if not expired.is_empty():
+		power_changed.emit()
+
+
+## Turns a hit aside with the Halo, if the hero has one. Returns true when
+## the hit was absorbed.
+func _spend_halo() -> bool:
+	if not has_power(Power.HALO):
+		return false
+	powers.erase(Power.HALO)
+	power_changed.emit()
+	_invulnerable_timer = INVULNERABLE_TIME
+	Audio.play("checkpoint", -4.0)
+	Feedback.spark(global_position + Vector2(0.0, -20.0), Color(1.0, 0.85, 0.4))
+	Feedback.flash(sprite, 0.12)
+	return true
+
+
+func _clear_powers() -> void:
+	if powers.is_empty():
+		return
+	powers.clear()
+	power_changed.emit()
 
 
 # --- Damage, death, checkpoints ----------------------------------------
@@ -493,7 +618,7 @@ func _can_be_hurt() -> bool:
 ## Takes health away and dies at zero. Returns true when the hero survived.
 func _lose_health(amount: int) -> bool:
 	health = maxi(health - amount, 0)
-	health_changed.emit(health, MAX_HEALTH)
+	health_changed.emit(health, max_health)
 	if health == 0:
 		_die()
 		return false
@@ -502,7 +627,7 @@ func _lose_health(amount: int) -> bool:
 
 ## Called by enemies: knockback away from the attacker.
 func take_damage(amount: int, source_position: Vector2) -> void:
-	if not _can_be_hurt() or not _lose_health(amount):
+	if not _can_be_hurt() or _spend_halo() or not _lose_health(amount):
 		return
 	var dir := 1.0 if global_position.x >= source_position.x else -1.0
 	_set_state(State.HURT, HURT_TIME)
@@ -513,7 +638,14 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 
 ## Called by spikes: put back on the last safe ground.
 func take_hazard_damage(amount: int) -> void:
-	if not _can_be_hurt() or not _lose_health(amount):
+	if not _can_be_hurt():
+		return
+	# The Halo spares the heart, but the hero still has to leave the spikes.
+	if _spend_halo():
+		global_position = last_safe_position
+		velocity = Vector2.ZERO
+		return
+	if not _lose_health(amount):
 		return
 	_hurt_feedback()
 	_set_state(State.HURT, HURT_TIME)
@@ -536,10 +668,10 @@ func freeze() -> void:
 ## Heals from a pickup. Returns false when there is nothing to heal, so the
 ## pickup can stay where it is.
 func restore_health(amount: int) -> bool:
-	if state == State.DEAD or health >= MAX_HEALTH:
+	if state == State.DEAD or health >= max_health:
 		return false
-	health = mini(health + amount, MAX_HEALTH)
-	health_changed.emit(health, MAX_HEALTH)
+	health = mini(health + amount, max_health)
+	health_changed.emit(health, max_health)
 	return true
 
 
@@ -547,10 +679,10 @@ func restore_health(amount: int) -> bool:
 func rest_at(checkpoint_position: Vector2) -> void:
 	respawn_position = checkpoint_position
 	last_safe_position = checkpoint_position
-	health = MAX_HEALTH
-	heal_charges = MAX_HEAL_CHARGES
-	health_changed.emit(health, MAX_HEALTH)
-	heal_charges_changed.emit(heal_charges, MAX_HEAL_CHARGES)
+	health = max_health
+	heal_charges = max_heal_charges
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
 
 
 ## Taking a hit: a sound, a white flash, a shake and a short freeze.
@@ -564,6 +696,7 @@ func _hurt_feedback() -> void:
 func _die() -> void:
 	_set_state(State.DEAD, DEATH_TIME)
 	velocity = Vector2(0.0, -90.0)
+	_clear_powers()
 	Audio.play("death")
 	Feedback.shake(0.6)
 	died.emit()
@@ -583,10 +716,10 @@ func respawn() -> void:
 	_dash_cooldown_timer = 0.0
 	_dash_available = true
 	_air_jump_available = true
-	health = MAX_HEALTH
-	heal_charges = MAX_HEAL_CHARGES
-	health_changed.emit(health, MAX_HEALTH)
-	heal_charges_changed.emit(heal_charges, MAX_HEAL_CHARGES)
+	health = max_health
+	heal_charges = max_heal_charges
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
 	_invulnerable_timer = INVULNERABLE_TIME
 	state = State.IDLE
 	respawned.emit()
@@ -611,7 +744,9 @@ func _update_sprite() -> void:
 		State.FALL:
 			_pose("jump", 1)
 		State.ATTACK:
-			pass  # started once in _start_attack
+			# Started once in _start_attack; the Lit Blade tints the swing.
+			if has_power(Power.BLADE):
+				sprite.modulate = TINT_BLADE
 		State.DASH:
 			_pose("run", 1)
 			sprite.modulate = TINT_LIGHT_DASH if has_ability(Ability.LIGHT_DASH) else TINT_DASH
