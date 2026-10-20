@@ -15,8 +15,12 @@ const PROMPT_FONT_SIZE := 8
 const PROMPT_COLOR := Color(1.0, 0.95, 0.7)
 const PROMPT_SHADOW := Color(0.0, 0.0, 0.0, 0.8)
 
-## Dialogue ids to try, first match wins (see DialogueData.pick).
+## Dialogue ids to try, first match wins (see DialogueData.pick). These are
+## the unique lines; mark them `once` in the dialogue file.
 var dialogue_ids: Array = []
+## Repeat lines, used when nothing in dialogue_ids applies any more. Each
+## talk takes the next one, round robin.
+var rotate_ids: Array = []
 ## The hero's half of the area, in level pixels.
 var area_size := Vector2(28, 40)
 ## Where the key prompt floats, relative to the base.
@@ -26,6 +30,7 @@ var automatic := false
 
 var _player_near := false
 var _prompt: Label
+var _rotation := 0
 
 
 func _ready() -> void:
@@ -65,6 +70,18 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func is_player_near() -> bool:
 	return _player_near
+
+
+## The repeat lines starting from the next one in turn, so the first that
+## applies is the one to play. Advances the turn.
+func rotation_ids() -> Array:
+	var result: Array = []
+	var count := rotate_ids.size()
+	for i in count:
+		result.append(rotate_ids[(_rotation + i) % count])
+	if count > 0:
+		_rotation = (_rotation + 1) % count
+	return result
 
 
 ## Called by main.gd once the dialogue has been read to the end.

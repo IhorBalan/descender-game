@@ -16,7 +16,7 @@ extends Node2D
 ## Tiles are 16x16. Rows may have different lengths; missing cells are empty.
 
 const TILE := 16
-const TILES_TEXTURE := preload("res://assets/sprites/tiles.png")
+const DEFAULT_TILES_TEXTURE := preload("res://assets/sprites/tiles.png")
 const WALKER_SCENE := preload("res://scenes/enemies/walker.tscn")
 const FLYER_SCENE := preload("res://scenes/enemies/flyer.tscn")
 const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
@@ -41,6 +41,9 @@ const TILE_FILL := 0
 const TILE_TOP := 1
 const TILE_SPIKE := 2
 
+## The tile sheet in use: fill, top and spikes, 16x16 each. Set before
+## loading a level to give it its own ground (see Levels.tiles).
+var tiles_texture: Texture2D = DEFAULT_TILES_TEXTURE
 var rows: PackedStringArray = []
 var width := 0
 var height := 0
@@ -264,6 +267,7 @@ func _add_placement(x: int, y: int, key: String) -> void:
 			return
 	node.name = "%s%s" % [str(spec.get("type", "")).capitalize(), key]
 	node.dialogue_ids = spec.get("dialogue", [])
+	node.rotate_ids = spec.get("rotate", [])
 	node.position = _cell_bottom(x, y)
 	_objects.add_child(node)
 	interactables.append(node)
@@ -344,7 +348,7 @@ func _add_spike_run(x: int, y: int, run: int) -> void:
 
 func _add_tile_sprite(x: int, y: int, tile: int, parent: Node2D) -> void:
 	var sprite := Sprite2D.new()
-	sprite.texture = TILES_TEXTURE
+	sprite.texture = tiles_texture
 	sprite.region_enabled = true
 	sprite.region_rect = Rect2(tile * TILE, 0, TILE, TILE)
 	sprite.position = _cell_center(x, y) - parent.position

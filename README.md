@@ -4,9 +4,10 @@ A side-view metroidvania built in Godot 4: a man with half-finished angel
 powers fights his way down from Heaven, through Purgatory and the nine
 circles of Hell, to rescue his brother.
 
-This repository holds the first playable prototype: two Heaven levels with
-the hero, movement, melee combat, enemies, checkpoints, limited healing and
-the first scenes of the story, behind a title screen with three save slots.
+This repository holds the first playable prototype: two Heaven levels and
+the Earth hub, with the hero, movement, melee combat, enemies, checkpoints,
+limited healing and the first scenes of the story, behind a title screen
+with three save slots.
 
 ## Running it
 
@@ -88,9 +89,18 @@ screen, and the same key (or jump) turns the page. The hero stands still and
 cannot be hurt while a box is open. People say different things once the
 hero has heard their first lines, relics are gone once read, and a few spots
 in the level speak on their own the first time the hero walks through. What
-he has seen is kept as story flags in the save. The script for the whole
-game, with the lines that are in the level and the ones that are not yet, is
-in [`docs/story/script.md`](docs/story/script.md).
+he has seen is kept as story flags in the save. Everyone has a few unique
+conversations, in order, some of them unlocked by what the hero has found;
+once those are used up they rotate through a handful of repeat lines, one
+per talk. The script for the whole game, with the lines that are in the
+levels and the ones that are not yet, is in
+[`docs/story/script.md`](docs/story/script.md).
+
+After Heaven the hero lands in Hollowmere, the Earth hub: a town under the
+hole in the sky, with its own sky, tiles and ambient sound, where four
+survivors (Old Pell, Hanne, Corporal Dace and Sister Ava) and three relics
+tell what the war looks like from the ground. The hole in the churchyard is
+the way down.
 
 ## Layout
 
@@ -106,10 +116,11 @@ in [`docs/story/script.md`](docs/story/script.md).
 | `scenes/dialogue_box.tscn`, `scripts/ui/dialogue_box.gd` | The text box: speaker, typed text, paging |
 | `scripts/interactable.gd` | Base for things the hero can talk to or examine; shows the talk key when he is close |
 | `scripts/npc.gd`, `scripts/lore_item.gd`, `scripts/story_trigger.gd` | Someone to talk to, a relic with a description, a spot that speaks on its own |
-| `dialogue/level_01.json` | Every line in the first level, by id, with the flags each needs and sets |
-| `levels/level_01.json` | Where the level's NPCs, relics and triggers stand (the digits in the map) and which lines they use |
+| `dialogue/level_01.json`, `dialogue/earth_hub.json` | Every line in a level, by id, with the flags each needs and sets, and whether it plays once |
+| `levels/level_01.json`, `levels/earth_hub.json` | Where a level's NPCs, relics and triggers stand (the digits in the map), their unique lines and their repeat lines |
+| `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
-| `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names and map paths |
+| `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, map paths, sky, tiles and ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |
 | `scripts/audio.gd` | The `Audio` autoload: sound effects and the ambient loop |
@@ -125,11 +136,11 @@ in [`docs/story/script.md`](docs/story/script.md).
 | `scripts/upgrade.gd`, `scripts/power_up.gd` | A permanent upgrade (heart, healing charge) and a timed power-up (Halo, Lit Blade, Zeal) |
 | `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
-| `levels/level_01.txt`, `levels/level_02.txt` | The levels. Edit them in any text editor |
+| `levels/level_01.txt`, `levels/level_02.txt`, `levels/earth_hub.txt` | The levels. Edit them in any text editor |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
-| `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
+| `assets/sprites/` | Character strips from the art thread and the NPC rig, plus generated tiles (Heaven and Earth), checkpoint and gate |
 | `assets/ui_theme.tres` | The menus' font size and button styles |
-| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
+| `tools/gen_placeholders.py` | Regenerates the tiles (both sets), checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
