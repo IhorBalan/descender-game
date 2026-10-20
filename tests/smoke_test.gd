@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 97
+const EXPECTED_CHECKS := 106
 const LAST_TICK := 860
 
 var _ticks := 0
@@ -136,10 +136,13 @@ func _physics_process(_delta: float) -> void:
 			_player.take_damage(99, _player.global_position)
 		402:
 			_check(_player.state == Player.State.DEAD, "hero dies")
+		468:
+			_check(_main.fade.cover.modulate.a > 0.5, "screen fades out before the respawn")
 		490:
 			_check(_player.state != Player.State.DEAD, "hero respawns")
 			_check(_player.health == Player.MAX_HEALTH, "respawn restores health")
 			_check(_main.level.enemy_count() == _enemy_count, "enemies respawn")
+			_check(_main.fade.cover.modulate.a < 1.0, "screen fades back in after the respawn")
 			# Drop the hero from high up so he has time for two dashes.
 			_player.global_position.y -= 160.0
 			_player.velocity = Vector2.ZERO
@@ -220,8 +223,26 @@ func _physics_process(_delta: float) -> void:
 			_check(Audio.last_played == "hit", "hitting an enemy plays its sound")
 			_check(_imp.sprite.material is ShaderMaterial, "hit enemy flashes")
 			_check(Feedback.spark_count() >= 1, "hit enemy throws sparks")
+			_check(_imp.health_bar.visible, "hit enemy shows its health bar")
+			# A heal mote dropped onto the hero, who was hurt by the swing.
+			var mote: HealMote = load("res://scenes/heal_mote.tscn").instantiate()
+			mote.position = _player.global_position + Vector2(0.0, -12.0)
+			_main.add_child(mote)
+			_mark_x = _player.health
+		646:
+			_check(_player.health == int(_mark_x) + 1, "heal mote restores a heart")
+			_check(
+				_main.get_tree().get_nodes_in_group("heal_mote").is_empty(), "heal mote is used up"
+			)
 		670:
 			_check(Feedback.spark_count() == 0, "sparks clean themselves up")
+		672:
+			_imp.take_damage(99, _player.global_position)
+			_check(_imp._dead, "imp dies")
+			_check(Audio.last_played == "enemy_die", "enemy death plays its sound")
+			_check(not _imp.health_bar.visible, "health bar hides on death")
+		695:
+			_check(_imp.sprite.modulate.a < 1.0, "dead imp fades out")
 		700:
 			# Light barrier: the enemies behind it would knock the hero about,
 			# so clear them first, then dash at the wall without the ability.

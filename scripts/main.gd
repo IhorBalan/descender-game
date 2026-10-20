@@ -9,6 +9,7 @@ extends Node2D
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
+const DEATH_FADE_TIME := 0.4
 const ABILITY_MESSAGES := {
 	Player.Ability.WINGS: "Wings: press jump again in the air",
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
@@ -158,15 +159,28 @@ func _on_save_requested() -> void:
 		pause_menu.show_saved(place)
 
 
+## Dying: the message shows while the hero falls, then the screen goes
+## black just before he comes back, so the respawn is never a visible snap.
 func _on_player_died() -> void:
 	hud.show_message("The angels' system pulls you back...", 1.2)
+	await get_tree().create_timer(Player.DEATH_TIME - DEATH_FADE_TIME - 0.05).timeout
+	if player.state == Player.State.DEAD:
+		fade.fade_out(DEATH_FADE_TIME)
 
 
 func _on_player_respawned() -> void:
 	# The signal fires from the hero's physics tick; rebuild the enemies once
 	# the physics step is over.
 	level.spawn_enemies.call_deferred()
+	_clear_motes()
 	camera.snap_to_target()
+	fade.fade_in()
+
+
+## Heal motes left by enemies go with the enemies when the fight resets.
+func _clear_motes() -> void:
+	for mote in get_tree().get_nodes_in_group("heal_mote"):
+		mote.queue_free()
 
 
 func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
