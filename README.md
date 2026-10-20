@@ -45,6 +45,7 @@ Resting at a checkpoint also saves the game: the checkpoint, the unlocked
 abilities and the time played go to the slot the game was started from,
 as JSON under `user://saves/`. Loading puts the hero back at that
 checkpoint, rested, with the feathers he already took gone from the level.
+Restarting with R does the same from the progress so far.
 Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
