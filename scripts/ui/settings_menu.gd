@@ -1,18 +1,24 @@
 class_name SettingsMenu
 extends Control
 
-## The settings screen: volume, fullscreen and keyboard bindings. Shared by
-## the title screen and the pause menu, which show it and listen for
-## `closed`. Pressing a key button waits for the next key and binds it;
-## Esc cancels the wait.
+## The settings screen: volume, fullscreen, keyboard and gamepad bindings.
+## Shared by the title screen and the pause menu, which show it and listen
+## for `closed`. The bindings grid shows one device at a time; the Device
+## button flips between keyboard and gamepad. Pressing a binding button
+## waits for the next key or gamepad button and binds it; Esc cancels.
 
 signal closed
+
+enum Device { KEYBOARD, GAMEPAD }
+
+var device := Device.KEYBOARD
 
 var _listening_action: StringName = &""
 var _key_buttons: Dictionary = {}
 
 @onready var volume_slider: HSlider = $Menu/Volume/Slider
 @onready var fullscreen_toggle: CheckButton = $Menu/Fullscreen/Toggle
+@onready var device_button: Button = $Menu/KeysRow/Device
 @onready var keys_grid: GridContainer = $Menu/Keys
 @onready var reset_button: Button = $Menu/Buttons/ResetKeys
 @onready var back_button: Button = $Menu/Buttons/Back
@@ -25,6 +31,7 @@ func _ready() -> void:
 	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
 	reset_button.pressed.connect(_on_reset_pressed)
 	back_button.pressed.connect(close)
+	device_button.pressed.connect(_on_device_pressed)
 	# Two actions per row: label, key, label, key.
 	for action in Settings.REBINDABLE_ACTIONS:
 		var label := Label.new()
@@ -45,11 +52,17 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if _listening_action != &"":
 		if event is InputEventKey and event.pressed and not event.echo:
-			if event.keycode != KEY_ESCAPE:
+			if event.keycode == KEY_ESCAPE:
+				_stop_listening()
+			elif device == Device.KEYBOARD:
 				Settings.bind_key(_listening_action, event.physical_keycode)
 				Settings.save_settings()
-			_listening_action = &""
-			_refresh()
+				_stop_listening()
+			get_viewport().set_input_as_handled()
+		elif event is InputEventJoypadButton and event.pressed and device == Device.GAMEPAD:
+			Settings.bind_pad_button(_listening_action, event.button_index)
+			Settings.save_settings()
+			_stop_listening()
 			get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("ui_cancel"):
@@ -76,17 +89,27 @@ func _refresh() -> void:
 	volume_slider.set_value_no_signal(Settings.volume * 100.0)
 	fullscreen_toggle.set_pressed_no_signal(Settings.fullscreen)
 	fullscreen_toggle.text = "On" if Settings.fullscreen else "Off"
+	var gamepad := device == Device.GAMEPAD
+	device_button.text = "Gamepad" if gamepad else "Keyboard"
 	for action in _key_buttons:
 		var button: Button = _key_buttons[action]
 		if action == _listening_action:
-			button.text = "Press a key..."
+			button.text = "Press a button..." if gamepad else "Press a key..."
+		elif gamepad:
+			button.text = Settings.pad_button_names(action)
 		else:
 			button.text = Settings.key_names(action)
-	hint.text = (
-		"Press the new key, or Esc to keep the old one"
-		if _listening_action != &""
-		else "Arrows move   Space changes   Esc goes back"
-	)
+	if _listening_action == &"":
+		hint.text = "Arrows move   Space changes   Esc goes back"
+	elif gamepad:
+		hint.text = "Press the new gamepad button, or Esc to keep the old one"
+	else:
+		hint.text = "Press the new key, or Esc to keep the old one"
+
+
+func _stop_listening() -> void:
+	_listening_action = &""
+	_refresh()
 
 
 func _on_volume_changed(value: float) -> void:
@@ -106,6 +129,12 @@ func _on_fullscreen_toggled(pressed: bool) -> void:
 
 func _on_key_button_pressed(action: StringName) -> void:
 	_listening_action = action
+	_refresh()
+
+
+func _on_device_pressed() -> void:
+	device = Device.GAMEPAD if device == Device.KEYBOARD else Device.KEYBOARD
+	_listening_action = &""
 	_refresh()
 
 

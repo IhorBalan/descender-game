@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 140
+const EXPECTED_CHECKS := 146
 const LAST_TICK := 900
 
 var _ticks := 0
@@ -502,10 +502,29 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				&"interact" in Settings.REBINDABLE_ACTIONS, "interact is rebindable in the settings"
 			)
+			# Gamepad: Y (heal) moves to attack, so heal loses it; reset puts it back.
+			var pad_before: Array = Settings.action_pad_buttons(&"heal")
+			Settings.bind_pad_button(&"attack", JOY_BUTTON_Y)
+			_check(
+				Settings.action_pad_buttons(&"attack") == [JOY_BUTTON_Y], "pad button rebinds to Y"
+			)
+			_check(JOY_BUTTON_Y not in Settings.action_pad_buttons(&"heal"), "Y leaves heal")
+			var y := InputEventJoypadButton.new()
+			y.button_index = JOY_BUTTON_Y
+			_check(InputMap.action_has_event(&"attack", y), "InputMap takes the pad button")
+			Settings.reset_keys()
+			_check(
+				Settings.action_pad_buttons(&"heal") == pad_before, "reset restores the pad button"
+			)
 			_title.get_node("Menu/Settings").pressed.emit()
 		876:
 			_check(_title.get_node("SettingsMenu").visible, "settings screen opens from the title")
 			_check(not _title.get_node("Menu").visible, "title menu hides behind settings")
+			var settings_menu: SettingsMenu = _title.get_node("SettingsMenu")
+			var attack_button: Button = settings_menu._key_buttons[&"attack"]
+			_check(attack_button.text == "J / X", "settings show the attack keys")
+			settings_menu.device_button.pressed.emit()
+			_check(attack_button.text == "X", "device button switches to gamepad names")
 		LAST_TICK:
 			_report()
 	if _ticks > LAST_TICK:
