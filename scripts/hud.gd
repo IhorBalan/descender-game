@@ -1,7 +1,10 @@
 class_name Hud
 extends CanvasLayer
 
-## Health, healing charges and short messages.
+## Health, healing charges, unlocked abilities, the dash cooldown and short
+## messages. main.gd hands over the hero so the dash readout can follow him.
+
+var player: Player
 
 var _message_timer := 0.0
 ## Messages waiting for the current timed one to end: [text, duration].
@@ -12,6 +15,11 @@ var _queue: Array[Array] = []
 
 
 func _process(delta: float) -> void:
+	if is_instance_valid(player):
+		var readiness := player.dash_readiness()
+		if readiness != status.dash_readiness:
+			status.dash_readiness = readiness
+			status.queue_redraw()
 	if _message_timer > 0.0:
 		_message_timer -= delta
 		if _message_timer <= 0.0:
@@ -30,6 +38,11 @@ func set_health(current: int, max_value: int) -> void:
 func set_charges(current: int, max_value: int) -> void:
 	status.charges = current
 	status.max_charges = max_value
+	status.queue_redraw()
+
+
+func set_abilities(abilities: Array[Player.Ability]) -> void:
+	status.abilities = abilities.duplicate()
 	status.queue_redraw()
 
 

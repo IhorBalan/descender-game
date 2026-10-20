@@ -47,7 +47,9 @@ or Esc to keep the old one. Settings live in `user://settings.cfg`.
 Pausing opens a menu to resume, save or quit to the title. Saving there
 records the last checkpoint, which is where the save will resume.
 
-Jump height depends on how long the button is held. Dashing gives a few
+The top left of the screen shows hearts, healing charges, the angel
+abilities unlocked so far and a small bar that fills as the dash comes
+back. Jump height depends on how long the button is held. Dashing gives a few
 invulnerability frames. Picking up the feather unlocks the **wings**: press
 jump again in the air for a second, slightly lower jump. The second feather,
 by the checkpoint, unlocks the **light dash**: the dash goes further and

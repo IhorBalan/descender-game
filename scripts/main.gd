@@ -56,6 +56,8 @@ func _ready() -> void:
 		_apply_save(SaveManager.pending)
 		SaveManager.pending = {}
 	player.ability_unlocked.connect(_on_ability_unlocked)
+	hud.player = player
+	hud.set_abilities(player.abilities)
 	level.spawn_enemies()
 	pause_menu.save_requested.connect(_on_save_requested)
 
@@ -193,6 +195,7 @@ func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 
 func _on_ability_unlocked(ability: Player.Ability) -> void:
 	hud.show_message(ABILITY_MESSAGES.get(ability, "New ability unlocked"), 3.5)
+	hud.set_abilities(player.abilities)
 
 
 func _on_goal_reached() -> void:
