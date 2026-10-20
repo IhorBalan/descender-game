@@ -19,6 +19,10 @@ const KNOCKBACK := Vector2(90.0, -60.0)
 const ATTACK_HEIGHT_TOLERANCE := 24.0
 const TINT_WINDUP := Color(1.0, 0.75, 0.55)
 const TINT_HURT := Color(1.0, 0.5, 0.5)
+const DEATH_TIME := 0.5
+const DEATH_SPARKS := Color(1.0, 0.45, 0.35)
+const HEALTH_BAR_SCENE := preload("res://scripts/enemy_health_bar.gd")
+const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 
 ## body: collision size. speed: patrol speed. health: hits to kill.
 ## walk: the looping animation name. faces_left: whether the strips face left.
@@ -26,6 +30,7 @@ const TINT_HURT := Color(1.0, 0.5, 0.5)
 ## reach: the strike hitbox size, placed in front of the body.
 ## windup / strike / recover: the three phases of a swing, in seconds.
 ## cooldown: pause before the next swing can start. attack_damage: hearts.
+## drop_chance: how often a kill leaves a heal mote behind.
 const PROFILES := {
 	"imp":
 	{
@@ -41,6 +46,7 @@ const PROFILES := {
 		"recover": 0.45,
 		"cooldown": 0.8,
 		"attack_damage": 1,
+		"drop_chance": 0.35,
 	},
 	"angel_guard":
 	{
@@ -56,6 +62,7 @@ const PROFILES := {
 		"recover": 0.7,
 		"cooldown": 1.2,
 		"attack_damage": 2,
+		"drop_chance": 1.0,
 	},
 }
 
@@ -69,6 +76,10 @@ var state: State = State.PATROL
 var health := 0
 var direction := -1
 var speed := 30.0
+var health_bar: EnemyHealthBar
+## Where a dropped heal mote goes (set by the level); the enemy's own
+## parent when unset, so a dying enemy is not counted among the live ones.
+var drop_parent: Node
 var _profile: Dictionary = {}
 var _walk_anim := "run"
 var _half_width := 0.0
@@ -118,6 +129,9 @@ func _ready() -> void:
 	attack_shape.disabled = true
 	floor_ray.position.y = -2.0
 	floor_ray.target_position = Vector2(0.0, 10.0)
+	health_bar = HEALTH_BAR_SCENE.new()
+	health_bar.position = Vector2(0.0, -body.y - 6.0)
+	add_child(health_bar)
 	_face(direction)
 
 
@@ -237,6 +251,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if _dead:
 		return
 	health -= amount
+	health_bar.show_health(health, _profile["health"])
 	Audio.play("hit")
 	Feedback.flash(sprite, 0.1)
 	Feedback.spark(global_position + Vector2(0.0, -body_shape.shape.get_rect().size.y / 2.0))
@@ -252,15 +267,39 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 		_die()
 
 
+## Death: the body is thrown back and topples over while it fades, with a
+## burst of sparks, and sometimes leaves a heal mote behind.
 func _die() -> void:
 	_dead = true
 	set_physics_process(false)
 	Audio.play("enemy_die")
 	Feedback.shake(0.3)
+	Feedback.spark(global_position + Vector2(0.0, body_shape.position.y), DEATH_SPARKS)
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	attack_hitbox.set_deferred("monitoring", false)
+	health_bar.visible = false
+	sprite.animation = "hurt"
+	sprite.pause()
+	sprite.frame = 0
+	sprite.modulate = Color.WHITE
+	# Topple away from the hero, who is on the side the body faces.
+	var fall_dir := -direction
 	var tween := create_tween()
-	tween.tween_property(sprite, "modulate:a", 0.0, 0.3)
-	tween.parallel().tween_property(sprite, "scale", Vector2(1.3, 0.4), 0.3)
-	tween.tween_callback(queue_free)
+	tween.set_parallel(true)
+	tween.tween_property(sprite, "rotation", fall_dir * PI / 2.0, DEATH_TIME).set_ease(
+		Tween.EASE_OUT
+	)
+	tween.tween_property(sprite, "position:x", fall_dir * 6.0, DEATH_TIME).set_ease(Tween.EASE_OUT)
+	tween.tween_property(sprite, "modulate:a", 0.0, DEATH_TIME * 0.5).set_delay(DEATH_TIME * 0.5)
+	tween.chain().tween_callback(queue_free)
+	_maybe_drop_mote()
+
+
+func _maybe_drop_mote() -> void:
+	if randf() >= float(_profile["drop_chance"]):
+		return
+	var mote: HealMote = MOTE_SCENE.instantiate()
+	mote.position = global_position + Vector2(0.0, body_shape.position.y)
+	var parent := drop_parent if drop_parent else get_parent()
+	parent.add_child.call_deferred(mote)

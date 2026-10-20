@@ -64,7 +64,9 @@ the gate of the last level ends the prototype.
 Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
-Hitting one during the wind-up cancels the swing.
+Hitting one during the wind-up cancels the swing. A hit enemy shows its
+health for a moment, and a killed one sometimes leaves a mote of light
+that restores a heart (angel guards always do).
 
 ## Layout
 
@@ -84,6 +86,8 @@ Hitting one during the wind-up cancels the swing.
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
+| `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
+| `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
 | `scripts/level_builder.gd` | Builds tiles, collision, spikes, enemies and objects from an ASCII map |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |

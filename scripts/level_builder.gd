@@ -246,6 +246,7 @@ func spawn_enemies() -> void:
 	for spawn in _enemy_spawns:
 		var enemy: Node2D = spawn.scene.instantiate()
 		enemy.position = spawn.position
+		enemy.drop_parent = _objects
 		if enemy is Walker:
 			var walker := enemy as Walker
 			walker.character = spawn.character
@@ -253,8 +254,13 @@ func spawn_enemies() -> void:
 		_enemies.add_child(enemy)
 
 
+## Live enemies: the dying ones still fading out are not counted.
 func enemy_count() -> int:
-	return _enemies.get_child_count()
+	var count := 0
+	for enemy in _enemies.get_children():
+		if not enemy.is_queued_for_deletion() and not enemy.get("_dead"):
+			count += 1
+	return count
 
 
 ## The bounds of every light barrier cell, in level pixels (empty when the

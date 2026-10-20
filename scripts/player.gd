@@ -64,8 +64,10 @@ const DASH_END_SPEED := 160.0
 
 # Attack
 const ATTACK_TIME := 0.28
-const ATTACK_ACTIVE_FROM := 0.06
-const ATTACK_ACTIVE_UNTIL := 0.2
+## The swing frames of the attack strip (6 frames at 21 fps): the sword
+## passes through the arc from frame 2 to frame 4.
+const ATTACK_ACTIVE_FROM := 0.1
+const ATTACK_ACTIVE_UNTIL := 0.24
 const ATTACK_DAMAGE := 1
 const ATTACK_OFFSET_X := 20.0
 ## Share of run speed the hero can walk at while swinging on the ground.
@@ -504,6 +506,16 @@ func freeze() -> void:
 	frozen = true
 	_set_state(State.IDLE, 0.0)
 	velocity.x = 0.0
+
+
+## Heals from a pickup. Returns false when there is nothing to heal, so the
+## pickup can stay where it is.
+func restore_health(amount: int) -> bool:
+	if state == State.DEAD or health >= MAX_HEALTH:
+		return false
+	health = mini(health + amount, MAX_HEALTH)
+	health_changed.emit(health, MAX_HEALTH)
+	return true
 
 
 ## Resting at a checkpoint: full health, healing refilled, respawn point set.
