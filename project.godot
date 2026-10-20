@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.7", "GL Compatibility")
 
 [autoload]
 
+Levels="*res://scripts/levels.gd"
 SaveManager="*res://scripts/save_manager.gd"
 Settings="*res://scripts/settings.gd"
 

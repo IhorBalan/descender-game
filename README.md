@@ -4,8 +4,8 @@ A side-view metroidvania built in Godot 4: a man with half-finished angel
 powers fights his way down from Heaven, through Purgatory and the nine
 circles of Hell, to rescue his brother.
 
-This repository holds the first playable prototype: one level with the
-hero, movement, melee combat, enemies, a checkpoint and limited healing,
+This repository holds the first playable prototype: two Heaven levels with
+the hero, movement, melee combat, enemies, checkpoints and limited healing,
 behind a title screen with three save slots.
 
 ## Running it
@@ -14,6 +14,10 @@ behind a title screen with three save slots.
    .NET needed).
 2. Open `project.godot` in the editor and press **F5**, or run
    `godot --path .` from this folder.
+
+To jump straight into a level while testing, run the level scene with its
+id: `godot --path . scenes/main.tscn -- --level=heaven_2`. The ids are
+listed in `scripts/levels.gd`.
 
 The game renders at **320x180** and scales up by whole numbers, so the
 window is 1280x720 by default.
@@ -50,11 +54,13 @@ by the checkpoint, unlocks the **light dash**: the dash goes further and
 passes through walls of angel light, which block everyone else. Abilities
 stay unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
-Resting at a checkpoint also saves the game: the checkpoint, the unlocked
-abilities and the time played go to the slot the game was started from,
-as JSON under `user://saves/`. Loading puts the hero back at that
+Resting at a checkpoint also saves the game: the level, the checkpoint, the
+unlocked abilities and the time played go to the slot the game was started
+from, as JSON under `user://saves/`. Loading puts the hero back at that
 checkpoint, rested, with the feathers he already took gone from the level.
-Restarting with R does the same from the progress so far.
+Restarting with R does the same from the progress so far. Reaching the goal
+gate fades out, saves, and starts the next level with the abilities so far;
+the gate of the last level ends the prototype.
 Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
@@ -69,14 +75,16 @@ Hitting one during the wind-up cancels the swing.
 | `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen: volume, fullscreen, key bindings |
 | `scripts/settings.gd` | The `Settings` autoload: reads, saves and applies the settings |
 | `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
-| `scenes/main.tscn`, `scripts/main.gd` | Boots the level, spawns the hero, wires HUD and camera, applies and writes saves |
+| `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names and map paths |
+| `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
+| `scripts/screen_fade.gd` | Fades the screen to black between levels |
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
 | `scripts/level_builder.gd` | Builds tiles, collision, spikes, enemies and objects from an ASCII map |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
-| `levels/level_01.txt` | The level. Edit it in any text editor |
+| `levels/level_01.txt`, `levels/level_02.txt` | The levels. Edit them in any text editor |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
 | `assets/ui_theme.tres` | The menus' font size and button styles |

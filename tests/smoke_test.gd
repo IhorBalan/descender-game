@@ -9,8 +9,8 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 69
-const LAST_TICK := 800
+const EXPECTED_CHECKS := 83
+const LAST_TICK := 860
 
 var _ticks := 0
 var _main: Node
@@ -30,6 +30,8 @@ var _checks := 0
 var _save: Dictionary = {}
 var _loaded: Node
 var _title: Node
+## The slot the save/load/transition checks use.
+var _slot := -1
 ## The SaveManager autoload; this script is compiled before autoloads
 ## are registered, so it is looked up by node instead of by name.
 var _saves: Node
@@ -259,22 +261,24 @@ func _physics_process(_delta: float) -> bool:
 			_player.velocity = Vector2.ZERO
 		774:
 			_check(_main._active_checkpoint == 0, "resting records the checkpoint")
-			var slot: int = _saves.SLOT_COUNT - 1
-			_saves.start_new_game(slot)
+			_slot = _saves.SLOT_COUNT - 1
+			_saves.start_new_game(_slot)
 			_check(_main.save_game(), "save slot written")
-			_save = _saves.read(slot)
+			_save = _saves.read(_slot)
 			_check(int(_save.get("checkpoint", -1)) == 0, "save holds the checkpoint")
 			_check(_save.get("abilities", []).size() == 2, "save holds both abilities")
-			_check(_saves.latest_slot() == slot, "latest slot is the new save")
+			_check(str(_save.get("level", "")) == "heaven_1", "save holds the level id")
+			_check(_saves.latest_slot() == _slot, "latest slot is the new save")
 			# Loading: boot a fresh level from the save in place of this one.
 			root.remove_child(_main)
 			_main.free()
-			_check(_saves.load_slot(slot), "save slot loads")
+			_check(_saves.load_slot(_slot), "save slot loads")
 			_loaded = _main_scene.instantiate()
 			root.add_child(_loaded)
 		778:
 			var loaded_player: Player = _loaded.player
 			var checkpoint: Checkpoint = _loaded.level.checkpoints[0]
+			_check(_loaded.level_id == "heaven_1", "loaded level is the saved one")
 			_check(
 				loaded_player.global_position.distance_to(checkpoint.global_position) < 1.0,
 				"loaded hero stands at the checkpoint"
@@ -288,16 +292,49 @@ func _physics_process(_delta: float) -> bool:
 				"loaded hero keeps both abilities"
 			)
 			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
-			_saves.delete(_saves.SLOT_COUNT - 1)
+			# Level transition: walk into the goal gate.
+			var levels := root.get_node_or_null("Levels")
+			_check(levels != null, "Levels autoload present")
+			_check(levels.next_id("heaven_1") == "heaven_2", "heaven_2 follows heaven_1")
+			_check(
+				levels.resolve("res://levels/level_01.txt") == "heaven_1", "old path saves resolve"
+			)
+			loaded_player.global_position = _loaded.level.goal.global_position
+			loaded_player.velocity = Vector2.ZERO
+		782:
+			_check(_loaded.player.frozen, "goal gate freezes the hero")
+			_check(_loaded._transitioning, "goal gate starts the transition")
+		830:
+			# The fade is over and the next level has booted as the current scene.
+			_check(_loaded.fade.is_covered(), "screen faded to black")
+			_save = _saves.read(_slot)
+			_check(str(_save.get("level", "")) == "heaven_2", "transition saves the next level")
+			_check(int(_save.get("checkpoint", 0)) == -1, "next level starts with no checkpoint")
+			var next: Node = current_scene
+			_check(next != null and next != _loaded, "next level scene booted")
+			if next:
+				_check(next.level_id == "heaven_2", "next level is heaven_2")
+				_check(
+					next.player.has_ability(Player.Ability.LIGHT_DASH),
+					"abilities carry over to the next level"
+				)
+				_check(
+					next.player.global_position.distance_to(next.level.player_start) < 1.0,
+					"hero starts the next level at its start"
+				)
+				current_scene = null
+				root.remove_child(next)
+				next.free()
+			_saves.delete(_slot)
 			_saves.current_slot = -1
 			root.remove_child(_loaded)
 			_loaded.free()
 			_title = load("res://scenes/title.tscn").instantiate()
 			root.add_child(_title)
-		782:
+		834:
 			_check(_title.get_node("Menu").visible, "title screen shows its menu")
 			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
-		786:
+		838:
 			# Settings: rebinding changes the InputMap and is undone by reset.
 			var settings := root.get_node_or_null("Settings")
 			_check(settings != null, "Settings autoload present")
@@ -310,7 +347,7 @@ func _physics_process(_delta: float) -> bool:
 			settings.reset_keys()
 			_check(settings.action_keys(&"heal") == before, "reset restores the default key")
 			_title.get_node("Menu/Settings").pressed.emit()
-		788:
+		840:
 			_check(_title.get_node("SettingsMenu").visible, "settings screen opens from the title")
 			_check(not _title.get_node("Menu").visible, "title menu hides behind settings")
 		LAST_TICK:
