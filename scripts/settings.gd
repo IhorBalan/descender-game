@@ -12,7 +12,15 @@ const PATH := "user://settings.cfg"
 ## Every keyboard action is here, so a key moved to one action is taken
 ## away from whichever other action had it.
 const REBINDABLE_ACTIONS: Array[StringName] = [
-	&"move_left", &"move_right", &"jump", &"attack", &"dash", &"heal", &"pause", &"restart"
+	&"move_left",
+	&"move_right",
+	&"jump",
+	&"attack",
+	&"dash",
+	&"heal",
+	&"interact",
+	&"pause",
+	&"restart",
 ]
 const ACTION_LABELS := {
 	&"move_left": "Move left",
@@ -21,6 +29,7 @@ const ACTION_LABELS := {
 	&"attack": "Attack",
 	&"dash": "Dash",
 	&"heal": "Heal",
+	&"interact": "Talk",
 	&"pause": "Pause",
 	&"restart": "Restart",
 }

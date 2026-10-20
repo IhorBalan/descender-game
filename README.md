@@ -5,8 +5,8 @@ powers fights his way down from Heaven, through Purgatory and the nine
 circles of Hell, to rescue his brother.
 
 This repository holds the first playable prototype: one level with the
-hero, movement, melee combat, enemies, a checkpoint and limited healing,
-behind a title screen with three save slots.
+hero, movement, melee combat, enemies, a checkpoint, limited healing and
+the first scenes of the story, behind a title screen with three save slots.
 
 ## Running it
 
@@ -27,6 +27,7 @@ window is 1280x720 by default.
 | Attack  | J or X              | X              |
 | Dash    | K or Shift          | RB or B        |
 | Heal    | H                   | Y              |
+| Talk    | E                   | LB             |
 | Pause   | Esc                 | Start          |
 | Restart | R                   |                |
 
@@ -51,7 +52,8 @@ passes through walls of angel light, which block everyone else. Abilities
 stay unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
 Resting at a checkpoint also saves the game: the checkpoint, the unlocked
-abilities and the time played go to the slot the game was started from,
+abilities, the story flags and the time played go to the slot the game was
+started from,
 as JSON under `user://saves/`. Loading puts the hero back at that
 checkpoint, rested, with the feathers he already took gone from the level.
 Restarting with R does the same from the progress so far.
@@ -59,6 +61,16 @@ Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
 Hitting one during the wind-up cancels the swing.
+
+The story is told in text boxes. Standing next to someone, or to a relic,
+shows the talk key above them; pressing it opens a box at the bottom of the
+screen, and the same key (or jump) turns the page. The hero stands still and
+cannot be hurt while a box is open. People say different things once the
+hero has heard their first lines, relics are gone once read, and a few spots
+in the level speak on their own the first time the hero walks through. What
+he has seen is kept as story flags in the save. The script for the whole
+game, with the lines that are in the level and the ones that are not yet, is
+in [`docs/story/script.md`](docs/story/script.md).
 
 ## Layout
 
@@ -69,6 +81,14 @@ Hitting one during the wind-up cancels the swing.
 | `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen: volume, fullscreen, key bindings |
 | `scripts/settings.gd` | The `Settings` autoload: reads, saves and applies the settings |
 | `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
+| `scripts/story.gd` | Story flags: who the hero has talked to, what he has seen and read; saved with the game |
+| `scripts/dialogue/dialogue_data.gd` | Reads a level's dialogue file and picks the entry whose flags match |
+| `scenes/dialogue_box.tscn`, `scripts/ui/dialogue_box.gd` | The text box: speaker, typed text, paging |
+| `scripts/interactable.gd` | Base for things the hero can talk to or examine; shows the talk key when he is close |
+| `scripts/npc.gd`, `scripts/lore_item.gd`, `scripts/story_trigger.gd` | Someone to talk to, a relic with a description, a spot that speaks on its own |
+| `dialogue/level_01.json` | Every line in the level, by id, with the flags each needs and sets |
+| `levels/level_01.json` | Where the level's NPCs, relics and triggers stand (the digits in the map) and which lines they use |
+| `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots the level, spawns the hero, wires HUD and camera, applies and writes saves |
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
@@ -80,7 +100,7 @@ Hitting one during the wind-up cancels the swing.
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread, plus generated tiles, checkpoint and gate |
 | `assets/ui_theme.tres` | The menus' font size and button styles |
-| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather and light barrier PNGs |
+| `tools/gen_placeholders.py` | Regenerates the tiles, checkpoint, gate, feather, light barrier and relic PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
 | `tests/smoke_test.gd` | Headless test that drives the hero and checks the basics |
@@ -93,6 +113,7 @@ w  imp (walker)    g  angel guard      f  watcher (flyer)
 C  checkpoint      G  goal gate        .  empty
 W  feather (unlocks the wings)       L  feather (unlocks the light dash)
 |  wall of light (needs the light dash)
+1-9  a story object: an NPC, relic or trigger described in level_01.json
 ```
 
 Tiles are 16x16. The hero is about two and a half tiles tall and jumps

@@ -17,6 +17,9 @@ var _shots := [
 	{"tick": 90, "name": "spikes.png", "x": 36 * 16 + 8.0, "y": 12 * 16.0},
 	{"tick": 140, "name": "checkpoint.png", "x": 57 * 16 + 8.0, "y": 12 * 16.0},
 	{"tick": 190, "name": "goal.png", "x": 88 * 16 + 8.0, "y": 11 * 16.0},
+	# Next to Mereth, with her first line typed out: the hero is put there
+	# early, interact is pressed on arrival and the typing is given time.
+	{"tick": 340, "name": "dialogue.png", "x": 13 * 16 - 20.0, "y": 12 * 16.0, "lead": 120},
 ]
 
 
@@ -31,18 +34,36 @@ func _initialize() -> void:
 
 func _physics_process(_delta: float) -> bool:
 	_ticks += 1
+	if _ticks == 2:
+		# Skip the opening dialogue, which would stop the hero at the start.
+		Story.set_flag("opening_seen")
 	if _ticks == 5:
 		Input.action_press("move_right")
 	for shot in _shots:
-		if _ticks == shot["tick"] - 30 and shot["x"] >= 0.0:
+		var lead: int = shot.get("lead", 30)
+		if _ticks == shot["tick"] - lead and shot["x"] >= 0.0:
 			_main.player.global_position = Vector2(shot["x"], shot["y"])
 			_main.camera.snap_to_target()
+		if _ticks == shot["tick"] - lead + 30 and shot.has("lead"):
+			Input.action_release("move_right")
+			_press("interact", true)
+		if _ticks == shot["tick"] - lead + 32 and shot.has("lead"):
+			_press("interact", false)
 		if _ticks == shot["tick"]:
 			_save(shot["name"])
 	if _ticks > _shots[-1]["tick"] + 5:
 		quit()
 		return true
 	return false
+
+
+## Interact is read from input events, not from the action state, so it is
+## sent as an event.
+func _press(action: String, pressed: bool) -> void:
+	var event := InputEventAction.new()
+	event.action = action
+	event.pressed = pressed
+	Input.parse_input_event(event)
 
 
 func _save(name: String) -> void:

@@ -5,26 +5,41 @@ extends Node2D
 
 const LEVEL_PATH := "res://levels/level_01.txt"
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
-const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
+const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal   E talk"
 const ABILITY_MESSAGES := {
 	Player.Ability.WINGS: "Wings: press jump again in the air",
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
 }
 
 var player: Player
+## The level's dialogue, or null when it has no dialogue file.
+var dialogue: DialogueData
 ## Seconds played in this save, carried over from the loaded file.
 var play_time := 0.0
 ## Index into level.checkpoints of the one the hero last rested at.
 var _active_checkpoint := -1
+## The NPC, relic or trigger whose dialogue is open.
+var _talking_to: Interactable
 
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
 @onready var pause_menu: PauseMenu = $PauseMenu
+@onready var dialogue_box: DialogueBox = $DialogueBox
 
 
 func _ready() -> void:
+	# Story flags come first: the level leaves out relics the save already has.
+	if SaveManager.pending.is_empty():
+		Story.reset()
+	else:
+		Story.from_list(SaveManager.pending.get("flags", []))
 	level.load_from_file(LEVEL_PATH)
+	if not level.dialogue_path.is_empty():
+		dialogue = DialogueData.new(level.dialogue_path)
+	for interactable in level.interactables:
+		interactable.interacted.connect(_on_interacted)
+	dialogue_box.finished.connect(_on_dialogue_finished)
 
 	player = PLAYER_SCENE.instantiate()
 	player.position = level.player_start
@@ -104,6 +119,7 @@ func capture_save() -> Dictionary:
 		"level": LEVEL_PATH,
 		"checkpoint": _active_checkpoint,
 		"abilities": abilities,
+		"flags": Story.to_list(),
 		"play_time": play_time,
 		"saved_at": Time.get_unix_time_from_system(),
 	}
@@ -153,3 +169,33 @@ func _on_ability_unlocked(ability: Player.Ability) -> void:
 func _on_goal_reached() -> void:
 	player.freeze()
 	hud.show_message("Level complete!   Press R to restart", -1.0)
+
+
+# --- Dialogue ------------------------------------------------------------
+
+
+## An NPC, relic or trigger asked for its dialogue: the first entry whose
+## flags match plays, and the hero stands still until it is read.
+func _on_interacted(source: Interactable) -> void:
+	if dialogue == null or dialogue_box.is_open() or player.state == Player.State.DEAD:
+		return
+	var entry := dialogue.pick(source.dialogue_ids)
+	if entry.is_empty():
+		return
+	_talking_to = source
+	player.talking = true
+	# The box covers the message line.
+	hud.hide_message()
+	dialogue_box.play(entry)
+	get_viewport().set_input_as_handled()
+
+
+func _on_dialogue_finished(entry: Dictionary) -> void:
+	Story.set_flag(str(entry.get("sets", "")))
+	# Released after this frame's physics step, so the press that closed the
+	# box is not also read as a jump.
+	player.set_deferred("talking", false)
+	var source := _talking_to
+	_talking_to = null
+	if is_instance_valid(source):
+		source.on_dialogue_finished(entry)

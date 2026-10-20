@@ -28,6 +28,11 @@ func set_charges(current: int, max_value: int) -> void:
 	status.queue_redraw()
 
 
+func hide_message() -> void:
+	message.visible = false
+	_message_timer = 0.0
+
+
 ## A negative duration keeps the message until the next one.
 func show_message(text: String, duration: float = 2.5) -> void:
 	message.text = text

@@ -101,6 +101,9 @@ var death_y := INF
 ## Set when the level ends: input is ignored and the hero can no longer be
 ## hurt, but gravity keeps running so he lands.
 var frozen := false
+## Set by main.gd while a dialogue box is open: input is ignored and nothing
+## can hurt the hero, but he is released again when the box closes.
+var talking := false
 
 var _coyote_timer := 0.0
 var _jump_buffer_timer := 0.0
@@ -144,7 +147,7 @@ func _physics_process(delta: float) -> void:
 	_tick_timers(delta)
 	# Sampled before the state switch so a press near the end of an attack,
 	# dash, heal or hurt is buffered instead of dropped.
-	if not frozen:
+	if not _input_blocked():
 		if Input.is_action_just_pressed("jump"):
 			_jump_buffer_timer = INPUT_BUFFER_TIME
 		if Input.is_action_just_pressed("dash"):
@@ -191,7 +194,7 @@ func _tick_timers(delta: float) -> void:
 
 
 func _process_normal(delta: float) -> void:
-	var input_dir := 0.0 if frozen else Input.get_axis("move_left", "move_right")
+	var input_dir := 0.0 if _input_blocked() else Input.get_axis("move_left", "move_right")
 	if input_dir != 0.0:
 		facing = 1 if input_dir > 0.0 else -1
 	if is_on_floor():
@@ -214,13 +217,13 @@ func _process_normal(delta: float) -> void:
 		_wing_flash_timer = WING_FLASH_TIME
 	elif _jump_rising and velocity.y >= 0.0:
 		_jump_rising = false
-	elif _jump_rising and not frozen and not Input.is_action_pressed("jump"):
+	elif _jump_rising and not _input_blocked() and not Input.is_action_pressed("jump"):
 		# Variable jump height: letting go while rising cuts the jump short,
 		# whichever state the button was released in.
 		velocity.y *= JUMP_CUT_MULTIPLIER
 		_jump_rising = false
 
-	if frozen:
+	if _input_blocked():
 		state = State.IDLE if is_on_floor() else State.FALL
 		return
 	if _dash_buffer_timer > 0.0 and _dash_cooldown_timer <= 0.0 and _dash_available:
@@ -347,12 +350,17 @@ func _apply_gravity(delta: float) -> void:
 	var airborne := state == State.JUMP or state == State.FALL
 	if (
 		airborne
-		and not frozen
+		and not _input_blocked()
 		and absf(velocity.y) < APEX_SPEED_THRESHOLD
 		and Input.is_action_pressed("jump")
 	):
 		gravity *= APEX_GRAVITY_MULTIPLIER
 	velocity.y = minf(velocity.y + gravity * delta, MAX_FALL_SPEED)
+
+
+## Input is ignored at the end of the level and while a dialogue is open.
+func _input_blocked() -> bool:
+	return frozen or talking
 
 
 func _apply_horizontal(input_dir: float, delta: float, speed_multiplier := 1.0) -> void:
@@ -441,9 +449,14 @@ func unlock(ability: Ability) -> void:
 
 
 ## True while nothing can hurt the hero: dead, dashing, blinking after a
-## hit, or standing at the gate after finishing the level.
+## hit, talking, or standing at the gate after finishing the level.
 func _can_be_hurt() -> bool:
-	return not frozen and state != State.DEAD and state != State.DASH and _invulnerable_timer <= 0.0
+	return (
+		not _input_blocked()
+		and state != State.DEAD
+		and state != State.DASH
+		and _invulnerable_timer <= 0.0
+	)
 
 
 ## Takes health away and dies at zero. Returns true when the hero survived.
