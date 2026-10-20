@@ -9,7 +9,7 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 58
+const EXPECTED_CHECKS := 63
 const LAST_TICK := 800
 
 var _ticks := 0
@@ -231,6 +231,25 @@ func _physics_process(_delta: float) -> bool:
 				_player.collision_mask & LightBarrier.LAYER_BIT != 0,
 				"wall of light is solid again after the dash"
 			)
+		760:
+			_press("pause", true)
+		762:
+			_press("pause", false)
+			_check(paused, "pause stops the tree")
+			_check(_main.pause_menu.is_open(), "pause menu opens")
+			_mark_x = _player.global_position.x
+			_press("move_right", true)
+		766:
+			_press("move_right", false)
+			_check(
+				is_equal_approx(_player.global_position.x, _mark_x),
+				"hero stands still while paused"
+			)
+			_press("pause", true)
+		768:
+			_press("pause", false)
+			_check(not paused, "pause again resumes")
+			_check(not _main.pause_menu.is_open(), "pause menu closes")
 		770:
 			# Saving: rest at the checkpoint, write the slot and read it back.
 			_saves = root.get_node_or_null("SaveManager")

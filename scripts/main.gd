@@ -20,6 +20,7 @@ var _active_checkpoint := -1
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
+@onready var pause_menu: PauseMenu = $PauseMenu
 
 
 func _ready() -> void:
@@ -45,6 +46,7 @@ func _ready() -> void:
 		SaveManager.pending = {}
 	player.ability_unlocked.connect(_on_ability_unlocked)
 	level.spawn_enemies()
+	pause_menu.save_requested.connect(_on_save_requested)
 
 	camera.target = player
 	camera.set_limits(level.size_px)
@@ -58,7 +60,10 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event.is_action_pressed("restart"):
+	if event.is_action_pressed("pause"):
+		pause_menu.open()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("restart"):
 		# Restart from the last checkpoint with the progress so far, so a
 		# reload never writes a fresh run over the slot.
 		SaveManager.pending = capture_save()
@@ -110,6 +115,16 @@ func save_game() -> bool:
 	if SaveManager.current_slot < 0:
 		return false
 	return SaveManager.write(SaveManager.current_slot, capture_save())
+
+
+## Saving from the pause menu records the last checkpoint, not the spot the
+## hero is standing on; the button says where the save will resume.
+func _on_save_requested() -> void:
+	if save_game():
+		var place := "the start"
+		if _active_checkpoint >= 0:
+			place = "checkpoint %d" % (_active_checkpoint + 1)
+		pause_menu.show_saved(place)
 
 
 func _on_player_died() -> void:
