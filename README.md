@@ -40,9 +40,11 @@ one asks to be pressed twice before it is overwritten), **Continue** resumes
 the most recent save and **Load Game** picks any slot.
 
 **Settings**, on the title screen and in the pause menu, has the master
-volume, a fullscreen toggle and the keyboard bindings: pick an action,
-press the new key (a key taken from another action is moved, not shared)
-or Esc to keep the old one. Settings live in `user://settings.cfg`.
+volume, a fullscreen toggle and the bindings: pick an action, press the
+new key (a key taken from another action is moved, not shared) or Esc to
+keep the old one. The **Bindings for** button flips the list between the
+keyboard and the gamepad, which are rebound separately. Settings live in
+`user://settings.cfg`.
 
 Pausing opens a menu to resume, save or quit to the title. Saving there
 records the last checkpoint, which is where the save will resume.
@@ -76,7 +78,7 @@ that restores a heart (angel guards always do).
 | ---- | ---------- |
 | `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
 | `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, quit to title |
-| `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen: volume, fullscreen, key bindings |
+| `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen: volume, fullscreen, keyboard and gamepad bindings |
 | `scripts/settings.gd` | The `Settings` autoload: reads, saves and applies the settings |
 | `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names and map paths |
