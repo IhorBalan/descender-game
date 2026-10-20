@@ -270,6 +270,15 @@ func barrier_rect() -> Rect2:
 	return rect
 
 
+## Drops the feathers for abilities the hero already has, for a loaded save.
+func remove_pickups(abilities: Array[Player.Ability]) -> void:
+	for pickup in pickups.duplicate():
+		if pickup.ability in abilities:
+			pickups.erase(pickup)
+			_objects.remove_child(pickup)
+			pickup.queue_free()
+
+
 ## Pickups still waiting in the level (collected ones are freed).
 func pickup_count() -> int:
 	var count := 0

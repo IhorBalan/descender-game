@@ -12,8 +12,12 @@ config_version=5
 
 config/name="Descender"
 config/description="A side-view metroidvania prototype: a man with half-finished angel powers descends from Heaven into Hell."
-run/main_scene="res://scenes/main.tscn"
+run/main_scene="res://scenes/title.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+
+[autoload]
+
+SaveManager="*res://scripts/save_manager.gd"
 
 [display]
 

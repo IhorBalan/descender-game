@@ -9,8 +9,8 @@ extends SceneTree
 ## when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 45
-const LAST_TICK := 760
+const EXPECTED_CHECKS := 58
+const LAST_TICK := 800
 
 var _ticks := 0
 var _main: Node
@@ -26,17 +26,25 @@ var _camera_y := 0.0
 var _enemy_count := 0
 var _failures := 0
 var _checks := 0
+## The save written at the end of the run and the level booted from it.
+var _save: Dictionary = {}
+var _loaded: Node
+var _title: Node
+## The SaveManager autoload; this script is compiled before autoloads
+## are registered, so it is looked up by node instead of by name.
+var _saves: Node
+var _main_scene: PackedScene
 
 
 func _initialize() -> void:
 	# Flyers pick a random hover phase; a fixed seed keeps every run identical.
 	seed(1)
-	var scene: PackedScene = load("res://scenes/main.tscn")
-	if scene == null:
+	_main_scene = load("res://scenes/main.tscn")
+	if _main_scene == null:
 		printerr("FAIL main scene did not load")
 		quit(1)
 		return
-	_main = scene.instantiate()
+	_main = _main_scene.instantiate()
 	root.add_child(_main)
 
 
@@ -223,6 +231,53 @@ func _physics_process(_delta: float) -> bool:
 				_player.collision_mask & LightBarrier.LAYER_BIT != 0,
 				"wall of light is solid again after the dash"
 			)
+		770:
+			# Saving: rest at the checkpoint, write the slot and read it back.
+			_saves = root.get_node_or_null("SaveManager")
+			_check(_saves != null, "SaveManager autoload present")
+			var checkpoint: Checkpoint = _main.level.checkpoints[0]
+			_player.global_position = checkpoint.global_position
+			_player.velocity = Vector2.ZERO
+		774:
+			_check(_main._active_checkpoint == 0, "resting records the checkpoint")
+			var slot: int = _saves.SLOT_COUNT - 1
+			_saves.start_new_game(slot)
+			_check(_main.save_game(), "save slot written")
+			_save = _saves.read(slot)
+			_check(int(_save.get("checkpoint", -1)) == 0, "save holds the checkpoint")
+			_check(_save.get("abilities", []).size() == 2, "save holds both abilities")
+			_check(_saves.latest_slot() == slot, "latest slot is the new save")
+			# Loading: boot a fresh level from the save in place of this one.
+			root.remove_child(_main)
+			_main.free()
+			_check(_saves.load_slot(slot), "save slot loads")
+			_loaded = _main_scene.instantiate()
+			root.add_child(_loaded)
+		778:
+			var loaded_player: Player = _loaded.player
+			var checkpoint: Checkpoint = _loaded.level.checkpoints[0]
+			_check(
+				loaded_player.global_position.distance_to(checkpoint.global_position) < 1.0,
+				"loaded hero stands at the checkpoint"
+			)
+			_check(checkpoint.active, "loaded checkpoint is lit")
+			_check(
+				(
+					loaded_player.has_ability(Player.Ability.WINGS)
+					and loaded_player.has_ability(Player.Ability.LIGHT_DASH)
+				),
+				"loaded hero keeps both abilities"
+			)
+			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
+			_saves.delete(_saves.SLOT_COUNT - 1)
+			_saves.current_slot = -1
+			root.remove_child(_loaded)
+			_loaded.free()
+			_title = load("res://scenes/title.tscn").instantiate()
+			root.add_child(_title)
+		782:
+			_check(_title.get_node("Menu").visible, "title screen shows its menu")
+			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
 		LAST_TICK:
 			_report()
 			return true

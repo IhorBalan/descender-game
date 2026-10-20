@@ -1,0 +1,131 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/title.gd" id="1_title"]
+[ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource("2_theme")
+script = ExtResource("1_title")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.16, 0.13, 0.32, 1)
+
+[node name="Heading" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 22.0
+offset_bottom = 54.0
+theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_font_sizes/font_size = 24
+text = "DESCENDER"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tagline" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 54.0
+offset_bottom = 66.0
+theme_override_colors/font_color = Color(0.7, 0.68, 0.85, 1)
+text = "A man with half-finished angel powers descends from Heaven"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -12.0
+offset_right = 40.0
+offset_bottom = 48.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 3
+
+[node name="NewGame" type="Button" parent="Menu"]
+layout_mode = 2
+text = "New Game"
+
+[node name="Continue" type="Button" parent="Menu"]
+layout_mode = 2
+text = "Continue"
+
+[node name="Load" type="Button" parent="Menu"]
+layout_mode = 2
+text = "Load Game"
+
+[node name="Quit" type="Button" parent="Menu"]
+layout_mode = 2
+text = "Quit"
+
+[node name="Slots" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -10.0
+offset_right = 100.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 3
+
+[node name="Heading" type="Label" parent="Slots"]
+layout_mode = 2
+text = "Load game"
+horizontal_alignment = 1
+
+[node name="Slot1" type="Button" parent="Slots"]
+layout_mode = 2
+text = "1   Empty"
+alignment = 0
+
+[node name="Slot2" type="Button" parent="Slots"]
+layout_mode = 2
+text = "2   Empty"
+alignment = 0
+
+[node name="Slot3" type="Button" parent="Slots"]
+layout_mode = 2
+text = "3   Empty"
+alignment = 0
+
+[node name="Back" type="Button" parent="Slots"]
+layout_mode = 2
+text = "Back"
+
+[node name="Hint" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -16.0
+offset_bottom = -4.0
+grow_vertical = 0
+theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
+text = "Arrows or stick to move   Space or A to choose   Esc or B to go back"
+horizontal_alignment = 1
+vertical_alignment = 1
