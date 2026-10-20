@@ -20,6 +20,9 @@ func _process(delta: float) -> void:
 		if readiness != status.dash_readiness:
 			status.dash_readiness = readiness
 			status.queue_redraw()
+		# The power-up bars drain every frame while one is running.
+		if not status.powers.is_empty():
+			set_powers(player.powers)
 	if _message_timer > 0.0:
 		_message_timer -= delta
 		if _message_timer <= 0.0:
@@ -43,6 +46,12 @@ func set_charges(current: int, max_value: int) -> void:
 
 func set_abilities(abilities: Array[Player.Ability]) -> void:
 	status.abilities = abilities.duplicate()
+	status.queue_redraw()
+
+
+## The hero's power-ups (Player.Power -> seconds left).
+func set_powers(powers: Dictionary) -> void:
+	status.powers = powers.duplicate()
 	status.queue_redraw()
 
 

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate the placeholder tiles, checkpoint, goal gate, ability feather,
-light barrier and story relic.
+light barrier, story relic, upgrades and power-ups.
 
 Everything is drawn from code so it can be regenerated or replaced without
 any tooling beyond Python + Pillow:
@@ -59,6 +59,22 @@ RELIC = (226, 206, 150, 255)
 RELIC_SHADE = (170, 140, 90, 255)
 RELIC_MARK = (90, 60, 40, 255)
 RELIC_GLOW = (255, 245, 180, 90)
+HEART = (236, 70, 96, 255)
+HEART_DARK = (150, 30, 56, 255)
+HEART_CORE = (255, 236, 190, 255)
+GLASS = (200, 230, 255, 255)
+GLASS_EDGE = (120, 160, 220, 255)
+BASIN_WATER = (255, 214, 110, 255)
+CORK = (150, 110, 70, 255)
+HALO = (255, 214, 90, 255)
+HALO_DARK = (180, 130, 40, 255)
+HALO_GLOW = (255, 240, 170, 110)
+BLADE = (240, 244, 255, 255)
+BLADE_FIRE = (255, 170, 60, 255)
+HILT = (120, 90, 60, 255)
+ZEAL = (140, 220, 255, 255)
+ZEAL_CORE = (240, 252, 255, 255)
+ZEAL_GLOW = (150, 210, 255, 90)
 
 
 def new(w: int, h: int) -> Image.Image:
@@ -225,6 +241,125 @@ def gen_relic() -> None:
     save(img, "relic.png")
 
 
+def gen_upgrade_heart() -> None:
+    """Kept Light: a heart of light, warm red around a white-gold core, in a
+    soft glow. The permanent heart upgrade."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((0, 0, 15, 15), fill=FEATHER_GLOW)
+    rows = [(3, 3, 6), (3, 9, 12), (4, 2, 13), (5, 2, 13), (6, 2, 13), (7, 3, 12),
+            (8, 4, 11), (9, 5, 10), (10, 6, 9), (11, 7, 8)]
+    for y, x0, x1 in rows:
+        rect(d, x0 - 1, y, x1 + 1, y, OUTLINE)
+    rect(d, 4, 2, 5, 2, OUTLINE)
+    rect(d, 10, 2, 11, 2, OUTLINE)
+    rect(d, 7, 12, 8, 12, OUTLINE)
+    for y, x0, x1 in rows:
+        rect(d, x0, y, x1, y, HEART)
+        rect(d, x1, y, x1, y, HEART_DARK)
+    for y, x0, x1 in rows[5:]:
+        rect(d, x0, y, x0, y, HEART)
+        rect(d, x1 - 1, y, x1, y, HEART_DARK)
+    # The light inside.
+    rect(d, 6, 5, 9, 7, HEART_CORE)
+    rect(d, 7, 4, 8, 8, HEART_CORE)
+    rect(d, 7, 5, 8, 6, CLOUD_EDGE)
+    save(img, "upgrade_heart.png")
+
+
+def gen_upgrade_vial() -> None:
+    """Vial of the Basin: a stoppered glass vial of gold Basin water. The
+    permanent healing-charge upgrade."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((1, 1, 14, 14), fill=FEATHER_GLOW)
+    # Cork and neck.
+    rect(d, 6, 1, 9, 3, CORK)
+    rect(d, 5, 2, 5, 3, OUTLINE)
+    rect(d, 10, 2, 10, 3, OUTLINE)
+    rect(d, 5, 4, 10, 5, OUTLINE)
+    rect(d, 6, 4, 9, 5, GLASS)
+    # Body.
+    rect(d, 3, 6, 12, 14, OUTLINE)
+    rect(d, 4, 6, 11, 13, GLASS)
+    rect(d, 4, 8, 11, 13, BASIN_WATER)
+    rect(d, 5, 8, 10, 8, CLOUD_EDGE)
+    rect(d, 4, 9, 4, 13, GLASS_EDGE)
+    rect(d, 11, 9, 11, 13, GLASS_EDGE)
+    rect(d, 5, 10, 5, 11, CLOUD_EDGE)
+    rect(d, 4, 14, 11, 14, OUTLINE)
+    save(img, "upgrade_vial.png")
+
+
+def gen_power_halo() -> None:
+    """Halo: a Warden's halo, a tilted gold ring with a crack in it. The
+    one-hit shield power-up."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((0, 2, 15, 13), fill=HALO_GLOW)
+    d.ellipse((1, 4, 14, 11), fill=OUTLINE)
+    d.ellipse((2, 5, 13, 10), fill=HALO)
+    d.ellipse((4, 7, 11, 9), fill=OUTLINE)
+    d.ellipse((4, 6, 11, 8), fill=CLEAR)
+    d.ellipse((4, 6, 11, 8), fill=CLEAR)
+    # Shade the lower rim, light the upper.
+    rect(d, 4, 10, 11, 10, HALO_DARK)
+    rect(d, 5, 5, 10, 5, CLOUD_EDGE)
+    # The crack.
+    rect(d, 11, 6, 11, 6, OUTLINE)
+    rect(d, 12, 7, 12, 7, OUTLINE)
+    rect(d, 11, 8, 11, 8, OUTLINE)
+    save(img, "power_halo.png")
+
+
+def gen_power_blade() -> None:
+    """Lit Blade: a short sword, point up and right, with Choir fire along
+    its edge. The damage power-up."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((1, 1, 14, 14), fill=(255, 200, 120, 90))
+    # Blade from the hilt (bottom-left) to the point (top-right).
+    for i in range(8):
+        x, y = 5 + i, 10 - i
+        rect(d, x - 1, y, x + 1, y, OUTLINE)
+    for i in range(8):
+        x, y = 5 + i, 10 - i
+        rect(d, x, y, x, y, BLADE)
+    rect(d, 12, 3, 12, 3, BLADE)
+    # Fire licking off the edge.
+    for x, y in ((7, 6), (9, 4), (11, 2), (8, 8), (10, 6), (13, 2)):
+        rect(d, x, y, x, y, BLADE_FIRE)
+    for x, y in ((8, 5), (10, 3)):
+        rect(d, x, y, x, y, SPIKE)
+    # Crossguard and grip.
+    rect(d, 3, 9, 7, 13, OUTLINE)
+    rect(d, 4, 10, 4, 12, HALO)
+    rect(d, 6, 10, 6, 12, HALO)
+    rect(d, 3, 11, 7, 11, HALO)
+    rect(d, 2, 13, 3, 14, OUTLINE)
+    rect(d, 3, 13, 3, 13, HILT)
+    rect(d, 2, 14, 2, 14, HILT)
+    save(img, "power_blade.png")
+
+
+def gen_power_zeal() -> None:
+    """Zeal: three chevrons of wind pointing right, the back ones fading.
+    The speed power-up."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((0, 1, 15, 14), fill=ZEAL_GLOW)
+    for n, (ox, color) in enumerate(((2, ZEAL_GLOW), (5, ZEAL), (8, ZEAL_CORE))):
+        for i in range(4):
+            x = ox + i
+            rect(d, x, 4 + i, x, 4 + i, OUTLINE if n else ZEAL)
+            rect(d, x, 11 - i, x, 11 - i, OUTLINE if n else ZEAL)
+        for i in range(4):
+            x = ox + i + 1
+            rect(d, x, 4 + i, x, 4 + i, color)
+            rect(d, x, 11 - i, x, 11 - i, color)
+    save(img, "power_zeal.png")
+
+
 if __name__ == "__main__":
     gen_tiles()
     gen_tiles_earth()
@@ -233,3 +368,8 @@ if __name__ == "__main__":
     gen_feather()
     gen_light_barrier()
     gen_relic()
+    gen_upgrade_heart()
+    gen_upgrade_vial()
+    gen_power_halo()
+    gen_power_blade()
+    gen_power_zeal()

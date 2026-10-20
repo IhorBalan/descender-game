@@ -2,7 +2,7 @@ class_name StatusBar
 extends Control
 
 ## Draws hearts (health), bars (healing charges), the unlocked angel
-## abilities and the dash cooldown with plain shapes.
+## abilities, the dash cooldown and the running power-ups with plain shapes.
 
 const HEART_ON := Color(0.96, 0.22, 0.32)
 const HEART_OFF := Color(0.32, 0.1, 0.16)
@@ -14,8 +14,15 @@ const LIGHT := Color(1.0, 0.9, 0.5)
 const DASH_READY := Color(0.6, 0.9, 1.0)
 const DASH_CHARGING := Color(0.3, 0.42, 0.5)
 const DASH_BACK := Color(0.0, 0.0, 0.0, 0.5)
-## Where the ability icons start; the hearts take the space before it.
+const HALO := Color(1.0, 0.85, 0.4)
+const BLADE := Color(0.95, 0.97, 1.0)
+const BLADE_FIRE := Color(1.0, 0.65, 0.25)
+const ZEAL := Color(0.55, 0.85, 1.0)
+const POWER_BAR := Color(1.0, 1.0, 1.0, 0.8)
+## Where the ability icons start at most five hearts; more hearts push them
+## right.
 const ABILITY_X := 58.0
+const HEART_STEP := 9.0
 
 var health := 5
 var max_health := 5
@@ -24,22 +31,34 @@ var max_charges := 3
 var abilities: Array[Player.Ability] = []
 ## 0 to 1; see Player.dash_readiness.
 var dash_readiness := 1.0
+## Player.Power -> seconds left (INF for the Halo).
+var powers: Dictionary = {}
 
 
 func _draw() -> void:
 	for i in max_health:
-		var r := Rect2(4 + i * 9, 4, 7, 7)
+		var r := Rect2(4 + i * HEART_STEP, 4, 7, 7)
 		draw_rect(Rect2(r.position + Vector2.ONE, r.size), SHADOW)
 		draw_rect(r, HEART_ON if i < health else HEART_OFF)
 	for i in max_charges:
 		var r := Rect2(4 + i * 7, 14, 5, 8)
 		draw_rect(Rect2(r.position + Vector2.ONE, r.size), SHADOW)
 		draw_rect(r, CHARGE_ON if i < charges else CHARGE_OFF)
-	var x := ABILITY_X
+	var x := ability_x()
 	for ability in abilities:
 		_draw_ability(ability, Vector2(x, 4.0))
 		x += 12.0
-	_draw_dash(Vector2(ABILITY_X, 15.0))
+	_draw_dash(Vector2(ability_x(), 15.0))
+	x = ability_x() + 26.0
+	for power: Player.Power in Player.Power.values():
+		if powers.has(power):
+			_draw_power(power, Vector2(x, 15.0))
+			x += 12.0
+
+
+## The hearts take the space before the ability icons.
+func ability_x() -> float:
+	return maxf(ABILITY_X, 4.0 + max_health * HEART_STEP + 4.0)
 
 
 ## A 9x7 icon per ability: the wings are two feathers, the light dash a
@@ -74,6 +93,36 @@ func _draw_dash(at: Vector2) -> void:
 		draw_rect(
 			Rect2(at, Vector2(fill, 3)), DASH_READY if dash_readiness >= 1.0 else DASH_CHARGING
 		)
+
+
+## A 9x7 icon per power-up with a bar under it that drains as its time runs
+## out: the Halo is a ring, the Lit Blade a short sword, Zeal two chevrons.
+func _draw_power(power: Player.Power, at: Vector2) -> void:
+	match power:
+		Player.Power.HALO:
+			draw_rect(Rect2(at + Vector2(2, 2), Vector2(7, 4)), SHADOW)
+			draw_rect(Rect2(at + Vector2(1, 1), Vector2(7, 4)), HALO)
+			draw_rect(Rect2(at + Vector2(3, 2), Vector2(3, 2)), DASH_BACK)
+		Player.Power.BLADE:
+			for i in 5:
+				draw_rect(Rect2(at + Vector2(3 + i, 6 - i), Vector2(1, 1)), SHADOW)
+				draw_rect(Rect2(at + Vector2(2 + i, 5 - i), Vector2(1, 1)), BLADE)
+			draw_rect(Rect2(at + Vector2(1, 5), Vector2(3, 1)), BLADE_FIRE)
+			draw_rect(Rect2(at + Vector2(6, 0), Vector2(1, 1)), BLADE_FIRE)
+		Player.Power.ZEAL:
+			for i in 3:
+				for ox: float in [1.0, 5.0]:
+					draw_rect(Rect2(at + Vector2(ox + i + 1, i + 1), Vector2(1, 1)), SHADOW)
+					draw_rect(Rect2(at + Vector2(ox + i + 1, 5 - i + 1), Vector2(1, 1)), SHADOW)
+					draw_rect(Rect2(at + Vector2(ox + i, i), Vector2(1, 1)), ZEAL)
+					draw_rect(Rect2(at + Vector2(ox + i, 5 - i), Vector2(1, 1)), ZEAL)
+	var left: float = powers[power]
+	if left == INF:
+		return
+	var fill := roundf(9.0 * clampf(left / Player.POWER_TIME, 0.0, 1.0))
+	draw_rect(Rect2(at + Vector2(1, 9), Vector2(9, 1)), DASH_BACK)
+	if fill > 0.0:
+		draw_rect(Rect2(at + Vector2(0, 8), Vector2(fill, 1)), POWER_BAR)
 
 
 func _shift(points: PackedVector2Array) -> PackedVector2Array:

@@ -22,6 +22,11 @@ var _heaven_shots := [
 	# Next to Mereth, with her first line typed out: the hero is put there
 	# early and stopped, interact is pressed and the typing is given time.
 	{"tick": 340, "name": "dialogue.png", "x": 13 * 16 - 14.0, "y": 12 * 16.0, "lead": 120},
+	# On the ledge left of the Kept Light: the hero walks into it and its
+	# description opens with the sixth heart in the HUD.
+	{"tick": 440, "name": "upgrade.png", "x": 1 * 16 + 8.0, "y": 6 * 16.0, "walk": 70},
+	# Taking the Lit Blade, with the guard and the wall of light ahead.
+	{"tick": 490, "name": "power_up.png", "x": 70 * 16 + 8.0, "y": 12 * 16.0, "walk": 20},
 ]
 var _hub_shots := [
 	{"tick": 40, "name": "hub_start.png", "x": -1.0},
@@ -52,13 +57,22 @@ func _physics_process(_delta: float) -> bool:
 	if _ticks == 5:
 		Input.action_press("move_right")
 	for shot in _shots:
-		var lead: int = shot.get("lead", 30)
+		# "lead" is a talk shot (stop, press interact, let the text type);
+		# "walk" only gives the hero longer to walk before the shot.
+		var lead: int = shot.get("lead", shot.get("walk", 30))
 		if _ticks == shot["tick"] - lead and shot["x"] >= 0.0:
+			# A box left open by the previous shot would hold the hero still.
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
 			_main.player.global_position = Vector2(shot["x"], shot["y"])
 			_main.player.velocity = Vector2.ZERO
 			_main.camera.snap_to_target()
+			# A talk shot stops the hero; a walk shot keeps him going (or
+			# starts him again after a talk shot).
 			if shot.has("lead"):
 				Input.action_release("move_right")
+			else:
+				Input.action_press("move_right")
 		if _ticks == shot["tick"] - lead + 30 and shot.has("lead"):
 			_press("interact", true)
 		if _ticks == shot["tick"] - lead + 32 and shot.has("lead"):
