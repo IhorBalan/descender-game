@@ -1,6 +1,7 @@
 extends Control
 
-## The title screen: new game, continue the latest save, load a slot, quit.
+## The title screen: new game, continue the latest save, load a slot,
+## settings, quit.
 ##
 ## New Game and Load both open the slot picker. For a new game an occupied
 ## slot asks to be pressed twice before it is overwritten.
@@ -16,7 +17,9 @@ var _overwrite_slot := -1
 @onready var new_game_button: Button = $Menu/NewGame
 @onready var continue_button: Button = $Menu/Continue
 @onready var load_button: Button = $Menu/Load
+@onready var settings_button: Button = $Menu/Settings
 @onready var quit_button: Button = $Menu/Quit
+@onready var settings_menu: SettingsMenu = $SettingsMenu
 @onready var slots: VBoxContainer = $Slots
 @onready var slots_heading: Label = $Slots/Heading
 @onready var slot_buttons: Array[Button] = [$Slots/Slot1, $Slots/Slot2, $Slots/Slot3]
@@ -27,6 +30,8 @@ func _ready() -> void:
 	new_game_button.pressed.connect(_show_slots.bind(SlotMode.NEW_GAME))
 	continue_button.pressed.connect(_on_continue_pressed)
 	load_button.pressed.connect(_show_slots.bind(SlotMode.LOAD))
+	settings_button.pressed.connect(_show_settings)
+	settings_menu.closed.connect(_show_menu)
 	quit_button.pressed.connect(get_tree().quit)
 	back_button.pressed.connect(_show_menu)
 	for slot in slot_buttons.size():
@@ -40,7 +45,13 @@ func _unhandled_input(event: InputEvent) -> void:
 		get_viewport().set_input_as_handled()
 
 
+func _show_settings() -> void:
+	menu.visible = false
+	settings_menu.open()
+
+
 func _show_menu() -> void:
+	settings_menu.visible = false
 	slots.visible = false
 	menu.visible = true
 	var any_save := SaveManager.latest_slot() >= 0
