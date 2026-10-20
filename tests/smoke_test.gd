@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 117
-const LAST_TICK := 860
+const EXPECTED_CHECKS := 146
+const LAST_TICK := 900
 
 var _ticks := 0
 ## Set once the level is in the tree, where the checks can reach it.
@@ -37,6 +37,8 @@ var _title: Node
 ## The slot the save/load/transition checks use.
 var _slot := -1
 var _main_scene: PackedScene
+var _mereth: Npc
+var _token: LoreItem
 
 @onready var root: Window = get_tree().root
 
@@ -79,6 +81,9 @@ func _physics_process(_delta: float) -> void:
 			_check(_main.level.pickup_count() == 2, "two ability feathers built")
 			_start_x = _player.global_position.x
 			_start_position = _player.global_position
+			# The opening dialogue would freeze the hero at the start; it is
+			# tested on its own below, so mark it as seen for the run.
+			Story.set_flag("opening_seen")
 			_press("move_right", true)
 		60:
 			_check(_player.global_position.x > _start_x + 40.0, "hero runs right")
@@ -293,31 +298,117 @@ func _physics_process(_delta: float) -> void:
 				"wall of light is solid again after the dash"
 			)
 		760:
+			# Dialogue: the story objects from the level's sidecar.
+			_check(InputMap.has_action("interact"), "interact action exists")
+			_check(_main.level.interactables.size() == 7, "seven story objects built")
+			_check(_main.level.npc_count() == 2, "two NPCs built")
+			_check(_main.level.item_count() == 3, "three relics built")
+			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
+			for node in _main.level.interactables:
+				if node is Npc and node.npc_name == "Mereth":
+					_mereth = node
+				elif node is LoreItem and node.item_id == "token":
+					_token = node
+			_check(_mereth != null and _token != null, "Mereth and the token are placed")
+			_player.global_position = _mereth.global_position + Vector2(-20.0, 0.0)
+			_player.velocity = Vector2.ZERO
+		764:
+			_check(_mereth.is_player_near(), "NPC notices the hero standing close")
+			_press("interact", true)
+		766:
+			_press("interact", false)
+			_check(_main.dialogue_box.is_open(), "interact opens the dialogue box")
+			_check(_main.dialogue_box.current_id() == "mereth_intro", "first talk plays the intro")
+			_check(_main.dialogue_box.name_label.text == "Mereth", "box shows the speaker")
+			_check(_player.talking, "hero is talking")
+			_mark_x = _player.global_position.x
+			_press("move_right", true)
+		772:
+			_press("move_right", false)
+			_check(
+				is_equal_approx(_player.global_position.x, _mark_x),
+				"hero stands still while talking"
+			)
+			_check(_main.dialogue_box.text_label.visible_characters >= 0, "text is being typed")
+			_press("jump", true)
+		774:
+			_press("jump", false)
+			_check(
+				_main.dialogue_box.text_label.visible_characters == -1,
+				"a press finishes the typing"
+			)
+			_check(_player.is_on_floor(), "the press did not make the hero jump")
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
+		776:
+			_check(not _main.dialogue_box.is_open(), "box closes after the last page")
+			_check(Story.has_flag("met_mereth"), "finishing the talk sets its flag")
+			_check(not _player.talking, "hero is released")
+			_press("interact", true)
+		778:
+			_press("interact", false)
+			_check(
+				_main.dialogue_box.current_id() == "mereth_again", "second talk plays later lines"
+			)
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
+			# A relic: examining it shows its description, then it is gone.
+			_player.global_position = _token.global_position
+			_player.velocity = Vector2.ZERO
+		782:
+			_press("interact", true)
+		784:
+			_press("interact", false)
+			_check(_main.dialogue_box.current_id() == "item_token", "relic shows its description")
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
+		786:
+			_check(_main.level.item_count() == 2, "examined relic is gone")
+			_check(Story.has_flag("item:token"), "examined relic is flagged")
+			# A trigger: walking in plays its dialogue once.
+			for node in _main.level.interactables:
+				if (
+					is_instance_valid(node)
+					and node is StoryTrigger
+					and node.dialogue_ids == ["gate"]
+				):
+					_player.global_position = node.global_position
+			_player.velocity = Vector2.ZERO
+		790:
+			_check(_main.dialogue_box.current_id() == "gate", "trigger plays on touch")
+			while _main.dialogue_box.is_open():
+				_main.dialogue_box.advance()
+		792:
+			_check(Story.has_flag("reached_gate"), "trigger sets its flag")
+			_player.global_position = _start_position
+			_player.velocity = Vector2.ZERO
+		796:
+			_check(not _main.dialogue_box.is_open(), "seen trigger stays quiet")
 			_press("pause", true)
-		762:
+		798:
 			_press("pause", false)
 			_check(get_tree().paused, "pause stops the tree")
 			_check(_main.pause_menu.is_open(), "pause menu opens")
 			_mark_x = _player.global_position.x
 			_press("move_right", true)
-		766:
+		802:
 			_press("move_right", false)
 			_check(
 				is_equal_approx(_player.global_position.x, _mark_x),
 				"hero stands still while paused"
 			)
 			_press("pause", true)
-		768:
+		804:
 			_press("pause", false)
 			_check(not get_tree().paused, "pause again resumes")
 			_check(not _main.pause_menu.is_open(), "pause menu closes")
-		770:
+		806:
 			# Saving: rest at the checkpoint, write the slot and read it back.
 			_check(root.get_node_or_null("SaveManager") != null, "SaveManager autoload present")
 			var checkpoint: Checkpoint = _main.level.checkpoints[0]
 			_player.global_position = checkpoint.global_position
 			_player.velocity = Vector2.ZERO
-		774:
+		810:
 			_check(_main._active_checkpoint == 0, "resting records the checkpoint")
 			_slot = SaveManager.SLOT_COUNT - 1
 			SaveManager.start_new_game(_slot)
@@ -326,14 +417,16 @@ func _physics_process(_delta: float) -> void:
 			_check(int(_save.get("checkpoint", -1)) == 0, "save holds the checkpoint")
 			_check(_save.get("abilities", []).size() == 2, "save holds both abilities")
 			_check(str(_save.get("level", "")) == "heaven_1", "save holds the level id")
+			_check("item:token" in _save.get("flags", []), "save holds the story flags")
 			_check(SaveManager.latest_slot() == _slot, "latest slot is the new save")
 			# Loading: boot a fresh level from the save in place of this one.
 			root.remove_child(_main)
 			_main.free()
+			Story.reset()
 			_check(SaveManager.load_slot(_slot), "save slot loads")
 			_loaded = _main_scene.instantiate()
 			root.add_child(_loaded)
-		778:
+		814:
 			var loaded_player: Player = _loaded.player
 			var checkpoint: Checkpoint = _loaded.level.checkpoints[0]
 			_check(_loaded.level_id == "heaven_1", "loaded level is the saved one")
@@ -350,6 +443,8 @@ func _physics_process(_delta: float) -> void:
 				"loaded hero keeps both abilities"
 			)
 			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
+			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
+			_check(_loaded.level.item_count() == 2, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
 			# Level transition: walk into the goal gate.
 			var levels := root.get_node_or_null("Levels")
@@ -360,10 +455,10 @@ func _physics_process(_delta: float) -> void:
 			)
 			loaded_player.global_position = _loaded.level.goal.global_position
 			loaded_player.velocity = Vector2.ZERO
-		782:
+		818:
 			_check(_loaded.player.frozen, "goal gate freezes the hero")
 			_check(_loaded._transitioning, "goal gate starts the transition")
-		830:
+		866:
 			# The fade is over and the next level has booted as the current scene.
 			_check(_loaded.fade.is_covered(), "screen faded to black")
 			_save = SaveManager.read(_slot)
@@ -390,10 +485,10 @@ func _physics_process(_delta: float) -> void:
 			_loaded.free()
 			_title = load("res://scenes/title.tscn").instantiate()
 			root.add_child(_title)
-		834:
+		870:
 			_check(_title.get_node("Menu").visible, "title screen shows its menu")
 			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
-		838:
+		874:
 			# Settings: rebinding changes the InputMap and is undone by reset.
 			_check(root.get_node_or_null("Settings") != null, "Settings autoload present")
 			var before: Array = Settings.action_keys(&"heal")
@@ -404,6 +499,9 @@ func _physics_process(_delta: float) -> void:
 			_check(InputMap.action_has_event(&"heal", g), "InputMap takes the new key")
 			Settings.reset_keys()
 			_check(Settings.action_keys(&"heal") == before, "reset restores the default key")
+			_check(
+				&"interact" in Settings.REBINDABLE_ACTIONS, "interact is rebindable in the settings"
+			)
 			# Gamepad: Y (heal) moves to attack, so heal loses it; reset puts it back.
 			var pad_before: Array = Settings.action_pad_buttons(&"heal")
 			Settings.bind_pad_button(&"attack", JOY_BUTTON_Y)
@@ -419,7 +517,7 @@ func _physics_process(_delta: float) -> void:
 				Settings.action_pad_buttons(&"heal") == pad_before, "reset restores the pad button"
 			)
 			_title.get_node("Menu/Settings").pressed.emit()
-		840:
+		876:
 			_check(_title.get_node("SettingsMenu").visible, "settings screen opens from the title")
 			_check(not _title.get_node("Menu").visible, "title menu hides behind settings")
 			var settings_menu: SettingsMenu = _title.get_node("SettingsMenu")

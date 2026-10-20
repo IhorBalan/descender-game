@@ -8,6 +8,8 @@ extends Node2D
 ##   C  checkpoint      G  goal gate        .  empty
 ##   W  feather that unlocks the wings (double jump)
 ##   L  feather that unlocks the light dash    |  light barrier
+##   1-9  a story object (NPC, relic or trigger) described in the level's
+##        .json sidecar under "placements" (see levels/level_01.json)
 ##
 ## Tiles are 16x16. Rows may have different lengths; missing cells are empty.
 
@@ -45,6 +47,12 @@ var player_start := Vector2.ZERO
 var checkpoints: Array[Checkpoint] = []
 var goal: Goal = null
 var pickups: Array[AbilityPickup] = []
+## NPCs, relics and triggers from the sidecar, in map order.
+var interactables: Array[Interactable] = []
+## The dialogue file the sidecar names, or "" when the level has none.
+var dialogue_path := ""
+## Digit -> story object description, from the sidecar.
+var placements: Dictionary = {}
 
 var _enemy_spawns: Array[EnemySpawn] = []
 var _tiles: Node2D
@@ -55,7 +63,20 @@ var _objects: Node2D
 var _enemies: Node2D
 
 
+## Builds the map at `path`; a .json file next to it, if any, places the
+## story objects and names the dialogue file.
 func load_from_file(path: String) -> void:
+	placements = {}
+	dialogue_path = ""
+	var sidecar := path.get_basename() + ".json"
+	if FileAccess.file_exists(sidecar):
+		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(sidecar))
+		if parsed is Dictionary:
+			dialogue_path = str(parsed.get("dialogue", ""))
+			if parsed.get("placements", {}) is Dictionary:
+				placements = parsed["placements"]
+		else:
+			push_error("LevelBuilder: could not read %s" % sidecar)
 	build(FileAccess.get_file_as_string(path))
 
 
@@ -103,6 +124,7 @@ func build(text: String) -> void:
 	checkpoints = []
 	goal = null
 	pickups = []
+	interactables = []
 	_enemy_spawns = []
 	for y in height:
 		_build_row(y)
@@ -170,8 +192,48 @@ func _build_row(y: int) -> void:
 			"|":
 				_add_barrier_cell(x, y)
 				x += 1
+			"1", "2", "3", "4", "5", "6", "7", "8", "9":
+				_add_placement(x, y, c)
+				x += 1
 			_:
 				x += 1
+
+
+## Places the story object the sidecar describes under `key`. A relic the
+## save already holds is left out.
+func _add_placement(x: int, y: int, key: String) -> void:
+	var spec: Variant = placements.get(key)
+	if not spec is Dictionary:
+		push_warning("LevelBuilder: no placement for '%s' in the level's .json" % key)
+		return
+	var node: Interactable
+	match str(spec.get("type", "")):
+		"npc":
+			var npc := Npc.new()
+			npc.npc_name = str(spec.get("name", ""))
+			npc.character = str(spec.get("character", "hero"))
+			npc.faces_left = bool(spec.get("faces_left", false))
+			var tint: Variant = spec.get("tint")
+			if tint is Array and tint.size() >= 3:
+				npc.tint = Color(float(tint[0]), float(tint[1]), float(tint[2]))
+			node = npc
+		"item":
+			var item_id := str(spec.get("item", key))
+			if Story.has_flag(LoreItem.flag_for(item_id)):
+				return
+			var item := LoreItem.new()
+			item.item_id = item_id
+			node = item
+		"trigger":
+			node = StoryTrigger.new()
+		_:
+			push_warning("LevelBuilder: placement '%s' has no known type" % key)
+			return
+	node.name = "%s%s" % [str(spec.get("type", "")).capitalize(), key]
+	node.dialogue_ids = spec.get("dialogue", [])
+	node.position = _cell_bottom(x, y)
+	_objects.add_child(node)
+	interactables.append(node)
 
 
 func _add_barrier_cell(x: int, y: int) -> void:
@@ -283,6 +345,23 @@ func remove_pickups(abilities: Array[Player.Ability]) -> void:
 			pickups.erase(pickup)
 			_objects.remove_child(pickup)
 			pickup.queue_free()
+
+
+## Relics still waiting in the level (examined ones are freed).
+func item_count() -> int:
+	var count := 0
+	for node in interactables:
+		if is_instance_valid(node) and not node.is_queued_for_deletion() and node is LoreItem:
+			count += 1
+	return count
+
+
+func npc_count() -> int:
+	var count := 0
+	for node in interactables:
+		if node is Npc:
+			count += 1
+	return count
 
 
 ## Pickups still waiting in the level (collected ones are freed).

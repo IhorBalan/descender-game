@@ -1,0 +1,99 @@
+class_name Interactable
+extends Area2D
+
+## Something in the level the hero can talk to or examine: an NPC, a relic
+## or an invisible story trigger. Lists the dialogue ids to try, in priority
+## order; main.gd picks the first whose flags match and plays it. Shows the
+## interact key above itself while the hero stands close. The node's origin
+## is at the base, like the hero's, so a level cell places it on the floor.
+
+## Fired when the hero presses interact in range (or, for a trigger, walks
+## in). main.gd listens and runs the dialogue.
+signal interacted(interactable: Interactable)
+
+const PROMPT_FONT_SIZE := 8
+const PROMPT_COLOR := Color(1.0, 0.95, 0.7)
+const PROMPT_SHADOW := Color(0.0, 0.0, 0.0, 0.8)
+
+## Dialogue ids to try, first match wins (see DialogueData.pick).
+var dialogue_ids: Array = []
+## The hero's half of the area, in level pixels.
+var area_size := Vector2(28, 40)
+## Where the key prompt floats, relative to the base.
+var prompt_offset := Vector2(0, -48)
+## Triggers have no prompt and fire on touch instead of on a key press.
+var automatic := false
+
+var _player_near := false
+var _prompt: Label
+
+
+func _ready() -> void:
+	collision_layer = 0
+	collision_mask = 2
+	monitorable = false
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = area_size
+	shape.shape = rect
+	shape.position = Vector2(0, -area_size.y / 2.0)
+	add_child(shape)
+	if not automatic:
+		_prompt = Label.new()
+		_prompt.add_theme_font_size_override("font_size", PROMPT_FONT_SIZE)
+		_prompt.add_theme_color_override("font_color", PROMPT_COLOR)
+		_prompt.add_theme_color_override("font_shadow_color", PROMPT_SHADOW)
+		_prompt.add_theme_constant_override("shadow_offset_x", 1)
+		_prompt.add_theme_constant_override("shadow_offset_y", 1)
+		_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_prompt.size = Vector2(40, 10)
+		_prompt.position = prompt_offset - Vector2(20, 5)
+		_prompt.visible = false
+		add_child(_prompt)
+	body_entered.connect(_on_body_entered)
+	body_exited.connect(_on_body_exited)
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if automatic or not _player_near:
+		return
+	if event.is_action_pressed("interact"):
+		# main.gd marks the event handled when it starts a dialogue; while
+		# one is already open the press falls through to the box instead.
+		interacted.emit(self)
+
+
+func is_player_near() -> bool:
+	return _player_near
+
+
+## Called by main.gd once the dialogue has been read to the end.
+func on_dialogue_finished(_entry: Dictionary) -> void:
+	pass
+
+
+## The key bound to interact, from the Settings autoload. Looked up by node
+## because the headless test compiles this script before autoloads exist.
+func _interact_key_name() -> String:
+	var settings := get_node_or_null("/root/Settings")
+	if settings == null:
+		return "E"
+	return settings.key_names(&"interact")
+
+
+func _on_body_entered(body: Node2D) -> void:
+	if not body is Player or body.state == Player.State.DEAD:
+		return
+	_player_near = true
+	if automatic:
+		interacted.emit(self)
+	else:
+		_prompt.text = _interact_key_name()
+		_prompt.visible = true
+
+
+func _on_body_exited(body: Node2D) -> void:
+	if body is Player:
+		_player_near = false
+		if _prompt:
+			_prompt.visible = false

@@ -1,0 +1,26 @@
+{
+	"dialogue": "res://dialogue/level_01.json",
+	"placements": {
+		"1": {"type": "trigger", "dialogue": ["opening"]},
+		"2": {
+			"type": "npc",
+			"name": "Mereth",
+			"character": "hero",
+			"tint": [0.45, 0.5, 0.75],
+			"faces_left": true,
+			"dialogue": ["mereth_again", "mereth_intro"]
+		},
+		"3": {"type": "item", "item": "token", "dialogue": ["item_token"]},
+		"4": {"type": "item", "item": "ledger", "dialogue": ["item_ledger"]},
+		"5": {
+			"type": "npc",
+			"name": "Ithuriel",
+			"character": "angel_guard",
+			"tint": [0.85, 0.85, 1.0],
+			"faces_left": true,
+			"dialogue": ["ithuriel_again", "ithuriel_intro"]
+		},
+		"6": {"type": "item", "item": "basin_shard", "dialogue": ["item_basin_shard"]},
+		"7": {"type": "trigger", "dialogue": ["gate"]}
+	}
+}

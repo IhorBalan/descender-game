@@ -46,6 +46,13 @@ func set_abilities(abilities: Array[Player.Ability]) -> void:
 	status.queue_redraw()
 
 
+## Clears the message line and whatever was queued behind it.
+func hide_message() -> void:
+	_queue.clear()
+	message.visible = false
+	_message_timer = 0.0
+
+
 ## A negative duration keeps the message until the next one. Showing a
 ## message drops whatever was queued behind the previous one.
 func show_message(text: String, duration: float = 2.5) -> void:

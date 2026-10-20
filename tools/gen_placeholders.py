@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
-"""Generate the placeholder tiles, checkpoint, goal gate, ability feather and
-light barrier.
+"""Generate the placeholder tiles, checkpoint, goal gate, ability feather,
+light barrier and story relic.
 
 Everything is drawn from code so it can be regenerated or replaced without
 any tooling beyond Python + Pillow:
@@ -48,6 +48,10 @@ FEATHER_GLOW = (255, 245, 180, 110)
 LIGHT = (255, 240, 190, 230)
 LIGHT_CORE = (255, 255, 240, 255)
 LIGHT_HAZE = (255, 230, 150, 90)
+RELIC = (226, 206, 150, 255)
+RELIC_SHADE = (170, 140, 90, 255)
+RELIC_MARK = (90, 60, 40, 255)
+RELIC_GLOW = (255, 245, 180, 90)
 
 
 def new(w: int, h: int) -> Image.Image:
@@ -166,9 +170,27 @@ def gen_light_barrier() -> None:
     save(img, "light_barrier.png")
 
 
+def gen_relic() -> None:
+    """A story relic the hero can examine: a small tablet with a tally cut
+    into it, in a soft glow. One sprite stands in for every relic."""
+    img = new(16, 16)
+    d = ImageDraw.Draw(img)
+    d.ellipse((0, 0, 15, 15), fill=RELIC_GLOW)
+    rect(d, 3, 2, 12, 13, OUTLINE)
+    rect(d, 4, 3, 11, 12, RELIC)
+    rect(d, 11, 3, 11, 12, RELIC_SHADE)
+    rect(d, 4, 12, 11, 12, RELIC_SHADE)
+    # The tally: four strokes and a bar.
+    for x in (5, 7, 9):
+        rect(d, x, 5, x, 9, RELIC_MARK)
+    rect(d, 4, 7, 10, 7, RELIC_MARK)
+    save(img, "relic.png")
+
+
 if __name__ == "__main__":
     gen_tiles()
     gen_checkpoint()
     gen_goal()
     gen_feather()
     gen_light_barrier()
+    gen_relic()
