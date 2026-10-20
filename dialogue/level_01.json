@@ -59,7 +59,10 @@
         "text": "The gate opens for the gathered and for the dropped. You're neither. You'll have to break it."
       }
     ],
-    "once": true
+    "once": true,
+    "unless": [
+      "met_mereth"
+    ]
   },
   "mereth_again": {
     "requires": [
@@ -112,7 +115,10 @@
         "text": "From the one they dropped. He hummed it at the gate. I think... I think I knew it before that."
       }
     ],
-    "once": true
+    "once": true,
+    "unless": [
+      "met_ithuriel"
+    ]
   },
   "ithuriel_again": {
     "requires": [
