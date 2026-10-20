@@ -21,6 +21,7 @@ var _key_buttons: Dictionary = {}
 
 func _ready() -> void:
 	volume_slider.value_changed.connect(_on_volume_changed)
+	volume_slider.drag_ended.connect(_on_volume_drag_ended)
 	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
 	reset_button.pressed.connect(_on_reset_pressed)
 	back_button.pressed.connect(close)
@@ -64,6 +65,9 @@ func open() -> void:
 
 
 func close() -> void:
+	# Keyboard changes to the slider are applied as they happen and written
+	# here, in one go.
+	Settings.save_settings()
 	visible = false
 	closed.emit()
 
@@ -88,6 +92,9 @@ func _refresh() -> void:
 func _on_volume_changed(value: float) -> void:
 	Settings.volume = value / 100.0
 	Settings.apply()
+
+
+func _on_volume_drag_ended(_changed: bool) -> void:
 	Settings.save_settings()
 
 

@@ -50,12 +50,13 @@ func load_settings() -> void:
 	fullscreen = bool(config.get_value("display", "fullscreen", false))
 	keys = {}
 	for action in REBINDABLE_ACTIONS:
-		if config.has_section_key("keys", action):
-			var saved: Array = config.get_value("keys", action, [])
-			var codes: Array[int] = []
-			for code in saved:
-				codes.append(int(code))
-			keys[action] = codes
+		var saved: Variant = config.get_value("keys", action, null)
+		if typeof(saved) != TYPE_ARRAY:
+			continue
+		var codes: Array[int] = []
+		for code in saved:
+			codes.append(int(code))
+		keys[action] = codes
 
 
 func save_settings() -> void:
