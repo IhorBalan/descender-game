@@ -9,8 +9,10 @@ extends Node
 
 const PATH := "user://settings.cfg"
 ## The actions the settings screen lets the player rebind, in menu order.
+## Every keyboard action is here, so a key moved to one action is taken
+## away from whichever other action had it.
 const REBINDABLE_ACTIONS: Array[StringName] = [
-	&"move_left", &"move_right", &"jump", &"attack", &"dash", &"heal", &"pause"
+	&"move_left", &"move_right", &"jump", &"attack", &"dash", &"heal", &"pause", &"restart"
 ]
 const ACTION_LABELS := {
 	&"move_left": "Move left",
@@ -20,6 +22,7 @@ const ACTION_LABELS := {
 	&"dash": "Dash",
 	&"heal": "Heal",
 	&"pause": "Pause",
+	&"restart": "Restart",
 }
 
 var volume := 1.0
