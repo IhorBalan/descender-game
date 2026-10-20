@@ -88,13 +88,17 @@ func load_slot(slot: int) -> bool:
 	return true
 
 
-## One line for the slot picker: where the save is and how long it took.
+## One line for the slot picker: which level, where in it, how long so far.
 func summary(slot: int) -> String:
 	var data := read(slot)
 	if data.is_empty():
 		return "Empty"
+	var level := Levels.resolve(str(data.get("level", "")))
+	# "Heaven 1: The Outskirts" is too long for the slot button; keep "Heaven 1".
+	var place := Levels.display_name(level).get_slice(":", 0)
 	var checkpoint := int(data.get("checkpoint", -1))
-	var place := "Start" if checkpoint < 0 else "Checkpoint %d" % (checkpoint + 1)
+	if checkpoint >= 0:
+		place += " checkpoint %d" % (checkpoint + 1)
 	var abilities: Array = data.get("abilities", [])
 	var seconds := int(data.get("play_time", 0.0))
 	var played := "%d:%02d" % [seconds / 60, seconds % 60]

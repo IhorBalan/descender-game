@@ -1,9 +1,12 @@
 extends Node2D
 
-## Boots the level, spawns the hero and wires up the HUD and camera, applies
+## Boots a level, spawns the hero and wires up the HUD and camera, applies
 ## the save the title screen chose and writes it back at every checkpoint.
+## Reaching the goal gate fades out, saves and boots the next level.
+##
+## Which level: the save's, else the `--level=<id>` user argument
+## (`godot --path . -- --level=heaven_2`), else the first in Levels.
 
-const LEVEL_PATH := "res://levels/level_01.txt"
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal"
 const ABILITY_MESSAGES := {
@@ -12,19 +15,26 @@ const ABILITY_MESSAGES := {
 }
 
 var player: Player
+## The id of the level being played (see Levels).
+var level_id := ""
 ## Seconds played in this save, carried over from the loaded file.
 var play_time := 0.0
 ## Index into level.checkpoints of the one the hero last rested at.
 var _active_checkpoint := -1
+## Set once the goal is reached: the level is fading out, so pausing and
+## restarting are over for this scene.
+var _transitioning := false
 
 @onready var level: LevelBuilder = $Level
 @onready var camera: GameCamera = $Camera2D
 @onready var hud: Hud = $HUD
+@onready var fade: ScreenFade = $ScreenFade
 @onready var pause_menu: PauseMenu = $PauseMenu
 
 
 func _ready() -> void:
-	level.load_from_file(LEVEL_PATH)
+	level_id = _pick_level()
+	level.load_from_file(Levels.path(level_id))
 
 	player = PLAYER_SCENE.instantiate()
 	player.position = level.player_start
@@ -52,7 +62,25 @@ func _ready() -> void:
 	camera.set_limits(level.size_px)
 	camera.snap_to_target()
 
-	hud.show_message(CONTROLS_HINT, 6.0)
+	fade.cover_now()
+	fade.fade_in()
+	hud.show_message(Levels.display_name(level_id), 2.5)
+	if level_id == Levels.first_id:
+		hud.queue_message(CONTROLS_HINT, 6.0)
+
+
+## The level the save asks for, else the one named on the command line,
+## else the first.
+func _pick_level() -> String:
+	if SaveManager.pending.has("level"):
+		return Levels.resolve(str(SaveManager.pending["level"]))
+	for arg in OS.get_cmdline_user_args():
+		if arg.begins_with("--level="):
+			var id := arg.trim_prefix("--level=")
+			if Levels.has(id):
+				return id
+			push_warning("Unknown level '%s', starting from the first" % id)
+	return Levels.first_id
 
 
 func _process(delta: float) -> void:
@@ -60,6 +88,8 @@ func _process(delta: float) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _transitioning:
+		return
 	if event.is_action_pressed("pause"):
 		pause_menu.open()
 		get_viewport().set_input_as_handled()
@@ -101,7 +131,7 @@ func capture_save() -> Dictionary:
 		abilities.append(ability)
 	return {
 		"version": SaveManager.VERSION,
-		"level": LEVEL_PATH,
+		"level": level_id,
 		"checkpoint": _active_checkpoint,
 		"abilities": abilities,
 		"play_time": play_time,
@@ -152,4 +182,23 @@ func _on_ability_unlocked(ability: Player.Ability) -> void:
 
 func _on_goal_reached() -> void:
 	player.freeze()
-	hud.show_message("Level complete!   Press R to restart", -1.0)
+	var next := Levels.next_id(level_id)
+	if next.is_empty():
+		hud.show_message("You have reached the end of the prototype.   Press R to restart", -1.0)
+		return
+	_transitioning = true
+	hud.show_message("Level complete", -1.0)
+	await fade.fade_out()
+	_advance_to(next)
+
+
+## Boots the next level with the progress so far: same abilities and play
+## time, no checkpoint yet. Saves first, so Continue resumes there.
+func _advance_to(next_id: String) -> void:
+	var data := capture_save()
+	data["level"] = next_id
+	data["checkpoint"] = -1
+	if SaveManager.current_slot >= 0:
+		SaveManager.write(SaveManager.current_slot, data)
+	SaveManager.pending = data
+	get_tree().change_scene_to_file(scene_file_path)

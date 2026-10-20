@@ -15,4 +15,11 @@ func _ready() -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body is Player and not _done and body.state != Player.State.DEAD:
 		_done = true
-		reached.emit()
+		# The hero freezes in response, which touches his attack shape, and
+		# physics shapes cannot change while the physics server is reporting
+		# overlaps; so the signal waits for the step to end.
+		_emit_reached.call_deferred()
+
+
+func _emit_reached() -> void:
+	reached.emit()
