@@ -77,6 +77,9 @@ var health := 0
 var direction := -1
 var speed := 30.0
 var health_bar: EnemyHealthBar
+## Where a dropped heal mote goes (set by the level); the enemy's own
+## parent when unset, so a dying enemy is not counted among the live ones.
+var drop_parent: Node
 var _profile: Dictionary = {}
 var _walk_anim := "run"
 var _half_width := 0.0
@@ -298,4 +301,5 @@ func _maybe_drop_mote() -> void:
 		return
 	var mote: HealMote = MOTE_SCENE.instantiate()
 	mote.position = global_position + Vector2(0.0, body_shape.position.y)
-	get_parent().add_child.call_deferred(mote)
+	var parent := drop_parent if drop_parent else get_parent()
+	parent.add_child.call_deferred(mote)

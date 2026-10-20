@@ -33,6 +33,10 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	_time += delta
+	# A hero who was at full health when he stepped on the mote and got
+	# hurt while standing on it takes it now, without stepping off and on.
+	for body in get_overlapping_bodies():
+		_on_body_entered(body)
 	position.y = _rest_y + sin(_time * BOB_SPEED) * BOB_HEIGHT
 	if _time >= LIFETIME:
 		queue_free()

@@ -23,6 +23,9 @@ const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 var health := 0
 var home := Vector2.ZERO
 var health_bar: EnemyHealthBar
+## Where a dropped heal mote goes (set by the level); the enemy's own
+## parent when unset, so a dying enemy is not counted among the live ones.
+var drop_parent: Node
 var _time := 0.0
 var _hurt_timer := 0.0
 var _dead := false
@@ -121,4 +124,5 @@ func _die() -> void:
 	if randf() < DROP_CHANCE:
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = global_position
-		get_parent().add_child.call_deferred(mote)
+		var parent := drop_parent if drop_parent else get_parent()
+		parent.add_child.call_deferred(mote)
