@@ -27,12 +27,16 @@ window is 1280x720 by default.
 | Attack  | J or X              | X              |
 | Dash    | K or Shift          | RB or B        |
 | Heal    | H                   | Y              |
-| Restart | R                   | Start          |
+| Pause   | Esc                 | Start          |
+| Restart | R                   |                |
 
 The title screen is driven with the arrow keys or the left stick, Space or
 A to choose and Esc or B to go back. **New Game** picks a slot (an occupied
 one asks to be pressed twice before it is overwritten), **Continue** resumes
 the most recent save and **Load Game** picks any slot.
+
+Pausing opens a menu to resume, save or quit to the title. Saving there
+records the last checkpoint, which is where the save will resume.
 
 Jump height depends on how long the button is held. Dashing gives a few
 invulnerability frames. Picking up the feather unlocks the **wings**: press
@@ -56,6 +60,7 @@ Hitting one during the wind-up cancels the swing.
 | Path | What it is |
 | ---- | ---------- |
 | `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
+| `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, quit to title |
 | `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots the level, spawns the hero, wires HUD and camera, applies and writes saves |
 | `scripts/player.gd` | Hero state machine and tuning constants |
