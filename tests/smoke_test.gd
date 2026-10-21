@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 247
+const EXPECTED_CHECKS := 248
 const LAST_TICK := 1150
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -868,12 +868,18 @@ func _physics_process(_delta: float) -> void:
 			_press("jump", true)
 		1073:
 			_press("jump", false)
-			_press("move_right", false)
 			_check(
 				_world.player.velocity.x < 0.0 and _world.player.velocity.y < 0.0,
 				"wall jump springs away from the wall"
 			)
 			_check(not _world.player.is_gripping_wall(), "the jump lets go of the wall")
+		1078:
+			# Still holding towards the wall: the spring is not steered back yet.
+			_check(
+				_world.player.velocity.x < 0.0,
+				"holding towards the wall does not pull back at once"
+			)
+			_press("move_right", false)
 		1090:
 			# Glide: dropped from high up with no wings, pressing jump on the way down.
 			_world.player.unlock(Player.Ability.GLIDE)

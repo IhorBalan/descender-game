@@ -261,8 +261,9 @@ func _tick_timers(delta: float) -> void:
 
 func _process_normal(delta: float) -> void:
 	var input_dir := 0.0 if _input_blocked() else Input.get_axis("move_left", "move_right")
-	if _wall_jump_lock_timer > 0.0 and input_dir == -_wall_dir:
-		# Just sprang off a wall: the push away from it holds for a moment.
+	if _wall_jump_lock_timer > 0.0 and int(signf(input_dir)) == _wall_dir:
+		# Just sprang off a wall: steering back towards it is ignored for a
+		# moment, so the wall cannot be climbed by rapid jumps.
 		input_dir = 0.0
 	if input_dir != 0.0:
 		facing = 1 if input_dir > 0.0 else -1
