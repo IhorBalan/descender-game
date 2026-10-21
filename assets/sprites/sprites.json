@@ -343,5 +343,80 @@
         "loop": true
       }
     }
+  },
+  "ferryman": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "ferryman_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "ferryman_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "gorrow": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "gorrow_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "gorrow_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "vael": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "vael_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "vael_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
   }
 }

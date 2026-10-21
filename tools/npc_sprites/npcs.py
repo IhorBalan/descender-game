@@ -56,6 +56,28 @@ CHARACTERS = {
         hair_style="veil", top=(36, 32, 48), top_s=(22, 20, 32), trim=(240, 240, 236),
         dress=True, sleeves=True, torso=11, legs=(8, 7), prop="hands", eyes=(50, 40, 60),
     ),
+    # Purgatory: the soul who refused both the Basin and the fall. Hooded,
+    # grey, leaning on a pole.
+    "ferryman": dict(
+        skin=(200, 196, 200), skin_s=(150, 146, 156), hair=(50, 48, 60), hair_h=(84, 80, 96),
+        hair_style="veil", top=(62, 60, 74), top_s=(38, 36, 48), trim=(96, 92, 108),
+        dress=True, sleeves=True, lean=6, torso=11, legs=(8, 7), prop="stick", eyes=(230, 226, 200),
+    ),
+    # Lust: the demon captain who served under the Lowest. Broad, red,
+    # helmeted, a blade held low.
+    "gorrow": dict(
+        skin=(160, 62, 56), skin_s=(110, 38, 40), hair=(44, 30, 36), hair_h=(90, 64, 70),
+        hair_style="helmet", top=(70, 44, 48), top_s=(44, 26, 30), trim=(150, 120, 60),
+        pants=(50, 36, 40), pants_s=(34, 24, 28), boots=(30, 22, 24), torso=13, legs=(9, 8),
+        broad=True, prop="hammer", eyes=(240, 200, 90),
+    ),
+    # Greed: the Bargainer, who buys memories. Thin, violet, bearded, hands
+    # out for the trade.
+    "vael": dict(
+        skin=(146, 100, 170), skin_s=(100, 62, 124), hair=(60, 30, 80), hair_h=(120, 80, 150),
+        hair_style="bald_beard", top=(84, 60, 110), top_s=(54, 36, 74), trim=(200, 170, 90),
+        dress=True, sleeves=True, torso=12, legs=(8, 7), prop="hands", eyes=(240, 220, 120),
+    ),
 }
 
 

@@ -17,7 +17,8 @@ extends Node2D
 ##
 ##   npc, item, trigger   a story object: name, character, tint, faces_left,
 ##                        dialogue and rotate, as the dialogue system wants
-##   enemy                character: imp, angel_guard (walkers) or watcher
+##   enemy                character: imp, angel_guard, brute (walkers) or
+##                        watcher; barks: a Walker.BARKS set the enemy shouts
 ##   upgrade              upgrade: heart (Kept Light) or vial (Vial of the Basin)
 ##   power                power: halo, blade or zeal
 ##   barrier              a wall of angel light from (x, y) down `height` cells
@@ -64,6 +65,8 @@ class EnemySpawn:
 	var character: String
 	## For a boss: the room it guards, in level pixels.
 	var arena := Rect2()
+	## For a walker: the bark set it shouts from (see Walker.BARKS).
+	var barks := ""
 
 	func _init(p_scene: PackedScene, p_position: Vector2, p_character: String = "") -> void:
 		scene = p_scene
@@ -554,7 +557,9 @@ func _place_object(spec: Dictionary) -> void:
 			if character == "watcher":
 				_enemy_spawns.append(EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0)))
 			else:
-				_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, at, character))
+				var spawn := EnemySpawn.new(WALKER_SCENE, at, character)
+				spawn.barks = str(spec.get("barks", ""))
+				_enemy_spawns.append(spawn)
 		"upgrade":
 			var kind := str(spec.get("upgrade", ""))
 			if UPGRADE_KINDS.has(kind):
@@ -677,6 +682,7 @@ func spawn_enemies() -> void:
 		if enemy is Walker:
 			var walker := enemy as Walker
 			walker.character = spawn.character
+			walker.barks = spawn.barks
 			walker.death_y = size_px.y + 64.0
 		elif enemy is Boss:
 			var boss := enemy as Boss

@@ -756,5 +756,212 @@
 				"text": "They held mine. Halfway."
 			}
 		]
+	},
+	"shaft": {
+		"unless": [
+			"shaft_seen"
+		],
+		"sets": "shaft_seen",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Names. Hundreds of them. Scratched going down."
+			},
+			{
+				"who": "",
+				"text": "(One, in a hand he knows: KEEP COUNT.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "I am."
+			}
+		]
+	},
+	"ferryman_intro": {
+		"once": true,
+		"sets": "met_ferryman",
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "You're going the wrong way. Everyone here is, but you're doing it on purpose."
+			},
+			{
+				"who": "Ansel",
+				"text": "What's at the bottom?"
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Whatever's left of you. The fall takes something at every circle. Fear first. Then names. Then faces."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "By the bottom, teeth."
+			},
+			{
+				"who": "Ansel",
+				"text": "And if you hold on?"
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Then you'd be the first. I didn't try. I stopped here. Here's nothing, but it's mine."
+			}
+		]
+	},
+	"ferryman_hand": {
+		"once": true,
+		"requires": [
+			"met_ferryman"
+		],
+		"sets": "clock_hand",
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "The hand of a clock? Had it for ages. Someone fell past with it and let go."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Take it. Time's not a thing I need."
+			},
+			{
+				"who": "",
+				"text": "(A brass clock hand, bent at the tip. It is warm, like the shard.)"
+			}
+		]
+	},
+	"ferryman_left": {
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "I wouldn't go to the Basin and I wouldn't fall. So they left me."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Turns out that's the one thing they can't do: make you choose."
+			}
+		]
+	},
+	"ferryman_nothing": {
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "Nothing comes back up this shaft. Nothing. I've watched a long time."
+			}
+		]
+	},
+	"ferryman_fell": {
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "Someone your shape fell past, years back. Talking. Still talking when he was out of sight."
+			}
+		]
+	},
+	"item_tally_bone": {
+		"lines": [
+			{
+				"who": "Imp's tally bone",
+				"text": "A finger bone with four cuts and a bar across them. The cuts are fresh."
+			},
+			{
+				"who": "Ansel",
+				"text": "They're counting. All of them."
+			}
+		]
+	},
+	"gorrow_meet": {
+		"once": true,
+		"sets": "met_gorrow",
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "Stop. Not to fight. He said a half-made thing would come down, and that I'm not to kill it."
+			},
+			{
+				"who": "Ansel",
+				"text": "Who said?"
+			},
+			{
+				"who": "Gorrow",
+				"text": "The Lowest. He doesn't say why. He says a lot of things and never why."
+			},
+			{
+				"who": "Gorrow",
+				"text": "Go on. If you get past the seal, I'll have to try to kill you anyway. Orders only go so far."
+			}
+		]
+	},
+	"gorrow_orders": {
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "Still here. Still not killing you. Don't make me find out how far orders go."
+			}
+		]
+	},
+	"gorrow_seal": {
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "Below the seal is my ground. The Fury, they call me there. Up here I'm just waiting."
+			}
+		]
+	},
+	"dontfollow": {
+		"unless": [
+			"dontfollow_seen"
+		],
+		"sets": "dontfollow_seen",
+		"lines": [
+			{
+				"who": "",
+				"text": "(Cut into the wall, deep, in a hand he knows: KEEP COUNT. DON'T FOLLOW. And a tally.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Too late."
+			}
+		]
+	},
+	"vael_intro": {
+		"once": true,
+		"sets": "met_vael",
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "Memories. Buying. You've got a lot; I can smell them. Sell me the winter you died in. You won't miss it."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "Vael",
+				"text": "That token, then. Someone below pays very well for anything with that mark. Doesn't say why. Pays, though."
+			},
+			{
+				"who": "Ansel",
+				"text": "Who?"
+			},
+			{
+				"who": "Vael",
+				"text": "Buyers don't give names. That one especially. Though he does say one. To himself. Not his."
+			}
+		]
+	},
+	"vael_smell": {
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "Fresh ones, too. Come back when you want to be lighter. Everyone does, in the end."
+			}
+		]
+	},
+	"vael_price": {
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "The fall takes memories for free. I at least pay. Think about which of us is the thief."
+			}
+		]
 	}
 }

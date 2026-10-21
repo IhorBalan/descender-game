@@ -64,10 +64,43 @@ const PROFILES := {
 		"attack_damage": 2,
 		"drop_chance": 1.0,
 	},
+	"brute":
+	{
+		"body": Vector2(36, 62),
+		"speed": 14.0,
+		"health": 8,
+		"walk": "walk",
+		"faces_left": true,
+		"attack_range": 52.0,
+		"reach": Vector2(46, 48),
+		"windup": 0.75,
+		"strike": 0.25,
+		"recover": 0.9,
+		"cooldown": 1.5,
+		"attack_damage": 2,
+		"drop_chance": 1.0,
+	},
 }
+## Lines an enemy may shout as it winds up, by bark set (see `barks`).
+const BARKS := {
+	"fallen":
+	[
+		"Up! He said up!",
+		"The Lowest talks to nobody.",
+		"Half-angel! He said you'd come!",
+		"He says a name. To nobody.",
+	],
+	"brute": ["Hrr.", "Down. Stay down."],
+}
+const BARK_CHANCE := 0.5
+const BARK_TIME := 1.3
+const BARK_COLOR := Color(1.0, 0.85, 0.8)
 
-@export_enum("imp", "angel_guard") var character := "imp"
+@export_enum("imp", "angel_guard", "brute") var character := "imp"
 @export var contact_damage := 1
+## A key of BARKS: the enemy shouts one of those lines when it winds up,
+## half the time. Set by the level from the placement; "" is silent.
+var barks := ""
 ## Falling below this y (set by the level) removes the enemy, so one knocked
 ## off its platform does not fall forever.
 var death_y := INF
@@ -89,6 +122,8 @@ var _state_timer := 0.0
 var _attack_cooldown := 0.0
 var _dead := false
 var _player: Player
+var _bark_label: Label
+var _bark_timer := 0.0
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
@@ -139,6 +174,10 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 	_attack_cooldown = maxf(_attack_cooldown - delta, 0.0)
+	if _bark_timer > 0.0:
+		_bark_timer -= delta
+		if _bark_timer <= 0.0 and _bark_label:
+			_bark_label.visible = false
 	if _hurt_timer > 0.0:
 		_hurt_timer -= delta
 		velocity.x = move_toward(velocity.x, 0.0, 300.0 * delta)
@@ -194,6 +233,32 @@ func _start_windup() -> void:
 	sprite.pause()
 	sprite.frame = 0
 	sprite.modulate = TINT_WINDUP
+	_maybe_bark()
+
+
+## A line over the head while the swing winds up, for enemies that talk.
+func _maybe_bark() -> void:
+	if not BARKS.has(barks) or randf() >= BARK_CHANCE:
+		return
+	if _bark_label == null:
+		_bark_label = Label.new()
+		_bark_label.add_theme_font_size_override("font_size", 8)
+		_bark_label.add_theme_color_override("font_color", BARK_COLOR)
+		_bark_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.8))
+		_bark_label.add_theme_constant_override("shadow_offset_x", 1)
+		_bark_label.add_theme_constant_override("shadow_offset_y", 1)
+		_bark_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		_bark_label.size = Vector2(120, 10)
+		_bark_label.position = Vector2(-60.0, body_shape.position.y * 2.0 - 14.0)
+		add_child(_bark_label)
+	var lines: Array = BARKS[barks]
+	_bark_label.text = str(lines[randi() % lines.size()])
+	_bark_label.visible = true
+	_bark_timer = BARK_TIME
+
+
+func bark_showing() -> bool:
+	return _bark_label != null and _bark_label.visible
 
 
 func _process_attack(delta: float) -> void:
@@ -279,6 +344,8 @@ func _die() -> void:
 	hitbox.set_deferred("monitoring", false)
 	attack_hitbox.set_deferred("monitoring", false)
 	health_bar.visible = false
+	if _bark_label:
+		_bark_label.visible = false
 	sprite.animation = "hurt"
 	sprite.pause()
 	sprite.frame = 0

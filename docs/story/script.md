@@ -556,6 +556,10 @@ on the inside, where they hold a head still.").
 
 ### Purgatory
 
+In the game: the `shaft` trigger at the bottom of the passage from Earth,
+and the Ferryman by the middle checkpoint (`ferryman_intro`,
+`ferryman_hand` sets `clock_hand`, then three repeat lines).
+
 **`shaft` (trigger, during the fall or on a ledge)**
 > **ANSEL:** Names. Hundreds of them. Scratched going down.
 > *(One, in a hand he knows: KEEP COUNT.)*
@@ -578,6 +582,11 @@ In the game now; see section 6.
 
 ### Circles 1 and 2
 
+In the game: the imps of Limbo and Lust bark as they wind up
+(`Walker.BARKS`), the tally bone is a relic in Limbo, and Gorrow stands by
+the checkpoint above the Palace of Velvet in Lust (`gorrow_meet`, two
+repeat lines).
+
 **Imps (barks, random)**
 > "Up! He said up!"
 > "The Lowest talks to nobody. Says a name to nobody."
@@ -590,6 +599,9 @@ In the game now; see section 6.
 > **GORROW:** Go on. If you get past the seal, I'll have to try to kill you anyway. Orders only go so far.
 
 ### Circles 3 and 4
+
+In the game: the `dontfollow` trigger in Gluttony and Vael in Greed
+(`vael_intro`, two repeat lines).
 
 **`dontfollow` (trigger, at the carved wall)**
 > *(KEEP COUNT. DON'T FOLLOW. And a tally.)*

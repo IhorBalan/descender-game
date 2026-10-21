@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 263
+const EXPECTED_CHECKS := 271
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -118,7 +118,22 @@ func _physics_process(_delta: float) -> void:
 			)
 			_enemy_count = level.enemy_count()
 			_check(
-				_enemy_count >= 6 + 11, "enemies and placeholder bosses spawned (%d)" % _enemy_count
+				_enemy_count >= 6 + 11 + 130,
+				"enemies below the hub and placeholder bosses spawned (%d)" % _enemy_count
+			)
+			var brutes := 0
+			var ferryman: Npc = null
+			for enemy in level.get_node("Enemies").get_children():
+				if enemy is Walker and enemy.character == "brute":
+					brutes += 1
+			for node in level.interactables:
+				if node is Npc and node.character == "ferryman":
+					ferryman = node
+			_check(brutes >= 20, "brutes stand in the deep circles (%d)" % brutes)
+			_check(ferryman != null, "the Ferryman waits in Purgatory")
+			_check(
+				ferryman != null and ferryman.sprite.sprite_frames.has_animation("talk"),
+				"the Ferryman has his strips"
 			)
 			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
 			_check(level.goal == null, "the world has no goal gate yet")
@@ -293,8 +308,23 @@ func _physics_process(_delta: float) -> void:
 		670:
 			_check(Feedback.spark_count() == 0, "sparks clean themselves up")
 		672:
+			# Barks: a fallen imp shouts as it winds up, half the time.
+			_imp.barks = "fallen"
+			for i in 24:
+				if not _imp.bark_showing():
+					_imp._maybe_bark()
+			_check(_imp.bark_showing(), "a fallen imp barks on the wind-up")
+			_check(_imp._bark_label.text in Walker.BARKS["fallen"], "the bark is one of its lines")
+			var brute: Walker = LevelBuilder.WALKER_SCENE.instantiate()
+			brute.character = "brute"
+			brute.position = _start_position + Vector2(-200.0, 0.0)
+			_main.add_child(brute)
+			_check(brute.health == Walker.PROFILES["brute"]["health"], "the brute has its profile")
+			_check(brute.sprite.sprite_frames.has_animation("walk"), "the brute has its strips")
+			brute.queue_free()
 			_imp.take_damage(99, _player.global_position)
 			_check(_imp._dead, "imp dies")
+			_check(not _imp.bark_showing(), "a dead imp stops shouting")
 			_check(Audio.last_played == "enemy_die", "enemy death plays its sound")
 			_check(not _imp.health_bar.visible, "health bar hides on death")
 		674:
@@ -393,9 +423,9 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 20, "twenty story objects built")
-			_check(_main.level.npc_count() == 6, "six NPCs built")
-			_check(_main.level.item_count() == 9, "nine relics built")
+			_check(_main.level.interactables.size() == 26, "twenty-six story objects built")
+			_check(_main.level.npc_count() == 9, "nine NPCs built")
+			_check(_main.level.item_count() == 10, "ten relics built")
 			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
 			for node in _main.level.interactables:
 				if node is Npc and node.npc_name == "Mereth":
@@ -456,7 +486,7 @@ func _physics_process(_delta: float) -> void:
 			while _main.dialogue_box.is_open():
 				_main.dialogue_box.advance()
 		786:
-			_check(_main.level.item_count() == 8, "examined relic is gone")
+			_check(_main.level.item_count() == 9, "examined relic is gone")
 			_check(Story.has_flag("item:token"), "examined relic is flagged")
 			# A trigger: walking in plays its dialogue once.
 			for node in _main.level.interactables:
@@ -539,7 +569,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(_loaded.level.pickup_count() == 4, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
-			_check(_loaded.level.item_count() == 8, "examined relic stays gone")
+			_check(_loaded.level.item_count() == 9, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
 			_check(_loaded.level.upgrade_count() == 1, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
