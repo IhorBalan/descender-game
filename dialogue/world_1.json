@@ -1382,7 +1382,8 @@
 		]
 	},
 	"garden": {
-		"sets": "ending:clock",
+		"sets": "clock_turned",
+		"warp": "start",
 		"lines": [
 			{
 				"who": "",
@@ -1408,6 +1409,78 @@
 			{
 				"who": "Ansel",
 				"text": "Five. Keep count."
+			}
+		]
+	},
+	"gardener_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Gardener",
+				"text": "Child. You are not from this day."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "The Gardener",
+				"text": "I made you. Or I will. The light in you is mine; I know my own."
+			},
+			{
+				"who": "Ansel",
+				"text": "Why the Basin?"
+			},
+			{
+				"who": "The Gardener",
+				"text": "I was the first. There was no one to wipe me. So I remember being hungry, and I remember the Making, and I remember nothing else."
+			},
+			{
+				"who": "The Gardener",
+				"text": "A heaven must be for something. I could not think what. So it is for me."
+			},
+			{
+				"who": "Ansel",
+				"text": "It was for us."
+			},
+			{
+				"who": "The Gardener",
+				"text": "Then take it."
+			}
+		]
+	},
+	"gardener_defeat": {
+		"once": true,
+		"then": "ending_night",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The light goes out of the first angel like a lamp. The Making stops. The harvest stops.)"
+			}
+		]
+	},
+	"ending_night": {
+		"sets": "ending:clock",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The sun sets in the Garden for the first time. Dark. Stars.)"
+			},
+			{
+				"who": "Tobiah",
+				"text": "Ansel. Ansel, look. What is that?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Night."
+			},
+			{
+				"who": "Tobiah",
+				"text": "What's it for?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Counting, I think. Start at one."
 			}
 		]
 	},

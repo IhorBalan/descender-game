@@ -19,8 +19,10 @@ extends Node2D
 ##                        dialogue and rotate, as the dialogue system wants;
 ##                        unless: a story flag that, once set, leaves it out
 ##   enemy                character: imp, angel_guard, brute (walkers) or
-##                        watcher; barks: a Walker.BARKS set the enemy shouts;
-##                        passive: true for a walker that never attacks
+##                        watcher, or a Boss.PROFILES id for a boss in its room;
+##                        barks: a Walker.BARKS set the enemy shouts; passive:
+##                        true for a walker that never attacks; requires: a
+##                        story flag the enemy waits for, read at every spawn
 ##   upgrade              upgrade: heart (Kept Light), vial (Vial of the Basin) or iron
 ##                        (Church Iron, for Old Pell's forge)
 ##   power                power: halo, blade or zeal
@@ -76,6 +78,8 @@ class EnemySpawn:
 	var barks := ""
 	## For a walker: never attacks (the resting army of the last camp).
 	var passive := false
+	## A story flag the enemy waits for, checked whenever the enemies spawn.
+	var requires := ""
 
 	func _init(p_scene: PackedScene, p_position: Vector2, p_character: String = "") -> void:
 		scene = p_scene
@@ -563,13 +567,20 @@ func _place_object(spec: Dictionary) -> void:
 			_add_placement(at, spec)
 		"enemy":
 			var character := str(spec.get("character", "imp"))
+			var spawn: EnemySpawn
 			if character == "watcher":
-				_enemy_spawns.append(EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0)))
+				spawn = EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0))
+			elif Boss.has_profile(character):
+				if Story.has_flag(Boss.flag_for(character)):
+					return
+				spawn = EnemySpawn.new(BOSS_SCENE, at, character)
+				spawn.arena = room_rect(world, room_at(at))
 			else:
-				var spawn := EnemySpawn.new(WALKER_SCENE, at, character)
+				spawn = EnemySpawn.new(WALKER_SCENE, at, character)
 				spawn.barks = str(spec.get("barks", ""))
 				spawn.passive = bool(spec.get("passive", false))
-				_enemy_spawns.append(spawn)
+			spawn.requires = str(spec.get("requires", ""))
+			_enemy_spawns.append(spawn)
 		"upgrade":
 			var kind := str(spec.get("upgrade", ""))
 			if UPGRADE_KINDS.has(kind):
@@ -689,6 +700,8 @@ func spawn_enemies() -> void:
 		_enemies.remove_child(child)
 		child.queue_free()
 	for spawn in _enemy_spawns:
+		if not spawn.requires.is_empty() and not Story.has_flag(spawn.requires):
+			continue
 		var enemy: Node2D = spawn.scene.instantiate()
 		enemy.position = spawn.position
 		enemy.drop_parent = _objects

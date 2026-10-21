@@ -750,9 +750,12 @@ imp holds out a tally bone like a gift.
 In the game: the `clock` trigger in the Time Clock room of Treachery needs
 all five pieces (`clock_face`, `clock_hand`, `item:clock_weight`,
 `item:clock_chain`, `item:clock_key`) and runs straight into `garden`,
-which sets `ending:clock` and ends the game at "Keep count." Without the
-pieces it says so once (`clock_missing`). The Gardener's conversation,
-fight and Ending B below are not built yet.
+which sets `clock_turned` and sends the hero back up to the start of the
+world (the Garden, the day before). The Gardener then stands in the
+Warden's room (a boss placed by the sidecar on that flag):
+`gardener_intro`, the fight, `gardener_defeat`, and `ending_night` (Ending
+B, sets `ending:clock`). Without the pieces the clock says so once
+(`clock_missing`).
 
 **At the Archive, with all five pieces**
 > **VOICE:** That is not a clock.

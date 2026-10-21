@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 310
-const LAST_TICK := 1230
+const EXPECTED_CHECKS := 315
+const LAST_TICK := 1270
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -1134,6 +1134,22 @@ func _physics_process(_delta: float) -> void:
 			_check("Press R" in _world.hud.message.text, "the end line shows")
 			_check(_world.game_over(), "the game is over")
 			_check(not _world._transitioning, "and R is still read for the restart")
+			# The clock turned: back up the pipes, where the Gardener waits.
+			_check(_gardeners() == 0, "the Gardener is not in the world before the clock")
+			_world.dialogue_box.play(_world.dialogue.entry("garden"))
+			while _world.dialogue_box.is_open():
+				_world.dialogue_box.advance()
+			_check(Story.has_flag("clock_turned"), "turning the clock sets its flag")
+		1262:
+			_check(
+				_world.player.global_position.distance_to(_world.level.player_start) < 8.0,
+				"the hero is back at the start"
+			)
+			_check(_gardeners() == 1, "the Gardener stands in Paradise")
+			_check(
+				DialogueData.next_id(_world.dialogue.entry("gardener_defeat")) == "ending_night",
+				"the Gardener's defeat leads to the night"
+			)
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")
@@ -1159,6 +1175,15 @@ func _power_up_position(power: Player.Power) -> Vector2:
 		if power_up.power == power:
 			return power_up.global_position
 	return Vector2.ZERO
+
+
+## How many Gardeners stand in the world right now.
+func _gardeners() -> int:
+	var count := 0
+	for boss in _world.level.bosses():
+		if boss.boss_id == "gardener":
+			count += 1
+	return count
 
 
 func _press(action: String, pressed: bool) -> void:

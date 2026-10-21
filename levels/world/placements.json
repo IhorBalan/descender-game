@@ -39,6 +39,7 @@
 		},
 		{"type": "item", "x": 246, "y": 48, "item": "tally_stone", "dialogue": ["item_tally_stone"]},
 		{"type": "trigger", "x": 264, "y": 43, "dialogue": ["makinghouse"]},
+		{"type": "enemy", "x": 299, "y": 48, "character": "gardener", "requires": "clock_turned"},
 		{"type": "item", "x": 318, "y": 31, "item": "prayer_card", "dialogue": ["item_prayer_card"]},
 		{"type": "item", "x": 383, "y": 40, "item": "glove", "dialogue": ["item_glove"]},
 		{"type": "enemy", "x": 372, "y": 48, "character": "imp"},

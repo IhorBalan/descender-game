@@ -326,6 +326,32 @@ const PROFILES := {
 		"contact_damage": 1,
 		"motes": 0,
 	},
+	# The Garden, the day before: the first angel, who made the Basin.
+	# Placed by the sidecar once the clock has turned.
+	"gardener":
+	{
+		"name": "The Gardener",
+		"character": "angel_guard",
+		"walk": "walk",
+		"scale": 2.2,
+		"tint": Color(1.0, 1.0, 0.95),
+		"body": Vector2(40, 70),
+		"health": 60,
+		"speed": 75.0,
+		"faces_left": true,
+		"attack_range": 56.0,
+		"reach": Vector2(56, 52),
+		"windup": 0.35,
+		"strike": 0.15,
+		"recover": 0.4,
+		"cooldown": 0.6,
+		"attack_damage": 2,
+		"charge_speed": 320.0,
+		"charge_windup": 0.35,
+		"charge_cooldown": 1.1,
+		"contact_damage": 1,
+		"motes": 0,
+	},
 }
 
 ## Which profile; see PROFILES. Set by the level before the boss is added.

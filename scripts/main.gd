@@ -16,7 +16,7 @@ const ENDING_FLAG_PREFIX := "ending:"
 const ENDINGS := {
 	"ending:carry": "The end: the Low Gate, from below.",
 	"ending:sit": "The end: the floor, counting.",
-	"ending:clock": "The end: the Garden, the day before.",
+	"ending:clock": "The end: night in the Garden.",
 }
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   L cast   H heal   E talk"
 const DEATH_FADE_TIME := 0.4
@@ -498,6 +498,8 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 		hud.show_message("Sword damage: %d" % player.attack_damage(), 3.0)
 	if not ending.is_empty():
 		_end_game(ending)
+	if str(entry.get("warp", "")) == "start":
+		_warp_to_start()
 	# Released after this frame's physics step, so the press that closed the
 	# box is not also read as a jump.
 	player.set_deferred("talking", false)
@@ -522,6 +524,27 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 ## Whether one of the endings has played.
 func game_over() -> bool:
 	return _ended
+
+
+## The clock turned: back up the pipes to the level's start, with the
+## enemies rebuilt, so whatever waits for the `clock_turned` flag stands.
+func _warp_to_start() -> void:
+	_transitioning = true
+	player.freeze()
+	await fade.fade_out()
+	_end_fight()
+	_clear_motes()
+	_active_checkpoint = -1
+	player.global_position = level.player_start
+	player.velocity = Vector2.ZERO
+	player.rest_at(level.player_start)
+	player.frozen = false
+	_respawn_enemies()
+	_respawn_power_ups()
+	camera.snap_to_target()
+	_enter_region(level.region_at(player.global_position.y), true)
+	_transitioning = false
+	fade.fade_in()
 
 
 ## One of the endings: the hero stands where he is, the line says which
