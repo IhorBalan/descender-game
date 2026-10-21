@@ -1921,5 +1921,108 @@
 				"text": "Don't thank me."
 			}
 		]
+	},
+	"limbo_lord_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Limbo Lord",
+				"text": "I was first down. I forget what for. I forget what you are."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then forget me."
+			},
+			{
+				"who": "Limbo Lord",
+				"text": "I will. After."
+			}
+		]
+	},
+	"palace_of_velvet_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Keeper",
+				"text": "He keeps his army. I keep what they came here to forget."
+			},
+			{
+				"who": "Keeper",
+				"text": "You carry a lot of it. Set it down. Stay."
+			}
+		]
+	},
+	"the_bloated_one_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Bloated One",
+				"text": "He said don't follow. They followed. I said one more."
+			},
+			{
+				"who": "The Bloated One",
+				"text": "One more."
+			}
+		]
+	},
+	"golden_vault_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Warden of the Vault",
+				"text": "Vael sells. I keep. Everything they dropped on the way down is here, in the dark."
+			},
+			{
+				"who": "Warden of the Vault",
+				"text": "A winter, a brother, a name. Yours will fit."
+			}
+		]
+	},
+	"cursed_bishop_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Cursed Bishop",
+				"text": "I taught them the Wheel. I taught it true. Here that is heresy."
+			},
+			{
+				"who": "Ansel",
+				"text": "It's a lie."
+			},
+			{
+				"who": "Cursed Bishop",
+				"text": "Then I was sent down for nothing. Hold still, child. The Choir still needs its count."
+			}
+		]
+	},
+	"the_red_arena_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Champion",
+				"text": "Nobody comes down here to talk."
+			},
+			{
+				"who": "Champion",
+				"text": "Good."
+			}
+		]
+	},
+	"the_false_king_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "False King",
+				"text": "They called me king before he came. Before the name. Bow, and I'll tell him you did."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "False King",
+				"text": "Then I'll tell him you knelt."
+			}
+		]
 	}
 }

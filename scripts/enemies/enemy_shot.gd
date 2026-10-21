@@ -23,12 +23,20 @@ const WAVE_SPEED := 120.0
 const WAVE_LIFETIME := 1.1
 ## How tall the wave's hitbox is: a standing hero is hit, a jumping one is not.
 const WAVE_SIZE := Vector2(12, 10)
+const BIG_WAVE_SIZE := Vector2(18, 15)
+const BIG_WAVE_SPEED := 145.0
+const BIG_WAVE_LIFETIME := 1.7
 const WAVE_COLOR := Color(0.75, 0.5, 0.35)
 const WAVE_DUST := Color(0.9, 0.75, 0.6)
 
 var kind := Kind.BOLT
 var direction := Vector2.RIGHT
 var damage := 1
+## A bolt's colours: hellfire unless the thrower is an angel.
+var color := BOLT_COLOR
+var core := BOLT_CORE
+## A boss's wave: taller, faster and longer-lived than a brute's.
+var big := false
 var _time := 0.0
 var _floor_ray: RayCast2D
 
@@ -47,11 +55,11 @@ func _ready() -> void:
 		rect.size = BOLT_SIZE
 	else:
 		collision_mask = 2 | 1
-		rect.size = WAVE_SIZE
+		rect.size = _wave_size()
 		# A pixel above the floor, so the floor itself is never "entered".
-		shape.position = Vector2(0.0, -WAVE_SIZE.y / 2.0 - 1.0)
+		shape.position = Vector2(0.0, -rect.size.y / 2.0 - 1.0)
 		_floor_ray = RayCast2D.new()
-		_floor_ray.position = Vector2(direction.x * WAVE_SIZE.x / 2.0, -2.0)
+		_floor_ray.position = Vector2(direction.x * rect.size.x / 2.0, -2.0)
 		_floor_ray.target_position = Vector2(0.0, 8.0)
 		# The world and the one-way ledges.
 		_floor_ray.collision_mask = 1 | 16
@@ -65,11 +73,12 @@ func _physics_process(delta: float) -> void:
 		if _time >= BOLT_LIFETIME:
 			_fade()
 	else:
-		position.x += direction.x * WAVE_SPEED * delta
+		position.x += direction.x * (BIG_WAVE_SPEED if big else WAVE_SPEED) * delta
 		# The wave stops at the end of its ledge and when it has run out.
 		# (Forced: a ray added this frame has not cast yet on its own.)
 		_floor_ray.force_raycast_update()
-		if _time >= WAVE_LIFETIME or not _floor_ray.is_colliding():
+		var lifetime := BIG_WAVE_LIFETIME if big else WAVE_LIFETIME
+		if _time >= lifetime or not _floor_ray.is_colliding():
 			_fade()
 	queue_redraw()
 
@@ -77,20 +86,30 @@ func _physics_process(delta: float) -> void:
 func _draw() -> void:
 	if kind == Kind.BOLT:
 		var tail := -direction * 8.0
-		draw_line(tail, Vector2.ZERO, BOLT_COLOR, 3.0)
-		draw_rect(Rect2(Vector2(-2.0, -2.0), Vector2(4.0, 4.0)), BOLT_CORE)
+		draw_line(tail, Vector2.ZERO, color, 3.0)
+		draw_rect(Rect2(Vector2(-2.0, -2.0), Vector2(4.0, 4.0)), core)
 		var flicker := 1.0 if int(_time * 30.0) % 2 == 0 else -1.0
-		draw_rect(Rect2(Vector2(-1.0, -4.0 * flicker), Vector2(2.0, 2.0)), BOLT_COLOR)
+		draw_rect(Rect2(Vector2(-1.0, -4.0 * flicker), Vector2(2.0, 2.0)), color)
 	else:
 		# A low hump of rubble with dust flying off its back.
+		var k := _wave_size().y / WAVE_SIZE.y
 		var points := PackedVector2Array(
-			[Vector2(-7.0, 0.0), Vector2(-3.0, -8.0), Vector2(3.0, -9.0), Vector2(7.0, 0.0)]
+			[
+				Vector2(-7.0 * k, 0.0),
+				Vector2(-3.0 * k, -8.0 * k),
+				Vector2(3.0 * k, -9.0 * k),
+				Vector2(7.0 * k, 0.0)
+			]
 		)
 		draw_colored_polygon(points, WAVE_COLOR)
 		var behind := -direction.x
 		for i in 3:
-			var dust_x := behind * (6.0 + i * 4.0) + sin(_time * 25.0 + i) * 1.5
-			draw_rect(Rect2(Vector2(dust_x, -6.0 - i * 2.0), Vector2(2.0, 2.0)), WAVE_DUST)
+			var dust_x := behind * (6.0 + i * 4.0) * k + sin(_time * 25.0 + i) * 1.5
+			draw_rect(Rect2(Vector2(dust_x, (-6.0 - i * 2.0) * k), Vector2(2.0, 2.0)), WAVE_DUST)
+
+
+func _wave_size() -> Vector2:
+	return BIG_WAVE_SIZE if big else WAVE_SIZE
 
 
 func _on_body_entered(body: Node2D) -> void:
@@ -98,10 +117,10 @@ func _on_body_entered(body: Node2D) -> void:
 		# Deferred: the hero's hurt state toggles shapes, which the physics
 		# server refuses while it is still flushing this overlap.
 		body.take_damage.call_deferred(damage, global_position)
-		Feedback.spark(global_position, BOLT_COLOR if kind == Kind.BOLT else WAVE_DUST)
+		Feedback.spark(global_position, color if kind == Kind.BOLT else WAVE_DUST)
 		_fade()
 	elif kind == Kind.BOLT:
-		Feedback.spark(global_position, BOLT_COLOR)
+		Feedback.spark(global_position, color)
 		_fade()
 	elif body is not CharacterBody2D:
 		# The wave has hit a wall.

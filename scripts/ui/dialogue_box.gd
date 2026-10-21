@@ -41,6 +41,13 @@ const SPEAKER_COLORS := {
 	"The Penitent": Color(0.8, 0.8, 0.85),
 	"Warden": Color(0.8, 0.9, 1.0),
 	"The Gardener": Color(1.0, 0.85, 0.5),
+	"Limbo Lord": Color(0.95, 0.55, 0.45),
+	"Keeper": Color(0.95, 0.55, 0.45),
+	"The Bloated One": Color(0.95, 0.55, 0.45),
+	"Warden of the Vault": Color(0.95, 0.55, 0.45),
+	"Cursed Bishop": Color(0.8, 0.8, 0.85),
+	"Champion": Color(0.95, 0.55, 0.45),
+	"False King": Color(0.95, 0.55, 0.45),
 	"Hanne": Color(1.0, 0.8, 0.75),
 }
 ## How the blip is pitched for each speaker; anyone else is 1.0, and a

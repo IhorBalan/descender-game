@@ -9,16 +9,34 @@ extends CharacterBody2D
 ##
 ## The boss walks at the hero and swings when he is close (a wind-up, a
 ## strike, a recovery, like a Walker's but wider), and charges across the
-## room when he keeps his distance. From half health it moves and winds up
-## faster and leaps at the hero after every charge. Hits do not stagger it.
-## `boss_id` picks the profile; the sprite is one of the character strips
-## scaled up. The node's origin is at the feet.
+## room when he keeps his distance. Each body has a move of its own on top
+## (`move` in the profile): the brutes slam the ground and send a tall
+## shockwave along the floor, the angels leap and throw three bolts of
+## light down in a fan, and the imp kings call two imps to them when the
+## fight turns. From half health it moves and winds up faster and leaps at
+## the hero after every charge; the turn is marked by a roar, a flash and
+## a shake. Hits do not stagger it. `boss_id` picks the profile; the
+## sprite is one of the character strips scaled up. The node's origin is
+## at the feet.
 
 signal engaged(boss: Boss)
 signal health_changed(current: int, max_value: int)
 signal defeated(boss: Boss)
 
-enum State { DORMANT, APPROACH, WINDUP, STRIKE, RECOVER, CHARGE_WINDUP, CHARGE, LEAP, DEAD }
+enum State {
+	DORMANT,
+	APPROACH,
+	WINDUP,
+	STRIKE,
+	RECOVER,
+	CHARGE_WINDUP,
+	CHARGE,
+	LEAP,
+	SLAM_WINDUP,
+	SLAM_RECOVER,
+	VOLLEY,
+	DEAD,
+}
 
 const GRAVITY := 700.0
 const MAX_FALL_SPEED := 300.0
@@ -41,7 +59,29 @@ const CHARGE_RANGE := 90.0
 const CHARGE_TIME_MAX := 1.4
 const LEAP_VELOCITY_Y := -260.0
 const LEAP_TIME := 0.9
+## The slam: the hero between the swing's reach and this far away.
+const SLAM_RANGE := 130.0
+const SLAM_WINDUP := 0.7
+const SLAM_RECOVER := 0.8
+const SLAM_COOLDOWN := 3.0
+const TINT_SLAM := Color(1.0, 0.6, 0.45)
+## The volley: a leap from this far away; the bolts go at the apex.
+const VOLLEY_MIN := 56.0
+const VOLLEY_MAX := 220.0
+const VOLLEY_VELOCITY_Y := -230.0
+const VOLLEY_TIME := 1.2
+const VOLLEY_COOLDOWN := 3.5
+const VOLLEY_SPREAD := 22.0
+const VOLLEY_COLOR := Color(1.0, 0.95, 0.7)
+const VOLLEY_CORE := Color(1.0, 1.0, 0.9)
+## The summons: how many imps come when the fight turns, and from how far.
+const SUMMON_COUNT := 2
+const SUMMON_SPACING := 48.0
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
+const SHOT_SCRIPT := preload("res://scripts/enemies/enemy_shot.gd")
+const WALKER_SCENE := preload("res://scenes/enemies/walker.tscn")
+## The move each body has: see the top of the file.
+const MOVES := {"brute": "slam", "angel_guard": "volley", "imp": "summon"}
 
 ## name: shown on the health bar. character: the sprite strips, and walk:
 ## the name of their walking loop. scale: how much bigger than the strips.
@@ -376,7 +416,11 @@ var _state_timer := 0.0
 var _hurt_timer := 0.0
 var _attack_cooldown := 0.0
 var _charge_cooldown := 0.0
+var _move_cooldown := 0.0
 var _leap_after_charge := false
+## Whether the volley's bolts have gone on this leap.
+var _volley_thrown := false
+var _phase_two := false
 var _dead := false
 var _player: Player
 
@@ -445,6 +489,7 @@ func _physics_process(delta: float) -> void:
 		velocity.y = minf(velocity.y + GRAVITY * delta, MAX_FALL_SPEED)
 	_attack_cooldown = maxf(_attack_cooldown - delta, 0.0)
 	_charge_cooldown = maxf(_charge_cooldown - delta, 0.0)
+	_move_cooldown = maxf(_move_cooldown - delta, 0.0)
 	_state_timer -= delta
 	if _hurt_timer > 0.0:
 		_hurt_timer -= delta
@@ -471,6 +516,17 @@ func _physics_process(delta: float) -> void:
 				_set_state(State.APPROACH, 0.0)
 			elif _state_timer <= 0.0:
 				_set_state(State.APPROACH, 0.0)
+		State.SLAM_WINDUP:
+			velocity.x = 0.0
+			if _state_timer <= 0.0:
+				_slam()
+		State.SLAM_RECOVER:
+			velocity.x = 0.0
+			if _state_timer <= 0.0:
+				_set_state(State.APPROACH, 0.0)
+				sprite.play(_walk_anim)
+		State.VOLLEY:
+			_process_volley()
 	move_and_slide()
 	if state != State.DORMANT and state != State.DEAD:
 		_hurt_player()
@@ -520,10 +576,123 @@ func _process_approach() -> void:
 		if _attack_cooldown <= 0.0 and absf(offset.y) <= ATTACK_HEIGHT_TOLERANCE:
 			_start_windup()
 		return
+	if _move_cooldown <= 0.0 and _move_wanted(offset):
+		_start_move()
+		return
 	if absf(offset.x) >= CHARGE_RANGE and _charge_cooldown <= 0.0:
 		_start_charge_windup()
 		return
 	velocity.x = direction * float(profile["speed"]) / _haste()
+
+
+## The body's own move: see MOVES.
+func move() -> String:
+	return str(MOVES.get(str(profile["character"]), ""))
+
+
+## Whether the hero stands where the body's move wants him.
+func _move_wanted(offset: Vector2) -> bool:
+	var dx := absf(offset.x)
+	match move():
+		"slam":
+			return dx <= SLAM_RANGE and absf(offset.y) <= ATTACK_HEIGHT_TOLERANCE
+		"volley":
+			return dx >= VOLLEY_MIN and dx <= VOLLEY_MAX and offset.y > -64.0
+	return false
+
+
+func _start_move() -> void:
+	match move():
+		"slam":
+			# The arms go up (the strip's raised frame) and stay there.
+			_set_state(State.SLAM_WINDUP, SLAM_WINDUP * _haste())
+			sprite.animation = "attack"
+			sprite.pause()
+			sprite.frame = 1
+			_tint(TINT_SLAM)
+		"volley":
+			_set_state(State.VOLLEY, VOLLEY_TIME)
+			_volley_thrown = false
+			velocity = Vector2(direction * 40.0, VOLLEY_VELOCITY_Y)
+			sprite.play("idle")
+			_tint(TINT_WINDUP)
+			Audio.play("jump", -4.0)
+
+
+## The ground shakes and a tall wave runs along the floor the way it faces.
+func _slam() -> void:
+	sprite.play("attack")
+	_tint(Color.WHITE)
+	var shot: EnemyShot = SHOT_SCRIPT.new()
+	shot.kind = EnemyShot.Kind.WAVE
+	shot.big = true
+	shot.damage = int(profile["attack_damage"])
+	shot.direction = Vector2(direction, 0.0)
+	shot.position = global_position + Vector2(direction * (_half_width + 8.0), 0.0)
+	_spawn_parent().add_child(shot)
+	Feedback.shake(0.5)
+	Audio.play("land")
+	for i in 4:
+		Feedback.spark(
+			global_position + Vector2(direction * (_half_width + i * 10.0), -2.0),
+			SHOT_SCRIPT.WAVE_DUST
+		)
+	_move_cooldown = SLAM_COOLDOWN * _haste()
+	_set_state(State.SLAM_RECOVER, SLAM_RECOVER * _haste())
+
+
+## In the air: at the top of the leap three bolts of light go down at the
+## hero in a fan; landing ends it.
+func _process_volley() -> void:
+	if not _volley_thrown and velocity.y >= 0.0:
+		_volley_thrown = true
+		_throw_volley()
+	if (is_on_floor() and _state_timer < VOLLEY_TIME - 0.1) or _state_timer <= 0.0:
+		velocity.x = 0.0
+		_tint(Color.WHITE)
+		_move_cooldown = VOLLEY_COOLDOWN * _haste()
+		_set_state(State.APPROACH, 0.0)
+		sprite.play(_walk_anim)
+
+
+func _throw_volley() -> void:
+	sprite.play("attack")
+	_tint(Color.WHITE)
+	var from := global_position + Vector2(direction * 8.0, body_shape.position.y)
+	var at := (
+		_player.global_position + Vector2(0.0, -12.0) if _find_player() else from + Vector2.DOWN
+	)
+	var aim := (at - from).normalized()
+	if aim == Vector2.ZERO:
+		aim = Vector2.DOWN
+	for i in 3:
+		var shot: EnemyShot = SHOT_SCRIPT.new()
+		shot.kind = EnemyShot.Kind.BOLT
+		shot.color = VOLLEY_COLOR
+		shot.core = VOLLEY_CORE
+		shot.direction = aim.rotated(deg_to_rad((i - 1) * VOLLEY_SPREAD))
+		shot.position = from
+		_spawn_parent().add_child(shot)
+	Audio.play("swing", -2.0)
+	Feedback.spark(from, VOLLEY_COLOR)
+
+
+## The imp kings' move: two imps come running when the fight turns.
+func _summon() -> void:
+	for i in SUMMON_COUNT:
+		var imp: Walker = WALKER_SCENE.instantiate()
+		imp.character = "imp"
+		imp.behaviour = "chase"
+		imp.death_y = global_position.y + 2000.0
+		imp.drop_parent = drop_parent
+		imp.position = global_position + Vector2((i * 2 - 1) * SUMMON_SPACING, -8.0)
+		get_parent().add_child(imp)
+		Feedback.puff(imp.position + Vector2(0.0, -12.0), TINT_CHARGE)
+
+
+## Where shots go: the level's objects, or the boss's own parent.
+func _spawn_parent() -> Node:
+	return drop_parent if drop_parent else get_parent()
 
 
 func _start_windup() -> void:
@@ -638,6 +807,24 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 	_tint(TINT_HURT)
 	if health <= 0:
 		_die()
+	elif not _phase_two and in_phase_two():
+		_enter_phase_two()
+
+
+## The turn of the fight: a roar, a flash, a shake and a blink of stopped
+## time, the body swelling for a moment; the imp kings call their imps.
+func _enter_phase_two() -> void:
+	_phase_two = true
+	Audio.play("roar")
+	Feedback.flash(sprite, 0.35)
+	Feedback.shake(0.5)
+	Feedback.hit_stop(0.1)
+	var pulse := create_tween()
+	var base := Vector2.ONE * float(profile["scale"])
+	pulse.tween_property(sprite, "scale", base * 1.15, 0.12).set_ease(Tween.EASE_OUT)
+	pulse.tween_property(sprite, "scale", base, 0.25).set_ease(Tween.EASE_IN)
+	if move() == "summon":
+		_summon()
 
 
 ## Death: the body plays its death strip (or topples, for a sprite without
