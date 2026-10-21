@@ -88,9 +88,15 @@ health bar at the bottom of the screen. The boss walks at the hero, swings
 with a wide telegraphed sweep and charges across the room when he keeps
 away; at half health it quickens and leaps after every charge. Killing it
 sets a story flag (`boss:<id>`), saves the game, opens the doors it held
-and plays its last lines; a dead boss stays dead in the save. So far only
-the Seraph Warden in Paradise has a profile; the other boss rooms keep an
-angel guard standing in.
+and plays its last lines; a dead boss stays dead in the save. Every boss
+room has a profile now (the strips of the guard, imp, brute or hero, scaled
+and tinted, with their own numbers): the Seraph Warden, the Penitent, the
+Limbo Lord, the Keeper of the Palace, the Bloated One, the Warden of the
+Vault, Gorrow the Fury, the Cursed Bishop, the Champion of the Red Arena,
+the False King and, at the bottom, the Lowest. Beating Gorrow in Wrath is
+the story's reveal: it sets the `reveal` flag the survivors on Earth react
+to, and Gorrow no longer waits in Lust afterwards (an NPC placement's
+`unless` flag).
 
 Hidden in the levels are **permanent upgrades**: a Kept Light adds a heart
 and a Vial of the Basin adds a healing charge, for the rest of the save. Each

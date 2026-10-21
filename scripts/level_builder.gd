@@ -16,7 +16,8 @@ extends Node2D
 ## and the tile cell (x, y) whose bottom its feet are on:
 ##
 ##   npc, item, trigger   a story object: name, character, tint, faces_left,
-##                        dialogue and rotate, as the dialogue system wants
+##                        dialogue and rotate, as the dialogue system wants;
+##                        unless: a story flag that, once set, leaves it out
 ##   enemy                character: imp, angel_guard, brute (walkers) or
 ##                        watcher; barks: a Walker.BARKS set the enemy shouts
 ##   upgrade              upgrade: heart (Kept Light) or vial (Vial of the Basin)
@@ -579,10 +580,13 @@ func _place_object(spec: Dictionary) -> void:
 			push_warning("LevelBuilder: object type '%s' is not known" % type)
 
 
-## Places a story object. A relic the save already holds is left out.
+## Places a story object. A relic the save already holds is left out, and
+## so is anything whose `unless` flag is set (someone who has died).
 func _add_placement(at: Vector2, spec: Dictionary) -> void:
 	var node: Interactable
 	var type := str(spec.get("type", ""))
+	if Story.has_flag(str(spec.get("unless", ""))):
+		return
 	match type:
 		"npc":
 			var npc := Npc.new()
