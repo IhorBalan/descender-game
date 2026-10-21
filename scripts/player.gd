@@ -26,6 +26,8 @@ enum UpgradeKind { HEART, VIAL }
 enum Power { HALO, BLADE, ZEAL }
 
 const CHARACTER := "hero"
+## The physics layer the one-way ledges sit on (see LevelBuilder).
+const LEDGE_LAYER_BIT := 16
 
 # Movement. The hero is meant to feel weighty: he takes a moment to get up
 # to speed, slides a little when he stops and keeps his momentum in the air.
@@ -50,6 +52,9 @@ const JUMP_CUT_MULTIPLIER := 0.45
 const APEX_SPEED_THRESHOLD := 30.0
 const APEX_GRAVITY_MULTIPLIER := 0.6
 const COYOTE_TIME := 0.1
+## Pressing down and jump on a one-way ledge drops through it: the ledges
+## are left out of the collision mask for this long.
+const DROP_TIME := 0.25
 ## Wings: one extra jump in the air, a little lower than the first.
 const DOUBLE_JUMP_HEIGHT := 56.0
 const DOUBLE_JUMP_VELOCITY := -sqrt(2.0 * GRAVITY * DOUBLE_JUMP_HEIGHT)
@@ -142,6 +147,8 @@ var _dash_from_floor := false
 var _air_jump_available := false
 var _wing_flash_timer := 0.0
 var _dash_cooldown_timer := 0.0
+## Counts down while the hero is dropping through a ledge.
+var _drop_timer := 0.0
 ## True while light barriers are ignored: during a light dash, and after it
 ## until the hero is clear of the barrier he ended inside.
 var _phasing := false
@@ -198,6 +205,7 @@ func _physics_process(delta: float) -> void:
 			_process_normal(delta)
 	_correct_corners(delta)
 	_update_phasing()
+	_update_dropping()
 	_last_fall_speed = velocity.y
 	move_and_slide()
 	if is_on_floor() and state != State.DASH:
@@ -222,6 +230,7 @@ func _tick_timers(delta: float) -> void:
 	_state_timer = maxf(_state_timer - delta, 0.0)
 	_invulnerable_timer = maxf(_invulnerable_timer - delta, 0.0)
 	_wing_flash_timer = maxf(_wing_flash_timer - delta, 0.0)
+	_drop_timer = maxf(_drop_timer - delta, 0.0)
 	_tick_powers(delta)
 
 
@@ -238,7 +247,9 @@ func _process_normal(delta: float) -> void:
 	_apply_gravity(delta)
 	_apply_horizontal(input_dir, delta)
 
-	if _jump_buffer_timer > 0.0 and _coyote_timer > 0.0:
+	if _jump_buffer_timer > 0.0 and is_on_floor() and _wants_drop():
+		_start_drop()
+	elif _jump_buffer_timer > 0.0 and _coyote_timer > 0.0:
 		velocity.y = JUMP_VELOCITY
 		_jump_buffer_timer = 0.0
 		_coyote_timer = 0.0
@@ -419,6 +430,40 @@ func _apply_horizontal(input_dir: float, delta: float, speed_multiplier := 1.0) 
 	else:
 		var friction := GROUND_FRICTION if on_floor else AIR_FRICTION
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+
+
+## Down and jump on a one-way ledge: true when the floor the hero stands
+## on is a ledge rather than solid ground, so the same press on the ground
+## is still a jump.
+func _wants_drop() -> bool:
+	if _input_blocked() or not Input.is_action_pressed("move_down"):
+		return false
+	return _on_ledge()
+
+
+## Whether the floor under the hero's feet is a one-way ledge: a short ray
+## down from the feet that only sees the ledge layer.
+func _on_ledge() -> bool:
+	var query := PhysicsRayQueryParameters2D.create(
+		global_position + Vector2(0.0, -2.0), global_position + Vector2(0.0, 4.0), LEDGE_LAYER_BIT
+	)
+	query.hit_from_inside = true
+	return not get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+
+
+func _start_drop() -> void:
+	_jump_buffer_timer = 0.0
+	_coyote_timer = 0.0
+	_drop_timer = DROP_TIME
+	collision_mask &= ~LEDGE_LAYER_BIT
+	# Out of the ledge's thin strip at once, so the snap cannot catch it.
+	velocity.y = maxf(velocity.y, 40.0)
+
+
+## The ledges come back into the mask once the drop is over.
+func _update_dropping() -> void:
+	if _drop_timer <= 0.0 and collision_mask & LEDGE_LAYER_BIT == 0:
+		collision_mask |= LEDGE_LAYER_BIT
 
 
 ## Light barriers are left out of the collision mask while light dashing,
@@ -714,6 +759,7 @@ func respawn() -> void:
 	_attack_buffer_timer = 0.0
 	_coyote_timer = 0.0
 	_dash_cooldown_timer = 0.0
+	_drop_timer = 0.0
 	_dash_available = true
 	_air_jump_available = true
 	health = max_health

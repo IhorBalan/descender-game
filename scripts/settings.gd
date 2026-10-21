@@ -15,6 +15,7 @@ const PATH := "user://settings.cfg"
 const REBINDABLE_ACTIONS: Array[StringName] = [
 	&"move_left",
 	&"move_right",
+	&"move_down",
 	&"jump",
 	&"attack",
 	&"dash",
@@ -44,6 +45,7 @@ const PAD_BUTTON_NAMES := {
 const ACTION_LABELS := {
 	&"move_left": "Move left",
 	&"move_right": "Move right",
+	&"move_down": "Move down",
 	&"jump": "Jump",
 	&"attack": "Attack",
 	&"dash": "Dash",

@@ -7,8 +7,9 @@ extends Node2D
 ## The export's layers become TileMapLayers, its terrain kinds become
 ## collision (solid runs, one-way ledges and hazards), its lights become
 ## PointLight2Ds and its markers place the hero (start), the checkpoints
-## (save), the feathers (ability) and, until there are bosses, a placeholder
-## angel guard in every boss room.
+## (save), the feathers (ability) and the bosses: a Boss for every boss
+## marker with a profile, a placeholder angel guard for the rest. Doors the
+## export locks by an ability or a boss get a seal of light (DoorLock).
 ##
 ## A placements.json next to the export names the dialogue file and lists
 ## the rest of what stands in the world under "objects", each with a type
@@ -38,6 +39,9 @@ const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
 const HAZARD_SCENE := preload("res://scenes/hazard.tscn")
 const PICKUP_SCENE := preload("res://scenes/ability_pickup.tscn")
+const BOSS_SCENE := preload("res://scenes/enemies/boss.tscn")
+## How many cells tall a seal across a sideways door can be.
+const MAX_SEAL_HEIGHT := 16
 const BARRIER_TEXTURE := preload("res://assets/sprites/light_barrier.png")
 const UPGRADE_KINDS := {"heart": Player.UpgradeKind.HEART, "vial": Player.UpgradeKind.VIAL}
 const POWER_KINDS := {
@@ -49,6 +53,8 @@ class EnemySpawn:
 	var scene: PackedScene
 	var position: Vector2
 	var character: String
+	## For a boss: the room it guards, in level pixels.
+	var arena := Rect2()
 
 	func _init(p_scene: PackedScene, p_position: Vector2, p_character: String = "") -> void:
 		scene = p_scene
@@ -65,6 +71,8 @@ var checkpoints: Array[Checkpoint] = []
 ## The gate that ends the level; the world has none yet.
 var goal: Goal = null
 var pickups: Array[AbilityPickup] = []
+## The seals on the export's locked doors that are still shut.
+var locks: Array[DoorLock] = []
 ## Permanent upgrades still lying in the level (ones the save holds are
 ## never built).
 var upgrades: Array[Upgrade] = []
@@ -94,6 +102,7 @@ var _hazards: Node2D
 var _barriers: LightBarrier
 var _objects: Node2D
 var _enemies: Node2D
+var _seals: Node2D
 var _power_ups: Node2D
 var _lights: Node2D
 
@@ -140,7 +149,7 @@ func _make_containers() -> void:
 	add_child(_solids)
 	_ledges = StaticBody2D.new()
 	_ledges.name = "Ledges"
-	_ledges.collision_layer = 1
+	_ledges.collision_layer = Player.LEDGE_LAYER_BIT
 	_ledges.collision_mask = 0
 	add_child(_ledges)
 	_hazards = Node2D.new()
@@ -157,6 +166,9 @@ func _make_containers() -> void:
 	_enemies = Node2D.new()
 	_enemies.name = "Enemies"
 	add_child(_enemies)
+	_seals = Node2D.new()
+	_seals.name = "Seals"
+	add_child(_seals)
 	_power_ups = Node2D.new()
 	_power_ups.name = "PowerUps"
 	add_child(_power_ups)
@@ -176,6 +188,7 @@ func _make_containers() -> void:
 	checkpoints = []
 	goal = null
 	pickups = []
+	locks = []
 	interactables = []
 	upgrades = []
 	_enemy_spawns = []
@@ -196,6 +209,7 @@ func build(map: WorldMap) -> void:
 		_build_row(map, y)
 	_build_lights(map)
 	_place_markers(map)
+	_place_locks(map)
 	for spec in _objects_spec:
 		if spec is Dictionary:
 			_place_object(spec)
@@ -335,7 +349,175 @@ func _place_markers(map: WorldMap) -> void:
 				if ability >= 0:
 					_add_pickup(at, ability)
 			"boss":
-				_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, at, BOSS_PLACEHOLDER))
+				_place_boss(map, marker, at)
+
+
+## A boss marker: a Boss with the room as its arena when its label has a
+## profile and the save does not already hold its death, else the
+## placeholder enemy.
+func _place_boss(map: WorldMap, marker: Dictionary, at: Vector2) -> void:
+	var id := Boss.id_for(str(marker.get("label", "")))
+	if not Boss.has_profile(id):
+		_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, at, BOSS_PLACEHOLDER))
+		return
+	if Story.has_flag(Boss.flag_for(id)):
+		return
+	var spawn := EnemySpawn.new(BOSS_SCENE, at, id)
+	spawn.arena = room_rect(map, int(marker.get("room", -1)))
+	_enemy_spawns.append(spawn)
+
+
+## The rect of a room of the export in level pixels, or an empty rect.
+func room_rect(map: WorldMap, room_id: int) -> Rect2:
+	for room in map.rooms:
+		if int(room.get("id", -1)) == room_id:
+			var rect: Array = room.get("rect", [])
+			if rect.size() == 4:
+				return Rect2(float(rect[0]), float(rect[1]), float(rect[2]), float(rect[3]))
+	return Rect2()
+
+
+## A seal of light on every door the export locks, unless the hero may
+## already pass it. Secret passages have no place in the grid and get none.
+func _place_locks(map: WorldMap) -> void:
+	for door in map.doors:
+		var lock: Variant = door.get("lock")
+		if not lock is Dictionary or bool(door.get("secret", false)):
+			continue
+		var seal := DoorLock.new()
+		seal.door_id = int(door.get("id", 0))
+		match str(lock.get("kind", "")):
+			"ability":
+				var index := int(lock.get("ability", -1))
+				seal.kind = DoorLock.Kind.ABILITY
+				seal.ability = _ability_for(index)
+				seal.ability_name = _ability_name(map, index)
+			"boss":
+				var boss_id := _boss_in_region(map, int(lock.get("region", -1)))
+				seal.kind = DoorLock.Kind.BOSS
+				seal.boss_flag = Boss.flag_for(boss_id)
+				seal.boss_name = boss_id.capitalize()
+				if Story.has_flag(seal.boss_flag):
+					continue
+			_:
+				continue
+		seal.cells = _door_cells(map, door)
+		if seal.cells.is_empty():
+			continue
+		seal.name = "Seal%d" % seal.door_id
+		_seals.add_child(seal)
+		locks.append(seal)
+
+
+## The cells a seal across a door covers. A door down (dir "v") is a gap
+## in a ledge four cells wide; the seal is the row of air just under the
+## ledge. A door sideways (dir "h") is an opening in the air at the room's
+## edge; the seal is the column from the door's floor up to the ceiling.
+func _door_cells(map: WorldMap, door: Dictionary) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	var x := int(door.get("x", 0))
+	var y := int(door.get("y", 0))
+	if str(door.get("dir", "")) == "v":
+		var row := y
+		while row > 0 and _row_is_air(map, x - 2, row - 1, 4):
+			row -= 1
+		for i in 4:
+			cells.append(Vector2i(x - 2 + i, row))
+	else:
+		var row := y
+		while row >= 0 and map.kind_at(x, row) == WorldMap.KIND_NONE:
+			cells.append(Vector2i(x, row))
+			row -= 1
+			if cells.size() >= MAX_SEAL_HEIGHT:
+				break
+	return cells
+
+
+func _row_is_air(map: WorldMap, x: int, y: int, count: int) -> bool:
+	for i in count:
+		if map.kind_at(x + i, y) != WorldMap.KIND_NONE:
+			return false
+	return true
+
+
+## The map's name for an ability, without the note in brackets.
+func _ability_name(map: WorldMap, index: int) -> String:
+	if index < 0 or index >= map.abilities.size():
+		return "unknown ability"
+	return map.abilities[index].get_slice("(", 0).strip_edges()
+
+
+## The id of the boss whose room is in the region (see Boss.id_for), or
+## "" when the region has none.
+func _boss_in_region(map: WorldMap, region: int) -> String:
+	for marker in map.markers_of("boss"):
+		var rect_room := int(marker.get("room", -1))
+		for room in map.rooms:
+			if int(room.get("id", -1)) == rect_room and int(room.get("region", -1)) == region:
+				return Boss.id_for(str(marker.get("label", "")))
+	return ""
+
+
+## Breaks every seal the hero may now pass: called when he learns an
+## ability or kills a boss, and quietly once a save has been applied.
+func open_locks(player: Player, quiet := false) -> void:
+	for seal in locks.duplicate():
+		if not is_instance_valid(seal):
+			locks.erase(seal)
+		elif seal.satisfied(player):
+			locks.erase(seal)
+			seal.open(quiet)
+
+
+## Seals every door of a room for a boss fight. Returns the seals, which
+## `unseal` breaks when the fight is over.
+func seal_room(room_id: int) -> Array[DoorLock]:
+	var seals: Array[DoorLock] = []
+	if world == null:
+		return seals
+	for door in world.doors:
+		if int(door.get("a", -1)) != room_id and int(door.get("b", -1)) != room_id:
+			continue
+		if bool(door.get("secret", false)):
+			continue
+		var cells := _door_cells(world, door)
+		if cells.is_empty() or _sealed(cells[0]):
+			continue
+		var seal := DoorLock.new()
+		seal.kind = DoorLock.Kind.ARENA
+		seal.door_id = int(door.get("id", 0))
+		seal.cells = cells
+		seal.name = "Arena%d" % seal.door_id
+		_seals.add_child(seal)
+		seals.append(seal)
+	return seals
+
+
+func unseal(seals: Array[DoorLock]) -> void:
+	for seal in seals:
+		if is_instance_valid(seal):
+			seal.open()
+
+
+## Whether a lock already covers the cell.
+func _sealed(cell: Vector2i) -> bool:
+	for seal in locks:
+		if is_instance_valid(seal) and cell in seal.cells:
+			return true
+	return false
+
+
+## The id of the room the pixel position falls in, or -1.
+func room_at(position: Vector2) -> int:
+	if world == null:
+		return -1
+	for room in world.rooms:
+		var rect: Array = room.get("rect", [])
+		if rect.size() == 4:
+			var r := Rect2(float(rect[0]), float(rect[1]), float(rect[2]), float(rect[3]))
+			if r.has_point(position):
+				return int(room.get("id", -1))
+	return -1
 
 
 ## The hero's ability for an index into the export's ability list, or -1
@@ -487,6 +669,10 @@ func spawn_enemies() -> void:
 			var walker := enemy as Walker
 			walker.character = spawn.character
 			walker.death_y = size_px.y + 64.0
+		elif enemy is Boss:
+			var boss := enemy as Boss
+			boss.boss_id = spawn.character
+			boss.arena = spawn.arena
 		_enemies.add_child(enemy)
 
 
@@ -520,6 +706,15 @@ func upgrade_count() -> int:
 		if is_instance_valid(upgrade) and not upgrade.is_queued_for_deletion():
 			count += 1
 	return count
+
+
+## The bosses standing in the level, dead ones included until they fade.
+func bosses() -> Array[Boss]:
+	var found: Array[Boss] = []
+	for enemy in _enemies.get_children():
+		if enemy is Boss:
+			found.append(enemy)
+	return found
 
 
 ## Live enemies: the dying ones still fading out are not counted.

@@ -528,6 +528,11 @@ designed, but the voice and the facts should hold.
 
 ### Heaven 2
 
+In the game: the `makinghouse` trigger stands on the ledge before the
+Warden's room in Paradise, the Warden's lines play as the boss's intro and
+defeat (`seraph_warden_intro`, `seraph_warden_defeat`, the latter sets
+`warden_fallen`), and the three items are relics on the lower terraces.
+
 **`makinghouse` (trigger, outside the Making-house)**
 > **VOICE:** You left your other half on the table in there.
 > **ANSEL:** Keep it.

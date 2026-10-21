@@ -28,6 +28,7 @@ window is 1280x720 by default.
 | Action  | Keyboard            | Gamepad        |
 | ------- | ------------------- | -------------- |
 | Move    | A / D or arrows     | Left stick / D-pad |
+| Drop    | S or Down, with jump | Stick or D-pad down, with A |
 | Jump    | Space, W or Up      | A              |
 | Attack  | J or X              | X              |
 | Dash    | K or Shift          | RB or B        |
@@ -65,6 +66,22 @@ unlocked abilities, the story flags and the time played go to the slot the
 game was started from, as JSON under `user://saves/`. Loading puts the hero back at that
 checkpoint, rested, with the feathers he already took gone from the level.
 Restarting with R does the same from the progress so far.
+
+Thin ledges can be jumped up through from below, and the hero drops
+through one by holding down and pressing jump.
+
+The map's **locked doors** are seals of angel light across the shafts and
+doorways between rooms. A seal lifted by an ability breaks the moment the
+hero learns it; one held by a boss breaks when that boss dies. Touching a
+seal says what it wants. Every boss room with a profile holds a **boss**:
+walking in seals the room's doors, plays the boss's lines and shows its
+health bar at the bottom of the screen. The boss walks at the hero, swings
+with a wide telegraphed sweep and charges across the room when he keeps
+away; at half health it quickens and leaps after every charge. Killing it
+sets a story flag (`boss:<id>`), saves the game, opens the doors it held
+and plays its last lines; a dead boss stays dead in the save. So far only
+the Seraph Warden in Paradise has a profile; the other boss rooms keep an
+angel guard standing in.
 
 Hidden in the levels are **permanent upgrades**: a Kept Light adds a heart
 and a Vial of the Basin adds a healing charge, for the rest of the save. Each
@@ -118,11 +135,13 @@ the hero is in it. The export also holds the rooms, the doors between them
 (solid, one-way ledge, hazard), a `PointLight2D` per light (without shadows,
 which would need an occluder on every tile), and the markers: the start
 puts the hero down, every save is a checkpoint, the ability markers for the
-wings and the halo dash are feathers, and every boss room has an angel
-guard standing in for the boss. The other markers (secrets, shops, the gate,
-the clock) and the four abilities the hero cannot learn yet (Wall Grip,
-Holy Light, Glide, Smite) are data in the JSON until there is something for
-them to do.
+wings and the halo dash are feathers, every boss marker with a profile is
+a `Boss` (the rest get an angel guard standing in), and every locked door
+gets a seal (`scripts/door_lock.gd`). The other markers (secrets, shops,
+the gate, the clock) and the four abilities the hero cannot learn yet (Wall
+Grip, Holy Light, Glide, Smite) are data in the JSON until there is
+something for them to do; a seal that wants one of those abilities stays
+shut.
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
@@ -168,6 +187,8 @@ gone.
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
+| `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: profiles by marker label, two phases, the fight main.gd runs around it |
+| `scripts/door_lock.gd` | A seal of light on a locked door, or on a boss room's doors during the fight |
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
