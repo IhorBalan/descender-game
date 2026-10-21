@@ -26,6 +26,7 @@ Audio="*res://scripts/audio.gd"
 Feedback="*res://scripts/feedback.gd"
 SaveManager="*res://scripts/save_manager.gd"
 Settings="*res://scripts/settings.gd"
+LiveMap="*res://scripts/live_map.gd"
 
 [display]
 
@@ -132,3 +133,8 @@ renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 2d/snap/snap_2d_transforms_to_pixel=true
 environment/defaults/default_clear_color=Color(0.16, 0.13, 0.32, 1)
+
+[live_map]
+
+enabled=true
+project_id="lit-pixel-game-k0os"

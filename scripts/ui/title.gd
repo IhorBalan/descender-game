@@ -24,6 +24,9 @@ var _overwrite_slot := -1
 @onready var slots_heading: Label = $Slots/Heading
 @onready var slot_buttons: Array[Button] = [$Slots/Slot1, $Slots/Slot2, $Slots/Slot3]
 @onready var back_button: Button = $Slots/Back
+@onready var live_map_status: Label = $LiveMapStatus
+
+var _starting := false
 
 
 func _ready() -> void:
@@ -39,6 +42,11 @@ func _ready() -> void:
 	Audio.wire_menu(self)
 	Audio.stop_ambient()
 	_show_menu()
+	# The live map sync (see LiveMap) reports along the bottom while it runs.
+	if LiveMap.enabled:
+		live_map_status.visible = true
+		_show_live_map_status(LiveMap.ok, LiveMap.status)
+		LiveMap.finished.connect(_show_live_map_status)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -99,4 +107,18 @@ func _on_continue_pressed() -> void:
 
 
 func _start_game() -> void:
+	if _starting:
+		return
+	_starting = true
+	# The world files may still be on their way from the editor.
+	if LiveMap.running:
+		live_map_status.text = "Waiting for the live map…"
+		await LiveMap.wait()
 	get_tree().change_scene_to_file(GAME_SCENE)
+
+
+func _show_live_map_status(ok: bool, message: String) -> void:
+	live_map_status.text = message
+	live_map_status.add_theme_color_override(
+		"font_color", Color(0.56, 0.88, 0.54) if ok or LiveMap.running else Color(1.0, 0.55, 0.45)
+	)
