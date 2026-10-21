@@ -419,6 +419,58 @@
 			}
 		]
 	},
+	"hanne_pipes": {
+		"once": true,
+		"requires": [
+			"seen_pipes"
+		],
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "You went down. What's it like? I can't see down from here."
+			},
+			{
+				"who": "Ansel",
+				"text": "Pipes. White stone, going up through all of it. Like a kitchen's."
+			},
+			{
+				"who": "Hanne",
+				"text": "(She draws. Lines, going up.) Where do they go?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Here."
+			}
+		]
+	},
+	"hanne_camp": {
+		"once": true,
+		"requires": [
+			"seen_camp"
+		],
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Did you find the one who counts?"
+			},
+			{
+				"who": "Ansel",
+				"text": "His army. They're resting. They let me through."
+			},
+			{
+				"who": "Hanne",
+				"text": "Did you say hello from the drawing girl?"
+			},
+			{
+				"who": "Ansel",
+				"text": "...Next time."
+			},
+			{
+				"who": "Hanne",
+				"text": "You said that like there's one."
+			}
+		]
+	},
 	"hanne_churchyard": {
 		"lines": [
 			{
@@ -499,6 +551,81 @@
 			{
 				"who": "Corporal Dace",
 				"text": "He's down there now. If you meet a lad in a red scarf, he was mine. Don't tell him I said so."
+			}
+		],
+		"sets": "quest:scarf"
+	},
+	"dace_scarf": {
+		"once": true,
+		"requires": [
+			"item:scarf"
+		],
+		"sets": "quest:scarf:done",
+		"gives": "vial",
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "That's... (He holds it a long time before he takes it.)"
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "You told him. I said don't. ...What did he say.",
+				"requires": [
+					"thorne_told"
+				]
+			},
+			{
+				"who": "Ansel",
+				"text": "That the barricade held.",
+				"requires": [
+					"thorne_told"
+				]
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "It did. It did hold.",
+				"requires": [
+					"thorne_told"
+				]
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "You didn't tell him. Good. Good lad. He always did better not knowing who was watching.",
+				"requires": [
+					"thorne_kept"
+				]
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "He had a flask. Warden's glass, off one of the sky ones, full of their water. He said it closed cuts."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "Take it. He'd want it going down, not sitting at a barricade with me."
+			}
+		]
+	},
+	"dace_army": {
+		"once": true,
+		"requires": [
+			"seen_camp"
+		],
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "They've stopped climbing. Three days now. Nothing out of the churchyard."
+			},
+			{
+				"who": "Ansel",
+				"text": "They're resting. All of them, in the eighth circle. Waiting on him."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "Waiting for an order. I said. ...And when he gives it?"
+			},
+			{
+				"who": "Ansel",
+				"text": "He won't."
 			}
 		]
 	},
@@ -585,6 +712,26 @@
 			{
 				"who": "Sister Ava",
 				"text": "Then I'll say it, church or no. Tobiah. They shout it like a prayer. Perhaps it is one."
+			}
+		]
+	},
+	"ava_pipes": {
+		"once": true,
+		"requires": [
+			"seen_pipes"
+		],
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "You've seen where the font drains. It's on your hands; you keep looking at them."
+			},
+			{
+				"who": "Ansel",
+				"text": "The Basin runs down into Hell."
+			},
+			{
+				"who": "Sister Ava",
+				"text": "Then it's one house. I had a feeling it was one house."
 			}
 		]
 	},
@@ -1007,6 +1154,54 @@
 			}
 		]
 	},
+	"pell_garden": {
+		"once": true,
+		"requires": [
+			"item:wheel_tablet"
+		],
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "You asked me what garden. It's a farm. They have it in writing."
+			},
+			{
+				"who": "Old Pell",
+				"text": "...A farm."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Then she was a crop. Say it. I'd rather hear it than guess it."
+			},
+			{
+				"who": "Ansel",
+				"text": "She was a crop."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Right. Hold the blade. Steadier. I've work to do."
+			}
+		]
+	},
+	"pell_warden": {
+		"once": true,
+		"requires": [
+			"warden_fallen"
+		],
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "The light over the churchyard went out a while this morning. First time in a year. That you?"
+			},
+			{
+				"who": "Ansel",
+				"text": "The one who dropped my brother."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Good. One hand's enough to shake with."
+			}
+		]
+	},
 	"vael_trade": {
 		"once": true,
 		"requires": [
@@ -1062,6 +1257,13 @@
 			{
 				"who": "The Voice",
 				"text": "The Basin has to drain somewhere."
+			},
+			{
+				"who": "Ansel",
+				"text": "He came down past these. He saw them and kept going. Of course he did.",
+				"requires": [
+					"reveal"
+				]
 			}
 		]
 	},
@@ -1167,6 +1369,141 @@
 			}
 		]
 	},
+	"thorne_stranger": {
+		"once": true,
+		"unless": [
+			"quest:scarf"
+		],
+		"sets": "met_thorne",
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "You're going the wrong way. ...I've said that before. To someone. I don't know who."
+			},
+			{
+				"who": "Thorne",
+				"text": "Is it holding? The barricade. I had a barricade, and a man who counted at it."
+			},
+			{
+				"who": "Ansel",
+				"text": "It's holding."
+			},
+			{
+				"who": "Thorne",
+				"text": "Good. Good. Then I'll stay here, and it'll hold."
+			}
+		]
+	},
+	"thorne_intro": {
+		"once": true,
+		"requires": [
+			"quest:scarf"
+		],
+		"sets": "met_thorne",
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "You're going the wrong way. ...I've said that before. To someone. I don't know who."
+			},
+			{
+				"who": "Ansel",
+				"text": "A red scarf. You're Thorne. Third Company."
+			},
+			{
+				"who": "Thorne",
+				"text": "Thorne. (He says it twice, trying it on.) Was that the name? It fits in the mouth."
+			},
+			{
+				"who": "Thorne",
+				"text": "Is the barricade holding? I had a barricade, and a man who counted at it. He'd know."
+			},
+			{
+				"who": "Thorne",
+				"text": "Did he send you? Did he say anything?",
+				"choices": [
+					{
+						"text": "He sent me",
+						"then": "thorne_told"
+					},
+					{
+						"text": "Nobody sent me",
+						"then": "thorne_kept"
+					}
+				]
+			}
+		]
+	},
+	"thorne_told": {
+		"sets": [
+			"thorne_told",
+			"item:scarf"
+		],
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "He sent me. He said you were his. He said not to tell you."
+			},
+			{
+				"who": "Thorne",
+				"text": "(He laughs, and it is still a laugh.) That's him. That's the corporal."
+			},
+			{
+				"who": "Thorne",
+				"text": "Take the scarf. Red was the company. Tell him it held. Tell him I said the barricade held."
+			},
+			{
+				"who": "",
+				"text": "(Thorne's scarf. The red is the only colour in Violence that is not blood.)"
+			}
+		]
+	},
+	"thorne_kept": {
+		"sets": [
+			"thorne_kept",
+			"item:scarf"
+		],
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Nobody sent me. I'm going down for my brother."
+			},
+			{
+				"who": "Thorne",
+				"text": "Then you'll pass my mother. Everyone's down here, in the end. (He unwinds the scarf.)"
+			},
+			{
+				"who": "Thorne",
+				"text": "Take it anyway. Red was the company. If there's a man still counting at a barricade up there, he'll know whose."
+			},
+			{
+				"who": "",
+				"text": "(Thorne's scarf. The red is the only colour in Violence that is not blood.)"
+			}
+		]
+	},
+	"thorne_barricade": {
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "Is it holding?"
+			},
+			{
+				"who": "Thorne",
+				"text": "Don't answer. I'd rather it held.",
+				"requires": [
+					"item:scarf"
+				]
+			}
+		]
+	},
+	"thorne_cold": {
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "It's not cold here. People say it is. It's just that nothing's warm."
+			}
+		]
+	},
 	"camp": {
 		"once": true,
 		"sets": "seen_camp",
@@ -1182,6 +1519,13 @@
 			{
 				"who": "Ansel",
 				"text": "No. He told them not to."
+			},
+			{
+				"who": "Ansel",
+				"text": "Four hundred and something. Every one of them counted. He always finished a count.",
+				"requires": [
+					"reveal"
+				]
 			}
 		]
 	},
@@ -1308,8 +1652,14 @@
 				"who": "Tobiah",
 				"text": "Can't. That's all right. I counted. Four hundred and ten. One more than I thought I'd get.",
 				"choices": [
-					{"text": "Carry him", "then": "ending_carry"},
-					{"text": "Sit down", "then": "ending_sit"}
+					{
+						"text": "Carry him",
+						"then": "ending_carry"
+					},
+					{
+						"text": "Sit down",
+						"then": "ending_sit"
+					}
 				]
 			}
 		]

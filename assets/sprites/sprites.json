@@ -418,5 +418,30 @@
         "loop": true
       }
     }
+  },
+  "thorne": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "thorne_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "thorne_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
   }
 }

@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 355
+const EXPECTED_CHECKS := 369
 const LAST_TICK := 1310
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -55,6 +55,8 @@ var _boss: Boss
 var _boss_start := Vector2.ZERO
 var _secret: SecretWall
 var _secret_cell := Vector2i.ZERO
+## The hero's healing charges before Dace's gift.
+var _charges := 0
 
 @onready var root: Window = get_tree().root
 
@@ -425,7 +427,7 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 39, "thirty-nine story objects built")
+			_check(_main.level.interactables.size() == 40, "forty story objects built")
 			var messenger: Npc = null
 			var vaels := 0
 			for node in _main.level.interactables:
@@ -439,7 +441,7 @@ func _physics_process(_delta: float) -> void:
 				"the messenger is a sent-down angel"
 			)
 			_check(vaels == 2, "Vael waits in Greed and again in Violence")
-			_check(_main.level.npc_count() == 12, "twelve NPCs built")
+			_check(_main.level.npc_count() == 13, "thirteen NPCs built")
 			_check(_main.level.item_count() == 16, "sixteen relics built")
 			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
 			for node in _main.level.interactables:
@@ -935,6 +937,75 @@ func _physics_process(_delta: float) -> void:
 				_hub.dialogue_box.advance()
 			_check(Story.has_flag("sold_winter"), "the trade takes the memory")
 			_check(Story.has_flag("item:clock_key"), "and gives the clock key")
+			# The red scarf: Thorne waits in Violence, the letter starts the
+			# quest, his last line is the choice, and Dace takes the scarf.
+			var thorne: Npc = null
+			var dace: Npc = null
+			for node in _hub.level.interactables:
+				if node is Npc and node.npc_name == "Thorne":
+					thorne = node
+				elif node is Npc and node.npc_name == "Corporal Dace":
+					dace = node
+			_check(thorne != null and dace != null, "Thorne and Dace are placed")
+			_check(
+				_hub.level.region_at(thorne.global_position.y).get("name") == "7. Violence",
+				"Thorne stands in Violence"
+			)
+			_check(thorne.sprite.sprite_frames.has_animation("talk"), "Thorne has his strips")
+			_check(
+				str(_hub.dialogue.entry("dace_letter").get("sets", "")) == "quest:scarf",
+				"the letter starts the quest"
+			)
+			_check(
+				_hub.dialogue.pick(thorne.dialogue_ids).get("id", "") == "thorne_stranger",
+				"without the quest Thorne is a stranger"
+			)
+			Story.set_flag("quest:scarf")
+			var intro: Dictionary = _hub.dialogue.pick(thorne.dialogue_ids)
+			_check(intro.get("id", "") == "thorne_intro", "with the quest Thorne is Thorne")
+			var last := DialogueData.line_count(intro) - 1
+			_check(
+				(
+					DialogueData.choices(intro, last).size() == 2
+					and DialogueData.choices(intro, last)[0]["then"] == "thorne_told"
+				),
+				"his last line is the choice"
+			)
+			_check(
+				"item:scarf" in DialogueData.sets(_hub.dialogue.entry("thorne_kept")),
+				"either answer gives the scarf"
+			)
+			Story.set_flag("item:scarf")
+			Story.set_flag("thorne_told")
+			# Dace's earlier lines have been heard.
+			Story.set_flag(DialogueData.seen_flag("dace_intro"))
+			Story.set_flag(DialogueData.seen_flag("dace_clock"))
+			_charges = _hub.player.max_heal_charges
+			_hub.player.global_position = dace.global_position + Vector2(-20.0, 0.0)
+			_hub.player.velocity = Vector2.ZERO
+		914:
+			_press("interact", true)
+		916:
+			_press("interact", false)
+			_check(
+				_hub.dialogue_box.current_id() == "dace_scarf",
+				"Dace takes the scarf (%s)" % _hub.dialogue_box.current_id()
+			)
+			var lines: int = _hub.dialogue_box.page_count()
+			_check(lines == 6, "the lines for the answer he got are in (%d)" % lines)
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			_check(Story.has_flag("quest:scarf:done"), "the quest is done")
+		917:
+			_check(
+				_hub.player.max_heal_charges == _charges + 1, "Thorne's flask is a healing charge"
+			)
+			_check(Story.has_flag("upgrade:vial:gift:dace_scarf"), "the gift is a flag in the save")
+			_check(
+				_hub.dialogue_box.current_id() == "upgrade_vial", "the flask reads like an upgrade"
+			)
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
 			# The gate at the bottom of the hub: the point of no return, saved.
 			var descent: Dictionary = _hub.dialogue.entry("descent")
 			_check(bool(descent.get("save", false)), "the descent saves the game")

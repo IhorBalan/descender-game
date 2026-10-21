@@ -514,6 +514,14 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 	if _fight_pending and is_instance_valid(_boss):
 		_fight_pending = false
 		_boss.start_fight()
+	# A gift (`gives`: an upgrade kind) lands once the hero has been released
+	# for this frame, so its description can hold him again.
+	var gift := str(entry.get("gives", ""))
+	if LevelBuilder.UPGRADE_KINDS.has(gift):
+		var kind: Player.UpgradeKind = LevelBuilder.UPGRADE_KINDS[gift]
+		var flag := Upgrade.flag_for(kind, "gift", str(entry.get("id", "")))
+		if not Story.has_flag(flag):
+			player.apply_upgrade.call_deferred(kind, flag)
 	# An entry's `then` (or the choice just taken) carries straight on, once
 	# the hero has been released for this frame.
 	var next_id := DialogueData.next_id(entry)

@@ -163,7 +163,17 @@ Gluttony that says DON'T FOLLOW, and Vael the Bargainer in Greed. In
 Heresy the hero sees the Basin's pipes, meets Tobiah's messenger (a
 sent-down angel Tobiah speaks through) and can find the Choir's tablet and
 the clock weight; in Violence Vael waits again, with the pipe section and
-the clock chain below him. Fraud is the last camp: the army rests there
+the clock chain below him, and Thorne, the lad in the red scarf from
+Dace's letter, stands by the checkpoint, half turned. Reading the letter
+and hearing Dace out starts the **red scarf** side quest (flag
+`quest:scarf`): Thorne asks whether the barricade holds and whether Dace
+sent the hero, and the answer is a choice that changes what each of them
+says afterwards. Either way he hands over the scarf (`item:scarf`), and
+Dace, back on Earth, takes it and gives Thorne's flask, one more healing
+charge (a dialogue entry's `gives` names an upgrade kind; the gift is a
+flag, `upgrade:<kind>:gift:<entry>`, so it stays given in the save). The
+survivors also answer what the hero has seen below: the Warden's fall,
+the pipes, the Wheel in writing and the resting army each unlock a line. Fraud is the last camp: the army rests there
 (`passive` enemies, which patrol and never swing), an imp offers a tally
 bone, and the roster lies among them. At the bottom of Treachery the
 Lowest speaks before the fight and after it, and the last line is a

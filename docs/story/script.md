@@ -124,6 +124,7 @@ That is where the game begins.
 | **Sister Ava** | A nun who stopped praying | Earth hub | Heard the demons shouting a name upward. |
 | **Gorrow** | Demon captain, served under the Lowest | Circles 1 to 5 | The reveal. |
 | **Vael the Bargainer** | A demon who trades in memories | Circles 3, 6, 8 | Hints and shop. Offers to buy Ansel's. |
+| **Thorne** | Dace's soldier, the lad in the red scarf, half turned | Circle 7 | The red scarf side quest. |
 | **The Gardener** | God. The first angel. | Heaven, before everything (clock ending) | The clock-ending fight. |
 
 Enemies with lines: imps (fresh fallen, still chatty), brutes (grunts), angel
@@ -526,6 +527,97 @@ cannot be missed on the floor.
 
 > **SOLDIER'S LETTER:** Never sent. 'Mother, they say the ones in the ground were people once. I don't believe it. I don't want to.'
 
+### The hub, later: what the hero brings back
+
+Each of these plays once, when its flag is set, before the repeat lines.
+
+**`pell_warden`** (needs `warden_fallen`)
+> **OLD PELL:** The light over the churchyard went out a while this morning. First time in a year. That you?
+> **ANSEL:** The one who dropped my brother.
+> **OLD PELL:** Good. One hand's enough to shake with.
+
+**`pell_garden`** (needs `item:wheel_tablet`)
+> **ANSEL:** You asked me what garden. It's a farm. They have it in writing.
+> **OLD PELL:** ...A farm.
+> **OLD PELL:** Then she was a crop. Say it. I'd rather hear it than guess it.
+> **ANSEL:** She was a crop.
+> **OLD PELL:** Right. Hold the blade. Steadier. I've work to do.
+
+**`hanne_pipes`** (needs `seen_pipes`)
+> **HANNE:** You went down. What's it like? I can't see down from here.
+> **ANSEL:** Pipes. White stone, going up through all of it. Like a kitchen's.
+> **HANNE:** *(She draws. Lines, going up.)* Where do they go?
+> **ANSEL:** Here.
+
+**`hanne_camp`** (needs `seen_camp`)
+> **HANNE:** Did you find the one who counts?
+> **ANSEL:** His army. They're resting. They let me through.
+> **HANNE:** Did you say hello from the drawing girl?
+> **ANSEL:** ...Next time.
+> **HANNE:** You said that like there's one.
+
+**`ava_pipes`** (needs `seen_pipes`)
+> **SISTER AVA:** You've seen where the font drains. It's on your hands; you keep looking at them.
+> **ANSEL:** The Basin runs down into Hell.
+> **SISTER AVA:** Then it's one house. I had a feeling it was one house.
+
+**`dace_army`** (needs `seen_camp`)
+> **CORPORAL DACE:** They've stopped climbing. Three days now. Nothing out of the churchyard.
+> **ANSEL:** They're resting. All of them, in the eighth circle. Waiting on him.
+> **CORPORAL DACE:** Waiting for an order. I said. ...And when he gives it?
+> **ANSEL:** He won't.
+
+### Side quest: the red scarf
+
+Dace's `dace_letter` (needs `item:letter`) now sets `quest:scarf`. Thorne,
+the lad in the red scarf, stands by the checkpoint in Violence, half
+turned: grey, the scarf the only colour on him. Without the quest he is a
+stranger (`thorne_stranger`); with it, `thorne_intro` ends in a choice,
+and either answer gives the scarf (`item:scarf`). Back on Earth,
+`dace_scarf` (needs `item:scarf`, sets `quest:scarf:done`) takes it, says
+a different thing for each answer, and gives Thorne's flask: a Vial of
+the Basin, one more healing charge.
+
+**`thorne_stranger`** (once; unless `quest:scarf`)
+> **THORNE:** You're going the wrong way. ...I've said that before. To someone. I don't know who.
+> **THORNE:** Is it holding? The barricade. I had a barricade, and a man who counted at it.
+> **ANSEL:** It's holding.
+> **THORNE:** Good. Good. Then I'll stay here, and it'll hold.
+
+**`thorne_intro`** (once; needs `quest:scarf`; sets `met_thorne`)
+> **THORNE:** You're going the wrong way. ...I've said that before. To someone. I don't know who.
+> **ANSEL:** A red scarf. You're Thorne. Third Company.
+> **THORNE:** Thorne. *(He says it twice, trying it on.)* Was that the name? It fits in the mouth.
+> **THORNE:** Is the barricade holding? I had a barricade, and a man who counted at it. He'd know.
+> **THORNE:** Did he send you? Did he say anything?
+> *Choice:* **He sent me** / **Nobody sent me**
+
+**`thorne_told`** (sets `thorne_told`, `item:scarf`)
+> **ANSEL:** He sent me. He said you were his. He said not to tell you.
+> **THORNE:** *(He laughs, and it is still a laugh.)* That's him. That's the corporal.
+> **THORNE:** Take the scarf. Red was the company. Tell him it held. Tell him I said the barricade held.
+> *(Thorne's scarf. The red is the only colour in Violence that is not blood.)*
+
+**`thorne_kept`** (sets `thorne_kept`, `item:scarf`)
+> **ANSEL:** Nobody sent me. I'm going down for my brother.
+> **THORNE:** Then you'll pass my mother. Everyone's down here, in the end. *(He unwinds the scarf.)*
+> **THORNE:** Take it anyway. Red was the company. If there's a man still counting at a barricade up there, he'll know whose.
+> *(Thorne's scarf. The red is the only colour in Violence that is not blood.)*
+
+**`thorne_barricade`, `thorne_cold`** (repeat lines)
+> **THORNE:** Is it holding? *(and, once he has given the scarf:)* Don't answer. I'd rather it held.
+
+> **THORNE:** It's not cold here. People say it is. It's just that nothing's warm.
+
+**`dace_scarf`** (once; needs `item:scarf`; sets `quest:scarf:done`; gives a vial)
+> **CORPORAL DACE:** That's... *(He holds it a long time before he takes it.)*
+> *(If the hero told him:)* **CORPORAL DACE:** You told him. I said don't. ...What did he say.
+> **ANSEL:** That the barricade held.
+> **CORPORAL DACE:** It did. It did hold.
+> *(If he kept it:)* **CORPORAL DACE:** You didn't tell him. Good. Good lad. He always did better not knowing who was watching.
+> **CORPORAL DACE:** He had a flask. Warden's glass, off one of the sky ones, full of their water. He said it closed cuts.
+> **CORPORAL DACE:** Take it. He'd want it going down, not sitting at a barricade with me.
+
 ### `hole` (once; sets `reached_hole`)
 
 > **ANSEL:** The churchyard. A hole, and warm air coming up out of it. Like a kitchen.
@@ -677,6 +769,7 @@ the pipe section and the clock chain in Violence.
 **`pipes` (trigger, once; sets `seen_pipes`)**
 > **ANSEL:** Pipes. White stone pipes, going up. All the way up.
 > **VOICE:** The Basin has to drain somewhere.
+> *(After the reveal:)* **ANSEL:** He came down past these. He saw them and kept going. Of course he did.
 
 **Tobiah's messenger (a sent-down angel; Tobiah speaks through it)**
 > **TOBIAH:** Go home, Ansel.
@@ -717,7 +810,9 @@ boss room, and the Lowest's intro (`final_boss_the_betrayer_intro`, the
 game ends on either with its line on the HUD.
 
 **The last camp (environment)**: the army, resting. Brutes step aside. An
-imp holds out a tally bone like a gift.
+imp holds out a tally bone like a gift. After the reveal, Ansel: "Four
+hundred and something. Every one of them counted. He always finished a
+count."
 
 **`floor` (trigger and boss intro, the brothers)**
 > **TOBIAH:** You kept count.

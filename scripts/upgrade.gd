@@ -70,8 +70,10 @@ static func flag_prefix(p_kind: Player.UpgradeKind) -> String:
 	return "upgrade:%s:" % FLAG_NAMES[p_kind]
 
 
-static func flag_for(p_kind: Player.UpgradeKind, level_id: String, index: int) -> String:
-	return "%s%s:%d" % [flag_prefix(p_kind), level_id, index]
+## `index` numbers a pickup in its level; a gift from a dialogue entry
+## uses "gift" and the entry's id instead.
+static func flag_for(p_kind: Player.UpgradeKind, level_id: String, index: Variant) -> String:
+	return "%s%s:%s" % [flag_prefix(p_kind), level_id, str(index)]
 
 
 ## Extra sword damage from Pell's forge, counted from the save's flags.

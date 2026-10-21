@@ -50,6 +50,14 @@ CHARACTERS = {
         pants_s=(54, 56, 42), boots=(50, 40, 34), torso=12, legs=(8, 7), prop="rifle",
         eyes=(40, 40, 50),
     ),
+    # Violence: Thorne, the lad in the red scarf, half turned. Dace's build
+    # with the colour gone out of it, no rifle, and the scarf.
+    "thorne": dict(
+        skin=(196, 186, 190), skin_s=(146, 136, 146), hair=(60, 54, 56), hair_h=(88, 80, 82),
+        hair_style="helmet", top=(78, 82, 70), top_s=(50, 54, 44), trim=(120, 110, 80),
+        pants=(66, 68, 58), pants_s=(44, 46, 38), boots=(44, 36, 32), torso=12, legs=(8, 7),
+        scarf=(200, 48, 52), scarf_s=(140, 30, 36), prop="hands", eyes=(230, 200, 120),
+    ),
     # Earth hub: the nun who stopped praying.
     "ava": dict(
         skin=SKIN_PALE, skin_s=SKIN_PALE_S, hair=(30, 28, 40), hair_h=(60, 56, 76),
@@ -115,6 +123,17 @@ def dress(c, hip, hem_y, col, col_s, trim):
     # Feet showing under the hem.
     c.rect(hx - 4, hem_y + 1, hx - 2, hem_y + 2, EDGE)
     c.rect(hx + 2, hem_y + 1, hx + 4, hem_y + 2, EDGE)
+
+
+def scarf(c, neck, ch, t=0):
+    """A scarf wound at the neck, its tail down the back, lifting a little."""
+    nx, ny = round(neck[0]), round(neck[1])
+    col, col_s = ch["scarf"], ch["scarf_s"]
+    c.rect(nx - 4, ny + 1, nx + 3, ny + 3, col)
+    c.line((nx - 4, ny + 3), (nx + 3, ny + 3), 1, col_s)
+    tail = [(nx - 4, ny + 3), (nx - 6, ny + 8 - (t % 2)), (nx - 5, ny + 13 - (t % 2))]
+    c.line(tail[0], tail[1], 2, col)
+    c.line(tail[1], tail[2], 2, col_s)
 
 
 def torso(c, hip, neck, ch, broad=False):
@@ -233,6 +252,8 @@ def frame(ch, p):
     else:
         leg(body, add(hip, -1, 1), p["tb"], p["sb"], legs, ch["pants_s"], ch["boots"])
     torso(body, hip, neck, ch, ch.get("broad", False))
+    if ch.get("scarf"):
+        scarf(body, neck, ch, p.get("t", 0))
     if not ch.get("dress"):
         leg(body, add(hip, 1, 1), p["tf"], p["sf"], legs, ch["pants"], ch["boots"], EDGE)
     head(body, fx, hc, ch, talk, p.get("nod", 0))

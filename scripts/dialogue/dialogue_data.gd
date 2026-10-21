@@ -17,6 +17,8 @@ extends RefCounted
 ##             entry ends (optional; the clock ending)
 ##   save      true for an entry that saves the game when it ends (optional;
 ##             the point of no return)
+##   gives     an upgrade kind (heart, vial, iron) handed over when the entry
+##             ends, once per save (optional; Dace's gift of Thorne's flask)
 ##   once      true for an entry that plays a single time per save (optional);
 ##             every entry read to the end sets the flag `seen:<id>`, and a
 ##             `once` entry is skipped when its flag is set
