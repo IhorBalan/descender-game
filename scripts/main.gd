@@ -5,7 +5,10 @@ extends Node2D
 ## Reaching the goal gate fades out, saves and boots the next level.
 ##
 ## Which level: the save's, else the `--level=<id>` user argument
-## (`godot --path . -- --level=world_1`), else the first in Levels.
+## (`godot --path . -- --level=world_1`), else the first in Levels. Two
+## more user arguments help playtesting: `--checkpoint=<n>` starts the hero
+## rested at the level's nth checkpoint and `--abilities=all` unlocks every
+## ability (see apply_dev_args).
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   L cast   H heal   E talk"
@@ -84,11 +87,15 @@ func _ready() -> void:
 		level.goal.reached.connect(_on_goal_reached)
 	# Applied before the ability signal is wired, so loaded powers are
 	# restored quietly instead of announced again.
-	if not SaveManager.pending.is_empty():
+	var from_save := not SaveManager.pending.is_empty()
+	if from_save:
 		_apply_save(SaveManager.pending)
 		SaveManager.pending = {}
 	# Hearts and healing from the upgrades in the save, in every level.
 	player.restore_upgrades()
+	# The playtesting arguments only shape a game started without a save.
+	if not from_save:
+		apply_dev_args(OS.get_cmdline_user_args())
 	player.ability_unlocked.connect(_on_ability_unlocked)
 	player.upgrade_collected.connect(_on_upgrade_collected)
 	player.power_changed.connect(_on_power_changed)
@@ -199,13 +206,42 @@ func _apply_save(data: Dictionary) -> void:
 	for ability in abilities:
 		player.unlock(ability)
 	level.remove_pickups(abilities)
-	var index := int(data.get("checkpoint", -1))
-	if index >= 0 and index < level.checkpoints.size():
-		_active_checkpoint = index
-		var checkpoint := level.checkpoints[index]
-		checkpoint.set_active(true)
-		player.global_position = checkpoint.global_position
-		player.rest_at(checkpoint.global_position)
+	_rest_at_checkpoint(int(data.get("checkpoint", -1)))
+
+
+## Puts the hero, rested, at one of the level's checkpoints (by index in
+## `level.checkpoints`) and makes it the one he comes back to.
+func _rest_at_checkpoint(index: int) -> void:
+	if index < 0 or index >= level.checkpoints.size():
+		return
+	_active_checkpoint = index
+	var checkpoint := level.checkpoints[index]
+	checkpoint.set_active(true)
+	player.global_position = checkpoint.global_position
+	player.rest_at(checkpoint.global_position)
+
+
+## The playtesting arguments after `--` on the command line, for a game
+## started without a save: `--checkpoint=<n>` (counted from 1, as the HUD
+## names them) and `--abilities=all`. Unknown values warn and do nothing.
+func apply_dev_args(args: Array) -> void:
+	for arg in args:
+		var text := str(arg)
+		if text.begins_with("--checkpoint="):
+			var number := text.trim_prefix("--checkpoint=")
+			var count := level.checkpoints.size()
+			if number.is_valid_int() and int(number) >= 1 and int(number) <= count:
+				_rest_at_checkpoint(int(number) - 1)
+			else:
+				push_warning("No checkpoint %s in %s (it has %d)" % [number, level_id, count])
+		elif text == "--abilities=all":
+			var all: Array[Player.Ability] = []
+			for ability: Player.Ability in Player.Ability.values():
+				player.unlock(ability)
+				all.append(ability)
+			level.remove_pickups(all)
+			level.open_locks(player, true)
+			hud.set_abilities(player.abilities)
 
 
 ## Everything a save needs to put the hero back where he was.

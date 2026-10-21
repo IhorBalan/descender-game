@@ -18,7 +18,13 @@ story, behind a title screen with three save slots.
 
 To jump straight into a level while testing, run the level scene with its
 id: `godot --path . scenes/main.tscn -- --level=world_1`. The ids are
-listed in `scripts/levels.gd`.
+listed in `scripts/levels.gd`. Two more arguments help with playtesting the
+deep regions: `--checkpoint=<n>` starts the hero rested at the level's nth
+checkpoint (counted from the top, as the HUD names them) and
+`--abilities=all` unlocks every ability and opens the ability seals, so
+`godot --path . scenes/main.tscn -- --level=world_1 --checkpoint=12 --abilities=all`
+drops a fully able hero in the lower circles. They only apply to a game
+started without a save.
 
 The game renders at **320x180** and scales up by whole numbers, so the
 window is 1280x720 by default.
