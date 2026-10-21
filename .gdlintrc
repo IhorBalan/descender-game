@@ -1,0 +1,4 @@
+# gdlint settings (the rest are the defaults). The hero's state machine in
+# scripts/player.gd carries every ability and its tuning constants in one
+# file on purpose, and passed 1000 lines with the sixth ability.
+max-file-lines: 1400

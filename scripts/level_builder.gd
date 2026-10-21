@@ -28,7 +28,12 @@ const TILE := 16
 const WORLD_PLACEMENTS := "placements.json"
 ## The abilities with gameplay behind them; the other markers stay data.
 const LEARNABLE: Array[int] = [
-	Player.Ability.WINGS, Player.Ability.LIGHT_DASH, Player.Ability.WALL_GRIP, Player.Ability.GLIDE
+	Player.Ability.WINGS,
+	Player.Ability.LIGHT_DASH,
+	Player.Ability.WALL_GRIP,
+	Player.Ability.HOLY_LIGHT,
+	Player.Ability.GLIDE,
+	Player.Ability.SMITE,
 ]
 ## Boss markers get this enemy until there are bosses.
 const BOSS_PLACEHOLDER := "angel_guard"

@@ -14,11 +14,10 @@ signal power_changed
 signal died
 signal respawned
 
-enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD }
+enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD, CAST, SLAM }
 ## The half-finished angel powers, in the map tool's order (the export's
 ## ability list indexes this enum). Each is unlocked by a pickup in the
 ## world and stays unlocked for the rest of the run, including after death.
-## Holy Light and Smite are listed but not learnable yet.
 enum Ability { WINGS, LIGHT_DASH, WALL_GRIP, HOLY_LIGHT, GLIDE, SMITE }
 ## Permanent upgrades picked up in the world (see Upgrade). Each one is a
 ## story flag, so it stays collected in the save.
@@ -91,6 +90,18 @@ const ZEAL_SPEED_MULTIPLIER := 1.25
 ## Speed kept when the dash ends, so it eases out instead of stopping dead.
 const DASH_END_SPEED := 160.0
 
+# Holy Light: a bolt from the hand (see LightBolt), on the cast action.
+const CAST_TIME := 0.22
+const CAST_COOLDOWN := 0.45
+const CAST_OFFSET := Vector2(14.0, -18.0)
+# Smite: down and attack in the air slams the hero to the ground, through
+# ledges, and the landing hurts everything around his feet.
+const SLAM_SPEED := 330.0
+const SLAM_DAMAGE := 2
+const SLAM_REACH := Vector2(84.0, 28.0)
+const SLAM_HIT_TIME := 0.12
+## The hero cannot act for this long after the landing.
+const SLAM_RECOVER_TIME := 0.18
 # Attack
 const ATTACK_TIME := 0.28
 ## The swing frames of the attack strip (6 frames at 21 fps): the sword
@@ -101,6 +112,8 @@ const ATTACK_DAMAGE := 1
 ## Lit Blade: extra damage while the power-up lasts.
 const BLADE_BONUS_DAMAGE := 1
 const ATTACK_OFFSET_X := 20.0
+const ATTACK_OFFSET_Y := -18.0
+const ATTACK_SHAPE_SIZE := Vector2(30.0, 28.0)
 ## Share of run speed the hero can walk at while swinging on the ground.
 const ATTACK_MOVE_MULTIPLIER := 0.6
 
@@ -125,6 +138,9 @@ const TINT_LIGHT_DASH := Color(1.0, 0.95, 0.7, 0.85)
 const TINT_HEAL := Color(1.0, 0.92, 0.6)
 const TINT_WINGS := Color(1.0, 1.0, 0.8)
 const TINT_GLIDE := Color(0.9, 0.95, 1.0)
+const TINT_CAST := Color(1.0, 0.97, 0.75)
+const TINT_SLAM := Color(1.0, 0.8, 0.6)
+const LIGHT_BOLT_SCENE := preload("res://scripts/light_bolt.gd")
 const TINT_BLADE := Color(1.0, 0.85, 0.5)
 
 var state: State = State.IDLE
@@ -168,6 +184,11 @@ var _on_wall_grip := false
 ## Which way the wall is while gripping, for the jump away from it.
 var _wall_dir := 0
 var _wall_jump_lock_timer := 0.0
+var _cast_buffer_timer := 0.0
+var _cast_cooldown_timer := 0.0
+## True once the slam has landed and the recovery runs.
+var _slam_landed := false
+var _slam_hit: Array[Node] = []
 ## True while the hero floats on the wings (see Glide).
 var _gliding := false
 ## True while light barriers are ignored: during a light dash, and after it
@@ -211,6 +232,8 @@ func _physics_process(delta: float) -> void:
 			_dash_buffer_timer = INPUT_BUFFER_TIME
 		if Input.is_action_just_pressed("attack"):
 			_attack_buffer_timer = INPUT_BUFFER_TIME
+		if Input.is_action_just_pressed("cast"):
+			_cast_buffer_timer = INPUT_BUFFER_TIME
 	match state:
 		State.DEAD:
 			_process_dead(delta)
@@ -222,6 +245,10 @@ func _physics_process(delta: float) -> void:
 			_process_heal(delta)
 		State.HURT:
 			_process_hurt(delta)
+		State.CAST:
+			_process_cast(delta)
+		State.SLAM:
+			_process_slam(delta)
 		_:
 			_process_normal(delta)
 	_correct_corners(delta)
@@ -253,6 +280,8 @@ func _tick_timers(delta: float) -> void:
 	_wing_flash_timer = maxf(_wing_flash_timer - delta, 0.0)
 	_drop_timer = maxf(_drop_timer - delta, 0.0)
 	_wall_jump_lock_timer = maxf(_wall_jump_lock_timer - delta, 0.0)
+	_cast_buffer_timer = maxf(_cast_buffer_timer - delta, 0.0)
+	_cast_cooldown_timer = maxf(_cast_cooldown_timer - delta, 0.0)
 	_tick_powers(delta)
 
 
@@ -320,8 +349,19 @@ func _process_normal(delta: float) -> void:
 	if _dash_buffer_timer > 0.0 and _dash_cooldown_timer <= 0.0 and _dash_available:
 		_start_dash()
 		return
+	if (
+		_attack_buffer_timer > 0.0
+		and not is_on_floor()
+		and Input.is_action_pressed("move_down")
+		and has_ability(Ability.SMITE)
+	):
+		_start_slam()
+		return
 	if _attack_buffer_timer > 0.0:
 		_start_attack()
+		return
+	if _cast_buffer_timer > 0.0 and _cast_cooldown_timer <= 0.0 and has_ability(Ability.HOLY_LIGHT):
+		_start_cast()
 		return
 	if (
 		Input.is_action_just_pressed("heal")
@@ -366,6 +406,7 @@ func _start_attack() -> void:
 	_set_state(State.ATTACK, ATTACK_TIME)
 	_attack_buffer_timer = 0.0
 	_attack_hit.clear()
+	_restore_attack_shape()
 	attack_hitbox.position.x = ATTACK_OFFSET_X * facing
 	sprite.play("attack")
 	Audio.play("swing")
@@ -397,6 +438,88 @@ func _process_attack(delta: float) -> void:
 
 func _end_attack() -> void:
 	attack_shape.disabled = true
+
+
+## The slam borrows the attack hitbox and widens it; the swing puts it back.
+func _restore_attack_shape() -> void:
+	var rect := attack_shape.shape as RectangleShape2D
+	rect.size = ATTACK_SHAPE_SIZE
+	attack_hitbox.position.y = ATTACK_OFFSET_Y
+
+
+# --- Holy Light and Smite -----------------------------------------------
+
+
+func _start_cast() -> void:
+	_set_state(State.CAST, CAST_TIME)
+	_cast_buffer_timer = 0.0
+	_cast_cooldown_timer = CAST_COOLDOWN
+	var bolt := LIGHT_BOLT_SCENE.new()
+	bolt.direction = facing
+	bolt.position = global_position + Vector2(CAST_OFFSET.x * facing, CAST_OFFSET.y)
+	get_parent().add_child(bolt)
+	Audio.play("swing", -3.0)
+	Feedback.spark(bolt.position, LightBolt.COLOR)
+
+
+## The hero keeps his momentum while the bolt leaves his hand.
+func _process_cast(delta: float) -> void:
+	_apply_gravity(delta)
+	_apply_horizontal(0.0, delta)
+	if _state_timer <= 0.0:
+		state = State.IDLE
+
+
+func _start_slam() -> void:
+	_set_state(State.SLAM, 0.0)
+	_attack_buffer_timer = 0.0
+	_slam_landed = false
+	_slam_hit.clear()
+	velocity = Vector2(0.0, SLAM_SPEED)
+	# Straight down through any ledge in the way.
+	collision_mask &= ~LEDGE_LAYER_BIT
+	_drop_timer = 0.0
+	Audio.play("dash", -2.0)
+
+
+## Falls at full speed until the ground, then the shock: everything around
+## the feet is hurt once, the screen shakes, and a short recovery follows.
+func _process_slam(delta: float) -> void:
+	if not _slam_landed:
+		velocity = Vector2(0.0, SLAM_SPEED)
+		if is_on_floor():
+			_land_slam()
+		return
+	_apply_gravity(delta)
+	velocity.x = 0.0
+	var elapsed := SLAM_RECOVER_TIME - _state_timer
+	if elapsed <= SLAM_HIT_TIME:
+		for body in attack_hitbox.get_overlapping_bodies():
+			if body in _slam_hit or not body.has_method("take_damage"):
+				continue
+			_slam_hit.append(body)
+			body.take_damage(SLAM_DAMAGE, global_position)
+			Feedback.hit_stop(0.05)
+	elif not attack_shape.disabled:
+		attack_shape.disabled = true
+	if _state_timer <= 0.0:
+		_end_attack()
+		state = State.IDLE
+
+
+func _land_slam() -> void:
+	_slam_landed = true
+	_state_timer = SLAM_RECOVER_TIME
+	collision_mask |= LEDGE_LAYER_BIT
+	attack_hitbox.position = Vector2(0.0, -SLAM_REACH.y / 2.0)
+	var rect := attack_shape.shape as RectangleShape2D
+	rect.size = SLAM_REACH
+	attack_shape.disabled = false
+	Audio.play("land")
+	Feedback.shake(0.6)
+	Feedback.hit_stop(0.06)
+	for i in 3:
+		Feedback.spark(global_position + Vector2((i - 1) * 18.0, -4.0), TINT_SLAM)
 
 
 func _start_heal() -> void:
@@ -856,8 +979,11 @@ func respawn() -> void:
 	_jump_buffer_timer = 0.0
 	_dash_buffer_timer = 0.0
 	_attack_buffer_timer = 0.0
+	_cast_buffer_timer = 0.0
 	_coyote_timer = 0.0
 	_dash_cooldown_timer = 0.0
+	_cast_cooldown_timer = 0.0
+	collision_mask |= LEDGE_LAYER_BIT
 	_drop_timer = 0.0
 	_on_wall_grip = false
 	_gliding = false
@@ -909,6 +1035,12 @@ func _update_sprite() -> void:
 		State.HEAL:
 			_play("idle")
 			sprite.modulate = TINT_HEAL
+		State.CAST:
+			_pose("attack", 2)
+			sprite.modulate = TINT_CAST
+		State.SLAM:
+			_pose("attack", 4 if _slam_landed else 1)
+			sprite.modulate = TINT_SLAM
 		State.DEAD:
 			_pose("hurt", 0)
 			sprite.rotation = -PI / 2.0 * facing

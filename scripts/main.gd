@@ -8,7 +8,7 @@ extends Node2D
 ## (`godot --path . -- --level=world_1`), else the first in Levels.
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
-const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal   E talk"
+const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   L cast   H heal   E talk"
 const DEATH_FADE_TIME := 0.4
 ## How far the world's ambient tint is pulled towards white, so the deep
 ## regions stay readable away from their lights.
@@ -18,6 +18,8 @@ const ABILITY_MESSAGES := {
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
 	Player.Ability.WALL_GRIP: "Wall grip: hold towards a wall to cling, jump to spring off",
 	Player.Ability.GLIDE: "Glide: press and hold jump while falling to float down",
+	Player.Ability.HOLY_LIGHT: "Holy Light: press cast to throw a bolt of light",
+	Player.Ability.SMITE: "Smite: down and attack in the air to slam the ground",
 }
 
 var player: Player

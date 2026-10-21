@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 248
-const LAST_TICK := 1150
+const EXPECTED_CHECKS := 261
+const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -122,7 +122,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
 			_check(level.goal == null, "the world has no goal gate yet")
-			_check(level.pickup_count() == 4, "feathers for the four learnable abilities built")
+			_check(level.pickup_count() == 6, "feathers for all six abilities built")
 			_check(level.upgrade_count() == 2, "two permanent upgrades built")
 			_check(level.power_up_count() == 3, "three power-ups built")
 			_start_x = _player.global_position.x
@@ -231,7 +231,7 @@ func _physics_process(_delta: float) -> void:
 		544:
 			_check(_player.has_ability(Player.Ability.WINGS), "feather unlocks the wings")
 			_check(_main.hud.status.abilities == [Player.Ability.WINGS], "HUD shows the wings")
-			_check(_main.level.pickup_count() == 3, "feather is used up")
+			_check(_main.level.pickup_count() == 5, "feather is used up")
 			# Back to the start room, where there is headroom for two jumps.
 			_player.global_position = AIR_START
 			_player.velocity = Vector2.ZERO
@@ -373,7 +373,7 @@ func _physics_process(_delta: float) -> void:
 				_player.has_ability(Player.Ability.LIGHT_DASH),
 				"second feather unlocks the light dash"
 			)
-			_check(_main.level.pickup_count() == 2, "both feathers used up")
+			_check(_main.level.pickup_count() == 4, "both feathers used up")
 			_player.global_position = _barrier_approach
 			_player.velocity = Vector2.ZERO
 			_player.facing = 1
@@ -537,7 +537,7 @@ func _physics_process(_delta: float) -> void:
 				),
 				"loaded hero keeps both abilities"
 			)
-			_check(_loaded.level.pickup_count() == 2, "collected feathers stay collected")
+			_check(_loaded.level.pickup_count() == 4, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
 			_check(_loaded.level.item_count() == 8, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
@@ -904,6 +904,67 @@ func _physics_process(_delta: float) -> void:
 				),
 				"the fall picks up again"
 			)
+		1140:
+			# Holy Light: a bolt at an imp standing in front of the hero.
+			_check(InputMap.has_action("cast"), "cast action exists")
+			_check(&"cast" in Settings.REBINDABLE_ACTIONS, "cast is rebindable")
+			_world.player.unlock(Player.Ability.HOLY_LIGHT)
+			_world.player.global_position = _start_position
+			_world.player.velocity = Vector2.ZERO
+			_world.player.facing = 1
+			_imp = LevelBuilder.WALKER_SCENE.instantiate()
+			_imp.character = "imp"
+			_imp.direction = 1
+			_imp.position = _start_position + Vector2(70.0, 0.0)
+			_world.add_child(_imp)
+			_press("cast", true)
+		1143:
+			_press("cast", false)
+			_check(_world.player.state == Player.State.CAST, "cast starts")
+			_check(
+				_world.get_tree().get_nodes_in_group("light_bolt").size() == 1,
+				"cast throws a bolt of light"
+			)
+			_mark_x = _imp.health
+		1170:
+			_check(_imp.health == int(_mark_x) - 1, "the bolt hurts the imp")
+			_check(
+				_world.get_tree().get_nodes_in_group("light_bolt").is_empty(),
+				"the bolt breaks on the hit"
+			)
+			_imp.queue_free()
+			# Smite: down and attack from the air, onto an imp.
+			_world.player.unlock(Player.Ability.SMITE)
+			_imp = LevelBuilder.WALKER_SCENE.instantiate()
+			_imp.character = "imp"
+			_imp.direction = 1
+			_imp.position = AIR_START + Vector2(30.0, 0.0)
+			_world.add_child(_imp)
+			_world.player.global_position = AIR_START + Vector2(0.0, -100.0)
+			_world.player.velocity = Vector2.ZERO
+			_press("move_down", true)
+		1174:
+			_mark_x = _imp.health
+			_press("attack", true)
+		1176:
+			_press("attack", false)
+			_check(_world.player.state == Player.State.SLAM, "down and attack in the air slams")
+			_check(
+				_world.player.velocity.y >= Player.SLAM_SPEED - 1.0, "the slam falls at full speed"
+			)
+		1210:
+			_press("move_down", false)
+			_check(_world.player.is_on_floor(), "the slam lands")
+			_check(_world.player.state != Player.State.SLAM, "the slam is over")
+			_check(
+				_imp.health <= int(_mark_x) - Player.SLAM_DAMAGE,
+				"the landing hurts the imp beside the hero"
+			)
+			_check(
+				_world.player.collision_mask & Player.LEDGE_LAYER_BIT != 0,
+				"ledges are solid again after the slam"
+			)
+			_check(_world.player.attack_shape.disabled, "the slam's hitbox is off")
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")
