@@ -616,6 +616,11 @@ In the game: the `dontfollow` trigger in Gluttony and Vael in Greed
 
 ### Circle 5
 
+In the game: Gorrow is the Fury, the Wrath boss (`the_fury_intro`,
+`the_fury_defeat` sets `reveal`). The Penitent in Purgatory has a line
+each way too; the other bosses fight in silence until their beats are
+written.
+
 **Gorrow, boss intro**
 > **GORROW:** I told you. Orders only go so far.
 

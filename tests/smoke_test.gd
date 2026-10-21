@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 271
+const EXPECTED_CHECKS := 275
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -772,11 +772,21 @@ func _physics_process(_delta: float) -> void:
 				boss_seal != null and "Golden Vault" in boss_seal.message(),
 				"boss lock names its boss"
 			)
-			_check(level.bosses().size() == 1, "one boss has a profile so far")
-			_boss = level.bosses()[0] if not level.bosses().is_empty() else null
+			_check(level.bosses().size() == 11, "every boss room holds a boss")
+			for boss in level.bosses():
+				if boss.boss_id == "seraph_warden":
+					_boss = boss
+			_check(_boss != null, "the Seraph Warden is a boss")
+			_check(Boss.has_profile("the_fury"), "Gorrow has a boss profile")
 			_check(
-				_boss != null and _boss.boss_id == "seraph_warden", "the Seraph Warden is a boss"
+				str(_world.dialogue.entry("the_fury_defeat").get("sets", "")) == "reveal",
+				"beating Gorrow sets the reveal"
 			)
+			var gorrow := 0
+			for node in level.interactables:
+				if node is Npc and node.npc_name == "Gorrow":
+					gorrow += 1
+			_check(gorrow == 1, "Gorrow waits in Lust")
 			_check(_boss != null and _boss.state == Boss.State.DORMANT, "boss waits in its room")
 			_check(
 				_boss != null and _boss.arena.has_point(_boss.global_position),
@@ -869,17 +879,23 @@ func _physics_process(_delta: float) -> void:
 			_check(_world.player.global_position.y > 812.0, "hero falls through the opened door")
 			# A world booted from a save with the Warden dead has no Warden.
 			var flags := Story.to_list()
+			flags.append("boss:the_fury")
 			root.remove_child(_world)
 			_world.queue_free()
 			SaveManager.pending = {"level": "world_1", "flags": flags}
 			_world = _main_scene.instantiate()
 			root.add_child(_world)
 		1060:
-			_check(_world.level.bosses().is_empty(), "a dead boss stays dead in the save")
+			_check(_world.level.bosses().size() == 9, "dead bosses stay dead in the save")
 			_check(
-				_world.level.enemy_count() == _enemy_count - 1,
-				"the dead boss leaves no placeholder"
+				_world.level.enemy_count() == _enemy_count - 2,
+				"the dead bosses leave no placeholder"
 			)
+			var gorrow := 0
+			for node in _world.level.interactables:
+				if node is Npc and node.npc_name == "Gorrow":
+					gorrow += 1
+			_check(gorrow == 0, "dead Gorrow no longer waits in Lust")
 			# Wall Grip: in the air beside the wall at the Warden's room's edge.
 			_world.player.unlock(Player.Ability.WALL_GRIP)
 			_check(

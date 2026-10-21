@@ -41,18 +41,21 @@ const LEAP_VELOCITY_Y := -260.0
 const LEAP_TIME := 0.9
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 
-## name: shown on the health bar. character: the sprite strips. scale: how
-## much bigger than the strips. tint: the sprite's colour. body: collision
-## size (at the scale). health: hits to kill. speed: walking speed.
+## name: shown on the health bar. character: the sprite strips, and walk:
+## the name of their walking loop. scale: how much bigger than the strips.
+## tint: the sprite's colour. body: collision size (at the scale). health:
+## hits to kill. speed: walking speed.
 ## faces_left: whether the strips face left. attack_range / reach / windup /
 ## strike / recover / cooldown / attack_damage: the swing, as a Walker's.
 ## charge_speed / charge_windup / charge_cooldown: the rush. contact_damage:
 ## hearts for touching it. motes: heal motes dropped on death.
 const PROFILES := {
+	# Paradise: the Warden of the Low Gate.
 	"seraph_warden":
 	{
 		"name": "Seraph Warden",
 		"character": "angel_guard",
+		"walk": "walk",
 		"scale": 1.5,
 		"tint": Color(1.0, 0.92, 0.7),
 		"body": Vector2(32, 80),
@@ -72,6 +75,257 @@ const PROFILES := {
 		"contact_damage": 1,
 		"motes": 2,
 	},
+	# Purgatory: an angel that chose to fall and never finished.
+	"the_penitent":
+	{
+		"name": "The Penitent",
+		"character": "angel_guard",
+		"walk": "walk",
+		"scale": 1.25,
+		"tint": Color(0.75, 0.75, 0.85),
+		"body": Vector2(28, 68),
+		"health": 20,
+		"speed": 40.0,
+		"faces_left": true,
+		"attack_range": 50.0,
+		"reach": Vector2(44, 50),
+		"windup": 0.45,
+		"strike": 0.2,
+		"recover": 0.5,
+		"cooldown": 0.8,
+		"attack_damage": 1,
+		"charge_speed": 250.0,
+		"charge_windup": 0.5,
+		"charge_cooldown": 2.0,
+		"contact_damage": 1,
+		"motes": 2,
+	},
+	# Limbo: the first of the fallen to stand up, grown huge on forgetting.
+	"limbo_lord":
+	{
+		"name": "Limbo Lord",
+		"character": "imp",
+		"walk": "run",
+		"scale": 2.5,
+		"tint": Color(0.7, 0.75, 1.0),
+		"body": Vector2(40, 56),
+		"health": 26,
+		"speed": 48.0,
+		"faces_left": true,
+		"attack_range": 48.0,
+		"reach": Vector2(46, 44),
+		"windup": 0.35,
+		"strike": 0.15,
+		"recover": 0.45,
+		"cooldown": 0.7,
+		"attack_damage": 1,
+		"charge_speed": 260.0,
+		"charge_windup": 0.45,
+		"charge_cooldown": 1.8,
+		"contact_damage": 1,
+		"motes": 2,
+	},
+	# Lust: the keeper of the Palace of Velvet.
+	"palace_of_velvet":
+	{
+		"name": "Keeper of the Palace",
+		"character": "imp",
+		"walk": "run",
+		"scale": 2.0,
+		"tint": Color(1.0, 0.6, 0.85),
+		"body": Vector2(34, 46),
+		"health": 28,
+		"speed": 60.0,
+		"faces_left": true,
+		"attack_range": 40.0,
+		"reach": Vector2(40, 40),
+		"windup": 0.3,
+		"strike": 0.15,
+		"recover": 0.4,
+		"cooldown": 0.6,
+		"attack_damage": 1,
+		"charge_speed": 280.0,
+		"charge_windup": 0.4,
+		"charge_cooldown": 1.5,
+		"contact_damage": 1,
+		"motes": 2,
+	},
+	# Gluttony: the brute that ate the circle.
+	"the_bloated_one":
+	{
+		"name": "The Bloated One",
+		"character": "brute",
+		"walk": "walk",
+		"scale": 1.5,
+		"tint": Color(0.75, 1.0, 0.7),
+		"body": Vector2(52, 90),
+		"health": 36,
+		"speed": 22.0,
+		"faces_left": true,
+		"attack_range": 70.0,
+		"reach": Vector2(68, 64),
+		"windup": 0.8,
+		"strike": 0.3,
+		"recover": 1.0,
+		"cooldown": 1.4,
+		"attack_damage": 2,
+		"charge_speed": 200.0,
+		"charge_windup": 0.8,
+		"charge_cooldown": 3.0,
+		"contact_damage": 2,
+		"motes": 3,
+	},
+	# Greed: the thing that guards the Golden Vault.
+	"golden_vault":
+	{
+		"name": "Warden of the Vault",
+		"character": "brute",
+		"walk": "walk",
+		"scale": 1.3,
+		"tint": Color(1.0, 0.88, 0.5),
+		"body": Vector2(46, 78),
+		"health": 34,
+		"speed": 30.0,
+		"faces_left": true,
+		"attack_range": 62.0,
+		"reach": Vector2(58, 56),
+		"windup": 0.6,
+		"strike": 0.25,
+		"recover": 0.8,
+		"cooldown": 1.1,
+		"attack_damage": 2,
+		"charge_speed": 240.0,
+		"charge_windup": 0.6,
+		"charge_cooldown": 2.4,
+		"contact_damage": 1,
+		"motes": 3,
+	},
+	# Wrath: Gorrow, the demon captain who served under the Lowest.
+	"the_fury":
+	{
+		"name": "Gorrow, the Fury",
+		"character": "brute",
+		"walk": "walk",
+		"scale": 1.2,
+		"tint": Color(1.0, 0.55, 0.5),
+		"body": Vector2(42, 72),
+		"health": 40,
+		"speed": 44.0,
+		"faces_left": true,
+		"attack_range": 58.0,
+		"reach": Vector2(54, 54),
+		"windup": 0.5,
+		"strike": 0.25,
+		"recover": 0.6,
+		"cooldown": 0.8,
+		"attack_damage": 2,
+		"charge_speed": 270.0,
+		"charge_windup": 0.45,
+		"charge_cooldown": 1.6,
+		"contact_damage": 1,
+		"motes": 3,
+	},
+	# Heresy: a bishop of the Choir, sent down for what he taught.
+	"cursed_bishop":
+	{
+		"name": "Cursed Bishop",
+		"character": "angel_guard",
+		"walk": "walk",
+		"scale": 1.4,
+		"tint": Color(0.7, 0.5, 0.45),
+		"body": Vector2(30, 74),
+		"health": 38,
+		"speed": 36.0,
+		"faces_left": true,
+		"attack_range": 56.0,
+		"reach": Vector2(50, 56),
+		"windup": 0.45,
+		"strike": 0.2,
+		"recover": 0.55,
+		"cooldown": 0.8,
+		"attack_damage": 2,
+		"charge_speed": 260.0,
+		"charge_windup": 0.5,
+		"charge_cooldown": 2.0,
+		"contact_damage": 1,
+		"motes": 3,
+	},
+	# Violence: the champion of the Red Arena.
+	"the_red_arena":
+	{
+		"name": "Champion of the Red Arena",
+		"character": "brute",
+		"walk": "walk",
+		"scale": 1.4,
+		"tint": Color(1.0, 0.45, 0.4),
+		"body": Vector2(48, 84),
+		"health": 44,
+		"speed": 40.0,
+		"faces_left": true,
+		"attack_range": 64.0,
+		"reach": Vector2(62, 60),
+		"windup": 0.5,
+		"strike": 0.25,
+		"recover": 0.6,
+		"cooldown": 0.8,
+		"attack_damage": 2,
+		"charge_speed": 290.0,
+		"charge_windup": 0.4,
+		"charge_cooldown": 1.5,
+		"contact_damage": 2,
+		"motes": 3,
+	},
+	# Fraud: the king who never was.
+	"the_false_king":
+	{
+		"name": "The False King",
+		"character": "imp",
+		"walk": "run",
+		"scale": 2.8,
+		"tint": Color(1.0, 0.85, 0.45),
+		"body": Vector2(44, 62),
+		"health": 42,
+		"speed": 70.0,
+		"faces_left": true,
+		"attack_range": 50.0,
+		"reach": Vector2(50, 48),
+		"windup": 0.3,
+		"strike": 0.15,
+		"recover": 0.35,
+		"cooldown": 0.5,
+		"attack_damage": 2,
+		"charge_speed": 300.0,
+		"charge_windup": 0.35,
+		"charge_cooldown": 1.3,
+		"contact_damage": 1,
+		"motes": 3,
+	},
+	# Treachery: the Lowest. Tobiah, at the bottom, in his brother's shape.
+	# His lines (the brothers, both endings) are a later beat.
+	"final_boss_the_betrayer":
+	{
+		"name": "The Lowest",
+		"character": "hero",
+		"walk": "run",
+		"scale": 1.3,
+		"tint": Color(0.55, 0.5, 0.65),
+		"body": Vector2(20, 42),
+		"health": 50,
+		"speed": 90.0,
+		"faces_left": false,
+		"attack_range": 36.0,
+		"reach": Vector2(36, 34),
+		"windup": 0.25,
+		"strike": 0.15,
+		"recover": 0.3,
+		"cooldown": 0.45,
+		"attack_damage": 2,
+		"charge_speed": 300.0,
+		"charge_windup": 0.3,
+		"charge_cooldown": 1.2,
+		"contact_damage": 1,
+		"motes": 0,
+	},
 }
 
 ## Which profile; see PROFILES. Set by the level before the boss is added.
@@ -87,6 +341,7 @@ var health := 0
 var max_health := 1
 var direction := -1
 var profile: Dictionary = {}
+var _walk_anim := "walk"
 var _faces_left := true
 var _half_width := 0.0
 var _state_timer := 0.0
@@ -133,6 +388,7 @@ func _ready() -> void:
 	max_health = int(profile["health"])
 	health = max_health
 	_faces_left = bool(profile["faces_left"])
+	_walk_anim = str(profile.get("walk", "walk"))
 	var body: Vector2 = profile["body"]
 	_half_width = body.x / 2.0
 	AnimLoader.setup(sprite, str(profile["character"]))
@@ -197,7 +453,7 @@ func start_fight() -> void:
 	if state != State.DORMANT or _dead:
 		return
 	_set_state(State.APPROACH, 0.0)
-	sprite.play("walk")
+	sprite.play(_walk_anim)
 
 
 func in_phase_two() -> bool:
@@ -271,7 +527,7 @@ func _process_swing() -> void:
 		State.RECOVER:
 			_attack_cooldown = float(profile["cooldown"]) * _haste()
 			_set_state(State.APPROACH, 0.0)
-			sprite.play("walk")
+			sprite.play(_walk_anim)
 
 
 func _start_charge_windup() -> void:
@@ -285,7 +541,7 @@ func _start_charge() -> void:
 		_face(1 if _player.global_position.x >= global_position.x else -1)
 	_set_state(State.CHARGE, CHARGE_TIME_MAX)
 	_tint(Color.WHITE)
-	sprite.play("walk")
+	sprite.play(_walk_anim)
 	sprite.speed_scale = 2.0
 	_leap_after_charge = in_phase_two()
 	Audio.play("dash", -4.0)

@@ -963,5 +963,74 @@
 				"text": "The fall takes memories for free. I at least pay. Think about which of us is the thief."
 			}
 		]
+	},
+	"the_fury_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "I told you. Orders only go so far."
+			}
+		]
+	},
+	"the_fury_defeat": {
+		"once": true,
+		"sets": "reveal",
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "He asked me. Every day. 'Has a half-angel come down.' Every day, like I'd forget."
+			},
+			{
+				"who": "Gorrow",
+				"text": "He said you'd come. He said your name. He says it when he thinks nobody's there."
+			},
+			{
+				"who": "Ansel",
+				"text": "Say his."
+			},
+			{
+				"who": "Gorrow",
+				"text": "The Lowest doesn't have one."
+			},
+			{
+				"who": "Ansel",
+				"text": "Say it."
+			},
+			{
+				"who": "Gorrow",
+				"text": "...Tobiah."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then I'll bring him home."
+			},
+			{
+				"who": "Gorrow",
+				"text": "Home. You still think that's a place."
+			}
+		]
+	},
+	"the_penitent_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Penitent",
+				"text": "I chose the fall. I chose it. Let me finish choosing."
+			}
+		]
+	},
+	"the_penitent_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Penitent",
+				"text": "Down, then. At last. Thank you."
+			},
+			{
+				"who": "Ansel",
+				"text": "Don't thank me."
+			}
+		]
 	}
 }

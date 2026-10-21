@@ -94,7 +94,7 @@
 		{"type": "trigger", "x": 36, "y": 116, "dialogue": ["shaft"]},
 		{"type": "npc", "x": 220, "y": 116, "name": "The Ferryman", "character": "ferryman", "faces_left": false, "dialogue": ["ferryman_intro", "ferryman_hand"], "rotate": ["ferryman_left", "ferryman_nothing", "ferryman_fell"]},
 		{"type": "item", "x": 260, "y": 167, "item": "tally_bone", "dialogue": ["item_tally_bone"]},
-		{"type": "npc", "x": 429, "y": 201, "name": "Gorrow", "character": "gorrow", "faces_left": false, "dialogue": ["gorrow_meet"], "rotate": ["gorrow_orders", "gorrow_seal"]},
+		{"type": "npc", "x": 429, "y": 201, "name": "Gorrow", "character": "gorrow", "faces_left": false, "unless": "boss:the_fury", "dialogue": ["gorrow_meet"], "rotate": ["gorrow_orders", "gorrow_seal"]},
 		{"type": "trigger", "x": 200, "y": 252, "dialogue": ["dontfollow"]},
 		{"type": "npc", "x": 142, "y": 269, "name": "Vael the Bargainer", "character": "vael", "faces_left": false, "dialogue": ["vael_intro"], "rotate": ["vael_smell", "vael_price"]},
 		{"type": "enemy", "x": 35, "y": 116, "character": "imp"},
