@@ -87,12 +87,14 @@ func _ready() -> void:
 		level.goal.reached.connect(_on_goal_reached)
 	# Applied before the ability signal is wired, so loaded powers are
 	# restored quietly instead of announced again.
-	if not SaveManager.pending.is_empty():
+	var from_save := not SaveManager.pending.is_empty()
+	if from_save:
 		_apply_save(SaveManager.pending)
 		SaveManager.pending = {}
 	# Hearts and healing from the upgrades in the save, in every level.
 	player.restore_upgrades()
-	if SaveManager.pending.is_empty():
+	# The playtesting arguments only shape a game started without a save.
+	if not from_save:
 		apply_dev_args(OS.get_cmdline_user_args())
 	player.ability_unlocked.connect(_on_ability_unlocked)
 	player.upgrade_collected.connect(_on_upgrade_collected)
