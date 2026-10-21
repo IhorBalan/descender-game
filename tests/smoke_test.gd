@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 261
+const EXPECTED_CHECKS := 263
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -951,6 +951,12 @@ func _physics_process(_delta: float) -> void:
 			_check(_world.player.state == Player.State.SLAM, "down and attack in the air slams")
 			_check(
 				_world.player.velocity.y >= Player.SLAM_SPEED - 1.0, "the slam falls at full speed"
+			)
+		1179:
+			_check(_world.player.state == Player.State.SLAM, "the slam is still falling")
+			_check(
+				_world.player.collision_mask & Player.LEDGE_LAYER_BIT == 0,
+				"the slam passes through ledges all the way down"
 			)
 		1210:
 			_press("move_down", false)

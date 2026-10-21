@@ -682,9 +682,12 @@ func _start_drop() -> void:
 	velocity.y = maxf(velocity.y, 40.0)
 
 
-## The ledges come back into the mask once the drop is over.
+## The ledges come back into the mask once the drop is over, and once a
+## slam has landed (or was cut short by a hit, which ends the state).
 func _update_dropping() -> void:
-	if _drop_timer <= 0.0 and collision_mask & LEDGE_LAYER_BIT == 0:
+	if _drop_timer > 0.0 or (state == State.SLAM and not _slam_landed):
+		return
+	if collision_mask & LEDGE_LAYER_BIT == 0:
 		collision_mask |= LEDGE_LAYER_BIT
 
 
