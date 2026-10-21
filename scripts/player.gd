@@ -515,6 +515,8 @@ func _land_slam() -> void:
 	var rect := attack_shape.shape as RectangleShape2D
 	rect.size = SLAM_REACH
 	attack_shape.disabled = false
+	# The rock over a secret passage breaks under the blow.
+	get_tree().call_group("secret_wall", "smite", global_position, SLAM_REACH)
 	Audio.play("land")
 	Feedback.shake(0.6)
 	Feedback.hit_stop(0.06)

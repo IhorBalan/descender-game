@@ -32,6 +32,9 @@ extends Node2D
 
 const TILE := 16
 const WORLD_PLACEMENTS := "placements.json"
+## How many cells of solid a secret passage may run through on each side
+## of its door.
+const SECRET_DEPTH := 12
 ## The abilities with gameplay behind them; the other markers stay data.
 const LEARNABLE: Array[int] = [
 	Player.Ability.WINGS,
@@ -98,6 +101,8 @@ var goal: Goal = null
 var pickups: Array[AbilityPickup] = []
 ## The seals on the export's locked doors that are still shut.
 var locks: Array[DoorLock] = []
+## The rock over the secret passages the hero has not broken yet.
+var secrets: Array[SecretWall] = []
 ## Permanent upgrades still lying in the level (ones the save holds are
 ## never built).
 var upgrades: Array[Upgrade] = []
@@ -117,6 +122,10 @@ var _enemy_spawns: Array[EnemySpawn] = []
 var _power_spawns: Array = []
 ## How many of each upgrade kind the sidecar has placed so far, for the flags.
 var _upgrade_counts: Dictionary = {}
+## Cells of the secret passages, carved out of the terrain's collision.
+var _carved: Dictionary = {}
+## Each secret door's id and the cells of its passage (see _find_secrets).
+var _secret_specs: Array = []
 ## The sidecar's "objects" list.
 var _objects_spec: Array = []
 var _tiles: Node2D
@@ -214,6 +223,9 @@ func _make_containers() -> void:
 	goal = null
 	pickups = []
 	locks = []
+	secrets = []
+	_carved = {}
+	_secret_specs = []
 	interactables = []
 	upgrades = []
 	_enemy_spawns = []
@@ -230,11 +242,13 @@ func build(map: WorldMap) -> void:
 	height = map.height
 	size_px = map.size_px()
 	_build_layers(map)
+	_find_secrets(map)
 	for y in height:
 		_build_row(map, y)
 	_build_lights(map)
 	_place_markers(map)
 	_place_locks(map)
+	_place_secrets()
 	for spec in _objects_spec:
 		if spec is Dictionary:
 			_place_object(spec)
@@ -272,12 +286,12 @@ func _build_layers(map: WorldMap) -> void:
 func _build_row(map: WorldMap, y: int) -> void:
 	var x := 0
 	while x < width:
-		var kind := _collision_kind(map.kind_at(x, y))
+		var kind := _collision_kind(map, x, y)
 		if kind == WorldMap.KIND_NONE:
 			x += 1
 			continue
 		var run := 1
-		while x + run < width and _collision_kind(map.kind_at(x + run, y)) == kind:
+		while x + run < width and _collision_kind(map, x + run, y) == kind:
 			run += 1
 		match kind:
 			WorldMap.KIND_SOLID:
@@ -289,8 +303,12 @@ func _build_row(map: WorldMap, y: int) -> void:
 		x += run
 
 
-## Hidden collision is solid for the hero.
-func _collision_kind(kind: int) -> int:
+## Hidden collision is solid for the hero; a carved secret passage is air
+## (its SecretWall is the solid until it breaks).
+func _collision_kind(map: WorldMap, x: int, y: int) -> int:
+	if _carved.has(Vector2i(x, y)):
+		return WorldMap.KIND_NONE
+	var kind := map.kind_at(x, y)
 	return WorldMap.KIND_SOLID if kind == WorldMap.KIND_HIDDEN else kind
 
 
@@ -390,6 +408,87 @@ func _place_boss(map: WorldMap, marker: Dictionary, at: Vector2) -> void:
 	var spawn := EnemySpawn.new(BOSS_SCENE, at, id)
 	spawn.arena = room_rect(map, int(marker.get("room", -1)))
 	_enemy_spawns.append(spawn)
+
+
+## The secret doors of the export sit in the solid between two rooms. Each
+## one's passage is the four-wide (or four-tall) channel from the air on
+## one side to the air on the other, carved out of the collision here and
+## filled by a SecretWall in _place_secrets. A door the tool left at the
+## origin has no place in the grid and is skipped.
+func _find_secrets(map: WorldMap) -> void:
+	for door in map.doors:
+		if not bool(door.get("secret", false)):
+			continue
+		var x := int(door.get("x", 0))
+		var y := int(door.get("y", 0))
+		if x == 0 and y == 0:
+			continue
+		var cells: Array[Vector2i] = []
+		if str(door.get("dir", "v")) == "v":
+			var top := _air_from(map, x, y - 1, Vector2i(0, -1))
+			var bottom := _air_from(map, x, y + 1, Vector2i(0, 1))
+			if top < 0 or bottom < 0:
+				continue
+			for row in range(top + 1, bottom):
+				for column in range(x - 2, x + 2):
+					cells.append(Vector2i(column, row))
+		else:
+			var left := _air_from(map, x - 1, y, Vector2i(-1, 0))
+			var right := _air_from(map, x + 1, y, Vector2i(1, 0))
+			if left < 0 or right < 0:
+				continue
+			for column in range(left + 1, right):
+				for row in range(y - 3, y + 1):
+					cells.append(Vector2i(column, row))
+		if cells.is_empty():
+			continue
+		for cell in cells:
+			_carved[cell] = true
+		_secret_specs.append({"id": int(door.get("id", 0)), "cells": cells})
+
+
+## The first cell of air from (x, y) along `step`, as its row (for a
+## vertical step) or column, or -1 when the solid goes on too far.
+func _air_from(map: WorldMap, x: int, y: int, step: Vector2i) -> int:
+	var cell := Vector2i(x, y)
+	for i in SECRET_DEPTH:
+		if cell.x < 0 or cell.y < 0 or cell.x >= width or cell.y >= height:
+			return -1
+		if map.kind_at(cell.x, cell.y) == WorldMap.KIND_NONE:
+			return cell.y if step.y != 0 else cell.x
+		cell += step
+	return -1
+
+
+## A SecretWall over every passage the hero has not broken; a broken one
+## is open already, its tiles gone.
+func _place_secrets() -> void:
+	for spec in _secret_specs:
+		var cells: Array[Vector2i] = spec["cells"]
+		if Story.has_flag(SecretWall.flag_for(int(spec["id"]))):
+			_erase_cells(cells)
+			continue
+		var wall := SecretWall.new()
+		wall.door_id = int(spec["id"])
+		wall.cells = cells
+		wall.name = "Secret%d" % wall.door_id
+		wall.broken.connect(_on_secret_broken)
+		_seals.add_child(wall)
+		secrets.append(wall)
+
+
+func _on_secret_broken(wall: SecretWall) -> void:
+	secrets.erase(wall)
+	_erase_cells(wall.cells)
+
+
+## Takes the terrain tiles off the cells of an opened passage.
+func _erase_cells(cells: Array[Vector2i]) -> void:
+	var terrain := _tiles.get_node_or_null(WorldMap.LAYER_TERRAIN) as TileMapLayer
+	if terrain == null:
+		return
+	for cell in cells:
+		terrain.set_cell(cell, -1)
 
 
 ## The rect of a room of the export in level pixels, or an empty rect.

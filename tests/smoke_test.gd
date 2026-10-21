@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 315
-const LAST_TICK := 1270
+const EXPECTED_CHECKS := 321
+const LAST_TICK := 1310
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -53,6 +53,8 @@ var _world: Node
 var _wings_seal: DoorLock
 var _boss: Boss
 var _boss_start := Vector2.ZERO
+var _secret: SecretWall
+var _secret_cell := Vector2i.ZERO
 
 @onready var root: Window = get_tree().root
 
@@ -926,7 +928,13 @@ func _physics_process(_delta: float) -> void:
 				_world.dialogue_box.advance()
 		1000:
 			_check(Story.has_flag("warden_fallen"), "the defeat lines set their flag")
-			_check(_world.level.get_node("Seals").get_child_count() == 19, "no arena seal is left")
+			_check(
+				(
+					_world.level.get_node("Seals").get_child_count()
+					== 19 + _world.level.secrets.size()
+				),
+				"no arena seal is left"
+			)
 			# On the ledge over the sealed shaft, pressing down.
 			_world.player.global_position = Vector2(280.0 * 16.0 + 8.0, 49.0 * 16.0)
 			_world.player.velocity = Vector2.ZERO
@@ -1149,6 +1157,40 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				DialogueData.next_id(_world.dialogue.entry("gardener_defeat")) == "ending_night",
 				"the Gardener's defeat leads to the night"
+			)
+			# Secret passages: the rock over one breaks under a Smite.
+			_check(
+				_world.level.secrets.size() == 14,
+				"fourteen secret passages are walled (%d)" % _world.level.secrets.size()
+			)
+			_secret = _world.level.secrets[0]
+			_mark_x = _secret.door_id
+			_secret_cell = _secret.cells[0]
+			_check(_secret.cells.size() >= 8, "a passage is at least four cells wide and two deep")
+			# Nobody in the room above may knock the slam off course.
+			for enemy in _world.level.get_node("Enemies").get_children():
+				enemy.queue_free()
+			_world.player.global_position = Vector2(
+				_secret.rect().get_center().x, _secret.rect().position.y - 60.0
+			)
+			_world.player.velocity = Vector2.ZERO
+			_press("move_down", true)
+		1264:
+			_press("attack", true)
+		1266:
+			_press("attack", false)
+			_check(_world.player.state == Player.State.SLAM, "the hero slams onto the rock")
+		1300:
+			_press("move_down", false)
+			_check(
+				Story.has_flag(SecretWall.flag_for(int(_mark_x))),
+				"the landing breaks the rock and flags it"
+			)
+			_check(_world.level.secrets.size() == 13, "the passage is open")
+			var terrain: TileMapLayer = _world.level.find_child("Terrain", true, false)
+			_check(
+				terrain != null and terrain.get_cell_source_id(_secret_cell) == -1,
+				"its tiles are gone"
 			)
 			root.remove_child(_world)
 			_world.queue_free()

@@ -189,8 +189,12 @@ puts the hero down, every save is a checkpoint, the ability markers for the
 wings and the halo dash are feathers, every boss marker with a profile is
 a `Boss` (the rest get an angel guard standing in), and every locked door
 gets a seal (`scripts/door_lock.gd`). All six abilities have feathers now.
-The other markers (secrets, shops, the gate, the clock) are data in the
-JSON until there is something for them to do.
+Every secret door of the export is a passage carved through the rock
+between its two rooms and hidden behind that rock (`scripts/secret_wall.gd`):
+a Smite landing on or beside it breaks it open for the rest of the save
+(flag `secret:<door id>`), and the terrain tiles go with it. The shop and
+gate markers are data in the JSON until there is something for them to
+do.
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
