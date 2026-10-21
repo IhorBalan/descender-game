@@ -163,11 +163,11 @@ the level. Previews at six times their size are in the project folder under
 
 ## 3. How it is built
 
-- `scripts/upgrade.gd` (`Upgrade`): an `Area2D` placed with `H` (Kept
-  Light) or `V` (Vial) in the ASCII map. Touching it calls
+- `scripts/upgrade.gd` (`Upgrade`): an `Area2D` placed as an `upgrade`
+  object (`heart` or `vial`) in `levels/world/placements.json`. Touching it calls
   `Player.apply_upgrade`, which raises the maximum and fills it, sets the
-  flag `upgrade:<kind>:<level>:<n>` (n counts that kind's pickups in map
-  order) and frees the node. The level builder skips flagged pickups when
+  flag `upgrade:<kind>:<level>:<n>` (n counts that kind's pickups in
+  placement order) and frees the node. The level builder skips flagged pickups when
   it builds, so a loaded save does not show them again. On boot,
   `Player.restore_upgrades` counts the flags and sets the maximums, so a
   loaded hero keeps his hearts in any level.

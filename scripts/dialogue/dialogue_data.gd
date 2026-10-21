@@ -1,7 +1,7 @@
 class_name DialogueData
 extends RefCounted
 
-## The dialogue of one level, read from a JSON file (see dialogue/level_01.json).
+## The dialogue of one level, read from a JSON file (see dialogue/world_1.json).
 ##
 ## Each entry is keyed by id and has:
 ##   lines     a list of {"who": speaker, "text": one box of text}

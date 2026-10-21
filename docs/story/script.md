@@ -257,7 +257,7 @@ One numbered list, each beat tied to its area and to how it is delivered
 
 ## 5. Script: Heaven 1, the outskirts (in the game)
 
-Format: `ID` is the key in `dialogue/level_01.json`. Each line is one box.
+Format: `ID` is the key in `dialogue/world_1.json`. Each line is one box.
 Three short lines fit a box; keep a box under about 140 characters.
 
 Speaker tags: **ANSEL**, **VOICE** (the Choir in his head), **MERETH**,
@@ -351,8 +351,8 @@ back to the last checkpoint.
 
 ## 6. Script: Earth, Hollowmere (in the game)
 
-The hub under the hole in the sky, `levels/earth_hub.txt` and
-`dialogue/earth_hub.json`. Four survivors, three relics, a trigger on
+The hub under the hole in the sky: the Ruined Earth region of the world,
+with its lines in `dialogue/world_1.json`. Four survivors, three relics, a trigger on
 arrival and one at the churchyard hole that leads down.
 
 Every NPC has unique conversations that play once each, in order; some
@@ -753,8 +753,8 @@ The remaining seventeen are flavour for the level issues to place.
   with `lines` (speaker and text), and optional `requires` / `unless` flag
   lists, `sets` (a flag set when it finishes) and `once` (plays a single
   time; every finished entry sets `seen:<id>`).
-- NPCs, relics and triggers are placed with digits `1` to `9` in the level's
-  ASCII map, and described in `levels/<level>.json`: the digit maps to a
+- NPCs, relics and triggers are placed in `levels/world/placements.json`:
+  each object has a tile cell, a
   type (`npc`, `item`, `trigger`), a sprite, a name, the unique dialogue ids
   to try in order and a `rotate` list of repeat lines. The first unique
   entry whose flags match is the one that plays; when none does, the next

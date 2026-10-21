@@ -5,11 +5,14 @@ extends Node2D
 ## Reaching the goal gate fades out, saves and boots the next level.
 ##
 ## Which level: the save's, else the `--level=<id>` user argument
-## (`godot --path . -- --level=heaven_2`), else the first in Levels.
+## (`godot --path . -- --level=world_1`), else the first in Levels.
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   H heal   E talk"
 const DEATH_FADE_TIME := 0.4
+## How far the world's ambient tint is pulled towards white, so the deep
+## regions stay readable away from their lights.
+const AMBIENT_LIFT := 0.3
 const ABILITY_MESSAGES := {
 	Player.Ability.WINGS: "Wings: press jump again in the air",
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
@@ -29,6 +32,8 @@ var _active_checkpoint := -1
 var _transitioning := false
 ## The NPC, relic or trigger whose dialogue is open.
 var _talking_to: Interactable
+## The region of the world the hero is in (see WorldMap).
+var _region: Dictionary = {}
 
 @onready var sky: TextureRect = $Background/Sky
 @onready var level: LevelBuilder = $Level
@@ -48,7 +53,6 @@ func _ready() -> void:
 		Story.from_list(SaveManager.pending.get("flags", []))
 	level.level_id = level_id
 	_paint_sky(Levels.sky(level_id))
-	level.tiles_texture = load(Levels.tiles(level_id))
 	level.load_from_file(Levels.path(level_id))
 	if not level.dialogue_path.is_empty():
 		dialogue = DialogueData.new(level.dialogue_path)
@@ -95,6 +99,7 @@ func _ready() -> void:
 	fade.fade_in()
 	Audio.play_ambient(Levels.ambient(level_id))
 	hud.show_message(Levels.display_name(level_id), 2.5)
+	_enter_region(level.region_at(player.global_position.y), false)
 	if level_id == Levels.first_id:
 		hud.queue_message(CONTROLS_HINT, 6.0)
 
@@ -127,6 +132,29 @@ func _pick_level() -> String:
 
 func _process(delta: float) -> void:
 	play_time += delta
+
+
+## The hero moves in the physics step, so the region he is in is read there.
+func _physics_process(_delta: float) -> void:
+	if is_instance_valid(player):
+		var region := level.region_at(player.global_position.y)
+		if region != _region:
+			_enter_region(region, true)
+
+
+## Crossing into a region of the world: its ambient tint and sound, and its
+## name on the message line when `announce` is set.
+func _enter_region(region: Dictionary, announce: bool) -> void:
+	_region = region
+	if region.is_empty():
+		return
+	var color := Color.from_string(str(region.get("ambient", "#ffffff")), Color.WHITE)
+	level.set_ambient(color.lerp(Color.WHITE, AMBIENT_LIFT))
+	var name := str(region.get("name", ""))
+	Audio.play_ambient("heaven" if name == "Paradise" else "earth")
+	if announce:
+		var subtitle := str(region.get("subtitle", ""))
+		hud.queue_message(name if subtitle.is_empty() else "%s: %s" % [name, subtitle], 2.5)
 
 
 func _unhandled_input(event: InputEvent) -> void:
