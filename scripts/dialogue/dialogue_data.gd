@@ -10,6 +10,8 @@ extends RefCounted
 ##   sets      a flag, or a list of flags, set when the entry has been read to
 ##             the end (optional)
 ##   then      the id of the entry that plays right after this one (optional)
+##   warp      "start": the hero goes back to the level's start when the
+##             entry ends (optional; the clock ending)
 ##   once      true for an entry that plays a single time per save (optional);
 ##             every entry read to the end sets the flag `seen:<id>`, and a
 ##             `once` entry is skipped when its flag is set
