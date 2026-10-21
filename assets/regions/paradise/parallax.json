@@ -2,28 +2,57 @@
   "art_tile": 64,
   "layers": [
     {
-      "file": "hills_far.png",
-      "scroll": [
-        0.25,
-        0.85
-      ],
-      "y": -60
+      "file": "sky.png",
+      "cover": true
     },
     {
-      "file": "hills_near.png",
+      "file": "clouds_far.png",
+      "scroll": [
+        0.12,
+        0.4
+      ],
+      "y": -120
+    },
+    {
+      "file": "islands.png",
+      "scroll": [
+        0.25,
+        0.55
+      ],
+      "y": 120
+    },
+    {
+      "file": "rays.png",
+      "scroll": [
+        0.15,
+        0.25
+      ],
+      "y": -300
+    },
+    {
+      "file": "clouds_mid.png",
       "scroll": [
         0.5,
-        0.92
+        0.78
       ],
-      "y": 20
+      "y": 330
     },
     {
       "file": "fog.png",
       "scroll": [
-        0.7,
-        0.97
+        0.75,
+        0.95
       ],
-      "y": 60
+      "y": 430
+    },
+    {
+      "file": "wisps.png",
+      "scroll": [
+        1.18,
+        1.04
+      ],
+      "y": 460,
+      "front": true
     }
   ]
 }

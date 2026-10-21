@@ -3,20 +3,25 @@
   "top": [
     "tuft_0.png",
     "tuft_1.png",
-    "tuft_2.png"
+    "tuft_2.png",
+    "tuft_3.png"
   ],
   "bottom": [
-    "vine_0.png",
-    "vine_1.png"
+    "underside_0.png",
+    "underside_1.png",
+    "underside_2.png"
   ],
   "left": [
-    "moss_l.png"
+    "ivy_l0.png",
+    "ivy_l1.png"
   ],
   "right": [
-    "moss_r.png"
+    "ivy_r0.png",
+    "ivy_r1.png"
   ],
   "chance": 1.0,
-  "bottom_chance": 0.5,
-  "left_chance": 0.6,
-  "right_chance": 0.6
+  "top_chance": 0.9,
+  "bottom_chance": 0.7,
+  "left_chance": 0.55,
+  "right_chance": 0.55
 }

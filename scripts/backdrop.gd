@@ -18,7 +18,9 @@ extends Node2D
 ## Each layer repeats sideways across the level. `scroll` is how much of the
 ## camera's movement the layer follows (1 moves with the world, 0 stays on
 ## screen); `y`, in level pixels, puts the layer's top edge relative to the
-## region's top edge. The PNGs are drawn scaled onto the 16-unit grid by
+## region's top edge. A layer with "cover": true is stretched over the whole
+## view instead (a sky), and "front": true draws it in front of the level
+## (haze, foreground wisps). The PNGs are drawn scaled onto the 16-unit grid by
 ## tile / art_tile, so a set serves maps of any art scale. Switching regions
 ## fades the old set out over the new one.
 
@@ -58,6 +60,9 @@ func show_region(region: Dictionary, tile: int) -> void:
 		var scroll: Array = entry.get("scroll", [1.0, 1.0])
 		layer.scroll = Vector2(float(scroll[0]), float(scroll[1])) if scroll.size() >= 2 else Vector2.ONE
 		layer.anchor = Vector2(0.0, top + float(entry.get("y", 0)))
+		layer.cover = bool(entry.get("cover", false))
+		if bool(entry.get("front", false)):
+			layer.z_index = 4
 		layer.modulate = Color.from_string(str(entry.get("tint", "#ffffff")), Color.WHITE)
 		layer.modulate.a = 0.0
 		add_child(layer)
@@ -72,6 +77,7 @@ class Layer:
 	var scale_factor := 1.0
 	var scroll := Vector2.ONE
 	var anchor := Vector2.ZERO
+	var cover := false
 	var _camera_at := Vector2.ZERO
 	var _view := Vector2.ZERO
 
@@ -91,6 +97,9 @@ class Layer:
 
 	func _draw() -> void:
 		if texture == null:
+			return
+		if cover:
+			draw_texture_rect(texture, Rect2(_camera_at - _view / 2.0, _view), false)
 			return
 		var size := texture.get_size() * scale_factor
 		# The layer drifts by the share of the camera's travel it does not

@@ -53,6 +53,8 @@ var _talking_to: Interactable
 var _region: Dictionary = {}
 ## The parallax layers of the region the hero is in (see Backdrop).
 var backdrop: Backdrop
+## The drifting particles of the region (see RegionFx).
+var region_fx: RegionFx
 ## The boss being fought, the seals on its room, and whether the fight is
 ## waiting for the intro dialogue to close.
 var _boss: Boss
@@ -85,6 +87,9 @@ func _ready() -> void:
 	backdrop.name = "Backdrop"
 	add_child(backdrop)
 	move_child(backdrop, level.get_index())
+	region_fx = RegionFx.new()
+	region_fx.name = "RegionFx"
+	add_child(region_fx)
 	if not level.dialogue_path.is_empty():
 		dialogue = DialogueData.new(level.dialogue_path)
 	for interactable in level.interactables:
@@ -192,6 +197,8 @@ func _enter_region(region: Dictionary, announce: bool) -> void:
 	level.set_ambient(color.lerp(Color.WHITE, AMBIENT_LIFT))
 	if backdrop and level.world:
 		backdrop.show_region(region, level.world.tile)
+	if region_fx and level.world:
+		region_fx.show_region(region, level.world.tile)
 	var name := str(region.get("name", ""))
 	Audio.play_ambient("heaven" if name == "Paradise" else "earth")
 	if announce:
