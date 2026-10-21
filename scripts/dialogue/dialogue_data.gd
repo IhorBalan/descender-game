@@ -9,6 +9,7 @@ extends RefCounted
 ##   unless    flags that must all be unset for the entry to play (optional)
 ##   sets      a flag, or a list of flags, set when the entry has been read to
 ##             the end (optional)
+##   then      the id of the entry that plays right after this one (optional)
 ##   once      true for an entry that plays a single time per save (optional);
 ##             every entry read to the end sets the flag `seen:<id>`, and a
 ##             `once` entry is skipped when its flag is set
@@ -51,6 +52,22 @@ func available(data: Dictionary) -> bool:
 	if bool(data.get("once", false)) and Story.has_flag(seen_flag(str(data.get("id", "")))):
 		return false
 	return Story.has_all(data.get("requires", [])) and not Story.has_any(data.get("unless", []))
+
+
+## A line may also carry `choices`: a list of {text, then}. The box offers
+## them once the line is typed out, and the picked one's `then` becomes
+## the entry's `then` (see DialogueBox.choose).
+static func choices(data: Dictionary, index: int) -> Array:
+	var lines: Array = data.get("lines", [])
+	if index < 0 or index >= lines.size() or not lines[index] is Dictionary:
+		return []
+	var raw: Variant = lines[index].get("choices", [])
+	return raw if raw is Array else []
+
+
+## The entry to play right after this one, or "".
+static func next_id(data: Dictionary) -> String:
+	return str(data.get("then", ""))
 
 
 ## The flags an entry sets when it has been read to the end.

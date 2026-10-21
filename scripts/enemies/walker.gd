@@ -101,6 +101,9 @@ const BARK_COLOR := Color(1.0, 0.85, 0.8)
 ## A key of BARKS: the enemy shouts one of those lines when it winds up,
 ## half the time. Set by the level from the placement; "" is silent.
 var barks := ""
+## A resting demon of the last camp: patrols, never swings and does no
+## contact damage. Still dies like the others.
+var passive := false
 ## Falling below this y (set by the level) removes the enemy, so one knocked
 ## off its platform does not fall forever.
 var death_y := INF
@@ -200,7 +203,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _process_patrol() -> void:
-	if _hero_in_reach() and _attack_cooldown <= 0.0:
+	if not passive and _hero_in_reach() and _attack_cooldown <= 0.0:
 		_start_windup()
 		return
 	if is_on_floor() and not floor_ray.is_colliding():
@@ -305,7 +308,7 @@ func _face(dir: int) -> void:
 
 
 func _hurt_player() -> void:
-	if not hitbox.has_overlapping_bodies():
+	if passive or not hitbox.has_overlapping_bodies():
 		return
 	for body in hitbox.get_overlapping_bodies():
 		if body is Player:

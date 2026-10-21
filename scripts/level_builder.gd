@@ -19,7 +19,8 @@ extends Node2D
 ##                        dialogue and rotate, as the dialogue system wants;
 ##                        unless: a story flag that, once set, leaves it out
 ##   enemy                character: imp, angel_guard, brute (walkers) or
-##                        watcher; barks: a Walker.BARKS set the enemy shouts
+##                        watcher; barks: a Walker.BARKS set the enemy shouts;
+##                        passive: true for a walker that never attacks
 ##   upgrade              upgrade: heart (Kept Light), vial (Vial of the Basin) or iron
 ##                        (Church Iron, for Old Pell's forge)
 ##   power                power: halo, blade or zeal
@@ -73,6 +74,8 @@ class EnemySpawn:
 	var arena := Rect2()
 	## For a walker: the bark set it shouts from (see Walker.BARKS).
 	var barks := ""
+	## For a walker: never attacks (the resting army of the last camp).
+	var passive := false
 
 	func _init(p_scene: PackedScene, p_position: Vector2, p_character: String = "") -> void:
 		scene = p_scene
@@ -565,6 +568,7 @@ func _place_object(spec: Dictionary) -> void:
 			else:
 				var spawn := EnemySpawn.new(WALKER_SCENE, at, character)
 				spawn.barks = str(spec.get("barks", ""))
+				spawn.passive = bool(spec.get("passive", false))
 				_enemy_spawns.append(spawn)
 		"upgrade":
 			var kind := str(spec.get("upgrade", ""))
@@ -692,6 +696,7 @@ func spawn_enemies() -> void:
 			var walker := enemy as Walker
 			walker.character = spawn.character
 			walker.barks = spawn.barks
+			walker.passive = spawn.passive
 			walker.death_y = size_px.y + 64.0
 		elif enemy is Boss:
 			var boss := enemy as Boss

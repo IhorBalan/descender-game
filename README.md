@@ -158,7 +158,14 @@ Gluttony that says DON'T FOLLOW, and Vael the Bargainer in Greed. In
 Heresy the hero sees the Basin's pipes, meets Tobiah's messenger (a
 sent-down angel Tobiah speaks through) and can find the Choir's tablet and
 the clock weight; in Violence Vael waits again, with the pipe section and
-the clock chain below him. No enemies stand in Heresy or below yet.
+the clock chain below him. Fraud is the last camp: the army rests there
+(`passive` enemies, which patrol and never swing), an imp offers a tally
+bone, and the roster lies among them. At the bottom of Treachery the
+Lowest speaks before the fight and after it, and the last line is a
+choice (left and right pick, interact confirms): carry him or sit down.
+Either ends the game, as does the clock in the Time Clock room once all
+five pieces are found. A dialogue entry's `then` names the entry that
+follows it, and a line's `choices` list the options with their `then`.
 
 ## The world
 
