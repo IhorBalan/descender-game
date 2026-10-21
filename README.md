@@ -149,8 +149,8 @@ to Purgatory.
 
 Below the hub the world is peopled: imps, angel guards, watchers and the
 **brute** (slow, eight hits, a two-heart swing) stand through Purgatory
-and circles one to five at a rising density, all listed in
-`placements.json`. Fallen imps in Limbo and Lust shout a line from the
+and the nine circles at a rising density (Fraud's army rests instead),
+all listed in `placements.json`. Fallen imps in Limbo and Lust shout a line from the
 script as they wind up. The story goes on down there too: the names in
 the Purgatory shaft, the Ferryman (who hands over the clock's hand), the
 imp's tally bone in Limbo, Gorrow waiting by the seal in Lust, the wall in

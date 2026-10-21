@@ -120,8 +120,8 @@ func _physics_process(_delta: float) -> void:
 			)
 			_enemy_count = level.enemy_count()
 			_check(
-				_enemy_count >= 6 + 11 + 130,
-				"enemies below the hub and placeholder bosses spawned (%d)" % _enemy_count
+				_enemy_count >= 6 + 11 + 130 + 88,
+				"enemies down to Treachery and the bosses spawned (%d)" % _enemy_count
 			)
 			var brutes := 0
 			var ferryman: Npc = null
@@ -1233,6 +1233,9 @@ func _press(action: String, pressed: bool) -> void:
 	event.action = action
 	event.pressed = pressed
 	Input.parse_input_event(event)
+	# Delivered now rather than at the next frame's flush, so a frame that
+	# runs two physics ticks (a heavy world) cannot swallow a press.
+	Input.flush_buffered_events()
 
 
 func _check(ok: bool, label: String) -> void:

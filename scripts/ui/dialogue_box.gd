@@ -73,10 +73,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("interact") or event.is_action_pressed("jump"):
 		advance()
 		get_viewport().set_input_as_handled()
-	elif choice_label.visible and event.is_action_pressed("move_right"):
+	elif _choosing() and event.is_action_pressed("move_right"):
 		_select(_choice + 1)
 		get_viewport().set_input_as_handled()
-	elif choice_label.visible and event.is_action_pressed("move_left"):
+	elif _choosing() and event.is_action_pressed("move_left"):
 		_select(_choice - 1)
 		get_viewport().set_input_as_handled()
 
@@ -117,6 +117,11 @@ func choose(index: int) -> void:
 	_entry["then"] = str(picked.get("then", ""))
 	_entry["chosen"] = index
 	close()
+
+
+## Whether the choices are up: the line has them and is typed out.
+func _choosing() -> bool:
+	return has_choice() and _shown >= text_label.text.length()
 
 
 func _select(index: int) -> void:
