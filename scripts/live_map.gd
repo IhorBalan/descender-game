@@ -12,10 +12,11 @@ extends Node
 ## for one run with the `--no-live-map` user argument or by setting the
 ## DESCENDER_LIVE_MAP environment variable to 0.
 ##
-## The head document carries a revision of the export. When it matches the
-## one recorded in levels/world/live_map.json and the files are in place,
-## the start costs that one small read; otherwise the world.json pieces and
-## the sheets are downloaded and written over levels/world. placements.json
+## The head document carries a revision of the export and lists its files,
+## each published in pieces (world.json as text, the sheets as base64). When
+## the revision matches the one recorded in levels/world/live_map.json and
+## the files are in place, the start costs that one small read; otherwise
+## the pieces are downloaded, joined and written over levels/world. placements.json
 ## is never touched. The title screen shows the outcome and a game started
 ## while the download is still running waits for it (see wait()).
 
@@ -81,9 +82,8 @@ func _sync(project: String) -> void:
 	var fields: Dictionary = head["fields"]
 	var revision := str(fields.get("revision", ""))
 	var map_name := str(fields.get("name", "?"))
-	var parts := int(fields.get("parts", 0))
-	var sheets: Dictionary = fields.get("sheets", {})
-	if revision.is_empty() or parts <= 0:
+	var files: Array = fields.get("files", [])
+	if revision.is_empty() or files.is_empty():
 		_finish(false, "Live map: the published map is incomplete")
 		return
 	if revision == _stamped_revision() and _files_present():
@@ -91,23 +91,27 @@ func _sync(project: String) -> void:
 		return
 
 	status = "Downloading the live map…"
-	var text := ""
-	for i in parts:
-		var part := await _get_document(base + "%s_%d" % [HEAD_DOCUMENT, i])
-		if part.has("error"):
-			_finish(false, "Live map: %s" % part["error"])
+	var wanted := [WORLD_FILE] + SHEETS
+	for index in files.size():
+		var file: Dictionary = files[index]
+		var file_name := str(file.get("name", ""))
+		if not file_name in wanted:
+			continue
+		var text := ""
+		for part in int(file.get("parts", 0)):
+			var piece := await _get_document(base + "%s_f%d_%d" % [HEAD_DOCUMENT, index, part])
+			if piece.has("error"):
+				_finish(false, "Live map: %s" % piece["error"])
+				return
+			text += str(piece["fields"].get("text", ""))
+		var bytes := Marshalls.base64_to_raw(text) if str(file.get("encoding", "")) == "base64" else text.to_utf8_buffer()
+		if not _write(WORLD_DIR + "/" + file_name, bytes):
+			_finish(false, "Live map: could not write %s" % file_name)
 			return
-		text += str(part["fields"].get("text", ""))
-	if not _write(WORLD_DIR + "/" + WORLD_FILE, text.to_utf8_buffer()):
-		_finish(false, "Live map: could not write %s" % WORLD_FILE)
+		wanted.erase(file_name)
+	if not wanted.is_empty():
+		_finish(false, "Live map: the published map has no %s" % ", ".join(wanted))
 		return
-	for sheet in SHEETS:
-		if not sheets.has(sheet):
-			_finish(false, "Live map: the published map has no %s" % sheet)
-			return
-		if not _write(WORLD_DIR + "/" + sheet, Marshalls.base64_to_raw(str(sheets[sheet]))):
-			_finish(false, "Live map: could not write %s" % sheet)
-			return
 	_write(STAMP_PATH, JSON.stringify({
 		"revision": revision,
 		"name": map_name,

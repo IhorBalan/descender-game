@@ -1,0 +1,29 @@
+{
+  "art_tile": 64,
+  "layers": [
+    {
+      "file": "hills_far.png",
+      "scroll": [
+        0.25,
+        0.85
+      ],
+      "y": -60
+    },
+    {
+      "file": "hills_near.png",
+      "scroll": [
+        0.5,
+        0.92
+      ],
+      "y": 20
+    },
+    {
+      "file": "fog.png",
+      "scroll": [
+        0.7,
+        0.97
+      ],
+      "y": 60
+    }
+  ]
+}

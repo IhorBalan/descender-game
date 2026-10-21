@@ -33,10 +33,13 @@ const SHEET_GLOW := "world_tiles_e.png"
 
 ## The file the map was read from.
 var path := ""
-## Size in tiles, and the tile size in pixels.
+## Size in tiles, and the tile size in level pixels (the world unit).
 var width := 0
 var height := 0
 var tile := 16
+## Pixels per tile in the sheets: the art scale (16 for pixel art, 64 for
+## painted tiles). The layers are drawn scaled by tile / art_tile.
+var art_tile := 16
 ## How many tiles wide the sheets are.
 var columns := 64
 ## Layer name -> one tile id per cell, row by row, -1 for empty.
@@ -86,6 +89,7 @@ func _parse(data: Dictionary) -> void:
 	width = int(data.get("width", 0))
 	height = int(data.get("height", 0))
 	tile = int(data.get("tile", 16))
+	art_tile = int(data.get("art_tile", tile))
 	columns = int(data.get("columns", 64))
 	for layer in data.get("layers", []):
 		if not layer is Dictionary:
@@ -128,6 +132,11 @@ func size_px() -> Vector2:
 ## The folder the tile sheets live in.
 func dir() -> String:
 	return path.get_base_dir() + "/"
+
+
+## What a tile layer is scaled by to put art_tile pixels in a tile-wide cell.
+func art_scale() -> float:
+	return float(tile) / float(art_tile)
 
 
 ## One of the tile sheets next to the export, or null when it is missing.
@@ -205,19 +214,19 @@ func marker_position(marker: Dictionary) -> Vector2:
 ## shapes instead, which is far fewer bodies than one polygon per tile.
 func build_tile_set() -> TileSet:
 	var tile_set := TileSet.new()
-	tile_set.tile_size = Vector2i(tile, tile)
+	tile_set.tile_size = Vector2i(art_tile, art_tile)
 	var lit := CanvasTexture.new()
 	lit.diffuse_texture = _sheet(dir() + SHEET_DIFFUSE)
 	lit.normal_texture = _sheet(dir() + SHEET_NORMAL)
 	lit.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var diffuse := TileSetAtlasSource.new()
 	diffuse.texture = lit
-	diffuse.texture_region_size = Vector2i(tile, tile)
+	diffuse.texture_region_size = Vector2i(art_tile, art_tile)
 	tile_set.add_source(diffuse, 0)
 	var glow := TileSetAtlasSource.new()
 	var glow_texture := _sheet(dir() + SHEET_GLOW)
 	glow.texture = glow_texture if glow_texture else lit
-	glow.texture_region_size = Vector2i(tile, tile)
+	glow.texture_region_size = Vector2i(art_tile, art_tile)
 	tile_set.add_source(glow, 1)
 	for id in _all_tile_ids():
 		var coords := atlas_coords(id)

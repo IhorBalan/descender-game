@@ -1,0 +1,22 @@
+{
+  "art_tile": 64,
+  "top": [
+    "tuft_0.png",
+    "tuft_1.png",
+    "tuft_2.png"
+  ],
+  "bottom": [
+    "vine_0.png",
+    "vine_1.png"
+  ],
+  "left": [
+    "moss_l.png"
+  ],
+  "right": [
+    "moss_r.png"
+  ],
+  "chance": 1.0,
+  "bottom_chance": 0.5,
+  "left_chance": 0.6,
+  "right_chance": 0.6
+}
