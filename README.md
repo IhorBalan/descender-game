@@ -130,7 +130,12 @@ that restores a heart (angel guards always do).
 
 The story is told in text boxes. Standing next to someone, or to a relic,
 shows the talk key above them; pressing it opens a box at the bottom of the
-screen, and the same key (or jump) turns the page. The hero stands still and
+screen, and the same key (or jump) turns the page. The text types out with
+a soft blip, pitched by who is speaking, and rests a moment on full stops
+and commas; a press shows the whole page at once. The speaker's name takes
+their colour (the Voice is the Choir's pale light, Tobiah and the demons the
+red of the deep circles), and a line nobody speaks, a stage note or a
+relic's description, is grey and silent. The hero stands still and
 cannot be hurt while a box is open. People say different things once the
 hero has heard their first lines, relics are gone once read, and a few spots
 in the level speak on their own the first time the hero walks through. What
@@ -169,7 +174,10 @@ pieces are found, sends the hero back up to the start of the world
 the last fight and the third ending. A dialogue entry's `then` names the
 entry that follows it, a line's `choices` list the options with their
 `then`, and an enemy placement may name a boss profile as its `character`
-and a flag it `requires` (read whenever the enemies spawn).
+and a flag it `requires` (read whenever the enemies spawn). A single line
+inside an entry may carry `requires` and `unless` flags of its own: the
+line is left out while they do not hold, so one conversation can say
+different things to a hero who has seen different things.
 
 ## The world
 
