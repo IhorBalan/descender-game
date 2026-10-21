@@ -1,14 +1,22 @@
 extends Node
 
-## Player settings: master volume, fullscreen, keyboard and gamepad bindings.
+## Player settings: volumes, window, screen shake, keyboard and gamepad
+## bindings.
 ##
 ## Registered as the Settings autoload. Values live in user://settings.cfg
-## and are applied to the audio bus, the window and the InputMap when the
+## and are applied to the audio buses, the window and the InputMap when the
 ## game starts and whenever the settings screen changes them. Keyboard keys
 ## and gamepad buttons are rebound separately; the stick axes stay as the
 ## project defines them.
 
 const PATH := "user://settings.cfg"
+## The game renders at this size; the window is a whole multiple of it.
+const BASE_SIZE := Vector2i(320, 180)
+const MIN_WINDOW_SCALE := 2
+const MAX_WINDOW_SCALE := 6
+const DEFAULT_WINDOW_SCALE := 4
+## Screen shake amounts the settings screen cycles through: off, half, full.
+const SHAKE_LEVELS: Array[float] = [0.0, 0.5, 1.0]
 ## The actions the settings screen lets the player rebind, in menu order.
 ## Every keyboard action is here, so a key moved to one action is taken
 ## away from whichever other action had it.
@@ -57,8 +65,16 @@ const ACTION_LABELS := {
 	&"restart": "Restart",
 }
 
+## Master, music (the ambient loops) and sound effect volumes, 0 to 1.
 var volume := 1.0
+var music_volume := 1.0
+var sfx_volume := 1.0
 var fullscreen := false
+## Window size as a multiple of BASE_SIZE, used when not fullscreen.
+var window_scale := DEFAULT_WINDOW_SCALE
+var vsync := true
+## Multiplier for camera shake, 0 to 1; see Feedback.shake.
+var screen_shake := 1.0
 ## Saved keys per action: physical keycodes. Actions not listed keep the
 ## project's defaults.
 var keys: Dictionary = {}
@@ -82,10 +98,23 @@ func load_settings() -> void:
 	var config := ConfigFile.new()
 	if config.load(PATH) != OK:
 		return
-	volume = clampf(float(config.get_value("audio", "volume", 1.0)), 0.0, 1.0)
+	volume = _volume_from(config, "volume")
+	music_volume = _volume_from(config, "music")
+	sfx_volume = _volume_from(config, "sfx")
 	fullscreen = bool(config.get_value("display", "fullscreen", false))
+	window_scale = clampi(
+		int(config.get_value("display", "scale", DEFAULT_WINDOW_SCALE)),
+		MIN_WINDOW_SCALE,
+		MAX_WINDOW_SCALE
+	)
+	vsync = bool(config.get_value("display", "vsync", true))
+	screen_shake = clampf(float(config.get_value("display", "shake", 1.0)), 0.0, 1.0)
 	keys = _load_bindings(config, "keys")
 	pad_buttons = _load_bindings(config, "pad")
+
+
+func _volume_from(config: ConfigFile, key: String) -> float:
+	return clampf(float(config.get_value("audio", key, 1.0)), 0.0, 1.0)
 
 
 func _load_bindings(config: ConfigFile, section: String) -> Dictionary:
@@ -104,7 +133,12 @@ func _load_bindings(config: ConfigFile, section: String) -> Dictionary:
 func save_settings() -> void:
 	var config := ConfigFile.new()
 	config.set_value("audio", "volume", volume)
+	config.set_value("audio", "music", music_volume)
+	config.set_value("audio", "sfx", sfx_volume)
 	config.set_value("display", "fullscreen", fullscreen)
+	config.set_value("display", "scale", window_scale)
+	config.set_value("display", "vsync", vsync)
+	config.set_value("display", "shake", screen_shake)
 	for action in keys:
 		config.set_value("keys", action, keys[action])
 	for action in pad_buttons:
@@ -115,17 +149,74 @@ func save_settings() -> void:
 
 ## Pushes every setting to the engine.
 func apply() -> void:
-	var bus := AudioServer.get_bus_index("Master")
-	AudioServer.set_bus_volume_db(bus, linear_to_db(maxf(volume, 0.0001)))
-	AudioServer.set_bus_mute(bus, volume <= 0.0)
+	_set_bus_volume("Master", volume)
+	_set_bus_volume("Music", music_volume)
+	_set_bus_volume("SFX", sfx_volume)
+	_apply_window()
+	for action in REBINDABLE_ACTIONS:
+		_set_keyboard_keys(action, keys.get(action, _default_keys[action]))
+		_set_joypad_buttons(action, pad_buttons.get(action, _default_pad_buttons[action]))
+
+
+## Puts the volumes back to full.
+func reset_audio() -> void:
+	volume = 1.0
+	music_volume = 1.0
+	sfx_volume = 1.0
+	apply()
+
+
+## Puts the window and the screen shake back to the project's defaults.
+func reset_display() -> void:
+	fullscreen = false
+	window_scale = DEFAULT_WINDOW_SCALE
+	vsync = true
+	screen_shake = 1.0
+	apply()
+
+
+## The window size for a scale, for the settings screen to show.
+func window_size_for(scale: int) -> Vector2i:
+	return BASE_SIZE * scale
+
+
+## The name of a screen shake level: "Off", "Half" or "Full".
+func shake_name(amount: float) -> String:
+	if amount <= 0.0:
+		return "Off"
+	return "Full" if amount >= 1.0 else "Half"
+
+
+func _set_bus_volume(bus_name: String, linear: float) -> void:
+	var bus := AudioServer.get_bus_index(bus_name)
+	if bus < 0:
+		push_warning("No audio bus named %s" % bus_name)
+		return
+	AudioServer.set_bus_volume_db(bus, linear_to_db(maxf(linear, 0.0001)))
+	AudioServer.set_bus_mute(bus, linear <= 0.0)
+
+
+## Sets the window mode, size and vsync. Does nothing headless, where there
+## is no window.
+func _apply_window() -> void:
+	if DisplayServer.get_name() == "headless":
+		return
 	var mode := (
 		DisplayServer.WINDOW_MODE_FULLSCREEN if fullscreen else DisplayServer.WINDOW_MODE_WINDOWED
 	)
 	if DisplayServer.window_get_mode() != mode:
 		DisplayServer.window_set_mode(mode)
-	for action in REBINDABLE_ACTIONS:
-		_set_keyboard_keys(action, keys.get(action, _default_keys[action]))
-		_set_joypad_buttons(action, pad_buttons.get(action, _default_pad_buttons[action]))
+	if not fullscreen:
+		var size := window_size_for(window_scale)
+		if DisplayServer.window_get_size() != size:
+			DisplayServer.window_set_size(size)
+			# Keep the window on the screen it was on, centred.
+			var screen := DisplayServer.window_get_current_screen()
+			var usable := DisplayServer.screen_get_usable_rect(screen)
+			DisplayServer.window_set_position(usable.position + (usable.size - size) / 2)
+	var vsync_mode := DisplayServer.VSYNC_ENABLED if vsync else DisplayServer.VSYNC_DISABLED
+	if DisplayServer.window_get_vsync_mode() != vsync_mode:
+		DisplayServer.window_set_vsync_mode(vsync_mode)
 
 
 ## The physical keycodes bound to an action right now.

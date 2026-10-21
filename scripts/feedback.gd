@@ -37,10 +37,11 @@ func is_hit_stopped() -> bool:
 	return _hit_stop_until > 0
 
 
-## Shakes the camera; `amount` is 0 to 1 and adds up across hits.
+## Shakes the camera; `amount` is 0 to 1 and adds up across hits. The
+## screen shake setting scales it, down to nothing when turned off.
 func shake(amount: float) -> void:
 	for camera in get_tree().get_nodes_in_group("game_camera"):
-		camera.add_trauma(amount)
+		camera.add_trauma(amount * Settings.screen_shake)
 
 
 ## Flashes a sprite white, fading back over the duration. The first flash

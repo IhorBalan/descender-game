@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 323
+const EXPECTED_CHECKS := 344
 const LAST_TICK := 1310
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -646,6 +646,74 @@ func _physics_process(_delta: float) -> void:
 			_check(attack_button.text == "J / X", "settings show the attack keys")
 			settings_menu.device_button.pressed.emit()
 			_check(attack_button.text == "X", "device button switches to gamepad names")
+			# Pages: the tab buttons show one page at a time.
+			_check(settings_menu.get_node("Pages/Audio").visible, "settings open on the audio page")
+			settings_menu.get_node("Tabs/Display").pressed.emit()
+			_check(settings_menu.get_node("Pages/Display").visible, "display tab shows its page")
+			_check(not settings_menu.get_node("Pages/Audio").visible, "audio page hides")
+			# Display: the window size and shake buttons cycle and Defaults undoes them.
+			settings_menu.scale_button.pressed.emit()
+			_check(Settings.window_scale == 5, "window size button steps up the scale")
+			_check(
+				settings_menu.scale_button.text == "< 5x  1600 x 900 >",
+				"window size shows its pixels"
+			)
+			settings_menu.shake_button.pressed.emit()
+			_check(Settings.screen_shake == 0.0, "shake button cycles from full to off")
+			_check(settings_menu.shake_button.text == "< Off >", "shake button says off")
+			settings_menu.display_defaults_button.pressed.emit()
+			_check(
+				Settings.window_scale == 4 and Settings.screen_shake == 1.0,
+				"display defaults put the scale and shake back"
+			)
+			# Audio: three buses, each with its own volume; a muted bus is silent.
+			_check(AudioServer.get_bus_index("Music") >= 0, "music bus exists")
+			_check(AudioServer.get_bus_index("SFX") >= 0, "sfx bus exists")
+			settings_menu.music_slider.value = 50.0
+			_check(is_equal_approx(Settings.music_volume, 0.5), "music slider sets music volume")
+			_check(
+				is_equal_approx(
+					AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music")),
+					linear_to_db(0.5)
+				),
+				"music bus takes the volume"
+			)
+			settings_menu.sfx_slider.value = 0.0
+			_check(
+				AudioServer.is_bus_mute(AudioServer.get_bus_index("SFX")),
+				"sfx at zero mutes its bus"
+			)
+			_check(settings_menu.sfx_value.text == "0%", "sfx slider shows its percentage")
+			settings_menu.audio_defaults_button.pressed.emit()
+			_check(
+				Settings.music_volume == 1.0 and Settings.sfx_volume == 1.0,
+				"audio defaults put the volumes back"
+			)
+			_check(not AudioServer.is_bus_mute(AudioServer.get_bus_index("SFX")), "sfx bus unmutes")
+			# The settings file: every value survives a save and a reload.
+			Settings.music_volume = 0.25
+			Settings.window_scale = 3
+			Settings.vsync = false
+			Settings.screen_shake = 0.5
+			Settings.save_settings()
+			Settings.reset_audio()
+			Settings.reset_display()
+			Settings.load_settings()
+			_check(
+				(
+					is_equal_approx(Settings.music_volume, 0.25)
+					and Settings.window_scale == 3
+					and not Settings.vsync
+					and Settings.screen_shake == 0.5
+				),
+				"settings file keeps the volumes, window and shake"
+			)
+			Settings.reset_audio()
+			Settings.reset_display()
+			Settings.save_settings()
+			settings_menu.back_button.pressed.emit()
+			_check(not settings_menu.visible, "back closes the settings")
+			_check(_title.get_node("Menu").visible, "title menu returns")
 		880:
 			# The hub region: crossing into Ruined Earth changes the ambient
 			# tint and sound, and the survivors stand in it with their unique
@@ -657,6 +725,16 @@ func _physics_process(_delta: float) -> void:
 			root.add_child(_hub)
 		884:
 			_check(_hub.level_id == "world_1", "world booted from a save")
+			# Screen shake off: a hit no longer shakes the camera.
+			_hub.camera.trauma = 0.0
+			Settings.screen_shake = 0.0
+			Feedback.shake(0.5)
+			_check(_hub.camera.trauma == 0.0, "shake off keeps the camera still")
+			Settings.screen_shake = 0.5
+			Feedback.shake(0.5)
+			_check(is_equal_approx(_hub.camera.trauma, 0.25), "half shake halves the trauma")
+			Settings.screen_shake = 1.0
+			_hub.camera.trauma = 0.0
 			_check(
 				_hub.sky.texture.gradient.colors[0] == Levels.WORLD_SKY[0], "world sky is painted"
 			)
