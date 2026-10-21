@@ -16,6 +16,8 @@ const AMBIENT_LIFT := 0.3
 const ABILITY_MESSAGES := {
 	Player.Ability.WINGS: "Wings: press jump again in the air",
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
+	Player.Ability.WALL_GRIP: "Wall grip: hold towards a wall to cling, jump to spring off",
+	Player.Ability.GLIDE: "Glide: press and hold jump while falling to float down",
 }
 
 var player: Player

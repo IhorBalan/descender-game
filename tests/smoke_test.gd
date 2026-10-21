@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 236
-const LAST_TICK := 1130
+const EXPECTED_CHECKS := 248
+const LAST_TICK := 1150
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -122,7 +122,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
 			_check(level.goal == null, "the world has no goal gate yet")
-			_check(level.pickup_count() == 2, "feathers for the two known abilities built")
+			_check(level.pickup_count() == 4, "feathers for the four learnable abilities built")
 			_check(level.upgrade_count() == 2, "two permanent upgrades built")
 			_check(level.power_up_count() == 3, "three power-ups built")
 			_start_x = _player.global_position.x
@@ -231,7 +231,7 @@ func _physics_process(_delta: float) -> void:
 		544:
 			_check(_player.has_ability(Player.Ability.WINGS), "feather unlocks the wings")
 			_check(_main.hud.status.abilities == [Player.Ability.WINGS], "HUD shows the wings")
-			_check(_main.level.pickup_count() == 1, "feather is used up")
+			_check(_main.level.pickup_count() == 3, "feather is used up")
 			# Back to the start room, where there is headroom for two jumps.
 			_player.global_position = AIR_START
 			_player.velocity = Vector2.ZERO
@@ -373,7 +373,7 @@ func _physics_process(_delta: float) -> void:
 				_player.has_ability(Player.Ability.LIGHT_DASH),
 				"second feather unlocks the light dash"
 			)
-			_check(_main.level.pickup_count() == 0, "both feathers used up")
+			_check(_main.level.pickup_count() == 2, "both feathers used up")
 			_player.global_position = _barrier_approach
 			_player.velocity = Vector2.ZERO
 			_player.facing = 1
@@ -537,7 +537,7 @@ func _physics_process(_delta: float) -> void:
 				),
 				"loaded hero keeps both abilities"
 			)
-			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
+			_check(_loaded.level.pickup_count() == 2, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
 			_check(_loaded.level.item_count() == 8, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
@@ -849,6 +849,60 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				_world.level.enemy_count() == _enemy_count - 1,
 				"the dead boss leaves no placeholder"
+			)
+			# Wall Grip: in the air beside the wall at the Warden's room's edge.
+			_world.player.unlock(Player.Ability.WALL_GRIP)
+			_check(
+				Player.Ability.WALL_GRIP in _world.hud.status.abilities, "HUD shows the wall grip"
+			)
+			_world.player.global_position = Vector2(327.0 * 16.0 + 8.0, 44.0 * 16.0)
+			_world.player.velocity = Vector2.ZERO
+			_press("move_right", true)
+		1070:
+			_check(_world.player.is_gripping_wall(), "pushing into a wall grips it")
+			_check(
+				_world.player.velocity.y <= Player.WALL_SLIDE_SPEED + 1.0,
+				"wall grip slows the slide (%.0f)" % _world.player.velocity.y
+			)
+			_check(not _world.player.is_on_floor(), "hero is still off the ground")
+			_press("jump", true)
+		1073:
+			_press("jump", false)
+			_check(
+				_world.player.velocity.x < 0.0 and _world.player.velocity.y < 0.0,
+				"wall jump springs away from the wall"
+			)
+			_check(not _world.player.is_gripping_wall(), "the jump lets go of the wall")
+		1078:
+			# Still holding towards the wall: the spring is not steered back yet.
+			_check(
+				_world.player.velocity.x < 0.0,
+				"holding towards the wall does not pull back at once"
+			)
+			_press("move_right", false)
+		1090:
+			# Glide: dropped from high up with no wings, pressing jump on the way down.
+			_world.player.unlock(Player.Ability.GLIDE)
+			_world.player.global_position = AIR_START + Vector2(0.0, -160.0)
+			_world.player.velocity = Vector2.ZERO
+		1096:
+			_check(_world.player.velocity.y > 0.0, "hero is falling")
+			_press("jump", true)
+		1116:
+			_check(_world.player.is_gliding(), "a press while falling opens the wings")
+			_check(
+				_world.player.velocity.y <= Player.GLIDE_FALL_SPEED + 1.0,
+				"glide slows the fall (%.0f)" % _world.player.velocity.y
+			)
+			_press("jump", false)
+		1126:
+			_check(not _world.player.is_gliding(), "letting go closes the wings")
+			_check(
+				(
+					_world.player.velocity.y > Player.GLIDE_FALL_SPEED + 5.0
+					or _world.player.is_on_floor()
+				),
+				"the fall picks up again"
 			)
 			root.remove_child(_world)
 			_world.queue_free()

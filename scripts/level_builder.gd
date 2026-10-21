@@ -26,6 +26,10 @@ extends Node2D
 
 const TILE := 16
 const WORLD_PLACEMENTS := "placements.json"
+## The abilities with gameplay behind them; the other markers stay data.
+const LEARNABLE: Array[int] = [
+	Player.Ability.WINGS, Player.Ability.LIGHT_DASH, Player.Ability.WALL_GRIP, Player.Ability.GLIDE
+]
 ## Boss markers get this enemy until there are bosses.
 const BOSS_PLACEHOLDER := "angel_guard"
 ## How tall the one-way strip at the top of a ledge tile is.
@@ -520,14 +524,14 @@ func room_at(position: Vector2) -> int:
 	return -1
 
 
-## The hero's ability for an index into the export's ability list, or -1
-## for one he cannot learn yet.
+## The hero's ability for an index into the export's ability list (the
+## Player.Ability enum follows the tool's order), or -1 for one he cannot
+## learn yet.
 func _ability_for(index: int) -> int:
-	match index:
-		0:
-			return Player.Ability.WINGS
-		1:
-			return Player.Ability.LIGHT_DASH
+	if index < 0 or index >= Player.Ability.size():
+		return -1
+	if index in LEARNABLE:
+		return index
 	return -1
 
 

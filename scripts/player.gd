@@ -15,9 +15,11 @@ signal died
 signal respawned
 
 enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD }
-## The half-finished angel powers. Each is unlocked by a pickup in the world
-## and stays unlocked for the rest of the run, including after death.
-enum Ability { WINGS, LIGHT_DASH }
+## The half-finished angel powers, in the map tool's order (the export's
+## ability list indexes this enum). Each is unlocked by a pickup in the
+## world and stays unlocked for the rest of the run, including after death.
+## Holy Light and Smite are listed but not learnable yet.
+enum Ability { WINGS, LIGHT_DASH, WALL_GRIP, HOLY_LIGHT, GLIDE, SMITE }
 ## Permanent upgrades picked up in the world (see Upgrade). Each one is a
 ## story flag, so it stays collected in the save.
 enum UpgradeKind { HEART, VIAL }
@@ -59,6 +61,17 @@ const DROP_TIME := 0.25
 const DOUBLE_JUMP_HEIGHT := 56.0
 const DOUBLE_JUMP_VELOCITY := -sqrt(2.0 * GRAVITY * DOUBLE_JUMP_HEIGHT)
 const WING_FLASH_TIME := 0.15
+# Wall Grip: pressing into a wall in the air holds the hero to it, sliding
+# down slowly; jump then springs him away from it.
+const WALL_SLIDE_SPEED := 40.0
+const WALL_JUMP_VELOCITY := Vector2(150.0, -2.0 * JUMP_HEIGHT * 0.9 / JUMP_TIME_TO_APEX)
+## Steering is locked away from the wall this long after a wall jump, so
+## holding towards the wall does not climb it by rapid jumps.
+const WALL_JUMP_LOCK := 0.16
+# Glide: pressing jump again while falling (with the wings' jump spent)
+# and holding it slows the fall to this.
+const GLIDE_FALL_SPEED := 45.0
+const GLIDE_GRAVITY_MULTIPLIER := 0.35
 ## Jump, dash and attack presses are remembered this long.
 const INPUT_BUFFER_TIME := 0.12
 ## How far the hero is nudged sideways around a ceiling corner, or up onto a
@@ -111,6 +124,7 @@ const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
 const TINT_LIGHT_DASH := Color(1.0, 0.95, 0.7, 0.85)
 const TINT_HEAL := Color(1.0, 0.92, 0.6)
 const TINT_WINGS := Color(1.0, 1.0, 0.8)
+const TINT_GLIDE := Color(0.9, 0.95, 1.0)
 const TINT_BLADE := Color(1.0, 0.85, 0.5)
 
 var state: State = State.IDLE
@@ -149,6 +163,13 @@ var _wing_flash_timer := 0.0
 var _dash_cooldown_timer := 0.0
 ## Counts down while the hero is dropping through a ledge.
 var _drop_timer := 0.0
+## True while the hero holds a wall (see Wall Grip).
+var _on_wall_grip := false
+## Which way the wall is while gripping, for the jump away from it.
+var _wall_dir := 0
+var _wall_jump_lock_timer := 0.0
+## True while the hero floats on the wings (see Glide).
+var _gliding := false
 ## True while light barriers are ignored: during a light dash, and after it
 ## until the hero is clear of the barrier he ended inside.
 var _phasing := false
@@ -231,6 +252,7 @@ func _tick_timers(delta: float) -> void:
 	_invulnerable_timer = maxf(_invulnerable_timer - delta, 0.0)
 	_wing_flash_timer = maxf(_wing_flash_timer - delta, 0.0)
 	_drop_timer = maxf(_drop_timer - delta, 0.0)
+	_wall_jump_lock_timer = maxf(_wall_jump_lock_timer - delta, 0.0)
 	_tick_powers(delta)
 
 
@@ -239,10 +261,16 @@ func _tick_timers(delta: float) -> void:
 
 func _process_normal(delta: float) -> void:
 	var input_dir := 0.0 if _input_blocked() else Input.get_axis("move_left", "move_right")
+	if _wall_jump_lock_timer > 0.0 and int(signf(input_dir)) == _wall_dir:
+		# Just sprang off a wall: steering back towards it is ignored for a
+		# moment, so the wall cannot be climbed by rapid jumps.
+		input_dir = 0.0
 	if input_dir != 0.0:
 		facing = 1 if input_dir > 0.0 else -1
 	if is_on_floor():
 		_coyote_timer = COYOTE_TIME
+	_update_wall_grip(input_dir)
+	_update_glide()
 
 	_apply_gravity(delta)
 	_apply_horizontal(input_dir, delta)
@@ -255,6 +283,17 @@ func _process_normal(delta: float) -> void:
 		_coyote_timer = 0.0
 		_jump_rising = true
 		Audio.play("jump")
+	elif _jump_buffer_timer > 0.0 and _on_wall_grip:
+		# Wall Grip: spring away from the wall; the air jump and dash come back.
+		velocity = Vector2(WALL_JUMP_VELOCITY.x * -_wall_dir, WALL_JUMP_VELOCITY.y)
+		facing = -_wall_dir
+		_wall_jump_lock_timer = WALL_JUMP_LOCK
+		_on_wall_grip = false
+		_jump_buffer_timer = 0.0
+		_jump_rising = true
+		_air_jump_available = true
+		_dash_available = true
+		Audio.play("jump")
 	elif _jump_buffer_timer > 0.0 and _air_jump_available and has_ability(Ability.WINGS):
 		# Wings: a second jump from mid-air, with the same variable height.
 		velocity.y = DOUBLE_JUMP_VELOCITY
@@ -263,6 +302,10 @@ func _process_normal(delta: float) -> void:
 		_jump_rising = true
 		_wing_flash_timer = WING_FLASH_TIME
 		Audio.play("double_jump")
+	elif _jump_buffer_timer > 0.0 and velocity.y > 0.0 and has_ability(Ability.GLIDE):
+		# Glide: the press opens the wings; holding it keeps them open.
+		_gliding = true
+		_jump_buffer_timer = 0.0
 	elif _jump_rising and velocity.y >= 0.0:
 		_jump_rising = false
 	elif _jump_rising and not _input_blocked() and not Input.is_action_pressed("jump"):
@@ -389,6 +432,8 @@ func _process_dead(delta: float) -> void:
 
 func _set_state(new_state: State, duration: float) -> void:
 	_end_attack()
+	_on_wall_grip = false
+	_gliding = false
 	state = new_state
 	_state_timer = duration
 
@@ -399,7 +444,13 @@ func _set_state(new_state: State, duration: float) -> void:
 func _apply_gravity(delta: float) -> void:
 	if is_on_floor():
 		return
+	if _on_wall_grip:
+		velocity.y = minf(velocity.y + GRAVITY * delta, WALL_SLIDE_SPEED)
+		return
 	var gravity := FALL_GRAVITY if velocity.y > 0.0 else GRAVITY
+	if _gliding:
+		velocity.y = minf(velocity.y + gravity * GLIDE_GRAVITY_MULTIPLIER * delta, GLIDE_FALL_SPEED)
+		return
 	var airborne := state == State.JUMP or state == State.FALL
 	if (
 		airborne
@@ -430,6 +481,54 @@ func _apply_horizontal(input_dir: float, delta: float, speed_multiplier := 1.0) 
 	else:
 		var friction := GROUND_FRICTION if on_floor else AIR_FRICTION
 		velocity.x = move_toward(velocity.x, 0.0, friction * delta)
+
+
+## Wall Grip: holding towards a wall while in the air and falling grips
+## it. Letting go of the direction, or landing, releases it.
+func _update_wall_grip(input_dir: float) -> void:
+	if not has_ability(Ability.WALL_GRIP) or is_on_floor() or _input_blocked():
+		_on_wall_grip = false
+		return
+	var pushing := int(signf(input_dir))
+	if pushing == 0 or velocity.y < 0.0 and not _on_wall_grip:
+		_on_wall_grip = false
+		return
+	var wall := test_move(global_transform, Vector2(pushing, 0.0))
+	if wall and _wall_is_solid(pushing):
+		if not _on_wall_grip:
+			velocity.y = minf(velocity.y, WALL_SLIDE_SPEED)
+			_air_jump_available = true
+			_dash_available = true
+		_on_wall_grip = true
+		_wall_dir = pushing
+		_jump_rising = false
+	else:
+		_on_wall_grip = false
+
+
+## Only the world's solids can be gripped, not a ledge's thin strip or a
+## wall of light.
+func _wall_is_solid(dir: int) -> bool:
+	var query := PhysicsRayQueryParameters2D.create(
+		global_position + Vector2(0.0, -16.0), global_position + Vector2(dir * 10.0, -16.0), 1
+	)
+	return not get_world_2d().direct_space_state.intersect_ray(query).is_empty()
+
+
+## Glide lasts while the button is held and the hero falls.
+func _update_glide() -> void:
+	if not _gliding:
+		return
+	if is_on_floor() or _on_wall_grip or _input_blocked() or not Input.is_action_pressed("jump"):
+		_gliding = false
+
+
+func is_gripping_wall() -> bool:
+	return _on_wall_grip
+
+
+func is_gliding() -> bool:
+	return _gliding
 
 
 ## Down and jump on a one-way ledge: true when the floor the hero stands
@@ -760,6 +859,9 @@ func respawn() -> void:
 	_coyote_timer = 0.0
 	_dash_cooldown_timer = 0.0
 	_drop_timer = 0.0
+	_on_wall_grip = false
+	_gliding = false
+	_wall_jump_lock_timer = 0.0
 	_dash_available = true
 	_air_jump_available = true
 	health = max_health
@@ -789,6 +891,12 @@ func _update_sprite() -> void:
 				sprite.modulate = TINT_WINGS
 		State.FALL:
 			_pose("jump", 1)
+			if _on_wall_grip:
+				_pose("hurt", 0)
+				sprite.flip_h = _wall_dir < 0
+			elif _gliding:
+				_pose("jump", 0)
+				sprite.modulate = TINT_GLIDE
 		State.ATTACK:
 			# Started once in _start_attack; the Lit Blade tints the swing.
 			if has_power(Power.BLADE):
