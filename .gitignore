@@ -12,3 +12,6 @@ Thumbs.db
 
 # Python
 __pycache__/
+
+# Live map sync (see README → Live map)
+levels/world/live_map.json

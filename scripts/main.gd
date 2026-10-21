@@ -67,6 +67,8 @@ var _fight_pending := false
 
 
 func _ready() -> void:
+	# A live map sync still writing the world files (see LiveMap) finishes first.
+	await LiveMap.wait()
 	level_id = _pick_level()
 	# Story flags come first: the level leaves out relics the save already has.
 	if SaveManager.pending.is_empty():

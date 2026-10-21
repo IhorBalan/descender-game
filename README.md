@@ -252,12 +252,40 @@ fields the dialogue system wants), `enemy` (`character`: `imp`,
 tall). Upgrades are numbered by their order in the list, so a save keeps
 them straight as long as that order does not change.
 
-To bring in a new export, unzip it over `levels/world/` and keep
-`placements.json`. The tool's own `import_world.gd` is not used: the game
+To bring in a new export by hand, unzip it over `levels/world/` and keep
+`placements.json`. The usual way is the live map below, which does the same
+from the editor's Firebase project when the game starts. The tool's own `import_world.gd` is not used: the game
 reads the JSON directly, so the map stays editable in the tool. This
 settles the level pipeline question (#34): big maps come from the tool as
 tile layers, and the hand-written ASCII levels of the first prototype are
 gone.
+
+### Live map
+
+The map editor (`../editor`) keeps its maps in Firebase, and its Maps page
+has a **Live map** picker. The editor publishes that map's Godot export
+(`world.json` and the three tile sheets) into Firestore, where anyone may
+read it, and republishes a few seconds after each save of the map while it
+is open. When this project starts from the editor or `godot-mono --path .`,
+the `LiveMap` autoload (`scripts/live_map.gd`) reads the small head
+document over HTTPS and, if its revision differs from the one recorded in
+`levels/world/live_map.json`, downloads the export and writes it over
+`levels/world/`. Nobody needs an account, Node or the editor checkout: a
+fresh clone runs and gets the live map. The title screen shows the outcome
+along its bottom edge, and a game started while the download is still
+running waits for it. `placements.json` is never touched, so a new map still
+needs its placements to line up with its rooms. Exported builds never sync.
+
+The Firebase project is the `live_map/project_id` setting in
+`project.godot` and `live_map/enabled` turns the sync off for everyone. To
+skip it for one run, pass `--no-live-map` after `--` or set the
+`DESCENDER_LIVE_MAP` environment variable to `0`. Run from the project, the
+game reads the tile sheets from the PNGs themselves rather than from Godot's
+imported copies, since only the editor re-imports a changed PNG.
+
+`levels/world/live_map.json` records what was pulled and is gitignored. The
+pulled `world.json` and sheets are ordinary tracked files: commit them when
+the live map is meant to ship.
 
 ## Layout
 
@@ -278,6 +306,7 @@ gone.
 | `levels/world/placements.json` | Where the world's NPCs, relics, triggers, enemies, upgrades, power-ups and walls of light stand, and the NPCs' unique and repeat lines |
 | `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
+| `scripts/live_map.gd` | Downloads the editor's published live map on start (see Live map) |
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |

@@ -130,6 +130,22 @@ func dir() -> String:
 	return path.get_base_dir() + "/"
 
 
+## One of the tile sheets next to the export, or null when it is missing.
+## Run from the project, the sheet is read from the PNG itself rather than
+## from Godot's imported copy: the live map sync (see LiveMap) rewrites the
+## sheets while the game is starting, and only the editor re-imports them.
+## Exported builds carry imported textures only, so they load those.
+func _sheet(sheet_path: String) -> Texture2D:
+	if OS.has_feature("editor"):
+		if not FileAccess.file_exists(sheet_path):
+			return null
+		# The OS path: given res://, Godot warns at every start that the
+		# file will not be there in an export, which _sheet already handles.
+		var image := Image.load_from_file(ProjectSettings.globalize_path(sheet_path))
+		return ImageTexture.create_from_image(image) if image else null
+	return load(sheet_path) if ResourceLoader.exists(sheet_path) else null
+
+
 ## The cells of a layer, or an empty array for a layer the export lacks.
 func cells(layer_name: String) -> PackedInt32Array:
 	return layers.get(layer_name, PackedInt32Array())
@@ -191,18 +207,16 @@ func build_tile_set() -> TileSet:
 	var tile_set := TileSet.new()
 	tile_set.tile_size = Vector2i(tile, tile)
 	var lit := CanvasTexture.new()
-	lit.diffuse_texture = load(dir() + SHEET_DIFFUSE)
-	var normal_path := dir() + SHEET_NORMAL
-	if ResourceLoader.exists(normal_path):
-		lit.normal_texture = load(normal_path)
+	lit.diffuse_texture = _sheet(dir() + SHEET_DIFFUSE)
+	lit.normal_texture = _sheet(dir() + SHEET_NORMAL)
 	lit.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	var diffuse := TileSetAtlasSource.new()
 	diffuse.texture = lit
 	diffuse.texture_region_size = Vector2i(tile, tile)
 	tile_set.add_source(diffuse, 0)
 	var glow := TileSetAtlasSource.new()
-	var glow_path := dir() + SHEET_GLOW
-	glow.texture = load(glow_path) if ResourceLoader.exists(glow_path) else lit
+	var glow_texture := _sheet(dir() + SHEET_GLOW)
+	glow.texture = glow_texture if glow_texture else lit
 	glow.texture_region_size = Vector2i(tile, tile)
 	tile_set.add_source(glow, 1)
 	for id in _all_tile_ids():
