@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 344
+const EXPECTED_CHECKS := 355
 const LAST_TICK := 1310
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -459,6 +459,72 @@ func _physics_process(_delta: float) -> void:
 			_check(_main.dialogue_box.current_id() == "mereth_intro", "first talk plays the intro")
 			_check(_main.dialogue_box.name_label.text == "Mereth", "box shows the speaker")
 			_check(_player.talking, "hero is talking")
+			# The typing: a blip every few characters, a rest at the end of a
+			# sentence or clause, then on again. Stepped by hand, since a
+			# headless frame's delta is whatever the machine makes it.
+			Audio.last_played = ""
+			var box: DialogueBox = _main.dialogue_box
+			var steps := 0
+			while not box.is_pausing() and steps < 200:
+				box.tick(0.01)
+				steps += 1
+			var typed: String = box.text_label.text.substr(0, box.text_label.visible_characters)
+			_check(box.is_pausing(), "typing rests on punctuation")
+			_check(
+				typed.length() > 0 and typed[typed.length() - 1] in ".,",
+				"the rest comes right after the mark (%s)" % typed
+			)
+			_check(Audio.last_played == "talk", "typing ticks with the talk blip")
+			box.tick(DialogueBox.PAUSE_SENTENCE)
+			box.tick(0.05)
+			_check(
+				box.text_label.visible_characters > typed.length() and not box.is_pausing(),
+				"typing goes on after the rest"
+			)
+			_check(
+				(
+					_main.dialogue_box.name_label.get_theme_color("font_color")
+					== DialogueBox.speaker_color("Mereth")
+				),
+				"the name takes the speaker's colour"
+			)
+			_check(
+				DialogueBox.speaker_color("Voice") != DialogueBox.speaker_color("Ansel"),
+				"the Voice and Ansel have their own colours"
+			)
+			_check(DialogueBox.speaker_pitch("") == 0.0, "a stage note types in silence")
+			_check(
+				DialogueBox.speaker_pitch("Hanne") > DialogueBox.speaker_pitch("Old Pell"),
+				"the blip is pitched by speaker"
+			)
+			# A line's own flags: the line is left out of the entry until they hold.
+			var gated := DialogueData.visible_lines(
+				[
+					{"who": "A", "text": "always"},
+					{"who": "A", "text": "later", "requires": ["smoke:later"]}
+				]
+			)
+			_check(gated.size() == 1 and gated[0]["text"] == "always", "a line waits for its flag")
+			Story.set_flag("smoke:later")
+			_check(
+				(
+					(
+						DialogueData
+						. visible_lines([{"text": "later", "requires": ["smoke:later"]}])
+						. size()
+					)
+					== 1
+				),
+				"the line plays once the flag is set"
+			)
+			_check(
+				(
+					DialogueData
+					. visible_lines([{"text": "gone", "unless": ["smoke:later"]}])
+					. is_empty()
+				),
+				"a line's unless leaves it out"
+			)
 			_mark_x = _player.global_position.x
 			_press("move_right", true)
 		772:

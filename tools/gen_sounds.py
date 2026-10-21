@@ -119,6 +119,10 @@ def main():
     write("sfx/menu_move.wav", sine(820, 0.045) * env(int(RATE * 0.045), 0.003, 0.04), 0.5)
     confirm = np.concatenate([sine(660, 0.06) * env(int(RATE * 0.06)), sine(990, 0.1) * env(int(RATE * 0.1))])
     write("sfx/menu_confirm.wav", confirm, 0.6)
+    # Dialogue: the blip the text box ticks with. Short and dull, so forty
+    # of them a second do not grate; the box pitches it per speaker.
+    talk = sine(520, 0.035) * 0.7 + square(260, 0.035) * 0.3
+    write("sfx/talk.wav", talk * env(int(RATE * 0.035), 0.002, 0.03), 0.4)
     # Ambient loop: a soft Heaven pad. Six seconds long; every frequency is a
     # multiple of 1/6 Hz so the loop joins without a click.
     dur = 6.0

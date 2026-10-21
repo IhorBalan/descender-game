@@ -4,7 +4,10 @@ extends RefCounted
 ## The dialogue of one level, read from a JSON file (see dialogue/world_1.json).
 ##
 ## Each entry is keyed by id and has:
-##   lines     a list of {"who": speaker, "text": one box of text}
+##   lines     a list of {"who": speaker, "text": one box of text}; a line
+##             may carry `requires` / `unless` of its own and is left out
+##             when its flags do not hold, so one entry can say different
+##             things to a hero who has seen different things
 ##   requires  flags that must all be set for the entry to play (optional)
 ##   unless    flags that must all be unset for the entry to play (optional)
 ##   sets      a flag, or a list of flags, set when the entry has been read to
@@ -39,19 +42,37 @@ func _init(p_path: String) -> void:
 		push_error("DialogueData: could not read %s" % path)
 
 
-## The entry with this id, with its id filled in, or an empty dictionary.
+## The entry with this id, with its id filled in and the lines the story
+## flags leave out dropped, or an empty dictionary.
 func entry(id: String) -> Dictionary:
 	var found: Variant = entries.get(id)
 	if not found is Dictionary or not found.get("lines", []) is Array:
 		return {}
 	var result: Dictionary = found.duplicate()
 	result["id"] = id
+	result["lines"] = visible_lines(found["lines"])
 	return result
 
 
-## Whether the entry's flag conditions hold right now.
+## The lines whose own flag conditions hold right now: a line without any
+## always does.
+static func visible_lines(lines: Array) -> Array:
+	var result: Array = []
+	for raw in lines:
+		if raw is Dictionary:
+			var line: Dictionary = raw
+			if not Story.has_all(line.get("requires", [])):
+				continue
+			if Story.has_any(line.get("unless", [])):
+				continue
+		result.append(raw)
+	return result
+
+
+## Whether the entry's flag conditions hold right now, and it has a line
+## left to say.
 func available(data: Dictionary) -> bool:
-	if data.is_empty():
+	if data.is_empty() or line_count(data) == 0:
 		return false
 	if bool(data.get("once", false)) and Story.has_flag(seen_flag(str(data.get("id", "")))):
 		return false

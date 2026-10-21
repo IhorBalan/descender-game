@@ -39,8 +39,10 @@ func _ready() -> void:
 
 
 ## Plays an effect by name (its file name without the extension). An
-## unknown name is reported once and ignored.
-func play(sound_name: String, volume_db := 0.0) -> void:
+## unknown name is reported once and ignored. `pitch` scales the sound
+## (the dialogue blips differ by speaker); the small random spread is
+## applied on top of it.
+func play(sound_name: String, volume_db := 0.0, pitch := 1.0) -> void:
 	var stream := _stream(SFX_DIR + sound_name + ".wav")
 	if stream == null:
 		return
@@ -48,7 +50,7 @@ func play(sound_name: String, volume_db := 0.0) -> void:
 	_next = (_next + 1) % POOL_SIZE
 	player.stream = stream
 	player.volume_db = volume_db
-	player.pitch_scale = 1.0 + randf_range(-PITCH_SPREAD, PITCH_SPREAD)
+	player.pitch_scale = pitch * (1.0 + randf_range(-PITCH_SPREAD, PITCH_SPREAD))
 	player.play()
 	last_played = sound_name
 

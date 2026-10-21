@@ -840,7 +840,12 @@ The remaining seventeen are flavour for the level issues to place.
 - Dialogue for a level lives in `dialogue/<level>.json`: one entry per id
   with `lines` (speaker and text), and optional `requires` / `unless` flag
   lists, `sets` (a flag set when it finishes) and `once` (plays a single
-  time; every finished entry sets `seen:<id>`).
+  time; every finished entry sets `seen:<id>`). A line may carry
+  `requires` / `unless` of its own and is skipped while they do not hold,
+  so one entry can answer to what the hero has seen.
+- The box colours the speaker's name (`DialogueBox.SPEAKER_COLORS`) and
+  pitches its typing blip by speaker (`SPEAKER_PITCH`); a line with no
+  speaker (a stage note in parentheses, a relic) is grey and silent.
 - NPCs, relics and triggers are placed in `levels/world/placements.json`:
   each object has a tile cell, a
   type (`npc`, `item`, `trigger`), a sprite, a name, the unique dialogue ids
