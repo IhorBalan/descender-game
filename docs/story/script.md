@@ -531,6 +531,12 @@ cannot be missed on the floor.
 > **ANSEL:** The churchyard. A hole, and warm air coming up out of it. Like a kitchen.
 > *(From far below, faint: 'Up! He said up!')*
 > **ANSEL:** Down, then.
+
+### `descent` (trigger, once, at the gate marker at the bottom of the hub; sets `descended`; saves the game)
+
+> *(The bottom of the churchyard. The hole goes down past where the lantern light stops, and the hammering is far above now.)*
+> **VOICE:** This is the way down. Nothing that goes this way comes back up the same.
+> **ANSEL:** Then I'll come back different. Keep count.
 ---
 
 ## 7. Script: later areas (drafted, not in the game yet)

@@ -150,8 +150,8 @@ to Purgatory.
 Below the hub the world is peopled: imps, angel guards, watchers and the
 **brute** (slow, eight hits, a two-heart swing) stand through Purgatory
 and the nine circles at a rising density (Fraud's army rests instead),
-all listed in `placements.json`. Fallen imps in Limbo and Lust shout a line from the
-script as they wind up. The story goes on down there too: the names in
+all listed in `placements.json`. Fallen imps in Limbo and Lust shout a
+line from the script as they wind up. The story goes on down there too: the names in
 the Purgatory shaft, the Ferryman (who hands over the clock's hand), the
 imp's tally bone in Limbo, Gorrow waiting by the seal in Lust, the wall in
 Gluttony that says DON'T FOLLOW, and Vael the Bargainer in Greed. In
@@ -192,9 +192,11 @@ gets a seal (`scripts/door_lock.gd`). All six abilities have feathers now.
 Every secret door of the export is a passage carved through the rock
 between its two rooms and hidden behind that rock (`scripts/secret_wall.gd`):
 a Smite landing on or beside it breaks it open for the rest of the save
-(flag `secret:<door id>`), and the terrain tiles go with it. The shop and
-gate markers are data in the JSON until there is something for them to
-do.
+(flag `secret:<door id>`), and the terrain tiles go with it. The gate
+marker at the bottom of the hub is the `descent` trigger: the point of no
+return, with a line from the Voice and an autosave (a dialogue entry's
+`save` flag). The two shop markers stay data: the shops are Pell and Vael
+themselves.
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an

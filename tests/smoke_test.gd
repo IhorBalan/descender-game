@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 321
+const EXPECTED_CHECKS := 323
 const LAST_TICK := 1310
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -425,7 +425,7 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 38, "thirty-eight story objects built")
+			_check(_main.level.interactables.size() == 39, "thirty-nine story objects built")
 			var messenger: Npc = null
 			var vaels := 0
 			for node in _main.level.interactables:
@@ -791,6 +791,13 @@ func _physics_process(_delta: float) -> void:
 				_hub.dialogue_box.advance()
 			_check(Story.has_flag("sold_winter"), "the trade takes the memory")
 			_check(Story.has_flag("item:clock_key"), "and gives the clock key")
+			# The gate at the bottom of the hub: the point of no return, saved.
+			var descent: Dictionary = _hub.dialogue.entry("descent")
+			_check(bool(descent.get("save", false)), "the descent saves the game")
+			_hub.dialogue_box.play(descent)
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			_check(Story.has_flag("descended"), "going down sets its flag")
 			# The playtesting arguments: start at a checkpoint with everything.
 			var third: Checkpoint = _hub.level.checkpoints[2]
 			_hub.apply_dev_args(["--checkpoint=3", "--abilities=all"])
