@@ -3,6 +3,13 @@ extends CharacterBody2D
 
 ## A Watcher: an angel eye that hovers around its post and chases the hero
 ## when he comes close. Hurts on contact. Origin at the sprite's centre.
+##
+## With the `dive` behaviour (set by the level from the placement) it keeps
+## above the hero instead, and once it is over him it stops, the eye turns
+## red (the attack strip), and it drops through him and climbs back up for
+## the next pass.
+
+enum State { HOVER, AIM, DIVE, CLIMB }
 
 const CHARACTER := "watcher"
 const HOVER_SPEED := 25.0
@@ -14,12 +21,24 @@ const KNOCKBACK := 120.0
 const DEATH_TIME := 0.45
 const DEATH_SPARKS := Color(1.0, 0.45, 0.35)
 const DROP_CHANCE := 0.5
+## The dive: where it waits over the hero, how long it aims, how fast and
+## how long it falls, how long it climbs back and the pause between passes.
+const DIVE_PERCH := Vector2(0.0, -64.0)
+const AIM_TIME := 0.5
+const DIVE_SPEED := 190.0
+const DIVE_TIME := 0.45
+const CLIMB_TIME := 0.8
+const DIVE_COOLDOWN := 1.5
+const TINT_AIM := Color(1.0, 0.7, 0.7)
 const HEALTH_BAR_SCENE := preload("res://scripts/enemy_health_bar.gd")
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 
 @export var max_health := 2
 @export var contact_damage := 1
 
+## "dive" or "" (see the top of the file). Set by the level.
+var behaviour := ""
+var state: State = State.HOVER
 var health := 0
 var home := Vector2.ZERO
 var health_bar: EnemyHealthBar
@@ -28,6 +47,8 @@ var health_bar: EnemyHealthBar
 var drop_parent: Node
 var _time := 0.0
 var _hurt_timer := 0.0
+var _state_timer := 0.0
+var _dive_cooldown := 0.0
 var _dead := false
 var _player: Player
 
@@ -51,6 +72,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	_time += delta
+	_state_timer -= delta
+	_dive_cooldown = maxf(_dive_cooldown - delta, 0.0)
 	if _hurt_timer > 0.0:
 		_hurt_timer -= delta
 		velocity = velocity.move_toward(Vector2.ZERO, ACCEL * delta)
@@ -58,19 +81,77 @@ func _physics_process(delta: float) -> void:
 			sprite.modulate = Color.WHITE
 			sprite.play("idle")
 	else:
-		var target := home + Vector2(sin(_time * 1.6) * 24.0, sin(_time * 2.7) * 6.0)
-		var speed := HOVER_SPEED
-		if (
-			is_instance_valid(_player)
-			and _player.state != Player.State.DEAD
-			and global_position.distance_to(_player.global_position) < AGGRO_RANGE
-		):
-			target = _player.global_position + Vector2(0.0, -16.0)
-			speed = CHASE_SPEED
-		var wanted := (target - global_position).limit_length(speed)
-		velocity = velocity.move_toward(wanted, ACCEL * delta)
+		match state:
+			State.HOVER:
+				_process_hover(delta)
+			State.AIM:
+				velocity = velocity.move_toward(Vector2.ZERO, ACCEL * 2.0 * delta)
+				if _state_timer <= 0.0:
+					_start_dive()
+			State.DIVE:
+				if _state_timer <= 0.0 or get_slide_collision_count() > 0:
+					_start_climb()
+			State.CLIMB:
+				var wanted := (home - global_position).limit_length(CHASE_SPEED)
+				velocity = velocity.move_toward(wanted, ACCEL * delta)
+				if _state_timer <= 0.0:
+					state = State.HOVER
 	move_and_slide()
 	_hurt_player()
+
+
+## Drifts about its post; near the hero, it chases him (or, diving, keeps
+## above him and drops when it gets there).
+func _process_hover(delta: float) -> void:
+	var target := home + Vector2(sin(_time * 1.6) * 24.0, sin(_time * 2.7) * 6.0)
+	var speed := HOVER_SPEED
+	if _hero_near():
+		speed = CHASE_SPEED
+		if behaviour == "dive":
+			target = _player.global_position + DIVE_PERCH
+			if _dive_cooldown <= 0.0 and global_position.distance_to(target) < 12.0:
+				_start_aim()
+				return
+		else:
+			target = _player.global_position + Vector2(0.0, -16.0)
+	var wanted := (target - global_position).limit_length(speed)
+	velocity = velocity.move_toward(wanted, ACCEL * delta)
+
+
+func _hero_near() -> bool:
+	return (
+		is_instance_valid(_player)
+		and _player.state != Player.State.DEAD
+		and global_position.distance_to(_player.global_position) < AGGRO_RANGE
+	)
+
+
+## The eye turns red and fixes on the hero: the warning.
+func _start_aim() -> void:
+	state = State.AIM
+	_state_timer = AIM_TIME
+	sprite.play("attack")
+	sprite.modulate = TINT_AIM
+
+
+## Straight at where the hero stands now.
+func _start_dive() -> void:
+	state = State.DIVE
+	_state_timer = DIVE_TIME
+	sprite.modulate = Color.WHITE
+	var at := _player.global_position + Vector2(0.0, -8.0) if is_instance_valid(_player) else home
+	var dir := (at - global_position).normalized()
+	if dir == Vector2.ZERO:
+		dir = Vector2.DOWN
+	velocity = dir * DIVE_SPEED
+	Audio.play("dash", -8.0)
+
+
+func _start_climb() -> void:
+	state = State.CLIMB
+	_state_timer = CLIMB_TIME
+	_dive_cooldown = DIVE_COOLDOWN
+	sprite.play("idle")
 
 
 func _hurt_player() -> void:
@@ -89,6 +170,9 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	Audio.play("hit")
 	Feedback.flash(sprite, 0.1)
 	Feedback.spark(global_position)
+	# A hit knocks it out of its aim.
+	if state == State.AIM:
+		_start_climb()
 	_hurt_timer = HURT_TIME
 	sprite.modulate = Color(1.0, 0.5, 0.5)
 	sprite.play("hurt")

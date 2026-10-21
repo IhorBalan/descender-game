@@ -21,7 +21,9 @@ extends Node2D
 ##   enemy                character: imp, angel_guard, brute (walkers) or
 ##                        watcher, or a Boss.PROFILES id for a boss in its room;
 ##                        barks: a Walker.BARKS set the enemy shouts; passive:
-##                        true for a walker that never attacks; requires: a
+##                        true for a walker that never attacks; behaviour: a
+##                        Walker.BEHAVIOURS habit (chase, ambush, pounce,
+##                        hurl, slam) or "dive" for a watcher; requires: a
 ##                        story flag the enemy waits for, read at every spawn
 ##   upgrade              upgrade: heart (Kept Light), vial (Vial of the Basin) or iron
 ##                        (Church Iron, for Old Pell's forge)
@@ -81,6 +83,8 @@ class EnemySpawn:
 	var barks := ""
 	## For a walker: never attacks (the resting army of the last camp).
 	var passive := false
+	## A walker's habit (see Walker.BEHAVIOURS) or a watcher's "dive".
+	var behaviour := ""
 	## A story flag the enemy waits for, checked whenever the enemies spawn.
 	var requires := ""
 
@@ -669,6 +673,7 @@ func _place_object(spec: Dictionary) -> void:
 			var spawn: EnemySpawn
 			if character == "watcher":
 				spawn = EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0))
+				spawn.behaviour = str(spec.get("behaviour", ""))
 			elif Boss.has_profile(character):
 				if Story.has_flag(Boss.flag_for(character)):
 					return
@@ -678,6 +683,7 @@ func _place_object(spec: Dictionary) -> void:
 				spawn = EnemySpawn.new(WALKER_SCENE, at, character)
 				spawn.barks = str(spec.get("barks", ""))
 				spawn.passive = bool(spec.get("passive", false))
+				spawn.behaviour = str(spec.get("behaviour", ""))
 			spawn.requires = str(spec.get("requires", ""))
 			_enemy_spawns.append(spawn)
 		"upgrade":
@@ -809,7 +815,10 @@ func spawn_enemies() -> void:
 			walker.character = spawn.character
 			walker.barks = spawn.barks
 			walker.passive = spawn.passive
+			walker.behaviour = spawn.behaviour
 			walker.death_y = size_px.y + 64.0
+		elif enemy is Flyer:
+			(enemy as Flyer).behaviour = spawn.behaviour
 		elif enemy is Boss:
 			var boss := enemy as Boss
 			boss.boss_id = spawn.character

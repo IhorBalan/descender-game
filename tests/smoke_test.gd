@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 369
-const LAST_TICK := 1310
+const EXPECTED_CHECKS := 415
+const LAST_TICK := 1950
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -55,6 +55,13 @@ var _boss: Boss
 var _boss_start := Vector2.ZERO
 var _secret: SecretWall
 var _secret_cell := Vector2i.ZERO
+var _flyer: Flyer
+## While set, every tick records the enemy shots in the air (by instance
+## id: kind and the sign of their direction) and the strongest shake, so
+## a check can look back at a throw that happened between two ticks.
+var _watch_shots := false
+var _shots_seen: Dictionary = {}
+var _max_trauma := 0.0
 ## The hero's healing charges before Dace's gift.
 var _charges := 0
 
@@ -85,6 +92,10 @@ func _physics_process(_delta: float) -> void:
 		if not _started:
 			return
 	_ticks += 1
+	if _watch_shots:
+		for shot in _world.get_tree().get_nodes_in_group("enemy_shot"):
+			_shots_seen[shot.get_instance_id()] = {"kind": shot.kind, "dx": shot.direction.x}
+		_max_trauma = maxf(_max_trauma, _world.camera.trauma)
 	match _ticks:
 		2:
 			_player = _main.player
@@ -318,7 +329,7 @@ func _physics_process(_delta: float) -> void:
 				if not _imp.bark_showing():
 					_imp._maybe_bark()
 			_check(_imp.bark_showing(), "a fallen imp barks on the wind-up")
-			_check(_imp._bark_label.text in Walker.BARKS["fallen"], "the bark is one of its lines")
+			_check(_imp.mark_text() in Walker.BARKS["fallen"], "the bark is one of its lines")
 			var brute: Walker = LevelBuilder.WALKER_SCENE.instantiate()
 			brute.character = "brute"
 			brute.position = _start_position + Vector2(-200.0, 0.0)
@@ -1417,6 +1428,153 @@ func _physics_process(_delta: float) -> void:
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")
+		1302:
+			# Enemy behaviours: a fresh world, its enemies cleared, and one
+			# of each habit put down near the hero in turn.
+			SaveManager.pending = {"level": "world_1", "flags": []}
+			_world = _main_scene.instantiate()
+			root.add_child(_world)
+		1304:
+			var chasers := 0
+			var divers := 0
+			for enemy in _world.level.get_node("Enemies").get_children():
+				if enemy is Walker and not (enemy as Walker).behaviour.is_empty():
+					chasers += 1
+				elif enemy is Flyer and (enemy as Flyer).behaviour == "dive":
+					divers += 1
+			_check(chasers >= 50, "walkers below the hub have behaviours (%d)" % chasers)
+			_check(divers >= 10, "watchers below the hub dive (%d)" % divers)
+			for enemy in _world.get_tree().get_nodes_in_group("enemy"):
+				enemy.queue_free()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("imp", "chase", 90.0)
+			_imp.direction = 1
+		1308:
+			_check(_imp.state == Walker.State.CHASE, "a chaser comes at the hero")
+			_check(_imp.direction == -1 and _imp.velocity.x < 0.0, "and walks towards him")
+			_check(
+				absf(_imp.velocity.x) > _imp.speed * 1.5,
+				"faster than it patrols (%.0f)" % _imp.velocity.x
+			)
+			_world.player.global_position.x = _imp.global_position.x - 400.0
+		1312:
+			_check(_imp.state == Walker.State.PATROL, "a chaser gives up when the hero leaves")
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("imp", "ambush", 70.0)
+		1316:
+			_check(_imp.state == Walker.State.LURK, "an ambusher waits as if idle")
+			_check(_imp.sprite.animation == "idle", "with its idle strip")
+			_check(_imp.velocity.x == 0.0, "and does not patrol")
+			_world.player.global_position.x = _imp.global_position.x - 30.0
+		1320:
+			_check(_imp.state == Walker.State.WINDUP, "the hero stepping close springs it")
+			_check(_imp.mark_text() == "!", "with a mark over its head")
+			_check(
+				_imp._state_timer < Walker.PROFILES["imp"]["windup"],
+				"and a quicker wind-up than a swing"
+			)
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("imp", "pounce", 70.0)
+		1324:
+			_check(_imp.state == Walker.State.WINDUP, "a pouncer crouches at a hero tiles away")
+			_check(_imp._attack == Walker.Attack.POUNCE, "for a pounce")
+		1330:
+			_check(_imp.sprite.scale.y < 1.0, "the crouch squashes the body")
+		1352:
+			_check(_imp.state == Walker.State.LEAP, "then it leaps")
+			_check(_imp.velocity.y < 0.0 and _imp.velocity.x < 0.0, "at the hero")
+			_check(not _imp.attack_shape.disabled, "claws out")
+			_check(_imp.sprite.scale == Vector2.ONE, "unsquashed")
+		1420:
+			_check(_imp.state != Walker.State.LEAP, "the leap ends on landing")
+			_check(_world.player.health < Player.MAX_HEALTH, "the pounce hurt the hero")
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("imp", "hurl", 100.0)
+			_shots_seen.clear()
+			_watch_shots = true
+		1424:
+			_check(_imp.state == Walker.State.WINDUP, "a hurler winds up at a hero in sight")
+			_check(_imp._attack == Walker.Attack.HURL, "for a throw")
+			_check(_imp.velocity.x == 0.0, "standing still")
+		1520:
+			var shots := _shots_seen.values()
+			_check(shots.size() == 1, "the throw left one shot in the air (%d)" % shots.size())
+			_check(
+				shots.size() == 1 and shots[0]["kind"] == EnemyShot.Kind.BOLT, "the shot was a bolt"
+			)
+			_check(shots.size() == 1 and shots[0]["dx"] < 0.0, "flying at the hero")
+			_check(_world.player.health < Player.MAX_HEALTH, "the bolt hurt the hero")
+			_check(_world.get_tree().get_nodes_in_group("enemy_shot").is_empty(), "and is gone")
+			_check(_imp.state != Walker.State.WINDUP, "the hurler is done winding up")
+			_world.player.global_position.x = _imp.global_position.x - 30.0
+			_world.player.velocity = Vector2.ZERO
+		1540:
+			_check(
+				_imp.direction == 1 or _imp.state != Walker.State.PATROL,
+				"a hurler backs away from a hero at its feet"
+			)
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("brute", "slam", 80.0)
+			_shots_seen.clear()
+			_max_trauma = 0.0
+		1544:
+			_check(_imp.state == Walker.State.WINDUP, "a slammer winds up at a hero at mid range")
+			_check(_imp._attack == Walker.Attack.SLAM, "for a slam")
+			_check(_imp.sprite.frame == 1, "arms raised")
+			_mark_x = _world.player.health
+		1596:
+			# The wave is released at about 1583 and reaches the hero at
+			# about 1607: a full jump, pressed now, clears it.
+			_press("jump", true)
+		1612:
+			_press("jump", false)
+		1660:
+			var shots := _shots_seen.values()
+			_check(shots.size() == 1, "the slam sent a shockwave (%d)" % shots.size())
+			_check(shots.size() == 1 and shots[0]["kind"] == EnemyShot.Kind.WAVE, "along the floor")
+			_check(shots.size() == 1 and shots[0]["dx"] < 0.0, "towards the hero")
+			_check(_max_trauma > 0.0, "the slam shook the screen")
+			_check(
+				_world.get_tree().get_nodes_in_group("enemy_shot").is_empty(), "the wave is gone"
+			)
+			_watch_shots = false
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("brute", "slam", 80.0)
+		1664:
+			_check(_imp.state == Walker.State.WINDUP, "a second slammer winds up")
+			# Wait for the wave on the ground this time.
+			_mark_x = _world.player.health
+		1820:
+			_check(_world.player.health < int(_mark_x), "a hero on the ground is hit by the wave")
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			var flyer: Flyer = LevelBuilder.FLYER_SCENE.instantiate()
+			flyer.behaviour = "dive"
+			flyer.position = _world.player.global_position + Flyer.DIVE_PERCH
+			_world.add_child(flyer)
+			_flyer = flyer
+		1824:
+			_check(_flyer.state == Flyer.State.AIM, "a diver over the hero takes aim")
+			_check(_flyer.sprite.animation == "attack", "with the eye turned red")
+		1870:
+			_check(
+				_flyer.state == Flyer.State.DIVE or _flyer.state == Flyer.State.CLIMB, "then dives"
+			)
+		1940:
+			_check(
+				_flyer.state == Flyer.State.CLIMB or _flyer.state == Flyer.State.HOVER,
+				"and climbs back"
+			)
+			_check(_world.player.health < Player.MAX_HEALTH, "the dive hurt the hero")
+			_flyer.queue_free()
+			root.remove_child(_world)
+			_world.queue_free()
+			Audio.play_ambient("")
 		LAST_TICK:
 			_report()
 	if _ticks > LAST_TICK:
@@ -1448,6 +1606,26 @@ func _gardeners() -> int:
 		if boss.boss_id == "gardener":
 			count += 1
 	return count
+
+
+## The hero rested on the start room's floor, facing right, for the
+## enemy behaviour checks.
+func _place_hero_for_enemy() -> void:
+	_world.player.global_position = AIR_START
+	_world.player.velocity = Vector2.ZERO
+	_world.player.facing = 1
+	_world.player.health = Player.MAX_HEALTH
+	_world.player._invulnerable_timer = 0.0
+
+
+## A walker with a behaviour, this far to the hero's right, facing him.
+func _spawn_walker(character: String, behaviour: String, distance: float) -> Walker:
+	var walker: Walker = LevelBuilder.WALKER_SCENE.instantiate()
+	walker.character = character
+	walker.behaviour = behaviour
+	walker.position = _world.player.global_position + Vector2(distance, 0.0)
+	_world.add_child(walker)
+	return walker
 
 
 func _press(action: String, pressed: bool) -> void:
