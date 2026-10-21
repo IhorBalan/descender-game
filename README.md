@@ -129,6 +129,15 @@ hole in the sky, with its own ambient tint and sound, where four survivors
 the war looks like from the ground. The passage at its right end leads on
 to Purgatory.
 
+Below the hub the world is peopled: imps, angel guards, watchers and the
+**brute** (slow, eight hits, a two-heart swing) stand through Purgatory
+and circles one to five at a rising density, all listed in
+`placements.json`. Fallen imps in Limbo and Lust shout a line from the
+script as they wind up. The story goes on down there too: the names in
+the Purgatory shaft, the Ferryman (who hands over the clock's hand), the
+imp's tally bone in Limbo, Gorrow waiting by the seal in Lust, the wall in
+Gluttony that says DON'T FOLLOW, and Vael the Bargainer in Greed.
+
 ## The world
 
 The map is one world, 480 x 459 tiles, exported by the map tool as
@@ -192,7 +201,7 @@ gone.
 | `scripts/feedback.gd` | The `Feedback` autoload: hit-stop, screen shake, hit flash and sparks |
 | `assets/audio/`, `tools/gen_sounds.py` | Placeholder sounds and the script that synthesises them |
 | `scripts/player.gd` | Hero state machine and tuning constants |
-| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard) with a telegraphed melee swing |
+| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard, brute) with a telegraphed melee swing and, for some, a bark |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
 | `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: profiles by marker label, two phases, the fight main.gd runs around it |
 | `scripts/door_lock.gd` | A seal of light on a locked door, or on a boss room's doors during the fight |
