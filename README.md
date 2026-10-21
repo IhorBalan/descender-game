@@ -154,7 +154,11 @@ and circles one to five at a rising density, all listed in
 script as they wind up. The story goes on down there too: the names in
 the Purgatory shaft, the Ferryman (who hands over the clock's hand), the
 imp's tally bone in Limbo, Gorrow waiting by the seal in Lust, the wall in
-Gluttony that says DON'T FOLLOW, and Vael the Bargainer in Greed.
+Gluttony that says DON'T FOLLOW, and Vael the Bargainer in Greed. In
+Heresy the hero sees the Basin's pipes, meets Tobiah's messenger (a
+sent-down angel Tobiah speaks through) and can find the Choir's tablet and
+the clock weight; in Violence Vael waits again, with the pipe section and
+the clock chain below him. No enemies stand in Heresy or below yet.
 
 ## The world
 
