@@ -393,6 +393,18 @@ cannot be missed on the floor.
 > **OLD PELL:** Forty names on that paper. My wife's is the ninth. 'Called to the Garden early.'
 > **OLD PELL:** When you get back up there, you tell me what garden.
 
+### `pell_forge_first` (once; needs `met_pell`; sets `sword:1`)
+
+> **OLD PELL:** Church iron. My own stock, and the last of it. Hold the blade on the horn. No, like that. Steadier.
+> **OLD PELL:** There. It'll go through a brute's hide now, which is more than mine did.
+> **ANSEL:** What do I owe you?
+> **OLD PELL:** More of it, if the ground has any. They hang their doors with it down there. Bring me a bar and I'll hammer it in.
+
+### `pell_iron` (once; needs `sword:1` and the Heresy iron; sets `sword:2`)
+
+> **OLD PELL:** That's church iron. Where did you... no. Don't tell me. Give it here.
+> **OLD PELL:** Hold. Hit. Hold. Hit. ...That's as hard as I can make it, lad. The rest is you.
+
 ### `pell_forge`
 
 > **OLD PELL:** Hold it steady. Steadier. Right, now don't move.
@@ -601,7 +613,8 @@ repeat lines).
 ### Circles 3 and 4
 
 In the game: the `dontfollow` trigger in Gluttony and Vael in Greed
-(`vael_intro`, two repeat lines).
+(`vael_intro`, two repeat lines, and after the reveal `vael_trade`: the
+memory of the winter for the clock key, with a third repeat line after).
 
 **`dontfollow` (trigger, at the carved wall)**
 > *(KEEP COUNT. DON'T FOLLOW. And a tally.)*
@@ -613,6 +626,16 @@ In the game: the `dontfollow` trigger in Gluttony and Vael in Greed
 > **VAEL:** That token, then. Someone below pays very well for anything with that mark. Doesn't say why. Pays, though.
 > **ANSEL:** Who?
 > **VAEL:** Buyers don't give names. That one especially. Though he does say one. To himself. Not his.
+
+**Vael, the trade (once; needs `met_vael`, `reveal`; sets `sold_winter`, `item:clock_key`)**
+> **VAEL:** You've been below the Seal. You've got a name now; I can smell it on you. Still want nothing?
+> **ANSEL:** A key. To a clock. You said you had one.
+> **VAEL:** I did. For the winter you died in. Not the token; I've had a better offer for the token.
+> **ANSEL:** ...Take it.
+> **VAEL:** Done. You'll feel lighter. Everyone does. Here's your key; it was never mine to keep.
+
+**Vael, repeat line after the trade**
+> **VAEL:** Lighter? Told you. There's a spring in there somewhere too, if you ever want to be rid of it.
 
 ### Circle 5
 
@@ -758,10 +781,11 @@ game; the ones for Heaven 1 are in the game.
 | Circle 5 | Seal fragment | Choir-made; Heaven built Hell's walls |
 | Circle 5 | Gorrow's orders | "Do not kill the half-made one." Signed with a tally |
 | Circle 6 | The Wheel, in writing | The Wheel is the Basin, officially |
+| Circle 6 | Church iron | A bar off a demon's hinge, for Pell's forge (in the game) |
 | Circle 6 | Clock weight | Clock piece 3 of 5 |
 | Circle 7 | Pipe section | The Basin drains to Hell |
 | Circle 7 | Clock chain | Clock piece 4 of 5 |
-| Circle 8 | Clock key | Clock piece 5 of 5, from Vael, for the token |
+| Circle 4 | Clock key | Clock piece 5 of 5, from Vael, for the memory of the winter (after the reveal) |
 | Circle 8 | Army roster | Nine circles' worth of names, counted |
 | Circle 9 | Tobiah's own token | 410 strokes |
 

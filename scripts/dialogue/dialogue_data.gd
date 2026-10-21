@@ -7,7 +7,8 @@ extends RefCounted
 ##   lines     a list of {"who": speaker, "text": one box of text}
 ##   requires  flags that must all be set for the entry to play (optional)
 ##   unless    flags that must all be unset for the entry to play (optional)
-##   sets      a flag set when the entry has been read to the end (optional)
+##   sets      a flag, or a list of flags, set when the entry has been read to
+##             the end (optional)
 ##   once      true for an entry that plays a single time per save (optional);
 ##             every entry read to the end sets the flag `seen:<id>`, and a
 ##             `once` entry is skipped when its flag is set
@@ -50,6 +51,16 @@ func available(data: Dictionary) -> bool:
 	if bool(data.get("once", false)) and Story.has_flag(seen_flag(str(data.get("id", "")))):
 		return false
 	return Story.has_all(data.get("requires", [])) and not Story.has_any(data.get("unless", []))
+
+
+## The flags an entry sets when it has been read to the end.
+static func sets(data: Dictionary) -> Array[String]:
+	var result: Array[String] = []
+	var value: Variant = data.get("sets", "")
+	for flag in value if value is Array else [value]:
+		if not str(flag).is_empty():
+			result.append(str(flag))
+	return result
 
 
 ## The flag set once an entry has been read to the end.

@@ -188,7 +188,12 @@ the level. Previews at six times their size are in the project folder under
   pickup reads the same in every level. `main.gd` plays an upgrade's lines
   through the dialogue box (the hero stands still, as for a relic) and a
   power-up's line as a HUD message.
-- Church iron, Old Pell's forge and Vael's shop are not built yet. Pell's
-  forge needs the Earth hub (the story thread's next PR); the iron pickup
-  can reuse `Upgrade` with a third kind that sets a flag and changes
-  nothing until Pell reads it.
+- Church iron is the third `Upgrade` kind: the pickup sets its flag and
+  changes nothing until Pell reads it. Pell's talks `pell_forge_first`
+  (his own stock, needs `met_pell`) and `pell_iron` (needs the Heresy bar's
+  flag `upgrade:iron:world_1:0`) set `sword:1` and `sword:2`;
+  `Upgrade.sword_bonus()` counts those flags into `Player.attack_damage()`,
+  so a loaded save keeps the harder sword with no extra state.
+- Vael's trade (`vael_trade`, needs `met_vael` and `reveal`) sets two flags
+  at once, `sold_winter` and `item:clock_key`: a dialogue entry's `sets`
+  may be a list.

@@ -1,8 +1,9 @@
 class_name Upgrade
 extends Area2D
 
-## A permanent upgrade lying in the world: Kept Light (one more heart) or a
-## Vial of the Basin (one more healing charge). Touching it raises the
+## A permanent upgrade lying in the world: Kept Light (one more heart), a
+## Vial of the Basin (one more healing charge) or Church Iron (carried to
+## Old Pell, who hammers it into the sword). Touching it raises the
 ## hero's maximum for the rest of the save; the pickup is a story flag
 ## (`upgrade:<kind>:<level>:<n>`), so the level builder leaves it out once
 ## it is taken. The node's origin is at the base, like the hero's, so a
@@ -13,6 +14,7 @@ signal collected(kind: Player.UpgradeKind)
 const TEXTURES := {
 	Player.UpgradeKind.HEART: preload("res://assets/sprites/upgrade_heart.png"),
 	Player.UpgradeKind.VIAL: preload("res://assets/sprites/upgrade_vial.png"),
+	Player.UpgradeKind.IRON: preload("res://assets/sprites/upgrade_iron.png"),
 }
 ## What the dialogue box shows when the upgrade is taken: the relic-style
 ## description, then what changed. The second line is filled in with the
@@ -34,11 +36,22 @@ const DESCRIPTIONS := {
 		),
 		"Healing charges: %d."
 	],
+	Player.UpgradeKind.IRON:
+	[
+		(
+			"A bar of church iron, off a hinge the demons hung. Old Pell on Earth can hammer it"
+			+ " into the sword, if someone holds."
+		),
+		"Church iron carried: %d."
+	],
 }
 const FLAG_NAMES := {
 	Player.UpgradeKind.HEART: "heart",
 	Player.UpgradeKind.VIAL: "vial",
+	Player.UpgradeKind.IRON: "iron",
 }
+## Old Pell's forge: every `sword:<n>` flag in the save is one more damage.
+const SWORD_FLAG_PREFIX := "sword:"
 const BOB_HEIGHT := 2.0
 const BOB_SPEED := 2.5
 const GLOW := Color(1.0, 0.9, 0.6)
@@ -61,11 +74,35 @@ static func flag_for(p_kind: Player.UpgradeKind, level_id: String, index: int) -
 	return "%s%s:%d" % [flag_prefix(p_kind), level_id, index]
 
 
-## The dialogue entry for the pickup, with the hero's new maximum filled in.
+## Extra sword damage from Pell's forge, counted from the save's flags.
+static func sword_bonus() -> int:
+	return _count_flags(SWORD_FLAG_PREFIX)
+
+
+## Church iron picked up and not yet hammered in. Pell's first forging uses
+## his own stock, so only the later ones spend a pickup.
+static func iron_carried() -> int:
+	var found := _count_flags(flag_prefix(Player.UpgradeKind.IRON))
+	return maxi(found - maxi(sword_bonus() - 1, 0), 0)
+
+
+static func _count_flags(prefix: String) -> int:
+	var count := 0
+	for flag in Story.to_list():
+		if flag.begins_with(prefix):
+			count += 1
+	return count
+
+
+## The dialogue entry for the pickup, with the hero's new maximum filled in
+## (for iron, how many bars he carries).
 static func description(p_kind: Player.UpgradeKind, player: Player) -> Dictionary:
-	var maximum := (
-		player.max_health if p_kind == Player.UpgradeKind.HEART else player.max_heal_charges
-	)
+	var maximum := iron_carried()
+	match p_kind:
+		Player.UpgradeKind.HEART:
+			maximum = player.max_health
+		Player.UpgradeKind.VIAL:
+			maximum = player.max_heal_charges
 	var lines: Array = []
 	for text: String in DESCRIPTIONS[p_kind]:
 		lines.append({"who": "", "text": text % maximum if "%d" in text else text})

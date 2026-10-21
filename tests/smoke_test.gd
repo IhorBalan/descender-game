@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 275
+const EXPECTED_CHECKS := 291
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -138,7 +138,7 @@ func _physics_process(_delta: float) -> void:
 			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
 			_check(level.goal == null, "the world has no goal gate yet")
 			_check(level.pickup_count() == 6, "feathers for all six abilities built")
-			_check(level.upgrade_count() == 2, "two permanent upgrades built")
+			_check(level.upgrade_count() == 3, "three permanent upgrades built")
 			_check(level.power_up_count() == 3, "three power-ups built")
 			_start_x = _player.global_position.x
 			_start_position = _player.global_position
@@ -336,7 +336,7 @@ func _physics_process(_delta: float) -> void:
 			_check(_player.max_health == Player.MAX_HEALTH + 1, "Kept Light adds a heart")
 			_check(_player.health == _player.max_health, "Kept Light fills the hearts")
 			_check(Story.has_flag("upgrade:heart:world_1:0"), "taken upgrade is flagged")
-			_check(_main.level.upgrade_count() == 1, "taken upgrade is gone")
+			_check(_main.level.upgrade_count() == 2, "taken upgrade is gone")
 			_check(
 				_main.dialogue_box.current_id() == "upgrade_heart", "upgrade shows its description"
 			)
@@ -571,7 +571,7 @@ func _physics_process(_delta: float) -> void:
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
 			_check(_loaded.level.item_count() == 9, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
-			_check(_loaded.level.upgrade_count() == 1, "taken upgrade stays taken")
+			_check(_loaded.level.upgrade_count() == 2, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
 			_check(loaded_player.powers.is_empty(), "power-ups are not saved")
 			# The registry: one level, which old saves and unknown ids fall
@@ -685,7 +685,21 @@ func _physics_process(_delta: float) -> void:
 			)
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
+		895:
+			_press("interact", true)
 		896:
+			_press("interact", false)
+			_check(
+				_hub.dialogue_box.current_id() == "pell_forge_first",
+				"Pell forges his own iron on the third talk"
+			)
+			_check(_hub.player.attack_damage() == 1, "the sword starts at one damage")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			_check(Story.has_flag("sword:1"), "the forging sets its flag")
+			_check(_hub.player.attack_damage() == 2, "the forging hardens the sword")
+			_check(_hub.hud.message.text == "Sword damage: 2", "the HUD says so")
+		897:
 			_press("interact", true)
 		898:
 			_press("interact", false)
@@ -694,31 +708,31 @@ func _physics_process(_delta: float) -> void:
 			)
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
-		900:
+		899:
 			_press("interact", true)
-		902:
+		900:
 			_press("interact", false)
 			_check(_hub.dialogue_box.current_id() == "pell_light", "second repeat line")
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
-		904:
+		901:
 			_press("interact", true)
-		906:
+		902:
 			_press("interact", false)
 			_check(_hub.dialogue_box.current_id() == "pell_boy", "third repeat line")
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
-		908:
+		903:
 			_press("interact", true)
-		910:
+		904:
 			_press("interact", false)
 			_check(_hub.dialogue_box.current_id() == "pell_forge", "repeat lines wrap around")
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 			Story.set_flag("item:hook")
-		912:
+		905:
 			_press("interact", true)
-		914:
+		906:
 			_press("interact", false)
 			_check(
 				_hub.dialogue_box.current_id() == "pell_hook",
@@ -726,6 +740,42 @@ func _physics_process(_delta: float) -> void:
 			)
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
+			# Church iron from the deep: Pell hammers it in.
+			_check(Upgrade.iron_carried() == 0, "no iron carried yet")
+			Story.set_flag(Upgrade.flag_for(Player.UpgradeKind.IRON, "world_1", 0))
+			_check(Upgrade.iron_carried() == 1, "picked-up iron is carried")
+		907:
+			_press("interact", true)
+		908:
+			_press("interact", false)
+			_check(_hub.dialogue_box.current_id() == "pell_iron", "Pell takes the church iron")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			_check(_hub.player.attack_damage() == 3, "the second forging hardens it again")
+			_check(Upgrade.iron_carried() == 0, "the forging spends the iron")
+			_hub.player.restore_upgrades()
+			_check(_hub.player.attack_damage() == 3, "a loaded hero keeps the forged sword")
+			# Vael's trade, once the hero knows the name: a memory for the clock key.
+			var vael: Npc = null
+			for node in _hub.level.interactables:
+				if node is Npc and node.npc_name == "Vael the Bargainer":
+					vael = node
+			_check(vael != null, "Vael is placed")
+			_check(vael.rotate_ids.size() == 3, "Vael has three repeat lines")
+			Story.set_flag("met_vael")
+			Story.set_flag(DialogueData.seen_flag("vael_intro"))
+			Story.set_flag("reveal")
+			_hub.player.global_position = vael.global_position + Vector2(-20.0, 0.0)
+			_hub.player.velocity = Vector2.ZERO
+		910:
+			_press("interact", true)
+		912:
+			_press("interact", false)
+			_check(_hub.dialogue_box.current_id() == "vael_trade", "Vael offers the trade")
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			_check(Story.has_flag("sold_winter"), "the trade takes the memory")
+			_check(Story.has_flag("item:clock_key"), "and gives the clock key")
 			root.remove_child(_hub)
 			_hub.queue_free()
 			Audio.play_ambient("")

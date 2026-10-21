@@ -964,6 +964,93 @@
 			}
 		]
 	},
+	"pell_forge_first": {
+		"once": true,
+		"requires": [
+			"met_pell"
+		],
+		"sets": "sword:1",
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Church iron. My own stock, and the last of it. Hold the blade on the horn. No, like that. Steadier."
+			},
+			{
+				"who": "Old Pell",
+				"text": "There. It'll go through a brute's hide now, which is more than mine did."
+			},
+			{
+				"who": "Ansel",
+				"text": "What do I owe you?"
+			},
+			{
+				"who": "Old Pell",
+				"text": "More of it, if the ground has any. They hang their doors with it down there. Bring me a bar and I'll hammer it in."
+			}
+		]
+	},
+	"pell_iron": {
+		"once": true,
+		"requires": [
+			"sword:1",
+			"upgrade:iron:world_1:0"
+		],
+		"sets": "sword:2",
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "That's church iron. Where did you... no. Don't tell me. Give it here."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Hold. Hit. Hold. Hit. ...That's as hard as I can make it, lad. The rest is you."
+			}
+		]
+	},
+	"vael_trade": {
+		"once": true,
+		"requires": [
+			"met_vael",
+			"reveal"
+		],
+		"sets": [
+			"sold_winter",
+			"item:clock_key"
+		],
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "You've been below the Seal. You've got a name now; I can smell it on you. Still want nothing?"
+			},
+			{
+				"who": "Ansel",
+				"text": "A key. To a clock. You said you had one."
+			},
+			{
+				"who": "Vael",
+				"text": "I did. For the winter you died in. Not the token; I've had a better offer for the token."
+			},
+			{
+				"who": "Ansel",
+				"text": "...Take it."
+			},
+			{
+				"who": "Vael",
+				"text": "Done. You'll feel lighter. Everyone does. Here's your key; it was never mine to keep."
+			}
+		]
+	},
+	"vael_lighter": {
+		"requires": [
+			"sold_winter"
+		],
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "Lighter? Told you. There's a spring in there somewhere too, if you ever want to be rid of it."
+			}
+		]
+	},
 	"the_fury_intro": {
 		"once": true,
 		"lines": [

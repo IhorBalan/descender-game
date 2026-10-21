@@ -20,7 +20,8 @@ extends Node2D
 ##                        unless: a story flag that, once set, leaves it out
 ##   enemy                character: imp, angel_guard, brute (walkers) or
 ##                        watcher; barks: a Walker.BARKS set the enemy shouts
-##   upgrade              upgrade: heart (Kept Light) or vial (Vial of the Basin)
+##   upgrade              upgrade: heart (Kept Light), vial (Vial of the Basin) or iron
+##                        (Church Iron, for Old Pell's forge)
 ##   power                power: halo, blade or zeal
 ##   barrier              a wall of angel light from (x, y) down `height` cells
 ##
@@ -54,7 +55,11 @@ const BOSS_SCENE := preload("res://scenes/enemies/boss.tscn")
 ## How many cells tall a seal across a sideways door can be.
 const MAX_SEAL_HEIGHT := 16
 const BARRIER_TEXTURE := preload("res://assets/sprites/light_barrier.png")
-const UPGRADE_KINDS := {"heart": Player.UpgradeKind.HEART, "vial": Player.UpgradeKind.VIAL}
+const UPGRADE_KINDS := {
+	"heart": Player.UpgradeKind.HEART,
+	"vial": Player.UpgradeKind.VIAL,
+	"iron": Player.UpgradeKind.IRON,
+}
 const POWER_KINDS := {
 	"halo": Player.Power.HALO, "blade": Player.Power.BLADE, "zeal": Player.Power.ZEAL
 }

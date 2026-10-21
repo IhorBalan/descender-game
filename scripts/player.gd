@@ -21,7 +21,7 @@ enum State { IDLE, RUN, JUMP, FALL, DASH, ATTACK, HEAL, HURT, DEAD, CAST, SLAM }
 enum Ability { WINGS, LIGHT_DASH, WALL_GRIP, HOLY_LIGHT, GLIDE, SMITE }
 ## Permanent upgrades picked up in the world (see Upgrade). Each one is a
 ## story flag, so it stays collected in the save.
-enum UpgradeKind { HEART, VIAL }
+enum UpgradeKind { HEART, VIAL, IRON }
 ## Timed power-ups picked up in a room (see PowerUp). Lost on death and at
 ## the end of the level.
 enum Power { HALO, BLADE, ZEAL }
@@ -773,7 +773,8 @@ func unlock(ability: Ability) -> void:
 
 
 ## A permanent pickup: raises the maximum and fills it, and records the
-## pickup as a story flag so it stays collected in the save.
+## pickup as a story flag so it stays collected in the save. Church iron
+## raises nothing by itself; Old Pell forges it (see Upgrade.sword_bonus).
 func apply_upgrade(kind: UpgradeKind, flag: String) -> void:
 	Story.set_flag(flag)
 	_raise_maximum(kind)
@@ -826,7 +827,11 @@ func power_time_left(power: Power) -> float:
 
 
 func attack_damage() -> int:
-	return ATTACK_DAMAGE + (BLADE_BONUS_DAMAGE if has_power(Power.BLADE) else 0)
+	return (
+		ATTACK_DAMAGE
+		+ Upgrade.sword_bonus()
+		+ (BLADE_BONUS_DAMAGE if has_power(Power.BLADE) else 0)
+	)
 
 
 func dash_cooldown() -> float:
