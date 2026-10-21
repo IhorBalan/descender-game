@@ -32,6 +32,7 @@ window is 1280x720 by default.
 | Jump    | Space, W or Up      | A              |
 | Attack  | J or X              | X              |
 | Dash    | K or Shift          | RB or B        |
+| Cast    | L or C              | RT             |
 | Heal    | H                   | Y              |
 | Talk    | E                   | LB             |
 | Pause   | Esc                 | Start          |
@@ -63,7 +64,11 @@ down, the **wall grip** feather lets the hero cling to a wall by holding
 towards it, sliding slowly, and spring away from it with jump (which also
 gives the wings and the dash back); the **glide** feather lets him press
 jump again while falling, once the wings' jump is spent, and hold it to
-float down. Abilities stay unlocked after death. Healing has three charges that come back when the
+float down. **Holy Light** throws a bolt of light from the hand with the
+cast key: it flies straight, hurts the first enemy it meets and breaks on
+the world. **Smite** is down and attack in the air: the hero slams to the
+ground, through any ledge in the way, and the landing hurts everything
+around his feet for two. Abilities stay unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
 Resting at a checkpoint also saves the game: the level, the checkpoint, the
 unlocked abilities, the story flags and the time played go to the slot the
@@ -141,10 +146,9 @@ which would need an occluder on every tile), and the markers: the start
 puts the hero down, every save is a checkpoint, the ability markers for the
 wings and the halo dash are feathers, every boss marker with a profile is
 a `Boss` (the rest get an angel guard standing in), and every locked door
-gets a seal (`scripts/door_lock.gd`). The other markers (secrets, shops,
-the gate, the clock) and the two abilities the hero cannot learn yet (Holy
-Light, Smite) are data in the JSON until there is something for them to
-do; a seal that wants one of those abilities stays shut.
+gets a seal (`scripts/door_lock.gd`). All six abilities have feathers now.
+The other markers (secrets, shops, the gate, the clock) are data in the
+JSON until there is something for them to do.
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
@@ -197,6 +201,7 @@ gone.
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
+| `scripts/light_bolt.gd` | The bolt of Holy Light the hero throws |
 | `scripts/upgrade.gd`, `scripts/power_up.gd` | A permanent upgrade (heart, healing charge) and a timed power-up (Halo, Lit Blade, Zeal) |
 | `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |

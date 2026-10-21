@@ -20,6 +20,9 @@ const BLADE_FIRE := Color(1.0, 0.65, 0.25)
 const ZEAL := Color(0.55, 0.85, 1.0)
 const GRIP := Color(0.85, 0.75, 0.6)
 const GLIDE := Color(0.8, 0.9, 1.0)
+const HOLY := Color(1.0, 0.97, 0.75)
+const SMITE := Color(1.0, 0.75, 0.55)
+const HEAD_WHITE := Color(1.0, 1.0, 1.0)
 const POWER_BAR := Color(1.0, 1.0, 1.0, 0.8)
 ## Where the ability icons start at most five hearts; more hearts push them
 ## right.
@@ -96,6 +99,21 @@ func _draw_ability(ability: Player.Ability, at: Vector2) -> void:
 			)
 			draw_colored_polygon(_shift(wing), SHADOW)
 			draw_colored_polygon(wing, GLIDE)
+		Player.Ability.HOLY_LIGHT:
+			draw_rect(Rect2(at + Vector2(4, 1), Vector2(3, 7)), SHADOW)
+			draw_rect(Rect2(at + Vector2(1, 4), Vector2(7, 3)), SHADOW)
+			draw_rect(Rect2(at + Vector2(3, 0), Vector2(3, 7)), HOLY)
+			draw_rect(Rect2(at + Vector2(0, 3), Vector2(7, 3)), HOLY)
+			draw_rect(Rect2(at + Vector2(4, 3), Vector2(1, 1)), HEAD_WHITE)
+		Player.Ability.SMITE:
+			draw_rect(Rect2(at + Vector2(4, 1), Vector2(3, 5)), SHADOW)
+			draw_rect(Rect2(at + Vector2(3, 0), Vector2(3, 5)), SMITE)
+			var head := PackedVector2Array(
+				[at + Vector2(1, 4), at + Vector2(8, 4), at + Vector2(4.5, 7)]
+			)
+			draw_colored_polygon(_shift(head), SHADOW)
+			draw_colored_polygon(head, SMITE)
+			draw_rect(Rect2(at + Vector2(0, 7), Vector2(9, 1)), DASH_BACK)
 
 
 ## The dash cooldown: a short bar that fills as the dash comes back and
