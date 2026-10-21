@@ -18,6 +18,8 @@ const HALO := Color(1.0, 0.85, 0.4)
 const BLADE := Color(0.95, 0.97, 1.0)
 const BLADE_FIRE := Color(1.0, 0.65, 0.25)
 const ZEAL := Color(0.55, 0.85, 1.0)
+const GRIP := Color(0.85, 0.75, 0.6)
+const GLIDE := Color(0.8, 0.9, 1.0)
 const POWER_BAR := Color(1.0, 1.0, 1.0, 0.8)
 ## Where the ability icons start at most five hearts; more hearts push them
 ## right.
@@ -62,7 +64,8 @@ func ability_x() -> float:
 
 
 ## A 9x7 icon per ability: the wings are two feathers, the light dash a
-## streak with a spark at its head.
+## streak with a spark at its head, the wall grip a hand on a wall edge,
+## the glide a wide open wing.
 func _draw_ability(ability: Player.Ability, at: Vector2) -> void:
 	match ability:
 		Player.Ability.WINGS:
@@ -81,6 +84,18 @@ func _draw_ability(ability: Player.Ability, at: Vector2) -> void:
 			draw_rect(Rect2(at + Vector2(0, 3), Vector2(6, 2)), LIGHT)
 			draw_rect(Rect2(at + Vector2(7, 2), Vector2(2, 4)), SHADOW)
 			draw_rect(Rect2(at + Vector2(6, 1), Vector2(2, 4)), CHARGE_ON)
+		Player.Ability.WALL_GRIP:
+			draw_rect(Rect2(at + Vector2(1, 1), Vector2(2, 7)), SHADOW)
+			draw_rect(Rect2(at + Vector2(0, 0), Vector2(2, 7)), DASH_CHARGING)
+			for i in 3:
+				draw_rect(Rect2(at + Vector2(3 + i * 2, 2 + i), Vector2(2, 2)), SHADOW)
+				draw_rect(Rect2(at + Vector2(2 + i * 2, 1 + i), Vector2(2, 2)), GRIP)
+		Player.Ability.GLIDE:
+			var wing := PackedVector2Array(
+				[at + Vector2(0, 5), at + Vector2(4, 1), at + Vector2(9, 5), at + Vector2(4, 3)]
+			)
+			draw_colored_polygon(_shift(wing), SHADOW)
+			draw_colored_polygon(wing, GLIDE)
 
 
 ## The dash cooldown: a short bar that fills as the dash comes back and

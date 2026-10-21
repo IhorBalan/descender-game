@@ -58,8 +58,12 @@ back. Jump height depends on how long the button is held. Dashing gives a few
 invulnerability frames. Picking up the feather unlocks the **wings**: press
 jump again in the air for a second, slightly lower jump. The second feather,
 by the checkpoint, unlocks the **light dash**: the dash goes further and
-passes through walls of angel light, which block everyone else. Abilities
-stay unlocked after death. Healing has three charges that come back when the
+passes through walls of angel light, which block everyone else. Deeper
+down, the **wall grip** feather lets the hero cling to a wall by holding
+towards it, sliding slowly, and spring away from it with jump (which also
+gives the wings and the dash back); the **glide** feather lets him press
+jump again while falling, once the wings' jump is spent, and hold it to
+float down. Abilities stay unlocked after death. Healing has three charges that come back when the
 hero rests at a checkpoint, which is also where he respawns after dying.
 Resting at a checkpoint also saves the game: the level, the checkpoint, the
 unlocked abilities, the story flags and the time played go to the slot the
@@ -138,10 +142,9 @@ puts the hero down, every save is a checkpoint, the ability markers for the
 wings and the halo dash are feathers, every boss marker with a profile is
 a `Boss` (the rest get an angel guard standing in), and every locked door
 gets a seal (`scripts/door_lock.gd`). The other markers (secrets, shops,
-the gate, the clock) and the four abilities the hero cannot learn yet (Wall
-Grip, Holy Light, Glide, Smite) are data in the JSON until there is
-something for them to do; a seal that wants one of those abilities stays
-shut.
+the gate, the clock) and the two abilities the hero cannot learn yet (Holy
+Light, Smite) are data in the JSON until there is something for them to
+do; a seal that wants one of those abilities stays shut.
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
