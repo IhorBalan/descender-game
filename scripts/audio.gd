@@ -6,7 +6,9 @@ extends Node
 ## assets/audio/sfx, named by what they are for; `play("jump")` picks one
 ## of a small pool of players so overlapping sounds do not cut each other
 ## off. The ambient loop is one long WAV per area, looped by the player.
-## Every sound is a placeholder made by tools/gen_sounds.py.
+## Every sound is a placeholder made by tools/gen_sounds.py. Effects play
+## on the SFX bus and the ambient loop on the Music bus, so the settings
+## screen can set their volumes apart (see default_bus_layout.tres).
 
 const SFX_DIR := "res://assets/audio/sfx/"
 const AMBIENT_DIR := "res://assets/audio/"
@@ -28,9 +30,11 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	for i in POOL_SIZE:
 		var player := AudioStreamPlayer.new()
+		player.bus = &"SFX"
 		add_child(player)
 		_pool.append(player)
 	_ambient = AudioStreamPlayer.new()
+	_ambient.bus = &"Music"
 	add_child(_ambient)
 
 

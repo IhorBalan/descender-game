@@ -221,8 +221,9 @@ gone.
 | ---- | ---------- |
 | `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
 | `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, quit to title |
-| `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen: volume, fullscreen, keyboard and gamepad bindings |
-| `scripts/settings.gd` | The `Settings` autoload: reads, saves and applies the settings |
+| `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen in three pages: Audio (master, music, sound effects), Display (fullscreen, window size, v-sync, screen shake), Controls (keyboard and gamepad bindings) |
+| `scripts/settings.gd` | The `Settings` autoload: reads, saves (`user://settings.cfg`) and applies the settings |
+| `default_bus_layout.tres` | The Master, Music and SFX audio buses the volume sliders control |
 | `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
 | `scripts/story.gd` | Story flags: who the hero has talked to, what he has seen and read; saved with the game |
 | `scripts/dialogue/dialogue_data.gd` | Reads a level's dialogue file and picks the entry whose flags match |
@@ -259,6 +260,7 @@ gone.
 | `assets/ui_theme.tres` | The menus' font size and button styles |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
+| `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
 
 ## Tests
