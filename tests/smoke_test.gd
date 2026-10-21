@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 423
-const LAST_TICK := 2050
+const EXPECTED_CHECKS := 436
+const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -94,7 +94,9 @@ func _physics_process(_delta: float) -> void:
 	_ticks += 1
 	if _watch_shots:
 		for shot in _world.get_tree().get_nodes_in_group("enemy_shot"):
-			_shots_seen[shot.get_instance_id()] = {"kind": shot.kind, "dx": shot.direction.x}
+			_shots_seen[shot.get_instance_id()] = {
+				"kind": shot.kind, "dx": shot.direction.x, "big": shot.big
+			}
 		_max_trauma = maxf(_max_trauma, _world.camera.trauma)
 	match _ticks:
 		2:
@@ -1144,6 +1146,8 @@ func _physics_process(_delta: float) -> void:
 			_boss.take_damage(hits, _world.player.global_position)
 			_check(_boss.health == _boss.max_health - hits, "boss takes damage")
 			_check(_boss.in_phase_two(), "half health starts phase two")
+			_check(Audio.last_played == "roar", "the turn of the fight is a roar")
+			_check(Feedback.is_hit_stopped(), "and a blink of stopped time")
 			_check(
 				_world.hud._boss_fill.size.x <= (Hud.BOSS_BAR_WIDTH - 2.0) / 2.0,
 				"boss bar drains with the hits"
@@ -1579,9 +1583,67 @@ func _physics_process(_delta: float) -> void:
 			_check(_world.player.health < Player.MAX_HEALTH, "the dive hurt the hero")
 			_flyer.take_damage(99, _world.player.global_position)
 			_check(_flyer.sprite.animation == "death", "a dead watcher's ring falls apart")
+		1944:
+			# Boss moves: a brute boss slams, an angel boss throws a volley,
+			# an imp king calls its imps when the fight turns.
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("the_bloated_one", 100.0)
+			_shots_seen.clear()
+			_watch_shots = true
+		1948:
+			_check(_boss.state == Boss.State.SLAM_WINDUP, "a brute boss winds up a slam")
+			_check(_boss.sprite.frame == 1, "arms raised")
+		2010:
+			var shots := _shots_seen.values()
+			_check(shots.size() == 1, "the slam sent one wave (%d)" % shots.size())
+			_check(
+				shots.size() == 1 and shots[0]["kind"] == EnemyShot.Kind.WAVE and shots[0]["big"],
+				"a tall one"
+			)
+			_boss.queue_free()
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("seraph_warden", 120.0)
+			_shots_seen.clear()
+		2014:
+			_check(_boss.state == Boss.State.VOLLEY, "an angel boss leaps for a volley")
+			_check(_boss.velocity.y < 0.0, "into the air")
 		2040:
 			_check(not is_instance_valid(_imp), "the brute's corpse lies a while, then goes")
 			_check(not is_instance_valid(_flyer), "so does the watcher's")
+		2070:
+			var bolts := 0
+			for shot in _shots_seen.values():
+				if shot["kind"] == EnemyShot.Kind.BOLT:
+					bolts += 1
+			_check(bolts == 3, "three bolts of light went down at the hero (%d)" % bolts)
+			_watch_shots = false
+			_boss.queue_free()
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("limbo_lord", 70.0)
+		2074:
+			var hits := _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_TWO_AT))
+			_boss.take_damage(hits, _world.player.global_position)
+			_check(_boss.in_phase_two(), "an imp king at half health")
+		2078:
+			# The imps come a frame later: the summons is deferred, since
+			# the hit may land inside a bolt's overlap signal.
+			var called := 0
+			for node in _world.get_children():
+				if node is Walker and node.character == "imp" and node.behaviour == "chase":
+					called += 1
+					node.queue_free()
+			_check(called == Boss.SUMMON_COUNT, "calls two imps to it (%d)" % called)
+			_boss.queue_free()
+			var silent := 0
+			for id in Boss.PROFILES:
+				if _world.dialogue.entry("%s_intro" % id).is_empty():
+					silent += 1
+			_check(silent == 0, "every boss has an intro line (%d silent)" % silent)
+			_check(
+				_world.dialogue.entry("the_false_king_intro")["lines"][0]["who"] == "False King",
+				"the False King speaks first in his room"
+			)
+		2080:
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")
@@ -1626,6 +1688,16 @@ func _place_hero_for_enemy() -> void:
 	_world.player.facing = 1
 	_world.player.health = Player.MAX_HEALTH
 	_world.player._invulnerable_timer = 0.0
+
+
+## A boss, this far to the hero's right, already fighting.
+func _spawn_boss(id: String, distance: float) -> Boss:
+	var boss: Boss = LevelBuilder.BOSS_SCENE.instantiate()
+	boss.boss_id = id
+	boss.position = _world.player.global_position + Vector2(distance, 0.0)
+	_world.add_child(boss)
+	boss.start_fight()
+	return boss
 
 
 ## A walker with a behaviour, this far to the hero's right, facing him.

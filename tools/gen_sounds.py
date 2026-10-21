@@ -111,6 +111,10 @@ def main():
     write("sfx/hit.wav", hit * env(int(RATE * 0.1), decay=0.09))
     enemy_die = lowpass(noise(0.28), 0.2) * 1.2 + sweep(160, 40, 0.28)
     write("sfx/enemy_die.wav", enemy_die * env(int(RATE * 0.28), decay=0.26))
+    # A boss's roar at the turn of its fight: a growl that climbs and breaks.
+    roar = sweep(70, 140, 0.55, 0.7) * 0.6 + square(48, 0.55) * 0.25 + lowpass(noise(0.55), 0.12) * 0.9
+    roar = roar * (1.0 + 0.5 * square(18, 0.55))
+    write("sfx/roar.wav", roar * env(int(RATE * 0.55), 0.03, 0.4))
     # World
     write("sfx/pickup.wav", chord([659.25, 987.77], 0.35, 0.25))
     write("sfx/checkpoint.wav", chord([440, 554.37, 659.25, 880], 0.9, 0.6))

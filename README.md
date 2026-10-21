@@ -92,7 +92,11 @@ seal says what it wants. Every boss room with a profile holds a **boss**:
 walking in seals the room's doors, plays the boss's lines and shows its
 health bar at the bottom of the screen. The boss walks at the hero, swings
 with a wide telegraphed sweep and charges across the room when he keeps
-away; at half health it quickens and leaps after every charge. Killing it
+away. Each body has a move of its own on top: the brutes raise their arms
+and slam the ground, sending a tall shockwave along the floor; the angels
+leap and throw three bolts of light down in a fan; the imp kings call two
+imps to them when the fight turns. At half health it roars, flashes and
+swells for a moment, then quickens and leaps after every charge. Killing it
 sets a story flag (`boss:<id>`), saves the game, opens the doors it held
 and plays its last lines; a dead boss stays dead in the save. Every boss
 room has a profile now (the strips of the guard, imp, brute or hero, scaled

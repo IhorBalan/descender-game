@@ -739,8 +739,8 @@ memory of the winter for the clock key, with a third repeat line after).
 
 In the game: Gorrow is the Fury, the Wrath boss (`the_fury_intro`,
 `the_fury_defeat` sets `reveal`). The Penitent in Purgatory has a line
-each way too; the other bosses fight in silence until their beats are
-written.
+each way too, and the other seven bosses each have an intro (below, after
+Gorrow); their defeat lines are not written.
 
 **Gorrow, boss intro**
 > **GORROW:** I told you. Orders only go so far.
@@ -756,6 +756,33 @@ written.
 > **GORROW:** Home. You still think that's a place.
 
 Sets flag `reveal`. Every later NPC changes its lines on this flag.
+
+**The other bosses, intros** (`<id>_intro`; the Choir's or the Lowest's
+voice, one box or three)
+
+> **LIMBO LORD:** I was first down. I forget what for. I forget what you are.
+> **ANSEL:** Then forget me.
+> **LIMBO LORD:** I will. After.
+
+> **KEEPER** (of the Palace of Velvet)**:** He keeps his army. I keep what they came here to forget.
+> **KEEPER:** You carry a lot of it. Set it down. Stay.
+
+> **THE BLOATED ONE:** He said don't follow. They followed. I said one more.
+> **THE BLOATED ONE:** One more.
+
+> **WARDEN OF THE VAULT:** Vael sells. I keep. Everything they dropped on the way down is here, in the dark.
+> **WARDEN OF THE VAULT:** A winter, a brother, a name. Yours will fit.
+
+> **CURSED BISHOP:** I taught them the Wheel. I taught it true. Here that is heresy.
+> **ANSEL:** It's a lie.
+> **CURSED BISHOP:** Then I was sent down for nothing. Hold still, child. The Choir still needs its count.
+
+> **CHAMPION** (of the Red Arena)**:** Nobody comes down here to talk.
+> **CHAMPION:** Good.
+
+> **FALSE KING:** They called me king before he came. Before the name. Bow, and I'll tell him you did.
+> **ANSEL:** No.
+> **FALSE KING:** Then I'll tell him you knelt.
 
 ### Circles 6 and 7
 
