@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/death_puff.gd" id="1_puff"]
+
+[node name="DeathPuff" type="CPUParticles2D"]
+z_index = 9
+emitting = false
+amount = 10
+lifetime = 0.7
+one_shot = true
+explosiveness = 0.9
+emission_shape = 1
+emission_sphere_radius = 6.0
+direction = Vector2(0, -1)
+spread = 70.0
+gravity = Vector2(0, -30)
+initial_velocity_min = 15.0
+initial_velocity_max = 45.0
+damping_min = 20.0
+damping_max = 40.0
+scale_amount_min = 2.0
+scale_amount_max = 3.0
+color = Color(1, 1, 1, 1)
+script = ExtResource("1_puff")

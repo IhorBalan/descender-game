@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 415
-const LAST_TICK := 1950
+const EXPECTED_CHECKS := 423
+const LAST_TICK := 2050
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -390,7 +390,8 @@ func _physics_process(_delta: float) -> void:
 			_check(not _player.has_power(Player.Power.ZEAL), "power-ups run out")
 			_check(_player.has_power(Player.Power.BLADE), "the others keep running")
 		695:
-			_check(_imp.sprite.modulate.a < 1.0, "dead imp fades out")
+			_check(_imp.sprite.animation == "death", "dead imp plays its death strip")
+			_check(Feedback.puff_count() >= 1, "and dies in a puff of dust")
 		700:
 			# Light barrier: the enemies behind it would knock the hero about,
 			# so clear them first, then dash at the wall without the ability.
@@ -1547,11 +1548,16 @@ func _physics_process(_delta: float) -> void:
 			_imp = _spawn_walker("brute", "slam", 80.0)
 		1664:
 			_check(_imp.state == Walker.State.WINDUP, "a second slammer winds up")
+			_imp.take_damage(1, _world.player.global_position)
+			_check(_imp.state == Walker.State.WINDUP, "a brute's armour keeps its slam going")
+			_check(_imp.velocity.x == 0.0, "and the hit does not push it back")
 			# Wait for the wave on the ground this time.
 			_mark_x = _world.player.health
 		1820:
 			_check(_world.player.health < int(_mark_x), "a hero on the ground is hit by the wave")
-			_imp.queue_free()
+			_imp.take_damage(99, _world.player.global_position)
+			_check(_imp._dead and _imp.sprite.animation == "death", "the brute dies on its face")
+			_check(Feedback.is_hit_stopped(), "a kill stops time for a blink")
 			_place_hero_for_enemy()
 			var flyer: Flyer = LevelBuilder.FLYER_SCENE.instantiate()
 			flyer.behaviour = "dive"
@@ -1571,7 +1577,11 @@ func _physics_process(_delta: float) -> void:
 				"and climbs back"
 			)
 			_check(_world.player.health < Player.MAX_HEALTH, "the dive hurt the hero")
-			_flyer.queue_free()
+			_flyer.take_damage(99, _world.player.global_position)
+			_check(_flyer.sprite.animation == "death", "a dead watcher's ring falls apart")
+		2040:
+			_check(not is_instance_valid(_imp), "the brute's corpse lies a while, then goes")
+			_check(not is_instance_valid(_flyer), "so does the watcher's")
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")

@@ -23,8 +23,10 @@ enum State { DORMANT, APPROACH, WINDUP, STRIKE, RECOVER, CHARGE_WINDUP, CHARGE, 
 const GRAVITY := 700.0
 const MAX_FALL_SPEED := 300.0
 const HURT_TIME := 0.15
-const DEATH_TIME := 1.2
+## How long the body lies there before it fades.
+const CORPSE_TIME := 1.5
 const DEATH_SPARKS := Color(1.0, 0.85, 0.5)
+const DEATH_PUFF := Color(1.0, 0.9, 0.6)
 const TINT_WINDUP := Color(1.0, 0.75, 0.55)
 const TINT_CHARGE := Color(1.0, 0.6, 0.5)
 const TINT_HURT := Color(1.0, 0.5, 0.5)
@@ -638,8 +640,9 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 		_die()
 
 
-## Death: the body topples and fades with a burst of sparks and a long
-## shake, and leaves heal motes for the hero to recover with.
+## Death: the body plays its death strip (or topples, for a sprite without
+## one), lies there and fades, with a burst of sparks, a puff of light and
+## a long shake, and leaves heal motes for the hero to recover with.
 func _die() -> void:
 	_dead = true
 	_set_state(State.DEAD, 0.0)
@@ -656,19 +659,11 @@ func _die() -> void:
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	attack_hitbox.set_deferred("monitoring", false)
-	sprite.animation = "hurt"
-	sprite.pause()
-	sprite.frame = 0
 	sprite.speed_scale = 1.0
 	_tint(Color.WHITE)
-	var fall_dir := -direction
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(sprite, "rotation", fall_dir * PI / 2.0, DEATH_TIME).set_ease(
-		Tween.EASE_OUT
-	)
-	tween.tween_property(sprite, "modulate:a", 0.0, DEATH_TIME * 0.5).set_delay(DEATH_TIME * 0.5)
-	tween.chain().tween_callback(queue_free)
+	Feedback.puff(centre, DEATH_PUFF)
+	# The body falls away from the hero, who is on the side it faces.
+	EnemyDeath.play(sprite, -direction, CORPSE_TIME, queue_free)
 	for i in int(profile["motes"]):
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = centre + Vector2((i - 0.5) * 20.0, 0.0)

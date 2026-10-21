@@ -30,13 +30,15 @@ enum Attack { SWING, POUNCE, HURL, SLAM }
 const GRAVITY := 700.0
 const MAX_FALL_SPEED := 260.0
 const HURT_TIME := 0.2
-const KNOCKBACK := Vector2(90.0, -60.0)
+const KNOCKBACK := Vector2(110.0, -70.0)
 ## The hero has to be roughly at the same height to be attacked.
 const ATTACK_HEIGHT_TOLERANCE := 24.0
 const TINT_WINDUP := Color(1.0, 0.75, 0.55)
 const TINT_HURT := Color(1.0, 0.5, 0.5)
-const DEATH_TIME := 0.5
+## How long the body lies there before it fades.
+const CORPSE_TIME := 1.0
 const DEATH_SPARKS := Color(1.0, 0.45, 0.35)
+const DEATH_HIT_STOP := 0.06
 const HEALTH_BAR_SCENE := preload("res://scripts/enemy_health_bar.gd")
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 const SHOT_SCRIPT := preload("res://scripts/enemies/enemy_shot.gd")
@@ -89,7 +91,9 @@ const TINT_SLAM := Color(1.0, 0.6, 0.45)
 ## reach: the strike hitbox size, placed in front of the body.
 ## windup / strike / recover: the three phases of a swing, in seconds.
 ## cooldown: pause before the next swing can start. attack_damage: hearts.
-## drop_chance: how often a kill leaves a heal mote behind.
+## drop_chance: how often a kill leaves a heal mote behind. puff: the colour
+## of the dust (or light) it dies in. armour: hits never cancel its attack
+## or push it back while it attacks (and push it half as far otherwise).
 const PROFILES := {
 	"imp":
 	{
@@ -106,6 +110,8 @@ const PROFILES := {
 		"cooldown": 0.8,
 		"attack_damage": 1,
 		"drop_chance": 0.35,
+		"puff": Color(0.55, 0.15, 0.15),
+		"armour": false,
 	},
 	"angel_guard":
 	{
@@ -122,6 +128,8 @@ const PROFILES := {
 		"cooldown": 1.2,
 		"attack_damage": 2,
 		"drop_chance": 1.0,
+		"puff": Color(1.0, 0.95, 0.75),
+		"armour": false,
 	},
 	"brute":
 	{
@@ -138,6 +146,8 @@ const PROFILES := {
 		"cooldown": 1.5,
 		"attack_damage": 2,
 		"drop_chance": 1.0,
+		"puff": Color(0.45, 0.12, 0.12),
+		"armour": true,
 	},
 }
 ## The habits a placement may ask for (see the top of the file).
@@ -601,28 +611,40 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	Audio.play("hit")
 	Feedback.flash(sprite, 0.1)
 	Feedback.spark(global_position + Vector2(0.0, -body_shape.shape.get_rect().size.y / 2.0))
-	# A hit wakes an ambusher, and getting hit mid-attack cancels it (and
-	# starts the cooldown).
+	# A hit wakes an ambusher.
 	_awake = true
-	if state != State.PATROL and state != State.CHASE:
+	if health <= 0:
+		_die()
+		return
+	var attacking := state != State.PATROL and state != State.CHASE and state != State.LURK
+	if attacking and bool(_profile["armour"]):
+		# Armour: the blow lands, the attack goes on.
+		return
+	# Getting hit mid-attack cancels it (and starts the cooldown).
+	if attacking:
 		_end_attack()
 	_hurt_timer = HURT_TIME
 	sprite.modulate = TINT_HURT
 	sprite.play("hurt")
 	var dir := 1.0 if global_position.x >= source_position.x else -1.0
-	velocity = Vector2(KNOCKBACK.x * dir, KNOCKBACK.y)
-	if health <= 0:
-		_die()
+	var push := 0.5 if bool(_profile["armour"]) else 1.0
+	velocity = Vector2(KNOCKBACK.x * dir * push, KNOCKBACK.y * push)
 
 
-## Death: the body is thrown back and topples over while it fades, with a
-## burst of sparks, and sometimes leaves a heal mote behind.
+## Death: time stops for a blink, the body plays its death strip (and
+## lies there a moment before it fades) in a puff of dust, with a burst of
+## sparks, and sometimes leaves a heal mote behind.
 func _die() -> void:
 	_dead = true
 	set_physics_process(false)
 	Audio.play("enemy_die")
-	Feedback.shake(0.3)
-	Feedback.spark(global_position + Vector2(0.0, body_shape.position.y), DEATH_SPARKS)
+	Feedback.hit_stop(DEATH_HIT_STOP)
+	var body: Vector2 = _profile["body"]
+	# A heavier body shakes the ground more.
+	Feedback.shake(0.25 + body.y / 250.0)
+	var centre := global_position + Vector2(0.0, body_shape.position.y)
+	Feedback.spark(centre, DEATH_SPARKS)
+	Feedback.puff(global_position + Vector2(0.0, -body.y / 4.0), _profile["puff"])
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	attack_hitbox.set_deferred("monitoring", false)
@@ -630,20 +652,9 @@ func _die() -> void:
 	if _mark_label:
 		_mark_label.visible = false
 	_unsquash()
-	sprite.animation = "hurt"
-	sprite.pause()
-	sprite.frame = 0
 	sprite.modulate = Color.WHITE
-	# Topple away from the hero, who is on the side the body faces.
-	var fall_dir := -direction
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(sprite, "rotation", fall_dir * PI / 2.0, DEATH_TIME).set_ease(
-		Tween.EASE_OUT
-	)
-	tween.tween_property(sprite, "position:x", fall_dir * 6.0, DEATH_TIME).set_ease(Tween.EASE_OUT)
-	tween.tween_property(sprite, "modulate:a", 0.0, DEATH_TIME * 0.5).set_delay(DEATH_TIME * 0.5)
-	tween.chain().tween_callback(queue_free)
+	# The body falls away from the hero, who is on the side it faces.
+	EnemyDeath.play(sprite, -direction, CORPSE_TIME, queue_free)
 	_maybe_drop_mote()
 
 
