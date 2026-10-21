@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 308
+const EXPECTED_CHECKS := 310
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -1132,6 +1132,8 @@ func _physics_process(_delta: float) -> void:
 			_check(Story.has_flag("ending:sit"), "the ending sets its flag")
 			_check(_world.player.frozen, "the hero stands still at the end")
 			_check("Press R" in _world.hud.message.text, "the end line shows")
+			_check(_world.game_over(), "the game is over")
+			_check(not _world._transitioning, "and R is still read for the restart")
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")

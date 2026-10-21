@@ -44,6 +44,9 @@ var _active_checkpoint := -1
 ## Set once the goal is reached: the level is fading out, so pausing and
 ## restarting are over for this scene.
 var _transitioning := false
+## One of the endings has played: the hero stands still and nothing talks,
+## but R still restarts from the last checkpoint.
+var _ended := false
 ## The NPC, relic or trigger whose dialogue is open.
 var _talking_to: Interactable
 ## The region of the world the hero is in (see WorldMap).
@@ -455,6 +458,7 @@ func _on_interacted(source: Interactable) -> void:
 		dialogue == null
 		or dialogue_box.is_open()
 		or _transitioning
+		or _ended
 		or player.state == Player.State.DEAD
 	):
 		return
@@ -515,10 +519,15 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 			_play_dialogue.call_deferred(next, null)
 
 
+## Whether one of the endings has played.
+func game_over() -> bool:
+	return _ended
+
+
 ## One of the endings: the hero stands where he is, the line says which
 ## end this was, and R starts again from the last checkpoint.
 func _end_game(flag: String) -> void:
-	_transitioning = true
+	_ended = true
 	player.freeze()
 	Audio.play("level_complete")
 	hud.show_message("%s   Press R to restart" % ENDINGS.get(flag, "The end."), -1.0)
