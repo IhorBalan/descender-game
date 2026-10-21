@@ -665,5 +665,96 @@
 				"text": "Down, then."
 			}
 		]
+	},
+	"makinghouse": {
+		"unless": [
+			"makinghouse_seen"
+		],
+		"sets": "makinghouse_seen",
+		"lines": [
+			{
+				"who": "Voice",
+				"text": "You left your other half on the table in there."
+			},
+			{
+				"who": "Ansel",
+				"text": "Keep it."
+			},
+			{
+				"who": "Voice",
+				"text": "We will. We keep everything."
+			}
+		]
+	},
+	"seraph_warden_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Warden",
+				"text": "Ungathered. You were seen at the Making. You will be finished."
+			},
+			{
+				"who": "Ansel",
+				"text": "You dropped my brother."
+			},
+			{
+				"who": "Warden",
+				"text": "I have dropped many. I remember none of them. That is a mercy they give us."
+			}
+		]
+	},
+	"seraph_warden_defeat": {
+		"once": true,
+		"sets": "warden_fallen",
+		"lines": [
+			{
+				"who": "Warden",
+				"text": "The gate... does not open from this side."
+			},
+			{
+				"who": "Ansel",
+				"text": "I know. I'm not opening it."
+			},
+			{
+				"who": "",
+				"text": "(The Warden of the Low Gate lies still. Below the ledge, the gate waits for wings.)"
+			}
+		]
+	},
+	"item_tally_stone": {
+		"lines": [
+			{
+				"who": "Child's tally stone",
+				"text": "A flat stone with eleven strokes scratched into it. The twelfth is half cut."
+			},
+			{
+				"who": "Ansel",
+				"text": "Somebody small was counting too."
+			}
+		]
+	},
+	"item_prayer_card": {
+		"lines": [
+			{
+				"who": "Warden's prayer card",
+				"text": "'What is pressed is not lost. What is lost was never pressed. Sing it until it is true.'"
+			},
+			{
+				"who": "Ansel",
+				"text": "Until it is true. They know it isn't."
+			}
+		]
+	},
+	"item_glove": {
+		"lines": [
+			{
+				"who": "Maker's glove",
+				"text": "Stiff with something that is not blood. The fingers are worn smooth on the inside, where they hold a head still."
+			},
+			{
+				"who": "Ansel",
+				"text": "They held mine. Halfway."
+			}
+		]
 	}
 }

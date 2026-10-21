@@ -34,6 +34,11 @@ var _transitioning := false
 var _talking_to: Interactable
 ## The region of the world the hero is in (see WorldMap).
 var _region: Dictionary = {}
+## The boss being fought, the seals on its room, and whether the fight is
+## waiting for the intro dialogue to close.
+var _boss: Boss
+var _arena_seals: Array[DoorLock] = []
+var _fight_pending := false
 
 @onready var sky: TextureRect = $Background/Sky
 @onready var level: LevelBuilder = $Level
@@ -85,7 +90,12 @@ func _ready() -> void:
 	player.power_changed.connect(_on_power_changed)
 	hud.player = player
 	hud.set_abilities(player.abilities)
+	# Seals the hero may already pass (a loaded save's abilities) go quietly.
+	level.open_locks(player, true)
+	for seal in level.locks:
+		seal.touched.connect(_on_lock_touched)
 	level.spawn_enemies()
+	_wire_bosses()
 	level.spawn_power_ups()
 	for power_up in level.get_node("PowerUps").get_children():
 		power_up.collected.connect(_on_power_up_collected)
@@ -240,11 +250,17 @@ func _on_player_died() -> void:
 func _on_player_respawned() -> void:
 	# The signal fires from the hero's physics tick; rebuild the enemies once
 	# the physics step is over.
-	level.spawn_enemies.call_deferred()
+	_end_fight()
+	_respawn_enemies.call_deferred()
 	_respawn_power_ups.call_deferred()
 	_clear_motes()
 	camera.snap_to_target()
 	fade.fade_in()
+
+
+func _respawn_enemies() -> void:
+	level.spawn_enemies()
+	_wire_bosses()
 
 
 ## Heal motes left by enemies go with the enemies when the fight resets.
@@ -291,6 +307,70 @@ func _on_power_changed() -> void:
 func _on_ability_unlocked(ability: Player.Ability) -> void:
 	hud.show_message(ABILITY_MESSAGES.get(ability, "New ability unlocked"), 3.5)
 	hud.set_abilities(player.abilities)
+	level.open_locks(player)
+
+
+func _on_lock_touched(seal: DoorLock) -> void:
+	if not dialogue_box.is_open():
+		hud.show_message(seal.message(), 2.5)
+
+
+# --- Bosses --------------------------------------------------------------
+
+
+func _wire_bosses() -> void:
+	for boss in level.bosses():
+		if not boss.engaged.is_connected(_on_boss_engaged):
+			boss.engaged.connect(_on_boss_engaged)
+			boss.health_changed.connect(hud.set_boss_health)
+			boss.defeated.connect(_on_boss_defeated)
+
+
+## The hero walked into a boss's room: the doors seal, the bar shows, and
+## the intro plays before the boss moves.
+func _on_boss_engaged(boss: Boss) -> void:
+	if _boss != null or player.state == Player.State.DEAD:
+		return
+	_boss = boss
+	_arena_seals = level.seal_room(level.room_at(boss.global_position))
+	hud.show_boss(str(boss.profile["name"]), boss.health, boss.max_health)
+	Audio.play("checkpoint", -6.0)
+	var intro := _boss_entry(boss, "intro")
+	if intro.is_empty():
+		boss.start_fight()
+	else:
+		_fight_pending = true
+		_play_dialogue(intro, null)
+
+
+func _on_boss_defeated(boss: Boss) -> void:
+	Story.set_flag(Boss.flag_for(boss.boss_id))
+	_end_fight()
+	level.open_locks(player)
+	var defeat := _boss_entry(boss, "defeat")
+	if not defeat.is_empty():
+		_play_dialogue(defeat, null)
+	if save_game():
+		hud.queue_message("Game saved", 2.0)
+
+
+## Drops the seals and the bar, whether the fight was won or the hero died.
+func _end_fight() -> void:
+	if _boss == null:
+		return
+	level.unseal(_arena_seals)
+	_arena_seals = []
+	hud.hide_boss()
+	_boss = null
+	_fight_pending = false
+
+
+## The boss's intro or defeat lines (`<id>_intro`, `<id>_defeat`), if the
+## dialogue file has them and they may play.
+func _boss_entry(boss: Boss, part: String) -> Dictionary:
+	if dialogue == null:
+		return {}
+	return dialogue.pick(["%s_%s" % [boss.boss_id, part]])
 
 
 func _on_goal_reached() -> void:
@@ -336,6 +416,15 @@ func _on_interacted(source: Interactable) -> void:
 		entry = dialogue.pick(source.rotation_ids())
 	if entry.is_empty():
 		return
+	_play_dialogue(entry, source)
+	get_viewport().set_input_as_handled()
+
+
+## Opens the box on an entry; the hero stands still until it is read.
+## `source` is the thing that spoke, or null for a boss's lines.
+func _play_dialogue(entry: Dictionary, source: Interactable) -> void:
+	if dialogue_box.is_open():
+		return
 	_talking_to = source
 	player.talking = true
 	if source is Npc:
@@ -343,7 +432,6 @@ func _on_interacted(source: Interactable) -> void:
 	# The box covers the message line.
 	hud.hide_message()
 	dialogue_box.play(entry)
-	get_viewport().set_input_as_handled()
 
 
 func _on_dialogue_finished(entry: Dictionary) -> void:
@@ -358,3 +446,6 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 		if source is Npc:
 			source.set_talking(false)
 		source.on_dialogue_finished(entry)
+	if _fight_pending and is_instance_valid(_boss):
+		_fight_pending = false
+		_boss.start_fight()

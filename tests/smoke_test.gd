@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 192
-const LAST_TICK := 930
+const EXPECTED_CHECKS := 236
+const LAST_TICK := 1130
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -48,6 +48,11 @@ var _hub: Node
 var _pell: Npc
 ## The tint of Paradise, which crossing into Ruined Earth changes.
 var _paradise_tint := Color.WHITE
+## The world booted once more for the seals and the boss fight.
+var _world: Node
+var _wings_seal: DoorLock
+var _boss: Boss
+var _boss_start := Vector2.ZERO
 
 @onready var root: Window = get_tree().root
 
@@ -388,9 +393,9 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 16, "sixteen story objects built")
+			_check(_main.level.interactables.size() == 20, "twenty story objects built")
 			_check(_main.level.npc_count() == 6, "six NPCs built")
-			_check(_main.level.item_count() == 6, "six relics built")
+			_check(_main.level.item_count() == 9, "nine relics built")
 			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
 			for node in _main.level.interactables:
 				if node is Npc and node.npc_name == "Mereth":
@@ -451,7 +456,7 @@ func _physics_process(_delta: float) -> void:
 			while _main.dialogue_box.is_open():
 				_main.dialogue_box.advance()
 		786:
-			_check(_main.level.item_count() == 5, "examined relic is gone")
+			_check(_main.level.item_count() == 8, "examined relic is gone")
 			_check(Story.has_flag("item:token"), "examined relic is flagged")
 			# A trigger: walking in plays its dialogue once.
 			for node in _main.level.interactables:
@@ -534,7 +539,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
-			_check(_loaded.level.item_count() == 5, "examined relic stays gone")
+			_check(_loaded.level.item_count() == 8, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
 			_check(_loaded.level.upgrade_count() == 1, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
@@ -694,12 +699,174 @@ func _physics_process(_delta: float) -> void:
 			root.remove_child(_hub)
 			_hub.queue_free()
 			Audio.play_ambient("")
+			# Seals and the boss: a fresh world, nothing seen.
+			SaveManager.pending = {"level": "world_1", "flags": []}
+			_world = _main_scene.instantiate()
+			root.add_child(_world)
+		918:
+			_check(InputMap.has_action("move_down"), "move_down action exists")
+			_check(&"move_down" in Settings.REBINDABLE_ACTIONS, "move down is rebindable")
+			var level: LevelBuilder = _world.level
+			_check(
+				level.locks.size() == 19, "a seal on every locked door (%d)" % level.locks.size()
+			)
+			for seal in level.locks:
+				if seal.door_id == 415:
+					_wings_seal = seal
+			_check(_wings_seal != null, "the door under the Warden is sealed")
+			_check(
+				_wings_seal != null and _wings_seal.kind == DoorLock.Kind.ABILITY,
+				"that seal is an ability lock"
+			)
+			_check(
+				_wings_seal != null and _wings_seal.ability == Player.Ability.WINGS,
+				"it wants the wings"
+			)
+			_check(
+				_wings_seal != null and _wings_seal.cells == _shaft_cells(279, 50),
+				"the seal fills the shaft under the ledge"
+			)
+			var boss_seal: DoorLock = null
+			for seal in level.locks:
+				if seal.door_id == 421:
+					boss_seal = seal
+			_check(
+				boss_seal != null and boss_seal.kind == DoorLock.Kind.BOSS,
+				"the door under the Golden Vault is a boss lock"
+			)
+			_check(
+				boss_seal != null and boss_seal.boss_flag == "boss:golden_vault",
+				"boss lock reads the boss flag"
+			)
+			_check(
+				boss_seal != null and "Golden Vault" in boss_seal.message(),
+				"boss lock names its boss"
+			)
+			_check(level.bosses().size() == 1, "one boss has a profile so far")
+			_boss = level.bosses()[0] if not level.bosses().is_empty() else null
+			_check(
+				_boss != null and _boss.boss_id == "seraph_warden", "the Seraph Warden is a boss"
+			)
+			_check(_boss != null and _boss.state == Boss.State.DORMANT, "boss waits in its room")
+			_check(
+				_boss != null and _boss.arena.has_point(_boss.global_position),
+				"boss arena is its room"
+			)
+			_check(not _world.hud.boss_bar.visible, "boss bar starts hidden")
+			# Into the Warden's room, well away from him.
+			_world.player.global_position = Vector2(4600.0, 784.0)
+			_world.player.velocity = Vector2.ZERO
+			_world.player.facing = 1
+		922:
+			_check(_world._boss == _boss, "walking into the room starts the fight")
+			_check(
+				_world.dialogue_box.current_id() == "seraph_warden_intro", "the boss intro plays"
+			)
+			var sealed_doors: Array[int] = []
+			for seal in _world._arena_seals:
+				sealed_doors.append(seal.door_id)
+			sealed_doors.sort()
+			# The door down is still under its own seal; the other two get one.
+			_check(
+				sealed_doors == [218, 219],
+				"the room's doors are sealed for the fight (%s)" % str(sealed_doors)
+			)
+			_check(_world.hud.boss_bar.visible, "boss bar shows")
+			_check(_world.hud.boss_name_label.text == "Seraph Warden", "boss bar names the boss")
+			_check(_boss.state == Boss.State.DORMANT, "boss waits for the intro")
+			_boss_start = _boss.global_position
+			while _world.dialogue_box.is_open():
+				_world.dialogue_box.advance()
+		924:
+			_check(_boss.state != Boss.State.DORMANT, "boss wakes after the intro")
+		990:
+			_check(
+				_boss.global_position.distance_to(_boss_start) > 20.0,
+				(
+					"boss comes at the hero (moved %.0f)"
+					% _boss.global_position.distance_to(_boss_start)
+				)
+			)
+			var hits := _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_TWO_AT))
+			_boss.take_damage(hits, _world.player.global_position)
+			_check(_boss.health == _boss.max_health - hits, "boss takes damage")
+			_check(_boss.in_phase_two(), "half health starts phase two")
+			_check(
+				_world.hud._boss_fill.size.x <= (Hud.BOSS_BAR_WIDTH - 2.0) / 2.0,
+				"boss bar drains with the hits"
+			)
+		994:
+			_boss.take_damage(99, _world.player.global_position)
+			_check(_boss._dead, "boss dies")
+			_check(Story.has_flag("boss:seraph_warden"), "dead boss sets its flag")
+			_check(_world._boss == null, "the fight is over")
+			_check(_world._arena_seals.is_empty(), "the room's seals break")
+			_check(not _world.hud.boss_bar.visible, "boss bar hides")
+			_check(
+				_world.dialogue_box.current_id() == "seraph_warden_defeat", "the defeat lines play"
+			)
+			while _world.dialogue_box.is_open():
+				_world.dialogue_box.advance()
+		1000:
+			_check(Story.has_flag("warden_fallen"), "the defeat lines set their flag")
+			_check(_world.level.get_node("Seals").get_child_count() == 19, "no arena seal is left")
+			# On the ledge over the sealed shaft, pressing down.
+			_world.player.global_position = Vector2(280.0 * 16.0 + 8.0, 49.0 * 16.0)
+			_world.player.velocity = Vector2.ZERO
+			_press("move_down", true)
+		1006:
+			_check(_world.player.is_on_floor(), "hero stands on the ledge over the shaft")
+			_check(_world.player.global_position.y <= 785.0, "down alone does not drop him")
+			_press("jump", true)
+		1010:
+			_press("jump", false)
+			_check(_world.player.global_position.y > 786.0, "down and jump drops through the ledge")
+		1030:
+			_press("move_down", false)
+			_check(
+				absf(_world.player.global_position.y - 800.0) < 1.5,
+				"the seal of light stops the hero (y %.1f)" % _world.player.global_position.y
+			)
+			_check(
+				_world.hud.message.visible and "Wings" in _world.hud.message.text,
+				"touching the seal says what it wants"
+			)
+			_world.player.unlock(Player.Ability.WINGS)
+			_check(_world.level.locks.size() == 18, "learning the ability breaks its seal")
+		1032:
+			_check(not is_instance_valid(_wings_seal), "the broken seal is gone")
+		1056:
+			_check(_world.player.global_position.y > 812.0, "hero falls through the opened door")
+			# A world booted from a save with the Warden dead has no Warden.
+			var flags := Story.to_list()
+			root.remove_child(_world)
+			_world.queue_free()
+			SaveManager.pending = {"level": "world_1", "flags": flags}
+			_world = _main_scene.instantiate()
+			root.add_child(_world)
+		1060:
+			_check(_world.level.bosses().is_empty(), "a dead boss stays dead in the save")
+			_check(
+				_world.level.enemy_count() == _enemy_count - 1,
+				"the dead boss leaves no placeholder"
+			)
+			root.remove_child(_world)
+			_world.queue_free()
+			Audio.play_ambient("")
 		LAST_TICK:
 			_report()
 	if _ticks > LAST_TICK:
 		# A script error inside the last step kept _report from running.
 		printerr("FAIL the test did not finish")
 		get_tree().quit(1)
+
+
+## The four cells of a shaft seal, from its left column.
+func _shaft_cells(left: int, row: int) -> Array[Vector2i]:
+	var cells: Array[Vector2i] = []
+	for i in 4:
+		cells.append(Vector2i(left + i, row))
+	return cells
 
 
 ## Where the power-up of that kind lies in the level.

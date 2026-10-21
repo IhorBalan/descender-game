@@ -4,7 +4,17 @@ extends CanvasLayer
 ## Health, healing charges, unlocked abilities, the dash cooldown and short
 ## messages. main.gd hands over the hero so the dash readout can follow him.
 
+const BOSS_BAR_WIDTH := 160.0
+const BOSS_BAR_BACK := Color(0.0, 0.0, 0.0, 0.6)
+const BOSS_BAR_FILL := Color(1.0, 0.85, 0.45)
+const BOSS_BAR_HURT := Color(0.9, 0.3, 0.3)
+
 var player: Player
+
+## The boss bar at the bottom of the screen, built in _ready.
+var boss_bar: Control
+var boss_name_label: Label
+var _boss_fill: ColorRect
 
 var _message_timer := 0.0
 ## Messages waiting for the current timed one to end: [text, duration].
@@ -12,6 +22,34 @@ var _queue: Array[Array] = []
 
 @onready var status: StatusBar = $Status
 @onready var message: Label = $Message
+
+
+func _ready() -> void:
+	boss_bar = Control.new()
+	boss_bar.name = "BossBar"
+	boss_bar.position = Vector2((320.0 - BOSS_BAR_WIDTH) / 2.0, 140.0)
+	boss_bar.size = Vector2(BOSS_BAR_WIDTH, 16.0)
+	boss_bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	boss_bar.visible = false
+	add_child(boss_bar)
+	boss_name_label = Label.new()
+	boss_name_label.size = Vector2(BOSS_BAR_WIDTH, 10.0)
+	boss_name_label.add_theme_font_size_override("font_size", 8)
+	boss_name_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.8))
+	boss_name_label.add_theme_constant_override("shadow_offset_x", 1)
+	boss_name_label.add_theme_constant_override("shadow_offset_y", 1)
+	boss_name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	boss_bar.add_child(boss_name_label)
+	var back := ColorRect.new()
+	back.position = Vector2(0.0, 11.0)
+	back.size = Vector2(BOSS_BAR_WIDTH, 4.0)
+	back.color = BOSS_BAR_BACK
+	boss_bar.add_child(back)
+	_boss_fill = ColorRect.new()
+	_boss_fill.position = Vector2(1.0, 12.0)
+	_boss_fill.size = Vector2(BOSS_BAR_WIDTH - 2.0, 2.0)
+	_boss_fill.color = BOSS_BAR_FILL
+	boss_bar.add_child(_boss_fill)
 
 
 func _process(delta: float) -> void:
@@ -53,6 +91,23 @@ func set_abilities(abilities: Array[Player.Ability]) -> void:
 func set_powers(powers: Dictionary) -> void:
 	status.powers = powers.duplicate()
 	status.queue_redraw()
+
+
+## Shows the boss bar with the boss's name and health.
+func show_boss(boss_name: String, current: int, max_value: int) -> void:
+	boss_name_label.text = boss_name
+	set_boss_health(current, max_value)
+	boss_bar.visible = true
+
+
+func set_boss_health(current: int, max_value: int) -> void:
+	var share := clampf(float(current) / float(maxi(max_value, 1)), 0.0, 1.0)
+	_boss_fill.size.x = roundf((BOSS_BAR_WIDTH - 2.0) * share)
+	_boss_fill.color = BOSS_BAR_HURT if share <= Boss.PHASE_TWO_AT else BOSS_BAR_FILL
+
+
+func hide_boss() -> void:
+	boss_bar.visible = false
 
 
 ## Clears the message line and whatever was queued behind it.

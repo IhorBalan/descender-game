@@ -37,6 +37,10 @@
 			"dialogue": ["ithuriel_intro"],
 			"rotate": ["ithuriel_again", "ithuriel_song", "ithuriel_orders"]
 		},
+		{"type": "item", "x": 246, "y": 48, "item": "tally_stone", "dialogue": ["item_tally_stone"]},
+		{"type": "trigger", "x": 264, "y": 43, "dialogue": ["makinghouse"]},
+		{"type": "item", "x": 318, "y": 31, "item": "prayer_card", "dialogue": ["item_prayer_card"]},
+		{"type": "item", "x": 383, "y": 40, "item": "glove", "dialogue": ["item_glove"]},
 		{"type": "enemy", "x": 372, "y": 48, "character": "imp"},
 		{"type": "item", "x": 380, "y": 48, "item": "basin_shard", "dialogue": ["item_basin_shard"]},
 		{"type": "trigger", "x": 398, "y": 48, "dialogue": ["gate"]},
