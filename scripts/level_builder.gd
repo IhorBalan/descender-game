@@ -133,6 +133,8 @@ var _secret_specs: Array = []
 ## The sidecar's "objects" list.
 var _objects_spec: Array = []
 var _tiles: Node2D
+## The pieces along the terrain's exposed edges (see EdgeDecor).
+var _edges: EdgeDecor
 var _solids: StaticBody2D
 ## One-way platforms.
 var _ledges: StaticBody2D
@@ -180,6 +182,9 @@ func _make_containers() -> void:
 	_tiles = Node2D.new()
 	_tiles.name = "Tiles"
 	add_child(_tiles)
+	_edges = EdgeDecor.new()
+	_edges.name = "Edges"
+	add_child(_edges)
 	_solids = StaticBody2D.new()
 	_solids.name = "Solids"
 	_solids.collision_layer = 1
@@ -246,6 +251,7 @@ func build(map: WorldMap) -> void:
 	height = map.height
 	size_px = map.size_px()
 	_build_layers(map)
+	_edges.build(map)
 	_find_secrets(map)
 	for y in height:
 		_build_row(map, y)
@@ -266,7 +272,11 @@ func _build_layers(map: WorldMap) -> void:
 		var layer := TileMapLayer.new()
 		layer.name = layer_name
 		layer.tile_set = tile_set
+		# Nearest at every art scale: the window scales by whole numbers, so
+		# 64-pixel art lands pixel for pixel; linear would bleed across the
+		# atlas cells without padding.
 		layer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		layer.scale = Vector2.ONE * map.art_scale()
 		layer.collision_enabled = false
 		var source := 0
 		if layer_name == WorldMap.LAYER_GLOW:

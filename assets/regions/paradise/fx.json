@@ -1,0 +1,50 @@
+{
+  "art_tile": 64,
+  "particles": [
+    {
+      "texture": "petal.png",
+      "amount": 36,
+      "color": "#ffffff",
+      "lifetime": 14,
+      "direction": [
+        -0.35,
+        1.0
+      ],
+      "spread": 20,
+      "speed": [
+        8,
+        18
+      ],
+      "gravity": [
+        0,
+        2
+      ],
+      "scale": [
+        0.5,
+        0.9
+      ],
+      "spin": 0.4,
+      "sway": 4
+    },
+    {
+      "texture": "mote.png",
+      "amount": 28,
+      "color": "#fff1b8",
+      "lifetime": 12,
+      "direction": [
+        0.1,
+        -1.0
+      ],
+      "spread": 40,
+      "speed": [
+        2,
+        6
+      ],
+      "scale": [
+        0.4,
+        0.9
+      ],
+      "sway": 2
+    }
+  ]
+}

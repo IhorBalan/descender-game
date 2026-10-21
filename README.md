@@ -14,7 +14,9 @@ story, behind a title screen with three save slots.
 1. Install [Godot 4.7](https://godotengine.org/download) (standard build, no
    .NET needed).
 2. Open `project.godot` in the editor and press **F5**, or run
-   `godot --path .` from this folder.
+   `godot --path .` from this folder. A fresh clone needs one import first,
+   which opening the editor does by itself; without the editor, run
+   `godot --headless --import --path .` once.
 
 To jump straight into a level while testing, run the level scene with its
 id: `godot --path . scenes/main.tscn -- --level=world_1`. The ids are
@@ -225,6 +227,47 @@ Limbo to Treachery, each with an ambient colour that tints the screen while
 the hero is in it. The export also holds the rooms, the doors between them
 (some locked by an ability or a boss), 853 point lights and the markers.
 
+The export also says how many pixels a tile has in the sheets, its **art
+scale** (`art_tile`): 16 for pixel art, 64 for painted tiles, which makes a
+30 x 17-tile room 1920 x 1088 pixels. The grid stays 16 level pixels a tile
+whatever the art scale, so nothing about movement or collision changes; the
+tile layers are drawn scaled by 16 / `art_tile`, and the window's whole-number
+scaling puts 64-pixel art on screen pixel for pixel at 1280x720. The scale is
+picked per map in the editor's header, and a map without it is pixel art as
+before.
+
+Two kinds of region art turn the grid into a painted shape, each read from
+`assets/regions/<region key>/` (the region's name lowercased without its
+number, so `1. Limbo` is `limbo`), and each optional per region:
+
+- **Edges** (`edges.json`, built by `scripts/edge_decor.gd`): pieces drawn
+  along the exposed sides of the solid terrain, tufts standing on the tops,
+  growth hanging from the undersides and moss down the sides, overhanging
+  the cells they belong to. The JSON lists the PNGs per side and the share
+  of exposed cells that get one; the variant of a cell is fixed by its
+  position.
+- **Parallax** (`parallax.json`, drawn by `scripts/backdrop.gd`): painted
+  layers behind the level, back to front, each repeated sideways and
+  following the camera by a share of its movement, placed relative to the
+  region's top edge; a `cover` layer is stretched over the view (the sky)
+  and a `front` layer draws in front of the level (haze, wisps). Crossing
+  into a region fades its set in over the last.
+- **Particles** (`fx.json`, run by `scripts/region_fx.gd`): sprites drifting
+  through the air of the region, petals, motes, embers, emitted across the
+  view around the camera.
+
+Each JSON says how many pixels per tile its PNGs are drawn at (`art_tile`),
+so one set serves maps of any art scale. `tools/gen_region_art.py` (needs
+Pillow and numpy) draws a region's whole set from code, and also its tile
+textures for the map editor as `.lpx.json` files, written to
+`../editor/art/<region>/` for the editor's `npm run upload-textures`.
+Paradise has a full set: sky, two cloud layers, distant islands, light
+rays, haze and wisps; grass and blossom fringes, floating-island
+undersides and ivy; petals and gold motes; marble terrain, a pilastered
+back wall, gold-rimmed ledges and the grass, vine, lantern and window
+decorations. Replace any PNG with a painted one and keep the name, or edit
+the JSON.
+
 `scripts/level_builder.gd` builds it at boot: one `TileMapLayer` per layer
 (Background, Decor, Terrain, Glow), collision merged from the terrain kinds
 (solid, one-way ledge, hazard), a `PointLight2D` per light (without shadows,
@@ -307,6 +350,10 @@ the live map is meant to ship.
 | `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
 | `scripts/live_map.gd` | Downloads the editor's published live map on start (see Live map) |
+| `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
+| `scripts/backdrop.gd` | The painted parallax layers behind the level, per region |
+| `scripts/region_fx.gd` | The drifting particles of a region |
+| `tools/gen_region_art.py` | Draws a region's edge pieces, parallax layers, particles and editor tile textures from code (needs Pillow and numpy) |
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |
