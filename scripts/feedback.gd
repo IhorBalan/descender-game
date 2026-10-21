@@ -1,6 +1,6 @@
 extends Node
 
-## Game feel: hit-stop, screen shake, hit flashes and sparks.
+## Game feel: hit-stop, screen shake, hit flashes, sparks and death puffs.
 ##
 ## Registered as the Feedback autoload so enemies, the hero and pickups can
 ## ask for feedback in one line. The camera registers itself in the
@@ -8,6 +8,7 @@ extends Node
 
 const FLASH_SHADER := preload("res://assets/shaders/hit_flash.gdshader")
 const SPARK_SCENE := preload("res://scenes/hit_spark.tscn")
+const PUFF_SCENE := preload("res://scenes/death_puff.tscn")
 const HIT_STOP_SCALE := 0.05
 
 ## Real-time stamp (msec) at which the current hit-stop ends.
@@ -69,3 +70,16 @@ func spark(world_position: Vector2, color := Color.WHITE) -> void:
 
 func spark_count() -> int:
 	return get_tree().get_nodes_in_group("hit_spark").size()
+
+
+## A slow puff of dust (or light) at a world position, for a death. The
+## puff frees itself when done.
+func puff(world_position: Vector2, color := Color.WHITE) -> void:
+	var puff := PUFF_SCENE.instantiate()
+	puff.global_position = world_position
+	puff.color = color
+	get_tree().root.add_child(puff)
+
+
+func puff_count() -> int:
+	return get_tree().get_nodes_in_group("death_puff").size()

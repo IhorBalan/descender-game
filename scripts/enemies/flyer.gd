@@ -18,8 +18,12 @@ const ACCEL := 220.0
 const AGGRO_RANGE := 110.0
 const HURT_TIME := 0.25
 const KNOCKBACK := 120.0
-const DEATH_TIME := 0.45
+## The eye drops this far as it dies, then lies there this long.
+const DEATH_DROP := 12.0
+const CORPSE_TIME := 0.6
 const DEATH_SPARKS := Color(1.0, 0.45, 0.35)
+const DEATH_PUFF := Color(1.0, 0.95, 0.8)
+const DEATH_HIT_STOP := 0.06
 const DROP_CHANCE := 0.5
 ## The dive: where it waits over the hero, how long it aims, how fast and
 ## how long it falls, how long it climbs back and the pause between passes.
@@ -184,27 +188,26 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 		_die()
 
 
-## Death: the eye shuts, drops a little and fades, with a burst of sparks,
-## and sometimes leaves a heal mote behind.
+## Death: time stops for a blink; the eye shuts, the ring falls apart and
+## the wings fold (the death strip) as it sinks in a puff of light, then it
+## fades. Sometimes it leaves a heal mote behind.
 func _die() -> void:
 	_dead = true
 	set_physics_process(false)
 	Audio.play("enemy_die")
+	Feedback.hit_stop(DEATH_HIT_STOP)
 	Feedback.shake(0.3)
 	Feedback.spark(global_position, DEATH_SPARKS)
+	Feedback.puff(global_position, DEATH_PUFF)
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	health_bar.visible = false
-	sprite.animation = "hurt"
-	sprite.pause()
-	sprite.frame = 0
 	sprite.modulate = Color.WHITE
-	var tween := create_tween()
-	tween.set_parallel(true)
-	tween.tween_property(sprite, "position:y", 10.0, DEATH_TIME).set_ease(Tween.EASE_IN)
-	tween.tween_property(sprite, "scale", Vector2(1.2, 0.6), DEATH_TIME).set_ease(Tween.EASE_OUT)
-	tween.tween_property(sprite, "modulate:a", 0.0, DEATH_TIME * 0.5).set_delay(DEATH_TIME * 0.5)
-	tween.chain().tween_callback(queue_free)
+	var sink := create_tween()
+	sink.tween_property(sprite, "position:y", sprite.position.y + DEATH_DROP, 0.5).set_ease(
+		Tween.EASE_IN
+	)
+	EnemyDeath.play(sprite, 1, CORPSE_TIME, queue_free)
 	if randf() < DROP_CHANCE:
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = global_position

@@ -124,9 +124,16 @@ it is one map from top to bottom.
 Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
-Hitting one during the wind-up cancels the swing. A hit enemy shows its
-health for a moment, and a killed one sometimes leaves a mote of light
-that restores a heart (angel guards always do).
+Hitting one during the wind-up cancels the swing (except a brute's: its
+armour keeps the blow from staggering it, and a hit only pushes it half as
+far). A hit enemy flinches and shows its health for a moment. A killed one
+stops time for a blink and dies in its own way: the imp crumples, the guard
+goes down on a knee and tips forward, the brute pitches onto its face and
+shakes the ground, the watcher's eye shuts and its ring falls apart. The
+body lies there a moment in a puff of dust (or light, for the angels) and
+fades, and sometimes leaves a mote of light that restores a heart (angel
+guards always do). The enemy strips are drawn by
+`tools/enemy_sprites/export.py` from the art thread's rigs.
 
 Below Limbo the enemies pick up habits, one per placement (`behaviour` in
 `placements.json`): a **chaser** walks at the hero once he is near and

@@ -73,19 +73,16 @@
       },
       "hurt": {
         "file": "angel_guard_hurt.png",
-        "frames": 1,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "angel_guard_death.png",
+        "frames": 4,
         "fps": 8,
         "loop": false
       }
-    },
-    "sheet": {
-      "file": "angel_guard_sheet.png",
-      "row_order": [
-        "idle",
-        "walk",
-        "attack",
-        "hurt"
-      ]
     }
   },
   "watcher": {
@@ -113,18 +110,16 @@
       },
       "hurt": {
         "file": "watcher_hurt.png",
-        "frames": 1,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "watcher_death.png",
+        "frames": 4,
         "fps": 8,
         "loop": false
       }
-    },
-    "sheet": {
-      "file": "watcher_sheet.png",
-      "row_order": [
-        "idle",
-        "attack",
-        "hurt"
-      ]
     }
   },
   "imp": {
@@ -158,19 +153,16 @@
       },
       "hurt": {
         "file": "imp_hurt.png",
-        "frames": 1,
+        "frames": 2,
         "fps": 8,
         "loop": false
+      },
+      "death": {
+        "file": "imp_death.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
       }
-    },
-    "sheet": {
-      "file": "imp_sheet.png",
-      "row_order": [
-        "idle",
-        "run",
-        "attack",
-        "hurt"
-      ]
     }
   },
   "brute": {
@@ -204,19 +196,16 @@
       },
       "hurt": {
         "file": "brute_hurt.png",
-        "frames": 1,
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "brute_death.png",
+        "frames": 5,
         "fps": 8,
         "loop": false
       }
-    },
-    "sheet": {
-      "file": "brute_sheet.png",
-      "row_order": [
-        "idle",
-        "walk",
-        "attack",
-        "hurt"
-      ]
     }
   },
   "mereth": {
