@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 291
+const EXPECTED_CHECKS := 296
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -776,6 +776,20 @@ func _physics_process(_delta: float) -> void:
 				_hub.dialogue_box.advance()
 			_check(Story.has_flag("sold_winter"), "the trade takes the memory")
 			_check(Story.has_flag("item:clock_key"), "and gives the clock key")
+			# The playtesting arguments: start at a checkpoint with everything.
+			var third: Checkpoint = _hub.level.checkpoints[2]
+			_hub.apply_dev_args(["--checkpoint=3", "--abilities=all"])
+			_check(
+				_hub.player.global_position == third.global_position,
+				"--checkpoint=3 puts the hero at the third checkpoint"
+			)
+			_check(third.active, "and makes it the one he comes back to")
+			_check(
+				_hub.player.abilities.size() == Player.Ability.size(),
+				"--abilities=all unlocks every ability"
+			)
+			_check(_hub.level.pickups.is_empty(), "and takes the feathers out of the world")
+			_check(_hub.level.locks.size() < 19, "and opens the ability seals")
 			root.remove_child(_hub)
 			_hub.queue_free()
 			Audio.play_ambient("")
