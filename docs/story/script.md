@@ -661,7 +661,14 @@ Sets flag `reveal`. Every later NPC changes its lines on this flag.
 
 ### Circles 6 and 7
 
-**True sight, first use (trigger)**
+In the game: the `pipes` trigger on arrival in Heresy (sets `seen_pipes`),
+Tobiah's messenger (an angel guard's strips, grey; `messenger_intro`, then
+two repeat lines), *The Wheel, in writing* and the clock weight in Heresy
+(the weight in a secret room), Vael again at the top of Violence
+(`vael_army`, needs `reveal`; his trade and repeat lines follow him), and
+the pipe section and the clock chain in Violence.
+
+**`pipes` (trigger, once; sets `seen_pipes`)**
 > **ANSEL:** Pipes. White stone pipes, going up. All the way up.
 > **VOICE:** The Basin has to drain somewhere.
 
@@ -672,15 +679,26 @@ Sets flag `reveal`. Every later NPC changes its lines on this flag.
 > **ANSEL:** Then come and tell me. Not through this thing.
 > **TOBIAH:** When you reach the floor. Not before. Keep count.
 
-**Vael, second talk**
+**Messenger, repeat lines**
+> **TOBIAH:** The floor, Ansel. Not before.
+> *(The angel's mouth moves. Nothing comes out of it now.)*
+
+**Vael, second talk (`vael_army`, once; needs `reveal`)**
 > **VAEL:** He's climbing with all of them, you know. All nine circles. To break the Basin.
 > **VAEL:** He's not wrong. I'd just rather he did it without me.
-> **VAEL:** The key to a clock? For the token. Final offer. He'll never know; he's got you now.
+> **VAEL:** Keep going. He's counting the days, and he thinks you are too.
 
-**Items**: *The Wheel, in writing* ("A Choir tablet. 'The Wheel is the
-Basin. Souls return to the Garden as the Choir's hands. Teach the Wheel to
-the gathered; it calms them.'"); *The weight*; *The chain* (clock pieces,
-each "Part of a clock that was never meant to run forward.").
+The key is traded in Greed now (see circles 3 and 4), so the old third
+line ("The key to a clock? For the token.") is gone.
+
+**Items** (in the game as `item_wheel_tablet`, `item_clock_weight`,
+`item_pipe_section`, `item_clock_chain`): *The Wheel, in writing* ("A Choir
+tablet, in the same hand as the warrant. 'The Wheel is the Basin. Souls
+return to the Garden as the Choir's hands. Teach the Wheel to the gathered;
+it calms them.'"); *The weight* and *The chain* (clock pieces, each "Part
+of a clock that was never meant to run forward."); *Pipe section* ("White
+stone, cut square, and cold. The inside is stained the colour of the
+Basin." Ansel: "It drains to here. All of it.").
 
 ### Circles 8 and 9
 

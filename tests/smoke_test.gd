@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 296
+const EXPECTED_CHECKS := 299
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -423,9 +423,22 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 26, "twenty-six story objects built")
-			_check(_main.level.npc_count() == 9, "nine NPCs built")
-			_check(_main.level.item_count() == 10, "ten relics built")
+			_check(_main.level.interactables.size() == 33, "thirty-three story objects built")
+			var messenger: Npc = null
+			var vaels := 0
+			for node in _main.level.interactables:
+				if node is Npc and node.npc_name == "Messenger":
+					messenger = node
+				elif node is Npc and node.npc_name == "Vael the Bargainer":
+					vaels += 1
+			_check(messenger != null, "Tobiah's messenger stands in Heresy")
+			_check(
+				messenger != null and messenger.character == "angel_guard",
+				"the messenger is a sent-down angel"
+			)
+			_check(vaels == 2, "Vael waits in Greed and again in Violence")
+			_check(_main.level.npc_count() == 11, "eleven NPCs built")
+			_check(_main.level.item_count() == 14, "fourteen relics built")
 			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
 			for node in _main.level.interactables:
 				if node is Npc and node.npc_name == "Mereth":
@@ -486,7 +499,7 @@ func _physics_process(_delta: float) -> void:
 			while _main.dialogue_box.is_open():
 				_main.dialogue_box.advance()
 		786:
-			_check(_main.level.item_count() == 9, "examined relic is gone")
+			_check(_main.level.item_count() == 13, "examined relic is gone")
 			_check(Story.has_flag("item:token"), "examined relic is flagged")
 			# A trigger: walking in plays its dialogue once.
 			for node in _main.level.interactables:
@@ -569,7 +582,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(_loaded.level.pickup_count() == 4, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
-			_check(_loaded.level.item_count() == 9, "examined relic stays gone")
+			_check(_loaded.level.item_count() == 13, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
 			_check(_loaded.level.upgrade_count() == 2, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
@@ -758,7 +771,7 @@ func _physics_process(_delta: float) -> void:
 			# Vael's trade, once the hero knows the name: a memory for the clock key.
 			var vael: Npc = null
 			for node in _hub.level.interactables:
-				if node is Npc and node.npc_name == "Vael the Bargainer":
+				if node is Npc and node.npc_name == "Vael the Bargainer" and vael == null:
 					vael = node
 			_check(vael != null, "Vael is placed")
 			_check(vael.rotate_ids.size() == 3, "Vael has three repeat lines")

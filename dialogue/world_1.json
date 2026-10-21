@@ -1051,6 +1051,122 @@
 			}
 		]
 	},
+	"pipes": {
+		"once": true,
+		"sets": "seen_pipes",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Pipes. White stone pipes, going up. All the way up."
+			},
+			{
+				"who": "The Voice",
+				"text": "The Basin has to drain somewhere."
+			}
+		]
+	},
+	"messenger_intro": {
+		"once": true,
+		"sets": "met_messenger",
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "Go home, Ansel."
+			},
+			{
+				"who": "Ansel",
+				"text": "You first."
+			},
+			{
+				"who": "Tobiah",
+				"text": "There isn't one. You've seen the pipes. You know what the Wheel is."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then come and tell me. Not through this thing."
+			},
+			{
+				"who": "Tobiah",
+				"text": "When you reach the floor. Not before. Keep count."
+			}
+		]
+	},
+	"messenger_floor": {
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "The floor, Ansel. Not before."
+			}
+		]
+	},
+	"messenger_empty": {
+		"lines": [
+			{
+				"who": "",
+				"text": "The angel's mouth moves. Nothing comes out of it now."
+			}
+		]
+	},
+	"vael_army": {
+		"once": true,
+		"requires": [
+			"reveal"
+		],
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "He's climbing with all of them, you know. All nine circles. To break the Basin."
+			},
+			{
+				"who": "Vael",
+				"text": "He's not wrong. I'd just rather he did it without me."
+			},
+			{
+				"who": "Vael",
+				"text": "Keep going. He's counting the days, and he thinks you are too."
+			}
+		]
+	},
+	"item_wheel_tablet": {
+		"lines": [
+			{
+				"who": "The Wheel, in writing",
+				"text": "A Choir tablet, in the same hand as the warrant. 'The Wheel is the Basin. Souls return to the Garden as the Choir's hands.'"
+			},
+			{
+				"who": "The Wheel, in writing",
+				"text": "'Teach the Wheel to the gathered; it calms them.'"
+			}
+		]
+	},
+	"item_clock_weight": {
+		"lines": [
+			{
+				"who": "Clock weight",
+				"text": "Part of a clock that was never meant to run forward. Lead, and heavier than lead should be."
+			}
+		]
+	},
+	"item_pipe_section": {
+		"lines": [
+			{
+				"who": "Pipe section",
+				"text": "White stone, cut square, and cold. The inside is stained the colour of the Basin."
+			},
+			{
+				"who": "Ansel",
+				"text": "It drains to here. All of it."
+			}
+		]
+	},
+	"item_clock_chain": {
+		"lines": [
+			{
+				"who": "Clock chain",
+				"text": "Part of a clock that was never meant to run forward. Every link is stamped with a tally."
+			}
+		]
+	},
 	"the_fury_intro": {
 		"once": true,
 		"lines": [
