@@ -12,6 +12,8 @@ extends RefCounted
 ##   then      the id of the entry that plays right after this one (optional)
 ##   warp      "start": the hero goes back to the level's start when the
 ##             entry ends (optional; the clock ending)
+##   save      true for an entry that saves the game when it ends (optional;
+##             the point of no return)
 ##   once      true for an entry that plays a single time per save (optional);
 ##             every entry read to the end sets the flag `seen:<id>`, and a
 ##             `once` entry is skipped when its flag is set

@@ -1484,6 +1484,25 @@
 			}
 		]
 	},
+	"descent": {
+		"once": true,
+		"sets": "descended",
+		"save": true,
+		"lines": [
+			{
+				"who": "",
+				"text": "(The bottom of the churchyard. The hole goes down past where the lantern light stops, and the hammering is far above now.)"
+			},
+			{
+				"who": "The Voice",
+				"text": "This is the way down. Nothing that goes this way comes back up the same."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then I'll come back different. Keep count."
+			}
+		]
+	},
 	"the_fury_intro": {
 		"once": true,
 		"lines": [

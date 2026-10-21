@@ -500,6 +500,8 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 		_end_game(ending)
 	if str(entry.get("warp", "")) == "start":
 		_warp_to_start()
+	if bool(entry.get("save", false)) and save_game():
+		hud.queue_message("Game saved", 2.0)
 	# Released after this frame's physics step, so the press that closed the
 	# box is not also read as a jump.
 	player.set_deferred("talking", false)
