@@ -128,6 +128,21 @@ Hitting one during the wind-up cancels the swing. A hit enemy shows its
 health for a moment, and a killed one sometimes leaves a mote of light
 that restores a heart (angel guards always do).
 
+Below Limbo the enemies pick up habits, one per placement (`behaviour` in
+`placements.json`): a **chaser** walks at the hero once he is near and
+level, stopping at the end of its ledge; an **ambusher** stands as if idle
+until he is close, then springs with a quick swing, a red mark over its
+head the only warning; a **pouncer** (imps) crouches and leaps at a hero a
+few tiles away, claws out; a **hurler** (imps) keeps its distance and
+throws a bolt of hellfire, backing off when he comes close; a **slammer**
+(brutes) raises its arms and strikes the ground, sending a shockwave along
+the floor that has to be jumped. Watchers that **dive** keep above the
+hero instead of drifting at him, stop, turn the eye red, and drop through
+him before climbing back for another pass. The mix thickens on the way
+down: chasers from Lust, ambushers from Gluttony, hurlers from Greed,
+slammers and pouncers from Wrath, divers from Heresy, everything in
+Violence and Treachery.
+
 The story is told in text boxes. Standing next to someone, or to a relic,
 shows the talk key above them; pressing it opens a box at the bottom of the
 screen, and the same key (or jump) turns the page. The text types out with
