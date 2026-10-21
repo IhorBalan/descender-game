@@ -96,6 +96,11 @@ func current_id() -> String:
 	return str(_entry.get("id", ""))
 
 
+## How many pages the entry being shown has.
+func page_count() -> int:
+	return DialogueData.line_count(_entry)
+
+
 func play(entry: Dictionary) -> void:
 	if DialogueData.line_count(entry) == 0:
 		return

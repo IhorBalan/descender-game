@@ -55,7 +55,7 @@
 			"name": "Old Pell",
 			"character": "pell",
 			"faces_left": true,
-			"dialogue": ["pell_intro", "pell_sky", "pell_forge_first", "pell_hook", "pell_warrant", "pell_iron"],
+			"dialogue": ["pell_intro", "pell_sky", "pell_forge_first", "pell_hook", "pell_warrant", "pell_iron", "pell_warden", "pell_garden"],
 			"rotate": ["pell_forge", "pell_light", "pell_boy"]
 		},
 		{"type": "item", "x": 215, "y": 82, "item": "letter", "dialogue": ["item_letter"]},
@@ -66,7 +66,7 @@
 			"name": "Sister Ava",
 			"character": "ava",
 			"faces_left": false,
-			"dialogue": ["ava_intro", "ava_name", "ava_reveal"],
+			"dialogue": ["ava_intro", "ava_name", "ava_reveal", "ava_pipes"],
 			"rotate": ["ava_hand", "ava_listen", "ava_below"]
 		},
 		{"type": "item", "x": 290, "y": 82, "item": "warrant", "dialogue": ["item_warrant"]},
@@ -77,7 +77,7 @@
 			"name": "Hanne",
 			"character": "hanne",
 			"faces_left": false,
-			"dialogue": ["hanne_intro", "hanne_drawing", "hanne_token"],
+			"dialogue": ["hanne_intro", "hanne_drawing", "hanne_token", "hanne_pipes", "hanne_camp"],
 			"rotate": ["hanne_churchyard", "hanne_draw_down", "hanne_count"]
 		},
 		{
@@ -87,7 +87,7 @@
 			"name": "Corporal Dace",
 			"character": "dace",
 			"faces_left": true,
-			"dialogue": ["dace_intro", "dace_clock", "dace_letter"],
+			"dialogue": ["dace_intro", "dace_clock", "dace_letter", "dace_scarf", "dace_army"],
 			"rotate": ["dace_barricade", "dace_waiting", "dace_ticking"]
 		},
 		{"type": "trigger", "x": 460, "y": 65, "dialogue": ["hole"]},
@@ -105,6 +105,7 @@
 		{"type": "item", "x": 224, "y": 337, "item": "clock_weight", "dialogue": ["item_clock_weight"]},
 		{"type": "npc", "x": 440, "y": 354, "name": "Messenger", "character": "angel_guard", "faces_left": true, "tint": [0.7, 0.72, 0.8], "dialogue": ["messenger_intro"], "rotate": ["messenger_floor", "messenger_empty"]},
 		{"type": "npc", "x": 150, "y": 371, "name": "Vael the Bargainer", "character": "vael", "faces_left": false, "dialogue": ["vael_army", "vael_trade"], "rotate": ["vael_smell", "vael_price", "vael_lighter"]},
+		{"type": "npc", "x": 200, "y": 371, "name": "Thorne", "character": "thorne", "faces_left": true, "dialogue": ["thorne_intro", "thorne_stranger"], "rotate": ["thorne_barricade", "thorne_cold"]},
 		{"type": "item", "x": 200, "y": 388, "item": "pipe_section", "dialogue": ["item_pipe_section"]},
 		{"type": "item", "x": 100, "y": 388, "item": "clock_chain", "dialogue": ["item_clock_chain"]},
 		{"type": "trigger", "x": 432, "y": 422, "dialogue": ["camp"]},
