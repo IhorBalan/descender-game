@@ -11,8 +11,11 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 193
+const EXPECTED_CHECKS := 192
 const LAST_TICK := 930
+## A spot on the start room's floor with clear air above it, for the
+## jumps and the air dashes (the start itself has ledges overhead).
+const AIR_START := Vector2(1064.0, 240.0)
 
 var _ticks := 0
 ## Set once the level is in the tree, where the checks can reach it.
@@ -39,9 +42,12 @@ var _slot := -1
 var _main_scene: PackedScene
 var _mereth: Npc
 var _token: LoreItem
-## The Earth hub booted at the end, and the blacksmith in it.
+## The world booted again at the end, for the hub region, and the
+## blacksmith in it.
 var _hub: Node
 var _pell: Npc
+## The tint of Paradise, which crossing into Ruined Earth changes.
+var _paradise_tint := Color.WHITE
 
 @onready var root: Window = get_tree().root
 
@@ -76,14 +82,44 @@ func _physics_process(_delta: float) -> void:
 			_check(_player != null, "hero spawned")
 			_check(root.get_node_or_null("Audio") != null, "Audio autoload present")
 			_check(root.get_node_or_null("Feedback") != null, "Feedback autoload present")
-			_check(Audio.ambient_name == "heaven", "level starts its ambient loop")
-			_enemy_count = _main.level.enemy_count()
-			_check(_enemy_count >= 6, "enemies spawned (%d)" % _enemy_count)
-			_check(_main.level.checkpoints.size() == 1, "checkpoint built")
-			_check(_main.level.goal != null, "goal gate built")
-			_check(_main.level.pickup_count() == 2, "two ability feathers built")
-			_check(_main.level.upgrade_count() == 1, "one permanent upgrade built")
-			_check(_main.level.power_up_count() == 2, "two power-ups built")
+			_check(Audio.ambient_name == "heaven", "Paradise starts the heaven ambient loop")
+			# The world: built from the map tool's export with TileMapLayers,
+			# collision from the terrain kinds, the markers, the lights and
+			# the objects of the placements sidecar.
+			var level: LevelBuilder = _main.level
+			_check(level.world != null, "world export read")
+			_check(level.get_node("Tiles").get_child_count() == 4, "four tile layers built")
+			var terrain := level.get_node_or_null("Tiles/Terrain")
+			_check(terrain is TileMapLayer, "terrain is a TileMapLayer")
+			_check(
+				terrain != null and terrain.get_used_cells().size() == 120990,
+				"every terrain cell is set"
+			)
+			_check(level.get_node("Solids").get_child_count() > 0, "solid runs have collision")
+			_check(level.get_node("Ledges").get_child_count() > 0, "one-way ledges built")
+			_check(level.get_node("Hazards").get_child_count() > 0, "hazards built")
+			_check(level.get_node("Lights").get_child_count() == 853, "every light placed")
+			_check(
+				level.region_at(_player.global_position.y).get("name") == "Paradise",
+				"the hero starts in Paradise"
+			)
+			_check(
+				_player.global_position.is_equal_approx(Vector2(1192.0, 240.0)),
+				"the hero stands on the start marker"
+			)
+			_check(
+				level.ambient != null and level.ambient.color != Color.WHITE,
+				"the region's ambient tint is applied"
+			)
+			_enemy_count = level.enemy_count()
+			_check(
+				_enemy_count >= 6 + 11, "enemies and placeholder bosses spawned (%d)" % _enemy_count
+			)
+			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
+			_check(level.goal == null, "the world has no goal gate yet")
+			_check(level.pickup_count() == 2, "feathers for the two known abilities built")
+			_check(level.upgrade_count() == 2, "two permanent upgrades built")
+			_check(level.power_up_count() == 3, "three power-ups built")
 			_start_x = _player.global_position.x
 			_start_position = _player.global_position
 			# The opening dialogue would freeze the hero at the start; it is
@@ -158,7 +194,7 @@ func _physics_process(_delta: float) -> void:
 			_check(_main.level.enemy_count() == _enemy_count, "enemies respawn")
 			_check(_main.fade.cover.modulate.a < 1.0, "screen fades back in after the respawn")
 			# Drop the hero from high up so he has time for two dashes.
-			_player.global_position.y -= 160.0
+			_player.global_position = AIR_START + Vector2(0.0, -160.0)
 			_player.velocity = Vector2.ZERO
 		500:
 			_press("dash", true)
@@ -191,8 +227,8 @@ func _physics_process(_delta: float) -> void:
 			_check(_player.has_ability(Player.Ability.WINGS), "feather unlocks the wings")
 			_check(_main.hud.status.abilities == [Player.Ability.WINGS], "HUD shows the wings")
 			_check(_main.level.pickup_count() == 1, "feather is used up")
-			# Back to the start, where there is headroom for two jumps.
-			_player.global_position = _start_position
+			# Back to the start room, where there is headroom for two jumps.
+			_player.global_position = AIR_START
 			_player.velocity = Vector2.ZERO
 		550:
 			_check(_player.is_on_floor(), "hero stands at the start again")
@@ -264,8 +300,8 @@ func _physics_process(_delta: float) -> void:
 		678:
 			_check(_player.max_health == Player.MAX_HEALTH + 1, "Kept Light adds a heart")
 			_check(_player.health == _player.max_health, "Kept Light fills the hearts")
-			_check(Story.has_flag("upgrade:heart:heaven_1:0"), "taken upgrade is flagged")
-			_check(_main.level.upgrade_count() == 0, "taken upgrade is gone")
+			_check(Story.has_flag("upgrade:heart:world_1:0"), "taken upgrade is flagged")
+			_check(_main.level.upgrade_count() == 1, "taken upgrade is gone")
 			_check(
 				_main.dialogue_box.current_id() == "upgrade_heart", "upgrade shows its description"
 			)
@@ -282,7 +318,7 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				_player.attack_damage() == Player.ATTACK_DAMAGE + 1, "Lit Blade raises the damage"
 			)
-			_check(_main.level.power_up_count() == 1, "taken power-up is gone")
+			_check(_main.level.power_up_count() == 2, "taken power-up is gone")
 			_check(_main.hud.status.powers.has(Player.Power.BLADE), "HUD shows the power-up")
 			_player.global_position = _power_up_position(Player.Power.HALO)
 			_player.velocity = Vector2.ZERO
@@ -352,9 +388,9 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 7, "seven story objects built")
-			_check(_main.level.npc_count() == 2, "two NPCs built")
-			_check(_main.level.item_count() == 3, "three relics built")
+			_check(_main.level.interactables.size() == 16, "sixteen story objects built")
+			_check(_main.level.npc_count() == 6, "six NPCs built")
+			_check(_main.level.item_count() == 6, "six relics built")
 			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
 			for node in _main.level.interactables:
 				if node is Npc and node.npc_name == "Mereth":
@@ -415,7 +451,7 @@ func _physics_process(_delta: float) -> void:
 			while _main.dialogue_box.is_open():
 				_main.dialogue_box.advance()
 		786:
-			_check(_main.level.item_count() == 2, "examined relic is gone")
+			_check(_main.level.item_count() == 5, "examined relic is gone")
 			_check(Story.has_flag("item:token"), "examined relic is flagged")
 			# A trigger: walking in plays its dialogue once.
 			for node in _main.level.interactables:
@@ -468,12 +504,14 @@ func _physics_process(_delta: float) -> void:
 			_save = SaveManager.read(_slot)
 			_check(int(_save.get("checkpoint", -1)) == 0, "save holds the checkpoint")
 			_check(_save.get("abilities", []).size() == 2, "save holds both abilities")
-			_check(str(_save.get("level", "")) == "heaven_1", "save holds the level id")
+			_check(str(_save.get("level", "")) == "world_1", "save holds the level id")
 			_check("item:token" in _save.get("flags", []), "save holds the story flags")
 			_check(SaveManager.latest_slot() == _slot, "latest slot is the new save")
 			# Loading: boot a fresh level from the save in place of this one.
+			# Freed at the end of the frame rather than at once: the world has
+			# hundreds of bodies and areas the physics step still refers to.
 			root.remove_child(_main)
-			_main.free()
+			_main.queue_free()
 			Story.reset()
 			_check(SaveManager.load_slot(_slot), "save slot loads")
 			_loaded = _main_scene.instantiate()
@@ -481,7 +519,7 @@ func _physics_process(_delta: float) -> void:
 		814:
 			var loaded_player: Player = _loaded.player
 			var checkpoint: Checkpoint = _loaded.level.checkpoints[0]
-			_check(_loaded.level_id == "heaven_1", "loaded level is the saved one")
+			_check(_loaded.level_id == "world_1", "loaded level is the saved one")
 			_check(
 				loaded_player.global_position.distance_to(checkpoint.global_position) < 1.0,
 				"loaded hero stands at the checkpoint"
@@ -496,54 +534,26 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(_loaded.level.pickup_count() == 0, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
-			_check(_loaded.level.item_count() == 2, "examined relic stays gone")
+			_check(_loaded.level.item_count() == 5, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
-			_check(_loaded.level.upgrade_count() == 0, "taken upgrade stays taken")
+			_check(_loaded.level.upgrade_count() == 1, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
 			_check(loaded_player.powers.is_empty(), "power-ups are not saved")
-			# Level transition: walk into the goal gate.
+			# The registry: one level, which old saves and unknown ids fall
+			# back to, and nothing after it yet.
 			var levels := root.get_node_or_null("Levels")
 			_check(levels != null, "Levels autoload present")
-			_check(levels.next_id("heaven_1") == "heaven_2", "heaven_2 follows heaven_1")
+			_check(levels.first_id == "world_1", "the world is the first level")
+			_check(levels.next_id("world_1") == "", "nothing follows the world yet")
+			_check(levels.resolve("heaven_1") == "world_1", "old level ids fall back to the world")
 			_check(
-				levels.resolve("res://levels/level_01.txt") == "heaven_1", "old path saves resolve"
+				levels.resolve("res://levels/level_01.txt") == "world_1", "old path saves fall back"
 			)
-			loaded_player.global_position = _loaded.level.goal.global_position
-			loaded_player.velocity = Vector2.ZERO
-		818:
-			_check(_loaded.player.frozen, "goal gate freezes the hero")
-			_check(_loaded._transitioning, "goal gate starts the transition")
 		866:
-			# The fade is over and the next level has booted as the current scene.
-			_check(_loaded.fade.is_covered(), "screen faded to black")
-			_save = SaveManager.read(_slot)
-			_check(str(_save.get("level", "")) == "heaven_2", "transition saves the next level")
-			_check(int(_save.get("checkpoint", 0)) == -1, "next level starts with no checkpoint")
-			var next: Node = get_tree().current_scene
-			_check(next != null and next != _loaded, "next level scene booted")
-			if next:
-				_check(next.level_id == "heaven_2", "next level is heaven_2")
-				_check(
-					next.player.has_ability(Player.Ability.LIGHT_DASH),
-					"abilities carry over to the next level"
-				)
-				_check(
-					next.player.global_position.distance_to(next.level.player_start) < 1.0,
-					"hero starts the next level at its start"
-				)
-				_check(
-					next.player.max_health == Player.MAX_HEALTH + 1,
-					"hearts carry over to the next level"
-				)
-				_check(next.level.upgrade_count() == 1, "next level has its own upgrade")
-				_check(next.level.power_up_count() == 1, "next level has its own power-up")
-				get_tree().current_scene = null
-				root.remove_child(next)
-				next.free()
 			SaveManager.delete(_slot)
 			SaveManager.current_slot = -1
 			root.remove_child(_loaded)
-			_loaded.free()
+			_loaded.queue_free()
 			_title = load("res://scenes/title.tscn").instantiate()
 			root.add_child(_title)
 		870:
@@ -587,33 +597,40 @@ func _physics_process(_delta: float) -> void:
 			settings_menu.device_button.pressed.emit()
 			_check(attack_button.text == "X", "device button switches to gamepad names")
 		880:
-			# The Earth hub: its own sky and tiles, four NPCs, unique lines
-			# first and then the repeat lines in turn.
+			# The hub region: crossing into Ruined Earth changes the ambient
+			# tint and sound, and the survivors stand in it with their unique
+			# lines first and then the repeat lines in turn.
 			root.remove_child(_title)
 			_title.free()
-			var levels := root.get_node("Levels")
-			_check(levels.next_id("heaven_2") == "earth_hub", "the hub follows heaven_2")
-			SaveManager.pending = {"level": "earth_hub", "flags": []}
+			SaveManager.pending = {"level": "world_1", "flags": []}
 			_hub = _main_scene.instantiate()
 			root.add_child(_hub)
 		884:
-			_check(_hub.level_id == "earth_hub", "hub booted from a save")
-			_check(_hub.level.interactables.size() == 9, "nine story objects in the hub")
-			_check(_hub.level.npc_count() == 4, "four survivors in the hub")
-			_check(_hub.level.item_count() == 3, "three relics in the hub")
+			_check(_hub.level_id == "world_1", "world booted from a save")
 			_check(
-				_hub.level.tiles_texture.resource_path == Levels.EARTH_TILES,
-				"hub uses the Earth tiles"
+				_hub.sky.texture.gradient.colors[0] == Levels.WORLD_SKY[0], "world sky is painted"
 			)
-			_check(_hub.sky.texture.gradient.colors[0] == Levels.EARTH_SKY[0], "hub sky is painted")
+			_paradise_tint = _hub.level.ambient.color
 			for node in _hub.level.interactables:
 				if node is Npc and node.npc_name == "Old Pell":
 					_pell = node
 			_check(_pell != null, "Pell is placed")
 			_check(_pell.sprite.sprite_frames.has_animation("talk"), "Pell has a talk animation")
 			_check(_pell.rotate_ids.size() == 3, "Pell has three repeat lines")
+			_check(
+				_hub.level.region_at(_pell.global_position.y).get("name") == "Ruined Earth",
+				"Pell stands in Ruined Earth"
+			)
 			_hub.player.global_position = _pell.global_position + Vector2(-20.0, 0.0)
 			_hub.player.velocity = Vector2.ZERO
+		886:
+			_check(
+				Audio.ambient_name == "earth", "crossing into Ruined Earth plays its ambient loop"
+			)
+			_check(
+				_hub.level.ambient.color != _paradise_tint,
+				"crossing into a region changes the tint"
+			)
 		888:
 			_press("interact", true)
 		890:
@@ -675,7 +692,7 @@ func _physics_process(_delta: float) -> void:
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 			root.remove_child(_hub)
-			_hub.free()
+			_hub.queue_free()
 			Audio.play_ambient("")
 		LAST_TICK:
 			_report()

@@ -4,10 +4,10 @@ A side-view metroidvania built in Godot 4: a man with half-finished angel
 powers fights his way down from Heaven, through Purgatory and the nine
 circles of Hell, to rescue his brother.
 
-This repository holds the first playable prototype: two Heaven levels and
-the Earth hub, with the hero, movement, melee combat, enemies, checkpoints,
-limited healing and the first scenes of the story, behind a title screen
-with three save slots.
+This repository holds the first playable prototype: the whole world as one
+connected map, exported from the map tool, with the hero, movement, melee
+combat, enemies, checkpoints, limited healing and the first scenes of the
+story, behind a title screen with three save slots.
 
 ## Running it
 
@@ -17,7 +17,7 @@ with three save slots.
    `godot --path .` from this folder.
 
 To jump straight into a level while testing, run the level scene with its
-id: `godot --path . scenes/main.tscn -- --level=heaven_2`. The ids are
+id: `godot --path . scenes/main.tscn -- --level=world_1`. The ids are
 listed in `scripts/levels.gd`.
 
 The game renders at **320x180** and scales up by whole numbers, so the
@@ -73,9 +73,10 @@ also **power-ups** lying in rooms: a Halo turns the next hit aside, a Lit
 Blade makes the sword hit harder and Zeal makes the hero run and dash faster,
 each for twenty seconds. Power-ups are lost on death and come back with the
 enemies. The design, with how many of each the whole game needs and where
-they go, is in [`docs/design/upgrades.md`](docs/design/upgrades.md). Reaching the goal
+they go, is in [`docs/design/upgrades.md`](docs/design/upgrades.md). Reaching a goal
 gate fades out, saves, and starts the next level with the abilities so far;
-the gate of the last level ends the prototype.
+the gate of the last level ends the prototype. The world has no gate yet:
+it is one map from top to bottom.
 Spikes cost one heart and put the hero back on the last solid ground.
 Imps and angel guards swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
@@ -96,11 +97,49 @@ per talk. The script for the whole game, with the lines that are in the
 levels and the ones that are not yet, is in
 [`docs/story/script.md`](docs/story/script.md).
 
-After Heaven the hero lands in Hollowmere, the Earth hub: a town under the
-hole in the sky, with its own sky, tiles and ambient sound, where four
-survivors (Old Pell, Hanne, Corporal Dace and Sister Ava) and three relics
-tell what the war looks like from the ground. The hole in the churchyard is
-the way down.
+Below Paradise the hero lands in Ruined Earth, the hub region under the
+hole in the sky, with its own ambient tint and sound, where four survivors
+(Old Pell, Hanne, Corporal Dace and Sister Ava) and three relics tell what
+the war looks like from the ground. The passage at its right end leads on
+to Purgatory.
+
+## The world
+
+The map is one world, 480 x 459 tiles, exported by the map tool as
+`levels/world/world.json` with three tile sheets next to it: the diffuse
+tiles, their normal map and the emissive glow. It is twelve regions stacked
+top to bottom: Paradise, Ruined Earth, Purgatory and the nine circles from
+Limbo to Treachery, each with an ambient colour that tints the screen while
+the hero is in it. The export also holds the rooms, the doors between them
+(some locked by an ability or a boss), 853 point lights and the markers.
+
+`scripts/level_builder.gd` builds it at boot: one `TileMapLayer` per layer
+(Background, Decor, Terrain, Glow), collision merged from the terrain kinds
+(solid, one-way ledge, hazard), a `PointLight2D` per light (without shadows,
+which would need an occluder on every tile), and the markers: the start
+puts the hero down, every save is a checkpoint, the ability markers for the
+wings and the halo dash are feathers, and every boss room has an angel
+guard standing in for the boss. The other markers (secrets, shops, the gate,
+the clock) and the four abilities the hero cannot learn yet (Wall Grip,
+Holy Light, Glide, Smite) are data in the JSON until there is something for
+them to do.
+
+Everything else that stands in the world is listed in
+`levels/world/placements.json`, which also names the dialogue file: an
+`objects` list, each with a `type` and the tile cell `x`, `y` its feet are
+on. The types are `npc`, `item` and `trigger` (story objects, with the
+fields the dialogue system wants), `enemy` (`character`: `imp`,
+`angel_guard` or `watcher`), `upgrade` (`heart` or `vial`), `power`
+(`halo`, `blade` or `zeal`) and `barrier` (a wall of light `height` cells
+tall). Upgrades are numbered by their order in the list, so a save keeps
+them straight as long as that order does not change.
+
+To bring in a new export, unzip it over `levels/world/` and keep
+`placements.json`. The tool's own `import_world.gd` is not used: the game
+reads the JSON directly, so the map stays editable in the tool. This
+settles the level pipeline question (#34): big maps come from the tool as
+tile layers, and the hand-written ASCII levels of the first prototype are
+gone.
 
 ## Layout
 
@@ -116,11 +155,11 @@ the way down.
 | `scenes/dialogue_box.tscn`, `scripts/ui/dialogue_box.gd` | The text box: speaker, typed text, paging |
 | `scripts/interactable.gd` | Base for things the hero can talk to or examine; shows the talk key when he is close |
 | `scripts/npc.gd`, `scripts/lore_item.gd`, `scripts/story_trigger.gd` | Someone to talk to, a relic with a description, a spot that speaks on its own |
-| `dialogue/level_01.json`, `dialogue/earth_hub.json` | Every line in a level, by id, with the flags each needs and sets, and whether it plays once |
-| `levels/level_01.json`, `levels/earth_hub.json` | Where a level's NPCs, relics and triggers stand (the digits in the map), their unique lines and their repeat lines |
+| `dialogue/world_1.json` | Every line in the world, by id, with the flags each needs and sets, and whether it plays once |
+| `levels/world/placements.json` | Where the world's NPCs, relics, triggers, enemies, upgrades, power-ups and walls of light stand, and the NPCs' unique and repeat lines |
 | `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
-| `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, map paths, sky, tiles and ambient sound |
+| `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |
 | `scripts/audio.gd` | The `Audio` autoload: sound effects and the ambient loop |
@@ -131,37 +170,19 @@ the way down.
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
-| `scripts/level_builder.gd` | Builds tiles, collision, spikes, enemies and objects from an ASCII map |
+| `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
+| `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/upgrade.gd`, `scripts/power_up.gd` | A permanent upgrade (heart, healing charge) and a timed power-up (Halo, Lit Blade, Zeal) |
 | `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
-| `levels/level_01.txt`, `levels/level_02.txt`, `levels/earth_hub.txt` | The levels. Edit them in any text editor |
+| `levels/world/` | The world export (`world.json` and its three tile sheets) and `placements.json` |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
-| `assets/sprites/` | Character strips from the art thread and the NPC rig, plus generated tiles (Heaven and Earth), checkpoint and gate |
+| `assets/sprites/` | Character strips from the art thread and the NPC rig, plus the generated checkpoint, gate and pickups |
 | `assets/ui_theme.tres` | The menus' font size and button styles |
-| `tools/gen_placeholders.py` | Regenerates the tiles (both sets), checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
+| `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
-| `tools/write_level.py` | Prints the level with a column ruler (`--write` regenerates the draft) |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
-
-### Level legend
-
-```
-#  solid tile      ^  spikes           P  hero start
-w  imp (walker)    g  angel guard      f  watcher (flyer)
-C  checkpoint      G  goal gate        .  empty
-W  feather (unlocks the wings)       L  feather (unlocks the light dash)
-|  wall of light (needs the light dash)
-1-9  a story object: an NPC, relic or trigger described in the level's .json
-H  Kept Light (+1 heart)             V  Vial of the Basin (+1 healing charge)
-O  Halo   B  Lit Blade   Z  Zeal     (timed power-ups)
-```
-
-Tiles are 16x16. The hero is about two and a half tiles tall and jumps
-just over four tiles high, or eight with the wings; a seven tile pit needs a
-jump plus a dash. The climb to the goal gate needs the wings, and the wall of
-light in front of it needs the light dash.
 
 ## Tests
 

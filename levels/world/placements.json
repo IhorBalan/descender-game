@@ -1,0 +1,91 @@
+{
+	"dialogue": "res://dialogue/world_1.json",
+	"objects": [
+		{"type": "trigger", "x": 76, "y": 14, "dialogue": ["opening"]},
+		{"type": "item", "x": 80, "y": 14, "item": "token", "dialogue": ["item_token"]},
+		{
+			"type": "npc",
+			"x": 84,
+			"y": 14,
+			"name": "Mereth",
+			"character": "mereth",
+			"faces_left": true,
+			"dialogue": ["mereth_intro"],
+			"rotate": ["mereth_again", "mereth_count", "mereth_orchard"]
+		},
+		{"type": "power", "x": 82, "y": 4, "power": "halo"},
+		{"type": "enemy", "x": 112, "y": 14, "character": "imp"},
+		{"type": "enemy", "x": 140, "y": 14, "character": "imp"},
+		{"type": "power", "x": 160, "y": 14, "power": "blade"},
+		{"type": "enemy", "x": 170, "y": 14, "character": "angel_guard"},
+		{"type": "barrier", "x": 191, "y": 11, "height": 4},
+		{"type": "enemy", "x": 203, "y": 14, "character": "angel_guard"},
+		{"type": "item", "x": 138, "y": 37, "item": "ledger", "dialogue": ["item_ledger"]},
+		{"type": "enemy", "x": 150, "y": 44, "character": "watcher"},
+		{"type": "enemy", "x": 128, "y": 48, "character": "imp"},
+		{"type": "power", "x": 150, "y": 48, "power": "zeal"},
+		{"type": "upgrade", "x": 283, "y": 14, "upgrade": "heart"},
+		{"type": "upgrade", "x": 52, "y": 31, "upgrade": "vial"},
+		{
+			"type": "npc",
+			"x": 262,
+			"y": 48,
+			"name": "Ithuriel",
+			"character": "angel_guard",
+			"tint": [0.85, 0.85, 1.0],
+			"faces_left": true,
+			"dialogue": ["ithuriel_intro"],
+			"rotate": ["ithuriel_again", "ithuriel_song", "ithuriel_orders"]
+		},
+		{"type": "enemy", "x": 372, "y": 48, "character": "imp"},
+		{"type": "item", "x": 380, "y": 48, "item": "basin_shard", "dialogue": ["item_basin_shard"]},
+		{"type": "trigger", "x": 398, "y": 48, "dialogue": ["gate"]},
+
+		{"type": "trigger", "x": 60, "y": 65, "dialogue": ["arrival"]},
+		{"type": "item", "x": 305, "y": 65, "item": "hook", "dialogue": ["item_hook"]},
+		{
+			"type": "npc",
+			"x": 322,
+			"y": 65,
+			"name": "Old Pell",
+			"character": "pell",
+			"faces_left": true,
+			"dialogue": ["pell_intro", "pell_sky", "pell_hook", "pell_warrant"],
+			"rotate": ["pell_forge", "pell_light", "pell_boy"]
+		},
+		{"type": "item", "x": 215, "y": 82, "item": "letter", "dialogue": ["item_letter"]},
+		{
+			"type": "npc",
+			"x": 254,
+			"y": 82,
+			"name": "Sister Ava",
+			"character": "ava",
+			"faces_left": false,
+			"dialogue": ["ava_intro", "ava_name", "ava_reveal"],
+			"rotate": ["ava_hand", "ava_listen", "ava_below"]
+		},
+		{"type": "item", "x": 290, "y": 82, "item": "warrant", "dialogue": ["item_warrant"]},
+		{
+			"type": "npc",
+			"x": 307,
+			"y": 82,
+			"name": "Hanne",
+			"character": "hanne",
+			"faces_left": false,
+			"dialogue": ["hanne_intro", "hanne_drawing", "hanne_token"],
+			"rotate": ["hanne_churchyard", "hanne_draw_down", "hanne_count"]
+		},
+		{
+			"type": "npc",
+			"x": 322,
+			"y": 82,
+			"name": "Corporal Dace",
+			"character": "dace",
+			"faces_left": true,
+			"dialogue": ["dace_intro", "dace_clock", "dace_letter"],
+			"rotate": ["dace_barricade", "dace_waiting", "dace_ticking"]
+		},
+		{"type": "trigger", "x": 460, "y": 65, "dialogue": ["hole"]},
+		{"type": "enemy", "x": 474, "y": 65, "character": "imp"}
+	]
+}

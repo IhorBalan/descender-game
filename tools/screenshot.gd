@@ -4,35 +4,34 @@ extends SceneTree
 ## (or a virtual one):
 ##
 ##   xvfb-run -a godot --rendering-driver opengl3 --path . \
-##       --script tools/screenshot.gd -- /tmp/shots [level id]
+##       --script tools/screenshot.gd -- /tmp/shots
 ##
 ## The hero is teleported to a few spots so each shot shows a different
-## part of the level. Without a level id the shots are of Heaven 1; with
-## `earth_hub` they are of the Earth hub.
+## part of the world, one per region on the way down and the story beats
+## of Paradise and the hub.
 
 var _ticks := 0
 var _main: Node
 var _out_dir := "/tmp"
-var _shots: Array = []
-var _heaven_shots := [
+var _shots := [
 	{"tick": 40, "name": "start.png", "x": -1.0},
-	{"tick": 90, "name": "spikes.png", "x": 36 * 16 + 8.0, "y": 12 * 16.0},
-	{"tick": 140, "name": "checkpoint.png", "x": 57 * 16 + 8.0, "y": 12 * 16.0},
-	{"tick": 190, "name": "goal.png", "x": 88 * 16 + 8.0, "y": 11 * 16.0},
 	# Next to Mereth, with her first line typed out: the hero is put there
 	# early and stopped, interact is pressed and the typing is given time.
-	{"tick": 340, "name": "dialogue.png", "x": 13 * 16 - 14.0, "y": 12 * 16.0, "lead": 120},
-	# On the ledge left of the Kept Light: the hero walks into it and its
+	{"tick": 190, "name": "dialogue.png", "x": 84 * 16 - 14.0, "y": 15 * 16.0, "lead": 120},
+	# The Lit Blade, with the guard ahead.
+	{"tick": 240, "name": "power_up.png", "x": 157 * 16 + 8.0, "y": 15 * 16.0, "walk": 20},
+	{"tick": 290, "name": "barrier.png", "x": 186 * 16 + 8.0, "y": 15 * 16.0, "walk": 20},
+	{"tick": 340, "name": "checkpoint.png", "x": 240 * 16 + 8.0, "y": 49 * 16.0},
+	# The Kept Light in the secret room: the hero walks into it and its
 	# description opens with the sixth heart in the HUD.
-	{"tick": 440, "name": "upgrade.png", "x": 1 * 16 + 8.0, "y": 6 * 16.0, "walk": 70},
-	# Taking the Lit Blade, with the guard and the wall of light ahead.
-	{"tick": 490, "name": "power_up.png", "x": 70 * 16 + 8.0, "y": 12 * 16.0, "walk": 20},
-]
-var _hub_shots := [
-	{"tick": 40, "name": "hub_start.png", "x": -1.0},
-	{"tick": 90, "name": "hub_barricade.png", "x": 41 * 16 + 8.0, "y": 11 * 16.0},
-	{"tick": 140, "name": "hub_church.png", "x": 76 * 16 + 8.0, "y": 11 * 16.0},
-	{"tick": 290, "name": "hub_pell.png", "x": 11 * 16 - 14.0, "y": 10 * 16.0, "lead": 120},
+	{"tick": 440, "name": "upgrade.png", "x": 279 * 16 + 8.0, "y": 15 * 16.0, "walk": 70},
+	{"tick": 490, "name": "wings.png", "x": 400 * 16 + 8.0, "y": 49 * 16.0, "walk": 20},
+	{"tick": 640, "name": "hub_pell.png", "x": 322 * 16 - 14.0, "y": 66 * 16.0, "lead": 120},
+	{"tick": 690, "name": "hub_camp.png", "x": 300 * 16 + 8.0, "y": 83 * 16.0},
+	{"tick": 740, "name": "purgatory.png", "x": 3352.0, "y": 1872.0},
+	{"tick": 790, "name": "limbo.png", "x": 4072.0, "y": 2688.0},
+	{"tick": 840, "name": "wrath.png", "x": 4552.0, "y": 4864.0},
+	{"tick": 890, "name": "treachery.png", "x": 3592.0, "y": 7040.0},
 ]
 
 
@@ -40,10 +39,6 @@ func _initialize() -> void:
 	var args := OS.get_cmdline_user_args()
 	if args.size() > 0:
 		_out_dir = args[0]
-	_shots = _heaven_shots
-	if args.size() > 1:
-		_shots = _hub_shots if args[1] == "earth_hub" else _heaven_shots
-		root.get_node("SaveManager").pending = {"level": args[1], "flags": []}
 	DirAccess.make_dir_recursive_absolute(_out_dir)
 	_main = load("res://scenes/main.tscn").instantiate()
 	root.add_child(_main)
