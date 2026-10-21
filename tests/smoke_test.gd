@@ -1624,6 +1624,9 @@ func _physics_process(_delta: float) -> void:
 			var hits := _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_TWO_AT))
 			_boss.take_damage(hits, _world.player.global_position)
 			_check(_boss.in_phase_two(), "an imp king at half health")
+		2078:
+			# The imps come a frame later: the summons is deferred, since
+			# the hit may land inside a bolt's overlap signal.
 			var called := 0
 			for node in _world.get_children():
 				if node is Walker and node.character == "imp" and node.behaviour == "chase":

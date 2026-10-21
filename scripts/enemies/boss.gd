@@ -679,6 +679,8 @@ func _throw_volley() -> void:
 
 ## The imp kings' move: two imps come running when the fight turns.
 func _summon() -> void:
+	if _dead or not is_inside_tree():
+		return
 	for i in SUMMON_COUNT:
 		var imp: Walker = WALKER_SCENE.instantiate()
 		imp.character = "imp"
@@ -824,7 +826,9 @@ func _enter_phase_two() -> void:
 	pulse.tween_property(sprite, "scale", base * 1.15, 0.12).set_ease(Tween.EASE_OUT)
 	pulse.tween_property(sprite, "scale", base, 0.25).set_ease(Tween.EASE_IN)
 	if move() == "summon":
-		_summon()
+		# Deferred: the hit may come from a bolt's overlap signal, and the
+		# physics server refuses new bodies while it flushes that.
+		_summon.call_deferred()
 
 
 ## Death: the body plays its death strip (or topples, for a sprite without
