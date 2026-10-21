@@ -100,7 +100,13 @@ to, and Gorrow no longer waits in Lust afterwards (an NPC placement's
 
 Hidden in the levels are **permanent upgrades**: a Kept Light adds a heart
 and a Vial of the Basin adds a healing charge, for the rest of the save. Each
-reads like a relic when it is taken, and a taken one stays gone. There are
+reads like a relic when it is taken, and a taken one stays gone. The sword
+is hardened at **Old Pell's forge** on Earth: his third talk uses his own
+stock of church iron (one more damage), and a bar of Church Iron found in
+Heresy, carried back to him, adds another. **Vael the Bargainer** in Greed
+trades once the hero knows the name below: a memory (flag `sold_winter`)
+for the clock key (`item:clock_key`). Nothing is bought with a currency;
+a dialogue entry's `sets` may be a list of flags for trades like these. There are
 also **power-ups** lying in rooms: a Halo turns the next hit aside, a Lit
 Blade makes the sword hit harder and Zeal makes the hero run and dash faster,
 each for twenty seconds. Power-ups are lost on death and come back with the
@@ -170,7 +176,7 @@ Everything else that stands in the world is listed in
 `objects` list, each with a `type` and the tile cell `x`, `y` its feet are
 on. The types are `npc`, `item` and `trigger` (story objects, with the
 fields the dialogue system wants), `enemy` (`character`: `imp`,
-`angel_guard` or `watcher`), `upgrade` (`heart` or `vial`), `power`
+`angel_guard`, `watcher` or `brute`), `upgrade` (`heart`, `vial` or `iron`), `power`
 (`halo`, `blade` or `zeal`) and `barrier` (a wall of light `height` cells
 tall). Upgrades are numbered by their order in the list, so a save keeps
 them straight as long as that order does not change.

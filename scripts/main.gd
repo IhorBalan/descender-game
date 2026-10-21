@@ -439,8 +439,13 @@ func _play_dialogue(entry: Dictionary, source: Interactable) -> void:
 
 
 func _on_dialogue_finished(entry: Dictionary) -> void:
-	Story.set_flag(str(entry.get("sets", "")))
+	var forged := false
+	for flag in DialogueData.sets(entry):
+		Story.set_flag(flag)
+		forged = forged or flag.begins_with(Upgrade.SWORD_FLAG_PREFIX)
 	Story.set_flag(DialogueData.seen_flag(str(entry.get("id", ""))))
+	if forged:
+		hud.show_message("Sword damage: %d" % player.attack_damage(), 3.0)
 	# Released after this frame's physics step, so the press that closed the
 	# box is not also read as a jump.
 	player.set_deferred("talking", false)
