@@ -11,6 +11,13 @@ extends Node2D
 ## ability (see apply_dev_args).
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
+## A dialogue entry that sets one of these ends the game (see _end_game).
+const ENDING_FLAG_PREFIX := "ending:"
+const ENDINGS := {
+	"ending:carry": "The end: the Low Gate, from below.",
+	"ending:sit": "The end: the floor, counting.",
+	"ending:clock": "The end: the Garden, the day before.",
+}
 const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   L cast   H heal   E talk"
 const DEATH_FADE_TIME := 0.4
 ## How far the world's ambient tint is pulled towards white, so the deep
@@ -37,6 +44,9 @@ var _active_checkpoint := -1
 ## Set once the goal is reached: the level is fading out, so pausing and
 ## restarting are over for this scene.
 var _transitioning := false
+## One of the endings has played: the hero stands still and nothing talks,
+## but R still restarts from the last checkpoint.
+var _ended := false
 ## The NPC, relic or trigger whose dialogue is open.
 var _talking_to: Interactable
 ## The region of the world the hero is in (see WorldMap).
@@ -448,6 +458,7 @@ func _on_interacted(source: Interactable) -> void:
 		dialogue == null
 		or dialogue_box.is_open()
 		or _transitioning
+		or _ended
 		or player.state == Player.State.DEAD
 	):
 		return
@@ -476,12 +487,17 @@ func _play_dialogue(entry: Dictionary, source: Interactable) -> void:
 
 func _on_dialogue_finished(entry: Dictionary) -> void:
 	var forged := false
+	var ending := ""
 	for flag in DialogueData.sets(entry):
 		Story.set_flag(flag)
 		forged = forged or flag.begins_with(Upgrade.SWORD_FLAG_PREFIX)
+		if flag.begins_with(ENDING_FLAG_PREFIX):
+			ending = flag
 	Story.set_flag(DialogueData.seen_flag(str(entry.get("id", ""))))
 	if forged:
 		hud.show_message("Sword damage: %d" % player.attack_damage(), 3.0)
+	if not ending.is_empty():
+		_end_game(ending)
 	# Released after this frame's physics step, so the press that closed the
 	# box is not also read as a jump.
 	player.set_deferred("talking", false)
@@ -494,3 +510,24 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 	if _fight_pending and is_instance_valid(_boss):
 		_fight_pending = false
 		_boss.start_fight()
+	# An entry's `then` (or the choice just taken) carries straight on, once
+	# the hero has been released for this frame.
+	var next_id := DialogueData.next_id(entry)
+	if not next_id.is_empty() and dialogue != null:
+		var next := dialogue.entry(next_id)
+		if not next.is_empty():
+			_play_dialogue.call_deferred(next, null)
+
+
+## Whether one of the endings has played.
+func game_over() -> bool:
+	return _ended
+
+
+## One of the endings: the hero stands where he is, the line says which
+## end this was, and R starts again from the last checkpoint.
+func _end_game(flag: String) -> void:
+	_ended = true
+	player.freeze()
+	Audio.play("level_complete")
+	hud.show_message("%s   Press R to restart" % ENDINGS.get(flag, "The end."), -1.0)

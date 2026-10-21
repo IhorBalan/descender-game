@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 299
+const EXPECTED_CHECKS := 310
 const LAST_TICK := 1230
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -423,7 +423,7 @@ func _physics_process(_delta: float) -> void:
 		760:
 			# Dialogue: the story objects from the level's sidecar.
 			_check(InputMap.has_action("interact"), "interact action exists")
-			_check(_main.level.interactables.size() == 33, "thirty-three story objects built")
+			_check(_main.level.interactables.size() == 38, "thirty-eight story objects built")
 			var messenger: Npc = null
 			var vaels := 0
 			for node in _main.level.interactables:
@@ -437,8 +437,8 @@ func _physics_process(_delta: float) -> void:
 				"the messenger is a sent-down angel"
 			)
 			_check(vaels == 2, "Vael waits in Greed and again in Violence")
-			_check(_main.level.npc_count() == 11, "eleven NPCs built")
-			_check(_main.level.item_count() == 14, "fourteen relics built")
+			_check(_main.level.npc_count() == 12, "twelve NPCs built")
+			_check(_main.level.item_count() == 16, "sixteen relics built")
 			_check(not _main.dialogue_box.is_open(), "dialogue box starts closed")
 			for node in _main.level.interactables:
 				if node is Npc and node.npc_name == "Mereth":
@@ -499,7 +499,7 @@ func _physics_process(_delta: float) -> void:
 			while _main.dialogue_box.is_open():
 				_main.dialogue_box.advance()
 		786:
-			_check(_main.level.item_count() == 13, "examined relic is gone")
+			_check(_main.level.item_count() == 15, "examined relic is gone")
 			_check(Story.has_flag("item:token"), "examined relic is flagged")
 			# A trigger: walking in plays its dialogue once.
 			for node in _main.level.interactables:
@@ -582,7 +582,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(_loaded.level.pickup_count() == 4, "collected feathers stay collected")
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
-			_check(_loaded.level.item_count() == 13, "examined relic stays gone")
+			_check(_loaded.level.item_count() == 15, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
 			_check(_loaded.level.upgrade_count() == 2, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
@@ -1094,6 +1094,46 @@ func _physics_process(_delta: float) -> void:
 				"ledges are solid again after the slam"
 			)
 			_check(_world.player.attack_shape.disabled, "the slam's hitbox is off")
+			_imp.queue_free()
+			# The last camp: a resting demon beside the hero never swings.
+			_imp = LevelBuilder.WALKER_SCENE.instantiate()
+			_imp.character = "imp"
+			_imp.passive = true
+			_imp.direction = 1
+			_imp.position = _start_position + Vector2(16.0, 0.0)
+			_world.add_child(_imp)
+			_world.player.global_position = _start_position
+			_world.player.velocity = Vector2.ZERO
+			_mark_x = _world.player.health
+		1220:
+			_check(_imp.state == Walker.State.PATROL, "a resting demon never winds up")
+			_check(_world.player.health == int(_mark_x), "and does no contact damage")
+			_imp.queue_free()
+			# The brothers: the last choice in the dialogue, and the ending it leads to.
+			var defeat: Dictionary = _world.dialogue.entry("final_boss_the_betrayer_defeat")
+			_check(not defeat.is_empty(), "the Lowest has his defeat lines")
+			_world.dialogue_box.play(defeat)
+			_world.player.talking = true
+			while _world.dialogue_box.is_open() and not _world.dialogue_box.has_choice():
+				_world.dialogue_box.advance()
+			_check(_world.dialogue_box.has_choice(), "the last line offers a choice")
+			_world.dialogue_box.advance()
+			_press("move_right", true)
+		1222:
+			_press("move_right", false)
+			_check(_world.dialogue_box.selected_choice() == 1, "right moves the cursor to Sit down")
+			_world.dialogue_box.advance()
+		1224:
+			_check(
+				_world.dialogue_box.current_id() == "ending_sit", "the choice leads to its ending"
+			)
+			while _world.dialogue_box.is_open():
+				_world.dialogue_box.advance()
+			_check(Story.has_flag("ending:sit"), "the ending sets its flag")
+			_check(_world.player.frozen, "the hero stands still at the end")
+			_check("Press R" in _world.hud.message.text, "the end line shows")
+			_check(_world.game_over(), "the game is over")
+			_check(not _world._transitioning, "and R is still read for the restart")
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")

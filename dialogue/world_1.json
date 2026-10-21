@@ -1167,6 +1167,250 @@
 			}
 		]
 	},
+	"camp": {
+		"once": true,
+		"sets": "seen_camp",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The army, resting. Brutes step aside. Imps look up, and then down again. They know who he is.)"
+			},
+			{
+				"who": "The Voice",
+				"text": "They are not going to stop you."
+			},
+			{
+				"who": "Ansel",
+				"text": "No. He told them not to."
+			}
+		]
+	},
+	"camp_imp": {
+		"once": true,
+		"sets": "imp_gift",
+		"lines": [
+			{
+				"who": "",
+				"text": "(An imp holds out a tally bone like a gift.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Keep it. Keep counting."
+			}
+		]
+	},
+	"camp_imp_again": {
+		"lines": [
+			{
+				"who": "",
+				"text": "(The imp holds the bone up again, and waits.)"
+			}
+		]
+	},
+	"item_roster": {
+		"lines": [
+			{
+				"who": "Army roster",
+				"text": "Nine circles' worth of names, in columns, each with a tally beside it. The last column is headed with four strokes and a bar."
+			},
+			{
+				"who": "Ansel",
+				"text": "Counted. Every one of them."
+			}
+		]
+	},
+	"item_own_token": {
+		"lines": [
+			{
+				"who": "Tobiah's own token",
+				"text": "A harvest token, the twin of the one from the Garden. Four hundred and ten strokes, and room for none."
+			}
+		]
+	},
+	"final_boss_the_betrayer_intro": {
+		"once": true,
+		"sets": "met_tobiah",
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "You kept count."
+			},
+			{
+				"who": "Ansel",
+				"text": "Every day."
+			},
+			{
+				"who": "Tobiah",
+				"text": "How many?"
+			},
+			{
+				"who": "Ansel",
+				"text": "I don't know. There was a page. The token ran out of wood."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Four hundred and nine. I kept it too."
+			},
+			{
+				"who": "Ansel",
+				"text": "Come home."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Ansel. Say what home is. Say it out loud."
+			},
+			{
+				"who": "Ansel",
+				"text": "..."
+			},
+			{
+				"who": "Tobiah",
+				"text": "It's a farm. You've seen the ledger. You've seen the pipes. We were on a list."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then we'll go somewhere else."
+			},
+			{
+				"who": "Tobiah",
+				"text": "There is nowhere else. There's up and there's down. I'm going up, with everyone they threw away, and I'm going to break the Basin."
+			},
+			{
+				"who": "Ansel",
+				"text": "They'll make you into one of them. Or they'll drop you again."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Then stop me. You've got the light for it. They gave you half of it."
+			},
+			{
+				"who": "Ansel",
+				"text": "I don't want to."
+			},
+			{
+				"who": "Tobiah",
+				"text": "I know. That's why it has to be you."
+			}
+		]
+	},
+	"final_boss_the_betrayer_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "Well. You've still got the better arm."
+			},
+			{
+				"who": "Ansel",
+				"text": "Get up."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Can't. That's all right. I counted. Four hundred and ten. One more than I thought I'd get.",
+				"choices": [
+					{"text": "Carry him", "then": "ending_carry"},
+					{"text": "Sit down", "then": "ending_sit"}
+				]
+			}
+		]
+	},
+	"ending_carry": {
+		"sets": "ending:carry",
+		"lines": [
+			{
+				"who": "",
+				"text": "(Ansel carries Tobiah up through nine circles. The demons let them pass.)"
+			},
+			{
+				"who": "",
+				"text": "(Tobiah talks the whole way, then stops talking somewhere around the Shallows. Ansel keeps climbing.)"
+			},
+			{
+				"who": "",
+				"text": "(The Low Gate, from below.)"
+			}
+		]
+	},
+	"ending_sit": {
+		"sets": "ending:sit",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Then I'll keep counting."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Start at one."
+			},
+			{
+				"who": "",
+				"text": "(The army climbs without them. The sound of the climb fades.)"
+			}
+		]
+	},
+	"clock": {
+		"once": true,
+		"requires": [
+			"clock_face",
+			"clock_hand",
+			"item:clock_weight",
+			"item:clock_chain",
+			"item:clock_key"
+		],
+		"then": "garden",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The five pieces fit. The face, the hand, the weight, the chain, the key.)"
+			},
+			{
+				"who": "The Voice",
+				"text": "That is not a clock."
+			},
+			{
+				"who": "Ansel",
+				"text": "No. It's the only thing in all of this that runs backward."
+			},
+			{
+				"who": "The Voice",
+				"text": "If you turn it, you will not have been made. You will not have the light. You will not be able to come down here."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then I won't need to."
+			}
+		]
+	},
+	"garden": {
+		"sets": "ending:clock",
+		"lines": [
+			{
+				"who": "",
+				"text": "(Ansel on the orchard edge. The sound of two boys arguing, far off. One of them is him.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Don't look. Don't go to him. He hasn't heard anything yet."
+			},
+			{
+				"who": "Ansel",
+				"text": "Keep count."
+			}
+		]
+	},
+	"clock_missing": {
+		"once": true,
+		"lines": [
+			{
+				"who": "",
+				"text": "(A clock, or the frame of one, with pieces missing. It does not run either way.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Five. Keep count."
+			}
+		]
+	},
 	"the_fury_intro": {
 		"once": true,
 		"lines": [

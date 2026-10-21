@@ -702,6 +702,14 @@ Basin." Ansel: "It drains to here. All of it.").
 
 ### Circles 8 and 9
 
+In the game: the `camp` trigger on arrival in Fraud, eight resting demons
+(`passive` enemies that patrol and never swing), the imp with the tally
+bone (`camp_imp`), the army roster, Tobiah's own token beside the last
+boss room, and the Lowest's intro (`final_boss_the_betrayer_intro`, the
+`floor` conversation below) and defeat lines, which end in the choice.
+`ending_carry` and `ending_sit` set `ending:carry` and `ending:sit`; the
+game ends on either with its line on the HUD.
+
 **The last camp (environment)**: the army, resting. Brutes step aside. An
 imp holds out a tally bone like a gift.
 
@@ -738,6 +746,13 @@ imp holds out a tally bone like a gift.
 > the sound of the climb fades. The game ends.
 
 ### The clock ending
+
+In the game: the `clock` trigger in the Time Clock room of Treachery needs
+all five pieces (`clock_face`, `clock_hand`, `item:clock_weight`,
+`item:clock_chain`, `item:clock_key`) and runs straight into `garden`,
+which sets `ending:clock` and ends the game at "Keep count." Without the
+pieces it says so once (`clock_missing`). The Gardener's conversation,
+fight and Ending B below are not built yet.
 
 **At the Archive, with all five pieces**
 > **VOICE:** That is not a clock.
