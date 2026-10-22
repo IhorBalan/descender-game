@@ -135,6 +135,7 @@ func _ready() -> void:
 	for power_up in level.get_node("PowerUps").get_children():
 		power_up.collected.connect(_on_power_up_collected)
 	pause_menu.save_requested.connect(_on_save_requested)
+	pause_menu.restart_requested.connect(restart_from_checkpoint)
 
 	camera.target = player
 	camera.set_limits(level.size_px)
@@ -215,13 +216,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		return
 	if event.is_action_pressed("pause"):
 		Audio.play("pause")
-		pause_menu.open()
+		pause_menu.open(pause_status())
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("restart"):
-		# Restart from the last checkpoint with the progress so far, so a
-		# reload never writes a fresh run over the slot.
-		SaveManager.pending = capture_save()
-		get_tree().reload_current_scene()
+		restart_from_checkpoint()
+
+
+## Restarts from the last checkpoint with the progress so far, so a
+## reload never writes a fresh run over the slot.
+func restart_from_checkpoint() -> void:
+	SaveManager.pending = capture_save()
+	get_tree().reload_current_scene()
+
+
+## The line under the pause menu's heading: the slot and the time played.
+func pause_status() -> String:
+	var seconds := int(play_time)
+	var played := "Played %d:%02d" % [seconds / 60, seconds % 60]
+	if SaveManager.current_slot < 0:
+		return played
+	return "Slot %d      %s" % [SaveManager.current_slot + 1, played]
 
 
 # --- Saving -------------------------------------------------------------
