@@ -134,7 +134,10 @@ to, and Gorrow no longer waits in Lust afterwards (an NPC placement's
 `unless` flag).
 
 Hidden in the levels are **permanent upgrades**: a Kept Light adds a heart
-and a Vial of the Basin adds a healing charge, for the rest of the save. Each
+and a Vial of the Basin adds a healing charge, for the rest of the save.
+Four Kept Lights lie in the secret rooms of Paradise, Purgatory, Gluttony
+and Fraud, and the promises give two more hearts and two vials, so a
+hero who finds everything ends with ten hearts. Each
 reads like a relic when it is taken, and a taken one stays gone. The sword
 is hardened at **Old Pell's forge** on Earth: his third talk uses his own
 stock of church iron (one more damage), and a bar of Church Iron found in
@@ -144,7 +147,9 @@ for the clock key (`item:clock_key`). Nothing is bought with a currency;
 a dialogue entry's `sets` may be a list of flags for trades like these. There are
 also **power-ups** lying in rooms: a Halo turns the next hit aside, a Lit
 Blade makes the sword hit harder and Zeal makes the hero run and dash faster,
-each for twenty seconds. Power-ups are lost on death and come back with the
+each for twenty seconds. Three lie in Paradise and five in the secret
+rooms below (Lust, Wrath, Heresy, Fraud, Treachery), so every secret
+passage pays out a Smite. Power-ups are lost on death and come back with the
 enemies. The design, with how many of each the whole game needs and where
 they go, is in [`docs/design/upgrades.md`](docs/design/upgrades.md). Reaching a goal
 gate fades out, saves, and starts the next level with the abilities so far;

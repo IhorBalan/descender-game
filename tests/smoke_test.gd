@@ -162,8 +162,8 @@ func _physics_process(_delta: float) -> void:
 			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
 			_check(level.goal == null, "the world has no goal gate yet")
 			_check(level.pickup_count() == 6, "feathers for all six abilities built")
-			_check(level.upgrade_count() == 3, "three permanent upgrades built")
-			_check(level.power_up_count() == 3, "three power-ups built")
+			_check(level.upgrade_count() == 6, "six permanent upgrades built")
+			_check(level.power_up_count() == 8, "eight power-ups built")
 			_start_x = _player.global_position.x
 			_start_position = _player.global_position
 			# The opening dialogue would freeze the hero at the start; it is
@@ -360,7 +360,7 @@ func _physics_process(_delta: float) -> void:
 			_check(_player.max_health == Player.MAX_HEALTH + 1, "Kept Light adds a heart")
 			_check(_player.health == _player.max_health, "Kept Light fills the hearts")
 			_check(Story.has_flag("upgrade:heart:world_1:0"), "taken upgrade is flagged")
-			_check(_main.level.upgrade_count() == 2, "taken upgrade is gone")
+			_check(_main.level.upgrade_count() == 5, "taken upgrade is gone")
 			_check(
 				_main.dialogue_box.current_id() == "upgrade_heart", "upgrade shows its description"
 			)
@@ -377,7 +377,7 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				_player.attack_damage() == Player.ATTACK_DAMAGE + 1, "Lit Blade raises the damage"
 			)
-			_check(_main.level.power_up_count() == 2, "taken power-up is gone")
+			_check(_main.level.power_up_count() == 7, "taken power-up is gone")
 			_check(_main.hud.status.powers.has(Player.Power.BLADE), "HUD shows the power-up")
 			_player.global_position = _power_up_position(Player.Power.HALO)
 			_player.velocity = Vector2.ZERO
@@ -690,7 +690,7 @@ func _physics_process(_delta: float) -> void:
 			_check(Story.has_flag("met_mereth"), "loaded save restores the story flags")
 			_check(_loaded.level.item_count() == 15, "examined relic stays gone")
 			_check(_loaded.hud.status.abilities.size() == 2, "loaded HUD shows both abilities")
-			_check(_loaded.level.upgrade_count() == 2, "taken upgrade stays taken")
+			_check(_loaded.level.upgrade_count() == 5, "taken upgrade stays taken")
 			_check(loaded_player.max_health == Player.MAX_HEALTH + 1, "loaded hero keeps his heart")
 			_check(loaded_player.powers.is_empty(), "power-ups are not saved")
 			# The registry: one level, which old saves and unknown ids fall

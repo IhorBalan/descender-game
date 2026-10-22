@@ -139,8 +139,17 @@ bar; it goes when it is spent.
 
 ## 2. In the game now
 
-Five placements in the two Heaven levels, as listed above. The first
-images:
+The whole set is placed. Kept Lights: the Paradise secret room, the
+Purgatory secret room, the Gluttony secret room and the Fraud secret room
+(the fourth and fifth are Hanne's drawing of Tobiah and what Orla Pell
+kept under the step, given at the end of their promises). Vials: the
+Paradise ledge, Thorne's flask from Dace and Ithuriel's Warden's glass,
+each a promise kept. Church Iron: Pell's own stock and the bar in the
+Heresy secret room. Power-ups lie in the Paradise rooms and in the secret
+rooms of Lust (a Lit Blade), Wrath (a Halo, before the slammers), Heresy
+(Zeal, for the divers), Fraud (a Halo) and Treachery (a Lit Blade, before
+the Lowest), and the brutes drop a Halo when they die. Every secret room
+pays out a Smite now. The first images:
 
 | Sprite | Name | Description shown in the game |
 | --- | --- | --- |
