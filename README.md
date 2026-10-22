@@ -184,7 +184,18 @@ hero instead of drifting at him, stop, turn the eye red, and drop through
 him before climbing back for another pass. The mix thickens on the way
 down: chasers from Lust, ambushers from Gluttony, hurlers from Greed,
 slammers and pouncers from Wrath, divers from Heresy, everything in
-Violence and Treachery.
+Violence and Treachery. Two bodies are only found at the bottom: the
+**hound** (Violence) is a lean four-legged demon that hunts in pairs,
+sees the hero from far off, runs at him faster than he walks and springs
+flat at him from a few tiles away, jaws open (`lunge`); and the **hanged
+thing** (Treachery) is a frozen traitor on a rope under the ceiling,
+swaying, that creaks and lets go when the hero walks beneath it, drops on
+him for two hearts, lies where it lands for a moment (when it can be hit)
+and is hauled back up for the next pass. Killed, it falls for good.
+
+![Hounds in Violence](docs/screenshots/hounds.png)
+
+![A hanged thing in Treachery](docs/screenshots/hanged.png)
 
 The story is told in text boxes. Standing next to someone, or to a relic,
 shows the talk key above them; pressing it opens a box at the bottom of the
@@ -426,8 +437,9 @@ the live map is meant to ship.
 | `scripts/feedback.gd` | The `Feedback` autoload: hit-stop, screen shake, hit flash and sparks |
 | `assets/audio/`, `tools/gen_sounds.py`, `tools/gen_music.py` | Placeholder sounds and music, and the scripts that synthesise them |
 | `scripts/player.gd` | Hero state machine and tuning constants |
-| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard, brute) with a telegraphed melee swing and, for some, a bark |
+| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard, brute, hound) with a telegraphed melee swing and, for some, a bark |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
+| `scenes/enemies/hanger.tscn`, `scripts/enemies/hanger.gd` | The hanged thing: hangs from a rope and drops on the hero |
 | `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: profiles by marker label, two phases, the fight main.gd runs around it |
 | `scripts/door_lock.gd` | A seal of light on a locked door, or on a boss room's doors during the fight |
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |

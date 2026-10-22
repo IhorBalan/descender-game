@@ -38,6 +38,10 @@ var _shots := [
 	{"tick": 1090, "name": "heresy.png", "x": 5512.0, "y": 5408.0},
 	{"tick": 1140, "name": "violence.png", "x": 3128.0, "y": 5952.0},
 	{"tick": 1190, "name": "fraud.png", "x": 2152.0, "y": 6496.0},
+	# The hounds of Violence, a pair ahead, and a hanged thing in Treachery
+	# with the hero walking under it.
+	{"tick": 1240, "name": "hounds.png", "x": 268 * 16 + 8.0, "y": 389 * 16.0, "walk": 12},
+	{"tick": 1300, "name": "hanged.png", "x": 159 * 16 + 8.0, "y": 457 * 16.0, "walk": 40},
 ]
 
 

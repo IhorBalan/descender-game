@@ -115,6 +115,9 @@ def main():
     roar = sweep(70, 140, 0.55, 0.7) * 0.6 + square(48, 0.55) * 0.25 + lowpass(noise(0.55), 0.12) * 0.9
     roar = roar * (1.0 + 0.5 * square(18, 0.55))
     write("sfx/roar.wav", roar * env(int(RATE * 0.55), 0.03, 0.4))
+    # The hanged thing's rope creaking before it lets go: a low, dry wobble.
+    creak = sweep(95, 62, 0.3, 0.8) * (1.0 + 0.6 * square(27, 0.3)) * 0.5 + lowpass(noise(0.3), 0.08) * 0.6
+    write("sfx/creak.wav", creak * env(int(RATE * 0.3), 0.02, 0.22), 0.6)
     # World
     write("sfx/pickup.wav", chord([659.25, 987.77], 0.35, 0.25))
     write("sfx/checkpoint.wav", chord([440, 554.37, 659.25, 880], 0.9, 0.6))

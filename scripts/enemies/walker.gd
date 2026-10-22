@@ -19,6 +19,8 @@ extends CharacterBody2D
 ##   is in sight, backing away when he comes close.
 ## - slam: strikes the ground when the hero is at mid range, sending a
 ##   shockwave along the floor that has to be jumped.
+## - lunge (hounds): runs at the hero from far off, faster than he walks,
+##   and springs flat at him from a few tiles away, jaws open.
 ##
 ## The node's origin is at the feet. `character` picks the sprite strips and
 ## the size/speed/attack profile below.
@@ -68,6 +70,17 @@ const POUNCE_RECOVER := 0.4
 const POUNCE_COOLDOWN := 1.6
 const CROUCH_SCALE := Vector2(1.2, 0.8)
 
+# Lunge
+## A hound sees the hero from further off than a chaser and runs faster.
+const LUNGE_SIGHT := 200.0
+const LUNGE_SPEED := 2.4
+const LUNGE_MIN := 28.0
+const LUNGE_MAX := 72.0
+const LUNGE_WINDUP := 0.25
+## Flatter and quicker than an imp's pounce: a dog's spring, not a leap.
+const LUNGE_VELOCITY := Vector2(210.0, -90.0)
+const LUNGE_COOLDOWN := 1.2
+
 # Hurl
 const HURL_RANGE := 150.0
 const HURL_HEIGHT_TOLERANCE := 48.0
@@ -103,7 +116,7 @@ const PROFILES := {
 		"speed": 32.0,
 		"health": 3,
 		"walk": "run",
-		"faces_left": true,
+		"faces_left": false,
 		"attack_range": 30.0,
 		"reach": Vector2(22, 20),
 		"windup": 0.35,
@@ -123,7 +136,7 @@ const PROFILES := {
 		"speed": 18.0,
 		"health": 5,
 		"walk": "walk",
-		"faces_left": true,
+		"faces_left": false,
 		"attack_range": 44.0,
 		"reach": Vector2(36, 40),
 		"windup": 0.6,
@@ -143,7 +156,7 @@ const PROFILES := {
 		"speed": 14.0,
 		"health": 8,
 		"walk": "walk",
-		"faces_left": true,
+		"faces_left": false,
 		"attack_range": 52.0,
 		"reach": Vector2(46, 48),
 		"windup": 0.75,
@@ -157,9 +170,29 @@ const PROFILES := {
 		"puff": Color(0.45, 0.12, 0.12),
 		"armour": true,
 	},
+	"hound":
+	{
+		"body": Vector2(26, 16),
+		"speed": 40.0,
+		"health": 3,
+		"walk": "run",
+		"faces_left": false,
+		"attack_range": 26.0,
+		"reach": Vector2(20, 14),
+		"windup": 0.25,
+		"strike": 0.12,
+		"recover": 0.35,
+		"cooldown": 0.6,
+		"attack_damage": 1,
+		"drop_chance": 0.25,
+		"power": Player.Power.ZEAL,
+		"power_chance": 0.1,
+		"puff": Color(0.5, 0.14, 0.16),
+		"armour": false,
+	},
 }
 ## The habits a placement may ask for (see the top of the file).
-const BEHAVIOURS: Array[String] = ["chase", "ambush", "pounce", "hurl", "slam"]
+const BEHAVIOURS: Array[String] = ["chase", "ambush", "pounce", "hurl", "slam", "lunge"]
 ## Lines an enemy may shout as it winds up, by bark set (see `barks`).
 const BARKS := {
 	"fallen":
@@ -175,7 +208,7 @@ const BARK_CHANCE := 0.5
 const BARK_TIME := 1.3
 const BARK_COLOR := Color(1.0, 0.85, 0.8)
 
-@export_enum("imp", "angel_guard", "brute") var character := "imp"
+@export_enum("imp", "angel_guard", "brute", "hound") var character := "imp"
 @export var contact_damage := 1
 ## One of BEHAVIOURS, or "" for plain patrolling. Set by the level from the
 ## placement.
@@ -308,7 +341,7 @@ func _physics_process(delta: float) -> void:
 func _process_patrol() -> void:
 	if _try_attacks():
 		return
-	if _chasing() and _hero_within(CHASE_RANGE, CHASE_HEIGHT_TOLERANCE):
+	if _chasing() and _hero_within(_chase_range(), CHASE_HEIGHT_TOLERANCE):
 		state = State.CHASE
 		return
 	if behaviour == "hurl" and _hero_within(HURL_RETREAT, HURL_HEIGHT_TOLERANCE):
@@ -325,11 +358,12 @@ func _process_patrol() -> void:
 func _process_chase() -> void:
 	if _try_attacks():
 		return
-	if not _hero_within(CHASE_RANGE * CHASE_GIVE_UP, CHASE_HEIGHT_TOLERANCE):
+	if not _hero_within(_chase_range() * CHASE_GIVE_UP, CHASE_HEIGHT_TOLERANCE):
 		state = State.PATROL
 		return
 	_face(1 if _player.global_position.x >= global_position.x else -1)
-	velocity.x = direction * speed * CHASE_SPEED if _ledge_ahead() else 0.0
+	var haste := LUNGE_SPEED if behaviour == "lunge" else CHASE_SPEED
+	velocity.x = direction * speed * haste if _ledge_ahead() else 0.0
 
 
 ## Waits as if idle; the hero coming close springs the swing.
@@ -358,6 +392,8 @@ func _try_attacks() -> bool:
 			_start_windup(Attack.HURL, HURL_WINDUP)
 		"slam":
 			_start_windup(Attack.SLAM, SLAM_WINDUP)
+		"lunge":
+			_start_windup(Attack.POUNCE, LUNGE_WINDUP)
 	return true
 
 
@@ -376,11 +412,18 @@ func _special_wanted() -> bool:
 		"slam":
 			var too_close := dx <= float(_profile["attack_range"])
 			return not too_close and dx <= SLAM_MAX and absf(offset.y) <= ATTACK_HEIGHT_TOLERANCE
+		"lunge":
+			return dx >= LUNGE_MIN and dx <= LUNGE_MAX and offset.y > -24.0 and offset.y <= 8.0
 	return false
 
 
 func _chasing() -> bool:
-	return behaviour == "chase" or (behaviour == "ambush" and _awake)
+	return behaviour == "chase" or behaviour == "lunge" or (behaviour == "ambush" and _awake)
+
+
+## How close the hero has to come before a chaser (or a hound) comes.
+func _chase_range() -> float:
+	return LUNGE_SIGHT if behaviour == "lunge" else CHASE_RANGE
 
 
 ## True when the hero is alive and in this box around the enemy.
@@ -505,7 +548,8 @@ func _release() -> void:
 			_unsquash()
 			state = State.LEAP
 			_state_timer = POUNCE_TIME_MAX
-			velocity = Vector2(POUNCE_VELOCITY.x * direction, POUNCE_VELOCITY.y)
+			var spring := LUNGE_VELOCITY if behaviour == "lunge" else POUNCE_VELOCITY
+			velocity = Vector2(spring.x * direction, spring.y)
 			attack_shape.disabled = false
 			Audio.play("jump", -6.0)
 		Attack.HURL:
@@ -585,7 +629,7 @@ func _end_attack() -> void:
 		Attack.SWING:
 			_attack_cooldown = _profile["cooldown"]
 		Attack.POUNCE:
-			_special_cooldown = POUNCE_COOLDOWN
+			_special_cooldown = LUNGE_COOLDOWN if behaviour == "lunge" else POUNCE_COOLDOWN
 		Attack.HURL:
 			_special_cooldown = HURL_COOLDOWN
 		Attack.SLAM:

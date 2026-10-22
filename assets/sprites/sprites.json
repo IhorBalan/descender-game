@@ -432,5 +432,85 @@
         "loop": true
       }
     }
+  },
+  "hound": {
+    "frame_size": [
+      56,
+      32
+    ],
+    "origin": [
+      28,
+      32
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hound_idle.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "run": {
+        "file": "hound_run.png",
+        "frames": 4,
+        "fps": 12,
+        "loop": true
+      },
+      "attack": {
+        "file": "hound_attack.png",
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hound_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "hound_death.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      }
+    }
+  },
+  "hanged": {
+    "frame_size": [
+      40,
+      64
+    ],
+    "origin": [
+      20,
+      64
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hanged_idle.png",
+        "frames": 8,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "hanged_attack.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hanged_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "hanged_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
   }
 }

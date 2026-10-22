@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 535
-const LAST_TICK := 2090
+const EXPECTED_CHECKS := 555
+const LAST_TICK := 2320
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -56,6 +56,7 @@ var _boss_start := Vector2.ZERO
 var _secret: SecretWall
 var _secret_cell := Vector2i.ZERO
 var _flyer: Flyer
+var _hanger: Hanger
 ## While set, every tick records the enemy shots in the air (by instance
 ## id: kind and the sign of their direction) and the strongest shake, so
 ## a check can look back at a throw that happened between two ticks.
@@ -2037,6 +2038,70 @@ func _physics_process(_delta: float) -> void:
 				_world.get_tree().get_nodes_in_group("dropped_power").is_empty(),
 				"and goes with the motes when the fight resets"
 			)
+			# The two new bodies: a hound that runs at the hero and springs,
+			# and a hanged thing that drops from its rope onto him.
+			var hounds := 0
+			var hanged := 0
+			for spawn in _world.level._enemy_spawns:
+				if spawn.character == "hound" and spawn.behaviour == "lunge":
+					hounds += 1
+				elif spawn.scene == LevelBuilder.HANGER_SCENE:
+					hanged += 1
+			_check(hounds >= 8, "hounds hunt in Violence (%d)" % hounds)
+			_check(hanged >= 6, "hanged things wait under Treachery's ceilings (%d)" % hanged)
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("hound", "lunge", 150.0)
+		2086:
+			_check(_imp.state == Walker.State.CHASE, "a hound sees the hero from far off and runs")
+		2088:
+			_check(_imp.velocity.x < -Walker.CHASE_SPEED * _imp.speed, "faster than a chaser")
+			_imp.global_position.x = _world.player.global_position.x + 50.0
+		2090:
+			_check(_imp.state == Walker.State.WINDUP, "a few tiles off it crouches")
+			_check(_imp._attack == Walker.Attack.POUNCE, "to spring")
+		2106:
+			_check(
+				_imp.state == Walker.State.LEAP or _imp.state == Walker.State.RECOVER,
+				"and springs flat at him (%s)" % Walker.State.keys()[_imp.state]
+			)
+			_imp.queue_free()
+			_place_hero_for_enemy()
+			var hanger: Hanger = LevelBuilder.HANGER_SCENE.instantiate()
+			hanger.position = _world.player.global_position + Vector2(0.0, -64.0)
+			_world.add_child(hanger)
+			_hanger = hanger
+		2108:
+			_check(_hanger.rope.points.size() == 2, "the hanged thing hangs on a rope")
+			_check(_hanger.anchor.y < _hanger.home.y, "from the ceiling above it")
+			_check(_hanger.state == Hanger.State.CREAK, "it creaks when the hero stands under it")
+			_check(_hanger.sprite.animation == "attack", "with its eyes open")
+		2140:
+			_check(
+				_hanger.state == Hanger.State.REST or _hanger.state == Hanger.State.DROP,
+				"then lets go (%s)" % Hanger.State.keys()[_hanger.state]
+			)
+		2170:
+			_check(_hanger.state == Hanger.State.REST, "it lies where it landed")
+			_check(_world.player.health < Player.MAX_HEALTH, "the fall hurt the hero")
+			_check(
+				absf(_hanger.global_position.y - _world.player.global_position.y) < 2.0,
+				"on the floor"
+			)
+			_hanger.take_damage(1, _world.player.global_position)
+			_check(_hanger.health == _hanger.max_health - 1, "and can be hit there")
+		2300:
+			_check(
+				_hanger.state == Hanger.State.CLIMB or _hanger.state == Hanger.State.HANG,
+				"the rope hauls it back up (%s)" % Hanger.State.keys()[_hanger.state]
+			)
+			_check(
+				_hanger.global_position.y < _world.player.global_position.y - 20.0, "off the floor"
+			)
+			_hanger.take_damage(99, _world.player.global_position)
+			_check(
+				_hanger._dead and _hanger.sprite.animation == "death", "killed, it falls for good"
+			)
+			_check(not _hanger.rope.visible, "and the rope goes with it")
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")
