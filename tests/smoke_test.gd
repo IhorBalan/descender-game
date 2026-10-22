@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 514
+const EXPECTED_CHECKS := 533
 const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -62,6 +62,8 @@ var _flyer: Flyer
 var _watch_shots := false
 var _shots_seen: Dictionary = {}
 var _max_trauma := 0.0
+## The brute killed for its drop.
+var _brute: Walker
 ## The hero's healing charges before Dace's gift.
 var _charges := 0
 
@@ -1938,7 +1940,94 @@ func _physics_process(_delta: float) -> void:
 				_world.dialogue.entry("the_false_king_intro")["lines"][0]["who"] == "False King",
 				"the False King speaks first in his room"
 			)
+			# The third phase: the last three bosses turn again below a
+			# quarter of their health, each with a move of its own.
+			_check(not Boss.PROFILES["seraph_warden"].has("third"), "the Warden has two phases")
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("the_red_arena", 120.0)
+			var hits := _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_THREE_AT))
+			_boss.take_damage(hits, _world.player.global_position)
+			_check(_boss.in_phase_two() and _boss.in_phase_three(), "the Champion turns twice")
+			_check(_boss._phase_three, "and marks the last turn")
+			_boss._slam()
+			var waves := 0
+			var ways := 0.0
+			for shot in _world.get_tree().get_nodes_in_group("enemy_shot"):
+				if shot.kind == EnemyShot.Kind.WAVE and not shot.is_queued_for_deletion():
+					waves += 1
+					ways += shot.direction.x
+					shot.queue_free()
+			_check(waves == 2 and ways == 0.0, "a rampaging slam sends a wave each way")
+			_boss._start_charge()
+			_check(_boss._bounces_left == Boss.RAMPAGE_BOUNCES, "and his charge will bounce")
+			_boss.queue_free()
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("final_boss_the_betrayer", 150.0)
+			hits = _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_THREE_AT))
+			_boss.take_damage(hits, _world.player.global_position)
+			_check(_boss.in_phase_three(), "the Lowest turns twice")
+			_check(_boss._third_wanted(Vector2(-150.0, 0.0)), "at range he wants to cast")
+			_boss._start_third(Vector2(-150.0, 0.0))
+			_check(_boss.state == Boss.State.CAST_WINDUP, "the hand goes up")
+			for shot in _world.get_tree().get_nodes_in_group("enemy_shot"):
+				shot.queue_free()
+			_boss._cast()
+			var light := 0
+			for shot in _world.get_tree().get_nodes_in_group("enemy_shot"):
+				if shot.is_queued_for_deletion():
+					continue
+				if shot.kind == EnemyShot.Kind.BOLT and shot.color == Boss.VOLLEY_COLOR:
+					light += 1
+					shot.queue_free()
+			_check(light == 1, "and throws the hero's own Holy Light (%d)" % light)
+			_check(_boss._third_wanted(Vector2(-40.0, 0.0)), "close by he wants to Smite")
+			_boss._start_third(Vector2(-40.0, 0.0))
+			_check(_boss.state == Boss.State.SMITE_RISE and _boss.velocity.y < 0.0, "he goes up")
+			_boss._smite_fall()
+			_check(_boss.state == Boss.State.SMITE_FALL, "and comes straight down")
+			_boss.queue_free()
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("the_false_king", 70.0)
+			hits = _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_THREE_AT))
+			_boss.take_damage(hits, _world.player.global_position)
+			_check(_boss.in_phase_three(), "the False King turns twice")
+			_check(_boss._third_wanted(Vector2(-120.0, 0.0)), "and throws hellfire from his seat")
 		2080:
+			# His court came a frame later, pouncing.
+			var court := 0
+			for node in _world.get_children():
+				if node is Walker and node.character == "imp" and node.behaviour == "pounce":
+					court += 1
+			_check(court == Boss.SUMMON_COUNT, "the False King calls his court (%d)" % court)
+			# Enemy drops: brutes always leave a Halo, imps sometimes a Lit Blade.
+			_check(
+				(
+					Walker.PROFILES["brute"]["power"] == Player.Power.HALO
+					and Walker.PROFILES["brute"]["power_chance"] == 1.0
+				),
+				"a brute always drops a Halo"
+			)
+			_check(Walker.PROFILES["imp"]["power_chance"] < 0.5, "an imp rarely drops anything")
+			_place_hero_for_enemy()
+			# The brute that died for its corpse earlier left one too.
+			_world._clear_motes()
+			_brute = _spawn_walker("brute", "", 60.0)
+			_brute.take_damage(99, _world.player.global_position)
+		2082:
+			var dropped := _world.get_tree().get_nodes_in_group("dropped_power")
+			_check(
+				dropped.size() == 1 and dropped[0].power == Player.Power.HALO,
+				(
+					"the Halo lies there (%d dropped, brute dead %s)"
+					% [dropped.size(), str(is_instance_valid(_brute) and _brute._dead)]
+				)
+			)
+			_world._clear_motes()
+		2084:
+			_check(
+				_world.get_tree().get_nodes_in_group("dropped_power").is_empty(),
+				"and goes with the motes when the fight resets"
+			)
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")

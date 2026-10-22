@@ -114,7 +114,14 @@ away. Each body has a move of its own on top: the brutes raise their arms
 and slam the ground, sending a tall shockwave along the floor; the angels
 leap and throw three bolts of light down in a fan; the imp kings call two
 imps to them when the fight turns. At half health it roars, flashes and
-swells for a moment, then quickens and leaps after every charge. Killing it
+swells for a moment, then quickens and leaps after every charge. The
+last three turn twice: below a quarter of their health the Champion of
+the Red Arena rampages (his charges bounce off the walls and come back,
+and his slam sends a wave each way), the False King calls his court (two
+imps that pounce) and throws hellfire from where he stands, and the
+Lowest fights with the hero's own light: a bolt of Holy Light from the
+hand at range, and a Smite that goes straight up and comes down on the
+hero's head with a wave each way. Killing it
 sets a story flag (`boss:<id>`), saves the game, opens the doors it held
 and plays its last lines; a dead boss stays dead in the save. Every boss
 room has a profile now (the strips of the guard, imp, brute or hero, scaled
@@ -154,7 +161,9 @@ goes down on a knee and tips forward, the brute pitches onto its face and
 shakes the ground, the watcher's eye shuts and its ring falls apart. The
 body lies there a moment in a puff of dust (or light, for the angels) and
 fades, and sometimes leaves a mote of light that restores a heart (angel
-guards always do). The enemy strips are drawn by
+guards always do). A brute always leaves a Halo instead, and an imp or a
+guard now and then a Lit Blade or Zeal; a dropped power-up goes with the
+motes when the enemies come back. The enemy strips are drawn by
 `tools/enemy_sprites/export.py` from the art thread's rigs.
 
 Below Limbo the enemies pick up habits, one per placement (`behaviour` in
