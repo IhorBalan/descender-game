@@ -1,7 +1,7 @@
 extends Node
 
-## Player settings: volumes, window, screen shake, keyboard and gamepad
-## bindings.
+## Player settings: volumes, window, screen shake, game feel and
+## accessibility, keyboard and gamepad bindings.
 ##
 ## Registered as the Settings autoload. Values live in user://settings.cfg
 ## and are applied to the audio buses, the window and the InputMap when the
@@ -17,6 +17,11 @@ const MAX_WINDOW_SCALE := 6
 const DEFAULT_WINDOW_SCALE := 4
 ## Screen shake amounts the settings screen cycles through: off, half, full.
 const SHAKE_LEVELS: Array[float] = [0.0, 0.5, 1.0]
+## Dialogue typing speeds, in characters per second, and their names in
+## the settings screen. The last is instant: the whole page at once.
+const TEXT_SPEED_NAMES: Array[String] = ["Slow", "Normal", "Fast", "Instant"]
+const TEXT_SPEEDS: Array[float] = [25.0, 45.0, 90.0, 0.0]
+const DEFAULT_TEXT_SPEED := 1
 ## The actions the settings screen lets the player rebind, in menu order.
 ## Every keyboard action is here, so a key moved to one action is taken
 ## away from whichever other action had it.
@@ -75,6 +80,16 @@ var window_scale := DEFAULT_WINDOW_SCALE
 var vsync := true
 ## Multiplier for camera shake, 0 to 1; see Feedback.shake.
 var screen_shake := 1.0
+## Index into TEXT_SPEEDS: how fast dialogue types.
+var text_speed := DEFAULT_TEXT_SPEED
+## Whether a hit flashes the sprite white; off for players flashing bothers.
+var hit_flash := true
+## Whether a hit freezes the game for a blink; see Feedback.hit_stop.
+var hit_stop := true
+## Whether hits rumble a connected gamepad.
+var rumble := true
+## Whether dialogue ticks with a blip as it types.
+var voice_blips := true
 ## Saved keys per action: physical keycodes. Actions not listed keep the
 ## project's defaults.
 var keys: Dictionary = {}
@@ -109,6 +124,13 @@ func load_settings() -> void:
 	)
 	vsync = bool(config.get_value("display", "vsync", true))
 	screen_shake = clampf(float(config.get_value("display", "shake", 1.0)), 0.0, 1.0)
+	text_speed = clampi(
+		int(config.get_value("game", "text_speed", DEFAULT_TEXT_SPEED)), 0, TEXT_SPEEDS.size() - 1
+	)
+	hit_flash = bool(config.get_value("game", "hit_flash", true))
+	hit_stop = bool(config.get_value("game", "hit_stop", true))
+	rumble = bool(config.get_value("game", "rumble", true))
+	voice_blips = bool(config.get_value("audio", "blips", true))
 	keys = _load_bindings(config, "keys")
 	pad_buttons = _load_bindings(config, "pad")
 
@@ -120,7 +142,9 @@ func _volume_from(config: ConfigFile, key: String) -> float:
 func _load_bindings(config: ConfigFile, section: String) -> Dictionary:
 	var out := {}
 	for action in REBINDABLE_ACTIONS:
-		var saved: Variant = config.get_value(section, action, null)
+		if not config.has_section_key(section, action):
+			continue
+		var saved: Variant = config.get_value(section, action)
 		if typeof(saved) != TYPE_ARRAY:
 			continue
 		var codes: Array[int] = []
@@ -139,6 +163,11 @@ func save_settings() -> void:
 	config.set_value("display", "scale", window_scale)
 	config.set_value("display", "vsync", vsync)
 	config.set_value("display", "shake", screen_shake)
+	config.set_value("game", "text_speed", text_speed)
+	config.set_value("game", "hit_flash", hit_flash)
+	config.set_value("game", "hit_stop", hit_stop)
+	config.set_value("game", "rumble", rumble)
+	config.set_value("audio", "blips", voice_blips)
 	for action in keys:
 		config.set_value("keys", action, keys[action])
 	for action in pad_buttons:
@@ -158,11 +187,12 @@ func apply() -> void:
 		_set_joypad_buttons(action, pad_buttons.get(action, _default_pad_buttons[action]))
 
 
-## Puts the volumes back to full.
+## Puts the volumes back to full and the blips on.
 func reset_audio() -> void:
 	volume = 1.0
 	music_volume = 1.0
 	sfx_volume = 1.0
+	voice_blips = true
 	apply()
 
 
@@ -173,6 +203,26 @@ func reset_display() -> void:
 	vsync = true
 	screen_shake = 1.0
 	apply()
+
+
+## Puts the typing speed and the game feel back to the project's defaults.
+func reset_game() -> void:
+	text_speed = DEFAULT_TEXT_SPEED
+	hit_flash = true
+	hit_stop = true
+	rumble = true
+	apply()
+
+
+## How many characters a second dialogue types, or 0 for a whole page at
+## once.
+func chars_per_second() -> float:
+	return TEXT_SPEEDS[clampi(text_speed, 0, TEXT_SPEEDS.size() - 1)]
+
+
+## The name of the typing speed: "Slow", "Normal", "Fast" or "Instant".
+func text_speed_name() -> String:
+	return TEXT_SPEED_NAMES[clampi(text_speed, 0, TEXT_SPEED_NAMES.size() - 1)]
 
 
 ## The window size for a scale, for the settings screen to show.

@@ -39,6 +39,10 @@ var level_id := ""
 var dialogue: DialogueData
 ## Seconds played in this save, carried over from the loaded file.
 var play_time := 0.0
+## The parallax layers of the region the hero is in (see Backdrop).
+var backdrop: Backdrop
+## The drifting particles of the region (see RegionFx).
+var region_fx: RegionFx
 ## Index into level.checkpoints of the one the hero last rested at.
 var _active_checkpoint := -1
 ## Set once the goal is reached: the level is fading out, so pausing and
@@ -51,10 +55,6 @@ var _ended := false
 var _talking_to: Interactable
 ## The region of the world the hero is in (see WorldMap).
 var _region: Dictionary = {}
-## The parallax layers of the region the hero is in (see Backdrop).
-var backdrop: Backdrop
-## The drifting particles of the region (see RegionFx).
-var region_fx: RegionFx
 ## The boss being fought, the seals on its room, and whether the fight is
 ## waiting for the intro dialogue to close.
 var _boss: Boss

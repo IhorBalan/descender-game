@@ -37,31 +37,37 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -120.0
+offset_left = -140.0
 offset_top = 20.0
-offset_right = 120.0
+offset_right = 140.0
 offset_bottom = 37.0
 grow_horizontal = 2
 theme_override_constants/separation = 4
 alignment = 1
 
 [node name="Audio" type="Button" parent="Tabs"]
-custom_minimum_size = Vector2(56, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Audio"
 
 [node name="Display" type="Button" parent="Tabs"]
-custom_minimum_size = Vector2(56, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Display"
 
 [node name="Controls" type="Button" parent="Tabs"]
-custom_minimum_size = Vector2(56, 0)
+custom_minimum_size = Vector2(50, 0)
 layout_mode = 2
 toggle_mode = true
 text = "Controls"
+
+[node name="Game" type="Button" parent="Tabs"]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+toggle_mode = true
+text = "Game"
 
 [node name="Spacer" type="Control" parent="Tabs"]
 custom_minimum_size = Vector2(8, 0)
@@ -165,10 +171,22 @@ theme_override_colors/font_color = Color(0.7, 0.68, 0.85, 1)
 text = "100%"
 horizontal_alignment = 2
 
+[node name="Blips" type="HBoxContainer" parent="Pages/Audio"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Audio/Blips"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Voice blips"
+
+[node name="Toggle" type="CheckButton" parent="Pages/Audio/Blips"]
+layout_mode = 2
+text = "On"
+
 [node name="Note" type="Label" parent="Pages/Audio"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
-text = "Music is the ambient sound of each region."
+text = "Music is the ambient sound of each region; blips tick as dialogue types."
 
 [node name="Buttons" type="HBoxContainer" parent="Pages/Audio"]
 layout_mode = 2
@@ -285,6 +303,76 @@ layout_mode = 2
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 1
 columns = 4
+
+[node name="Game" type="VBoxContainer" parent="Pages"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/separation = 3
+
+[node name="TextSpeed" type="HBoxContainer" parent="Pages/Game"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Game/TextSpeed"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Text speed"
+
+[node name="Cycle" type="Button" parent="Pages/Game/TextSpeed"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "< Normal >"
+
+[node name="HitFlash" type="HBoxContainer" parent="Pages/Game"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Game/HitFlash"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Hit flashes"
+
+[node name="Toggle" type="CheckButton" parent="Pages/Game/HitFlash"]
+layout_mode = 2
+text = "On"
+
+[node name="HitStop" type="HBoxContainer" parent="Pages/Game"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Game/HitStop"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Hit pause"
+
+[node name="Toggle" type="CheckButton" parent="Pages/Game/HitStop"]
+layout_mode = 2
+text = "On"
+
+[node name="Rumble" type="HBoxContainer" parent="Pages/Game"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Game/Rumble"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Gamepad rumble"
+
+[node name="Toggle" type="CheckButton" parent="Pages/Game/Rumble"]
+layout_mode = 2
+text = "On"
+
+[node name="Note" type="Label" parent="Pages/Game"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
+text = "Flashes and the pause on a hit can be turned off for comfort."
+
+[node name="Buttons" type="HBoxContainer" parent="Pages/Game"]
+layout_mode = 2
+alignment = 1
+
+[node name="Defaults" type="Button" parent="Pages/Game/Buttons"]
+layout_mode = 2
+text = "Defaults"
 
 [node name="Hint" type="Label" parent="."]
 layout_mode = 1

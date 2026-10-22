@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 436
+const EXPECTED_CHECKS := 450
 const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -88,7 +88,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if not _started:
-		_started = _main.is_inside_tree()
+		# A live map still downloading (see LiveMap) holds the level's _ready;
+		# the ticks start once the world is there to be checked.
+		_started = _main.is_inside_tree() and not LiveMap.running
 		if not _started:
 			return
 	_ticks += 1
@@ -113,14 +115,15 @@ func _physics_process(_delta: float) -> void:
 			_check(level.get_node("Tiles").get_child_count() == 4, "four tile layers built")
 			var terrain := level.get_node_or_null("Tiles/Terrain")
 			_check(terrain is TileMapLayer, "terrain is a TileMapLayer")
-			_check(
-				terrain != null and terrain.get_used_cells().size() == 120990,
-				"every terrain cell is set"
-			)
+			# The world is the live map (see LiveMap), re-exported as the editor
+			# changes it, so the counts are floors rather than exact numbers.
+			var terrain_cells: int = terrain.get_used_cells().size() if terrain != null else 0
+			_check(terrain_cells >= 100000, "the terrain is set (%d cells)" % terrain_cells)
 			_check(level.get_node("Solids").get_child_count() > 0, "solid runs have collision")
 			_check(level.get_node("Ledges").get_child_count() > 0, "one-way ledges built")
 			_check(level.get_node("Hazards").get_child_count() > 0, "hazards built")
-			_check(level.get_node("Lights").get_child_count() == 853, "every light placed")
+			var lights := level.get_node("Lights").get_child_count()
+			_check(lights >= 800, "the lights are placed (%d)" % lights)
 			_check(
 				level.region_at(_player.global_position.y).get("name") == "Paradise",
 				"the hero starts in Paradise"
@@ -792,6 +795,58 @@ func _physics_process(_delta: float) -> void:
 			)
 			Settings.reset_audio()
 			Settings.reset_display()
+			Settings.save_settings()
+			# The Game page: text speed cycles, the toggles drive the feedback
+			# and everything survives the settings file.
+			settings_menu.get_node("Tabs/Game").pressed.emit()
+			_check(settings_menu.get_node("Pages/Game").visible, "game tab shows its page")
+			_check(settings_menu.text_speed_button.text == "< Normal >", "text speed starts normal")
+			settings_menu.text_speed_button.pressed.emit()
+			_check(Settings.text_speed_name() == "Fast", "text speed button steps to fast")
+			_check(Settings.chars_per_second() == 90.0, "fast types twice as quickly")
+			settings_menu.text_speed_button.pressed.emit()
+			_check(Settings.chars_per_second() == 0.0, "instant types the whole page at once")
+			settings_menu.hit_flash_toggle.button_pressed = false
+			_check(not Settings.hit_flash, "hit flash toggle turns the flashes off")
+			_check(settings_menu.hit_flash_toggle.text == "Off", "and says so")
+			var plain := Sprite2D.new()
+			_title.add_child(plain)
+			Feedback.flash(plain)
+			_check(plain.material == null, "flashes off leave the sprite alone")
+			plain.queue_free()
+			settings_menu.hit_stop_toggle.button_pressed = false
+			Feedback.hit_stop(0.5)
+			_check(
+				not Feedback.is_hit_stopped() and Engine.time_scale == 1.0,
+				"hit pause off keeps time running"
+			)
+			settings_menu.rumble_toggle.button_pressed = false
+			_check(not Settings.rumble, "rumble toggle turns the rumble off")
+			settings_menu.blips_toggle.button_pressed = false
+			_check(not Settings.voice_blips, "voice blips toggle on the audio page")
+			Settings.load_settings()
+			_check(
+				(
+					Settings.text_speed == 3
+					and not Settings.hit_flash
+					and not Settings.hit_stop
+					and not Settings.rumble
+					and not Settings.voice_blips
+				),
+				"settings file keeps the game page and the blips"
+			)
+			settings_menu.game_defaults_button.pressed.emit()
+			_check(
+				(
+					Settings.text_speed == 1
+					and Settings.hit_flash
+					and Settings.hit_stop
+					and Settings.rumble
+				),
+				"game defaults put the page back"
+			)
+			settings_menu.audio_defaults_button.pressed.emit()
+			_check(Settings.voice_blips, "audio defaults put the blips back")
 			Settings.save_settings()
 			settings_menu.back_button.pressed.emit()
 			_check(not settings_menu.visible, "back closes the settings")

@@ -10,6 +10,8 @@ const FLASH_SHADER := preload("res://assets/shaders/hit_flash.gdshader")
 const SPARK_SCENE := preload("res://scenes/hit_spark.tscn")
 const PUFF_SCENE := preload("res://scenes/death_puff.tscn")
 const HIT_STOP_SCALE := 0.05
+## How long a hit rumbles the gamepad; the shake amount sets how hard.
+const RUMBLE_TIME := 0.15
 
 ## Real-time stamp (msec) at which the current hit-stop ends.
 var _hit_stop_until := 0
@@ -26,8 +28,11 @@ func _process(_delta: float) -> void:
 
 
 ## Freezes the game for a moment of real time; a longer stop replaces a
-## shorter one still running.
+## shorter one still running. Does nothing with hit stop turned off in the
+## settings.
 func hit_stop(seconds: float) -> void:
+	if not Settings.hit_stop:
+		return
 	var until := Time.get_ticks_msec() + int(seconds * 1000.0)
 	if until > _hit_stop_until:
 		_hit_stop_until = until
@@ -38,17 +43,22 @@ func is_hit_stopped() -> bool:
 	return _hit_stop_until > 0
 
 
-## Shakes the camera; `amount` is 0 to 1 and adds up across hits. The
-## screen shake setting scales it, down to nothing when turned off.
+## Shakes the camera and rumbles the gamepads; `amount` is 0 to 1 and
+## adds up across hits. The screen shake setting scales the shake, down to
+## nothing when turned off, and the rumble setting turns the rumble off.
 func shake(amount: float) -> void:
 	for camera in get_tree().get_nodes_in_group("game_camera"):
 		camera.add_trauma(amount * Settings.screen_shake)
+	if Settings.rumble and amount > 0.0:
+		for device in Input.get_connected_joypads():
+			Input.start_joy_vibration(device, amount * 0.5, amount, RUMBLE_TIME)
 
 
 ## Flashes a sprite white, fading back over the duration. The first flash
-## gives the sprite its own copy of the flash shader.
+## gives the sprite its own copy of the flash shader. Does nothing with
+## hit flashes turned off in the settings.
 func flash(item: CanvasItem, duration := 0.1) -> void:
-	if not is_instance_valid(item):
+	if not is_instance_valid(item) or not Settings.hit_flash:
 		return
 	var material := item.material as ShaderMaterial
 	if material == null or material.shader != FLASH_SHADER:
