@@ -858,6 +858,38 @@ voice, one box or three)
 > **ANSEL:** No.
 > **FALSE KING:** Then I'll tell him you knelt.
 
+**The other bosses, defeated** (`<id>_defeat`; one box or three, after the
+fall, before the doors open)
+
+> **LIMBO LORD:** Oh. That was what for.
+> **LIMBO LORD:** Go on down. I won't remember you came.
+> *(The Limbo Lord settles into the dust like something that has waited a long time to.)*
+
+> **KEEPER:** You set nothing down.
+> **ANSEL:** No.
+> **KEEPER:** Then it gets heavier from here. That is all I was ever for.
+
+> **THE BLOATED ONE:** One... more.
+> *(It does not ask again.)*
+> **ANSEL:** That was the last one.
+
+> **WARDEN OF THE VAULT:** It doesn't fit. Nothing of yours. You dropped it all up there, before the hole.
+> **ANSEL:** Not all of it.
+> **WARDEN OF THE VAULT:** The name. Yes. Keep it in the dark, then, where I can't see it.
+
+> **CURSED BISHOP:** Was it true? The Wheel. Tell me once that it was true.
+> **ANSEL:** It was a farm.
+> **CURSED BISHOP:** Then count me. Somebody. Count me.
+
+> **CHAMPION:** Ha. ...Ha.
+> **CHAMPION:** Tell him it was a good one.
+> **ANSEL:** I'll tell him.
+
+> **FALSE KING:** I'll tell him... you knelt.
+> **ANSEL:** He'll know.
+> **FALSE KING:** He always knows. That is the worst of him. He always knows.
+> *(The court is gone. There was never a crown.)*
+
 ### Circles 6 and 7
 
 In the game: the `pipes` trigger on arrival in Heresy (sets `seen_pipes`),
