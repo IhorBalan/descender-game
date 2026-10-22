@@ -1,0 +1,42 @@
+{
+  "art_tile": 64,
+  "layers": [
+    {
+      "file": "sky.png",
+      "cover": true
+    },
+    {
+      "file": "far.png",
+      "scroll": [
+        0.2,
+        0.08
+      ],
+      "y": -992
+    },
+    {
+      "file": "mid.png",
+      "scroll": [
+        0.45,
+        0.16
+      ],
+      "y": -80
+    },
+    {
+      "file": "fog.png",
+      "scroll": [
+        0.75,
+        0.25
+      ],
+      "y": 384
+    },
+    {
+      "file": "haze.png",
+      "scroll": [
+        1.18,
+        0.4
+      ],
+      "y": 313,
+      "front": true
+    }
+  ]
+}
