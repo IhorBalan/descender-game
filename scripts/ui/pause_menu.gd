@@ -2,7 +2,8 @@ class_name PauseMenu
 extends CanvasLayer
 
 ## The pause menu: resume, restart at the last checkpoint, save to the
-## current slot, the promises (quest log), settings, or quit to the title.
+## current slot, the promises (quest log), the pack (inventory), settings,
+## or quit to the title.
 ## Quit asks to be pressed twice, since whatever happened after the last
 ## save goes with it. A line under the heading says which slot the game is
 ## in and how long it has been played. Keeps processing while the tree is
@@ -20,12 +21,14 @@ const TITLE_SCENE := "res://scenes/title.tscn"
 @onready var restart_button: Button = $Panel/Menu/Restart
 @onready var save_button: Button = $Panel/Menu/Save
 @onready var quest_log_button: Button = $Panel/Menu/Promises
+@onready var pack_button: Button = $Panel/Menu/Pack
 @onready var settings_button: Button = $Panel/Menu/Settings
 @onready var quit_button: Button = $Panel/Menu/Quit
 @onready var menu: VBoxContainer = $Panel/Menu
 @onready var status_label: Label = $Panel/Status
 @onready var settings_menu: SettingsMenu = $Panel/SettingsMenu
 @onready var quest_log: QuestLog = $Panel/QuestLog
+@onready var inventory_menu: InventoryMenu = $Panel/InventoryMenu
 
 
 func _ready() -> void:
@@ -35,6 +38,8 @@ func _ready() -> void:
 	save_button.pressed.connect(_on_save_pressed)
 	quest_log_button.pressed.connect(_on_quest_log_pressed)
 	quest_log.closed.connect(_on_quest_log_closed)
+	pack_button.pressed.connect(_on_pack_pressed)
+	inventory_menu.closed.connect(_on_pack_closed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	settings_menu.closed.connect(_on_settings_closed)
 	quit_button.pressed.connect(_on_quit_pressed)
@@ -43,7 +48,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible or settings_menu.visible or quest_log.visible:
+	if not visible or settings_menu.visible or quest_log.visible or inventory_menu.visible:
 		return
 	if event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel"):
 		close()
@@ -55,8 +60,10 @@ func is_open() -> bool:
 
 
 ## Pauses the tree and shows the menu. Saving is offered only when the game
-## was started from a slot. `status` is the line under the heading.
-func open(status := "") -> void:
+## was started from a slot. `status` is the line under the heading and
+## `player` the hero, for the pack.
+func open(status := "", player: Player = null) -> void:
+	inventory_menu.player = player
 	get_tree().paused = true
 	save_button.disabled = SaveManager.current_slot < 0
 	save_button.text = "Save Game"
@@ -94,6 +101,16 @@ func _on_quest_log_pressed() -> void:
 func _on_quest_log_closed() -> void:
 	menu.visible = true
 	quest_log_button.grab_focus()
+
+
+func _on_pack_pressed() -> void:
+	menu.visible = false
+	inventory_menu.open()
+
+
+func _on_pack_closed() -> void:
+	menu.visible = true
+	pack_button.grab_focus()
 
 
 func _on_settings_pressed() -> void:

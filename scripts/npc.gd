@@ -11,6 +11,9 @@ var character := "hero"
 var tint := Color.WHITE
 ## Whether the strips face left (the hero's do not, the guards' do).
 var faces_left := false
+## A Shops id: once the unique lines are spent, a talk plays a repeat line
+## and opens the wares. "" for someone who does not trade.
+var shop := ""
 
 var sprite: AnimatedSprite2D
 

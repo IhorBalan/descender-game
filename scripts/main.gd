@@ -55,6 +55,8 @@ var _ended := false
 var _talking_to: Interactable
 ## The region of the world the hero is in (see WorldMap).
 var _region: Dictionary = {}
+## A trader's repeat line is playing: the wares open when it closes.
+var _shop_pending := false
 ## The boss being fought, the seals on its room, and whether the fight is
 ## waiting for the intro dialogue to close.
 var _boss: Boss
@@ -68,6 +70,7 @@ var _fight_pending := false
 @onready var fade: ScreenFade = $ScreenFade
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var dialogue_box: DialogueBox = $DialogueBox
+@onready var shop_menu: ShopMenu = $ShopMenu
 
 
 func _ready() -> void:
@@ -77,8 +80,10 @@ func _ready() -> void:
 	# Story flags come first: the level leaves out relics the save already has.
 	if SaveManager.pending.is_empty():
 		Story.reset()
+		Inventory.reset()
 	else:
 		Story.from_list(SaveManager.pending.get("flags", []))
+		Inventory.from_dict(SaveManager.pending.get("inventory", {}))
 	level.level_id = level_id
 	_paint_sky(Levels.sky(level_id))
 	level.load_from_file(Levels.path(level_id))
@@ -124,6 +129,9 @@ func _ready() -> void:
 	player.upgrade_collected.connect(_on_upgrade_collected)
 	player.power_changed.connect(_on_power_changed)
 	player.power_granted.connect(_on_power_granted)
+	player.purse_changed.connect(hud.set_purse)
+	player.loot_collected.connect(_on_loot_collected)
+	hud.set_purse()
 	hud.player = player
 	hud.set_abilities(player.abilities)
 	# Seals the hero may already pass (a loaded save's abilities) go quietly.
@@ -214,8 +222,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("pause"):
+		if shop_menu.is_open():
+			return
 		Audio.play("pause")
-		pause_menu.open(pause_status())
+		pause_menu.open(pause_status(), player)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("restart"):
 		restart_from_checkpoint()
@@ -305,6 +315,7 @@ func capture_save() -> Dictionary:
 		"checkpoint": _active_checkpoint,
 		"abilities": abilities,
 		"flags": Story.to_list(),
+		"inventory": Inventory.to_dict(),
 		"difficulty": SaveManager.difficulty,
 		"play_time": play_time,
 		"saved_at": Time.get_unix_time_from_system(),
@@ -354,13 +365,15 @@ func _respawn_enemies() -> void:
 	_wire_bosses()
 
 
-## Heal motes and power-ups left by enemies go with the enemies when the
-## fight resets.
+## Heal motes, power-ups and loot left by enemies go with the enemies when
+## the fight resets (a boss's unique loot stays where it fell).
 func _clear_motes() -> void:
 	for mote in get_tree().get_nodes_in_group("heal_mote"):
 		mote.queue_free()
 	for power_up in get_tree().get_nodes_in_group("dropped_power"):
 		power_up.queue_free()
+	for drop in get_tree().get_nodes_in_group("loot"):
+		drop.queue_free()
 
 
 func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
@@ -386,6 +399,34 @@ func _on_upgrade_collected(kind: Player.UpgradeKind) -> void:
 	player.talking = true
 	hud.hide_message()
 	dialogue_box.play(entry)
+
+
+## An item picked up off the ground reads like a relic: a boss's unique
+## loot opens the text box with its lines, a consumable only says so.
+func _on_loot_collected(item_id: String) -> void:
+	var name := Items.display_name(item_id)
+	if not Items.is_unique(item_id) or dialogue_box.is_open() or _transitioning:
+		hud.show_message("Taken: %s   (in the pack)" % name, 3.0)
+		return
+	player.talking = true
+	hud.hide_message()
+	var what := Items.summary(item_id)
+	(
+		dialogue_box
+		. play(
+			{
+				"id": "loot_%s" % item_id,
+				"lines":
+				[
+					{"who": "", "text": Items.description(item_id)},
+					{
+						"who": "",
+						"text": "%s: %s. Wear it from the pack, in the pause menu." % [name, what]
+					},
+				],
+			}
+		)
+	)
 
 
 func _on_power_granted(power: Player.Power) -> void:
@@ -508,9 +549,15 @@ func _on_interacted(source: Interactable) -> void:
 	):
 		return
 	var entry := dialogue.pick(source.dialogue_ids)
+	var trades := source is Npc and not (source as Npc).shop.is_empty()
 	if entry.is_empty():
 		entry = dialogue.pick(source.rotation_ids())
+		# A trader whose unique lines are spent shows the wares after a word.
+		_shop_pending = trades
 	if entry.is_empty():
+		if trades:
+			shop_menu.open((source as Npc).shop)
+			get_viewport().set_input_as_handled()
 		return
 	_play_dialogue(entry, source)
 	get_viewport().set_input_as_handled()
@@ -561,7 +608,10 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 	if is_instance_valid(source):
 		if source is Npc:
 			source.set_talking(false)
+			if _shop_pending and not source.shop.is_empty():
+				shop_menu.open.call_deferred(source.shop)
 		source.on_dialogue_finished(entry)
+	_shop_pending = false
 	if _fight_pending and is_instance_valid(_boss):
 		_fight_pending = false
 		_boss.start_fight()

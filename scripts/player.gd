@@ -13,6 +13,10 @@ signal upgrade_collected(kind: UpgradeKind)
 signal power_changed
 ## A power-up was taken (placed or dropped by an enemy).
 signal power_granted(power: Power)
+## The purse changed: light or tally bones picked up or spent.
+signal purse_changed
+## An item was picked up off the ground (see LootDrop).
+signal loot_collected(item_id: String)
 signal died
 signal respawned
 
@@ -405,12 +409,18 @@ func _process_dash(_delta: float) -> void:
 
 
 func _start_attack() -> void:
-	_set_state(State.ATTACK, ATTACK_TIME)
+	_set_state(State.ATTACK, attack_time())
 	_attack_buffer_timer = 0.0
 	_attack_hit.clear()
 	_restore_attack_shape()
-	attack_hitbox.position.x = ATTACK_OFFSET_X * facing
+	# A longer blade widens the hitbox away from the body.
+	var rect := attack_shape.shape as RectangleShape2D
+	rect.size.x = ATTACK_SHAPE_SIZE.x * Inventory.factor("reach")
+	var extra := (rect.size.x - ATTACK_SHAPE_SIZE.x) / 2.0
+	attack_hitbox.position.x = (ATTACK_OFFSET_X + extra) * facing
 	sprite.play("attack")
+	# A slow or quick blade plays the strip to match.
+	sprite.speed_scale = ATTACK_TIME / attack_time()
 	Audio.play("swing")
 
 
@@ -421,8 +431,9 @@ func _process_attack(delta: float) -> void:
 	var speed_multiplier := ATTACK_MOVE_MULTIPLIER if is_on_floor() else 1.0
 	_apply_gravity(delta)
 	_apply_horizontal(input_dir, delta, speed_multiplier)
-	var elapsed := ATTACK_TIME - _state_timer
-	var active := elapsed >= ATTACK_ACTIVE_FROM and elapsed <= ATTACK_ACTIVE_UNTIL
+	var scale := attack_time() / ATTACK_TIME
+	var elapsed := attack_time() - _state_timer
+	var active := elapsed >= ATTACK_ACTIVE_FROM * scale and elapsed <= ATTACK_ACTIVE_UNTIL * scale
 	if attack_shape.disabled == active:
 		attack_shape.disabled = not active
 	if active:
@@ -440,6 +451,7 @@ func _process_attack(delta: float) -> void:
 
 func _end_attack() -> void:
 	attack_shape.disabled = true
+	sprite.speed_scale = 1.0
 
 
 ## The slam borrows the attack hitbox and widens it; the swing puts it back.
@@ -536,7 +548,7 @@ func _process_heal(delta: float) -> void:
 	velocity.x = 0.0
 	if _state_timer <= 0.0:
 		heal_charges -= 1
-		health = mini(health + HEAL_AMOUNT, max_health)
+		health = mini(health + heal_amount(), max_health)
 		health_changed.emit(health, max_health)
 		heal_charges_changed.emit(heal_charges, max_heal_charges)
 		Audio.play("heal")
@@ -795,16 +807,24 @@ func apply_upgrade(kind: UpgradeKind, flag: String) -> void:
 ## Sets the maximums from the upgrade flags in the save, for a loaded or
 ## continued hero, and fills them (he arrives rested).
 func restore_upgrades() -> void:
+	_set_maximums()
+	health = max_health
+	heal_charges = max_heal_charges
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
+
+
+## The maximums from scratch: the base, the difficulty, the upgrade flags
+## in the save and the equipment worn.
+func _set_maximums() -> void:
 	max_health = MAX_HEALTH + SaveManager.bonus_hearts()
 	max_heal_charges = MAX_HEAL_CHARGES + SaveManager.bonus_charges()
 	for flag in Story.to_list():
 		for kind: UpgradeKind in UpgradeKind.values():
 			if flag.begins_with(Upgrade.flag_prefix(kind)):
 				_raise_maximum(kind)
-	health = max_health
-	heal_charges = max_heal_charges
-	health_changed.emit(health, max_health)
-	heal_charges_changed.emit(heal_charges, max_heal_charges)
+	max_health = maxi(max_health + int(Inventory.bonus("hearts")), 1)
+	max_heal_charges = maxi(max_heal_charges + int(Inventory.bonus("charges")), 0)
 
 
 func _raise_maximum(kind: UpgradeKind) -> void:
@@ -831,20 +851,121 @@ func power_time_left(power: Power) -> float:
 	return float(powers.get(power, 0.0))
 
 
+## The sword: its base, Pell's forge, the blade worn (see Inventory) and
+## the Lit Blade.
 func attack_damage() -> int:
 	return (
 		ATTACK_DAMAGE
 		+ Upgrade.sword_bonus()
+		+ int(Inventory.bonus("damage"))
 		+ (BLADE_BONUS_DAMAGE if has_power(Power.BLADE) else 0)
 	)
 
 
+## How long a swing takes: a heavy blade swings slower, a knife quicker.
+func attack_time() -> float:
+	return ATTACK_TIME * Inventory.factor("attack_time")
+
+
+## Hearts a healing charge gives back.
+func heal_amount() -> int:
+	return HEAL_AMOUNT + int(Inventory.bonus("heal"))
+
+
+## Hearts the worn armour takes off a hit; a hit never drops below one.
+func guard() -> int:
+	return int(Inventory.bonus("guard"))
+
+
 func dash_cooldown() -> float:
-	return DASH_COOLDOWN * (ZEAL_COOLDOWN_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
+	return (
+		DASH_COOLDOWN
+		* (ZEAL_COOLDOWN_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
+		* Inventory.factor("dash_cooldown")
+	)
 
 
 func run_speed() -> float:
-	return RUN_SPEED * (ZEAL_SPEED_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
+	return (
+		RUN_SPEED
+		* (ZEAL_SPEED_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
+		* Inventory.factor("speed")
+	)
+
+
+## A hit on the hero after his armour: the difficulty's blow less the guard,
+## never below one heart.
+func guarded_damage(amount: int) -> int:
+	return maxi(SaveManager.scaled_damage(amount) - guard(), 1)
+
+
+# --- The pack: currency, loot, consumables, equipment -------------------
+
+
+## Light or tally bones picked up (see LightDrop).
+func collect_currency(currency: String, amount: int) -> void:
+	Inventory.add_currency(currency, amount)
+	purse_changed.emit()
+
+
+## An item picked up off the ground (see LootDrop). A boss's unique loot
+## sets its flag so it is never dropped again.
+func collect_loot(item_id: String) -> void:
+	Inventory.add(item_id)
+	if Items.is_unique(item_id):
+		Story.set_flag(Items.loot_flag(item_id))
+	loot_collected.emit(item_id)
+
+
+## Uses a consumable from the pack. Returns "" when it was used, else why
+## it was not (and the item stays).
+func use_item(item_id: String) -> String:
+	if not Inventory.has(item_id) or not Items.is_consumable(item_id):
+		return "Nothing to use"
+	match item_id:
+		"flask":
+			if heal_charges >= max_heal_charges:
+				return "The healing charges are full"
+			heal_charges += 1
+			heal_charges_changed.emit(heal_charges, max_heal_charges)
+			Audio.play("heal")
+		"halo_shard":
+			grant_power(Power.HALO)
+		"blade_oil":
+			grant_power(Power.BLADE)
+		"zeal_draught":
+			grant_power(Power.ZEAL)
+		_:
+			return "Nothing to use"
+	Inventory.remove(item_id)
+	return ""
+
+
+## Wears a piece from the pack, or takes it off if it is worn. The
+## maximums follow the armour; what is worn is kept with the save.
+func toggle_equipment(item_id: String) -> void:
+	if Inventory.is_equipped(item_id):
+		Inventory.unequip(Items.slot_of(item_id))
+	elif not Inventory.equip(item_id):
+		return
+	refresh_equipment()
+
+
+## Sets the maximums again after the equipment changed, without filling
+## them: a heart gained is empty, a heart lost goes with its blood.
+func refresh_equipment() -> void:
+	_set_maximums()
+	health = mini(health, max_health)
+	heal_charges = mini(heal_charges, max_heal_charges)
+	health_changed.emit(health, max_health)
+	heal_charges_changed.emit(heal_charges, max_heal_charges)
+
+
+## A Warden's Halo worn gives a Halo at every rest (and respawn).
+func _rest_halo() -> void:
+	if Inventory.bonus("halo_at_rest") > 0.0 and not has_power(Power.HALO):
+		powers[Power.HALO] = INF
+		power_changed.emit()
 
 
 func _tick_powers(delta: float) -> void:
@@ -909,7 +1030,7 @@ func _lose_health(amount: int) -> bool:
 func take_damage(amount: int, source_position: Vector2) -> void:
 	if not _can_be_hurt() or _spend_halo():
 		return
-	if not _lose_health(SaveManager.scaled_damage(amount)):
+	if not _lose_health(guarded_damage(amount)):
 		return
 	var dir := 1.0 if global_position.x >= source_position.x else -1.0
 	_set_state(State.HURT, HURT_TIME)
@@ -927,7 +1048,7 @@ func take_hazard_damage(amount: int) -> void:
 		global_position = last_safe_position
 		velocity = Vector2.ZERO
 		return
-	if not _lose_health(SaveManager.scaled_damage(amount)):
+	if not _lose_health(guarded_damage(amount)):
 		return
 	_hurt_feedback()
 	_set_state(State.HURT, HURT_TIME)
@@ -965,6 +1086,7 @@ func rest_at(checkpoint_position: Vector2) -> void:
 	heal_charges = max_heal_charges
 	health_changed.emit(health, max_health)
 	heal_charges_changed.emit(heal_charges, max_heal_charges)
+	_rest_halo()
 
 
 ## Taking a hit: a sound, a white flash, a shake and a short freeze.
@@ -1011,6 +1133,7 @@ func respawn() -> void:
 	heal_charges_changed.emit(heal_charges, max_heal_charges)
 	_invulnerable_timer = INVULNERABLE_TIME
 	state = State.IDLE
+	_rest_halo()
 	respawned.emit()
 
 
