@@ -8,15 +8,33 @@ extends Node
 ## `pending`; main.gd applies `pending` once the level is built and writes
 ## back to `current_slot` whenever the game saves.
 
+## The difficulties, chosen when a game starts and kept in its save.
+enum Difficulty { EASY, NORMAL, HARD }
+
 const SLOT_COUNT := 3
 const SAVE_DIR := "user://saves"
 const VERSION := 1
+
+const DIFFICULTY_NAMES: Array[String] = ["Easy", "Normal", "Hard"]
+## One line on each, for the picker.
+const DIFFICULTY_NOTES: Array[String] = [
+	"An extra heart and an extra healing charge",
+	"The descent as it was meant",
+	"Every blow lands twice as hard",
+]
+## What each difficulty changes: extra hearts and healing charges, and
+## what a hit on the hero is multiplied by.
+const DIFFICULTY_HEARTS: Array[int] = [1, 0, 0]
+const DIFFICULTY_CHARGES: Array[int] = [1, 0, 0]
+const DIFFICULTY_DAMAGE: Array[int] = [1, 1, 2]
 
 ## The slot the running game saves to, or -1 when it should not save at all
 ## (the level scene was started directly, as the smoke test does).
 var current_slot := -1
 ## The save to apply when the level scene boots; empty for a fresh game.
 var pending: Dictionary = {}
+## The difficulty of the running game (see Difficulty).
+var difficulty := Difficulty.NORMAL
 
 
 func slot_path(slot: int) -> String:
@@ -72,9 +90,10 @@ func latest_slot() -> int:
 
 
 ## Clears the slot and makes it the one the new game saves to.
-func start_new_game(slot: int) -> void:
+func start_new_game(slot: int, chosen := Difficulty.NORMAL) -> void:
 	delete(slot)
 	current_slot = slot
+	difficulty = chosen
 	pending = {}
 
 
@@ -84,8 +103,34 @@ func load_slot(slot: int) -> bool:
 	if data.is_empty():
 		return false
 	current_slot = slot
+	difficulty = difficulty_of(data)
 	pending = data
 	return true
+
+
+## The difficulty a save was played at; older saves are Normal.
+static func difficulty_of(data: Dictionary) -> Difficulty:
+	var value := int(data.get("difficulty", Difficulty.NORMAL))
+	return clampi(value, 0, Difficulty.size() - 1) as Difficulty
+
+
+func difficulty_name() -> String:
+	return DIFFICULTY_NAMES[difficulty]
+
+
+## Extra hearts the difficulty gives the hero.
+func bonus_hearts() -> int:
+	return DIFFICULTY_HEARTS[difficulty]
+
+
+## Extra healing charges the difficulty gives the hero.
+func bonus_charges() -> int:
+	return DIFFICULTY_CHARGES[difficulty]
+
+
+## A hit on the hero, as the difficulty makes it.
+func scaled_damage(amount: int) -> int:
+	return amount * DIFFICULTY_DAMAGE[difficulty]
 
 
 ## One line for the slot picker: which level, where in it, how long so far.
@@ -102,6 +147,9 @@ func summary(slot: int) -> String:
 	var abilities: Array = data.get("abilities", [])
 	var seconds := int(data.get("play_time", 0.0))
 	var played := "%d:%02d" % [seconds / 60, seconds % 60]
+	var chosen := difficulty_of(data)
+	if chosen != Difficulty.NORMAL:
+		played += "   " + DIFFICULTY_NAMES[chosen]
 	if abilities.is_empty():
 		return "%s   %s" % [place, played]
 	var names: PackedStringArray = []

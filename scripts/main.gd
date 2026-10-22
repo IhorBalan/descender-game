@@ -235,7 +235,10 @@ func pause_status() -> String:
 	var played := "Played %d:%02d" % [seconds / 60, seconds % 60]
 	if SaveManager.current_slot < 0:
 		return played
-	return "Slot %d      %s" % [SaveManager.current_slot + 1, played]
+	return (
+		"Slot %d      %s      %s"
+		% [SaveManager.current_slot + 1, SaveManager.difficulty_name(), played]
+	)
 
 
 # --- Saving -------------------------------------------------------------
@@ -245,6 +248,7 @@ func pause_status() -> String:
 ## with the saved abilities (their feathers gone from the level).
 func _apply_save(data: Dictionary) -> void:
 	play_time = float(data.get("play_time", 0.0))
+	SaveManager.difficulty = SaveManager.difficulty_of(data)
 	var abilities: Array[Player.Ability] = []
 	for value in data.get("abilities", []):
 		var ability := int(value)
@@ -302,6 +306,7 @@ func capture_save() -> Dictionary:
 		"checkpoint": _active_checkpoint,
 		"abilities": abilities,
 		"flags": Story.to_list(),
+		"difficulty": SaveManager.difficulty,
 		"play_time": play_time,
 		"saved_at": Time.get_unix_time_from_system(),
 	}

@@ -146,6 +146,52 @@ text = "Delete a save"
 layout_mode = 2
 text = "Back"
 
+[node name="Difficulty" type="VBoxContainer" parent="."]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -26.0
+offset_right = 100.0
+offset_bottom = 64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 3
+
+[node name="Heading" type="Label" parent="Difficulty"]
+layout_mode = 2
+text = "New game: choose a difficulty"
+horizontal_alignment = 1
+
+[node name="Easy" type="Button" parent="Difficulty"]
+layout_mode = 2
+text = "Easy"
+alignment = 0
+
+[node name="Normal" type="Button" parent="Difficulty"]
+layout_mode = 2
+text = "Normal"
+alignment = 0
+
+[node name="Hard" type="Button" parent="Difficulty"]
+layout_mode = 2
+text = "Hard"
+alignment = 0
+
+[node name="Note" type="Label" parent="Difficulty"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
+text = "The difficulty is kept with the save."
+horizontal_alignment = 1
+
+[node name="Back" type="Button" parent="Difficulty"]
+layout_mode = 2
+text = "Back"
+
 [node name="Credits" type="Control" parent="."]
 visible = false
 layout_mode = 1

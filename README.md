@@ -50,7 +50,10 @@ The title screen is driven with the arrow keys or the left stick, Space or
 A to choose and Esc or B to go back. **New Game** picks a slot (an occupied
 one asks to be pressed twice before it is overwritten), **Continue** resumes
 the most recent save (the line along the bottom says which, while the
-button is focused) and **Load Game** picks any slot. The load picker's
+button is focused) and **Load Game** picks any slot. A new game then picks
+a **difficulty**, kept with the save: Easy gives the hero an extra heart
+and an extra healing charge, Hard makes every blow on him land twice as
+hard, and Normal is the descent as it was meant. The load picker's
 **Delete a save** button turns it into a delete picker, where a slot asks
 to be pressed twice before it is cleared. **Credits** lists who made the
 game (the lines are `CREDITS` in `scripts/ui/title.gd`), and the version
