@@ -272,6 +272,20 @@ back wall, gold-rimmed ledges and the grass, vine, lantern and window
 decorations. Replace any PNG with a painted one and keep the name, or edit
 the JSON.
 
+The regions below Paradise are drawn by the same script from a table
+(`STYLES` in `tools/gen_region_art.py`): a dozen lines per region naming
+its sky gradient, a far and a mid silhouette (a ruined skyline, a cavern's
+teeth, a hall of pillars, ice spires, a wall of names, hanging cages or
+veils), its fog and haze colours, what stands on its ledges (dead grass,
+moss, slime, frost, cinders, bones) and hangs under them (roots,
+stalactites, drips, icicles, chains, cloth), and what drifts through its
+air (ash, snow, embers, motes, dust, flies, drops, smoke). Ruined Earth has
+a dead sky with the hole in it, a broken skyline with a few lit windows,
+dead grass and roots, ash and smoke; Purgatory grey mist, a wall of names
+behind a hall of pillars, moss and drips, and slow motes. The parallax
+layers are anchored to the region's height so they stay in view from its
+top to its bottom.
+
 `scripts/level_builder.gd` builds it at boot: one `TileMapLayer` per layer
 (Background, Decor, Terrain, Glow), collision merged from the terrain kinds
 (solid, one-way ledge, hazard), a `PointLight2D` per light (without shadows,
