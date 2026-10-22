@@ -119,7 +119,6 @@ def main():
     write("sfx/pickup.wav", chord([659.25, 987.77], 0.35, 0.25))
     write("sfx/checkpoint.wav", chord([440, 554.37, 659.25, 880], 0.9, 0.6))
     write("sfx/level_complete.wav", chord([392, 493.88, 587.33, 783.99, 987.77], 1.3, 0.9))
-    # Menus
     write("sfx/menu_move.wav", sine(820, 0.045) * env(int(RATE * 0.045), 0.003, 0.04), 0.5)
     confirm = np.concatenate([sine(660, 0.06) * env(int(RATE * 0.06)), sine(990, 0.1) * env(int(RATE * 0.1))])
     write("sfx/menu_confirm.wav", confirm, 0.6)
@@ -141,6 +140,20 @@ def main():
     drone = 0.5 * sine(55.0, dur) * (0.7 + 0.3 * sine(2 / 6, dur)) + 0.25 * sine(82.5, dur)
     rumble = lowpass(noise(dur), 0.01) * np.clip(sine(1 / 6, dur) * 3.0 - 1.5, 0.0, 1.0)
     write("ambient_earth.wav", wind * 1.4 + drone + rumble * 2.0, 0.3)
+    # Bosses: a low horn when the doors seal, and a long fall when one dies.
+    horn = sine(98, 0.9) * 0.6 + square(49, 0.9) * 0.25 + sine(147, 0.9) * 0.3
+    horn = horn * (1.0 + 0.15 * sine(5, 0.9)) + lowpass(noise(0.9), 0.05) * 0.5
+    write("sfx/boss_engage.wav", horn * env(int(RATE * 0.9), 0.08, 0.6, 0.2))
+    fall = sweep(220, 30, 1.6, 1.2) * 0.7 + lowpass(noise(1.6), 0.15) * 0.8
+    fall = fall * (1.0 + 0.3 * square(12, 1.6))
+    write("sfx/boss_defeat.wav", fall * env(int(RATE * 1.6), 0.01, 1.5))
+    # A new ability: the pickup chord, taller and slower.
+    write("sfx/ability.wav", chord([392, 493.88, 587.33, 783.99, 1174.66, 1567.98], 1.5, 1.1))
+    # More menu sounds: back out of a page, and the pause itself.
+    back = np.concatenate([sine(880, 0.06) * env(int(RATE * 0.06)), sine(560, 0.1) * env(int(RATE * 0.1))])
+    write("sfx/menu_back.wav", back, 0.5)
+    pause = sine(440, 0.12) * 0.6 + sine(660, 0.12) * 0.4
+    write("sfx/pause.wav", pause * env(int(RATE * 0.12), 0.005, 0.1), 0.5)
 
 
 if __name__ == "__main__":
