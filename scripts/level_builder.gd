@@ -20,13 +20,15 @@ extends Node2D
 ##                        unless: a story flag that, once set, leaves it out;
 ##                        shop: a Shops id for an NPC that trades once its
 ##                        unique lines are spent
-##   enemy                character: imp, angel_guard, brute (walkers) or
-##                        watcher, or a Boss.PROFILES id for a boss in its room;
+##   enemy                character: imp, angel_guard, brute, hound (walkers),
+##                        watcher, hanged (a Hanger: it hangs with its feet
+##                        at the cell and drops on the hero), or a
+##                        Boss.PROFILES id for a boss in its room;
 ##                        barks: a Walker.BARKS set the enemy shouts; passive:
 ##                        true for a walker that never attacks; behaviour: a
 ##                        Walker.BEHAVIOURS habit (chase, ambush, pounce,
-##                        hurl, slam) or "dive" for a watcher; requires: a
-##                        story flag the enemy waits for, read at every spawn
+##                        hurl, slam, lunge) or "dive" for a watcher; requires:
+##                        a story flag the enemy waits for, read at every spawn
 ##   upgrade              upgrade: heart (Kept Light), vial (Vial of the Basin) or iron
 ##                        (Church Iron, for Old Pell's forge)
 ##   power                power: halo, blade or zeal
@@ -57,6 +59,7 @@ const LEDGE_HEIGHT := 4.0
 const LIGHT_TEXTURE_SIZE := 128
 const WALKER_SCENE := preload("res://scenes/enemies/walker.tscn")
 const FLYER_SCENE := preload("res://scenes/enemies/flyer.tscn")
+const HANGER_SCENE := preload("res://scenes/enemies/hanger.tscn")
 const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
 const HAZARD_SCENE := preload("res://scenes/hazard.tscn")
@@ -686,6 +689,8 @@ func _place_object(spec: Dictionary) -> void:
 			if character == "watcher":
 				spawn = EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0))
 				spawn.behaviour = str(spec.get("behaviour", ""))
+			elif character == "hanged":
+				spawn = EnemySpawn.new(HANGER_SCENE, at)
 			elif Boss.has_profile(character):
 				if Story.has_flag(Boss.flag_for(character)):
 					# A dead boss's unique loot lies where it fell until it
@@ -850,6 +855,8 @@ func spawn_enemies() -> void:
 			walker.death_y = size_px.y + 64.0
 		elif enemy is Flyer:
 			(enemy as Flyer).behaviour = spawn.behaviour
+		elif enemy is Hanger:
+			(enemy as Hanger).death_y = size_px.y + 64.0
 		elif enemy is Boss:
 			var boss := enemy as Boss
 			boss.boss_id = spawn.character

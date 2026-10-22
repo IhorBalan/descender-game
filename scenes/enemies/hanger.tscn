@@ -1,0 +1,37 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/hanger.gd" id="1_hanger"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
+size = Vector2(14, 44)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(18, 46)
+
+[node name="Hanger" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 17
+script = ExtResource("1_hanger")
+
+[node name="Rope" type="Line2D" parent="."]
+width = 2.0
+default_color = Color(0.47, 0.39, 0.27, 1)
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -22)
+shape = SubResource("RectangleShape2D_body")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+position = Vector2(0, -23)
+shape = SubResource("RectangleShape2D_hit")
+
+[node name="CeilingRay" type="RayCast2D" parent="."]
+position = Vector2(0, -52)
+target_position = Vector2(0, -400)
+collision_mask = 1
