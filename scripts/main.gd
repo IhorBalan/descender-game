@@ -123,6 +123,7 @@ func _ready() -> void:
 	player.ability_unlocked.connect(_on_ability_unlocked)
 	player.upgrade_collected.connect(_on_upgrade_collected)
 	player.power_changed.connect(_on_power_changed)
+	player.power_granted.connect(_on_power_granted)
 	hud.player = player
 	hud.set_abilities(player.abilities)
 	# Seals the hero may already pass (a loaded save's abilities) go quietly.
@@ -132,8 +133,6 @@ func _ready() -> void:
 	level.spawn_enemies()
 	_wire_bosses()
 	level.spawn_power_ups()
-	for power_up in level.get_node("PowerUps").get_children():
-		power_up.collected.connect(_on_power_up_collected)
 	pause_menu.save_requested.connect(_on_save_requested)
 	pause_menu.restart_requested.connect(restart_from_checkpoint)
 
@@ -355,10 +354,13 @@ func _respawn_enemies() -> void:
 	_wire_bosses()
 
 
-## Heal motes left by enemies go with the enemies when the fight resets.
+## Heal motes and power-ups left by enemies go with the enemies when the
+## fight resets.
 func _clear_motes() -> void:
 	for mote in get_tree().get_nodes_in_group("heal_mote"):
 		mote.queue_free()
+	for power_up in get_tree().get_nodes_in_group("dropped_power"):
+		power_up.queue_free()
 
 
 func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
@@ -372,8 +374,6 @@ func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 ## The power-ups come back with the enemies.
 func _respawn_power_ups() -> void:
 	level.spawn_power_ups()
-	for power_up in level.get_node("PowerUps").get_children():
-		power_up.collected.connect(_on_power_up_collected)
 
 
 ## A permanent upgrade reads like a relic: its lines open in the text box
@@ -388,7 +388,7 @@ func _on_upgrade_collected(kind: Player.UpgradeKind) -> void:
 	dialogue_box.play(entry)
 
 
-func _on_power_up_collected(power: Player.Power) -> void:
+func _on_power_granted(power: Player.Power) -> void:
 	hud.show_message(PowerUp.MESSAGES.get(power, "Power-up"), 3.0)
 
 

@@ -15,7 +15,13 @@ extends CharacterBody2D
 ## light down in a fan, and the imp kings call two imps to them when the
 ## fight turns. From half health it moves and winds up faster and leaps at
 ## the hero after every charge; the turn is marked by a roar, a flash and
-## a shake. Hits do not stagger it. `boss_id` picks the profile; the
+## a shake. The last three bosses turn twice: below a quarter of their
+## health (`third` in the profile) the Champion's charges bounce off the
+## walls and his slam sends a wave each way (rampage), the False King
+## calls his court and throws hellfire from where he stands (court), and
+## the Lowest fights with the hero's own light: a bolt of Holy Light from
+## the hand and a Smite that comes down on the hero's head (mirror). Hits
+## do not stagger a boss. `boss_id` picks the profile; the
 ## sprite is one of the character strips scaled up. The node's origin is
 ## at the feet.
 
@@ -35,6 +41,11 @@ enum State {
 	SLAM_WINDUP,
 	SLAM_RECOVER,
 	VOLLEY,
+	CAST_WINDUP,
+	CAST_RECOVER,
+	SMITE_RISE,
+	SMITE_FALL,
+	SMITE_RECOVER,
 	DEAD,
 }
 
@@ -77,6 +88,25 @@ const VOLLEY_CORE := Color(1.0, 1.0, 0.9)
 ## The summons: how many imps come when the fight turns, and from how far.
 const SUMMON_COUNT := 2
 const SUMMON_SPACING := 48.0
+## The third phase (bosses with a `third` move) starts at this share of
+## the health.
+const PHASE_THREE_AT := 0.25
+## The cast: a bolt thrown from where the boss stands at a hero this far.
+const CAST_MIN := 56.0
+const CAST_MAX := 240.0
+const CAST_WINDUP := 0.35
+const CAST_RECOVER := 0.4
+const CAST_COOLDOWN := 2.2
+const TINT_CAST := Color(1.0, 0.95, 0.75)
+## The Lowest's Smite: a leap that comes straight down on a hero this far.
+const SMITE_RANGE := 110.0
+const SMITE_VELOCITY_Y := -300.0
+const SMITE_RISE_TIME := 0.55
+const SMITE_FALL_TIME := 1.5
+const SMITE_RECOVER := 0.7
+const SMITE_COOLDOWN := 4.0
+## How many times a rampaging charge turns at a wall and comes back.
+const RAMPAGE_BOUNCES := 1
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 const SHOT_SCRIPT := preload("res://scripts/enemies/enemy_shot.gd")
 const WALKER_SCENE := preload("res://scenes/enemies/walker.tscn")
@@ -297,6 +327,7 @@ const PROFILES := {
 	{
 		"name": "Champion of the Red Arena",
 		"character": "brute",
+		"third": "rampage",
 		"walk": "walk",
 		"scale": 1.4,
 		"tint": Color(1.0, 0.45, 0.4),
@@ -322,6 +353,7 @@ const PROFILES := {
 	{
 		"name": "The False King",
 		"character": "imp",
+		"third": "court",
 		"walk": "run",
 		"scale": 2.8,
 		"tint": Color(1.0, 0.85, 0.45),
@@ -348,6 +380,7 @@ const PROFILES := {
 	{
 		"name": "The Lowest",
 		"character": "hero",
+		"third": "mirror",
 		"walk": "run",
 		"scale": 1.3,
 		"tint": Color(0.55, 0.5, 0.65),
@@ -421,6 +454,10 @@ var _leap_after_charge := false
 ## Whether the volley's bolts have gone on this leap.
 var _volley_thrown := false
 var _phase_two := false
+var _phase_three := false
+var _third_cooldown := 0.0
+var _smite_cooldown := 0.0
+var _bounces_left := 0
 var _dead := false
 var _player: Player
 
@@ -490,6 +527,8 @@ func _physics_process(delta: float) -> void:
 	_attack_cooldown = maxf(_attack_cooldown - delta, 0.0)
 	_charge_cooldown = maxf(_charge_cooldown - delta, 0.0)
 	_move_cooldown = maxf(_move_cooldown - delta, 0.0)
+	_third_cooldown = maxf(_third_cooldown - delta, 0.0)
+	_smite_cooldown = maxf(_smite_cooldown - delta, 0.0)
 	_state_timer -= delta
 	if _hurt_timer > 0.0:
 		_hurt_timer -= delta
@@ -527,6 +566,20 @@ func _physics_process(delta: float) -> void:
 				sprite.play(_walk_anim)
 		State.VOLLEY:
 			_process_volley()
+		State.CAST_WINDUP:
+			velocity.x = 0.0
+			if _state_timer <= 0.0:
+				_cast()
+		State.CAST_RECOVER, State.SMITE_RECOVER:
+			velocity.x = 0.0
+			if _state_timer <= 0.0:
+				_set_state(State.APPROACH, 0.0)
+				sprite.play(_walk_anim)
+		State.SMITE_RISE:
+			if _state_timer <= 0.0 or velocity.y >= 0.0:
+				_smite_fall()
+		State.SMITE_FALL:
+			_process_smite_fall()
 	move_and_slide()
 	if state != State.DORMANT and state != State.DEAD:
 		_hurt_player()
@@ -542,6 +595,16 @@ func start_fight() -> void:
 
 func in_phase_two() -> bool:
 	return health <= int(ceil(max_health * PHASE_TWO_AT))
+
+
+## The last turn of the fight, for a boss with a third move.
+func in_phase_three() -> bool:
+	return not third().is_empty() and health <= int(ceil(max_health * PHASE_THREE_AT))
+
+
+## The move a boss keeps for its last quarter: see the top of the file.
+func third() -> String:
+	return str(profile.get("third", ""))
 
 
 func is_fighting() -> bool:
@@ -578,6 +641,9 @@ func _process_approach() -> void:
 		return
 	if _move_cooldown <= 0.0 and _move_wanted(offset):
 		_start_move()
+		return
+	if in_phase_three() and _third_wanted(offset):
+		_start_third(offset)
 		return
 	if absf(offset.x) >= CHARGE_RANGE and _charge_cooldown <= 0.0:
 		_start_charge_windup()
@@ -619,17 +685,14 @@ func _start_move() -> void:
 			Audio.play("jump", -4.0)
 
 
-## The ground shakes and a tall wave runs along the floor the way it faces.
+## The ground shakes and a tall wave runs along the floor the way it faces
+## (and, in a rampage, the other way too).
 func _slam() -> void:
 	sprite.play("attack")
 	_tint(Color.WHITE)
-	var shot: EnemyShot = SHOT_SCRIPT.new()
-	shot.kind = EnemyShot.Kind.WAVE
-	shot.big = true
-	shot.damage = int(profile["attack_damage"])
-	shot.direction = Vector2(direction, 0.0)
-	shot.position = global_position + Vector2(direction * (_half_width + 8.0), 0.0)
-	_spawn_parent().add_child(shot)
+	_wave(direction, true)
+	if third() == "rampage" and in_phase_three():
+		_wave(-direction, true)
 	Feedback.shake(0.5)
 	Audio.play("land")
 	for i in 4:
@@ -639,6 +702,109 @@ func _slam() -> void:
 		)
 	_move_cooldown = SLAM_COOLDOWN * _haste()
 	_set_state(State.SLAM_RECOVER, SLAM_RECOVER * _haste())
+
+
+## A shockwave along the floor, from the boss's feet.
+func _wave(dir: int, big: bool) -> void:
+	var shot: EnemyShot = SHOT_SCRIPT.new()
+	shot.kind = EnemyShot.Kind.WAVE
+	shot.big = big
+	shot.damage = int(profile["attack_damage"])
+	shot.direction = Vector2(dir, 0.0)
+	shot.position = global_position + Vector2(dir * (_half_width + 8.0), 0.0)
+	_spawn_parent().add_child(shot)
+
+
+## Whether the hero stands where the third-phase move wants him.
+func _third_wanted(offset: Vector2) -> bool:
+	var dx := absf(offset.x)
+	match third():
+		"court":
+			return _third_cooldown <= 0.0 and dx >= CAST_MIN and dx <= CAST_MAX
+		"mirror":
+			if _smite_cooldown <= 0.0 and dx <= SMITE_RANGE and offset.y >= -24.0:
+				return true
+			return _third_cooldown <= 0.0 and dx >= CAST_MIN and dx <= CAST_MAX
+	return false
+
+
+func _start_third(offset: Vector2) -> void:
+	if third() == "mirror" and _smite_cooldown <= 0.0 and absf(offset.x) <= SMITE_RANGE:
+		_start_smite(offset)
+		return
+	# The hand goes up (the strip's first attack frame) and the light gathers.
+	_set_state(State.CAST_WINDUP, CAST_WINDUP * _haste())
+	sprite.animation = "attack"
+	sprite.pause()
+	sprite.frame = 0
+	_tint(TINT_CAST)
+
+
+## A bolt from where the boss stands, straight at the hero: hellfire for
+## the False King, the hero's own Holy Light for the Lowest.
+func _cast() -> void:
+	sprite.play("attack")
+	_tint(Color.WHITE)
+	var from := global_position + Vector2(direction * (_half_width + 4.0), body_shape.position.y)
+	var at := (
+		_player.global_position + Vector2(0.0, -12.0) if _find_player() else from + Vector2.RIGHT
+	)
+	var aim := (at - from).normalized()
+	if aim == Vector2.ZERO:
+		aim = Vector2(direction, 0.0)
+	var shot: EnemyShot = SHOT_SCRIPT.new()
+	shot.kind = EnemyShot.Kind.BOLT
+	shot.direction = aim
+	shot.position = from
+	if third() == "mirror":
+		shot.color = VOLLEY_COLOR
+		shot.core = VOLLEY_CORE
+	_spawn_parent().add_child(shot)
+	Audio.play("swing", -2.0)
+	Feedback.spark(from, VOLLEY_COLOR if third() == "mirror" else SHOT_SCRIPT.BOLT_COLOR)
+	_third_cooldown = CAST_COOLDOWN * _haste()
+	_set_state(State.CAST_RECOVER, CAST_RECOVER * _haste())
+
+
+## The Lowest's Smite: straight up, over the hero, and straight down.
+func _start_smite(offset: Vector2) -> void:
+	_face(1 if offset.x >= 0.0 else -1)
+	velocity = Vector2(clampf(offset.x / SMITE_RISE_TIME, -200.0, 200.0), SMITE_VELOCITY_Y)
+	_set_state(State.SMITE_RISE, SMITE_RISE_TIME)
+	sprite.play("jump" if sprite.sprite_frames.has_animation("jump") else "idle")
+	_tint(TINT_CAST)
+	Audio.play("jump", -4.0)
+
+
+func _smite_fall() -> void:
+	if _find_player():
+		_face(1 if _player.global_position.x >= global_position.x else -1)
+	velocity = Vector2(0.0, MAX_FALL_SPEED)
+	_set_state(State.SMITE_FALL, SMITE_FALL_TIME)
+	sprite.animation = "attack"
+	sprite.pause()
+	sprite.frame = 0
+
+
+## The landing: the ground shakes and a wave runs out each way.
+func _process_smite_fall() -> void:
+	velocity.y = MAX_FALL_SPEED
+	if _state_timer <= 0.0:
+		_set_state(State.APPROACH, 0.0)
+		_tint(Color.WHITE)
+		return
+	if not is_on_floor():
+		return
+	sprite.play("attack")
+	_tint(Color.WHITE)
+	_wave(1, false)
+	_wave(-1, false)
+	Feedback.shake(0.6)
+	Audio.play("land")
+	for i in 3:
+		Feedback.spark(global_position + Vector2((i - 1) * 14.0, -2.0), SHOT_SCRIPT.WAVE_DUST)
+	_smite_cooldown = SMITE_COOLDOWN * _haste()
+	_set_state(State.SMITE_RECOVER, SMITE_RECOVER * _haste())
 
 
 ## In the air: at the top of the leap three bolts of light go down at the
@@ -678,13 +844,13 @@ func _throw_volley() -> void:
 
 
 ## The imp kings' move: two imps come running when the fight turns.
-func _summon() -> void:
+func _summon(behaviour: String = "chase") -> void:
 	if _dead or not is_inside_tree():
 		return
 	for i in SUMMON_COUNT:
 		var imp: Walker = WALKER_SCENE.instantiate()
 		imp.character = "imp"
-		imp.behaviour = "chase"
+		imp.behaviour = behaviour
 		imp.death_y = global_position.y + 2000.0
 		imp.drop_parent = drop_parent
 		imp.position = global_position + Vector2((i * 2 - 1) * SUMMON_SPACING, -8.0)
@@ -743,6 +909,7 @@ func _start_charge() -> void:
 	sprite.play(_walk_anim)
 	sprite.speed_scale = 2.0
 	_leap_after_charge = in_phase_two()
+	_bounces_left = RAMPAGE_BOUNCES if third() == "rampage" and in_phase_three() else 0
 	Audio.play("dash", -4.0)
 
 
@@ -750,6 +917,14 @@ func _start_charge() -> void:
 ## out, hurting the hero on contact.
 func _process_charge() -> void:
 	velocity.x = direction * float(profile["charge_speed"])
+	if is_on_wall() and _bounces_left > 0:
+		# A rampage turns at the wall and comes straight back.
+		_bounces_left -= 1
+		_face(-direction)
+		_state_timer = CHARGE_TIME_MAX
+		Feedback.shake(0.3)
+		Audio.play("dash", -4.0)
+		return
 	if is_on_wall() or _state_timer <= 0.0:
 		sprite.speed_scale = 1.0
 		_charge_cooldown = float(profile["charge_cooldown"])
@@ -809,8 +984,11 @@ func take_damage(amount: int, _source_position: Vector2) -> void:
 	_tint(TINT_HURT)
 	if health <= 0:
 		_die()
-	elif not _phase_two and in_phase_two():
-		_enter_phase_two()
+	else:
+		if not _phase_two and in_phase_two():
+			_enter_phase_two()
+		if not _phase_three and in_phase_three():
+			_enter_phase_three()
 
 
 ## The turn of the fight: a roar, a flash, a shake and a blink of stopped
@@ -829,6 +1007,22 @@ func _enter_phase_two() -> void:
 		# Deferred: the hit may come from a bolt's overlap signal, and the
 		# physics server refuses new bodies while it flushes that.
 		_summon.call_deferred()
+
+
+## The last turn: the roar again, and the False King calls his court (two
+## imps that pounce).
+func _enter_phase_three() -> void:
+	_phase_three = true
+	Audio.play("roar")
+	Feedback.flash(sprite, 0.45)
+	Feedback.shake(0.6)
+	Feedback.hit_stop(0.12)
+	var pulse := create_tween()
+	var base := Vector2.ONE * float(profile["scale"])
+	pulse.tween_property(sprite, "scale", base * 1.25, 0.15).set_ease(Tween.EASE_OUT)
+	pulse.tween_property(sprite, "scale", base, 0.3).set_ease(Tween.EASE_IN)
+	if third() == "court":
+		_summon.call_deferred("pounce")
 
 
 ## Death: the body plays its death strip (or topples, for a sprite without

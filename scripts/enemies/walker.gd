@@ -91,7 +91,9 @@ const TINT_SLAM := Color(1.0, 0.6, 0.45)
 ## reach: the strike hitbox size, placed in front of the body.
 ## windup / strike / recover: the three phases of a swing, in seconds.
 ## cooldown: pause before the next swing can start. attack_damage: hearts.
-## drop_chance: how often a kill leaves a heal mote behind. puff: the colour
+## drop_chance: how often a kill leaves a heal mote behind. power /
+## power_chance: the power-up a kill may leave instead of a mote, and how
+## often (brutes always leave a Halo). puff: the colour
 ## of the dust (or light) it dies in. armour: hits never cancel its attack
 ## or push it back while it attacks (and push it half as far otherwise).
 const PROFILES := {
@@ -110,6 +112,8 @@ const PROFILES := {
 		"cooldown": 0.8,
 		"attack_damage": 1,
 		"drop_chance": 0.35,
+		"power": Player.Power.BLADE,
+		"power_chance": 0.1,
 		"puff": Color(0.55, 0.15, 0.15),
 		"armour": false,
 	},
@@ -128,6 +132,8 @@ const PROFILES := {
 		"cooldown": 1.2,
 		"attack_damage": 2,
 		"drop_chance": 1.0,
+		"power": Player.Power.ZEAL,
+		"power_chance": 0.1,
 		"puff": Color(1.0, 0.95, 0.75),
 		"armour": false,
 	},
@@ -146,6 +152,8 @@ const PROFILES := {
 		"cooldown": 1.5,
 		"attack_damage": 2,
 		"drop_chance": 1.0,
+		"power": Player.Power.HALO,
+		"power_chance": 1.0,
 		"puff": Color(0.45, 0.12, 0.12),
 		"armour": true,
 	},
@@ -633,7 +641,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 
 ## Death: time stops for a blink, the body plays its death strip (and
 ## lies there a moment before it fades) in a puff of dust, with a burst of
-## sparks, and sometimes leaves a heal mote behind.
+## sparks, and sometimes leaves a heal mote, or a power-up, behind.
 func _die() -> void:
 	_dead = true
 	set_physics_process(false)
@@ -659,9 +667,17 @@ func _die() -> void:
 
 
 func _maybe_drop_mote() -> void:
+	var parent := drop_parent if drop_parent else get_parent()
+	if _profile.has("power") and randf() < float(_profile.get("power_chance", 0.0)):
+		# A dropped power-up goes with the motes when the enemies come back.
+		var power_up := PowerUp.new()
+		power_up.power = _profile["power"]
+		power_up.position = global_position
+		power_up.add_to_group("dropped_power")
+		parent.add_child.call_deferred(power_up)
+		return
 	if randf() >= float(_profile["drop_chance"]):
 		return
 	var mote: HealMote = MOTE_SCENE.instantiate()
 	mote.position = global_position + Vector2(0.0, body_shape.position.y)
-	var parent := drop_parent if drop_parent else get_parent()
 	parent.add_child.call_deferred(mote)

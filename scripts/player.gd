@@ -11,6 +11,8 @@ signal heal_charges_changed(current: int, max_value: int)
 signal ability_unlocked(ability: Ability)
 signal upgrade_collected(kind: UpgradeKind)
 signal power_changed
+## A power-up was taken (placed or dropped by an enemy).
+signal power_granted(power: Power)
 signal died
 signal respawned
 
@@ -817,6 +819,7 @@ func _raise_maximum(kind: UpgradeKind) -> void:
 func grant_power(power: Power) -> void:
 	powers[power] = INF if power == Power.HALO else POWER_TIME
 	power_changed.emit()
+	power_granted.emit(power)
 
 
 func has_power(power: Power) -> bool:
