@@ -485,16 +485,33 @@ the live map is meant to ship.
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
+| `tests/unit_test.tscn` | Headless unit and data tests: every name in the placements, the dialogue, the sprite spec and the region art resolves, and the pure pieces work |
 
 ## Tests
 
 ```
+godot --headless --path . res://tests/unit_test.tscn
 godot --headless --path . res://tests/smoke_test.tscn
 ```
 
-Exits non-zero when a check fails. The same test runs on every pull request
-through `.github/workflows/tests.yml`. It runs as a scene rather than a
-`--script` so the autoloads exist before the game scripts compile.
+Each exits non-zero when a check fails, and both run on every pull
+request through `.github/workflows/tests.yml`. They run as scenes rather
+than `--script`s so the autoloads exist before the game scripts compile.
+
+The **unit and data tests** take a few seconds and need no world. The
+data half reads the files the game reads and checks that every name in
+one resolves in another: a placement's character has sprites and its
+dialogue ids exist, every `then`, choice and `gives` in the dialogue
+resolves, every flag an entry or a quest requires is set by some entry,
+relic, boss or pickup, every strip in `sprites.json` is cut to its frame
+count, every enemy and boss has the strips its script plays, every PNG a
+region's JSON names exists, and every sound the scripts play has a file.
+A failing check names the offending entry. The unit half covers the story
+flags, the dialogue data, the quests, the levels registry, the upgrade
+flags and the save slots (the last slot is written and put back).
+
+The **smoke test** drives the hero through the whole game in one run and
+is the one to extend for anything that moves.
 
 ## Sounds
 
