@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3]
+[gd_scene load_steps=11 format=3]
 
 [ext_resource type="Script" path="res://scripts/main.gd" id="1_main"]
 [ext_resource type="Script" path="res://scripts/level_builder.gd" id="2_level"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" path="res://scenes/pause_menu.tscn" id="5_pause"]
 [ext_resource type="PackedScene" path="res://scenes/screen_fade.tscn" id="6_fade"]
 [ext_resource type="PackedScene" path="res://scenes/dialogue_box.tscn" id="7_dialogue"]
+[ext_resource type="PackedScene" path="res://scenes/shop_menu.tscn" id="8_shop"]
 
 [sub_resource type="Gradient" id="Gradient_sky"]
 offsets = PackedFloat32Array(0, 0.55, 1)
@@ -47,3 +48,5 @@ script = ExtResource("3_camera")
 [node name="ScreenFade" parent="." instance=ExtResource("6_fade")]
 
 [node name="PauseMenu" parent="." instance=ExtResource("5_pause")]
+
+[node name="ShopMenu" parent="." instance=ExtResource("8_shop")]

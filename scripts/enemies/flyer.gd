@@ -25,6 +25,8 @@ const DEATH_SPARKS := Color(1.0, 0.45, 0.35)
 const DEATH_PUFF := Color(1.0, 0.95, 0.8)
 const DEATH_HIT_STOP := 0.06
 const DROP_CHANCE := 0.5
+## What it leaks and carries (see Loot).
+const LOOT := {"light": [4, 6], "bone_chance": 0.04, "flask_chance": 0.03}
 ## The dive: where it waits over the hero, how long it aims, how fast and
 ## how long it falls, how long it climbs back and the pause between passes.
 const DIVE_PERCH := Vector2(0.0, -64.0)
@@ -208,8 +210,9 @@ func _die() -> void:
 		Tween.EASE_IN
 	)
 	EnemyDeath.play(sprite, 1, CORPSE_TIME, queue_free)
-	if randf() < DROP_CHANCE:
+	var parent := drop_parent if drop_parent else get_parent()
+	Loot.drop(parent, global_position, LOOT)
+	if randf() < DROP_CHANCE + Inventory.bonus("mote_chance"):
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = global_position
-		var parent := drop_parent if drop_parent else get_parent()
 		parent.add_child.call_deferred(mote)

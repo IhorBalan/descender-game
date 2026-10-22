@@ -33,9 +33,11 @@ This doc adds the two layers around them:
 
 Rules that hold for all of them:
 
-- **Nothing is bought with a currency.** The game has no coins and does
-  not need them. The blacksmith's upgrades cost a found item (church iron),
-  the Bargainer's cost a memory (a story flag). Everything else is picked up.
+- **No upgrade is bought with a currency.** The blacksmith's forging
+  costs a found item (church iron), the Bargainer's trade costs a memory
+  (a story flag). Everything on this page is picked up. (The equipment and
+  consumables of [`economy.md`](economy.md), added later, are what light
+  and tally bones buy; they sit next to the upgrades, not among them.)
 - **Every pickup is visible before it is reachable.** An upgrade behind a
   wall of light or on a high ledge is shown to the player first, so the
   later ability has a known reward waiting.

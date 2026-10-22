@@ -17,7 +17,9 @@ extends Node2D
 ##
 ##   npc, item, trigger   a story object: name, character, tint, faces_left,
 ##                        dialogue and rotate, as the dialogue system wants;
-##                        unless: a story flag that, once set, leaves it out
+##                        unless: a story flag that, once set, leaves it out;
+##                        shop: a Shops id for an NPC that trades once its
+##                        unique lines are spent
 ##   enemy                character: imp, angel_guard, brute (walkers) or
 ##                        watcher, or a Boss.PROFILES id for a boss in its room;
 ##                        barks: a Walker.BARKS set the enemy shouts; passive:
@@ -686,6 +688,11 @@ func _place_object(spec: Dictionary) -> void:
 				spawn.behaviour = str(spec.get("behaviour", ""))
 			elif Boss.has_profile(character):
 				if Story.has_flag(Boss.flag_for(character)):
+					# A dead boss's unique loot lies where it fell until it
+					# is taken, whatever happened to the hero since.
+					var unique := Boss.unique_loot(character)
+					if not unique.is_empty() and not Story.has_flag(Items.loot_flag(unique)):
+						_add_loot(at, unique)
 					return
 				spawn = EnemySpawn.new(BOSS_SCENE, at, character)
 				spawn.arena = room_rect(world, room_at(at))
@@ -728,6 +735,10 @@ func _add_placement(at: Vector2, spec: Dictionary) -> void:
 			npc.npc_name = str(spec.get("name", ""))
 			npc.character = str(spec.get("character", "hero"))
 			npc.faces_left = bool(spec.get("faces_left", false))
+			npc.shop = str(spec.get("shop", ""))
+			if not npc.shop.is_empty() and not Shops.has(npc.shop):
+				push_warning("LevelBuilder: no shop called '%s'" % npc.shop)
+				npc.shop = ""
 			var tint: Variant = spec.get("tint")
 			if tint is Array and tint.size() >= 3:
 				npc.tint = Color(float(tint[0]), float(tint[1]), float(tint[2]))
@@ -767,6 +778,16 @@ func _add_upgrade(at: Vector2, kind: Player.UpgradeKind) -> void:
 	upgrade.position = at
 	_objects.add_child(upgrade)
 	upgrades.append(upgrade)
+
+
+## Lays an item on the floor (see LootDrop), for a boss's unique loot the
+## hero has not picked up yet.
+func _add_loot(at: Vector2, item_id: String) -> void:
+	var drop := LootDrop.new()
+	drop.item_id = item_id
+	drop.name = "Loot%s" % item_id.capitalize().replace(" ", "")
+	drop.position = at
+	_objects.add_child(drop)
 
 
 func _add_barrier_cell(x: int, y: int) -> void:

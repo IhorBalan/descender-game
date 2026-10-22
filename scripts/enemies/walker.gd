@@ -116,6 +116,7 @@ const PROFILES := {
 		"power_chance": 0.1,
 		"puff": Color(0.55, 0.15, 0.15),
 		"armour": false,
+		"loot": {"light": [3, 5], "bone_chance": 0.08, "flask_chance": 0.03},
 	},
 	"angel_guard":
 	{
@@ -136,6 +137,7 @@ const PROFILES := {
 		"power_chance": 0.1,
 		"puff": Color(1.0, 0.95, 0.75),
 		"armour": false,
+		"loot": {"light": [6, 9], "bone_chance": 0.04, "flask_chance": 0.04},
 	},
 	"brute":
 	{
@@ -156,6 +158,7 @@ const PROFILES := {
 		"power_chance": 1.0,
 		"puff": Color(0.45, 0.12, 0.12),
 		"armour": true,
+		"loot": {"light": [10, 14], "bone_chance": 0.1, "flask_chance": 0.06},
 	},
 }
 ## The habits a placement may ask for (see the top of the file).
@@ -668,6 +671,10 @@ func _die() -> void:
 
 func _maybe_drop_mote() -> void:
 	var parent := drop_parent if drop_parent else get_parent()
+	# The light it leaks, and whatever else it carried (see Loot).
+	Loot.drop(
+		parent, global_position + Vector2(0.0, body_shape.position.y), _profile.get("loot", {})
+	)
 	if _profile.has("power") and randf() < float(_profile.get("power_chance", 0.0)):
 		# A dropped power-up goes with the motes when the enemies come back.
 		var power_up := PowerUp.new()
@@ -676,7 +683,8 @@ func _maybe_drop_mote() -> void:
 		power_up.add_to_group("dropped_power")
 		parent.add_child.call_deferred(power_up)
 		return
-	if randf() >= float(_profile["drop_chance"]):
+	# A Cold Coin worn makes the dying give up more motes.
+	if randf() >= float(_profile["drop_chance"]) + Inventory.bonus("mote_chance"):
 		return
 	var mote: HealMote = MOTE_SCENE.instantiate()
 	mote.position = global_position + Vector2(0.0, body_shape.position.y)

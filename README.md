@@ -71,7 +71,8 @@ the white flash and the blink of stopped time on a hit and for gamepad
 rumble, for anyone they bother. Settings live in `user://settings.cfg`.
 
 Pausing opens a menu to resume, restart at the last checkpoint (what R
-does), save, read the promises (the quest log), open the settings or quit
+does), save, read the promises (the quest log), open the pack (the
+inventory, below), open the settings or quit
 to the title, which asks to be pressed twice since whatever happened
 after the last save goes with it. A line under the heading says which
 slot the game is in and how long it has been played. Saving there records
@@ -79,7 +80,7 @@ the last checkpoint, which is where the save will resume.
 
 The top left of the screen shows hearts, healing charges, the angel
 abilities unlocked so far and a small bar that fills as the dash comes
-back. Jump height depends on how long the button is held. Dashing gives a few
+back; the top right shows the purse (light and tally bones, below). Jump height depends on how long the button is held. Dashing gives a few
 invulnerability frames. Picking up the feather unlocks the **wings**: press
 jump again in the air for a second, slightly lower jump. The second feather,
 by the checkpoint, unlocks the **light dash**: the dash goes further and
@@ -143,8 +144,9 @@ is hardened at **Old Pell's forge** on Earth: his third talk uses his own
 stock of church iron (one more damage), and a bar of Church Iron found in
 Heresy, carried back to him, adds another. **Vael the Bargainer** in Greed
 trades once the hero knows the name below: a memory (flag `sold_winter`)
-for the clock key (`item:clock_key`). Nothing is bought with a currency;
-a dialogue entry's `sets` may be a list of flags for trades like these. There are
+for the clock key (`item:clock_key`); a dialogue entry's `sets` may be a
+list of flags for trades like these. Both of them also keep a stall, see
+the economy below. There are
 also **power-ups** lying in rooms: a Halo turns the next hit aside, a Lit
 Blade makes the sword hit harder and Zeal makes the hero run and dash faster,
 each for twenty seconds. Three lie in Paradise and five in the secret
@@ -168,8 +170,27 @@ body lies there a moment in a puff of dust (or light, for the angels) and
 fades, and sometimes leaves a mote of light that restores a heart (angel
 guards always do). A brute always leaves a Halo instead, and an imp or a
 guard now and then a Lit Blade or Zeal; a dropped power-up goes with the
-motes when the enemies come back. The enemy strips are drawn by
+motes when the enemies come back. Every kill also leaks **light**, the
+common currency, in a cluster that flies to the hero once he is near,
+and now and then a **tally bone** or a Basin Flask. The enemy strips are drawn by
 `tools/enemy_sprites/export.py` from the art thread's rigs.
+
+The **economy**: light is kept through death and load and buys blades and
+coats at **Old Pell's forge**, tally bones (three from every boss, rarely
+from an imp) buy charms and bottled power-ups from **Vael the Bargainer**
+in Greed and Violence. Once a trader's unique lines are spent, each talk
+plays a repeat line and opens his stall: Space buys, Esc leaves.
+Every boss leaves one piece of **unique loot** once per save (the
+Warden's Halo, the Glutton's Maw, the Champion's Plate, the False Crown
+and so on), laid back down by its room until it is taken. The hero
+wears one sword, one armour and one charm at a time, from **The Pack**
+page of the pause menu, which also lists his consumables (a Basin Flask
+puts a healing charge back; a Halo Shard, Choir Oil or Draught of Zeal
+is a power-up in a bottle) and the kept things of the story. Worn pieces
+change his damage, reach and swing, the guard that takes hearts off a
+hit, his maximums, his feet and his drops; the whole design, with every
+item and price, is in [`docs/design/economy.md`](docs/design/economy.md).
+The pack goes into the save under `inventory`.
 
 Below Limbo the enemies pick up habits, one per placement (`behaviour` in
 `placements.json`): a **chaser** walks at the hero once he is near and
@@ -353,7 +374,8 @@ Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
 `objects` list, each with a `type` and the tile cell `x`, `y` its feet are
 on. The types are `npc`, `item` and `trigger` (story objects, with the
-fields the dialogue system wants), `enemy` (`character`: `imp`,
+fields the dialogue system wants; an `npc` with a `shop` trades, see
+`scripts/shops.gd`), `enemy` (`character`: `imp`,
 `angel_guard`, `watcher` or `brute`), `upgrade` (`heart`, `vial` or `iron`), `power`
 (`halo`, `blade` or `zeal`) and `barrier` (a wall of light `height` cells
 tall). Upgrades are numbered by their order in the list, so a save keeps
@@ -401,6 +423,10 @@ the live map is meant to ship.
 | `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
 | `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, promises, settings, quit to title |
 | `scenes/quest_log.tscn`, `scripts/ui/quest_log.gd`, `scripts/quests.gd` | The promises page: the side quests and their steps, read off the story flags |
+| `scenes/inventory_menu.tscn`, `scripts/ui/inventory_menu.gd` | The pack page: the purse, what is worn, the items to wear or use, the kept things |
+| `scenes/shop_menu.tscn`, `scripts/ui/shop_menu.gd`, `scripts/shops.gd` | A trader's stall and the stock of each |
+| `scripts/items.gd`, `scripts/inventory.gd` | The item table (equipment, consumables, the bosses' uniques) and what the hero carries and wears |
+| `scripts/loot.gd`, `scripts/light_drop.gd`, `scripts/loot_drop.gd` | What a dead enemy leaves: light, tally bones, a flask, a boss's unique piece |
 | `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen in three pages: Audio (master, music, sound effects), Display (fullscreen, window size, v-sync, screen shake), Controls (keyboard and gamepad bindings) |
 | `scripts/settings.gd` | The `Settings` autoload: reads, saves (`user://settings.cfg`) and applies the settings |
 | `default_bus_layout.tres` | The Master, Music and SFX audio buses the volume sliders control |
