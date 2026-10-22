@@ -120,7 +120,8 @@ const MOVES := {"brute": "slam", "angel_guard": "volley", "imp": "summon"}
 ## faces_left: whether the strips face left. attack_range / reach / windup /
 ## strike / recover / cooldown / attack_damage: the swing, as a Walker's.
 ## charge_speed / charge_windup / charge_cooldown: the rush. contact_damage:
-## hearts for touching it. motes: heal motes dropped on death.
+## hearts for touching it. motes: heal motes dropped on death. loot: the
+## light, tally bones and unique item it leaves (see Loot).
 const PROFILES := {
 	# Paradise: the Warden of the Low Gate.
 	"seraph_warden":
@@ -146,6 +147,7 @@ const PROFILES := {
 		"charge_cooldown": 2.5,
 		"contact_damage": 1,
 		"motes": 2,
+		"loot": {"light": [40, 55], "bones": 3, "unique": "wardens_halo"},
 	},
 	# Purgatory: an angel that chose to fall and never finished.
 	"the_penitent":
@@ -171,6 +173,7 @@ const PROFILES := {
 		"charge_cooldown": 2.0,
 		"contact_damage": 1,
 		"motes": 2,
+		"loot": {"light": [45, 60], "bones": 3, "unique": "penitents_shroud"},
 	},
 	# Limbo: the first of the fallen to stand up, grown huge on forgetting.
 	"limbo_lord":
@@ -196,6 +199,7 @@ const PROFILES := {
 		"charge_cooldown": 1.8,
 		"contact_damage": 1,
 		"motes": 2,
+		"loot": {"light": [50, 65], "bones": 3, "unique": "lords_tally"},
 	},
 	# Lust: the keeper of the Palace of Velvet.
 	"palace_of_velvet":
@@ -221,6 +225,7 @@ const PROFILES := {
 		"charge_cooldown": 1.5,
 		"contact_damage": 1,
 		"motes": 2,
+		"loot": {"light": [55, 70], "bones": 3, "unique": "velvet_gloves"},
 	},
 	# Gluttony: the brute that ate the circle.
 	"the_bloated_one":
@@ -246,6 +251,7 @@ const PROFILES := {
 		"charge_cooldown": 3.0,
 		"contact_damage": 2,
 		"motes": 3,
+		"loot": {"light": [60, 80], "bones": 3, "unique": "gluttons_maw"},
 	},
 	# Greed: the thing that guards the Golden Vault.
 	"golden_vault":
@@ -271,6 +277,7 @@ const PROFILES := {
 		"charge_cooldown": 2.4,
 		"contact_damage": 1,
 		"motes": 3,
+		"loot": {"light": [90, 120], "bones": 3, "unique": "vault_seal"},
 	},
 	# Wrath: Gorrow, the demon captain who served under the Lowest.
 	"the_fury":
@@ -296,6 +303,7 @@ const PROFILES := {
 		"charge_cooldown": 1.6,
 		"contact_damage": 1,
 		"motes": 3,
+		"loot": {"light": [70, 90], "bones": 3, "unique": "furys_edge"},
 	},
 	# Heresy: a bishop of the Choir, sent down for what he taught.
 	"cursed_bishop":
@@ -321,6 +329,7 @@ const PROFILES := {
 		"charge_cooldown": 2.0,
 		"contact_damage": 1,
 		"motes": 3,
+		"loot": {"light": [75, 95], "bones": 3, "unique": "bishops_mitre"},
 	},
 	# Violence: the champion of the Red Arena.
 	"the_red_arena":
@@ -347,6 +356,7 @@ const PROFILES := {
 		"charge_cooldown": 1.5,
 		"contact_damage": 2,
 		"motes": 3,
+		"loot": {"light": [80, 100], "bones": 3, "unique": "champions_plate"},
 	},
 	# Fraud: the king who never was.
 	"the_false_king":
@@ -373,6 +383,7 @@ const PROFILES := {
 		"charge_cooldown": 1.3,
 		"contact_damage": 1,
 		"motes": 3,
+		"loot": {"light": [90, 110], "bones": 3, "unique": "false_crown"},
 	},
 	# Treachery: the Lowest. Tobiah, at the bottom, in his brother's shape.
 	# His lines (the brothers, both endings) are a later beat.
@@ -400,6 +411,7 @@ const PROFILES := {
 		"charge_cooldown": 1.2,
 		"contact_damage": 1,
 		"motes": 0,
+		"loot": {"light": [100, 140], "bones": 3, "unique": "brothers_knife"},
 	},
 	# The Garden, the day before: the first angel, who made the Basin.
 	# Placed by the sidecar once the clock has turned.
@@ -426,6 +438,7 @@ const PROFILES := {
 		"charge_cooldown": 1.1,
 		"contact_damage": 1,
 		"motes": 0,
+		"loot": {"light": [120, 160], "bones": 3, "unique": "gardeners_seed"},
 	},
 }
 
@@ -481,6 +494,11 @@ static func id_for(label: String) -> String:
 	for ch in [":", ",", "'", "."]:
 		id = id.replace(ch, "")
 	return id.replace(" ", "_")
+
+
+## The unique item a boss leaves (see Loot), or "" for one without.
+static func unique_loot(id: String) -> String:
+	return str(PROFILES.get(id, {}).get("loot", {}).get("unique", ""))
 
 
 static func has_profile(id: String) -> bool:
@@ -1049,9 +1067,11 @@ func _die() -> void:
 	Feedback.puff(centre, DEATH_PUFF)
 	# The body falls away from the hero, who is on the side it faces.
 	EnemyDeath.play(sprite, -direction, CORPSE_TIME, queue_free)
+	var parent := drop_parent if drop_parent else get_parent()
 	for i in int(profile["motes"]):
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = centre + Vector2((i - 0.5) * 20.0, 0.0)
-		var parent := drop_parent if drop_parent else get_parent()
 		parent.add_child.call_deferred(mote)
+	# Its hoard: light, tally bones and the one thing it carried.
+	Loot.drop(parent, global_position + Vector2(0.0, -8.0), profile.get("loot", {}))
 	defeated.emit(self)

@@ -11,6 +11,8 @@ const BOSS_BAR_HURT := Color(0.9, 0.3, 0.3)
 
 var player: Player
 
+## The purse in the top right corner: light and tally bones.
+var purse_label: Label
 ## The boss bar at the bottom of the screen, built in _ready.
 var boss_bar: Control
 var boss_name_label: Label
@@ -50,6 +52,18 @@ func _ready() -> void:
 	_boss_fill.size = Vector2(BOSS_BAR_WIDTH - 2.0, 2.0)
 	_boss_fill.color = BOSS_BAR_FILL
 	boss_bar.add_child(_boss_fill)
+	purse_label = Label.new()
+	purse_label.name = "Purse"
+	purse_label.position = Vector2(196.0, 3.0)
+	purse_label.size = Vector2(120.0, 10.0)
+	purse_label.add_theme_font_size_override("font_size", 8)
+	purse_label.add_theme_color_override("font_color", Inventory.CURRENCIES["light"]["color"])
+	purse_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.8))
+	purse_label.add_theme_constant_override("shadow_offset_x", 1)
+	purse_label.add_theme_constant_override("shadow_offset_y", 1)
+	purse_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	add_child(purse_label)
+	set_purse()
 
 
 func _process(delta: float) -> void:
@@ -91,6 +105,11 @@ func set_abilities(abilities: Array[Player.Ability]) -> void:
 func set_powers(powers: Dictionary) -> void:
 	status.powers = powers.duplicate()
 	status.queue_redraw()
+
+
+## Writes the purse from the pack (see Inventory).
+func set_purse() -> void:
+	purse_label.text = ShopMenu.purse_text()
 
 
 ## Shows the boss bar with the boss's name and health.

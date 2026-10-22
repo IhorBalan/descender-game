@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 555
-const LAST_TICK := 2320
+const EXPECTED_CHECKS := 610
+const LAST_TICK := 2330
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -1056,6 +1056,16 @@ func _physics_process(_delta: float) -> void:
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 		899:
+			# A trader's repeat line opens his wares; the test leaves them.
+			_check(_hub.shop_menu.is_open(), "Pell's wares open after a repeat line")
+			_check(_hub.shop_menu.shop_id == "pell", "his own")
+			_check(
+				_hub.shop_menu.lines().size() == 5,
+				"five wares on the forge (%d)" % _hub.shop_menu.lines().size()
+			)
+			_check(_hub.get_tree().paused, "the world waits while he trades")
+			_hub.shop_menu.close()
+			_check(not _hub.get_tree().paused, "and goes on when the hero leaves")
 			_press("interact", true)
 		900:
 			_press("interact", false)
@@ -1063,6 +1073,7 @@ func _physics_process(_delta: float) -> void:
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 		901:
+			_hub.shop_menu.close()
 			_press("interact", true)
 		902:
 			_press("interact", false)
@@ -1070,6 +1081,7 @@ func _physics_process(_delta: float) -> void:
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 		903:
+			_hub.shop_menu.close()
 			_press("interact", true)
 		904:
 			_press("interact", false)
@@ -1078,6 +1090,7 @@ func _physics_process(_delta: float) -> void:
 				_hub.dialogue_box.advance()
 			Story.set_flag("item:hook")
 		905:
+			_hub.shop_menu.close()
 			_press("interact", true)
 		906:
 			_press("interact", false)
@@ -2038,6 +2051,230 @@ func _physics_process(_delta: float) -> void:
 				_world.get_tree().get_nodes_in_group("dropped_power").is_empty(),
 				"and goes with the motes when the fight resets"
 			)
+			# The economy: every kill leaks light, the imps count on tally
+			# bones, and each boss leaves one unique piece of equipment.
+			Inventory.reset()
+			_check(Inventory.amount("light") == 0 and Inventory.items.is_empty(), "an empty pack")
+			var uniques: Dictionary = {}
+			var bad := 0
+			for id in Boss.PROFILES:
+				var unique := Boss.unique_loot(id)
+				if not Items.is_unique(unique) or uniques.has(unique):
+					bad += 1
+				uniques[unique] = true
+			_check(bad == 0, "every boss leaves a unique piece of its own (%d wrong)" % bad)
+			bad = 0
+			for id: String in Items.TABLE:
+				var item := Items.get_item(id)
+				if Items.is_equipment(id) and not Items.SLOT_NAMES.has(Items.slot_of(id)):
+					bad += 1
+				for stat in Items.stats(id):
+					if stat not in Items.ADDITIVE_STATS and stat not in Items.FACTOR_STATS:
+						bad += 1
+				if str(item.get("text", "")).is_empty():
+					bad += 1
+			_check(bad == 0, "every item has a slot, known stats and a line (%d wrong)" % bad)
+			bad = 0
+			for shop_id: String in Shops.TABLE:
+				for ware: Dictionary in Shops.TABLE[shop_id]["stock"]:
+					if not Items.has(str(ware.get("item", ""))) or ware.get("price", {}).is_empty():
+						bad += 1
+			_check(bad == 0, "every ware is an item with a price (%d wrong)" % bad)
+			_check(
+				Walker.PROFILES["imp"]["loot"]["light"][0] > 0 and Flyer.LOOT["light"][0] > 0,
+				"every enemy leaks light"
+			)
+			_world._clear_motes()
+			_place_hero_for_enemy()
+			_imp = _spawn_walker("imp", "", 60.0)
+			_imp.take_damage(99, _world.player.global_position)
+		2086:
+			var drops := _world.get_tree().get_nodes_in_group("loot")
+			var light := 0
+			for drop in drops:
+				if drop is LightDrop and drop.currency == "light":
+					light += drop.amount
+			_check(
+				drops.size() >= 1 and light >= 3 and light <= 5,
+				"a dead imp leaks light (%d)" % light
+			)
+			# The light flies to the hero once he is near, and lands in the purse.
+			_world.player.global_position = drops[0].global_position + Vector2(0.0, 14.0)
+			_world.player.velocity = Vector2.ZERO
+		2090:
+			_check(Inventory.amount("light") >= 3, "which flies to him and fills the purse")
+			_check(
+				_world.hud.purse_label.text.begins_with("%d light" % Inventory.amount("light")),
+				"and the HUD counts it"
+			)
+			_world._clear_motes()
+			_place_hero_for_enemy()
+			_boss = _spawn_boss("seraph_warden", 120.0)
+			_boss.take_damage(999, _world.player.global_position)
+		2092:
+			while _world.dialogue_box.is_open():
+				_world.dialogue_box.advance()
+			var bones := 0
+			var light := 0
+			var unique: LootDrop = null
+			for drop in _world.get_tree().get_nodes_in_group("loot"):
+				if drop is LightDrop and drop.currency == "bones":
+					bones += drop.amount
+				elif drop is LightDrop:
+					light += drop.amount
+			for drop in _world.get_tree().get_nodes_in_group("unique_loot"):
+				unique = drop
+			_check(bones == 3, "the Warden leaves three tally bones (%d)" % bones)
+			_check(light >= 40, "and a hoard of light (%d)" % light)
+			_check(
+				unique != null and unique.item_id == "wardens_halo",
+				"and the Warden's Halo lies there"
+			)
+			_check(not Story.has_flag(Items.loot_flag("wardens_halo")), "not yet taken")
+			# The unique loot stays through a reset; the rest goes with the motes.
+			_world._clear_motes()
+			var left := 0
+			for drop in _world.get_tree().get_nodes_in_group("loot"):
+				if not drop.is_queued_for_deletion():
+					left += 1
+			_check(
+				is_instance_valid(unique) and not unique.is_queued_for_deletion() and left == 0,
+				"the unique stays when the light goes (%d left)" % left
+			)
+			_world.player.global_position = unique.global_position
+			_world.player.velocity = Vector2.ZERO
+		2094:
+			_check(Inventory.has("wardens_halo"), "touching it puts the Warden's Halo in the pack")
+			_check(Story.has_flag(Items.loot_flag("wardens_halo")), "and sets its flag")
+			_check(
+				_world.dialogue_box.current_id() == "loot_wardens_halo", "and reads it like a relic"
+			)
+			while _world.dialogue_box.is_open():
+				_world.dialogue_box.advance()
+			# A dead boss whose loot was not taken lays it back down.
+			Story.set_flag(Boss.flag_for("the_penitent"))
+			var before: int = _world.level.get_node("Objects").get_child_count()
+			_world.level._place_object(
+				{"type": "enemy", "character": "the_penitent", "x": 10, "y": 10}
+			)
+			var laid: LootDrop = null
+			for node in _world.level.get_node("Objects").get_children():
+				if node is LootDrop and node.item_id == "penitents_shroud":
+					laid = node
+			_check(laid != null, "a dead boss's untaken loot is laid back down on load")
+			Story.set_flag(Items.loot_flag("penitents_shroud"))
+			_world.level._place_object(
+				{"type": "enemy", "character": "the_penitent", "x": 10, "y": 10}
+			)
+			_check(
+				_world.level.get_node("Objects").get_child_count() == before + 1,
+				"and not once it is taken"
+			)
+			laid.queue_free()
+			# Wearing: the halo at every rest, a blade's damage, armour's guard,
+			# a crown's hearts; the pack keeps what is worn.
+			var player: Player = _world.player
+			player.toggle_equipment("wardens_halo")
+			_check(Inventory.is_equipped("wardens_halo"), "the Warden's Halo is worn")
+			player._clear_powers()
+			player.rest_at(player.global_position)
+			_check(player.has_power(Player.Power.HALO), "and gives a Halo at every rest")
+			player.toggle_equipment("wardens_halo")
+			_check(not Inventory.is_equipped("wardens_halo"), "taken off again")
+			var base_damage: int = player.attack_damage()
+			var base_speed: float = player.run_speed()
+			var base_hearts: int = player.max_health
+			Inventory.add("iron_sword")
+			Inventory.add("champions_plate")
+			Inventory.add("false_crown")
+			player.toggle_equipment("iron_sword")
+			_check(player.attack_damage() == base_damage + 1, "the Church Iron Sword adds a damage")
+			player.toggle_equipment("champions_plate")
+			_check(
+				player.guarded_damage(2) == maxi(SaveManager.scaled_damage(2) - 2, 1),
+				"the Champion's Plate guards two hearts of a hit"
+			)
+			_check(player.guarded_damage(1) == 1, "but a hit always costs one")
+			_check(is_equal_approx(player.run_speed(), base_speed * 0.8), "and slows his feet")
+			player.toggle_equipment("false_crown")
+			_check(player.max_health == base_hearts + 2, "the False Crown holds two more hearts")
+			player.toggle_equipment("false_crown")
+			_check(player.max_health == base_hearts, "which go with it")
+			player.toggle_equipment("gluttons_maw")
+			_check(not Inventory.is_equipped("gluttons_maw"), "nothing not in the pack is worn")
+			# Trading: a price, a purse, a sale, a sold-out line.
+			Inventory.purse["light"] = 0
+			var ware: Dictionary = Shops.TABLE["pell"]["stock"][0]
+			_check(ware["item"] == "iron_sword", "Pell sells the Church Iron Sword")
+			_check(Shops.buy("pell", ware).begins_with("Not enough"), "not for an empty purse")
+			Inventory.purse["light"] = 130
+			_check(Shops.buy("pell", ware) == "", "120 light buys it")
+			_check(Inventory.amount("light") == 10, "and leaves 10")
+			_check(Inventory.count("iron_sword") == 2, "the sword is in the pack")
+			_check(Shops.sold_out("pell", "iron_sword"), "and Pell's stall is out of them")
+			_check(Shops.buy("pell", ware) == "Sold", "so a second buy is refused")
+			Inventory.add("vault_seal")
+			player.toggle_equipment("vault_seal")
+			_check(Shops.price_of(ware)["light"] == 72, "the Seal of the Vault lowers the price")
+			player.toggle_equipment("vault_seal")
+			# Consumables: a flask refills a charge, once.
+			Inventory.add("flask")
+			player.heal_charges = 0
+			_check(player.use_item("flask") == "", "a Basin Flask is drunk")
+			_check(
+				player.heal_charges == 1 and not Inventory.has("flask"),
+				"for one charge, and is gone"
+			)
+			_check(player.use_item("flask") != "", "an empty pack has nothing to drink")
+			Inventory.add("blade_oil")
+			player.use_item("blade_oil")
+			_check(player.has_power(Player.Power.BLADE), "Choir Oil lights the blade")
+			# The pack goes into the save and comes back whole.
+			Inventory.purse["bones"] = 4
+			var saved: Dictionary = _world.capture_save()
+			_check(saved.has("inventory"), "the save holds the pack")
+			var worn := Inventory.equipped.duplicate()
+			Inventory.reset()
+			Inventory.from_dict(saved["inventory"])
+			_check(
+				(
+					Inventory.amount("light") == 10
+					and Inventory.amount("bones") == 4
+					and Inventory.count("iron_sword") == 2
+					and Inventory.equipped == worn
+				),
+				"and gives it back: purse, items and what is worn"
+			)
+			# The menus: the wares and the pack.
+			_world.shop_menu.open("vael")
+			_check(
+				_world.shop_menu.is_open() and _world.get_tree().paused,
+				"Vael's wares open and pause"
+			)
+			_check(_world.shop_menu.lines().size() == 7, "seven wares on his stall")
+			_check(
+				_world.shop_menu.lines()[0].ends_with("1 tally bone"), "a Halo Shard costs a bone"
+			)
+			_world.shop_menu.close()
+			_check(not _world.get_tree().paused, "leaving unpauses")
+			var pack: InventoryMenu = _world.pause_menu.inventory_menu
+			pack.player = player
+			pack.refresh()
+			var listed := pack.lines()
+			_check(listed.size() == Inventory.sorted_ids().size(), "the pack lists every item")
+			_check(listed[0].begins_with("* "), "the worn sword is marked")
+			_check(listed[0].contains("x2"), "and counted")
+			_check(
+				(
+					Story.has_flag("item:scarf")
+					== InventoryMenu.kept_things().has("Thorne's red scarf")
+				),
+				"the kept things follow the story"
+			)
+			Inventory.reset()
+			_world._clear_motes()
+			_boss.queue_free()
+		2100:
 			# The two new bodies: a hound that runs at the hero and springs,
 			# and a hanged thing that drops from its rope onto him.
 			var hounds := 0
@@ -2051,15 +2288,15 @@ func _physics_process(_delta: float) -> void:
 			_check(hanged >= 6, "hanged things wait under Treachery's ceilings (%d)" % hanged)
 			_place_hero_for_enemy()
 			_imp = _spawn_walker("hound", "lunge", 150.0)
-		2086:
+		2102:
 			_check(_imp.state == Walker.State.CHASE, "a hound sees the hero from far off and runs")
-		2088:
+		2104:
 			_check(_imp.velocity.x < -Walker.CHASE_SPEED * _imp.speed, "faster than a chaser")
 			_imp.global_position.x = _world.player.global_position.x + 50.0
-		2090:
+		2106:
 			_check(_imp.state == Walker.State.WINDUP, "a few tiles off it crouches")
 			_check(_imp._attack == Walker.Attack.POUNCE, "to spring")
-		2106:
+		2122:
 			_check(
 				_imp.state == Walker.State.LEAP or _imp.state == Walker.State.RECOVER,
 				"and springs flat at him (%s)" % Walker.State.keys()[_imp.state]
@@ -2070,17 +2307,17 @@ func _physics_process(_delta: float) -> void:
 			hanger.position = _world.player.global_position + Vector2(0.0, -64.0)
 			_world.add_child(hanger)
 			_hanger = hanger
-		2108:
+		2124:
 			_check(_hanger.rope.points.size() == 2, "the hanged thing hangs on a rope")
 			_check(_hanger.anchor.y < _hanger.home.y, "from the ceiling above it")
 			_check(_hanger.state == Hanger.State.CREAK, "it creaks when the hero stands under it")
 			_check(_hanger.sprite.animation == "attack", "with its eyes open")
-		2140:
+		2156:
 			_check(
 				_hanger.state == Hanger.State.REST or _hanger.state == Hanger.State.DROP,
 				"then lets go (%s)" % Hanger.State.keys()[_hanger.state]
 			)
-		2170:
+		2186:
 			_check(_hanger.state == Hanger.State.REST, "it lies where it landed")
 			_check(_world.player.health < Player.MAX_HEALTH, "the fall hurt the hero")
 			_check(
@@ -2089,7 +2326,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_hanger.take_damage(1, _world.player.global_position)
 			_check(_hanger.health == _hanger.max_health - 1, "and can be hit there")
-		2300:
+		2316:
 			_check(
 				_hanger.state == Hanger.State.CLIMB or _hanger.state == Hanger.State.HANG,
 				"the rope hauls it back up (%s)" % Hanger.State.keys()[_hanger.state]

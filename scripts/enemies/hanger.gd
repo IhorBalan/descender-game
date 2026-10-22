@@ -35,6 +35,9 @@ const DEATH_HIT_STOP := 0.06
 const TINT_CREAK := Color(1.0, 0.8, 0.8)
 const TINT_HURT := Color(1.0, 0.5, 0.5)
 const DROP_CHANCE := 0.5
+## What it leaks and carried (see Loot): a traitor's light, and a bone now
+## and then.
+const LOOT := {"light": [7, 10], "bone_chance": 0.12, "flask_chance": 0.04}
 const HEALTH_BAR_SCENE := preload("res://scripts/enemy_health_bar.gd")
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 
@@ -278,8 +281,9 @@ func _die() -> void:
 	sprite.position.x = 0.0
 	rope.visible = false
 	EnemyDeath.play(sprite, 1, CORPSE_TIME, queue_free)
+	var parent := drop_parent if drop_parent else get_parent()
+	Loot.drop(parent, global_position + Vector2(0.0, -22.0), LOOT)
 	if randf() < DROP_CHANCE:
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = global_position + Vector2(0.0, -22.0)
-		var parent := drop_parent if drop_parent else get_parent()
 		parent.add_child.call_deferred(mote)

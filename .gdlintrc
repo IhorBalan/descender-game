@@ -4,3 +4,6 @@
 # test in tests/smoke_test.gd is one scripted run through the whole game
 # and passed 2000 with the promises.
 max-file-lines: 3000
+# The hero has one public entry per thing that can happen to him (a hit, a
+# pickup, a rest, a piece of equipment worn) and passed 20 with the pack.
+max-public-methods: 30
