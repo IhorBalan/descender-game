@@ -1943,6 +1943,23 @@
 			}
 		]
 	},
+	"limbo_lord_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Limbo Lord",
+				"text": "Oh. That was what for."
+			},
+			{
+				"who": "Limbo Lord",
+				"text": "Go on down. I won't remember you came."
+			},
+			{
+				"who": "",
+				"text": "(The Limbo Lord settles into the dust like something that has waited a long time to.)"
+			}
+		]
+	},
 	"palace_of_velvet_intro": {
 		"once": true,
 		"lines": [
@@ -1953,6 +1970,23 @@
 			{
 				"who": "Keeper",
 				"text": "You carry a lot of it. Set it down. Stay."
+			}
+		]
+	},
+	"palace_of_velvet_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Keeper",
+				"text": "You set nothing down."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "Keeper",
+				"text": "Then it gets heavier from here. That is all I was ever for."
 			}
 		]
 	},
@@ -1969,6 +2003,23 @@
 			}
 		]
 	},
+	"the_bloated_one_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Bloated One",
+				"text": "One... more."
+			},
+			{
+				"who": "",
+				"text": "(It does not ask again.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "That was the last one."
+			}
+		]
+	},
 	"golden_vault_intro": {
 		"once": true,
 		"lines": [
@@ -1979,6 +2030,23 @@
 			{
 				"who": "Warden of the Vault",
 				"text": "A winter, a brother, a name. Yours will fit."
+			}
+		]
+	},
+	"golden_vault_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Warden of the Vault",
+				"text": "It doesn't fit. Nothing of yours. You dropped it all up there, before the hole."
+			},
+			{
+				"who": "Ansel",
+				"text": "Not all of it."
+			},
+			{
+				"who": "Warden of the Vault",
+				"text": "The name. Yes. Keep it in the dark, then, where I can't see it."
 			}
 		]
 	},
@@ -1999,6 +2067,23 @@
 			}
 		]
 	},
+	"cursed_bishop_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Cursed Bishop",
+				"text": "Was it true? The Wheel. Tell me once that it was true."
+			},
+			{
+				"who": "Ansel",
+				"text": "It was a farm."
+			},
+			{
+				"who": "Cursed Bishop",
+				"text": "Then count me. Somebody. Count me."
+			}
+		]
+	},
 	"the_red_arena_intro": {
 		"once": true,
 		"lines": [
@@ -2009,6 +2094,23 @@
 			{
 				"who": "Champion",
 				"text": "Good."
+			}
+		]
+	},
+	"the_red_arena_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Champion",
+				"text": "Ha. ...Ha."
+			},
+			{
+				"who": "Champion",
+				"text": "Tell him it was a good one."
+			},
+			{
+				"who": "Ansel",
+				"text": "I'll tell him."
 			}
 		]
 	},
@@ -2026,6 +2128,27 @@
 			{
 				"who": "False King",
 				"text": "Then I'll tell him you knelt."
+			}
+		]
+	},
+	"the_false_king_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "False King",
+				"text": "I'll tell him... you knelt."
+			},
+			{
+				"who": "Ansel",
+				"text": "He'll know."
+			},
+			{
+				"who": "False King",
+				"text": "He always knows. That is the worst of him. He always knows."
+			},
+			{
+				"who": "",
+				"text": "(The court is gone. There was never a crown.)"
 			}
 		]
 	},

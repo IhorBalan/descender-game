@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 588
+const EXPECTED_CHECKS := 590
 const LAST_TICK := 2098
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -1949,6 +1949,15 @@ func _physics_process(_delta: float) -> void:
 				if _world.dialogue.entry("%s_intro" % id).is_empty():
 					silent += 1
 			_check(silent == 0, "every boss has an intro line (%d silent)" % silent)
+			var mute := 0
+			for id in Boss.PROFILES:
+				if _world.dialogue.entry("%s_defeat" % id).is_empty():
+					mute += 1
+			_check(mute == 0, "every boss has its last lines (%d mute)" % mute)
+			_check(
+				_world.dialogue.entry("the_red_arena_defeat")["lines"][-1]["who"] == "Ansel",
+				"Ansel answers the Champion"
+			)
 			_check(
 				_world.dialogue.entry("the_false_king_intro")["lines"][0]["who"] == "False King",
 				"the False King speaks first in his room"
