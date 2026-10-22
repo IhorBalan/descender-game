@@ -201,6 +201,10 @@ func _enter_region(region: Dictionary, announce: bool) -> void:
 		region_fx.show_region(region, level.world.tile)
 	var name := str(region.get("name", ""))
 	Audio.play_ambient("heaven" if name == "Paradise" else "earth")
+	# Each region has its own loop (see tools/gen_music.py); a fight keeps
+	# its own until it is over.
+	if _boss == null:
+		Audio.play_music(EdgeDecor.region_key(name))
 	if announce:
 		var subtitle := str(region.get("subtitle", ""))
 		hud.queue_message(name if subtitle.is_empty() else "%s: %s" % [name, subtitle], 2.5)
@@ -210,6 +214,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("pause"):
+		Audio.play("pause")
 		pause_menu.open()
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("restart"):
@@ -402,7 +407,8 @@ func _on_boss_engaged(boss: Boss) -> void:
 	_boss = boss
 	_arena_seals = level.seal_room(level.room_at(boss.global_position))
 	hud.show_boss(str(boss.profile["name"]), boss.health, boss.max_health)
-	Audio.play("checkpoint", -6.0)
+	Audio.play("boss_engage")
+	Audio.play_music("boss")
 	var intro := _boss_entry(boss, "intro")
 	if intro.is_empty():
 		boss.start_fight()
@@ -413,6 +419,7 @@ func _on_boss_engaged(boss: Boss) -> void:
 
 func _on_boss_defeated(boss: Boss) -> void:
 	Story.set_flag(Boss.flag_for(boss.boss_id))
+	Audio.play("boss_defeat")
 	_end_fight()
 	level.open_locks(player)
 	var defeat := _boss_entry(boss, "defeat")
@@ -431,6 +438,7 @@ func _end_fight() -> void:
 	hud.hide_boss()
 	_boss = null
 	_fight_pending = false
+	Audio.play_music(EdgeDecor.region_key(str(_region.get("name", ""))))
 
 
 ## The boss's intro or defeat lines (`<id>_intro`, `<id>_defeat`), if the

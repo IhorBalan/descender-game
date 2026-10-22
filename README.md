@@ -361,9 +361,9 @@ the live map is meant to ship.
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |
-| `scripts/audio.gd` | The `Audio` autoload: sound effects and the ambient loop |
+| `scripts/audio.gd` | The `Audio` autoload: sound effects, the music loops (crossfaded per region, ducked while paused) and the ambient loop |
 | `scripts/feedback.gd` | The `Feedback` autoload: hit-stop, screen shake, hit flash and sparks |
-| `assets/audio/`, `tools/gen_sounds.py` | Placeholder sounds and the script that synthesises them |
+| `assets/audio/`, `tools/gen_sounds.py`, `tools/gen_music.py` | Placeholder sounds and music, and the scripts that synthesise them |
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard, brute) with a telegraphed melee swing and, for some, a bark |
 | `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
@@ -403,6 +403,20 @@ Every sound under `assets/audio/` is a synthesised placeholder. To change
 one, edit its recipe in `tools/gen_sounds.py` and run
 `python3 tools/gen_sounds.py` (needs numpy). Effects are played by name
 (`Audio.play("jump")`), so a real recording only has to keep the file name.
+
+The music is made the same way by `tools/gen_music.py`: one loop per
+region of the world under `assets/audio/music/`, named by the region's
+key (`paradise`, `ruined_earth`, `purgatory`, `limbo` ... `treachery`),
+plus `title` for the title screen and `boss` for the fights. Each is a
+short composition for a tiny sequencer (a few synthesised voices, drums, a
+tempo-synced echo) whose tails wrap round the loop's end so it joins
+without a click; the regions sound as they are named, from Paradise's harp
+and choir to Wrath's drums and Treachery's ice. The script encodes to Ogg
+Vorbis with ffmpeg when it is installed and leaves WAV otherwise; the game
+loads either. Crossing into a region crossfades to its loop
+(`Audio.play_music(key)`), a boss fight takes over until it ends, and the
+pause menu ducks the music. Music and the ambient loops play on the Music
+bus and effects on the SFX bus, so the volume sliders in Settings apply.
 
 The same workflow also lints and format-checks GDScript with
 [gdtoolkit](https://github.com/Scony/godot-gdscript-toolkit). To run it locally:

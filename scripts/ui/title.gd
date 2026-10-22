@@ -40,6 +40,7 @@ func _ready() -> void:
 		slot_buttons[slot].pressed.connect(_on_slot_pressed.bind(slot))
 	Audio.wire_menu(self)
 	Audio.stop_ambient()
+	Audio.play_music("title")
 	_show_menu()
 	# The live map sync (see LiveMap) reports along the bottom while it runs.
 	if LiveMap.enabled:
@@ -50,6 +51,7 @@ func _ready() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if slots.visible and event.is_action_pressed("ui_cancel"):
+		Audio.play("menu_back")
 		_show_menu()
 		get_viewport().set_input_as_handled()
 

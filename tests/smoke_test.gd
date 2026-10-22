@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 450
+const EXPECTED_CHECKS := 457
 const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -107,6 +107,8 @@ func _physics_process(_delta: float) -> void:
 			_check(root.get_node_or_null("Audio") != null, "Audio autoload present")
 			_check(root.get_node_or_null("Feedback") != null, "Feedback autoload present")
 			_check(Audio.ambient_name == "heaven", "Paradise starts the heaven ambient loop")
+			_check(Audio.music_name == "paradise", "Paradise plays its own music")
+			_check(Audio.is_music_playing(), "the music loop is running")
 			# The world: built from the map tool's export with TileMapLayers,
 			# collision from the terrain kinds, the markers, the lights and
 			# the objects of the placements sidecar.
@@ -693,6 +695,7 @@ func _physics_process(_delta: float) -> void:
 			root.add_child(_title)
 		870:
 			_check(_title.get_node("Menu").visible, "title screen shows its menu")
+			_check(Audio.music_name == "title", "title screen plays its music")
 			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
 		874:
 			# Settings: rebinding changes the InputMap and is undone by reset.
@@ -892,6 +895,7 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				Audio.ambient_name == "earth", "crossing into Ruined Earth plays its ambient loop"
 			)
+			_check(Audio.music_name == "ruined_earth", "and crossfades to the hub's music")
 			_check(
 				_hub.level.ambient.color != _paradise_tint,
 				"crossing into a region changes the tint"
@@ -1182,6 +1186,7 @@ func _physics_process(_delta: float) -> void:
 				"the room's doors are sealed for the fight (%s)" % str(sealed_doors)
 			)
 			_check(_world.hud.boss_bar.visible, "boss bar shows")
+			_check(Audio.music_name == "boss", "the fight has its own music")
 			_check(_world.hud.boss_name_label.text == "Seraph Warden", "boss bar names the boss")
 			_check(_boss.state == Boss.State.DORMANT, "boss waits for the intro")
 			_boss_start = _boss.global_position
@@ -1213,6 +1218,8 @@ func _physics_process(_delta: float) -> void:
 			_check(Story.has_flag("boss:seraph_warden"), "dead boss sets its flag")
 			_check(_world._boss == null, "the fight is over")
 			_check(_world._arena_seals.is_empty(), "the room's seals break")
+			_check("boss_defeat" in Audio.frame_played, "the boss's fall has its sound")
+			_check(Audio.music_name == "paradise", "the region's music returns after the fight")
 			_check(not _world.hud.boss_bar.visible, "boss bar hides")
 			_check(
 				_world.dialogue_box.current_id() == "seraph_warden_defeat", "the defeat lines play"
