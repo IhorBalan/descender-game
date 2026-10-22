@@ -51,12 +51,16 @@ A to choose and Esc or B to go back. **New Game** picks a slot (an occupied
 one asks to be pressed twice before it is overwritten), **Continue** resumes
 the most recent save and **Load Game** picks any slot.
 
-**Settings**, on the title screen and in the pause menu, has the master
-volume, a fullscreen toggle and the bindings: pick an action, press the
-new key (a key taken from another action is moved, not shared) or Esc to
-keep the old one. The **Bindings for** button flips the list between the
-keyboard and the gamepad, which are rebound separately. Settings live in
-`user://settings.cfg`.
+**Settings**, on the title screen and in the pause menu, has four pages.
+**Audio** has the master, music and sound effect volumes and a toggle for
+the blips dialogue ticks with. **Display** has fullscreen, the window
+size, v-sync and the screen shake. **Controls** has the bindings: pick an
+action, press the new key (a key taken from another action is moved, not
+shared) or Esc to keep the old one; the **Bindings for** button flips the
+list between the keyboard and the gamepad, which are rebound separately.
+**Game** has the dialogue text speed (slow to instant), and toggles for
+the white flash and the blink of stopped time on a hit and for gamepad
+rumble, for anyone they bother. Settings live in `user://settings.cfg`.
 
 Pausing opens a menu to resume, save or quit to the title. Saving there
 records the last checkpoint, which is where the save will resume.

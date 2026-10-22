@@ -1,9 +1,10 @@
 class_name SettingsMenu
 extends Control
 
-## The settings screen, in three pages: Audio (master, music and sound
-## effect volumes), Display (fullscreen, window size, v-sync, screen shake)
-## and Controls (keyboard and gamepad bindings).
+## The settings screen, in four pages: Audio (master, music and sound
+## effect volumes, the dialogue blips), Display (fullscreen, window size,
+## v-sync, screen shake), Controls (keyboard and gamepad bindings) and
+## Game (text speed, hit flashes, hit pause, gamepad rumble).
 ##
 ## Shared by the title screen and the pause menu, which show it and listen
 ## for `closed`. The page buttons along the top switch pages, as do Q/E and
@@ -15,7 +16,7 @@ extends Control
 
 signal closed
 
-enum Page { AUDIO, DISPLAY, CONTROLS }
+enum Page { AUDIO, DISPLAY, CONTROLS, GAME }
 enum Device { KEYBOARD, GAMEPAD }
 
 const DEFAULT_HINT := "Arrows move   Space changes   Q/E or LB/RB switch pages   Esc goes back"
@@ -37,6 +38,7 @@ var _first_controls: Dictionary = {}
 @onready var volume_value: Label = $Pages/Audio/Master/Value
 @onready var music_value: Label = $Pages/Audio/Music/Value
 @onready var sfx_value: Label = $Pages/Audio/Sfx/Value
+@onready var blips_toggle: CheckButton = $Pages/Audio/Blips/Toggle
 @onready var audio_defaults_button: Button = $Pages/Audio/Buttons/Defaults
 @onready var fullscreen_toggle: CheckButton = $Pages/Display/Fullscreen/Toggle
 @onready var scale_button: Button = $Pages/Display/Scale/Cycle
@@ -46,16 +48,32 @@ var _first_controls: Dictionary = {}
 @onready var device_button: Button = $Pages/Controls/KeysRow/Device
 @onready var reset_button: Button = $Pages/Controls/KeysRow/ResetKeys
 @onready var keys_grid: GridContainer = $Pages/Controls/Keys
+@onready var text_speed_button: Button = $Pages/Game/TextSpeed/Cycle
+@onready var hit_flash_toggle: CheckButton = $Pages/Game/HitFlash/Toggle
+@onready var hit_stop_toggle: CheckButton = $Pages/Game/HitStop/Toggle
+@onready var rumble_toggle: CheckButton = $Pages/Game/Rumble/Toggle
+@onready var game_defaults_button: Button = $Pages/Game/Buttons/Defaults
 @onready var hint: Label = $Hint
 
 
 func _ready() -> void:
-	_tabs = {Page.AUDIO: $Tabs/Audio, Page.DISPLAY: $Tabs/Display, Page.CONTROLS: $Tabs/Controls}
+	_tabs = {
+		Page.AUDIO: $Tabs/Audio,
+		Page.DISPLAY: $Tabs/Display,
+		Page.CONTROLS: $Tabs/Controls,
+		Page.GAME: $Tabs/Game,
+	}
 	_pages = {
-		Page.AUDIO: $Pages/Audio, Page.DISPLAY: $Pages/Display, Page.CONTROLS: $Pages/Controls
+		Page.AUDIO: $Pages/Audio,
+		Page.DISPLAY: $Pages/Display,
+		Page.CONTROLS: $Pages/Controls,
+		Page.GAME: $Pages/Game,
 	}
 	_first_controls = {
-		Page.AUDIO: volume_slider, Page.DISPLAY: fullscreen_toggle, Page.CONTROLS: device_button
+		Page.AUDIO: volume_slider,
+		Page.DISPLAY: fullscreen_toggle,
+		Page.CONTROLS: device_button,
+		Page.GAME: text_speed_button,
 	}
 	for which in _tabs:
 		var tab: Button = _tabs[which]
@@ -64,12 +82,18 @@ func _ready() -> void:
 	_wire_volume(volume_slider, _on_volume_changed)
 	_wire_volume(music_slider, _on_music_changed)
 	_wire_volume(sfx_slider, _on_sfx_changed)
+	blips_toggle.toggled.connect(_on_blips_toggled)
 	audio_defaults_button.pressed.connect(_on_audio_defaults_pressed)
 	fullscreen_toggle.toggled.connect(_on_fullscreen_toggled)
 	vsync_toggle.toggled.connect(_on_vsync_toggled)
 	_wire_cycle(scale_button, _on_scale_stepped)
 	_wire_cycle(shake_button, _on_shake_stepped)
 	display_defaults_button.pressed.connect(_on_display_defaults_pressed)
+	_wire_cycle(text_speed_button, _on_text_speed_stepped)
+	hit_flash_toggle.toggled.connect(_on_hit_flash_toggled)
+	hit_stop_toggle.toggled.connect(_on_hit_stop_toggled)
+	rumble_toggle.toggled.connect(_on_rumble_toggled)
+	game_defaults_button.pressed.connect(_on_game_defaults_pressed)
 	reset_button.pressed.connect(_on_reset_pressed)
 	device_button.pressed.connect(_on_device_pressed)
 	# Two actions per row: label, key, label, key.
@@ -197,6 +221,11 @@ func _refresh() -> void:
 	var size: Vector2i = Settings.window_size_for(Settings.window_scale)
 	scale_button.text = "< %dx  %d x %d >" % [Settings.window_scale, size.x, size.y]
 	shake_button.text = "< %s >" % Settings.shake_name(Settings.screen_shake)
+	_refresh_toggle(blips_toggle, Settings.voice_blips)
+	text_speed_button.text = "< %s >" % Settings.text_speed_name()
+	_refresh_toggle(hit_flash_toggle, Settings.hit_flash)
+	_refresh_toggle(hit_stop_toggle, Settings.hit_stop)
+	_refresh_toggle(rumble_toggle, Settings.rumble)
 	var gamepad := device == Device.GAMEPAD
 	device_button.text = "Gamepad" if gamepad else "Keyboard"
 	for action in _key_buttons:
@@ -213,6 +242,11 @@ func _refresh() -> void:
 		hint.text = "Press the new gamepad button, or Esc to keep the old one"
 	else:
 		hint.text = "Press the new key, or Esc to keep the old one"
+
+
+func _refresh_toggle(toggle: CheckButton, on: bool) -> void:
+	toggle.set_pressed_no_signal(on)
+	toggle.text = "On" if on else "Off"
 
 
 func _percent(linear: float) -> String:
@@ -251,6 +285,12 @@ func _on_sfx_changed(value: float) -> void:
 
 func _on_slider_drag_ended(_changed: bool) -> void:
 	Settings.save_settings()
+
+
+func _on_blips_toggled(pressed: bool) -> void:
+	Settings.voice_blips = pressed
+	Settings.save_settings()
+	_refresh()
 
 
 func _on_audio_defaults_pressed() -> void:
@@ -295,6 +335,36 @@ func _on_shake_stepped(step: int) -> void:
 
 func _on_display_defaults_pressed() -> void:
 	Settings.reset_display()
+	Settings.save_settings()
+	_refresh()
+
+
+func _on_text_speed_stepped(step: int) -> void:
+	Settings.text_speed = wrapi(Settings.text_speed + step, 0, Settings.TEXT_SPEEDS.size())
+	Settings.save_settings()
+	_refresh()
+
+
+func _on_hit_flash_toggled(pressed: bool) -> void:
+	Settings.hit_flash = pressed
+	Settings.save_settings()
+	_refresh()
+
+
+func _on_hit_stop_toggled(pressed: bool) -> void:
+	Settings.hit_stop = pressed
+	Settings.save_settings()
+	_refresh()
+
+
+func _on_rumble_toggled(pressed: bool) -> void:
+	Settings.rumble = pressed
+	Settings.save_settings()
+	_refresh()
+
+
+func _on_game_defaults_pressed() -> void:
+	Settings.reset_game()
 	Settings.save_settings()
 	_refresh()
 

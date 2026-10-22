@@ -12,6 +12,7 @@ const GAME_SCENE := "res://scenes/main.tscn"
 
 var _slot_mode := SlotMode.NEW_GAME
 var _overwrite_slot := -1
+var _starting := false
 
 @onready var menu: VBoxContainer = $Menu
 @onready var new_game_button: Button = $Menu/NewGame
@@ -25,8 +26,6 @@ var _overwrite_slot := -1
 @onready var slot_buttons: Array[Button] = [$Slots/Slot1, $Slots/Slot2, $Slots/Slot3]
 @onready var back_button: Button = $Slots/Back
 @onready var live_map_status: Label = $LiveMapStatus
-
-var _starting := false
 
 
 func _ready() -> void:

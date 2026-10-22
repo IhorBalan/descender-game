@@ -48,7 +48,8 @@ var _http: HTTPRequest
 func _ready() -> void:
 	if not OS.has_feature("editor") or not ProjectSettings.get_setting(SETTING_ENABLED, false):
 		return
-	if "--no-live-map" in OS.get_cmdline_user_args() or OS.get_environment("DESCENDER_LIVE_MAP") == "0":
+	var skipped := OS.get_environment("DESCENDER_LIVE_MAP") == "0"
+	if "--no-live-map" in OS.get_cmdline_user_args() or skipped:
 		return
 	var project := str(ProjectSettings.get_setting(SETTING_PROJECT, ""))
 	if project.is_empty():
@@ -71,7 +72,10 @@ func wait() -> void:
 func _sync(project: String) -> void:
 	running = true
 	status = "Checking the live map…"
-	var base := "https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/published/" % project
+	var base := (
+		"https://firestore.googleapis.com/v1/projects/%s/databases/(default)/documents/published/"
+		% project
+	)
 	var head := await _get_document(base + HEAD_DOCUMENT)
 	if head.has("error"):
 		if head.get("code", 0) == 404:
@@ -104,7 +108,9 @@ func _sync(project: String) -> void:
 				_finish(false, "Live map: %s" % piece["error"])
 				return
 			text += str(piece["fields"].get("text", ""))
-		var bytes := Marshalls.base64_to_raw(text) if str(file.get("encoding", "")) == "base64" else text.to_utf8_buffer()
+		var bytes := text.to_utf8_buffer()
+		if str(file.get("encoding", "")) == "base64":
+			bytes = Marshalls.base64_to_raw(text)
 		if not _write(WORLD_DIR + "/" + file_name, bytes):
 			_finish(false, "Live map: could not write %s" % file_name)
 			return
@@ -112,13 +118,23 @@ func _sync(project: String) -> void:
 	if not wanted.is_empty():
 		_finish(false, "Live map: the published map has no %s" % ", ".join(wanted))
 		return
-	_write(STAMP_PATH, JSON.stringify({
-		"revision": revision,
-		"name": map_name,
-		"mapId": str(fields.get("mapId", "")),
-		"publishedAt": int(fields.get("publishedAt", 0)),
-		"syncedAt": int(Time.get_unix_time_from_system() * 1000.0),
-	}, "  ").to_utf8_buffer())
+	_write(
+		STAMP_PATH,
+		(
+			JSON
+			. stringify(
+				{
+					"revision": revision,
+					"name": map_name,
+					"mapId": str(fields.get("mapId", "")),
+					"publishedAt": int(fields.get("publishedAt", 0)),
+					"syncedAt": int(Time.get_unix_time_from_system() * 1000.0),
+				},
+				"  "
+			)
+			. to_utf8_buffer()
+		)
+	)
 	_finish(true, "Live map: %s, updated" % map_name)
 
 

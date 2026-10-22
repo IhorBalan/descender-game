@@ -43,15 +43,17 @@ func build(map: WorldMap) -> void:
 	var solid := PackedByteArray()
 	solid.resize(terrain.size())
 	for i in terrain.size():
-		solid[i] = 1 if terrain[i] >= 0 and int(map.kinds.get(terrain[i], 0)) == WorldMap.KIND_SOLID else 0
+		solid[i] = (
+			1 if terrain[i] >= 0 and int(map.kinds.get(terrain[i], 0)) == WorldMap.KIND_SOLID else 0
+		)
 	var tile := map.tile
 	# Chunk key -> the pieces in it.
 	var chunks := {}
 	for region in map.regions:
-		var set := _set_for(str(region.get("name", "")))
-		if set.is_empty():
+		var edge_set := _set_for(str(region.get("name", "")))
+		if edge_set.is_empty():
 			continue
-		var scale_factor := float(tile) / float(set.get("art_tile", tile))
+		var scale_factor := float(tile) / float(edge_set.get("art_tile", tile))
 		var y0 := int(floor(float(region.get("y0", 0)) / tile))
 		var y1 := int(ceil(float(region.get("y1", 0)) / tile))
 		for y in range(maxi(y0, 0), mini(y1, map.height)):
@@ -59,17 +61,23 @@ func build(map: WorldMap) -> void:
 				if solid[y * map.width + x] == 0:
 					continue
 				for side in SIDES:
-					var pieces: Array = set.get(side, [])
+					var pieces: Array = edge_set.get(side, [])
 					if pieces.is_empty() or not _exposed(solid, map.width, map.height, x, y, side):
 						continue
 					var roll := _hash(x, y, side.unicode_at(0))
-					if roll % 1000 >= int(float(set.get(side + "_chance", 1.0)) * 1000.0):
+					if roll % 1000 >= int(float(edge_set.get(side + "_chance", 1.0)) * 1000.0):
 						continue
 					var texture: Texture2D = pieces[(roll / 1000) % pieces.size()]
 					var key := Vector2i(x / CHUNK, y / CHUNK)
 					if not chunks.has(key):
 						chunks[key] = []
-					chunks[key].append([texture, _anchor(x, y, side, tile, texture.get_size() * scale_factor), scale_factor])
+					chunks[key].append(
+						[
+							texture,
+							_anchor(x, y, side, tile, texture.get_size() * scale_factor),
+							scale_factor
+						]
+					)
 	for key in chunks:
 		var chunk := EdgeChunk.new()
 		chunk.pieces = chunks[key]
@@ -78,7 +86,9 @@ func build(map: WorldMap) -> void:
 
 
 ## Whether the solid cell (x, y) has open air on the given side.
-static func _exposed(solid: PackedByteArray, width: int, height: int, x: int, y: int, side: String) -> bool:
+static func _exposed(
+	solid: PackedByteArray, width: int, height: int, x: int, y: int, side: String
+) -> bool:
 	var nx := x
 	var ny := y
 	match side:
@@ -123,12 +133,12 @@ func _set_for(region_name: String) -> Dictionary:
 	var key := region_key(region_name)
 	if _sets.has(key):
 		return _sets[key]
-	var set := {}
+	var edge_set := {}
 	var dir := "%s/%s" % [REGIONS_DIR, key]
 	var text := FileAccess.get_file_as_string(dir + "/edges.json")
 	var spec: Variant = JSON.parse_string(text) if not text.is_empty() else null
 	if spec is Dictionary:
-		set["art_tile"] = int(spec.get("art_tile", 16))
+		edge_set["art_tile"] = int(spec.get("art_tile", 16))
 		var chance := float(spec.get("chance", 1.0))
 		for side in SIDES:
 			var textures: Array = []
@@ -137,10 +147,10 @@ func _set_for(region_name: String) -> Dictionary:
 				if texture:
 					textures.append(texture)
 			if not textures.is_empty():
-				set[side] = textures
-			set[side + "_chance"] = float(spec.get(side + "_chance", chance))
-	_sets[key] = set
-	return set
+				edge_set[side] = textures
+			edge_set[side + "_chance"] = float(spec.get(side + "_chance", chance))
+	_sets[key] = edge_set
+	return edge_set
 
 
 ## The folder name of a region: lowercased, without the circle's number.

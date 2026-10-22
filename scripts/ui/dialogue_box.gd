@@ -2,8 +2,9 @@ class_name DialogueBox
 extends CanvasLayer
 
 ## The text box at the bottom of the screen: a speaker name and one box of
-## text at a time, typed out. The typing rests a moment on punctuation and
-## ticks with a soft blip, pitched by who is speaking; the name takes the
+## text at a time, typed out at the speed the settings choose (or all at
+## once). The typing rests a moment on punctuation and ticks with a soft
+## blip, pitched by who is speaking, unless the blips are turned off; the name takes the
 ## speaker's colour, and a stage note (no speaker) is grey and silent.
 ## Interact (or jump) finishes the typing, then turns the page; the last
 ## page closes the box. A line with `choices` shows them once it is typed
@@ -13,6 +14,7 @@ extends CanvasLayer
 
 signal finished(entry: Dictionary)
 
+## The typing speed at the Normal setting; see Settings.chars_per_second.
 const CHARS_PER_SECOND := 45.0
 const BLINK_PERIOD := 0.8
 const CHOICE_GAP := "      "
@@ -160,7 +162,12 @@ func _unhandled_input(event: InputEvent) -> void:
 ## its end, and the end of the box does not rest at all).
 func _type(delta: float, total: int) -> void:
 	var before := int(_shown)
-	_shown = minf(_shown + CHARS_PER_SECOND * delta, total)
+	var speed: float = Settings.chars_per_second()
+	if speed <= 0.0:
+		# Instant: the whole page, no rests and one blip.
+		_shown = total
+	else:
+		_shown = minf(_shown + speed * delta, total)
 	var after := int(_shown)
 	if after == before:
 		return
@@ -168,12 +175,14 @@ func _type(delta: float, total: int) -> void:
 	var text := text_label.text
 	var last := text[after - 1]
 	if after < total:
+		# The rests keep their feel at every speed: shorter when typing faster.
+		var rest_scale := CHARS_PER_SECOND / speed
 		if last in SENTENCE_ENDS and text[after] != last:
-			_pause = PAUSE_SENTENCE
+			_pause = PAUSE_SENTENCE * rest_scale
 		elif last in COMMA_ENDS:
-			_pause = PAUSE_COMMA
+			_pause = PAUSE_COMMA * rest_scale
 	_since_blip += after - before
-	if _since_blip >= BLIP_EVERY and _blip_pitch > 0.0:
+	if _since_blip >= BLIP_EVERY and _blip_pitch > 0.0 and Settings.voice_blips:
 		_since_blip = 0
 		Audio.play("talk", BLIP_VOLUME_DB, _blip_pitch)
 

@@ -58,7 +58,9 @@ func show_region(region: Dictionary, tile: int) -> void:
 		layer.texture = texture
 		layer.scale_factor = scale_factor
 		var scroll: Array = entry.get("scroll", [1.0, 1.0])
-		layer.scroll = Vector2(float(scroll[0]), float(scroll[1])) if scroll.size() >= 2 else Vector2.ONE
+		layer.scroll = (
+			Vector2(float(scroll[0]), float(scroll[1])) if scroll.size() >= 2 else Vector2.ONE
+		)
 		layer.anchor = Vector2(0.0, top + float(entry.get("y", 0)))
 		layer.cover = bool(entry.get("cover", false))
 		if bool(entry.get("front", false)):
