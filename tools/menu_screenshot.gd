@@ -1,7 +1,8 @@
 extends SceneTree
 
-## Renders the title screen, the credits, the four pages of the settings
-## screen and the pause menu and saves screenshots. Needs a display (or a virtual one):
+## Renders the title screen, the credits, the new game pickers, the four
+## pages of the settings screen and the pause menu and saves screenshots.
+## Needs a display (or a virtual one):
 ##
 ##   xvfb-run -a godot --rendering-driver opengl3 --path . \
 ##       --script tools/menu_screenshot.gd -- /tmp/shots
@@ -26,42 +27,53 @@ func _initialize() -> void:
 
 func _physics_process(_delta: float) -> bool:
 	_ticks += 1
-	if _ticks == 10:
-		_save("title.png")
-	if _ticks == 12:
-		_title.get_node("Menu/Credits").pressed.emit()
-	if _ticks == 22:
-		_save("credits.png")
-	if _ticks == 24:
-		_title.get_node("Credits/Back").pressed.emit()
-		_title.get_node("Menu/Settings").pressed.emit()
-	if _ticks == 34:
-		_save("settings_audio.png")
-	if _ticks == 36:
-		_settings_menu().get_node("Tabs/Display").pressed.emit()
-	if _ticks == 46:
-		_save("settings_display.png")
-	if _ticks == 48:
-		_settings_menu().get_node("Tabs/Controls").pressed.emit()
-	if _ticks == 58:
-		_save("settings_controls.png")
-	if _ticks == 60:
-		_settings_menu().get_node("Tabs/Game").pressed.emit()
-	if _ticks == 70:
-		_save("settings_game.png")
-	if _ticks == 72:
-		# The pause menu, over the start of the world.
-		root.remove_child(_title)
-		_title.free()
-		_main = load("res://scenes/main.tscn").instantiate()
-		root.add_child(_main)
-	if _ticks == 120:
-		_main.pause_menu.open()
-	if _ticks == 130:
-		_save("pause.png")
-	if _ticks > 136:
-		quit()
-		return true
+	match _ticks:
+		10:
+			_save("title.png")
+		12:
+			_title.get_node("Menu/Credits").pressed.emit()
+		22:
+			_save("credits.png")
+		24:
+			_title.get_node("Credits/Back").pressed.emit()
+			_title.get_node("Menu/NewGame").pressed.emit()
+		34:
+			_save("new_game_slots.png")
+		36:
+			_title.get_node("Slots/Slot1").pressed.emit()
+		46:
+			_save("new_game_difficulty.png")
+		48:
+			_title.get_node("Difficulty/Back").pressed.emit()
+			_title.get_node("Slots/Back").pressed.emit()
+			_title.get_node("Menu/Settings").pressed.emit()
+		58:
+			_save("settings_audio.png")
+		60:
+			_settings_menu().get_node("Tabs/Display").pressed.emit()
+		70:
+			_save("settings_display.png")
+		72:
+			_settings_menu().get_node("Tabs/Controls").pressed.emit()
+		82:
+			_save("settings_controls.png")
+		84:
+			_settings_menu().get_node("Tabs/Game").pressed.emit()
+		94:
+			_save("settings_game.png")
+		96:
+			# The pause menu, over the start of the world.
+			root.remove_child(_title)
+			_title.free()
+			_main = load("res://scenes/main.tscn").instantiate()
+			root.add_child(_main)
+		140:
+			_main.pause_menu.open(_main.pause_status())
+		150:
+			_save("pause.png")
+		156:
+			quit()
+			return true
 	return false
 
 

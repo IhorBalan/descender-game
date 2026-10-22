@@ -793,8 +793,8 @@ func apply_upgrade(kind: UpgradeKind, flag: String) -> void:
 ## Sets the maximums from the upgrade flags in the save, for a loaded or
 ## continued hero, and fills them (he arrives rested).
 func restore_upgrades() -> void:
-	max_health = MAX_HEALTH
-	max_heal_charges = MAX_HEAL_CHARGES
+	max_health = MAX_HEALTH + SaveManager.bonus_hearts()
+	max_heal_charges = MAX_HEAL_CHARGES + SaveManager.bonus_charges()
 	for flag in Story.to_list():
 		for kind: UpgradeKind in UpgradeKind.values():
 			if flag.begins_with(Upgrade.flag_prefix(kind)):
@@ -904,7 +904,9 @@ func _lose_health(amount: int) -> bool:
 
 ## Called by enemies: knockback away from the attacker.
 func take_damage(amount: int, source_position: Vector2) -> void:
-	if not _can_be_hurt() or _spend_halo() or not _lose_health(amount):
+	if not _can_be_hurt() or _spend_halo():
+		return
+	if not _lose_health(SaveManager.scaled_damage(amount)):
 		return
 	var dir := 1.0 if global_position.x >= source_position.x else -1.0
 	_set_state(State.HURT, HURT_TIME)
@@ -922,7 +924,7 @@ func take_hazard_damage(amount: int) -> void:
 		global_position = last_safe_position
 		velocity = Vector2.ZERO
 		return
-	if not _lose_health(amount):
+	if not _lose_health(SaveManager.scaled_damage(amount)):
 		return
 	_hurt_feedback()
 	_set_state(State.HURT, HURT_TIME)

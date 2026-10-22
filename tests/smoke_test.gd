@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 476
+const EXPECTED_CHECKS := 490
 const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -747,6 +747,53 @@ func _physics_process(_delta: float) -> void:
 			)
 			_title.back_button.pressed.emit()
 			_check(_title.continue_button.disabled, "nothing to continue again")
+			# A new game picks a slot, then a difficulty; Back returns to the slots.
+			_title.new_game_button.pressed.emit()
+			_title.slot_buttons[_slot].pressed.emit()
+			_check(
+				_title.difficulty.visible and not _title.slots.visible,
+				"new game asks the difficulty"
+			)
+			_check(
+				_title.difficulty_buttons[SaveManager.Difficulty.NORMAL].has_focus(),
+				"normal is focused first"
+			)
+			_title.difficulty_back_button.pressed.emit()
+			_check(
+				_title.slots.visible and not _title.difficulty.visible, "back returns to the slots"
+			)
+			_title.back_button.pressed.emit()
+			# The difficulty shapes the hero: Easy adds a heart and a charge, Hard
+			# doubles every hit, and a save without one is Normal.
+			SaveManager.start_new_game(_slot, SaveManager.Difficulty.HARD)
+			_check(
+				SaveManager.difficulty == SaveManager.Difficulty.HARD,
+				"new game takes the difficulty"
+			)
+			_check(SaveManager.scaled_damage(1) == 2, "hard doubles a hit")
+			_check(SaveManager.bonus_hearts() == 0, "hard gives no heart")
+			SaveManager.difficulty = SaveManager.Difficulty.EASY
+			_check(
+				SaveManager.bonus_hearts() == 1 and SaveManager.bonus_charges() == 1,
+				"easy gives both"
+			)
+			_check(SaveManager.scaled_damage(1) == 1, "easy keeps a hit at one")
+			_check(
+				SaveManager.difficulty_of(_save) == SaveManager.Difficulty.NORMAL,
+				"an old save is normal"
+			)
+			var hard_save := _save.duplicate()
+			hard_save["difficulty"] = SaveManager.Difficulty.HARD
+			SaveManager.write(_slot, hard_save)
+			_check(
+				SaveManager.summary(_slot).ends_with("Hard"), "the slot summary names a hard save"
+			)
+			_check(SaveManager.load_slot(_slot), "the hard save loads")
+			_check(SaveManager.difficulty == SaveManager.Difficulty.HARD, "and sets the difficulty")
+			SaveManager.delete(_slot)
+			SaveManager.difficulty = SaveManager.Difficulty.NORMAL
+			SaveManager.current_slot = -1
+			SaveManager.pending = {}
 		874:
 			# Settings: rebinding changes the InputMap and is undone by reset.
 			_check(root.get_node_or_null("Settings") != null, "Settings autoload present")
@@ -925,6 +972,19 @@ func _physics_process(_delta: float) -> void:
 			_check(is_equal_approx(_hub.camera.trauma, 0.25), "half shake halves the trauma")
 			Settings.screen_shake = 1.0
 			_hub.camera.trauma = 0.0
+			# Easy gives the hero a heart and a charge on top of his upgrades.
+			SaveManager.difficulty = SaveManager.Difficulty.EASY
+			_hub.player.restore_upgrades()
+			_check(
+				(
+					_hub.player.max_health == Player.MAX_HEALTH + 1
+					and _hub.player.max_heal_charges == Player.MAX_HEAL_CHARGES + 1
+				),
+				"easy adds a heart and a charge"
+			)
+			SaveManager.difficulty = SaveManager.Difficulty.NORMAL
+			_hub.player.restore_upgrades()
+			_check(_hub.player.max_health == Player.MAX_HEALTH, "normal has the plain five")
 			_check(
 				_hub.sky.texture.gradient.colors[0] == Levels.WORLD_SKY[0], "world sky is painted"
 			)

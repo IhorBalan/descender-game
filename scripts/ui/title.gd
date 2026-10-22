@@ -4,7 +4,8 @@ extends Control
 ## settings, credits, quit.
 ##
 ## New Game and Load both open the slot picker. For a new game an occupied
-## slot asks to be pressed twice before it is overwritten; the picker's
+## slot asks to be pressed twice before it is overwritten, and then the
+## difficulty picker chooses how hard the run is (kept in its save); the picker's
 ## Delete button turns it into a delete picker, where a slot asks the same
 ## before it is cleared. The hint along the bottom says where Continue
 ## would resume, while that button is focused. The version in the corner
@@ -27,6 +28,8 @@ const CREDITS: Array[String] = [
 ]
 
 var _slot_mode := SlotMode.NEW_GAME
+## The slot a new game will start in, while the difficulty is being picked.
+var _new_game_slot := -1
 ## The slot pressed once, waiting for the second press that overwrites or
 ## deletes it.
 var _confirm_slot := -1
@@ -45,6 +48,10 @@ var _starting := false
 @onready var slot_buttons: Array[Button] = [$Slots/Slot1, $Slots/Slot2, $Slots/Slot3]
 @onready var delete_button: Button = $Slots/Delete
 @onready var back_button: Button = $Slots/Back
+@onready var difficulty: VBoxContainer = $Difficulty
+@onready
+var difficulty_buttons: Array[Button] = [$Difficulty/Easy, $Difficulty/Normal, $Difficulty/Hard]
+@onready var difficulty_back_button: Button = $Difficulty/Back
 @onready var credits: Control = $Credits
 @onready var credits_text: Label = $Credits/Text
 @onready var credits_back_button: Button = $Credits/Back
@@ -66,6 +73,13 @@ func _ready() -> void:
 	back_button.pressed.connect(_show_menu)
 	for slot in slot_buttons.size():
 		slot_buttons[slot].pressed.connect(_on_slot_pressed.bind(slot))
+	for which in difficulty_buttons.size():
+		var button := difficulty_buttons[which]
+		button.text = (
+			"%s   %s" % [SaveManager.DIFFICULTY_NAMES[which], SaveManager.DIFFICULTY_NOTES[which]]
+		)
+		button.pressed.connect(_on_difficulty_pressed.bind(which))
+	difficulty_back_button.pressed.connect(_show_slots.bind(SlotMode.NEW_GAME))
 	for button in menu.get_children():
 		button.focus_entered.connect(_on_menu_focus.bind(button))
 	credits_text.text = "\n".join(CREDITS)
@@ -83,10 +97,16 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if (slots.visible or credits.visible) and event.is_action_pressed("ui_cancel"):
-		Audio.play("menu_back")
+	if not event.is_action_pressed("ui_cancel"):
+		return
+	if difficulty.visible:
+		_show_slots(SlotMode.NEW_GAME)
+	elif slots.visible or credits.visible:
 		_show_menu()
-		get_viewport().set_input_as_handled()
+	else:
+		return
+	Audio.play("menu_back")
+	get_viewport().set_input_as_handled()
 
 
 func _show_settings() -> void:
@@ -103,6 +123,7 @@ func _show_credits() -> void:
 func _show_menu() -> void:
 	settings_menu.visible = false
 	slots.visible = false
+	difficulty.visible = false
 	credits.visible = false
 	menu.visible = true
 	var any_save := SaveManager.latest_slot() >= 0
@@ -149,8 +170,23 @@ func _show_slots(mode: SlotMode) -> void:
 		if first == null and not button.disabled:
 			first = button
 	menu.visible = false
+	difficulty.visible = false
 	slots.visible = true
 	(first if first else back_button).grab_focus()
+
+
+func _show_difficulty(slot: int) -> void:
+	_new_game_slot = slot
+	slots.visible = false
+	difficulty.visible = true
+	difficulty_buttons[SaveManager.Difficulty.NORMAL].grab_focus()
+
+
+func _on_difficulty_pressed(which: int) -> void:
+	if _new_game_slot < 0:
+		return
+	SaveManager.start_new_game(_new_game_slot, which as SaveManager.Difficulty)
+	_start_game()
 
 
 func _on_slot_pressed(slot: int) -> void:
@@ -158,7 +194,8 @@ func _on_slot_pressed(slot: int) -> void:
 		SlotMode.NEW_GAME:
 			if SaveManager.has_save(slot) and not _confirm(slot, "Overwrite?"):
 				return
-			SaveManager.start_new_game(slot)
+			_show_difficulty(slot)
+			return
 		SlotMode.LOAD:
 			if not SaveManager.load_slot(slot):
 				return
