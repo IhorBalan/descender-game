@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 457
+const EXPECTED_CHECKS := 476
 const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -614,6 +614,21 @@ func _physics_process(_delta: float) -> void:
 			_press("pause", false)
 			_check(get_tree().paused, "pause stops the tree")
 			_check(_main.pause_menu.is_open(), "pause menu opens")
+			var pause: PauseMenu = _main.pause_menu
+			_check(pause.status_label.text.begins_with("Played "), "pause says how long was played")
+			_check(not pause.restart_button.disabled, "restart at checkpoint is offered")
+			# Quit asks first: one press changes the button and nothing else.
+			pause.quit_button.grab_focus()
+			pause.quit_button.pressed.emit()
+			_check(
+				pause.quit_button.text == PauseMenu.QUIT_CONFIRM_TEXT,
+				"quit asks to be pressed again"
+			)
+			_check(pause.is_open() and _main.is_inside_tree(), "and the game stays")
+			pause.resume_button.grab_focus()
+			_check(
+				pause.quit_button.text == PauseMenu.QUIT_TEXT, "moving away withdraws the question"
+			)
 			_mark_x = _player.global_position.x
 			_press("move_right", true)
 		802:
@@ -697,6 +712,41 @@ func _physics_process(_delta: float) -> void:
 			_check(_title.get_node("Menu").visible, "title screen shows its menu")
 			_check(Audio.music_name == "title", "title screen plays its music")
 			_check(_title.get_node("Menu/Continue").disabled, "nothing to continue without a save")
+			_check(_title.version_label.text == "v0.1.0", "title shows the version")
+			# Credits open from the menu and go back.
+			_title.credits_button.pressed.emit()
+			_check(
+				_title.credits.visible and not _title.menu.visible, "credits open from the title"
+			)
+			_check(_title.credits_text.text.contains("Godot"), "credits name the engine")
+			_title.credits_back_button.pressed.emit()
+			_check(_title.menu.visible and not _title.credits.visible, "back leaves the credits")
+			# A save in the last slot: Continue says where it resumes, and the
+			# load picker can delete it, on the second press.
+			SaveManager.write(_slot, _save)
+			_title._show_menu()
+			_check(not _title.continue_button.disabled, "a save enables Continue")
+			_title.continue_button.grab_focus()
+			_check(
+				_title.hint.text.begins_with("Resumes slot %d:" % (_slot + 1)),
+				"focusing Continue says which save resumes"
+			)
+			_title.new_game_button.grab_focus()
+			_check(_title.hint.text == _title.DEFAULT_HINT, "the hint returns on another button")
+			_title.load_button.pressed.emit()
+			_check(_title.delete_button.visible, "the load picker offers deleting")
+			_title.delete_button.pressed.emit()
+			_check(_title.slots_heading.text.begins_with("Delete"), "delete picker opens")
+			_title.slot_buttons[_slot].pressed.emit()
+			_check(SaveManager.has_save(_slot), "one press keeps the save")
+			_check(_title.slot_buttons[_slot].text.contains("Delete?"), "and asks")
+			_title.slot_buttons[_slot].pressed.emit()
+			_check(not SaveManager.has_save(_slot), "the second press deletes it")
+			_check(
+				_title.slots_heading.text == "Load game", "no saves left: back to the load picker"
+			)
+			_title.back_button.pressed.emit()
+			_check(_title.continue_button.disabled, "nothing to continue again")
 		874:
 			# Settings: rebinding changes the InputMap and is undone by reset.
 			_check(root.get_node_or_null("Settings") != null, "Settings autoload present")

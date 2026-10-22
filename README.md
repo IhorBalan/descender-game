@@ -49,7 +49,12 @@ window is 1280x720 by default.
 The title screen is driven with the arrow keys or the left stick, Space or
 A to choose and Esc or B to go back. **New Game** picks a slot (an occupied
 one asks to be pressed twice before it is overwritten), **Continue** resumes
-the most recent save and **Load Game** picks any slot.
+the most recent save (the line along the bottom says which, while the
+button is focused) and **Load Game** picks any slot. The load picker's
+**Delete a save** button turns it into a delete picker, where a slot asks
+to be pressed twice before it is cleared. **Credits** lists who made the
+game (the lines are `CREDITS` in `scripts/ui/title.gd`), and the version
+in the corner is the project's `application/config/version`.
 
 **Settings**, on the title screen and in the pause menu, has four pages.
 **Audio** has the master, music and sound effect volumes and a toggle for
@@ -62,8 +67,12 @@ list between the keyboard and the gamepad, which are rebound separately.
 the white flash and the blink of stopped time on a hit and for gamepad
 rumble, for anyone they bother. Settings live in `user://settings.cfg`.
 
-Pausing opens a menu to resume, save or quit to the title. Saving there
-records the last checkpoint, which is where the save will resume.
+Pausing opens a menu to resume, restart at the last checkpoint (what R
+does), save, open the settings or quit to the title, which asks to be
+pressed twice since whatever happened after the last save goes with it. A
+line under the heading says which slot the game is in and how long it has
+been played. Saving there records the last checkpoint, which is where the
+save will resume.
 
 The top left of the screen shows hearts, healing charges, the angel
 abilities unlocked so far and a small bar that fills as the dash comes
