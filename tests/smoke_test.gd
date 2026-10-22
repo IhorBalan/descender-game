@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 490
+const EXPECTED_CHECKS := 514
 const LAST_TICK := 2090
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -1196,6 +1196,129 @@ func _physics_process(_delta: float) -> void:
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 			_check(Story.has_flag("descended"), "going down sets its flag")
+			# The promises: the quest log reads the flags, and the three side
+			# quests written as hooks each run through their people.
+			var hanne: Npc = null
+			var pell: Npc = null
+			var mereth: Npc = null
+			var ithuriel: Npc = null
+			var ferryman: Npc = null
+			for node in _hub.level.interactables:
+				if node is Npc:
+					match node.npc_name:
+						"Hanne":
+							hanne = node
+						"Old Pell":
+							pell = node
+						"Mereth":
+							mereth = node
+						"Ithuriel":
+							ithuriel = node
+						"The Ferryman":
+							ferryman = node
+			_check(
+				hanne != null and pell != null and mereth != null and ithuriel != null,
+				"the people of the promises are placed"
+			)
+			var quest_log: QuestLog = _hub.pause_menu.quest_log
+			quest_log.refresh()
+			_check(quest_log.titles() == ["The red scarf  (kept)"], "the log lists the kept scarf")
+			for id in ["hanne_intro", "hanne_drawing"]:
+				Story.set_flag(DialogueData.seen_flag(id))
+			Story.set_flag("hanne_drawing")
+			_check(
+				_hub.dialogue.pick(hanne.dialogue_ids).get("id", "") == "hanne_ask",
+				"Hanne asks for three true things"
+			)
+			_hub.dialogue_box.play(_hub.dialogue.entry("hanne_ask"))
+			while _hub.dialogue_box.is_open():
+				_hub.dialogue_box.advance()
+			_check(Story.has_flag("quest:drawings"), "that is a promise")
+			_check(_hub.hud.message.text == "A promise: Hanne's drawings", "and the HUD says so")
+			Story.set_flag("shaft_seen")
+			_check(
+				_hub.dialogue.pick(hanne.dialogue_ids).get("id", "") == "hanne_shaft",
+				"the shaft is the first drawing"
+			)
+			Story.set_flag("drawing:shaft")
+			Story.set_flag(DialogueData.seen_flag("hanne_shaft"))
+			Story.set_flag("dontfollow_seen")
+			_check(
+				_hub.dialogue.pick(hanne.dialogue_ids).get("id", "") == "hanne_wall",
+				"the wall is the second"
+			)
+			Story.set_flag("drawing:wall")
+			Story.set_flag(DialogueData.seen_flag("hanne_wall"))
+			Story.set_flag("seen_pipes")
+			var pipes: Dictionary = _hub.dialogue.pick(hanne.dialogue_ids)
+			_check(pipes.get("id", "") == "hanne_pipes", "the pipes are the third")
+			_check("drawing:pipes" in DialogueData.sets(pipes), "and count as a drawing")
+			Story.set_flag("drawing:pipes")
+			Story.set_flag(DialogueData.seen_flag("hanne_pipes"))
+			Story.set_flag(DialogueData.seen_flag("hanne_camp"))
+			var tobiah: Dictionary = _hub.dialogue.pick(hanne.dialogue_ids)
+			_check(tobiah.get("id", "") == "hanne_tobiah", "after the reveal she draws Tobiah")
+			_check(
+				(
+					str(tobiah.get("gives", "")) == "heart"
+					and "quest:drawings:done" in DialogueData.sets(tobiah)
+				),
+				"the drawing keeps a heart and the promise"
+			)
+			# Pell's wife: Pell names her, Mereth remembers, Pell hears it.
+			for id in ["pell_intro", "pell_sky", "pell_forge_first", "pell_warrant"]:
+				Story.set_flag(DialogueData.seen_flag(id))
+			_check(
+				_hub.dialogue.pick(pell.dialogue_ids).get("id", "") == "pell_wife",
+				"after the warrant Pell names Orla"
+			)
+			Story.set_flag("quest:wife")
+			Story.set_flag(DialogueData.seen_flag("pell_wife"))
+			Story.set_flag(DialogueData.seen_flag("mereth_intro"))
+			_check(
+				_hub.dialogue.pick(mereth.dialogue_ids).get("id", "") == "mereth_orla",
+				"Mereth remembers her"
+			)
+			Story.set_flag("wife_word")
+			Story.set_flag(DialogueData.seen_flag("mereth_orla"))
+			var orla: Dictionary = _hub.dialogue.pick(pell.dialogue_ids)
+			_check(orla.get("id", "") == "pell_orla", "and Pell hears what she said")
+			_check(str(orla.get("gives", "")) == "heart", "which is worth a heart")
+			# Ithuriel's song: he asks, the Ferryman knows, he is told.
+			Story.set_flag(DialogueData.seen_flag("ithuriel_intro"))
+			_check(
+				_hub.dialogue.pick(ithuriel.dialogue_ids).get("id", "") == "ithuriel_ask",
+				"Ithuriel asks what he is humming"
+			)
+			Story.set_flag("quest:song")
+			Story.set_flag(DialogueData.seen_flag("ithuriel_ask"))
+			Story.set_flag("met_ferryman")
+			Story.set_flag("clock_hand")
+			for id in ["ferryman_intro", "ferryman_hand"]:
+				Story.set_flag(DialogueData.seen_flag(id))
+			_check(
+				_hub.dialogue.pick(ferryman.dialogue_ids).get("id", "") == "ferryman_song",
+				"the Ferryman knows the song"
+			)
+			Story.set_flag("song_word")
+			var told: Dictionary = _hub.dialogue.pick(ithuriel.dialogue_ids)
+			_check(told.get("id", "") == "ithuriel_told", "and Ithuriel is told")
+			_check(str(told.get("gives", "")) == "vial", "his glass is a healing charge")
+			quest_log.refresh()
+			_check(quest_log.titles().size() == 4, "the log lists all four promises")
+			_check(quest_log.titles()[0] == "Hanne's drawings", "open ones first")
+			_check(
+				Quests.steps(Quests.started_by("quest:drawings"))[2]["done"],
+				"with the steps so far ticked"
+			)
+			_hub.pause_menu.open()
+			_hub.pause_menu.quest_log_button.pressed.emit()
+			_check(quest_log.visible and not _hub.pause_menu.menu.visible, "Promises opens the log")
+			quest_log.close()
+			_check(
+				not quest_log.visible and _hub.pause_menu.menu.visible, "Back returns to the menu"
+			)
+			_hub.pause_menu.close()
 			# The playtesting arguments: start at a checkpoint with everything.
 			var third: Checkpoint = _hub.level.checkpoints[2]
 			_hub.apply_dev_args(["--checkpoint=3", "--abilities=all"])

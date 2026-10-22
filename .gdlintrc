@@ -1,4 +1,6 @@
 # gdlint settings (the rest are the defaults). The hero's state machine in
 # scripts/player.gd carries every ability and its tuning constants in one
-# file on purpose, and passed 1000 lines with the sixth ability.
-max-file-lines: 2000
+# file on purpose, and passed 1000 lines with the sixth ability; the smoke
+# test in tests/smoke_test.gd is one scripted run through the whole game
+# and passed 2000 with the promises.
+max-file-lines: 3000
