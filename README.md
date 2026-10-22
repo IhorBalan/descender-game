@@ -71,11 +71,11 @@ the white flash and the blink of stopped time on a hit and for gamepad
 rumble, for anyone they bother. Settings live in `user://settings.cfg`.
 
 Pausing opens a menu to resume, restart at the last checkpoint (what R
-does), save, open the settings or quit to the title, which asks to be
-pressed twice since whatever happened after the last save goes with it. A
-line under the heading says which slot the game is in and how long it has
-been played. Saving there records the last checkpoint, which is where the
-save will resume.
+does), save, read the promises (the quest log), open the settings or quit
+to the title, which asks to be pressed twice since whatever happened
+after the last save goes with it. A line under the heading says which
+slot the game is in and how long it has been played. Saving there records
+the last checkpoint, which is where the save will resume.
 
 The top left of the screen shows hearts, healing charges, the angel
 abilities unlocked so far and a small bar that fills as the dash comes
@@ -217,7 +217,22 @@ Dace, back on Earth, takes it and gives Thorne's flask, one more healing
 charge (a dialogue entry's `gives` names an upgrade kind; the gift is a
 flag, `upgrade:<kind>:gift:<entry>`, so it stays given in the save). The
 survivors also answer what the hero has seen below: the Warden's fall,
-the pipes, the Wheel in writing and the resting army each unlock a line. Fraud is the last camp: the army rests there
+the pipes, the Wheel in writing and the resting army each unlock a line.
+Three more promises are made on the way: **Hanne's drawings** (flag
+`quest:drawings`, once she has shown her flag): bring her word of the
+names in the shaft, the wall that says DON'T FOLLOW and the pipes, and
+she draws each; after the reveal she draws Tobiah from Ansel's
+description and the page keeps a heart. **Orla Pell** (`quest:wife`, after
+the warrant): Pell names his wife, Mereth in the orchard remembers her
+and what she said going in, and Pell, told, lifts the step and gives
+what she kept back, a heart. **Ithuriel's song** (`quest:song`): the guard
+asks what he is humming, the Ferryman knows (a cradle song the Basin
+took), and Ithuriel, told, hands over his Warden's glass, a healing
+charge. Mereth and Ithuriel are back up in Paradise, through the secret
+passage from the hub, so the last two are climbs. The pause menu's
+**Promises** page lists every quest the hero has taken on with its steps
+ticked (`scripts/quests.gd` names the flags), kept ones last, and the HUD
+says when a promise is made or kept. Fraud is the last camp: the army rests there
 (`passive` enemies, which patrol and never swing), an imp offers a tally
 bone, and the roster lies among them. At the bottom of Treachery the
 Lowest speaks before the fight and after it, and the last line is a
@@ -370,7 +385,8 @@ the live map is meant to ship.
 | Path | What it is |
 | ---- | ---------- |
 | `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
-| `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, quit to title |
+| `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, promises, settings, quit to title |
+| `scenes/quest_log.tscn`, `scripts/ui/quest_log.gd`, `scripts/quests.gd` | The promises page: the side quests and their steps, read off the story flags |
 | `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen in three pages: Audio (master, music, sound effects), Display (fullscreen, window size, v-sync, screen shake), Controls (keyboard and gamepad bindings) |
 | `scripts/settings.gd` | The `Settings` autoload: reads, saves (`user://settings.cfg`) and applies the settings |
 | `default_bus_layout.tres` | The Master, Music and SFX audio buses the volume sliders control |

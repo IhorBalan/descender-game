@@ -624,6 +624,80 @@ the Basin, one more healing charge.
 > *(From far below, faint: 'Up! He said up!')*
 > **ANSEL:** Down, then.
 
+### The promises (side quests, in the game)
+
+The pause menu lists these as promises, with the steps ticked as the
+flags come in.
+
+**`hanne_ask`** (once; needs `hanne_drawing`; sets `quest:drawings`)
+> **HANNE:** Pell says you're going down. Will you look at everything? I can't see down from here.
+> **ANSEL:** I'll look.
+> **HANNE:** Then come back and tell me three things. Not nice things. True things. I'll draw them. That's how I keep them.
+> **HANNE:** Three. Then I'll show you the one I can't draw yet.
+
+**`hanne_shaft`** (once; needs the quest and `shaft_seen`; sets `drawing:shaft`)
+> **ANSEL:** There's a shaft under the churchyard. Names cut into the wall, all the way down. Hundreds.
+> **HANNE:** *(She draws. Short lines, close together, going down off the page.)* Were they counting?
+> **ANSEL:** Someone was.
+> **HANNE:** That's one.
+
+**`hanne_wall`** (once; needs the quest and `dontfollow_seen`; sets `drawing:wall`)
+> **ANSEL:** A wall, three circles down. Someone cut KEEP COUNT into it. Under that, bigger: DON'T FOLLOW.
+> **HANNE:** *(She draws. Two rows of letters, the second pressed hard.)* Did you follow?
+> **ANSEL:** I'm still going down.
+> **HANNE:** That's two.
+
+`hanne_pipes` above is the third drawing (it sets `drawing:pipes`).
+
+**`hanne_tobiah`** (once; needs the three drawings and `reveal`; sets `quest:drawings:done`; gives a heart)
+> **HANNE:** Three. You said three. *(She turns to a clean page.)* Now the one I can't draw.
+> **ANSEL:** My brother.
+> **HANNE:** What does he look like?
+> **ANSEL:** Like me. Taller. He talks when he's frightened. He talked the whole way down.
+> **ANSEL:** He has a mark cut into him now. Like your flag. He did the counting.
+> **HANNE:** *(She draws a long time. Then she tears the page out.)* Take it. So you know him when you get there.
+> *(A man, in lines. The tally on his chest is the only thing she pressed hard on. Folded inside: a little light she kept back, warm.)*
+
+**`pell_wife`** (once; after `pell_warrant`; sets `quest:wife`)
+> **OLD PELL:** Her name's Orla. Ninth on the list. Red hair, going grey. She counted things; it steadied her.
+> **OLD PELL:** The gathered go to the orchard first, Dace says. You came down through it. If any of them up there are still themselves, ask after her.
+> **ANSEL:** I'll ask.
+> **OLD PELL:** Don't promise, lad. Just ask.
+
+**`mereth_orla`** (Mereth, in the orchard; once; needs `quest:wife`; sets `wife_word`)
+> **ANSEL:** Orla. Red hair going grey. Ninth name on a list of forty. She counted things.
+> **MERETH:** ...The trees. Two hundred and six. She said it every morning so she wouldn't lose it.
+> **MERETH:** They took her in the second time I was put back. She went talking. 'Tell him the hammer's under the step.' That's all of it. Whoever him is.
+> **ANSEL:** A blacksmith.
+> **MERETH:** Then tell him. I'd like one thing I remembered to get where it was going.
+
+**`pell_orla`** (once; needs `wife_word`; sets `quest:wife:done`; gives a heart)
+> **ANSEL:** Orla. A woman in the orchard knew her. She counted the trees. Two hundred and six.
+> **ANSEL:** She said to tell you the hammer's under the step.
+> **OLD PELL:** *(He does not move for a while. Then he goes to the step, and lifts it, with one hand, and there it is.)*
+> **OLD PELL:** She hid it when the brutes came. So they'd not take the one thing I... Two hundred and six. She never told me the number.
+> **OLD PELL:** Here. She kept this back from them too; I found it in the handle. It's no use to me. Go on.
+> *(A little of someone's light, wrapped in a strip of red cloth, warm.)*
+
+**`ithuriel_ask`** (Ithuriel, by the Paradise checkpoint; once; after `ithuriel_intro`; sets `quest:song`)
+> **ITHURIEL:** You know it. The song. I saw your face when I hummed it.
+> **ANSEL:** I know it. I don't know from where.
+> **ITHURIEL:** Then find out. Somebody below will know. They all go past here, humming.
+> **ITHURIEL:** Come back and tell me what I'm humming. I'd like to know one true thing before they wipe me again.
+
+**`ferryman_song`** (once; needs `quest:song` and `met_ferryman`; sets `song_word`)
+> **ANSEL:** *(He hums it. Badly.)* Do you know that?
+> **THE FERRYMAN:** Everyone who fell past hummed it. It's the Basin's. They sing it on the way in, so you don't hear the pressing.
+> **THE FERRYMAN:** It wasn't the Basin's first. It's a cradle song. Mothers sang it. The Choir took it with everything else, and it stuck in the hands.
+> **THE FERRYMAN:** The one your shape hummed it the whole way down. Talking in between.
+
+**`ithuriel_told`** (once; needs `song_word`; sets `quest:song:done`; gives a healing charge)
+> **ANSEL:** It's the song they sing going into the Basin. So you don't hear what's being done to you.
+> **ANSEL:** It was a cradle song first. Somebody's mother sang it. Maybe yours.
+> **ITHURIEL:** *(He is quiet a long time.)* Then I had a mother.
+> **ITHURIEL:** Here. The glass they gave me for the way in. I never went. Take the water; it's the last thing of mine I'll keep from them.
+> *(Basin water in Warden's glass, still cold.)*
+
 ### `descent` (trigger, once, at the gate marker at the bottom of the hub; sets `descended`; saves the game)
 
 > *(The bottom of the churchyard. The hole goes down past where the lantern light stops, and the hammering is far above now.)*

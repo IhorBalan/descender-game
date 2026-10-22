@@ -534,6 +534,12 @@ func _on_dialogue_finished(entry: Dictionary) -> void:
 	var forged := false
 	var ending := ""
 	for flag in DialogueData.sets(entry):
+		var started := Quests.started_by(flag)
+		var kept := Quests.finished_by(flag)
+		if not started.is_empty() and not Story.has_flag(flag):
+			hud.queue_message("A promise: %s" % started["title"], 3.0)
+		elif not kept.is_empty() and not Story.has_flag(flag):
+			hud.queue_message("Promise kept: %s" % kept["title"], 3.0)
 		Story.set_flag(flag)
 		forged = forged or flag.begins_with(Upgrade.SWORD_FLAG_PREFIX)
 		if flag.begins_with(ENDING_FLAG_PREFIX):

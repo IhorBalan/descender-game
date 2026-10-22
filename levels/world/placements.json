@@ -10,7 +10,10 @@
 			"name": "Mereth",
 			"character": "mereth",
 			"faces_left": true,
-			"dialogue": ["mereth_intro"],
+			"dialogue": [
+				"mereth_intro",
+				"mereth_orla"
+			],
 			"rotate": ["mereth_again", "mereth_count", "mereth_orchard"]
 		},
 		{"type": "power", "x": 82, "y": 4, "power": "halo"},
@@ -34,7 +37,11 @@
 			"character": "angel_guard",
 			"tint": [0.85, 0.85, 1.0],
 			"faces_left": true,
-			"dialogue": ["ithuriel_intro"],
+			"dialogue": [
+				"ithuriel_intro",
+				"ithuriel_ask",
+				"ithuriel_told"
+			],
 			"rotate": ["ithuriel_again", "ithuriel_song", "ithuriel_orders"]
 		},
 		{"type": "item", "x": 246, "y": 48, "item": "tally_stone", "dialogue": ["item_tally_stone"]},
@@ -55,7 +62,18 @@
 			"name": "Old Pell",
 			"character": "pell",
 			"faces_left": true,
-			"dialogue": ["pell_intro", "pell_sky", "pell_forge_first", "pell_hook", "pell_warrant", "pell_iron", "pell_warden", "pell_garden"],
+			"dialogue": [
+				"pell_intro",
+				"pell_sky",
+				"pell_forge_first",
+				"pell_hook",
+				"pell_warrant",
+				"pell_wife",
+				"pell_iron",
+				"pell_warden",
+				"pell_garden",
+				"pell_orla"
+			],
 			"rotate": ["pell_forge", "pell_light", "pell_boy"]
 		},
 		{"type": "item", "x": 215, "y": 82, "item": "letter", "dialogue": ["item_letter"]},
@@ -77,7 +95,17 @@
 			"name": "Hanne",
 			"character": "hanne",
 			"faces_left": false,
-			"dialogue": ["hanne_intro", "hanne_drawing", "hanne_token", "hanne_pipes", "hanne_camp"],
+			"dialogue": [
+				"hanne_intro",
+				"hanne_drawing",
+				"hanne_token",
+				"hanne_ask",
+				"hanne_shaft",
+				"hanne_wall",
+				"hanne_pipes",
+				"hanne_camp",
+				"hanne_tobiah"
+			],
 			"rotate": ["hanne_churchyard", "hanne_draw_down", "hanne_count"]
 		},
 		{
@@ -94,7 +122,7 @@
 		{"type": "trigger", "x": 59, "y": 99, "dialogue": ["descent"]},
 		{"type": "enemy", "x": 474, "y": 65, "character": "imp"},
 		{"type": "trigger", "x": 36, "y": 116, "dialogue": ["shaft"]},
-		{"type": "npc", "x": 220, "y": 116, "name": "The Ferryman", "character": "ferryman", "faces_left": false, "dialogue": ["ferryman_intro", "ferryman_hand"], "rotate": ["ferryman_left", "ferryman_nothing", "ferryman_fell"]},
+		{"type": "npc", "x": 220, "y": 116, "name": "The Ferryman", "character": "ferryman", "faces_left": false, "dialogue": ["ferryman_intro", "ferryman_hand", "ferryman_song"], "rotate": ["ferryman_left", "ferryman_nothing", "ferryman_fell"]},
 		{"type": "item", "x": 260, "y": 167, "item": "tally_bone", "dialogue": ["item_tally_bone"]},
 		{"type": "npc", "x": 429, "y": 201, "name": "Gorrow", "character": "gorrow", "faces_left": false, "unless": "boss:the_fury", "dialogue": ["gorrow_meet"], "rotate": ["gorrow_orders", "gorrow_seal"]},
 		{"type": "trigger", "x": 200, "y": 252, "dialogue": ["dontfollow"]},

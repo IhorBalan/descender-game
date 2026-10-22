@@ -2,11 +2,11 @@ class_name PauseMenu
 extends CanvasLayer
 
 ## The pause menu: resume, restart at the last checkpoint, save to the
-## current slot, settings, or quit to the title. Quit asks to be pressed
-## twice, since whatever happened after the last save goes with it. A
-## line under the heading says which slot the game is in and how long it
-## has been played. Keeps processing while the tree is paused; main.gd
-## opens it and it closes itself.
+## current slot, the promises (quest log), settings, or quit to the title.
+## Quit asks to be pressed twice, since whatever happened after the last
+## save goes with it. A line under the heading says which slot the game is
+## in and how long it has been played. Keeps processing while the tree is
+## paused; main.gd opens it and it closes itself.
 
 signal save_requested
 signal restart_requested
@@ -19,11 +19,13 @@ const TITLE_SCENE := "res://scenes/title.tscn"
 @onready var resume_button: Button = $Panel/Menu/Resume
 @onready var restart_button: Button = $Panel/Menu/Restart
 @onready var save_button: Button = $Panel/Menu/Save
+@onready var quest_log_button: Button = $Panel/Menu/Promises
 @onready var settings_button: Button = $Panel/Menu/Settings
 @onready var quit_button: Button = $Panel/Menu/Quit
 @onready var menu: VBoxContainer = $Panel/Menu
 @onready var status_label: Label = $Panel/Status
 @onready var settings_menu: SettingsMenu = $Panel/SettingsMenu
+@onready var quest_log: QuestLog = $Panel/QuestLog
 
 
 func _ready() -> void:
@@ -31,6 +33,8 @@ func _ready() -> void:
 	resume_button.pressed.connect(close)
 	restart_button.pressed.connect(_on_restart_pressed)
 	save_button.pressed.connect(_on_save_pressed)
+	quest_log_button.pressed.connect(_on_quest_log_pressed)
+	quest_log.closed.connect(_on_quest_log_closed)
 	settings_button.pressed.connect(_on_settings_pressed)
 	settings_menu.closed.connect(_on_settings_closed)
 	quit_button.pressed.connect(_on_quit_pressed)
@@ -39,7 +43,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible or settings_menu.visible:
+	if not visible or settings_menu.visible or quest_log.visible:
 		return
 	if event.is_action_pressed("pause") or event.is_action_pressed("ui_cancel"):
 		close()
@@ -80,6 +84,16 @@ func _on_save_pressed() -> void:
 ## Called back by main.gd with where the save landed.
 func show_saved(place: String) -> void:
 	save_button.text = "Saved at %s" % place
+
+
+func _on_quest_log_pressed() -> void:
+	menu.visible = false
+	quest_log.open()
+
+
+func _on_quest_log_closed() -> void:
+	menu.visible = true
+	quest_log_button.grab_focus()
 
 
 func _on_settings_pressed() -> void:
