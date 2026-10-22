@@ -43,5 +43,8 @@ jobs:
       - name: Import project
         run: ./godot --headless --path . --import
 
+      - name: Run unit and data tests
+        run: ./godot --headless --path . res://tests/unit_test.tscn
+
       - name: Run smoke test
         run: ./godot --headless --path . res://tests/smoke_test.tscn

@@ -8,8 +8,10 @@ extends RefCounted
 ##             may carry `requires` / `unless` of its own and is left out
 ##             when its flags do not hold, so one entry can say different
 ##             things to a hero who has seen different things
-##   requires  flags that must all be set for the entry to play (optional)
-##   unless    flags that must all be unset for the entry to play (optional)
+##   requires  a flag, or a list of flags, that must all be set for the entry
+##             to play (optional)
+##   unless    a flag, or a list of flags, that must all be unset for the
+##             entry to play (optional)
 ##   sets      a flag, or a list of flags, set when the entry has been read to
 ##             the end (optional)
 ##   then      the id of the entry that plays right after this one (optional)
@@ -63,9 +65,9 @@ static func visible_lines(lines: Array) -> Array:
 	for raw in lines:
 		if raw is Dictionary:
 			var line: Dictionary = raw
-			if not Story.has_all(line.get("requires", [])):
+			if not Story.has_all(flags(line.get("requires", []))):
 				continue
-			if Story.has_any(line.get("unless", [])):
+			if Story.has_any(flags(line.get("unless", []))):
 				continue
 		result.append(raw)
 	return result
@@ -78,7 +80,17 @@ func available(data: Dictionary) -> bool:
 		return false
 	if bool(data.get("once", false)) and Story.has_flag(seen_flag(str(data.get("id", "")))):
 		return false
-	return Story.has_all(data.get("requires", [])) and not Story.has_any(data.get("unless", []))
+	return (
+		Story.has_all(flags(data.get("requires", [])))
+		and not Story.has_any(flags(data.get("unless", [])))
+	)
+
+
+## A flag field as a list: one flag, a list of them, or nothing.
+static func flags(value: Variant) -> Array:
+	if value is Array:
+		return value
+	return [] if str(value).is_empty() else [value]
 
 
 ## A line may also carry `choices`: a list of {text, then}. The box offers
@@ -100,10 +112,8 @@ static func next_id(data: Dictionary) -> String:
 ## The flags an entry sets when it has been read to the end.
 static func sets(data: Dictionary) -> Array[String]:
 	var result: Array[String] = []
-	var value: Variant = data.get("sets", "")
-	for flag in value if value is Array else [value]:
-		if not str(flag).is_empty():
-			result.append(str(flag))
+	for flag in flags(data.get("sets", "")):
+		result.append(str(flag))
 	return result
 
 
