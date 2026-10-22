@@ -32,6 +32,12 @@ var _shots := [
 	{"tick": 790, "name": "limbo.png", "x": 4072.0, "y": 2688.0},
 	{"tick": 840, "name": "wrath.png", "x": 4552.0, "y": 4864.0},
 	{"tick": 890, "name": "treachery.png", "x": 3592.0, "y": 7040.0},
+	{"tick": 940, "name": "lust.png", "x": 2872.0, "y": 3232.0},
+	{"tick": 990, "name": "gluttony.png", "x": 6984.0, "y": 3776.0},
+	{"tick": 1040, "name": "greed.png", "x": 2152.0, "y": 4208.0},
+	{"tick": 1090, "name": "heresy.png", "x": 5512.0, "y": 5408.0},
+	{"tick": 1140, "name": "violence.png", "x": 3128.0, "y": 5952.0},
+	{"tick": 1190, "name": "fraud.png", "x": 2152.0, "y": 6496.0},
 ]
 
 

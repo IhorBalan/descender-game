@@ -294,9 +294,14 @@ stalactites, drips, icicles, chains, cloth), and what drifts through its
 air (ash, snow, embers, motes, dust, flies, drops, smoke). Ruined Earth has
 a dead sky with the hole in it, a broken skyline with a few lit windows,
 dead grass and roots, ash and smoke; Purgatory grey mist, a wall of names
-behind a hall of pillars, moss and drips, and slow motes. The parallax
-layers are anchored to the region's height so they stay in view from its
-top to its bottom.
+behind a hall of pillars, moss and drips, and slow motes. Each circle has
+its own set: Limbo a blue cavern with dust and stalactites, Lust magenta
+pillars and cages with silk tatters, Gluttony a green cave of slime and
+flies, Greed a gold vault with chains and bones, Wrath lava glow under
+spires with embers and smoke, Heresy a burning skyline with ash, Violence
+a red cave of cages and drips, Fraud purple veils and motes, Treachery ice
+spires, frost, icicles and snow. The parallax layers are anchored to the
+region's height so they stay in view from its top to its bottom.
 
 `scripts/level_builder.gd` builds it at boot: one `TileMapLayer` per layer
 (Background, Decor, Terrain, Glow), collision merged from the terrain kinds
