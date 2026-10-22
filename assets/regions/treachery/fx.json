@@ -1,0 +1,49 @@
+{
+  "art_tile": 64,
+  "particles": [
+    {
+      "texture": "snow.png",
+      "color": "#ebf5ff",
+      "amount": 60,
+      "lifetime": 12,
+      "direction": [
+        -0.2,
+        1.0
+      ],
+      "spread": 20,
+      "speed": [
+        10,
+        22
+      ],
+      "gravity": [
+        0,
+        4
+      ],
+      "scale": [
+        0.3,
+        0.7
+      ],
+      "sway": 4
+    },
+    {
+      "texture": "dust.png",
+      "color": "#c8e1fa",
+      "amount": 16,
+      "lifetime": 16,
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "spread": 30,
+      "speed": [
+        2,
+        6
+      ],
+      "scale": [
+        0.2,
+        0.5
+      ],
+      "sway": 2
+    }
+  ]
+}

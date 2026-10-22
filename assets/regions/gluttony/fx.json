@@ -1,0 +1,48 @@
+{
+  "art_tile": 64,
+  "particles": [
+    {
+      "texture": "flies.png",
+      "color": "#283c1e",
+      "amount": 22,
+      "lifetime": 6,
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "spread": 180,
+      "speed": [
+        14,
+        30
+      ],
+      "scale": [
+        0.2,
+        0.35
+      ],
+      "sway": 12
+    },
+    {
+      "texture": "drops.png",
+      "color": "#78c850",
+      "amount": 8,
+      "lifetime": 3,
+      "direction": [
+        0.0,
+        1.0
+      ],
+      "spread": 0,
+      "speed": [
+        60,
+        90
+      ],
+      "gravity": [
+        0,
+        60
+      ],
+      "scale": [
+        0.4,
+        0.7
+      ]
+    }
+  ]
+}
