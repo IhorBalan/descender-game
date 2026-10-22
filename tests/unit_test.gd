@@ -430,6 +430,13 @@ func test_dialogue_data() -> void:
 	_check(DialogueData.sets(single) == ["s1", "s2"], "sets may be a list")
 	_check(DialogueData.sets(plain).is_empty(), "or nothing")
 	_check(DialogueData.sets({"sets": "one"}) == ["one"], "or one flag")
+	_check(
+		DialogueData.sets({"sets": ["", "a", null]}) == ["a"], "empty and null flags are dropped"
+	)
+	_check(
+		DialogueData.flags(null).is_empty() and DialogueData.flags("").is_empty(),
+		"as is a null or empty field"
+	)
 	_check(DialogueData.next_id(single) == "plain", "then names the next entry")
 	Story.set_flag(DialogueData.seen_flag("single"))
 	_check(not dialogue.available(single), "a once entry seen is over")

@@ -86,11 +86,14 @@ func available(data: Dictionary) -> bool:
 	)
 
 
-## A flag field as a list: one flag, a list of them, or nothing.
+## A flag field as a list: one flag, a list of them, or nothing. Empty
+## and null flags are dropped.
 static func flags(value: Variant) -> Array:
-	if value is Array:
-		return value
-	return [] if str(value).is_empty() else [value]
+	var result: Array = []
+	for flag in value if value is Array else [value]:
+		if flag != null and not str(flag).is_empty():
+			result.append(flag)
+	return result
 
 
 ## A line may also carry `choices`: a list of {text, then}. The box offers
