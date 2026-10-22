@@ -100,7 +100,7 @@ func _physics_process(delta: float) -> void:
 		_hurt_timer -= delta
 		if _hurt_timer <= 0.0:
 			sprite.modulate = Color.WHITE
-			sprite.play("idle")
+			_show_state()
 	match state:
 		State.HANG:
 			velocity = Vector2.ZERO
@@ -204,6 +204,24 @@ func _hang_again() -> void:
 	global_position = home
 	velocity = Vector2.ZERO
 	sprite.play("idle")
+
+
+## The frame the state holds, once a flinch is over: the sway on the rope,
+## the heap it lies in, the slump as it is hauled up, or the fall.
+func _show_state() -> void:
+	match state:
+		State.REST:
+			sprite.animation = "death"
+			sprite.pause()
+			sprite.frame = 2
+		State.CLIMB:
+			sprite.animation = "hurt"
+			sprite.pause()
+			sprite.frame = 1
+		State.DROP, State.CREAK:
+			sprite.play("attack")
+		_:
+			sprite.play("idle")
 
 
 func _draw_rope() -> void:
