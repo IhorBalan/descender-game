@@ -13,12 +13,22 @@ signal camp_requested(checkpoint: Checkpoint)
 
 const PROMPT_OFFSET := Vector2(0.0, -64.0)
 
+## The flag prefix a rested checkpoint is kept under in the story flags,
+## by its index in the level's list (the save's `checkpoint` is the same
+## index), so fast travel knows where the hero has been.
+const RESTED_FLAG_PREFIX := "rested:"
+
 var active := false
 
 var _player_near := false
 var _prompt: Label
 
 @onready var sprite: Sprite2D = $Sprite2D
+
+
+## The story flag a checkpoint sets once the hero has rested at it.
+static func rested_flag(index: int) -> String:
+	return "%s%d" % [RESTED_FLAG_PREFIX, index]
 
 
 func _ready() -> void:

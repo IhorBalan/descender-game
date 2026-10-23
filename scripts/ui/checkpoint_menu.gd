@@ -9,21 +9,22 @@ extends CanvasLayer
 ## the hint describes the picked button. Esc leaves. main.gd opens it
 ## and it closes itself.
 ##
-## Fast travel: the button is here for the thread adding it. Call
-## set_fast_travel(true) once other camps answer, and listen to
-## fast_travel_requested, which carries this checkpoint's index.
+## Fast travel opens the map page on the checkpoints the hero has rested
+## at; picking one emits fast_travel_requested and main.gd carries him
+## there (see Main.travel_to_checkpoint). main.gd offers it with
+## set_fast_travel when it may be taken from here.
 
 signal closed
 signal save_requested
 ## A skill point was spent (the HUD line follows).
 signal skill_learned
-## Fast travel was asked for from this checkpoint (by index).
-signal fast_travel_requested(from_checkpoint: int)
+## A rested checkpoint was picked to travel to (by index in the level).
+signal fast_travel_requested(index: int)
 
 const SAVE_TEXT := "Save Game"
 const NOTE_COLOR := Color(0.7, 0.7, 0.78)
 const WARN_COLOR := Color(1.0, 0.7, 0.6)
-const TRAVEL_CLOSED_NOTE := "The other camps do not answer yet."
+const TRAVEL_CLOSED_NOTE := "No other camp he has rested at answers from here."
 const NOTES := {
 	"pack": "What he carries: wear a blade, a coat or a charm, or drink a flask.",
 	"skills": "Where his levels go: a heart, an edge, quicker feet.",
@@ -35,7 +36,9 @@ const NOTES := {
 ## The checkpoint the camp was opened at, by index in the level.
 var checkpoint_index := -1
 var _player: Player
-var _travel_open := false
+var _level: LevelBuilder
+## The checkpoints on offer to travel to (rested at, by index).
+var _rested: Array[int] = []
 
 @onready var heading: Label = $Panel/Heading
 @onready var status_label: Label = $Panel/Status
@@ -49,6 +52,7 @@ var _travel_open := false
 @onready var hint: Label = $Panel/Hint
 @onready var inventory_menu: InventoryMenu = $Panel/InventoryMenu
 @onready var skill_menu: SkillMenu = $Panel/SkillMenu
+@onready var map_screen: MapScreen = $Panel/MapScreen
 
 
 func _ready() -> void:
@@ -59,6 +63,8 @@ func _ready() -> void:
 	skill_menu.closed.connect(_on_page_closed.bind(skills_button))
 	skill_menu.learned.connect(_on_skill_learned)
 	travel_button.pressed.connect(_on_travel_pressed)
+	map_screen.closed.connect(_on_page_closed.bind(travel_button))
+	map_screen.travel_requested.connect(fast_travel_requested.emit)
 	save_button.pressed.connect(save_requested.emit)
 	leave_button.pressed.connect(close)
 	for key: String in NOTES:
@@ -68,7 +74,7 @@ func _ready() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not visible or inventory_menu.visible or skill_menu.visible:
+	if not visible or inventory_menu.visible or skill_menu.visible or map_screen.visible:
 		return
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause"):
 		close()
@@ -91,7 +97,7 @@ func open(player: Player, index: int, count: int) -> void:
 	status_label.text = status_text(index, count)
 	save_button.disabled = SaveManager.current_slot < 0
 	save_button.text = SAVE_TEXT
-	travel_button.disabled = not _travel_open
+	set_fast_travel(null, [])
 	_show_frame(true)
 	get_tree().paused = true
 	visible = true
@@ -106,6 +112,7 @@ func close() -> void:
 	visible = false
 	inventory_menu.visible = false
 	skill_menu.visible = false
+	map_screen.visible = false
 	get_tree().paused = false
 	closed.emit()
 
@@ -123,11 +130,20 @@ static func status_text(index: int, count: int) -> String:
 	return "      ".join(parts)
 
 
-## Opens fast travel from this camp (the thread adding it wires the
-## signal; until then the button stays grey).
-func set_fast_travel(available: bool) -> void:
-	_travel_open = available
-	travel_button.disabled = not available
+## Offers fast travel from this camp: `level` for the map and the
+## checkpoints rested at. It needs another one to go to, else the button
+## stays grey.
+func set_fast_travel(level: LevelBuilder, rested: Array[int]) -> void:
+	_level = level
+	_rested = rested.duplicate()
+	travel_button.disabled = not can_travel()
+
+
+## Whether there is somewhere to go: a map, and a rested camp besides this.
+func can_travel() -> bool:
+	if _level == null or _level.world == null or checkpoint_index not in _rested:
+		return false
+	return _rested.size() > 1
 
 
 ## Called back by main.gd with whether the save landed.
@@ -154,10 +170,12 @@ func _on_skill_learned(_id: String) -> void:
 
 
 func _on_travel_pressed() -> void:
-	if not _travel_open:
+	if not can_travel():
 		_show_note(TRAVEL_CLOSED_NOTE, WARN_COLOR)
 		return
-	fast_travel_requested.emit(checkpoint_index)
+	_show_frame(false)
+	var hero := _player.global_position if is_instance_valid(_player) else Vector2.ZERO
+	map_screen.open(_level.world, hero, _level.checkpoints, _rested, checkpoint_index)
 
 
 func _on_page_closed(button: Button) -> void:

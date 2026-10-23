@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene load_steps=6 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/checkpoint_menu.gd" id="1_camp"]
 [ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
 [ext_resource type="PackedScene" path="res://scenes/inventory_menu.tscn" id="3_pack"]
 [ext_resource type="PackedScene" path="res://scenes/skill_menu.tscn" id="4_skills"]
+[ext_resource type="PackedScene" path="res://scenes/map_screen.tscn" id="5_map"]
 
 [node name="CheckpointMenu" type="CanvasLayer"]
 process_mode = 3
@@ -132,4 +133,7 @@ vertical_alignment = 1
 layout_mode = 1
 
 [node name="SkillMenu" parent="Panel" instance=ExtResource("4_skills")]
+layout_mode = 1
+
+[node name="MapScreen" parent="Panel" instance=ExtResource("5_map")]
 layout_mode = 1

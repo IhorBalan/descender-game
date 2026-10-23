@@ -91,6 +91,15 @@ drawn once both their rooms are known.
 
 ![The map](docs/screenshots/map.png)
 
+The map is also where the hero **travels**. Standing at the checkpoint he
+last rested at, he can be carried by the angels' system to any other
+checkpoint he has rested at (flag `rested:<n>`, kept with the save): on
+the map page, left and right pick one, it blinks in a ring, the footer
+names it with its region, and Space (or the talk key) goes. The screen
+goes black, he arrives rested with the enemies rebuilt, and the game
+saves there. Away from a checkpoint, or mid-fight or mid-talk, the map is
+only a map.
+
 The top left of the screen shows hearts, healing charges, the angel
 abilities unlocked so far and a small bar that fills as the dash comes
 back; the top right shows the purse (light and tally bones, below). Jump height depends on how long the button is held. Dashing gives a few
@@ -213,7 +222,8 @@ under the purse with a bar towards the next, and every level is a skill
 point. Touching a checkpoint rests as before; pressing the talk key at one
 **makes camp**: a menu over the paused game with the pack, the **skills**
 (Vigour, Edge, Swift Feet and seven more, a few ranks each, some opening
-only at a level), a slot for fast travel and the save. Experience and
+only at a level), fast travel to another checkpoint he has rested at (the same map
+picker the pause menu has) and the save. Experience and
 skills go into the save under `skills`; the design, with the curve and
 every skill, is in [`docs/design/progression.md`](docs/design/progression.md).
 

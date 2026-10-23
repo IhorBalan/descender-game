@@ -69,9 +69,9 @@ pressing the talk key **makes camp**, a menu over the paused game:
   the hero carries.
 - **Skills**: the level, the experience towards the next, the points left
   and every skill with its ranks. Space puts a point in.
-- **Fast Travel**: a slot for the fast travel between checkpoints. The
-  button is grey until it is wired; `CheckpointMenu.set_fast_travel` and
-  the `fast_travel_requested` signal are the hooks.
+- **Fast Travel**: the map page on the checkpoints the hero has rested
+  at (the picker from PR #94); picking one carries him there
+  (`Main.travel_to_checkpoint`). Grey until a second camp is rested at.
 - **Save Game** and **Leave**.
 
 Making camp rests the hero again, so a heart learned is a full heart.
