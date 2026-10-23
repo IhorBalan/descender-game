@@ -8,13 +8,14 @@ extends Control
 ## difficulty picker chooses how hard the run is (kept in its save); the picker's
 ## Delete button turns it into a delete picker, where a slot asks the same
 ## before it is cleared. The hint along the bottom says where Continue
-## would resume, while that button is focused. The version in the corner
+## would resume, while that button is focused, and otherwise shows the
+## keys or the pad buttons, whichever the player last used. The version in the corner
 ## is the project's `application/config/version`.
 
 enum SlotMode { NEW_GAME, LOAD, DELETE }
 
 const GAME_SCENE := "res://scenes/main.tscn"
-const DEFAULT_HINT := "Arrows or stick to move   Space or A to choose   Esc or B to go back"
+const DEFAULT_HINT := "{navigate} move   {ui_accept} choose   {ui_cancel} go back"
 ## The credits, one line each; an empty string is a blank line.
 const CREDITS: Array[String] = [
 	"A game by Ihor Balan",
@@ -55,7 +56,7 @@ var difficulty_buttons: Array[Button] = [$Difficulty/Easy, $Difficulty/Normal, $
 @onready var credits: Control = $Credits
 @onready var credits_text: Label = $Credits/Text
 @onready var credits_back_button: Button = $Credits/Back
-@onready var hint: Label = $Hint
+@onready var hint: PromptLabel = $Hint
 @onready var version_label: Label = $Version
 @onready var live_map_status: Label = $LiveMapStatus
 
@@ -135,9 +136,9 @@ func _show_menu() -> void:
 ## The hint says where Continue would resume while it is focused.
 func _on_menu_focus(button: Button) -> void:
 	if button == continue_button and not continue_button.disabled:
-		hint.text = continue_summary()
+		hint.template = continue_summary()
 	else:
-		hint.text = DEFAULT_HINT
+		hint.template = DEFAULT_HINT
 
 
 ## One line on the save Continue resumes: its slot and the slot's summary.

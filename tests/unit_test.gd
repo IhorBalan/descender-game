@@ -12,8 +12,8 @@ extends Node
 ## has the strips its moves use. A failing check names the entry, so a
 ## broken reference is found before the smoke test walks past it. The
 ## unit tests cover the pure pieces: the story flags, the dialogue data,
-## the quests, the levels registry, the upgrade flags, the map and the
-## save slots.
+## the quests, the levels registry, the upgrade flags, the map, the
+## save slots and the button prompts.
 ##
 ## Every method named test_* runs once, in order; `_check` counts.
 
@@ -619,6 +619,73 @@ func test_save_slots() -> void:
 
 
 # Helpers
+
+
+func test_prompts() -> void:
+	var keyboard := Prompts.Device.KEYBOARD
+	var xbox := Prompts.Device.XBOX
+	var ps := Prompts.Device.PLAYSTATION
+	_check("Space" in Prompts.render("{ui_accept}", keyboard), "the keyboard says Space to choose")
+	_check("Esc" in Prompts.render("{ui_cancel}", keyboard), "and Esc to go back")
+	_check("xbox_a.png" in Prompts.render("{jump}", xbox), "jump is A on an Xbox pad")
+	_check("ps_cross.png" in Prompts.render("{jump}", ps), "and Cross on a PlayStation pad")
+	_check("xbox_rt.png" in Prompts.render("{cast}", xbox), "cast shows the right trigger")
+	_check("ps_r2.png" in Prompts.render("{cast}", ps), "as R2 on a PlayStation pad")
+	_check("ps_l1.png" in Prompts.render("{page_prev}", ps), "the page buttons are the shoulders")
+	_check(
+		Prompts.render("{no_such_action} [b]", keyboard) == "{no_such_action} [lb]b]",
+		"an unknown token and a bracket are left as written"
+	)
+	var a := InputEventJoypadButton.new()
+	a.button_index = JOY_BUTTON_A
+	var b := InputEventJoypadButton.new()
+	b.button_index = JOY_BUTTON_B
+	_check(InputMap.action_has_event(&"ui_accept", a), "A chooses in the menus")
+	_check(InputMap.action_has_event(&"ui_cancel", b), "and B goes back")
+	_check("xbox_a.png" in Prompts.render("{ui_accept}", xbox), "the hints say so")
+	_check(Prompts.button_name(JOY_BUTTON_Y, ps) == "Triangle", "Y is named Triangle")
+	_check(Prompts.button_name(JOY_BUTTON_Y, xbox) == "Y", "and Y on Xbox")
+	# Every icon the layouts can name exists.
+	var bad := 0
+	for table in [
+		Prompts.XBOX_BUTTONS,
+		Prompts.PLAYSTATION_BUTTONS,
+		Prompts.XBOX_AXES,
+		Prompts.PLAYSTATION_AXES,
+		Prompts.STICK_AXES,
+	]:
+		for key in table:
+			var icon_name: String = table[key][0]
+			if load("%s/%s.png" % [Prompts.ICON_DIR, icon_name]) == null:
+				bad += _fail("no prompt icon %s" % icon_name)
+	_check(bad == 0, "every prompt icon exists (%d missing)" % bad)
+	# The device follows the last input, and a pinned layout wins.
+	var changes: Array[int] = []
+	var on_change := func(which: int) -> void: changes.append(which)
+	Prompts.device_changed.connect(on_change)
+	var press := InputEventJoypadButton.new()
+	press.button_index = JOY_BUTTON_A
+	press.pressed = true
+	Prompts.set_layout(Prompts.Layout.PLAYSTATION)
+	Prompts._input(press)
+	_check(Prompts.device == ps, "a pad press with PlayStation pinned shows PlayStation")
+	var drift := InputEventJoypadMotion.new()
+	drift.axis = JOY_AXIS_LEFT_X
+	drift.axis_value = 0.2
+	var key := InputEventKey.new()
+	key.physical_keycode = KEY_A
+	key.pressed = true
+	Prompts._input(key)
+	_check(Prompts.device == keyboard, "a key press goes back to the keyboard")
+	Prompts._input(drift)
+	_check(Prompts.device == keyboard, "a drifting stick does not take the prompts")
+	Prompts.set_layout(Prompts.Layout.XBOX)
+	Prompts._input(press)
+	_check(Prompts.device == xbox, "with Xbox pinned the pad shows Xbox")
+	Prompts.set_layout(Prompts.Layout.AUTO)
+	Prompts._input(key)
+	_check(changes.size() >= 3, "each switch is announced (%d)" % changes.size())
+	Prompts.device_changed.disconnect(on_change)
 
 
 func _json(path: String) -> Dictionary:

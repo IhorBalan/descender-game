@@ -23,7 +23,7 @@ var _message_timer := 0.0
 var _queue: Array[Array] = []
 
 @onready var status: StatusBar = $Status
-@onready var message: Label = $Message
+@onready var message: PromptLabel = $Message
 
 
 func _ready() -> void:
@@ -137,10 +137,12 @@ func hide_message() -> void:
 
 
 ## A negative duration keeps the message until the next one. Showing a
-## message drops whatever was queued behind the previous one.
+## message drops whatever was queued behind the previous one. The text
+## can name keys with `{action}` tokens (see Prompts); the line redraws
+## them for the device in the player's hands.
 func show_message(text: String, duration: float = 2.5) -> void:
 	_queue.clear()
-	message.text = text
+	message.template = text
 	message.visible = true
 	_message_timer = duration if duration > 0.0 else 0.0
 

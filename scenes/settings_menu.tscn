@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_settings"]
 [ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://scripts/ui/prompt_label.gd" id="9_prompt"]
 
 [node name="SettingsMenu" type="Control"]
 visible = false
@@ -361,6 +362,19 @@ text = "Gamepad rumble"
 layout_mode = 2
 text = "On"
 
+[node name="Prompts" type="HBoxContainer" parent="Pages/Game"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Pages/Game/Prompts"]
+custom_minimum_size = Vector2(70, 0)
+layout_mode = 2
+text = "Pad prompts"
+
+[node name="Cycle" type="Button" parent="Pages/Game/Prompts"]
+custom_minimum_size = Vector2(110, 0)
+layout_mode = 2
+text = "< Auto >"
+
 [node name="Note" type="Label" parent="Pages/Game"]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
@@ -374,7 +388,7 @@ alignment = 1
 layout_mode = 2
 text = "Defaults"
 
-[node name="Hint" type="Label" parent="."]
+[node name="Hint" type="RichTextLabel" parent="."]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -383,7 +397,11 @@ anchor_bottom = 1.0
 offset_top = -13.0
 offset_bottom = -1.0
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
-text = "Arrows move   Space changes   Q/E or LB/RB switch pages   Esc goes back"
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.55, 0.52, 0.7, 1)
+bbcode_enabled = true
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("9_prompt")
+template = "{navigate} move   {ui_accept} changes   {page_prev} {page_next} switch pages   {ui_cancel} goes back"

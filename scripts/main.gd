@@ -18,18 +18,21 @@ const ENDINGS := {
 	"ending:sit": "The end: the floor, counting.",
 	"ending:clock": "The end: night in the Garden.",
 }
-const CONTROLS_HINT := "A/D move   Space jump   J attack   K dash   L cast   H heal   E talk"
+const CONTROLS_HINT := (
+	"{move} move   {jump} jump   {attack} attack   {dash} dash   {cast} cast   {heal} heal"
+	+ "   {interact} talk"
+)
 const DEATH_FADE_TIME := 0.4
 ## How far the world's ambient tint is pulled towards white, so the deep
 ## regions stay readable away from their lights.
 const AMBIENT_LIFT := 0.3
 const ABILITY_MESSAGES := {
-	Player.Ability.WINGS: "Wings: press jump again in the air",
+	Player.Ability.WINGS: "Wings: press {jump} again in the air",
 	Player.Ability.LIGHT_DASH: "Light dash: dash further, and through walls of light",
-	Player.Ability.WALL_GRIP: "Wall grip: hold towards a wall to cling, jump to spring off",
-	Player.Ability.GLIDE: "Glide: press and hold jump while falling to float down",
-	Player.Ability.HOLY_LIGHT: "Holy Light: press cast to throw a bolt of light",
-	Player.Ability.SMITE: "Smite: down and attack in the air to slam the ground",
+	Player.Ability.WALL_GRIP: "Wall grip: hold towards a wall to cling, {jump} to spring off",
+	Player.Ability.GLIDE: "Glide: press and hold {jump} while falling to float down",
+	Player.Ability.HOLY_LIGHT: "Holy Light: press {cast} to throw a bolt of light",
+	Player.Ability.SMITE: "Smite: {move_down} and {attack} in the air to slam the ground",
 }
 
 var player: Player
@@ -532,7 +535,9 @@ func _on_goal_reached() -> void:
 	Audio.play("level_complete")
 	var next := Levels.next_id(level_id)
 	if next.is_empty():
-		hud.show_message("You have reached the end of the prototype.   Press R to restart", -1.0)
+		hud.show_message(
+			"You have reached the end of the prototype.   Press {restart} to restart", -1.0
+		)
 		return
 	_transitioning = true
 	hud.show_message("Level complete", -1.0)
@@ -682,4 +687,4 @@ func _end_game(flag: String) -> void:
 	_ended = true
 	player.freeze()
 	Audio.play("level_complete")
-	hud.show_message("%s   Press R to restart" % ENDINGS.get(flag, "The end."), -1.0)
+	hud.show_message("%s   Press {restart} to restart" % ENDINGS.get(flag, "The end."), -1.0)

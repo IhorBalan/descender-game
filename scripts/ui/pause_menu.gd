@@ -33,7 +33,7 @@ var _level: LevelBuilder
 @onready var quit_button: Button = $Panel/Menu/Left/Quit
 @onready var menu: HBoxContainer = $Panel/Menu
 @onready var heading: Label = $Panel/Heading
-@onready var hint: Label = $Panel/Hint
+@onready var hint: PromptLabel = $Panel/Hint
 @onready var status_label: Label = $Panel/Status
 @onready var settings_menu: SettingsMenu = $Panel/SettingsMenu
 @onready var quest_log: QuestLog = $Panel/QuestLog
