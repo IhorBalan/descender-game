@@ -7,9 +7,19 @@ extends Area2D
 
 signal rested(checkpoint: Checkpoint)
 
+## The flag prefix a rested checkpoint is kept under in the story flags,
+## by its index in the level's list (the save's `checkpoint` is the same
+## index), so fast travel knows where the hero has been.
+const RESTED_FLAG_PREFIX := "rested:"
+
 var active := false
 
 @onready var sprite: Sprite2D = $Sprite2D
+
+
+## The story flag a checkpoint sets once the hero has rested at it.
+static func rested_flag(index: int) -> String:
+	return "%s%d" % [RESTED_FLAG_PREFIX, index]
 
 
 func _ready() -> void:

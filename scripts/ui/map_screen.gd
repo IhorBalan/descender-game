@@ -8,10 +8,20 @@ extends Control
 ## stands in it (main.gd sets its flag, see room_flag), so the map fills
 ## in as he goes and is kept with the save like any other story flag.
 ##
+## Opened while the hero rests at a checkpoint, the page is also the fast
+## travel picker: left and right step through the checkpoints he has
+## rested at, the picked one blinks on the map and is named in the
+## footer, and accept (or the talk key) carries him there. The travel
+## itself is main.gd's (travel_to_checkpoint), so another menu, such as
+## the camp at a checkpoint, can offer the same trip.
+##
 ## The whole world fits the page: the export's room grid is 16 by 27
 ## cells of 30 x 17 tiles, drawn at CELL pixels each.
 
 signal closed
+## A rested checkpoint was picked to travel to (by index in the level's
+## checkpoints). Only emitted while travel is on offer (see open).
+signal travel_requested(index: int)
 
 ## The flag prefix a found room is kept under in the story flags.
 const ROOM_FLAG_PREFIX := "room:"
@@ -35,6 +45,8 @@ const GRID_COLOR := Color(0.12, 0.09, 0.22)
 const REGION_NAME_COLOR := Color(0.7, 0.68, 0.85)
 const REGION_UNKNOWN_COLOR := Color(0.3, 0.28, 0.42)
 const BLINK_TIME := 0.35
+const PICK_COLOR := Color(1.0, 0.95, 0.7)
+const LEGEND_TEXT := "white: you   gold: rest   red: boss"
 ## How many of the walls of a found room its door tick breaks.
 const DOOR_TICK := 2.0
 
@@ -45,6 +57,11 @@ var hero_position := Vector2.ZERO
 var checkpoints: Array[Checkpoint] = []
 ## Pixels per room cell in the export, read from the rooms themselves.
 var _cell_px := Vector2(480.0, 272.0)
+## Fast travel: the checkpoints the hero may travel to (rested, by index),
+## which of them is picked, and the one he stands at (-1: no travel).
+var _targets: Array[int] = []
+var _pick := 0
+var _travel_from := -1
 var _blink_timer := 0.0
 var _blink_on := true
 var _region_labels: Array[Label] = []
@@ -85,6 +102,17 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel") or event.is_action_pressed("pause"):
 		close()
 		get_viewport().set_input_as_handled()
+	elif not can_travel():
+		return
+	elif event.is_action_pressed("ui_left") or event.is_action_pressed("move_left"):
+		pick_previous()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_right") or event.is_action_pressed("move_right"):
+		pick_next()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("ui_accept") or event.is_action_pressed("interact"):
+		confirm_travel()
+		get_viewport().set_input_as_handled()
 
 
 func _process(delta: float) -> void:
@@ -98,16 +126,93 @@ func _process(delta: float) -> void:
 
 
 ## Shows the map of `map` with the hero at `hero` (level pixels) and the
-## level's checkpoints (the active one is the hero's way back).
-func open(map: WorldMap, hero: Vector2, level_checkpoints: Array[Checkpoint]) -> void:
+## level's checkpoints (the active one is the hero's way back). `rested`
+## lists the checkpoints he has rested at, and `travel_from` the one he
+## stands at when he may travel from it (else -1): with two or more rested
+## the page offers the trip, and the Back button stays unfocused so accept
+## picks the trip rather than the button.
+func open(
+	map: WorldMap,
+	hero: Vector2,
+	level_checkpoints: Array[Checkpoint],
+	rested: Array[int] = [],
+	travel_from := -1
+) -> void:
 	world = map
 	hero_position = hero
 	checkpoints = level_checkpoints
+	_targets = rested.duplicate()
+	_targets.sort()
+	_travel_from = travel_from if travel_from in _targets else -1
+	_pick = maxi(_targets.find(_travel_from), 0)
 	refresh()
 	visible = true
 	_blink_on = true
 	_blink_timer = 0.0
-	back_button.grab_focus()
+	if can_travel():
+		back_button.release_focus()
+	else:
+		back_button.grab_focus()
+
+
+## Whether the page offers fast travel: the hero rests at a checkpoint and
+## has rested at another.
+func can_travel() -> bool:
+	return _travel_from >= 0 and _targets.size() > 1
+
+
+## The rested checkpoints on offer, by index, for the test.
+func travel_targets() -> Array[int]:
+	return _targets
+
+
+## The checkpoint picked to travel to, or -1 when travel is not on offer.
+func picked_checkpoint() -> int:
+	return _targets[_pick] if can_travel() else -1
+
+
+func pick_next() -> void:
+	if can_travel():
+		_pick = (_pick + 1) % _targets.size()
+		_show_travel()
+		queue_redraw()
+
+
+func pick_previous() -> void:
+	if can_travel():
+		_pick = (_pick - 1 + _targets.size()) % _targets.size()
+		_show_travel()
+		queue_redraw()
+
+
+## Asks for the trip to the picked checkpoint; picking the one the hero
+## stands at does nothing.
+func confirm_travel() -> void:
+	var index := picked_checkpoint()
+	if index < 0 or index == _travel_from:
+		return
+	travel_requested.emit(index)
+
+
+## The footer's second line: the trip on offer, or the legend.
+func _show_travel() -> void:
+	if not can_travel():
+		legend_label.text = LEGEND_TEXT
+		return
+	var index := picked_checkpoint()
+	if index == _travel_from:
+		legend_label.text = "Travel: < > pick a checkpoint you have rested at"
+		return
+	legend_label.text = (
+		"Travel: < > checkpoint %d, %s   Space to go" % [index + 1, _checkpoint_region(index)]
+	)
+
+
+## The name of the region a checkpoint stands in.
+func _checkpoint_region(index: int) -> String:
+	if world == null or index < 0 or index >= checkpoints.size():
+		return ""
+	return str(world.region_at(checkpoints[index].global_position.y).get("name", ""))
 
 
 func close() -> void:
@@ -127,6 +232,7 @@ func refresh() -> void:
 		return
 	_read_cell_size()
 	found_label.text = "%d of %d rooms found" % [rooms_found(world), world.rooms.size()]
+	_show_travel()
 	var known := _regions_found()
 	for i in world.regions.size():
 		var region: Dictionary = world.regions[i]
@@ -237,6 +343,12 @@ func _draw() -> void:
 	if _blink_on:
 		var at := _map_point(hero_position) - Vector2(1.0, 2.0)
 		draw_rect(Rect2(at, Vector2(3.0, 3.0)), HERO_COLOR)
+	# The checkpoint picked to travel to blinks in a ring, out of step
+	# with the hero so both read.
+	var picked := picked_checkpoint()
+	if picked >= 0 and picked != _travel_from and not _blink_on:
+		var at := _map_point(checkpoints[picked].global_position) - Vector2(3.0, 4.0)
+		draw_rect(Rect2(at, Vector2(6.0, 6.0)), PICK_COLOR, false, 1.0)
 
 
 ## A door between two found rooms is a gap in the wall between them; one
