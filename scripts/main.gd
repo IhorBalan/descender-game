@@ -77,6 +77,7 @@ var _fight_pending := false
 @onready var pause_menu: PauseMenu = $PauseMenu
 @onready var dialogue_box: DialogueBox = $DialogueBox
 @onready var shop_menu: ShopMenu = $ShopMenu
+@onready var camp_menu: CheckpointMenu = $CampMenu
 
 
 func _ready() -> void:
@@ -87,9 +88,11 @@ func _ready() -> void:
 	if SaveManager.pending.is_empty():
 		Story.reset()
 		Inventory.reset()
+		Skills.reset()
 	else:
 		Story.from_list(SaveManager.pending.get("flags", []))
 		Inventory.from_dict(SaveManager.pending.get("inventory", {}))
+		Skills.from_dict(SaveManager.pending.get("skills", {}))
 	level.level_id = level_id
 	_paint_sky(Levels.sky(level_id))
 	level.load_from_file(Levels.path(level_id))
@@ -118,6 +121,7 @@ func _ready() -> void:
 
 	for checkpoint in level.checkpoints:
 		checkpoint.rested.connect(_on_checkpoint_rested)
+		checkpoint.camp_requested.connect(_on_camp_requested)
 	if level.goal:
 		level.goal.reached.connect(_on_goal_reached)
 	# Applied before the ability signal is wired, so loaded powers are
@@ -137,7 +141,10 @@ func _ready() -> void:
 	player.power_granted.connect(_on_power_granted)
 	player.purse_changed.connect(hud.set_purse)
 	player.loot_collected.connect(_on_loot_collected)
+	player.xp_changed.connect(hud.set_progress)
+	player.leveled_up.connect(_on_leveled_up)
 	hud.set_purse()
+	hud.set_progress()
 	hud.player = player
 	hud.set_abilities(player.abilities)
 	# Seals the hero may already pass (a loaded save's abilities) go quietly.
@@ -150,6 +157,9 @@ func _ready() -> void:
 	pause_menu.save_requested.connect(_on_save_requested)
 	pause_menu.restart_requested.connect(restart_from_checkpoint)
 	pause_menu.travel_requested.connect(_on_travel_requested)
+	camp_menu.save_requested.connect(_on_camp_save_requested)
+	camp_menu.skill_learned.connect(hud.set_progress)
+	camp_menu.fast_travel_requested.connect(_on_camp_travel_requested)
 
 	camera.target = player
 	camera.set_limits(level.size_px)
@@ -244,7 +254,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if _transitioning:
 		return
 	if event.is_action_pressed("pause"):
-		if shop_menu.is_open():
+		if shop_menu.is_open() or camp_menu.is_open():
 			return
 		Audio.play("pause")
 		pause_menu.open(pause_status(), player, level, _active_checkpoint if can_travel() else -1)
@@ -339,6 +349,7 @@ func capture_save() -> Dictionary:
 		"abilities": abilities,
 		"flags": Story.to_list(),
 		"inventory": Inventory.to_dict(),
+		"skills": Skills.to_dict(),
 		"difficulty": SaveManager.difficulty,
 		"play_time": play_time,
 		"saved_at": Time.get_unix_time_from_system(),
@@ -406,6 +417,51 @@ func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 	if save_game():
 		text += "   Game saved"
 	hud.show_message(text, 2.5)
+	if Skills.points_left() > 0:
+		hud.queue_message("A skill point waits: press %s to make camp" % _interact_key(), 3.0)
+
+
+## The hero pressed the talk key at a checkpoint: the camp opens, with the
+## pack, the skills and the save (see CheckpointMenu). Not over a dialogue
+## or a fight, and never for a dead hero.
+func _on_camp_requested(checkpoint: Checkpoint) -> void:
+	if (
+		dialogue_box.is_open()
+		or shop_menu.is_open()
+		or camp_menu.is_open()
+		or pause_menu.is_open()
+		or _transitioning
+		or _ended
+		or _boss != null
+		or player.state == Player.State.DEAD
+	):
+		return
+	# Camp rests him again, so the pack and the skills are managed rested.
+	player.rest_at(checkpoint.global_position)
+	var index := level.checkpoints.find(checkpoint)
+	camp_menu.open(player, index, level.checkpoints.size())
+	# Fast travel from the camp: the map page, on the checkpoints rested at.
+	var rested: Array[int] = []
+	if can_travel():
+		rested = rested_checkpoints()
+	camp_menu.set_fast_travel(level, rested)
+	get_viewport().set_input_as_handled()
+
+
+## Saving from the camp records this checkpoint, where the hero stands.
+func _on_camp_save_requested() -> void:
+	camp_menu.show_saved(save_game())
+
+
+## A level made: the HUD says so, and that a point waits for a camp.
+func _on_leveled_up(level_reached: int) -> void:
+	hud.show_message("Level %d: a skill point to spend at a checkpoint camp" % level_reached, 3.5)
+
+
+## The key bound to interact, for the messages.
+func _interact_key() -> String:
+	var settings := get_node_or_null("/root/Settings")
+	return "E" if settings == null else str(settings.key_names(&"interact"))
 
 
 ## The power-ups come back with the enemies.
@@ -740,6 +796,12 @@ func travel_to_checkpoint(index: int) -> void:
 	if save_game():
 		text += "   Game saved"
 	hud.show_message(text, 2.5)
+
+
+## The camp's map page picked a checkpoint to travel to.
+func _on_camp_travel_requested(index: int) -> void:
+	camp_menu.close()
+	travel_to_checkpoint(index)
 
 
 ## The map page picked a checkpoint to travel to.

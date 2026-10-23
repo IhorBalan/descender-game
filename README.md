@@ -239,6 +239,16 @@ hit, his maximums, his feet and his drops; the whole design, with every
 item and price, is in [`docs/design/economy.md`](docs/design/economy.md).
 The pack goes into the save under `inventory`.
 
+Every kill also gives **experience**. Enough of it is a **level**, shown
+under the purse with a bar towards the next, and every level is a skill
+point. Touching a checkpoint rests as before; pressing the talk key at one
+**makes camp**: a menu over the paused game with the pack, the **skills**
+(Vigour, Edge, Swift Feet and seven more, a few ranks each, some opening
+only at a level), fast travel to another checkpoint he has rested at (the same map
+picker the pause menu has) and the save. Experience and
+skills go into the save under `skills`; the design, with the curve and
+every skill, is in [`docs/design/progression.md`](docs/design/progression.md).
+
 Below Limbo the enemies pick up habits, one per placement (`behaviour` in
 `placements.json`): a **chaser** walks at the hero once he is near and
 level, stopping at the end of its ledge; an **ambusher** stands as if idle

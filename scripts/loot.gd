@@ -8,9 +8,11 @@ extends RefCounted
 ##   bones        tally bones left every time (bosses)
 ##   flask_chance how often a kill leaves a Basin Flask
 ##   unique       the item id a boss leaves, once per save
+##   xp           the experience the kill gives the hero (see Skills)
 ##
-## A charm that heals on a kill is paid here too, since the enemies do
-## not know the hero. See docs/design/economy.md.
+## A charm that heals on a kill is paid here too, and so is the
+## experience, since the enemies do not know the hero. See
+## docs/design/economy.md and docs/design/progression.md.
 
 const LIGHT_DROP_SCRIPT := preload("res://scripts/light_drop.gd")
 const LOOT_DROP_SCRIPT := preload("res://scripts/loot_drop.gd")
@@ -28,7 +30,7 @@ static func drop(parent: Node, at: Vector2, table: Dictionary) -> void:
 	var light_range: Variant = table.get("light", [])
 	if light_range is Array and light_range.size() == 2:
 		var light := randi_range(int(light_range[0]), int(light_range[1]))
-		light = int(round(light * Inventory.factor("light")))
+		light = int(round(light * Inventory.factor("light") * Skills.factor("light")))
 		if light > 0:
 			drops.append(_currency("light", light))
 	var bones := int(table.get("bones", 0))
@@ -45,11 +47,13 @@ static func drop(parent: Node, at: Vector2, table: Dictionary) -> void:
 		var drop := drops[i]
 		drop.position = at + Vector2((i - (drops.size() - 1) / 2.0) * SPREAD, 0.0)
 		parent.add_child.call_deferred(drop)
+	var player := parent.get_tree().get_first_node_in_group("player") as Player
+	if player == null:
+		return
 	var heal := int(Inventory.bonus("heal_on_kill"))
-	if heal > 0:
-		var player := parent.get_tree().get_first_node_in_group("player") as Player
-		if player != null and player.restore_health(heal):
-			Feedback.spark(player.global_position + Vector2(0.0, -20.0), HealMote.COLOR)
+	if heal > 0 and player.restore_health(heal):
+		Feedback.spark(player.global_position + Vector2(0.0, -20.0), HealMote.COLOR)
+	player.gain_xp(int(table.get("xp", 0)))
 
 
 static func _currency(currency: String, amount: int) -> LightDrop:
