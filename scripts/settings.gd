@@ -253,6 +253,18 @@ func _apply_window() -> void:
 	)
 	if DisplayServer.window_get_mode() != mode:
 		DisplayServer.window_set_mode(mode)
+	# Full screen fills the display: the view scales by any factor and takes
+	# the screen's aspect, showing a little more world on a 16:10 screen. A
+	# window scales by whole numbers so pixel art stays crisp, at 16:9.
+	var window := get_tree().root
+	window.content_scale_stretch = (
+		Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+		if fullscreen
+		else Window.CONTENT_SCALE_STRETCH_INTEGER
+	)
+	window.content_scale_aspect = (
+		Window.CONTENT_SCALE_ASPECT_EXPAND if fullscreen else Window.CONTENT_SCALE_ASPECT_KEEP
+	)
 	if not fullscreen:
 		var size := window_size_for(window_scale)
 		if DisplayServer.window_get_size() != size:

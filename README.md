@@ -81,7 +81,9 @@ in the corner is the project's `application/config/version`.
 **Settings**, on the title screen and in the pause menu, has four pages.
 **Audio** has the master, music and sound effect volumes and a toggle for
 the blips dialogue ticks with. **Display** has fullscreen (on by default:
-the game starts full screen), the window size, v-sync and the screen shake. **Controls** has the bindings: pick an
+the game starts full screen, filling the display at the screen's own
+aspect; a window scales the 16:9 view by whole numbers instead), the
+window size, v-sync and the screen shake. **Controls** has the bindings: pick an
 action, press the new key (a key taken from another action is moved, not
 shared) or Esc to keep the old one; the **Bindings for** button flips the
 list between the keyboard and the gamepad, which are rebound separately

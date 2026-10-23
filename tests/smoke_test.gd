@@ -893,6 +893,8 @@ func _physics_process(_delta: float) -> void:
 			_check(settings_menu.get_node("Pages/Display").visible, "display tab shows its page")
 			_check(not settings_menu.get_node("Pages/Audio").visible, "audio page hides")
 			# Display: the window size and shake buttons cycle and Defaults undoes them.
+			# From the defaults, whatever this machine's settings file says.
+			Settings.reset_display()
 			settings_menu.scale_button.pressed.emit()
 			_check(Settings.window_scale == 5, "window size button steps up the scale")
 			_check(
