@@ -56,7 +56,8 @@ const ACTION_LABELS := {
 var volume := 1.0
 var music_volume := 1.0
 var sfx_volume := 1.0
-var fullscreen := false
+## The game starts full screen; Settings → Display turns it off.
+var fullscreen := true
 ## Window size as a multiple of BASE_SIZE, used when not fullscreen.
 var window_scale := DEFAULT_WINDOW_SCALE
 var vsync := true
@@ -101,7 +102,7 @@ func load_settings() -> void:
 	volume = _volume_from(config, "volume")
 	music_volume = _volume_from(config, "music")
 	sfx_volume = _volume_from(config, "sfx")
-	fullscreen = bool(config.get_value("display", "fullscreen", false))
+	fullscreen = bool(config.get_value("display", "fullscreen", true))
 	window_scale = clampi(
 		int(config.get_value("display", "scale", DEFAULT_WINDOW_SCALE)),
 		MIN_WINDOW_SCALE,
@@ -193,7 +194,7 @@ func reset_audio() -> void:
 
 ## Puts the window and the screen shake back to the project's defaults.
 func reset_display() -> void:
-	fullscreen = false
+	fullscreen = true
 	window_scale = DEFAULT_WINDOW_SCALE
 	vsync = true
 	screen_shake = 1.0
