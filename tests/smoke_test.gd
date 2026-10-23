@@ -74,6 +74,9 @@ var _charges := 0
 func _ready() -> void:
 	# Flyers pick a random hover phase; a fixed seed keeps every run identical.
 	seed(1)
+	# A map picked in the Maps menu on this machine must not change which
+	# level a new game boots here.
+	MapStore.chosen_level = ""
 	# The pause checks need the test to keep ticking while the tree is paused.
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	# This node is the current scene; stepping aside lets the game change
@@ -120,15 +123,23 @@ func _physics_process(_delta: float) -> void:
 			_check(level.get_node("Tiles").get_child_count() == 4, "four tile layers built")
 			var terrain := level.get_node_or_null("Tiles/Terrain")
 			_check(terrain is TileMapLayer, "terrain is a TileMapLayer")
-			# The world is the live map (see LiveMap), re-exported as the editor
-			# changes it, so the counts are floors rather than exact numbers.
-			var terrain_cells: int = terrain.get_used_cells().size() if terrain != null else 0
-			_check(terrain_cells >= 100000, "the terrain is set (%d cells)" % terrain_cells)
+			# The counts come from the export itself, so a republished live map
+			# does not move the goalposts.
+			var terrain_cells := 0
+			for id in level.world.cells(WorldMap.LAYER_TERRAIN):
+				if id >= 0:
+					terrain_cells += 1
+			_check(
+				terrain != null and terrain.get_used_cells().size() == terrain_cells,
+				"every terrain cell is set"
+			)
 			_check(level.get_node("Solids").get_child_count() > 0, "solid runs have collision")
 			_check(level.get_node("Ledges").get_child_count() > 0, "one-way ledges built")
 			_check(level.get_node("Hazards").get_child_count() > 0, "hazards built")
-			var lights := level.get_node("Lights").get_child_count()
-			_check(lights >= 800, "the lights are placed (%d)" % lights)
+			_check(
+				level.get_node("Lights").get_child_count() == level.world.lights.size(),
+				"every light placed"
+			)
 			_check(
 				level.region_at(_player.global_position.y).get("name") == "Paradise",
 				"the hero starts in Paradise"

@@ -29,6 +29,7 @@ SaveManager="*res://scripts/save_manager.gd"
 Prompts="*res://scripts/prompts.gd"
 Settings="*res://scripts/settings.gd"
 LiveMap="*res://scripts/live_map.gd"
+MapStore="*res://scripts/map_store.gd"
 
 [display]
 
