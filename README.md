@@ -43,11 +43,30 @@ window is 1280x720 by default.
 | Cast    | L or C              | RT             |
 | Heal    | H                   | Y              |
 | Talk    | E                   | LB             |
+| Menu pages | Q / E            | LB / RB        |
 | Pause   | Esc                 | Start          |
 | Restart | R                   |                |
 
-The title screen is driven with the arrow keys or the left stick, Space or
-A to choose and Esc or B to go back. **New Game** picks a slot (an occupied
+The title screen is driven with the arrow keys, the d-pad or the left
+stick, Space or A to choose and Esc or B to go back; every menu works
+the same way with a gamepad alone.
+
+**Button prompts** follow whatever the player last touched: press a key
+and the hints along the bottom of the menus, the HUD messages and the
+talk prompt over an NPC name keys; press a gamepad button and they turn
+into button icons, in the Xbox layout or the PlayStation one (Cross,
+Circle, Square, Triangle, L1/R1, L2/R2) depending on the pad's name. The
+switch is instant, in both directions, mid-menu or mid-fight. The
+**Pad prompts** setting on the Game page pins one layout (Auto, Xbox,
+PlayStation) for a pad that reports a name the game does not recognise.
+The prompts come from the `Prompts` autoload (`scripts/prompts.gd`): a
+hint is written as text with `{action}` tokens, such as
+`"{ui_accept} choose   {ui_cancel} back"`, and a `PromptLabel`
+(`scripts/ui/prompt_label.gd`) draws it and redraws it on every switch,
+so new screens get prompts by dropping one in. The icons are drawn by
+`tools/gen_prompts.py` into `assets/ui/prompts/`.
+
+**New Game** picks a slot (an occupied
 one asks to be pressed twice before it is overwritten), **Continue** resumes
 the most recent save (the line along the bottom says which, while the
 button is focused) and **Load Game** picks any slot. A new game then picks
@@ -65,10 +84,13 @@ the blips dialogue ticks with. **Display** has fullscreen, the window
 size, v-sync and the screen shake. **Controls** has the bindings: pick an
 action, press the new key (a key taken from another action is moved, not
 shared) or Esc to keep the old one; the **Bindings for** button flips the
-list between the keyboard and the gamepad, which are rebound separately.
+list between the keyboard and the gamepad, which are rebound separately
+(the list opens on the device in use). A binding waits five seconds for
+the new key or button, so a player holding only a pad backs out by waiting.
 **Game** has the dialogue text speed (slow to instant), and toggles for
 the white flash and the blink of stopped time on a hit and for gamepad
-rumble, for anyone they bother. Settings live in `user://settings.cfg`.
+rumble, for anyone they bother, and **Pad prompts**, which picks the
+gamepad layout the hints show (see above). Settings live in `user://settings.cfg`.
 
 Pausing opens a menu to resume, restart at the last checkpoint (what R
 does), save, open the map, read the promises (the quest log), open the

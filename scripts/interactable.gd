@@ -4,15 +4,15 @@ extends Area2D
 ## Something in the level the hero can talk to or examine: an NPC, a relic
 ## or an invisible story trigger. Lists the dialogue ids to try, in priority
 ## order; main.gd picks the first whose flags match and plays it. Shows the
-## interact key above itself while the hero stands close. The node's origin
-## is at the base, like the hero's, so a level cell places it on the floor.
+## interact key, or the pad button, above itself while the hero stands
+## close. The node's origin is at the base, like the hero's, so a level
+## cell places it on the floor.
 
 ## Fired when the hero presses interact in range (or, for a trigger, walks
 ## in). main.gd listens and runs the dialogue.
 signal interacted(interactable: Interactable)
 
 const PROMPT_FONT_SIZE := 8
-const PROMPT_COLOR := Color(1.0, 0.95, 0.7)
 const PROMPT_SHADOW := Color(0.0, 0.0, 0.0, 0.8)
 
 ## Dialogue ids to try, first match wins (see DialogueData.pick). These are
@@ -29,7 +29,7 @@ var prompt_offset := Vector2(0, -48)
 var automatic := false
 
 var _player_near := false
-var _prompt: Label
+var _prompt: PromptLabel
 var _rotation := 0
 
 
@@ -44,15 +44,15 @@ func _ready() -> void:
 	shape.position = Vector2(0, -area_size.y / 2.0)
 	add_child(shape)
 	if not automatic:
-		_prompt = Label.new()
-		_prompt.add_theme_font_size_override("font_size", PROMPT_FONT_SIZE)
-		_prompt.add_theme_color_override("font_color", PROMPT_COLOR)
+		_prompt = PromptLabel.new()
+		_prompt.template = "{interact}"
+		_prompt.add_theme_font_size_override("normal_font_size", PROMPT_FONT_SIZE)
 		_prompt.add_theme_color_override("font_shadow_color", PROMPT_SHADOW)
 		_prompt.add_theme_constant_override("shadow_offset_x", 1)
 		_prompt.add_theme_constant_override("shadow_offset_y", 1)
 		_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		_prompt.size = Vector2(40, 10)
-		_prompt.position = prompt_offset - Vector2(20, 5)
+		_prompt.size = Vector2(40, 12)
+		_prompt.position = prompt_offset - Vector2(20, 6)
 		_prompt.visible = false
 		add_child(_prompt)
 	body_entered.connect(_on_body_entered)
@@ -89,15 +89,6 @@ func on_dialogue_finished(_entry: Dictionary) -> void:
 	pass
 
 
-## The key bound to interact, from the Settings autoload. Looked up by node
-## because the headless test compiles this script before autoloads exist.
-func _interact_key_name() -> String:
-	var settings := get_node_or_null("/root/Settings")
-	if settings == null:
-		return "E"
-	return settings.key_names(&"interact")
-
-
 func _on_body_entered(body: Node2D) -> void:
 	if not body is Player or body.state == Player.State.DEAD:
 		return
@@ -105,7 +96,6 @@ func _on_body_entered(body: Node2D) -> void:
 	if automatic:
 		interacted.emit(self)
 	else:
-		_prompt.text = _interact_key_name()
 		_prompt.visible = true
 
 

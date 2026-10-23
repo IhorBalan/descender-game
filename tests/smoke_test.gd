@@ -771,11 +771,13 @@ func _physics_process(_delta: float) -> void:
 			_check(not _title.continue_button.disabled, "a save enables Continue")
 			_title.continue_button.grab_focus()
 			_check(
-				_title.hint.text.begins_with("Resumes slot %d:" % (_slot + 1)),
+				_title.hint.template.begins_with("Resumes slot %d:" % (_slot + 1)),
 				"focusing Continue says which save resumes"
 			)
 			_title.new_game_button.grab_focus()
-			_check(_title.hint.text == _title.DEFAULT_HINT, "the hint returns on another button")
+			_check(
+				_title.hint.template == _title.DEFAULT_HINT, "the hint returns on another button"
+			)
 			_title.load_button.pressed.emit()
 			_check(_title.delete_button.visible, "the load picker offers deleting")
 			_title.delete_button.pressed.emit()
@@ -1085,7 +1087,7 @@ func _physics_process(_delta: float) -> void:
 				_hub.dialogue_box.advance()
 			_check(Story.has_flag("sword:1"), "the forging sets its flag")
 			_check(_hub.player.attack_damage() == 2, "the forging hardens the sword")
-			_check(_hub.hud.message.text == "Sword damage: 2", "the HUD says so")
+			_check(_hub.hud.message.get_parsed_text() == "Sword damage: 2", "the HUD says so")
 		897:
 			_press("interact", true)
 		898:
@@ -1290,7 +1292,10 @@ func _physics_process(_delta: float) -> void:
 			while _hub.dialogue_box.is_open():
 				_hub.dialogue_box.advance()
 			_check(Story.has_flag("quest:drawings"), "that is a promise")
-			_check(_hub.hud.message.text == "A promise: Hanne's drawings", "and the HUD says so")
+			_check(
+				_hub.hud.message.get_parsed_text() == "A promise: Hanne's drawings",
+				"and the HUD says so"
+			)
 			Story.set_flag("shaft_seen")
 			_check(
 				_hub.dialogue.pick(hanne.dialogue_ids).get("id", "") == "hanne_shaft",
@@ -1542,7 +1547,7 @@ func _physics_process(_delta: float) -> void:
 				"the seal of light stops the hero (y %.1f)" % _world.player.global_position.y
 			)
 			_check(
-				_world.hud.message.visible and "Wings" in _world.hud.message.text,
+				_world.hud.message.visible and "Wings" in _world.hud.message.get_parsed_text(),
 				"touching the seal says what it wants"
 			)
 			_world.player.unlock(Player.Ability.WINGS)
@@ -1728,7 +1733,7 @@ func _physics_process(_delta: float) -> void:
 				_world.dialogue_box.advance()
 			_check(Story.has_flag("ending:sit"), "the ending sets its flag")
 			_check(_world.player.frozen, "the hero stands still at the end")
-			_check("Press R" in _world.hud.message.text, "the end line shows")
+			_check("Press R" in _world.hud.message.get_parsed_text(), "the end line shows")
 			_check(_world.game_over(), "the game is over")
 			_check(not _world._transitioning, "and R is still read for the restart")
 			# The clock turned: back up the pipes, where the Gardener waits.
@@ -2403,17 +2408,17 @@ func _physics_process(_delta: float) -> void:
 			_check(map_screen.travel_targets() == [0, 5], "the rested checkpoints are on offer")
 			_check(map_screen.picked_checkpoint() == 0, "starting from the one he rests at")
 			_check(
-				map_screen.legend_label.text.begins_with("Travel: < > pick"),
+				map_screen.legend_label.template.begins_with("Travel: {navigate} pick"),
 				"the footer asks for a pick"
 			)
 			map_screen.pick_next()
 			_check(map_screen.picked_checkpoint() == 5, "right picks the next")
 			_check(
 				(
-					"checkpoint 6" in map_screen.legend_label.text
-					and "Purgatory" in map_screen.legend_label.text
+					"checkpoint 6" in map_screen.legend_label.template
+					and "Purgatory" in map_screen.legend_label.template
 				),
-				"and names it with its region (%s)" % map_screen.legend_label.text
+				"and names it with its region (%s)" % map_screen.legend_label.template
 			)
 			map_screen.pick_previous()
 			map_screen.pick_previous()
@@ -2435,7 +2440,8 @@ func _physics_process(_delta: float) -> void:
 			_check(_world.fade.cover.modulate.a < 1.0, "as the screen comes back")
 			_check(_world.rested_checkpoints() == [0, 5], "both checkpoints stay rested")
 			_check(
-				_world.hud.message.text.begins_with("Carried to checkpoint 6"), "the HUD says so"
+				_world.hud.message.get_parsed_text().begins_with("Carried to checkpoint 6"),
+				"the HUD says so"
 			)
 			_check(_world.can_travel(), "and he may travel on from there")
 			root.remove_child(_world)

@@ -1,7 +1,7 @@
 extends Node
 
 ## Player settings: volumes, window, screen shake, game feel and
-## accessibility, keyboard and gamepad bindings.
+## accessibility, keyboard and gamepad bindings, the gamepad's prompts.
 ##
 ## Registered as the Settings autoload. Values live in user://settings.cfg
 ## and are applied to the audio buses, the window and the InputMap when the
@@ -38,24 +38,6 @@ const REBINDABLE_ACTIONS: Array[StringName] = [
 	&"pause",
 	&"restart",
 ]
-## Short names for the gamepad buttons, in Xbox layout.
-const PAD_BUTTON_NAMES := {
-	JOY_BUTTON_A: "A",
-	JOY_BUTTON_B: "B",
-	JOY_BUTTON_X: "X",
-	JOY_BUTTON_Y: "Y",
-	JOY_BUTTON_BACK: "Back",
-	JOY_BUTTON_GUIDE: "Guide",
-	JOY_BUTTON_START: "Start",
-	JOY_BUTTON_LEFT_STICK: "LS",
-	JOY_BUTTON_RIGHT_STICK: "RS",
-	JOY_BUTTON_LEFT_SHOULDER: "LB",
-	JOY_BUTTON_RIGHT_SHOULDER: "RB",
-	JOY_BUTTON_DPAD_UP: "D-Up",
-	JOY_BUTTON_DPAD_DOWN: "D-Down",
-	JOY_BUTTON_DPAD_LEFT: "D-Left",
-	JOY_BUTTON_DPAD_RIGHT: "D-Right",
-}
 const ACTION_LABELS := {
 	&"move_left": "Move left",
 	&"move_right": "Move right",
@@ -90,6 +72,9 @@ var hit_stop := true
 var rumble := true
 ## Whether dialogue ticks with a blip as it types.
 var voice_blips := true
+## Which gamepad's prompts the hints show: a Prompts.Layout, where AUTO
+## follows the pad the player picks up.
+var prompt_layout := Prompts.Layout.AUTO
 ## Saved keys per action: physical keycodes. Actions not listed keep the
 ## project's defaults.
 var keys: Dictionary = {}
@@ -131,6 +116,14 @@ func load_settings() -> void:
 	hit_stop = bool(config.get_value("game", "hit_stop", true))
 	rumble = bool(config.get_value("game", "rumble", true))
 	voice_blips = bool(config.get_value("audio", "blips", true))
+	prompt_layout = (
+		clampi(
+			int(config.get_value("game", "prompts", Prompts.Layout.AUTO)),
+			0,
+			Prompts.LAYOUT_NAMES.size() - 1
+		)
+		as Prompts.Layout
+	)
 	keys = _load_bindings(config, "keys")
 	pad_buttons = _load_bindings(config, "pad")
 
@@ -168,6 +161,7 @@ func save_settings() -> void:
 	config.set_value("game", "hit_stop", hit_stop)
 	config.set_value("game", "rumble", rumble)
 	config.set_value("audio", "blips", voice_blips)
+	config.set_value("game", "prompts", prompt_layout)
 	for action in keys:
 		config.set_value("keys", action, keys[action])
 	for action in pad_buttons:
@@ -182,6 +176,7 @@ func apply() -> void:
 	_set_bus_volume("Music", music_volume)
 	_set_bus_volume("SFX", sfx_volume)
 	_apply_window()
+	Prompts.set_layout(prompt_layout)
 	for action in REBINDABLE_ACTIONS:
 		_set_keyboard_keys(action, keys.get(action, _default_keys[action]))
 		_set_joypad_buttons(action, pad_buttons.get(action, _default_pad_buttons[action]))
@@ -211,6 +206,7 @@ func reset_game() -> void:
 	hit_flash = true
 	hit_stop = true
 	rumble = true
+	prompt_layout = Prompts.Layout.AUTO
 	apply()
 
 
@@ -315,16 +311,16 @@ func reset_keys() -> void:
 func key_names(action: StringName) -> String:
 	var names: PackedStringArray = []
 	for code in action_keys(action):
-		var event := InputEventKey.new()
-		event.physical_keycode = code
-		names.append(event.as_text_physical_keycode())
+		names.append(Prompts.key_name(code))
 	return " / ".join(names) if names.size() > 0 else "none"
 
 
+## The gamepad buttons bound to an action, named in the layout of the
+## pad the player last used (Xbox names for the keyboard).
 func pad_button_names(action: StringName) -> String:
 	var names: PackedStringArray = []
 	for button in action_pad_buttons(action):
-		names.append(PAD_BUTTON_NAMES.get(button, "Button %d" % button))
+		names.append(Prompts.button_name(button))
 	return " / ".join(names) if names.size() > 0 else "none"
 
 

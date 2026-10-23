@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3]
+[gd_scene load_steps=4 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/shop_menu.gd" id="1_shop"]
 [ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+[ext_resource type="Script" path="res://scripts/ui/prompt_label.gd" id="9_prompt"]
 
 [node name="ShopMenu" type="CanvasLayer"]
 process_mode = 3
@@ -112,7 +113,7 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "Leave"
 
-[node name="Hint" type="Label" parent="Panel"]
+[node name="Hint" type="RichTextLabel" parent="Panel"]
 layout_mode = 1
 anchors_preset = 12
 anchor_top = 1.0
@@ -121,7 +122,11 @@ anchor_bottom = 1.0
 offset_top = -10.0
 offset_bottom = -2.0
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.55, 0.52, 0.7, 1)
-text = "Arrows pick   Space buys   Esc leaves"
+mouse_filter = 2
+theme_override_colors/default_color = Color(0.55, 0.52, 0.7, 1)
+bbcode_enabled = true
+scroll_active = false
 horizontal_alignment = 1
 vertical_alignment = 1
+script = ExtResource("9_prompt")
+template = "{navigate} pick   {ui_accept} buys   {ui_cancel} leaves"

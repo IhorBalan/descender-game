@@ -4,27 +4,38 @@ extends Control
 ## The settings screen, in four pages: Audio (master, music and sound
 ## effect volumes, the dialogue blips), Display (fullscreen, window size,
 ## v-sync, screen shake), Controls (keyboard and gamepad bindings) and
-## Game (text speed, hit flashes, hit pause, gamepad rumble).
+## Game (text speed, hit flashes, hit pause, gamepad rumble, which pad's
+## prompts the hints show).
 ##
 ## Shared by the title screen and the pause menu, which show it and listen
 ## for `closed`. The page buttons along the top switch pages, as do Q/E and
-## the shoulder buttons. The bindings grid shows one device at a time; the
-## Device button flips between keyboard and gamepad. Pressing a binding
-## button waits for the next key or gamepad button and binds it; Esc
-## cancels. Every change is applied at once and written to the settings
-## file when the control is let go of or the screen closes.
+## the shoulder buttons (the page_prev and page_next actions). The
+## bindings grid shows one device at a time, starting with the one the
+## player last used; the Device button flips between keyboard and gamepad.
+## Pressing a binding button waits for the next key or gamepad button and
+## binds it; Esc cancels, and so does waiting out LISTEN_TIME, for a
+## player with no keyboard to hand. Every change is applied at once and
+## written to the settings file when the control is let go of or the
+## screen closes.
 
 signal closed
 
 enum Page { AUDIO, DISPLAY, CONTROLS, GAME }
 enum Device { KEYBOARD, GAMEPAD }
 
-const DEFAULT_HINT := "Arrows move   Space changes   Q/E or LB/RB switch pages   Esc goes back"
+const DEFAULT_HINT := (
+	"{navigate} move   {ui_accept} changes   {page_prev} {page_next} switch pages"
+	+ "   {ui_cancel} goes back"
+)
+const LISTEN_HINT := "Press the new %s, or wait to keep the old one"
+## How long a binding button listens for a new key or button.
+const LISTEN_TIME := 5.0
 
 var page := Page.AUDIO
 var device := Device.KEYBOARD
 
 var _listening_action: StringName = &""
+var _listen_left := 0.0
 var _key_buttons: Dictionary = {}
 ## Page -> its tab button, its container and the control focused first.
 var _tabs: Dictionary = {}
@@ -52,8 +63,9 @@ var _first_controls: Dictionary = {}
 @onready var hit_flash_toggle: CheckButton = $Pages/Game/HitFlash/Toggle
 @onready var hit_stop_toggle: CheckButton = $Pages/Game/HitStop/Toggle
 @onready var rumble_toggle: CheckButton = $Pages/Game/Rumble/Toggle
+@onready var prompts_button: Button = $Pages/Game/Prompts/Cycle
 @onready var game_defaults_button: Button = $Pages/Game/Buttons/Defaults
-@onready var hint: Label = $Hint
+@onready var hint: PromptLabel = $Hint
 
 
 func _ready() -> void:
@@ -93,6 +105,7 @@ func _ready() -> void:
 	hit_flash_toggle.toggled.connect(_on_hit_flash_toggled)
 	hit_stop_toggle.toggled.connect(_on_hit_stop_toggled)
 	rumble_toggle.toggled.connect(_on_rumble_toggled)
+	_wire_cycle(prompts_button, _on_prompts_stepped)
 	game_defaults_button.pressed.connect(_on_game_defaults_pressed)
 	reset_button.pressed.connect(_on_reset_pressed)
 	device_button.pressed.connect(_on_device_pressed)
@@ -112,23 +125,40 @@ func _ready() -> void:
 	_refresh()
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	if not visible:
+func _process(delta: float) -> void:
+	if _listening_action == &"" or not visible:
 		return
-	if _listening_action != &"":
-		if event is InputEventKey and event.pressed and not event.echo:
-			if event.keycode == KEY_ESCAPE:
-				_stop_listening()
-			elif device == Device.KEYBOARD:
-				Settings.bind_key(_listening_action, event.physical_keycode)
-				Settings.save_settings()
-				_stop_listening()
-			get_viewport().set_input_as_handled()
-		elif event is InputEventJoypadButton and event.pressed and device == Device.GAMEPAD:
+	_listen_left -= delta
+	if _listen_left <= 0.0:
+		_stop_listening()
+
+
+func _input(event: InputEvent) -> void:
+	# Listening takes the event before the focused button can act on it:
+	# a pad's A would otherwise press the binding button again.
+	if not visible or _listening_action == &"":
+		return
+	if event is InputEventKey and event.pressed and not event.echo:
+		if event.keycode == KEY_ESCAPE:
+			_stop_listening()
+		elif device == Device.KEYBOARD:
+			Settings.bind_key(_listening_action, event.physical_keycode)
+			Settings.save_settings()
+			_stop_listening()
+		get_viewport().set_input_as_handled()
+	elif event is InputEventJoypadButton and event.pressed:
+		if device == Device.GAMEPAD:
 			Settings.bind_pad_button(_listening_action, event.button_index)
 			Settings.save_settings()
 			_stop_listening()
-			get_viewport().set_input_as_handled()
+		get_viewport().set_input_as_handled()
+	elif event is InputEventJoypadButton:
+		# The release of the button just bound, kept from the menu.
+		get_viewport().set_input_as_handled()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if not visible or _listening_action != &"":
 		return
 	if event.is_action_pressed("ui_cancel"):
 		close()
@@ -143,6 +173,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func open() -> void:
 	_listening_action = &""
+	# The bindings page opens on the device in the player's hands.
+	device = Device.GAMEPAD if Prompts.is_gamepad() else Device.KEYBOARD
 	_show_page(page)
 	_refresh()
 	visible = true
@@ -160,16 +192,10 @@ func close() -> void:
 
 ## Q/E and the shoulder buttons turn pages: -1 back, 1 forward, 0 neither.
 func _page_step(event: InputEvent) -> int:
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.physical_keycode == KEY_Q:
-			return -1
-		if event.physical_keycode == KEY_E:
-			return 1
-	elif event is InputEventJoypadButton and event.pressed:
-		if event.button_index == JOY_BUTTON_LEFT_SHOULDER:
-			return -1
-		if event.button_index == JOY_BUTTON_RIGHT_SHOULDER:
-			return 1
+	if event.is_action_pressed("page_prev"):
+		return -1
+	if event.is_action_pressed("page_next"):
+		return 1
 	return 0
 
 
@@ -226,6 +252,7 @@ func _refresh() -> void:
 	_refresh_toggle(hit_flash_toggle, Settings.hit_flash)
 	_refresh_toggle(hit_stop_toggle, Settings.hit_stop)
 	_refresh_toggle(rumble_toggle, Settings.rumble)
+	prompts_button.text = "< %s >" % Prompts.LAYOUT_NAMES[Settings.prompt_layout]
 	var gamepad := device == Device.GAMEPAD
 	device_button.text = "Gamepad" if gamepad else "Keyboard"
 	for action in _key_buttons:
@@ -237,11 +264,9 @@ func _refresh() -> void:
 		else:
 			button.text = Settings.key_names(action)
 	if _listening_action == &"":
-		hint.text = DEFAULT_HINT
-	elif gamepad:
-		hint.text = "Press the new gamepad button, or Esc to keep the old one"
+		hint.template = DEFAULT_HINT
 	else:
-		hint.text = "Press the new key, or Esc to keep the old one"
+		hint.template = LISTEN_HINT % ("gamepad button" if gamepad else "key")
 
 
 func _refresh_toggle(toggle: CheckButton, on: bool) -> void:
@@ -363,6 +388,15 @@ func _on_rumble_toggled(pressed: bool) -> void:
 	_refresh()
 
 
+func _on_prompts_stepped(step: int) -> void:
+	Settings.prompt_layout = (
+		wrapi(Settings.prompt_layout + step, 0, Prompts.LAYOUT_NAMES.size()) as Prompts.Layout
+	)
+	Settings.apply()
+	Settings.save_settings()
+	_refresh()
+
+
 func _on_game_defaults_pressed() -> void:
 	Settings.reset_game()
 	Settings.save_settings()
@@ -371,6 +405,7 @@ func _on_game_defaults_pressed() -> void:
 
 func _on_key_button_pressed(action: StringName) -> void:
 	_listening_action = action
+	_listen_left = LISTEN_TIME
 	_refresh()
 
 
