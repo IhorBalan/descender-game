@@ -7,9 +7,9 @@ extends Node2D
 ## Which level: the save's, else the map chosen in the title's Maps menu or
 ## by `--map=<name>` (see MapStore), else the `--level=<id or path to a
 ## world.json>` user argument (`godot --path . -- --level=world_1`), else
-## the first in Levels. Two more user arguments help playtesting: `--checkpoint=<n>` starts the hero
-## rested at the level's nth checkpoint and `--abilities=all` unlocks every
-## ability (see apply_dev_args).
+## the first in Levels. Two more user arguments help playtesting:
+## `--checkpoint=<n>` starts the hero rested at the level's nth checkpoint
+## and `--abilities=all` unlocks every ability (see apply_dev_args).
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 ## A dialogue entry that sets one of these ends the game (see _end_game).

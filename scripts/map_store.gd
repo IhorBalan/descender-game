@@ -98,6 +98,17 @@ static func level_id(map_id: String) -> String:
 	return LEVEL_PREFIX + map_id
 
 
+## Whether a map id from the index can name a folder: letters, digits,
+## dashes and underscores only.
+static func is_safe_id(map_id: String) -> bool:
+	if map_id.is_empty():
+		return false
+	for c in map_id:
+		if not (c.is_valid_ascii_identifier() or c.is_valid_int() or c == "-"):
+			return false
+	return true
+
+
 ## The maps already downloaded: their stamps (mapId, name, revision,
 ## publishedAt, artTile) plus `path` to their world.json.
 func cached() -> Array[Dictionary]:
@@ -169,6 +180,10 @@ func fetch(map_id: String) -> String:
 	if running:
 		await finished
 	running = true
+	# The id names a folder under user://maps and comes from the index.
+	if not is_safe_id(map_id):
+		_finish(false, "Map: '%s' is not a map id" % map_id)
+		return ""
 	status = "Checking the map…"
 	var head := await _http.get_document(
 		FirestoreRest.base_url(_project) + "published/" + HEAD_PREFIX + map_id

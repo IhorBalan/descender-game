@@ -16,7 +16,7 @@ extends Node
 ## Loaded by path, so a fresh checkout works before the class cache knows it.
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 78
+const EXPECTED_CHECKS := 87
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -272,6 +272,10 @@ func test_level_builder_sprites() -> void:
 
 func test_map_store() -> void:
 	_check(MapStore.level_id("abc") == "map_abc", "a published map runs as map_<id>")
+	_check(MapStore.is_safe_id("mvk5yxk4zvw5bw"), "a library id is a safe map id")
+	_check(MapStore.is_safe_id("map_1-2"), "dashes and underscores are safe")
+	for bad in ["", "..", "../x", "a/b", "a\\b", "a b", ".hidden"]:
+		_check(not MapStore.is_safe_id(bad), "'%s' is not a safe map id" % bad)
 	_check(not MapStore.running, "the store is idle without --map")
 	# The cache is read from user://maps; a stamp without a world.json does not count.
 	var store_dir := MapStore.MAPS_DIR
