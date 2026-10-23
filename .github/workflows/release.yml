@@ -1,0 +1,52 @@
+name: Release
+
+# A tag like v0.3.0 builds the game and attaches the builds to a GitHub
+# release of the same name. Platforms are the presets in export_presets.cfg.
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      GODOT_VERSION: 4.7.2
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Download Godot and the export templates
+        run: |
+          base="https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable"
+          curl -fsSL -o godot.zip "$base/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
+          unzip -q godot.zip
+          mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" godot
+          curl -fsSL -o templates.tpz "$base/Godot_v${GODOT_VERSION}-stable_export_templates.tpz"
+          dir="$HOME/.local/share/godot/export_templates/${GODOT_VERSION}.stable"
+          mkdir -p "$dir"
+          unzip -q templates.tpz -d templates
+          mv templates/templates/* "$dir/"
+          ./godot --version
+
+      - name: Import project
+        run: ./godot --headless --path . --import
+
+      - name: Export
+        run: |
+          mkdir -p export/linux export/windows
+          ./godot --headless --path . --export-release "Linux" export/linux/descender.x86_64
+          ./godot --headless --path . --export-release "Windows" export/windows/descender.exe
+          (cd export/linux && zip -qr "../descender-${GITHUB_REF_NAME}-linux.zip" .)
+          (cd export/windows && zip -qr "../descender-${GITHUB_REF_NAME}-windows.zip" .)
+
+      - name: Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            export/descender-${{ github.ref_name }}-linux.zip
+            export/descender-${{ github.ref_name }}-windows.zip
+          generate_release_notes: true

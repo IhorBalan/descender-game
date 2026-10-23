@@ -441,6 +441,7 @@ the live map is meant to ship.
 | `scenes/settings_menu.tscn`, `scripts/ui/settings_menu.gd` | Settings screen in three pages: Audio (master, music, sound effects), Display (fullscreen, window size, v-sync, screen shake), Controls (keyboard and gamepad bindings) |
 | `scripts/settings.gd` | The `Settings` autoload: reads, saves (`user://settings.cfg`) and applies the settings |
 | `default_bus_layout.tres` | The Master, Music and SFX audio buses the volume sliders control |
+| `.github/workflows/release.yml`, `export_presets.cfg` | Release on tag: the Linux and Windows export presets and the workflow that builds and publishes them |
 | `scripts/save_manager.gd` | The `SaveManager` autoload: save slots on disk and the save the level applies on boot |
 | `scripts/story.gd` | Story flags: who the hero has talked to, what he has seen and read; saved with the game |
 | `scripts/dialogue/dialogue_data.gd` | Reads a level's dialogue file and picks the entry whose flags match |
@@ -512,6 +513,35 @@ flags and the save slots (the last slot is written and put back).
 
 The **smoke test** drives the hero through the whole game in one run and
 is the one to extend for anything that moves.
+
+## Releases
+
+Pushing a tag that starts with `v` builds the game and publishes it on the
+repository's [Releases](https://github.com/IhorBalan/descender-godot/releases)
+page:
+
+```
+git tag v0.3.0
+git push origin v0.3.0
+```
+
+`.github/workflows/release.yml` downloads Godot and its export templates,
+exports the `Linux` and `Windows` presets from `export_presets.cfg`, zips
+each build and attaches both to a GitHub release named after the tag, with
+release notes generated from the merged pull requests. The builds are
+standalone: the game data is embedded, `tools/`, `tests/` and `docs/` are
+left out, and no Godot install is needed to run them. Unzip and start
+`descender.x86_64` or `descender.exe`.
+
+To build the same thing locally, install the export templates through the
+editor (Editor → Manage Export Templates) and run
+
+```
+godot --headless --path . --export-release "Linux" export/linux/descender.x86_64
+godot --headless --path . --export-release "Windows" export/windows/descender.exe
+```
+
+Nothing is built on an ordinary push; only tags release.
 
 ## Sounds
 
