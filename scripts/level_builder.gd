@@ -258,7 +258,8 @@ func build(map: WorldMap) -> void:
 	width = map.width
 	height = map.height
 	size_px = map.size_px()
-	_build_layers(map)
+	var tile_set := _build_layers(map)
+	_build_sprites(map, tile_set)
 	_edges.build(map)
 	_find_secrets(map)
 	for y in height:
@@ -274,16 +275,15 @@ func build(map: WorldMap) -> void:
 	checkpoints.sort_custom(_above_or_left)
 
 
-func _build_layers(map: WorldMap) -> void:
+func _build_layers(map: WorldMap) -> TileSet:
 	var tile_set := map.build_tile_set()
 	for layer_name in map.layer_names:
 		var layer := TileMapLayer.new()
 		layer.name = layer_name
 		layer.tile_set = tile_set
-		# Nearest at every art scale: the window scales by whole numbers, so
-		# 64-pixel art lands pixel for pixel; linear would bleed across the
-		# atlas cells without padding.
-		layer.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		# Nearest up to 64-pixel art, which the window's whole-number scaling
+		# lands pixel for pixel; finer art is sampled linear (see WorldMap).
+		layer.texture_filter = map.texture_filter()
 		layer.scale = Vector2.ONE * map.art_scale()
 		layer.collision_enabled = false
 		var source := 0
@@ -300,6 +300,60 @@ func _build_layers(map: WorldMap) -> void:
 			if id >= 0:
 				layer.set_cell(Vector2i(i % width, i / width), source, map.atlas_coords(id))
 		_tiles.add_child(layer)
+	return tile_set
+
+
+## The export's free-placed decorations: each is a small TileMapLayer at a
+## pixel position, drawn over the tile layers (a lit one also gets a glow
+## layer), and a solid one is a box for the hero.
+func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
+	for spec in map.sprites:
+		var columns := int(spec.get("columns", 1))
+		var rows := int(spec.get("rows", 1))
+		var tiles := PackedInt32Array(spec.get("tiles", []))
+		if columns <= 0 or tiles.size() != columns * rows:
+			push_warning(
+				(
+					"LevelBuilder: sprite %s skipped, its tiles do not fill %d x %d"
+					% [spec.get("name", "?"), columns, rows]
+				)
+			)
+			continue
+		var at := Vector2(float(spec.get("x", 0)), float(spec.get("y", 0)))
+		var flip: bool = spec.get("flip", false)
+		var sources: Array[int] = [0]
+		if spec.get("glow", false):
+			sources.append(1)
+		for source in sources:
+			var layer := TileMapLayer.new()
+			layer.name = "Sprite%d%s" % [int(spec.get("id", 0)), "Glow" if source == 1 else ""]
+			layer.tile_set = tile_set
+			layer.texture_filter = map.texture_filter()
+			layer.position = at
+			layer.scale = Vector2.ONE * map.art_scale()
+			layer.collision_enabled = false
+			if source == 1:
+				var material := CanvasItemMaterial.new()
+				material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+				material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+				layer.material = material
+			for i in tiles.size():
+				var id := tiles[i]
+				if id < 0:
+					continue
+				var cx := i % columns
+				if flip:
+					cx = columns - 1 - cx
+				var alternative := TileSetAtlasSource.TRANSFORM_FLIP_H if flip else 0
+				layer.set_cell(Vector2i(cx, i / columns), source, map.atlas_coords(id), alternative)
+			_tiles.add_child(layer)
+		if spec.get("solid", false):
+			var shape := CollisionShape2D.new()
+			var rect := RectangleShape2D.new()
+			rect.size = Vector2(columns * TILE, rows * TILE)
+			shape.shape = rect
+			shape.position = at + rect.size / 2.0
+			_solids.add_child(shape)
 
 
 ## Collision for one row of terrain: runs of solid cells become one

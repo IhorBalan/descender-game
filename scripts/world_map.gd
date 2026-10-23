@@ -64,6 +64,9 @@ var abilities: PackedStringArray = []
 var markers: Array[Dictionary] = []
 ## Point lights: x, y, z (height), radius, color, energy, flicker.
 var lights: Array[Dictionary] = []
+## Free-placed decorations: id, name, x, y (pixels of the top-left corner),
+## columns, rows (tiles), tiles (atlas ids row by row), flip, solid, glow.
+var sprites: Array[Dictionary] = []
 
 
 ## Reads the export at `file_path`; null, with an error pushed, when the
@@ -122,6 +125,9 @@ func _parse(data: Dictionary) -> void:
 	for light in data.get("lights", []):
 		if light is Dictionary:
 			lights.append(light)
+	for sprite in data.get("sprites", []):
+		if sprite is Dictionary:
+			sprites.append(sprite)
 
 
 ## The world's size in pixels.
@@ -139,13 +145,21 @@ func art_scale() -> float:
 	return float(tile) / float(art_tile)
 
 
+## How the sheets are sampled: nearest for pixel art and for painted art that
+## lands pixel for pixel; linear for art drawn finer than the screen shows
+## it (128-pixel tiles), which nearest would shimmer. The atlas sources pad
+## their tiles, so linear does not bleed between them.
+func texture_filter() -> CanvasItem.TextureFilter:
+	return CanvasItem.TEXTURE_FILTER_LINEAR if art_tile > 64 else CanvasItem.TEXTURE_FILTER_NEAREST
+
+
 ## One of the tile sheets next to the export, or null when it is missing.
 ## Run from the project, the sheet is read from the PNG itself rather than
 ## from Godot's imported copy: the live map sync (see LiveMap) rewrites the
 ## sheets while the game is starting, and only the editor re-imports them.
 ## Exported builds carry imported textures only, so they load those.
 func _sheet(sheet_path: String) -> Texture2D:
-	if OS.has_feature("editor"):
+	if OS.has_feature("editor") or not sheet_path.begins_with("res://"):
 		if not FileAccess.file_exists(sheet_path):
 			return null
 		# The OS path: given res://, Godot warns at every start that the
@@ -218,7 +232,7 @@ func build_tile_set() -> TileSet:
 	var lit := CanvasTexture.new()
 	lit.diffuse_texture = _sheet(dir() + SHEET_DIFFUSE)
 	lit.normal_texture = _sheet(dir() + SHEET_NORMAL)
-	lit.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	lit.texture_filter = texture_filter()
 	var diffuse := TileSetAtlasSource.new()
 	diffuse.texture = lit
 	diffuse.texture_region_size = Vector2i(art_tile, art_tile)
@@ -237,16 +251,23 @@ func build_tile_set() -> TileSet:
 	return tile_set
 
 
-## The ids the layers use: used_tiles when the export lists them, else a
-## scan of every layer.
+## The ids the layers and sprites use: used_tiles when the export lists
+## them (plus the sprites' tiles, in case an export left those out), else a
+## scan of every layer and sprite.
 func _all_tile_ids() -> PackedInt32Array:
-	if used_tiles.size() > 0:
-		return used_tiles
 	var seen := {}
-	for name in layer_names:
-		for id in layers[name]:
-			if id >= 0:
-				seen[id] = true
+	if used_tiles.size() > 0:
+		for id in used_tiles:
+			seen[id] = true
+	else:
+		for name in layer_names:
+			for id in layers[name]:
+				if id >= 0:
+					seen[id] = true
+	for sprite in sprites:
+		for id in sprite.get("tiles", []):
+			if int(id) >= 0:
+				seen[int(id)] = true
 	var ids := PackedInt32Array(seen.keys())
 	ids.sort()
 	return ids

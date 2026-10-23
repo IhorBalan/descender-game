@@ -372,6 +372,14 @@ Limbo to Treachery, each with an ambient colour that tints the screen while
 the hero is in it. The export also holds the rooms, the doors between them
 (some locked by an ability or a boss), 853 point lights and the markers.
 
+Besides the tile layers the export may list **sprites**: decorations the
+editor placed freely by the pixel instead of on the grid (big painted
+pieces composed by eye). Each gives its atlas tiles row by row, the pixel
+position of its top-left corner, its size in tiles and whether it is
+mirrored, solid or glowing. `LevelBuilder._build_sprites` draws each as a
+small `TileMapLayer` at that position above the tile layers (a glowing one
+also gets an additive glow layer), and a solid one is a box in `Solids`.
+
 The export also says how many pixels a tile has in the sheets, its **art
 scale** (`art_tile`): 16 for pixel art, 64 for painted tiles, which makes a
 30 x 17-tile room 1920 x 1088 pixels. The grid stays 16 level pixels a tile
@@ -384,6 +392,10 @@ before.
 Two kinds of region art turn the grid into a painted shape, each read from
 `assets/regions/<region key>/` (the region's name lowercased without its
 number, so `1. Limbo` is `limbo`), and each optional per region:
+
+Both are looked for next to the map's `world.json` first (`<map folder>/regions/<key>/`,
+where the editor's export puts a region's **Sky backdrop** as a parallax set that covers the
+view), then under `assets/regions/<key>/`.
 
 - **Edges** (`edges.json`, built by `scripts/edge_decor.gd`): pieces drawn
   along the exposed sides of the solid terrain, tufts standing on the tops,
@@ -468,6 +480,37 @@ settles the level pipeline question (#34): big maps come from the tool as
 tile layers, and the hand-written ASCII levels of the first prototype are
 gone.
 
+### Running another map
+
+**Maps menu.** The title screen's **Maps** button lists the levels in the game and every map the
+editor published for it (**Publish for game** on a map's ⋯ menu on the editor's Maps page, or the
+button in the map's header; `npm run publish-live -- --map "World 3"` from the editor repo does the
+same). Choosing one downloads it into `user://maps/<map id>/` (world.json, the sheets, any region
+backdrops and a `map.json` stamp of the published revision, so an unchanged map is not fetched
+again), registers it with `Levels` as `map_<map id>` and makes it what **New Game** starts on (the button
+says so, and the choice is kept in `user://map_choice.cfg` across runs until another map, or the
+descent, is picked); saves made there reopen it. Downloaded maps stay listed without a connection, and after the editor unpublishes
+them. `scripts/map_store.gd` (the `MapStore` autoload) does this, reading Firestore through
+`scripts/firestore_rest.gd` like the live map sync; it needs only `live_map/project_id` and works
+in exported builds too. Files the editor put in Cloud Storage (a head with `mediaBase`) stream
+straight to disk, one request each; files published in Firestore pieces are read and joined.
+`DESCENDER_FIRESTORE_HOST=http://127.0.0.1:8080` points both syncs at an emulator or a stand-in
+server.
+
+**Command line.** `--map=<map id or name>` downloads (if needed) and starts a published map, and
+`--level=<path to a world.json>` starts an export in the project without listing it in
+`scripts/levels.gd`:
+
+    DESCENDER_LIVE_MAP=0 godot --path . scenes/main.tscn -- "--map=World 3" --no-live-map
+    DESCENDER_LIVE_MAP=0 godot --path . scenes/main.tscn -- --level=res://levels/world3/world.json --no-live-map
+
+both with the live-map sync off, so `levels/world` and the published live map are untouched. An
+export in the project comes from the editor repo's
+`npm run export-map -- --map "World 3" --out ../descender-godot/levels/world3` (its sky backdrops
+land in `levels/world3/regions/<key>/`; `--regions ../descender-godot/assets/regions` also copies
+them to the shared region folders). After new PNGs under `res://`, run
+`godot --headless --import --path .` once (or open the editor).
+
 ### Live map
 
 The map editor (`../editor`) keeps its maps in Firebase, and its Maps page
@@ -522,6 +565,8 @@ the live map is meant to ship.
 | `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
 | `scripts/live_map.gd` | Downloads the editor's published live map on start (see Live map) |
+| `scripts/map_store.gd` | Lists and downloads the other maps the editor published, for the Maps menu and `--map=` |
+| `scripts/firestore_rest.gd` | Reads the editor's public Firestore documents, for the two above |
 | `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
 | `scripts/backdrop.gd` | The painted parallax layers behind the level, per region |
 | `scripts/region_fx.gd` | The drifting particles of a region |
@@ -554,6 +599,7 @@ the live map is meant to ship.
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |
+| `tests/map_pipeline_test.tscn` | Headless tests of the level registry, export reader, Firestore parsing, map store, sprite building and backdrops |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
 | `tests/unit_test.tscn` | Headless unit and data tests: every name in the placements, the dialogue, the sprite spec and the region art resolves, and the pure pieces work |
 
@@ -561,6 +607,7 @@ the live map is meant to ship.
 
 ```
 godot --headless --path . res://tests/unit_test.tscn
+godot --headless --path . res://tests/map_pipeline_test.tscn
 godot --headless --path . res://tests/smoke_test.tscn
 ```
 

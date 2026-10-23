@@ -3,9 +3,10 @@ extends Node2D
 
 ## Painted parallax layers behind the level, one set per region.
 ##
-## A region opts in with assets/regions/<key>/parallax.json (key as in
-## EdgeDecor.region_key): the pixels per tile its PNGs are drawn at and the
-## layers from back to front:
+## A region opts in with regions/<key>/parallax.json next to the map's
+## world.json (the editor exports a region's Sky backdrop that way), else
+## assets/regions/<key>/parallax.json (key as in EdgeDecor.region_key): the
+## pixels per tile its PNGs are drawn at and the layers from back to front:
 ##
 ##   {
 ##     "art_tile": 64,
@@ -31,17 +32,25 @@ var _current := ""
 
 
 ## Draws the layers for a region, replacing the previous region's; `tile`
-## is the level's tile size in pixels.
-func show_region(region: Dictionary, tile: int) -> void:
+## is the level's tile size in pixels and `map_dir` the folder of its
+## world.json, whose regions/<key>/ set wins over assets/regions/<key>/.
+func show_region(region: Dictionary, tile: int, map_dir := "") -> void:
 	var key := EdgeDecor.region_key(str(region.get("name", "")))
-	if key == _current:
+	var dir := "%s/%s" % [REGIONS_DIR, key]
+	if (
+		not map_dir.is_empty()
+		and FileAccess.file_exists(
+			map_dir.path_join("regions").path_join(key).path_join("parallax.json")
+		)
+	):
+		dir = map_dir.path_join("regions").path_join(key)
+	if dir == _current:
 		return
-	_current = key
+	_current = dir
 	for child in get_children():
 		var tween := create_tween()
 		tween.tween_property(child, "modulate:a", 0.0, FADE)
 		tween.tween_callback(child.queue_free)
-	var dir := "%s/%s" % [REGIONS_DIR, key]
 	var text := FileAccess.get_file_as_string(dir + "/parallax.json")
 	var spec: Variant = JSON.parse_string(text) if not text.is_empty() else null
 	if not spec is Dictionary:
@@ -51,7 +60,7 @@ func show_region(region: Dictionary, tile: int) -> void:
 	for entry in spec.get("layers", []):
 		if not entry is Dictionary:
 			continue
-		var texture := load("%s/%s" % [dir, str(entry.get("file", ""))]) as Texture2D
+		var texture := _texture("%s/%s" % [dir, str(entry.get("file", ""))])
 		if texture == null:
 			continue
 		var layer := Layer.new()
@@ -113,3 +122,15 @@ class Layer:
 		var last := ceili((right - origin.x) / size.x)
 		for k in range(first, last + 1):
 			draw_texture_rect(texture, Rect2(Vector2(origin.x + k * size.x, origin.y), size), false)
+
+
+## A layer's PNG: Godot's imported copy for a resource in an exported build,
+## else the file itself (a map's folder under user://, or a sheet the live
+## map sync rewrote while the editor was not looking).
+static func _texture(path: String) -> Texture2D:
+	if path.begins_with("res://") and not OS.has_feature("editor"):
+		return load(path) as Texture2D
+	if not FileAccess.file_exists(path):
+		return null
+	var image := Image.load_from_file(ProjectSettings.globalize_path(path))
+	return ImageTexture.create_from_image(image) if image else null

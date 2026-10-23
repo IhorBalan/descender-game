@@ -4,9 +4,10 @@ extends Node2D
 ## the save the title screen chose and writes it back at every checkpoint.
 ## Reaching the goal gate fades out, saves and boots the next level.
 ##
-## Which level: the save's, else the `--level=<id>` user argument
-## (`godot --path . -- --level=world_1`), else the first in Levels. Two
-## more user arguments help playtesting: `--checkpoint=<n>` starts the hero
+## Which level: the save's, else the map chosen in the title's Maps menu or
+## by `--map=<name>` (see MapStore), else the `--level=<id or path to a
+## world.json>` user argument (`godot --path . -- --level=world_1`), else
+## the first in Levels. Two more user arguments help playtesting: `--checkpoint=<n>` starts the hero
 ## rested at the level's nth checkpoint and `--abilities=all` unlocks every
 ## ability (see apply_dev_args).
 
@@ -81,8 +82,10 @@ var _fight_pending := false
 
 
 func _ready() -> void:
-	# A live map sync still writing the world files (see LiveMap) finishes first.
+	# A live map sync still writing the world files (see LiveMap) finishes
+	# first, as does a map download started by --map (see MapStore).
 	await LiveMap.wait()
+	await MapStore.wait()
 	level_id = _pick_level()
 	# Story flags come first: the level leaves out relics the save already has.
 	if SaveManager.pending.is_empty():
@@ -186,16 +189,21 @@ func _paint_sky(colors: Array[Color]) -> void:
 	sky.texture = texture
 
 
-## The level the save asks for, else the one named on the command line,
-## else the first.
+## The level the save asks for, else the chosen map, else the one named on
+## the command line, else the first.
 func _pick_level() -> String:
 	if SaveManager.pending.has("level"):
 		return Levels.resolve(str(SaveManager.pending["level"]))
+	if not MapStore.chosen_level.is_empty() and Levels.has(MapStore.chosen_level):
+		return MapStore.chosen_level
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("--level="):
 			var id := arg.trim_prefix("--level=")
 			if Levels.has(id):
 				return id
+			var registered := Levels.register_path(id)
+			if not registered.is_empty():
+				return registered
 			push_warning("Unknown level '%s', starting from the first" % id)
 	return Levels.first_id
 
@@ -236,7 +244,7 @@ func _enter_region(region: Dictionary, announce: bool) -> void:
 	var color := Color.from_string(str(region.get("ambient", "#ffffff")), Color.WHITE)
 	level.set_ambient(color.lerp(Color.WHITE, AMBIENT_LIFT))
 	if backdrop and level.world:
-		backdrop.show_region(region, level.world.tile)
+		backdrop.show_region(region, level.world.tile, level.world.dir())
 	if region_fx and level.world:
 		region_fx.show_region(region, level.world.tile)
 	var name := str(region.get("name", ""))
