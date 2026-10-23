@@ -134,7 +134,7 @@ const PROFILES := {
 		"power_chance": 0.1,
 		"puff": Color(0.55, 0.15, 0.15),
 		"armour": false,
-		"loot": {"light": [3, 5], "bone_chance": 0.08, "flask_chance": 0.03},
+		"loot": {"light": [3, 5], "bone_chance": 0.08, "flask_chance": 0.03, "xp": 3},
 	},
 	"angel_guard":
 	{
@@ -155,7 +155,7 @@ const PROFILES := {
 		"power_chance": 0.1,
 		"puff": Color(1.0, 0.95, 0.75),
 		"armour": false,
-		"loot": {"light": [6, 9], "bone_chance": 0.04, "flask_chance": 0.04},
+		"loot": {"light": [6, 9], "bone_chance": 0.04, "flask_chance": 0.04, "xp": 5},
 	},
 	"brute":
 	{
@@ -176,7 +176,7 @@ const PROFILES := {
 		"power_chance": 1.0,
 		"puff": Color(0.45, 0.12, 0.12),
 		"armour": true,
-		"loot": {"light": [10, 14], "bone_chance": 0.1, "flask_chance": 0.06},
+		"loot": {"light": [10, 14], "bone_chance": 0.1, "flask_chance": 0.06, "xp": 10},
 	},
 	"hound":
 	{
@@ -197,7 +197,7 @@ const PROFILES := {
 		"power_chance": 0.1,
 		"puff": Color(0.5, 0.14, 0.16),
 		"armour": false,
-		"loot": {"light": [4, 6], "bone_chance": 0.1, "flask_chance": 0.02},
+		"loot": {"light": [4, 6], "bone_chance": 0.1, "flask_chance": 0.02, "xp": 5},
 	},
 	"slug":
 	{
@@ -218,7 +218,7 @@ const PROFILES := {
 		"power_chance": 0.15,
 		"puff": Color(0.5, 0.42, 0.3),
 		"armour": true,
-		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.08},
+		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.08, "xp": 6},
 	},
 	"hoarder":
 	{
@@ -239,7 +239,7 @@ const PROFILES := {
 		"power_chance": 0.1,
 		"puff": Color(0.4, 0.32, 0.26),
 		"armour": false,
-		"loot": {"light": [9, 14], "bone_chance": 0.2, "flask_chance": 0.05},
+		"loot": {"light": [9, 14], "bone_chance": 0.2, "flask_chance": 0.05, "xp": 9},
 	},
 	"burned":
 	{
@@ -260,7 +260,7 @@ const PROFILES := {
 		"power_chance": 0.15,
 		"puff": Color(0.35, 0.3, 0.32),
 		"armour": false,
-		"loot": {"light": [6, 10], "bone_chance": 0.06, "flask_chance": 0.04},
+		"loot": {"light": [6, 10], "bone_chance": 0.06, "flask_chance": 0.04, "xp": 7},
 	},
 }
 ## The habits a placement may ask for (see the top of the file).

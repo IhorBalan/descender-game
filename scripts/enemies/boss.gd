@@ -147,7 +147,7 @@ const PROFILES := {
 		"charge_cooldown": 2.5,
 		"contact_damage": 1,
 		"motes": 2,
-		"loot": {"light": [40, 55], "bones": 3, "unique": "wardens_halo"},
+		"loot": {"light": [40, 55], "bones": 3, "unique": "wardens_halo", "xp": 40},
 	},
 	# Purgatory: an angel that chose to fall and never finished.
 	"the_penitent":
@@ -173,7 +173,7 @@ const PROFILES := {
 		"charge_cooldown": 2.0,
 		"contact_damage": 1,
 		"motes": 2,
-		"loot": {"light": [45, 60], "bones": 3, "unique": "penitents_shroud"},
+		"loot": {"light": [45, 60], "bones": 3, "unique": "penitents_shroud", "xp": 45},
 	},
 	# Limbo: the first of the fallen to stand up, grown huge on forgetting.
 	"limbo_lord":
@@ -199,7 +199,7 @@ const PROFILES := {
 		"charge_cooldown": 1.8,
 		"contact_damage": 1,
 		"motes": 2,
-		"loot": {"light": [50, 65], "bones": 3, "unique": "lords_tally"},
+		"loot": {"light": [50, 65], "bones": 3, "unique": "lords_tally", "xp": 50},
 	},
 	# Lust: the keeper of the Palace of Velvet.
 	"palace_of_velvet":
@@ -225,7 +225,7 @@ const PROFILES := {
 		"charge_cooldown": 1.5,
 		"contact_damage": 1,
 		"motes": 2,
-		"loot": {"light": [55, 70], "bones": 3, "unique": "velvet_gloves"},
+		"loot": {"light": [55, 70], "bones": 3, "unique": "velvet_gloves", "xp": 55},
 	},
 	# Gluttony: the brute that ate the circle.
 	"the_bloated_one":
@@ -251,7 +251,7 @@ const PROFILES := {
 		"charge_cooldown": 3.0,
 		"contact_damage": 2,
 		"motes": 3,
-		"loot": {"light": [60, 80], "bones": 3, "unique": "gluttons_maw"},
+		"loot": {"light": [60, 80], "bones": 3, "unique": "gluttons_maw", "xp": 60},
 	},
 	# Greed: the thing that guards the Golden Vault.
 	"golden_vault":
@@ -277,7 +277,7 @@ const PROFILES := {
 		"charge_cooldown": 2.4,
 		"contact_damage": 1,
 		"motes": 3,
-		"loot": {"light": [90, 120], "bones": 3, "unique": "vault_seal"},
+		"loot": {"light": [90, 120], "bones": 3, "unique": "vault_seal", "xp": 70},
 	},
 	# Wrath: Gorrow, the demon captain who served under the Lowest.
 	"the_fury":
@@ -303,7 +303,7 @@ const PROFILES := {
 		"charge_cooldown": 1.6,
 		"contact_damage": 1,
 		"motes": 3,
-		"loot": {"light": [70, 90], "bones": 3, "unique": "furys_edge"},
+		"loot": {"light": [70, 90], "bones": 3, "unique": "furys_edge", "xp": 75},
 	},
 	# Heresy: a bishop of the Choir, sent down for what he taught.
 	"cursed_bishop":
@@ -329,7 +329,7 @@ const PROFILES := {
 		"charge_cooldown": 2.0,
 		"contact_damage": 1,
 		"motes": 3,
-		"loot": {"light": [75, 95], "bones": 3, "unique": "bishops_mitre"},
+		"loot": {"light": [75, 95], "bones": 3, "unique": "bishops_mitre", "xp": 80},
 	},
 	# Violence: the champion of the Red Arena.
 	"the_red_arena":
@@ -356,7 +356,7 @@ const PROFILES := {
 		"charge_cooldown": 1.5,
 		"contact_damage": 2,
 		"motes": 3,
-		"loot": {"light": [80, 100], "bones": 3, "unique": "champions_plate"},
+		"loot": {"light": [80, 100], "bones": 3, "unique": "champions_plate", "xp": 85},
 	},
 	# Fraud: the king who never was.
 	"the_false_king":
@@ -383,7 +383,7 @@ const PROFILES := {
 		"charge_cooldown": 1.3,
 		"contact_damage": 1,
 		"motes": 3,
-		"loot": {"light": [90, 110], "bones": 3, "unique": "false_crown"},
+		"loot": {"light": [90, 110], "bones": 3, "unique": "false_crown", "xp": 90},
 	},
 	# Treachery: the Lowest. Tobiah, at the bottom, in his brother's shape.
 	# His lines (the brothers, both endings) are a later beat.
@@ -411,7 +411,7 @@ const PROFILES := {
 		"charge_cooldown": 1.2,
 		"contact_damage": 1,
 		"motes": 0,
-		"loot": {"light": [100, 140], "bones": 3, "unique": "brothers_knife"},
+		"loot": {"light": [100, 140], "bones": 3, "unique": "brothers_knife", "xp": 100},
 	},
 	# The Garden, the day before: the first angel, who made the Basin.
 	# Placed by the sidecar once the clock has turned.
@@ -438,7 +438,7 @@ const PROFILES := {
 		"charge_cooldown": 1.1,
 		"contact_damage": 1,
 		"motes": 0,
-		"loot": {"light": [120, 160], "bones": 3, "unique": "gardeners_seed"},
+		"loot": {"light": [120, 160], "bones": 3, "unique": "gardeners_seed", "xp": 120},
 	},
 }
 

@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 621
+const EXPECTED_CHECKS := 644
 const LAST_TICK := 2330
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -2211,6 +2211,46 @@ func _physics_process(_delta: float) -> void:
 				"and not once it is taken"
 			)
 			laid.queue_free()
+			# Experience: every kill gives some, a level gives a point, and the
+			# camp at a checkpoint spends it.
+			Skills.reset()
+			_world.hud.set_progress()
+			_check(_world.hud.level_label.text == "Lv 1", "the HUD shows the level")
+			for character: String in Walker.PROFILES:
+				_check(
+					int(Walker.PROFILES[character]["loot"].get("xp", 0)) > 0,
+					"a %s gives experience" % character
+				)
+			_world.player.gain_xp(Skills.XP_BASE)
+			_check(Skills.level() == 2, "enough experience is a level")
+			_check(
+				_world.hud.level_label.text.contains("1 skill point"), "the HUD says a point waits"
+			)
+			var camp: CheckpointMenu = _world.camp_menu
+			var camp_at: Checkpoint = _world.level.checkpoints[0]
+			_world._on_camp_requested(camp_at)
+			_check(camp.is_open() and _world.get_tree().paused, "a checkpoint makes camp")
+			_check(camp.skills_button.has_focus(), "a waiting point puts the skills first")
+			_check(camp.travel_button.disabled, "fast travel waits for the other camps")
+			camp.skills_button.pressed.emit()
+			_check(camp.skill_menu.visible and not camp.menu.visible, "Skills opens its page")
+			_check(camp.skill_menu.lines().size() == Skills.TABLE.size(), "every skill is listed")
+			var hearts_before: int = _world.player.max_health
+			camp.skill_menu._on_skill_pressed("vigour")
+			_check(Skills.rank("vigour") == 1, "a point goes into Vigour")
+			_check(_world.player.max_health == hearts_before + 1, "which is a heart")
+			_check(_world.player.health == _world.player.max_health, "filled at camp")
+			_check(_world.hud.level_label.text == "Lv 2", "the HUD line follows")
+			camp.skill_menu.close()
+			_check(camp.menu.visible, "Back returns to the camp")
+			camp.pack_button.pressed.emit()
+			_check(camp.inventory_menu.visible, "the pack opens from the camp")
+			camp.inventory_menu.close()
+			camp.close()
+			_check(not camp.is_open() and not _world.get_tree().paused, "leaving the camp unpauses")
+			_check(_world.capture_save()["skills"]["ranks"]["vigour"] == 1, "the save keeps it")
+			Skills.reset()
+			_world.player.refresh_equipment()
 			# Wearing: the halo at every rest, a blade's damage, armour's guard,
 			# a crown's hearts; the pack keeps what is worn.
 			var player: Player = _world.player

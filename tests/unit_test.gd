@@ -532,6 +532,50 @@ func test_upgrades() -> void:
 		)
 
 
+func test_skills() -> void:
+	Skills.reset()
+	_check(Skills.level() == 1 and Skills.points_left() == 0, "a new hero is level 1, no points")
+	_check(Skills.xp_for_level(2) == Skills.XP_BASE, "the first level takes the base")
+	var rising := true
+	for level in range(1, Skills.MAX_LEVEL - 1):
+		rising = rising and Skills.xp_to_next(level + 1) > Skills.xp_to_next(level)
+	_check(rising, "every level takes more than the one before")
+	_check(Skills.xp_to_next(Skills.MAX_LEVEL) == 0, "the cap takes nothing more")
+	_check(Skills.add_xp(Skills.XP_BASE) == 1, "enough experience makes a level")
+	_check(Skills.level() == 2 and Skills.points_left() == 1, "and a point")
+	_check(Skills.level_progress() == [0, Skills.xp_to_next(2)], "the bar starts again")
+	_check(not Skills.raise("mender").is_empty(), "a skill above the level is closed")
+	_check(Skills.raise("vigour").is_empty(), "an open skill takes the point")
+	_check(Skills.bonus("hearts") == 1.0, "and gives its heart")
+	_check(Skills.raise("edge").begins_with("No skill point"), "no point, no rank")
+	Skills.add_xp(Skills.xp_for_level(Skills.MAX_LEVEL) * 2)
+	_check(Skills.level() == Skills.MAX_LEVEL, "experience stops at the cap")
+	Skills.raise("swift_feet")
+	Skills.raise("swift_feet")
+	_check(is_equal_approx(Skills.factor("speed"), 1.08 * 1.08), "a factor multiplies per rank")
+	Skills.raise("vigour")
+	Skills.raise("vigour")
+	_check(Skills.raise("vigour").contains("to the end"), "a skill stops at its ranks")
+	var bad := 0
+	for id in Skills.ids():
+		for stat in Skills.get_skill(id).get("stats", {}):
+			if stat not in Items.ADDITIVE_STATS and stat not in Items.FACTOR_STATS:
+				bad += 1
+		if Skills.description(id).is_empty() or Skills.max_rank(id) < 1:
+			bad += 1
+	_check(bad == 0, "every skill has known stats, a line and ranks (%d wrong)" % bad)
+	var saved := Skills.to_dict()
+	Skills.reset()
+	Skills.from_dict(JSON.parse_string(JSON.stringify(saved)))
+	_check(Skills.xp == saved["xp"] and Skills.rank("vigour") == 3, "the skills go through a save")
+	Skills.from_dict({"xp": 0, "ranks": {"vigour": 3, "nope": 1}})
+	_check(
+		Skills.points_left() == 0 and not Skills.ranks.has("nope"),
+		"a save spending more than it earned is given back"
+	)
+	Skills.reset()
+
+
 func test_map() -> void:
 	var world := WorldMap.read(WORLD_PATH)
 	_check(world != null and world.rooms.size() > 100, "the world has its rooms")

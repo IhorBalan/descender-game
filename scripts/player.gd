@@ -17,6 +17,10 @@ signal power_granted(power: Power)
 signal purse_changed
 ## An item was picked up off the ground (see LootDrop).
 signal loot_collected(item_id: String)
+## Experience came in (see Skills); the HUD follows it.
+signal xp_changed
+## The experience made a level: `level` is the new one.
+signal leveled_up(level: int)
 signal died
 signal respawned
 
@@ -416,7 +420,7 @@ func _start_attack() -> void:
 	_restore_attack_shape()
 	# A longer blade widens the hitbox away from the body.
 	var rect := attack_shape.shape as RectangleShape2D
-	rect.size.x = ATTACK_SHAPE_SIZE.x * Inventory.factor("reach")
+	rect.size.x = ATTACK_SHAPE_SIZE.x * _stat_factor("reach")
 	var extra := (rect.size.x - ATTACK_SHAPE_SIZE.x) / 2.0
 	attack_hitbox.position.x = (ATTACK_OFFSET_X + extra) * facing
 	sprite.play("attack")
@@ -821,7 +825,7 @@ func restore_upgrades() -> void:
 
 
 ## The maximums from scratch: the base, the difficulty, the upgrade flags
-## in the save and the equipment worn.
+## in the save, the equipment worn and the skills learned.
 func _set_maximums() -> void:
 	max_health = MAX_HEALTH + SaveManager.bonus_hearts()
 	max_heal_charges = MAX_HEAL_CHARGES + SaveManager.bonus_charges()
@@ -829,8 +833,8 @@ func _set_maximums() -> void:
 		for kind: UpgradeKind in UpgradeKind.values():
 			if flag.begins_with(Upgrade.flag_prefix(kind)):
 				_raise_maximum(kind)
-	max_health = maxi(max_health + int(Inventory.bonus("hearts")), 1)
-	max_heal_charges = maxi(max_heal_charges + int(Inventory.bonus("charges")), 0)
+	max_health = maxi(max_health + int(_stat_bonus("hearts")), 1)
+	max_heal_charges = maxi(max_heal_charges + int(_stat_bonus("charges")), 0)
 
 
 func _raise_maximum(kind: UpgradeKind) -> void:
@@ -857,37 +861,50 @@ func power_time_left(power: Power) -> float:
 	return float(powers.get(power, 0.0))
 
 
-## The sword: its base, Pell's forge, the blade worn (see Inventory) and
-## the Lit Blade.
+## A stat the equipment worn and the skills learned add to (see
+## Inventory.bonus and Skills.bonus).
+func _stat_bonus(stat: String) -> float:
+	return Inventory.bonus(stat) + Skills.bonus(stat)
+
+
+## A stat the equipment worn and the skills learned multiply (see
+## Inventory.factor and Skills.factor).
+func _stat_factor(stat: String) -> float:
+	return Inventory.factor(stat) * Skills.factor(stat)
+
+
+## The sword: its base, Pell's forge, the blade worn (see Inventory), the
+## Edge skill and the Lit Blade.
 func attack_damage() -> int:
 	return (
 		ATTACK_DAMAGE
 		+ Upgrade.sword_bonus()
-		+ int(Inventory.bonus("damage"))
+		+ int(_stat_bonus("damage"))
 		+ (BLADE_BONUS_DAMAGE if has_power(Power.BLADE) else 0)
 	)
 
 
 ## How long a swing takes: a heavy blade swings slower, a knife quicker.
 func attack_time() -> float:
-	return ATTACK_TIME * Inventory.factor("attack_time")
+	return ATTACK_TIME * _stat_factor("attack_time")
 
 
 ## Hearts a healing charge gives back.
 func heal_amount() -> int:
-	return HEAL_AMOUNT + int(Inventory.bonus("heal"))
+	return HEAL_AMOUNT + int(_stat_bonus("heal"))
 
 
-## Hearts the worn armour takes off a hit; a hit never drops below one.
+## Hearts the worn armour and the Iron Skin skill take off a hit; a hit
+## never drops below one.
 func guard() -> int:
-	return int(Inventory.bonus("guard"))
+	return int(_stat_bonus("guard"))
 
 
 func dash_cooldown() -> float:
 	return (
 		DASH_COOLDOWN
 		* (ZEAL_COOLDOWN_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
-		* Inventory.factor("dash_cooldown")
+		* _stat_factor("dash_cooldown")
 	)
 
 
@@ -895,7 +912,7 @@ func run_speed() -> float:
 	return (
 		RUN_SPEED
 		* (ZEAL_SPEED_MULTIPLIER if has_power(Power.ZEAL) else 1.0)
-		* Inventory.factor("speed")
+		* _stat_factor("speed")
 	)
 
 
@@ -945,6 +962,19 @@ func use_item(item_id: String) -> String:
 			return "Nothing to use"
 	Inventory.remove(item_id)
 	return ""
+
+
+## Experience from a kill (see Loot). Enough of it is a level, and every
+## level is a skill point to spend at a checkpoint camp (see Skills).
+func gain_xp(amount: int) -> void:
+	var levels := Skills.add_xp(amount)
+	if levels <= 0 and amount <= 0:
+		return
+	xp_changed.emit()
+	if levels > 0:
+		Audio.play("checkpoint", -2.0)
+		Feedback.spark(global_position + Vector2(0.0, -20.0), Color(1.0, 0.95, 0.7))
+		leveled_up.emit(Skills.level())
 
 
 ## Wears a piece from the pack, or takes it off if it is worn. The

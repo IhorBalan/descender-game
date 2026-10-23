@@ -36,7 +36,7 @@ const PROFILES := {
 		"aggro": 110.0,
 		"drop_chance": 0.5,
 		"puff": Color(1.0, 0.95, 0.8),
-		"loot": {"light": [4, 6], "bone_chance": 0.04, "flask_chance": 0.03},
+		"loot": {"light": [4, 6], "bone_chance": 0.04, "flask_chance": 0.03, "xp": 4},
 	},
 	"shade":
 	{
@@ -46,7 +46,7 @@ const PROFILES := {
 		"aggro": 130.0,
 		"drop_chance": 0.3,
 		"puff": Color(0.6, 0.66, 0.82),
-		"loot": {"light": [3, 6], "bone_chance": 0.05, "flask_chance": 0.03},
+		"loot": {"light": [3, 6], "bone_chance": 0.05, "flask_chance": 0.03, "xp": 4},
 	},
 	"siren":
 	{
@@ -56,7 +56,7 @@ const PROFILES := {
 		"aggro": 120.0,
 		"drop_chance": 0.4,
 		"puff": Color(0.8, 0.4, 0.6),
-		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.04},
+		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.04, "xp": 6},
 	},
 }
 ## The dive: where it waits over the hero, how long it aims, how fast and

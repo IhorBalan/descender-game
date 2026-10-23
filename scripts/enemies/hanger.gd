@@ -37,7 +37,7 @@ const TINT_HURT := Color(1.0, 0.5, 0.5)
 const DROP_CHANCE := 0.5
 ## What it leaks and carried (see Loot): a traitor's light, and a bone now
 ## and then.
-const LOOT := {"light": [7, 10], "bone_chance": 0.12, "flask_chance": 0.04}
+const LOOT := {"light": [7, 10], "bone_chance": 0.12, "flask_chance": 0.04, "xp": 8}
 const HEALTH_BAR_SCENE := preload("res://scripts/enemy_health_bar.gd")
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 

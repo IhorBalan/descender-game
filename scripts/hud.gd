@@ -1,22 +1,32 @@
 class_name Hud
 extends CanvasLayer
 
-## Health, healing charges, unlocked abilities, the dash cooldown and short
-## messages. main.gd hands over the hero so the dash readout can follow him.
+## Health, healing charges, unlocked abilities, the dash cooldown, the purse,
+## the level with its experience bar and short messages. main.gd hands
+## over the hero so the dash readout can follow him.
 
 const BOSS_BAR_WIDTH := 160.0
 const BOSS_BAR_BACK := Color(0.0, 0.0, 0.0, 0.6)
 const BOSS_BAR_FILL := Color(1.0, 0.85, 0.45)
 const BOSS_BAR_HURT := Color(0.9, 0.3, 0.3)
+const XP_BAR_WIDTH := 40.0
+const XP_BAR_BACK := Color(0.0, 0.0, 0.0, 0.6)
+const XP_BAR_FILL := Color(0.75, 0.85, 1.0)
+const LEVEL_COLOR := Color(0.85, 0.9, 1.0)
+## The level line brightens while a skill point waits to be spent.
+const POINT_COLOR := Color(1.0, 0.95, 0.7)
 
 var player: Player
 
 ## The purse in the top right corner: light and tally bones.
 var purse_label: Label
+## Under it, the level and a bar of the experience towards the next.
+var level_label: Label
 ## The boss bar at the bottom of the screen, built in _ready.
 var boss_bar: Control
 var boss_name_label: Label
 var _boss_fill: ColorRect
+var _xp_fill: ColorRect
 
 var _message_timer := 0.0
 ## Messages waiting for the current timed one to end: [text, duration].
@@ -63,7 +73,30 @@ func _ready() -> void:
 	purse_label.add_theme_constant_override("shadow_offset_y", 1)
 	purse_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 	add_child(purse_label)
+	level_label = Label.new()
+	level_label.name = "Level"
+	level_label.position = Vector2(196.0, 12.0)
+	level_label.size = Vector2(120.0, 10.0)
+	level_label.add_theme_font_size_override("font_size", 8)
+	level_label.add_theme_color_override("font_color", LEVEL_COLOR)
+	level_label.add_theme_color_override("font_shadow_color", Color(0.0, 0.0, 0.0, 0.8))
+	level_label.add_theme_constant_override("shadow_offset_x", 1)
+	level_label.add_theme_constant_override("shadow_offset_y", 1)
+	level_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+	add_child(level_label)
+	var xp_back := ColorRect.new()
+	xp_back.name = "XpBar"
+	xp_back.position = Vector2(316.0 - XP_BAR_WIDTH, 23.0)
+	xp_back.size = Vector2(XP_BAR_WIDTH, 3.0)
+	xp_back.color = XP_BAR_BACK
+	add_child(xp_back)
+	_xp_fill = ColorRect.new()
+	_xp_fill.position = Vector2(1.0, 1.0)
+	_xp_fill.size = Vector2(0.0, 1.0)
+	_xp_fill.color = XP_BAR_FILL
+	xp_back.add_child(_xp_fill)
 	set_purse()
+	set_progress()
 
 
 func _process(delta: float) -> void:
@@ -110,6 +143,22 @@ func set_powers(powers: Dictionary) -> void:
 ## Writes the purse from the pack (see Inventory).
 func set_purse() -> void:
 	purse_label.text = ShopMenu.purse_text()
+
+
+## Writes the level and fills the experience bar from the skills (see
+## Skills). The line names a skill point waiting to be spent.
+func set_progress() -> void:
+	var points := Skills.points_left()
+	var text := "Lv %d" % Skills.level()
+	if points > 0:
+		text += "   %d skill point%s" % [points, "" if points == 1 else "s"]
+	level_label.text = text
+	level_label.add_theme_color_override("font_color", POINT_COLOR if points > 0 else LEVEL_COLOR)
+	var progress := Skills.level_progress()
+	var share := 1.0
+	if progress[1] > 0:
+		share = clampf(float(progress[0]) / float(progress[1]), 0.0, 1.0)
+	_xp_fill.size.x = roundf((XP_BAR_WIDTH - 2.0) * share)
 
 
 ## Shows the boss bar with the boss's name and health.
