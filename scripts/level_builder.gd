@@ -20,14 +20,17 @@ extends Node2D
 ##                        unless: a story flag that, once set, leaves it out;
 ##                        shop: a Shops id for an NPC that trades once its
 ##                        unique lines are spent
-##   enemy                character: imp, angel_guard, brute, hound (walkers),
-##                        watcher, hanged (a Hanger: it hangs with its feet
-##                        at the cell and drops on the hero), or a
-##                        Boss.PROFILES id for a boss in its room;
+##   enemy                character: a Walker.PROFILES body (imp, angel_guard,
+##                        brute, hound, slug, hoarder, burned), a
+##                        Flyer.PROFILES body (watcher, shade, siren), hanged
+##                        (a Hanger: it hangs with its feet at the cell and
+##                        drops on the hero), or a Boss.PROFILES id for a boss
+##                        in its room; which bodies stand in which region is
+##                        in docs/design/enemies.md;
 ##                        barks: a Walker.BARKS set the enemy shouts; passive:
 ##                        true for a walker that never attacks; behaviour: a
 ##                        Walker.BEHAVIOURS habit (chase, ambush, pounce,
-##                        hurl, slam, lunge) or "dive" for a watcher; requires:
+##                        hurl, slam, lunge) or "dive" for a flyer; requires:
 ##                        a story flag the enemy waits for, read at every spawn
 ##   upgrade              upgrade: heart (Kept Light), vial (Vial of the Basin) or iron
 ##                        (Church Iron, for Old Pell's forge)
@@ -686,8 +689,8 @@ func _place_object(spec: Dictionary) -> void:
 		"enemy":
 			var character := str(spec.get("character", "imp"))
 			var spawn: EnemySpawn
-			if character == "watcher":
-				spawn = EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0))
+			if Flyer.PROFILES.has(character):
+				spawn = EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0), character)
 				spawn.behaviour = str(spec.get("behaviour", ""))
 			elif character == "hanged":
 				spawn = EnemySpawn.new(HANGER_SCENE, at)
@@ -854,7 +857,9 @@ func spawn_enemies() -> void:
 			walker.behaviour = spawn.behaviour
 			walker.death_y = size_px.y + 64.0
 		elif enemy is Flyer:
-			(enemy as Flyer).behaviour = spawn.behaviour
+			var flyer := enemy as Flyer
+			flyer.character = spawn.character
+			flyer.behaviour = spawn.behaviour
 		elif enemy is Hanger:
 			(enemy as Hanger).death_y = size_px.y + 64.0
 		elif enemy is Boss:

@@ -6,8 +6,9 @@
 
 Needs Python 3 with Pillow. The rigs are the art thread's prototype sources
 (imp.py, angel.py, brute.py, watcher.py on pix.py), with the hurt and death
-strips added here, plus the hound and the hanged thing (hound.py, hanged.py). The hero, the NPCs and the other placeholders are not
-touched. The origins are fixed so the enemies stand where they always did.
+strips added here, plus the hound and the hanged thing (hound.py, hanged.py)
+and the region bodies (slug.py, hoarder.py, burned.py, shade.py, siren.py).
+The hero, the NPCs and the other placeholders are not touched. The origins are fixed so the enemies stand where they always did.
 """
 from __future__ import annotations
 
@@ -34,6 +35,11 @@ CHARACTERS = [
     ("watcher", "watcher", [30, 29], "centre"),
     ("hound", "hound", [28, 32], "feet"),
     ("hanged", "hanged", [20, 64], "feet"),
+    ("slug", "slug", [36, 40], "feet"),
+    ("hoarder", "hoarder", [28, 48], "feet"),
+    ("burned", "burned", [36, 64], "feet"),
+    ("shade", "shade", [24, 22], "centre"),
+    ("siren", "siren", [32, 24], "centre"),
 ]
 LOOPING = ("idle", "run", "walk")
 
