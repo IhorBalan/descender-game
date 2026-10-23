@@ -91,6 +91,15 @@ drawn once both their rooms are known.
 
 ![The map](docs/screenshots/map.png)
 
+The map is also where the hero **travels**. Standing at the checkpoint he
+last rested at, he can be carried by the angels' system to any other
+checkpoint he has rested at (flag `rested:<n>`, kept with the save): on
+the map page, left and right pick one, it blinks in a ring, the footer
+names it with its region, and Space (or the talk key) goes. The screen
+goes black, he arrives rested with the enemies rebuilt, and the game
+saves there. Away from a checkpoint, or mid-fight or mid-talk, the map is
+only a map.
+
 The top left of the screen shows hearts, healing charges, the angel
 abilities unlocked so far and a small bar that fills as the dash comes
 back; the top right shows the purse (light and tally bones, below). Jump height depends on how long the button is held. Dashing gives a few

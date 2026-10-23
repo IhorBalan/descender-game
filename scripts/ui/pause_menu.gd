@@ -13,15 +13,19 @@ extends CanvasLayer
 
 signal save_requested
 signal restart_requested
+## The map page picked a rested checkpoint to travel to (by index).
+signal travel_requested(index: int)
 
 const QUIT_TEXT := "Quit to Title"
 const QUIT_CONFIRM_TEXT := "Quit?  Press again"
 
 const TITLE_SCENE := "res://scenes/title.tscn"
 
-## The hero and the level the menu was opened over, for the map.
+## The hero and the level the menu was opened over, for the map, and the
+## checkpoint he rests at when he may travel from it.
 var _player: Player
 var _level: LevelBuilder
+var _travel_from := -1
 
 @onready var resume_button: Button = $Panel/Menu/Left/Resume
 @onready var restart_button: Button = $Panel/Menu/Left/Restart
@@ -48,6 +52,7 @@ func _ready() -> void:
 	save_button.pressed.connect(_on_save_pressed)
 	map_button.pressed.connect(_on_map_pressed)
 	map_screen.closed.connect(_on_map_closed)
+	map_screen.travel_requested.connect(_on_travel_requested)
 	quest_log_button.pressed.connect(_on_quest_log_pressed)
 	quest_log.closed.connect(_on_quest_log_closed)
 	pack_button.pressed.connect(_on_pack_pressed)
@@ -80,11 +85,15 @@ func is_open() -> bool:
 ## Pauses the tree and shows the menu. Saving is offered only when the game
 ## was started from a slot. `status` is the line under the heading, `player`
 ## the hero, for the pack and the map, and `level` the level, for the map
-## (the button is greyed out without one).
-func open(status := "", player: Player = null, level: LevelBuilder = null) -> void:
+## (the button is greyed out without one). `travel_from` is the index of
+## the checkpoint the hero rests at when fast travel is on offer, else -1.
+func open(
+	status := "", player: Player = null, level: LevelBuilder = null, travel_from := -1
+) -> void:
 	inventory_menu.player = player
 	_player = player
 	_level = level
+	_travel_from = travel_from
 	map_button.disabled = level == null or level.world == null
 	get_tree().paused = true
 	save_button.disabled = SaveManager.current_slot < 0
@@ -120,7 +129,16 @@ func _on_map_pressed() -> void:
 		return
 	_show_frame(false)
 	var hero := _player.global_position if is_instance_valid(_player) else Vector2.ZERO
-	map_screen.open(_level.world, hero, _level.checkpoints)
+	var rested: Array[int] = []
+	for index in _level.checkpoints.size():
+		if Story.has_flag(Checkpoint.rested_flag(index)):
+			rested.append(index)
+	map_screen.open(_level.world, hero, _level.checkpoints, rested, _travel_from)
+
+
+## Travelling closes the menu; main.gd takes it from here.
+func _on_travel_requested(index: int) -> void:
+	travel_requested.emit(index)
 
 
 func _on_map_closed() -> void:

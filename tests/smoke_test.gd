@@ -11,8 +11,8 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 621
-const LAST_TICK := 2330
+const EXPECTED_CHECKS := 640
+const LAST_TICK := 2380
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
 const AIR_START := Vector2(1064.0, 240.0)
@@ -2379,6 +2379,64 @@ func _physics_process(_delta: float) -> void:
 				_hanger._dead and _hanger.sprite.animation == "death", "killed, it falls for good"
 			)
 			_check(not _hanger.rope.visible, "and the rope goes with it")
+			_hanger.queue_free()
+			# Fast travel: resting at a checkpoint, with another rested, the
+			# map offers the trip and the angels' system carries him there.
+			# The hanged thing's fall killed him: back on his feet first.
+			_world.player.respawn()
+			_world._rest_at_checkpoint(0)
+			_world.player.velocity = Vector2.ZERO
+		2318:
+			_check(_world.can_travel(), "the hero rests at a checkpoint and may travel")
+			_check(
+				_world.rested_checkpoints() == [0] and Story.has_flag(Checkpoint.rested_flag(0)),
+				"resting flags the checkpoint"
+			)
+			var map_screen: MapScreen = _world.pause_menu.map_screen
+			_world.pause_menu.open("", _world.player, _world.level, 0)
+			_world.pause_menu.map_button.pressed.emit()
+			_check(not map_screen.can_travel(), "one rested checkpoint is nowhere to go")
+			map_screen.close()
+			Story.set_flag(Checkpoint.rested_flag(5))
+			_world.pause_menu.map_button.pressed.emit()
+			_check(map_screen.can_travel(), "a second rested checkpoint opens the trip")
+			_check(map_screen.travel_targets() == [0, 5], "the rested checkpoints are on offer")
+			_check(map_screen.picked_checkpoint() == 0, "starting from the one he rests at")
+			_check(
+				map_screen.legend_label.text.begins_with("Travel: < > pick"),
+				"the footer asks for a pick"
+			)
+			map_screen.pick_next()
+			_check(map_screen.picked_checkpoint() == 5, "right picks the next")
+			_check(
+				(
+					"checkpoint 6" in map_screen.legend_label.text
+					and "Purgatory" in map_screen.legend_label.text
+				),
+				"and names it with its region (%s)" % map_screen.legend_label.text
+			)
+			map_screen.pick_previous()
+			map_screen.pick_previous()
+			_check(map_screen.picked_checkpoint() == 5, "left wraps round")
+			map_screen.confirm_travel()
+			_check(
+				not _world.pause_menu.is_open() and not get_tree().paused, "travel closes the menu"
+			)
+			_check(_world._transitioning and _world.player.frozen, "and the hero is carried off")
+		2360:
+			var fifth: Checkpoint = _world.level.checkpoints[5]
+			_check(
+				_world.player.global_position == fifth.global_position,
+				"the hero arrives at the sixth checkpoint"
+			)
+			_check(fifth.active and _world._active_checkpoint == 5, "which is now his way back")
+			_check(not _world._transitioning and not _world.player.frozen, "and is released")
+			_check(_world.fade.cover.modulate.a < 1.0, "as the screen comes back")
+			_check(_world.rested_checkpoints() == [0, 5], "both checkpoints stay rested")
+			_check(
+				_world.hud.message.text.begins_with("Carried to checkpoint 6"), "the HUD says so"
+			)
+			_check(_world.can_travel(), "and he may travel on from there")
 			root.remove_child(_world)
 			_world.queue_free()
 			Audio.play_ambient("")

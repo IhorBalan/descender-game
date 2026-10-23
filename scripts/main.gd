@@ -146,6 +146,7 @@ func _ready() -> void:
 	level.spawn_power_ups()
 	pause_menu.save_requested.connect(_on_save_requested)
 	pause_menu.restart_requested.connect(restart_from_checkpoint)
+	pause_menu.travel_requested.connect(_on_travel_requested)
 
 	camera.target = player
 	camera.set_limits(level.size_px)
@@ -243,7 +244,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if shop_menu.is_open():
 			return
 		Audio.play("pause")
-		pause_menu.open(pause_status(), player, level)
+		pause_menu.open(pause_status(), player, level, _active_checkpoint if can_travel() else -1)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("restart"):
 		restart_from_checkpoint()
@@ -293,6 +294,7 @@ func _rest_at_checkpoint(index: int) -> void:
 	if index < 0 or index >= level.checkpoints.size():
 		return
 	_active_checkpoint = index
+	Story.set_flag(Checkpoint.rested_flag(index))
 	var checkpoint := level.checkpoints[index]
 	checkpoint.set_active(true)
 	player.global_position = checkpoint.global_position
@@ -396,6 +398,7 @@ func _clear_motes() -> void:
 
 func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 	_active_checkpoint = level.checkpoints.find(checkpoint)
+	Story.set_flag(Checkpoint.rested_flag(_active_checkpoint))
 	var text := "Checkpoint: health and healing restored"
 	if save_game():
 		text += "   Game saved"
@@ -674,6 +677,70 @@ func _warp_to_start() -> void:
 	_enter_region(level.region_at(player.global_position.y), true)
 	_transitioning = false
 	fade.fade_in()
+
+
+# --- Fast travel ---------------------------------------------------------
+
+
+## The checkpoints the hero has rested at, by index, in the level's order.
+func rested_checkpoints() -> Array[int]:
+	var rested: Array[int] = []
+	for index in level.checkpoints.size():
+		if Story.has_flag(Checkpoint.rested_flag(index)):
+			rested.append(index)
+	return rested
+
+
+## Fast travel is offered while the hero stands at the checkpoint he last
+## rested at, with nothing else going on: no fight, no talk, no ending.
+func can_travel() -> bool:
+	if _transitioning or _ended or _boss != null or dialogue_box.is_open():
+		return false
+	if not is_instance_valid(player) or player.state == Player.State.DEAD:
+		return false
+	if _active_checkpoint < 0 or _active_checkpoint >= level.checkpoints.size():
+		return false
+	return level.checkpoints[_active_checkpoint].overlaps_body(player)
+
+
+## The angels' system carries the hero from the checkpoint he rests at to
+## another he has rested at: the screen goes black, he arrives rested,
+## the enemies are rebuilt, and the game saves there. Does nothing when
+## travel is not on offer (see can_travel) or the target is unknown.
+func travel_to_checkpoint(index: int) -> void:
+	if not can_travel() or index == _active_checkpoint:
+		return
+	if index < 0 or index >= level.checkpoints.size():
+		return
+	if not Story.has_flag(Checkpoint.rested_flag(index)):
+		return
+	_transitioning = true
+	player.freeze()
+	Audio.play("checkpoint")
+	await fade.fade_out()
+	_end_fight()
+	_clear_motes()
+	for checkpoint in level.checkpoints:
+		checkpoint.set_active(false)
+	_rest_at_checkpoint(index)
+	player.velocity = Vector2.ZERO
+	player.frozen = false
+	_respawn_enemies()
+	_respawn_power_ups()
+	camera.snap_to_target()
+	_enter_region(level.region_at(player.global_position.y), false)
+	_transitioning = false
+	fade.fade_in()
+	var text := "Carried to checkpoint %d" % (index + 1)
+	if save_game():
+		text += "   Game saved"
+	hud.show_message(text, 2.5)
+
+
+## The map page picked a checkpoint to travel to.
+func _on_travel_requested(index: int) -> void:
+	pause_menu.close()
+	travel_to_checkpoint(index)
 
 
 ## One of the endings: the hero stands where he is, the line says which
