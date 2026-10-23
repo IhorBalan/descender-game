@@ -69,6 +69,9 @@ var lights: Array[Dictionary] = []
 ## and hit, the box of the art's opaque pixels ([x, y, w, h] from the
 ## top-left, unmirrored) that a solid one collides with.
 var sprites: Array[Dictionary] = []
+## How much the world darkens from its top to its bottom (0 to 1, see
+## RegionLook.descent_factor): the export's "descent": {"dark": ...}.
+var descent_dark := 0.0
 
 
 ## Reads the export at `file_path`; null, with an error pushed, when the
@@ -96,6 +99,9 @@ func _parse(data: Dictionary) -> void:
 	tile = int(data.get("tile", 16))
 	art_tile = int(data.get("art_tile", tile))
 	columns = int(data.get("columns", 64))
+	var descent: Variant = data.get("descent", {})
+	if descent is Dictionary:
+		descent_dark = clampf(float(descent.get("dark", 0.0)), 0.0, 1.0)
 	for layer in data.get("layers", []):
 		if not layer is Dictionary:
 			continue

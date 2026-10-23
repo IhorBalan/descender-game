@@ -39,6 +39,9 @@ extends Node2D
 ##
 ## Tiles are 16x16.
 
+## The sky's rim light on the tiles: 0 turns it off.
+const RIM_STRENGTH := 0.25
+const RIM_SHADER := preload("res://assets/shaders/rim.gdshader")
 const TILE := 16
 const WORLD_PLACEMENTS := "placements.json"
 ## How many cells of solid a secret passage may run through on each side
@@ -64,6 +67,11 @@ const SPRITE_STRAND_PX := 6.0
 const SPRITE_TRACE_PX := 1.0
 ## Pixels per level pixel the tracing works at.
 const SPRITE_TRACE_SCALE := 2
+## The traced outline is smoothed so it strays at most this many level
+## pixels from the trace: a painted top that is nearly flat comes out of the
+## tracing as a staircase of half-pixel steps, and every step would stop the
+## hero like a wall. Within this, steps become gentle slopes.
+const SPRITE_SMOOTH_PX := 1.5
 ## Lights are drawn with a radial gradient this many pixels across, scaled
 ## to each light's radius.
 const LIGHT_TEXTURE_SIZE := 128
@@ -135,6 +143,9 @@ var dialogue_path := ""
 var world: WorldMap = null
 ## Tints the whole level (hero included) with the region's ambient colour.
 var ambient: CanvasModulate = null
+## The rim light the sky throws on the lit tile layers (see
+## assets/shaders/rim.gdshader); null until the layers are built.
+var rim: ShaderMaterial = null
 
 var _enemy_spawns: Array[EnemySpawn] = []
 ## Where the power-ups lie; rebuilt with the enemies.
@@ -294,7 +305,14 @@ func _build_layers(map: WorldMap) -> TileSet:
 		layer.scale = Vector2.ONE * map.art_scale()
 		layer.collision_enabled = false
 		var source := 0
-		if layer_name == WorldMap.LAYER_GLOW:
+		if layer_name != WorldMap.LAYER_GLOW:
+			# Lit layers: the sky's rim light on top of Godot's lighting.
+			if rim == null:
+				rim = ShaderMaterial.new()
+				rim.shader = RIM_SHADER
+				rim.set_shader_parameter("strength", RIM_STRENGTH)
+			layer.material = rim
+		else:
 			# Emissive: unlit and added on top of what is under it.
 			source = 1
 			var material := CanvasItemMaterial.new()
@@ -358,7 +376,8 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set)
 
 
-## Collision for a solid sprite: polygons traced around the art's opaque
+## Collision for a solid sprite: the walkable shape drawn in the editor
+## (`shape`) when it has one, else polygons traced around the art's opaque
 ## pixels (alpha over a half), with strands thinner than a few level pixels
 ## (grass, hanging ivy) left out, so the hero stands on the stone itself.
 ## Without the sheet's image (a missing sheet), the export's hit box, or
@@ -373,8 +392,10 @@ func _add_sprite_collision(
 	map: WorldMap,
 	tile_set: TileSet
 ) -> void:
-	var image := _sprite_image(tiles, columns, rows, flip, map, tile_set)
-	var polygons: Array[PackedVector2Array] = []
+	var polygons := drawn_shapes(spec.get("shape", []), columns * TILE, flip)
+	var image := (
+		_sprite_image(tiles, columns, rows, flip, map, tile_set) if polygons.is_empty() else null
+	)
 	if image:
 		# Traced at a few pixels per level pixel: fine enough for the outline,
 		# and small enough that the strand filter (a neighbourhood pass per
@@ -394,6 +415,7 @@ func _add_sprite_collision(
 			var points := PackedVector2Array()
 			for point in polygon:
 				points.append(point / float(SPRITE_TRACE_SCALE))
+			points = smooth_outline(points, SPRITE_SMOOTH_PX)
 			if points.size() >= 3:
 				polygons.append(points)
 	if polygons.is_empty():
@@ -420,6 +442,84 @@ func _add_sprite_collision(
 		shape.polygon = points
 		shape.position = at
 		_solids.add_child(shape)
+
+
+## A sprite's drawn walkable shapes ([[x, y], ...] per shape, level px from
+## its top-left, unmirrored) as polygons, mirrored inside `width` when the
+## sprite is. Shapes with fewer than three points are left out.
+static func drawn_shapes(shapes: Variant, width: float, flip: bool) -> Array[PackedVector2Array]:
+	var out: Array[PackedVector2Array] = []
+	if not shapes is Array:
+		return out
+	for shape: Variant in shapes:
+		if not shape is Array:
+			continue
+		var points := PackedVector2Array()
+		for point: Variant in shape:
+			if point is Array and point.size() >= 2:
+				var x := float(point[0])
+				points.append(Vector2(width - x if flip else x, float(point[1])))
+		if points.size() >= 3:
+			out.append(points)
+	return out
+
+
+## A closed outline simplified (Ramer-Douglas-Peucker) so no point of the
+## original lies further than `tolerance` from it: small steps merge into
+## slopes, corners further out than that stay. The original comes back when
+## the result would not make a valid polygon.
+static func smooth_outline(points: PackedVector2Array, tolerance: float) -> PackedVector2Array:
+	var n := points.size()
+	if n < 4:
+		return points
+	# Split the loop at the point furthest from the first, so each half is an
+	# open chain with well-defined ends.
+	var far := 0
+	for i in n:
+		if points[i].distance_squared_to(points[0]) > points[far].distance_squared_to(points[0]):
+			far = i
+	if far == 0:
+		return points
+	var first := points.slice(0, far + 1)
+	var second := points.slice(far)
+	second.append(points[0])
+	var result := _simplify_chain(first, tolerance)
+	result.remove_at(result.size() - 1)
+	var rest := _simplify_chain(second, tolerance)
+	rest.remove_at(rest.size() - 1)
+	result.append_array(rest)
+	if result.size() < 3 or Geometry2D.triangulate_polygon(result).is_empty():
+		return points
+	return result
+
+
+static func _simplify_chain(chain: PackedVector2Array, tolerance: float) -> PackedVector2Array:
+	var keep := PackedByteArray()
+	keep.resize(chain.size())
+	keep[0] = 1
+	keep[chain.size() - 1] = 1
+	var stack: Array[Vector2i] = [Vector2i(0, chain.size() - 1)]
+	while not stack.is_empty():
+		var span: Vector2i = stack.pop_back()
+		var worst := -1
+		var worst_distance := tolerance
+		for i in range(span.x + 1, span.y):
+			var on := Geometry2D.get_closest_point_to_segment(
+				chain[i], chain[span.x], chain[span.y]
+			)
+			var distance := chain[i].distance_to(on)
+			if distance > worst_distance:
+				worst = i
+				worst_distance = distance
+		if worst >= 0:
+			keep[worst] = 1
+			stack.append(Vector2i(span.x, worst))
+			stack.append(Vector2i(worst, span.y))
+	var out := PackedVector2Array()
+	for i in chain.size():
+		if keep[i]:
+			out.append(chain[i])
+	return out
 
 
 ## The sprite's art as one image: its atlas tiles laid out in order, flipped
@@ -983,6 +1083,12 @@ func region_at(y: float) -> Dictionary:
 func set_ambient(color: Color) -> void:
 	if ambient != null:
 		ambient.color = color
+
+
+## Colours the rim light on the tiles (the region's light, see RegionLook).
+func set_rim(color: Color) -> void:
+	if rim != null:
+		rim.set_shader_parameter("rim_color", color)
 
 
 ## (Re)creates every enemy from the map. Called at start and after the hero

@@ -89,6 +89,41 @@ func download_files(
 	return ""
 
 
+## Removes what an earlier download left under `dir` that the publication
+## no longer lists (a region backdrop dropped in the editor, say), so the
+## game does not keep showing it: every file whose path relative to `dir`
+## is neither in `files` nor in `keep`, with Godot's .import sidecars
+## following their file, and folders left empty. Hidden files stay. Returns
+## the removed paths.
+static func prune_files(dir: String, files: Array, keep: Array[String] = []) -> Array[String]:
+	var wanted := {}
+	for file in files:
+		if file is Dictionary:
+			wanted[str(file.get("name", ""))] = true
+	for name in keep:
+		wanted[name] = true
+	var removed: Array[String] = []
+	_prune(ProjectSettings.globalize_path(dir), "", wanted, removed)
+	return removed
+
+
+static func _prune(root: String, rel: String, wanted: Dictionary, removed: Array[String]) -> void:
+	var here := root if rel.is_empty() else root.path_join(rel)
+	var access := DirAccess.open(here)
+	if access == null:
+		return
+	for sub in access.get_directories():
+		_prune(root, sub if rel.is_empty() else rel.path_join(sub), wanted, removed)
+	for file in access.get_files():
+		var path := file if rel.is_empty() else rel.path_join(file)
+		if wanted.has(path) or wanted.has(path.trim_suffix(".import")):
+			continue
+		if DirAccess.remove_absolute(here.path_join(file)) == OK:
+			removed.append(path)
+	if not rel.is_empty() and access.get_directories().is_empty() and access.get_files().is_empty():
+		DirAccess.remove_absolute(here)
+
+
 ## Streams a URL to `path` (written next to it and renamed when complete).
 ## Returns an empty string, or what went wrong.
 func download_object(url: String, path: String) -> String:

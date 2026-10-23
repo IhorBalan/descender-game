@@ -1044,7 +1044,8 @@ func _physics_process(_delta: float) -> void:
 			_hub.player.restore_upgrades()
 			_check(_hub.player.max_health == Player.MAX_HEALTH, "normal has the plain five")
 			_check(
-				_hub.sky.texture.gradient.colors[0] == Levels.WORLD_SKY[0], "world sky is painted"
+				_hub.sky.material.get_shader_parameter("top") == Levels.WORLD_SKY[0],
+				"world sky is painted"
 			)
 			_paradise_tint = _hub.level.ambient.color
 			for node in _hub.level.interactables:

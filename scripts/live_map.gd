@@ -32,6 +32,7 @@ const SETTING_ENABLED := "live_map/enabled"
 const SETTING_PROJECT := "live_map/project_id"
 const WORLD_DIR := "res://levels/world"
 const STAMP_PATH := WORLD_DIR + "/live_map.json"
+const PLACEMENTS_FILE := "placements.json"
 const WORLD_FILE := "world.json"
 const SHEETS: Array[String] = ["world_tiles.png", "world_tiles_n.png", "world_tiles_e.png"]
 const HEAD_DOCUMENT := "live"
@@ -106,6 +107,8 @@ func _sync(project: String) -> void:
 	if not problem.is_empty():
 		_finish(false, "Live map: %s" % problem)
 		return
+	# A region backdrop the map no longer has must not linger under regions/.
+	FirestoreRest.prune_files(WORLD_DIR, files, [STAMP_PATH.get_file(), PLACEMENTS_FILE])
 	(
 		FirestoreRest
 		. write_file(
