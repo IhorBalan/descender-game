@@ -146,6 +146,10 @@ var ambient: CanvasModulate = null
 ## The rim light the sky throws on the lit tile layers (see
 ## assets/shaders/rim.gdshader); null until the layers are built.
 var rim: ShaderMaterial = null
+## The diffuse sheet as an image, fetched once per build for tracing solid
+## sprites: get_image() copies the whole atlas back from the GPU, over
+## 100 MB at 128-px art, so doing it per sprite would stall the start.
+var _sheet_image: Image = null
 
 var _enemy_spawns: Array[EnemySpawn] = []
 ## Where the power-ups lie; rebuilt with the enemies.
@@ -374,6 +378,7 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 			_tiles.add_child(layer)
 		if spec.get("solid", false):
 			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set)
+	_sheet_image = null
 
 
 ## Collision for a solid sprite: the walkable shape drawn in the editor
@@ -527,11 +532,12 @@ static func _simplify_chain(chain: PackedVector2Array, tolerance: float) -> Pack
 func _sprite_image(
 	tiles: PackedInt32Array, columns: int, rows: int, flip: bool, map: WorldMap, tile_set: TileSet
 ) -> Image:
-	var source := tile_set.get_source(0) as TileSetAtlasSource
-	var texture := source.texture as CanvasTexture if source else null
-	var sheet := (
-		texture.diffuse_texture.get_image() if texture and texture.diffuse_texture else null
-	)
+	if _sheet_image == null:
+		var source := tile_set.get_source(0) as TileSetAtlasSource
+		var texture := source.texture as CanvasTexture if source else null
+		if texture and texture.diffuse_texture:
+			_sheet_image = texture.diffuse_texture.get_image()
+	var sheet := _sheet_image
 	if sheet == null:
 		return null
 	var art := map.art_tile
