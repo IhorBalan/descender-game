@@ -107,6 +107,12 @@ func open(
 func close() -> void:
 	visible = false
 	_unask_quit()
+	# Hiding the layer leaves a page's own `visible` set, and a page still
+	# reads input while it is: the map, left open by a trip, would go on
+	# taking the talk and pause keys in play.
+	if map_screen.visible:
+		map_screen.visible = false
+		_show_frame(true)
 	get_tree().paused = false
 
 

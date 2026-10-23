@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 640
+const EXPECTED_CHECKS := 641
 const LAST_TICK := 2380
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -2422,6 +2422,7 @@ func _physics_process(_delta: float) -> void:
 			_check(
 				not _world.pause_menu.is_open() and not get_tree().paused, "travel closes the menu"
 			)
+			_check(not map_screen.visible, "and puts the map page away")
 			_check(_world._transitioning and _world.player.frozen, "and the hero is carried off")
 		2360:
 			var fifth: Checkpoint = _world.level.checkpoints[5]
