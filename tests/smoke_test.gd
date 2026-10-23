@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 618
+const EXPECTED_CHECKS := 622
 const LAST_TICK := 2330
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -186,6 +186,7 @@ func _physics_process(_delta: float) -> void:
 			_check(camera_moved < 2.0, "camera ignores a jump (moved %.1f)" % camera_moved)
 		130:
 			_check(_player.is_on_floor(), "hero lands again")
+			_check(Feedback.dusts_raised >= 1, "the landing raises dust")
 			_press("attack", true)
 			_press("move_right", true)
 			_mark_x = _player.global_position.x
@@ -216,6 +217,19 @@ func _physics_process(_delta: float) -> void:
 			_check(_player.state == Player.State.HURT, "hurt state")
 		215:
 			_check(is_equal_approx(Engine.time_scale, 1.0), "time runs again after the hit-stop")
+		222:
+			# Peek: holding down while standing still pans the view below.
+			_check(_player.is_on_floor(), "hero is back on the floor after the hit")
+			_camera_y = _main.camera.global_position.y
+			_press("move_down", true)
+		258:
+			var peeked: float = _main.camera.global_position.y - _camera_y
+			_check(peeked > 16.0, "holding down peeks below (moved %.1f)" % peeked)
+			_check(
+				_player.is_on_floor() and _player.state == Player.State.IDLE,
+				"without moving the hero"
+			)
+			_press("move_down", false)
 		260:
 			_press("heal", true)
 		263:

@@ -115,7 +115,10 @@ checkpoint, rested, with the feathers he already took gone from the level.
 Restarting with R does the same from the progress so far.
 
 Thin ledges can be jumped up through from below, and the hero drops
-through one by holding down and pressing jump.
+through one by holding down and pressing jump. Standing still and holding
+down on its own peeks below: after a moment the view pans down a few
+tiles, so a drop can be looked at before it is taken, and comes back when
+the button is let go. A hard landing raises a puff of dust at his feet.
 
 The map's **locked doors** are seals of angel light across the shafts and
 doorways between rooms. A seal lifted by an ability breaks the moment the
