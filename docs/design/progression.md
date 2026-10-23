@@ -75,6 +75,8 @@ pressing the talk key **makes camp**, a menu over the paused game:
 - **Save Game** and **Leave**.
 
 Making camp rests the hero again, so a heart learned is a full heart.
+That is no more than touching the checkpoint already gives: a camp is
+always at a checkpoint, and the enemies are not rebuilt by it.
 The HUD shows the level and an experience bar under the purse, and says
 when a point is waiting.
 

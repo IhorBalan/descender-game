@@ -58,13 +58,17 @@ func is_player_near() -> bool:
 
 
 func _on_body_entered(body: Node2D) -> void:
-	if not body is Player or body.state == Player.State.DEAD:
+	if not body is Player:
 		return
+	# Near even while dead: a body that falls in here and respawns here
+	# does not enter again, and the camp still has to open (main.gd keeps
+	# a dead hero out of it).
 	_player_near = true
 	_prompt.text = "%s  camp" % _interact_key_name()
 	_prompt.visible = true
-	# A respawn landing on an active checkpoint is not a new rest.
-	if not active:
+	# A dead hero falling past, or a respawn landing on an active
+	# checkpoint, is not a new rest.
+	if not active and body.state != Player.State.DEAD:
 		body.rest_at(global_position)
 		Audio.play("checkpoint")
 		for other in get_tree().get_nodes_in_group("checkpoint"):
