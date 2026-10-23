@@ -84,7 +84,9 @@ const GLIDE_GRAVITY_MULTIPLIER := 0.35
 ## Jump, dash and attack presses are remembered this long.
 const INPUT_BUFFER_TIME := 0.12
 ## How far the hero is nudged sideways around a ceiling corner, or up onto a
-## ledge lip during a dash, instead of being stopped.
+## ledge lip during a dash or a walk, instead of being stopped. Walking it is
+## a step up: a lip this low (painted ground is never perfectly flat) is
+## climbed, and floor_snap_length (4) puts him back on the ground after it.
 const CORNER_CORRECTION := 4
 
 # Dash
@@ -748,14 +750,29 @@ func _correct_corners(delta: float) -> void:
 					global_position += shift
 					return
 	if state == State.DASH and test_move(global_transform, Vector2(step.x, 0.0)):
-		for offset in range(1, CORNER_CORRECTION + 1):
-			var lift := Vector2(0.0, -offset)
-			if (
-				not test_move(global_transform, lift)
-				and not test_move(global_transform.translated(lift), Vector2(step.x, 0.0))
-			):
-				global_position += lift
-				return
+		_lift_over(step.x)
+		return
+	if is_on_floor() and velocity.y >= 0.0 and step.x != 0.0:
+		# Only a wall-like edge is stepped over; a slope is walked up as it is.
+		var hit := KinematicCollision2D.new()
+		if (
+			test_move(global_transform, Vector2(step.x, 0.0), hit)
+			and absf(hit.get_normal().x) > 0.9
+		):
+			_lift_over(step.x)
+
+
+## Lifts the hero by the least of up to CORNER_CORRECTION pixels that lets
+## him move `dx` sideways; leaves him be when no lift does (a real wall).
+func _lift_over(dx: float) -> void:
+	for offset in range(1, CORNER_CORRECTION + 1):
+		var lift := Vector2(0.0, -offset)
+		if (
+			not test_move(global_transform, lift)
+			and not test_move(global_transform.translated(lift), Vector2(dx, 0.0))
+		):
+			global_position += lift
+			return
 
 
 func _track_safe_ground(delta: float) -> void:

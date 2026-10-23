@@ -238,6 +238,9 @@ func _download(map_id: String, fields: Dictionary) -> String:
 		return problem
 	if not FileAccess.file_exists(dir.path_join(WORLD_FILE)):
 		return "the published export has no %s" % WORLD_FILE
+	# Files the earlier revision had and this one does not (a removed region
+	# backdrop) would otherwise stay and be used.
+	FirestoreRest.prune_files(dir, files, [STAMP_FILE])
 	var entry := _entry(fields, dir)
 	entry["syncedAt"] = int(Time.get_unix_time_from_system() * 1000.0)
 	FirestoreRest.write_file(

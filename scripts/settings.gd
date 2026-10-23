@@ -56,7 +56,8 @@ const ACTION_LABELS := {
 var volume := 1.0
 var music_volume := 1.0
 var sfx_volume := 1.0
-var fullscreen := false
+## The game starts full screen; Settings → Display turns it off.
+var fullscreen := true
 ## Window size as a multiple of BASE_SIZE, used when not fullscreen.
 var window_scale := DEFAULT_WINDOW_SCALE
 var vsync := true
@@ -101,7 +102,7 @@ func load_settings() -> void:
 	volume = _volume_from(config, "volume")
 	music_volume = _volume_from(config, "music")
 	sfx_volume = _volume_from(config, "sfx")
-	fullscreen = bool(config.get_value("display", "fullscreen", false))
+	fullscreen = bool(config.get_value("display", "fullscreen", true))
 	window_scale = clampi(
 		int(config.get_value("display", "scale", DEFAULT_WINDOW_SCALE)),
 		MIN_WINDOW_SCALE,
@@ -193,7 +194,7 @@ func reset_audio() -> void:
 
 ## Puts the window and the screen shake back to the project's defaults.
 func reset_display() -> void:
-	fullscreen = false
+	fullscreen = true
 	window_scale = DEFAULT_WINDOW_SCALE
 	vsync = true
 	screen_shake = 1.0
@@ -252,6 +253,18 @@ func _apply_window() -> void:
 	)
 	if DisplayServer.window_get_mode() != mode:
 		DisplayServer.window_set_mode(mode)
+	# Full screen fills the display: the view scales by any factor and takes
+	# the screen's aspect, showing a little more world on a 16:10 screen. A
+	# window scales by whole numbers so pixel art stays crisp, at 16:9.
+	var window := get_tree().root
+	window.content_scale_stretch = (
+		Window.CONTENT_SCALE_STRETCH_FRACTIONAL
+		if fullscreen
+		else Window.CONTENT_SCALE_STRETCH_INTEGER
+	)
+	window.content_scale_aspect = (
+		Window.CONTENT_SCALE_ASPECT_EXPAND if fullscreen else Window.CONTENT_SCALE_ASPECT_KEEP
+	)
 	if not fullscreen:
 		var size := window_size_for(window_scale)
 		if DisplayServer.window_get_size() != size:

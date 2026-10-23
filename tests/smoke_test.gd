@@ -893,6 +893,8 @@ func _physics_process(_delta: float) -> void:
 			_check(settings_menu.get_node("Pages/Display").visible, "display tab shows its page")
 			_check(not settings_menu.get_node("Pages/Audio").visible, "audio page hides")
 			# Display: the window size and shake buttons cycle and Defaults undoes them.
+			# From the defaults, whatever this machine's settings file says.
+			Settings.reset_display()
 			settings_menu.scale_button.pressed.emit()
 			_check(Settings.window_scale == 5, "window size button steps up the scale")
 			_check(
@@ -1042,7 +1044,8 @@ func _physics_process(_delta: float) -> void:
 			_hub.player.restore_upgrades()
 			_check(_hub.player.max_health == Player.MAX_HEALTH, "normal has the plain five")
 			_check(
-				_hub.sky.texture.gradient.colors[0] == Levels.WORLD_SKY[0], "world sky is painted"
+				_hub.sky.material.get_shader_parameter("top") == Levels.WORLD_SKY[0],
+				"world sky is painted"
 			)
 			_paradise_tint = _hub.level.ambient.color
 			for node in _hub.level.interactables:

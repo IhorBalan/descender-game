@@ -12,6 +12,12 @@ extends Node2D
 ## and `--abilities=all` unlocks every ability (see apply_dev_args).
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
+const SKY_SHADER := preload("res://assets/shaders/sky.gdshader")
+## Loaded by path, so a fresh checkout works before the class cache knows them.
+const RegionLook := preload("res://scripts/region_look.gd")
+const PostFx := preload("res://scripts/post_fx.gd")
+## The glow over the brightest pixels (the sky, the glow tiles, the lights).
+const GLOW_INTENSITY := 0.4
 ## A dialogue entry that sets one of these ends the game (see _end_game).
 const ENDING_FLAG_PREFIX := "ending:"
 const ENDINGS := {
@@ -47,6 +53,15 @@ var play_time := 0.0
 var backdrop: Backdrop
 ## The drifting particles of the region (see RegionFx).
 var region_fx: RegionFx
+## The colour grade and vignette over the level (see PostFx).
+var post: PostFx
+## The look of the region the hero is in, eased between regions: the sky,
+## the rim light and the grade (see RegionLook).
+var look := RegionLook.new()
+## The sky's shader, fed the look and the camera every frame.
+var _sky_material := ShaderMaterial.new()
+## The ambient tint of the region, before the descent darkens it.
+var _ambient := Color.WHITE
 ## Index into level.checkpoints of the one the hero last rested at.
 var _active_checkpoint := -1
 ## Set once the goal is reached: the level is fading out, so pausing and
@@ -97,7 +112,8 @@ func _ready() -> void:
 		Inventory.from_dict(SaveManager.pending.get("inventory", {}))
 		Skills.from_dict(SaveManager.pending.get("skills", {}))
 	level.level_id = level_id
-	_paint_sky(Levels.sky(level_id))
+	_sky_material.shader = SKY_SHADER
+	sky.material = _sky_material
 	level.load_from_file(Levels.path(level_id))
 	# Painted parallax layers sit behind the level, in front of the sky.
 	backdrop = Backdrop.new()
@@ -107,6 +123,21 @@ func _ready() -> void:
 	region_fx = RegionFx.new()
 	region_fx.name = "RegionFx"
 	add_child(region_fx)
+	# The grade sits on the HUD's layer, before it in the tree so it is
+	# drawn under it; the glow needs the viewport's 2D HDR (project.godot).
+	post = PostFx.new()
+	post.name = "Post"
+	add_child(post)
+	move_child(post, hud.get_index())
+	var environment := WorldEnvironment.new()
+	environment.name = "Glow"
+	environment.environment = Environment.new()
+	environment.environment.background_mode = Environment.BG_CANVAS
+	environment.environment.glow_enabled = true
+	environment.environment.glow_intensity = GLOW_INTENSITY
+	environment.environment.glow_bloom = 0.05
+	environment.environment.glow_hdr_threshold = 1.0
+	add_child(environment)
 	if not level.dialogue_path.is_empty():
 		dialogue = DialogueData.new(level.dialogue_path)
 	for interactable in level.interactables:
@@ -177,16 +208,37 @@ func _ready() -> void:
 		hud.queue_message(CONTROLS_HINT, 6.0)
 
 
-## Recolours the background gradient for the level.
-func _paint_sky(colors: Array[Color]) -> void:
-	var texture := sky.texture as GradientTexture2D
-	if texture == null or colors.size() < 3:
-		return
-	# The gradient is shared by every instance of the scene, so it is
-	# copied before being changed.
-	texture = texture.duplicate(true)
-	texture.gradient.colors = PackedColorArray(colors)
-	sky.texture = texture
+## Feeds the look of the moment to the sky, the backdrop, the tiles and
+## the grade, darkened by how deep the camera and the hero are (see
+## RegionLook.descent_factor).
+func _apply_look() -> void:
+	var view := get_viewport_rect().size / camera.zoom
+	var centre := camera.get_screen_center_position()
+	var dark := 0.0
+	var height := level.size_px.y
+	if level.world:
+		dark = level.world.descent_dark
+	var camera_factor := RegionLook.descent_factor(dark, centre.y, height)
+	_sky_material.set_shader_parameter("top", look.top)
+	_sky_material.set_shader_parameter("bottom", look.bottom)
+	_sky_material.set_shader_parameter("cave", look.cave)
+	_sky_material.set_shader_parameter("band", look.band)
+	_sky_material.set_shader_parameter("cam_origin", centre - view / 2.0)
+	_sky_material.set_shader_parameter("view_size", view)
+	_sky_material.set_shader_parameter(
+		"art_tile", float(level.world.art_tile) if level.world else 16.0
+	)
+	_sky_material.set_shader_parameter("dark", camera_factor)
+	if backdrop:
+		backdrop.modulate = Color(camera_factor, camera_factor, camera_factor)
+	level.set_rim(look.rim)
+	if post:
+		post.set_grade(look.tint, look.contrast, look.saturation)
+	var hero_factor := camera_factor
+	if is_instance_valid(player):
+		hero_factor = RegionLook.descent_factor(dark, player.global_position.y, height)
+	var lifted := _ambient.lerp(Color.WHITE, AMBIENT_LIFT)
+	level.set_ambient(Color(lifted.r * hero_factor, lifted.g * hero_factor, lifted.b * hero_factor))
 
 
 ## The level the save asks for, else the chosen map, else the one named on
@@ -210,6 +262,8 @@ func _pick_level() -> String:
 
 func _process(delta: float) -> void:
 	play_time += delta
+	look.step(delta)
+	_apply_look()
 
 
 ## The hero moves in the physics step, so the region and the room he is
@@ -241,12 +295,17 @@ func _enter_region(region: Dictionary, announce: bool) -> void:
 	_region = region
 	if region.is_empty():
 		return
-	var color := Color.from_string(str(region.get("ambient", "#ffffff")), Color.WHITE)
-	level.set_ambient(color.lerp(Color.WHITE, AMBIENT_LIFT))
+	var fallback := Levels.sky(level_id)
+	_ambient = RegionLook.ambient_of(region, fallback)
+	if announce:
+		look.retarget(region, fallback)
+	else:
+		look.reset(region, fallback)
+	_apply_look()
 	if backdrop and level.world:
 		backdrop.show_region(region, level.world.tile, level.world.dir())
 	if region_fx and level.world:
-		region_fx.show_region(region, level.world.tile)
+		region_fx.show_region(region, level.world.tile, level.world.dir())
 	var name := str(region.get("name", ""))
 	Audio.play_ambient("heaven" if name == "Paradise" else "earth")
 	# Each region has its own loop (see tools/gen_music.py); a fight keeps

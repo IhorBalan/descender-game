@@ -3,7 +3,8 @@ extends Node2D
 
 ## Drifting particles in the air of a region: petals, motes, embers, ash.
 ##
-## A region opts in with assets/regions/<key>/fx.json (key as in
+## A region opts in with regions/<key>/fx.json next to the map's
+## world.json, else assets/regions/<key>/fx.json (key as in
 ## EdgeDecor.region_key):
 ##
 ##   {
@@ -11,9 +12,15 @@ extends Node2D
 ##     "particles": [
 ##       {"texture": "petal.png", "amount": 40, "color": "#ffc8e4", "lifetime": 12,
 ##        "direction": [-0.4, 1], "speed": [10, 25], "gravity": [0, 3],
-##        "scale": [0.6, 1.0], "spin": 2, "sway": 6}
+##        "scale": [0.6, 1.0], "spin": 2, "sway": 6},
+##       {"preset": "embers", "amount": 20}
 ##     ]
 ##   }
+##
+## An entry with a `preset` (see PRESETS: embers, dust, ash, leaves, rain,
+## snow, birds) needs no PNG: its sprite is drawn in code and its other
+## fields are defaults the entry may override. A region with no fx.json
+## but a `particles` list of preset names in the export gets those.
 ##
 ## The emitters follow the camera and fill the view plus a margin, so the
 ## air is never empty when the view moves. Speeds are level pixels a second,
@@ -25,11 +32,101 @@ const REGIONS_DIR := "res://assets/regions"
 const MARGIN := 48.0
 const FADE := 1.5
 
+## The stock particles, drawn at 16 pixels a tile (level pixels).
+const PRESETS := {
+	"embers":
+	{
+		"amount": 24,
+		"color": "#ffa040",
+		"lifetime": 6,
+		"direction": [0.15, -1],
+		"spread": 30,
+		"speed": [8, 22],
+		"gravity": [0, -4],
+		"scale": [0.6, 1.0],
+		"sway": 5,
+	},
+	"dust":
+	{
+		"amount": 40,
+		"color": "#d8cfb8",
+		"lifetime": 14,
+		"direction": [0.3, 0.1],
+		"spread": 60,
+		"speed": [2, 6],
+		"gravity": [0, 0],
+		"scale": [0.5, 1.0],
+		"sway": 3,
+	},
+	"ash":
+	{
+		"amount": 30,
+		"color": "#9a9a9a",
+		"lifetime": 12,
+		"direction": [-0.3, 1],
+		"spread": 25,
+		"speed": [6, 14],
+		"gravity": [0, 2],
+		"scale": [0.6, 1.0],
+		"spin": 0.5,
+		"sway": 4,
+	},
+	"leaves":
+	{
+		"amount": 18,
+		"color": "#b8c860",
+		"lifetime": 12,
+		"direction": [-0.5, 1],
+		"spread": 20,
+		"speed": [10, 24],
+		"gravity": [0, 4],
+		"scale": [0.7, 1.0],
+		"spin": 0.8,
+		"sway": 8,
+	},
+	"rain":
+	{
+		"amount": 120,
+		"color": "#b0c4e0",
+		"lifetime": 2,
+		"direction": [-0.15, 1],
+		"spread": 2,
+		"speed": [220, 300],
+		"gravity": [0, 60],
+		"scale": [0.8, 1.0],
+	},
+	"snow":
+	{
+		"amount": 60,
+		"color": "#f4f8ff",
+		"lifetime": 14,
+		"direction": [-0.2, 1],
+		"spread": 25,
+		"speed": [6, 14],
+		"gravity": [0, 2],
+		"scale": [0.5, 1.0],
+		"sway": 5,
+	},
+	"birds":
+	{
+		"amount": 4,
+		"color": "#2a2630",
+		"lifetime": 16,
+		"direction": [1, -0.05],
+		"spread": 6,
+		"speed": [24, 40],
+		"gravity": [0, 0],
+		"scale": [0.8, 1.2],
+	},
+}
+
 var _current := ""
 
 
-## Starts the particles of a region, replacing the previous region's.
-func show_region(region: Dictionary, tile: int) -> void:
+## Starts the particles of a region, replacing the previous region's;
+## `map_dir` is the folder of the level's world.json, whose own
+## regions/<key>/fx.json wins over the shared assets folder.
+func show_region(region: Dictionary, tile: int, map_dir := "") -> void:
 	var key := EdgeDecor.region_key(str(region.get("name", "")))
 	if key == _current:
 		return
@@ -41,26 +138,85 @@ func show_region(region: Dictionary, tile: int) -> void:
 		var tween := create_tween()
 		tween.tween_property(child, "modulate:a", 0.0, FADE)
 		tween.tween_callback(child.queue_free)
-	var dir := "%s/%s" % [REGIONS_DIR, key]
+	var dir := Backdrop.set_dir(key, map_dir, "fx.json")
 	var text := FileAccess.get_file_as_string(dir + "/fx.json")
 	var spec: Variant = JSON.parse_string(text) if not text.is_empty() else null
 	if not spec is Dictionary:
-		return
+		spec = region_spec(region)
 	var scale_factor := float(tile) / float(spec.get("art_tile", tile))
 	for entry in spec.get("particles", []):
 		if not entry is Dictionary:
 			continue
 		var emitter := Emitter.new()
-		emitter.setup(entry, "%s/%s" % [dir, str(entry.get("texture", ""))], scale_factor)
+		if entry.has("preset"):
+			var preset := str(entry["preset"])
+			if not PRESETS.has(preset):
+				push_warning("RegionFx: no particle preset '%s'" % preset)
+				emitter.free()
+				continue
+			var merged: Dictionary = PRESETS[preset].duplicate()
+			merged.merge(entry, true)
+			emitter.setup(merged, preset_texture(preset), float(tile) / 16.0)
+		else:
+			var texture := Backdrop.load_texture("%s/%s" % [dir, str(entry.get("texture", ""))])
+			if texture == null:
+				emitter.free()
+				continue
+			emitter.setup(entry, texture, scale_factor)
 		add_child(emitter)
+
+
+## The spec a region's own `particles` list of preset names stands for.
+static func region_spec(region: Dictionary) -> Dictionary:
+	var particles := []
+	for name in region.get("particles", []):
+		if name is String and PRESETS.has(name):
+			particles.append({"preset": name})
+	return {"art_tile": 16, "particles": particles}
+
+
+## The sprite of a preset, drawn in code: a soft dot for embers, dust and
+## snow, a flake for ash, a leaf, a streak of rain and a bird's wings.
+static func preset_texture(preset: String) -> ImageTexture:
+	var image: Image
+	match preset:
+		"rain":
+			image = Image.create(1, 7, false, Image.FORMAT_RGBA8)
+			for y in 7:
+				image.set_pixel(0, y, Color(1, 1, 1, 0.35 + 0.65 * y / 6.0))
+		"leaves":
+			image = Image.create(5, 3, false, Image.FORMAT_RGBA8)
+			for x in 5:
+				var half := 1 if x == 0 or x == 4 else 0
+				for y in range(half, 3 - half):
+					image.set_pixel(x, y, Color.WHITE)
+		"ash":
+			image = Image.create(3, 3, false, Image.FORMAT_RGBA8)
+			for x in 3:
+				for y in 3:
+					if x == 1 or y == 1:
+						image.set_pixel(x, y, Color(1, 1, 1, 0.9))
+		"birds":
+			image = Image.create(7, 3, false, Image.FORMAT_RGBA8)
+			for p in [[0, 0], [1, 1], [2, 2], [3, 2], [4, 2], [5, 1], [6, 0]]:
+				image.set_pixel(p[0], p[1], Color.WHITE)
+		_:
+			var size := 2 if preset == "dust" else 3
+			image = Image.create(size, size, false, Image.FORMAT_RGBA8)
+			var centre := Vector2((size - 1) / 2.0, (size - 1) / 2.0)
+			for x in size:
+				for y in size:
+					var d := Vector2(x, y).distance_to(centre) / maxf(centre.x, 0.5)
+					image.set_pixel(x, y, Color(1, 1, 1, clampf(1.15 - d * 0.8, 0.0, 1.0)))
+	return ImageTexture.create_from_image(image)
 
 
 ## One kind of particle, emitted across the view around the camera.
 class Emitter:
 	extends CPUParticles2D
 
-	func setup(entry: Dictionary, texture_path: String, scale_factor: float) -> void:
-		texture = load(texture_path) as Texture2D
+	func setup(entry: Dictionary, sprite: Texture2D, scale_factor: float) -> void:
+		texture = sprite
 		texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 		z_index = 5
 		amount = int(entry.get("amount", 30))

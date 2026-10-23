@@ -20,6 +20,12 @@ extends Camera2D
 ##   amount that grows with trauma squared, so small hits barely register and
 ##   big ones kick. The offset never moves the follow position itself.
 
+## How far the view is zoomed out: 0.5 shows 640 x 360 level pixels, twice
+## what the 320 x 180 base view would, so the hero takes half the height he
+## otherwise would. The window still draws at its own resolution, so pixel
+## art stays whole at any whole-number window scale.
+const VIEW_ZOOM := 0.5
+
 # Horizontal
 const DEADZONE_X := 24.0
 const LOOK_AHEAD := 40.0
@@ -69,6 +75,7 @@ var _peek_offset := 0.0
 
 
 func _ready() -> void:
+	zoom = Vector2.ONE * VIEW_ZOOM
 	add_to_group("game_camera")
 
 

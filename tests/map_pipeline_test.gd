@@ -15,8 +15,9 @@ extends Node
 
 ## Loaded by path, so a fresh checkout works before the class cache knows it.
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
+const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 87
+const EXPECTED_CHECKS := 133
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -175,6 +176,18 @@ func _write_export(dir: String, art_tile: int) -> String:
 				"tiles": [70, 71],
 			},
 			{"id": 10, "name": "broken", "x": 0, "y": 0, "columns": 2, "rows": 2, "tiles": [70]},
+			{
+				"id": 11,
+				"name": "padded",
+				"x": 100,
+				"y": 100,
+				"columns": 2,
+				"rows": 2,
+				"flip": true,
+				"solid": true,
+				"tiles": [70, 71, 70, 71],
+				"hit": [4, 20, 24, 12],
+			},
 		],
 	}
 	var path := dir.path_join("world.json")
@@ -195,7 +208,7 @@ func test_world_map() -> void:
 	)
 	_check(map.kind_at(0, 1) == WorldMap.KIND_SOLID, "terrain kinds are read")
 	_check(map.kind_at(0, 0) == WorldMap.KIND_NONE, "air has no kind")
-	_check(map.sprites.size() == 2, "sprites are read")
+	_check(map.sprites.size() == 3, "sprites are read")
 	_check(map.atlas_coords(70) == Vector2i(6, 1), "atlas ids become columns and rows")
 	_check(is_equal_approx(map.art_scale(), 1.0), "16-px art is drawn at scale 1")
 	_check(
@@ -255,16 +268,168 @@ func test_level_builder_sprites() -> void:
 			"and flips each tile"
 		)
 	var solids := builder.get_node("Solids")
-	# One run of rock along the bottom row, plus the solid sprite's box.
-	_check(solids.get_child_count() == 2, "a solid sprite adds one collision box")
-	var box: CollisionShape2D = null
+	# One run of rock along the bottom row, plus a polygon per solid sprite.
+	_check(solids.get_child_count() == 3, "a solid sprite adds one collision polygon")
+	var outlines: Array[Rect2] = []
 	for child in solids.get_children():
-		if child is CollisionShape2D and child.shape.size == Vector2(32, 16):
-			box = child
-	_check(box != null, "the box covers the sprite's tiles")
-	_check(box != null and box.position == Vector2(36, 12), "and is centred on it")
+		if child is CollisionPolygon2D:
+			var bounds := Rect2(child.polygon[0], Vector2.ZERO)
+			for point in child.polygon:
+				bounds = bounds.expand(point)
+			outlines.append(Rect2(child.position + bounds.position, bounds.size))
+	_check(outlines.size() == 2, "the sprites collide with polygons traced from their art")
+	# The test sheet is opaque everywhere, so each outline is the sprite's whole box, give or
+	# take the smoothing (LevelBuilder.SPRITE_SMOOTH_PX).
+	_check(_has_box(outlines, Rect2(20, 4, 32, 16)), "the ledge's outline covers its two tiles")
+	_check(
+		_has_box(outlines, Rect2(100, 100, 32, 32)),
+		"the padded sprite's outline covers its four tiles"
+	)
 	_check(builder.player_start == Vector2(8, 16), "the start marker places the hero")
 	builder.queue_free()
+
+
+# ---------- FirestoreRest.prune_files ----------
+
+
+func _has_box(outlines: Array[Rect2], box: Rect2) -> bool:
+	var slack := LevelBuilder.SPRITE_SMOOTH_PX
+	for r in outlines:
+		if r.position.distance_to(box.position) <= slack and r.end.distance_to(box.end) <= slack:
+			return true
+	return false
+
+
+func test_drawn_shapes() -> void:
+	var shape := [[[0, 4], [16, 2], [16, 16], [0, 16]], [[1, 1], [2, 2]], "junk"]
+	var plain := LevelBuilder.drawn_shapes(shape, 32.0, false)
+	_check(plain.size() == 1, "a drawn shape becomes a polygon; one with two points is left out")
+	_check(plain[0][1] == Vector2(16, 2), "and keeps its points")
+	var mirrored := LevelBuilder.drawn_shapes(shape, 32.0, true)
+	_check(mirrored[0][0] == Vector2(32, 4), "a mirrored sprite mirrors its shape")
+	_check(LevelBuilder.drawn_shapes(null, 32.0, false).is_empty(), "no shape is no polygon")
+	# Built into a level, the drawn shape replaces the traced outline.
+	var builder := LevelBuilder.new()
+	add_child(builder)
+	var map := WorldMap.new()
+	map.width = 8
+	map.height = 4
+	map.sprites = [
+		{
+			"id": 1,
+			"x": 10,
+			"y": 20,
+			"columns": 2,
+			"rows": 1,
+			"solid": true,
+			"tiles": [-1, -1],
+			"shape": [[[0, 4], [32, 6], [32, 16], [0, 16]]],
+		}
+	]
+	builder._solids = StaticBody2D.new()
+	builder.add_child(builder._solids)
+	builder._add_sprite_collision(
+		map.sprites[0], Vector2(10, 20), 2, 1, false, PackedInt32Array([-1, -1]), map, null
+	)
+	var polys := builder._solids.get_children()
+	_check(polys.size() == 1, "a sprite with a drawn shape gets that one polygon")
+	_check(
+		polys[0] is CollisionPolygon2D and polys[0].polygon[1] == Vector2(32, 6),
+		"made of the drawn points, not a trace"
+	)
+	builder.queue_free()
+
+
+func test_smooth_outline() -> void:
+	# A ledge whose top is a staircase of half-pixel steps, as the tracing
+	# makes of a painted top that is nearly flat.
+	var stairs := PackedVector2Array([Vector2(0, 10)])
+	for i in 8:
+		stairs.append(Vector2(i * 12 + 12, 10 - i * 0.5))
+		stairs.append(Vector2(i * 12 + 12, 10 - (i + 1) * 0.5))
+	stairs.append_array([Vector2(100, 6), Vector2(100, 40), Vector2(0, 40)])
+	var smooth := LevelBuilder.smooth_outline(stairs, 1.5)
+	var vertical := 0
+	for i in smooth.size():
+		var a := smooth[i]
+		var b := smooth[(i + 1) % smooth.size()]
+		if absf(a.x - b.x) < 0.01 and absf(a.y - b.y) < 4.0:
+			vertical += 1
+	_check(vertical == 0, "half-pixel steps merge into a slope (no short vertical edges left)")
+	_check(smooth.size() < stairs.size(), "the outline has fewer points")
+	var furthest := 0.0
+	for p in stairs:
+		furthest = maxf(furthest, _distance_to_outline(p, smooth))
+	_check(furthest <= 1.5 + 0.001, "no traced point is further than the tolerance from it")
+	var box := PackedVector2Array([Vector2(0, 0), Vector2(30, 0), Vector2(30, 20), Vector2(0, 20)])
+	_check(LevelBuilder.smooth_outline(box, 1.5) == box, "a box keeps its corners")
+	var tall := PackedVector2Array(
+		[
+			Vector2(0, 20),
+			Vector2(10, 20),
+			Vector2(10, 0),
+			Vector2(20, 0),
+			Vector2(20, 30),
+			Vector2(0, 30)
+		]
+	)
+	_check(
+		LevelBuilder.smooth_outline(tall, 1.5).size() == 6,
+		"a real step taller than the tolerance stays"
+	)
+
+
+func _distance_to_outline(p: Vector2, outline: PackedVector2Array) -> float:
+	var best := INF
+	for i in outline.size():
+		var on := Geometry2D.get_closest_point_to_segment(
+			p, outline[i], outline[(i + 1) % outline.size()]
+		)
+		best = minf(best, p.distance_to(on))
+	return best
+
+
+func test_prune_files() -> void:
+	var dir := DIR + "/prune"
+	for name in [
+		"world.json",
+		"map.json",
+		"regions/r1/sky.png",
+		"regions/r1/sky.png.import",
+		"regions/r1/parallax.json",
+		"regions/r2/parallax.json",
+		"world_tiles.png",
+		"world_tiles.png.import",
+	]:
+		FirestoreRest.write_file(dir + "/" + name, "x".to_utf8_buffer())
+	var files := [{"name": "world.json"}, {"name": "regions/r2/parallax.json"}, "junk"]
+	var removed := FirestoreRest.prune_files(dir, files, ["map.json"])
+	removed.sort()
+	_check(
+		(
+			removed
+			== [
+				"regions/r1/parallax.json",
+				"regions/r1/sky.png",
+				"regions/r1/sky.png.import",
+				"world_tiles.png",
+				"world_tiles.png.import"
+			]
+		),
+		"files the publication no longer lists go, their .import sidecars with them"
+	)
+	_check(FileAccess.file_exists(dir + "/world.json"), "a listed file stays")
+	_check(FileAccess.file_exists(dir + "/map.json"), "a kept file stays")
+	_check(
+		FileAccess.file_exists(dir + "/regions/r2/parallax.json"),
+		"a listed file in a subfolder stays"
+	)
+	_check(not DirAccess.dir_exists_absolute(dir + "/regions/r1"), "an emptied folder goes")
+	_check(DirAccess.dir_exists_absolute(dir + "/regions"), "a folder with a listed file stays")
+	_check(
+		FirestoreRest.prune_files(DIR + "/prune/none", files).is_empty(),
+		"a missing folder is nothing to prune"
+	)
 
 
 # ---------- MapStore ----------
@@ -338,6 +503,218 @@ func test_backdrop_lookup() -> void:
 	backdrop.show_region({"name": "Nowhere", "y0": 0, "y1": 32}, 16, map_dir)
 	_check(backdrop.get_child_count() == 1, "a region without a set only fades the old one out")
 	backdrop.queue_free()
+
+
+func test_backdrop_layers() -> void:
+	var map_dir := DIR + "/with_layers"
+	var region_dir := map_dir + "/regions/layered"
+	var image := Image.create(4, 4, false, Image.FORMAT_RGBA8)
+	image.fill(Color.WHITE)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(region_dir))
+	image.save_png(ProjectSettings.globalize_path(region_dir + "/far.png"))
+	image.save_png(ProjectSettings.globalize_path(region_dir + "/fog.png"))
+	var spec := {
+		"art_tile": 64,
+		"layers":
+		[
+			{"file": "far.png", "scroll": [0.2, 0.1]},
+			{
+				"file": "fog.png",
+				"scroll": [0.6, 1.0],
+				"drift": [6, 0],
+				"sway": [8, 9],
+				"blend": "add",
+				"lit": true,
+				"repeat_y": true,
+				"depth": 0.0,
+				"tint": "#ff8800",
+			},
+			{"file": "fog.png", "cover": true, "blend": "screen"},
+			{"file": "missing.png"},
+		]
+	}
+	FirestoreRest.write_file(region_dir + "/parallax.json", JSON.stringify(spec).to_utf8_buffer())
+	var backdrop := Backdrop.new()
+	add_child(backdrop)
+	var region := {"name": "Layered", "y0": 0, "y1": 64, "sky_bottom": "#0000ff"}
+	backdrop.show_region(region, 16, map_dir)
+	_check(backdrop.get_child_count() == 3, "a layer without its PNG is skipped")
+	var far: Backdrop.Layer = backdrop.get_child(0)
+	var fog: Backdrop.Layer = backdrop.get_child(1)
+	var cover: Backdrop.Layer = backdrop.get_child(2)
+	_check(
+		is_equal_approx(far.depth, 0.4),
+		"a far layer's depth defaults to half of what it does not follow"
+	)
+	_check(
+		far.tint.is_equal_approx(Color.WHITE.lerp(Color.BLUE, 0.4)),
+		"and is pulled towards the sky colour"
+	)
+	_check(
+		far.drift == Vector2.ZERO and far.sway == Vector2.ZERO and not far.animated(),
+		"a plain layer stands still"
+	)
+	var far_material := far.material as CanvasItemMaterial
+	_check(
+		(
+			far.light_mask == 0
+			and far_material != null
+			and far_material.light_mode == CanvasItemMaterial.LIGHT_MODE_UNSHADED
+		),
+		"and the lights pass it by"
+	)
+	_check(
+		far.texture_filter == CanvasItem.TEXTURE_FILTER_LINEAR_WITH_MIPMAPS,
+		"painted art is filtered with mipmaps"
+	)
+	_check(
+		fog.drift == Vector2(6, 0) and fog.sway == Vector2(8, 9) and fog.animated(),
+		"drift and sway are read"
+	)
+	_check(
+		fog.motion(0.0) == Vector2.ZERO and is_equal_approx(fog.motion(4.5).x, 27.0),
+		"a layer drifts at its speed and sways back through the middle"
+	)
+	var fog_material := fog.material as CanvasItemMaterial
+	_check(
+		(
+			fog.light_mask == 1
+			and fog_material.blend_mode == CanvasItemMaterial.BLEND_MODE_ADD
+			and fog_material.light_mode == CanvasItemMaterial.LIGHT_MODE_NORMAL
+		),
+		"a lit additive layer keeps the lights"
+	)
+	_check(
+		fog.repeat_y and fog.depth == 0.0 and fog.tint == Color("#ff8800"),
+		"repeat_y and an explicit depth are read"
+	)
+	_check(
+		cover.depth == 0.0 and is_equal_approx(cover.tint.a, Backdrop.SCREEN_ALPHA),
+		"a cover layer has no depth; a screen blend is additive at a lower alpha"
+	)
+	_check(
+		Backdrop.layer_depth({"front": true, "scroll": [0.2, 1]}) == 0.0,
+		"a front layer has no depth"
+	)
+	backdrop.queue_free()
+
+
+# ---------- RegionFx ----------
+
+
+func test_region_fx() -> void:
+	_check(
+		RegionFx.PRESETS.has("embers") and RegionFx.PRESETS.size() == 7,
+		"seven stock particle presets"
+	)
+	var spec := RegionFx.region_spec({"particles": ["embers", "nothing", "snow"]})
+	_check(
+		spec["particles"] == [{"preset": "embers"}, {"preset": "snow"}],
+		"a region's particles list names presets, unknown ones dropped"
+	)
+	_check(
+		(
+			RegionFx.preset_texture("rain").get_size() == Vector2(1, 7)
+			and RegionFx.preset_texture("birds").get_width() == 7
+		),
+		"presets draw their own sprites"
+	)
+	var fx := RegionFx.new()
+	add_child(fx)
+	fx.show_region({"name": "Nowhere Special", "particles": ["embers", "dust"]}, 16)
+	_check(fx.get_child_count() == 2, "a region with no fx.json gets its presets")
+	var map_dir := DIR + "/with_fx"
+	var region_dir := map_dir + "/regions/foggy"
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(region_dir))
+	var own := {"art_tile": 16, "particles": [{"preset": "snow", "amount": 7}, {"preset": "none"}]}
+	FirestoreRest.write_file(region_dir + "/fx.json", JSON.stringify(own).to_utf8_buffer())
+	fx.show_region({"name": "Foggy", "particles": ["embers"]}, 16, map_dir)
+	var emitters := fx.get_children().filter(func(c: Node) -> bool: return c.emitting)
+	_check(
+		emitters.size() == 1 and emitters[0].amount == 7,
+		"the map's own fx.json wins over the region's list and tunes the preset"
+	)
+	# Freed now, not at exit: the particles' meshes would be reported as leaked.
+	remove_child(fx)
+	fx.free()
+
+
+# ---------- RegionLook ----------
+
+
+func test_region_look() -> void:
+	var fallback: Array[Color] = [Color.RED, Color.GREEN, Color.BLUE]
+	var sky := RegionLook.sky_of({}, fallback)
+	_check(
+		sky[0] == Color.RED and sky[1] == Color.BLUE,
+		"a region without sky colours takes the level's top and bottom"
+	)
+	sky = RegionLook.sky_of({"sky_top": "#102030", "sky_bottom": "nonsense"}, fallback)
+	_check(
+		sky[0] == Color("#102030") and sky[1] == Color.BLUE,
+		"its own colours win, bad ones fall back"
+	)
+	_check(
+		(
+			RegionLook.rim_of({"sky_top": "#102030"}, fallback) == Color("#102030")
+			and RegionLook.rim_of({"light": "#ffffff"}, fallback) == Color.WHITE
+		),
+		"the rim is the region's light, else its sky top"
+	)
+	_check(
+		RegionLook.ambient_of({"ambient": "#808080"}, fallback) == Color("#808080"),
+		"an explicit ambient is used as it is"
+	)
+	var derived := RegionLook.ambient_of({"sky_top": "#ffffff", "sky_bottom": "#ffffff"}, fallback)
+	_check(derived.is_equal_approx(Color(0.6, 0.6, 0.6)), "a derived ambient sits below the sky")
+	var grade := RegionLook.grade_of({})
+	_check(
+		grade["tint"] == Color.WHITE and grade["contrast"] == 1.0 and grade["saturation"] == 1.0,
+		"no grade leaves the view alone"
+	)
+	grade = RegionLook.grade_of({"grade": {"tint": "#ffe0c0", "contrast": 9, "saturation": 0.5}})
+	_check(
+		(
+			grade["tint"] == Color("#ffe0c0")
+			and grade["contrast"] == 3.0
+			and grade["saturation"] == 0.5
+		),
+		"a grade is read and clamped"
+	)
+	_check(
+		(
+			RegionLook.descent_factor(0.0, 50, 100) == 1.0
+			and is_equal_approx(RegionLook.descent_factor(0.6, 50, 100), 0.7)
+			and is_equal_approx(RegionLook.descent_factor(0.6, 500, 100), 0.4)
+			and RegionLook.descent_factor(0.6, -5, 100) == 1.0
+		),
+		"the descent darkens evenly to the bottom and no further"
+	)
+	var look := RegionLook.new()
+	look.reset({"sky_top": "#000000", "sky_bottom": "#000000", "y0": 0, "y1": 100}, fallback)
+	var next := {
+		"sky_top": "#ffffff",
+		"sky_bottom": "#ffffff",
+		"cave": true,
+		"y0": 100,
+		"y1": 300,
+		"grade": {"contrast": 2},
+	}
+	look.retarget(next, fallback)
+	look.step(RegionLook.FADE / 2.0)
+	_check(
+		(
+			is_equal_approx(look.top.r, 0.5)
+			and is_equal_approx(look.cave, 0.5)
+			and look.band.is_equal_approx(Vector2(50, 200))
+			and is_equal_approx(look.contrast, 1.5)
+		),
+		"halfway through a fade the look is halfway"
+	)
+	_check(
+		look.step(RegionLook.FADE) and look.top == Color.WHITE and not look.step(0.1),
+		"the fade ends on the new look"
+	)
 
 
 func test_region_key() -> void:

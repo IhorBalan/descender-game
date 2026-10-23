@@ -80,8 +80,10 @@ in the corner is the project's `application/config/version`.
 
 **Settings**, on the title screen and in the pause menu, has four pages.
 **Audio** has the master, music and sound effect volumes and a toggle for
-the blips dialogue ticks with. **Display** has fullscreen, the window
-size, v-sync and the screen shake. **Controls** has the bindings: pick an
+the blips dialogue ticks with. **Display** has fullscreen (on by default:
+the game starts full screen, filling the display at the screen's own
+aspect; a window scales the 16:9 view by whole numbers instead), the
+window size, v-sync and the screen shake. **Controls** has the bindings: pick an
 action, press the new key (a key taken from another action is moved, not
 shared) or Esc to keep the old one; the **Bindings for** button flips the
 list between the keyboard and the gamepad, which are rebound separately
@@ -378,7 +380,18 @@ pieces composed by eye). Each gives its atlas tiles row by row, the pixel
 position of its top-left corner, its size in tiles and whether it is
 mirrored, solid or glowing. `LevelBuilder._build_sprites` draws each as a
 small `TileMapLayer` at that position above the tile layers (a glowing one
-also gets an additive glow layer), and a solid one is a box in `Solids`.
+also gets an additive glow layer). A solid one collides with polygons traced
+from its art: the opaque pixels, with strands thinner than a few level
+pixels (grass tufts, hanging ivy) left out, so the hero stands on the stone
+rather than on the tips of the grass; without the sheet's image the
+export's `hit` box stands in. A sprite with a walkable shape drawn in the
+editor (`shape`: polygons in level pixels from its top-left, unmirrored)
+collides with exactly those polygons instead, mirrored with the sprite. The
+traced outline is smoothed to within 1.5 level
+pixels (`SPRITE_SMOOTH_PX`), so the half-pixel stairs the tracing makes of a
+nearly flat painted top become gentle slopes, and the hero steps up any lip
+of up to 4 pixels while walking (`Player.CORNER_CORRECTION`), so painted
+ground never stops him like a wall.
 
 The export also says how many pixels a tile has in the sheets, its **art
 scale** (`art_tile`): 16 for pixel art, 64 for painted tiles, which makes a
@@ -405,13 +418,46 @@ view), then under `assets/regions/<key>/`.
   position.
 - **Parallax** (`parallax.json`, drawn by `scripts/backdrop.gd`): painted
   layers behind the level, back to front, each repeated sideways and
-  following the camera by a share of its movement, placed relative to the
-  region's top edge; a `cover` layer is stretched over the view (the sky)
-  and a `front` layer draws in front of the level (haze, wisps). Crossing
-  into a region fades its set in over the last.
+  following the camera by a share of its movement (`scroll`), placed
+  relative to the region's top edge (`y`); a `cover` layer is stretched
+  over the view (the sky) and a `front` layer draws in front of the level
+  (haze, wisps). A layer may also `drift` by itself (level pixels a second,
+  `[x, y]`), `sway` sideways (`[amplitude, period]`), `blend` as `"add"` or
+  `"screen"` (additive at a lower alpha), be `lit` by the level's lights
+  (fog a torch brightens; other layers ignore them), `repeat_y` for a
+  region taller than its art, and sit at a `depth` of 0 to 1 that pulls
+  it towards the region's sky colour, the haze of distance (a layer
+  without one gets half of what it does not follow the camera by). Painted
+  sets are filtered with mipmaps; pixel art stays nearest. Crossing into
+  a region cross-fades its set in over the last.
 - **Particles** (`fx.json`, run by `scripts/region_fx.gd`): sprites drifting
   through the air of the region, petals, motes, embers, emitted across the
-  view around the camera.
+  view around the camera. An entry with a `preset` instead of a `texture`
+  (`embers`, `dust`, `ash`, `leaves`, `rain`, `snow`, `birds`) draws its
+  own sprite and may override the preset's fields; a region with no
+  `fx.json` but a `particles` list of preset names in the export gets those.
+
+The export's regions can carry their look too, each field optional:
+`sky_top` and `sky_bottom` (the procedural sky's colours, else the level's
+own, see `Levels.sky`), `cave` (flat dark streaks instead of clouds and
+ridges), `light` (the rim light the sky throws on the tiles, else the sky
+top), `ambient` (else one derived from the sky) and a `grade` of `tint`,
+`contrast` and `saturation`. A top-level `descent: {"dark": 0..1}` darkens
+the sky, the backdrop and the ambient evenly from the map's top to its
+bottom. `scripts/region_look.gd` eases all of it over 2.5 s when the hero
+crosses a region line.
+
+The sky is `assets/shaders/sky.gdshader` on the `Sky` rect, the editor's
+procedural sky ported: a gradient across the region's band keyed to the
+camera, so the horizon rises as the hero falls, with ridges, a sea of
+clouds and puffs drifting over time (stepped and dithered for pixel art,
+smooth for painted maps). The lit tile layers wear
+`assets/shaders/rim.gdshader`, which adds the region's light where a
+tile's normal map faces up (`LevelBuilder.RIM_STRENGTH`, 0 turns it off).
+Over the level and under the HUD, `scripts/post_fx.gd` draws
+`assets/shaders/post.gdshader`: the region's grade and a soft vignette.
+A `WorldEnvironment` with glow (and `rendering/viewport/hdr_2d` on) makes
+the sky, the glow tiles and the lights bloom a little.
 
 Each JSON says how many pixels per tile its PNGs are drawn at (`art_tile`),
 so one set serves maps of any art scale. `tools/gen_region_art.py` (needs
@@ -569,7 +615,9 @@ the live map is meant to ship.
 | `scripts/firestore_rest.gd` | Reads the editor's public Firestore documents, for the two above |
 | `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
 | `scripts/backdrop.gd` | The painted parallax layers behind the level, per region |
-| `scripts/region_fx.gd` | The drifting particles of a region |
+| `scripts/region_fx.gd` | The drifting particles of a region, from its `fx.json` or the stock presets |
+| `scripts/region_look.gd` | The sky colours, rim light and grade of the region the hero is in, eased between regions |
+| `scripts/post_fx.gd`, `assets/shaders/` | The grade and vignette over the level; the procedural sky, the rim light and the post shaders |
 | `tools/gen_region_art.py` | Draws a region's edge pieces, parallax layers, particles and editor tile textures from code (needs Pillow and numpy) |
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
