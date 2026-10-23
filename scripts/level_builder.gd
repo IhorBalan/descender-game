@@ -62,6 +62,8 @@ const LEDGE_HEIGHT := 4.0
 ## stray this far from the pixels.
 const SPRITE_STRAND_PX := 6.0
 const SPRITE_TRACE_PX := 1.0
+## Pixels per level pixel the tracing works at.
+const SPRITE_TRACE_SCALE := 2
 ## Lights are drawn with a radial gradient this many pixels across, scaled
 ## to each light's radius.
 const LIGHT_TEXTURE_SIZE := 128
@@ -371,23 +373,27 @@ func _add_sprite_collision(
 	map: WorldMap,
 	tile_set: TileSet
 ) -> void:
-	var art := map.art_tile
 	var image := _sprite_image(tiles, columns, rows, flip, map, tile_set)
 	var polygons: Array[PackedVector2Array] = []
 	if image:
+		# Traced at a few pixels per level pixel: fine enough for the outline,
+		# and small enough that the strand filter (a neighbourhood pass per
+		# pixel) stays quick for 128-px art.
+		var size := Vector2i(columns * SPRITE_TRACE_SCALE * TILE, rows * SPRITE_TRACE_SCALE * TILE)
+		if image.get_size() != size:
+			image.resize(size.x, size.y, Image.INTERPOLATE_BILINEAR)
 		var mask := BitMap.new()
 		mask.create_from_image_alpha(image, 0.5)
-		var rect := Rect2i(0, 0, columns * art, rows * art)
+		var rect := Rect2i(Vector2i.ZERO, size)
 		# Opening: shrink then grow back, which drops anything thinner than
-		# twice the margin and keeps the body's outline where it was.
-		var margin := maxi(1, int(round(art * SPRITE_STRAND_PX / float(TILE))))
+		# the strand width and keeps the body's outline where it was.
+		var margin := maxi(1, int(round(SPRITE_STRAND_PX * SPRITE_TRACE_SCALE / 2.0)))
 		mask.grow_mask(-margin, rect)
 		mask.grow_mask(margin, rect)
-		var scale_factor := map.art_scale()
-		for polygon in mask.opaque_to_polygons(rect, art * SPRITE_TRACE_PX / float(TILE)):
+		for polygon in mask.opaque_to_polygons(rect, SPRITE_TRACE_PX * SPRITE_TRACE_SCALE):
 			var points := PackedVector2Array()
 			for point in polygon:
-				points.append(point * scale_factor)
+				points.append(point / float(SPRITE_TRACE_SCALE))
 			if points.size() >= 3:
 				polygons.append(points)
 	if polygons.is_empty():
