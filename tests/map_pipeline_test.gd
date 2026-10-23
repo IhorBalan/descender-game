@@ -16,7 +16,7 @@ extends Node
 ## Loaded by path, so a fresh checkout works before the class cache knows it.
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 87
+const EXPECTED_CHECKS := 89
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -175,6 +175,18 @@ func _write_export(dir: String, art_tile: int) -> String:
 				"tiles": [70, 71],
 			},
 			{"id": 10, "name": "broken", "x": 0, "y": 0, "columns": 2, "rows": 2, "tiles": [70]},
+			{
+				"id": 11,
+				"name": "padded",
+				"x": 100,
+				"y": 100,
+				"columns": 2,
+				"rows": 2,
+				"flip": true,
+				"solid": true,
+				"tiles": [70, 71, 70, 71],
+				"hit": [4, 20, 24, 12],
+			},
 		],
 	}
 	var path := dir.path_join("world.json")
@@ -195,7 +207,7 @@ func test_world_map() -> void:
 	)
 	_check(map.kind_at(0, 1) == WorldMap.KIND_SOLID, "terrain kinds are read")
 	_check(map.kind_at(0, 0) == WorldMap.KIND_NONE, "air has no kind")
-	_check(map.sprites.size() == 2, "sprites are read")
+	_check(map.sprites.size() == 3, "sprites are read")
 	_check(map.atlas_coords(70) == Vector2i(6, 1), "atlas ids become columns and rows")
 	_check(is_equal_approx(map.art_scale(), 1.0), "16-px art is drawn at scale 1")
 	_check(
@@ -255,8 +267,18 @@ func test_level_builder_sprites() -> void:
 			"and flips each tile"
 		)
 	var solids := builder.get_node("Solids")
-	# One run of rock along the bottom row, plus the solid sprite's box.
-	_check(solids.get_child_count() == 2, "a solid sprite adds one collision box")
+	# One run of rock along the bottom row, plus a box per solid sprite.
+	_check(solids.get_child_count() == 3, "a solid sprite adds one collision box")
+	var padded: CollisionShape2D = null
+	for child in solids.get_children():
+		if child is CollisionShape2D and child.shape.size == Vector2(24, 12):
+			padded = child
+	_check(padded != null, "a sprite with a hit box collides with its opaque pixels only")
+	# Mirrored: the box sits 4 px from the right edge of the 32-px-wide sprite.
+	_check(
+		padded != null and padded.position == Vector2(100 + 4 + 12, 100 + 20 + 6),
+		"and the hit box is mirrored with the sprite"
+	)
 	var box: CollisionShape2D = null
 	for child in solids.get_children():
 		if child is CollisionShape2D and child.shape.size == Vector2(32, 16):

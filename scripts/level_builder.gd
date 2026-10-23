@@ -348,11 +348,17 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 				layer.set_cell(Vector2i(cx, i / columns), source, map.atlas_coords(id), alternative)
 			_tiles.add_child(layer)
 		if spec.get("solid", false):
+			# The box of the art's opaque pixels (`hit`, from the top-left,
+			# unmirrored), else the whole tile box of an older export.
+			var hit: Array = spec.get("hit", [0, 0, columns * TILE, rows * TILE])
 			var shape := CollisionShape2D.new()
 			var rect := RectangleShape2D.new()
-			rect.size = Vector2(columns * TILE, rows * TILE)
+			rect.size = Vector2(float(hit[2]), float(hit[3]))
 			shape.shape = rect
-			shape.position = at + rect.size / 2.0
+			var left := float(hit[0])
+			if flip:
+				left = columns * TILE - float(hit[0]) - float(hit[2])
+			shape.position = at + Vector2(left, float(hit[1])) + rect.size / 2.0
 			_solids.add_child(shape)
 
 

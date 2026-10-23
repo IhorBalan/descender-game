@@ -65,7 +65,9 @@ var markers: Array[Dictionary] = []
 ## Point lights: x, y, z (height), radius, color, energy, flicker.
 var lights: Array[Dictionary] = []
 ## Free-placed decorations: id, name, x, y (pixels of the top-left corner),
-## columns, rows (tiles), tiles (atlas ids row by row), flip, solid, glow.
+## columns, rows (tiles), tiles (atlas ids row by row), flip, solid, glow,
+## and hit, the box of the art's opaque pixels ([x, y, w, h] from the
+## top-left, unmirrored) that a solid one collides with.
 var sprites: Array[Dictionary] = []
 
 
