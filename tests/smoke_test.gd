@@ -2408,17 +2408,17 @@ func _physics_process(_delta: float) -> void:
 			_check(map_screen.travel_targets() == [0, 5], "the rested checkpoints are on offer")
 			_check(map_screen.picked_checkpoint() == 0, "starting from the one he rests at")
 			_check(
-				map_screen.legend_label.text.begins_with("Travel: < > pick"),
+				map_screen.legend_label.template.begins_with("Travel: {navigate} pick"),
 				"the footer asks for a pick"
 			)
 			map_screen.pick_next()
 			_check(map_screen.picked_checkpoint() == 5, "right picks the next")
 			_check(
 				(
-					"checkpoint 6" in map_screen.legend_label.text
-					and "Purgatory" in map_screen.legend_label.text
+					"checkpoint 6" in map_screen.legend_label.template
+					and "Purgatory" in map_screen.legend_label.template
 				),
-				"and names it with its region (%s)" % map_screen.legend_label.text
+				"and names it with its region (%s)" % map_screen.legend_label.template
 			)
 			map_screen.pick_previous()
 			map_screen.pick_previous()
@@ -2440,7 +2440,8 @@ func _physics_process(_delta: float) -> void:
 			_check(_world.fade.cover.modulate.a < 1.0, "as the screen comes back")
 			_check(_world.rested_checkpoints() == [0, 5], "both checkpoints stay rested")
 			_check(
-				_world.hud.message.text.begins_with("Carried to checkpoint 6"), "the HUD says so"
+				_world.hud.message.get_parsed_text().begins_with("Carried to checkpoint 6"),
+				"the HUD says so"
 			)
 			_check(_world.can_travel(), "and he may travel on from there")
 			root.remove_child(_world)

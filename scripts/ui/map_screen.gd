@@ -68,7 +68,7 @@ var _region_labels: Array[Label] = []
 
 @onready var heading: Label = $Heading
 @onready var found_label: Label = $Found
-@onready var legend_label: Label = $Legend
+@onready var legend_label: PromptLabel = $Legend
 @onready var back_button: Button = $Back
 
 
@@ -197,14 +197,15 @@ func confirm_travel() -> void:
 ## The footer's second line: the trip on offer, or the legend.
 func _show_travel() -> void:
 	if not can_travel():
-		legend_label.text = LEGEND_TEXT
+		legend_label.template = LEGEND_TEXT
 		return
 	var index := picked_checkpoint()
 	if index == _travel_from:
-		legend_label.text = "Travel: < > pick a checkpoint you have rested at"
+		legend_label.template = "Travel: {navigate} pick a checkpoint you have rested at"
 		return
-	legend_label.text = (
-		"Travel: < > checkpoint %d, %s   Space to go" % [index + 1, _checkpoint_region(index)]
+	legend_label.template = (
+		"Travel: {navigate} checkpoint %d, %s   {ui_accept} to go"
+		% [index + 1, _checkpoint_region(index)]
 	)
 
 

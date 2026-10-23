@@ -4,8 +4,9 @@ extends Area2D
 ## Something in the level the hero can talk to or examine: an NPC, a relic
 ## or an invisible story trigger. Lists the dialogue ids to try, in priority
 ## order; main.gd picks the first whose flags match and plays it. Shows the
-## interact key, or the pad button, above itself while the hero stands close. The node's origin
-## is at the base, like the hero's, so a level cell places it on the floor.
+## interact key, or the pad button, above itself while the hero stands
+## close. The node's origin is at the base, like the hero's, so a level
+## cell places it on the floor.
 
 ## Fired when the hero presses interact in range (or, for a trigger, walks
 ## in). main.gd listens and runs the dialogue.
