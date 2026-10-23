@@ -12,7 +12,8 @@ extends Node
 ## has the strips its moves use. A failing check names the entry, so a
 ## broken reference is found before the smoke test walks past it. The
 ## unit tests cover the pure pieces: the story flags, the dialogue data,
-## the quests, the levels registry, the upgrade flags and the save slots.
+## the quests, the levels registry, the upgrade flags, the map and the
+## save slots.
 ##
 ## Every method named test_* runs once, in order; `_check` counts.
 
@@ -30,7 +31,9 @@ const PLACEMENT_TYPES: Array[String] = [
 	"npc", "item", "trigger", "enemy", "upgrade", "power", "barrier"
 ]
 ## The flags the code sets without a dialogue entry: their prefixes.
-const CODE_FLAG_PREFIXES: Array[String] = ["boss:", "secret:", "upgrade:", "sword:", "seen:"]
+const CODE_FLAG_PREFIXES: Array[String] = [
+	"boss:", "secret:", "upgrade:", "sword:", "seen:", "room:"
+]
 
 var _checks := 0
 var _failures := 0
@@ -526,6 +529,28 @@ func test_upgrades() -> void:
 			Upgrade.DESCRIPTIONS[kind].size() >= 2,
 			"%s reads like a relic" % Upgrade.FLAG_NAMES[kind]
 		)
+
+
+func test_map() -> void:
+	var world := WorldMap.read(WORLD_PATH)
+	_check(world != null and world.rooms.size() > 100, "the world has its rooms")
+	_check(MapScreen.room_flag(7) == "room:7", "a found room is a flag")
+	_check(MapScreen.rooms_found(world) == 0, "a new game has found nothing")
+	var first: Dictionary = world.rooms[0]
+	var second: Dictionary = world.rooms[1]
+	Story.set_flag(MapScreen.room_flag(int(first["id"])))
+	Story.set_flag(MapScreen.room_flag(int(second["id"])))
+	Story.set_flag(MapScreen.room_flag(999999))
+	_check(
+		(
+			MapScreen.rooms_found(world) == 2
+			and MapScreen.is_found(first)
+			and MapScreen.is_found(second)
+		),
+		"found rooms are counted, and an unknown id is not"
+	)
+	var third: Dictionary = world.rooms[2]
+	_check(not MapScreen.is_found(third), "the rest are not")
 
 
 func test_save_slots() -> void:

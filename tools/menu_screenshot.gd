@@ -1,7 +1,8 @@
 extends SceneTree
 
 ## Renders the title screen, the credits, the new game pickers, the four
-## pages of the settings screen and the pause menu and saves screenshots.
+## pages of the settings screen, the pause menu and the map page and saves
+## screenshots.
 ## Needs a display (or a virtual one):
 ##
 ##   xvfb-run -a godot --rendering-driver opengl3 --path . \
@@ -68,10 +69,19 @@ func _physics_process(_delta: float) -> bool:
 			_main = load("res://scenes/main.tscn").instantiate()
 			root.add_child(_main)
 		140:
-			_main.pause_menu.open(_main.pause_status())
+			_main.pause_menu.open(_main.pause_status(), _main.player, _main.level)
 		150:
 			_save("pause.png")
-		156:
+		152:
+			# The map, with the rooms of Paradise and the hub found.
+			var level: Node = _main.level
+			for room in level.world.rooms:
+				if int(room.get("region", -1)) <= 1 and int(room.get("depth", 0)) <= 8:
+					Story.set_flag("room:%d" % int(room.get("id", -1)))
+			_main.pause_menu.map_button.pressed.emit()
+		162:
+			_save("map.png")
+		168:
 			quit()
 			return true
 	return false

@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene load_steps=7 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/pause_menu.gd" id="1_pause"]
 [ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
 [ext_resource type="PackedScene" path="res://scenes/settings_menu.tscn" id="3_settings"]
 [ext_resource type="PackedScene" path="res://scenes/quest_log.tscn" id="4_log"]
 [ext_resource type="PackedScene" path="res://scenes/inventory_menu.tscn" id="5_pack"]
+[ext_resource type="PackedScene" path="res://scenes/map_screen.tscn" id="6_map"]
 
 [node name="PauseMenu" type="CanvasLayer"]
 process_mode = 3
@@ -52,48 +53,62 @@ text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Menu" type="VBoxContainer" parent="Panel"]
+[node name="Menu" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -46.0
-offset_right = 50.0
-offset_bottom = 66.0
+offset_left = -104.0
+offset_top = -32.0
+offset_right = 104.0
+offset_bottom = 38.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 8
+
+[node name="Left" type="VBoxContainer" parent="Panel/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
 theme_override_constants/separation = 2
 
-[node name="Resume" type="Button" parent="Panel/Menu"]
+[node name="Resume" type="Button" parent="Panel/Menu/Left"]
 layout_mode = 2
 text = "Resume"
 
-[node name="Restart" type="Button" parent="Panel/Menu"]
+[node name="Restart" type="Button" parent="Panel/Menu/Left"]
 layout_mode = 2
 text = "Restart at Checkpoint"
 
-[node name="Save" type="Button" parent="Panel/Menu"]
+[node name="Save" type="Button" parent="Panel/Menu/Left"]
 layout_mode = 2
 text = "Save Game"
 
-[node name="Promises" type="Button" parent="Panel/Menu"]
+[node name="Quit" type="Button" parent="Panel/Menu/Left"]
+layout_mode = 2
+text = "Quit to Title"
+
+[node name="Right" type="VBoxContainer" parent="Panel/Menu"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 2
+
+[node name="Map" type="Button" parent="Panel/Menu/Right"]
+layout_mode = 2
+text = "The Map"
+
+[node name="Promises" type="Button" parent="Panel/Menu/Right"]
 layout_mode = 2
 text = "Promises"
 
-[node name="Pack" type="Button" parent="Panel/Menu"]
+[node name="Pack" type="Button" parent="Panel/Menu/Right"]
 layout_mode = 2
 text = "The Pack"
 
-[node name="Settings" type="Button" parent="Panel/Menu"]
+[node name="Settings" type="Button" parent="Panel/Menu/Right"]
 layout_mode = 2
 text = "Settings"
-
-[node name="Quit" type="Button" parent="Panel/Menu"]
-layout_mode = 2
-text = "Quit to Title"
 
 [node name="Hint" type="Label" parent="Panel"]
 layout_mode = 1
@@ -116,4 +131,7 @@ layout_mode = 1
 layout_mode = 1
 
 [node name="InventoryMenu" parent="Panel" instance=ExtResource("5_pack")]
+layout_mode = 1
+
+[node name="MapScreen" parent="Panel" instance=ExtResource("6_map")]
 layout_mode = 1

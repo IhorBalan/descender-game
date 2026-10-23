@@ -55,6 +55,9 @@ var _ended := false
 var _talking_to: Interactable
 ## The region of the world the hero is in (see WorldMap).
 var _region: Dictionary = {}
+## The rect of the room the hero is in, so the room is only looked up
+## again once he leaves it (see MapScreen for what a found room is).
+var _room_rect := Rect2()
 ## A trader's repeat line is playing: the wares open when it closes.
 var _shop_pending := false
 ## The boss being fought, the seals on its room, and whether the fight is
@@ -187,12 +190,27 @@ func _process(delta: float) -> void:
 	play_time += delta
 
 
-## The hero moves in the physics step, so the region he is in is read there.
+## The hero moves in the physics step, so the region and the room he is
+## in are read there.
 func _physics_process(_delta: float) -> void:
 	if is_instance_valid(player):
 		var region := level.region_at(player.global_position.y)
 		if region != _region:
 			_enter_region(region, true)
+		_track_room(player.global_position)
+
+
+## The first time the hero stands in a room of the export it is found:
+## its flag goes into the story, so the map shows it and the save keeps it.
+func _track_room(at: Vector2) -> void:
+	if _room_rect.has_point(at):
+		return
+	var room_id := level.room_at(at)
+	if room_id < 0:
+		_room_rect = Rect2()
+		return
+	_room_rect = level.room_rect(level.world, room_id)
+	Story.set_flag(MapScreen.room_flag(room_id))
 
 
 ## Crossing into a region of the world: its ambient tint and sound, and its
@@ -225,7 +243,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if shop_menu.is_open():
 			return
 		Audio.play("pause")
-		pause_menu.open(pause_status(), player)
+		pause_menu.open(pause_status(), player, level)
 		get_viewport().set_input_as_handled()
 	elif event.is_action_pressed("restart"):
 		restart_from_checkpoint()

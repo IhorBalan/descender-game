@@ -71,12 +71,25 @@ the white flash and the blink of stopped time on a hit and for gamepad
 rumble, for anyone they bother. Settings live in `user://settings.cfg`.
 
 Pausing opens a menu to resume, restart at the last checkpoint (what R
-does), save, read the promises (the quest log), open the pack (the
-inventory, below), open the settings or quit
+does), save, open the map, read the promises (the quest log), open the
+pack (the inventory, below), open the settings or quit
 to the title, which asks to be pressed twice since whatever happened
 after the last save goes with it. A line under the heading says which
 slot the game is in and how long it has been played. Saving there records
 the last checkpoint, which is where the save will resume.
+
+**The Map** draws the rooms of the world the hero has stood in, on the
+room grid of the export, with the whole world on one page: a room is
+found the first time he walks into it (flag `room:<id>`, so the save
+keeps it), the region names down the side appear as he reaches them, and
+the line at the bottom counts the rooms found. A blinking white mark is
+the hero, a gold mark a checkpoint (bright for the one he will come back
+to), a red room a boss not yet beaten (dark once he is), a gap in a wall
+a door he has been through, a grey tick on a wall a way he has not taken
+yet, and a gold tick a seal that still holds. Secret passages are only
+drawn once both their rooms are known.
+
+![The map](docs/screenshots/map.png)
 
 The top left of the screen shows hearts, healing charges, the angel
 abilities unlocked so far and a small bar that fills as the dash comes
@@ -433,6 +446,7 @@ the live map is meant to ship.
 | ---- | ---------- |
 | `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
 | `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, promises, settings, quit to title |
+| `scenes/map_screen.tscn`, `scripts/ui/map_screen.gd` | The map page: the rooms found so far on the room grid of the export, the hero, the checkpoints, the bosses and the doors not yet taken |
 | `scenes/quest_log.tscn`, `scripts/ui/quest_log.gd`, `scripts/quests.gd` | The promises page: the side quests and their steps, read off the story flags |
 | `scenes/inventory_menu.tscn`, `scripts/ui/inventory_menu.gd` | The pack page: the purse, what is worn, the items to wear or use, the kept things |
 | `scenes/shop_menu.tscn`, `scripts/ui/shop_menu.gd`, `scripts/shops.gd` | A trader's stall and the stock of each |

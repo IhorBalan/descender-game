@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 610
+const EXPECTED_CHECKS := 618
 const LAST_TICK := 2330
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -620,6 +620,30 @@ func _physics_process(_delta: float) -> void:
 			var pause: PauseMenu = _main.pause_menu
 			_check(pause.status_label.text.begins_with("Played "), "pause says how long was played")
 			_check(not pause.restart_button.disabled, "restart at checkpoint is offered")
+			# The map: the rooms walked through so far are found, and the
+			# page opens from the menu with the regions down its side.
+			var world_map: WorldMap = _main.level.world
+			_check(Story.has_flag(MapScreen.room_flag(2)), "the start room is found on the map")
+			_check(MapScreen.rooms_found(world_map) >= 2, "the rooms walked through are found")
+			_check(not pause.map_button.disabled, "the map is offered")
+			pause.map_button.pressed.emit()
+			var map_screen: MapScreen = pause.map_screen
+			_check(map_screen.visible and not pause.menu.visible, "The Map opens the page")
+			_check(
+				map_screen.found_label.text.ends_with("of %d rooms found" % world_map.rooms.size()),
+				"the page counts the rooms found"
+			)
+			var names := map_screen.region_names()
+			_check(
+				(
+					names.size() == world_map.regions.size()
+					and names[0] == "Paradise"
+					and "?" in names
+				),
+				"the regions reached are named, the rest hidden"
+			)
+			map_screen.close()
+			_check(not map_screen.visible and pause.menu.visible, "Back returns to the menu")
 			# Quit asks first: one press changes the button and nothing else.
 			pause.quit_button.grab_focus()
 			pause.quit_button.pressed.emit()
@@ -658,6 +682,7 @@ func _physics_process(_delta: float) -> void:
 			_check(_main.save_game(), "save slot written")
 			_save = SaveManager.read(_slot)
 			_check(int(_save.get("checkpoint", -1)) == 0, "save holds the checkpoint")
+			_check(MapScreen.room_flag(2) in _save.get("flags", []), "save keeps the rooms found")
 			_check(_save.get("abilities", []).size() == 2, "save holds both abilities")
 			_check(str(_save.get("level", "")) == "world_1", "save holds the level id")
 			_check("item:token" in _save.get("flags", []), "save holds the story flags")
