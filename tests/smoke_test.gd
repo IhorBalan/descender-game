@@ -2080,10 +2080,10 @@ func _physics_process(_delta: float) -> void:
 					if not Items.has(str(ware.get("item", ""))) or ware.get("price", {}).is_empty():
 						bad += 1
 			_check(bad == 0, "every ware is an item with a price (%d wrong)" % bad)
-			_check(
-				Walker.PROFILES["imp"]["loot"]["light"][0] > 0 and Flyer.LOOT["light"][0] > 0,
-				"every enemy leaks light"
-			)
+			var leaks := Walker.PROFILES["imp"]["loot"]["light"][0] > 0
+			for character: String in Flyer.PROFILES:
+				leaks = leaks and Flyer.PROFILES[character]["loot"]["light"][0] > 0
+			_check(leaks, "every enemy leaks light")
 			_world._clear_motes()
 			_place_hero_for_enemy()
 			_imp = _spawn_walker("imp", "", 60.0)

@@ -512,5 +512,208 @@
         "loop": false
       }
     }
+  },
+  "slug": {
+    "frame_size": [
+      72,
+      40
+    ],
+    "origin": [
+      36,
+      40
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "slug_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "slug_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "slug_attack.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "slug_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "slug_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "hoarder": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      28,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hoarder_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "hoarder_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "hoarder_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hoarder_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "hoarder_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "burned": {
+    "frame_size": [
+      96,
+      64
+    ],
+    "origin": [
+      36,
+      64
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "burned_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "burned_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "burned_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "burned_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "burned_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "shade": {
+    "frame_size": [
+      48,
+      48
+    ],
+    "origin": [
+      24,
+      22
+    ],
+    "anchor": "centre",
+    "animations": {
+      "idle": {
+        "file": "shade_idle.png",
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "attack": {
+        "file": "shade_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "shade_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "shade_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "siren": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      24
+    ],
+    "anchor": "centre",
+    "animations": {
+      "idle": {
+        "file": "siren_idle.png",
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "attack": {
+        "file": "siren_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "siren_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "siren_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
   }
 }

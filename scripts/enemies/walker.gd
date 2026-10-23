@@ -23,7 +23,11 @@ extends CharacterBody2D
 ##   and springs flat at him from a few tiles away, jaws open.
 ##
 ## The node's origin is at the feet. `character` picks the sprite strips and
-## the size/speed/attack profile below.
+## the size/speed/attack profile below. The bodies belong to regions: the
+## **angel guard** to Heaven and Purgatory, the **imp** to every circle (the
+## common demon), the **brute** to the deep circles from Gluttony down, the
+## **slug** to Gluttony, the **hoarder** to Greed, the **burned** (a
+## sent-down angel) to Heresy and the **hound** to Violence.
 
 enum State { PATROL, CHASE, LURK, WINDUP, STRIKE, LEAP, RECOVER }
 ## What a wind-up is for.
@@ -109,6 +113,7 @@ const TINT_SLAM := Color(1.0, 0.6, 0.45)
 ## often (brutes always leave a Halo). puff: the colour
 ## of the dust (or light) it dies in. armour: hits never cancel its attack
 ## or push it back while it attacks (and push it half as far otherwise).
+## light_bolt: a hurler throws the Choir's light instead of hellfire.
 const PROFILES := {
 	"imp":
 	{
@@ -194,6 +199,69 @@ const PROFILES := {
 		"armour": false,
 		"loot": {"light": [4, 6], "bone_chance": 0.1, "flask_chance": 0.02},
 	},
+	"slug":
+	{
+		"body": Vector2(40, 20),
+		"speed": 9.0,
+		"health": 6,
+		"walk": "walk",
+		"faces_left": false,
+		"attack_range": 34.0,
+		"reach": Vector2(26, 18),
+		"windup": 0.5,
+		"strike": 0.2,
+		"recover": 0.8,
+		"cooldown": 1.2,
+		"attack_damage": 1,
+		"drop_chance": 0.6,
+		"power": Player.Power.HALO,
+		"power_chance": 0.15,
+		"puff": Color(0.5, 0.42, 0.3),
+		"armour": true,
+		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.08},
+	},
+	"hoarder":
+	{
+		"body": Vector2(20, 36),
+		"speed": 22.0,
+		"health": 4,
+		"walk": "walk",
+		"faces_left": false,
+		"attack_range": 30.0,
+		"reach": Vector2(24, 26),
+		"windup": 0.4,
+		"strike": 0.15,
+		"recover": 0.5,
+		"cooldown": 1.0,
+		"attack_damage": 1,
+		"drop_chance": 0.3,
+		"power": Player.Power.BLADE,
+		"power_chance": 0.1,
+		"puff": Color(0.4, 0.32, 0.26),
+		"armour": false,
+		"loot": {"light": [9, 14], "bone_chance": 0.2, "flask_chance": 0.05},
+	},
+	"burned":
+	{
+		"body": Vector2(24, 56),
+		"speed": 20.0,
+		"health": 5,
+		"walk": "walk",
+		"faces_left": false,
+		"attack_range": 44.0,
+		"reach": Vector2(36, 40),
+		"windup": 0.55,
+		"strike": 0.2,
+		"recover": 0.7,
+		"cooldown": 1.2,
+		"attack_damage": 2,
+		"drop_chance": 0.7,
+		"power": Player.Power.ZEAL,
+		"power_chance": 0.15,
+		"puff": Color(0.35, 0.3, 0.32),
+		"armour": false,
+		"loot": {"light": [6, 10], "bone_chance": 0.06, "flask_chance": 0.04},
+	},
 }
 ## The habits a placement may ask for (see the top of the file).
 const BEHAVIOURS: Array[String] = ["chase", "ambush", "pounce", "hurl", "slam", "lunge"]
@@ -212,7 +280,8 @@ const BARK_CHANCE := 0.5
 const BARK_TIME := 1.3
 const BARK_COLOR := Color(1.0, 0.85, 0.8)
 
-@export_enum("imp", "angel_guard", "brute", "hound") var character := "imp"
+@export_enum("imp", "angel_guard", "brute", "hound", "slug", "hoarder", "burned")
+var character := "imp"
 @export var contact_damage := 1
 ## One of BEHAVIOURS, or "" for plain patrolling. Set by the level from the
 ## placement.

@@ -120,9 +120,9 @@ func _check_enemy(spec: Dictionary, where: String, sprites: Dictionary) -> int:
 		var barks := str(spec.get("barks", ""))
 		if not barks.is_empty() and not Walker.BARKS.has(barks):
 			bad += _fail("%s: no bark set '%s'" % [where, barks])
-	elif character == "watcher":
+	elif Flyer.PROFILES.has(character):
 		if behaviour != "" and behaviour != "dive":
-			bad += _fail("%s: a watcher only dives ('%s')" % [where, behaviour])
+			bad += _fail("%s: a flyer only dives ('%s')" % [where, behaviour])
 	elif character == "hanged":
 		character = Hanger.CHARACTER
 	elif not Boss.has_profile(character):
@@ -258,8 +258,9 @@ func test_sprites() -> void:
 			if not sprites.get(character, {}).get("animations", {}).has(anim_name):
 				bad += _fail("walker %s has no %s strip" % [character, anim_name])
 	for anim_name in ["idle", "attack", "hurt", "death"]:
-		if not sprites.get(Flyer.CHARACTER, {}).get("animations", {}).has(anim_name):
-			bad += _fail("the watcher has no %s strip" % anim_name)
+		for character: String in Flyer.PROFILES:
+			if not sprites.get(character, {}).get("animations", {}).has(anim_name):
+				bad += _fail("flyer %s has no %s strip" % [character, anim_name])
 		if not sprites.get(Hanger.CHARACTER, {}).get("animations", {}).has(anim_name):
 			bad += _fail("the hanged thing has no %s strip" % anim_name)
 	for id: String in Boss.PROFILES:

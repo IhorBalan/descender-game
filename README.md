@@ -158,7 +158,7 @@ gate fades out, saves, and starts the next level with the abilities so far;
 the gate of the last level ends the prototype. The world has no gate yet:
 it is one map from top to bottom.
 Spikes cost one heart and put the hero back on the last solid ground.
-Imps and angel guards swing when the hero stands close: they stop, glow
+Imps, angel guards and the rest of the walkers swing when the hero stands close: they stop, glow
 orange while winding up, then strike in front of them and pause to recover.
 Hitting one during the wind-up cancels the swing (except a brute's: its
 armour keeps the blow from staggering it, and a hit only pushes it half as
@@ -205,7 +205,18 @@ hero instead of drifting at him, stop, turn the eye red, and drop through
 him before climbing back for another pass. The mix thickens on the way
 down: chasers from Lust, ambushers from Gluttony, hurlers from Greed,
 slammers and pouncers from Wrath, divers from Heresy, everything in
-Violence and Treachery. Two bodies are only found at the bottom: the
+Violence and Treachery. Each region keeps bodies of its own, too: Heaven
+is angels only (guards and watchers), Purgatory is the border where both
+sides stand, and every circle below the hub has one demon found nowhere
+else on top of the imps, brutes and **shades** (the demons' drifting
+flyer, from Limbo down) found everywhere: the **siren** of Lust (a
+velvet-winged flyer that comes fast), the **slug** of Gluttony (a bloated
+armoured maw that lies in wait and bites), the **hoarder** of Greed (a
+hunched demon that throws from its sack and leaks the most light), the
+brutes' slams in Wrath, the **burned** of Heresy (sent-down angels, the
+guard's bones charred) and the two below. The roster, with every body's
+numbers and where it stands, is in
+[`docs/design/enemies.md`](docs/design/enemies.md). The
 **hound** (Violence) is a lean four-legged demon that hunts in pairs,
 sees the hero from far off, runs at him faster than he walks and springs
 flat at him from a few tiles away, jaws open (`lunge`); and the **hanged
@@ -242,10 +253,10 @@ hole in the sky, with its own ambient tint and sound, where four survivors
 the war looks like from the ground. The passage at its right end leads on
 to Purgatory.
 
-Below the hub the world is peopled: imps, angel guards, watchers and the
-**brute** (slow, eight hits, a two-heart swing) stand through Purgatory
-and the nine circles at a rising density (Fraud's army rests instead),
-all listed in `placements.json`. Fallen imps in Limbo and Lust shout a
+Below the hub the world is peopled: imps, the **brute** (slow, eight
+hits, a two-heart swing) and each circle's own demons stand through the
+nine circles at a rising density (Fraud's army rests instead), with the
+angels kept to Heaven and Purgatory, all listed in `placements.json`. Fallen imps in Limbo and Lust shout a
 line from the script as they wind up. The story goes on down there too: the names in
 the Purgatory shaft, the Ferryman (who hands over the clock's hand), the
 imp's tally bone in Limbo, Gorrow waiting by the seal in Lust, the wall in
@@ -386,8 +397,8 @@ Everything else that stands in the world is listed in
 `objects` list, each with a `type` and the tile cell `x`, `y` its feet are
 on. The types are `npc`, `item` and `trigger` (story objects, with the
 fields the dialogue system wants; an `npc` with a `shop` trades, see
-`scripts/shops.gd`), `enemy` (`character`: `imp`,
-`angel_guard`, `watcher` or `brute`), `upgrade` (`heart`, `vial` or `iron`), `power`
+`scripts/shops.gd`), `enemy` (`character`: a walker, flyer or hanger body,
+see `docs/design/enemies.md`), `upgrade` (`heart`, `vial` or `iron`), `power`
 (`halo`, `blade` or `zeal`) and `barrier` (a wall of light `height` cells
 tall). Upgrades are numbered by their order in the list, so a save keeps
 them straight as long as that order does not change.

@@ -11,6 +11,7 @@ CLOTH, CLOTH_S = (66, 116, 220), (44, 74, 160)
 SHAFT = (150, 100, 60)
 WING, WING_S, WING_D = (252, 252, 255), (200, 212, 240), (160, 172, 214)
 LIGHT = (255, 250, 210)
+HALO_GLOW, HALO_DOT, HALO_BRIGHT = (255, 236, 150), (255, 220, 100), (255, 252, 230)
 EDGE = (24, 16, 32)
 
 
@@ -94,12 +95,12 @@ def halo(fx, hc, t, dim=False):
     for k in range(28):
         a = 2 * math.pi * k / 28
         x, y = cx + 6 * math.cos(a), cy + 2 * math.sin(a)
-        fx.glow(x, y, 1, (255, 236, 150), 20 if dim else 50)
+        fx.glow(x, y, 1, HALO_GLOW, 20 if dim else 50)
     for k in range(28):
         a = 2 * math.pi * k / 28
         x, y = cx + 6 * math.cos(a), cy + 2 * math.sin(a)
         bright = (k + t * 3) % 9 == 0
-        fx.dot(x, y, (255, 252, 230) if bright else (255, 220, 100))
+        fx.dot(x, y, HALO_BRIGHT if bright else HALO_DOT)
 
 
 def frame(p):
