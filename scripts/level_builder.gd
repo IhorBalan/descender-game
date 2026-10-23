@@ -57,6 +57,11 @@ const LEARNABLE: Array[int] = [
 const BOSS_PLACEHOLDER := "angel_guard"
 ## How tall the one-way strip at the top of a ledge tile is.
 const LEDGE_HEIGHT := 4.0
+## Solid sprites (see _add_sprite_collision): strands of art thinner than
+## this many level pixels carry no collision, and the traced outline may
+## stray this far from the pixels.
+const SPRITE_STRAND_PX := 6.0
+const SPRITE_TRACE_PX := 1.0
 ## Lights are drawn with a radial gradient this many pixels across, scaled
 ## to each light's radius.
 const LIGHT_TEXTURE_SIZE := 128
@@ -348,18 +353,95 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 				layer.set_cell(Vector2i(cx, i / columns), source, map.atlas_coords(id), alternative)
 			_tiles.add_child(layer)
 		if spec.get("solid", false):
-			# The box of the art's opaque pixels (`hit`, from the top-left,
-			# unmirrored), else the whole tile box of an older export.
-			var hit: Array = spec.get("hit", [0, 0, columns * TILE, rows * TILE])
-			var shape := CollisionShape2D.new()
-			var rect := RectangleShape2D.new()
-			rect.size = Vector2(float(hit[2]), float(hit[3]))
-			shape.shape = rect
-			var left := float(hit[0])
-			if flip:
-				left = columns * TILE - float(hit[0]) - float(hit[2])
-			shape.position = at + Vector2(left, float(hit[1])) + rect.size / 2.0
-			_solids.add_child(shape)
+			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set)
+
+
+## Collision for a solid sprite: polygons traced around the art's opaque
+## pixels (alpha over a half), with strands thinner than a few level pixels
+## (grass, hanging ivy) left out, so the hero stands on the stone itself.
+## Without the sheet's image (a missing sheet), the export's hit box, or
+## the whole tile box, stands in.
+func _add_sprite_collision(
+	spec: Dictionary,
+	at: Vector2,
+	columns: int,
+	rows: int,
+	flip: bool,
+	tiles: PackedInt32Array,
+	map: WorldMap,
+	tile_set: TileSet
+) -> void:
+	var art := map.art_tile
+	var image := _sprite_image(tiles, columns, rows, flip, map, tile_set)
+	var polygons: Array[PackedVector2Array] = []
+	if image:
+		var mask := BitMap.new()
+		mask.create_from_image_alpha(image, 0.5)
+		var rect := Rect2i(0, 0, columns * art, rows * art)
+		# Opening: shrink then grow back, which drops anything thinner than
+		# twice the margin and keeps the body's outline where it was.
+		var margin := maxi(1, int(round(art * SPRITE_STRAND_PX / float(TILE))))
+		mask.grow_mask(-margin, rect)
+		mask.grow_mask(margin, rect)
+		var scale_factor := map.art_scale()
+		for polygon in mask.opaque_to_polygons(rect, art * SPRITE_TRACE_PX / float(TILE)):
+			var points := PackedVector2Array()
+			for point in polygon:
+				points.append(point * scale_factor)
+			if points.size() >= 3:
+				polygons.append(points)
+	if polygons.is_empty():
+		var hit: Array = spec.get("hit", [0, 0, columns * TILE, rows * TILE])
+		var left := float(hit[0])
+		if flip:
+			left = columns * TILE - float(hit[0]) - float(hit[2])
+		var size := Vector2(float(hit[2]), float(hit[3]))
+		(
+			polygons
+			. append(
+				PackedVector2Array(
+					[
+						Vector2(left, float(hit[1])),
+						Vector2(left + size.x, float(hit[1])),
+						Vector2(left + size.x, float(hit[1]) + size.y),
+						Vector2(left, float(hit[1]) + size.y),
+					]
+				)
+			)
+		)
+	for points in polygons:
+		var shape := CollisionPolygon2D.new()
+		shape.polygon = points
+		shape.position = at
+		_solids.add_child(shape)
+
+
+## The sprite's art as one image: its atlas tiles laid out in order, flipped
+## when the sprite is. Null without the diffuse sheet.
+func _sprite_image(
+	tiles: PackedInt32Array, columns: int, rows: int, flip: bool, map: WorldMap, tile_set: TileSet
+) -> Image:
+	var source := tile_set.get_source(0) as TileSetAtlasSource
+	var texture := source.texture as CanvasTexture if source else null
+	var sheet := (
+		texture.diffuse_texture.get_image() if texture and texture.diffuse_texture else null
+	)
+	if sheet == null:
+		return null
+	var art := map.art_tile
+	var image := Image.create(columns * art, rows * art, false, Image.FORMAT_RGBA8)
+	for i in tiles.size():
+		if tiles[i] < 0:
+			continue
+		var coords := map.atlas_coords(tiles[i])
+		image.blit_rect(
+			sheet,
+			Rect2i(coords.x * art, coords.y * art, art, art),
+			Vector2i((i % columns) * art, (i / columns) * art)
+		)
+	if flip:
+		image.flip_x()
+	return image
 
 
 ## Collision for one row of terrain: runs of solid cells become one

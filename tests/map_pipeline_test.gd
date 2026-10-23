@@ -16,7 +16,7 @@ extends Node
 ## Loaded by path, so a fresh checkout works before the class cache knows it.
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 89
+const EXPECTED_CHECKS := 88
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -267,24 +267,21 @@ func test_level_builder_sprites() -> void:
 			"and flips each tile"
 		)
 	var solids := builder.get_node("Solids")
-	# One run of rock along the bottom row, plus a box per solid sprite.
-	_check(solids.get_child_count() == 3, "a solid sprite adds one collision box")
-	var padded: CollisionShape2D = null
+	# One run of rock along the bottom row, plus a polygon per solid sprite.
+	_check(solids.get_child_count() == 3, "a solid sprite adds one collision polygon")
+	var outlines: Array[Rect2] = []
 	for child in solids.get_children():
-		if child is CollisionShape2D and child.shape.size == Vector2(24, 12):
-			padded = child
-	_check(padded != null, "a sprite with a hit box collides with its opaque pixels only")
-	# Mirrored: the box sits 4 px from the right edge of the 32-px-wide sprite.
+		if child is CollisionPolygon2D:
+			var bounds := Rect2(child.polygon[0], Vector2.ZERO)
+			for point in child.polygon:
+				bounds = bounds.expand(point)
+			outlines.append(Rect2(child.position + bounds.position, bounds.size))
+	_check(outlines.size() == 2, "the sprites collide with polygons traced from their art")
+	# The test sheet is opaque everywhere, so each outline is the sprite's whole box.
+	_check(outlines.has(Rect2(20, 4, 32, 16)), "the ledge's outline covers its two tiles")
 	_check(
-		padded != null and padded.position == Vector2(100 + 4 + 12, 100 + 20 + 6),
-		"and the hit box is mirrored with the sprite"
+		outlines.has(Rect2(100, 100, 32, 32)), "the padded sprite's outline covers its four tiles"
 	)
-	var box: CollisionShape2D = null
-	for child in solids.get_children():
-		if child is CollisionShape2D and child.shape.size == Vector2(32, 16):
-			box = child
-	_check(box != null, "the box covers the sprite's tiles")
-	_check(box != null and box.position == Vector2(36, 12), "and is centred on it")
 	_check(builder.player_start == Vector2(8, 16), "the start marker places the hero")
 	builder.queue_free()
 

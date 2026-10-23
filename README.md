@@ -378,7 +378,11 @@ pieces composed by eye). Each gives its atlas tiles row by row, the pixel
 position of its top-left corner, its size in tiles and whether it is
 mirrored, solid or glowing. `LevelBuilder._build_sprites` draws each as a
 small `TileMapLayer` at that position above the tile layers (a glowing one
-also gets an additive glow layer), and a solid one is a box in `Solids`.
+also gets an additive glow layer). A solid one collides with polygons traced
+from its art: the opaque pixels, with strands thinner than a few level
+pixels (grass tufts, hanging ivy) left out, so the hero stands on the stone
+rather than on the tips of the grass; without the sheet's image the
+export's `hit` box stands in.
 
 The export also says how many pixels a tile has in the sheets, its **art
 scale** (`art_tile`): 16 for pixel art, 64 for painted tiles, which makes a
