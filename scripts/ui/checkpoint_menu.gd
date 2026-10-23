@@ -6,7 +6,7 @@ extends CanvasLayer
 ## what he carries), the skills (spend the points his levels gave) and
 ## fast travel on the left; save and leave on the right. A line under the
 ## heading says which checkpoint this is and the level, and a line above
-## the hint describes the picked button. Esc leaves. main.gd opens it
+## the hint describes the picked button. Cancel leaves. main.gd opens it
 ## and it closes itself.
 ##
 ## Fast travel opens the map page on the checkpoints the hero has rested
@@ -49,7 +49,7 @@ var _rested: Array[int] = []
 @onready var save_button: Button = $Panel/Menu/Right/Save
 @onready var leave_button: Button = $Panel/Menu/Right/Leave
 @onready var description: Label = $Panel/Description
-@onready var hint: Label = $Panel/Hint
+@onready var hint: PromptLabel = $Panel/Hint
 @onready var inventory_menu: InventoryMenu = $Panel/InventoryMenu
 @onready var skill_menu: SkillMenu = $Panel/SkillMenu
 @onready var map_screen: MapScreen = $Panel/MapScreen

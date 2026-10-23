@@ -418,7 +418,7 @@ func _on_checkpoint_rested(checkpoint: Checkpoint) -> void:
 		text += "   Game saved"
 	hud.show_message(text, 2.5)
 	if Skills.points_left() > 0:
-		hud.queue_message("A skill point waits: press %s to make camp" % _interact_key(), 3.0)
+		hud.queue_message("A skill point waits: {interact} makes camp", 3.0)
 
 
 ## The hero pressed the talk key at a checkpoint: the camp opens, with the
@@ -456,12 +456,6 @@ func _on_camp_save_requested() -> void:
 ## A level made: the HUD says so, and that a point waits for a camp.
 func _on_leveled_up(level_reached: int) -> void:
 	hud.show_message("Level %d: a skill point to spend at a checkpoint camp" % level_reached, 3.5)
-
-
-## The key bound to interact, for the messages.
-func _interact_key() -> String:
-	var settings := get_node_or_null("/root/Settings")
-	return "E" if settings == null else str(settings.key_names(&"interact"))
 
 
 ## The power-ups come back with the enemies.
