@@ -1,6 +1,7 @@
 extends Node
 
-## Game feel: hit-stop, screen shake, hit flashes, sparks and death puffs.
+## Game feel: hit-stop, screen shake, hit flashes, sparks, death puffs and
+## landing dust.
 ##
 ## Registered as the Feedback autoload so enemies, the hero and pickups can
 ## ask for feedback in one line. The camera registers itself in the
@@ -12,6 +13,11 @@ const PUFF_SCENE := preload("res://scenes/death_puff.tscn")
 const HIT_STOP_SCALE := 0.05
 ## How long a hit rumbles the gamepad; the shake amount sets how hard.
 const RUMBLE_TIME := 0.15
+const DUST_COLOR := Color(0.85, 0.8, 0.7, 0.75)
+const DUST_LIFETIME := 0.35
+
+## How many landings have raised dust, for the test.
+var dusts_raised := 0
 
 ## Real-time stamp (msec) at which the current hit-stop ends.
 var _hit_stop_until := 0
@@ -89,6 +95,30 @@ func puff(world_position: Vector2, color := Color.WHITE) -> void:
 	puff.global_position = world_position
 	puff.color = color
 	get_tree().root.add_child(puff)
+
+
+## A small, quick puff of dust at the hero's feet, for a hard landing: the
+## death puff's scene, smaller and shorter, in its own group.
+func dust(world_position: Vector2) -> void:
+	var dust := PUFF_SCENE.instantiate() as CPUParticles2D
+	dust.global_position = world_position
+	dust.color = DUST_COLOR
+	dust.amount = 5
+	dust.lifetime = DUST_LIFETIME
+	dust.emission_sphere_radius = 5.0
+	dust.initial_velocity_min = 10.0
+	dust.initial_velocity_max = 30.0
+	dust.scale_amount_min = 1.0
+	dust.scale_amount_max = 2.0
+	dust.spread = 80.0
+	get_tree().root.add_child(dust)
+	dust.remove_from_group("death_puff")
+	dust.add_to_group("landing_dust")
+	dusts_raised += 1
+
+
+func dust_count() -> int:
+	return get_tree().get_nodes_in_group("landing_dust").size()
 
 
 func puff_count() -> int:

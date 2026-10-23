@@ -12,6 +12,9 @@ extends Camera2D
 ## - Vertical: jumps don't move the camera. It follows when he lands at a new
 ##   height, drops below the last ground, or climbs past UP_WINDOW, and leads
 ##   downward on fast falls.
+## - Peek: standing still on the ground and holding down pans the view
+##   PEEK_DISTANCE below after a short delay, so a drop can be looked at
+##   before it is taken; letting go brings the view back.
 ## - The final position is rounded to whole pixels so tiles don't shimmer.
 ## - Shake: hits add trauma, which decays; the view is offset by a random
 ##   amount that grows with trauma squared, so small hits barely register and
@@ -35,6 +38,11 @@ const FALL_LEAD_SPEED := 200.0
 const SMOOTH_Y := 4.0
 const SMOOTH_Y_FALLING := 10.0
 
+# Peek
+const PEEK_DISTANCE := 48.0
+const PEEK_DELAY := 0.25
+const PEEK_SPEED := 160.0
+
 # Shake
 const MAX_SHAKE := 4.0
 const TRAUMA_DECAY := 2.2
@@ -56,6 +64,8 @@ var _look_offset := LOOK_AHEAD
 ## LOOK_SWITCH_DISTANCE from it swaps the look-ahead.
 var _look_extreme_x := 0.0
 var _fall_offset := 0.0
+var _peek_timer := 0.0
+var _peek_offset := 0.0
 
 
 func _ready() -> void:
@@ -69,7 +79,10 @@ func _physics_process(delta: float) -> void:
 	var focus := _focus_point()
 	_update_horizontal(focus.x, delta)
 	_update_vertical(focus.y, delta)
-	var goal := _clamp_to_level(Vector2(_window_x + _look_offset, _ground_y + _fall_offset))
+	_update_peek(delta)
+	var goal := _clamp_to_level(
+		Vector2(_window_x + _look_offset, _ground_y + _fall_offset + _peek_offset)
+	)
 	var smooth_y := SMOOTH_Y_FALLING if _fall_offset > 0.0 else SMOOTH_Y
 	_smoothed.x = lerpf(_smoothed.x, goal.x, 1.0 - exp(-SMOOTH_X * delta))
 	_smoothed.y = lerpf(_smoothed.y, goal.y, 1.0 - exp(-smooth_y * delta))
@@ -95,6 +108,8 @@ func snap_to_target() -> void:
 	_look_offset = LOOK_AHEAD * _look_dir
 	_look_extreme_x = focus.x
 	_fall_offset = 0.0
+	_peek_timer = 0.0
+	_peek_offset = 0.0
 	_smoothed = _clamp_to_level(Vector2(_window_x + _look_offset, _ground_y))
 	global_position = _smoothed.round()
 	reset_smoothing()
@@ -143,6 +158,29 @@ func _update_vertical(y: float, delta: float) -> void:
 	var falling_fast := body != null and not on_floor and body.velocity.y > FALL_LEAD_SPEED
 	var lead := FALL_LEAD if falling_fast else 0.0
 	_fall_offset = move_toward(_fall_offset, lead, FALL_LEAD * 4.0 * delta)
+
+
+## Holding down while standing still on the ground, with nothing holding
+## the hero's input, peeks below after PEEK_DELAY.
+func _update_peek(delta: float) -> void:
+	var peeking := _wants_peek()
+	_peek_timer = _peek_timer + delta if peeking else 0.0
+	var lead := PEEK_DISTANCE if peeking and _peek_timer >= PEEK_DELAY else 0.0
+	_peek_offset = move_toward(_peek_offset, lead, PEEK_SPEED * delta)
+
+
+func _wants_peek() -> bool:
+	var player := target as Player
+	if player == null or not player.is_on_floor():
+		return false
+	if player.frozen or player.talking or player.state != Player.State.IDLE:
+		return false
+	return Input.is_action_pressed("move_down") and not Input.is_action_pressed("jump")
+
+
+## How far below the hero the view is peeking, 0 when it is not.
+func peek_offset() -> float:
+	return _peek_offset
 
 
 func _target_facing() -> int:

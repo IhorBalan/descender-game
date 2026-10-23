@@ -135,7 +135,7 @@ const HURT_TIME := 0.25
 const INVULNERABLE_TIME := 0.9
 const KNOCKBACK := Vector2(110.0, -110.0)
 const DEATH_TIME := 1.2
-## Falling at least this fast makes a landing sound.
+## Falling at least this fast makes a landing sound and raises dust.
 const LAND_SOUND_SPEED := 120.0
 const SAFE_GROUND_TIME := 0.2
 
@@ -268,6 +268,7 @@ func _physics_process(delta: float) -> void:
 	if is_on_floor() and not _was_on_floor and _last_fall_speed >= LAND_SOUND_SPEED:
 		if state != State.DEAD:
 			Audio.play("land", -6.0)
+			Feedback.dust(global_position)
 	_was_on_floor = is_on_floor()
 	_track_safe_ground(delta)
 	if global_position.y > death_y and state != State.DEAD and not frozen:
@@ -429,6 +430,9 @@ func _process_attack(delta: float) -> void:
 	# facing the way the swing started.
 	var input_dir := Input.get_axis("move_left", "move_right")
 	var speed_multiplier := ATTACK_MOVE_MULTIPLIER if is_on_floor() else 1.0
+	# Walking off a ledge mid-swing keeps the late jump a walk would have.
+	if is_on_floor():
+		_coyote_timer = COYOTE_TIME
 	_apply_gravity(delta)
 	_apply_horizontal(input_dir, delta, speed_multiplier)
 	var scale := attack_time() / ATTACK_TIME
@@ -478,6 +482,8 @@ func _start_cast() -> void:
 
 ## The hero keeps his momentum while the bolt leaves his hand.
 func _process_cast(delta: float) -> void:
+	if is_on_floor():
+		_coyote_timer = COYOTE_TIME
 	_apply_gravity(delta)
 	_apply_horizontal(0.0, delta)
 	if _state_timer <= 0.0:
