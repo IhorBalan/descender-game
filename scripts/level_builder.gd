@@ -334,7 +334,8 @@ func _build_layers(map: WorldMap) -> TileSet:
 
 ## The export's free-placed decorations: each is a small TileMapLayer at a
 ## pixel position, drawn over the tile layers (a lit one also gets a glow
-## layer), and a solid one is a box for the hero.
+## layer) at its `scale` from its top-left corner, and a solid one collides
+## at that scale too.
 func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 	for spec in map.sprites:
 		var columns := int(spec.get("columns", 1))
@@ -350,6 +351,7 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 			continue
 		var at := Vector2(float(spec.get("x", 0)), float(spec.get("y", 0)))
 		var flip: bool = spec.get("flip", false)
+		var copy_scale := float(spec.get("scale", 1.0))
 		var sources: Array[int] = [0]
 		if spec.get("glow", false):
 			sources.append(1)
@@ -359,7 +361,7 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 			layer.tile_set = tile_set
 			layer.texture_filter = map.texture_filter()
 			layer.position = at
-			layer.scale = Vector2.ONE * map.art_scale()
+			layer.scale = Vector2.ONE * map.art_scale() * copy_scale
 			layer.collision_enabled = false
 			if source == 1:
 				var material := CanvasItemMaterial.new()
@@ -377,7 +379,7 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 				layer.set_cell(Vector2i(cx, i / columns), source, map.atlas_coords(id), alternative)
 			_tiles.add_child(layer)
 		if spec.get("solid", false):
-			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set)
+			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set, copy_scale)
 	_sheet_image = null
 
 
@@ -386,7 +388,7 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 ## pixels (alpha over a half), with strands thinner than a few level pixels
 ## (grass, hanging ivy) left out, so the hero stands on the stone itself.
 ## Without the sheet's image (a missing sheet), the export's hit box, or
-## the whole tile box, stands in.
+## the whole tile box, stands in. All of it is scaled by `copy_scale`.
 func _add_sprite_collision(
 	spec: Dictionary,
 	at: Vector2,
@@ -395,7 +397,8 @@ func _add_sprite_collision(
 	flip: bool,
 	tiles: PackedInt32Array,
 	map: WorldMap,
-	tile_set: TileSet
+	tile_set: TileSet,
+	copy_scale := 1.0
 ) -> void:
 	var polygons := drawn_shapes(spec.get("shape", []), columns * TILE, flip)
 	var image := (
@@ -444,7 +447,8 @@ func _add_sprite_collision(
 		)
 	for points in polygons:
 		var shape := CollisionPolygon2D.new()
-		shape.polygon = points
+		# Outlines are in the texture's own level pixels; a resized copy scales them.
+		shape.polygon = Transform2D().scaled(Vector2.ONE * copy_scale) * points
 		shape.position = at
 		_solids.add_child(shape)
 

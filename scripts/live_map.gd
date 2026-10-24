@@ -102,7 +102,12 @@ func _sync(project: String) -> void:
 		_finish(false, "Live map: the published map has no %s" % ", ".join(wanted))
 		return
 	var problem := await _http.download_files(
-		base, HEAD_DOCUMENT, files, WORLD_DIR, Callable(), str(fields.get("mediaBase", ""))
+		base,
+		str(fields.get("prefix", HEAD_DOCUMENT)),
+		files,
+		WORLD_DIR,
+		Callable(),
+		str(fields.get("mediaBase", ""))
 	)
 	if not problem.is_empty():
 		_finish(false, "Live map: %s" % problem)

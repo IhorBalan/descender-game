@@ -386,7 +386,9 @@ pixels (grass tufts, hanging ivy) left out, so the hero stands on the stone
 rather than on the tips of the grass; without the sheet's image the
 export's `hit` box stands in. A sprite with a walkable shape drawn in the
 editor (`shape`: polygons in level pixels from its top-left, unmirrored)
-collides with exactly those polygons instead, mirrored with the sprite. The
+collides with exactly those polygons instead, mirrored with the sprite. A
+copy resized in the editor (`scale`) is drawn and collides at that size,
+from its top-left corner. The
 traced outline is smoothed to within 1.5 level
 pixels (`SPRITE_SMOOTH_PX`), so the half-pixel stairs the tracing makes of a
 nearly flat painted top become gentle slopes, and the hero steps up any lip
@@ -612,6 +614,8 @@ the live map is meant to ship.
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
 | `scripts/live_map.gd` | Downloads the editor's published live map on start (see Live map) |
 | `scripts/map_store.gd` | Lists and downloads the other maps the editor published, for the Maps menu and `--map=` |
+| `scripts/component_store.gd` | The `ComponentStore` autoload: downloads the UI components the editor published into `user://components/`, falling back to `assets/ui/components/` |
+| `scripts/ui_component.gd` | Draws an editor UI component (colour boxes, images, fill bars with lag, text) with props the game sets; the HUD's health bar is the `HealthBar` component |
 | `scripts/firestore_rest.gd` | Reads the editor's public Firestore documents, for the two above |
 | `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
 | `scripts/backdrop.gd` | The painted parallax layers behind the level, per region |

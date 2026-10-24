@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 133
+const EXPECTED_CHECKS := 158
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -337,6 +337,13 @@ func test_drawn_shapes() -> void:
 		polys[0] is CollisionPolygon2D and polys[0].polygon[1] == Vector2(32, 6),
 		"made of the drawn points, not a trace"
 	)
+	# A copy resized in the editor (scale) collides at that size, from its top-left corner.
+	builder._add_sprite_collision(
+		map.sprites[0], Vector2(10, 20), 2, 1, false, PackedInt32Array([-1, -1]), map, null, 2.0
+	)
+	var scaled: Node = builder._solids.get_child(builder._solids.get_child_count() - 1)
+	_check(scaled.polygon[1] == Vector2(64, 12), "a resized sprite scales its shape")
+	_check(scaled.position == Vector2(10, 20), "around its top-left corner")
 	builder.queue_free()
 
 
@@ -723,6 +730,102 @@ func test_region_key() -> void:
 		EdgeDecor.region_key("Ruined Earth") == "ruined_earth", "and join words with underscores"
 	)
 	_check(EdgeDecor.region_key(" 7. Violence ") == "violence", "and trim spaces")
+
+
+# ---------- UI components ----------
+
+
+func test_ui_component_rules() -> void:
+	var fill := {
+		"kind": "fill",
+		"x": 10,
+		"y": 2,
+		"w": 100,
+		"h": 8,
+		"dir": "right",
+		"bind": {"value": "hp", "max": "top", "visible": "", "color": ""},
+	}
+	var node := UiComponent.new()
+	node.spec = {
+		"w": 200,
+		"h": 20,
+		"props":
+		[
+			{"name": "hp", "type": "number", "default": 3},
+			{"name": "top", "type": "number", "default": 4},
+			{"name": "label", "type": "text", "default": "HP"},
+			{"name": "show", "type": "bool", "default": false},
+		],
+		"parts": [fill],
+	}
+	node.values = {"hp": 3.0, "top": 4.0, "label": "HP", "show": false}
+	_check(is_equal_approx(node.fill_ratio(fill), 0.75), "a fill's ratio is its value over its max")
+	node.values["top"] = 0.0
+	_check(node.fill_ratio(fill) == 0.0, "a zero max is an empty bar")
+	_check(
+		UiComponent.fill_rect(fill, 0.5) == Rect2(10, 2, 50, 8), "a right fill grows from the left"
+	)
+	fill["dir"] = "up"
+	_check(
+		UiComponent.fill_rect(fill, 0.25) == Rect2(10, 8, 100, 2),
+		"an up fill grows from the bottom"
+	)
+	node.values["hp"] = 3.456
+	_check(
+		node.format_text("{label} {hp}/{missing}") == "HP 3.46/", "text fills in props and rounds"
+	)
+	node.values["hp"] = 5.0
+	_check(node.format_text("{hp}") == "5", "whole numbers show no decimals")
+	_check(not node.is_visible_part({"bind": {"visible": "show"}}), "a false bool hides a part")
+	node.values["show"] = true
+	_check(node.is_visible_part({"bind": {"visible": "show"}}), "a true bool shows it")
+	var nine := UiComponent.pieces("nine", 30, 30, Rect2(0, 0, 100, 40), [10, 10, 10, 10])
+	_check(nine.size() == 9, "nine-slicing makes nine pieces")
+	_check(nine[0][1] == Rect2(0, 0, 10, 10), "the corners keep their size")
+	_check(nine[4][1] == Rect2(10, 10, 80, 20), "the middle stretches")
+	var tiles := UiComponent.pieces("tile", 16, 16, Rect2(0, 0, 40, 16), [])
+	_check(tiles.size() == 3 and tiles[2][1] == Rect2(32, 0, 8, 16), "tiling cuts the last tile")
+	var cut := UiComponent.clip_piece(
+		Rect2(0, 0, 200, 20), Rect2(0, 0, 100, 10), Rect2(0, 0, 50, 10)
+	)
+	_check(
+		cut[0] == Rect2(0, 0, 100, 20) and cut[1] == Rect2(0, 0, 50, 10),
+		"clipping cuts the source by the same share"
+	)
+	_check(
+		(
+			UiComponent
+			. clip_piece(Rect2(0, 0, 1, 1), Rect2(0, 0, 10, 10), Rect2(20, 0, 5, 5))
+			. is_empty()
+		),
+		"a piece outside the clip is dropped"
+	)
+	node.free()
+
+
+func test_component_store() -> void:
+	_check(
+		ComponentStore.key("Health Bar") == ComponentStore.key("health_bar"),
+		"component names match loosely"
+	)
+	_check("HealthBar" in ComponentStore.names(), "the shipped HealthBar is available")
+	var bar := ComponentStore.create("health bar", 110.0)
+	_check(bar != null, "a component is created by name")
+	if bar == null:
+		return
+	_check(bar.has_prop("health") and bar.has_prop("maxHealth"), "it has the health props")
+	_check(is_equal_approx(bar.size.x, 110.0), "it is drawn at the asked width")
+	_check(is_equal_approx(bar.size.y, 110.0 * 90.0 / 420.0), "its height keeps its shape")
+	bar.set_prop("health", 2.0)
+	bar.set_prop("maxHealth", 4.0)
+	var fill: Dictionary = {}
+	for part: Dictionary in bar.spec["parts"]:
+		if part["kind"] == "fill":
+			fill = part
+	_check(is_equal_approx(bar.fill_ratio(fill), 0.5), "the game's health drives its fill")
+	_check(not bar.set_prop("nope", 1), "unknown props are ignored")
+	_check(ComponentStore.create("no such component") == null, "an unknown component is null")
+	bar.free()
 
 
 # ---------- harness ----------
