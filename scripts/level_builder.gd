@@ -43,6 +43,10 @@ extends Node2D
 const RIM_STRENGTH := 0.25
 const RIM_SHADER := preload("res://assets/shaders/rim.gdshader")
 const TILE := 16
+## How far from the hero or the camera an enemy keeps moving, in level
+## pixels: the view (640 x 360) plus a wide margin, so nothing freezes in
+## sight and enemies just off screen still walk in on their own.
+const ACTIVE_RANGE := Vector2(800.0, 480.0)
 const WORLD_PLACEMENTS := "placements.json"
 ## How many cells of solid a secret passage may run through on each side
 ## of its door.
@@ -1168,6 +1172,26 @@ func bosses() -> Array[Boss]:
 		if enemy is Boss:
 			found.append(enemy)
 	return found
+
+
+## Puts the enemies far from both points (the hero and the camera's centre)
+## to sleep and wakes the ones near either. Every enemy in the world moving
+## every tick cost more than a whole physics frame on its own, so the game
+## fell behind, ran several ticks a frame to catch up and pinned the CPU.
+## Bosses always run: their arena logic waits on them.
+func update_active_enemies(points: Array[Vector2]) -> void:
+	for enemy: Node2D in _enemies.get_children():
+		if enemy is Boss:
+			continue
+		var near := false
+		for point in points:
+			var offset := (enemy.global_position - point).abs()
+			if offset.x <= ACTIVE_RANGE.x and offset.y <= ACTIVE_RANGE.y:
+				near = true
+				break
+		var mode := Node.PROCESS_MODE_INHERIT if near else Node.PROCESS_MODE_DISABLED
+		if enemy.process_mode != mode:
+			enemy.process_mode = mode
 
 
 ## Live enemies: the dying ones still fading out are not counted.
