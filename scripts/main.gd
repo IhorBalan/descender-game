@@ -270,6 +270,7 @@ func _process(delta: float) -> void:
 ## in are read there.
 func _physics_process(_delta: float) -> void:
 	if is_instance_valid(player):
+		level.update_active_enemies([player.global_position, camera.get_screen_center_position()])
 		var region := level.region_at(player.global_position.y)
 		if region != _region:
 			_enter_region(region, true)
