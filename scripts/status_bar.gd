@@ -3,6 +3,9 @@ extends Control
 
 ## Draws hearts (health), bars (healing charges), the unlocked angel
 ## abilities, the dash cooldown and the running power-ups with plain shapes.
+## When the HUD shows a health bar component instead of the hearts,
+## `health_bar_rect` is where it sits: the hearts are left out, the charges
+## go under it and the icons to its right.
 
 const HEART_ON := Color(0.96, 0.22, 0.32)
 const HEART_OFF := Color(0.32, 0.1, 0.16)
@@ -38,15 +41,21 @@ var abilities: Array[Player.Ability] = []
 var dash_readiness := 1.0
 ## Player.Power -> seconds left (INF for the Halo).
 var powers: Dictionary = {}
+## Where a health bar component is drawn over this control (see Hud); empty
+## when the hearts show health.
+var health_bar_rect := Rect2()
 
 
 func _draw() -> void:
-	for i in max_health:
-		var r := Rect2(4 + i * HEART_STEP, 4, 7, 7)
-		draw_rect(Rect2(r.position + Vector2.ONE, r.size), SHADOW)
-		draw_rect(r, HEART_ON if i < health else HEART_OFF)
+	var bar := health_bar_rect.has_area()
+	if not bar:
+		for i in max_health:
+			var r := Rect2(4 + i * HEART_STEP, 4, 7, 7)
+			draw_rect(Rect2(r.position + Vector2.ONE, r.size), SHADOW)
+			draw_rect(r, HEART_ON if i < health else HEART_OFF)
+	var charges_y := health_bar_rect.end.y + 1.0 if bar else 14.0
 	for i in max_charges:
-		var r := Rect2(4 + i * 7, 14, 5, 8)
+		var r := Rect2(4 + i * 7, charges_y, 5, 8)
 		draw_rect(Rect2(r.position + Vector2.ONE, r.size), SHADOW)
 		draw_rect(r, CHARGE_ON if i < charges else CHARGE_OFF)
 	var x := ability_x()
@@ -63,6 +72,8 @@ func _draw() -> void:
 
 ## The hearts take the space before the ability icons.
 func ability_x() -> float:
+	if health_bar_rect.has_area():
+		return health_bar_rect.end.x + 4.0
 	return maxf(ABILITY_X, 4.0 + max_health * HEART_STEP + 4.0)
 
 

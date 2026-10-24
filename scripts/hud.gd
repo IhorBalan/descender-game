@@ -5,6 +5,11 @@ extends CanvasLayer
 ## the level with its experience bar and short messages. main.gd hands
 ## over the hero so the dash readout can follow him.
 
+## The editor component shown as the hero's health, its width in level
+## pixels and where it sits.
+const HEALTH_BAR_COMPONENT := "HealthBar"
+const HEALTH_BAR_WIDTH := 110.0
+const HEALTH_BAR_AT := Vector2(2.0, 1.0)
 const BOSS_BAR_WIDTH := 160.0
 const BOSS_BAR_BACK := Color(0.0, 0.0, 0.0, 0.6)
 const BOSS_BAR_FILL := Color(1.0, 0.85, 0.45)
@@ -25,6 +30,9 @@ var level_label: Label
 ## The boss bar at the bottom of the screen, built in _ready.
 var boss_bar: Control
 var boss_name_label: Label
+## The health bar component from the editor, when there is one (see
+## _setup_health_bar); the hearts show health otherwise.
+var health_bar: UiComponent = null
 var _boss_fill: ColorRect
 var _xp_fill: ColorRect
 
@@ -37,6 +45,8 @@ var _queue: Array[Array] = []
 
 
 func _ready() -> void:
+	_setup_health_bar()
+	ComponentStore.updated.connect(_on_component_updated)
 	boss_bar = Control.new()
 	boss_bar.name = "BossBar"
 	boss_bar.position = Vector2((320.0 - BOSS_BAR_WIDTH) / 2.0, 140.0)
@@ -121,6 +131,41 @@ func set_health(current: int, max_value: int) -> void:
 	status.health = current
 	status.max_health = max_value
 	status.queue_redraw()
+	_show_health()
+
+
+## The editor's health bar component in place of the hearts, when there is
+## one (see ComponentStore), reloaded when a newer one arrives.
+func _setup_health_bar() -> void:
+	if health_bar:
+		health_bar.queue_free()
+		health_bar = null
+	health_bar = ComponentStore.create(HEALTH_BAR_COMPONENT, HEALTH_BAR_WIDTH)
+	if health_bar == null:
+		status.health_bar_rect = Rect2()
+	else:
+		health_bar.position = HEALTH_BAR_AT
+		add_child(health_bar)
+		move_child(health_bar, status.get_index() + 1)
+		status.health_bar_rect = Rect2(HEALTH_BAR_AT, health_bar.size)
+		_show_health()
+	status.queue_redraw()
+
+
+func _on_component_updated(component_name: String) -> void:
+	if ComponentStore.key(component_name) == ComponentStore.key(HEALTH_BAR_COMPONENT):
+		_setup_health_bar()
+
+
+## Feeds the hero's health to the bar: its health (or value) and maxHealth
+## (or max) props, whichever the component has.
+func _show_health() -> void:
+	if health_bar == null:
+		return
+	for name in ["health", "value", "current"]:
+		health_bar.set_prop(name, float(status.health))
+	for name in ["maxHealth", "max", "max_health"]:
+		health_bar.set_prop(name, float(status.max_health))
 
 
 func set_charges(current: int, max_value: int) -> void:

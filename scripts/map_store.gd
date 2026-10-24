@@ -228,7 +228,7 @@ func _download(map_id: String, fields: Dictionary) -> String:
 	var base := FirestoreRest.base_url(_project) + "published/"
 	var problem := await _http.download_files(
 		base,
-		HEAD_PREFIX + map_id,
+		str(fields.get("prefix", HEAD_PREFIX + map_id)),
 		files,
 		dir,
 		_on_progress.bind(map_name),

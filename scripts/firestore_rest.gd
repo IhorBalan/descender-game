@@ -47,7 +47,8 @@ func get_document(url: String) -> Dictionary:
 ## Downloads the files a published head lists into `dir` (subfolders made as
 ## needed): a Storage object (the head's `mediaBase` + the file's `storage`
 ## path) streams straight to disk in one request; otherwise the file's
-## Firestore pieces are read and joined. Returns an empty string, or what
+## Firestore pieces (`<head_id>_f<file>_<piece>`; pass the head's `prefix`
+## when it has one) are read and joined. Returns an empty string, or what
 ## went wrong.
 func download_files(
 	base: String,
