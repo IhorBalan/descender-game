@@ -1174,16 +1174,18 @@ func bosses() -> Array[Boss]:
 	return found
 
 
-## Puts the enemies far from both points (the hero and the camera's centre)
-## to sleep and wakes the ones near either. Every enemy in the world moving
+## Puts the enemies far from all the points (the hero first, then the camera's
+## centre) to sleep and wakes the ones near either. Every enemy in the world moving
 ## every tick cost more than a whole physics frame on its own, so the game
 ## fell behind, ran several ticks a frame to catch up and pinned the CPU.
-## Bosses always run: their arena logic waits on them.
+## A boss also stays awake while the hero is in its arena (it watches for
+## him there to start the fight) and once the fight has begun.
 func update_active_enemies(points: Array[Vector2]) -> void:
 	for enemy: Node2D in _enemies.get_children():
-		if enemy is Boss:
-			continue
 		var near := false
+		if enemy is Boss:
+			var boss := enemy as Boss
+			near = boss.state != Boss.State.DORMANT or boss.arena.has_point(points[0])
 		for point in points:
 			var offset := (enemy.global_position - point).abs()
 			if offset.x <= ACTIVE_RANGE.x and offset.y <= ACTIVE_RANGE.y:
