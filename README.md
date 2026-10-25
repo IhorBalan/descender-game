@@ -31,6 +31,15 @@ started without a save.
 The game renders at **320x180** and scales up by whole numbers, so the
 window is 1280x720 by default.
 
+The game uses Godot's **Mobile** renderer (despite the name, the light
+desktop one): Direct3D 12 or Vulkan on Windows, Metal on macOS, with
+`rendering_device/fallback_to_opengl3` for machines that have none of
+them. It keeps frames evenly paced at the screen's refresh rate, which
+OpenGL on macOS did not (frames of 4, 8 and 13 ms on a 120 Hz screen).
+2D HDR is off: on this renderer it blends in linear light, which made
+soft, see-through art look different from the editor. Screenshots of a
+viewport come back in sRGB that way too.
+
 Physics runs at 60 ticks a second, and **physics interpolation** is on
 (`physics/common/physics_interpolation`): the hero, enemies and camera are
 drawn between ticks, so motion stays smooth on 120 and 144 Hz screens. Code
@@ -39,6 +48,10 @@ so it doesn't slide there. Anything moved in `_process` turns interpolation
 off for itself (the bobbing pickups). Anything that follows the view reads
 the viewport's canvas transform, not the camera's position, which only
 changes on ticks (see `Backdrop`).
+Snapping 2D transforms to pixels is off: it rounds every node to whole
+level pixels, several screen pixels each on a large window, so parallax
+layers hopped by up to a level pixel against the world. Painted art is
+filtered, so nothing shimmers without it.
 
 ## Controls
 
@@ -480,8 +493,8 @@ smooth for painted maps). The lit tile layers wear
 tile's normal map faces up (`LevelBuilder.RIM_STRENGTH`, 0 turns it off).
 Over the level and under the HUD, `scripts/post_fx.gd` draws
 `assets/shaders/post.gdshader`: the region's grade and a soft vignette.
-A `WorldEnvironment` with glow (and `rendering/viewport/hdr_2d` on) makes
-the sky, the glow tiles and the lights bloom a little.
+A `WorldEnvironment` with glow makes the sky, the glow tiles and the
+lights bloom a little.
 
 Each JSON says how many pixels per tile its PNGs are drawn at (`art_tile`),
 so one set serves maps of any art scale. `tools/gen_region_art.py` (needs

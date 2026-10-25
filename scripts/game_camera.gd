@@ -16,8 +16,10 @@ extends Camera2D
 ##   PEEK_DISTANCE below after a short delay, so a drop can be looked at
 ##   before it is taken; letting go brings the view back.
 ## - The position is not rounded to level pixels: with physics
-##   interpolation the view moves smoothly between ticks, and the project's
-##   2D pixel snapping lines everything up on screen pixels.
+##   interpolation the view moves smoothly between ticks. The project's 2D
+##   pixel snapping is off too: it rounds every node to whole level pixels
+##   (several screen pixels each), so layers that scroll at their own speed
+##   hopped against the world.
 ## - Shake: hits add trauma, which decays; the view is offset by a random
 ##   amount that grows with trauma squared, so small hits barely register and
 ##   big ones kick. The offset never moves the follow position itself.

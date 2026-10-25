@@ -15,8 +15,9 @@ extends Parallax2D
 ##
 ## The camera position comes from the drawn view each frame rather than
 ## from Parallax2D's own camera tracking, which floors it to whole level
-## pixels when 2D pixel snapping is on, so slow layers would step unevenly
-## against the world.
+## pixels if 2D pixel snapping is on, so slow layers would step unevenly
+## against the world. Physics interpolation is off for it, as for anything
+## moved in _process.
 
 ## The smallest camera zoom the copies of a repeating sprite are counted for.
 const MIN_ZOOM := GameCamera.VIEW_ZOOM
@@ -35,6 +36,9 @@ static func from_spec(parallax: Dictionary, placed: Vector2, art_size: Vector2) 
 	node.ignore_camera_scroll = true
 	# After the camera, which moves the drawn view each frame.
 	node.process_priority = 1
+	# It moves every frame in _process, already in step with the drawn view:
+	# physics interpolation would only take its position on physics ticks.
+	node.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	var scroll: Array = parallax.get("scroll", [1.0, 1.0])
 	node.scroll_scale = Vector2(float(scroll[0]), float(scroll[1]))
 	node.at = placed

@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 169
+const EXPECTED_CHECKS := 174
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -412,6 +412,10 @@ func test_parallax_sprites() -> void:
 		)
 		_check(back.repeat_size == Vector2(32, 0), "repeat_x tiles it sideways only")
 		_check(back.repeat_times >= 2, "with copies enough to cover the view")
+		_check(
+			back.physics_interpolation_mode == Node.PHYSICS_INTERPOLATION_MODE_OFF,
+			"it moves every frame, so physics interpolation leaves it alone"
+		)
 		# Centred on the sprite, Parallax2D's offset puts it where it was placed.
 		var viewport := Vector2(320, 180)
 		back.fit(viewport)
@@ -804,6 +808,20 @@ func test_region_look() -> void:
 		look.step(RegionLook.FADE) and look.top == Color.WHITE and not look.step(0.1),
 		"the fade ends on the new look"
 	)
+
+
+func test_post_fx_path() -> void:
+	var post := PostFx.new()
+	add_child(post)
+	post.set_grade(Color(1.0, 0.9, 0.8), 1.0, 1.0)
+	_check(not post.reads_screen(), "a tint-only grade draws without reading the screen back")
+	post.set_grade(Color.WHITE, 1.2, 1.0)
+	_check(post.reads_screen(), "contrast needs the screen")
+	post.set_grade(Color.WHITE, 1.0, 0.8)
+	_check(post.reads_screen(), "and so does saturation")
+	post.set_grade(Color.WHITE, 1.0, 1.0)
+	_check(not post.reads_screen(), "back to the cheap path once the grade is plain again")
+	post.queue_free()
 
 
 func test_region_key() -> void:
