@@ -153,6 +153,8 @@ class Layer:
 			else CanvasItem.TEXTURE_FILTER_NEAREST
 		)
 		z_index = 4 if front else -10
+		# After the camera, which moves the drawn view each frame (see _process).
+		process_priority = 1
 		light_mask = 1 if lit else 0
 		var additive := blend == "add" or blend == "screen"
 		if additive or not lit:
@@ -176,11 +178,14 @@ class Layer:
 
 	func _process(delta: float) -> void:
 		_time += delta
-		var camera := get_viewport().get_camera_2d()
-		if camera == null:
+		if get_viewport().get_camera_2d() == null:
 			return
-		var at := camera.get_screen_center_position()
-		_view = get_viewport_rect().size / camera.zoom
+		# Where the view is drawn this frame: with physics interpolation the
+		# camera's own position only changes on physics ticks.
+		var to_world := get_viewport().get_canvas_transform().affine_inverse()
+		var size := get_viewport_rect().size
+		var at := to_world * (size / 2.0)
+		_view = to_world.basis_xform(size)
 		if at != _camera_at or animated():
 			_camera_at = at
 			queue_redraw()

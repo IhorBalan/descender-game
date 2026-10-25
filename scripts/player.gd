@@ -1099,6 +1099,7 @@ func take_hazard_damage(amount: int) -> void:
 	# The Halo spares the heart, but the hero still has to leave the spikes.
 	if _spend_halo():
 		global_position = last_safe_position
+		reset_physics_interpolation()
 		velocity = Vector2.ZERO
 		return
 	if not _lose_health(guarded_damage(amount)):
@@ -1106,6 +1107,7 @@ func take_hazard_damage(amount: int) -> void:
 	_hurt_feedback()
 	_set_state(State.HURT, HURT_TIME)
 	global_position = last_safe_position
+	reset_physics_interpolation()
 	velocity = Vector2.ZERO
 	_invulnerable_timer = INVULNERABLE_TIME
 
@@ -1162,6 +1164,7 @@ func _die() -> void:
 ## The angels' system resurrects the hero at the last checkpoint.
 func respawn() -> void:
 	global_position = respawn_position
+	reset_physics_interpolation()
 	last_safe_position = respawn_position
 	velocity = Vector2.ZERO
 	# Nothing pressed before the death carries over.

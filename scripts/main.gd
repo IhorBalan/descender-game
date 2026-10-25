@@ -379,6 +379,7 @@ func _rest_at_checkpoint(index: int) -> void:
 	var checkpoint := level.checkpoints[index]
 	checkpoint.set_active(true)
 	player.global_position = checkpoint.global_position
+	player.reset_physics_interpolation()
 	player.rest_at(checkpoint.global_position)
 
 
@@ -791,6 +792,7 @@ func _warp_to_start() -> void:
 	_clear_motes()
 	_active_checkpoint = -1
 	player.global_position = level.player_start
+	player.reset_physics_interpolation()
 	player.velocity = Vector2.ZERO
 	player.rest_at(level.player_start)
 	player.frozen = false

@@ -21,6 +21,8 @@ var _sprite_rest_y := 0.0
 
 func _ready() -> void:
 	_sprite_rest_y = sprite.position.y
+	# It bobs every frame in _process, so physics interpolation stays off for it.
+	sprite.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	body_entered.connect(_on_body_entered)
 
 

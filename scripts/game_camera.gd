@@ -15,7 +15,9 @@ extends Camera2D
 ## - Peek: standing still on the ground and holding down pans the view
 ##   PEEK_DISTANCE below after a short delay, so a drop can be looked at
 ##   before it is taken; letting go brings the view back.
-## - The final position is rounded to whole pixels so tiles don't shimmer.
+## - The position is not rounded to level pixels: with physics
+##   interpolation the view moves smoothly between ticks, and the project's
+##   2D pixel snapping lines everything up on screen pixels.
 ## - Shake: hits add trauma, which decays; the view is offset by a random
 ##   amount that grows with trauma squared, so small hits barely register and
 ##   big ones kick. The offset never moves the follow position itself.
@@ -58,7 +60,7 @@ var target: Node2D
 var trauma := 0.0
 
 var _level_size := Vector2.ZERO
-## Unrounded camera position; global_position is this rounded.
+## The followed camera position (global_position, kept apart from it).
 var _smoothed := Vector2.ZERO
 ## Horizontal centre of the deadzone window.
 var _window_x := 0.0
@@ -93,7 +95,7 @@ func _physics_process(delta: float) -> void:
 	var smooth_y := SMOOTH_Y_FALLING if _fall_offset > 0.0 else SMOOTH_Y
 	_smoothed.x = lerpf(_smoothed.x, goal.x, 1.0 - exp(-SMOOTH_X * delta))
 	_smoothed.y = lerpf(_smoothed.y, goal.y, 1.0 - exp(-smooth_y * delta))
-	global_position = _smoothed.round()
+	global_position = _smoothed
 
 
 func set_limits(level_size: Vector2) -> void:
@@ -118,8 +120,9 @@ func snap_to_target() -> void:
 	_peek_timer = 0.0
 	_peek_offset = 0.0
 	_smoothed = _clamp_to_level(Vector2(_window_x + _look_offset, _ground_y))
-	global_position = _smoothed.round()
+	global_position = _smoothed
 	reset_smoothing()
+	reset_physics_interpolation()
 
 
 ## Adds shake; amounts add up and are capped at 1.
