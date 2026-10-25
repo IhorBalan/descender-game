@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 158
+const EXPECTED_CHECKS := 169
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -344,6 +344,88 @@ func test_drawn_shapes() -> void:
 	var scaled: Node = builder._solids.get_child(builder._solids.get_child_count() - 1)
 	_check(scaled.polygon[1] == Vector2(64, 12), "a resized sprite scales its shape")
 	_check(scaled.position == Vector2(10, 20), "around its top-left corner")
+	builder.queue_free()
+
+
+func test_parallax_sprites() -> void:
+	var builder := LevelBuilder.new()
+	add_child(builder)
+	builder._make_containers()
+	var map := WorldMap.new()
+	map.width = 8
+	map.height = 4
+	var shape := [[[0, 0], [32, 0], [32, 16], [0, 16]]]
+	map.sprites = [
+		{
+			"id": 1,
+			"x": 400,
+			"y": 64,
+			"columns": 2,
+			"rows": 1,
+			"solid": true,
+			"shape": shape,
+			"tiles": [-1, -1],
+			"parallax": {"scroll": [0.2, 1.0], "repeat_x": true},
+		},
+		{
+			"id": 2,
+			"x": 0,
+			"y": 0,
+			"columns": 2,
+			"rows": 1,
+			"scale": 2.0,
+			"tiles": [-1, -1],
+			"parallax": {"scroll": [1.2, 1.0]},
+		},
+		{
+			"id": 3,
+			"x": 8,
+			"y": 8,
+			"columns": 2,
+			"rows": 1,
+			"solid": true,
+			"shape": shape,
+			"tiles": [-1, -1]
+		},
+	]
+	builder._build_sprites(map, TileSet.new())
+	var back := builder.get_node("ParallaxBack/Sprite1Parallax") as ParallaxSprite
+	var front := builder.get_node_or_null("ParallaxFront/Sprite2Parallax") as ParallaxSprite
+	_check(
+		back != null and back.scroll_scale == Vector2(0.2, 1.0),
+		"a parallax sprite lagging the camera goes behind the level"
+	)
+	_check(front != null, "one running ahead goes in front")
+	_check(builder.get_node("ParallaxFront").z_index > 0, "drawn over the hero")
+	_check(
+		builder.has_node("Tiles/Sprite3") and not builder.has_node("Tiles/Sprite1"),
+		"plain sprites stay with the tiles"
+	)
+	if back:
+		_check(
+			back.get_node("Sprite1").position == Vector2.ZERO,
+			"its layer sits at the ParallaxSprite's origin"
+		)
+		_check(
+			back.at == Vector2(400, 64) and back.size == Vector2(32, 16),
+			"which knows where it was placed"
+		)
+		_check(back.repeat_size == Vector2(32, 0), "repeat_x tiles it sideways only")
+		_check(back.repeat_times >= 2, "with copies enough to cover the view")
+		# Centred on the sprite, Parallax2D's offset puts it where it was placed.
+		var viewport := Vector2(320, 180)
+		back.fit(viewport)
+		var centre := back.at + back.size / 2.0
+		var placed := (
+			back.scroll_offset + (centre - viewport / 2.0) * (Vector2.ONE - back.scroll_scale)
+		)
+		_check(placed.is_equal_approx(back.at), "centred on it, it sits where the editor shows it")
+	if front:
+		_check(
+			front.size == Vector2(64, 32) and front.repeat_size == Vector2.ZERO,
+			"scaled, without repeats"
+		)
+	_check(builder._solids.get_child_count() == 1, "only the plain solid sprite collides")
 	builder.queue_free()
 
 

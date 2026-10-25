@@ -48,6 +48,8 @@ func _ready() -> void:
 	_sprite.texture = TEXTURES[power]
 	_sprite.scale = Vector2(2, 2)
 	_sprite.position = Vector2(0, -16)
+	# It bobs every frame in _process, so physics interpolation stays off for it.
+	_sprite.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	add_child(_sprite)
 	body_entered.connect(_on_body_entered)
 

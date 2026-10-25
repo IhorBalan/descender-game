@@ -23,6 +23,8 @@ var _done := false
 func _ready() -> void:
 	add_to_group("heal_mote")
 	_rest_y = position.y
+	# It bobs every frame in _process, so physics interpolation stays off for it.
+	physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	body_entered.connect(_on_body_entered)
 	var shape := CollisionShape2D.new()
 	var circle := CircleShape2D.new()

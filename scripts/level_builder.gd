@@ -167,6 +167,10 @@ var _secret_specs: Array = []
 ## The sidecar's "objects" list.
 var _objects_spec: Array = []
 var _tiles: Node2D
+## Parallax sprites (see ParallaxSprite): those that lag behind the camera
+## under the tile layers, those that run ahead in front of the hero.
+var _parallax_back: Node2D
+var _parallax_front: Node2D
 ## The pieces along the terrain's exposed edges (see EdgeDecor).
 var _edges: EdgeDecor
 var _solids: StaticBody2D
@@ -213,9 +217,16 @@ func _make_containers() -> void:
 	for child in get_children():
 		remove_child(child)
 		child.queue_free()
+	_parallax_back = Node2D.new()
+	_parallax_back.name = "ParallaxBack"
+	add_child(_parallax_back)
 	_tiles = Node2D.new()
 	_tiles.name = "Tiles"
 	add_child(_tiles)
+	_parallax_front = Node2D.new()
+	_parallax_front.name = "ParallaxFront"
+	_parallax_front.z_index = 4
+	add_child(_parallax_front)
 	_edges = EdgeDecor.new()
 	_edges.name = "Edges"
 	add_child(_edges)
@@ -339,7 +350,8 @@ func _build_layers(map: WorldMap) -> TileSet:
 ## The export's free-placed decorations: each is a small TileMapLayer at a
 ## pixel position, drawn over the tile layers (a lit one also gets a glow
 ## layer) at its `scale` from its top-left corner, and a solid one collides
-## at that scale too.
+## at that scale too. A sprite with `parallax` goes under a ParallaxSprite
+## instead, behind the level or in front of it, and does not collide.
 func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 	for spec in map.sprites:
 		var columns := int(spec.get("columns", 1))
@@ -356,6 +368,17 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 		var at := Vector2(float(spec.get("x", 0)), float(spec.get("y", 0)))
 		var flip: bool = spec.get("flip", false)
 		var copy_scale := float(spec.get("scale", 1.0))
+		# A parallax sprite's layers sit at the origin of its ParallaxSprite,
+		# which places them; it never collides.
+		var parent: Node2D = _tiles
+		var parallax: Variant = spec.get("parallax")
+		if parallax is Dictionary:
+			var art_size := Vector2(columns, rows) * TILE * copy_scale
+			var holder := ParallaxSprite.from_spec(parallax, at, art_size)
+			holder.name = "Sprite%dParallax" % int(spec.get("id", 0))
+			(_parallax_front if holder.in_front() else _parallax_back).add_child(holder)
+			parent = holder
+			at = Vector2.ZERO
 		var sources: Array[int] = [0]
 		if spec.get("glow", false):
 			sources.append(1)
@@ -381,8 +404,8 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 					cx = columns - 1 - cx
 				var alternative := TileSetAtlasSource.TRANSFORM_FLIP_H if flip else 0
 				layer.set_cell(Vector2i(cx, i / columns), source, map.atlas_coords(id), alternative)
-			_tiles.add_child(layer)
-		if spec.get("solid", false):
+			parent.add_child(layer)
+		if spec.get("solid", false) and parent == _tiles:
 			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set, copy_scale)
 	_sheet_image = null
 

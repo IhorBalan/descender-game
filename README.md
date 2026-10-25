@@ -31,6 +31,15 @@ started without a save.
 The game renders at **320x180** and scales up by whole numbers, so the
 window is 1280x720 by default.
 
+Physics runs at 60 ticks a second, and **physics interpolation** is on
+(`physics/common/physics_interpolation`): the hero, enemies and camera are
+drawn between ticks, so motion stays smooth on 120 and 144 Hz screens. Code
+that teleports a body calls `reset_physics_interpolation()` after moving it,
+so it doesn't slide there. Anything moved in `_process` turns interpolation
+off for itself (the bobbing pickups). Anything that follows the view reads
+the viewport's canvas transform, not the camera's position, which only
+changes on ticks (see `Backdrop`).
+
 ## Controls
 
 | Action  | Keyboard            | Gamepad        |
@@ -394,6 +403,19 @@ pixels (`SPRITE_SMOOTH_PX`), so the half-pixel stairs the tracing makes of a
 nearly flat painted top become gentle slopes, and the hero steps up any lip
 of up to 4 pixels while walking (`Player.CORNER_CORRECTION`), so painted
 ground never stops him like a wall.
+
+A sprite marked for **parallax scrolling** in the editor (`parallax`:
+`scroll` = [x, y], optional `repeat_x` / `repeat_y`) is built as a
+`ParallaxSprite`, Godot's `Parallax2D` with the sprite's layers as its
+children. It sits where it was placed when the camera is centred on it and
+follows that share of the camera's movement: 1 moves with the world, 0
+stays on screen. Sprites below 1 go under `ParallaxBack`, behind the tile
+layers; those above 1 go under `ParallaxFront`, over the hero. Repeating
+axes tile the art seamlessly across the view at any window size. Parallax
+sprites never collide. Typical speeds: 0.05–0.1 for the farthest
+background, 0.15–0.25 for silhouettes, 0.35–0.5 for the middle, 0.6–0.8 for
+near background and 1.1–1.3 for foreground. The region-wide painted sets
+are separate (see `Backdrop` below).
 
 The export also says how many pixels a tile has in the sheets, its **art
 scale** (`art_tile`): 16 for pixel art, 64 for painted tiles, which makes a

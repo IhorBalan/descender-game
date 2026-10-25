@@ -26,6 +26,8 @@ func _ready() -> void:
 	_sprite = Sprite2D.new()
 	_sprite.texture = TEXTURE
 	_sprite.position = Vector2(0, -8)
+	# It bobs every frame in _process, so physics interpolation stays off for it.
+	_sprite.physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF
 	add_child(_sprite)
 	move_child(_sprite, 0)
 
