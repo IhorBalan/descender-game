@@ -13,9 +13,10 @@ extends Node
 ## connection.
 ##
 ## `--map=<map id or name>` on the command line downloads (if needed) and
-## starts that map: `godot --path . -- --map="World 3"`. It only needs the
-## `live_map/project_id` project setting, not the live map sync, and works
-## in exported builds too since it writes under user://.
+## makes it what New Game starts: `godot --path . -- --map="World 3"`; add
+## `--play` to skip the menu and play it at once, in no save slot. It only
+## needs the `live_map/project_id` project setting, not the live map sync,
+## and works in exported builds too since it writes under user://.
 
 ## Emitted when a download or the --map start-up ends, well or badly.
 signal finished(ok: bool, message: String)

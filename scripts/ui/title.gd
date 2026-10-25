@@ -104,6 +104,10 @@ func _ready() -> void:
 		live_map_status.visible = true
 		_show_live_map_status(LiveMap.ok, LiveMap.status)
 		LiveMap.finished.connect(_show_live_map_status)
+	# --play skips the menu: a fresh game in no save slot (nothing is saved),
+	# on what New Game would start, e.g. the map --map picks (see MapStore).
+	if OS.get_cmdline_user_args().has("--play"):
+		_start_game.call_deferred()
 
 
 func _unhandled_input(event: InputEvent) -> void:

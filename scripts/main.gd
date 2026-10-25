@@ -124,7 +124,9 @@ func _ready() -> void:
 	region_fx.name = "RegionFx"
 	add_child(region_fx)
 	# The grade sits on the HUD's layer, before it in the tree so it is
-	# drawn under it; the glow needs the viewport's 2D HDR (project.godot).
+	# drawn under it. 2D HDR stays off (project.godot): on the Mobile
+	# renderer it blends in linear light, which changes the look; the glow
+	# blooms what the sky, glow tiles and lights push to full brightness.
 	post = PostFx.new()
 	post.name = "Post"
 	add_child(post)
