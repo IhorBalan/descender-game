@@ -1,31 +1,31 @@
 {
   "hero": {
     "frame_size": [
-      54,
-      44
+      64,
+      48
     ],
     "origin": [
-      27,
+      32,
       44
     ],
     "anchor": "feet",
     "animations": {
       "idle": {
         "file": "hero_idle.png",
-        "frames": 8,
-        "fps": 8,
+        "frames": 6,
+        "fps": 6,
         "loop": true
       },
       "run": {
         "file": "hero_run.png",
         "frames": 8,
-        "fps": 10,
+        "fps": 12,
         "loop": true
       },
-      "attack": {
-        "file": "hero_attack.png",
-        "frames": 6,
-        "fps": 21,
+      "skid": {
+        "file": "hero_skid.png",
+        "frames": 1,
+        "fps": 1,
         "loop": false
       },
       "jump": {
@@ -34,10 +34,76 @@
         "fps": 8,
         "loop": false
       },
+      "fall": {
+        "file": "hero_fall.png",
+        "frames": 2,
+        "fps": 6,
+        "loop": true
+      },
+      "land": {
+        "file": "hero_land.png",
+        "frames": 2,
+        "fps": 15,
+        "loop": false
+      },
+      "dash": {
+        "file": "hero_dash.png",
+        "frames": 2,
+        "fps": 12,
+        "loop": true
+      },
+      "wall": {
+        "file": "hero_wall.png",
+        "frames": 2,
+        "fps": 6,
+        "loop": true
+      },
+      "glide": {
+        "file": "hero_glide.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": true
+      },
+      "double_jump": {
+        "file": "hero_double_jump.png",
+        "frames": 4,
+        "fps": 20,
+        "loop": false
+      },
+      "attack": {
+        "file": "hero_attack.png",
+        "frames": 6,
+        "fps": 21,
+        "loop": false
+      },
+      "cast": {
+        "file": "hero_cast.png",
+        "frames": 3,
+        "fps": 14,
+        "loop": false
+      },
+      "slam": {
+        "file": "hero_slam.png",
+        "frames": 2,
+        "fps": 1,
+        "loop": false
+      },
       "hurt": {
         "file": "hero_hurt.png",
         "frames": 2,
         "fps": 10,
+        "loop": false
+      },
+      "heal": {
+        "file": "hero_heal.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": true
+      },
+      "death": {
+        "file": "hero_death.png",
+        "frames": 5,
+        "fps": 8,
         "loop": false
       }
     }

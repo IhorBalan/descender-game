@@ -169,6 +169,25 @@ game was started from, as JSON under `user://saves/`. Loading puts the hero back
 checkpoint, rested, with the feathers he already took gone from the level.
 Restarting with R does the same from the progress so far.
 
+**The hero's sprite** is a stand-in while the movement is being tuned: a
+plain figure drawn by `tools/hero_placeholder/gen.py` (run it to redraw the
+strips in `assets/sprites/hero/` and the hero entry of `sprites.json`). Its
+point is that every frame fits the hero's collision box, 14x32 level
+pixels from the soles up: the head, torso and legs of each frame fill the
+box, and the script refuses a pose that does not (only the sword, the arms
+and the wings reach past it), so what the player sees standing on a ledge,
+pressed to a wall or landing is what the physics has. `--sheet out.png`
+draws every strip with the box over each frame. There is a strip for every
+move: idle, run (paced by the hero's speed), skid (the stick against the
+run), jump (launch, rise, apex), fall, land (the squash after a drop),
+dash, wall (the grip, facing the wall), glide, double_jump (the wing beat),
+attack, cast, slam (dive and impact), hurt, heal and death. The painted
+SpriteCook hero and its cut-out rig stay in `tools/hero_cutout/` for later;
+its export would need the new strips drawn too, since `player.gd` plays
+them all. `tools/hero_shots.gd` films each move in the game with the body
+box in green and the live attack hitbox in red, one filmstrip per move
+(needs a display; see the script).
+
 Thin ledges can be jumped up through from below, and the hero drops
 through one by holding down and pressing jump. Standing still and holding
 down on its own peeks below: after a moment the view pans down a few
@@ -684,7 +703,9 @@ the live map is meant to ship.
 | `assets/sprites/` | Character strips from the art thread and the NPC rig, plus the generated checkpoint, gate and pickups |
 | `assets/ui_theme.tres` | The menus' font size and button styles |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
-| `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
+| `tools/hero_placeholder/gen.py` | Draws the stand-in hero's strips, every frame fitted to his collision box, and rewrites the hero entry of `sprites.json` |
+| `tools/hero_shots.gd` | Films the hero's moves with his collision box and attack hitbox drawn, one filmstrip per move (needs a display; see the script) |
+| `tools/hero_cutout/` | The painted hero's SpriteCook base art and cut-out animation script, kept for when the art comes back; `export.py` writes the hero strips |
 | `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |
 | `tests/map_pipeline_test.tscn` | Headless tests of the level registry, export reader, Firestore parsing, map store, sprite building and backdrops |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |

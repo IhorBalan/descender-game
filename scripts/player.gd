@@ -143,6 +143,20 @@ const KNOCKBACK := Vector2(110.0, -110.0)
 const DEATH_TIME := 1.2
 ## Falling at least this fast makes a landing sound and raises dust.
 const LAND_SOUND_SPEED := 120.0
+# Animation. The strips are in assets/sprites/hero (tools/hero_placeholder):
+# every frame's body fills the collision box, so the poses below only pick
+# which frame shows for the movement under way.
+## Falling at least this fast shows the landing squash, for this long.
+const LAND_ANIM_SPEED := 60.0
+const LAND_ANIM_TIME := 0.14
+## The wing beat of the second jump.
+const DOUBLE_JUMP_ANIM_TIME := 0.2
+## Running at least this fast against the stick shows the skid frame.
+const SKID_SPEED := 40.0
+## The run strip plays faster or slower with the hero's speed, within these.
+const RUN_ANIM_SPEED_RANGE := Vector2(0.6, 1.6)
+## The launch frame of the jump lasts while the hero rises faster than this.
+const JUMP_LAUNCH_SPEED := 200.0
 const SAFE_GROUND_TIME := 0.2
 
 const TINT_DASH := Color(0.7, 0.9, 1.0, 0.85)
@@ -216,6 +230,14 @@ var _attack_hit: Array[Node] = []
 ## Last tick's floor contact and fall speed, for the landing sound.
 var _was_on_floor := false
 var _last_fall_speed := 0.0
+## Counts down while the landing squash shows.
+var _land_timer := 0.0
+## Counts down while the wings beat for the second jump.
+var _double_jump_timer := 0.0
+## The stick this tick, for the skid frame when it points against the run.
+var _move_input := 0.0
+## The one-shot strip started for the current state, so it plays once.
+var _one_shot := ""
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var attack_hitbox: Area2D = $AttackHitbox
@@ -275,6 +297,9 @@ func _physics_process(delta: float) -> void:
 		if state != State.DEAD:
 			Audio.play("land", -6.0)
 			Feedback.dust(global_position)
+	if is_on_floor() and not _was_on_floor and _last_fall_speed >= LAND_ANIM_SPEED:
+		_land_timer = LAND_ANIM_TIME
+		_one_shot = ""
 	_was_on_floor = is_on_floor()
 	_track_safe_ground(delta)
 	if global_position.y > death_y and state != State.DEAD and not frozen:
@@ -295,6 +320,8 @@ func _tick_timers(delta: float) -> void:
 	_wall_jump_lock_timer = maxf(_wall_jump_lock_timer - delta, 0.0)
 	_cast_buffer_timer = maxf(_cast_buffer_timer - delta, 0.0)
 	_cast_cooldown_timer = maxf(_cast_cooldown_timer - delta, 0.0)
+	_land_timer = maxf(_land_timer - delta, 0.0)
+	_double_jump_timer = maxf(_double_jump_timer - delta, 0.0)
 	_tick_powers(delta)
 
 
@@ -309,6 +336,7 @@ func _process_normal(delta: float) -> void:
 		input_dir = 0.0
 	if input_dir != 0.0:
 		facing = 1 if input_dir > 0.0 else -1
+	_move_input = input_dir
 	if is_on_floor():
 		_coyote_timer = COYOTE_TIME
 	_update_wall_grip(input_dir)
@@ -343,6 +371,8 @@ func _process_normal(delta: float) -> void:
 		_air_jump_available = false
 		_jump_rising = true
 		_wing_flash_timer = WING_FLASH_TIME
+		_double_jump_timer = DOUBLE_JUMP_ANIM_TIME
+		_one_shot = ""
 		Audio.play("double_jump")
 	elif _jump_buffer_timer > 0.0 and velocity.y > 0.0 and has_ability(Ability.GLIDE):
 		# Glide: the press opens the wings; holding it keeps them open.
@@ -425,7 +455,7 @@ func _start_attack() -> void:
 	rect.size.x = ATTACK_SHAPE_SIZE.x * _stat_factor("reach")
 	var extra := (rect.size.x - ATTACK_SHAPE_SIZE.x) / 2.0
 	attack_hitbox.position.x = (ATTACK_OFFSET_X + extra) * facing
-	sprite.play("attack")
+	_play_once("attack")
 	# A slow or quick blade plays the strip to match.
 	sprite.speed_scale = ATTACK_TIME / attack_time()
 	Audio.play("swing")
@@ -587,6 +617,8 @@ func _set_state(new_state: State, duration: float) -> void:
 	_gliding = false
 	state = new_state
 	_state_timer = duration
+	_land_timer = 0.0
+	_one_shot = ""
 
 
 # --- Physics helpers ----------------------------------------------------
@@ -1199,45 +1231,56 @@ func respawn() -> void:
 func _update_sprite() -> void:
 	sprite.flip_h = facing < 0
 	sprite.modulate = Color.WHITE
-	sprite.rotation = 0.0
+	if state != State.ATTACK:
+		sprite.speed_scale = 1.0
 	match state:
-		State.IDLE:
-			_play("idle")
-		State.RUN:
-			_play("run")
+		State.IDLE, State.RUN:
+			_update_ground_sprite()
 		State.JUMP:
-			_pose("jump", 0)
-			if _wing_flash_timer > 0.0:
+			if _double_jump_timer > 0.0:
+				_play_once("double_jump")
 				sprite.modulate = TINT_WINGS
+			elif velocity.y < -JUMP_LAUNCH_SPEED:
+				_pose("jump", 0)
+			elif velocity.y < -APEX_SPEED_THRESHOLD:
+				_pose("jump", 1)
+			else:
+				_pose("jump", 2)
 		State.FALL:
-			_pose("jump", 1)
 			if _on_wall_grip:
-				_pose("hurt", 0)
+				_play("wall")
 				sprite.flip_h = _wall_dir < 0
 			elif _gliding:
-				_pose("jump", 0)
+				_play("glide")
 				sprite.modulate = TINT_GLIDE
+			elif _double_jump_timer > 0.0:
+				_play_once("double_jump")
+				sprite.modulate = TINT_WINGS
+			elif velocity.y < APEX_SPEED_THRESHOLD:
+				# Just past the top of the arc, before the fall proper.
+				_pose("jump", 2)
+			else:
+				_play("fall")
 		State.ATTACK:
 			# Started once in _start_attack; the Lit Blade tints the swing.
 			if has_power(Power.BLADE):
 				sprite.modulate = TINT_BLADE
 		State.DASH:
-			_pose("run", 1)
+			_play("dash")
 			sprite.modulate = TINT_LIGHT_DASH if has_ability(Ability.LIGHT_DASH) else TINT_DASH
 		State.HURT:
-			_pose("hurt", 0)
+			_play_once("hurt")
 		State.HEAL:
-			_play("idle")
+			_play("heal")
 			sprite.modulate = TINT_HEAL
 		State.CAST:
-			_pose("attack", 2)
+			_play_once("cast")
 			sprite.modulate = TINT_CAST
 		State.SLAM:
-			_pose("attack", 4 if _slam_landed else 1)
+			_pose("slam", 1 if _slam_landed else 0)
 			sprite.modulate = TINT_SLAM
 		State.DEAD:
-			_pose("hurt", 0)
-			sprite.rotation = -PI / 2.0 * facing
+			_play_once("death")
 	# Blink while invulnerable.
 	if _invulnerable_timer > 0.0 and state != State.DEAD:
 		sprite.visible = fmod(_invulnerable_timer, 0.12) < 0.07
@@ -1245,14 +1288,47 @@ func _update_sprite() -> void:
 		sprite.visible = true
 
 
+## On the ground: the landing squash first, then the skid when the stick
+## points against the run, else the run (paced by the speed) or the idle.
+func _update_ground_sprite() -> void:
+	if _land_timer > 0.0:
+		_play_once("land")
+		return
+	var skidding := (
+		state == State.RUN
+		and _move_input != 0.0
+		and signf(_move_input) != signf(velocity.x)
+		and absf(velocity.x) >= SKID_SPEED
+	)
+	if skidding:
+		_pose("skid", 0)
+		# The feet point the way he slides; he looks back where he is going.
+		sprite.flip_h = velocity.x < 0.0
+	elif state == State.RUN:
+		_play("run")
+		sprite.speed_scale = clampf(
+			absf(velocity.x) / RUN_SPEED, RUN_ANIM_SPEED_RANGE.x, RUN_ANIM_SPEED_RANGE.y
+		)
+	else:
+		_play("idle")
+
+
 ## Switches to a looping animation, or restarts it if it was paused by _pose.
-## One-shot animations (attack) are started where the state begins, so a
-## finished strip is never replayed while the state lasts.
 func _play(anim_name: String) -> void:
 	if sprite.animation != anim_name:
 		sprite.play(anim_name)
 	elif not sprite.is_playing() and sprite.sprite_frames.get_animation_loop(anim_name):
 		sprite.play(anim_name)
+
+
+## Starts a one-shot strip from its first frame, once per state (or per
+## landing or wing beat, which clear the token), so a finished strip is
+## never replayed while the state lasts and stays on its last frame.
+func _play_once(anim_name: String) -> void:
+	if _one_shot == anim_name:
+		return
+	_one_shot = anim_name
+	sprite.play(anim_name)
 
 
 func _pose(anim_name: String, frame: int) -> void:
