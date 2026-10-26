@@ -242,6 +242,8 @@ func test_world_map() -> void:
 func test_level_builder_sprites() -> void:
 	var builder := LevelBuilder.new()
 	add_child(builder)
+	# The whole export at once: nothing stands in it to stream around.
+	builder.streaming = false
 	builder.load_from_file(DIR + "/export16/world.json")
 	var tiles := builder.get_node("Tiles")
 	var names: Array[String] = []

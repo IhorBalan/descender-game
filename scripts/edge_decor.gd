@@ -22,7 +22,8 @@ extends Node2D
 ## The PNGs are drawn scaled onto the 16-unit grid by tile / art_tile, so a
 ## set serves maps of any art scale. Pieces are drawn in chunks of
 ## CHUNK x CHUNK cells, one canvas item each, so only the chunks in view
-## cost anything; the variant of a cell is fixed by its position.
+## cost anything; the variant of a cell is fixed by its position. The level
+## streams them with its tiles: prepare once, then build_cells per chunk.
 
 const REGIONS_DIR := "res://assets/regions"
 const CHUNK := 32
@@ -32,20 +33,42 @@ const SIDES: Array[String] = ["top", "bottom", "left", "right"]
 ## empty dictionary for a region without edge art.
 var _sets := {}
 
+## Which cells of the map are solid (1) or not (0), row by row, from prepare.
+var _solid := PackedByteArray()
+var _width := 0
+var _height := 0
 
-## Builds the edge pieces for the whole map.
+
+## Builds the edge pieces for the whole map at once.
 func build(map: WorldMap) -> void:
+	prepare(map)
+	build_cells(map, Rect2i(0, 0, map.width, map.height))
+
+
+## Reads the map's solid cells and clears the pieces built so far, ready for
+## build_cells to build the pieces of any part of the grid.
+func prepare(map: WorldMap) -> void:
 	for child in get_children():
 		child.queue_free()
+	_width = map.width
+	_height = map.height
 	var terrain: PackedInt32Array = map.cells(WorldMap.LAYER_TERRAIN)
-	if terrain.is_empty():
-		return
-	var solid := PackedByteArray()
-	solid.resize(terrain.size())
+	_solid = PackedByteArray()
+	_solid.resize(terrain.size())
 	for i in terrain.size():
-		solid[i] = (
+		_solid[i] = (
 			1 if terrain[i] >= 0 and int(map.kinds.get(terrain[i], 0)) == WorldMap.KIND_SOLID else 0
 		)
+
+
+## Builds the pieces of the solid cells within `cells` (a chunk, see
+## LevelBuilder.stream_around) and returns the chunk nodes made, so the
+## caller can free them again. The pieces of a cell overhang it, so a
+## chunk's pieces may reach a little outside its cells.
+func build_cells(map: WorldMap, cells: Rect2i) -> Array[Node]:
+	var made: Array[Node] = []
+	if _solid.is_empty() or not cells.has_area():
+		return made
 	var tile := map.tile
 	# Chunk key -> the pieces in it.
 	var chunks := {}
@@ -54,15 +77,15 @@ func build(map: WorldMap) -> void:
 		if edge_set.is_empty():
 			continue
 		var scale_factor := float(tile) / float(edge_set.get("art_tile", tile))
-		var y0 := int(floor(float(region.get("y0", 0)) / tile))
-		var y1 := int(ceil(float(region.get("y1", 0)) / tile))
-		for y in range(maxi(y0, 0), mini(y1, map.height)):
-			for x in map.width:
-				if solid[y * map.width + x] == 0:
+		var y0 := maxi(int(floor(float(region.get("y0", 0)) / tile)), cells.position.y)
+		var y1 := mini(int(ceil(float(region.get("y1", 0)) / tile)), cells.end.y)
+		for y in range(y0, y1):
+			for x in range(cells.position.x, cells.end.x):
+				if _solid[y * _width + x] == 0:
 					continue
 				for side in SIDES:
 					var pieces: Array = edge_set.get(side, [])
-					if pieces.is_empty() or not _exposed(solid, map.width, map.height, x, y, side):
+					if pieces.is_empty() or not _exposed(_solid, _width, _height, x, y, side):
 						continue
 					var roll := _hash(x, y, side.unicode_at(0))
 					if roll % 1000 >= int(float(edge_set.get(side + "_chance", 1.0)) * 1000.0):
@@ -83,6 +106,8 @@ func build(map: WorldMap) -> void:
 		chunk.pieces = chunks[key]
 		chunk.position = Vector2(key) * CHUNK * tile
 		add_child(chunk)
+		made.append(chunk)
+	return made
 
 
 ## Whether the solid cell (x, y) has open air on the given side.

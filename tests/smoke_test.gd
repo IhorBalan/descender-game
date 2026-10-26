@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 668
+const EXPECTED_CHECKS := 675
 const LAST_TICK := 2380
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -124,18 +124,41 @@ func _physics_process(_delta: float) -> void:
 			var terrain := level.get_node_or_null("Tiles/Terrain")
 			_check(terrain is TileMapLayer, "terrain is a TileMapLayer")
 			# The counts come from the export itself, so a republished live map
-			# does not move the goalposts.
+			# does not move the goalposts. The grid streams in chunks around the
+			# hero (see LevelBuilder.stream_around): the chunks around the start
+			# are built, the far ones are not.
+			var chunks := level.loaded_chunks()
+			_check(
+				chunks.size() > 0 and chunks.size() < 20,
+				"only the chunks around the hero are built (%d)" % chunks.size()
+			)
+			_check(
+				level.is_loaded(Vector2i(74, 15)) and not level.is_loaded(Vector2i(74, 440)),
+				"the start's chunk is built and Treachery's is not"
+			)
 			var terrain_cells := 0
-			for id in level.world.cells(WorldMap.LAYER_TERRAIN):
-				if id >= 0:
+			var all_cells := level.world.cells(WorldMap.LAYER_TERRAIN)
+			for i in all_cells.size():
+				var cell := Vector2i(i % level.world.width, i / level.world.width)
+				if all_cells[i] >= 0 and level.is_loaded(cell):
 					terrain_cells += 1
 			_check(
 				terrain != null and terrain.get_used_cells().size() == terrain_cells,
-				"every terrain cell is set"
+				"every terrain cell of the built chunks is set"
 			)
 			_check(level.get_node("Solids").get_child_count() > 0, "solid runs have collision")
 			_check(level.get_node("Ledges").get_child_count() > 0, "one-way ledges built")
-			_check(level.get_node("Hazards").get_child_count() > 0, "hazards built")
+			# Hazards lie in the deep circles only: their chunks are built when
+			# something is near them and torn down again when nothing is.
+			_check(level.get_node("Hazards").get_child_count() == 0, "no hazard near the start")
+			var pit := Vector2(36.5 * 16.0, 236.0 * 16.0)
+			level.stream_around([_player.global_position, pit])
+			_check(level.is_loaded(Vector2i(36, 236)), "a chunk streams in around a far point")
+			_check(level.get_node("Hazards").get_child_count() > 0, "hazards built with it")
+			level.stream_around([_player.global_position])
+			_check(not level.is_loaded(Vector2i(36, 236)), "and streams out once nothing is near")
+			_check(level.get_node("Hazards").get_child_count() == 0, "with its hazards")
+			_check(level.is_loaded(Vector2i(74, 15)), "the start's chunk stays")
 			_check(
 				level.get_node("Lights").get_child_count() == level.world.lights.size(),
 				"every light placed"

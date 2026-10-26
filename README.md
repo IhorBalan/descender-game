@@ -527,7 +527,7 @@ a red cave of cages and drips, Fraud purple veils and motes, Treachery ice
 spires, frost, icicles and snow. The parallax layers are anchored to the
 region's height so they stay in view from its top to its bottom.
 
-`scripts/level_builder.gd` builds it at boot: one `TileMapLayer` per layer
+`scripts/level_builder.gd` builds it: one `TileMapLayer` per layer
 (Background, Decor, Terrain, Glow), collision merged from the terrain kinds
 (solid, one-way ledge, hazard), a `PointLight2D` per light (without shadows,
 which would need an occluder on every tile), and the markers: the start
@@ -543,6 +543,38 @@ marker at the bottom of the hub is the `descent` trigger: the point of no
 return, with a line from the Voice and an autosave (a dialogue entry's
 `save` flag). The two shop markers stay data: the shops are Pell and Vael
 themselves.
+
+### Streaming and the region scenes
+
+The grid is not built all at once. `LevelBuilder` cuts it into chunks of
+64 x 64 tiles (`CHUNK_TILES`, 1024 level pixels a side) and builds only the
+chunks within a screen and a half of the hero and of the camera
+(`STREAM_IN`): their cells on the four tile layers, the collision of their
+terrain rows and their edge pieces. Chunks further than `STREAM_OUT` from
+both are torn down again. `Main` calls `stream_around` every physics tick,
+before the hero's own step, and again wherever it puts him down (a
+checkpoint, fast travel, the warp to the start), so he never stands on
+ground that is not there. At the start three of the world's 64 chunks exist
+instead of the whole 880,000-cell grid. Everything with state in it (the
+markers, the seals, the secret walls, the lights, the enemies and the
+objects of the sidecar) is placed for the whole world as before; an opened
+secret passage stays open when its chunk comes back. The tests and the tools
+build the whole grid with `streaming = false` or `load_all()`.
+
+To look at one level in the editor, open its scene under `scenes/world/`:
+`00_paradise.tscn` down to `11_treachery.tscn`, one per region. Each is a
+`RegionPreview` (`scripts/region_preview.gd`, a tool script) that reads the
+export when the scene opens and builds that region's tile layers, its lights,
+and over them the rooms (outlined and named, boss rooms in red), the doors
+and the markers. Nothing is saved into the scene, so a live map pull shows
+up on the next open. Set **Area** in the inspector to one of the region's
+areas to narrow the view to its rooms (Paradise, Ruined Earth and Purgatory
+have several; the deep circles are one area each), and turn the rooms, the
+markers or the lights off there. The region's top-left cell sits at the
+scene's origin; the title in the corner gives its place in the world grid.
+`tools/gen_region_scenes.py` writes the scenes again from an export when
+its regions change, and `tools/region_screenshot.gd` renders each one to a
+PNG, whole and per area (see the script for the command).
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
@@ -673,7 +705,9 @@ the live map is meant to ship.
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
-| `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements |
+| `scenes/world/*.tscn`, `scripts/region_preview.gd` | One editor scene per region of the world: its tiles, lights, rooms, doors and markers, built from the export when the scene opens |
+| `tools/gen_region_scenes.py`, `tools/region_screenshot.gd` | Writes the region scenes from an export, and renders each to a PNG (needs a display; see the script) |
+| `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/light_bolt.gd` | The bolt of Holy Light the hero throws |
 | `scripts/upgrade.gd`, `scripts/power_up.gd` | A permanent upgrade (heart, healing charge) and a timed power-up (Halo, Lit Blade, Zeal) |
