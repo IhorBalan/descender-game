@@ -8,8 +8,10 @@ extends Control
 ## difficulty picker chooses how hard the run is (kept in its save); the picker's
 ## Delete button turns it into a delete picker, where a slot asks the same
 ## before it is cleared. Maps lists the maps the editor published (see
-## MapStore) and the exports in the project; choosing one downloads it if
-## needed and makes it what New Game starts on. The hint along the bottom
+## MapStore): choosing one downloads it if needed and selects it, so New
+## Game starts on it instead of the game's own world, like a mod; choosing
+## it again deselects it. The selected map is named under the version in
+## the corner ("Mod: Map - <name>"). The hint along the bottom
 ## says where Continue would resume, while that button is focused, and
 ## otherwise shows the keys or the pad buttons, whichever the player last
 ## used. The version in the corner is the project's `application/config/version`.
@@ -61,6 +63,7 @@ var difficulty_buttons: Array[Button] = [$Difficulty/Easy, $Difficulty/Normal, $
 @onready var credits_back_button: Button = $Credits/Back
 @onready var hint: PromptLabel = $Hint
 @onready var version_label: Label = $Version
+@onready var mod_label: Label = $Mod
 @onready var maps: VBoxContainer = $Maps
 @onready var maps_list: VBoxContainer = $Maps/List
 @onready var maps_status: Label = $Maps/Status
@@ -141,9 +144,7 @@ func _show_menu() -> void:
 	credits.visible = false
 	maps.visible = false
 	menu.visible = true
-	# New Game says which map it starts (see the Maps menu).
-	var chosen := MapStore.chosen_name()
-	new_game_button.text = "New Game" if chosen.is_empty() else "New Game: %s" % chosen
+	_show_mod()
 	var any_save := SaveManager.latest_slot() >= 0
 	continue_button.disabled = not any_save
 	load_button.disabled = not any_save
@@ -169,14 +170,9 @@ func continue_summary() -> String:
 func _show_slots(mode: SlotMode) -> void:
 	_slot_mode = mode
 	_confirm_slot = -1
-	var chosen := MapStore.chosen_name()
 	match mode:
 		SlotMode.NEW_GAME:
-			slots_heading.text = (
-				"New game: choose a slot"
-				if chosen.is_empty()
-				else "New game on %s: choose a slot" % chosen
-			)
+			slots_heading.text = "New game: choose a slot"
 		SlotMode.LOAD:
 			slots_heading.text = "Load game"
 		SlotMode.DELETE:
@@ -243,37 +239,26 @@ func _on_delete_pressed() -> void:
 	_show_slots(SlotMode.LOAD if _slot_mode == SlotMode.DELETE else SlotMode.DELETE)
 
 
-## The Maps menu: the exports in the project (the descent and anything
-## registered), then the maps the editor published, downloaded ones first.
+## The selected map, under the version: a map the editor published that
+## New Game starts on instead of the game's own world (see the Maps menu).
+func _show_mod() -> void:
+	var chosen := MapStore.chosen_name()
+	mod_label.text = "" if chosen.is_empty() else "Mod: Map - %s" % chosen
+	mod_label.visible = not chosen.is_empty()
+
+
+## The Maps menu: the maps the editor published, downloaded ones first. The
+## selected one is ticked; choosing a map selects it (after its download, if
+## it needs one) and choosing it again deselects it.
 func _show_maps() -> void:
 	menu.visible = false
 	maps.visible = true
-	for child in maps_list.get_children():
-		maps_list.remove_child(child)
-		child.queue_free()
 	maps_status.text = "Looking for published maps…"
-	for level in Levels.LEVELS:
-		_add_map_button("%s   (in the game)" % level["name"], _start_level.bind(""))
 	maps_back_button.grab_focus()
 	var listed := await MapStore.list()
 	if not maps.visible:
 		return
-	for entry in listed:
-		var map_id := str(entry.get("mapId", ""))
-		if entry.get("unpublished", false):
-			_add_map_button(
-				"%s   (downloaded, no longer published)" % str(entry.get("name", map_id)),
-				_start_level.bind(MapStore.level_id(map_id))
-			)
-		else:
-			var note := (
-				"downloaded"
-				if entry.get("cached", false)
-				else ("update available" if entry.has("path") else "download")
-			)
-			_add_map_button(
-				"%s   (%s)" % [str(entry.get("name", map_id)), note], _fetch_and_start.bind(map_id)
-			)
+	_list_maps(listed)
 	maps_status.text = (
 		MapStore.status
 		if not MapStore.status.is_empty()
@@ -287,38 +272,88 @@ func _show_maps() -> void:
 		maps_list.get_child(0).grab_focus()
 
 
-func _add_map_button(text: String, on_pressed: Callable) -> void:
+## (Re)builds the list's buttons for the maps listed, with the selected one
+## ticked.
+func _list_maps(listed: Array[Dictionary]) -> void:
+	for child in maps_list.get_children():
+		maps_list.remove_child(child)
+		child.queue_free()
+	for entry in listed:
+		var map_id := str(entry.get("mapId", ""))
+		var map_name := str(entry.get("name", map_id))
+		var level := MapStore.level_id(map_id)
+		var selected := MapStore.chosen_level == level
+		var note: String
+		if entry.get("unpublished", false):
+			note = "downloaded, no longer published"
+		elif entry.get("cached", false):
+			note = "downloaded"
+		else:
+			note = "update available" if entry.has("path") else "download"
+		var text := "%s   (%s)" % [map_name, note]
+		if selected:
+			text = "* %s   (selected)" % map_name
+		var downloaded: bool = entry.get("cached", false) or entry.get("unpublished", false)
+		if selected or downloaded:
+			_add_map_button(text, level, _toggle_map.bind(level, listed))
+		else:
+			_add_map_button(text, level, _fetch_and_select.bind(map_id, listed))
+
+
+func _add_map_button(text: String, level: String, on_pressed: Callable) -> void:
 	var button := Button.new()
 	button.text = text
+	button.set_meta("level", level)
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.pressed.connect(on_pressed)
 	maps_list.add_child(button)
 	Audio.wire_menu(button)
 
 
-func _fetch_and_start(map_id: String) -> void:
+## Downloads a map and selects it.
+func _fetch_and_select(map_id: String, listed: Array[Dictionary]) -> void:
 	for child in maps_list.get_children():
 		child.disabled = true
 	var level: String = await MapStore.fetch(map_id)
 	maps_status.text = MapStore.status
 	for child in maps_list.get_children():
 		child.disabled = false
-	if level.is_empty() or not maps.visible:
+	if not maps.visible:
 		return
-	_start_level(level)
+	if level.is_empty():
+		return
+	MapStore.choose(level)
+	for entry in listed:
+		if str(entry.get("mapId", "")) == map_id:
+			entry["cached"] = true
+	_show_mod()
+	_list_maps(listed)
+	_focus_map(level)
+
+
+## Selects a downloaded map, or deselects it when it is the selected one:
+## New Game is back on the game's own world.
+func _toggle_map(level: String, listed: Array[Dictionary]) -> void:
+	MapStore.choose("" if MapStore.chosen_level == level else level)
+	_show_mod()
+	_list_maps(listed)
+	_focus_map(level)
+
+
+## Puts the focus back on the map's button after the list is rebuilt.
+func _focus_map(level: String) -> void:
+	for button in maps_list.get_children():
+		if button.get_meta("level", "") == level:
+			button.grab_focus()
+			return
+	if maps_list.get_child_count() > 0:
+		maps_list.get_child(0).grab_focus()
 
 
 func _process(_delta: float) -> void:
 	# A download reports its progress while the Maps menu is up.
 	if maps.visible and MapStore.running:
 		maps_status.text = MapStore.status
-
-
-## A chosen map (empty: the descent) is what New Game starts on from now
-## on; it goes straight to the slot picker.
-func _start_level(level_id: String) -> void:
-	MapStore.choose(level_id)
-	_show_slots(SlotMode.NEW_GAME)
 
 
 func _on_continue_pressed() -> void:

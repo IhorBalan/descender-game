@@ -33,6 +33,9 @@ const SETTING_PROJECT := "live_map/project_id"
 const WORLD_DIR := "res://levels/world"
 const STAMP_PATH := WORLD_DIR + "/live_map.json"
 const PLACEMENTS_FILE := "placements.json"
+## The TileSet of the world scenes (see WorldMigration) lives next to the
+## sheets it reads, and is not the live map's to remove.
+const TILE_SET_FILE := "world_tiles.tres"
 const WORLD_FILE := "world.json"
 const SHEETS: Array[String] = ["world_tiles.png", "world_tiles_n.png", "world_tiles_e.png"]
 const HEAD_DOCUMENT := "live"
@@ -113,7 +116,9 @@ func _sync(project: String) -> void:
 		_finish(false, "Live map: %s" % problem)
 		return
 	# A region backdrop the map no longer has must not linger under regions/.
-	FirestoreRest.prune_files(WORLD_DIR, files, [STAMP_PATH.get_file(), PLACEMENTS_FILE])
+	FirestoreRest.prune_files(
+		WORLD_DIR, files, [STAMP_PATH.get_file(), PLACEMENTS_FILE, TILE_SET_FILE]
+	)
 	(
 		FirestoreRest
 		. write_file(

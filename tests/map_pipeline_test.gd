@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 174
+const EXPECTED_CHECKS := 202
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -288,6 +288,220 @@ func test_level_builder_sprites() -> void:
 		"the padded sprite's outline covers its four tiles"
 	)
 	_check(builder.player_start == Vector2(8, 16), "the start marker places the hero")
+	builder.queue_free()
+
+
+# ---------- SceneWorld and WorldMigration ----------
+
+
+## An export with a bit of everything that the scenes have to carry.
+func _write_rich_export(dir: String) -> String:
+	var path := _write_export(dir, 16)
+	var data: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(path))
+	data["name"] = "Round Trip"
+	data["width"] = 4
+	data["height"] = 4
+	data["layers"] = [
+		{
+			"name": "Background",
+			"tiles": [-1, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, -1, -1, -1, -1]
+		},
+		{"name": "Decor", "tiles": [-1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]},
+		{"name": "Terrain", "tiles": [-1, -1, -1, -1, 1, 1, 7, 7, -1, -1, -1, -1, 1, 1, 1, 1]},
+		{"name": "Glow", "tiles": [-1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]},
+	]
+	data["used_tiles"] = [1, 2, 5, 7]
+	data["tile_kinds"] = {"1": 1, "7": 2}
+	data["regions"] = [
+		{"name": "Top", "subtitle": "Up", "ambient": "#ffffff", "y0": 0, "y1": 32, "cave": true},
+		{"name": "1. Low", "subtitle": "", "ambient": "#102030", "y0": 32, "y1": 64},
+	]
+	data["rooms"] = [
+		{
+			"id": 1,
+			"region": 0,
+			"cx": 0,
+			"cy": 0,
+			"cw": 1,
+			"ch": 1,
+			"kind": "boss",
+			"area": 0,
+			"depth": 0,
+			"name": "Hall",
+			"rect": [0, 0, 480, 272]
+		},
+		{
+			"id": 2,
+			"region": 1,
+			"cx": 0,
+			"cy": 0,
+			"cw": 1,
+			"ch": 1,
+			"kind": "room",
+			"area": 1,
+			"depth": 1,
+			"rect": [0, 32, 480, 272]
+		},
+	]
+	data["doors"] = [
+		{"id": 5, "a": 1, "b": 2, "dir": "v", "x": 2, "y": 1, "lock": null},
+		{
+			"id": 6,
+			"a": 1,
+			"b": 2,
+			"dir": "h",
+			"x": 1,
+			"y": 2,
+			"lock": {"kind": "ability", "ability": 2},
+			"secret": true
+		},
+	]
+	data["abilities"] = ["Wings (double jump)", "Halo Dash", "Wall Grip"]
+	data["markers"] = [
+		{"id": 1, "type": "start", "x": 0, "y": 0, "label": "Start", "room": 1, "px": 8, "py": 16},
+		{"id": 2, "type": "save", "x": 1, "y": 2, "label": "Save", "room": 2, "px": 24, "py": 48},
+	]
+	data["lights"] = [
+		{
+			"x": 20,
+			"y": 10,
+			"z": 18,
+			"radius": 64,
+			"color": "#ffb35c",
+			"energy": 0.7,
+			"flicker": false
+		},
+		{
+			"x": 40,
+			"y": 40,
+			"z": 8,
+			"radius": 32,
+			"color": "#4080ff",
+			"energy": 1.25,
+			"flicker": true
+		},
+	]
+	data["sprites"] = []
+	FirestoreRest.write_file(path, JSON.stringify(data).to_utf8_buffer())
+	var sidecar := {
+		"dialogue": "res://dialogue/world_1.json",
+		"objects":
+		[
+			{"type": "trigger", "x": 0, "y": 0, "dialogue": ["opening"]},
+			{
+				"type": "npc",
+				"x": 1,
+				"y": 0,
+				"name": "Pell",
+				"character": "pell",
+				"faces_left": true,
+				"shop": "pell",
+				"tint": [1.0, 0.5, 0.25],
+				"dialogue": ["pell_intro"],
+				"rotate": ["pell_again"]
+			},
+			{
+				"type": "enemy",
+				"x": 2,
+				"y": 0,
+				"character": "imp",
+				"behaviour": "chase",
+				"barks": "imp"
+			},
+			{
+				"type": "enemy",
+				"x": 3,
+				"y": 2,
+				"character": "brute",
+				"passive": true,
+				"requires": "x"
+			},
+			{"type": "item", "x": 0, "y": 2, "item": "token", "dialogue": ["item_token"]},
+			{"type": "upgrade", "x": 1, "y": 2, "upgrade": "heart"},
+			{"type": "power", "x": 2, "y": 2, "power": "halo", "unless": "gone"},
+			{"type": "barrier", "x": 3, "y": 0, "height": 2},
+		]
+	}
+	FirestoreRest.write_file(
+		dir.path_join("placements.json"), JSON.stringify(sidecar).to_utf8_buffer()
+	)
+	return path
+
+
+## Numbers as floats and dictionaries with their keys sorted, so a JSON
+## reading and a scene reading of the same world compare equal.
+func _norm(value: Variant) -> Variant:
+	if value is Dictionary:
+		var keys: Array = value.keys()
+		keys.sort()
+		var out := {}
+		for key in keys:
+			out[key] = _norm(value[key])
+		return out
+	if value is Array or value is PackedInt32Array or value is PackedStringArray:
+		var out := []
+		for item in value:
+			out.append(_norm(item))
+		return out
+	if value is int or value is float:
+		# Node properties are single precision: 0.7 comes back as 0.699999988.
+		return snappedf(float(value), 0.001)
+	return value
+
+
+func _same(a: Variant, b: Variant) -> bool:
+	return JSON.stringify(_norm(a)) == JSON.stringify(_norm(b))
+
+
+func test_scene_world_round_trip() -> void:
+	var json_path := _write_rich_export(DIR + "/round_trip")
+	var scenes_dir := DIR + "/round_trip/scenes"
+	var world_path := WorldMigration.migrate(
+		json_path, scenes_dir, DIR + "/round_trip/scenes/world_tiles.tres"
+	)
+	_check(world_path == scenes_dir + "/world.tscn", "the migration writes the world scene")
+	_check(FileAccess.file_exists(scenes_dir + "/00_top.tscn"), "and a scene per region")
+	_check(FileAccess.file_exists(scenes_dir + "/01_low.tscn"), "named after its key")
+	var a := WorldMap.read(json_path)
+	var b := SceneWorld.read(world_path)
+	_check(b != null, "the world scene reads back")
+	if b == null:
+		return
+	_check(b.width == a.width and b.height == a.height, "the grid keeps its size")
+	_check(b.tile == a.tile and b.art_tile == a.art_tile, "and its tile sizes")
+	for layer_name in a.layer_names:
+		_check(b.layers[layer_name] == a.layers[layer_name], "layer %s round-trips" % layer_name)
+	_check(_same(b.kinds, a.kinds), "the terrain kinds ride on the TileSet")
+	_check(b.used_tiles == a.used_tiles, "the used tiles are found again")
+	_check(_same(b.regions, a.regions), "the regions round-trip, their look included")
+	_check(_same(b.rooms, a.rooms), "the rooms round-trip")
+	_check(_same(b.doors, a.doors), "the doors round-trip, locks and secrets included")
+	_check(_same(b.markers, a.markers), "the markers round-trip")
+	_check(_same(b.lights, a.lights), "the lights round-trip")
+	_check(b.abilities == a.abilities, "the abilities round-trip")
+	_check(b.dialogue_path == "res://dialogue/world_1.json", "the dialogue file is kept")
+	var sidecar: Dictionary = JSON.parse_string(
+		FileAccess.get_file_as_string(DIR + "/round_trip/placements.json")
+	)
+	# The scenes keep the placements region by region, in their order within it.
+	var expected: Array = []
+	for region in 2:
+		for spec in sidecar["objects"]:
+			if int(spec["y"]) / 2 == region:
+				expected.append(spec)
+	_check(_same(b.objects, expected), "the placements round-trip, region by region")
+	_check(b.tile_set != null and b.tile_set.has_source(0), "the world brings its TileSet")
+	var builder := LevelBuilder.new()
+	add_child(builder)
+	builder.streaming = false
+	builder.load_from_file(world_path)
+	_check(builder.world != null, "a level builds from the world scene")
+	_check(builder.player_start == Vector2(8, 16), "the start marker places the hero")
+	_check(builder.checkpoints.size() == 1, "the save marker is a checkpoint")
+	_check(builder.npc_count() == 1 and builder.item_count() == 1, "the placements stand")
+	_check(builder.get_node("Ledges").get_child_count() == 1, "a ledge run has one-way collision")
+	_check(builder.get_node("Lights").get_child_count() == 2, "both lights are placed")
+	_check(builder.dialogue_path == "res://dialogue/world_1.json", "and the dialogue is named")
 	builder.queue_free()
 
 

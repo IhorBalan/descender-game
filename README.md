@@ -633,20 +633,50 @@ objects of the sidecar) is placed for the whole world as before; an opened
 secret passage stays open when its chunk comes back. The tests and the tools
 build the whole grid with `streaming = false` or `load_all()`.
 
-To look at one level in the editor, open its scene under `scenes/world/`:
-`00_paradise.tscn` down to `11_treachery.tscn`, one per region. Each is a
-`RegionPreview` (`scripts/region_preview.gd`, a tool script) that reads the
-export when the scene opens and builds that region's tile layers, its lights,
-and over them the rooms (outlined and named, boss rooms in red), the doors
-and the markers. Nothing is saved into the scene, so a live map pull shows
-up on the next open. Set **Area** in the inspector to one of the region's
-areas to narrow the view to its rooms (Paradise, Ruined Earth and Purgatory
-have several; the deep circles are one area each), and turn the rooms, the
-markers or the lights off there. The region's top-left cell sits at the
-scene's origin; the title in the corner gives its place in the world grid.
-`tools/gen_region_scenes.py` writes the scenes again from an export when
-its regions change, and `tools/region_screenshot.gd` renders each one to a
-PNG, whole and per area (see the script for the command).
+### The world as scenes
+
+The game's own world is Godot scenes, under `scenes/world/`: `world.tscn`
+(a `WorldScene`, `scripts/world/world_scene.gd`) holds the grid's width,
+the tile sizes, the TileSet, the abilities, the dialogue file and the
+descent's darkening, and instances the twelve regions, `00_paradise.tscn`
+down to `11_treachery.tscn`, one `WorldRegion` each
+(`scripts/world/world_region.gd`). Open a region's scene to edit that level
+on its own, or `world.tscn` to see them all. A region is a band of the grid
+`rows` tiles tall, placed at its `position.y` in the world, so everything in
+its scene is in level pixels from its top-left corner:
+
+- `Tiles/Background`, `Decor`, `Terrain`, `Glow`: `TileMapLayer`s painted
+  with `levels/world/world_tiles.tres`, the TileSet of the three sheets
+  (the diffuse sheet lit by its normal map as source 0, the glow sheet as
+  source 1). Every tile carries its terrain kind as the custom data
+  `kind` (solid, ledge, hazard, hidden), so painting a tile places its
+  collision too. Paint with Godot's TileMap tools.
+- `Lights/*`: `WorldLight`, a `PointLight2D` with a `flicker` flag; its
+  texture scale is its radius.
+- `Rooms/*`: `WorldRoom`, a rectangle on the room grid with its id, kind,
+  area, depth and name; the map page, the boss arenas and the doors
+  refer to rooms by id.
+- `Doors/*`: `WorldDoor`, the opening between two rooms at the cell it
+  stands on, with its direction, its lock (an ability or a region's boss)
+  and whether it is a secret passage.
+- `Markers/*`: `WorldMarker`: start, save, boss, ability, secret, shop...
+  with its feet at its position.
+- `Placements/*`: `WorldPlacement`, what `placements.json` used to list:
+  NPCs, relics, triggers, enemies, upgrades, power-ups and walls of light,
+  each with the fields its type wants in the inspector (see the script),
+  its feet at its position. Upgrades are numbered region by region in
+  scene order, so keep that order to keep saves straight.
+
+In the editor each region draws its band and every room, door, marker and
+placement draws itself, so a level reads at a glance; in the game nothing
+of that is drawn. At boot `SceneWorld` (`scripts/world/scene_world.gd`)
+reads the scenes into the same `WorldMap` an export gives, so
+`LevelBuilder` and everything after it are the same for the world and for
+a downloaded map. `tools/migrate_world.gd` made the scenes from the last
+export (`WorldMigration`, `scripts/world/world_migration.gd`); the map
+pipeline tests round-trip an export through it. `tools/region_screenshot.gd`
+renders each region scene to a PNG, whole and per area, with the overlays
+(see the script for the command).
 
 Everything else that stands in the world is listed in
 `levels/world/placements.json`, which also names the dialogue file: an
@@ -669,15 +699,18 @@ gone.
 
 ### Running another map
 
-**Maps menu.** The title screen's **Maps** button lists the levels in the game and every map the
-editor published for it (**Publish for game** on a map's ⋯ menu on the editor's Maps page, or the
-button in the map's header; `npm run publish-live -- --map "World 3"` from the editor repo does the
-same). Choosing one downloads it into `user://maps/<map id>/` (world.json, the sheets, any region
-backdrops and a `map.json` stamp of the published revision, so an unchanged map is not fetched
-again), registers it with `Levels` as `map_<map id>` and makes it what **New Game** starts on (the button
-says so, and the choice is kept in `user://map_choice.cfg` across runs until another map, or the
-descent, is picked); saves made there reopen it. Downloaded maps stay listed without a connection, and after the editor unpublishes
-them. `scripts/map_store.gd` (the `MapStore` autoload) does this, reading Firestore through
+**Maps menu.** The title screen's **Maps** button lists every map the editor published for
+the game (**Publish for game** on a map's ⋯ menu on the editor's Maps page, or the button in
+the map's header; `npm run publish-live -- --map "World 3"` from the editor repo does the
+same). The game's own world is not in the list: a published map plays like a mod. Choosing one
+downloads it into `user://maps/<map id>/` (world.json, the sheets, any region backdrops and a
+`map.json` stamp of the published revision, so an unchanged map is not fetched again),
+registers it with `Levels` as `map_<map id>` and selects it: **New Game** starts on it, the
+title screen says so under the version (`Mod: Map - <name>`), and the choice is kept in
+`user://map_choice.cfg` across runs. Choosing the selected map again deselects it, and New
+Game is back on the game's world; saves made on a map reopen it either way. Downloaded maps
+stay listed without a connection, and after the editor unpublishes them.
+`scripts/map_store.gd` (the `MapStore` autoload) does this, reading Firestore through
 `scripts/firestore_rest.gd` like the live map sync; it needs only `live_map/project_id` and works
 in exported builds too. Files the editor put in Cloud Storage (a head with `mediaBase`) stream
 straight to disk, one request each; files published in Firestore pieces are read and joined.
@@ -729,7 +762,7 @@ the live map is meant to ship.
 
 | Path | What it is |
 | ---- | ---------- |
-| `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
+| `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, maps (select a published map as a mod), quit |
 | `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, promises, settings, quit to title |
 | `scenes/map_screen.tscn`, `scripts/ui/map_screen.gd` | The map page: the rooms found so far on the room grid of the export, the hero, the checkpoints, the bosses and the doors not yet taken |
 | `scenes/quest_log.tscn`, `scripts/ui/quest_log.gd`, `scripts/quests.gd` | The promises page: the side quests and their steps, read off the story flags |
@@ -779,8 +812,10 @@ the live map is meant to ship.
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
-| `scenes/world/*.tscn`, `scripts/region_preview.gd` | One editor scene per region of the world: its tiles, lights, rooms, doors and markers, built from the export when the scene opens |
-| `tools/gen_region_scenes.py`, `tools/region_screenshot.gd` | Writes the region scenes from an export, and renders each to a PNG (needs a display; see the script) |
+| `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, markers and placements as nodes to edit |
+| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldMarker`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
+| `levels/world/world_tiles.tres` | The world's TileSet: the three sheets, a tile per id with its terrain kind |
+| `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/light_bolt.gd` | The bolt of Holy Light the hero throws |
