@@ -34,7 +34,7 @@ enum Layout { AUTO, XBOX, PLAYSTATION }
 
 const ICON_DIR := "res://assets/ui/prompts"
 ## Key names are written in this colour, so they stand out from the hint.
-const KEY_COLOR := "#fff2b3"
+const KEY_COLOR := "#ffe2b8"
 ## A stick has to be pushed this far before it counts as the player
 ## picking the pad up; a resting stick drifts a little.
 const STICK_THRESHOLD := 0.5
