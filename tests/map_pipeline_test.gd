@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 202
+const EXPECTED_CHECKS := 203
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -769,8 +769,12 @@ func test_map_store() -> void:
 	_check(mine.get("name") == "Unit Map", "the cached entry carries the stamp")
 	_check(mine.get("cached") == true, "and is marked cached")
 	_check(mine.get("path") == store_dir + "/unit/world.json", "and points at its world.json")
+	MapStore.register_cached("unit")
+	_check(
+		Levels.path("map_unit") == store_dir + "/unit/world.json",
+		"a downloaded folder registers its level from the stamp"
+	)
 	# Forgetting it removes the folder and the level.
-	Levels.register({"id": "map_unit", "name": "Unit Map", "path": store_dir + "/unit/world.json"})
 	var removed := false
 	var dir := ProjectSettings.globalize_path(store_dir + "/unit")
 	if DirAccess.dir_exists_absolute(dir):

@@ -2,7 +2,7 @@ class_name LevelBuilder
 extends Node2D
 
 ## Builds a level from a world export of the map tool (see WorldMap and
-## levels/world/world.json).
+## scenes/world/world.tscn, or a world.json the editor exported).
 ##
 ## The export's layers become TileMapLayers, its terrain kinds become
 ## collision (solid runs, one-way ledges and hazards), its lights become

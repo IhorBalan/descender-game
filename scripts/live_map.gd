@@ -1,7 +1,7 @@
 extends Node
 
 ## Downloads the live map from the map editor's Firebase project when the
-## game starts.
+## game starts, as a downloadable map.
 ##
 ## Registered as the LiveMap autoload. The editor publishes the Godot export
 ## of its live map (world.json and the three tile sheets) into Firestore's
@@ -13,15 +13,16 @@ extends Node
 ## DESCENDER_LIVE_MAP environment variable to 0.
 ##
 ## The head document carries a revision of the export and lists its files,
-## each published in pieces (world.json as text, the sheets as base64). When
-## the revision matches the one recorded in levels/world/live_map.json and
-## the files are in place, the start costs that one small read; otherwise
-## the pieces are downloaded, joined and written over levels/world (region
-## backdrops under levels/world/regions/ among them). placements.json is
-## never touched. The REST reading lives in FirestoreRest, shared with
-## MapStore, which fetches the other published maps. The title screen shows
-## the outcome and a game started while the download is still running waits
-## for it (see wait()).
+## each published in pieces (world.json as text, the sheets as base64). The
+## export lands under user://maps/live/, like a map chosen in the Maps menu
+## (see MapStore), with a map.json stamp of the revision; when the revision
+## matches the stamp and the files are in place, the start costs that one
+## small read. Once in place it is registered with Levels as `map_live`, so
+## it is listed in the Maps menu as "<name> (live)" to select like any other
+## map. The game's own world (scenes/world/) is never touched. The REST
+## reading lives in FirestoreRest, shared with MapStore. The title screen
+## shows the outcome and a game started while the download is still running
+## waits for it (see wait()).
 
 ## Emitted once the sync has ended, well or badly.
 signal finished(ok: bool, message: String)
@@ -30,12 +31,11 @@ signal finished(ok: bool, message: String)
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const SETTING_ENABLED := "live_map/enabled"
 const SETTING_PROJECT := "live_map/project_id"
-const WORLD_DIR := "res://levels/world"
-const STAMP_PATH := WORLD_DIR + "/live_map.json"
-const PLACEMENTS_FILE := "placements.json"
-## The TileSet of the world scenes (see WorldMigration) lives next to the
-## sheets it reads, and is not the live map's to remove.
-const TILE_SET_FILE := "world_tiles.tres"
+## The folder under MapStore.MAPS_DIR the live map is kept in, and its id
+## there (its level is `map_live`).
+const MAP_ID := "live"
+const WORLD_DIR := "user://maps/" + MAP_ID
+const STAMP_PATH := WORLD_DIR + "/map.json"
 const WORLD_FILE := "world.json"
 const SHEETS: Array[String] = ["world_tiles.png", "world_tiles_n.png", "world_tiles_e.png"]
 const HEAD_DOCUMENT := "live"
@@ -93,6 +93,7 @@ func _sync(project: String) -> void:
 		_finish(false, "Live map: the published map is incomplete")
 		return
 	if revision == _stamped_revision() and _files_present():
+		MapStore.register_cached(MAP_ID)
 		_finish(true, "Live map: %s" % map_name)
 		return
 
@@ -116,29 +117,22 @@ func _sync(project: String) -> void:
 		_finish(false, "Live map: %s" % problem)
 		return
 	# A region backdrop the map no longer has must not linger under regions/.
-	FirestoreRest.prune_files(
-		WORLD_DIR, files, [STAMP_PATH.get_file(), PLACEMENTS_FILE, TILE_SET_FILE]
-	)
-	(
-		FirestoreRest
-		. write_file(
-			STAMP_PATH,
-			(
-				JSON
-				. stringify(
-					{
-						"revision": revision,
-						"name": map_name,
-						"mapId": str(fields.get("mapId", "")),
-						"publishedAt": int(fields.get("publishedAt", 0)),
-						"syncedAt": int(Time.get_unix_time_from_system() * 1000.0),
-					},
-					"  "
-				)
-				. to_utf8_buffer()
-			)
-		)
-	)
+	FirestoreRest.prune_files(WORLD_DIR, files, [STAMP_PATH.get_file()])
+	# The stamp MapStore reads for a downloaded map; `live` stands in for the
+	# editor's map id so the map is listed beside its own publication.
+	var stamp := {
+		"mapId": MAP_ID,
+		"liveMapId": str(fields.get("mapId", "")),
+		"name": "%s (live)" % map_name,
+		"revision": revision,
+		"publishedAt": int(fields.get("publishedAt", 0)),
+		"publishedBy": str(fields.get("publishedBy", "")),
+		"artTile": int(fields.get("artTile", 16)),
+		"path": WORLD_DIR + "/" + WORLD_FILE,
+		"syncedAt": int(Time.get_unix_time_from_system() * 1000.0),
+	}
+	FirestoreRest.write_file(STAMP_PATH, JSON.stringify(stamp, "  ").to_utf8_buffer())
+	MapStore.register_cached(MAP_ID)
 	_finish(true, "Live map: %s, updated" % map_name)
 
 

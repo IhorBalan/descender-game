@@ -175,7 +175,7 @@ the level. Previews at six times their size are in the project folder under
 ## 3. How it is built
 
 - `scripts/upgrade.gd` (`Upgrade`): an `Area2D` placed as an `upgrade`
-  object (`heart` or `vial`) in `levels/world/placements.json`. Touching it calls
+  object (`heart` or `vial`) among the `Placements` of its region scene (`scenes/world/`). Touching it calls
   `Player.apply_upgrade`, which raises the maximum and fills it, sets the
   flag `upgrade:<kind>:<level>:<n>` (n counts that kind's pickups in
   placement order) and frees the node. The level builder skips flagged pickups when

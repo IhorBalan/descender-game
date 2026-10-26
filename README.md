@@ -460,13 +460,17 @@ print (or nothing, which prints `ok`). Return a line that starts with
 
 ## The world
 
-The map is one world, 480 x 459 tiles, exported by the map tool as
-`levels/world/world.json` with three tile sheets next to it: the diffuse
-tiles, their normal map and the emissive glow. It is twelve regions stacked
-top to bottom: Paradise, Ruined Earth, Purgatory and the nine circles from
-Limbo to Treachery, each with an ambient colour that tints the screen while
-the hero is in it. The export also holds the rooms, the doors between them
-(some locked by an ability or a boss), 853 point lights and the markers.
+The map is one world, 480 x 459 tiles, kept as Godot scenes under
+`scenes/world/` (see *The world as scenes* below) over three tile sheets in
+`levels/world/`: the diffuse tiles, their normal map and the emissive glow.
+It began as an export of the map tool, and a map the tool publishes still
+plays as one (see *Running another map*); what follows describes the world
+in the terms of that export, which the scenes are read into at boot. It is
+twelve regions stacked top to bottom: Paradise, Ruined Earth, Purgatory and
+the nine circles from Limbo to Treachery, each with an ambient colour that
+tints the screen while the hero is in it. The world also holds the rooms,
+the doors between them (some locked by an ability or a boss), 853 point
+lights and the markers.
 
 Besides the tile layers the export may list **sprites**: decorations the
 editor placed freely by the pixel instead of on the grid (big painted
@@ -678,20 +682,22 @@ pipeline tests round-trip an export through it. `tools/region_screenshot.gd`
 renders each region scene to a PNG, whole and per area, with the overlays
 (see the script for the command).
 
-Everything else that stands in the world is listed in
-`levels/world/placements.json`, which also names the dialogue file: an
-`objects` list, each with a `type` and the tile cell `x`, `y` its feet are
-on. The types are `npc`, `item` and `trigger` (story objects, with the
-fields the dialogue system wants; an `npc` with a `shop` trades, see
-`scripts/shops.gd`), `enemy` (`character`: a walker, flyer or hanger body,
-see `docs/design/enemies.md`), `upgrade` (`heart`, `vial` or `iron`), `power`
+Everything else that stands in the world is a `WorldPlacement` node in its
+region scene (for an export, a `placements.json` next to its `world.json`
+with the same fields: an `objects` list, each with a `type` and the tile
+cell `x`, `y` its feet are on, and the dialogue file's name). The types are
+`npc`, `item` and `trigger` (story objects, with the fields the dialogue
+system wants; an `npc` with a `shop` trades, see `scripts/shops.gd`),
+`enemy` (`character`: a walker, flyer or hanger body, see
+`docs/design/enemies.md`), `upgrade` (`heart`, `vial` or `iron`), `power`
 (`halo`, `blade` or `zeal`) and `barrier` (a wall of light `height` cells
-tall). Upgrades are numbered by their order in the list, so a save keeps
-them straight as long as that order does not change.
+tall). Upgrades are numbered by their order, so a save keeps them straight
+as long as that order does not change.
 
-To bring in a new export by hand, unzip it over `levels/world/` and keep
-`placements.json`. The usual way is the live map below, which does the same
-from the editor's Firebase project when the game starts. The tool's own `import_world.gd` is not used: the game
+An export of the map tool is not copied into the world any more: it plays
+as a map of its own (the live map or a published one, below), and
+`tools/migrate_world.gd` turns one into region scenes when it is meant to
+become the world. The tool's own `import_world.gd` is not used: the game
 reads the JSON directly, so the map stays editable in the tool. This
 settles the level pipeline question (#34): big maps come from the tool as
 tile layers, and the hand-written ASCII levels of the first prototype are
@@ -724,7 +730,7 @@ server.
     DESCENDER_LIVE_MAP=0 godot --path . scenes/main.tscn -- "--map=World 3" --no-live-map
     DESCENDER_LIVE_MAP=0 godot --path . scenes/main.tscn -- --level=res://levels/world3/world.json --no-live-map
 
-both with the live-map sync off, so `levels/world` and the published live map are untouched. An
+both with the live-map sync off, so the downloaded live map is left as it is. An
 export in the project comes from the editor repo's
 `npm run export-map -- --map "World 3" --out ../descender-godot/levels/world3` (its sky backdrops
 land in `levels/world3/regions/<key>/`; `--regions ../descender-godot/assets/regions` also copies
@@ -737,26 +743,25 @@ The map editor (`../editor`) keeps its maps in Firebase, and its Maps page
 has a **Live map** picker. The editor publishes that map's Godot export
 (`world.json` and the three tile sheets) into Firestore, where anyone may
 read it, and republishes a few seconds after each save of the map while it
-is open. When this project starts from the editor or `godot-mono --path .`,
-the `LiveMap` autoload (`scripts/live_map.gd`) reads the small head
-document over HTTPS and, if its revision differs from the one recorded in
-`levels/world/live_map.json`, downloads the export and writes it over
-`levels/world/`. Nobody needs an account, Node or the editor checkout: a
-fresh clone runs and gets the live map. The title screen shows the outcome
-along its bottom edge, and a game started while the download is still
-running waits for it. `placements.json` is never touched, so a new map still
-needs its placements to line up with its rooms. Exported builds never sync.
+is open. When this project starts from the editor or `godot --path .`, the
+`LiveMap` autoload (`scripts/live_map.gd`) reads the small head document
+over HTTPS and, if its revision differs from the one stamped in
+`user://maps/live/map.json`, downloads the export into `user://maps/live/`,
+like a map chosen in the Maps menu. It is registered as the level `map_live`
+and listed in the Maps menu as `<name> (live)`, to select and deselect like
+any other map; the game's own world under `scenes/world/` is never touched.
+Nobody needs an account, Node or the editor checkout: a fresh clone runs and
+gets the live map. The title screen shows the outcome along its bottom edge,
+and a game started while the download is still running waits for it. Like
+every downloaded map it plays with the placements its export ships, if any.
+Exported builds never sync.
 
 The Firebase project is the `live_map/project_id` setting in
 `project.godot` and `live_map/enabled` turns the sync off for everyone. To
 skip it for one run, pass `--no-live-map` after `--` or set the
 `DESCENDER_LIVE_MAP` environment variable to `0`. Run from the project, the
-game reads the tile sheets from the PNGs themselves rather than from Godot's
-imported copies, since only the editor re-imports a changed PNG.
-
-`levels/world/live_map.json` records what was pulled and is gitignored. The
-pulled `world.json` and sheets are ordinary tracked files: commit them when
-the live map is meant to ship.
+game reads a map's tile sheets from the PNGs themselves rather than from
+Godot's imported copies, since only the editor re-imports a changed PNG.
 
 ## Layout
 
@@ -781,10 +786,9 @@ the live map is meant to ship.
 | `scripts/interactable.gd` | Base for things the hero can talk to or examine; shows the talk key when he is close |
 | `scripts/npc.gd`, `scripts/lore_item.gd`, `scripts/story_trigger.gd` | Someone to talk to, a relic with a description, a spot that speaks on its own |
 | `dialogue/world_1.json` | Every line in the world, by id, with the flags each needs and sets, and whether it plays once |
-| `levels/world/placements.json` | Where the world's NPCs, relics, triggers, enemies, upgrades, power-ups and walls of light stand, and the NPCs' unique and repeat lines |
 | `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
-| `scripts/live_map.gd` | Downloads the editor's published live map on start (see Live map) |
+| `scripts/live_map.gd` | Downloads the editor's published live map on start into `user://maps/live/`, a map to select in the Maps menu (see Live map) |
 | `scripts/map_store.gd` | Lists and downloads the other maps the editor published, for the Maps menu and `--map=` |
 | `scripts/component_store.gd` | The `ComponentStore` autoload: downloads the UI components the editor published into `user://components/`, falling back to `assets/ui/components/` |
 | `scripts/ui_component.gd` | Draws an editor UI component (colour boxes, images, fill bars with lag, text) with props the game sets; the HUD's health bar is the `HealthBar` component |
@@ -822,7 +826,7 @@ the live map is meant to ship.
 | `scripts/upgrade.gd`, `scripts/power_up.gd` | A permanent upgrade (heart, healing charge) and a timed power-up (Halo, Lit Blade, Zeal) |
 | `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
-| `levels/world/` | The world export (`world.json` and its three tile sheets) and `placements.json` |
+| `levels/world/` | The world's three tile sheets (diffuse, normal, glow) the TileSet reads |
 | `scripts/anim_loader.gd` | Loads a character's `SpriteFrames` (`assets/sprites/<name>/<name>.tres`) and places it on its origin |
 | `tools/sprite_frames.py` | Cuts every character's `SpriteFrames` resource from its strips, as `sprites.json` says; the art tools run it after they write the spec |
 | `assets/sprites/` | Character strips from the art thread and the NPC rig, each folder with its `SpriteFrames`, plus the generated checkpoint, gate and pickups |
