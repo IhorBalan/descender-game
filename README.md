@@ -682,7 +682,8 @@ the live map is meant to ship.
 | `levels/world/` | The world export (`world.json` and its three tile sheets) and `placements.json` |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread and the NPC rig, plus the generated checkpoint, gate and pickups |
-| `assets/ui_theme.tres` | The menus' font size and button styles |
+| `assets/ui_theme.tres` | The menus' theme: the Pirata One font (`assets/fonts/`, OFL), the stone button boxes, slider, toggles and the `Title`, `Heading`, `Subheading` and `Muted` label variations |
+| `tools/menu_textures.py` | Regenerates the theme's textures in `assets/ui/theme/`: the 9-slice boxes, grabber, toggles, divider and the title backdrop |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
 | `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/checkpoint_menu.gd" id="1_camp"]
 [ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" path="res://scenes/skill_menu.tscn" id="4_skills"]
 [ext_resource type="PackedScene" path="res://scenes/map_screen.tscn" id="5_map"]
 [ext_resource type="Script" path="res://scripts/ui/prompt_label.gd" id="9_prompt"]
+[ext_resource type="Texture2D" path="res://assets/ui/theme/divider.png" id="11_divider"]
 
 [node name="CheckpointMenu" type="CanvasLayer"]
 process_mode = 3
@@ -25,19 +26,15 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
-color = Color(0.05, 0.03, 0.12, 0.7)
+color = Color(0.08, 0.02, 0.02, 0.75)
 
 [node name="Heading" type="Label" parent="Panel"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 24.0
-offset_bottom = 44.0
-theme_override_colors/font_color = Color(1, 0.95, 0.7, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.6)
-theme_override_constants/shadow_offset_x = 1
-theme_override_constants/shadow_offset_y = 1
-theme_override_font_sizes/font_size = 16
+offset_top = 12.0
+offset_bottom = 34.0
+theme_type_variation = &"Heading"
 text = "CAMP"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -46,12 +43,25 @@ vertical_alignment = 1
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_top = 42.0
-offset_bottom = 54.0
-theme_override_colors/font_color = Color(0.7, 0.68, 0.85, 1)
+offset_top = 34.0
+offset_bottom = 46.0
+theme_type_variation = &"Muted"
 text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Divider" type="TextureRect" parent="Panel"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -60.0
+offset_top = 48.0
+offset_right = 60.0
+offset_bottom = 53.0
+grow_horizontal = 2
+mouse_filter = 2
+texture = ExtResource("11_divider")
 
 [node name="Menu" type="HBoxContainer" parent="Panel"]
 layout_mode = 1
@@ -110,7 +120,7 @@ offset_top = -44.0
 offset_right = -16.0
 offset_bottom = -26.0
 grow_vertical = 0
-theme_override_colors/font_color = Color(0.7, 0.7, 0.78, 1)
+theme_type_variation = &"Muted"
 text = ""
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -126,7 +136,6 @@ offset_top = -10.0
 offset_bottom = -2.0
 grow_vertical = 0
 mouse_filter = 2
-theme_override_colors/default_color = Color(0.55, 0.52, 0.7, 1)
 horizontal_alignment = 1
 vertical_alignment = 1
 bbcode_enabled = true

@@ -41,6 +41,7 @@ var _level: LevelBuilder
 var _rested: Array[int] = []
 
 @onready var heading: Label = $Panel/Heading
+@onready var divider: TextureRect = $Panel/Divider
 @onready var status_label: Label = $Panel/Status
 @onready var menu: HBoxContainer = $Panel/Menu
 @onready var pack_button: Button = $Panel/Menu/Left/Pack
@@ -188,6 +189,7 @@ func _on_page_closed(button: Button) -> void:
 func _show_frame(shown: bool) -> void:
 	menu.visible = shown
 	heading.visible = shown
+	divider.visible = shown
 	status_label.visible = shown
 	description.visible = shown
 	hint.visible = shown
