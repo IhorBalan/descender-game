@@ -653,15 +653,18 @@ gone.
 
 ### Running another map
 
-**Maps menu.** The title screen's **Maps** button lists the levels in the game and every map the
-editor published for it (**Publish for game** on a map's ⋯ menu on the editor's Maps page, or the
-button in the map's header; `npm run publish-live -- --map "World 3"` from the editor repo does the
-same). Choosing one downloads it into `user://maps/<map id>/` (world.json, the sheets, any region
-backdrops and a `map.json` stamp of the published revision, so an unchanged map is not fetched
-again), registers it with `Levels` as `map_<map id>` and makes it what **New Game** starts on (the button
-says so, and the choice is kept in `user://map_choice.cfg` across runs until another map, or the
-descent, is picked); saves made there reopen it. Downloaded maps stay listed without a connection, and after the editor unpublishes
-them. `scripts/map_store.gd` (the `MapStore` autoload) does this, reading Firestore through
+**Maps menu.** The title screen's **Maps** button lists every map the editor published for
+the game (**Publish for game** on a map's ⋯ menu on the editor's Maps page, or the button in
+the map's header; `npm run publish-live -- --map "World 3"` from the editor repo does the
+same). The game's own world is not in the list: a published map plays like a mod. Choosing one
+downloads it into `user://maps/<map id>/` (world.json, the sheets, any region backdrops and a
+`map.json` stamp of the published revision, so an unchanged map is not fetched again),
+registers it with `Levels` as `map_<map id>` and selects it: **New Game** starts on it, the
+title screen says so under the version (`Mod: Map - <name>`), and the choice is kept in
+`user://map_choice.cfg` across runs. Choosing the selected map again deselects it, and New
+Game is back on the game's world; saves made on a map reopen it either way. Downloaded maps
+stay listed without a connection, and after the editor unpublishes them.
+`scripts/map_store.gd` (the `MapStore` autoload) does this, reading Firestore through
 `scripts/firestore_rest.gd` like the live map sync; it needs only `live_map/project_id` and works
 in exported builds too. Files the editor put in Cloud Storage (a head with `mediaBase`) stream
 straight to disk, one request each; files published in Firestore pieces are read and joined.
@@ -713,7 +716,7 @@ the live map is meant to ship.
 
 | Path | What it is |
 | ---- | ---------- |
-| `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, quit |
+| `scenes/title.tscn`, `scripts/ui/title.gd` | Title screen: new game, continue, load a slot, maps (select a published map as a mod), quit |
 | `scenes/pause_menu.tscn`, `scripts/ui/pause_menu.gd` | Pause menu: resume, save, promises, settings, quit to title |
 | `scenes/map_screen.tscn`, `scripts/ui/map_screen.gd` | The map page: the rooms found so far on the room grid of the export, the hero, the checkpoints, the bosses and the doors not yet taken |
 | `scenes/quest_log.tscn`, `scripts/ui/quest_log.gd`, `scripts/quests.gd` | The promises page: the side quests and their steps, read off the story flags |
