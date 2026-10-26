@@ -221,9 +221,6 @@ var _power_ups: Node2D
 var _lights: Node2D
 
 
-## Builds the world export at `path`, with the objects of the
-## placements.json next to it, if any. An unreadable export leaves the
-## level empty, with an error pushed.
 ## The scene of a walker or flyer body: scenes/enemies/<character>.tscn,
 ## which inherits walker.tscn or flyer.tscn and wears the body's profile
 ## and frames. Null for a name that has no scene.
@@ -234,6 +231,9 @@ static func enemy_scene(character: String) -> PackedScene:
 	return load(path) as PackedScene
 
 
+## Builds the world export at `path`, with the objects of the
+## placements.json next to it, if any. An unreadable export leaves the
+## level empty, with an error pushed.
 func load_from_file(path: String) -> void:
 	dialogue_path = ""
 	_objects_spec = []
