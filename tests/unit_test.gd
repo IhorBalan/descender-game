@@ -13,7 +13,7 @@ extends Node
 ## broken reference is found before the smoke test walks past it. The
 ## unit tests cover the pure pieces: the story flags, the dialogue data,
 ## the quests, the levels registry, the upgrade flags, the map, the
-## save slots and the button prompts.
+## save slots, the button prompts and the developer console.
 ##
 ## Every method named test_* runs once, in order; `_check` counts.
 
@@ -730,6 +730,134 @@ func test_prompts() -> void:
 	Prompts._input(key)
 	_check(changes.size() >= 3, "each switch is announced (%d)" % changes.size())
 	Prompts.device_changed.disconnect(on_change)
+
+
+func test_dev_console() -> void:
+	# The registry: the built-ins, a command of our own, help and errors.
+	_check(DevConsole.has_command("show_boxes"), "show_boxes is registered")
+	_check(
+		DevConsole.has_command("help") and DevConsole.has_command("clear"), "so are help and clear"
+	)
+	var seen: Array = []
+	DevConsole.register(
+		"unit_echo",
+		func(args: PackedStringArray) -> String:
+			seen.append(args)
+			return " ".join(args),
+		"unit_echo <words>",
+		"Repeats its arguments."
+	)
+	_check(DevConsole.run("unit_echo  one   two ") == "one two", "a command gets its arguments")
+	_check(seen == [PackedStringArray(["one", "two"])], "split on spaces, blanks dropped")
+	_check(DevConsole.run("") == "", "a blank line prints nothing")
+	_check(
+		DevConsole.run("no_such_thing 1").begins_with("Unknown command 'no_such_thing'"),
+		"an unknown command says so"
+	)
+	_check("unit_echo <words>" in DevConsole.run("help"), "help lists a registered command")
+	_check(
+		DevConsole.run("help unit_echo").ends_with("Repeats its arguments."), "help explains one"
+	)
+	DevConsole.register("unit_quiet", func(_args: PackedStringArray) -> void: pass)
+	_check(
+		DevConsole.run("unit_quiet") == DevConsole.DONE_TEXT,
+		"a command that returns nothing is acknowledged"
+	)
+	DevConsole.unregister("unit_echo")
+	DevConsole.unregister("unit_quiet")
+	_check(not DevConsole.has_command("unit_echo"), "a command can be removed")
+	# Opening pauses the tree and closing puts the pause back as it was.
+	DevConsole.open()
+	_check(DevConsole.is_open() and get_tree().paused, "opening the console pauses the game")
+	DevConsole.close()
+	_check(not DevConsole.is_open() and not get_tree().paused, "closing it resumes")
+	get_tree().paused = true
+	DevConsole.open()
+	DevConsole.close()
+	_check(get_tree().paused, "a game paused before stays paused after")
+	get_tree().paused = false
+	# show_boxes: the overlay comes and goes with the command.
+	_check(DevConsole.run("show_boxes") == "show_boxes is off", "show_boxes starts off")
+	_check(DevConsole.run("show_boxes sideways").begins_with("Usage:"), "and only takes on or off")
+	_check(DevConsole.run("show_boxes on") == "Collision boxes on", "show_boxes on answers")
+	_check(DevConsole.boxes_shown(), "and the overlay is on its way under the root")
+	_check(DevConsole.run("show_boxes").begins_with("show_boxes is on"), "show_boxes reports on")
+	_check(DevConsole.run("show_boxes off") == "Collision boxes off", "show_boxes off answers")
+	_check(not DevConsole.boxes_shown(), "and the overlay is gone")
+	# The overlay itself: shapes added while it is on are picked up and
+	# coloured by their owner, and dropped when they go.
+	var boxes := CollisionBoxes.new()
+	add_child(boxes)
+	var before: int = boxes.shape_count()
+	var world := StaticBody2D.new()
+	world.collision_layer = 1
+	world.add_child(_box_shape())
+	add_child(world)
+	var enemy := CharacterBody2D.new()
+	enemy.add_to_group("enemy")
+	enemy.collision_layer = 4
+	var enemy_hit := Area2D.new()
+	enemy_hit.collision_mask = 2
+	enemy_hit.add_child(_box_shape())
+	enemy.add_child(enemy_hit)
+	add_child(enemy)
+	var hero := CharacterBody2D.new()
+	hero.add_to_group("player")
+	hero.collision_layer = 2
+	hero.add_child(_box_shape())
+	add_child(hero)
+	var item := Area2D.new()
+	item.collision_mask = 2
+	item.add_child(_box_shape())
+	add_child(item)
+	var hazard := Hazard.new()
+	hazard.collision_mask = 2
+	hazard.add_child(_box_shape())
+	add_child(hazard)
+	var door := DoorLock.new()
+	door.add_child(_box_shape())
+	add_child(door)
+	_check(boxes.shape_count() == before + 6, "shapes added later are tracked")
+	_check(
+		CollisionBoxes.color_for(world) == CollisionBoxes.WORLD_COLOR,
+		"a static body is world: black"
+	)
+	_check(
+		CollisionBoxes.color_for(enemy_hit) == CollisionBoxes.ENEMY_COLOR,
+		"an enemy's hitbox is red"
+	)
+	_check(CollisionBoxes.color_for(hero) == CollisionBoxes.PLAYER_COLOR, "the hero is green")
+	_check(CollisionBoxes.color_for(item) == CollisionBoxes.ITEM_COLOR, "an item area is blue")
+	_check(CollisionBoxes.color_for(hazard) == CollisionBoxes.HAZARD_COLOR, "a hazard is orange")
+	_check(CollisionBoxes.color_for(door) == CollisionBoxes.WORLD_COLOR, "a sealed door is world")
+	_check(
+		CollisionBoxes.is_live(world.get_child(0), world),
+		"a shape counts while its owner has a layer"
+	)
+	door.collision_layer = 0
+	_check(
+		not CollisionBoxes.is_live(door.get_child(0), door),
+		"an opened door, off every layer, does not"
+	)
+	var hidden: CollisionShape2D = hero.get_child(0)
+	hidden.disabled = true
+	_check(not CollisionBoxes.is_live(hidden, hero), "a disabled shape is skipped")
+	var rect := CollisionBoxes.local_rect(world.get_child(0))
+	_check(rect == Rect2(-8.0, -8.0, 16.0, 16.0), "a box shape's bounds are its rect")
+	for node in [world, enemy, hero, item, hazard, door]:
+		remove_child(node)
+		node.free()
+	_check(boxes.shape_count() == before, "removed shapes are dropped")
+	remove_child(boxes)
+	boxes.free()
+
+
+func _box_shape() -> CollisionShape2D:
+	var shape := CollisionShape2D.new()
+	var rect := RectangleShape2D.new()
+	rect.size = Vector2(16.0, 16.0)
+	shape.shape = rect
+	return shape
 
 
 func _json(path: String) -> Dictionary:
