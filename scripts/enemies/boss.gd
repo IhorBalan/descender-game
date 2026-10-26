@@ -21,8 +21,8 @@ extends CharacterBody2D
 ## calls his court and throws hellfire from where he stands (court), and
 ## the Lowest fights with the hero's own light: a bolt of Holy Light from
 ## the hand and a Smite that comes down on the hero's head (mirror). Hits
-## do not stagger a boss. `boss_id` picks the profile; the
-## sprite is one of the character strips scaled up. The node's origin is
+## do not stagger a boss. `boss_id` picks the profile (a BossProfile in
+## resources/bosses/); the sprite is one of the character strips scaled up. The node's origin is
 ## at the feet.
 
 signal engaged(boss: Boss)
@@ -109,340 +109,29 @@ const SMITE_COOLDOWN := 4.0
 const RAMPAGE_BOUNCES := 1
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 const SHOT_SCRIPT := preload("res://scripts/enemies/enemy_shot.gd")
-const WALKER_SCENE := preload("res://scenes/enemies/walker.tscn")
+const IMP_SCENE := preload("res://scenes/enemies/imp.tscn")
 ## The move each body has: see the top of the file.
 const MOVES := {"brute": "slam", "angel_guard": "volley", "imp": "summon"}
 
-## name: shown on the health bar. character: the sprite strips, and walk:
-## the name of their walking loop. scale: how much bigger than the strips.
-## tint: the sprite's colour. body: collision size (at the scale). health:
-## hits to kill. speed: walking speed.
-## faces_left: whether the strips face left. attack_range / reach / windup /
-## strike / recover / cooldown / attack_damage: the swing, as a Walker's.
-## charge_speed / charge_windup / charge_cooldown: the rush. contact_damage:
-## hearts for touching it. motes: heal motes dropped on death. loot: the
-## light, tally bones and unique item it leaves (see Loot).
-const PROFILES := {
-	# Paradise: the Warden of the Low Gate.
-	"seraph_warden":
-	{
-		"name": "Seraph Warden",
-		"character": "angel_guard",
-		"walk": "walk",
-		"scale": 1.5,
-		"tint": Color(1.0, 0.92, 0.7),
-		"body": Vector2(32, 80),
-		"health": 24,
-		"speed": 34.0,
-		"faces_left": false,
-		"attack_range": 60.0,
-		"reach": Vector2(52, 60),
-		"windup": 0.55,
-		"strike": 0.2,
-		"recover": 0.6,
-		"cooldown": 0.9,
-		"attack_damage": 2,
-		"charge_speed": 230.0,
-		"charge_windup": 0.6,
-		"charge_cooldown": 2.5,
-		"contact_damage": 1,
-		"motes": 2,
-		"loot": {"light": [40, 55], "bones": 3, "unique": "wardens_halo", "xp": 40},
-	},
-	# Purgatory: an angel that chose to fall and never finished.
-	"the_penitent":
-	{
-		"name": "The Penitent",
-		"character": "angel_guard",
-		"walk": "walk",
-		"scale": 1.25,
-		"tint": Color(0.75, 0.75, 0.85),
-		"body": Vector2(28, 68),
-		"health": 20,
-		"speed": 40.0,
-		"faces_left": false,
-		"attack_range": 50.0,
-		"reach": Vector2(44, 50),
-		"windup": 0.45,
-		"strike": 0.2,
-		"recover": 0.5,
-		"cooldown": 0.8,
-		"attack_damage": 1,
-		"charge_speed": 250.0,
-		"charge_windup": 0.5,
-		"charge_cooldown": 2.0,
-		"contact_damage": 1,
-		"motes": 2,
-		"loot": {"light": [45, 60], "bones": 3, "unique": "penitents_shroud", "xp": 45},
-	},
-	# Limbo: the first of the fallen to stand up, grown huge on forgetting.
-	"limbo_lord":
-	{
-		"name": "Limbo Lord",
-		"character": "imp",
-		"walk": "run",
-		"scale": 2.5,
-		"tint": Color(0.7, 0.75, 1.0),
-		"body": Vector2(40, 56),
-		"health": 26,
-		"speed": 48.0,
-		"faces_left": false,
-		"attack_range": 48.0,
-		"reach": Vector2(46, 44),
-		"windup": 0.35,
-		"strike": 0.15,
-		"recover": 0.45,
-		"cooldown": 0.7,
-		"attack_damage": 1,
-		"charge_speed": 260.0,
-		"charge_windup": 0.45,
-		"charge_cooldown": 1.8,
-		"contact_damage": 1,
-		"motes": 2,
-		"loot": {"light": [50, 65], "bones": 3, "unique": "lords_tally", "xp": 50},
-	},
-	# Lust: the keeper of the Palace of Velvet.
-	"palace_of_velvet":
-	{
-		"name": "Keeper of the Palace",
-		"character": "imp",
-		"walk": "run",
-		"scale": 2.0,
-		"tint": Color(1.0, 0.6, 0.85),
-		"body": Vector2(34, 46),
-		"health": 28,
-		"speed": 60.0,
-		"faces_left": false,
-		"attack_range": 40.0,
-		"reach": Vector2(40, 40),
-		"windup": 0.3,
-		"strike": 0.15,
-		"recover": 0.4,
-		"cooldown": 0.6,
-		"attack_damage": 1,
-		"charge_speed": 280.0,
-		"charge_windup": 0.4,
-		"charge_cooldown": 1.5,
-		"contact_damage": 1,
-		"motes": 2,
-		"loot": {"light": [55, 70], "bones": 3, "unique": "velvet_gloves", "xp": 55},
-	},
-	# Gluttony: the brute that ate the circle.
-	"the_bloated_one":
-	{
-		"name": "The Bloated One",
-		"character": "brute",
-		"walk": "walk",
-		"scale": 1.5,
-		"tint": Color(0.75, 1.0, 0.7),
-		"body": Vector2(52, 90),
-		"health": 36,
-		"speed": 22.0,
-		"faces_left": false,
-		"attack_range": 70.0,
-		"reach": Vector2(68, 64),
-		"windup": 0.8,
-		"strike": 0.3,
-		"recover": 1.0,
-		"cooldown": 1.4,
-		"attack_damage": 2,
-		"charge_speed": 200.0,
-		"charge_windup": 0.8,
-		"charge_cooldown": 3.0,
-		"contact_damage": 2,
-		"motes": 3,
-		"loot": {"light": [60, 80], "bones": 3, "unique": "gluttons_maw", "xp": 60},
-	},
-	# Greed: the thing that guards the Golden Vault.
-	"golden_vault":
-	{
-		"name": "Warden of the Vault",
-		"character": "brute",
-		"walk": "walk",
-		"scale": 1.3,
-		"tint": Color(1.0, 0.88, 0.5),
-		"body": Vector2(46, 78),
-		"health": 34,
-		"speed": 30.0,
-		"faces_left": false,
-		"attack_range": 62.0,
-		"reach": Vector2(58, 56),
-		"windup": 0.6,
-		"strike": 0.25,
-		"recover": 0.8,
-		"cooldown": 1.1,
-		"attack_damage": 2,
-		"charge_speed": 240.0,
-		"charge_windup": 0.6,
-		"charge_cooldown": 2.4,
-		"contact_damage": 1,
-		"motes": 3,
-		"loot": {"light": [90, 120], "bones": 3, "unique": "vault_seal", "xp": 70},
-	},
-	# Wrath: Gorrow, the demon captain who served under the Lowest.
-	"the_fury":
-	{
-		"name": "Gorrow, the Fury",
-		"character": "brute",
-		"walk": "walk",
-		"scale": 1.2,
-		"tint": Color(1.0, 0.55, 0.5),
-		"body": Vector2(42, 72),
-		"health": 40,
-		"speed": 44.0,
-		"faces_left": false,
-		"attack_range": 58.0,
-		"reach": Vector2(54, 54),
-		"windup": 0.5,
-		"strike": 0.25,
-		"recover": 0.6,
-		"cooldown": 0.8,
-		"attack_damage": 2,
-		"charge_speed": 270.0,
-		"charge_windup": 0.45,
-		"charge_cooldown": 1.6,
-		"contact_damage": 1,
-		"motes": 3,
-		"loot": {"light": [70, 90], "bones": 3, "unique": "furys_edge", "xp": 75},
-	},
-	# Heresy: a bishop of the Choir, sent down for what he taught.
-	"cursed_bishop":
-	{
-		"name": "Cursed Bishop",
-		"character": "angel_guard",
-		"walk": "walk",
-		"scale": 1.4,
-		"tint": Color(0.7, 0.5, 0.45),
-		"body": Vector2(30, 74),
-		"health": 38,
-		"speed": 36.0,
-		"faces_left": false,
-		"attack_range": 56.0,
-		"reach": Vector2(50, 56),
-		"windup": 0.45,
-		"strike": 0.2,
-		"recover": 0.55,
-		"cooldown": 0.8,
-		"attack_damage": 2,
-		"charge_speed": 260.0,
-		"charge_windup": 0.5,
-		"charge_cooldown": 2.0,
-		"contact_damage": 1,
-		"motes": 3,
-		"loot": {"light": [75, 95], "bones": 3, "unique": "bishops_mitre", "xp": 80},
-	},
-	# Violence: the champion of the Red Arena.
-	"the_red_arena":
-	{
-		"name": "Champion of the Red Arena",
-		"character": "brute",
-		"third": "rampage",
-		"walk": "walk",
-		"scale": 1.4,
-		"tint": Color(1.0, 0.45, 0.4),
-		"body": Vector2(48, 84),
-		"health": 44,
-		"speed": 40.0,
-		"faces_left": false,
-		"attack_range": 64.0,
-		"reach": Vector2(62, 60),
-		"windup": 0.5,
-		"strike": 0.25,
-		"recover": 0.6,
-		"cooldown": 0.8,
-		"attack_damage": 2,
-		"charge_speed": 290.0,
-		"charge_windup": 0.4,
-		"charge_cooldown": 1.5,
-		"contact_damage": 2,
-		"motes": 3,
-		"loot": {"light": [80, 100], "bones": 3, "unique": "champions_plate", "xp": 85},
-	},
-	# Fraud: the king who never was.
-	"the_false_king":
-	{
-		"name": "The False King",
-		"character": "imp",
-		"third": "court",
-		"walk": "run",
-		"scale": 2.8,
-		"tint": Color(1.0, 0.85, 0.45),
-		"body": Vector2(44, 62),
-		"health": 42,
-		"speed": 70.0,
-		"faces_left": false,
-		"attack_range": 50.0,
-		"reach": Vector2(50, 48),
-		"windup": 0.3,
-		"strike": 0.15,
-		"recover": 0.35,
-		"cooldown": 0.5,
-		"attack_damage": 2,
-		"charge_speed": 300.0,
-		"charge_windup": 0.35,
-		"charge_cooldown": 1.3,
-		"contact_damage": 1,
-		"motes": 3,
-		"loot": {"light": [90, 110], "bones": 3, "unique": "false_crown", "xp": 90},
-	},
-	# Treachery: the Lowest. Tobiah, at the bottom, in his brother's shape.
-	# His lines (the brothers, both endings) are a later beat.
-	"final_boss_the_betrayer":
-	{
-		"name": "The Lowest",
-		"character": "hero",
-		"third": "mirror",
-		"walk": "run",
-		"scale": 1.3,
-		"tint": Color(0.55, 0.5, 0.65),
-		"body": Vector2(20, 42),
-		"health": 50,
-		"speed": 90.0,
-		"faces_left": false,
-		"attack_range": 36.0,
-		"reach": Vector2(36, 34),
-		"windup": 0.25,
-		"strike": 0.15,
-		"recover": 0.3,
-		"cooldown": 0.45,
-		"attack_damage": 2,
-		"charge_speed": 300.0,
-		"charge_windup": 0.3,
-		"charge_cooldown": 1.2,
-		"contact_damage": 1,
-		"motes": 0,
-		"loot": {"light": [100, 140], "bones": 3, "unique": "brothers_knife", "xp": 100},
-	},
-	# The Garden, the day before: the first angel, who made the Basin.
-	# Placed by the sidecar once the clock has turned.
-	"gardener":
-	{
-		"name": "The Gardener",
-		"character": "angel_guard",
-		"walk": "walk",
-		"scale": 2.2,
-		"tint": Color(1.0, 1.0, 0.95),
-		"body": Vector2(40, 70),
-		"health": 60,
-		"speed": 75.0,
-		"faces_left": false,
-		"attack_range": 56.0,
-		"reach": Vector2(56, 52),
-		"windup": 0.35,
-		"strike": 0.15,
-		"recover": 0.4,
-		"cooldown": 0.6,
-		"attack_damage": 2,
-		"charge_speed": 320.0,
-		"charge_windup": 0.35,
-		"charge_cooldown": 1.1,
-		"contact_damage": 1,
-		"motes": 0,
-		"loot": {"light": [120, 160], "bones": 3, "unique": "gardeners_seed", "xp": 120},
-	},
-}
+## The bosses there are: each has a BossProfile in resources/bosses/<id>.tres
+## (see profile_for).
+const IDS: Array[String] = [
+	"seraph_warden",
+	"the_penitent",
+	"limbo_lord",
+	"palace_of_velvet",
+	"the_bloated_one",
+	"golden_vault",
+	"the_fury",
+	"cursed_bishop",
+	"the_red_arena",
+	"the_false_king",
+	"final_boss_the_betrayer",
+	"gardener",
+]
+const PROFILES_DIR := "res://resources/bosses"
 
-## Which profile; see PROFILES. Set by the level before the boss is added.
+## Which profile (see IDS). Set by the level before the boss is added.
 var boss_id := "seraph_warden"
 ## The room the boss guards, in level pixels: the hero walking into it
 ## starts the fight.
@@ -454,7 +143,7 @@ var state: State = State.DORMANT
 var health := 0
 var max_health := 1
 var direction := -1
-var profile: Dictionary = {}
+var profile: BossProfile
 var _walk_anim := "walk"
 var _faces_left := true
 var _half_width := 0.0
@@ -498,30 +187,38 @@ static func id_for(label: String) -> String:
 
 ## The unique item a boss leaves (see Loot), or "" for one without.
 static func unique_loot(id: String) -> String:
-	return str(PROFILES.get(id, {}).get("loot", {}).get("unique", ""))
+	var found := profile_for(id)
+	return str(found.loot.get("unique", "")) if found else ""
 
 
 static func has_profile(id: String) -> bool:
-	return PROFILES.has(id)
+	return id in IDS
+
+
+## The boss's numbers, or null for an id that is not a boss.
+static func profile_for(id: String) -> BossProfile:
+	if not has_profile(id):
+		return null
+	return load("%s/%s.tres" % [PROFILES_DIR, id]) as BossProfile
 
 
 func _ready() -> void:
 	add_to_group("enemy")
 	add_to_group("boss")
-	if not PROFILES.has(boss_id):
+	if not has_profile(boss_id):
 		push_error("Boss: no profile called '%s'" % boss_id)
-		boss_id = PROFILES.keys()[0]
-	profile = PROFILES[boss_id]
-	max_health = int(profile["health"])
+		boss_id = IDS[0]
+	profile = profile_for(boss_id)
+	max_health = profile.health
 	health = max_health
-	_faces_left = bool(profile["faces_left"])
-	_walk_anim = str(profile.get("walk", "walk"))
-	var body: Vector2 = profile["body"]
+	_faces_left = profile.faces_left
+	_walk_anim = profile.walk_anim
+	var body := profile.body
 	_half_width = body.x / 2.0
-	AnimLoader.setup(sprite, str(profile["character"]))
-	sprite.scale = Vector2.ONE * float(profile["scale"])
-	sprite.position *= float(profile["scale"])
-	sprite.modulate = profile["tint"]
+	AnimLoader.setup(sprite, profile.character)
+	sprite.scale = Vector2.ONE * profile.scale
+	sprite.position *= profile.scale
+	sprite.modulate = profile.tint
 	sprite.play("idle")
 	var shape := RectangleShape2D.new()
 	shape.size = body
@@ -531,9 +228,8 @@ func _ready() -> void:
 	hit_shape.size = body + Vector2(4.0, 0.0)
 	hitbox_shape.shape = hit_shape
 	hitbox_shape.position = body_shape.position
-	var reach: Vector2 = profile["reach"]
 	var attack_rect := RectangleShape2D.new()
-	attack_rect.size = reach
+	attack_rect.size = profile.reach
 	attack_shape.shape = attack_rect
 	attack_shape.disabled = true
 	_face(direction)
@@ -622,7 +318,7 @@ func in_phase_three() -> bool:
 
 ## The move a boss keeps for its last quarter: see the top of the file.
 func third() -> String:
-	return str(profile.get("third", ""))
+	return profile.third
 
 
 func is_fighting() -> bool:
@@ -652,7 +348,7 @@ func _process_approach() -> void:
 		return
 	var offset := _player.global_position - global_position
 	_face(1 if offset.x >= 0.0 else -1)
-	if absf(offset.x) <= float(profile["attack_range"]):
+	if absf(offset.x) <= profile.attack_range:
 		velocity.x = 0.0
 		if _attack_cooldown <= 0.0 and absf(offset.y) <= ATTACK_HEIGHT_TOLERANCE:
 			_start_windup()
@@ -666,12 +362,12 @@ func _process_approach() -> void:
 	if absf(offset.x) >= CHARGE_RANGE and _charge_cooldown <= 0.0:
 		_start_charge_windup()
 		return
-	velocity.x = direction * float(profile["speed"]) / _haste()
+	velocity.x = direction * profile.speed / _haste()
 
 
 ## The body's own move: see MOVES.
 func move() -> String:
-	return str(MOVES.get(str(profile["character"]), ""))
+	return str(MOVES.get(profile.character, ""))
 
 
 ## Whether the hero stands where the body's move wants him.
@@ -727,7 +423,7 @@ func _wave(dir: int, big: bool) -> void:
 	var shot: EnemyShot = SHOT_SCRIPT.new()
 	shot.kind = EnemyShot.Kind.WAVE
 	shot.big = big
-	shot.damage = int(profile["attack_damage"])
+	shot.damage = profile.attack_damage
 	shot.direction = Vector2(dir, 0.0)
 	shot.position = global_position + Vector2(dir * (_half_width + 8.0), 0.0)
 	_spawn_parent().add_child(shot)
@@ -866,8 +562,7 @@ func _summon(behaviour: String = "chase") -> void:
 	if _dead or not is_inside_tree():
 		return
 	for i in SUMMON_COUNT:
-		var imp: Walker = WALKER_SCENE.instantiate()
-		imp.character = "imp"
+		var imp: Walker = IMP_SCENE.instantiate()
 		imp.behaviour = behaviour
 		imp.death_y = global_position.y + 2000.0
 		imp.drop_parent = drop_parent
@@ -882,7 +577,7 @@ func _spawn_parent() -> Node:
 
 
 func _start_windup() -> void:
-	_set_state(State.WINDUP, float(profile["windup"]) * _haste())
+	_set_state(State.WINDUP, profile.windup * _haste())
 	sprite.animation = "attack"
 	sprite.pause()
 	sprite.frame = 0
@@ -894,27 +589,27 @@ func _process_swing() -> void:
 	if state == State.STRIKE:
 		for body in attack_hitbox.get_overlapping_bodies():
 			if body is Player:
-				body.take_damage(int(profile["attack_damage"]), global_position)
+				body.take_damage(profile.attack_damage, global_position)
 	if _state_timer > 0.0:
 		return
 	match state:
 		State.WINDUP:
-			_set_state(State.STRIKE, float(profile["strike"]))
+			_set_state(State.STRIKE, profile.strike)
 			_tint(Color.WHITE)
 			sprite.play("attack")
 			attack_shape.disabled = false
 		State.STRIKE:
-			_set_state(State.RECOVER, float(profile["recover"]) * _haste())
+			_set_state(State.RECOVER, profile.recover * _haste())
 			attack_shape.disabled = true
 			sprite.play("idle")
 		State.RECOVER:
-			_attack_cooldown = float(profile["cooldown"]) * _haste()
+			_attack_cooldown = profile.cooldown * _haste()
 			_set_state(State.APPROACH, 0.0)
 			sprite.play(_walk_anim)
 
 
 func _start_charge_windup() -> void:
-	_set_state(State.CHARGE_WINDUP, float(profile["charge_windup"]) * _haste())
+	_set_state(State.CHARGE_WINDUP, profile.charge_windup * _haste())
 	sprite.play("idle")
 	_tint(TINT_CHARGE)
 
@@ -934,7 +629,7 @@ func _start_charge() -> void:
 ## The rush: straight ahead at full speed until a wall or the time runs
 ## out, hurting the hero on contact.
 func _process_charge() -> void:
-	velocity.x = direction * float(profile["charge_speed"])
+	velocity.x = direction * profile.charge_speed
 	if is_on_wall() and _bounces_left > 0:
 		# A rampage turns at the wall and comes straight back.
 		_bounces_left -= 1
@@ -945,7 +640,7 @@ func _process_charge() -> void:
 		return
 	if is_on_wall() or _state_timer <= 0.0:
 		sprite.speed_scale = 1.0
-		_charge_cooldown = float(profile["charge_cooldown"])
+		_charge_cooldown = profile.charge_cooldown
 		if _leap_after_charge and _find_player():
 			_start_leap()
 		else:
@@ -975,18 +670,18 @@ func _set_state(new_state: State, duration: float) -> void:
 func _face(dir: int) -> void:
 	direction = dir
 	sprite.flip_h = (dir > 0) == _faces_left
-	var reach: Vector2 = profile["reach"]
+	var reach := profile.reach
 	attack_shape.position = Vector2((_half_width + reach.x / 2.0) * dir, -reach.y / 2.0)
 
 
 func _tint(color: Color) -> void:
-	sprite.modulate = (profile["tint"] as Color) * color
+	sprite.modulate = profile.tint * color
 
 
 func _hurt_player() -> void:
 	for body in hitbox.get_overlapping_bodies():
 		if body is Player:
-			body.take_damage(int(profile["contact_damage"]), global_position)
+			body.take_damage(profile.contact_damage, global_position)
 
 
 ## Hits flash and count, but never stagger the boss.
@@ -1018,7 +713,7 @@ func _enter_phase_two() -> void:
 	Feedback.shake(0.5)
 	Feedback.hit_stop(0.1)
 	var pulse := create_tween()
-	var base := Vector2.ONE * float(profile["scale"])
+	var base := Vector2.ONE * profile.scale
 	pulse.tween_property(sprite, "scale", base * 1.15, 0.12).set_ease(Tween.EASE_OUT)
 	pulse.tween_property(sprite, "scale", base, 0.25).set_ease(Tween.EASE_IN)
 	if move() == "summon":
@@ -1036,7 +731,7 @@ func _enter_phase_three() -> void:
 	Feedback.shake(0.6)
 	Feedback.hit_stop(0.12)
 	var pulse := create_tween()
-	var base := Vector2.ONE * float(profile["scale"])
+	var base := Vector2.ONE * profile.scale
 	pulse.tween_property(sprite, "scale", base * 1.25, 0.15).set_ease(Tween.EASE_OUT)
 	pulse.tween_property(sprite, "scale", base, 0.3).set_ease(Tween.EASE_IN)
 	if third() == "court":
@@ -1068,10 +763,10 @@ func _die() -> void:
 	# The body falls away from the hero, who is on the side it faces.
 	EnemyDeath.play(sprite, -direction, CORPSE_TIME, queue_free)
 	var parent := drop_parent if drop_parent else get_parent()
-	for i in int(profile["motes"]):
+	for i in profile.motes:
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = centre + Vector2((i - 0.5) * 20.0, 0.0)
 		parent.add_child.call_deferred(mote)
 	# Its hoard: light, tally bones and the one thing it carried.
-	Loot.drop(parent, global_position + Vector2(0.0, -8.0), profile.get("loot", {}))
+	Loot.drop(parent, global_position + Vector2(0.0, -8.0), profile.loot)
 	defeated.emit(self)

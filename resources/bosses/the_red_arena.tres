@@ -1,0 +1,30 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_oq6ny"]
+
+[resource]
+script = ExtResource("1_oq6ny")
+display_name = "Champion of the Red Arena"
+character = "brute"
+scale = 1.4
+tint = Color(1, 0.45, 0.4, 1)
+body = Vector2(48, 84)
+health = 44
+speed = 40.0
+contact_damage = 2
+third = "rampage"
+attack_range = 64.0
+reach = Vector2(62, 60)
+windup = 0.5
+strike = 0.25
+cooldown = 0.8
+charge_speed = 290.0
+charge_windup = 0.4
+charge_cooldown = 1.5
+motes = 3
+loot = {
+"bones": 3,
+"light": [80, 100],
+"unique": "champions_plate",
+"xp": 85
+}

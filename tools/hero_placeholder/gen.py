@@ -20,10 +20,14 @@ import argparse
 import json
 import math
 import os
+import sys
 
 from PIL import Image, ImageDraw
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import sprite_frames  # noqa: E402
+
 SPRITES = os.path.join(ROOT, "assets", "sprites")
 OUT_DIR = os.path.join(SPRITES, "hero")
 SPEC_PATH = os.path.join(SPRITES, "sprites.json")
@@ -693,6 +697,7 @@ def write(strips):
     with open(SPEC_PATH, "w") as f:
         json.dump(spec, f, indent=2)
         f.write("\n")
+    sprite_frames.write(["hero"])
 
 
 def contact_sheet(strips, path, scale=4):

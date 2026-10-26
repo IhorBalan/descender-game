@@ -280,7 +280,7 @@ func _list_maps(listed: Array[Dictionary]) -> void:
 		child.queue_free()
 	for entry in listed:
 		var map_id := str(entry.get("mapId", ""))
-		var name := str(entry.get("name", map_id))
+		var map_name := str(entry.get("name", map_id))
 		var level := MapStore.level_id(map_id)
 		var selected := MapStore.chosen_level == level
 		var note: String
@@ -290,19 +290,20 @@ func _list_maps(listed: Array[Dictionary]) -> void:
 			note = "downloaded"
 		else:
 			note = "update available" if entry.has("path") else "download"
-		var text := "%s   (%s)" % [name, note]
+		var text := "%s   (%s)" % [map_name, note]
 		if selected:
-			text = "* %s   (selected)" % name
+			text = "* %s   (selected)" % map_name
 		var downloaded: bool = entry.get("cached", false) or entry.get("unpublished", false)
 		if selected or downloaded:
-			_add_map_button(text, _toggle_map.bind(level, listed))
+			_add_map_button(text, level, _toggle_map.bind(level, listed))
 		else:
-			_add_map_button(text, _fetch_and_select.bind(map_id, listed))
+			_add_map_button(text, level, _fetch_and_select.bind(map_id, listed))
 
 
-func _add_map_button(text: String, on_pressed: Callable) -> void:
+func _add_map_button(text: String, level: String, on_pressed: Callable) -> void:
 	var button := Button.new()
 	button.text = text
+	button.set_meta("level", level)
 	button.alignment = HORIZONTAL_ALIGNMENT_LEFT
 	button.pressed.connect(on_pressed)
 	maps_list.add_child(button)
@@ -342,7 +343,7 @@ func _toggle_map(level: String, listed: Array[Dictionary]) -> void:
 ## Puts the focus back on the map's button after the list is rebuilt.
 func _focus_map(level: String) -> void:
 	for button in maps_list.get_children():
-		if button.text.contains(Levels.display_name(level)):
+		if button.get_meta("level", "") == level:
 			button.grab_focus()
 			return
 	if maps_list.get_child_count() > 0:

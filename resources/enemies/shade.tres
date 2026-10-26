@@ -1,0 +1,17 @@
+[gd_resource type="Resource" script_class="FlyerProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/flyer_profile.gd" id="1_wye0c"]
+
+[resource]
+script = ExtResource("1_wye0c")
+hover = 18.0
+chase = 48.0
+aggro = 130.0
+drop_chance = 0.3
+loot = {
+"bone_chance": 0.05,
+"flask_chance": 0.03,
+"light": [3, 6],
+"xp": 4
+}
+puff = Color(0.6, 0.66, 0.82, 1)

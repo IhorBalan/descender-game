@@ -130,13 +130,13 @@ func _check_enemy(spec: Dictionary, where: String, sprites: Dictionary) -> int:
 	var bad := 0
 	var character := str(spec.get("character", "imp"))
 	var behaviour := str(spec.get("behaviour", ""))
-	if Walker.PROFILES.has(character):
+	if character in Walker.CHARACTERS:
 		if not behaviour.is_empty() and behaviour not in Walker.BEHAVIOURS:
 			bad += _fail("%s: no walker habit '%s'" % [where, behaviour])
 		var barks := str(spec.get("barks", ""))
 		if not barks.is_empty() and not Walker.BARKS.has(barks):
 			bad += _fail("%s: no bark set '%s'" % [where, barks])
-	elif Flyer.PROFILES.has(character):
+	elif character in Flyer.CHARACTERS:
 		if behaviour != "" and behaviour != "dive":
 			bad += _fail("%s: a flyer only dives ('%s')" % [where, behaviour])
 	elif character == "hanged":
@@ -144,7 +144,7 @@ func _check_enemy(spec: Dictionary, where: String, sprites: Dictionary) -> int:
 	elif not Boss.has_profile(character):
 		return _fail("%s: no enemy or boss called '%s'" % [where, character])
 	else:
-		character = str(Boss.PROFILES[character]["character"])
+		character = Boss.profile_for(character).character
 	if not sprites.has(character):
 		bad += _fail("%s: no sprites for '%s'" % [where, character])
 	return bad
@@ -166,7 +166,7 @@ func test_dialogue() -> void:
 	for spec: Dictionary in placements.get("objects", []):
 		if str(spec.get("type", "")) == "item":
 			set_by[LoreItem.flag_for(str(spec.get("item", "")))] = "a relic"
-	for id: String in Boss.PROFILES:
+	for id: String in Boss.IDS:
 		set_by[Boss.flag_for(id)] = "the boss"
 	var bad := 0
 	var choices := 0
@@ -219,7 +219,7 @@ func test_dialogue() -> void:
 	_check(bad == 0, "every quest flag is set somewhere (%d bad)" % bad)
 	# Every boss speaks before and after its fight.
 	bad = 0
-	for id: String in Boss.PROFILES:
+	for id: String in Boss.IDS:
 		for part in ["intro", "defeat"]:
 			if dialogue.entry("%s_%s" % [id, part]).is_empty():
 				bad += _fail("%s has no %s lines" % [id, part])
@@ -266,27 +266,143 @@ func test_sprites() -> void:
 					)
 				)
 	_check(bad == 0, "every strip in the sprite spec exists and is cut right (%d bad)" % bad)
-	# The enemies use the strips their scripts play.
+	# Every character's SpriteFrames resource matches the spec it was cut
+	# from, so a strip changed without running tools/sprite_frames.py is
+	# caught here.
 	bad = 0
-	for character: String in Walker.PROFILES:
-		var walk := str(Walker.PROFILES[character]["walk"])
-		for anim_name in ["idle", walk, "attack", "hurt", "death"]:
-			if not sprites.get(character, {}).get("animations", {}).has(anim_name):
-				bad += _fail("walker %s has no %s strip" % [character, anim_name])
+	for character: String in sprites:
+		bad += _check_frames(character, sprites[character])
+	_check(bad == 0, "every character's SpriteFrames matches the sprite spec (%d bad)" % bad)
+
+
+func _check_frames(character: String, spec: Dictionary) -> int:
+	var bad := 0
+	var path := AnimLoader.frames_path(character)
+	var frames := load(path) as SpriteFrames
+	if frames == null:
+		return _fail("%s: no SpriteFrames at %s (run tools/sprite_frames.py)" % [character, path])
+	var origin := Vector2(float(spec["origin"][0]), float(spec["origin"][1]))
+	if AnimLoader.origin(frames) != origin:
+		bad += _fail(
+			"%s: the frames' origin is %s, not %s" % [character, AnimLoader.origin(frames), origin]
+		)
+	var size := Vector2(float(spec["frame_size"][0]), float(spec["frame_size"][1]))
+	if AnimLoader.frame_size(frames) != size:
+		bad += _fail(
+			"%s: the frames are %s, not %s" % [character, AnimLoader.frame_size(frames), size]
+		)
+	var anims: Dictionary = spec["animations"]
+	if frames.get_animation_names().size() != anims.size():
+		bad += _fail(
+			(
+				"%s: %d animations in the frames, %d in the spec"
+				% [character, frames.get_animation_names().size(), anims.size()]
+			)
+		)
+	for anim_name: String in anims:
+		var anim: Dictionary = anims[anim_name]
+		if not frames.has_animation(anim_name):
+			bad += _fail("%s.%s: not in the frames" % [character, anim_name])
+		elif (
+			frames.get_frame_count(anim_name) != int(anim["frames"])
+			or frames.get_animation_speed(anim_name) != float(anim["fps"])
+			or frames.get_animation_loop(anim_name) != bool(anim["loop"])
+		):
+			bad += _fail("%s.%s: the frames differ from the spec" % [character, anim_name])
+	return bad
+
+
+## Every enemy body has its profile, its scene and the strips its script
+## plays, and nothing in the resource and scene folders is unlisted.
+func test_enemies() -> void:
+	var bad := 0
+	for character: String in Walker.CHARACTERS:
+		bad += _check_enemy_scene(character, Walker, WalkerProfile)
+	for character: String in Flyer.CHARACTERS:
+		bad += _check_enemy_scene(character, Flyer, FlyerProfile)
 	for anim_name in ["idle", "attack", "hurt", "death"]:
-		for character: String in Flyer.PROFILES:
-			if not sprites.get(character, {}).get("animations", {}).has(anim_name):
-				bad += _fail("flyer %s has no %s strip" % [character, anim_name])
-		if not sprites.get(Hanger.CHARACTER, {}).get("animations", {}).has(anim_name):
+		if not AnimLoader.frames(Hanger.CHARACTER).has_animation(anim_name):
 			bad += _fail("the hanged thing has no %s strip" % anim_name)
-	for id: String in Boss.PROFILES:
-		var profile: Dictionary = Boss.PROFILES[id]
-		var character := str(profile["character"])
-		var anims: Dictionary = sprites.get(character, {}).get("animations", {})
-		for anim_name in ["idle", str(profile["walk"]), "attack", "hurt"]:
-			if not anims.has(anim_name):
-				bad += _fail("boss %s (%s) has no %s strip" % [id, character, anim_name])
-	_check(bad == 0, "every enemy has the strips it plays (%d bad)" % bad)
+	for id: String in Boss.IDS:
+		var profile := Boss.profile_for(id)
+		if profile == null:
+			bad += _fail("boss %s has no profile in %s" % [id, Boss.PROFILES_DIR])
+			continue
+		var frames := AnimLoader.frames(profile.character)
+		for anim_name in ["idle", profile.walk_anim, "attack", "hurt"]:
+			if not frames.has_animation(anim_name):
+				bad += _fail("boss %s (%s) has no %s strip" % [id, profile.character, anim_name])
+	_check(bad == 0, "every enemy has its profile, scene and strips (%d bad)" % bad)
+	bad = 0
+	bad += _check_listed(Walker.PROFILES_DIR, Walker.CHARACTERS + Flyer.CHARACTERS)
+	bad += _check_listed(Boss.PROFILES_DIR, Boss.IDS)
+	var scenes: Array[String] = ["walker", "flyer", "hanger", "boss"]
+	scenes.append_array(Walker.CHARACTERS)
+	scenes.append_array(Flyer.CHARACTERS)
+	bad += _check_listed(LevelBuilder.ENEMY_SCENES_DIR, scenes)
+	_check(bad == 0, "every enemy resource and scene is listed in its script (%d bad)" % bad)
+
+
+## A body's scene is an inherited scene of the right kind that wears the
+## body's profile, with the frames its script plays set on the sprite and
+## placed on its origin.
+func _check_enemy_scene(character: String, kind: Variant, profile_kind: Variant) -> int:
+	var bad := 0
+	var profile: Resource = load("%s/%s.tres" % [Walker.PROFILES_DIR, character])
+	if not is_instance_of(profile, profile_kind):
+		return _fail(
+			"%s: no %s in %s" % [character, profile_kind.get_global_name(), Walker.PROFILES_DIR]
+		)
+	var scene := LevelBuilder.enemy_scene(character)
+	if scene == null:
+		return _fail("%s: no scene in %s" % [character, LevelBuilder.ENEMY_SCENES_DIR])
+	var enemy: Node = scene.instantiate()
+	if not is_instance_of(enemy, kind):
+		bad += _fail("%s: the scene is not a %s" % [character, kind.get_global_name()])
+	elif enemy.profile != profile:
+		bad += _fail("%s: the scene wears the wrong profile" % character)
+	var sprite := enemy.get_node_or_null("Sprite") as AnimatedSprite2D
+	var frames := AnimLoader.frames(character)
+	if sprite == null or sprite.sprite_frames != frames:
+		bad += _fail(
+			(
+				"%s: the scene's sprite does not use %s"
+				% [character, AnimLoader.frames_path(character)]
+			)
+		)
+	elif sprite.offset != AnimLoader.offset(frames):
+		bad += _fail(
+			(
+				"%s: the sprite's offset is %s, not %s"
+				% [character, sprite.offset, AnimLoader.offset(frames)]
+			)
+		)
+	var walk: String = profile.walk_anim if profile is WalkerProfile else "idle"
+	for anim_name in ["idle", walk, "attack", "hurt", "death"]:
+		if not frames.has_animation(anim_name):
+			bad += _fail("%s has no %s strip" % [character, anim_name])
+	enemy.free()
+	return bad
+
+
+## Every .tres or .tscn in the folder is one of the names, and each name
+## is in the folder.
+func _check_listed(dir_path: String, names: Array[String]) -> int:
+	var bad := 0
+	var dir := DirAccess.open(dir_path)
+	if dir == null:
+		return _fail("%s does not open" % dir_path)
+	var found: Array[String] = []
+	for file_name in dir.get_files():
+		if file_name.get_extension() in ["tres", "tscn"]:
+			found.append(file_name.get_basename())
+	for name in names:
+		if name not in found:
+			bad += _fail("%s is not in %s" % [name, dir_path])
+	for name in found:
+		if name not in names:
+			bad += _fail("%s/%s is listed in no script" % [dir_path, name])
+	return bad
 
 
 func test_region_art() -> void:

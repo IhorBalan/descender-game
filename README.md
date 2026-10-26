@@ -265,6 +265,22 @@ common currency, in a cluster that flies to the hero once he is near,
 and now and then a **tally bone** or a Basin Flask. The enemy strips are drawn by
 `tools/enemy_sprites/export.py` from the art thread's rigs.
 
+Each enemy body is three files, all openable in the editor: a **profile**
+(`resources/enemies/<name>.tres`, a `WalkerProfile` or `FlyerProfile`: size,
+speed, health, the swing, the drops), its **frames**
+(`assets/sprites/<name>/<name>.tres`, a `SpriteFrames` cut from the strips)
+and a **scene** (`scenes/enemies/<name>.tscn`, inheriting `walker.tscn` or
+`flyer.tscn`, that wears the two). Open the scene to see the body; select
+its root to tune the profile in the Inspector; select the Sprite to play
+and retime its animations in the SpriteFrames panel. The placements name a
+body by its file name, and `LevelBuilder.enemy_scene` finds the scene. The
+bosses are profiles too (`resources/bosses/<id>.tres`, a `BossProfile`),
+looked up by id. To add a body: a strip set and an entry in `sprites.json`
+(the art tools write both), `python3 tools/sprite_frames.py <name>`, a
+profile resource, a scene inheriting the right base, and the name in
+`Walker.CHARACTERS` or `Flyer.CHARACTERS`; the unit tests check that all
+five agree.
+
 The **economy**: light is kept through death and load and buys blades and
 coats at **Old Pell's forge**, tally bones (three from every boss, rarely
 from an imp) buy charms and bottled power-ups from **Vael the Bargainer**
@@ -786,10 +802,12 @@ the live map is meant to ship.
 | `scripts/feedback.gd` | The `Feedback` autoload: hit-stop, screen shake, hit flash and sparks |
 | `assets/audio/`, `tools/gen_sounds.py`, `tools/gen_music.py` | Placeholder sounds and music, and the scripts that synthesise them |
 | `scripts/player.gd` | Hero state machine and tuning constants |
-| `scripts/enemies/walker.gd` | Ground patroller (imp, angel guard, brute, hound) with a telegraphed melee swing and, for some, a bark |
-| `scripts/enemies/flyer.gd` | Hovering Watcher that chases when close |
+| `scenes/enemies/walker.tscn`, `scripts/enemies/walker.gd` | Ground patroller with a telegraphed melee swing and, for some, a bark; the base of the imp, angel guard, brute, hound, slug, hoarder and burned scenes |
+| `scenes/enemies/flyer.tscn`, `scripts/enemies/flyer.gd` | Hovering flyer that chases when close; the base of the watcher, shade and siren scenes |
+| `scenes/enemies/<name>.tscn` | One scene per enemy body, inheriting walker or flyer, wearing its profile and its frames |
+| `scripts/enemies/walker_profile.gd`, `flyer_profile.gd`, `boss_profile.gd`, `resources/enemies/`, `resources/bosses/` | The profile resources: an enemy's or a boss's numbers, one `.tres` per body or boss, tuned in the Inspector |
 | `scenes/enemies/hanger.tscn`, `scripts/enemies/hanger.gd` | The hanged thing: hangs from a rope and drops on the hero |
-| `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: profiles by marker label, two phases, the fight main.gd runs around it |
+| `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: a profile by marker label, two phases, the fight main.gd runs around it |
 | `scripts/door_lock.gd` | A seal of light on a locked door, or on a boss room's doors during the fight |
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
@@ -805,8 +823,9 @@ the live map is meant to ship.
 | `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
 | `levels/world/` | The world export (`world.json` and its three tile sheets) and `placements.json` |
-| `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
-| `assets/sprites/` | Character strips from the art thread and the NPC rig, plus the generated checkpoint, gate and pickups |
+| `scripts/anim_loader.gd` | Loads a character's `SpriteFrames` (`assets/sprites/<name>/<name>.tres`) and places it on its origin |
+| `tools/sprite_frames.py` | Cuts every character's `SpriteFrames` resource from its strips, as `sprites.json` says; the art tools run it after they write the spec |
+| `assets/sprites/` | Character strips from the art thread and the NPC rig, each folder with its `SpriteFrames`, plus the generated checkpoint, gate and pickups |
 | `assets/ui_theme.tres` | The menus' theme: the Pirata One font (`assets/fonts/`, OFL), the stone button boxes, slider, toggles and the `Title`, `Heading`, `Subheading` and `Muted` label variations |
 | `tools/menu_textures.py` | Regenerates the theme's textures in `assets/ui/theme/`: the 9-slice boxes, grabber, toggles, divider and the title backdrop |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
@@ -839,8 +858,10 @@ one resolves in another: a placement's character has sprites and its
 dialogue ids exist, every `then`, choice and `gives` in the dialogue
 resolves, every flag an entry or a quest requires is set by some entry,
 relic, boss or pickup, every strip in `sprites.json` is cut to its frame
-count, every enemy and boss has the strips its script plays, every PNG a
-region's JSON names exists, and every sound the scripts play has a file.
+count and its `SpriteFrames` resource matches it, every enemy body has its
+profile, its scene and the strips its script plays (and nothing in those
+folders is unlisted), every PNG a region's JSON names exists, and every
+sound the scripts play has a file.
 A failing check names the offending entry. The unit half covers the story
 flags, the dialogue data, the quests, the levels registry, the upgrade
 flags and the save slots (the last slot is written and put back).

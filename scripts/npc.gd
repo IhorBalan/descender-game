@@ -19,14 +19,15 @@ var sprite: AnimatedSprite2D
 
 
 func _ready() -> void:
-	var spec := AnimLoader.spec(character)
-	if not spec.is_empty():
-		var frame_h := float(spec["frame_size"][1])
+	var frames := AnimLoader.frames(character)
+	var frame_h := AnimLoader.frame_size(frames).y
+	if frame_h > 0.0:
 		area_size = Vector2(32, frame_h)
 		prompt_offset = Vector2(0, -frame_h - 8.0)
 	super()
 	sprite = AnimatedSprite2D.new()
-	AnimLoader.setup(sprite, character)
+	sprite.sprite_frames = frames
+	sprite.offset = AnimLoader.offset(frames)
 	sprite.modulate = tint
 	sprite.play("idle")
 	add_child(sprite)

@@ -2,8 +2,10 @@ class_name Flyer
 extends CharacterBody2D
 
 ## A flying enemy that hovers around its post and chases the hero when he
-## comes close. Hurts on contact. Origin at the sprite's centre. `character`
-## picks the strips and the numbers (PROFILES): the **watcher** is an angel
+## comes close. Hurts on contact. Origin at the sprite's centre. The body
+## is picked by the scene: scenes/enemies/<name>.tscn inherits flyer.tscn
+## and sets the `profile` (a FlyerProfile in resources/enemies/) and the
+## sprite's frames (assets/sprites/<name>/<name>.tres). The **watcher** is an angel
 ## eye, found where the angels are (Heaven, Purgatory); the **shade** is a
 ## forgotten soul that drifts through the circles from Limbo down; the
 ## **siren** is the winged want of Lust, quicker and keener than either.
@@ -23,42 +25,11 @@ const DEATH_DROP := 12.0
 const CORPSE_TIME := 0.6
 const DEATH_SPARKS := Color(1.0, 0.45, 0.35)
 const DEATH_HIT_STOP := 0.06
-## health: hits to kill. hover / chase: speeds about the post and after the
-## hero. aggro: how close he has to come. drop_chance: how often a kill
-## leaves a heal mote. puff: the colour it dies in. loot: what it leaks and
-## carries (see Loot).
-const PROFILES := {
-	"watcher":
-	{
-		"health": 2,
-		"hover": 25.0,
-		"chase": 55.0,
-		"aggro": 110.0,
-		"drop_chance": 0.5,
-		"puff": Color(1.0, 0.95, 0.8),
-		"loot": {"light": [4, 6], "bone_chance": 0.04, "flask_chance": 0.03, "xp": 4},
-	},
-	"shade":
-	{
-		"health": 2,
-		"hover": 18.0,
-		"chase": 48.0,
-		"aggro": 130.0,
-		"drop_chance": 0.3,
-		"puff": Color(0.6, 0.66, 0.82),
-		"loot": {"light": [3, 6], "bone_chance": 0.05, "flask_chance": 0.03, "xp": 4},
-	},
-	"siren":
-	{
-		"health": 3,
-		"hover": 30.0,
-		"chase": 72.0,
-		"aggro": 120.0,
-		"drop_chance": 0.4,
-		"puff": Color(0.8, 0.4, 0.6),
-		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.04, "xp": 6},
-	},
-}
+## The bodies there are: each has a FlyerProfile in resources/enemies/ and
+## a scene in scenes/enemies/ that wears it.
+const CHARACTERS: Array[String] = ["watcher", "shade", "siren"]
+const DEFAULT_PROFILE := preload("res://resources/enemies/watcher.tres")
+const PROFILES_DIR := "res://resources/enemies"
 ## The dive: where it waits over the hero, how long it aims, how fast and
 ## how long it falls, how long it climbs back and the pause between passes.
 const DIVE_PERCH := Vector2(0.0, -64.0)
@@ -71,8 +42,12 @@ const TINT_AIM := Color(1.0, 0.7, 0.7)
 const HEALTH_BAR_SCENE := preload("res://scripts/enemy_health_bar.gd")
 const MOTE_SCENE := preload("res://scenes/heal_mote.tscn")
 
-@export_enum("watcher", "shade", "siren") var character := "watcher"
+## The body's numbers; the scene sets it (see CHARACTERS).
+@export var profile: FlyerProfile
 @export var contact_damage := 1
+## The profile's name (its file name, one of CHARACTERS). Set from the
+## profile when the enemy is ready.
+var character := ""
 
 ## "dive" or "" (see the top of the file). Set by the level.
 var behaviour := ""
@@ -90,22 +65,27 @@ var _state_timer := 0.0
 var _dive_cooldown := 0.0
 var _dead := false
 var _player: Player
-var _profile: Dictionary = {}
 
 @onready var sprite: AnimatedSprite2D = $Sprite
 @onready var body_shape: CollisionShape2D = $CollisionShape2D
 @onready var hitbox: Area2D = $Hitbox
 
 
+## The body's numbers, or null for a name that is not one of CHARACTERS.
+static func profile_for(character: String) -> FlyerProfile:
+	if character not in CHARACTERS:
+		return null
+	return load("%s/%s.tres" % [PROFILES_DIR, character]) as FlyerProfile
+
+
 func _ready() -> void:
 	add_to_group("enemy")
-	if not PROFILES.has(character):
-		push_error("Flyer: unknown character '%s', using watcher" % character)
-		character = "watcher"
-	_profile = PROFILES[character]
-	AnimLoader.setup(sprite, character)
+	if profile == null:
+		push_error("Flyer: no profile set on %s, using the watcher's" % name)
+		profile = DEFAULT_PROFILE
+	character = profile.resource_path.get_file().get_basename()
 	sprite.play("idle")
-	max_health = int(_profile["health"])
+	max_health = profile.health
 	health = max_health
 	home = global_position
 	_time = randf() * TAU
@@ -137,7 +117,7 @@ func _physics_process(delta: float) -> void:
 				if _state_timer <= 0.0 or get_slide_collision_count() > 0:
 					_start_climb()
 			State.CLIMB:
-				var wanted := (home - global_position).limit_length(float(_profile["chase"]))
+				var wanted := (home - global_position).limit_length(profile.chase)
 				velocity = velocity.move_toward(wanted, ACCEL * delta)
 				if _state_timer <= 0.0:
 					state = State.HOVER
@@ -149,9 +129,9 @@ func _physics_process(delta: float) -> void:
 ## above him and drops when it gets there).
 func _process_hover(delta: float) -> void:
 	var target := home + Vector2(sin(_time * 1.6) * 24.0, sin(_time * 2.7) * 6.0)
-	var speed := float(_profile["hover"])
+	var speed := profile.hover
 	if _hero_near():
-		speed = float(_profile["chase"])
+		speed = profile.chase
 		if behaviour == "dive":
 			target = _player.global_position + DIVE_PERCH
 			if _dive_cooldown <= 0.0 and global_position.distance_to(target) < 12.0:
@@ -167,7 +147,7 @@ func _hero_near() -> bool:
 	return (
 		is_instance_valid(_player)
 		and _player.state != Player.State.DEAD
-		and global_position.distance_to(_player.global_position) < float(_profile["aggro"])
+		and global_position.distance_to(_player.global_position) < profile.aggro
 	)
 
 
@@ -239,7 +219,7 @@ func _die() -> void:
 	Feedback.hit_stop(DEATH_HIT_STOP)
 	Feedback.shake(0.3)
 	Feedback.spark(global_position, DEATH_SPARKS)
-	Feedback.puff(global_position, _profile["puff"])
+	Feedback.puff(global_position, profile.puff)
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	health_bar.visible = false
@@ -250,8 +230,8 @@ func _die() -> void:
 	)
 	EnemyDeath.play(sprite, 1, CORPSE_TIME, queue_free)
 	var parent := drop_parent if drop_parent else get_parent()
-	Loot.drop(parent, global_position, _profile["loot"])
-	if randf() < float(_profile["drop_chance"]) + Inventory.bonus("mote_chance"):
+	Loot.drop(parent, global_position, profile.loot)
+	if randf() < profile.drop_chance + Inventory.bonus("mote_chance"):
 		var mote: HealMote = MOTE_SCENE.instantiate()
 		mote.position = global_position
 		parent.add_child.call_deferred(mote)
