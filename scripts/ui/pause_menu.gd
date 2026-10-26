@@ -37,6 +37,7 @@ var _travel_from := -1
 @onready var quit_button: Button = $Panel/Menu/Left/Quit
 @onready var menu: HBoxContainer = $Panel/Menu
 @onready var heading: Label = $Panel/Heading
+@onready var divider: TextureRect = $Panel/Divider
 @onready var hint: PromptLabel = $Panel/Hint
 @onready var status_label: Label = $Panel/Status
 @onready var settings_menu: SettingsMenu = $Panel/SettingsMenu
@@ -156,6 +157,7 @@ func _on_map_closed() -> void:
 func _show_frame(shown: bool) -> void:
 	menu.visible = shown
 	heading.visible = shown
+	divider.visible = shown
 	status_label.visible = shown
 	hint.visible = shown
 

@@ -169,6 +169,25 @@ game was started from, as JSON under `user://saves/`. Loading puts the hero back
 checkpoint, rested, with the feathers he already took gone from the level.
 Restarting with R does the same from the progress so far.
 
+**The hero's sprite** is a stand-in while the movement is being tuned: a
+plain figure drawn by `tools/hero_placeholder/gen.py` (run it to redraw the
+strips in `assets/sprites/hero/` and the hero entry of `sprites.json`). Its
+point is that every frame fits the hero's collision box, 14x32 level
+pixels from the soles up: the head, torso and legs of each frame fill the
+box, and the script refuses a pose that does not (only the sword, the arms
+and the wings reach past it), so what the player sees standing on a ledge,
+pressed to a wall or landing is what the physics has. `--sheet out.png`
+draws every strip with the box over each frame. There is a strip for every
+move: idle, run (paced by the hero's speed), skid (the stick against the
+run), jump (launch, rise, apex), fall, land (the squash after a drop),
+dash, wall (the grip, facing the wall), glide, double_jump (the wing beat),
+attack, cast, slam (dive and impact), hurt, heal and death. The painted
+SpriteCook hero and its cut-out rig stay in `tools/hero_cutout/` for later;
+its export would need the new strips drawn too, since `player.gd` plays
+them all. `tools/hero_shots.gd` films each move in the game with the body
+box in green and the live attack hitbox in red, one filmstrip per move
+(needs a display; see the script).
+
 Thin ledges can be jumped up through from below, and the hero drops
 through one by holding down and pressing jump. Standing still and holding
 down on its own peeks below: after a moment the view pans down a few
@@ -385,6 +404,43 @@ and a flag it `requires` (read whenever the enemies spawn). A single line
 inside an entry may carry `requires` and `unless` flags of its own: the
 line is left out while they do not hold, so one conversation can say
 different things to a hero who has seen different things.
+
+## Developer console
+
+The grave key (`` ` ``, under Escape) opens a console over the top of the
+screen for debugging and playtesting; the same key or Escape closes it.
+The game pauses while it is open. Type a command and press Enter; the up
+and down arrows walk back through earlier lines.
+
+| Command | What it does |
+| ------- | ------------ |
+| `help [command]` | Lists the commands, or explains one |
+| `clear` | Clears the output |
+| `show_boxes on` | Draws every collision shape over the game: the hero green, enemies red, items and triggers blue, the walkable world (floors, platforms, walls, ledges, light barriers, sealed doors) black, hazards orange |
+| `show_boxes off` | Takes the boxes away (`show_boxes` alone says whether they are on) |
+
+![The console with show_boxes on](docs/screenshots/console.png)
+
+The boxes are what the physics engine sees: a disabled shape (an attack
+hitbox between swings) and an opened door are not drawn. They stay on
+through a restart and a level change until turned off.
+
+Commands live in a registry on the `DevConsole` autoload, so any script
+can add one:
+
+```gdscript
+DevConsole.register(
+    "say",
+    func(args: PackedStringArray) -> String:
+        return " ".join(args),
+    "say <words>",
+    "Prints the words back."
+)
+```
+
+The callable takes the words typed after the name and returns the text to
+print (or nothing, which prints `ok`). Return a line that starts with
+`Usage:` to flag a bad argument.
 
 ## The world
 
@@ -716,9 +772,15 @@ the live map is meant to ship.
 | `levels/world/` | The world export (`world.json` and its three tile sheets) and `placements.json` |
 | `scripts/anim_loader.gd` | Builds animations from the strips in `assets/sprites/<name>/` and `sprites.json` |
 | `assets/sprites/` | Character strips from the art thread and the NPC rig, plus the generated checkpoint, gate and pickups |
-| `assets/ui_theme.tres` | The menus' font size and button styles |
+| `assets/ui_theme.tres` | The menus' theme: the Pirata One font (`assets/fonts/`, OFL), the stone button boxes, slider, toggles and the `Title`, `Heading`, `Subheading` and `Muted` label variations |
+| `tools/menu_textures.py` | Regenerates the theme's textures in `assets/ui/theme/`: the 9-slice boxes, grabber, toggles, divider and the title backdrop |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
-| `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
+| `tools/hero_placeholder/gen.py` | Draws the stand-in hero's strips, every frame fitted to his collision box, and rewrites the hero entry of `sprites.json` |
+| `tools/hero_shots.gd` | Films the hero's moves with his collision box and attack hitbox drawn, one filmstrip per move (needs a display; see the script) |
+| `tools/hero_cutout/` | The painted hero's SpriteCook base art and cut-out animation script, kept for when the art comes back; `export.py` writes the hero strips |
+| `scripts/dev_console.gd` | The `DevConsole` autoload: the developer console (the ` key), its command registry and the built-in commands |
+| `scripts/collision_boxes.gd` | The `show_boxes` overlay: every collision shape drawn over the game, coloured by owner |
+| `tools/console_screenshot.gd` | Renders the console and the `show_boxes` overlay to PNGs (needs a display; see the script) |
 | `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |
 | `tests/map_pipeline_test.tscn` | Headless tests of the level registry, export reader, Firestore parsing, map store, sprite building and backdrops |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
