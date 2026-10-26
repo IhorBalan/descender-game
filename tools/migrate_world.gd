@@ -1,19 +1,21 @@
 extends SceneTree
 
-## Turns the map editor's export into the world's scenes (see WorldMigration):
+## Turns the map editor's export into the world's scenes (see WorldMigration),
+## or rebuilds the scenes from themselves with the current TileSet layout:
 ##
 ##   godot --headless --path . --script tools/migrate_world.gd -- \
-##       <world.json of an export> [res://scenes/world] [res://levels/world/world_tiles.tres]
+##       <world.json of an export, or res://scenes/world/world.tscn> \
+##       [res://scenes/world] [res://levels/world/world_tiles.tres]
 ##
 ## then `godot --headless --path . --import` once, so the editor picks up the
-## new resources. Run from an import that has been done, so the sheets are
-## referenced, not embedded.
+## new resources, and run it again: the atlases it cut (levels/world/tiles/)
+## are then imported and referenced by the TileSet instead of embedded.
 
 
 func _initialize() -> void:
 	var args := OS.get_cmdline_user_args()
 	if args.is_empty():
-		printerr("usage: -- <world.json of an export> [scenes dir] [tileset path]")
+		printerr("usage: -- <world.json or world.tscn> [scenes dir] [tileset path]")
 		quit(1)
 		return
 	var json_path: String = args[0]

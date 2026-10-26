@@ -650,11 +650,19 @@ on its own, or `world.tscn` to see them all. A region is a band of the grid
 its scene is in level pixels from its top-left corner:
 
 - `Tiles/Background`, `Decor`, `Terrain`, `Glow`: `TileMapLayer`s painted
-  with `levels/world/world_tiles.tres`, the TileSet of the three sheets
-  (the diffuse sheet lit by its normal map as source 0, the glow sheet as
-  source 1). Every tile carries its terrain kind as the custom data
-  `kind` (solid, ledge, hazard, hidden), so painting a tile places its
-  collision too. Paint with Godot's TileMap tools.
+  with `levels/world/world_tiles.tres`, the TileSet cut up for the editor:
+  one atlas source per region, named after it, holding only the tiles that
+  region paints with (the editor's sheet gives each region two of its rows;
+  Paradise's big pieces are a second source, "Paradise props"), reflowed
+  16 wide, with the region's glow tiles under its diffuse ones, lit by the
+  normal map. The atlases are `levels/world/tiles/<region>.png` and
+  `<region>_n.png`, cut from the three sheets in `levels/world/`. Every
+  tile carries its terrain kind as the custom data `kind` (solid, ledge,
+  hazard, hidden), so painting a tile places its collision too, and each
+  source records the sheet rows it holds, so `TileIndex`
+  (`scripts/world/tile_index.gd`) can name a tile by the editor's id both
+  ways. Paint with Godot's TileMap tools: pick the region's source in the
+  Tiles tab.
 - `Lights/*`: `WorldLight`, a `PointLight2D` with a `flicker` flag; its
   texture scale is its radius.
 - `Rooms/*`: `WorldRoom`, a rectangle on the room grid with its id, kind,
@@ -677,7 +685,10 @@ of that is drawn. At boot `SceneWorld` (`scripts/world/scene_world.gd`)
 reads the scenes into the same `WorldMap` an export gives, so
 `LevelBuilder` and everything after it are the same for the world and for
 a downloaded map. `tools/migrate_world.gd` made the scenes from the last
-export (`WorldMigration`, `scripts/world/world_migration.gd`); the map
+export (`WorldMigration`, `scripts/world/world_migration.gd`), and given
+`world.tscn` instead rebuilds the scenes from themselves, which is how to
+recut the TileSet after the sheets or the layout change (run it, import,
+run it again so the atlases are referenced rather than embedded); the map
 pipeline tests round-trip an export through it. `tools/region_screenshot.gd`
 renders each region scene to a PNG, whole and per area, with the overlays
 (see the script for the command).
@@ -818,7 +829,7 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
 | `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, markers and placements as nodes to edit |
 | `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldMarker`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
-| `levels/world/world_tiles.tres` | The world's TileSet: the three sheets, a tile per id with its terrain kind |
+| `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind; `scripts/world/tile_index.gd` names the tiles by the editor's ids |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |

@@ -495,7 +495,8 @@ func _load_chunk(key: Vector2i) -> void:
 		var layer: TileMapLayer = _layers.get(layer_name)
 		if layer == null:
 			continue
-		var source := 1 if layer_name == WorldMap.LAYER_GLOW else 0
+		var glow := layer_name == WorldMap.LAYER_GLOW
+		var index := world.tile_index()
 		var ids := world.cells(layer_name)
 		var terrain := layer_name == WorldMap.LAYER_TERRAIN
 		for y in range(cells.position.y, cells.end.y):
@@ -503,7 +504,8 @@ func _load_chunk(key: Vector2i) -> void:
 			for x in range(cells.position.x, cells.end.x):
 				var id := ids[row + x]
 				if id >= 0 and not (terrain and _erased.has(Vector2i(x, y))):
-					layer.set_cell(Vector2i(x, y), source, world.atlas_coords(id))
+					var at := index.locate(id, glow)
+					layer.set_cell(Vector2i(x, y), at[0], at[1])
 	for y in range(cells.position.y, cells.end.y):
 		_build_row(world, y, cells.position.x, cells.end.x, chunk.nodes)
 	chunk.nodes.append_array(_edges.build_cells(world, cells))

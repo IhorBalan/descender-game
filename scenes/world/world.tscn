@@ -16,20 +16,21 @@
 [ext_resource type="PackedScene" path="res://scenes/world/10_fraud.tscn" id="14_2x71e"]
 [ext_resource type="PackedScene" path="res://scenes/world/11_treachery.tscn" id="15_wnndm"]
 
-[node name="World" type="Node2D" unique_id=396388151]
+[node name="World" type="Node2D" unique_id=1724490374]
 script = ExtResource("1_mxkvs")
+world_name = "World"
 tile_set = ExtResource("2_m114p")
 abilities = PackedStringArray("Wings (double jump)", "Halo Dash", "Wall Grip", "Holy Light", "Glide", "Smite")
 dialogue = "res://dialogue/world_1.json"
 
-[node name="Paradise" type="Node2D" parent="." unique_id=2076716390 instance=ExtResource("3_71ii3")]
+[node name="Paradise" type="Node2D" parent="." unique_id=1056203741 instance=ExtResource("3_71ii3")]
 script = ExtResource("4_bt7bg")
 region_name = "Paradise"
 subtitle = "Celestial Gardens"
 ambient = Color(0.7607843, 0.8039216, 0.9019608, 1)
 rows = 51
 
-[node name="RuinedEarth" type="Node2D" parent="." unique_id=1861246583 instance=ExtResource("5_wbwoo")]
+[node name="RuinedEarth" type="Node2D" parent="." unique_id=1787029260 instance=ExtResource("5_wbwoo")]
 position = Vector2(0, 816)
 script = ExtResource("4_bt7bg")
 region_name = "Ruined Earth"
@@ -37,7 +38,7 @@ subtitle = "The Hub"
 ambient = Color(0.34117648, 0.32156864, 0.43137255, 1)
 rows = 51
 
-[node name="Purgatory" type="Node2D" parent="." unique_id=1472269819 instance=ExtResource("6_tytul")]
+[node name="Purgatory" type="Node2D" parent="." unique_id=1984942428 instance=ExtResource("6_tytul")]
 position = Vector2(0, 1632)
 script = ExtResource("4_bt7bg")
 region_name = "Purgatory"
@@ -45,63 +46,63 @@ subtitle = "The Waiting"
 ambient = Color(0.3529412, 0.35686275, 0.3882353, 1)
 rows = 51
 
-[node name="Limbo" type="Node2D" parent="." unique_id=1461220531 instance=ExtResource("7_t634p")]
+[node name="Limbo" type="Node2D" parent="." unique_id=854014463 instance=ExtResource("7_t634p")]
 position = Vector2(0, 2448)
 script = ExtResource("4_bt7bg")
 region_name = "1. Limbo"
 subtitle = "The Forgotten"
 ambient = Color(0.27450982, 0.33333334, 0.49411765, 1)
 
-[node name="Lust" type="Node2D" parent="." unique_id=1883783435 instance=ExtResource("8_6hctx")]
+[node name="Lust" type="Node2D" parent="." unique_id=1928153974 instance=ExtResource("8_6hctx")]
 position = Vector2(0, 2992)
 script = ExtResource("4_bt7bg")
 region_name = "2. Lust"
 subtitle = "The Desire"
 ambient = Color(0.36862746, 0.15686275, 0.3137255, 1)
 
-[node name="Gluttony" type="Node2D" parent="." unique_id=2000279646 instance=ExtResource("9_ues17")]
+[node name="Gluttony" type="Node2D" parent="." unique_id=714713193 instance=ExtResource("9_ues17")]
 position = Vector2(0, 3536)
 script = ExtResource("4_bt7bg")
 region_name = "3. Gluttony"
 subtitle = "The Devourers"
 ambient = Color(0.21960784, 0.3372549, 0.16470589, 1)
 
-[node name="Greed" type="Node2D" parent="." unique_id=586320762 instance=ExtResource("10_xq18t")]
+[node name="Greed" type="Node2D" parent="." unique_id=1769623916 instance=ExtResource("10_xq18t")]
 position = Vector2(0, 4080)
 script = ExtResource("4_bt7bg")
 region_name = "4. Greed"
 subtitle = "The Hoarders"
 ambient = Color(0.32941177, 0.25882354, 0.14901961, 1)
 
-[node name="Wrath" type="Node2D" parent="." unique_id=1274276426 instance=ExtResource("11_x0nq1")]
+[node name="Wrath" type="Node2D" parent="." unique_id=2076869124 instance=ExtResource("11_x0nq1")]
 position = Vector2(0, 4624)
 script = ExtResource("4_bt7bg")
 region_name = "5. Wrath"
 subtitle = "The Raging"
 ambient = Color(0.32156864, 0.11764706, 0.10980392, 1)
 
-[node name="Heresy" type="Node2D" parent="." unique_id=840323954 instance=ExtResource("12_rwifv")]
+[node name="Heresy" type="Node2D" parent="." unique_id=269322753 instance=ExtResource("12_rwifv")]
 position = Vector2(0, 5168)
 script = ExtResource("4_bt7bg")
 region_name = "6. Heresy"
 subtitle = "The Burned"
 ambient = Color(0.3372549, 0.16470589, 0.08627451, 1)
 
-[node name="Violence" type="Node2D" parent="." unique_id=689657969 instance=ExtResource("13_ckok1")]
+[node name="Violence" type="Node2D" parent="." unique_id=848126660 instance=ExtResource("13_ckok1")]
 position = Vector2(0, 5712)
 script = ExtResource("4_bt7bg")
 region_name = "7. Violence"
 subtitle = "The Wounded"
 ambient = Color(0.3137255, 0.09411765, 0.14901961, 1)
 
-[node name="Fraud" type="Node2D" parent="." unique_id=484161423 instance=ExtResource("14_2x71e")]
+[node name="Fraud" type="Node2D" parent="." unique_id=1267640651 instance=ExtResource("14_2x71e")]
 position = Vector2(0, 6256)
 script = ExtResource("4_bt7bg")
 region_name = "8. Fraud"
 subtitle = "The Deceivers"
 ambient = Color(0.24313726, 0.17254902, 0.4, 1)
 
-[node name="Treachery" type="Node2D" parent="." unique_id=876629278 instance=ExtResource("15_wnndm")]
+[node name="Treachery" type="Node2D" parent="." unique_id=100293536 instance=ExtResource("15_wnndm")]
 position = Vector2(0, 6800)
 script = ExtResource("4_bt7bg")
 region_name = "9. Treachery"

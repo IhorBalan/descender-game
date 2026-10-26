@@ -16,35 +16,57 @@ const TILE_SET_FILE := "world_tiles.tres"
 const LIGHT_DISC := "res://assets/sprites/light_disc.png"
 const LIGHT_DISC_FILE := "light_disc.png"
 const WORLD_SCENE_FILE := "world.tscn"
+## The folder next to the TileSet its per-region atlases are written to.
+const TILES_DIR := "tiles"
+## The sheets next to an export, by what they hold.
+const SHEET_FILES := {
+	"diffuse": WorldMap.SHEET_DIFFUSE, "normal": WorldMap.SHEET_NORMAL, "glow": WorldMap.SHEET_GLOW
+}
 ## The sidecar next to an export (see LevelBuilder.WORLD_PLACEMENTS).
 const PLACEMENTS_FILE := "placements.json"
 
 
 ## Writes the TileSet to `tile_set_path`, the region scenes and the world
-## scene to `scenes_dir`, from the export at `json_path`. Returns the path
+## scene to `scenes_dir`, from the export at `path` (a world.json) or from
+## the world's own scenes (a world.tscn, rebuilt with the current TileSet
+## layout; the sheets are read from next to its TileSet). Returns the path
 ## of the world scene, or "" with an error pushed.
-static func migrate(json_path: String, scenes_dir: String, tile_set_path: String) -> String:
-	var map := WorldMap.read(json_path)
-	if map == null:
-		return ""
+static func migrate(path: String, scenes_dir: String, tile_set_path: String) -> String:
+	var map: WorldMap
 	var objects: Array = []
-	var sidecar := map.dir() + PLACEMENTS_FILE
 	var dialogue := ""
-	if FileAccess.file_exists(sidecar):
-		var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(sidecar))
-		if parsed is Dictionary:
-			dialogue = str(parsed.get("dialogue", ""))
-			if parsed.get("objects", []) is Array:
-				objects = parsed["objects"]
+	var sheets_dir := ""
+	if path.ends_with(".tscn"):
+		map = SceneWorld.read(path)
+		if map == null:
+			return ""
+		objects = map.objects
+		dialogue = map.dialogue_path
+		var old := map.tile_set.resource_path if map.tile_set else tile_set_path
+		sheets_dir = old.get_base_dir() + "/"
+	else:
+		map = WorldMap.read(path)
+		if map == null:
+			return ""
+		sheets_dir = map.dir()
+		var sidecar := map.dir() + PLACEMENTS_FILE
+		if FileAccess.file_exists(sidecar):
+			var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(sidecar))
+			if parsed is Dictionary:
+				dialogue = str(parsed.get("dialogue", ""))
+				if parsed.get("objects", []) is Array:
+					objects = parsed["objects"]
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(scenes_dir))
 	DirAccess.make_dir_recursive_absolute(
 		ProjectSettings.globalize_path(tile_set_path.get_base_dir())
 	)
-	var tile_set := build_tile_set(map)
+	var tile_set := build_tile_set(
+		map, load_sheets(sheets_dir), tile_set_path.get_base_dir().path_join(TILES_DIR)
+	)
 	if ResourceSaver.save(tile_set, tile_set_path) != OK:
 		push_error("WorldMigration: could not write %s" % tile_set_path)
 		return ""
-	tile_set = load(tile_set_path)
+	tile_set = ResourceLoader.load(tile_set_path, "", ResourceLoader.CACHE_MODE_REPLACE)
 	var light_texture := _light_texture(tile_set_path.get_base_dir())
 	var world := WorldScene.new()
 	world.name = "World"
@@ -57,13 +79,15 @@ static func migrate(json_path: String, scenes_dir: String, tile_set_path: String
 	world.abilities = map.abilities
 	world.dialogue = dialogue
 	world.descent_dark = map.descent_dark
+	var index := TileIndex.of(tile_set, map.columns)
 	for i in map.regions.size():
-		var region := _build_region(map, i, objects, tile_set, light_texture)
+		var region := _build_region(map, i, objects, tile_set, index, light_texture)
 		var file := "%s/%02d_%s.tscn" % [scenes_dir, i, EdgeDecor.region_key(region.region_name)]
 		if not _save_scene(region, file):
 			return ""
 		region.free()
-		var instance: WorldRegion = load(file).instantiate()
+		var packed: PackedScene = ResourceLoader.load(file, "", ResourceLoader.CACHE_MODE_REPLACE)
+		var instance: WorldRegion = packed.instantiate()
 		world.add_child(instance)
 		instance.owner = world
 	var world_path := scenes_dir.path_join(WORLD_SCENE_FILE)
@@ -72,30 +96,97 @@ static func migrate(json_path: String, scenes_dir: String, tile_set_path: String
 	return world_path if saved else ""
 
 
-## The TileSet of the export's sheets: the diffuse sheet lit by its normal
-## map as source 0, the glow sheet as source 1, a tile for every id the
-## layers use with its terrain kind as custom data "kind". Sheets under
-## res:// that Godot has imported are referenced, so the resource stays
-## small; others are embedded.
-static func build_tile_set(map: WorldMap) -> TileSet:
+## The three sheets in `dir` (with a trailing slash) as images: "diffuse",
+## "normal" and "glow", null where a sheet is missing.
+static func load_sheets(dir: String) -> Dictionary:
+	var sheets := {}
+	for key in SHEET_FILES:
+		var file: String = dir + SHEET_FILES[key]
+		var image: Image = null
+		if FileAccess.file_exists(file):
+			image = Image.load_from_file(ProjectSettings.globalize_path(file))
+		sheets[key] = image
+	return sheets
+
+
+## The world's TileSet, cut up for the editor: one atlas source per region
+## holding the rows of the sheet only that region paints with (a second
+## source, "<region> props", for a region's further rows, as Paradise's
+## big pieces), reflowed TileIndex.ATLAS_COLUMNS wide, the region's glow
+## tiles under its diffuse ones; rows two regions share go in "Shared",
+## rows none paints with in "Spare". A source's atlas is written to
+## `crops_dir` as <key>.png (diffuse over glow) and <key>_n.png (its
+## normal map), cut from `sheets` (see load_sheets); crops Godot has
+## imported are referenced, others embedded. Every tile that has pixels,
+## a terrain kind or a use is created, with its kind as custom data
+## "kind"; each source records its sheet rows for TileIndex.
+static func build_tile_set(map: WorldMap, sheets: Dictionary, crops_dir: String) -> TileSet:
 	var tile_set := TileSet.new()
 	tile_set.tile_size = Vector2i(map.art_tile, map.art_tile)
 	tile_set.add_custom_data_layer()
 	tile_set.set_custom_data_layer_name(0, "kind")
 	tile_set.set_custom_data_layer_type(0, TYPE_INT)
-	var lit := CanvasTexture.new()
-	lit.diffuse_texture = _texture(map.dir() + WorldMap.SHEET_DIFFUSE)
-	lit.normal_texture = _texture(map.dir() + WorldMap.SHEET_NORMAL)
-	lit.texture_filter = map.texture_filter()
-	var diffuse := TileSetAtlasSource.new()
-	diffuse.texture = lit
-	diffuse.texture_region_size = Vector2i(map.art_tile, map.art_tile)
-	tile_set.add_source(diffuse, 0)
-	var glow := TileSetAtlasSource.new()
-	var glow_texture := _texture(map.dir() + WorldMap.SHEET_GLOW)
-	glow.texture = glow_texture if glow_texture else lit
-	glow.texture_region_size = Vector2i(map.art_tile, map.art_tile)
-	tile_set.add_source(glow, 1)
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(crops_dir))
+	var index := TileIndex.new()
+	index.columns = map.columns
+	var ids := _tile_ids(map)
+	var glow_ids := {}
+	for id in map.cells(WorldMap.LAYER_GLOW):
+		if id >= 0:
+			glow_ids[id] = true
+	var source_id := 0
+	for group in _row_groups(map, ids, sheets):
+		var rows: PackedInt32Array = group["rows"]
+		index.add_source(source_id, rows)
+		var width := index.atlas_width()
+		var art := map.art_tile
+		var glow_row: int = int(ceil(float(rows.size() * map.columns) / width))
+		var diffuse := Image.create(width * art, glow_row * 2 * art, false, Image.FORMAT_RGBA8)
+		var normal := Image.create(width * art, glow_row * 2 * art, false, Image.FORMAT_RGBA8)
+		var source := TileSetAtlasSource.new()
+		source.resource_name = group["name"]
+		source.set_meta(TileIndex.SHEET_ROWS, rows)
+		source.texture_region_size = Vector2i(art, art)
+		var key: String = group["key"]
+		var created := []
+		for order in rows.size():
+			for column in map.columns:
+				var id: int = rows[order] * map.columns + column
+				var from := Rect2i(column * art, rows[order] * art, art, art)
+				var at: Vector2i = index.locate(id)[1]
+				var lit := _cut(sheets.get("diffuse"), from)
+				var has_pixels := lit != null and not lit.is_invisible()
+				if has_pixels:
+					diffuse.blit_rect(lit, Rect2i(Vector2i.ZERO, from.size), at * art)
+					var bumps := _cut(sheets.get("normal"), from)
+					if bumps:
+						normal.blit_rect(bumps, Rect2i(Vector2i.ZERO, from.size), at * art)
+				if has_pixels or ids.has(id):
+					created.append([at, int(map.kinds.get(id, 0))])
+				var shine := _cut(sheets.get("glow"), from)
+				var shines := _lit(shine)
+				if shines or glow_ids.has(id):
+					var glow_at: Vector2i = index.locate(id, true)[1]
+					if shines:
+						diffuse.blit_rect(shine, Rect2i(Vector2i.ZERO, from.size), glow_at * art)
+					created.append([glow_at, -1])
+		var texture := CanvasTexture.new()
+		texture.diffuse_texture = _crop_texture(diffuse, crops_dir.path_join(key + ".png"))
+		texture.normal_texture = _crop_texture(normal, crops_dir.path_join(key + "_n.png"))
+		texture.texture_filter = map.texture_filter()
+		source.texture = texture
+		tile_set.add_source(source, source_id)
+		for entry in created:
+			if source.has_room_for_tile(entry[0], Vector2i.ONE, 1, Vector2i.ZERO, 1):
+				source.create_tile(entry[0])
+				if entry[1] >= 0:
+					source.get_tile_data(entry[0], 0).set_custom_data("kind", entry[1])
+		source_id += 1
+	return tile_set
+
+
+## The ids the map gives a meaning: used, painted or with a kind.
+static func _tile_ids(map: WorldMap) -> Dictionary:
 	var ids := {}
 	for id in map.used_tiles:
 		ids[id] = true
@@ -105,14 +196,112 @@ static func build_tile_set(map: WorldMap) -> TileSet:
 				ids[id] = true
 	for id in map.kinds:
 		ids[id] = true
+	return ids
+
+
+## The sources to make, in order: {"name", "key", "rows"} each. A sheet row
+## belongs to the one region that paints with it; a region's first run of
+## rows is its own source and any further rows its "props" source.
+static func _row_groups(map: WorldMap, ids: Dictionary, sheets: Dictionary) -> Array:
+	var columns := map.columns
+	var painters := {}
+	for i in map.regions.size():
+		var spec: Dictionary = map.regions[i]
+		var top := int(floor(float(spec.get("y0", 0)) / map.tile))
+		var bottom := mini(int(ceil(float(spec.get("y1", 0)) / map.tile)), map.height)
+		for layer_name in map.layer_names:
+			var cells := map.cells(layer_name)
+			for y in range(top, bottom):
+				for x in map.width:
+					var id := cells[y * map.width + x]
+					if id >= 0:
+						var row := id / columns
+						if not painters.has(row):
+							painters[row] = {}
+						painters[row][i] = true
+	var row_count := 0
 	for id in ids:
-		var coords := map.atlas_coords(id)
-		if diffuse.has_room_for_tile(coords, Vector2i.ONE, 1, Vector2i.ZERO, 1):
-			diffuse.create_tile(coords)
-			diffuse.get_tile_data(coords, 0).set_custom_data("kind", int(map.kinds.get(id, 0)))
-		if glow.has_room_for_tile(coords, Vector2i.ONE, 1, Vector2i.ZERO, 1):
-			glow.create_tile(coords)
-	return tile_set
+		row_count = maxi(row_count, id / columns + 1)
+	var diffuse: Image = sheets.get("diffuse")
+	if diffuse != null:
+		row_count = maxi(row_count, diffuse.get_height() / map.art_tile)
+	var groups := []
+	var taken := {}
+	for i in map.regions.size():
+		var name := str(map.regions[i].get("name", "Region %d" % i))
+		var own := PackedInt32Array()
+		for row in range(row_count):
+			if painters.get(row, {}).keys() == [i]:
+				own.append(row)
+		if own.is_empty():
+			continue
+		var first := PackedInt32Array([own[0]])
+		var rest := PackedInt32Array()
+		for j in range(1, own.size()):
+			if rest.is_empty() and own[j] == own[j - 1] + 1:
+				first.append(own[j])
+			else:
+				rest.append(own[j])
+		var key := EdgeDecor.region_key(name)
+		groups.append({"name": name, "key": key, "rows": first})
+		if not rest.is_empty():
+			groups.append({"name": "%s props" % name, "key": key + "_props", "rows": rest})
+		for row in own:
+			taken[row] = true
+	var shared := PackedInt32Array()
+	var spare := PackedInt32Array()
+	for row in range(row_count):
+		if taken.has(row):
+			continue
+		if painters.has(row):
+			shared.append(row)
+		elif _row_matters(row, columns, ids, diffuse, map.art_tile):
+			spare.append(row)
+	if not shared.is_empty():
+		groups.append({"name": "Shared", "key": "shared", "rows": shared})
+	if not spare.is_empty():
+		groups.append({"name": "Spare", "key": "spare", "rows": spare})
+	return groups
+
+
+## Whether a row nobody paints with has anything in it.
+static func _row_matters(row: int, columns: int, ids: Dictionary, diffuse: Image, art: int) -> bool:
+	for column in columns:
+		if ids.has(row * columns + column):
+			return true
+	if diffuse == null:
+		return false
+	var band := Rect2i(0, row * art, diffuse.get_width(), art)
+	return not diffuse.get_region(band).is_invisible()
+
+
+## Whether a glow tile has any light in it: the glow sheet is opaque black
+## where a tile does not glow, which adds nothing in the game but would
+## clutter the palette.
+static func _lit(image: Image) -> bool:
+	if image == null or image.is_invisible():
+		return false
+	var rgb := image.duplicate() as Image
+	rgb.premultiply_alpha()
+	rgb.convert(Image.FORMAT_RGB8)
+	var data := rgb.get_data()
+	return data.count(0) < data.size()
+
+
+## A tile's pixels out of a sheet, or null when the sheet lacks them.
+static func _cut(sheet: Image, from: Rect2i) -> Image:
+	if sheet == null:
+		return null
+	if from.end.x > sheet.get_width() or from.end.y > sheet.get_height():
+		return null
+	return sheet.get_region(from)
+
+
+## Writes a crop and returns it as a texture: by reference when Godot has
+## imported it already, else its pixels.
+static func _crop_texture(image: Image, path: String) -> Texture2D:
+	image.save_png(ProjectSettings.globalize_path(path))
+	return _texture(path)
 
 
 ## An imported texture by reference when Godot has it, else the PNG's
@@ -154,7 +343,12 @@ static func _save_scene(root: Node, path: String) -> bool:
 ## One region's scene: the band's rows of every layer, and what stands in
 ## the band, in level pixels from its top-left corner.
 static func _build_region(
-	map: WorldMap, index: int, objects: Array, tile_set: TileSet, light_texture: Texture2D
+	map: WorldMap,
+	index: int,
+	objects: Array,
+	tile_set: TileSet,
+	tiles_index: TileIndex,
+	light_texture: Texture2D
 ) -> WorldRegion:
 	var spec := map.regions[index]
 	var tile := map.tile
@@ -182,9 +376,8 @@ static func _build_region(
 		layer.texture_filter = map.texture_filter()
 		layer.scale = Vector2.ONE * map.art_scale()
 		layer.collision_enabled = false
-		var source := 0
-		if layer_name == WorldMap.LAYER_GLOW:
-			source = 1
+		var glow := layer_name == WorldMap.LAYER_GLOW
+		if glow:
 			var material := CanvasItemMaterial.new()
 			material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 			material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
@@ -195,7 +388,8 @@ static func _build_region(
 				for x in map.width:
 					var id := cells[y * map.width + x]
 					if id >= 0:
-						layer.set_cell(Vector2i(x, y - top), source, map.atlas_coords(id))
+						var at := tiles_index.locate(id, glow)
+						layer.set_cell(Vector2i(x, y - top), at[0], at[1])
 		tiles.add_child(layer)
 		layer.owner = region
 	var holders := {}

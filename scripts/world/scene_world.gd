@@ -53,9 +53,10 @@ static func from_scene(world: WorldScene) -> WorldMap:
 		cells.resize(map.width * map.height)
 		cells.fill(-1)
 		map.layers[layer_name] = cells
-	map.kinds = _kinds(world.tile_set)
+	var index := TileIndex.of(world.tile_set, world.columns)
+	map.kinds = _kinds(world.tile_set, index)
 	for i in regions.size():
-		_read_region(map, regions[i], i)
+		_read_region(map, regions[i], i, index)
 	var seen := {}
 	for layer_name in map.layer_names:
 		for id in map.layers[layer_name]:
@@ -71,28 +72,32 @@ static func _top_row(region: WorldRegion, tile: int) -> int:
 	return int(round(region.position.y / tile))
 
 
-## Tile id -> kind, from the TileSet's custom data "kind" on the diffuse
-## source's tiles.
-static func _kinds(tile_set: TileSet) -> Dictionary:
+## Tile id -> kind, from the TileSet's custom data "kind" on the tiles of
+## its sources (see TileIndex for which tile is which).
+static func _kinds(tile_set: TileSet, index: TileIndex) -> Dictionary:
 	var kinds := {}
-	if tile_set == null or not tile_set.has_source(0):
+	if tile_set == null:
 		return kinds
 	var layer := tile_set.get_custom_data_layer_by_name("kind")
 	if layer < 0:
 		return kinds
-	var source := tile_set.get_source(0) as TileSetAtlasSource
-	if source == null:
-		return kinds
-	var columns := source.get_atlas_grid_size().x
-	for i in source.get_tiles_count():
-		var coords := source.get_tile_id(i)
-		var kind := int(source.get_tile_data(coords, 0).get_custom_data_by_layer_id(layer))
-		if kind != WorldMap.KIND_NONE:
-			kinds[coords.y * columns + coords.x] = kind
+	for i in tile_set.get_source_count():
+		var source_id := tile_set.get_source_id(i)
+		var source := tile_set.get_source(source_id) as TileSetAtlasSource
+		if source == null:
+			continue
+		for j in source.get_tiles_count():
+			var coords := source.get_tile_id(j)
+			if index.is_glow(source_id, coords):
+				continue
+			var kind := int(source.get_tile_data(coords, 0).get_custom_data_by_layer_id(layer))
+			var id := index.id_of(source_id, coords)
+			if kind != WorldMap.KIND_NONE and id >= 0:
+				kinds[id] = kind
 	return kinds
 
 
-static func _read_region(map: WorldMap, region: WorldRegion, index: int) -> void:
+static func _read_region(map: WorldMap, region: WorldRegion, index: int, tiles: TileIndex) -> void:
 	var tile := map.tile
 	var top := _top_row(region, tile)
 	var offset := Vector2(0.0, top * tile)
@@ -116,8 +121,9 @@ static func _read_region(map: WorldMap, region: WorldRegion, index: int) -> void
 			var y: int = cell.y + top
 			if x < 0 or y < 0 or x >= map.width or y >= map.height:
 				continue
-			var coords := layer.get_cell_atlas_coords(cell)
-			cells[y * map.width + x] = coords.y * map.columns + coords.x
+			var id := tiles.id_of(layer.get_cell_source_id(cell), layer.get_cell_atlas_coords(cell))
+			if id >= 0:
+				cells[y * map.width + x] = id
 	for light in region.lights():
 		var at := light.position + offset
 		(
