@@ -119,13 +119,21 @@ static func load_sheets(dir: String) -> Dictionary:
 ## normal map), cut from `sheets` (see load_sheets); crops Godot has
 ## imported are referenced, others embedded. Every tile that has pixels,
 ## a terrain kind or a use is created, with its kind as custom data
-## "kind"; each source records its sheet rows for TileIndex.
+## "kind"; each source records its sheet rows for TileIndex. Terrain set
+## 0 matches sides and has a terrain per region, coloured like it; each
+## region's solid tiles carry the peering bits TerrainRules reads off the
+## map, so the terrain tools paint the edges the map does.
 static func build_tile_set(map: WorldMap, sheets: Dictionary, crops_dir: String) -> TileSet:
 	var tile_set := TileSet.new()
 	tile_set.tile_size = Vector2i(map.art_tile, map.art_tile)
 	tile_set.add_custom_data_layer()
 	tile_set.set_custom_data_layer_name(0, "kind")
 	tile_set.set_custom_data_layer_type(0, TYPE_INT)
+	# One "match sides" terrain set, a terrain per region, so painting ground
+	# picks the edge pieces the map uses (see TerrainRules).
+	var rules := TerrainRules.infer(map)
+	tile_set.add_terrain_set()
+	tile_set.set_terrain_set_mode(0, TileSet.TERRAIN_MODE_MATCH_SIDES)
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(crops_dir))
 	var index := TileIndex.new()
 	index.columns = map.columns
@@ -148,6 +156,12 @@ static func build_tile_set(map: WorldMap, sheets: Dictionary, crops_dir: String)
 		source.set_meta(TileIndex.SHEET_ROWS, rows)
 		source.texture_region_size = Vector2i(art, art)
 		var key: String = group["key"]
+		var terrain := -1
+		if group.has("region"):
+			terrain = tile_set.get_terrains_count(0)
+			tile_set.add_terrain(0)
+			tile_set.set_terrain_name(0, terrain, group["name"])
+			tile_set.set_terrain_color(0, terrain, group["ambient"])
 		var created := []
 		for order in rows.size():
 			for column in map.columns:
@@ -162,14 +176,14 @@ static func build_tile_set(map: WorldMap, sheets: Dictionary, crops_dir: String)
 					if bumps:
 						normal.blit_rect(bumps, Rect2i(Vector2i.ZERO, from.size), at * art)
 				if has_pixels or ids.has(id):
-					created.append([at, int(map.kinds.get(id, 0))])
+					created.append([at, int(map.kinds.get(id, 0)), id])
 				var shine := _cut(sheets.get("glow"), from)
 				var shines := _lit(shine)
 				if shines or glow_ids.has(id):
 					var glow_at: Vector2i = index.locate(id, true)[1]
 					if shines:
 						diffuse.blit_rect(shine, Rect2i(Vector2i.ZERO, from.size), glow_at * art)
-					created.append([glow_at, -1])
+					created.append([glow_at, -1, -1])
 		var texture := CanvasTexture.new()
 		texture.diffuse_texture = _crop_texture(diffuse, crops_dir.path_join(key + ".png"))
 		texture.normal_texture = _crop_texture(normal, crops_dir.path_join(key + "_n.png"))
@@ -180,7 +194,14 @@ static func build_tile_set(map: WorldMap, sheets: Dictionary, crops_dir: String)
 			if source.has_room_for_tile(entry[0], Vector2i.ONE, 1, Vector2i.ZERO, 1):
 				source.create_tile(entry[0])
 				if entry[1] >= 0:
-					source.get_tile_data(entry[0], 0).set_custom_data("kind", entry[1])
+					var data := source.get_tile_data(entry[0], 0)
+					data.set_custom_data("kind", entry[1])
+					if terrain >= 0 and rules.has(entry[2]):
+						data.terrain_set = 0
+						data.terrain = terrain
+						for bit in TerrainRules.SIDES:
+							if rules[entry[2]] & bit:
+								data.set_terrain_peering_bit(TerrainRules.SIDES[bit], terrain)
 		source_id += 1
 	return tile_set
 
@@ -243,7 +264,8 @@ static func _row_groups(map: WorldMap, ids: Dictionary, sheets: Dictionary) -> A
 			else:
 				rest.append(own[j])
 		var key := EdgeDecor.region_key(name)
-		groups.append({"name": name, "key": key, "rows": first})
+		var ambient := Color.from_string(str(map.regions[i].get("ambient", "#ffffff")), Color.WHITE)
+		groups.append({"name": name, "key": key, "rows": first, "region": i, "ambient": ambient})
 		if not rest.is_empty():
 			groups.append({"name": "%s props" % name, "key": key + "_props", "rows": rest})
 		for row in own:

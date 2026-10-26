@@ -662,7 +662,16 @@ its scene is in level pixels from its top-left corner:
   source records the sheet rows it holds, so `TileIndex`
   (`scripts/world/tile_index.gd`) can name a tile by the editor's id both
   ways. Paint with Godot's TileMap tools: pick the region's source in the
-  Tiles tab.
+  Tiles tab, or paint ground with the Terrains tab: the TileSet has one
+  "match sides" terrain set with a terrain per region, and each region's
+  solid tiles carry the peering bits `TerrainRules`
+  (`scripts/world/terrain_rules.gd`) reads off the map (a tile's most
+  common pattern of solid side neighbours, which the editor's tiles follow
+  in 99 cells of 100), so a painted blob of ground gets the editor's edge
+  pieces by itself. Terrains do not join across regions: the row where one
+  region's ground meets the next is painted by hand.
+  `tools/check_terrains.gd` repaints every region's ground by terrain and
+  reports how many cells face the way the scenes paint them.
 - `Lights/*`: `WorldLight`, a `PointLight2D` with a `flicker` flag; its
   texture scale is its radius.
 - `Rooms/*`: `WorldRoom`, a rectangle on the room grid with its id, kind,
@@ -829,7 +838,7 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
 | `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, markers and placements as nodes to edit |
 | `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldMarker`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
-| `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind; `scripts/world/tile_index.gd` names the tiles by the editor's ids |
+| `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |

@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 225
+const EXPECTED_CHECKS := 236
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -528,6 +528,34 @@ func test_scene_world_round_trip() -> void:
 		),
 		"the atlases are written next to the TileSet"
 	)
+	# A terrain per region, its solid tiles facing the way the map paints them.
+	_check(
+		(
+			b.tile_set.get_terrain_sets_count() == 1
+			and b.tile_set.get_terrain_set_mode(0) == TileSet.TERRAIN_MODE_MATCH_SIDES
+		),
+		"one terrain set, matching sides"
+	)
+	_check(
+		(
+			b.tile_set.get_terrains_count(0) == 2
+			and b.tile_set.get_terrain_name(0, 0) == "Top"
+			and b.tile_set.get_terrain_name(0, 1) == "1. Low"
+		),
+		"a terrain per region"
+	)
+	var ground := low.get_tile_data(Vector2i(1, 0), 0)
+	_check(
+		ground.terrain_set == 0 and ground.terrain == 1, "a solid tile is in its region's terrain"
+	)
+	_check(
+		(
+			TerrainRules.mask_of(ground, 1)
+			== TerrainRules.LEFT | TerrainRules.RIGHT | TerrainRules.BOTTOM
+		),
+		"facing the way the map paints it: ground to both sides and below, open above"
+	)
+	_check(top.get_tile_data(Vector2i(7, 0), 0).terrain == -1, "a ledge is not ground")
 	var builder := LevelBuilder.new()
 	add_child(builder)
 	builder.streaming = false
@@ -540,6 +568,37 @@ func test_scene_world_round_trip() -> void:
 	_check(builder.get_node("Lights").get_child_count() == 2, "both lights are placed")
 	_check(builder.dialogue_path == "res://dialogue/world_1.json", "and the dialogue is named")
 	builder.queue_free()
+
+
+# ---------- TerrainRules ----------
+
+
+func test_terrain_rules() -> void:
+	# A 3 x 3 block of ground with its top middle cell missing.
+	var map := WorldMap.new()
+	map.width = 3
+	map.height = 3
+	map.columns = 64
+	map.kinds = {1: WorldMap.KIND_SOLID, 65: WorldMap.KIND_SOLID, 7: WorldMap.KIND_LEDGE}
+	map.layer_names = PackedStringArray([WorldMap.LAYER_TERRAIN])
+	map.layers[WorldMap.LAYER_TERRAIN] = PackedInt32Array([1, -1, 1, 1, 1, 1, 1, 1, 1])
+	var solid := PackedByteArray([1, 0, 1, 1, 1, 1, 1, 1, 1])
+	_check(
+		(
+			TerrainRules.mask_at(solid, 3, 3, 1, 1)
+			== TerrainRules.LEFT | TerrainRules.RIGHT | TerrainRules.BOTTOM
+		),
+		"a mask names the solid sides, the world's edge counting as solid"
+	)
+	_check(TerrainRules.mask_at(solid, 3, 3, 0, 0) == 11, "a corner cell has the edge on two sides")
+	var rules := TerrainRules.infer(map)
+	_check(rules.get(1) == 15, "a tile's rule is its most common surroundings")
+	_check(rules.get(65) == 15, "a solid tile never painted takes its column's rule")
+	_check(not rules.has(7), "a ledge has no rule")
+	_check(
+		is_equal_approx(TerrainRules.fit(map, rules), 5.0 / 8.0),
+		"fit is the share of cells that follow their rule"
+	)
 
 
 # ---------- TileIndex ----------
