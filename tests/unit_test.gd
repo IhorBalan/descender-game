@@ -17,9 +17,8 @@ extends Node
 ##
 ## Every method named test_* runs once, in order; `_check` counts.
 
-const PLACEMENTS_PATH := "res://levels/world/placements.json"
 const DIALOGUE_PATH := "res://dialogue/world_1.json"
-const WORLD_PATH := "res://levels/world/world.json"
+const WORLD_PATH := "res://scenes/world/world.tscn"
 const SPRITES_PATH := "res://assets/sprites/sprites.json"
 const REGIONS_DIR := "res://assets/regions"
 const SFX_DIR := "res://assets/audio/sfx"
@@ -55,9 +54,23 @@ func _ready() -> void:
 # Data
 
 
+## The world's placements and dialogue file, read from its scenes (see
+## SceneWorld), the way placements.json listed them.
+func _placements() -> Dictionary:
+	var map := SceneWorld.read(WORLD_PATH)
+	if map == null:
+		return {}
+	return {
+		"dialogue": map.dialogue_path,
+		"objects": map.objects,
+		"width": map.width,
+		"height": map.height,
+	}
+
+
 func test_placements() -> void:
-	var placements := _json(PLACEMENTS_PATH)
-	var world := _json(WORLD_PATH)
+	var placements := _placements()
+	var world := placements
 	var dialogue := DialogueData.new(str(placements.get("dialogue", "")))
 	var sprites := _json(SPRITES_PATH)
 	_check(not dialogue.entries.is_empty(), "the placements name a dialogue file that reads")
@@ -139,7 +152,7 @@ func _check_enemy(spec: Dictionary, where: String, sprites: Dictionary) -> int:
 
 func test_dialogue() -> void:
 	var dialogue := DialogueData.new(DIALOGUE_PATH)
-	var placements := _json(PLACEMENTS_PATH)
+	var placements := _placements()
 	_check(
 		dialogue.entries.size() > 100, "the dialogue has its entries (%d)" % dialogue.entries.size()
 	)
@@ -493,10 +506,14 @@ func test_levels() -> void:
 	_check(Levels.next_id("world_1").is_empty(), "nothing follows it")
 	_check(Levels.next_id("nope").is_empty(), "nor an unknown level")
 	_check(Levels.resolve("heaven_1") == "world_1", "an old save's level falls back to the world")
-	_check(Levels.resolve("res://levels/world/world.json") == "world_1", "a path resolves too")
+	_check(Levels.resolve(WORLD_PATH) == "world_1", "a path resolves too")
+	_check(
+		Levels.resolve("res://levels/world/world.json") == "world_1",
+		"and so does the export the world was, from an older save"
+	)
 	_check(Levels.display_name("world_1").begins_with("World 1"), "it has a name")
 	_check(Levels.display_name("nope") == "nope", "an unknown id is its own name")
-	_check(Levels.path("world_1") == WORLD_PATH, "and the export's path")
+	_check(Levels.path("world_1") == WORLD_PATH, "and the world scene's path")
 	_check(Levels.sky("nope") == Levels.WORLD_SKY, "an unknown level gets the world's sky")
 
 
@@ -577,7 +594,7 @@ func test_skills() -> void:
 
 
 func test_map() -> void:
-	var world := WorldMap.read(WORLD_PATH)
+	var world := SceneWorld.read(WORLD_PATH)
 	_check(world != null and world.rooms.size() > 100, "the world has its rooms")
 	_check(MapScreen.room_flag(7) == "room:7", "a found room is a flag")
 	_check(MapScreen.rooms_found(world) == 0, "a new game has found nothing")

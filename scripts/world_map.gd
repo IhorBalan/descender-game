@@ -33,6 +33,8 @@ const SHEET_GLOW := "world_tiles_e.png"
 
 ## The file the map was read from.
 var path := ""
+## The map's name in the editor ("World 1").
+var name := "World"
 ## Size in tiles, and the tile size in level pixels (the world unit).
 var width := 0
 var height := 0
@@ -72,6 +74,12 @@ var sprites: Array[Dictionary] = []
 ## How much the world darkens from its top to its bottom (0 to 1, see
 ## RegionLook.descent_factor): the export's "descent": {"dark": ...}.
 var descent_dark := 0.0
+## A world read from scenes (see SceneWorld) brings its own TileSet, its
+## dialogue file and what stands in it (the placements, as placements.json
+## lists them); an export leaves these for the files next to it.
+var tile_set: TileSet = null
+var dialogue_path := ""
+var objects: Array = []
 
 
 ## Reads the export at `file_path`; null, with an error pushed, when the
@@ -94,6 +102,7 @@ static func read(file_path: String) -> WorldMap:
 
 
 func _parse(data: Dictionary) -> void:
+	name = str(data.get("name", "World"))
 	width = int(data.get("width", 0))
 	height = int(data.get("height", 0))
 	tile = int(data.get("tile", 16))
@@ -235,7 +244,15 @@ func marker_position(marker: Dictionary) -> Vector2:
 ## Collision is not part of it: LevelBuilder merges runs of cells into
 ## shapes instead, which is far fewer bodies than one polygon per tile.
 func build_tile_set() -> TileSet:
-	var tile_set := TileSet.new()
+	if tile_set != null:
+		return tile_set
+	var built := TileSet.new()
+	_fill_tile_set(built)
+	return built
+
+
+## Puts the sheets and the used tiles into a TileSet (see build_tile_set).
+func _fill_tile_set(tile_set: TileSet) -> void:
 	tile_set.tile_size = Vector2i(art_tile, art_tile)
 	var lit := CanvasTexture.new()
 	lit.diffuse_texture = _sheet(dir() + SHEET_DIFFUSE)
@@ -256,7 +273,6 @@ func build_tile_set() -> TileSet:
 			diffuse.create_tile(coords)
 		if glow.has_room_for_tile(coords, Vector2i.ONE, 1, Vector2i.ZERO, 1):
 			glow.create_tile(coords)
-	return tile_set
 
 
 ## The ids the layers and sprites use: used_tiles when the export lists

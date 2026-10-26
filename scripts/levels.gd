@@ -21,7 +21,9 @@ const LEVELS: Array[Dictionary] = [
 	{
 		"id": "world_1",
 		"name": "World 1: The Descent",
-		"path": "res://levels/world/world.json",
+		"path": "res://scenes/world/world.tscn",
+		# The export the world was, which older saves name.
+		"was": "res://levels/world/world.json",
 		"ambient": "heaven",
 		"sky": WORLD_SKY,
 	},
@@ -113,13 +115,14 @@ func next_id(id: String) -> String:
 
 
 ## Turns whatever a save or the command line calls a level into a known id.
-## Accepts ids and map paths (older saves stored the path; a path to an
-## existing export is registered on the spot); anything unknown, such as
+## Accepts ids and map paths (older saves stored the path, some of them the
+## export the world was made from; a path to an existing export is
+## registered on the spot); anything unknown, such as
 ## the ids of the ASCII levels the world replaced or a downloaded map that
 ## is gone, falls back to the first level.
 func resolve(value: String) -> String:
 	for level in LEVELS + _extra:
-		if level["id"] == value or level["path"] == value:
+		if level["id"] == value or level["path"] == value or level.get("was", "") == value:
 			return level["id"]
 	var registered := register_path(value)
 	return registered if not registered.is_empty() else first_id

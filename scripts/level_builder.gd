@@ -220,17 +220,26 @@ var _power_ups: Node2D
 var _lights: Node2D
 
 
-## Builds the world export at `path`, with the objects of the
-## placements.json next to it, if any. An unreadable export leaves the
-## level empty, with an error pushed.
+## Builds the world at `path`: a world export (world.json) with the objects
+## of the placements.json next to it, if any, or a world scene (world.tscn,
+## see SceneWorld) with the placements in its regions. An unreadable world
+## leaves the level empty, with an error pushed.
 func load_from_file(path: String) -> void:
 	dialogue_path = ""
 	_objects_spec = []
-	var map := WorldMap.read(path)
+	var map: WorldMap
+	if path.ends_with(".tscn"):
+		map = SceneWorld.read(path)
+		if map != null:
+			dialogue_path = map.dialogue_path
+			_objects_spec = map.objects
+	else:
+		map = WorldMap.read(path)
+		if map != null:
+			_read_sidecar(map.dir() + WORLD_PLACEMENTS)
 	if map == null:
 		_make_containers()
 		return
-	_read_sidecar(map.dir() + WORLD_PLACEMENTS)
 	build(map)
 
 
