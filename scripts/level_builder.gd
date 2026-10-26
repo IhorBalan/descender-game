@@ -38,6 +38,12 @@ extends Node2D
 ##   barrier              a wall of angel light from (x, y) down `height` cells
 ##
 ## Tiles are 16x16.
+##
+## The tiles, their collision and the edge art are streamed: the grid is cut
+## into chunks of CHUNK_TILES cells a side and only the chunks near the hero
+## (and the camera) are built, see stream_around. Everything with gameplay
+## state (markers, enemies, objects, seals, lights) is placed for the whole
+## world at once, as before.
 
 ## The sky's rim light on the tiles: 0 turns it off.
 const RIM_STRENGTH := 0.25
@@ -48,6 +54,15 @@ const TILE := 16
 ## sight and enemies just off screen still walk in on their own.
 const ACTIVE_RANGE := Vector2(800.0, 480.0)
 const WORLD_PLACEMENTS := "placements.json"
+## Streaming: the grid is built in square chunks this many tiles a side.
+const CHUNK_TILES := 64
+## Half the width and height of the box around each streamed point (the
+## hero, the camera) whose chunks are built: the view (640 x 360) plus a
+## screen and a half of margin, so nothing is seen being built.
+const STREAM_IN := Vector2(960.0, 540.0)
+## Chunks outside this box around every point are torn down. Wider than
+## STREAM_IN, so a hero pacing a chunk's edge does not thrash it.
+const STREAM_OUT := Vector2(1600.0, 960.0)
 ## How many cells of solid a secret passage may run through on each side
 ## of its door.
 const SECRET_DEPTH := 12
@@ -100,6 +115,16 @@ const POWER_KINDS := {
 }
 
 
+## One streamed chunk of the grid: the cells it covers and the nodes that
+## go with it, so it can be torn down again.
+class Chunk:
+	var cells: Rect2i
+	var nodes: Array[Node] = []
+
+	func _init(p_cells: Rect2i) -> void:
+		cells = p_cells
+
+
 class EnemySpawn:
 	var scene: PackedScene
 	var position: Vector2
@@ -150,10 +175,20 @@ var ambient: CanvasModulate = null
 ## The rim light the sky throws on the lit tile layers (see
 ## assets/shaders/rim.gdshader); null until the layers are built.
 var rim: ShaderMaterial = null
+## Whether the grid is streamed in chunks around stream_around's points
+## (the game) or built whole by build() (tests and tools; see load_all).
+var streaming := true
 ## The diffuse sheet as an image, fetched once per build for tracing solid
 ## sprites: get_image() copies the whole atlas back from the GPU, over
 ## 100 MB at 128-px art, so doing it per sprite would stall the start.
 var _sheet_image: Image = null
+## Chunk key (cell / CHUNK_TILES) -> Chunk, for the chunks built right now.
+var _chunks: Dictionary = {}
+## Terrain cells erased for good (opened secret passages): a chunk built
+## again after an unload leaves them empty.
+var _erased: Dictionary = {}
+## The tile layers by name, once built.
+var _layers: Dictionary = {}
 
 var _enemy_spawns: Array[EnemySpawn] = []
 ## Where the power-ups lie; rebuilt with the enemies.
@@ -285,6 +320,9 @@ func _make_containers() -> void:
 	_enemy_spawns = []
 	_power_spawns = []
 	_upgrade_counts = {}
+	_chunks = {}
+	_erased = {}
+	_layers = {}
 
 
 ## Builds a world export: one TileMapLayer per layer, collision merged from
@@ -297,10 +335,10 @@ func build(map: WorldMap) -> void:
 	size_px = map.size_px()
 	var tile_set := _build_layers(map)
 	_build_sprites(map, tile_set)
-	_edges.build(map)
+	_edges.prepare(map)
 	_find_secrets(map)
-	for y in height:
-		_build_row(map, y)
+	if not streaming:
+		load_all()
 	_build_lights(map)
 	_place_markers(map)
 	_place_locks(map)
@@ -338,13 +376,134 @@ func _build_layers(map: WorldMap) -> TileSet:
 			material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 			material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 			layer.material = material
-		var cells := map.cells(layer_name)
-		for i in cells.size():
-			var id := cells[i]
-			if id >= 0:
-				layer.set_cell(Vector2i(i % width, i / width), source, map.atlas_coords(id))
 		_tiles.add_child(layer)
+		_layers[layer_name] = layer
 	return tile_set
+
+
+# --- Streaming -----------------------------------------------------------
+
+
+## Builds every chunk of the grid at once: the whole world, as the tests
+## and the editor preview want it. Turns streaming off.
+func load_all() -> void:
+	streaming = false
+	if world == null:
+		return
+	for key in _chunk_keys(Rect2i(0, 0, width, height)):
+		_load_chunk(key)
+
+
+## Builds the chunks within STREAM_IN of any of the points (the hero and the
+## camera's centre, in level pixels) and tears down those outside STREAM_OUT
+## of all of them. Called every physics tick by Main, and whenever the hero
+## is put somewhere else (a checkpoint, fast travel), so he always lands on
+## built ground: Main runs before its children, so the chunks under him are
+## there before his step.
+func stream_around(points: Array[Vector2]) -> void:
+	if world == null or not streaming:
+		return
+	var wanted := {}
+	for point in points:
+		for key in _chunk_keys(_cells_around(point, STREAM_IN)):
+			wanted[key] = true
+	for key in _chunks.keys():
+		var keep := false
+		for point in points:
+			if _cells_around(point, STREAM_OUT).intersects(_chunks[key].cells):
+				keep = true
+				break
+		if not keep:
+			_unload_chunk(key)
+	for key in wanted:
+		if not _chunks.has(key):
+			_load_chunk(key)
+
+
+## The cells of the chunks built right now.
+func loaded_chunks() -> Array[Rect2i]:
+	var rects: Array[Rect2i] = []
+	for key in _chunks:
+		rects.append(_chunks[key].cells)
+	return rects
+
+
+## Whether the cell's chunk is built.
+func is_loaded(cell: Vector2i) -> bool:
+	return _chunks.has(_chunk_key(cell))
+
+
+## The grid cells within `half` pixels of the point, clamped to the grid.
+func _cells_around(point: Vector2, half: Vector2) -> Rect2i:
+	var top_left := Vector2i(((point - half) / TILE).floor())
+	var bottom_right := Vector2i(((point + half) / TILE).ceil())
+	return Rect2i(top_left, bottom_right - top_left).intersection(Rect2i(0, 0, width, height))
+
+
+func _chunk_key(cell: Vector2i) -> Vector2i:
+	return Vector2i(cell.x / CHUNK_TILES, cell.y / CHUNK_TILES)
+
+
+## The keys of every chunk the cell rect touches.
+func _chunk_keys(cells: Rect2i) -> Array[Vector2i]:
+	var keys: Array[Vector2i] = []
+	if not cells.has_area():
+		return keys
+	var first := _chunk_key(cells.position)
+	var last := _chunk_key(cells.end - Vector2i.ONE)
+	for cy in range(first.y, last.y + 1):
+		for cx in range(first.x, last.x + 1):
+			keys.append(Vector2i(cx, cy))
+	return keys
+
+
+## The cells of a chunk, clipped to the grid.
+func _chunk_cells(key: Vector2i) -> Rect2i:
+	var rect := Rect2i(key * CHUNK_TILES, Vector2i.ONE * CHUNK_TILES)
+	return rect.intersection(Rect2i(0, 0, width, height))
+
+
+## Builds one chunk: its cells on every tile layer, the collision of its
+## terrain rows (runs are cut at the chunk's sides) and its edge art.
+func _load_chunk(key: Vector2i) -> void:
+	if _chunks.has(key) or world == null:
+		return
+	var chunk := Chunk.new(_chunk_cells(key))
+	_chunks[key] = chunk
+	var cells := chunk.cells
+	for layer_name in world.layer_names:
+		var layer: TileMapLayer = _layers.get(layer_name)
+		if layer == null:
+			continue
+		var source := 1 if layer_name == WorldMap.LAYER_GLOW else 0
+		var ids := world.cells(layer_name)
+		var terrain := layer_name == WorldMap.LAYER_TERRAIN
+		for y in range(cells.position.y, cells.end.y):
+			var row := y * width
+			for x in range(cells.position.x, cells.end.x):
+				var id := ids[row + x]
+				if id >= 0 and not (terrain and _erased.has(Vector2i(x, y))):
+					layer.set_cell(Vector2i(x, y), source, world.atlas_coords(id))
+	for y in range(cells.position.y, cells.end.y):
+		_build_row(world, y, cells.position.x, cells.end.x, chunk.nodes)
+	chunk.nodes.append_array(_edges.build_cells(world, cells))
+
+
+## Tears a chunk down: its cells cleared, its collision and edge art freed.
+func _unload_chunk(key: Vector2i) -> void:
+	var chunk: Chunk = _chunks.get(key)
+	if chunk == null:
+		return
+	_chunks.erase(key)
+	for layer_name in _layers:
+		var layer: TileMapLayer = _layers[layer_name]
+		for y in range(chunk.cells.position.y, chunk.cells.end.y):
+			for x in range(chunk.cells.position.x, chunk.cells.end.x):
+				layer.erase_cell(Vector2i(x, y))
+	for node in chunk.nodes:
+		if is_instance_valid(node):
+			node.get_parent().remove_child(node)
+			node.queue_free()
 
 
 ## The export's free-placed decorations: each is a small TileMapLayer at a
@@ -587,26 +746,27 @@ func _sprite_image(
 	return image
 
 
-## Collision for one row of terrain: runs of solid cells become one
-## rectangle each, ledges a one-way strip and hazards a Hazard area. The
-## tiles themselves are drawn by the layer.
-func _build_row(map: WorldMap, y: int) -> void:
-	var x := 0
-	while x < width:
+## Collision for the cells x0 to x1 of one row of terrain: runs of solid
+## cells become one rectangle each, ledges a one-way strip and hazards a
+## Hazard area, each appended to `nodes` (the chunk's). The tiles themselves
+## are drawn by the layer.
+func _build_row(map: WorldMap, y: int, x0: int, x1: int, nodes: Array[Node]) -> void:
+	var x := x0
+	while x < x1:
 		var kind := _collision_kind(map, x, y)
 		if kind == WorldMap.KIND_NONE:
 			x += 1
 			continue
 		var run := 1
-		while x + run < width and _collision_kind(map, x + run, y) == kind:
+		while x + run < x1 and _collision_kind(map, x + run, y) == kind:
 			run += 1
 		match kind:
 			WorldMap.KIND_SOLID:
-				_add_solid_run(x, y, run)
+				nodes.append(_add_solid_run(x, y, run))
 			WorldMap.KIND_LEDGE:
-				_add_ledge_run(x, y, run)
+				nodes.append(_add_ledge_run(x, y, run))
 			WorldMap.KIND_HAZARD:
-				_add_hazard_run(x, y, run)
+				nodes.append(_add_hazard_run(x, y, run))
 		x += run
 
 
@@ -619,16 +779,17 @@ func _collision_kind(map: WorldMap, x: int, y: int) -> int:
 	return WorldMap.KIND_SOLID if kind == WorldMap.KIND_HIDDEN else kind
 
 
-func _add_solid_run(x: int, y: int, run: int) -> void:
+func _add_solid_run(x: int, y: int, run: int) -> Node:
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
 	rect.size = Vector2(run * TILE, TILE)
 	shape.shape = rect
 	shape.position = Vector2(x * TILE + run * TILE / 2.0, y * TILE + TILE / 2.0)
 	_solids.add_child(shape)
+	return shape
 
 
-func _add_ledge_run(x: int, y: int, run: int) -> void:
+func _add_ledge_run(x: int, y: int, run: int) -> Node:
 	var shape := CollisionShape2D.new()
 	var rect := RectangleShape2D.new()
 	rect.size = Vector2(run * TILE, LEDGE_HEIGHT)
@@ -636,9 +797,10 @@ func _add_ledge_run(x: int, y: int, run: int) -> void:
 	shape.one_way_collision = true
 	shape.position = Vector2(x * TILE + run * TILE / 2.0, y * TILE + LEDGE_HEIGHT / 2.0)
 	_ledges.add_child(shape)
+	return shape
 
 
-func _add_hazard_run(x: int, y: int, run: int) -> void:
+func _add_hazard_run(x: int, y: int, run: int) -> Node:
 	var hazard: Hazard = HAZARD_SCENE.instantiate()
 	var shape: CollisionShape2D = hazard.get_node("CollisionShape2D")
 	var rect := RectangleShape2D.new()
@@ -648,6 +810,7 @@ func _add_hazard_run(x: int, y: int, run: int) -> void:
 	shape.shape = rect
 	hazard.position = Vector2(x * TILE + run * TILE / 2.0, y * TILE + TILE - 4.5)
 	_hazards.add_child(hazard)
+	return hazard
 
 
 func _build_lights(map: WorldMap) -> void:
@@ -789,13 +952,14 @@ func _on_secret_broken(wall: SecretWall) -> void:
 	_erase_cells(wall.cells)
 
 
-## Takes the terrain tiles off the cells of an opened passage.
+## Takes the terrain tiles off the cells of an opened passage, for good: a
+## chunk streamed in again later leaves them empty too.
 func _erase_cells(cells: Array[Vector2i]) -> void:
-	var terrain := _tiles.get_node_or_null(WorldMap.LAYER_TERRAIN) as TileMapLayer
-	if terrain == null:
-		return
+	var terrain: TileMapLayer = _layers.get(WorldMap.LAYER_TERRAIN)
 	for cell in cells:
-		terrain.set_cell(cell, -1)
+		_erased[cell] = true
+		if terrain != null:
+			terrain.erase_cell(cell)
 
 
 ## The rect of a room of the export in level pixels, or an empty rect.

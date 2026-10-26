@@ -154,6 +154,9 @@ func _ready() -> void:
 	player.died.connect(_on_player_died)
 	player.respawned.connect(_on_player_respawned)
 	add_child(player)
+	# The ground under the start is built before the hero's first step; the
+	# rest of the world streams in as he goes (see LevelBuilder.stream_around).
+	level.stream_around([player.global_position])
 
 	for checkpoint in level.checkpoints:
 		checkpoint.rested.connect(_on_checkpoint_rested)
@@ -272,7 +275,9 @@ func _process(delta: float) -> void:
 ## in are read there.
 func _physics_process(_delta: float) -> void:
 	if is_instance_valid(player):
-		level.update_active_enemies([player.global_position, camera.get_screen_center_position()])
+		var around: Array[Vector2] = [player.global_position, camera.get_screen_center_position()]
+		level.stream_around(around)
+		level.update_active_enemies(around)
 		var region := level.region_at(player.global_position.y)
 		if region != _region:
 			_enter_region(region, true)
@@ -383,6 +388,7 @@ func _rest_at_checkpoint(index: int) -> void:
 	player.global_position = checkpoint.global_position
 	player.reset_physics_interpolation()
 	player.rest_at(checkpoint.global_position)
+	level.stream_around([player.global_position])
 
 
 ## The playtesting arguments after `--` on the command line, for a game
@@ -797,6 +803,7 @@ func _warp_to_start() -> void:
 	player.reset_physics_interpolation()
 	player.velocity = Vector2.ZERO
 	player.rest_at(level.player_start)
+	level.stream_around([player.global_position])
 	player.frozen = false
 	_respawn_enemies()
 	_respawn_power_ups()
