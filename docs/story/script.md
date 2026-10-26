@@ -1074,7 +1074,7 @@ The remaining seventeen are flavour for the level issues to place.
 - The box colours the speaker's name (`DialogueBox.SPEAKER_COLORS`) and
   pitches its typing blip by speaker (`SPEAKER_PITCH`); a line with no
   speaker (a stage note in parentheses, a relic) is grey and silent.
-- NPCs, relics and triggers are placed in `levels/world/placements.json`:
+- NPCs, relics and triggers are placed as `WorldPlacement` nodes under `Placements` in the region scenes (`scenes/world/`), with these fields:
   each object has a tile cell, a
   type (`npc`, `item`, `trigger`), a sprite, a name, the unique dialogue ids
   to try in order and a `rotate` list of repeat lines. The first unique

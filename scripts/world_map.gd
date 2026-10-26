@@ -1,7 +1,8 @@
 class_name WorldMap
 extends RefCounted
 
-## A world exported by the Lit Pixel map tool (levels/world/world.json).
+## A world: the Lit Pixel map tool's export (a world.json) or, read through
+## SceneWorld, the game's own world scenes.
 ##
 ## The export is one big tile grid in four layers (Background, Decor,
 ## Terrain, Glow) drawn from three tile sheets next to the JSON: the diffuse
@@ -172,9 +173,9 @@ func texture_filter() -> CanvasItem.TextureFilter:
 
 ## One of the tile sheets next to the export, or null when it is missing.
 ## Run from the project, the sheet is read from the PNG itself rather than
-## from Godot's imported copy: the live map sync (see LiveMap) rewrites the
-## sheets while the game is starting, and only the editor re-imports them.
-## Exported builds carry imported textures only, so they load those.
+## from Godot's imported copy, so an export dropped into the project plays
+## before the editor re-imports its sheets. Exported builds carry imported
+## textures only, so they load those.
 func _sheet(sheet_path: String) -> Texture2D:
 	if OS.has_feature("editor") or not sheet_path.begins_with("res://"):
 		if not FileAccess.file_exists(sheet_path):

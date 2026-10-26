@@ -1,7 +1,7 @@
 # Descender: the enemies, by region
 
 Who stands where, and why. The placements are in
-`levels/world/placements.json`; the bodies are the walker profiles
+the `Placements` of the region scenes under `scenes/world/` (`WorldPlacement` nodes); the bodies are the walker profiles
 (ground) and flyer profiles (air) in `resources/enemies/`, each with a
 scene in `scenes/enemies/`, and the `Hanger`; the strips are drawn by
 `tools/enemy_sprites/export.py` and cut into each body's `SpriteFrames` by

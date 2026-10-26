@@ -2,15 +2,15 @@ extends Node
 
 ## The maps the editor published for the game's Maps menu.
 ##
-## Registered as the MapStore autoload. Besides the live map (see LiveMap),
-## the editor can publish any map under its own head in Firestore's public
-## `published` collection and list it in `published/index`. This store lists
-## them for the title screen, downloads a chosen one into
-## user://maps/<map id>/ (world.json, the sheets and any region backdrops,
-## with a map.json stamp of the published revision) and registers it with
-## Levels under the id `map_<map id>`, so saves made on it reopen it. Maps
-## already downloaded are registered at start and listed without a
-## connection.
+## Registered as the MapStore autoload. The editor can publish any map under
+## its own head in Firestore's public `published` collection and list it in
+## `published/index`. This store lists them for the title screen, downloads
+## a chosen one into user://maps/<map id>/ (world.json, the sheets and any
+## region backdrops, with a map.json stamp of the published revision) and
+## registers it with Levels under the id `map_<map id>`, so saves made on it
+## reopen it. Maps already downloaded are registered at start and listed
+## without a connection; the live map (see LiveMap) lands under
+## user://maps/live/ the same way and is one of them.
 ##
 ## `--map=<map id or name>` on the command line downloads (if needed) and
 ## makes it what New Game starts: `godot --path . -- --map="World 3"`; add
@@ -250,6 +250,16 @@ func _download(map_id: String, fields: Dictionary) -> String:
 	_register(entry)
 	_fetched(map_id, "Map: %s, downloaded" % map_name)
 	return ""
+
+
+## Registers the map downloaded into user://maps/<map id>/ with Levels, from
+## its stamp. For a folder written after start (the live map sync).
+func register_cached(map_id: String) -> void:
+	var stamp := _stamp(map_id)
+	if stamp.is_empty():
+		return
+	stamp["path"] = MAPS_DIR.path_join(map_id).path_join(WORLD_FILE)
+	_register(stamp)
 
 
 ## Forgets a downloaded map (its files and its level).
