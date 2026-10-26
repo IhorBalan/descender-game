@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_vmsnt"]
+
+[resource]
+script = ExtResource("1_vmsnt")
+display_name = "Seraph Warden"
+tint = Color(1, 0.92, 0.7, 1)
+cooldown = 0.9
+charge_speed = 230.0
+charge_windup = 0.6
+charge_cooldown = 2.5
+loot = {
+"bones": 3,
+"light": [40, 55],
+"unique": "wardens_halo",
+"xp": 40
+}

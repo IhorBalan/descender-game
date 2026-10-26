@@ -1,0 +1,28 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_sgith"]
+
+[resource]
+script = ExtResource("1_sgith")
+display_name = "Limbo Lord"
+character = "imp"
+walk_anim = "run"
+scale = 2.5
+tint = Color(0.7, 0.75, 1, 1)
+body = Vector2(40, 56)
+health = 26
+speed = 48.0
+attack_range = 48.0
+reach = Vector2(46, 44)
+windup = 0.35
+strike = 0.15
+recover = 0.45
+cooldown = 0.7
+attack_damage = 1
+charge_cooldown = 1.8
+loot = {
+"bones": 3,
+"light": [50, 65],
+"unique": "lords_tally",
+"xp": 50
+}

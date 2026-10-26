@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_g7vsh"]
+
+[resource]
+script = ExtResource("1_g7vsh")
+display_name = "The Penitent"
+scale = 1.25
+tint = Color(0.75, 0.75, 0.85, 1)
+body = Vector2(28, 68)
+health = 20
+speed = 40.0
+attack_range = 50.0
+reach = Vector2(44, 50)
+windup = 0.45
+recover = 0.5
+cooldown = 0.8
+attack_damage = 1
+charge_speed = 250.0
+charge_windup = 0.5
+loot = {
+"bones": 3,
+"light": [45, 60],
+"unique": "penitents_shroud",
+"xp": 45
+}

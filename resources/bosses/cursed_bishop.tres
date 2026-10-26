@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_1iloj"]
+
+[resource]
+script = ExtResource("1_1iloj")
+display_name = "Cursed Bishop"
+scale = 1.4
+tint = Color(0.7, 0.5, 0.45, 1)
+body = Vector2(30, 74)
+health = 38
+speed = 36.0
+attack_range = 56.0
+reach = Vector2(50, 56)
+windup = 0.45
+recover = 0.55
+cooldown = 0.8
+charge_windup = 0.5
+motes = 3
+loot = {
+"bones": 3,
+"light": [75, 95],
+"unique": "bishops_mitre",
+"xp": 80
+}

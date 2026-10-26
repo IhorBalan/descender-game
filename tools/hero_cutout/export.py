@@ -24,6 +24,9 @@ sys.path.insert(0, HERE)
 import anim  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(HERE))
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import sprite_frames  # noqa: E402
+
 SPRITES = os.path.join(ROOT, "assets", "sprites")
 OUT_DIR = os.path.join(SPRITES, "hero")
 
@@ -89,6 +92,7 @@ def main() -> None:
     with open(spec_path, "w", encoding="utf-8") as f:
         json.dump(spec, f, indent=2)
         f.write("\n")
+    sprite_frames.write(["hero"])
     print(f"hero: {frame_w}x{frame_h} frames, origin {entry['origin']}")
 
 

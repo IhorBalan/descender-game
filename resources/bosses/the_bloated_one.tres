@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_gpfny"]
+
+[resource]
+script = ExtResource("1_gpfny")
+display_name = "The Bloated One"
+character = "brute"
+tint = Color(0.75, 1, 0.7, 1)
+body = Vector2(52, 90)
+health = 36
+speed = 22.0
+contact_damage = 2
+attack_range = 70.0
+reach = Vector2(68, 64)
+windup = 0.8
+strike = 0.3
+recover = 1.0
+cooldown = 1.4
+charge_speed = 200.0
+charge_windup = 0.8
+charge_cooldown = 3.0
+motes = 3
+loot = {
+"bones": 3,
+"light": [60, 80],
+"unique": "gluttons_maw",
+"xp": 60
+}

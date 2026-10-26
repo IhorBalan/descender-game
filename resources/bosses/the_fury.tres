@@ -1,0 +1,27 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_j1laf"]
+
+[resource]
+script = ExtResource("1_j1laf")
+display_name = "Gorrow, the Fury"
+character = "brute"
+scale = 1.2
+tint = Color(1, 0.55, 0.5, 1)
+body = Vector2(42, 72)
+health = 40
+speed = 44.0
+attack_range = 58.0
+reach = Vector2(54, 54)
+windup = 0.5
+strike = 0.25
+cooldown = 0.8
+charge_speed = 270.0
+charge_cooldown = 1.6
+motes = 3
+loot = {
+"bones": 3,
+"light": [70, 90],
+"unique": "furys_edge",
+"xp": 75
+}

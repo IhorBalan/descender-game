@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="FlyerProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/flyer_profile.gd" id="1_iw1m7"]
+
+[resource]
+script = ExtResource("1_iw1m7")
+loot = {
+"bone_chance": 0.04,
+"flask_chance": 0.03,
+"light": [4, 6],
+"xp": 4
+}
