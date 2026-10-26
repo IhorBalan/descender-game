@@ -82,6 +82,8 @@ var tile_set: TileSet = null
 var dialogue_path := ""
 var objects: Array = []
 
+var _index: TileIndex
+
 
 ## Reads the export at `file_path`; null, with an error pushed, when the
 ## file is missing or not a world export.
@@ -250,6 +252,14 @@ func build_tile_set() -> TileSet:
 	var built := TileSet.new()
 	_fill_tile_set(built)
 	return built
+
+
+## Where each tile id is in the TileSet (see TileIndex): the sheet's own
+## grid for a built one, the per-region sources of the world's.
+func tile_index() -> TileIndex:
+	if _index == null:
+		_index = TileIndex.of(tile_set, columns)
+	return _index
 
 
 ## Puts the sheets and the used tiles into a TileSet (see build_tile_set).

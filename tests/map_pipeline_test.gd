@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 203
+const EXPECTED_CHECKS := 225
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -304,14 +304,20 @@ func _write_rich_export(dir: String) -> String:
 	data["layers"] = [
 		{
 			"name": "Background",
-			"tiles": [-1, -1, -1, -1, -1, -1, -1, -1, 2, 2, 2, 2, -1, -1, -1, -1]
+			"tiles": [-1, -1, -1, -1, -1, -1, -1, -1, 66, 66, 66, 66, -1, -1, -1, -1]
 		},
 		{"name": "Decor", "tiles": [-1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]},
-		{"name": "Terrain", "tiles": [-1, -1, -1, -1, 1, 1, 7, 7, -1, -1, -1, -1, 1, 1, 1, 1]},
+		{"name": "Terrain", "tiles": [-1, -1, -1, -1, 1, 1, 7, 7, -1, -1, -1, -1, 65, 65, 65, 65]},
 		{"name": "Glow", "tiles": [-1, 5, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]},
 	]
-	data["used_tiles"] = [1, 2, 5, 7]
-	data["tile_kinds"] = {"1": 1, "7": 2}
+	# The top region paints with the sheet's first row, the low one with its second.
+	data["used_tiles"] = [1, 5, 7, 65, 66]
+	data["tile_kinds"] = {"1": 1, "7": 2, "65": 1}
+	# The glow sheet is black but for tile 5, as the editor exports it.
+	var glow := Image.create(64 * 16, 2 * 16, false, Image.FORMAT_RGBA8)
+	glow.fill(Color.BLACK)
+	glow.fill_rect(Rect2i(5 * 16, 0, 16, 16), Color(1.0, 0.8, 0.2, 1.0))
+	glow.save_png(ProjectSettings.globalize_path(dir.path_join("world_tiles_e.png")))
 	data["regions"] = [
 		{"name": "Top", "subtitle": "Up", "ambient": "#ffffff", "y0": 0, "y1": 32, "cave": true},
 		{"name": "1. Low", "subtitle": "", "ambient": "#102030", "y0": 32, "y1": 64},
@@ -491,6 +497,37 @@ func test_scene_world_round_trip() -> void:
 				expected.append(spec)
 	_check(_same(b.objects, expected), "the placements round-trip, region by region")
 	_check(b.tile_set != null and b.tile_set.has_source(0), "the world brings its TileSet")
+	# One atlas source per region, holding the sheet rows only it paints with.
+	var top := b.tile_set.get_source(0) as TileSetAtlasSource
+	var low := b.tile_set.get_source(1) as TileSetAtlasSource
+	_check(b.tile_set.get_source_count() == 2, "a source per region")
+	_check(top.resource_name == "Top" and low.resource_name == "1. Low", "named after it")
+	_check(
+		(
+			top.get_meta(TileIndex.SHEET_ROWS) == PackedInt32Array([0])
+			and low.get_meta(TileIndex.SHEET_ROWS) == PackedInt32Array([1])
+		),
+		"each recording the sheet rows it holds"
+	)
+	var index := b.tile_index()
+	_check(index.locate(65) == [1, Vector2i(1, 0)], "a tile is drawn from its region's source")
+	_check(index.locate(5, true) == [0, Vector2i(5, 4)], "its glow under the diffuse tiles")
+	_check(index.id_of(1, Vector2i(2, 0)) == 66, "and the source's coords name the id again")
+	_check(
+		top.has_tile(Vector2i(5, 4)) and not top.has_tile(Vector2i(2, 4)),
+		"glow tiles exist only where they glow or are painted"
+	)
+	_check(
+		int(low.get_tile_data(Vector2i(1, 0), 0).get_custom_data("kind")) == WorldMap.KIND_SOLID,
+		"the kind rides on the region's tile"
+	)
+	_check(
+		(
+			FileAccess.file_exists(scenes_dir + "/tiles/low.png")
+			and FileAccess.file_exists(scenes_dir + "/tiles/top_n.png")
+		),
+		"the atlases are written next to the TileSet"
+	)
 	var builder := LevelBuilder.new()
 	add_child(builder)
 	builder.streaming = false
@@ -503,6 +540,31 @@ func test_scene_world_round_trip() -> void:
 	_check(builder.get_node("Lights").get_child_count() == 2, "both lights are placed")
 	_check(builder.dialogue_path == "res://dialogue/world_1.json", "and the dialogue is named")
 	builder.queue_free()
+
+
+# ---------- TileIndex ----------
+
+
+func test_tile_index() -> void:
+	var plain := TileIndex.of(null, 64)
+	_check(plain.plain, "no TileSet is the sheet's own grid")
+	_check(plain.locate(70) == [0, Vector2i(6, 1)], "where source 0 holds the diffuse sheet")
+	_check(plain.locate(70, true) == [1, Vector2i(6, 1)], "and source 1 the glow sheet")
+	_check(
+		plain.id_of(1, Vector2i(6, 1)) == 70 and plain.id_of(2, Vector2i.ZERO) == -1, "both ways"
+	)
+	var cut := TileIndex.new()
+	cut.columns = 64
+	cut.add_source(3, PackedInt32Array([10, 11]))
+	_check(not cut.plain, "a source with sheet rows is a cut-up TileSet")
+	_check(cut.locate(10 * 64 + 5) == [3, Vector2i(5, 0)], "a row's tiles reflow 16 wide")
+	_check(cut.locate(11 * 64 + 20) == [3, Vector2i(4, 5)], "the next row after it")
+	_check(cut.locate(11 * 64 + 20, true) == [3, Vector2i(4, 13)], "the glow 8 rows further down")
+	_check(cut.locate(12 * 64) == [-1, Vector2i(-1, -1)], "a row no source holds is nowhere")
+	_check(cut.id_of(3, Vector2i(4, 5)) == 11 * 64 + 20, "coords name the id")
+	_check(cut.id_of(3, Vector2i(4, 13)) == 11 * 64 + 20, "glow coords the same id")
+	_check(cut.is_glow(3, Vector2i(4, 13)) and not cut.is_glow(3, Vector2i(4, 5)), "told apart")
+	_check(cut.id_of(3, Vector2i(0, 20)) == -1 and cut.id_of(4, Vector2i.ZERO) == -1, "or -1")
 
 
 # ---------- FirestoreRest.prune_files ----------
