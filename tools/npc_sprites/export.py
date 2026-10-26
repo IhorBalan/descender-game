@@ -21,6 +21,9 @@ import npcs  # noqa: E402
 from pix import scale, strip  # noqa: E402
 
 ROOT = os.path.dirname(os.path.dirname(HERE))
+sys.path.insert(0, os.path.join(ROOT, "tools"))
+import sprite_frames  # noqa: E402
+
 SPRITES = os.path.join(ROOT, "assets", "sprites")
 SPEC = os.path.join(SPRITES, "sprites.json")
 
@@ -50,6 +53,7 @@ def main() -> None:
     with open(SPEC, "w") as f:
         json.dump(spec, f, indent=2)
         f.write("\n")
+    sprite_frames.write(list(npcs.CHARACTERS))
     if "--preview" in sys.argv:
         w = max(r.width for r in rows)
         sheet = Image.new("RGBA", (w, sum(r.height for r in rows)), (90, 100, 130, 255))

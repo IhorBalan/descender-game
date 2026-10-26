@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="PackedScene" path="res://scenes/enemies/flyer.tscn" id="1_base"]
+[ext_resource type="Resource" path="res://resources/enemies/siren.tres" id="2_profile"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/siren/siren.tres" id="3_frames"]
+
+[node name="Siren" instance=ExtResource("1_base")]
+profile = ExtResource("2_profile")
+
+[node name="Sprite" parent="." index="0"]
+sprite_frames = ExtResource("3_frames")
+animation = &"idle"
+autoplay = "idle"

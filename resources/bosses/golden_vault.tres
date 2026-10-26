@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="BossProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/boss_profile.gd" id="1_pgx3v"]
+
+[resource]
+script = ExtResource("1_pgx3v")
+display_name = "Warden of the Vault"
+character = "brute"
+scale = 1.3
+tint = Color(1, 0.88, 0.5, 1)
+body = Vector2(46, 78)
+health = 34
+speed = 30.0
+attack_range = 62.0
+reach = Vector2(58, 56)
+windup = 0.6
+strike = 0.25
+recover = 0.8
+cooldown = 1.1
+charge_speed = 240.0
+charge_windup = 0.6
+charge_cooldown = 2.4
+motes = 3
+loot = {
+"bones": 3,
+"light": [90, 120],
+"unique": "vault_seal",
+"xp": 70
+}

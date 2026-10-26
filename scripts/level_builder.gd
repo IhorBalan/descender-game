@@ -20,13 +20,14 @@ extends Node2D
 ##                        unless: a story flag that, once set, leaves it out;
 ##                        shop: a Shops id for an NPC that trades once its
 ##                        unique lines are spent
-##   enemy                character: a Walker.PROFILES body (imp, angel_guard,
-##                        brute, hound, slug, hoarder, burned), a
-##                        Flyer.PROFILES body (watcher, shade, siren), hanged
-##                        (a Hanger: it hangs with its feet at the cell and
-##                        drops on the hero), or a Boss.PROFILES id for a boss
-##                        in its room; which bodies stand in which region is
-##                        in docs/design/enemies.md;
+##   enemy                character: a walker body (Walker.CHARACTERS: imp,
+##                        angel_guard, brute, hound, slug, hoarder, burned), a
+##                        flyer body (Flyer.CHARACTERS: watcher, shade, siren),
+##                        hanged (a Hanger: it hangs with its feet at the cell
+##                        and drops on the hero), or a boss id (Boss.IDS) for a
+##                        boss in its room; each body is a scene in
+##                        scenes/enemies/ (see enemy_scene); which bodies stand
+##                        in which region is in docs/design/enemies.md;
 ##                        barks: a Walker.BARKS set the enemy shouts; passive:
 ##                        true for a walker that never attacks; behaviour: a
 ##                        Walker.BEHAVIOURS habit (chase, ambush, pounce,
@@ -94,8 +95,8 @@ const SPRITE_SMOOTH_PX := 1.5
 ## Lights are drawn with a radial gradient this many pixels across, scaled
 ## to each light's radius.
 const LIGHT_TEXTURE_SIZE := 128
-const WALKER_SCENE := preload("res://scenes/enemies/walker.tscn")
-const FLYER_SCENE := preload("res://scenes/enemies/flyer.tscn")
+## The enemy bodies' scenes: scenes/enemies/<character>.tscn (see enemy_scene).
+const ENEMY_SCENES_DIR := "res://scenes/enemies"
 const HANGER_SCENE := preload("res://scenes/enemies/hanger.tscn")
 const CHECKPOINT_SCENE := preload("res://scenes/checkpoint.tscn")
 const GOAL_SCENE := preload("res://scenes/goal.tscn")
@@ -218,6 +219,16 @@ var _enemies: Node2D
 var _seals: Node2D
 var _power_ups: Node2D
 var _lights: Node2D
+
+
+## The scene of a walker or flyer body: scenes/enemies/<character>.tscn,
+## which inherits walker.tscn or flyer.tscn and wears the body's profile
+## and frames. Null for a name that has no scene.
+static func enemy_scene(character: String) -> PackedScene:
+	var path := "%s/%s.tscn" % [ENEMY_SCENES_DIR, character]
+	if not ResourceLoader.exists(path):
+		return null
+	return load(path) as PackedScene
 
 
 ## Builds the world export at `path`, with the objects of the
@@ -871,7 +882,7 @@ func _place_markers(map: WorldMap) -> void:
 func _place_boss(map: WorldMap, marker: Dictionary, at: Vector2) -> void:
 	var id := Boss.id_for(str(marker.get("label", "")))
 	if not Boss.has_profile(id):
-		_enemy_spawns.append(EnemySpawn.new(WALKER_SCENE, at, BOSS_PLACEHOLDER))
+		_enemy_spawns.append(EnemySpawn.new(enemy_scene(BOSS_PLACEHOLDER), at, BOSS_PLACEHOLDER))
 		return
 	if Story.has_flag(Boss.flag_for(id)):
 		return
@@ -1138,10 +1149,11 @@ func _place_object(spec: Dictionary) -> void:
 		"enemy":
 			var character := str(spec.get("character", "imp"))
 			var spawn: EnemySpawn
-			if Flyer.PROFILES.has(character):
-				spawn = EnemySpawn.new(FLYER_SCENE, at - Vector2(0.0, TILE / 2.0), character)
+			if character in Flyer.CHARACTERS:
+				var flyer_scene := enemy_scene(character)
+				spawn = EnemySpawn.new(flyer_scene, at - Vector2(0.0, TILE / 2.0), character)
 				spawn.behaviour = str(spec.get("behaviour", ""))
-			elif character == "hanged":
+			elif character == Hanger.CHARACTER:
 				spawn = EnemySpawn.new(HANGER_SCENE, at)
 			elif Boss.has_profile(character):
 				if Story.has_flag(Boss.flag_for(character)):
@@ -1154,7 +1166,10 @@ func _place_object(spec: Dictionary) -> void:
 				spawn = EnemySpawn.new(BOSS_SCENE, at, character)
 				spawn.arena = room_rect(world, room_at(at))
 			else:
-				spawn = EnemySpawn.new(WALKER_SCENE, at, character)
+				if character not in Walker.CHARACTERS:
+					push_error("LevelBuilder: no enemy called '%s', placing an imp" % character)
+					character = "imp"
+				spawn = EnemySpawn.new(enemy_scene(character), at, character)
 				spawn.barks = str(spec.get("barks", ""))
 				spawn.passive = bool(spec.get("passive", false))
 				spawn.behaviour = str(spec.get("behaviour", ""))
@@ -1306,15 +1321,12 @@ func spawn_enemies() -> void:
 		enemy.drop_parent = _objects
 		if enemy is Walker:
 			var walker := enemy as Walker
-			walker.character = spawn.character
 			walker.barks = spawn.barks
 			walker.passive = spawn.passive
 			walker.behaviour = spawn.behaviour
 			walker.death_y = size_px.y + 64.0
 		elif enemy is Flyer:
-			var flyer := enemy as Flyer
-			flyer.character = spawn.character
-			flyer.behaviour = spawn.behaviour
+			(enemy as Flyer).behaviour = spawn.behaviour
 		elif enemy is Hanger:
 			(enemy as Hanger).death_y = size_px.y + 64.0
 		elif enemy is Boss:

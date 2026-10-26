@@ -617,7 +617,7 @@ func _on_boss_engaged(boss: Boss) -> void:
 		return
 	_boss = boss
 	_arena_seals = level.seal_room(level.room_at(boss.global_position))
-	hud.show_boss(str(boss.profile["name"]), boss.health, boss.max_health)
+	hud.show_boss(boss.profile.display_name, boss.health, boss.max_health)
 	Audio.play("boss_engage")
 	Audio.play_music("boss")
 	var intro := _boss_entry(boss, "intro")

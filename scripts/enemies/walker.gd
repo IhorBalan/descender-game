@@ -22,8 +22,10 @@ extends CharacterBody2D
 ## - lunge (hounds): runs at the hero from far off, faster than he walks,
 ##   and springs flat at him from a few tiles away, jaws open.
 ##
-## The node's origin is at the feet. `character` picks the sprite strips and
-## the size/speed/attack profile below. The bodies belong to regions: the
+## The node's origin is at the feet. The body is picked by the scene:
+## scenes/enemies/<name>.tscn inherits walker.tscn and sets the `profile`
+## (a WalkerProfile in resources/enemies/) and the sprite's frames
+## (assets/sprites/<name>/<name>.tres). The bodies belong to regions: the
 ## **angel guard** to Heaven and Purgatory, the **imp** to every circle (the
 ## common demon), the **brute** to the deep circles from Gluttony down, the
 ## **slug** to Gluttony, the **hoarder** to Greed, the **burned** (a
@@ -102,167 +104,13 @@ const SLAM_RECOVER := 0.9
 const SLAM_COOLDOWN := 2.5
 const TINT_SLAM := Color(1.0, 0.6, 0.45)
 
-## body: collision size. speed: patrol speed. health: hits to kill.
-## walk: the looping animation name. faces_left: whether the strips face left.
-## attack_range: how close (horizontally) the hero must be to trigger a swing.
-## reach: the strike hitbox size, placed in front of the body.
-## windup / strike / recover: the three phases of a swing, in seconds.
-## cooldown: pause before the next swing can start. attack_damage: hearts.
-## drop_chance: how often a kill leaves a heal mote behind. power /
-## power_chance: the power-up a kill may leave instead of a mote, and how
-## often (brutes always leave a Halo). puff: the colour
-## of the dust (or light) it dies in. armour: hits never cancel its attack
-## or push it back while it attacks (and push it half as far otherwise).
-## light_bolt: a hurler throws the Choir's light instead of hellfire.
-const PROFILES := {
-	"imp":
-	{
-		"body": Vector2(18, 24),
-		"speed": 32.0,
-		"health": 3,
-		"walk": "run",
-		"faces_left": false,
-		"attack_range": 30.0,
-		"reach": Vector2(22, 20),
-		"windup": 0.35,
-		"strike": 0.15,
-		"recover": 0.45,
-		"cooldown": 0.8,
-		"attack_damage": 1,
-		"drop_chance": 0.35,
-		"power": Player.Power.BLADE,
-		"power_chance": 0.1,
-		"puff": Color(0.55, 0.15, 0.15),
-		"armour": false,
-		"loot": {"light": [3, 5], "bone_chance": 0.08, "flask_chance": 0.03, "xp": 3},
-	},
-	"angel_guard":
-	{
-		"body": Vector2(24, 56),
-		"speed": 18.0,
-		"health": 5,
-		"walk": "walk",
-		"faces_left": false,
-		"attack_range": 44.0,
-		"reach": Vector2(36, 40),
-		"windup": 0.6,
-		"strike": 0.2,
-		"recover": 0.7,
-		"cooldown": 1.2,
-		"attack_damage": 2,
-		"drop_chance": 1.0,
-		"power": Player.Power.ZEAL,
-		"power_chance": 0.1,
-		"puff": Color(1.0, 0.95, 0.75),
-		"armour": false,
-		"loot": {"light": [6, 9], "bone_chance": 0.04, "flask_chance": 0.04, "xp": 5},
-	},
-	"brute":
-	{
-		"body": Vector2(36, 62),
-		"speed": 14.0,
-		"health": 8,
-		"walk": "walk",
-		"faces_left": false,
-		"attack_range": 52.0,
-		"reach": Vector2(46, 48),
-		"windup": 0.75,
-		"strike": 0.25,
-		"recover": 0.9,
-		"cooldown": 1.5,
-		"attack_damage": 2,
-		"drop_chance": 1.0,
-		"power": Player.Power.HALO,
-		"power_chance": 1.0,
-		"puff": Color(0.45, 0.12, 0.12),
-		"armour": true,
-		"loot": {"light": [10, 14], "bone_chance": 0.1, "flask_chance": 0.06, "xp": 10},
-	},
-	"hound":
-	{
-		"body": Vector2(26, 16),
-		"speed": 40.0,
-		"health": 3,
-		"walk": "run",
-		"faces_left": false,
-		"attack_range": 26.0,
-		"reach": Vector2(20, 14),
-		"windup": 0.25,
-		"strike": 0.12,
-		"recover": 0.35,
-		"cooldown": 0.6,
-		"attack_damage": 1,
-		"drop_chance": 0.25,
-		"power": Player.Power.ZEAL,
-		"power_chance": 0.1,
-		"puff": Color(0.5, 0.14, 0.16),
-		"armour": false,
-		"loot": {"light": [4, 6], "bone_chance": 0.1, "flask_chance": 0.02, "xp": 5},
-	},
-	"slug":
-	{
-		"body": Vector2(40, 20),
-		"speed": 9.0,
-		"health": 6,
-		"walk": "walk",
-		"faces_left": false,
-		"attack_range": 34.0,
-		"reach": Vector2(26, 18),
-		"windup": 0.5,
-		"strike": 0.2,
-		"recover": 0.8,
-		"cooldown": 1.2,
-		"attack_damage": 1,
-		"drop_chance": 0.6,
-		"power": Player.Power.HALO,
-		"power_chance": 0.15,
-		"puff": Color(0.5, 0.42, 0.3),
-		"armour": true,
-		"loot": {"light": [5, 8], "bone_chance": 0.06, "flask_chance": 0.08, "xp": 6},
-	},
-	"hoarder":
-	{
-		"body": Vector2(20, 36),
-		"speed": 22.0,
-		"health": 4,
-		"walk": "walk",
-		"faces_left": false,
-		"attack_range": 30.0,
-		"reach": Vector2(24, 26),
-		"windup": 0.4,
-		"strike": 0.15,
-		"recover": 0.5,
-		"cooldown": 1.0,
-		"attack_damage": 1,
-		"drop_chance": 0.3,
-		"power": Player.Power.BLADE,
-		"power_chance": 0.1,
-		"puff": Color(0.4, 0.32, 0.26),
-		"armour": false,
-		"loot": {"light": [9, 14], "bone_chance": 0.2, "flask_chance": 0.05, "xp": 9},
-	},
-	"burned":
-	{
-		"body": Vector2(24, 56),
-		"speed": 20.0,
-		"health": 5,
-		"walk": "walk",
-		"faces_left": false,
-		"attack_range": 44.0,
-		"reach": Vector2(36, 40),
-		"windup": 0.55,
-		"strike": 0.2,
-		"recover": 0.7,
-		"cooldown": 1.2,
-		"attack_damage": 2,
-		"drop_chance": 0.7,
-		"power": Player.Power.ZEAL,
-		"power_chance": 0.15,
-		"puff": Color(0.35, 0.3, 0.32),
-		"armour": false,
-		"loot": {"light": [6, 10], "bone_chance": 0.06, "flask_chance": 0.04, "xp": 7},
-	},
-}
+## The bodies there are: each has a WalkerProfile in resources/enemies/ and a
+## scene in scenes/enemies/ that wears it.
+const CHARACTERS: Array[String] = [
+	"imp", "angel_guard", "brute", "hound", "slug", "hoarder", "burned"
+]
+const DEFAULT_PROFILE := preload("res://resources/enemies/imp.tres")
+const PROFILES_DIR := "res://resources/enemies"
 ## The habits a placement may ask for (see the top of the file).
 const BEHAVIOURS: Array[String] = ["chase", "ambush", "pounce", "hurl", "slam", "lunge"]
 ## Lines an enemy may shout as it winds up, by bark set (see `barks`).
@@ -280,9 +128,12 @@ const BARK_CHANCE := 0.5
 const BARK_TIME := 1.3
 const BARK_COLOR := Color(1.0, 0.85, 0.8)
 
-@export_enum("imp", "angel_guard", "brute", "hound", "slug", "hoarder", "burned")
-var character := "imp"
+## The body's numbers; the scene sets it (see CHARACTERS).
+@export var profile: WalkerProfile
 @export var contact_damage := 1
+## The profile's name (its file name, one of CHARACTERS): "brute" for a
+## brute. Set from the profile when the enemy is ready.
+var character := ""
 ## One of BEHAVIOURS, or "" for plain patrolling. Set by the level from the
 ## placement.
 var behaviour := ""
@@ -305,7 +156,6 @@ var health_bar: EnemyHealthBar
 ## the enemy's own parent when unset, so a dying enemy is not counted
 ## among the live ones.
 var drop_parent: Node
-var _profile: Dictionary = {}
 var _walk_anim := "run"
 var _half_width := 0.0
 var _faces_left := true
@@ -333,22 +183,27 @@ var _crouch_tween: Tween
 @onready var floor_ray: RayCast2D = $FloorRay
 
 
+## The body's numbers, or null for a name that is not one of CHARACTERS.
+static func profile_for(character: String) -> WalkerProfile:
+	if character not in CHARACTERS:
+		return null
+	return load("%s/%s.tres" % [PROFILES_DIR, character]) as WalkerProfile
+
+
 func _ready() -> void:
 	add_to_group("enemy")
-	if not PROFILES.has(character):
-		push_error("Walker: unknown character '%s', using imp" % character)
-		character = "imp"
+	if profile == null:
+		push_error("Walker: no profile set on %s, using the imp's" % name)
+		profile = DEFAULT_PROFILE
+	character = profile.resource_path.get_file().get_basename()
 	if not behaviour.is_empty() and behaviour not in BEHAVIOURS:
 		push_warning("Walker: no behaviour called '%s'" % behaviour)
 		behaviour = ""
-	_profile = PROFILES[character]
-	var body: Vector2 = _profile["body"]
-	health = _profile["health"]
-	speed = _profile["speed"]
-	_walk_anim = _profile["walk"]
-	_faces_left = _profile["faces_left"]
-
-	AnimLoader.setup(sprite, character)
+	var body := profile.body
+	health = profile.health
+	speed = profile.speed
+	_walk_anim = profile.walk_anim
+	_faces_left = profile.faces_left
 	sprite.play(_walk_anim)
 	_half_width = body.x / 2.0
 	var shape := RectangleShape2D.new()
@@ -359,9 +214,8 @@ func _ready() -> void:
 	hit_shape.size = body + Vector2(4.0, 0.0)
 	hitbox_shape.shape = hit_shape
 	hitbox_shape.position = body_shape.position
-	var reach: Vector2 = _profile["reach"]
 	var attack_rect := RectangleShape2D.new()
-	attack_rect.size = reach
+	attack_rect.size = profile.reach
 	attack_shape.shape = attack_rect
 	attack_shape.disabled = true
 	floor_ray.position.y = -2.0
@@ -446,7 +300,7 @@ func _process_lurk() -> void:
 		return
 	_awake = true
 	_show_mark("!", MARK_COLOR, MARK_TIME)
-	_start_windup(Attack.SWING, float(_profile["windup"]) * AMBUSH_HASTE)
+	_start_windup(Attack.SWING, profile.windup * AMBUSH_HASTE)
 
 
 ## Starts whichever attack the hero's distance calls for. True if one did.
@@ -454,7 +308,7 @@ func _try_attacks() -> bool:
 	if passive or not _find_player():
 		return false
 	if _attack_cooldown <= 0.0 and _hero_in_reach():
-		_start_windup(Attack.SWING, float(_profile["windup"]))
+		_start_windup(Attack.SWING, profile.windup)
 		return true
 	if _special_cooldown > 0.0 or not _special_wanted():
 		return false
@@ -483,7 +337,7 @@ func _special_wanted() -> bool:
 				dx > HURL_RETREAT and dx <= HURL_RANGE and absf(offset.y) <= HURL_HEIGHT_TOLERANCE
 			)
 		"slam":
-			var too_close := dx <= float(_profile["attack_range"])
+			var too_close := dx <= profile.attack_range
 			return not too_close and dx <= SLAM_MAX and absf(offset.y) <= ATTACK_HEIGHT_TOLERANCE
 		"lunge":
 			return dx >= LUNGE_MIN and dx <= LUNGE_MAX and offset.y > -24.0 and offset.y <= 8.0
@@ -509,7 +363,7 @@ func _hero_within(range_x: float, range_y: float) -> bool:
 
 ## True when the hero is alive, close in front or behind, and about level.
 func _hero_in_reach() -> bool:
-	return _hero_within(float(_profile["attack_range"]), ATTACK_HEIGHT_TOLERANCE)
+	return _hero_within(profile.attack_range, ATTACK_HEIGHT_TOLERANCE)
 
 
 func _find_player() -> bool:
@@ -601,7 +455,7 @@ func _process_attack(delta: float) -> void:
 			_release()
 		State.STRIKE:
 			state = State.RECOVER
-			_state_timer = _profile["recover"]
+			_state_timer = profile.recover
 			attack_shape.disabled = true
 			sprite.play("idle")
 		State.RECOVER:
@@ -615,7 +469,7 @@ func _release() -> void:
 	match _attack:
 		Attack.SWING:
 			state = State.STRIKE
-			_state_timer = _profile["strike"]
+			_state_timer = profile.strike
 			attack_shape.disabled = false
 		Attack.POUNCE:
 			_unsquash()
@@ -650,7 +504,7 @@ func _process_leap() -> void:
 func _strike_player() -> void:
 	for body in attack_hitbox.get_overlapping_bodies():
 		if body is Player:
-			body.take_damage(_profile["attack_damage"], global_position)
+			body.take_damage(profile.attack_damage, global_position)
 
 
 func _throw() -> void:
@@ -700,7 +554,7 @@ func _end_attack() -> void:
 	_unsquash()
 	match _attack:
 		Attack.SWING:
-			_attack_cooldown = _profile["cooldown"]
+			_attack_cooldown = profile.cooldown
 		Attack.POUNCE:
 			_special_cooldown = LUNGE_COOLDOWN if behaviour == "lunge" else POUNCE_COOLDOWN
 		Attack.HURL:
@@ -716,7 +570,7 @@ func _face(dir: int) -> void:
 	sprite.flip_h = (dir > 0) == _faces_left
 	floor_ray.position.x = (_half_width + 2.0) * dir
 	floor_ray.force_raycast_update()
-	var reach: Vector2 = _profile["reach"]
+	var reach := profile.reach
 	attack_shape.position = Vector2((_half_width + reach.x / 2.0) * dir, -reach.y / 2.0)
 
 
@@ -732,7 +586,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	if _dead:
 		return
 	health -= amount
-	health_bar.show_health(health, _profile["health"])
+	health_bar.show_health(health, profile.health)
 	Audio.play("hit")
 	Feedback.flash(sprite, 0.1)
 	Feedback.spark(global_position + Vector2(0.0, -body_shape.shape.get_rect().size.y / 2.0))
@@ -742,7 +596,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 		_die()
 		return
 	var attacking := state != State.PATROL and state != State.CHASE and state != State.LURK
-	if attacking and bool(_profile["armour"]):
+	if attacking and profile.armour:
 		# Armour: the blow lands, the attack goes on.
 		return
 	# Getting hit mid-attack cancels it (and starts the cooldown).
@@ -752,7 +606,7 @@ func take_damage(amount: int, source_position: Vector2) -> void:
 	sprite.modulate = TINT_HURT
 	sprite.play("hurt")
 	var dir := 1.0 if global_position.x >= source_position.x else -1.0
-	var push := 0.5 if bool(_profile["armour"]) else 1.0
+	var push := 0.5 if profile.armour else 1.0
 	velocity = Vector2(KNOCKBACK.x * dir * push, KNOCKBACK.y * push)
 
 
@@ -764,12 +618,12 @@ func _die() -> void:
 	set_physics_process(false)
 	Audio.play("enemy_die")
 	Feedback.hit_stop(DEATH_HIT_STOP)
-	var body: Vector2 = _profile["body"]
+	var body := profile.body
 	# A heavier body shakes the ground more.
 	Feedback.shake(0.25 + body.y / 250.0)
 	var centre := global_position + Vector2(0.0, body_shape.position.y)
 	Feedback.spark(centre, DEATH_SPARKS)
-	Feedback.puff(global_position + Vector2(0.0, -body.y / 4.0), _profile["puff"])
+	Feedback.puff(global_position + Vector2(0.0, -body.y / 4.0), profile.puff)
 	body_shape.set_deferred("disabled", true)
 	hitbox.set_deferred("monitoring", false)
 	attack_hitbox.set_deferred("monitoring", false)
@@ -786,19 +640,17 @@ func _die() -> void:
 func _maybe_drop_mote() -> void:
 	var parent := drop_parent if drop_parent else get_parent()
 	# The light it leaks, and whatever else it carried (see Loot).
-	Loot.drop(
-		parent, global_position + Vector2(0.0, body_shape.position.y), _profile.get("loot", {})
-	)
-	if _profile.has("power") and randf() < float(_profile.get("power_chance", 0.0)):
+	Loot.drop(parent, global_position + Vector2(0.0, body_shape.position.y), profile.loot)
+	if randf() < profile.power_chance:
 		# A dropped power-up goes with the motes when the enemies come back.
 		var power_up := PowerUp.new()
-		power_up.power = _profile["power"]
+		power_up.power = profile.power
 		power_up.position = global_position
 		power_up.add_to_group("dropped_power")
 		parent.add_child.call_deferred(power_up)
 		return
 	# A Cold Coin worn makes the dying give up more motes.
-	if randf() >= float(_profile["drop_chance"]) + Inventory.bonus("mote_chance"):
+	if randf() >= profile.drop_chance + Inventory.bonus("mote_chance"):
 		return
 	var mote: HealMote = MOTE_SCENE.instantiate()
 	mote.position = global_position + Vector2(0.0, body_shape.position.y)

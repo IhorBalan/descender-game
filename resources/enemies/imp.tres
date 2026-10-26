@@ -1,0 +1,29 @@
+[gd_resource type="Resource" script_class="WalkerProfile" format=3]
+
+[ext_resource type="Script" path="res://scripts/enemies/walker_profile.gd" id="1_edfid"]
+
+[resource]
+script = ExtResource("1_edfid")
+body = Vector2(18, 24)
+speed = 32.0
+health = 3
+walk_anim = "run"
+faces_left = false
+armour = false
+attack_range = 30.0
+reach = Vector2(22, 20)
+windup = 0.35
+strike = 0.15
+recover = 0.45
+cooldown = 0.8
+attack_damage = 1
+drop_chance = 0.35
+power = 1
+power_chance = 0.1
+loot = {
+"bone_chance": 0.08,
+"flask_chance": 0.03,
+"light": [3, 5],
+"xp": 3
+}
+puff = Color(0.55, 0.15, 0.15, 1)

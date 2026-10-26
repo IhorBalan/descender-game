@@ -345,8 +345,7 @@ func _physics_process(_delta: float) -> void:
 			# Enemy attacks: an imp placed just out of its reach, facing away.
 			_player.global_position = _start_position
 			_player.velocity = Vector2.ZERO
-			_imp = LevelBuilder.WALKER_SCENE.instantiate()
-			_imp.character = "imp"
+			_imp = LevelBuilder.enemy_scene("imp").instantiate()
 			_imp.direction = 1
 			_imp.position = _start_position + Vector2(40.0, 0.0)
 			_main.add_child(_imp)
@@ -389,11 +388,10 @@ func _physics_process(_delta: float) -> void:
 					_imp._maybe_bark()
 			_check(_imp.bark_showing(), "a fallen imp barks on the wind-up")
 			_check(_imp.mark_text() in Walker.BARKS["fallen"], "the bark is one of its lines")
-			var brute: Walker = LevelBuilder.WALKER_SCENE.instantiate()
-			brute.character = "brute"
+			var brute: Walker = LevelBuilder.enemy_scene("brute").instantiate()
 			brute.position = _start_position + Vector2(-200.0, 0.0)
 			_main.add_child(brute)
-			_check(brute.health == Walker.PROFILES["brute"]["health"], "the brute has its profile")
+			_check(brute.health == Walker.profile_for("brute").health, "the brute has its profile")
 			_check(brute.sprite.sprite_frames.has_animation("walk"), "the brute has its strips")
 			brute.queue_free()
 			_imp.take_damage(99, _player.global_position)
@@ -1674,8 +1672,7 @@ func _physics_process(_delta: float) -> void:
 			_world.player.global_position = _start_position
 			_world.player.velocity = Vector2.ZERO
 			_world.player.facing = 1
-			_imp = LevelBuilder.WALKER_SCENE.instantiate()
-			_imp.character = "imp"
+			_imp = LevelBuilder.enemy_scene("imp").instantiate()
 			_imp.direction = 1
 			_imp.position = _start_position + Vector2(70.0, 0.0)
 			_world.add_child(_imp)
@@ -1697,8 +1694,7 @@ func _physics_process(_delta: float) -> void:
 			_imp.queue_free()
 			# Smite: down and attack from the air, onto an imp.
 			_world.player.unlock(Player.Ability.SMITE)
-			_imp = LevelBuilder.WALKER_SCENE.instantiate()
-			_imp.character = "imp"
+			_imp = LevelBuilder.enemy_scene("imp").instantiate()
 			_imp.direction = 1
 			_imp.position = AIR_START + Vector2(30.0, 0.0)
 			_world.add_child(_imp)
@@ -1735,8 +1731,7 @@ func _physics_process(_delta: float) -> void:
 			_check(_world.player.attack_shape.disabled, "the slam's hitbox is off")
 			_imp.queue_free()
 			# The last camp: a resting demon beside the hero never swings.
-			_imp = LevelBuilder.WALKER_SCENE.instantiate()
-			_imp.character = "imp"
+			_imp = LevelBuilder.enemy_scene("imp").instantiate()
 			_imp.passive = true
 			_imp.direction = 1
 			_imp.position = _start_position + Vector2(16.0, 0.0)
@@ -1868,10 +1863,7 @@ func _physics_process(_delta: float) -> void:
 		1320:
 			_check(_imp.state == Walker.State.WINDUP, "the hero stepping close springs it")
 			_check(_imp.mark_text() == "!", "with a mark over its head")
-			_check(
-				_imp._state_timer < Walker.PROFILES["imp"]["windup"],
-				"and a quicker wind-up than a swing"
-			)
+			_check(_imp._state_timer < _imp.profile.windup, "and a quicker wind-up than a swing")
 			_imp.queue_free()
 			_place_hero_for_enemy()
 			_imp = _spawn_walker("imp", "pounce", 70.0)
@@ -1956,7 +1948,7 @@ func _physics_process(_delta: float) -> void:
 			_check(_imp._dead and _imp.sprite.animation == "death", "the brute dies on its face")
 			_check(Feedback.is_hit_stopped(), "a kill stops time for a blink")
 			_place_hero_for_enemy()
-			var flyer: Flyer = LevelBuilder.FLYER_SCENE.instantiate()
+			var flyer: Flyer = LevelBuilder.enemy_scene("watcher").instantiate()
 			flyer.behaviour = "dive"
 			flyer.position = _world.player.global_position + Flyer.DIVE_PERCH
 			_world.add_child(flyer)
@@ -2028,12 +2020,12 @@ func _physics_process(_delta: float) -> void:
 			_check(called == Boss.SUMMON_COUNT, "calls two imps to it (%d)" % called)
 			_boss.queue_free()
 			var silent := 0
-			for id in Boss.PROFILES:
+			for id in Boss.IDS:
 				if _world.dialogue.entry("%s_intro" % id).is_empty():
 					silent += 1
 			_check(silent == 0, "every boss has an intro line (%d silent)" % silent)
 			var mute := 0
-			for id in Boss.PROFILES:
+			for id in Boss.IDS:
 				if _world.dialogue.entry("%s_defeat" % id).is_empty():
 					mute += 1
 			_check(mute == 0, "every boss has its last lines (%d mute)" % mute)
@@ -2047,7 +2039,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			# The third phase: the last three bosses turn again below a
 			# quarter of their health, each with a move of its own.
-			_check(not Boss.PROFILES["seraph_warden"].has("third"), "the Warden has two phases")
+			_check(Boss.profile_for("seraph_warden").third.is_empty(), "the Warden has two phases")
 			_place_hero_for_enemy()
 			_boss = _spawn_boss("the_red_arena", 120.0)
 			var hits := _boss.max_health - int(ceil(_boss.max_health * Boss.PHASE_THREE_AT))
@@ -2107,12 +2099,12 @@ func _physics_process(_delta: float) -> void:
 			# Enemy drops: brutes always leave a Halo, imps sometimes a Lit Blade.
 			_check(
 				(
-					Walker.PROFILES["brute"]["power"] == Player.Power.HALO
-					and Walker.PROFILES["brute"]["power_chance"] == 1.0
+					Walker.profile_for("brute").power == Player.Power.HALO
+					and Walker.profile_for("brute").power_chance == 1.0
 				),
 				"a brute always drops a Halo"
 			)
-			_check(Walker.PROFILES["imp"]["power_chance"] < 0.5, "an imp rarely drops anything")
+			_check(Walker.profile_for("imp").power_chance < 0.5, "an imp rarely drops anything")
 			_place_hero_for_enemy()
 			# The brute that died for its corpse earlier left one too.
 			_world._clear_motes()
@@ -2139,7 +2131,7 @@ func _physics_process(_delta: float) -> void:
 			_check(Inventory.amount("light") == 0 and Inventory.items.is_empty(), "an empty pack")
 			var uniques: Dictionary = {}
 			var bad := 0
-			for id in Boss.PROFILES:
+			for id in Boss.IDS:
 				var unique := Boss.unique_loot(id)
 				if not Items.is_unique(unique) or uniques.has(unique):
 					bad += 1
@@ -2162,9 +2154,9 @@ func _physics_process(_delta: float) -> void:
 					if not Items.has(str(ware.get("item", ""))) or ware.get("price", {}).is_empty():
 						bad += 1
 			_check(bad == 0, "every ware is an item with a price (%d wrong)" % bad)
-			var leaks := Walker.PROFILES["imp"]["loot"]["light"][0] > 0
-			for character: String in Flyer.PROFILES:
-				leaks = leaks and Flyer.PROFILES[character]["loot"]["light"][0] > 0
+			var leaks: bool = Walker.profile_for("imp").loot["light"][0] > 0
+			for character: String in Flyer.CHARACTERS:
+				leaks = leaks and Flyer.profile_for(character).loot["light"][0] > 0
 			_check(leaks, "every enemy leaks light")
 			_world._clear_motes()
 			_place_hero_for_enemy()
@@ -2258,9 +2250,9 @@ func _physics_process(_delta: float) -> void:
 			Skills.reset()
 			_world.hud.set_progress()
 			_check(_world.hud.level_label.text == "Lv 1", "the HUD shows the level")
-			for character: String in Walker.PROFILES:
+			for character: String in Walker.CHARACTERS:
 				_check(
-					int(Walker.PROFILES[character]["loot"].get("xp", 0)) > 0,
+					int(Walker.profile_for(character).loot.get("xp", 0)) > 0,
 					"a %s gives experience" % character
 				)
 			_world.player.gain_xp(Skills.XP_BASE)
@@ -2592,8 +2584,7 @@ func _spawn_boss(id: String, distance: float) -> Boss:
 
 ## A walker with a behaviour, this far to the hero's right, facing him.
 func _spawn_walker(character: String, behaviour: String, distance: float) -> Walker:
-	var walker: Walker = LevelBuilder.WALKER_SCENE.instantiate()
-	walker.character = character
+	var walker: Walker = LevelBuilder.enemy_scene(character).instantiate()
 	walker.behaviour = behaviour
 	walker.position = _world.player.global_position + Vector2(distance, 0.0)
 	_world.add_child(walker)
