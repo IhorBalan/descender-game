@@ -386,6 +386,43 @@ inside an entry may carry `requires` and `unless` flags of its own: the
 line is left out while they do not hold, so one conversation can say
 different things to a hero who has seen different things.
 
+## Developer console
+
+The grave key (`` ` ``, under Escape) opens a console over the top of the
+screen for debugging and playtesting; the same key or Escape closes it.
+The game pauses while it is open. Type a command and press Enter; the up
+and down arrows walk back through earlier lines.
+
+| Command | What it does |
+| ------- | ------------ |
+| `help [command]` | Lists the commands, or explains one |
+| `clear` | Clears the output |
+| `show_boxes on` | Draws every collision shape over the game: the hero green, enemies red, items and triggers blue, the walkable world (floors, platforms, walls, ledges, light barriers, sealed doors) black, hazards orange |
+| `show_boxes off` | Takes the boxes away (`show_boxes` alone says whether they are on) |
+
+![The console with show_boxes on](docs/screenshots/console.png)
+
+The boxes are what the physics engine sees: a disabled shape (an attack
+hitbox between swings) and an opened door are not drawn. They stay on
+through a restart and a level change until turned off.
+
+Commands live in a registry on the `DevConsole` autoload, so any script
+can add one:
+
+```gdscript
+DevConsole.register(
+    "say",
+    func(args: PackedStringArray) -> String:
+        return " ".join(args),
+    "say <words>",
+    "Prints the words back."
+)
+```
+
+The callable takes the words typed after the name and returns the text to
+print (or nothing, which prints `ok`). Return a line that starts with
+`Usage:` to flag a bad argument.
+
 ## The world
 
 The map is one world, 480 x 459 tiles, exported by the map tool as
@@ -685,6 +722,9 @@ the live map is meant to ship.
 | `assets/ui_theme.tres` | The menus' font size and button styles |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_cutout/` | The hero's SpriteCook base art and the cut-out animation script; `export.py` rewrites the hero strips |
+| `scripts/dev_console.gd` | The `DevConsole` autoload: the developer console (the ` key), its command registry and the built-in commands |
+| `scripts/collision_boxes.gd` | The `show_boxes` overlay: every collision shape drawn over the game, coloured by owner |
+| `tools/console_screenshot.gd` | Renders the console and the `show_boxes` overlay to PNGs (needs a display; see the script) |
 | `tools/menu_screenshot.gd` | Renders the title screen, the settings pages and the pause menu to PNGs (needs a display; see the script) |
 | `tests/map_pipeline_test.tscn` | Headless tests of the level registry, export reader, Firestore parsing, map store, sprite building and backdrops |
 | `tests/smoke_test.tscn` | Headless test that drives the hero and checks the basics |
