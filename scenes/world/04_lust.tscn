@@ -1,6 +1,7 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_cuy0t"]
+[ext_resource type="Resource" path="res://resources/regions/lust.tres" id="2_aqryd"]
 [ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_bevqw"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_yijx1"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_2ahjl"]
@@ -38,9 +39,8 @@ position = Vector2(0, 2992)
 script = ExtResource("1_cuy0t")
 region_name = "2. Lust"
 subtitle = "The Desire"
-ambient = Color(0.36862746, 0.15686275, 0.3137255, 1)
 rows = 34
-look = {}
+look = ExtResource("2_aqryd")
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1418949716]
 

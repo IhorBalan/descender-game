@@ -33,7 +33,7 @@ extends Node2D
 ## The dialogue file (see DialogueData), or "" for a world without one.
 @export_file("*.json") var dialogue := ""
 ## How much the world darkens from its top to its bottom, 0 to 1 (see
-## RegionLook.descent_factor).
+## LookBlend.descent_factor).
 @export_range(0.0, 1.0) var descent_dark := 0.0
 
 

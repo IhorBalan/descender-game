@@ -561,10 +561,12 @@ The export's regions can carry their look too, each field optional:
 own, see `Levels.sky`), `cave` (flat dark streaks instead of clouds and
 ridges), `light` (the rim light the sky throws on the tiles, else the sky
 top), `ambient` (else one derived from the sky) and a `grade` of `tint`,
-`contrast` and `saturation`. A top-level `descent: {"dark": 0..1}` darkens
-the sky, the backdrop and the ambient evenly from the map's top to its
-bottom. `scripts/region_look.gd` eases all of it over 2.5 s when the hero
-crosses a region line.
+`contrast` and `saturation`, and `music` (the loop's name, else the
+region's key). A region of the game's own world carries the same fields
+in its `RegionLook` resource (see "The world as scenes"). A top-level
+`descent: {"dark": 0..1}` darkens the sky, the backdrop and the ambient
+evenly from the map's top to its bottom. `scripts/look_blend.gd` eases
+all of it over 2.5 s when the hero crosses a region line.
 
 The sky is `assets/shaders/sky.gdshader` on the `Sky` rect, the editor's
 procedural sky ported: a gradient across the region's band keyed to the
@@ -653,8 +655,12 @@ descent's darkening, and instances the twelve regions, `00_paradise.tscn`
 down to `11_treachery.tscn`, one `WorldRegion` each
 (`scripts/world/world_region.gd`). Open a region's scene to edit that level
 on its own, or `world.tscn` to see them all. A region is a band of the grid
-`rows` tiles tall, placed at its `position.y` in the world, so everything in
-its scene is in level pixels from its top-left corner:
+`rows` tiles tall, placed at its `position.y` in the world, with its `look`
+(a `RegionLook` resource, `scripts/world/region_look.gd`, kept at
+`resources/regions/<key>.tres`: the ambient tint, its own sky colours if
+any, cave, rim light, grade and music loop, each a typed field with a
+default that leaves the level alone), so everything in its scene is in
+level pixels from its top-left corner:
 
 - `Backdrop/*`: `BackdropLayer` (`scripts/backdrop_layer.gd`), the region's
   painted parallax set as nodes, back to front, with the fields of a
@@ -866,7 +872,8 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
 | `scripts/backdrop.gd`, `scripts/backdrop_layer.gd` | The painted parallax layers behind the level, per region: one `BackdropLayer` a layer, from the region's scene or its `parallax.json` |
 | `scripts/region_fx.gd` | The drifting particles of a region, from its `fx.json` or the stock presets |
-| `scripts/region_look.gd` | The sky colours, rim light and grade of the region the hero is in, eased between regions |
+| `scripts/look_blend.gd` | The sky colours, rim light and grade of the region the hero is in, eased between regions |
+| `scripts/world/region_look.gd`, `resources/regions/<key>.tres` | A region's look as a resource: ambient, sky, cave, rim light, grade, music |
 | `scripts/post_fx.gd`, `assets/shaders/` | The grade and vignette over the level; the procedural sky, the rim light and the post shaders |
 | `tools/gen_region_art.py` | Draws a region's edge pieces, parallax layers, particles and editor tile textures from code (needs Pillow and numpy) |
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
@@ -891,7 +898,7 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`, `RegionFringes`, `RegionParticles`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
-| `tools/scene_art.gd` | Writes a region's `parallax.json`, `edges.json` and `fx.json` into its scene as `BackdropLayer`, `RegionFringes` and `RegionParticles` nodes |
+| `tools/scene_art.gd` | Writes a region's `parallax.json`, `edges.json` and `fx.json` into its scene as `BackdropLayer`, `RegionFringes` and `RegionParticles` nodes, and its look as `resources/regions/<key>.tres` |
 | `tools/extract_props.gd` | Turns the pieces painted as tiles from a props atlas source into prop scenes and PNGs, placed in the region scene |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |

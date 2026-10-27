@@ -74,7 +74,7 @@ var sprites: Array[Dictionary] = []
 ## path, its `x`, `y` in level pixels and an optional `scale` [x, y].
 var props: Array[Dictionary] = []
 ## How much the world darkens from its top to its bottom (0 to 1, see
-## RegionLook.descent_factor): the export's "descent": {"dark": ...}.
+## LookBlend.descent_factor): the export's "descent": {"dark": ...}.
 var descent_dark := 0.0
 ## A world read from scenes (see SceneWorld) brings its own TileSet and its
 ## dialogue file; an export leaves these for the files next to it.

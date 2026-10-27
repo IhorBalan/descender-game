@@ -14,7 +14,7 @@ extends Node2D
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
 const SKY_SHADER := preload("res://assets/shaders/sky.gdshader")
 ## Loaded by path, so a fresh checkout works before the class cache knows them.
-const RegionLook := preload("res://scripts/region_look.gd")
+const LookBlend := preload("res://scripts/look_blend.gd")
 const PostFx := preload("res://scripts/post_fx.gd")
 ## The glow over the brightest pixels (the sky, the glow tiles, the lights).
 const GLOW_INTENSITY := 0.4
@@ -56,8 +56,8 @@ var region_fx: RegionFx
 ## The colour grade and vignette over the level (see PostFx).
 var post: PostFx
 ## The look of the region the hero is in, eased between regions: the sky,
-## the rim light and the grade (see RegionLook).
-var look := RegionLook.new()
+## the rim light and the grade (see LookBlend).
+var look := LookBlend.new()
 ## The sky's shader, fed the look and the camera every frame.
 var _sky_material := ShaderMaterial.new()
 ## The ambient tint of the region, before the descent darkens it.
@@ -215,7 +215,7 @@ func _ready() -> void:
 
 ## Feeds the look of the moment to the sky, the backdrop, the tiles and
 ## the grade, darkened by how deep the camera and the hero are (see
-## RegionLook.descent_factor).
+## LookBlend.descent_factor).
 func _apply_look() -> void:
 	var view := get_viewport_rect().size / camera.zoom
 	var centre := camera.get_screen_center_position()
@@ -223,7 +223,7 @@ func _apply_look() -> void:
 	var height := level.size_px.y
 	if level.world:
 		dark = level.world.descent_dark
-	var camera_factor := RegionLook.descent_factor(dark, centre.y, height)
+	var camera_factor := LookBlend.descent_factor(dark, centre.y, height)
 	_sky_material.set_shader_parameter("top", look.top)
 	_sky_material.set_shader_parameter("bottom", look.bottom)
 	_sky_material.set_shader_parameter("cave", look.cave)
@@ -241,7 +241,7 @@ func _apply_look() -> void:
 		post.set_grade(look.tint, look.contrast, look.saturation)
 	var hero_factor := camera_factor
 	if is_instance_valid(player):
-		hero_factor = RegionLook.descent_factor(dark, player.global_position.y, height)
+		hero_factor = LookBlend.descent_factor(dark, player.global_position.y, height)
 	var lifted := _ambient.lerp(Color.WHITE, AMBIENT_LIFT)
 	level.set_ambient(Color(lifted.r * hero_factor, lifted.g * hero_factor, lifted.b * hero_factor))
 
@@ -304,7 +304,7 @@ func _enter_region(region: Dictionary, announce: bool) -> void:
 	if region.is_empty():
 		return
 	var fallback := Levels.sky(level_id)
-	_ambient = RegionLook.ambient_of(region, fallback)
+	_ambient = LookBlend.ambient_of(region, fallback)
 	if announce:
 		look.retarget(region, fallback)
 	else:
@@ -319,7 +319,7 @@ func _enter_region(region: Dictionary, announce: bool) -> void:
 	# Each region has its own loop (see tools/gen_music.py); a fight keeps
 	# its own until it is over.
 	if _boss == null:
-		Audio.play_music(EdgeDecor.region_key(name))
+		Audio.play_music(LookBlend.music_of(region))
 	if announce:
 		var subtitle := str(region.get("subtitle", ""))
 		hud.queue_message(name if subtitle.is_empty() else "%s: %s" % [name, subtitle], 2.5)
@@ -649,7 +649,7 @@ func _end_fight() -> void:
 	hud.hide_boss()
 	_boss = null
 	_fight_pending = false
-	Audio.play_music(EdgeDecor.region_key(str(_region.get("name", ""))))
+	Audio.play_music(LookBlend.music_of(_region))
 
 
 ## The boss's intro or defeat lines (`<id>_intro`, `<id>_defeat`), if the

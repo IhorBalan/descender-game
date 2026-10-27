@@ -1,6 +1,7 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_s8fb3"]
+[ext_resource type="Resource" path="res://resources/regions/heresy.tres" id="2_6ik3c"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_ti6mt"]
 [ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_unscc"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_ekpdu"]
@@ -39,9 +40,8 @@ position = Vector2(0, 5168)
 script = ExtResource("1_s8fb3")
 region_name = "6. Heresy"
 subtitle = "The Burned"
-ambient = Color(0.3372549, 0.16470589, 0.08627451, 1)
 rows = 34
-look = {}
+look = ExtResource("2_6ik3c")
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1542028783]
 

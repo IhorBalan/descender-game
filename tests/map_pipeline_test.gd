@@ -15,9 +15,9 @@ extends Node
 
 ## Loaded by path, so a fresh checkout works before the class cache knows it.
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
-const RegionLook := preload("res://scripts/region_look.gd")
+const LookBlend := preload("res://scripts/look_blend.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 255
+const EXPECTED_CHECKS := 260
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -1316,37 +1316,82 @@ func test_region_fx() -> void:
 # ---------- RegionLook ----------
 
 
+func test_region_look_resource() -> void:
+	var spec := {
+		"ambient": "#102030",
+		"sky_top": "#405060",
+		"sky_bottom": "#708090",
+		"cave": true,
+		"light": "#ffffff",
+		"grade": {"tint": "#ffe0c0", "saturation": 0.5},
+		"music": "hymn",
+	}
+	var look := RegionLook.from_spec(spec)
+	_check(
+		(
+			look.own_sky
+			and look.cave
+			and look.light == Color.WHITE
+			and look.ambient == Color("#102030")
+		),
+		"a look takes an exported region's fields"
+	)
+	_check(look.to_spec() == spec, "a look's spec round-trips, with only the fields that are set")
+	var plain := RegionLook.new().to_spec()
+	_check(
+		plain.keys() == ["ambient"] and plain["ambient"] == "#c2cce6",
+		"a default look is only its ambient"
+	)
+	_check(
+		(
+			LookBlend.music_of({"name": "1. Limbo"}) == "limbo"
+			and LookBlend.music_of({"name": "1. Limbo", "music": "hymn"}) == "hymn"
+		),
+		"a region's music is its own loop, else its key"
+	)
+	var world := SceneWorld.read("res://scenes/world/world.tscn")
+	var paradise := world.region_at(0.0) if world else {}
+	var saved := load("res://resources/regions/paradise.tres") as RegionLook
+	_check(
+		saved != null and paradise.get("ambient") == "#" + saved.ambient.to_html(false),
+		"Paradise's ambient comes from resources/regions/paradise.tres"
+	)
+
+
+# ---------- LookBlend ----------
+
+
 func test_region_look() -> void:
 	var fallback: Array[Color] = [Color.RED, Color.GREEN, Color.BLUE]
-	var sky := RegionLook.sky_of({}, fallback)
+	var sky := LookBlend.sky_of({}, fallback)
 	_check(
 		sky[0] == Color.RED and sky[1] == Color.BLUE,
 		"a region without sky colours takes the level's top and bottom"
 	)
-	sky = RegionLook.sky_of({"sky_top": "#102030", "sky_bottom": "nonsense"}, fallback)
+	sky = LookBlend.sky_of({"sky_top": "#102030", "sky_bottom": "nonsense"}, fallback)
 	_check(
 		sky[0] == Color("#102030") and sky[1] == Color.BLUE,
 		"its own colours win, bad ones fall back"
 	)
 	_check(
 		(
-			RegionLook.rim_of({"sky_top": "#102030"}, fallback) == Color("#102030")
-			and RegionLook.rim_of({"light": "#ffffff"}, fallback) == Color.WHITE
+			LookBlend.rim_of({"sky_top": "#102030"}, fallback) == Color("#102030")
+			and LookBlend.rim_of({"light": "#ffffff"}, fallback) == Color.WHITE
 		),
 		"the rim is the region's light, else its sky top"
 	)
 	_check(
-		RegionLook.ambient_of({"ambient": "#808080"}, fallback) == Color("#808080"),
+		LookBlend.ambient_of({"ambient": "#808080"}, fallback) == Color("#808080"),
 		"an explicit ambient is used as it is"
 	)
-	var derived := RegionLook.ambient_of({"sky_top": "#ffffff", "sky_bottom": "#ffffff"}, fallback)
+	var derived := LookBlend.ambient_of({"sky_top": "#ffffff", "sky_bottom": "#ffffff"}, fallback)
 	_check(derived.is_equal_approx(Color(0.6, 0.6, 0.6)), "a derived ambient sits below the sky")
-	var grade := RegionLook.grade_of({})
+	var grade := LookBlend.grade_of({})
 	_check(
 		grade["tint"] == Color.WHITE and grade["contrast"] == 1.0 and grade["saturation"] == 1.0,
 		"no grade leaves the view alone"
 	)
-	grade = RegionLook.grade_of({"grade": {"tint": "#ffe0c0", "contrast": 9, "saturation": 0.5}})
+	grade = LookBlend.grade_of({"grade": {"tint": "#ffe0c0", "contrast": 9, "saturation": 0.5}})
 	_check(
 		(
 			grade["tint"] == Color("#ffe0c0")
@@ -1357,14 +1402,14 @@ func test_region_look() -> void:
 	)
 	_check(
 		(
-			RegionLook.descent_factor(0.0, 50, 100) == 1.0
-			and is_equal_approx(RegionLook.descent_factor(0.6, 50, 100), 0.7)
-			and is_equal_approx(RegionLook.descent_factor(0.6, 500, 100), 0.4)
-			and RegionLook.descent_factor(0.6, -5, 100) == 1.0
+			LookBlend.descent_factor(0.0, 50, 100) == 1.0
+			and is_equal_approx(LookBlend.descent_factor(0.6, 50, 100), 0.7)
+			and is_equal_approx(LookBlend.descent_factor(0.6, 500, 100), 0.4)
+			and LookBlend.descent_factor(0.6, -5, 100) == 1.0
 		),
 		"the descent darkens evenly to the bottom and no further"
 	)
-	var look := RegionLook.new()
+	var look := LookBlend.new()
 	look.reset({"sky_top": "#000000", "sky_bottom": "#000000", "y0": 0, "y1": 100}, fallback)
 	var next := {
 		"sky_top": "#ffffff",
@@ -1375,7 +1420,7 @@ func test_region_look() -> void:
 		"grade": {"contrast": 2},
 	}
 	look.retarget(next, fallback)
-	look.step(RegionLook.FADE / 2.0)
+	look.step(LookBlend.FADE / 2.0)
 	_check(
 		(
 			is_equal_approx(look.top.r, 0.5)
@@ -1386,7 +1431,7 @@ func test_region_look() -> void:
 		"halfway through a fade the look is halfway"
 	)
 	_check(
-		look.step(RegionLook.FADE) and look.top == Color.WHITE and not look.step(0.1),
+		look.step(LookBlend.FADE) and look.top == Color.WHITE and not look.step(0.1),
 		"the fade ends on the new look"
 	)
 

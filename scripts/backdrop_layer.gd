@@ -111,9 +111,9 @@ func _ready() -> void:
 	_apply_filter()
 	_apply_tint()
 	if Engine.is_editor_hint():
-		var region := _region()
-		if region:
-			sky = str(region.look.get("sky_bottom", ""))
+		var region := WorldRegion.of(self)
+		if region and region.look and region.look.own_sky:
+			sky = "#" + region.look.sky_bottom.to_html(false)
 
 
 ## What the PNG is scaled by to land on the level's grid.
@@ -260,14 +260,6 @@ func _apply_tint() -> void:
 	var colour := effective_tint()
 	var alpha := modulate.a if is_node_ready() and not Engine.is_editor_hint() else colour.a
 	modulate = Color(colour.r, colour.g, colour.b, alpha)
-
-
-## The region scene the layer is in, when it is in one.
-func _region() -> WorldRegion:
-	var node := get_parent()
-	while node and not node is WorldRegion:
-		node = node.get_parent()
-	return node as WorldRegion
 
 
 func _process(delta: float) -> void:

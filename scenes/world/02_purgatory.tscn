@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_bug3c"]
 [ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_h7vbe"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_y43k8"]
+[ext_resource type="Resource" path="res://resources/regions/purgatory.tres" id="2_ymfda"]
 [ext_resource type="Texture2D" path="res://assets/regions/purgatory/sky.png" id="3_xh3a5"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_y82qu"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_0e51y"]
@@ -38,9 +39,8 @@ position = Vector2(0, 1632)
 script = ExtResource("1_bug3c")
 region_name = "Purgatory"
 subtitle = "The Waiting"
-ambient = Color(0.3529412, 0.35686275, 0.3882353, 1)
 rows = 51
-look = {}
+look = ExtResource("2_ymfda")
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1195332493]
 

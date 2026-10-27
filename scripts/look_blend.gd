@@ -1,4 +1,4 @@
-class_name RegionLook
+class_name LookBlend
 extends RefCounted
 
 ## The look of the region the hero is in, eased towards over FADE seconds
@@ -6,10 +6,11 @@ extends RefCounted
 ## procedural sky's two colours and cave flag, the band the sky gradient
 ## spans, the rim light the sky throws on the tiles and the colour grade.
 ##
-## The export's regions carry them (see the map editor): `sky_top` and
-## `sky_bottom` colours, `cave`, `light` (the rim colour), `ambient` and a
-## `grade` of tint, contrast and saturation. Each is optional; a region
-## without sky colours uses the level's own (see Levels.sky).
+## The export's regions carry them (see the map editor, and RegionLook for
+## a region of the game's own world): `sky_top` and `sky_bottom` colours,
+## `cave`, `light` (the rim colour), `ambient`, a `grade` of tint, contrast
+## and saturation and the `music` loop. Each is optional; a region without
+## sky colours uses the level's own (see Levels.sky).
 
 const FADE := 2.5
 ## How far a derived ambient tint sits below the sky colour, so a region
@@ -55,6 +56,12 @@ static func ambient_of(region: Dictionary, fallback: Array[Color]) -> Color:
 	var mix := sky[1].lerp(sky[0], 0.5)
 	mix.a = 1.0
 	return mix.darkened(1.0 - DERIVED_AMBIENT)
+
+
+## The region's music loop: its own, else its key (see EdgeDecor.region_key).
+static func music_of(region: Dictionary) -> String:
+	var own := str(region.get("music", ""))
+	return own if not own.is_empty() else EdgeDecor.region_key(str(region.get("name", "")))
 
 
 ## The region's colour grade, every part optional: tint (a colour the view

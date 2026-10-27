@@ -46,19 +46,24 @@ static var show_overlays := false
 ## name lowercased without its number (see EdgeDecor.region_key).
 @export var region_name := "Region"
 @export var subtitle := ""
-## The colour that tints the screen while the hero is in the region.
-@export var ambient := Color(0.76, 0.8, 0.9)
 ## How many tiles tall the band is.
 @export var rows := 34
-## The look of the region beyond the ambient, each optional and as the map
-## tool exports it (see README, "The world"): sky_top, sky_bottom, cave,
-## light, grade {tint, contrast, saturation}, particles.
-@export var look: Dictionary = {}
+## The region's tint, sky, rim light, grade and music (see RegionLook),
+## kept at resources/regions/<key>.tres; the defaults when unset.
+@export var look: RegionLook
 
 
 ## Whether the overlays are drawn: in the editor, or when a tool asks.
 static func overlays_shown() -> bool:
 	return Engine.is_editor_hint() or show_overlays
+
+
+## The region scene `node` is in, or null when it is in none.
+static func of(node: Node) -> WorldRegion:
+	var parent := node.get_parent() if node else null
+	while parent and not parent is WorldRegion:
+		parent = parent.get_parent()
+	return parent as WorldRegion
 
 
 func _ready() -> void:

@@ -5,7 +5,7 @@ extends CanvasLayer
 ## over the level and under the HUD (assets/shaders/post.gdshader). It
 ## sits on the HUD's canvas layer, placed before the HUD in the tree so
 ## it is drawn first, and reads the screen behind it. Main eases the grade
-## between regions (see RegionLook).
+## between regions (see LookBlend).
 ##
 ## Reading the screen copies the whole frame first, which at a large
 ## window's full resolution costs more than a 120 Hz frame has. Only
