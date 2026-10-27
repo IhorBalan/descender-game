@@ -1,11 +1,17 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_lc6fx"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_iwkx6"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_obyjk"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_i5dk8"]
+[ext_resource type="Texture2D" path="res://assets/regions/gluttony/sky.png" id="3_p25o4"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_7n57x"]
+[ext_resource type="Texture2D" path="res://assets/regions/gluttony/far.png" id="4_mid68"]
+[ext_resource type="Texture2D" path="res://assets/regions/gluttony/mid.png" id="5_o5s6s"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_twyr8"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_iwkx6"]
+[ext_resource type="Texture2D" path="res://assets/regions/gluttony/fog.png" id="6_uvyb7"]
+[ext_resource type="Texture2D" path="res://assets/regions/gluttony/haze.png" id="7_e5sfq"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_mid68"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_lc6fx"]
@@ -18,6 +24,38 @@ script = ExtResource("1_lc6fx")
 region_name = "3. Gluttony"
 subtitle = "The Devourers"
 ambient = Color(0.21960784, 0.3372549, 0.16470589, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1864936033]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=1478787691]
+script = ExtResource("2_iwkx6")
+texture = ExtResource("3_p25o4")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=693497688]
+position = Vector2(0, -1128)
+script = ExtResource("2_iwkx6")
+texture = ExtResource("4_mid68")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=599862436]
+position = Vector2(0, -216)
+script = ExtResource("2_iwkx6")
+texture = ExtResource("5_o5s6s")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=1280966603]
+position = Vector2(0, 248)
+script = ExtResource("2_iwkx6")
+texture = ExtResource("6_uvyb7")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=594910945]
+position = Vector2(0, 177)
+script = ExtResource("2_iwkx6")
+texture = ExtResource("7_e5sfq")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=650595443]
 
@@ -671,22 +709,30 @@ lock_ability = 4
 position = Vector2(2392, 512)
 script = ExtResource("8_mid68")
 character = "the_bloated_one"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save471" type="Node2D" parent="Placements" unique_id=126938844]
 position = Vector2(6984, 240)
 script = ExtResource("8_mid68")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save472" type="Node2D" parent="Placements" unique_id=1775651416]
 position = Vector2(3112, 512)
 script = ExtResource("8_mid68")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Ability475" type="Node2D" parent="Placements" unique_id=1214302568]
 position = Vector2(712, 240)
 script = ExtResource("8_mid68")
 type = "ability"
 ability = "Smite"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1141077305]
 position = Vector2(3208, 512)

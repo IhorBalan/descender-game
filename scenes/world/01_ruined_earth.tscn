@@ -2,10 +2,16 @@
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_vseci"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_j6acs"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_yitr8"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/sky.png" id="3_rcf42"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_u0nw3"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_hxgc0"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/far.png" id="4_k80ob"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_pb5a0"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/mid.png" id="5_ps4xe"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/fog.png" id="6_ct684"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_yitr8"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/haze.png" id="7_1foe8"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_k80ob"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vseci"]
@@ -19,6 +25,38 @@ region_name = "Ruined Earth"
 subtitle = "The Hub"
 ambient = Color(0.34117648, 0.32156864, 0.43137255, 1)
 rows = 51
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=533405194]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=1081823702]
+script = ExtResource("2_yitr8")
+texture = ExtResource("3_rcf42")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=1652368623]
+position = Vector2(0, -992)
+script = ExtResource("2_yitr8")
+texture = ExtResource("4_k80ob")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=1160416727]
+position = Vector2(0, -80)
+script = ExtResource("2_yitr8")
+texture = ExtResource("5_ps4xe")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=1296926344]
+position = Vector2(0, 384)
+script = ExtResource("2_yitr8")
+texture = ExtResource("6_ct684")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=366806228]
+position = Vector2(0, 313)
+script = ExtResource("2_yitr8")
+texture = ExtResource("7_1foe8")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=1794928049]
 
@@ -1794,17 +1832,23 @@ lock_kind = "ability"
 position = Vector2(1672, 784)
 script = ExtResource("8_k80ob")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Ability445" type="Node2D" parent="Placements" unique_id=1763673107]
 position = Vector2(1672, 240)
 script = ExtResource("8_k80ob")
 type = "ability"
 ability = "Halo Dash"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save446" type="Node2D" parent="Placements" unique_id=1150797846]
 position = Vector2(7432, 784)
 script = ExtResource("8_k80ob")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1447913281]
 position = Vector2(968, 240)

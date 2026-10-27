@@ -2,10 +2,16 @@
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_kxpyp"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_auebg"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_cnkip"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/sky.png" id="3_ivxj7"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_uqc3h"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_age7e"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/far.png" id="4_ktjh1"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_8la44"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/mid.png" id="5_gqwe8"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_cnkip"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/fog.png" id="6_dij4p"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/haze.png" id="7_7kdsx"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_ktjh1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kxpyp"]
@@ -18,6 +24,38 @@ script = ExtResource("1_kxpyp")
 region_name = "7. Violence"
 subtitle = "The Wounded"
 ambient = Color(0.3137255, 0.09411765, 0.14901961, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1665012499]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=590703877]
+script = ExtResource("2_cnkip")
+texture = ExtResource("3_ivxj7")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=894020272]
+position = Vector2(0, -1128)
+script = ExtResource("2_cnkip")
+texture = ExtResource("4_ktjh1")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=1530333742]
+position = Vector2(0, -216)
+script = ExtResource("2_cnkip")
+texture = ExtResource("5_gqwe8")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=1709016812]
+position = Vector2(0, 248)
+script = ExtResource("2_cnkip")
+texture = ExtResource("6_dij4p")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=1204220691]
+position = Vector2(0, 177)
+script = ExtResource("2_cnkip")
+texture = ExtResource("7_7kdsx")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=1211398775]
 
@@ -474,16 +512,22 @@ lock_region = 8
 position = Vector2(6696, 512)
 script = ExtResource("8_ktjh1")
 character = "the_red_arena"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save496" type="Node2D" parent="Placements" unique_id=2096491879]
 position = Vector2(3128, 240)
 script = ExtResource("8_ktjh1")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save497" type="Node2D" parent="Placements" unique_id=474769609]
 position = Vector2(5992, 512)
 script = ExtResource("8_ktjh1")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Npc1" type="Node2D" parent="Placements" unique_id=1486624522]
 position = Vector2(2408, 240)
