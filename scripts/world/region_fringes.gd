@@ -120,7 +120,7 @@ static func from_spec(spec: Dictionary, dir := "") -> RegionFringes:
 ## top-left in the region's pixels, scale] each.
 func pieces() -> Array:
 	var terrain := _terrain()
-	var region := _region()
+	var region := WorldRegion.of(self)
 	if terrain == null or terrain.tile_set == null or region == null:
 		return []
 	var world := region.get_parent() as WorldScene
@@ -145,13 +145,6 @@ func _draw() -> void:
 		draw_texture_rect(texture, Rect2(at, texture.get_size() * float(piece[2])), false)
 
 
-func _region() -> WorldRegion:
-	var node := get_parent()
-	while node and not node is WorldRegion:
-		node = node.get_parent()
-	return node as WorldRegion
-
-
 func _terrain() -> TileMapLayer:
-	var region := _region()
+	var region := WorldRegion.of(self)
 	return region.layer("Terrain") if region else null

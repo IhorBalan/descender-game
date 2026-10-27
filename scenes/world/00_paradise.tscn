@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_4k8yx"]
 [ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_5i4ff"]
+[ext_resource type="Resource" path="res://resources/regions/paradise.tres" id="2_ktrot"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_ufmdw"]
 [ext_resource type="Texture2D" path="res://assets/regions/paradise/sky.png" id="3_behbo"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_wlw3m"]
@@ -67,9 +68,8 @@ light_mode = 1
 script = ExtResource("1_4k8yx")
 region_name = "Paradise"
 subtitle = "Celestial Gardens"
-ambient = Color(0.7607843, 0.8039216, 0.9019608, 1)
 rows = 51
-look = {}
+look = ExtResource("2_ktrot")
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1058192180]
 

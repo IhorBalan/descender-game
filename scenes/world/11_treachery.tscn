@@ -1,6 +1,7 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_5t6gs"]
+[ext_resource type="Resource" path="res://resources/regions/treachery.tres" id="2_2vxet"]
 [ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_adtbv"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_f5woj"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_c5fo6"]
@@ -38,9 +39,8 @@ position = Vector2(0, 6800)
 script = ExtResource("1_5t6gs")
 region_name = "9. Treachery"
 subtitle = "The Frozen"
-ambient = Color(0.23529412, 0.3529412, 0.49411765, 1)
 rows = 34
-look = {}
+look = ExtResource("2_2vxet")
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1446494120]
 

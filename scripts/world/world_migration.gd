@@ -375,12 +375,11 @@ static func _build_region(
 	region.name = _node_name(str(spec.get("name", "Region")), "Region")
 	region.region_name = str(spec.get("name", ""))
 	region.subtitle = str(spec.get("subtitle", ""))
-	region.ambient = Color.from_string(str(spec.get("ambient", "#ffffff")), Color.WHITE)
 	region.position = offset
 	region.rows = bottom - top
-	for key in spec:
-		if key not in ["name", "subtitle", "ambient", "y0", "y1"]:
-			region.look[key] = spec[key]
+	region.look = RegionLook.write(
+		EdgeDecor.region_key(region.region_name), RegionLook.from_spec(spec)
+	)
 	var tiles := Node2D.new()
 	tiles.name = "Tiles"
 	region.add_child(tiles)

@@ -168,7 +168,7 @@ func _refresh() -> void:
 	if _preview:
 		_preview.queue_free()
 		_preview = null
-	var region := _region()
+	var region := WorldRegion.of(self)
 	if region == null:
 		return
 	var world := region.get_parent() as WorldScene
@@ -190,10 +190,3 @@ func _refresh() -> void:
 	emitter.emitting = true
 	add_child(emitter)
 	_preview = emitter
-
-
-func _region() -> WorldRegion:
-	var node := get_parent()
-	while node and not node is WorldRegion:
-		node = node.get_parent()
-	return node as WorldRegion

@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="RegionLook" format=3]
+
+[ext_resource type="Script" path="res://scripts/world/region_look.gd" id="1_3fuvh"]
+
+[resource]
+script = ExtResource("1_3fuvh")
+ambient = Color(0.3372549, 0.16470589, 0.08627451, 1)

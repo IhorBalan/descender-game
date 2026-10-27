@@ -1330,7 +1330,7 @@ func set_ambient(color: Color) -> void:
 		ambient.color = color
 
 
-## Colours the rim light on the tiles (the region's light, see RegionLook).
+## Colours the rim light on the tiles (the region's light, see LookBlend).
 func set_rim(color: Color) -> void:
 	if rim != null:
 		rim.set_shader_parameter("rim_color", color)

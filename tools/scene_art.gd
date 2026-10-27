@@ -6,8 +6,10 @@ extends SceneTree
 ## scenes/world/ a Backdrop node of BackdropLayer children (back to front),
 ## a Fringes node (RegionFringes) and an Fx node of RegionParticles
 ## children, so the editor shows the region the way the game draws it and
-## each part can be picked, moved and tuned there. A part the scene already
-## has is left alone unless `--replace` is given.
+## each part can be picked, moved and tuned there. A region whose look is
+## not a resource file yet gets one, resources/regions/<key>.tres (see
+## RegionLook), from the look it has. A part the scene already has is
+## left alone unless `--replace` is given.
 ##
 ##   godot --headless --path . --script tools/scene_art.gd -- \
 ##       [--replace] [00_paradise.tscn ...]
@@ -54,7 +56,8 @@ func _convert(path: String, replace: bool) -> bool:
 	var dir := "%s/%s" % [REGIONS_DIR, key]
 	var done: Array[String] = []
 	var ok := (
-		_backdrop(region, dir, replace, done)
+		_look(region, key, done)
+		and _backdrop(region, dir, replace, done)
 		and _fringes(region, dir, replace, done)
 		and _fx(region, dir, replace, done)
 	)
@@ -71,6 +74,21 @@ func _convert(path: String, replace: bool) -> bool:
 		print("%s (%s): %s" % [path.get_file(), key, what])
 	region.free()
 	return ok and error == OK
+
+
+## Writes the region's look as resources/regions/<key>.tres when it is not
+## a resource file yet (an inline resource, or none).
+static func _look(region: WorldRegion, key: String, done: Array[String]) -> bool:
+	var look := region.look if region.look else RegionLook.new()
+	if look.resource_path.begins_with(RegionLook.DIR):
+		return true
+	var written := RegionLook.write(key, look)
+	if written == null:
+		printerr("%s: %s/%s.tres could not be written" % [region.region_name, RegionLook.DIR, key])
+		return false
+	region.look = written
+	done.append("look at %s.tres" % key)
+	return true
 
 
 ## The JSON at `file` in `dir`, or null for a region without it.
