@@ -13,6 +13,21 @@
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_oyoy4"]
 [ext_resource type="Texture2D" path="res://assets/regions/greed/haze.png" id="7_f24ls"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_rf65r"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_p5tlm"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/top_0.png" id="10_0quab"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/top_1.png" id="11_aujh7"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/top_2.png" id="12_qeefs"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/top_3.png" id="13_fw1m6"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/hang_0.png" id="14_1ckgu"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/hang_1.png" id="15_eq5sk"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/hang_2.png" id="16_bkx8m"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/side_l0.png" id="17_53x6o"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/side_l1.png" id="18_tvovk"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/side_r0.png" id="19_7vxj1"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/side_r1.png" id="20_lffmw"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_0wwy1"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/motes.png" id="22_012wa"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/dust.png" id="23_tfoue"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uwfop"]
 blend_mode = 1
@@ -24,6 +39,8 @@ script = ExtResource("1_uwfop")
 region_name = "4. Greed"
 subtitle = "The Hoarders"
 ambient = Color(0.32941177, 0.25882354, 0.14901961, 1)
+rows = 34
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=460916998]
 
@@ -87,6 +104,43 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AABOAAQABwAAAA0AAAAhAAkABwAAAA0AAAALAA4ABwABAA0AAABUAA4ABwABAA0AAACOAA4ABwABAA0AAAB6AQ4ABwABAA0AAADVABgABwAAAA0AAACSABkABwAAAA0AAACZABkABwAAAA0AAABOARkABwAAAA0AAABrARkABwAAAA0AAACJARoABwAAAA0AAADsABsABwAAAA0AAADzABsABwAAAA0AAAB0ABwABwAAAA0AAAB7ABwABwAAAA0AAAAKARwABwAAAA0AAAARARwABwAAAA0AAACyAB4ABwAAAA0AAABLAR4ABwAAAA0AAADgAB8ABwABAA0AAAAoAR8ABwABAA0AAABSAR8ABwABAA0AAABVAR8ABwABAA0AAABkAR8ABwABAA0AAAA=")
 tile_set = ExtResource("2_dcvkt")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=118326560]
+script = ExtResource("9_p5tlm")
+top = Array[Texture2D]([ExtResource("10_0quab"), ExtResource("11_aujh7"), ExtResource("12_qeefs"), ExtResource("13_fw1m6")])
+bottom = Array[Texture2D]([ExtResource("14_1ckgu"), ExtResource("15_eq5sk"), ExtResource("16_bkx8m")])
+left = Array[Texture2D]([ExtResource("17_53x6o"), ExtResource("18_tvovk")])
+right = Array[Texture2D]([ExtResource("19_7vxj1"), ExtResource("20_lffmw")])
+top_chance = 0.5
+bottom_chance = 0.4
+left_chance = 0.3
+right_chance = 0.3
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=1176869072]
+
+[node name="Motes" type="Node2D" parent="Fx" unique_id=426339450]
+script = ExtResource("21_0wwy1")
+texture = ExtResource("22_012wa")
+color = Color(1, 0.8627451, 0.54901963, 1)
+lifetime = 12.0
+direction = Vector2(0, -1)
+spread = 50.0
+speed = Vector2(2, 5)
+size = Vector2(0.2, 0.5)
+sway = 2.0
+
+[node name="Dust" type="Node2D" parent="Fx" unique_id=333318245]
+script = ExtResource("21_0wwy1")
+texture = ExtResource("23_tfoue")
+amount = 20
+color = Color(0.78431374, 0.6666667, 0.39215687, 1)
+lifetime = 16.0
+direction = Vector2(1, 0)
+spread = 30.0
+speed = Vector2(2, 6)
+size = Vector2(0.2, 0.5)
+sway = 2.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=1083502308]
 

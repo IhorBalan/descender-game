@@ -13,6 +13,21 @@
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_bevqw"]
 [ext_resource type="Texture2D" path="res://assets/regions/lust/haze.png" id="7_sj0ma"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_xwk3o"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_1nusc"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/top_0.png" id="10_aqryd"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/top_1.png" id="11_rt4qq"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/top_2.png" id="12_akfm0"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/top_3.png" id="13_mv34i"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/hang_0.png" id="14_rvspc"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/hang_1.png" id="15_ltfu3"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/hang_2.png" id="16_ewvj5"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/side_l0.png" id="17_xb8x1"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/side_l1.png" id="18_sxksj"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/side_r0.png" id="19_3ljka"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/side_r1.png" id="20_mh7pc"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_a4pl8"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/motes.png" id="22_ejg55"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/ash.png" id="23_flv1p"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cuy0t"]
 blend_mode = 1
@@ -24,6 +39,8 @@ script = ExtResource("1_cuy0t")
 region_name = "2. Lust"
 subtitle = "The Desire"
 ambient = Color(0.36862746, 0.15686275, 0.3137255, 1)
+rows = 34
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1418949716]
 
@@ -87,6 +104,45 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AAC4AQMABQADAA0AAAAYAQcABQADAA0AAACGAAgABQADAA0AAAD9AAgABQADAA0AAAAxAQgABQADAA0AAACQAQgABQADAA0AAADYAAkABQADAA0AAADjAAkABQADAA0AAAA6AQkABQADAA0AAADsAAoABQADAA0AAADzAAoABQADAA0AAABGAQoABQADAA0AAABHAQoABQADAA0AAABNAQoABQADAA0AAAC+AQoABQADAA0AAADFAQoABQADAA0AAACSAAsABQADAA0AAACZAAsABQADAA0AAAAKAQsABQADAA0AAAARAQsABQADAA0AAACgAQsABQADAA0AAACnAQsABQADAA0AAACGAA4ABQABAA0AAACPAA4ABQABAA0AAAAAAQ4ABQABAA0AAACEAQ4ABQABAA0AAACSAQ4ABQABAA0AAACZARMABQADAA0AAABzARYABQADAA0AAAB3ARgABQADAA0AAAA8ARkABQADAA0AAAC/ARwABQADAA0AAACgAB8ABQABAA0AAACkAB8ABQABAA0AAABBAR8ABQABAA0AAABTAR8ABQABAA0AAAChAR8ABQABAA0AAAA=")
 tile_set = ExtResource("2_yijx1")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=859948970]
+script = ExtResource("9_1nusc")
+top = Array[Texture2D]([ExtResource("10_aqryd"), ExtResource("11_rt4qq"), ExtResource("12_akfm0"), ExtResource("13_mv34i")])
+bottom = Array[Texture2D]([ExtResource("14_rvspc"), ExtResource("15_ltfu3"), ExtResource("16_ewvj5")])
+left = Array[Texture2D]([ExtResource("17_xb8x1"), ExtResource("18_sxksj")])
+right = Array[Texture2D]([ExtResource("19_3ljka"), ExtResource("20_mh7pc")])
+top_chance = 0.5
+bottom_chance = 0.45
+left_chance = 0.35
+right_chance = 0.35
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=29754047]
+
+[node name="Motes" type="Node2D" parent="Fx" unique_id=2028065533]
+script = ExtResource("21_a4pl8")
+texture = ExtResource("22_ejg55")
+amount = 26
+color = Color(1, 0.74509805, 0.9019608, 1)
+lifetime = 12.0
+direction = Vector2(0, -1)
+spread = 80.0
+speed = Vector2(2, 5)
+size = Vector2(0.3, 0.7)
+sway = 2.0
+
+[node name="Ash" type="Node2D" parent="Fx" unique_id=295965896]
+script = ExtResource("21_a4pl8")
+texture = ExtResource("23_flv1p")
+amount = 14
+color = Color(0.8627451, 0.5882353, 0.78431374, 1)
+lifetime = 14.0
+direction = Vector2(-0.3, 1)
+speed = Vector2(6, 14)
+gravity = Vector2(0, 2)
+size = Vector2(0.25, 0.45)
+spin = 0.3
+sway = 3.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=189892986]
 

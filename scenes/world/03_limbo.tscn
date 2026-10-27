@@ -13,6 +13,21 @@
 [ext_resource type="Texture2D" path="res://assets/regions/limbo/fog.png" id="6_outto"]
 [ext_resource type="Texture2D" path="res://assets/regions/limbo/haze.png" id="7_362s2"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_8ekn6"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_7unsp"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/top_0.png" id="10_wcjpr"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/top_1.png" id="11_vjpq5"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/top_2.png" id="12_3keeh"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/top_3.png" id="13_05r25"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/hang_0.png" id="14_pkltd"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/hang_1.png" id="15_p0df2"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/hang_2.png" id="16_cycf3"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/side_l0.png" id="17_mfywm"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/side_l1.png" id="18_sa3go"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/side_r0.png" id="19_06chq"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/side_r1.png" id="20_1sap6"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_6p6dp"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/dust.png" id="22_hu7sl"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/motes.png" id="23_frqao"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_onsl0"]
 blend_mode = 1
@@ -24,6 +39,8 @@ script = ExtResource("1_onsl0")
 region_name = "1. Limbo"
 subtitle = "The Forgotten"
 ambient = Color(0.27450982, 0.33333334, 0.49411765, 1)
+rows = 34
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=33444504]
 
@@ -87,6 +104,44 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AADzAAcABAAAAA0AAACZAAkABAAAAA0AAAB0AAoABAAAAA0AAAB7AAoABAAAAA0AAACwAAoABAAAAA0AAAC3AAoABAAAAA0AAAB6AAwABAABAA0AAACZAA4ABAACAA0AAACfAA4ABAACAA0AAACsAA4ABAACAA0AAADXAA4ABAACAA0AAAABAQ4ABAACAA0AAAAvAQ4ABAABAA0AAAA6AQ4ABAACAA0AAAA+AQ4ABAACAA0AAACnAQ4ABAACAA0AAACqAQ4ABAACAA0AAACFABEABAABAA0AAAAoARkABAAAAA0AAAAvARkABAAAAA0AAACSABoABAAAAA0AAACZABoABAAAAA0AAADVABoABAAAAA0AAACCARsABAAAAA0AAACJARsABAAAAA0AAADUABwABAACAA0AAADsABwABAAAAA0AAADzABwABAAAAA0AAAB+AB8ABAABAA0AAACXAB8ABAACAA0AAACdAB8ABAACAA0AAACgAB8ABAACAA0AAAC5AB8ABAACAA0AAAC7AB8ABAACAA0AAADYAB8ABAACAA0AAADkAB8ABAACAA0AAAAHAR8ABAACAA0AAAATAR8ABAACAA0AAAAtAR8ABAABAA0AAAA8AR8ABAACAA0AAABBAR8ABAACAA0AAABLAR8ABAACAA0AAABOAR8ABAABAA0AAABUAR8ABAACAA0AAABVAR8ABAACAA0AAACoAR8ABAABAA0AAACsAR8ABAACAA0AAACtAR8ABAACAA0AAAA=")
 tile_set = ExtResource("2_p0m0j")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=110972945]
+script = ExtResource("9_7unsp")
+top = Array[Texture2D]([ExtResource("10_wcjpr"), ExtResource("11_vjpq5"), ExtResource("12_3keeh"), ExtResource("13_05r25")])
+bottom = Array[Texture2D]([ExtResource("14_pkltd"), ExtResource("15_p0df2"), ExtResource("16_cycf3")])
+left = Array[Texture2D]([ExtResource("17_mfywm"), ExtResource("18_sa3go")])
+right = Array[Texture2D]([ExtResource("19_06chq"), ExtResource("20_1sap6")])
+top_chance = 0.6
+bottom_chance = 0.5
+left_chance = 0.4
+right_chance = 0.4
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=834352160]
+
+[node name="Dust" type="Node2D" parent="Fx" unique_id=734254157]
+script = ExtResource("21_6p6dp")
+texture = ExtResource("22_hu7sl")
+amount = 36
+color = Color(0.6666667, 0.7294118, 0.8627451, 1)
+lifetime = 16.0
+direction = Vector2(1, 0)
+spread = 30.0
+speed = Vector2(2, 6)
+size = Vector2(0.2, 0.5)
+sway = 2.0
+
+[node name="Motes" type="Node2D" parent="Fx" unique_id=1106879428]
+script = ExtResource("21_6p6dp")
+texture = ExtResource("23_frqao")
+amount = 12
+color = Color(0.78431374, 0.8392157, 0.98039216, 1)
+lifetime = 12.0
+direction = Vector2(0, -1)
+spread = 50.0
+speed = Vector2(2, 5)
+size = Vector2(0.3, 0.7)
+sway = 2.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=1269810664]
 

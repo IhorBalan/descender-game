@@ -13,6 +13,21 @@
 [ext_resource type="Texture2D" path="res://assets/regions/purgatory/fog.png" id="6_l4a5k"]
 [ext_resource type="Texture2D" path="res://assets/regions/purgatory/haze.png" id="7_41p7o"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_81lsa"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_esm0t"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/top_0.png" id="10_ymfda"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/top_1.png" id="11_ihi5m"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/top_2.png" id="12_8hmbt"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/top_3.png" id="13_wcygs"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/hang_0.png" id="14_h0hrx"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/hang_1.png" id="15_0h5m5"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/hang_2.png" id="16_tvw61"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/side_l0.png" id="17_nb86d"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/side_l1.png" id="18_yd2u4"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/side_r0.png" id="19_dkrrr"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/side_r1.png" id="20_bomnj"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_bw44f"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/motes.png" id="22_2w148"]
+[ext_resource type="Texture2D" path="res://assets/regions/purgatory/dust.png" id="23_0hxxl"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bug3c"]
 blend_mode = 1
@@ -25,6 +40,7 @@ region_name = "Purgatory"
 subtitle = "The Waiting"
 ambient = Color(0.3529412, 0.35686275, 0.3882353, 1)
 rows = 51
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1195332493]
 
@@ -88,6 +104,43 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("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")
 tile_set = ExtResource("2_y43k8")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=1138860230]
+script = ExtResource("9_esm0t")
+top = Array[Texture2D]([ExtResource("10_ymfda"), ExtResource("11_ihi5m"), ExtResource("12_8hmbt"), ExtResource("13_wcygs")])
+bottom = Array[Texture2D]([ExtResource("14_h0hrx"), ExtResource("15_0h5m5"), ExtResource("16_tvw61")])
+left = Array[Texture2D]([ExtResource("17_nb86d"), ExtResource("18_yd2u4")])
+right = Array[Texture2D]([ExtResource("19_dkrrr"), ExtResource("20_bomnj")])
+top_chance = 0.6
+bottom_chance = 0.3
+left_chance = 0.4
+right_chance = 0.4
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=1300815564]
+
+[node name="Motes" type="Node2D" parent="Fx" unique_id=937947961]
+script = ExtResource("21_bw44f")
+texture = ExtResource("22_2w148")
+amount = 18
+color = Color(0.8235294, 0.83137256, 0.8627451, 1)
+lifetime = 12.0
+direction = Vector2(0, -1)
+spread = 50.0
+speed = Vector2(2, 5)
+size = Vector2(0.3, 0.7)
+sway = 2.0
+
+[node name="Dust" type="Node2D" parent="Fx" unique_id=135247533]
+script = ExtResource("21_bw44f")
+texture = ExtResource("23_0hxxl")
+color = Color(0.627451, 0.627451, 0.6666667, 1)
+lifetime = 16.0
+direction = Vector2(1, 0)
+spread = 30.0
+speed = Vector2(2, 6)
+size = Vector2(0.2, 0.5)
+sway = 2.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=1382142699]
 

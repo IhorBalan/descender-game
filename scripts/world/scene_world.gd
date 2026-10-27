@@ -8,8 +8,10 @@ extends RefCounted
 ## TileSet's custom data the terrain kinds, and the regions' lights, rooms,
 ## doors and placements the lists the export would hold, in level pixels of
 ## the whole world, a region's backdrop layers its `parallax` spec (see
-## Backdrop) and its props the `props` list (see WorldProp). Nothing is
-## added to the tree: the scene is instanced, read and freed.
+## Backdrop), its fringes its `edges` spec (see EdgeDecor), its particles
+## its `fx` spec (see RegionFx) and its props the `props` list (see
+## WorldProp). Nothing is added to the tree: the scene is instanced, read
+## and freed.
 
 ## The room grid the map page draws on, in tiles.
 const ROOM_COLUMNS := 30
@@ -117,6 +119,15 @@ static func _read_region(map: WorldMap, region: WorldRegion, index: int, tiles: 
 		for layer in layers:
 			entries.append(layer.to_spec())
 		spec["parallax"] = {"art_tile": layers[0].art_tile, "layers": entries}
+	var fringes := region.fringes()
+	if fringes:
+		spec["edges"] = fringes.to_spec()
+	var particles := region.particles()
+	if not particles.is_empty():
+		var entries: Array[Dictionary] = []
+		for node in particles:
+			entries.append(node.to_spec())
+		spec["fx"] = {"art_tile": particles[0].art_tile, "particles": entries}
 	map.regions.append(spec)
 	for layer_name in map.layer_names:
 		var layer := region.layer(layer_name)

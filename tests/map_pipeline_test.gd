@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 249
+const EXPECTED_CHECKS := 255
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -1179,6 +1179,97 @@ func test_backdrop_from_scene() -> void:
 	_check(
 		layers.size() == 7 and layers[0].get("cover", false) and layers[6].get("front", false),
 		"Paradise's scene carries its backdrop: 7 layers, the sky first and the wisps in front"
+	)
+
+
+# ---------- Fringes and Fx from a scene ----------
+
+
+func test_fringes_and_fx_from_scene() -> void:
+	var image := Image.create(8, 4, false, Image.FORMAT_RGBA8)
+	image.fill(Color.WHITE)
+	var texture := ImageTexture.create_from_image(image)
+	var fringes := RegionFringes.from_spec(
+		{
+			"art_tile": 64,
+			"top": [texture, texture],
+			"left": [texture],
+			"chance": 0.5,
+			"top_chance": 0.9
+		}
+	)
+	var spec := fringes.to_spec()
+	fringes.free()
+	_check(
+		(
+			spec["art_tile"] == 64
+			and spec["top"].size() == 2
+			and spec["left"] == [texture]
+			and not spec.has("bottom")
+			and is_equal_approx(spec["top_chance"], 0.9)
+			and is_equal_approx(spec["left_chance"], 0.5)
+		),
+		"a fringes node's spec round-trips, a side without its own chance taking the shared one"
+	)
+	var solid := PackedByteArray([0, 0, 0, 0, 1, 0, 0, 0, 0])
+	var pieces := EdgeDecor.pieces_in(solid, 3, 3, Rect2i(0, 0, 3, 3), spec, 16)
+	var tops := pieces.filter(func(piece: Array) -> bool: return piece[1].y < 16.0)
+	_check(
+		pieces.size() == 2 and tops.size() == 1 and tops[0][1] == Vector2(23.0, 15.0),
+		"a lone solid cell gets a tuft on top and ivy on its left, the tuft standing on the cell"
+	)
+	var snow := RegionParticles.from_spec({"preset": "snow", "amount": 5}, null, 64)
+	var entry := snow.to_spec()
+	snow.free()
+	_check(
+		(
+			entry["preset"] == "snow"
+			and entry["amount"] == 5
+			and entry["color"] == "#f4f8ff"
+			and is_equal_approx(entry["sway"], 5.0)
+			and not entry.has("texture")
+		),
+		"a preset particle node takes the preset's defaults and keeps its own amount"
+	)
+	var fx := RegionFx.new()
+	add_child(fx)
+	var region := {
+		"name": "Scened",
+		"particles": ["embers"],
+		"fx":
+		{
+			"art_tile": 64,
+			"particles": [{"texture": texture, "amount": 7}, {"preset": "ash"}, {"preset": "nope"}]
+		},
+	}
+	fx.show_region(region, 16, "res://nowhere")
+	var emitters := fx.get_children()
+	_check(
+		(
+			emitters.size() == 2
+			and emitters[0].amount == 7
+			and is_equal_approx(emitters[0].scale_amount_max, 0.25)
+			and emitters[0].texture == texture
+		),
+		"a region's scene particles are emitted, not its presets list, the art scaled to the grid"
+	)
+	fx.queue_free()
+	var world := SceneWorld.read("res://scenes/world/world.tscn")
+	var paradise := world.region_at(0.0) if world else {}
+	var edges: Dictionary = paradise.get("edges", {})
+	_check(
+		(
+			edges.get("top", []).size() == 4
+			and edges.get("bottom", []).size() == 3
+			and is_equal_approx(float(edges.get("top_chance", 0.0)), 0.9)
+			and edges.get("top", [null])[0] is Texture2D
+		),
+		"Paradise's scene carries its fringes: four tufts, three undersides, with their chances"
+	)
+	var particles: Array = paradise.get("fx", {}).get("particles", [])
+	_check(
+		particles.size() == 2 and particles[0].get("amount") == 36 and particles[1].has("texture"),
+		"Paradise's scene carries its particles: the petals and the motes"
 	)
 
 

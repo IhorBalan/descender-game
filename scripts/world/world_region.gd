@@ -17,6 +17,10 @@ extends Node2D
 ##                                            does to the hero (see WorldMap.KIND_*)
 ##   Props/*                                  WorldProp, the pieces of the set (lanterns, pillars,
 ##                                            ledges, statues) as instances of scenes/props/<key>/
+##   Fringes                                  RegionFringes, the tufts, undersides and ivy along
+##                                            the terrain's exposed edges, drawn on it in the editor
+##   Fx/*                                     RegionParticles, one kind of drifting particle each,
+##                                            previewed over the band in the editor
 ##   Lights/*                                 WorldLight (a PointLight2D)
 ##   Rooms/*                                  WorldRoom, the rooms of the map page and the fights
 ##   Doors/*                                  WorldDoor, the openings between rooms and their locks
@@ -26,9 +30,10 @@ extends Node2D
 ##
 ## Drag a node to move it; paint the layers with Godot's TileMap tools. The
 ## editor draws the region's band, and each room, door and placement draws
-## itself, so a level reads at a glance. A region without a Backdrop node
-## falls back to assets/regions/<key>/parallax.json;
-## tools/scene_backdrops.gd turns that file into the nodes.
+## itself, so a level reads at a glance. A region without a Backdrop node,
+## a Fringes node or Fx nodes falls back to its assets/regions/<key>/
+## parallax.json, edges.json or fx.json; tools/scene_art.gd turns those
+## files into the nodes.
 
 const LAYER_NAMES: Array[String] = ["Background", "Decor", "Terrain", "Glow"]
 const BAND_COLOR := Color(1.0, 1.0, 1.0, 0.25)
@@ -92,6 +97,20 @@ func props() -> Array[WorldProp]:
 	var found: Array[WorldProp] = []
 	for node in _children_of("Props"):
 		if node is WorldProp:
+			found.append(node)
+	return found
+
+
+## The fringes along the terrain's edges, or null for a region without.
+func fringes() -> RegionFringes:
+	return get_node_or_null("Fringes") as RegionFringes
+
+
+## The kinds of particle in the region's air, in tree order.
+func particles() -> Array[RegionParticles]:
+	var found: Array[RegionParticles] = []
+	for node in _children_of("Fx"):
+		if node is RegionParticles:
 			found.append(node)
 	return found
 
