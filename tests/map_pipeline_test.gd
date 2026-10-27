@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 242
+const EXPECTED_CHECKS := 249
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -1038,6 +1038,72 @@ func test_backdrop_layers() -> void:
 		"a front layer has no depth"
 	)
 	backdrop.queue_free()
+
+
+func test_props() -> void:
+	var prop_path := "res://scenes/props/paradise/hanging_lantern.tscn"
+	var prop: WorldProp = load(prop_path).instantiate()
+	prop.position = Vector2(32, 48)
+	var spec := prop.to_spec(Vector2(0, 800))
+	_check(
+		(
+			spec["scene"] == prop_path
+			and spec["x"] == 32.0
+			and spec["y"] == 848.0
+			and not spec.has("scale")
+		),
+		"a prop's spec is its scene and its place in the world"
+	)
+	prop.scale = Vector2(-1, 1)
+	_check(prop.to_spec(Vector2.ZERO).get("scale") == [-1.0, 1.0], "a flipped prop says so")
+	_check(
+		prop.lit_sprites().size() == 1 and prop.lit_sprites()[0].name == "Art",
+		"the art is lit, the glow is not"
+	)
+	prop.free()
+	var map := WorldMap.new()
+	map.width = 4
+	map.height = 4
+	map.layer_names = PackedStringArray(["Terrain"])
+	map.layers["Terrain"] = PackedInt32Array(
+		[-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1]
+	)
+	map.props = [
+		{"scene": prop_path, "x": 10, "y": 20, "scale": [-1, 1]},
+		{"scene": "res://scenes/props/paradise/nowhere.tscn", "x": 0, "y": 0},
+	]
+	var builder := LevelBuilder.new()
+	add_child(builder)
+	builder.streaming = false
+	builder.build(map)
+	var holder := builder.get_node_or_null("Tiles/Props")
+	_check(
+		holder != null and holder.get_child_count() == 1,
+		"a prop is instanced, a missing scene skipped"
+	)
+	if holder and holder.get_child_count() == 1:
+		var placed: WorldProp = holder.get_child(0)
+		_check(
+			placed.position == Vector2(10, 20) and placed.scale == Vector2(-1, 1),
+			"where and how it was placed"
+		)
+		_check(
+			(
+				placed.get_node("Art").material == builder.rim
+				and placed.get_node("Glow").material != builder.rim
+			),
+			"its art wears the rim light, its glow keeps its own blend"
+		)
+	builder.queue_free()
+	var world := SceneWorld.read("res://scenes/world/world.tscn")
+	var in_paradise := 0
+	for placed in world.props if world else []:
+		if (
+			float(placed["y"]) < 816.0
+			and str(placed["scene"]).begins_with("res://scenes/props/paradise/")
+		):
+			in_paradise += 1
+	_check(in_paradise == 115, "Paradise's scene places its 115 props (%d)" % in_paradise)
 
 
 func test_backdrop_from_scene() -> void:

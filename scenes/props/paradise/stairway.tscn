@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_x7so2"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/stairway.png" id="2_ai40s"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/stairway_n.png" id="3_6e3cc"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ljrds"]
+diffuse_texture = ExtResource("2_ai40s")
+normal_texture = ExtResource("3_6e3cc")
+
+[node name="Stairway" type="Node2D" unique_id=372873675]
+script = ExtResource("1_x7so2")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=454360170]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_ljrds")
+centered = false

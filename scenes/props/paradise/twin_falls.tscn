@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_u2n8g"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/twin_falls.png" id="2_a1mao"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/twin_falls_n.png" id="3_xv4b7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_ewtv1"]
+diffuse_texture = ExtResource("2_a1mao")
+normal_texture = ExtResource("3_xv4b7")
+
+[node name="TwinFalls" type="Node2D" unique_id=232967168]
+script = ExtResource("1_u2n8g")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=1984688984]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_ewtv1")
+centered = false

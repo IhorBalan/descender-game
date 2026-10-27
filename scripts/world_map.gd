@@ -70,6 +70,9 @@ var lights: Array[Dictionary] = []
 ## and hit, the box of the art's opaque pixels ([x, y, w, h] from the
 ## top-left, unmirrored) that a solid one collides with.
 var sprites: Array[Dictionary] = []
+## The pieces of the set placed as scenes (see WorldProp): each a `scene`
+## path, its `x`, `y` in level pixels and an optional `scale` [x, y].
+var props: Array[Dictionary] = []
 ## How much the world darkens from its top to its bottom (0 to 1, see
 ## RegionLook.descent_factor): the export's "descent": {"dark": ...}.
 var descent_dark := 0.0
@@ -151,6 +154,9 @@ func _parse(data: Dictionary) -> void:
 	for sprite in data.get("sprites", []):
 		if sprite is Dictionary:
 			sprites.append(sprite)
+	for prop in data.get("props", []):
+		if prop is Dictionary:
+			props.append(prop)
 
 
 ## The world's size in pixels.

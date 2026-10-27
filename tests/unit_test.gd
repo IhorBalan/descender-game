@@ -422,6 +422,43 @@ func _check_listed(dir_path: String, names: Array[String]) -> int:
 	return bad
 
 
+func test_props() -> void:
+	var scenes_root := DirAccess.open("res://scenes/props")
+	_check(scenes_root != null, "the prop scenes folder opens")
+	if scenes_root == null:
+		return
+	var props := 0
+	var bad := 0
+	for key in scenes_root.get_directories():
+		var dir := "res://scenes/props/" + key
+		var art_dir := "res://assets/props/" + key
+		var names := _json(art_dir + "/names.json")
+		var named: Array[String] = []
+		for shape_key in names:
+			named.append(str(names[shape_key]))
+		for file_name in DirAccess.get_files_at(dir):
+			if not file_name.ends_with(".tscn"):
+				continue
+			props += 1
+			var name := file_name.get_basename()
+			var prop := (load(dir + "/" + file_name) as PackedScene).instantiate()
+			if not prop is WorldProp:
+				bad += _fail("%s/%s is not a WorldProp" % [key, file_name])
+			elif prop.get_node_or_null("Art") == null:
+				bad += _fail("%s/%s has no Art sprite" % [key, file_name])
+			for suffix in ["", "_n"]:
+				if not FileAccess.file_exists("%s/%s%s.png" % [art_dir, name, suffix]):
+					bad += _fail("%s/%s%s.png is missing" % [key, name, suffix])
+			if prop is WorldProp and prop.get_node_or_null("Glow") != null:
+				if not FileAccess.file_exists("%s/%s_glow.png" % [art_dir, name]):
+					bad += _fail("%s/%s_glow.png is missing" % [key, name])
+			if not named.is_empty() and name not in named:
+				bad += _fail("%s/%s is not in names.json" % [key, name])
+			prop.free()
+	_check(props >= 27, "the prop scenes are there (%d)" % props)
+	_check(bad == 0, "every prop scene has its script, its art and its name (%d bad)" % bad)
+
+
 func test_region_art() -> void:
 	var dir := DirAccess.open(REGIONS_DIR)
 	_check(dir != null, "the region art folder opens")

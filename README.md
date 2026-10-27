@@ -668,9 +668,8 @@ its scene is in level pixels from its top-left corner:
 - `Tiles/Background`, `Decor`, `Terrain`, `Glow`: `TileMapLayer`s painted
   with `levels/world/world_tiles.tres`, the TileSet cut up for the editor:
   one atlas source per region, named after it, holding only the tiles that
-  region paints with (the editor's sheet gives each region two of its rows;
-  Paradise's big pieces are a second source, "Paradise props"), reflowed
-  16 wide, with the region's glow tiles under its diffuse ones, lit by the
+  region paints with (the editor's sheet gives each region two of its
+  rows), reflowed 16 wide, with the region's glow tiles under its diffuse ones, lit by the
   normal map. The atlases are `levels/world/tiles/<region>.png` and
   `<region>_n.png`, cut from the three sheets in `levels/world/`. Every
   tile carries its terrain kind as the custom data `kind` (solid, ledge,
@@ -688,6 +687,18 @@ its scene is in level pixels from its top-left corner:
   region's ground meets the next is painted by hand.
   `tools/check_terrains.gd` repaints every region's ground by terrain and
   reports how many cells face the way the scenes paint them.
+- `Props/*`: `WorldProp` (`scripts/world/world_prop.gd`), the pieces of the
+  region's set, lanterns, pillars, floating ledges, clouds, the angel
+  statue, each an instance of a scene under `scenes/props/<key>/` (27 for
+  Paradise, placed 115 times). A prop scene is its PNGs under
+  `assets/props/<key>/` (`<name>.png`, `<name>_n.png` its normal map and,
+  for one that shines, `<name>_glow.png`) on an `Art` sprite and a `Glow`
+  sprite, so a piece is one object to drag, flip (scale by -1) or delete,
+  and repainting its PNG or editing its scene changes every copy. The game
+  instances the same scenes over the tile layers, lit and rimmed like them.
+  `tools/extract_props.gd` made them from the pieces that were painted as
+  tiles from the sheet's props rows (see the script for the two-step run
+  and `assets/props/<key>/names.json`, which names the shapes it finds).
 - `Lights/*`: `WorldLight`, a `PointLight2D` with a `flicker` flag; its
   texture scale is its radius.
 - `Rooms/*`: `WorldRoom`, a rectangle on the room grid with its id, kind,
@@ -854,12 +865,14 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/door_lock.gd` | A seal of light on a locked door, or on a boss room's doors during the fight |
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
-| `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, lights, and its markers as placements |
-| `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors and placements as nodes to edit |
-| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
+| `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, lights, props, and its markers as placements |
+| `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, placements, backdrop and props as nodes to edit |
+| `scenes/props/<key>/`, `assets/props/<key>/` | The pieces of a region's set as scenes (`WorldProp`), one PNG, normal map and glow each |
+| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
 | `tools/scene_backdrops.gd` | Writes a region's `parallax.json` into its scene as `BackdropLayer` nodes |
+| `tools/extract_props.gd` | Turns the pieces painted as tiles from a props atlas source into prop scenes and PNGs, placed in the region scene |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/light_bolt.gd` | The bolt of Holy Light the hero throws |
