@@ -10,8 +10,10 @@ extends Node2D
 ## its normal map) at tile / art_tile of its size from its top-left corner,
 ## and, for a piece that shines, a `Glow` Sprite2D of <name>_glow.png added
 ## unlit on top. Drag an instance to place it, scale it by -1 to flip it,
-## and edit the scene once to change every copy. tools/extract_props.gd
-## wrote the first set from the pieces painted as tiles.
+## and edit the scene once to change every copy. PropScene writes a prop's
+## scene from its PNGs: tools/extract_props.gd wrote the first set from the
+## pieces painted as tiles, and the editor's Props dock (addons/props_dock)
+## is the gallery to browse, place and add them.
 ##
 ## The game instances the same scene (LevelBuilder) where SceneWorld read
 ## it, lighting its art the way it lights the tile layers.

@@ -23,7 +23,6 @@ const SCENES_DIR := "res://scenes/world"
 const PROPS_SCENES := "res://scenes/props"
 const PROPS_ART := "res://assets/props"
 const SHEETS_DIR := "res://levels/world"
-const WORLD_PROP := "res://scripts/world/world_prop.gd"
 const DIRECTIONS := [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 
 
@@ -273,14 +272,12 @@ static func _place(
 	shapes: Dictionary,
 	grid: Dictionary
 ) -> bool:
-	var art_dir := PROPS_ART.path_join(key)
 	var scenes_dir := PROPS_SCENES.path_join(key)
-	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(scenes_dir))
 	var prop_scenes := {}
 	for shape_key in shapes:
 		var name: String = shapes[shape_key]["name"]
 		var scene_path := scenes_dir.path_join(name + ".tscn")
-		if not _write_prop_scene(scene_path, art_dir, name, grid["art"], grid["tile"]):
+		if PropScene.write(key, name, grid["art"], grid["tile"], scene_path).is_empty():
 			return false
 		prop_scenes[shape_key] = scene_path
 	var holder := region.get_node_or_null("Props")
@@ -330,54 +327,4 @@ static func _place(
 			% [path.get_file(), pieces.size(), shapes.size(), scenes_dir]
 		)
 	)
-	return true
-
-
-## Writes a prop's scene: a WorldProp root, its Art sprite (a CanvasTexture
-## of the diffuse and the normal map) and, when it shines, its Glow sprite.
-static func _write_prop_scene(
-	scene_path: String, art_dir: String, name: String, art: int, tile: int
-) -> bool:
-	var diffuse := load(art_dir.path_join(name + ".png")) as Texture2D
-	var normal := load(art_dir.path_join(name + "_n.png")) as Texture2D
-	if diffuse == null or normal == null:
-		printerr("%s's PNGs are not imported yet: run the import, then again with --write" % name)
-		return false
-	var root := Node2D.new()
-	root.name = name.to_pascal_case()
-	root.set_script(load(WORLD_PROP))
-	root.set("art_tile", art)
-	var canvas := CanvasTexture.new()
-	canvas.diffuse_texture = diffuse
-	canvas.normal_texture = normal
-	var sprite := Sprite2D.new()
-	sprite.name = "Art"
-	sprite.texture = canvas
-	sprite.centered = false
-	sprite.scale = Vector2.ONE * float(tile) / float(art)
-	sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	root.add_child(sprite)
-	sprite.owner = root
-	var glow_path := art_dir.path_join(name + "_glow.png")
-	if ResourceLoader.exists(glow_path):
-		var glow := Sprite2D.new()
-		glow.name = "Glow"
-		glow.texture = load(glow_path)
-		glow.centered = false
-		glow.scale = sprite.scale
-		glow.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-		var material := CanvasItemMaterial.new()
-		material.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
-		material.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-		glow.material = material
-		root.add_child(glow)
-		glow.owner = root
-	var packed := PackedScene.new()
-	var error := packed.pack(root)
-	if error == OK:
-		error = ResourceSaver.save(packed, scene_path)
-	root.free()
-	if error != OK:
-		printerr("%s: could not be written (%s)" % [scene_path, error_string(error)])
-		return false
 	return true
