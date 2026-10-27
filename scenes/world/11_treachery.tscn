@@ -13,6 +13,21 @@
 [ext_resource type="Texture2D" path="res://assets/regions/treachery/fog.png" id="6_bu2dw"]
 [ext_resource type="Texture2D" path="res://assets/regions/treachery/haze.png" id="7_h235y"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_36srb"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_offuc"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/top_0.png" id="10_2vxet"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/top_1.png" id="11_vi84u"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/top_2.png" id="12_hcdew"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/top_3.png" id="13_qel1y"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/hang_0.png" id="14_bn26j"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/hang_1.png" id="15_nydom"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/hang_2.png" id="16_ntq4d"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/side_l0.png" id="17_12uue"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/side_l1.png" id="18_k6k07"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/side_r0.png" id="19_cv2vr"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/side_r1.png" id="20_6mjgm"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_a67wv"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/snow.png" id="22_ob7xf"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/dust.png" id="23_cd7mx"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5t6gs"]
 blend_mode = 1
@@ -24,6 +39,8 @@ script = ExtResource("1_5t6gs")
 region_name = "9. Treachery"
 subtitle = "The Frozen"
 ambient = Color(0.23529412, 0.3529412, 0.49411765, 1)
+rows = 34
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1446494120]
 
@@ -87,6 +104,45 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AAC3AAcADAAAAA0AAACSAAkADAAAAA0AAADVAAkADAAAAA0AAACUAA4ADAACAA0AAACrAA4ADAAEAAwAAACsAA4ADAAHAAwAAACQAQ4ADAAHAAwAAACRAQ4ADAAEAAwAAACZAQ4ADAACAA0AAACwAQ4ADAACAA0AAADKAQ4ADAAEAAwAAADLAQ4ADAAEAAwAAADQAQ4ADAACAA0AAADTAQ4ADAAEAAwAAADUAQ4ADAAGAAwAAADVAQ4ADAAGAAwAAAC3ABkADAAAAA0AAAAKARsADAAAAA0AAAARARsADAAAAA0AAAAoARsADAAAAA0AAAAvARsADAAAAA0AAACSABwADAAAAA0AAACZABwADAAAAA0AAADVABwADAAAAA0AAABIAB8ADAACAA0AAABJAB8ADAAGAAwAAABKAB8ADAAFAAwAAABtAB8ADAAFAAwAAABuAB8ADAAEAAwAAABvAB8ADAAHAAwAAACKAB8ADAACAA0AAAChAB8ADAAFAAwAAACiAB8ADAAGAAwAAACjAB8ADAAEAAwAAAC+AB8ADAAHAAwAAAC/AB8ADAAEAAwAAADXAB8ADAACAA0AAADbAB8ADAAGAAwAAADcAB8ADAAGAAwAAADdAB8ADAAGAAwAAADfAB8ADAACAA0AAADzAB8ADAACAA0AAAD1AB8ADAAFAAwAAAD2AB8ADAAHAAwAAAD3AB8ADAAEAAwAAAD8AB8ADAACAA0AAAAHAR8ADAACAA0AAAAeAR8ADAAHAAwAAAAfAR8ADAAHAAwAAAA4AR8ADAAGAAwAAAA5AR8ADAAEAAwAAAA6AR8ADAAGAAwAAAA7AR8ADAACAA0AAABDAR8ADAAEAAwAAABEAR8ADAAHAAwAAABFAR8ADAAHAAwAAABGAR8ADAACAA0AAABbAR8ADAACAA0AAABcAR8ADAAEAAwAAABdAR8ADAAHAAwAAABtAR8ADAAGAAwAAABuAR8ADAAHAAwAAABvAR8ADAAGAAwAAACBAR8ADAACAA0AAACWAR8ADAAHAAwAAACXAR8ADAAHAAwAAAA=")
 tile_set = ExtResource("2_f5woj")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=1842345680]
+script = ExtResource("9_offuc")
+top = Array[Texture2D]([ExtResource("10_2vxet"), ExtResource("11_vi84u"), ExtResource("12_hcdew"), ExtResource("13_qel1y")])
+bottom = Array[Texture2D]([ExtResource("14_bn26j"), ExtResource("15_nydom"), ExtResource("16_ntq4d")])
+left = Array[Texture2D]([ExtResource("17_12uue"), ExtResource("18_k6k07")])
+right = Array[Texture2D]([ExtResource("19_cv2vr"), ExtResource("20_6mjgm")])
+top_chance = 0.8
+bottom_chance = 0.6
+left_chance = 0.5
+right_chance = 0.5
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=484991573]
+
+[node name="Snow" type="Node2D" parent="Fx" unique_id=1523689329]
+script = ExtResource("21_a67wv")
+texture = ExtResource("22_ob7xf")
+amount = 60
+color = Color(0.92156863, 0.9607843, 1, 1)
+lifetime = 12.0
+direction = Vector2(-0.2, 1)
+spread = 20.0
+speed = Vector2(10, 22)
+gravity = Vector2(0, 4)
+size = Vector2(0.3, 0.7)
+sway = 4.0
+
+[node name="Dust" type="Node2D" parent="Fx" unique_id=467712113]
+script = ExtResource("21_a67wv")
+texture = ExtResource("23_cd7mx")
+amount = 16
+color = Color(0.78431374, 0.88235295, 0.98039216, 1)
+lifetime = 16.0
+direction = Vector2(1, 0)
+spread = 30.0
+speed = Vector2(2, 6)
+size = Vector2(0.2, 0.5)
+sway = 2.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=325833259]
 

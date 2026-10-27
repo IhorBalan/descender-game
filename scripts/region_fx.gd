@@ -3,8 +3,11 @@ extends Node2D
 
 ## Drifting particles in the air of a region: petals, motes, embers, ash.
 ##
-## A region opts in with regions/<key>/fx.json next to the map's
-## world.json, else assets/regions/<key>/fx.json (key as in
+## A region of the game's own world keeps its particles in its scene, as
+## RegionParticles nodes, which SceneWorld reads into the region's `fx`
+## spec (the same shape, with the textures in place of file names). A
+## region of a map without a scene opts in with regions/<key>/fx.json next
+## to the map's world.json, else assets/regions/<key>/fx.json (key as in
 ## EdgeDecor.region_key):
 ##
 ##   {
@@ -138,12 +141,15 @@ func show_region(region: Dictionary, tile: int, map_dir := "") -> void:
 		var tween := create_tween()
 		tween.tween_property(child, "modulate:a", 0.0, FADE)
 		tween.tween_callback(child.queue_free)
-	var dir := Backdrop.set_dir(key, map_dir, "fx.json")
-	var text := FileAccess.get_file_as_string(dir + "/fx.json")
-	var spec: Variant = JSON.parse_string(text) if not text.is_empty() else null
+	var spec: Variant = region.get("fx")
+	var dir := ""
+	if not spec is Dictionary:
+		dir = Backdrop.set_dir(key, map_dir, "fx.json")
+		var text := FileAccess.get_file_as_string(dir + "/fx.json")
+		spec = JSON.parse_string(text) if not text.is_empty() else null
 	if not spec is Dictionary:
 		spec = region_spec(region)
-	var scale_factor := float(tile) / float(spec.get("art_tile", tile))
+	var art_tile := int(spec.get("art_tile", tile))
 	for entry in spec.get("particles", []):
 		if not entry is Dictionary:
 			continue
@@ -158,11 +164,13 @@ func show_region(region: Dictionary, tile: int, map_dir := "") -> void:
 			merged.merge(entry, true)
 			emitter.setup(merged, preset_texture(preset), float(tile) / 16.0)
 		else:
-			var texture := Backdrop.load_texture("%s/%s" % [dir, str(entry.get("texture", ""))])
+			var texture: Texture2D = entry["texture"] if entry.get("texture") is Texture2D else null
+			if texture == null and not dir.is_empty():
+				texture = Backdrop.load_texture("%s/%s" % [dir, str(entry.get("texture", ""))])
 			if texture == null:
 				emitter.free()
 				continue
-			emitter.setup(entry, texture, scale_factor)
+			emitter.setup(entry, texture, float(tile) / float(entry.get("art_tile", art_tile)))
 		add_child(emitter)
 
 

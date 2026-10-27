@@ -13,6 +13,22 @@
 [ext_resource type="Texture2D" path="res://assets/regions/violence/fog.png" id="6_dij4p"]
 [ext_resource type="Texture2D" path="res://assets/regions/violence/haze.png" id="7_7kdsx"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_ktjh1"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_1opbd"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/top_0.png" id="10_43vn8"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/top_1.png" id="11_yxhm0"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/top_2.png" id="12_1bdpt"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/top_3.png" id="13_t5iam"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/hang_0.png" id="14_jbnx0"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/hang_1.png" id="15_hd4i2"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/hang_2.png" id="16_2mqcf"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/side_l0.png" id="17_jfxmx"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/side_l1.png" id="18_m2e56"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/side_r0.png" id="19_yge1x"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/side_r1.png" id="20_7ujpp"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_ai7ra"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/drops.png" id="22_pfrn7"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/ash.png" id="23_dxrdi"]
+[ext_resource type="Texture2D" path="res://assets/regions/violence/flies.png" id="24_tsp77"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kxpyp"]
 blend_mode = 1
@@ -24,6 +40,8 @@ script = ExtResource("1_kxpyp")
 region_name = "7. Violence"
 subtitle = "The Wounded"
 ambient = Color(0.3137255, 0.09411765, 0.14901961, 1)
+rows = 34
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=1665012499]
 
@@ -87,6 +105,56 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AAA/AAkACgAAAA0AAAA4AAoACgAAAA0AAACwAAoACgAAAA0AAABAAA8ACgAHAAwAAABBAA8ACgAFAAwAAABCAA8ACgAHAAwAAABQAA8ACgAHAAwAAABRAA8ACgAEAAwAAABSAA8ACgAHAAwAAABTAA8ACgAHAAwAAABdAA8ACgAHAAwAAABeAA8ACgAGAAwAAABfAA8ACgAEAAwAAABnAA8ACgAGAAwAAABoAA8ACgAEAAwAAABpAA8ACgAHAAwAAABqAA8ACgAHAAwAAACDAA8ACgAGAAwAAACEAA8ACgAGAAwAAACFAA8ACgAEAAwAAACGAA8ACgAHAAwAAAA4ABgACgAAAA0AAAARARkACgAAAA0AAAB7ABoACgAAAA0AAACwABoACgAAAA0AAAC3ABoACgAAAA0AAABGARoACgAAAA0AAABNARoACgAAAA0AAABkARoACgAAAA0AAACSABwACgAAAA0AAACZABwACgAAAA0AAACJARwACgAAAA0AAABLAR4ACgAAAA0AAABVACAACgAFAAwAAABWACAACgAGAAwAAABXACAACgAFAAwAAABYACAACgAHAAwAAABhACAACgAHAAwAAABiACAACgAEAAwAAABjACAACgAGAAwAAAB/ACAACgAFAAwAAACAACAACgAFAAwAAACBACAACgAHAAwAAACCACAACgAHAAwAAAC6ACAACgAHAAwAAAC7ACAACgAFAAwAAAC8ACAACgAGAAwAAADlACAACgAFAAwAAADmACAACgAHAAwAAADnACAACgAFAAwAAAD2ACAACgAFAAwAAAD3ACAACgAEAAwAAAD4ACAACgAEAAwAAAD5ACAACgAHAAwAAAABASAACgAHAAwAAAACASAACgAEAAwAAAADASAACgAGAAwAAAAaASAACgAHAAwAAAAbASAACgAEAAwAAAAcASAACgAGAAwAAAA2ASAACgAFAAwAAAA3ASAACgAGAAwAAAA4ASAACgAEAAwAAAA5ASAACgAGAAwAAABBASAACgAEAAwAAABCASAACgAFAAwAAABDASAACgAHAAwAAABEASAACgAGAAwAAABTASAACgAGAAwAAABUASAACgAFAAwAAABVASAACgAFAAwAAABsASAACgAHAAwAAABtASAACgAFAAwAAABuASAACgAGAAwAAABvASAACgAGAAwAAAB3ASAACgAHAAwAAAB4ASAACgAGAAwAAAB5ASAACgAEAAwAAACjASAACgAGAAwAAACkASAACgAHAAwAAAClASAACgAGAAwAAAA=")
 tile_set = ExtResource("2_auebg")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=1484160690]
+script = ExtResource("9_1opbd")
+top = Array[Texture2D]([ExtResource("10_43vn8"), ExtResource("11_yxhm0"), ExtResource("12_1bdpt"), ExtResource("13_t5iam")])
+bottom = Array[Texture2D]([ExtResource("14_jbnx0"), ExtResource("15_hd4i2"), ExtResource("16_2mqcf")])
+left = Array[Texture2D]([ExtResource("17_jfxmx"), ExtResource("18_m2e56")])
+right = Array[Texture2D]([ExtResource("19_yge1x"), ExtResource("20_7ujpp")])
+top_chance = 0.6
+bottom_chance = 0.5
+left_chance = 0.35
+right_chance = 0.35
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=1194292776]
+
+[node name="Drops" type="Node2D" parent="Fx" unique_id=1328693148]
+script = ExtResource("21_ai7ra")
+texture = ExtResource("22_pfrn7")
+amount = 10
+color = Color(0.6666667, 0.11764706, 0.15686275, 1)
+lifetime = 3.0
+spread = 0.0
+speed = Vector2(60, 90)
+gravity = Vector2(0, 60)
+size = Vector2(0.4, 0.7)
+
+[node name="Ash" type="Node2D" parent="Fx" unique_id=28876952]
+script = ExtResource("21_ai7ra")
+texture = ExtResource("23_dxrdi")
+amount = 24
+color = Color(0.47058824, 0.23529412, 0.27450982, 1)
+lifetime = 14.0
+direction = Vector2(-0.3, 1)
+speed = Vector2(6, 14)
+gravity = Vector2(0, 2)
+size = Vector2(0.3, 0.6)
+spin = 0.3
+sway = 3.0
+
+[node name="Flies" type="Node2D" parent="Fx" unique_id=605220273]
+script = ExtResource("21_ai7ra")
+texture = ExtResource("24_tsp77")
+amount = 10
+color = Color(0.11764706, 0.039215688, 0.05490196, 1)
+lifetime = 6.0
+direction = Vector2(1, 0)
+spread = 180.0
+speed = Vector2(14, 30)
+size = Vector2(0.2, 0.35)
+sway = 12.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=524949863]
 

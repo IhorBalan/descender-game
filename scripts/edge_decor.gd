@@ -6,8 +6,12 @@ extends Node2D
 ## what lets a grid of tiles read as a painted shape, since they overhang
 ## the cells they belong to.
 ##
-## A region opts in with assets/regions/<key>/edges.json, where key is the
-## region name lowercased without its number ("1. Limbo" -> "limbo"):
+## A region of the game's own world keeps its set in its scene, as a
+## RegionFringes node, which SceneWorld reads into the region's `edges` spec
+## (the same fields, with the textures in place of file names). A region of
+## a map without a scene opts in with assets/regions/<key>/edges.json,
+## where key is the region name lowercased without its number
+## ("1. Limbo" -> "limbo"):
 ##
 ##   {
 ##     "top": ["tuft_a.png", "tuft_b.png"],   anchored by their bottom centre on the cell's top edge
@@ -73,34 +77,18 @@ func build_cells(map: WorldMap, cells: Rect2i) -> Array[Node]:
 	# Chunk key -> the pieces in it.
 	var chunks := {}
 	for region in map.regions:
-		var edge_set := _set_for(str(region.get("name", "")))
+		var edge_set := _set_for(region)
 		if edge_set.is_empty():
 			continue
-		var scale_factor := float(tile) / float(edge_set.get("art_tile", tile))
-		var y0 := maxi(int(floor(float(region.get("y0", 0)) / tile)), cells.position.y)
-		var y1 := mini(int(ceil(float(region.get("y1", 0)) / tile)), cells.end.y)
-		for y in range(y0, y1):
-			for x in range(cells.position.x, cells.end.x):
-				if _solid[y * _width + x] == 0:
-					continue
-				for side in SIDES:
-					var pieces: Array = edge_set.get(side, [])
-					if pieces.is_empty() or not _exposed(_solid, _width, _height, x, y, side):
-						continue
-					var roll := _hash(x, y, side.unicode_at(0))
-					if roll % 1000 >= int(float(edge_set.get(side + "_chance", 1.0)) * 1000.0):
-						continue
-					var texture: Texture2D = pieces[(roll / 1000) % pieces.size()]
-					var key := Vector2i(x / CHUNK, y / CHUNK)
-					if not chunks.has(key):
-						chunks[key] = []
-					chunks[key].append(
-						[
-							texture,
-							_anchor(x, y, side, tile, texture.get_size() * scale_factor),
-							scale_factor
-						]
-					)
+		var y0 := int(floor(float(region.get("y0", 0)) / tile))
+		var y1 := int(ceil(float(region.get("y1", 0)) / tile))
+		var band := cells.intersection(Rect2i(0, y0, _width, y1 - y0))
+		for piece in pieces_in(_solid, _width, _height, band, edge_set, tile):
+			var at: Vector2 = piece[1]
+			var key := Vector2i(int(at.x) / (CHUNK * tile), int(at.y) / (CHUNK * tile))
+			if not chunks.has(key):
+				chunks[key] = []
+			chunks[key].append(piece)
 	for key in chunks:
 		var chunk := EdgeChunk.new()
 		chunk.pieces = chunks[key]
@@ -108,6 +96,40 @@ func build_cells(map: WorldMap, cells: Rect2i) -> Array[Node]:
 		add_child(chunk)
 		made.append(chunk)
 	return made
+
+
+## The pieces along the exposed sides of the solid cells within `cells`, as
+## [texture, top-left in level pixels, scale] each: `solid` is the grid,
+## row by row, `edge_set` a region's set (see _set_for) and `tile` the
+## level's tile size. Which piece a cell gets, if any, is fixed by its
+## position, so the editor and the game agree.
+static func pieces_in(
+	solid: PackedByteArray, width: int, height: int, cells: Rect2i, edge_set: Dictionary, tile: int
+) -> Array:
+	var pieces: Array = []
+	if not cells.has_area():
+		return pieces
+	var scale_factor := float(tile) / float(edge_set.get("art_tile", tile))
+	for y in range(maxi(cells.position.y, 0), mini(cells.end.y, height)):
+		for x in range(maxi(cells.position.x, 0), mini(cells.end.x, width)):
+			if solid[y * width + x] == 0:
+				continue
+			for side in SIDES:
+				var options: Array = edge_set.get(side, [])
+				if options.is_empty() or not _exposed(solid, width, height, x, y, side):
+					continue
+				var roll := _hash(x, y, side.unicode_at(0))
+				if roll % 1000 >= int(float(edge_set.get(side + "_chance", 1.0)) * 1000.0):
+					continue
+				var texture: Texture2D = options[(roll / 1000) % options.size()]
+				pieces.append(
+					[
+						texture,
+						_anchor(x, y, side, tile, texture.get_size() * scale_factor),
+						scale_factor
+					]
+				)
+	return pieces
 
 
 ## Whether the solid cell (x, y) has open air on the given side.
@@ -153,9 +175,13 @@ static func _hash(x: int, y: int, salt: int) -> int:
 	return h ^ (h >> 16)
 
 
-## The edge set of a region, loaded once; empty when the region has none.
-func _set_for(region_name: String) -> Dictionary:
-	var key := region_key(region_name)
+## The edge set of a region: its scene's (the `edges` spec), else its
+## edges.json loaded once; empty when the region has none.
+func _set_for(region: Dictionary) -> Dictionary:
+	var own: Variant = region.get("edges")
+	if own is Dictionary:
+		return own
+	var key := region_key(str(region.get("name", "")))
 	if _sets.has(key):
 		return _sets[key]
 	var edge_set := {}

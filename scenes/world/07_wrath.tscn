@@ -14,6 +14,22 @@
 [ext_resource type="Texture2D" path="res://assets/regions/wrath/fog.png" id="7_ca1hm"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_jqspl"]
 [ext_resource type="Texture2D" path="res://assets/regions/wrath/haze.png" id="8_jw0dg"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="10_gd7wc"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/top_0.png" id="11_l8b4u"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/top_1.png" id="12_kg001"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/top_2.png" id="13_hni1v"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/top_3.png" id="14_jqhd0"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/hang_0.png" id="15_0axdt"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/hang_1.png" id="16_a1egy"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/hang_2.png" id="17_wmcsw"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/side_l0.png" id="18_0gduq"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/side_l1.png" id="19_lighf"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/side_r0.png" id="20_33hms"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/side_r1.png" id="21_xhr8l"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="22_j1tv5"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/embers.png" id="23_thlh0"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/smoke.png" id="24_sygya"]
+[ext_resource type="Texture2D" path="res://assets/regions/wrath/sparks.png" id="25_3qju0"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yrstp"]
 blend_mode = 1
@@ -25,6 +41,8 @@ script = ExtResource("1_yrstp")
 region_name = "5. Wrath"
 subtitle = "The Raging"
 ambient = Color(0.32156864, 0.11764706, 0.10980392, 1)
+rows = 34
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=712675461]
 
@@ -94,6 +112,57 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("AADFAQgACAAAAA0AAAAKAQkACAAAAA0AAACTAA0ACAAAAA0AAADoAA4ACAAKAA0AAAD9AA4ACAAKAA0AAAAmAQ4ACAAKAA0AAAAyAQ4ACAAKAA0AAAB8AA8ACAAEAAwAAAB9AA8ACAAGAAwAAAB+AA8ACAAHAAwAAAB/AA8ACAAGAAwAAACJAA8ACAAFAAwAAACKAA8ACAAHAAwAAACLAA8ACAAGAAwAAACMAA8ACAAEAAwAAAChAA8ACAAFAAwAAACiAA8ACAAEAAwAAACjAA8ACAAEAAwAAADZAA8ACAAHAAwAAADaAA8ACAAFAAwAAADbAA8ACAAGAAwAAADcAA8ACAAFAAwAAAAUAQ8ACAAHAAwAAAAVAQ8ACAAFAAwAAAAWAQ8ACAAEAAwAAAAXAQ8ACAAHAAwAAABdAQ8ACAAEAAwAAABeAQ8ACAAFAAwAAABfAQ8ACAAGAAwAAABgAQ8ACAAEAAwAAACOAQ8ACAAGAAwAAACPAQ8ACAAHAAwAAACQAQ8ACAAHAAwAAAClAQ8ACAAHAAwAAACmAQ8ACAAHAAwAAACnAQ8ACAAEAAwAAADPAQ8ACAAHAAwAAADQAQ8ACAAHAAwAAADRAQ8ACAAGAAwAAADSAQ8ACAAFAAwAAACCARoACAAAAA0AAACJARoACAAAAA0AAACSABsACAAAAA0AAACZABsACAAAAA0AAABGARwACAAAAA0AAABNARwACAAAAA0AAACEARwACAAKAA0AAACgARwACAAAAA0AAACnARwACAAAAA0AAAC+ARwACAAAAA0AAADFARwACAAAAA0AAACZAB0ACAAKAA0AAAAuAR4ACAAAAA0AAADFAR4ACAAKAA0AAACAAB8ACAAKAA0AAACtAB8ACAAKAA0AAACxAB8ACAAKAA0AAAC1AB8ACAAKAA0AAABWAR8ACAAKAA0AAACNACAACAAGAAwAAACOACAACAAGAAwAAACPACAACAAGAAwAAACQACAACAAGAAwAAADXACAACAAEAAwAAADYACAACAAHAAwAAADZACAACAAEAAwAAAAzASAACAAFAAwAAAA0ASAACAAFAAwAAAA1ASAACAAHAAwAAAA2ASAACAAFAAwAAABbASAACAAFAAwAAABcASAACAAHAAwAAABdASAACAAGAAwAAABpASAACAAEAAwAAABqASAACAAGAAwAAABrASAACAAHAAwAAACOASAACAAFAAwAAACPASAACAAFAAwAAACQASAACAAEAAwAAACYASAACAAGAAwAAACZASAACAAHAAwAAACaASAACAAEAAwAAAA=")
 tile_set = ExtResource("2_1sp2o")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=1372777123]
+script = ExtResource("10_gd7wc")
+top = Array[Texture2D]([ExtResource("11_l8b4u"), ExtResource("12_kg001"), ExtResource("13_hni1v"), ExtResource("14_jqhd0")])
+bottom = Array[Texture2D]([ExtResource("15_0axdt"), ExtResource("16_a1egy"), ExtResource("17_wmcsw")])
+left = Array[Texture2D]([ExtResource("18_0gduq"), ExtResource("19_lighf")])
+right = Array[Texture2D]([ExtResource("20_33hms"), ExtResource("21_xhr8l")])
+top_chance = 0.6
+bottom_chance = 0.5
+left_chance = 0.3
+right_chance = 0.3
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=19032296]
+
+[node name="Embers" type="Node2D" parent="Fx" unique_id=995603640]
+script = ExtResource("22_j1tv5")
+texture = ExtResource("23_thlh0")
+color = Color(1, 0.5882353, 0.23529412, 1)
+lifetime = 8.0
+direction = Vector2(0.1, -1)
+spread = 35.0
+speed = Vector2(10, 26)
+gravity = Vector2(0, -4)
+size = Vector2(0.3, 0.7)
+sway = 5.0
+
+[node name="Smoke" type="Node2D" parent="Fx" unique_id=1610106611]
+script = ExtResource("22_j1tv5")
+texture = ExtResource("24_sygya")
+amount = 8
+color = Color(0.23529412, 0.078431375, 0.0627451, 1)
+lifetime = 16.0
+direction = Vector2(0.2, -1)
+spread = 20.0
+speed = Vector2(3, 7)
+size = Vector2(1.5, 3)
+sway = 3.0
+
+[node name="Sparks" type="Node2D" parent="Fx" unique_id=993893261]
+script = ExtResource("22_j1tv5")
+texture = ExtResource("25_3qju0")
+amount = 10
+color = Color(1, 0.8627451, 0.47058824, 1)
+lifetime = 5.0
+direction = Vector2(0, -1)
+spread = 60.0
+speed = Vector2(16, 40)
+gravity = Vector2(0, 10)
+size = Vector2(0.2, 0.4)
+sway = 6.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=1915197956]
 

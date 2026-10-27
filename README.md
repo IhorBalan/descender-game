@@ -523,7 +523,9 @@ Both are looked for next to the map's `world.json` first (`<map folder>/regions/
 where the editor's export puts a region's **Sky backdrop** as a parallax set that covers the
 view), then under `assets/regions/<key>/`.
 
-- **Edges** (`edges.json`, built by `scripts/edge_decor.gd`): pieces drawn
+- **Edges** (`edges.json`, built by `scripts/edge_decor.gd`; a region of
+  the game's own world keeps the same set as a `RegionFringes` node in its
+  scene instead, see "The world as scenes"): pieces drawn
   along the exposed sides of the solid terrain, tufts standing on the tops,
   growth hanging from the undersides and moss down the sides, overhanging
   the cells they belong to. The JSON lists the PNGs per side and the share
@@ -545,7 +547,9 @@ view), then under `assets/regions/<key>/`.
   without one gets half of what it does not follow the camera by). Painted
   sets are filtered with mipmaps; pixel art stays nearest. Crossing into
   a region cross-fades its set in over the last.
-- **Particles** (`fx.json`, run by `scripts/region_fx.gd`): sprites drifting
+- **Particles** (`fx.json`, run by `scripts/region_fx.gd`; a region of the
+  game's own world keeps them as `RegionParticles` nodes in its scene
+  instead, see "The world as scenes"): sprites drifting
   through the air of the region, petals, motes, embers, emitted across the
   view around the camera. An entry with a `preset` instead of a `texture`
   (`embers`, `dust`, `ash`, `leaves`, `rain`, `snow`, `birds`) draws its
@@ -662,9 +666,9 @@ its scene is in level pixels from its top-left corner:
   inspector. `SceneWorld` reads the layers into the region's `parallax`
   spec and `Backdrop` builds the same nodes from it; a region without a
   `Backdrop` node falls back to its `assets/regions/<key>/parallax.json`.
-  `tools/scene_backdrops.gd` turns that file into the nodes
-  (`godot --headless --path . --script tools/scene_backdrops.gd -- 00_paradise.tscn`;
-  no names does every region, `--replace` redoes one that has them).
+  `tools/scene_art.gd` turns that file into the nodes
+  (`godot --headless --path . --script tools/scene_art.gd -- 00_paradise.tscn`;
+  no names does every region, `--replace` redoes a part a scene has).
 - `Tiles/Background`, `Decor`, `Terrain`, `Glow`: `TileMapLayer`s painted
   with `levels/world/world_tiles.tres`, the TileSet cut up for the editor:
   one atlas source per region, named after it, holding only the tiles that
@@ -699,6 +703,22 @@ its scene is in level pixels from its top-left corner:
   `tools/extract_props.gd` made them from the pieces that were painted as
   tiles from the sheet's props rows (see the script for the two-step run
   and `assets/props/<key>/names.json`, which names the shapes it finds).
+- `Fringes`: `RegionFringes` (`scripts/world/region_fringes.gd`), the
+  region's edge art with the fields of its `edges.json` as properties: the
+  PNGs per side and the share of exposed cells that get one. The editor
+  draws the pieces on `Tiles/Terrain` the way the game does and redraws as
+  the terrain is painted. `SceneWorld` reads the node into the region's
+  `edges` spec and `EdgeDecor` builds the pieces from it as the level
+  streams; a region without the node falls back to its `edges.json`.
+- `Fx/*`: `RegionParticles` (`scripts/world/region_particles.gd`), one kind
+  of drifting particle each, with the fields of an `fx.json` entry as
+  properties (a stock `preset` or a `texture`, `amount`, `color`,
+  `lifetime`, `direction`, `spread`, `speed`, `gravity`, `size`, `spin`,
+  `sway`). The editor runs a preview over the region's band. `SceneWorld`
+  reads the nodes into the region's `fx` spec and `RegionFx` emits them
+  around the camera; a region without them falls back to its `fx.json`.
+  `tools/scene_art.gd` wrote the Fringes and Fx nodes of every region from
+  its JSON, as it did the Backdrop.
 - `Lights/*`: `WorldLight`, a `PointLight2D` with a `flicker` flag; its
   texture scale is its radius.
 - `Rooms/*`: `WorldRoom`, a rectangle on the room grid with its id, kind,
@@ -868,10 +888,10 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, lights, props, and its markers as placements |
 | `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, placements, backdrop and props as nodes to edit |
 | `scenes/props/<key>/`, `assets/props/<key>/` | The pieces of a region's set as scenes (`WorldProp`), one PNG, normal map and glow each |
-| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
+| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`, `RegionFringes`, `RegionParticles`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
-| `tools/scene_backdrops.gd` | Writes a region's `parallax.json` into its scene as `BackdropLayer` nodes |
+| `tools/scene_art.gd` | Writes a region's `parallax.json`, `edges.json` and `fx.json` into its scene as `BackdropLayer`, `RegionFringes` and `RegionParticles` nodes |
 | `tools/extract_props.gd` | Turns the pieces painted as tiles from a props atlas source into prop scenes and PNGs, placed in the region scene |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |

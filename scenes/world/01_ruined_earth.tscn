@@ -13,6 +13,21 @@
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_yitr8"]
 [ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/haze.png" id="7_1foe8"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_k80ob"]
+[ext_resource type="Script" path="res://scripts/world/region_fringes.gd" id="9_ibkew"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/top_0.png" id="10_gbc1g"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/top_1.png" id="11_lea0j"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/top_2.png" id="12_vjcee"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/top_3.png" id="13_1774k"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/hang_0.png" id="14_7jcqc"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/hang_1.png" id="15_qbalk"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/hang_2.png" id="16_mw4g7"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/side_l0.png" id="17_xokuv"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/side_l1.png" id="18_opimy"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/side_r0.png" id="19_7xj24"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/side_r1.png" id="20_r6u0x"]
+[ext_resource type="Script" path="res://scripts/world/region_particles.gd" id="21_i3xsb"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/ash.png" id="22_tdvja"]
+[ext_resource type="Texture2D" path="res://assets/regions/ruined_earth/smoke.png" id="23_1egwf"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vseci"]
 blend_mode = 1
@@ -25,6 +40,7 @@ region_name = "Ruined Earth"
 subtitle = "The Hub"
 ambient = Color(0.34117648, 0.32156864, 0.43137255, 1)
 rows = 51
+look = {}
 
 [node name="Backdrop" type="Node2D" parent="." unique_id=533405194]
 
@@ -88,6 +104,45 @@ scale = Vector2(0.25, 0.25)
 tile_map_data = PackedByteArray("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")
 tile_set = ExtResource("2_j6acs")
 collision_enabled = false
+
+[node name="Fringes" type="Node2D" parent="." unique_id=566711455]
+script = ExtResource("9_ibkew")
+top = Array[Texture2D]([ExtResource("10_gbc1g"), ExtResource("11_lea0j"), ExtResource("12_vjcee"), ExtResource("13_1774k")])
+bottom = Array[Texture2D]([ExtResource("14_7jcqc"), ExtResource("15_qbalk"), ExtResource("16_mw4g7")])
+left = Array[Texture2D]([ExtResource("17_xokuv"), ExtResource("18_opimy")])
+right = Array[Texture2D]([ExtResource("19_7xj24"), ExtResource("20_r6u0x")])
+top_chance = 0.8
+bottom_chance = 0.5
+left_chance = 0.4
+right_chance = 0.4
+art_tile = 64
+
+[node name="Fx" type="Node2D" parent="." unique_id=1110797981]
+
+[node name="Ash" type="Node2D" parent="Fx" unique_id=1317520694]
+script = ExtResource("21_i3xsb")
+texture = ExtResource("22_tdvja")
+amount = 40
+color = Color(0.5882353, 0.5568628, 0.53333336, 1)
+lifetime = 14.0
+direction = Vector2(-0.3, 1)
+speed = Vector2(6, 14)
+gravity = Vector2(0, 2)
+size = Vector2(0.3, 0.6)
+spin = 0.3
+sway = 3.0
+
+[node name="Smoke" type="Node2D" parent="Fx" unique_id=1473153178]
+script = ExtResource("21_i3xsb")
+texture = ExtResource("23_1egwf")
+amount = 6
+color = Color(0.27450982, 0.2509804, 0.27450982, 1)
+lifetime = 16.0
+direction = Vector2(0.2, -1)
+spread = 20.0
+speed = Vector2(3, 7)
+size = Vector2(1.5, 3)
+sway = 3.0
 
 [node name="Lights" type="Node2D" parent="." unique_id=1467823778]
 
