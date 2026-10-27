@@ -422,6 +422,47 @@ func _check_listed(dir_path: String, names: Array[String]) -> int:
 	return bad
 
 
+func test_prop_scene_writer() -> void:
+	var dir := "user://prop_scene_test"
+	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(dir))
+	var plain := PropScene.write("paradise", "pillar", 64, 16, dir + "/pillar.tscn")
+	var lit := PropScene.write("paradise", "hanging_lantern", 64, 16, dir + "/lantern.tscn")
+	_check(not plain.is_empty() and not lit.is_empty(), "prop scenes are written from their PNGs")
+	var pillar := (load(plain) as PackedScene).instantiate() if not plain.is_empty() else null
+	var lantern := (load(lit) as PackedScene).instantiate() if not lit.is_empty() else null
+	_check(
+		(
+			pillar is WorldProp
+			and pillar.art_tile == 64
+			and pillar.get_node("Art").texture is CanvasTexture
+			and pillar.get_node("Art").scale == Vector2(0.25, 0.25)
+			and pillar.get_node_or_null("Glow") == null
+		),
+		"a plain prop is a WorldProp with a lit Art sprite drawn to the grid and no glow"
+	)
+	_check(
+		lantern is WorldProp and lantern.get_node_or_null("Glow") != null,
+		"a prop with a glow PNG gets its Glow sprite"
+	)
+	_check(
+		PropScene.write("paradise", "no_such_prop", 64, 16, dir + "/none.tscn").is_empty(),
+		"a prop without a PNG is refused"
+	)
+	var thumb := PropScene.thumbnail("paradise", "pillar", 32)
+	_check(
+		thumb != null and maxi(thumb.get_width(), thumb.get_height()) == 32,
+		"a prop's thumbnail fits the asked size"
+	)
+	_check(
+		"paradise" in PropScene.regions() and "pillar" in PropScene.names("paradise"),
+		"the props folders are listed by region and name"
+	)
+	if pillar:
+		pillar.free()
+	if lantern:
+		lantern.free()
+
+
 func test_props() -> void:
 	var scenes_root := DirAccess.open("res://scenes/props")
 	_check(scenes_root != null, "the prop scenes folder opens")

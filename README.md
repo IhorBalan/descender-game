@@ -709,6 +709,18 @@ level pixels from its top-left corner:
   `tools/extract_props.gd` made them from the pieces that were painted as
   tiles from the sheet's props rows (see the script for the two-step run
   and `assets/props/<key>/names.json`, which names the shapes it finds).
+  `PropScene` (`scripts/world/prop_scene.gd`) writes a prop's scene from
+  its PNGs, so the extractor and the editor make props the same shape.
+  The editor's **Props** dock (`addons/props_dock/`, on the right beside
+  Groups) is the gallery of the open region's props: each shown as its
+  art with a search box, the picked one shown large. Click a prop, then
+  click in the 2D view to drop an instance under `Props` at the mouse (a
+  ghost follows the mouse, snapped to the grid; Shift keeps placing, Esc
+  or a right click stops, the placement undoes). Flip mirrors the next
+  placement, Open opens the prop's scene, and New from PNG makes a prop
+  out of a PNG put under `assets/props/<key>/` (with `<name>_n.png` and
+  `<name>_glow.png` picked up when they exist). Props are placed in a
+  region's own scene; `world.tscn` only shows them.
 - `Fringes`: `RegionFringes` (`scripts/world/region_fringes.gd`), the
   region's edge art with the fields of its `edges.json` as properties: the
   PNGs per side and the share of exposed cells that get one. The editor
@@ -895,7 +907,8 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, lights, props, and its markers as placements |
 | `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, placements, backdrop and props as nodes to edit |
 | `scenes/props/<key>/`, `assets/props/<key>/` | The pieces of a region's set as scenes (`WorldProp`), one PNG, normal map and glow each |
-| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`, `RegionFringes`, `RegionParticles`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
+| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`, `RegionFringes`, `RegionParticles`), `PropScene` (writes a prop scene from its PNGs), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
+| `addons/props_dock/` | The editor's Props dock: a gallery of the open region's props to search, preview and click into the 2D view, flip, open or make from a PNG |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
 | `tools/scene_art.gd` | Writes a region's `parallax.json`, `edges.json` and `fx.json` into its scene as `BackdropLayer`, `RegionFringes` and `RegionParticles` nodes, and its look as `resources/regions/<key>.tres` |
