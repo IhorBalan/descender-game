@@ -1,11 +1,17 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_5t6gs"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_adtbv"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_f5woj"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_c5fo6"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/sky.png" id="3_ouv2c"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/far.png" id="4_36srb"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_afywc"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/mid.png" id="5_n6dvk"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_ub0cy"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_adtbv"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/fog.png" id="6_bu2dw"]
+[ext_resource type="Texture2D" path="res://assets/regions/treachery/haze.png" id="7_h235y"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_36srb"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5t6gs"]
@@ -18,6 +24,38 @@ script = ExtResource("1_5t6gs")
 region_name = "9. Treachery"
 subtitle = "The Frozen"
 ambient = Color(0.23529412, 0.3529412, 0.49411765, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1446494120]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=1001613566]
+script = ExtResource("2_adtbv")
+texture = ExtResource("3_ouv2c")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=898223679]
+position = Vector2(0, -1128)
+script = ExtResource("2_adtbv")
+texture = ExtResource("4_36srb")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=975864602]
+position = Vector2(0, -216)
+script = ExtResource("2_adtbv")
+texture = ExtResource("5_n6dvk")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=1873601617]
+position = Vector2(0, 248)
+script = ExtResource("2_adtbv")
+texture = ExtResource("6_bu2dw")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=1228395523]
+position = Vector2(0, 177)
+script = ExtResource("2_adtbv")
+texture = ExtResource("7_h235y")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=816117788]
 
@@ -545,16 +583,22 @@ lock_region = 10
 position = Vector2(6232, 512)
 script = ExtResource("8_36srb")
 character = "final_boss_the_betrayer"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save507" type="Node2D" parent="Placements" unique_id=900094242]
 position = Vector2(3592, 240)
 script = ExtResource("8_36srb")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save508" type="Node2D" parent="Placements" unique_id=309785427]
 position = Vector2(5272, 512)
 script = ExtResource("8_36srb")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Item1" type="Node2D" parent="Placements" unique_id=1558207392]
 position = Vector2(5080, 240)

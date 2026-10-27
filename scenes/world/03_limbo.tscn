@@ -1,11 +1,17 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_onsl0"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_j23cj"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_p0m0j"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_gw005"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/sky.png" id="3_jrxdv"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/far.png" id="4_8ekn6"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_l0pch"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/mid.png" id="5_keoh3"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_yu7p3"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_j23cj"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/fog.png" id="6_outto"]
+[ext_resource type="Texture2D" path="res://assets/regions/limbo/haze.png" id="7_362s2"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_8ekn6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_onsl0"]
@@ -18,6 +24,38 @@ script = ExtResource("1_onsl0")
 region_name = "1. Limbo"
 subtitle = "The Forgotten"
 ambient = Color(0.27450982, 0.33333334, 0.49411765, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=33444504]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=1297197241]
+script = ExtResource("2_j23cj")
+texture = ExtResource("3_jrxdv")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=1833537029]
+position = Vector2(0, -1128)
+script = ExtResource("2_j23cj")
+texture = ExtResource("4_8ekn6")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=323340274]
+position = Vector2(0, -216)
+script = ExtResource("2_j23cj")
+texture = ExtResource("5_keoh3")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=1929610128]
+position = Vector2(0, 248)
+script = ExtResource("2_j23cj")
+texture = ExtResource("6_outto")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=575766559]
+position = Vector2(0, 177)
+script = ExtResource("2_j23cj")
+texture = ExtResource("7_362s2")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=2036711615]
 
@@ -741,22 +779,30 @@ lock_ability = 2
 position = Vector2(6712, 512)
 script = ExtResource("8_8ekn6")
 character = "limbo_lord"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save458" type="Node2D" parent="Placements" unique_id=80521325]
 position = Vector2(4072, 240)
 script = ExtResource("8_8ekn6")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Ability460" type="Node2D" parent="Placements" unique_id=184570286]
 position = Vector2(1672, 240)
 script = ExtResource("8_8ekn6")
 type = "ability"
 ability = "Holy Light"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save461" type="Node2D" parent="Placements" unique_id=931247022]
 position = Vector2(6952, 240)
 script = ExtResource("8_8ekn6")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Item1" type="Node2D" parent="Placements" unique_id=1398613042]
 position = Vector2(4168, 240)

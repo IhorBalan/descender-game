@@ -2,10 +2,16 @@
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_uwfop"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_dcvkt"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_oyoy4"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_0uhr2"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/sky.png" id="3_jlfis"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_4acdj"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/far.png" id="4_rf65r"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/mid.png" id="5_btwpr"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_yynt1"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/fog.png" id="6_fmqn1"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_oyoy4"]
+[ext_resource type="Texture2D" path="res://assets/regions/greed/haze.png" id="7_f24ls"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_rf65r"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_uwfop"]
@@ -18,6 +24,38 @@ script = ExtResource("1_uwfop")
 region_name = "4. Greed"
 subtitle = "The Hoarders"
 ambient = Color(0.32941177, 0.25882354, 0.14901961, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=460916998]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=230440851]
+script = ExtResource("2_oyoy4")
+texture = ExtResource("3_jlfis")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=1742858670]
+position = Vector2(0, -1128)
+script = ExtResource("2_oyoy4")
+texture = ExtResource("4_rf65r")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=362233903]
+position = Vector2(0, -216)
+script = ExtResource("2_oyoy4")
+texture = ExtResource("5_btwpr")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=520521531]
+position = Vector2(0, 248)
+script = ExtResource("2_oyoy4")
+texture = ExtResource("6_fmqn1")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=1535876152]
+position = Vector2(0, 177)
+script = ExtResource("2_oyoy4")
+texture = ExtResource("7_f24ls")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=1128403930]
 
@@ -601,21 +639,29 @@ lock_ability = 5
 position = Vector2(4792, 512)
 script = ExtResource("8_rf65r")
 character = "golden_vault"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save479" type="Node2D" parent="Placements" unique_id=2034632751]
 position = Vector2(2152, 128)
 script = ExtResource("8_rf65r")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save482" type="Node2D" parent="Placements" unique_id=479402029]
 position = Vector2(232, 512)
 script = ExtResource("8_rf65r")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save483" type="Node2D" parent="Placements" unique_id=1354258845]
 position = Vector2(4072, 512)
 script = ExtResource("8_rf65r")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Npc1" type="Node2D" parent="Placements" unique_id=2095685932]
 position = Vector2(2280, 240)

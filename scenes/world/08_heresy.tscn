@@ -2,10 +2,17 @@
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_s8fb3"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_ti6mt"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_unscc"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_ekpdu"]
+[ext_resource type="Texture2D" path="res://assets/regions/heresy/sky.png" id="3_uwu0k"]
+[ext_resource type="Texture2D" path="res://assets/regions/heresy/far.png" id="4_85f84"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_m10ov"]
+[ext_resource type="Texture2D" path="res://assets/regions/heresy/mid.png" id="5_bwwd2"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_fj4so"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_6wr75"]
+[ext_resource type="Texture2D" path="res://assets/regions/heresy/glow.png" id="6_ydo2v"]
+[ext_resource type="Texture2D" path="res://assets/regions/heresy/fog.png" id="7_7tkhd"]
+[ext_resource type="Texture2D" path="res://assets/regions/heresy/haze.png" id="8_oip7a"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_uwu0k"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_s8fb3"]
@@ -18,6 +25,44 @@ script = ExtResource("1_s8fb3")
 region_name = "6. Heresy"
 subtitle = "The Burned"
 ambient = Color(0.3372549, 0.16470589, 0.08627451, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1542028783]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=1807808283]
+script = ExtResource("2_unscc")
+texture = ExtResource("3_uwu0k")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=1416001590]
+position = Vector2(0, -1128)
+script = ExtResource("2_unscc")
+texture = ExtResource("4_85f84")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=886619822]
+position = Vector2(0, -216)
+script = ExtResource("2_unscc")
+texture = ExtResource("5_bwwd2")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Glow" type="Node2D" parent="Backdrop" unique_id=475693962]
+position = Vector2(0, 455)
+script = ExtResource("2_unscc")
+texture = ExtResource("6_ydo2v")
+scroll = Vector2(0.6, 0.12)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=25141697]
+position = Vector2(0, 248)
+script = ExtResource("2_unscc")
+texture = ExtResource("7_7tkhd")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=927763474]
+position = Vector2(0, 177)
+script = ExtResource("2_unscc")
+texture = ExtResource("8_oip7a")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=870099465]
 
@@ -826,16 +871,22 @@ lock_region = 7
 position = Vector2(3352, 512)
 script = ExtResource("8_uwu0k")
 character = "cursed_bishop"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save491" type="Node2D" parent="Placements" unique_id=1257440635]
 position = Vector2(5512, 240)
 script = ExtResource("8_uwu0k")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save494" type="Node2D" parent="Placements" unique_id=851864843]
 position = Vector2(4072, 512)
 script = ExtResource("8_uwu0k")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Upgrade1" type="Node2D" parent="Placements" unique_id=1810671883]
 position = Vector2(4568, 240)

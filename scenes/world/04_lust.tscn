@@ -1,11 +1,17 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_cuy0t"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_bevqw"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_yijx1"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_2ahjl"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/sky.png" id="3_fomj8"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_gpdjh"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/far.png" id="4_xwk3o"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/mid.png" id="5_11nr7"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_hewl2"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/fog.png" id="6_7o52f"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_bevqw"]
+[ext_resource type="Texture2D" path="res://assets/regions/lust/haze.png" id="7_sj0ma"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_xwk3o"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cuy0t"]
@@ -18,6 +24,38 @@ script = ExtResource("1_cuy0t")
 region_name = "2. Lust"
 subtitle = "The Desire"
 ambient = Color(0.36862746, 0.15686275, 0.3137255, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1418949716]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=86544406]
+script = ExtResource("2_bevqw")
+texture = ExtResource("3_fomj8")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=638085538]
+position = Vector2(0, -1128)
+script = ExtResource("2_bevqw")
+texture = ExtResource("4_xwk3o")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=2066382928]
+position = Vector2(0, -216)
+script = ExtResource("2_bevqw")
+texture = ExtResource("5_11nr7")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=767897331]
+position = Vector2(0, 248)
+script = ExtResource("2_bevqw")
+texture = ExtResource("6_7o52f")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=1019357589]
+position = Vector2(0, 177)
+script = ExtResource("2_bevqw")
+texture = ExtResource("7_sj0ma")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=1771113187]
 
@@ -684,27 +722,37 @@ lock_ability = 3
 position = Vector2(6712, 512)
 script = ExtResource("8_xwk3o")
 character = "palace_of_velvet"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save463" type="Node2D" parent="Placements" unique_id=150013384]
 position = Vector2(6952, 240)
 script = ExtResource("8_xwk3o")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Ability464" type="Node2D" parent="Placements" unique_id=516819859]
 position = Vector2(2152, 240)
 script = ExtResource("8_xwk3o")
 type = "ability"
 ability = "Glide"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save465" type="Node2D" parent="Placements" unique_id=194804717]
 position = Vector2(2872, 240)
 script = ExtResource("8_xwk3o")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save466" type="Node2D" parent="Placements" unique_id=1183364968]
 position = Vector2(5752, 512)
 script = ExtResource("8_xwk3o")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Npc1" type="Node2D" parent="Placements" unique_id=1708148996]
 position = Vector2(6872, 240)

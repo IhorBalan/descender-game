@@ -2,10 +2,16 @@
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_vwvgp"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_mfxxm"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_on88j"]
+[ext_resource type="Texture2D" path="res://assets/regions/fraud/sky.png" id="3_m1643"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_p43os"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_7ob0k"]
+[ext_resource type="Texture2D" path="res://assets/regions/fraud/far.png" id="4_rn5fr"]
+[ext_resource type="Texture2D" path="res://assets/regions/fraud/mid.png" id="5_ihn82"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_vamei"]
+[ext_resource type="Texture2D" path="res://assets/regions/fraud/fog.png" id="6_kri57"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_on88j"]
+[ext_resource type="Texture2D" path="res://assets/regions/fraud/haze.png" id="7_iuvm3"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_rn5fr"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vwvgp"]
@@ -18,6 +24,38 @@ script = ExtResource("1_vwvgp")
 region_name = "8. Fraud"
 subtitle = "The Deceivers"
 ambient = Color(0.24313726, 0.17254902, 0.4, 1)
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=887521375]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=1851670125]
+script = ExtResource("2_on88j")
+texture = ExtResource("3_m1643")
+cover = true
+
+[node name="Far" type="Node2D" parent="Backdrop" unique_id=211945025]
+position = Vector2(0, -1128)
+script = ExtResource("2_on88j")
+texture = ExtResource("4_rn5fr")
+scroll = Vector2(0.2, 0.08)
+
+[node name="Mid" type="Node2D" parent="Backdrop" unique_id=1375939584]
+position = Vector2(0, -216)
+script = ExtResource("2_on88j")
+texture = ExtResource("5_ihn82")
+scroll = Vector2(0.45, 0.16)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=722137368]
+position = Vector2(0, 248)
+script = ExtResource("2_on88j")
+texture = ExtResource("6_kri57")
+scroll = Vector2(0.75, 0.25)
+
+[node name="Haze" type="Node2D" parent="Backdrop" unique_id=1309963291]
+position = Vector2(0, 177)
+script = ExtResource("2_on88j")
+texture = ExtResource("7_iuvm3")
+scroll = Vector2(1.18, 0.4)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=1294516064]
 
@@ -935,21 +973,29 @@ lock_region = 9
 position = Vector2(3832, 512)
 script = ExtResource("8_rn5fr")
 character = "the_false_king"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save499" type="Node2D" parent="Placements" unique_id=1195428768]
 position = Vector2(6952, 240)
 script = ExtResource("8_rn5fr")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save501" type="Node2D" parent="Placements" unique_id=1843546982]
 position = Vector2(2152, 240)
 script = ExtResource("8_rn5fr")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save503" type="Node2D" parent="Placements" unique_id=285990743]
 position = Vector2(4552, 512)
 script = ExtResource("8_rn5fr")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1748192725]
 position = Vector2(6920, 512)
