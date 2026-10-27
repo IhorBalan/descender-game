@@ -312,6 +312,11 @@ static func _place(
 			decor.erase_cell(at)
 			if glow and cell[2] >= 0:
 				glow.erase_cell(at)
+	# Erased cells leave the layer's data only once it updates, which a
+	# headless script never waits a frame for.
+	decor.update_internals()
+	if glow:
+		glow.update_internals()
 	var out := PackedScene.new()
 	var error := out.pack(region)
 	if error == OK:
