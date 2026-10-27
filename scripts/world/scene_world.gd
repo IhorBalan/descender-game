@@ -7,7 +7,8 @@ extends RefCounted
 ## it see one kind of world. The regions' tile layers become the grid, the
 ## TileSet's custom data the terrain kinds, and the regions' lights, rooms,
 ## doors and placements the lists the export would hold, in level pixels of
-## the whole world. Nothing is added to the tree: the scene is
+## the whole world, and a region's backdrop layers its `parallax` spec
+## (see Backdrop). Nothing is added to the tree: the scene is
 ## instanced, read and freed.
 
 ## The room grid the map page draws on, in tiles.
@@ -110,6 +111,12 @@ static func _read_region(map: WorldMap, region: WorldRegion, index: int, tiles: 
 	}
 	for key in region.look:
 		spec[key] = region.look[key]
+	var layers := region.backdrop_layers()
+	if not layers.is_empty():
+		var entries: Array[Dictionary] = []
+		for layer in layers:
+			entries.append(layer.to_spec())
+		spec["parallax"] = {"art_tile": layers[0].art_tile, "layers": entries}
 	map.regions.append(spec)
 	for layer_name in map.layer_names:
 		var layer := region.layer(layer_name)

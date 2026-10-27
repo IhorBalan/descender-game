@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 235
+const EXPECTED_CHECKS := 242
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -977,15 +977,15 @@ func test_backdrop_layers() -> void:
 	var region := {"name": "Layered", "y0": 0, "y1": 64, "sky_bottom": "#0000ff"}
 	backdrop.show_region(region, 16, map_dir)
 	_check(backdrop.get_child_count() == 3, "a layer without its PNG is skipped")
-	var far: Backdrop.Layer = backdrop.get_child(0)
-	var fog: Backdrop.Layer = backdrop.get_child(1)
-	var cover: Backdrop.Layer = backdrop.get_child(2)
+	var far: BackdropLayer = backdrop.get_child(0)
+	var fog: BackdropLayer = backdrop.get_child(1)
+	var cover: BackdropLayer = backdrop.get_child(2)
 	_check(
-		is_equal_approx(far.depth, 0.4),
+		far.depth < 0.0 and is_equal_approx(far.effective_depth(), 0.4),
 		"a far layer's depth defaults to half of what it does not follow"
 	)
 	_check(
-		far.tint.is_equal_approx(Color.WHITE.lerp(Color.BLUE, 0.4)),
+		far.effective_tint().is_equal_approx(Color.WHITE.lerp(Color.BLUE, 0.4)),
 		"and is pulled towards the sky colour"
 	)
 	_check(
@@ -1027,7 +1027,10 @@ func test_backdrop_layers() -> void:
 		"repeat_y and an explicit depth are read"
 	)
 	_check(
-		cover.depth == 0.0 and is_equal_approx(cover.tint.a, Backdrop.SCREEN_ALPHA),
+		(
+			cover.effective_depth() == 0.0
+			and is_equal_approx(cover.effective_tint().a, Backdrop.SCREEN_ALPHA)
+		),
 		"a cover layer has no depth; a screen blend is additive at a lower alpha"
 	)
 	_check(
@@ -1035,6 +1038,82 @@ func test_backdrop_layers() -> void:
 		"a front layer has no depth"
 	)
 	backdrop.queue_free()
+
+
+func test_backdrop_from_scene() -> void:
+	var image := Image.create(8, 4, false, Image.FORMAT_RGBA8)
+	image.fill(Color.WHITE)
+	var texture := ImageTexture.create_from_image(image)
+	var entry := {
+		"texture": texture,
+		"scroll": [0.3, 0.8],
+		"y": 24,
+		"art_tile": 64,
+		"drift": [2, 0],
+		"blend": "add",
+		"lit": true,
+		"depth": 0.25,
+		"tint": "#80ff00",
+	}
+	var layer := BackdropLayer.from_spec(entry, texture, 16)
+	var back := layer.to_spec()
+	layer.free()
+	var same := true
+	for key in entry:
+		if key == "texture":
+			same = same and back.get(key) == texture
+		elif entry[key] is Array:
+			same = (
+				same
+				and Vector2(back[key][0], back[key][1]) == Vector2(entry[key][0], entry[key][1])
+			)
+		else:
+			same = same and is_equal_approx(float(back.get(key, -1)), float(entry[key]))
+	_check(
+		same and not back.has("cover") and not back.has("repeat_y"), "a layer's spec round-trips"
+	)
+	var region := {
+		"name": "Scened",
+		"y0": 200,
+		"y1": 300,
+		"sky_bottom": "#0000ff",
+		"parallax":
+		{
+			"art_tile": 64,
+			"layers":
+			[
+				{"texture": texture, "scroll": [0.3, 0.8], "y": 24},
+				{"texture": texture, "cover": true},
+				{"file": "nowhere.png"},
+			]
+		},
+	}
+	var backdrop := Backdrop.new()
+	add_child(backdrop)
+	backdrop.show_region(region, 16, "res://nowhere")
+	_check(backdrop.get_child_count() == 2, "a region's scene layers are drawn, not its JSON")
+	var far: BackdropLayer = backdrop.get_child(0)
+	_check(
+		far.position.y == 224.0 and far.texture == texture,
+		"a layer sits at its y from the region's top"
+	)
+	_check(
+		far.tile == 16 and is_equal_approx(far.scale_factor(), 0.25),
+		"painted art is scaled to the grid"
+	)
+	_check(
+		far.sky == "#0000ff" and far.effective_tint() != Color.WHITE, "the sky's haze is applied"
+	)
+	backdrop.show_region(region, 16, "res://nowhere")
+	_check(backdrop.get_child_count() == 2, "showing the same scene region again draws nothing new")
+	backdrop.queue_free()
+	var world := SceneWorld.read("res://scenes/world/world.tscn")
+	var paradise := world.region_at(0.0) if world else {}
+	var layers: Array = paradise.get("parallax", {}).get("layers", [])
+	_check(
+		layers.size() == 7 and layers[0].get("cover", false) and layers[6].get("front", false),
+		"Paradise's scene carries its backdrop: 7 layers, the sky first and the wisps in front"
+	)
 
 
 # ---------- RegionFx ----------

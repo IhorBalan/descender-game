@@ -1,12 +1,20 @@
 [gd_scene format=4]
 
 [ext_resource type="Script" path="res://scripts/world/world_region.gd" id="1_4k8yx"]
+[ext_resource type="Script" path="res://scripts/backdrop_layer.gd" id="2_5i4ff"]
 [ext_resource type="TileSet" path="res://levels/world/world_tiles.tres" id="2_ufmdw"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/sky.png" id="3_behbo"]
 [ext_resource type="Texture2D" path="res://assets/sprites/light_disc.png" id="3_wlw3m"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/clouds_far.png" id="4_27vla"]
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_nsf2r"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/islands.png" id="5_kebk8"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_vti8o"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_7mm7l"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/rays.png" id="6_ilgga"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/clouds_mid.png" id="7_lngfe"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_5i4ff"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/fog.png" id="8_61t44"]
+[ext_resource type="Texture2D" path="res://assets/regions/paradise/wisps.png" id="9_tmq6f"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4k8yx"]
 blend_mode = 1
@@ -18,6 +26,50 @@ region_name = "Paradise"
 subtitle = "Celestial Gardens"
 ambient = Color(0.7607843, 0.8039216, 0.9019608, 1)
 rows = 51
+
+[node name="Backdrop" type="Node2D" parent="." unique_id=1058192180]
+
+[node name="Sky" type="Node2D" parent="Backdrop" unique_id=251106167]
+script = ExtResource("2_5i4ff")
+texture = ExtResource("3_behbo")
+cover = true
+
+[node name="CloudsFar" type="Node2D" parent="Backdrop" unique_id=104999692]
+position = Vector2(0, -120)
+script = ExtResource("2_5i4ff")
+texture = ExtResource("4_27vla")
+scroll = Vector2(0.12, 0.4)
+
+[node name="Islands" type="Node2D" parent="Backdrop" unique_id=1003537669]
+position = Vector2(0, 120)
+script = ExtResource("2_5i4ff")
+texture = ExtResource("5_kebk8")
+scroll = Vector2(0.25, 0.55)
+
+[node name="Rays" type="Node2D" parent="Backdrop" unique_id=914199376]
+position = Vector2(0, -300)
+script = ExtResource("2_5i4ff")
+texture = ExtResource("6_ilgga")
+scroll = Vector2(0.15, 0.25)
+
+[node name="CloudsMid" type="Node2D" parent="Backdrop" unique_id=1777236930]
+position = Vector2(0, 330)
+script = ExtResource("2_5i4ff")
+texture = ExtResource("7_lngfe")
+scroll = Vector2(0.5, 0.78)
+
+[node name="Fog" type="Node2D" parent="Backdrop" unique_id=1063774183]
+position = Vector2(0, 430)
+script = ExtResource("2_5i4ff")
+texture = ExtResource("8_61t44")
+scroll = Vector2(0.75, 0.95)
+
+[node name="Wisps" type="Node2D" parent="Backdrop" unique_id=1654849327]
+position = Vector2(0, 460)
+script = ExtResource("2_5i4ff")
+texture = ExtResource("9_tmq6f")
+scroll = Vector2(1.18, 1.04)
+front = true
 
 [node name="Tiles" type="Node2D" parent="." unique_id=1810168954]
 
@@ -1773,32 +1825,44 @@ secret = true
 position = Vector2(4792, 784)
 script = ExtResource("8_5i4ff")
 character = "seraph_warden"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Start" type="Node2D" parent="Placements" unique_id=2035525363]
 position = Vector2(1192, 240)
 script = ExtResource("8_5i4ff")
 type = "start"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Ability433" type="Node2D" parent="Placements" unique_id=323946140]
 position = Vector2(6472, 784)
 script = ExtResource("8_5i4ff")
 type = "ability"
 ability = "Wings (double jump)"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save434" type="Node2D" parent="Placements" unique_id=847877000]
 position = Vector2(744, 512)
 script = ExtResource("8_5i4ff")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save436" type="Node2D" parent="Placements" unique_id=1397871145]
 position = Vector2(4072, 784)
 script = ExtResource("8_5i4ff")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Save437" type="Node2D" parent="Placements" unique_id=103694313]
 position = Vector2(5992, 784)
 script = ExtResource("8_5i4ff")
 type = "save"
+dialogue = PackedStringArray()
+rotate = PackedStringArray()
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1550843788]
 position = Vector2(1224, 240)
