@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_slirg"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/star_lily.png" id="2_2fn2x"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/star_lily_n.png" id="3_ay17h"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/star_lily_glow.png" id="4_v68nb"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5e4pp"]
+diffuse_texture = ExtResource("2_2fn2x")
+normal_texture = ExtResource("3_ay17h")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_b1s7l"]
+blend_mode = 1
+light_mode = 1
+
+[node name="StarLily" type="Node2D" unique_id=1386419455]
+script = ExtResource("1_slirg")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=902175753]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_5e4pp")
+centered = false
+
+[node name="Glow" type="Sprite2D" parent="." unique_id=1546126924]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_b1s7l")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_v68nb")
+centered = false

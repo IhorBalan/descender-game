@@ -1,0 +1,30 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_1ou7s"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/light_shaft.png" id="2_nn6ll"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/light_shaft_n.png" id="3_2pwu1"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/light_shaft_glow.png" id="4_ehme7"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_8e01f"]
+diffuse_texture = ExtResource("2_nn6ll")
+normal_texture = ExtResource("3_2pwu1")
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cy6v7"]
+blend_mode = 1
+light_mode = 1
+
+[node name="LightShaft" type="Node2D" unique_id=661335867]
+script = ExtResource("1_1ou7s")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=2048545532]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_8e01f")
+centered = false
+
+[node name="Glow" type="Sprite2D" parent="." unique_id=1825262494]
+texture_filter = 1
+material = SubResource("CanvasItemMaterial_cy6v7")
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("4_ehme7")
+centered = false

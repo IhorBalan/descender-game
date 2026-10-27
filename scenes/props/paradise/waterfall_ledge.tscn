@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_ld2fe"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/waterfall_ledge.png" id="2_nwouo"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/waterfall_ledge_n.png" id="3_0rdxt"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_gexyc"]
+diffuse_texture = ExtResource("2_nwouo")
+normal_texture = ExtResource("3_0rdxt")
+
+[node name="WaterfallLedge" type="Node2D" unique_id=1954931899]
+script = ExtResource("1_ld2fe")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=1494565416]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_gexyc")
+centered = false

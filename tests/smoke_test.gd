@@ -11,7 +11,7 @@ extends Node
 ## load, or when a script error stops the checks from running.
 
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 675
+const EXPECTED_CHECKS := 676
 const LAST_TICK := 2380
 ## A spot on the start room's floor with clear air above it, for the
 ## jumps and the air dashes (the start itself has ledges overhead).
@@ -119,7 +119,18 @@ func _physics_process(_delta: float) -> void:
 			# collision from the terrain kinds, the lights and the placements.
 			var level: LevelBuilder = _main.level
 			_check(level.world != null, "world export read")
-			_check(level.get_node("Tiles").get_child_count() == 4, "four tile layers built")
+			var tile_layers := 0
+			for child in level.get_node("Tiles").get_children():
+				if child is TileMapLayer:
+					tile_layers += 1
+			_check(tile_layers == 4, "four tile layers built")
+			_check(
+				(
+					level.get_node_or_null("Tiles/Props") != null
+					and level.get_node("Tiles/Props").get_child_count() > 100
+				),
+				"Paradise's props are instanced over the tiles"
+			)
 			var terrain := level.get_node_or_null("Tiles/Terrain")
 			_check(terrain is TileMapLayer, "terrain is a TileMapLayer")
 			# The counts come from the export itself, so a republished live map

@@ -15,6 +15,8 @@ extends Node2D
 ##   Tiles/Background, Decor, Terrain, Glow   TileMapLayers painted with the world's TileSet;
 ##                                            a Terrain tile's custom data "kind" says what it
 ##                                            does to the hero (see WorldMap.KIND_*)
+##   Props/*                                  WorldProp, the pieces of the set (lanterns, pillars,
+##                                            ledges, statues) as instances of scenes/props/<key>/
 ##   Lights/*                                 WorldLight (a PointLight2D)
 ##   Rooms/*                                  WorldRoom, the rooms of the map page and the fights
 ##   Doors/*                                  WorldDoor, the openings between rooms and their locks
@@ -81,6 +83,15 @@ func backdrop_layers() -> Array[BackdropLayer]:
 	var found: Array[BackdropLayer] = []
 	for node in _children_of("Backdrop"):
 		if node is BackdropLayer:
+			found.append(node)
+	return found
+
+
+## The pieces of the set, in tree order.
+func props() -> Array[WorldProp]:
+	var found: Array[WorldProp] = []
+	for node in _children_of("Props"):
+		if node is WorldProp:
 			found.append(node)
 	return found
 

@@ -357,6 +357,7 @@ func build(map: WorldMap) -> void:
 	size_px = map.size_px()
 	var tile_set := _build_layers(map)
 	_build_sprites(map, tile_set)
+	_build_props(map)
 	_edges.prepare(map)
 	_find_secrets(map)
 	if not streaming:
@@ -590,6 +591,32 @@ func _build_sprites(map: WorldMap, tile_set: TileSet) -> void:
 		if spec.get("solid", false) and parent == _tiles:
 			_add_sprite_collision(spec, at, columns, rows, flip, tiles, map, tile_set, copy_scale)
 	_sheet_image = null
+
+
+## The pieces of the set placed as scenes (see WorldProp): each instanced
+## where it was put, over the tile layers, its art lit and rimmed like them.
+## A prop whose scene is missing is skipped with a warning.
+func _build_props(map: WorldMap) -> void:
+	if map.props.is_empty():
+		return
+	var holder := Node2D.new()
+	holder.name = "Props"
+	_tiles.add_child(holder)
+	for spec in map.props:
+		var path := str(spec.get("scene", ""))
+		var packed := load(path) as PackedScene if ResourceLoader.exists(path) else null
+		var prop := packed.instantiate() as WorldProp if packed else null
+		if prop == null:
+			push_warning("LevelBuilder: prop %s skipped, it is not a WorldProp scene" % path)
+			continue
+		prop.position = Vector2(float(spec.get("x", 0)), float(spec.get("y", 0)))
+		var prop_scale: Variant = spec.get("scale")
+		if prop_scale is Array and prop_scale.size() >= 2:
+			prop.scale = Vector2(float(prop_scale[0]), float(prop_scale[1]))
+		for sprite in prop.lit_sprites():
+			sprite.material = rim
+			sprite.texture_filter = map.texture_filter()
+		holder.add_child(prop)
 
 
 ## Collision for a solid sprite: the walkable shape drawn in the editor

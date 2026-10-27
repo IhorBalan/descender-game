@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_6mv2x"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/ledge_island.png" id="2_aeh6r"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/ledge_island_n.png" id="3_1md0n"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_l2u7y"]
+diffuse_texture = ExtResource("2_aeh6r")
+normal_texture = ExtResource("3_1md0n")
+
+[node name="LedgeIsland" type="Node2D" unique_id=1303868443]
+script = ExtResource("1_6mv2x")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=182425610]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_l2u7y")
+centered = false

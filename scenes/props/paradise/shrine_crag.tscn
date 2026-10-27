@@ -1,0 +1,18 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_xw11s"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/shrine_crag.png" id="2_snuj1"]
+[ext_resource type="Texture2D" path="res://assets/props/paradise/shrine_crag_n.png" id="3_svk5v"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_mor1w"]
+diffuse_texture = ExtResource("2_snuj1")
+normal_texture = ExtResource("3_svk5v")
+
+[node name="ShrineCrag" type="Node2D" unique_id=643162417]
+script = ExtResource("1_xw11s")
+
+[node name="Art" type="Sprite2D" parent="." unique_id=1112693760]
+texture_filter = 1
+scale = Vector2(0.25, 0.25)
+texture = SubResource("CanvasTexture_mor1w")
+centered = false
