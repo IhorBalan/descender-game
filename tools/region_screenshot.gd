@@ -2,7 +2,7 @@ extends SceneTree
 
 ## Renders every region scene under scenes/world/ (see WorldRegion) to a
 ## PNG, each framed to fit the window, the way the editor shows it, with
-## the rooms, doors, markers and placements drawn over the tiles. A region
+## the rooms, doors and placements drawn over the tiles. A region
 ## with several areas also gets one shot per area, closer in. Needs a
 ## display (or a virtual one):
 ##

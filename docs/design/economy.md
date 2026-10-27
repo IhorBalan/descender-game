@@ -120,7 +120,7 @@ three power-ups: a **Halo Shard**, **Choir Oil** (a Lit Blade) and a
 
 ### Traders
 
-Two, at the shop markers the map already had:
+Two, where the map put its shops:
 
 - **Old Pell's forge** (Earth, the hub): blades and coats for light, each
   once; flasks for 25. His forging of church iron is a separate thing and

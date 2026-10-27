@@ -27,7 +27,7 @@ const SCRATCH_DIALOGUE := "user://unit_test_dialogue.json"
 const UPGRADE_KINDS: Array[String] = ["heart", "vial", "iron"]
 const POWER_KINDS: Array[String] = ["halo", "blade", "zeal"]
 const PLACEMENT_TYPES: Array[String] = [
-	"npc", "item", "trigger", "enemy", "upgrade", "power", "barrier"
+	"start", "save", "ability", "npc", "item", "trigger", "enemy", "upgrade", "power", "barrier"
 ]
 ## The flags the code sets without a dialogue entry: their prefixes.
 const CODE_FLAG_PREFIXES: Array[String] = [
@@ -63,6 +63,7 @@ func _placements() -> Dictionary:
 	return {
 		"dialogue": map.dialogue_path,
 		"objects": map.objects,
+		"abilities": map.abilities,
 		"width": map.width,
 		"height": map.height,
 	}
@@ -78,6 +79,10 @@ func test_placements() -> void:
 	_check(objects.size() > 200, "the world has its objects (%d)" % objects.size())
 	var width := int(world.get("width", 0))
 	var height := int(world.get("height", 0))
+	var abilities: PackedStringArray = world.get("abilities", PackedStringArray())
+	var starts := 0
+	var saves := 0
+	var bosses := 0
 	var bad := 0
 	for i in objects.size():
 		var spec: Dictionary = objects[i]
@@ -91,10 +96,19 @@ func test_placements() -> void:
 		if x < 0 or y < 0 or x >= width or y >= height:
 			bad += _fail("%s: outside the world" % where)
 		match type:
+			"start":
+				starts += 1
+			"save":
+				saves += 1
+			"ability":
+				if not abilities.has(str(spec.get("ability", ""))):
+					bad += _fail("%s: no ability '%s'" % [where, spec.get("ability", "")])
 			"npc", "item", "trigger":
 				bad += _check_story_object(spec, where, dialogue, sprites)
 			"enemy":
 				bad += _check_enemy(spec, where, sprites)
+				if Boss.has_profile(str(spec.get("character", ""))):
+					bosses += 1
 			"upgrade":
 				if str(spec.get("upgrade", "")) not in UPGRADE_KINDS:
 					bad += _fail("%s: unknown upgrade '%s'" % [where, spec.get("upgrade", "")])
@@ -105,6 +119,9 @@ func test_placements() -> void:
 				if int(spec.get("height", 0)) <= 0:
 					bad += _fail("%s: a barrier needs a height" % where)
 	_check(bad == 0, "every placement resolves (%d bad)" % bad)
+	_check(starts == 1, "the world has one start (%d)" % starts)
+	_check(saves >= 30, "and its checkpoints (%d)" % saves)
+	_check(bosses == Boss.IDS.size(), "and every boss stands in it (%d)" % bosses)
 
 
 func _check_story_object(

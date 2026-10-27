@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_7ob0k"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_vamei"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_on88j"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_m1643"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_rn5fr"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vwvgp"]
@@ -930,70 +929,27 @@ dir = "v"
 lock_kind = "boss"
 lock_region = 9
 
-[node name="Markers" type="Node2D" parent="." unique_id=158372128]
-
-[node name="Boss498" type="Node2D" parent="Markers" unique_id=294011148]
-position = Vector2(3832, 512)
-script = ExtResource("7_m1643")
-id = 498
-type = "boss"
-label = "The False King"
-room = 176
-
-[node name="Save499" type="Node2D" parent="Markers" unique_id=1847777890]
-position = Vector2(6952, 240)
-script = ExtResource("7_m1643")
-id = 499
-label = "Save"
-room = 177
-
-[node name="Secret500" type="Node2D" parent="Markers" unique_id=849910140]
-position = Vector2(3112, 240)
-script = ExtResource("7_m1643")
-id = 500
-type = "secret"
-label = "Secret"
-room = 179
-
-[node name="Save501" type="Node2D" parent="Markers" unique_id=1245153422]
-position = Vector2(2152, 240)
-script = ExtResource("7_m1643")
-id = 501
-label = "Save"
-room = 180
-
-[node name="Secret502" type="Node2D" parent="Markers" unique_id=963570746]
-position = Vector2(1192, 512)
-script = ExtResource("7_m1643")
-id = 502
-type = "secret"
-label = "Secret"
-room = 183
-
-[node name="Save503" type="Node2D" parent="Markers" unique_id=1540604824]
-position = Vector2(4552, 512)
-script = ExtResource("7_m1643")
-id = 503
-label = "Save"
-room = 185
-
-[node name="Secret504" type="Node2D" parent="Markers" unique_id=1111990329]
-position = Vector2(5992, 240)
-script = ExtResource("7_m1643")
-id = 504
-type = "secret"
-label = "Secret"
-room = 187
-
-[node name="Secret505" type="Node2D" parent="Markers" unique_id=916567975]
-position = Vector2(4072, 240)
-script = ExtResource("7_m1643")
-id = 505
-type = "secret"
-label = "Secret"
-room = 189
-
 [node name="Placements" type="Node2D" parent="." unique_id=1320937374]
+
+[node name="Boss498" type="Node2D" parent="Placements" unique_id=100035545]
+position = Vector2(3832, 512)
+script = ExtResource("8_rn5fr")
+character = "the_false_king"
+
+[node name="Save499" type="Node2D" parent="Placements" unique_id=1195428768]
+position = Vector2(6952, 240)
+script = ExtResource("8_rn5fr")
+type = "save"
+
+[node name="Save501" type="Node2D" parent="Placements" unique_id=1843546982]
+position = Vector2(2152, 240)
+script = ExtResource("8_rn5fr")
+type = "save"
+
+[node name="Save503" type="Node2D" parent="Placements" unique_id=285990743]
+position = Vector2(4552, 512)
+script = ExtResource("8_rn5fr")
+type = "save"
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1748192725]
 position = Vector2(6920, 512)

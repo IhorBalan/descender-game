@@ -5,16 +5,22 @@ extends Node2D
 ## scenes/world/world.tscn, or a world.json the editor exported).
 ##
 ## The export's layers become TileMapLayers, its terrain kinds become
-## collision (solid runs, one-way ledges and hazards), its lights become
-## PointLight2Ds and its markers place the hero (start), the checkpoints
-## (save), the feathers (ability) and the bosses: a Boss for every boss
-## marker with a profile, a placeholder angel guard for the rest. Doors the
-## export locks by an ability or a boss get a seal of light (DoorLock).
+## collision (solid runs, one-way ledges and hazards) and its lights become
+## PointLight2Ds. Doors the export locks by an ability or a boss get a seal
+## of light (DoorLock).
 ##
-## A placements.json next to the export names the dialogue file and lists
-## the rest of what stands in the world under "objects", each with a type
-## and the tile cell (x, y) whose bottom its feet are on:
+## Everything that stands in the world is a placement: the world scene's
+## WorldPlacements, or, for an export, the placements its markers stand for
+## (see WorldMap.placement_of_marker) and the "objects" of the
+## placements.json next to it, which also names the dialogue file. Each
+## has a type and the tile cell (x, y) whose bottom its feet are on:
 ##
+##   start                where a new game puts the hero
+##   save                 a checkpoint
+##   ability              ability: the name of the feather's ability as the
+##                        world's abilities list has it (the Player.Ability
+##                        enum follows that order), for the abilities the
+##                        hero can learn (LEARNABLE)
 ##   npc, item, trigger   a story object: name, character, tint, faces_left,
 ##                        dialogue and rotate, as the dialogue system wants;
 ##                        unless: a story flag that, once set, leaves it out;
@@ -43,7 +49,7 @@ extends Node2D
 ## The tiles, their collision and the edge art are streamed: the grid is cut
 ## into chunks of CHUNK_TILES cells a side and only the chunks near the hero
 ## (and the camera) are built, see stream_around. Everything with gameplay
-## state (markers, enemies, objects, seals, lights) is placed for the whole
+## state (the placements, the seals, the lights) is placed for the whole
 ## world at once, as before.
 
 ## The sky's rim light on the tiles: 0 turns it off.
@@ -67,7 +73,7 @@ const STREAM_OUT := Vector2(1600.0, 960.0)
 ## How many cells of solid a secret passage may run through on each side
 ## of its door.
 const SECRET_DEPTH := 12
-## The abilities with gameplay behind them; the other markers stay data.
+## The abilities with gameplay behind them; the other feathers stay data.
 const LEARNABLE: Array[int] = [
 	Player.Ability.WINGS,
 	Player.Ability.LIGHT_DASH,
@@ -76,8 +82,6 @@ const LEARNABLE: Array[int] = [
 	Player.Ability.GLIDE,
 	Player.Ability.SMITE,
 ]
-## Boss markers get this enemy until there are bosses.
-const BOSS_PLACEHOLDER := "angel_guard"
 ## How tall the one-way strip at the top of a ledge tile is.
 const LEDGE_HEIGHT := 4.0
 ## Solid sprites (see _add_sprite_collision): strands of art thinner than
@@ -200,8 +204,6 @@ var _upgrade_counts: Dictionary = {}
 var _carved: Dictionary = {}
 ## Each secret door's id and the cells of its passage (see _find_secrets).
 var _secret_specs: Array = []
-## The sidecar's "objects" list.
-var _objects_spec: Array = []
 var _tiles: Node2D
 ## Parallax sprites (see ParallaxSprite): those that lag behind the camera
 ## under the tile layers, those that run ahead in front of the hero.
@@ -231,38 +233,38 @@ static func enemy_scene(character: String) -> PackedScene:
 	return load(path) as PackedScene
 
 
-## Builds the world at `path`: a world export (world.json) with the objects
-## of the placements.json next to it, if any, or a world scene (world.tscn,
-## see SceneWorld) with the placements in its regions. An unreadable world
-## leaves the level empty, with an error pushed.
+## Builds the world at `path`: a world export (world.json) with the
+## placements its markers stand for and the objects of the placements.json
+## next to it, if any, or a world scene (world.tscn, see SceneWorld) with
+## the placements in its regions. An unreadable world leaves the level
+## empty, with an error pushed.
 func load_from_file(path: String) -> void:
 	dialogue_path = ""
-	_objects_spec = []
 	var map: WorldMap
 	if path.ends_with(".tscn"):
 		map = SceneWorld.read(path)
 		if map != null:
 			dialogue_path = map.dialogue_path
-			_objects_spec = map.objects
 	else:
 		map = WorldMap.read(path)
 		if map != null:
-			_read_sidecar(map.dir() + WORLD_PLACEMENTS)
+			_read_sidecar(map, map.dir() + WORLD_PLACEMENTS)
 	if map == null:
 		_make_containers()
 		return
 	build(map)
 
 
-## Reads the dialogue file name and the objects from a sidecar, if any.
-func _read_sidecar(sidecar: String) -> void:
+## Reads the dialogue file name and the objects from a sidecar, if any,
+## the objects after the map's own placements.
+func _read_sidecar(map: WorldMap, sidecar: String) -> void:
 	if not FileAccess.file_exists(sidecar):
 		return
 	var parsed: Variant = JSON.parse_string(FileAccess.get_file_as_string(sidecar))
 	if parsed is Dictionary:
 		dialogue_path = str(parsed.get("dialogue", ""))
 		if parsed.get("objects", []) is Array:
-			_objects_spec = parsed["objects"]
+			map.objects.append_array(parsed["objects"])
 	else:
 		push_error("LevelBuilder: could not read %s" % sidecar)
 
@@ -345,8 +347,8 @@ func _make_containers() -> void:
 	_layers = {}
 
 
-## Builds a world export: one TileMapLayer per layer, collision merged from
-## the terrain kinds, the lights, the markers and the sidecar's objects.
+## Builds a world: one TileMapLayer per layer, collision merged from the
+## terrain kinds, the lights, the seals and the placements.
 func build(map: WorldMap) -> void:
 	_make_containers()
 	world = map
@@ -360,10 +362,9 @@ func build(map: WorldMap) -> void:
 	if not streaming:
 		load_all()
 	_build_lights(map)
-	_place_markers(map)
 	_place_locks(map)
 	_place_secrets()
-	for spec in _objects_spec:
+	for spec in map.objects:
 		if spec is Dictionary:
 			_place_object(spec)
 	# Saves index the checkpoints, so keep them in a stable order.
@@ -864,44 +865,6 @@ func _light_texture() -> ImageTexture:
 	return ImageTexture.create_from_image(image)
 
 
-## The export's markers: start, save (a checkpoint), ability (a feather,
-## for the abilities the hero can learn) and boss (a placeholder enemy).
-## Secrets, shops, gates and the clock are data only until there is
-## something for them to do.
-func _place_markers(map: WorldMap) -> void:
-	for marker in map.markers:
-		var at := map.marker_position(marker)
-		match str(marker.get("type", "")):
-			"start":
-				player_start = at
-			"save":
-				var checkpoint: Checkpoint = CHECKPOINT_SCENE.instantiate()
-				checkpoint.position = at
-				_objects.add_child(checkpoint)
-				checkpoints.append(checkpoint)
-			"ability":
-				var ability := _ability_for(map.abilities.find(str(marker.get("label", ""))))
-				if ability >= 0:
-					_add_pickup(at, ability)
-			"boss":
-				_place_boss(map, marker, at)
-
-
-## A boss marker: a Boss with the room as its arena when its label has a
-## profile and the save does not already hold its death, else the
-## placeholder enemy.
-func _place_boss(map: WorldMap, marker: Dictionary, at: Vector2) -> void:
-	var id := Boss.id_for(str(marker.get("label", "")))
-	if not Boss.has_profile(id):
-		_enemy_spawns.append(EnemySpawn.new(enemy_scene(BOSS_PLACEHOLDER), at, BOSS_PLACEHOLDER))
-		return
-	if Story.has_flag(Boss.flag_for(id)):
-		return
-	var spawn := EnemySpawn.new(BOSS_SCENE, at, id)
-	spawn.arena = room_rect(map, int(marker.get("room", -1)))
-	_enemy_spawns.append(spawn)
-
-
 ## The secret doors of the export sit in the solid between two rooms. Each
 ## one's passage is the four-wide (or four-tall) channel from the air on
 ## one side to the air on the other, carved out of the collision here and
@@ -1064,14 +1027,31 @@ func _ability_name(map: WorldMap, index: int) -> String:
 	return map.abilities[index].get_slice("(", 0).strip_edges()
 
 
-## The id of the boss whose room is in the region (see Boss.id_for), or
-## "" when the region has none.
+## The index of the ability `name` in the map's list, by its full name or
+## its name without the note in brackets, or -1.
+func _ability_index(map: WorldMap, name: String) -> int:
+	var wanted := name.get_slice("(", 0).strip_edges().to_lower()
+	for i in map.abilities.size():
+		if map.abilities[i] == name or _ability_name(map, i).to_lower() == wanted:
+			return i
+	return -1
+
+
+## The id of the boss standing in the region (an enemy placement with a
+## boss's profile, see Boss.IDS), or "" when the region has none.
 func _boss_in_region(map: WorldMap, region: int) -> String:
-	for marker in map.markers_of("boss"):
-		var rect_room := int(marker.get("room", -1))
-		for room in map.rooms:
-			if int(room.get("id", -1)) == rect_room and int(room.get("region", -1)) == region:
-				return Boss.id_for(str(marker.get("label", "")))
+	if region < 0 or region >= map.regions.size():
+		return ""
+	var band: Dictionary = map.regions[region]
+	for spec in map.objects:
+		if not spec is Dictionary or str(spec.get("type", "")) != "enemy":
+			continue
+		var character := str(spec.get("character", ""))
+		if not Boss.has_profile(character):
+			continue
+		var y := (int(spec.get("y", 0)) + 1) * map.tile
+		if y > float(band.get("y0", 0)) and y <= float(band.get("y1", 0)):
+			return character
 	return ""
 
 
@@ -1155,6 +1135,17 @@ func _place_object(spec: Dictionary) -> void:
 	var at := Vector2(x * TILE + TILE / 2.0, (y + 1) * TILE)
 	var type := str(spec.get("type", ""))
 	match type:
+		"start":
+			player_start = at
+		"save":
+			var checkpoint: Checkpoint = CHECKPOINT_SCENE.instantiate()
+			checkpoint.position = at
+			_objects.add_child(checkpoint)
+			checkpoints.append(checkpoint)
+		"ability":
+			var ability := _ability_for(_ability_index(world, str(spec.get("ability", ""))))
+			if ability >= 0:
+				_add_pickup(at, ability)
 		"npc", "item", "trigger":
 			_add_placement(at, spec)
 		"enemy":

@@ -470,7 +470,7 @@ twelve regions stacked top to bottom: Paradise, Ruined Earth, Purgatory and
 the nine circles from Limbo to Treachery, each with an ambient colour that
 tints the screen while the hero is in it. The world also holds the rooms,
 the doors between them (some locked by an ability or a boss), 853 point
-lights and the markers.
+lights and the placements: everything that stands in it.
 
 Besides the tile layers the export may list **sprites**: decorations the
 editor placed freely by the pixel instead of on the grid (big painted
@@ -606,19 +606,20 @@ region's height so they stay in view from its top to its bottom.
 `scripts/level_builder.gd` builds it: one `TileMapLayer` per layer
 (Background, Decor, Terrain, Glow), collision merged from the terrain kinds
 (solid, one-way ledge, hazard), a `PointLight2D` per light (without shadows,
-which would need an occluder on every tile), and the markers: the start
-puts the hero down, every save is a checkpoint, the ability markers for the
-wings and the halo dash are feathers, every boss marker with a profile is
-a `Boss` (the rest get an angel guard standing in), and every locked door
-gets a seal (`scripts/door_lock.gd`). All six abilities have feathers now.
+which would need an occluder on every tile), and the placements (see
+*The world as scenes*): the start puts the hero down, every save is a
+checkpoint, the ability placements are feathers (all six abilities have
+one), every enemy placement with a boss's id is a `Boss` in its room, and
+every locked door gets a seal (`scripts/door_lock.gd`). The map tool's
+other markers (secrets, shops, the gate, the clock) are its own notes and
+are left out of the game.
 Every secret door of the export is a passage carved through the rock
 between its two rooms and hidden behind that rock (`scripts/secret_wall.gd`):
 a Smite landing on or beside it breaks it open for the rest of the save
-(flag `secret:<door id>`), and the terrain tiles go with it. The gate
-marker at the bottom of the hub is the `descent` trigger: the point of no
-return, with a line from the Voice and an autosave (a dialogue entry's
-`save` flag). The two shop markers stay data: the shops are Pell and Vael
-themselves.
+(flag `secret:<door id>`), and the terrain tiles go with it. The trigger
+at the gate at the bottom of the hub is the `descent` trigger: the point
+of no return, with a line from the Voice and an autosave (a dialogue
+entry's `save` flag). The shops are Pell and Vael themselves.
 
 ### Streaming and the region scenes
 
@@ -632,8 +633,8 @@ before the hero's own step, and again wherever it puts him down (a
 checkpoint, fast travel, the warp to the start), so he never stands on
 ground that is not there. At the start three of the world's 64 chunks exist
 instead of the whole 880,000-cell grid. Everything with state in it (the
-markers, the seals, the secret walls, the lights, the enemies and the
-objects of the sidecar) is placed for the whole world as before; an opened
+placements, the seals, the secret walls and the lights) is placed for the
+whole world as before; an opened
 secret passage stays open when its chunk comes back. The tests and the tools
 build the whole grid with `streaming = false` or `load_all()`.
 
@@ -680,15 +681,18 @@ its scene is in level pixels from its top-left corner:
 - `Doors/*`: `WorldDoor`, the opening between two rooms at the cell it
   stands on, with its direction, its lock (an ability or a region's boss)
   and whether it is a secret passage.
-- `Markers/*`: `WorldMarker`: start, save, boss, ability, secret, shop...
-  with its feet at its position.
-- `Placements/*`: `WorldPlacement`, what `placements.json` used to list:
-  NPCs, relics, triggers, enemies, upgrades, power-ups and walls of light,
-  each with the fields its type wants in the inspector (see the script),
-  its feet at its position. Upgrades are numbered region by region in
-  scene order, so keep that order to keep saves straight.
+- `Placements/*`: `WorldPlacement`, everything that stands in the world
+  with its feet at its position: the start, the saves (checkpoints), the
+  feathers (`ability`, by the ability's name in the world's list), NPCs,
+  relics, triggers, enemies (a boss is an enemy with its profile's id,
+  standing in its arena room), upgrades, power-ups and walls of light,
+  each with the fields its type wants in the inspector (see the script).
+  Upgrades are numbered region by region in scene order, so keep that
+  order to keep saves straight. A map export's markers become these when
+  it is migrated (`WorldMap.placement_of_marker`): its start, saves,
+  abilities and bosses; its secrets, shops, gates and clock are dropped.
 
-In the editor each region draws its band and every room, door, marker and
+In the editor each region draws its band and every room, door and
 placement draws itself, so a level reads at a glance; in the game nothing
 of that is drawn. At boot `SceneWorld` (`scripts/world/scene_world.gd`)
 reads the scenes into the same `WorldMap` an export gives, so
@@ -831,13 +835,13 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scenes/enemies/<name>.tscn` | One scene per enemy body, inheriting walker or flyer, wearing its profile and its frames |
 | `scripts/enemies/walker_profile.gd`, `flyer_profile.gd`, `boss_profile.gd`, `resources/enemies/`, `resources/bosses/` | The profile resources: an enemy's or a boss's numbers, one `.tres` per body or boss, tuned in the Inspector |
 | `scenes/enemies/hanger.tscn`, `scripts/enemies/hanger.gd` | The hanged thing: hangs from a rope and drops on the hero |
-| `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: a profile by marker label, two phases, the fight main.gd runs around it |
+| `scenes/enemies/boss.tscn`, `scripts/enemies/boss.gd` | A boss: a profile by its placement's id, two phases, the fight main.gd runs around it |
 | `scripts/door_lock.gd` | A seal of light on a locked door, or on a boss room's doors during the fight |
 | `scripts/enemy_health_bar.gd` | Health bar that appears over a hit enemy |
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
-| `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, markers and lights |
-| `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, markers and placements as nodes to edit |
-| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldMarker`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
+| `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, lights, and its markers as placements |
+| `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors and placements as nodes to edit |
+| `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |

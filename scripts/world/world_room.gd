@@ -11,7 +11,7 @@ const ROOM_COLOR := Color(1.0, 1.0, 1.0, 0.35)
 const BOSS_COLOR := Color(1.0, 0.5, 0.3, 0.6)
 const LABEL_COLOR := Color(1.0, 1.0, 1.0, 0.9)
 
-## The room's id in the world: what doors, markers and the map page refer to.
+## The room's id in the world: what doors and the map page refer to.
 @export var id := 0
 ## "room", "boss", "save", "secret"... as the map tool kinds them.
 @export var kind := "room"

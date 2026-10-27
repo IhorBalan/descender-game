@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_nsf2r"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_vti8o"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_7mm7l"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_5mpoy"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_5i4ff"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4k8yx"]
@@ -1768,86 +1767,38 @@ lock_kind = "ability"
 lock_ability = 5
 secret = true
 
-[node name="Markers" type="Node2D" parent="." unique_id=1076245611]
-
-[node name="Boss429" type="Node2D" parent="Markers" unique_id=819405899]
-position = Vector2(4792, 784)
-script = ExtResource("7_5mpoy")
-id = 429
-type = "boss"
-label = "Seraph Warden"
-room = 1
-
-[node name="Start430" type="Node2D" parent="Markers" unique_id=1206612868]
-position = Vector2(1192, 240)
-script = ExtResource("7_5mpoy")
-id = 430
-type = "start"
-label = "Start"
-room = 2
-
-[node name="Secret431" type="Node2D" parent="Markers" unique_id=2073379546]
-position = Vector2(4552, 240)
-script = ExtResource("7_5mpoy")
-id = 431
-type = "secret"
-label = "Secret"
-room = 3
-
-[node name="Secret432" type="Node2D" parent="Markers" unique_id=1004759470]
-position = Vector2(1672, 784)
-script = ExtResource("7_5mpoy")
-id = 432
-type = "secret"
-label = "Passage from Ruined Earth"
-room = 6
-
-[node name="Ability433" type="Node2D" parent="Markers" unique_id=813422829]
-position = Vector2(6472, 784)
-script = ExtResource("7_5mpoy")
-id = 433
-type = "ability"
-label = "Wings (double jump)"
-room = 11
-
-[node name="Save434" type="Node2D" parent="Markers" unique_id=768023730]
-position = Vector2(744, 512)
-script = ExtResource("7_5mpoy")
-id = 434
-label = "Save"
-room = 12
-
-[node name="Secret435" type="Node2D" parent="Markers" unique_id=1407763315]
-position = Vector2(232, 512)
-script = ExtResource("7_5mpoy")
-id = 435
-type = "secret"
-label = "Secret"
-room = 17
-
-[node name="Save436" type="Node2D" parent="Markers" unique_id=1258107146]
-position = Vector2(4072, 784)
-script = ExtResource("7_5mpoy")
-id = 436
-label = "Save"
-room = 18
-
-[node name="Save437" type="Node2D" parent="Markers" unique_id=102209827]
-position = Vector2(5992, 784)
-script = ExtResource("7_5mpoy")
-id = 437
-label = "Save"
-room = 22
-
-[node name="Secret438" type="Node2D" parent="Markers" unique_id=417207224]
-position = Vector2(3592, 240)
-script = ExtResource("7_5mpoy")
-id = 438
-type = "secret"
-label = "Secret"
-room = 23
-
 [node name="Placements" type="Node2D" parent="." unique_id=894502510]
+
+[node name="Boss429" type="Node2D" parent="Placements" unique_id=695425565]
+position = Vector2(4792, 784)
+script = ExtResource("8_5i4ff")
+character = "seraph_warden"
+
+[node name="Start" type="Node2D" parent="Placements" unique_id=2035525363]
+position = Vector2(1192, 240)
+script = ExtResource("8_5i4ff")
+type = "start"
+
+[node name="Ability433" type="Node2D" parent="Placements" unique_id=323946140]
+position = Vector2(6472, 784)
+script = ExtResource("8_5i4ff")
+type = "ability"
+ability = "Wings (double jump)"
+
+[node name="Save434" type="Node2D" parent="Placements" unique_id=847877000]
+position = Vector2(744, 512)
+script = ExtResource("8_5i4ff")
+type = "save"
+
+[node name="Save436" type="Node2D" parent="Placements" unique_id=1397871145]
+position = Vector2(4072, 784)
+script = ExtResource("8_5i4ff")
+type = "save"
+
+[node name="Save437" type="Node2D" parent="Placements" unique_id=103694313]
+position = Vector2(5992, 784)
+script = ExtResource("8_5i4ff")
+type = "save"
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1550843788]
 position = Vector2(1224, 240)

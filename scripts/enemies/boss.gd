@@ -176,8 +176,8 @@ static func flag_for(id: String) -> String:
 	return "boss:%s" % id
 
 
-## The profile id for a boss marker's label ("Seraph Warden" ->
-## "seraph_warden"), whether or not a profile exists for it.
+## The profile id for a boss's name as the map tool labels it ("Seraph
+## Warden" -> "seraph_warden"), whether or not a profile exists for it.
 static func id_for(label: String) -> String:
 	var id := label.to_lower().strip_edges()
 	for ch in [":", ",", "'", "."]:

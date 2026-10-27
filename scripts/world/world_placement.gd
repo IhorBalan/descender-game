@@ -3,19 +3,27 @@ class_name WorldPlacement
 extends Node2D
 
 ## Something that stands in the world with its feet at its position: what
-## placements.json listed (see LevelBuilder, the top of the file, for every
+## placements.json lists (see LevelBuilder, the top of the file, for every
 ## field). `type` says which fields matter:
 ##
+##   start     nothing: where a new game puts the hero (the world has one)
+##   save      nothing: a checkpoint
+##   ability   ability, the name of the feather's ability as the world's
+##             abilities list has it ("Wings (double jump)", "Halo Dash"...)
 ##   npc       placement_name, character, tint, faces_left, dialogue, rotate, unless, shop
 ##   item      item, dialogue, unless
 ##   trigger   dialogue, unless
-##   enemy     character, barks, passive, behaviour, requires
+##   enemy     character, barks, passive, behaviour, requires; a boss is an
+##             enemy with its profile's id (Boss.IDS) in its room
 ##   upgrade   upgrade (heart, vial, iron); upgrades are numbered in scene
 ##             order, region by region, so keep that order to keep saves straight
 ##   power     power (halo, blade, zeal)
 ##   barrier   height, the cells of light below the position
 
 const COLORS := {
+	"start": Color(1.0, 1.0, 1.0, 0.9),
+	"save": Color(1.0, 0.9, 0.3, 0.9),
+	"ability": Color(0.9, 0.8, 1.0, 0.9),
 	"npc": Color(0.5, 1.0, 0.6, 0.9),
 	"item": Color(1.0, 0.85, 0.4, 0.9),
 	"trigger": Color(0.7, 0.7, 1.0, 0.8),
@@ -25,8 +33,10 @@ const COLORS := {
 	"barrier": Color(1.0, 1.0, 0.7, 0.9),
 }
 
-## One of npc, item, trigger, enemy, upgrade, power, barrier.
+## One of start, save, ability, npc, item, trigger, enemy, upgrade, power, barrier.
 @export var type := "enemy"
+## A feather's ability, by its name in the world's abilities list.
+@export var ability := ""
 ## An NPC's name, as the dialogue box shows it.
 @export var placement_name := ""
 ## An NPC's or an enemy's body (see Npc, Walker.PROFILES, Flyer.PROFILES, Boss.PROFILES).
@@ -70,6 +80,8 @@ func _draw() -> void:
 		detail = placement_name
 	elif type == "item":
 		detail = item
+	elif type == "ability":
+		detail = ability
 	elif type == "upgrade":
 		detail = upgrade
 	elif type == "power":
@@ -84,6 +96,8 @@ func _draw() -> void:
 func to_spec(cell: Vector2i) -> Dictionary:
 	var spec := {"type": type, "x": cell.x, "y": cell.y}
 	match type:
+		"ability":
+			spec["ability"] = ability
 		"npc":
 			spec["name"] = placement_name
 			spec["character"] = character if not character.is_empty() else "hero"
@@ -130,6 +144,7 @@ func _put_lines(spec: Dictionary) -> void:
 ## Fills the fields from a placements.json entry.
 func from_spec(spec: Dictionary) -> void:
 	type = str(spec.get("type", "enemy"))
+	ability = str(spec.get("ability", ""))
 	placement_name = str(spec.get("name", ""))
 	character = str(spec.get("character", ""))
 	var color: Variant = spec.get("tint")

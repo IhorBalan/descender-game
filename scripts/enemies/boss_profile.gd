@@ -2,8 +2,8 @@ class_name BossProfile
 extends Resource
 
 ## The numbers of one boss (see Boss). One of these lives in
-## resources/bosses/<id>.tres; the id is the file name, which the map's
-## boss markers and the placements name (see Boss.id_for).
+## resources/bosses/<id>.tres; the id is the file name, which the
+## placements name (see Boss.id_for).
 
 ## Shown on the health bar.
 @export var display_name := ""

@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_l0pch"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_yu7p3"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_j23cj"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_jrxdv"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_8ekn6"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_onsl0"]
@@ -736,47 +735,28 @@ dir = "v"
 lock_kind = "ability"
 lock_ability = 2
 
-[node name="Markers" type="Node2D" parent="." unique_id=253718781]
-
-[node name="Boss457" type="Node2D" parent="Markers" unique_id=237469447]
-position = Vector2(6712, 512)
-script = ExtResource("7_jrxdv")
-id = 457
-type = "boss"
-label = "Limbo Lord"
-room = 71
-
-[node name="Save458" type="Node2D" parent="Markers" unique_id=1324436778]
-position = Vector2(4072, 240)
-script = ExtResource("7_jrxdv")
-id = 458
-label = "Save"
-room = 72
-
-[node name="Secret459" type="Node2D" parent="Markers" unique_id=1817078396]
-position = Vector2(5032, 240)
-script = ExtResource("7_jrxdv")
-id = 459
-type = "secret"
-label = "Secret"
-room = 78
-
-[node name="Ability460" type="Node2D" parent="Markers" unique_id=542668285]
-position = Vector2(1672, 240)
-script = ExtResource("7_jrxdv")
-id = 460
-type = "ability"
-label = "Holy Light"
-room = 80
-
-[node name="Save461" type="Node2D" parent="Markers" unique_id=149039060]
-position = Vector2(6952, 240)
-script = ExtResource("7_jrxdv")
-id = 461
-label = "Save"
-room = 82
-
 [node name="Placements" type="Node2D" parent="." unique_id=194547343]
+
+[node name="Boss457" type="Node2D" parent="Placements" unique_id=461060839]
+position = Vector2(6712, 512)
+script = ExtResource("8_8ekn6")
+character = "limbo_lord"
+
+[node name="Save458" type="Node2D" parent="Placements" unique_id=80521325]
+position = Vector2(4072, 240)
+script = ExtResource("8_8ekn6")
+type = "save"
+
+[node name="Ability460" type="Node2D" parent="Placements" unique_id=184570286]
+position = Vector2(1672, 240)
+script = ExtResource("8_8ekn6")
+type = "ability"
+ability = "Holy Light"
+
+[node name="Save461" type="Node2D" parent="Placements" unique_id=931247022]
+position = Vector2(6952, 240)
+script = ExtResource("8_8ekn6")
+type = "save"
 
 [node name="Item1" type="Node2D" parent="Placements" unique_id=1398613042]
 position = Vector2(4168, 240)

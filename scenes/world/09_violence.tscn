@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_age7e"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_8la44"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_cnkip"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_ivxj7"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_ktjh1"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_kxpyp"]
@@ -469,31 +468,22 @@ dir = "v"
 lock_kind = "boss"
 lock_region = 8
 
-[node name="Markers" type="Node2D" parent="." unique_id=732401054]
-
-[node name="Boss495" type="Node2D" parent="Markers" unique_id=1568320703]
-position = Vector2(6696, 512)
-script = ExtResource("7_ivxj7")
-id = 495
-type = "boss"
-label = "The Red Arena"
-room = 161
-
-[node name="Save496" type="Node2D" parent="Markers" unique_id=1047519685]
-position = Vector2(3128, 240)
-script = ExtResource("7_ivxj7")
-id = 496
-label = "Save"
-room = 162
-
-[node name="Save497" type="Node2D" parent="Markers" unique_id=1968567678]
-position = Vector2(5992, 512)
-script = ExtResource("7_ivxj7")
-id = 497
-label = "Save"
-room = 171
-
 [node name="Placements" type="Node2D" parent="." unique_id=744566245]
+
+[node name="Boss495" type="Node2D" parent="Placements" unique_id=106492239]
+position = Vector2(6696, 512)
+script = ExtResource("8_ktjh1")
+character = "the_red_arena"
+
+[node name="Save496" type="Node2D" parent="Placements" unique_id=2096491879]
+position = Vector2(3128, 240)
+script = ExtResource("8_ktjh1")
+type = "save"
+
+[node name="Save497" type="Node2D" parent="Placements" unique_id=474769609]
+position = Vector2(5992, 512)
+script = ExtResource("8_ktjh1")
+type = "save"
 
 [node name="Npc1" type="Node2D" parent="Placements" unique_id=1486624522]
 position = Vector2(2408, 240)

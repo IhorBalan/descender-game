@@ -15,19 +15,19 @@ extends Node2D
 ##   Lights/*                                 WorldLight (a PointLight2D)
 ##   Rooms/*                                  WorldRoom, the rooms of the map page and the fights
 ##   Doors/*                                  WorldDoor, the openings between rooms and their locks
-##   Markers/*                                WorldMarker: start, save, boss, ability, secret...
-##   Placements/*                             WorldPlacement: NPCs, relics, triggers, enemies,
-##                                            upgrades, power-ups, walls of light
+##   Placements/*                             WorldPlacement: the start, the checkpoints, the
+##                                            feathers, NPCs, relics, triggers, enemies and
+##                                            bosses, upgrades, power-ups, walls of light
 ##
 ## Drag a node to move it; paint the layers with Godot's TileMap tools. The
-## editor draws the region's band, and each room, door, marker and
-## placement draws itself, so a level reads at a glance.
+## editor draws the region's band, and each room, door and placement draws
+## itself, so a level reads at a glance.
 
 const LAYER_NAMES: Array[String] = ["Background", "Decor", "Terrain", "Glow"]
 const BAND_COLOR := Color(1.0, 1.0, 1.0, 0.25)
 
-## Draw the editor's overlays (the band, the rooms, the doors, the markers,
-## the placements) outside the editor too: the screenshot tool sets it.
+## Draw the editor's overlays (the band, the rooms, the doors, the
+## placements) outside the editor too: the screenshot tool sets it.
 static var show_overlays := false
 
 ## The name of the region ("1. Limbo"); its key for art and music is the
@@ -91,14 +91,6 @@ func doors() -> Array[WorldDoor]:
 	var found: Array[WorldDoor] = []
 	for node in _children_of("Doors"):
 		if node is WorldDoor:
-			found.append(node)
-	return found
-
-
-func markers() -> Array[WorldMarker]:
-	var found: Array[WorldMarker] = []
-	for node in _children_of("Markers"):
-		if node is WorldMarker:
 			found.append(node)
 	return found
 

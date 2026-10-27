@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_xabx2"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_p0hgk"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_gk2vd"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_ro32v"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_jqspl"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_yrstp"]
@@ -708,54 +707,27 @@ dir = "v"
 lock_kind = "boss"
 lock_region = 6
 
-[node name="Markers" type="Node2D" parent="." unique_id=1823014847]
-
-[node name="Boss484" type="Node2D" parent="Markers" unique_id=940823717]
-position = Vector2(5752, 512)
-script = ExtResource("7_ro32v")
-id = 484
-type = "boss"
-label = "The Fury"
-room = 132
-
-[node name="Save485" type="Node2D" parent="Markers" unique_id=717981378]
-position = Vector2(4552, 240)
-script = ExtResource("7_ro32v")
-id = 485
-label = "Save"
-room = 133
-
-[node name="Secret486" type="Node2D" parent="Markers" unique_id=271413197]
-position = Vector2(2152, 240)
-script = ExtResource("7_ro32v")
-id = 486
-type = "secret"
-label = "Secret"
-room = 136
-
-[node name="Secret487" type="Node2D" parent="Markers" unique_id=66737359]
-position = Vector2(6712, 240)
-script = ExtResource("7_ro32v")
-id = 487
-type = "secret"
-label = "Passage from Ruined Earth"
-room = 138
-
-[node name="Save488" type="Node2D" parent="Markers" unique_id=1274663022]
-position = Vector2(5032, 512)
-script = ExtResource("7_ro32v")
-id = 488
-label = "Save"
-room = 145
-
-[node name="Save489" type="Node2D" parent="Markers" unique_id=1503069482]
-position = Vector2(7400, 240)
-script = ExtResource("7_ro32v")
-id = 489
-label = "Save"
-room = 146
-
 [node name="Placements" type="Node2D" parent="." unique_id=1357506111]
+
+[node name="Boss484" type="Node2D" parent="Placements" unique_id=1347402587]
+position = Vector2(5752, 512)
+script = ExtResource("8_jqspl")
+character = "the_fury"
+
+[node name="Save485" type="Node2D" parent="Placements" unique_id=1251976313]
+position = Vector2(4552, 240)
+script = ExtResource("8_jqspl")
+type = "save"
+
+[node name="Save488" type="Node2D" parent="Placements" unique_id=2035189461]
+position = Vector2(5032, 512)
+script = ExtResource("8_jqspl")
+type = "save"
+
+[node name="Save489" type="Node2D" parent="Placements" unique_id=132847737]
+position = Vector2(7400, 240)
+script = ExtResource("8_jqspl")
+type = "save"
 
 [node name="Enemy1" type="Node2D" parent="Placements" unique_id=701697496]
 position = Vector2(4568, 240)

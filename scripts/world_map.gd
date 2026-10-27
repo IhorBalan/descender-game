@@ -9,10 +9,12 @@ extends RefCounted
 ## sheet, its normal map and the emissive glow sheet. Terrain tiles have a
 ## kind that says what they do to the hero; the other layers are only
 ## drawn. Around the grid the export describes regions (horizontal bands
-## with an ambient colour), rooms, doors, markers (start, saves, bosses,
-## abilities and so on) and point lights. LevelBuilder turns the grid into
-## TileMapLayers and collision and places the markers; the rest is kept
-## here for the game code.
+## with an ambient colour), rooms, doors, markers (the start, the saves,
+## the bosses, the abilities and so on) and point lights. LevelBuilder
+## turns the grid into TileMapLayers and collision; the rest is kept here
+## for the game code. The export's markers are read as the placements they
+## stand for (see placement_of_marker), the same things placements.json
+## lists, so the game has one kind of thing standing in the world.
 
 ## Terrain kinds, from the export's tile_kinds table.
 const KIND_NONE := 0
@@ -58,13 +60,9 @@ var used_tiles: PackedInt32Array = []
 var regions: Array[Dictionary] = []
 var rooms: Array[Dictionary] = []
 var doors: Array[Dictionary] = []
-## The ability names the doors' locks and the ability markers refer to,
-## in the tool's order.
+## The ability names the doors' locks and the feathers refer to, in the
+## tool's order.
 var abilities: PackedStringArray = []
-## Points of interest: type, label, the cell (x, y) and the pixel position
-## of the bottom of that cell (px, py), where a thing standing there has
-## its feet.
-var markers: Array[Dictionary] = []
 ## Point lights: x, y, z (height), radius, color, energy, flicker.
 var lights: Array[Dictionary] = []
 ## Free-placed decorations: id, name, x, y (pixels of the top-left corner),
@@ -75,11 +73,14 @@ var sprites: Array[Dictionary] = []
 ## How much the world darkens from its top to its bottom (0 to 1, see
 ## RegionLook.descent_factor): the export's "descent": {"dark": ...}.
 var descent_dark := 0.0
-## A world read from scenes (see SceneWorld) brings its own TileSet, its
-## dialogue file and what stands in it (the placements, as placements.json
-## lists them); an export leaves these for the files next to it.
+## A world read from scenes (see SceneWorld) brings its own TileSet and its
+## dialogue file; an export leaves these for the files next to it.
 var tile_set: TileSet = null
 var dialogue_path := ""
+## What stands in the world, as placements.json lists it (see LevelBuilder,
+## the top of the file): every placement of a world read from scenes, or
+## the placements an export's markers stand for (the start, the saves, the
+## feathers and the bosses), before the objects of the sidecar next to it.
 var objects: Array = []
 
 var _index: TileIndex
@@ -141,7 +142,9 @@ func _parse(data: Dictionary) -> void:
 	abilities = PackedStringArray(data.get("abilities", []))
 	for marker in data.get("markers", []):
 		if marker is Dictionary:
-			markers.append(marker)
+			var object := placement_of_marker(marker)
+			if not object.is_empty():
+				objects.append(object)
 	for light in data.get("lights", []):
 		if light is Dictionary:
 			lights.append(light)
@@ -224,22 +227,31 @@ func region_at(y: float) -> Dictionary:
 	return regions[0] if y < float(regions[0].get("y0", 0)) else regions[regions.size() - 1]
 
 
-## The markers of one type, in export order.
-func markers_of(type: String) -> Array[Dictionary]:
-	var found: Array[Dictionary] = []
-	for marker in markers:
-		if str(marker.get("type", "")) == type:
-			found.append(marker)
-	return found
-
-
-## The pixel position of a marker: the bottom centre of its cell.
-func marker_position(marker: Dictionary) -> Vector2:
-	if marker.has("px") and marker.has("py"):
-		return Vector2(float(marker["px"]), float(marker["py"]))
-	return Vector2(
-		int(marker.get("x", 0)) * tile + tile / 2.0, (int(marker.get("y", 0)) + 1) * tile
-	)
+## The placement an export's marker stands for, at the marker's cell: a
+## start marker is the start, a save a checkpoint, an ability marker a
+## feather for the ability its label names, and a boss marker a boss
+## enemy, by its label (see Boss.id_for), or an angel guard standing in
+## for a boss without a profile. Secrets, shops, gates and the clock are
+## the map tool's notes with nothing in the game behind them, so they give
+## an empty Dictionary.
+static func placement_of_marker(marker: Dictionary) -> Dictionary:
+	var spec := {"x": int(marker.get("x", 0)), "y": int(marker.get("y", 0))}
+	var label := str(marker.get("label", ""))
+	match str(marker.get("type", "save")):
+		"start":
+			spec["type"] = "start"
+		"save":
+			spec["type"] = "save"
+		"ability":
+			spec["type"] = "ability"
+			spec["ability"] = label
+		"boss":
+			spec["type"] = "enemy"
+			var id := Boss.id_for(label)
+			spec["character"] = id if Boss.has_profile(id) else "angel_guard"
+		_:
+			return {}
+	return spec
 
 
 ## A TileSet with the diffuse sheet (lit by its normal map) as source 0 and
