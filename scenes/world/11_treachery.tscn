@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_afywc"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_ub0cy"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_adtbv"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_ouv2c"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_36srb"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5t6gs"]
@@ -540,47 +539,22 @@ dir = "v"
 lock_kind = "boss"
 lock_region = 10
 
-[node name="Markers" type="Node2D" parent="." unique_id=1923815790]
-
-[node name="Boss506" type="Node2D" parent="Markers" unique_id=294653699]
-position = Vector2(6232, 512)
-script = ExtResource("7_ouv2c")
-id = 506
-type = "boss"
-label = "Final Boss: The Betrayer"
-room = 193
-
-[node name="Save507" type="Node2D" parent="Markers" unique_id=1483878591]
-position = Vector2(3592, 240)
-script = ExtResource("7_ouv2c")
-id = 507
-label = "Save"
-room = 194
-
-[node name="Save508" type="Node2D" parent="Markers" unique_id=583181306]
-position = Vector2(5272, 512)
-script = ExtResource("7_ouv2c")
-id = 508
-label = "Save"
-room = 196
-
-[node name="Clock509" type="Node2D" parent="Markers" unique_id=405426364]
-position = Vector2(6952, 240)
-script = ExtResource("7_ouv2c")
-id = 509
-type = "clock"
-label = "Time Clock"
-room = 201
-
-[node name="Secret510" type="Node2D" parent="Markers" unique_id=47014524]
-position = Vector2(1208, 512)
-script = ExtResource("7_ouv2c")
-id = 510
-type = "secret"
-label = "Secret"
-room = 205
-
 [node name="Placements" type="Node2D" parent="." unique_id=309699358]
+
+[node name="Boss506" type="Node2D" parent="Placements" unique_id=621931212]
+position = Vector2(6232, 512)
+script = ExtResource("8_36srb")
+character = "final_boss_the_betrayer"
+
+[node name="Save507" type="Node2D" parent="Placements" unique_id=900094242]
+position = Vector2(3592, 240)
+script = ExtResource("8_36srb")
+type = "save"
+
+[node name="Save508" type="Node2D" parent="Placements" unique_id=309785427]
+position = Vector2(5272, 512)
+script = ExtResource("8_36srb")
+type = "save"
 
 [node name="Item1" type="Node2D" parent="Placements" unique_id=1558207392]
 position = Vector2(5080, 240)

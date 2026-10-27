@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_hxgc0"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_pb5a0"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_yitr8"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_rcf42"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_k80ob"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_vseci"]
@@ -1789,87 +1788,23 @@ room_b = 25
 dir = "v"
 lock_kind = "ability"
 
-[node name="Markers" type="Node2D" parent="." unique_id=782561901]
-
-[node name="Npc439" type="Node2D" parent="Markers" unique_id=1277716576]
-position = Vector2(4072, 512)
-script = ExtResource("7_rcf42")
-id = 439
-type = "npc"
-label = "hub"
-room = 25
-
-[node name="Gate440" type="Node2D" parent="Markers" unique_id=1123710734]
-position = Vector2(952, 784)
-script = ExtResource("7_rcf42")
-id = 440
-type = "gate"
-label = "gate"
-room = 26
-
-[node name="Secret441" type="Node2D" parent="Markers" unique_id=123325812]
-position = Vector2(7432, 512)
-script = ExtResource("7_rcf42")
-id = 441
-type = "secret"
-label = "Passage to 5. Wrath"
-room = 27
-
-[node name="Save442" type="Node2D" parent="Markers" unique_id=1082249538]
-position = Vector2(1672, 784)
-script = ExtResource("7_rcf42")
-id = 442
-label = "Save"
-room = 31
-
-[node name="Shop443" type="Node2D" parent="Markers" unique_id=32709155]
-position = Vector2(5000, 512)
-script = ExtResource("7_rcf42")
-id = 443
-type = "shop"
-label = "Survivor Camp"
-room = 33
-
-[node name="Secret444" type="Node2D" parent="Markers" unique_id=437109508]
-position = Vector2(952, 240)
-script = ExtResource("7_rcf42")
-id = 444
-type = "secret"
-label = "Passage to Paradise"
-room = 35
-
-[node name="Ability445" type="Node2D" parent="Markers" unique_id=405954388]
-position = Vector2(1672, 240)
-script = ExtResource("7_rcf42")
-id = 445
-type = "ability"
-label = "Halo Dash"
-room = 38
-
-[node name="Save446" type="Node2D" parent="Markers" unique_id=1391577328]
-position = Vector2(7432, 784)
-script = ExtResource("7_rcf42")
-id = 446
-label = "Save"
-room = 39
-
-[node name="Secret447" type="Node2D" parent="Markers" unique_id=491477508]
-position = Vector2(7432, 240)
-script = ExtResource("7_rcf42")
-id = 447
-type = "secret"
-label = "Passage to Purgatory"
-room = 41
-
-[node name="Shop448" type="Node2D" parent="Markers" unique_id=952752130]
-position = Vector2(5032, 240)
-script = ExtResource("7_rcf42")
-id = 448
-type = "shop"
-label = "Blacksmith"
-room = 42
-
 [node name="Placements" type="Node2D" parent="." unique_id=2104206525]
+
+[node name="Save442" type="Node2D" parent="Placements" unique_id=155555738]
+position = Vector2(1672, 784)
+script = ExtResource("8_k80ob")
+type = "save"
+
+[node name="Ability445" type="Node2D" parent="Placements" unique_id=1763673107]
+position = Vector2(1672, 240)
+script = ExtResource("8_k80ob")
+type = "ability"
+ability = "Halo Dash"
+
+[node name="Save446" type="Node2D" parent="Placements" unique_id=1150797846]
+position = Vector2(7432, 784)
+script = ExtResource("8_k80ob")
+type = "save"
 
 [node name="Trigger1" type="Node2D" parent="Placements" unique_id=1447913281]
 position = Vector2(968, 240)

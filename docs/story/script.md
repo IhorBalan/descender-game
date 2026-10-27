@@ -698,7 +698,7 @@ flags come in.
 > **ITHURIEL:** Here. The glass they gave me for the way in. I never went. Take the water; it's the last thing of mine I'll keep from them.
 > *(Basin water in Warden's glass, still cold.)*
 
-### `descent` (trigger, once, at the gate marker at the bottom of the hub; sets `descended`; saves the game)
+### `descent` (trigger, once, at the gate at the bottom of the hub; sets `descended`; saves the game)
 
 > *(The bottom of the churchyard. The hole goes down past where the lantern light stops, and the hammering is far above now.)*
 > **VOICE:** This is the way down. Nothing that goes this way comes back up the same.

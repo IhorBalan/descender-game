@@ -115,9 +115,8 @@ func _physics_process(_delta: float) -> void:
 			_check(Audio.ambient_name == "heaven", "Paradise starts the heaven ambient loop")
 			_check(Audio.music_name == "paradise", "Paradise plays its own music")
 			_check(Audio.is_music_playing(), "the music loop is running")
-			# The world: built from the map tool's export with TileMapLayers,
-			# collision from the terrain kinds, the markers, the lights and
-			# the objects of the placements sidecar.
+			# The world: built from the world scenes with TileMapLayers,
+			# collision from the terrain kinds, the lights and the placements.
 			var level: LevelBuilder = _main.level
 			_check(level.world != null, "world export read")
 			_check(level.get_node("Tiles").get_child_count() == 4, "four tile layers built")
@@ -169,7 +168,7 @@ func _physics_process(_delta: float) -> void:
 			)
 			_check(
 				_player.global_position.is_equal_approx(Vector2(1192.0, 240.0)),
-				"the hero stands on the start marker"
+				"the hero stands on the start placement"
 			)
 			_check(
 				level.ambient != null and level.ambient.color != Color.WHITE,
@@ -194,7 +193,7 @@ func _physics_process(_delta: float) -> void:
 				ferryman != null and ferryman.sprite.sprite_frames.has_animation("talk"),
 				"the Ferryman has his strips"
 			)
-			_check(level.checkpoints.size() == 31, "every save marker is a checkpoint")
+			_check(level.checkpoints.size() == 31, "every save placement is a checkpoint")
 			_check(level.goal == null, "the world has no goal gate yet")
 			_check(level.pickup_count() == 6, "feathers for all six abilities built")
 			_check(level.upgrade_count() == 6, "six permanent upgrades built")

@@ -17,7 +17,7 @@ extends Node
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const RegionLook := preload("res://scripts/region_look.gd")
 ## Every check the script makes; fewer at the end means something broke early.
-const EXPECTED_CHECKS := 236
+const EXPECTED_CHECKS := 235
 const DIR := "user://map_pipeline_test"
 
 var _checks := 0
@@ -216,7 +216,8 @@ func test_world_map() -> void:
 	)
 	_check(map.region_at(5.0).get("name") == "1. Test Land", "regions are found by y")
 	_check(
-		map.marker_position(map.markers[0]) == Vector2(8, 16), "markers give their foot position"
+		map.objects == [{"type": "start", "x": 0, "y": 0}],
+		"the start marker reads as a start placement"
 	)
 	var tile_set := map.build_tile_set()
 	var source := tile_set.get_source(0) as TileSetAtlasSource
@@ -287,7 +288,7 @@ func test_level_builder_sprites() -> void:
 		_has_box(outlines, Rect2(100, 100, 32, 32)),
 		"the padded sprite's outline covers its four tiles"
 	)
-	_check(builder.player_start == Vector2(8, 16), "the start marker places the hero")
+	_check(builder.player_start == Vector2(8, 16), "the start placement puts the hero down")
 	builder.queue_free()
 
 
@@ -482,20 +483,23 @@ func test_scene_world_round_trip() -> void:
 	_check(_same(b.regions, a.regions), "the regions round-trip, their look included")
 	_check(_same(b.rooms, a.rooms), "the rooms round-trip")
 	_check(_same(b.doors, a.doors), "the doors round-trip, locks and secrets included")
-	_check(_same(b.markers, a.markers), "the markers round-trip")
 	_check(_same(b.lights, a.lights), "the lights round-trip")
 	_check(b.abilities == a.abilities, "the abilities round-trip")
 	_check(b.dialogue_path == "res://dialogue/world_1.json", "the dialogue file is kept")
 	var sidecar: Dictionary = JSON.parse_string(
 		FileAccess.get_file_as_string(DIR + "/round_trip/placements.json")
 	)
-	# The scenes keep the placements region by region, in their order within it.
+	# The scenes keep the placements region by region, in their order within
+	# it: what the export's markers stand for, then the sidecar's objects.
 	var expected: Array = []
 	for region in 2:
-		for spec in sidecar["objects"]:
+		for spec in a.objects + sidecar["objects"]:
 			if int(spec["y"]) / 2 == region:
 				expected.append(spec)
-	_check(_same(b.objects, expected), "the placements round-trip, region by region")
+	_check(
+		a.objects.size() == 2 and _same(b.objects, expected),
+		"the placements round-trip, region by region, the markers among them"
+	)
 	_check(b.tile_set != null and b.tile_set.has_source(0), "the world brings its TileSet")
 	# One atlas source per region, holding the sheet rows only it paints with.
 	var top := b.tile_set.get_source(0) as TileSetAtlasSource
@@ -561,8 +565,8 @@ func test_scene_world_round_trip() -> void:
 	builder.streaming = false
 	builder.load_from_file(world_path)
 	_check(builder.world != null, "a level builds from the world scene")
-	_check(builder.player_start == Vector2(8, 16), "the start marker places the hero")
-	_check(builder.checkpoints.size() == 1, "the save marker is a checkpoint")
+	_check(builder.player_start == Vector2(8, 16), "the start placement puts the hero down")
+	_check(builder.checkpoints.size() == 1, "the save placement is a checkpoint")
 	_check(builder.npc_count() == 1 and builder.item_count() == 1, "the placements stand")
 	_check(builder.get_node("Ledges").get_child_count() == 1, "a ledge run has one-way collision")
 	_check(builder.get_node("Lights").get_child_count() == 2, "both lights are placed")

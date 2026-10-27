@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://scripts/world/world_light.gd" id="4_gpdjh"]
 [ext_resource type="Script" path="res://scripts/world/world_room.gd" id="5_hewl2"]
 [ext_resource type="Script" path="res://scripts/world/world_door.gd" id="6_bevqw"]
-[ext_resource type="Script" path="res://scripts/world/world_marker.gd" id="7_fomj8"]
 [ext_resource type="Script" path="res://scripts/world/world_placement.gd" id="8_xwk3o"]
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cuy0t"]
@@ -679,70 +678,33 @@ dir = "v"
 lock_kind = "ability"
 lock_ability = 3
 
-[node name="Markers" type="Node2D" parent="." unique_id=934452513]
-
-[node name="Boss462" type="Node2D" parent="Markers" unique_id=2004867857]
-position = Vector2(6712, 512)
-script = ExtResource("7_fomj8")
-id = 462
-type = "boss"
-label = "Palace of Velvet"
-room = 84
-
-[node name="Save463" type="Node2D" parent="Markers" unique_id=449881908]
-position = Vector2(6952, 240)
-script = ExtResource("7_fomj8")
-id = 463
-label = "Save"
-room = 85
-
-[node name="Ability464" type="Node2D" parent="Markers" unique_id=752872975]
-position = Vector2(2152, 240)
-script = ExtResource("7_fomj8")
-id = 464
-type = "ability"
-label = "Glide"
-room = 88
-
-[node name="Save465" type="Node2D" parent="Markers" unique_id=910172849]
-position = Vector2(2872, 240)
-script = ExtResource("7_fomj8")
-id = 465
-label = "Save"
-room = 89
-
-[node name="Save466" type="Node2D" parent="Markers" unique_id=404539705]
-position = Vector2(5752, 512)
-script = ExtResource("7_fomj8")
-id = 466
-label = "Save"
-room = 90
-
-[node name="Secret467" type="Node2D" parent="Markers" unique_id=409348109]
-position = Vector2(3592, 512)
-script = ExtResource("7_fomj8")
-id = 467
-type = "secret"
-label = "Secret"
-room = 95
-
-[node name="Secret468" type="Node2D" parent="Markers" unique_id=2053169849]
-position = Vector2(7432, 240)
-script = ExtResource("7_fomj8")
-id = 468
-type = "secret"
-label = "Secret"
-room = 96
-
-[node name="Secret469" type="Node2D" parent="Markers" unique_id=505059257]
-position = Vector2(2632, 512)
-script = ExtResource("7_fomj8")
-id = 469
-type = "secret"
-label = "Secret"
-room = 97
-
 [node name="Placements" type="Node2D" parent="." unique_id=1277074370]
+
+[node name="Boss462" type="Node2D" parent="Placements" unique_id=898017870]
+position = Vector2(6712, 512)
+script = ExtResource("8_xwk3o")
+character = "palace_of_velvet"
+
+[node name="Save463" type="Node2D" parent="Placements" unique_id=150013384]
+position = Vector2(6952, 240)
+script = ExtResource("8_xwk3o")
+type = "save"
+
+[node name="Ability464" type="Node2D" parent="Placements" unique_id=516819859]
+position = Vector2(2152, 240)
+script = ExtResource("8_xwk3o")
+type = "ability"
+ability = "Glide"
+
+[node name="Save465" type="Node2D" parent="Placements" unique_id=194804717]
+position = Vector2(2872, 240)
+script = ExtResource("8_xwk3o")
+type = "save"
+
+[node name="Save466" type="Node2D" parent="Placements" unique_id=1183364968]
+position = Vector2(5752, 512)
+script = ExtResource("8_xwk3o")
+type = "save"
 
 [node name="Npc1" type="Node2D" parent="Placements" unique_id=1708148996]
 position = Vector2(6872, 240)

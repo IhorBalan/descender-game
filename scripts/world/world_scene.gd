@@ -14,7 +14,7 @@ extends Node2D
 ## What lives here is what is not any one region's: the grid's width, the
 ## tile size and the art scale, the TileSet the regions paint with (its
 ## tiles carry the terrain kind as custom data "kind"), the abilities in
-## the order the doors' locks and the ability markers refer to, the
+## the order the doors' locks and the feathers refer to, the
 ## dialogue file and how dark the world gets towards its bottom.
 
 ## Shown on the title line when the world starts.

@@ -4,9 +4,10 @@ extends RefCounted
 ## Turns a map editor export (world.json, the placements.json next to it)
 ## into the world's scenes: a TileSet resource of the three sheets with the
 ## terrain kind on each tile, a WorldRegion scene per region with the tile
-## layers painted and the lights, rooms, doors, markers and placements as
-## nodes, and a WorldScene that holds them all (see SceneWorld for the way
-## back). tools/migrate_world.gd runs it; the map pipeline tests round-trip
+## layers painted and the lights, rooms, doors and placements as nodes
+## (the export's markers among the placements, see
+## WorldMap.placement_of_marker), and a WorldScene that holds them all (see
+## SceneWorld for the way back). tools/migrate_world.gd runs it; the map pipeline tests round-trip
 ## an export through it.
 
 const LAYER_NAMES := WorldRegion.LAYER_NAMES
@@ -33,14 +34,12 @@ const PLACEMENTS_FILE := "placements.json"
 ## of the world scene, or "" with an error pushed.
 static func migrate(path: String, scenes_dir: String, tile_set_path: String) -> String:
 	var map: WorldMap
-	var objects: Array = []
 	var dialogue := ""
 	var sheets_dir := ""
 	if path.ends_with(".tscn"):
 		map = SceneWorld.read(path)
 		if map == null:
 			return ""
-		objects = map.objects
 		dialogue = map.dialogue_path
 		var old := map.tile_set.resource_path if map.tile_set else tile_set_path
 		sheets_dir = old.get_base_dir() + "/"
@@ -55,7 +54,7 @@ static func migrate(path: String, scenes_dir: String, tile_set_path: String) -> 
 			if parsed is Dictionary:
 				dialogue = str(parsed.get("dialogue", ""))
 				if parsed.get("objects", []) is Array:
-					objects = parsed["objects"]
+					map.objects.append_array(parsed["objects"])
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(scenes_dir))
 	DirAccess.make_dir_recursive_absolute(
 		ProjectSettings.globalize_path(tile_set_path.get_base_dir())
@@ -81,7 +80,7 @@ static func migrate(path: String, scenes_dir: String, tile_set_path: String) -> 
 	world.descent_dark = map.descent_dark
 	var index := TileIndex.of(tile_set, map.columns)
 	for i in map.regions.size():
-		var region := _build_region(map, i, objects, tile_set, index, light_texture)
+		var region := _build_region(map, i, tile_set, index, light_texture)
 		var file := "%s/%02d_%s.tscn" % [scenes_dir, i, EdgeDecor.region_key(region.region_name)]
 		if not _save_scene(region, file):
 			return ""
@@ -365,12 +364,7 @@ static func _save_scene(root: Node, path: String) -> bool:
 ## One region's scene: the band's rows of every layer, and what stands in
 ## the band, in level pixels from its top-left corner.
 static func _build_region(
-	map: WorldMap,
-	index: int,
-	objects: Array,
-	tile_set: TileSet,
-	tiles_index: TileIndex,
-	light_texture: Texture2D
+	map: WorldMap, index: int, tile_set: TileSet, tiles_index: TileIndex, light_texture: Texture2D
 ) -> WorldRegion:
 	var spec := map.regions[index]
 	var tile := map.tile
@@ -415,7 +409,7 @@ static func _build_region(
 		tiles.add_child(layer)
 		layer.owner = region
 	var holders := {}
-	for holder_name in ["Lights", "Rooms", "Doors", "Markers", "Placements"]:
+	for holder_name in ["Lights", "Rooms", "Doors", "Placements"]:
 		var holder := Node2D.new()
 		holder.name = holder_name
 		region.add_child(holder)
@@ -471,20 +465,8 @@ static func _build_region(
 		door.secret = bool(door_spec.get("secret", false))
 		door.position = (Vector2(cell) + Vector2(0.5, 0.5)) * tile - offset
 		_add(holders["Doors"], door, region)
-	for marker_spec in map.markers:
-		var cell := Vector2i(int(marker_spec.get("x", 0)), int(marker_spec.get("y", 0)))
-		if cell.y < top or cell.y >= bottom:
-			continue
-		var marker := WorldMarker.new()
-		marker.id = int(marker_spec.get("id", 0))
-		marker.type = str(marker_spec.get("type", "save"))
-		marker.name = "%s%d" % [marker.type.capitalize(), marker.id]
-		marker.label = str(marker_spec.get("label", ""))
-		marker.room = int(marker_spec.get("room", -1))
-		marker.position = map.marker_position(marker_spec) - offset
-		_add(holders["Markers"], marker, region)
 	count = 0
-	for object_spec in objects:
+	for object_spec in map.objects:
 		if not object_spec is Dictionary:
 			continue
 		var cell := Vector2i(int(object_spec.get("x", 0)), int(object_spec.get("y", 0)))

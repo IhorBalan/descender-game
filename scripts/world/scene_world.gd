@@ -6,8 +6,8 @@ extends RefCounted
 ## thing a map editor export gives, so LevelBuilder and everything after
 ## it see one kind of world. The regions' tile layers become the grid, the
 ## TileSet's custom data the terrain kinds, and the regions' lights, rooms,
-## doors, markers and placements the lists the export would hold, in level
-## pixels of the whole world. Nothing is added to the tree: the scene is
+## doors and placements the lists the export would hold, in level pixels of
+## the whole world. Nothing is added to the tree: the scene is
 ## instanced, read and freed.
 
 ## The room grid the map page draws on, in tiles.
@@ -175,25 +175,6 @@ static func _read_region(map: WorldMap, region: WorldRegion, index: int, tiles: 
 		if door.secret:
 			door_spec["secret"] = true
 		map.doors.append(door_spec)
-	for marker in region.markers():
-		var feet := marker.position + offset
-		var cell := feet_cell(feet, tile)
-		(
-			map
-			. markers
-			. append(
-				{
-					"id": marker.id,
-					"type": marker.type,
-					"x": cell.x,
-					"y": cell.y,
-					"label": marker.label,
-					"room": marker.room,
-					"px": feet.x,
-					"py": feet.y,
-				}
-			)
-		)
 	for placement in region.placements():
 		map.objects.append(placement.to_spec(feet_cell(placement.position + offset, tile)))
 
