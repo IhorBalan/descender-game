@@ -529,7 +529,9 @@ view), then under `assets/regions/<key>/`.
   the cells they belong to. The JSON lists the PNGs per side and the share
   of exposed cells that get one; the variant of a cell is fixed by its
   position.
-- **Parallax** (`parallax.json`, drawn by `scripts/backdrop.gd`): painted
+- **Parallax** (`parallax.json`, drawn by `scripts/backdrop.gd`; a region
+  of the game's own world keeps the same layers as `BackdropLayer` nodes in
+  its scene instead, see "The world as scenes"): painted
   layers behind the level, back to front, each repeated sideways and
   following the camera by a share of its movement (`scroll`), placed
   relative to the region's top edge (`y`); a `cover` layer is stretched
@@ -650,6 +652,19 @@ on its own, or `world.tscn` to see them all. A region is a band of the grid
 `rows` tiles tall, placed at its `position.y` in the world, so everything in
 its scene is in level pixels from its top-left corner:
 
+- `Backdrop/*`: `BackdropLayer` (`scripts/backdrop_layer.gd`), the region's
+  painted parallax set as nodes, back to front, with the fields of a
+  `parallax.json` layer as properties (`scroll`, `cover`, `front`, `drift`,
+  `sway`, `blend`, `lit`, `repeat_y`, `depth`, `tint`, `art_tile`) and the
+  node's position as the layer's anchor (its `y` from the region's top).
+  The editor draws the set the way the game does, scrolling as the view
+  pans, so each layer can be picked in the tree, moved and tuned in the
+  inspector. `SceneWorld` reads the layers into the region's `parallax`
+  spec and `Backdrop` builds the same nodes from it; a region without a
+  `Backdrop` node falls back to its `assets/regions/<key>/parallax.json`.
+  `tools/scene_backdrops.gd` turns that file into the nodes
+  (`godot --headless --path . --script tools/scene_backdrops.gd -- 00_paradise.tscn`;
+  no names does every region, `--replace` redoes one that has them).
 - `Tiles/Background`, `Decor`, `Terrain`, `Glow`: `TileMapLayer`s painted
   with `levels/world/world_tiles.tres`, the TileSet cut up for the editor:
   one atlas source per region, named after it, holding only the tiles that
@@ -818,7 +833,7 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/ui_component.gd` | Draws an editor UI component (colour boxes, images, fill bars with lag, text) with props the game sets; the HUD's health bar is the `HealthBar` component |
 | `scripts/firestore_rest.gd` | Reads the editor's public Firestore documents, for the two above |
 | `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
-| `scripts/backdrop.gd` | The painted parallax layers behind the level, per region |
+| `scripts/backdrop.gd`, `scripts/backdrop_layer.gd` | The painted parallax layers behind the level, per region: one `BackdropLayer` a layer, from the region's scene or its `parallax.json` |
 | `scripts/region_fx.gd` | The drifting particles of a region, from its `fx.json` or the stock presets |
 | `scripts/region_look.gd` | The sky colours, rim light and grade of the region the hero is in, eased between regions |
 | `scripts/post_fx.gd`, `assets/shaders/` | The grade and vignette over the level; the procedural sky, the rim light and the post shaders |
@@ -844,6 +859,7 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
 | `tools/migrate_world.gd`, `tools/region_screenshot.gd` | Turns an export into the world scenes; renders each region scene to a PNG (needs a display; see the script) |
+| `tools/scene_backdrops.gd` | Writes a region's `parallax.json` into its scene as `BackdropLayer` nodes |
 | `scripts/level_builder.gd` | Builds the tile layers, collision, lights, enemies and objects from a world export and its placements, streaming the grid in chunks around the hero |
 | `scripts/ability_pickup.gd` | The feather that unlocks an angel ability on touch |
 | `scripts/light_bolt.gd` | The bolt of Holy Light the hero throws |

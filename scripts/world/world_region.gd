@@ -9,6 +9,9 @@ extends Node2D
 ## size) in the world, so everything in the scene is in level pixels from
 ## the region's top-left corner. Under it:
 ##
+##   Backdrop/*                               BackdropLayer, the painted parallax set behind
+##                                            (and, for a `front` layer, over) the level, back
+##                                            to front; drawn in the editor as in the game
 ##   Tiles/Background, Decor, Terrain, Glow   TileMapLayers painted with the world's TileSet;
 ##                                            a Terrain tile's custom data "kind" says what it
 ##                                            does to the hero (see WorldMap.KIND_*)
@@ -21,7 +24,9 @@ extends Node2D
 ##
 ## Drag a node to move it; paint the layers with Godot's TileMap tools. The
 ## editor draws the region's band, and each room, door and placement draws
-## itself, so a level reads at a glance.
+## itself, so a level reads at a glance. A region without a Backdrop node
+## falls back to assets/regions/<key>/parallax.json;
+## tools/scene_backdrops.gd turns that file into the nodes.
 
 const LAYER_NAMES: Array[String] = ["Background", "Decor", "Terrain", "Glow"]
 const BAND_COLOR := Color(1.0, 1.0, 1.0, 0.25)
@@ -69,6 +74,15 @@ func _draw() -> void:
 ## The tile layer of that name, or null.
 func layer(layer_name: String) -> TileMapLayer:
 	return get_node_or_null("Tiles/" + layer_name) as TileMapLayer
+
+
+## The parallax layers of the region's backdrop, back to front.
+func backdrop_layers() -> Array[BackdropLayer]:
+	var found: Array[BackdropLayer] = []
+	for node in _children_of("Backdrop"):
+		if node is BackdropLayer:
+			found.append(node)
+	return found
 
 
 func lights() -> Array[WorldLight]:
