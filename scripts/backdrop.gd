@@ -8,7 +8,7 @@ extends Node2D
 ## `Backdrop/*`, which SceneWorld reads into the region's `parallax` spec.
 ## A region of a map without a scene opts in with regions/<key>/parallax.json
 ## next to the map's world.json (the editor exports a region's parallax set
-## that way), else assets/regions/<key>/parallax.json (key as in
+## that way), else godot_assets/regions/<key>/parallax.json (key as in
 ## EdgeDecor.region_key): the pixels per tile its PNGs are drawn at and the
 ## layers from back to front:
 ##
@@ -26,7 +26,7 @@ extends Node2D
 ## top edge; the other fields are BackdropLayer's. Switching regions
 ## cross-fades the sets.
 
-const REGIONS_DIR := "res://assets/regions"
+const REGIONS_DIR := "res://godot_assets/regions"
 const FADE := 2.5
 const SCREEN_ALPHA := BackdropLayer.SCREEN_ALPHA
 
@@ -35,7 +35,7 @@ var _current := ""
 
 ## Draws the layers for a region, replacing the previous region's; `tile`
 ## is the level's tile size in pixels and `map_dir` the folder of its
-## world.json, whose regions/<key>/ set wins over assets/regions/<key>/.
+## world.json, whose regions/<key>/ set wins over godot_assets/regions/<key>/.
 ## A region with a `parallax` spec of its own (from its scene) uses that.
 func show_region(region: Dictionary, tile: int, map_dir := "") -> void:
 	var key := EdgeDecor.region_key(str(region.get("name", "")))

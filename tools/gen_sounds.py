@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the placeholder sounds under assets/audio from scratch.
+"""Generates the placeholder sounds under godot_assets/audio from scratch.
 
     python3 tools/gen_sounds.py
 
@@ -14,7 +14,7 @@ import wave
 import numpy as np
 
 RATE = 22050
-OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "audio")
+OUT = os.path.join(os.path.dirname(__file__), "..", "godot_assets", "audio")
 rng = np.random.default_rng(7)
 
 

@@ -12,7 +12,7 @@ extends Node2D
 ## and `--abilities=all` unlocks every ability (see apply_dev_args).
 
 const PLAYER_SCENE := preload("res://scenes/player.tscn")
-const SKY_SHADER := preload("res://assets/shaders/sky.gdshader")
+const SKY_SHADER := preload("res://godot_assets/shaders/sky.gdshader")
 ## Loaded by path, so a fresh checkout works before the class cache knows them.
 const LookBlend := preload("res://scripts/look_blend.gd")
 const PostFx := preload("res://scripts/post_fx.gd")

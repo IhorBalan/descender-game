@@ -6,7 +6,7 @@ particle sprites, and the tile textures for the map editor.
 
 Needs Pillow and numpy. Everything is generated so it can be regenerated or
 replaced piece by piece: drop painted PNGs with the same names into
-assets/regions/<key>/ and the JSON next to them keeps working. The tile
+godot_assets/regions/<key>/ and the JSON next to them keeps working. The tile
 textures go to DIR (default ../editor/art/<key>/) as .lpx.json files the
 editor imports, or that scripts/upload-textures.ts in the editor writes over
 the region's existing textures.
@@ -84,13 +84,13 @@ def gray_image(v: np.ndarray) -> Image.Image:
 
 
 def save_png(img: Image.Image, key: str, name: str) -> None:
-    path = os.path.join(ROOT, "assets", "regions", key, name)
+    path = os.path.join(ROOT, "godot_assets", "regions", key, name)
     os.makedirs(os.path.dirname(path), exist_ok=True)
     img.save(path)
 
 
 def write_json(key: str, name: str, data) -> None:
-    with open(os.path.join(ROOT, "assets", "regions", key, name), "w") as f:
+    with open(os.path.join(ROOT, "godot_assets", "regions", key, name), "w") as f:
         json.dump(data, f, indent=2)
         f.write("\n")
 
@@ -547,7 +547,7 @@ def paradise(texture_dir: str) -> None:
         lefts.append(f"ivy_l{i}.png")
         rights.append(f"ivy_r{i}.png")
     for old in ("vine_0.png", "vine_1.png", "moss_l.png", "moss_r.png", "hills_far.png", "hills_near.png"):
-        path = os.path.join(ROOT, "assets", "regions", key, old)
+        path = os.path.join(ROOT, "godot_assets", "regions", key, old)
         if os.path.exists(path):
             os.remove(path)
     write_json(key, "edges.json", {
@@ -587,7 +587,7 @@ def paradise(texture_dir: str) -> None:
     for doc in docs:
         with open(os.path.join(texture_dir, f"{doc['name']}.lpx.json"), "w") as f:
             json.dump(doc, f)
-    print(f"{key}: edges, parallax and particles in assets/regions/{key}/; {len(docs)} textures in {texture_dir}")
+    print(f"{key}: edges, parallax and particles in godot_assets/regions/{key}/; {len(docs)} textures in {texture_dir}")
 
 
 # ---------------------------------------------------------------- the regions below Paradise
@@ -1155,7 +1155,7 @@ def styled_region(key: str, _texture_dir: str) -> None:
         entry.update(overrides)
         particles.append(entry)
     write_json(key, "fx.json", {"art_tile": ART, "particles": particles})
-    print(f"{key}: edges, parallax and particles in assets/regions/{key}/ ({mid_kind} mid layer)")
+    print(f"{key}: edges, parallax and particles in godot_assets/regions/{key}/ ({mid_kind} mid layer)")
 
 
 REGIONS = {"paradise": paradise}

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Generate the gamepad button prompts: one small PNG per button, in an
-Xbox set and a PlayStation set, under assets/ui/prompts/.
+Xbox set and a PlayStation set, under godot_assets/ui/prompts/.
 
 The Prompts autoload (scripts/prompts.gd) shows them in hints and HUD
 messages for whichever gamepad the player last touched. Everything is
@@ -21,7 +21,7 @@ import sys
 from PIL import Image, ImageDraw
 
 OUT_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "ui", "prompts")
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "godot_assets", "ui", "prompts")
 
 CLEAR = (0, 0, 0, 0)
 OUTLINE = (24, 18, 40, 255)

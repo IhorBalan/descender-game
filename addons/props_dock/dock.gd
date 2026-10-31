@@ -91,7 +91,7 @@ func _init() -> void:
 	buttons.add_child(open)
 	var new_prop := Button.new()
 	new_prop.text = "New from PNG"
-	new_prop.tooltip_text = "Make a prop scene from a PNG in the region's assets/props folder"
+	new_prop.tooltip_text = "Make a prop scene from a PNG in the region's godot_assets/props folder"
 	new_prop.pressed.connect(_pick_png)
 	buttons.add_child(new_prop)
 	_hint = Label.new()

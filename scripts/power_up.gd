@@ -11,9 +11,9 @@ extends Area2D
 signal collected(power: Player.Power)
 
 const TEXTURES := {
-	Player.Power.HALO: preload("res://assets/sprites/power_halo.png"),
-	Player.Power.BLADE: preload("res://assets/sprites/power_blade.png"),
-	Player.Power.ZEAL: preload("res://assets/sprites/power_zeal.png"),
+	Player.Power.HALO: preload("res://godot_assets/sprites/power_halo.png"),
+	Player.Power.BLADE: preload("res://godot_assets/sprites/power_blade.png"),
+	Player.Power.ZEAL: preload("res://godot_assets/sprites/power_zeal.png"),
 }
 ## The HUD line shown when the power-up is taken.
 const MESSAGES := {

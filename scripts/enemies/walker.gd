@@ -25,7 +25,7 @@ extends CharacterBody2D
 ## The node's origin is at the feet. The body is picked by the scene:
 ## scenes/enemies/<name>.tscn inherits walker.tscn and sets the `profile`
 ## (a WalkerProfile in resources/enemies/) and the sprite's frames
-## (assets/sprites/<name>/<name>.tres). The bodies belong to regions: the
+## (godot_assets/sprites/<name>/<name>.tres). The bodies belong to regions: the
 ## **angel guard** to Heaven and Purgatory, the **imp** to every circle (the
 ## common demon), the **brute** to the deep circles from Gluttony down, the
 ## **slug** to Gluttony, the **hoarder** to Greed, the **burned** (a

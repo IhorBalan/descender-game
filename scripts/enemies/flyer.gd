@@ -5,7 +5,7 @@ extends CharacterBody2D
 ## comes close. Hurts on contact. Origin at the sprite's centre. The body
 ## is picked by the scene: scenes/enemies/<name>.tscn inherits flyer.tscn
 ## and sets the `profile` (a FlyerProfile in resources/enemies/) and the
-## sprite's frames (assets/sprites/<name>/<name>.tres). The **watcher** is an angel
+## sprite's frames (godot_assets/sprites/<name>/<name>.tres). The **watcher** is an angel
 ## eye, found where the angels are (Heaven, Purgatory); the **shade** is a
 ## forgotten soul that drifts through the circles from Limbo down; the
 ## **siren** is the winged want of Lust, quicker and keener than either.

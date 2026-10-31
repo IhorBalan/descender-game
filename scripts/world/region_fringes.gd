@@ -14,7 +14,7 @@ extends Node2D
 ## The game never draws this node: SceneWorld reads it into the region's
 ## `edges` spec and EdgeDecor builds the pieces from that, in chunks, as the
 ## level streams. A region without a Fringes node falls back to its
-## assets/regions/<key>/edges.json; tools/scene_art.gd turns that file
+## godot_assets/regions/<key>/edges.json; tools/scene_art.gd turns that file
 ## into the node.
 
 ## Pieces standing on the top edges, anchored by their bottom centre.

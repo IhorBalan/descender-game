@@ -5,7 +5,7 @@ extends Interactable
 ## after which it is gone for the rest of the save (flag `item:<id>`). The
 ## level builder skips relics the save already has.
 
-const TEXTURE := preload("res://assets/sprites/relic.png")
+const TEXTURE := preload("res://godot_assets/sprites/relic.png")
 const BOB_HEIGHT := 1.5
 const BOB_SPEED := 2.5
 

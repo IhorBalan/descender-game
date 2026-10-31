@@ -2,7 +2,7 @@ class_name PostFx
 extends CanvasLayer
 
 ## The post stack: the region's colour grade and a soft vignette drawn
-## over the level and under the HUD (assets/shaders/post.gdshader). It
+## over the level and under the HUD (godot_assets/shaders/post.gdshader). It
 ## sits on the HUD's canvas layer, placed before the HUD in the tree so
 ## it is drawn first, and reads the screen behind it. Main eases the grade
 ## between regions (see LookBlend).
@@ -13,8 +13,8 @@ extends CanvasLayer
 ## the tint and vignette with post_tint.gdshader instead, which multiplies
 ## through the blend and looks the same.
 
-const SHADER := preload("res://assets/shaders/post.gdshader")
-const TINT_SHADER := preload("res://assets/shaders/post_tint.gdshader")
+const SHADER := preload("res://godot_assets/shaders/post.gdshader")
+const TINT_SHADER := preload("res://godot_assets/shaders/post_tint.gdshader")
 
 var _rect := ColorRect.new()
 var _material := ShaderMaterial.new()

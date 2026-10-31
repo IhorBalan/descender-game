@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_8x6sm"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/pedestal_lantern.png" id="2_fma3a"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/pedestal_lantern_n.png" id="3_ccb7l"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/pedestal_lantern_glow.png" id="4_tiv1c"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/pedestal_lantern.png" id="2_fma3a"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/pedestal_lantern_n.png" id="3_ccb7l"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/pedestal_lantern_glow.png" id="4_tiv1c"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_g5eac"]
 diffuse_texture = ExtResource("2_fma3a")

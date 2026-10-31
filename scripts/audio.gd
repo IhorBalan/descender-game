@@ -3,9 +3,9 @@ extends Node
 ## Plays sound effects, the music and the ambient loop.
 ##
 ## Registered as the Audio autoload. Effects are short WAVs under
-## assets/audio/sfx, named by what they are for; `play("jump")` picks one
+## godot_assets/audio/sfx, named by what they are for; `play("jump")` picks one
 ## of a small pool of players so overlapping sounds do not cut each other
-## off. Music is one loop per region of the world under assets/audio/music
+## off. Music is one loop per region of the world under godot_assets/audio/music
 ## (plus `title` and `boss`), named by the region's key; `play_music`
 ## crossfades from whatever is playing. The ambient loop is one long WAV
 ## per area, looped by the player, under the music. Every sound is made by
@@ -14,9 +14,9 @@ extends Node
 ## screen can set their volumes apart (see default_bus_layout.tres). While
 ## the tree is paused the music is ducked.
 
-const SFX_DIR := "res://assets/audio/sfx/"
-const MUSIC_DIR := "res://assets/audio/music/"
-const AMBIENT_DIR := "res://assets/audio/"
+const SFX_DIR := "res://godot_assets/audio/sfx/"
+const MUSIC_DIR := "res://godot_assets/audio/music/"
+const AMBIENT_DIR := "res://godot_assets/audio/"
 const POOL_SIZE := 8
 ## Random pitch spread around 1.0, so repeated sounds do not sound stamped.
 const PITCH_SPREAD := 0.06

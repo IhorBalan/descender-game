@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the enemy strips into assets/sprites/<name>/ and update sprites.json.
+"""Export the enemy strips into godot_assets/sprites/<name>/ and update sprites.json.
 
     python3 tools/enemy_sprites/export.py            # write strips and the spec
     python3 tools/enemy_sprites/export.py --preview  # also write preview_enemies.png
@@ -27,7 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import sprite_frames  # noqa: E402
 
-SPRITES = os.path.join(ROOT, "assets", "sprites")
+SPRITES = os.path.join(ROOT, "godot_assets", "sprites")
 SPEC = os.path.join(SPRITES, "sprites.json")
 
 ## name, module, origin, anchor

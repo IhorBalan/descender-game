@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_wg27m"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/blossom_mound.png" id="2_q52cb"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/blossom_mound_n.png" id="3_poky3"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/blossom_mound.png" id="2_q52cb"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/blossom_mound_n.png" id="3_poky3"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_e24kp"]
 diffuse_texture = ExtResource("2_q52cb")

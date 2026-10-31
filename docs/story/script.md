@@ -1083,7 +1083,7 @@ The remaining seventeen are flavour for the level issues to place.
   and never run dry.
 - NPC sprites are drawn by `tools/npc_sprites/npcs.py` (a small rig: idle
   and talk loops, 64x48 frames) and exported with `export.py` into
-  `assets/sprites/<name>/`; the Npc node plays `talk` while its box is open.
+  `godot_assets/sprites/<name>/`; the Npc node plays `talk` while its box is open.
 - Story flags live in the `Story` autoload and are written to the save with
   everything else. Collected relics are flags (`item:<id>`), so a loaded
   save does not show them again.

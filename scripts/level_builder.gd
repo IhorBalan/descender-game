@@ -54,7 +54,7 @@ extends Node2D
 
 ## The sky's rim light on the tiles: 0 turns it off.
 const RIM_STRENGTH := 0.25
-const RIM_SHADER := preload("res://assets/shaders/rim.gdshader")
+const RIM_SHADER := preload("res://godot_assets/shaders/rim.gdshader")
 const TILE := 16
 ## How far from the hero or the camera an enemy keeps moving, in level
 ## pixels: the view (640 x 360) plus a wide margin, so nothing freezes in
@@ -109,7 +109,7 @@ const PICKUP_SCENE := preload("res://scenes/ability_pickup.tscn")
 const BOSS_SCENE := preload("res://scenes/enemies/boss.tscn")
 ## How many cells tall a seal across a sideways door can be.
 const MAX_SEAL_HEIGHT := 16
-const BARRIER_TEXTURE := preload("res://assets/sprites/light_barrier.png")
+const BARRIER_TEXTURE := preload("res://godot_assets/sprites/light_barrier.png")
 const UPGRADE_KINDS := {
 	"heart": Player.UpgradeKind.HEART,
 	"vial": Player.UpgradeKind.VIAL,
@@ -178,7 +178,7 @@ var world: WorldMap = null
 ## Tints the whole level (hero included) with the region's ambient colour.
 var ambient: CanvasModulate = null
 ## The rim light the sky throws on the lit tile layers (see
-## assets/shaders/rim.gdshader); null until the layers are built.
+## godot_assets/shaders/rim.gdshader); null until the layers are built.
 var rim: ShaderMaterial = null
 ## Whether the grid is streamed in chunks around stream_around's points
 ## (the game) or built whole by build() (tests and tools; see load_all).

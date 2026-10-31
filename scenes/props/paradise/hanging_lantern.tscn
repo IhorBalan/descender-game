@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_sdvx4"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/hanging_lantern.png" id="2_2myyd"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/hanging_lantern_n.png" id="3_p57xo"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/hanging_lantern_glow.png" id="4_0xs0a"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/hanging_lantern.png" id="2_2myyd"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/hanging_lantern_n.png" id="3_p57xo"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/hanging_lantern_glow.png" id="4_0xs0a"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_olr3x"]
 diffuse_texture = ExtResource("2_2myyd")
