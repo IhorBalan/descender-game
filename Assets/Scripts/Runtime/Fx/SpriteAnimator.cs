@@ -46,18 +46,19 @@ namespace Descender.Fx
         /// <summary>Plays the strips faster or slower; 1 is the spec's fps.</summary>
         public float SpeedScale { get; set; } = 1f;
 
-        public SpriteRenderer Renderer => renderer2d;
+        /// <summary>The renderer the strips play on; found on first use so EditMode code, where Awake does not run, can use it too.</summary>
+        public SpriteRenderer Renderer => renderer2d != null ? renderer2d : renderer2d = GetComponent<SpriteRenderer>();
 
         public bool FlipX
         {
-            get => renderer2d.flipX;
-            set => renderer2d.flipX = value;
+            get => Renderer.flipX;
+            set => Renderer.flipX = value;
         }
 
         public Color Color
         {
-            get => renderer2d.color;
-            set => renderer2d.color = value;
+            get => Renderer.color;
+            set => Renderer.color = value;
         }
 
         /// <summary>A bare Visual child with a renderer and an empty animator, for a body whose prefab has none.</summary>
@@ -218,7 +219,7 @@ namespace Descender.Fx
             var strip = strips[current];
             if (strip.frames.Length > 0)
             {
-                renderer2d.sprite = strip.frames[Mathf.Min(frame, strip.frames.Length - 1)];
+                Renderer.sprite = strip.frames[Mathf.Min(frame, strip.frames.Length - 1)];
             }
         }
     }
