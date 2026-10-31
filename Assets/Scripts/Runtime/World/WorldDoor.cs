@@ -213,9 +213,18 @@ namespace Descender.World
 
         private void OnDrawGizmos()
         {
-            Gizmos.color = secret ? new Color(0.8f, 0.5f, 1f, 0.9f)
-                : string.IsNullOrEmpty(lockKind) ? new Color(0.4f, 0.9f, 1f, 0.8f)
-                : new Color(1f, 0.8f, 0.2f, 0.9f);
+            if (secret)
+            {
+                Gizmos.color = new Color(0.8f, 0.5f, 1f, 0.9f);
+            }
+            else if (string.IsNullOrEmpty(lockKind))
+            {
+                Gizmos.color = new Color(0.4f, 0.9f, 1f, 0.8f);
+            }
+            else
+            {
+                Gizmos.color = new Color(1f, 0.8f, 0.2f, 0.9f);
+            }
             Gizmos.DrawSphere(transform.position, 0.3f);
         }
     }

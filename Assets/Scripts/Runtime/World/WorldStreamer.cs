@@ -107,10 +107,12 @@ namespace Descender.World
                 Debug.LogError("WorldStreamer has no WorldAtlas; set it to Assets/Data/World.asset.", this);
                 return;
             }
-            if (!Busy)
+            if (Busy)
             {
-                StartCoroutine(EnterRoutine(hero, point));
+                Debug.LogWarning("WorldStreamer.EnterAt ignored: a region change is already in progress.", this);
+                return;
             }
+            StartCoroutine(EnterRoutine(hero, point));
         }
 
         /// <summary>Unloads every region, for a return to the title.</summary>

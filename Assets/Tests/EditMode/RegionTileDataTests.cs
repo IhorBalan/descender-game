@@ -13,8 +13,18 @@ namespace Descender.Tests
             {
                 ["Terrain"] = new[]
                 {
-                    new RegionTileData.Cell { X = 0, Y = 0, Tile = 5 },
-                    new RegionTileData.Cell { X = 479, Y = 50, Tile = 255 },
+                    new RegionTileData.Cell
+                    {
+                        X = 0,
+                        Y = 0,
+                        Tile = 5,
+                    },
+                    new RegionTileData.Cell
+                    {
+                        X = 479,
+                        Y = 50,
+                        Tile = 255,
+                    },
                 },
                 ["Glow"] = new RegionTileData.Cell[0],
             };

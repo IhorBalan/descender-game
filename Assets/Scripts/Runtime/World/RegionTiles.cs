@@ -42,7 +42,7 @@ namespace Descender.World
         [SerializeField, Min(1)]
         private int rows = 34;
 
-        private readonly Dictionary<int, Tile> tiles = new Dictionary<int, Tile>();
+        private readonly Dictionary<(int, bool), Tile> tiles = new Dictionary<(int, bool), Tile>();
         private TileKind[] kinds;
         private Transform built;
         private Tilemap terrain;
@@ -214,7 +214,7 @@ namespace Descender.World
         {
             var kind = tileSet.KindOf(index);
             var solid = collides && (kind == TileKind.Solid || kind == TileKind.Hidden);
-            var key = solid ? index + 1000 : index;
+            var key = (index, solid);
             if (tiles.TryGetValue(key, out var tile))
             {
                 return tile;
