@@ -2,14 +2,14 @@ class_name PropScene
 extends RefCounted
 
 ## Writes a prop's scene from its PNGs (see WorldProp): scenes/props/<key>/
-## <name>.tscn from assets/props/<key>/<name>.png, with <name>_n.png as its
+## <name>.tscn from godot_assets/props/<key>/<name>.png, with <name>_n.png as its
 ## normal map when there is one and <name>_glow.png as an unlit additive
 ## Glow sprite when there is one. The extractor (tools/extract_props.gd)
 ## and the editor's Props dock (addons/props_dock) both write props this
 ## way, so every prop scene has the same shape.
 
 const SCENES_DIR := "res://scenes/props"
-const ART_DIR := "res://assets/props"
+const ART_DIR := "res://godot_assets/props"
 const WORLD_PROP := "res://scripts/world/world_prop.gd"
 
 

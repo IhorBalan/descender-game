@@ -2,8 +2,8 @@ class_name AnimLoader
 extends RefCounted
 
 ## The characters' animations: one SpriteFrames resource per character at
-## assets/sprites/<name>/<name>.tres, cut from the strips in that folder by
-## tools/sprite_frames.py from assets/sprites/sprites.json (frame size,
+## godot_assets/sprites/<name>/<name>.tres, cut from the strips in that folder by
+## tools/sprite_frames.py from godot_assets/sprites/sprites.json (frame size,
 ## fps, loop, origin). The resource's `origin` metadata is the strip's
 ## origin point (the feet, or the centre) in frame pixels, so a centred
 ## AnimatedSprite2D gets an offset that puts it on the node's position.
@@ -12,7 +12,7 @@ extends RefCounted
 ## scenes/enemies/); the hero, the NPCs and the bosses, whose sprites are
 ## picked in code, go through `setup`.
 
-const SPRITES_DIR := "res://assets/sprites"
+const SPRITES_DIR := "res://godot_assets/sprites"
 
 
 ## The resource's path for a character.

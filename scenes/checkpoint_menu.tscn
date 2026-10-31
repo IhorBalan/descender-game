@@ -1,12 +1,12 @@
 [gd_scene load_steps=8 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/checkpoint_menu.gd" id="1_camp"]
-[ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" path="res://godot_assets/ui_theme.tres" id="2_theme"]
 [ext_resource type="PackedScene" path="res://scenes/inventory_menu.tscn" id="3_pack"]
 [ext_resource type="PackedScene" path="res://scenes/skill_menu.tscn" id="4_skills"]
 [ext_resource type="PackedScene" path="res://scenes/map_screen.tscn" id="5_map"]
 [ext_resource type="Script" path="res://scripts/ui/prompt_label.gd" id="9_prompt"]
-[ext_resource type="Texture2D" path="res://assets/ui/theme/divider.png" id="11_divider"]
+[ext_resource type="Texture2D" path="res://godot_assets/ui/theme/divider.png" id="11_divider"]
 
 [node name="CheckpointMenu" type="CanvasLayer"]
 process_mode = 3

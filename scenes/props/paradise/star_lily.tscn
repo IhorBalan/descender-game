@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_slirg"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/star_lily.png" id="2_2fn2x"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/star_lily_n.png" id="3_ay17h"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/star_lily_glow.png" id="4_v68nb"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/star_lily.png" id="2_2fn2x"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/star_lily_n.png" id="3_ay17h"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/star_lily_glow.png" id="4_v68nb"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_5e4pp"]
 diffuse_texture = ExtResource("2_2fn2x")

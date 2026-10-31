@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Export the hero's animation strips into assets/sprites/hero/ at game scale.
+"""Export the hero's animation strips into godot_assets/sprites/hero/ at game scale.
 
 The hero art is a 168x168 SpriteCook sprite (hero_base.png). anim.py cuts it
 into layers (wing, halo, legs, sword arm) and poses them frame by frame at full
@@ -27,7 +27,7 @@ ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import sprite_frames  # noqa: E402
 
-SPRITES = os.path.join(ROOT, "assets", "sprites")
+SPRITES = os.path.join(ROOT, "godot_assets", "sprites")
 OUT_DIR = os.path.join(SPRITES, "hero")
 
 SCALE = 0.25  # 165 px tall source -> about 41 px in game

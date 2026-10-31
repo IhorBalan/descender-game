@@ -7,7 +7,7 @@ extends Node
 ## ask for feedback in one line. The camera registers itself in the
 ## "game_camera" group to receive shakes.
 
-const FLASH_SHADER := preload("res://assets/shaders/hit_flash.gdshader")
+const FLASH_SHADER := preload("res://godot_assets/shaders/hit_flash.gdshader")
 const SPARK_SCENE := preload("res://scenes/hit_spark.tscn")
 const PUFF_SCENE := preload("res://scenes/death_puff.tscn")
 const HIT_STOP_SCALE := 0.05

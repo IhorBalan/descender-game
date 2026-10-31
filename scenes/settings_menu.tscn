@@ -1,9 +1,9 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/ui/settings_menu.gd" id="1_settings"]
-[ext_resource type="Theme" path="res://assets/ui_theme.tres" id="2_theme"]
+[ext_resource type="Theme" path="res://godot_assets/ui_theme.tres" id="2_theme"]
 [ext_resource type="Script" path="res://scripts/ui/prompt_label.gd" id="9_prompt"]
-[ext_resource type="Texture2D" path="res://assets/ui/theme/title_backdrop.png" id="10_backdrop"]
+[ext_resource type="Texture2D" path="res://godot_assets/ui/theme/title_backdrop.png" id="10_backdrop"]
 
 [node name="SettingsMenu" type="Control"]
 visible = false

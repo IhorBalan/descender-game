@@ -1,7 +1,7 @@
 extends SceneTree
 
 ## Puts a region's art data into its scene as nodes: reads
-## assets/regions/<key>/parallax.json, edges.json and fx.json (see Backdrop,
+## godot_assets/regions/<key>/parallax.json, edges.json and fx.json (see Backdrop,
 ## EdgeDecor and RegionFx) and writes into the region's scene under
 ## scenes/world/ a Backdrop node of BackdropLayer children (back to front),
 ## a Fringes node (RegionFringes) and an Fx node of RegionParticles
@@ -18,7 +18,7 @@ extends SceneTree
 ## (`godot --headless --path . --import`) so the PNGs are resources.
 
 const SCENES_DIR := "res://scenes/world"
-const REGIONS_DIR := "res://assets/regions"
+const REGIONS_DIR := "res://godot_assets/regions"
 
 
 func _initialize() -> void:

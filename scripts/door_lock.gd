@@ -12,7 +12,7 @@ signal touched(lock: DoorLock)
 
 enum Kind { ABILITY, BOSS, ARENA }
 
-const TEXTURE := preload("res://assets/sprites/light_barrier.png")
+const TEXTURE := preload("res://godot_assets/sprites/light_barrier.png")
 const TINT_ABILITY := Color(1.0, 0.95, 0.75)
 const TINT_BOSS := Color(1.0, 0.7, 0.6)
 const TINT_ARENA := Color(1.0, 0.55, 0.45)

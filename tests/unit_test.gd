@@ -19,9 +19,9 @@ extends Node
 
 const DIALOGUE_PATH := "res://dialogue/world_1.json"
 const WORLD_PATH := "res://scenes/world/world.tscn"
-const SPRITES_PATH := "res://assets/sprites/sprites.json"
-const REGIONS_DIR := "res://assets/regions"
-const SFX_DIR := "res://assets/audio/sfx"
+const SPRITES_PATH := "res://godot_assets/sprites/sprites.json"
+const REGIONS_DIR := "res://godot_assets/regions"
+const SFX_DIR := "res://godot_assets/audio/sfx"
 ## A scratch dialogue file for the DialogueData tests.
 const SCRATCH_DIALOGUE := "user://unit_test_dialogue.json"
 const UPGRADE_KINDS: Array[String] = ["heart", "vial", "iron"]
@@ -472,7 +472,7 @@ func test_props() -> void:
 	var bad := 0
 	for key in scenes_root.get_directories():
 		var dir := "res://scenes/props/" + key
-		var art_dir := "res://assets/props/" + key
+		var art_dir := "res://godot_assets/props/" + key
 		var names := _json(art_dir + "/names.json")
 		var named: Array[String] = []
 		for shape_key in names:

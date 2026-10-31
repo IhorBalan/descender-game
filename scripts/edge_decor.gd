@@ -9,7 +9,7 @@ extends Node2D
 ## A region of the game's own world keeps its set in its scene, as a
 ## RegionFringes node, which SceneWorld reads into the region's `edges` spec
 ## (the same fields, with the textures in place of file names). A region of
-## a map without a scene opts in with assets/regions/<key>/edges.json,
+## a map without a scene opts in with godot_assets/regions/<key>/edges.json,
 ## where key is the region name lowercased without its number
 ## ("1. Limbo" -> "limbo"):
 ##
@@ -29,7 +29,7 @@ extends Node2D
 ## cost anything; the variant of a cell is fixed by its position. The level
 ## streams them with its tiles: prepare once, then build_cells per chunk.
 
-const REGIONS_DIR := "res://assets/regions"
+const REGIONS_DIR := "res://godot_assets/regions"
 const CHUNK := 32
 const SIDES: Array[String] = ["top", "bottom", "left", "right"]
 

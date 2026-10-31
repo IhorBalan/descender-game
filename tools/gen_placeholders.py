@@ -9,7 +9,7 @@ any tooling beyond Python + Pillow:
     python3 tools/gen_placeholders.py
 
 Characters (hero, imp, watcher, angel guard) are the prototype strips from
-the art thread, under assets/sprites/<name>/ with sprites.json.
+the art thread, under godot_assets/sprites/<name>/ with sprites.json.
 """
 from __future__ import annotations
 
@@ -19,7 +19,7 @@ import sys
 from PIL import Image, ImageDraw
 
 OUT_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "assets", "sprites")
+    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "godot_assets", "sprites")
 
 # Palette (RGBA)
 CLEAR = (0, 0, 0, 0)

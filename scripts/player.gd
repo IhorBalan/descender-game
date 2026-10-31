@@ -143,7 +143,7 @@ const KNOCKBACK := Vector2(110.0, -110.0)
 const DEATH_TIME := 1.2
 ## Falling at least this fast makes a landing sound and raises dust.
 const LAND_SOUND_SPEED := 120.0
-# Animation. The strips are in assets/sprites/hero (tools/hero_placeholder):
+# Animation. The strips are in godot_assets/sprites/hero (tools/hero_placeholder):
 # every frame's body fills the collision box, so the poses below only pick
 # which frame shows for the movement under way.
 ## Falling at least this fast shows the landing squash, for this long.

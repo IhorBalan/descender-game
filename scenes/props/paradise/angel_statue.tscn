@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_slh1f"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/angel_statue.png" id="2_xxnsr"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/angel_statue_n.png" id="3_hgf42"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/angel_statue.png" id="2_xxnsr"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/angel_statue_n.png" id="3_hgf42"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_83pra"]
 diffuse_texture = ExtResource("2_xxnsr")

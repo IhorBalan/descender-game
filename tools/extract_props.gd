@@ -5,10 +5,10 @@ extends SceneTree
 ## region's props atlas source on the Decor layer (with the Glow layer's
 ## cells over them) is one piece; pieces painted from the same tiles in the
 ## same arrangement are one prop. Each prop gets its PNGs baked from the
-## sheets under assets/props/<key>/ (<name>.png, <name>_n.png and, when it
+## sheets under godot_assets/props/<key>/ (<name>.png, <name>_n.png and, when it
 ## shines, <name>_glow.png) and a scene under scenes/props/<key>/; the
 ## region scene then gets an instance per piece under Props/* and loses
-## the cells. Names come from assets/props/<key>/names.json ({"<shape
+## the cells. Names come from godot_assets/props/<key>/names.json ({"<shape
 ## key>": "lantern", ...}, the shape keys as the first run prints them),
 ## else the props are numbered.
 ##
@@ -21,7 +21,7 @@ extends SceneTree
 
 const SCENES_DIR := "res://scenes/world"
 const PROPS_SCENES := "res://scenes/props"
-const PROPS_ART := "res://assets/props"
+const PROPS_ART := "res://godot_assets/props"
 const SHEETS_DIR := "res://levels/world"
 const DIRECTIONS := [Vector2i(1, 0), Vector2i(-1, 0), Vector2i(0, 1), Vector2i(0, -1)]
 
@@ -226,7 +226,7 @@ static func _bake_all(
 	return shapes
 
 
-## The names given to shapes, from assets/props/<key>/names.json.
+## The names given to shapes, from godot_assets/props/<key>/names.json.
 static func _names(key: String) -> Dictionary:
 	var text := FileAccess.get_file_as_string(PROPS_ART.path_join(key).path_join("names.json"))
 	var parsed: Variant = JSON.parse_string(text) if not text.is_empty() else null

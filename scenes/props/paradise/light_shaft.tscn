@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_1ou7s"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/light_shaft.png" id="2_nn6ll"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/light_shaft_n.png" id="3_2pwu1"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/light_shaft_glow.png" id="4_ehme7"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/light_shaft.png" id="2_nn6ll"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/light_shaft_n.png" id="3_2pwu1"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/light_shaft_glow.png" id="4_ehme7"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_8e01f"]
 diffuse_texture = ExtResource("2_nn6ll")

@@ -1,9 +1,9 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_8m4x7"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/spark.png" id="2_xhhvy"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/spark_n.png" id="3_5a741"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/spark_glow.png" id="4_ubu53"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/spark.png" id="2_xhhvy"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/spark_n.png" id="3_5a741"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/spark_glow.png" id="4_ubu53"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_xv08l"]
 diffuse_texture = ExtResource("2_xhhvy")

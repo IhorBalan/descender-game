@@ -12,9 +12,9 @@ extends Area2D
 signal collected(kind: Player.UpgradeKind)
 
 const TEXTURES := {
-	Player.UpgradeKind.HEART: preload("res://assets/sprites/upgrade_heart.png"),
-	Player.UpgradeKind.VIAL: preload("res://assets/sprites/upgrade_vial.png"),
-	Player.UpgradeKind.IRON: preload("res://assets/sprites/upgrade_iron.png"),
+	Player.UpgradeKind.HEART: preload("res://godot_assets/sprites/upgrade_heart.png"),
+	Player.UpgradeKind.VIAL: preload("res://godot_assets/sprites/upgrade_vial.png"),
+	Player.UpgradeKind.IRON: preload("res://godot_assets/sprites/upgrade_iron.png"),
 }
 ## What the dialogue box shows when the upgrade is taken: the relic-style
 ## description, then what changed. The second line is filled in with the

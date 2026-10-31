@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Draw the placeholder hero's animation strips into assets/sprites/hero/.
+"""Draw the placeholder hero's animation strips into godot_assets/sprites/hero/.
 
 The hero is a simple figure built from a few limbs, drawn pose by pose at
 game scale so every frame fits the hero's collision box (Player.tscn: 14x32
@@ -11,7 +11,7 @@ and the wings reach outside it.
     python3 tools/hero_placeholder/gen.py            # write the strips
     python3 tools/hero_placeholder/gen.py --sheet out.png   # and a contact sheet
 
-The script rewrites the hero entry of assets/sprites/sprites.json and checks
+The script rewrites the hero entry of godot_assets/sprites/sprites.json and checks
 every frame against the box (see check_frame). Needs Python 3 with Pillow.
 """
 from __future__ import annotations
@@ -28,7 +28,7 @@ ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)
 sys.path.insert(0, os.path.join(ROOT, "tools"))
 import sprite_frames  # noqa: E402
 
-SPRITES = os.path.join(ROOT, "assets", "sprites")
+SPRITES = os.path.join(ROOT, "godot_assets", "sprites")
 OUT_DIR = os.path.join(SPRITES, "hero")
 SPEC_PATH = os.path.join(SPRITES, "sprites.json")
 

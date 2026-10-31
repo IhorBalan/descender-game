@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_13uvp"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/islet.png" id="2_e4vfh"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/islet_n.png" id="3_4q5mw"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/islet.png" id="2_e4vfh"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/islet_n.png" id="3_4q5mw"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_co2rf"]
 diffuse_texture = ExtResource("2_e4vfh")

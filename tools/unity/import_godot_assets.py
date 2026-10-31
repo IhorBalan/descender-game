@@ -3,12 +3,12 @@
 
     python3 tools/unity/import_godot_assets.py
 
-Copies the PNGs, sounds and JSON under assets/ and levels/ into Assets/Art,
+Copies the PNGs, sounds and JSON under godot_assets/ and levels/ into Assets/Art,
 Assets/Audio and Assets/Data, turns the enemy, boss and region .tres
 resources into ScriptableObject .asset files, and writes a .meta beside
 every file and folder under Assets/ that has none, with a GUID derived from
 the path, so every clone and every run agrees on the ids. Sprite strips are
-sliced in their .meta from assets/sprites/sprites.json (one sprite a frame,
+sliced in their .meta from godot_assets/sprites/sprites.json (one sprite a frame,
 pivot at the strip's origin), tile atlases into their 64 px grid, and a
 prop's normal map is attached to its art as the `_NormalMap` secondary
 texture, so Unity needs no click to show them lit.
@@ -39,16 +39,16 @@ PPU_LEVEL = 16
 PPU_PAINTED = 64
 
 COPIES = [
-    ("assets/sprites", "Assets/Art/Sprites", (".png", ".json")),
-    ("assets/props", "Assets/Art/Props", (".png", ".json")),
-    ("assets/regions", "Assets/Art/Regions", (".png", ".json")),
+    ("godot_assets/sprites", "Assets/Art/Sprites", (".png", ".json")),
+    ("godot_assets/props", "Assets/Art/Props", (".png", ".json")),
+    ("godot_assets/regions", "Assets/Art/Regions", (".png", ".json")),
     ("levels/world/tiles", "Assets/Art/Tiles", (".png",)),
     ("levels/world", "Assets/Art/Tiles/Sheets", (".png",)),
-    ("assets/ui/theme", "Assets/Art/UI/Theme", (".png",)),
-    ("assets/ui/prompts", "Assets/Art/UI/Prompts", (".png",)),
-    ("assets/fonts", "Assets/Art/Fonts", (".ttf", ".txt")),
-    ("assets/audio", "Assets/Audio", (".wav", ".ogg")),
-    ("assets/shaders", "Assets/Shaders/Godot", (".gdshader",)),
+    ("godot_assets/ui/theme", "Assets/Art/UI/Theme", (".png",)),
+    ("godot_assets/ui/prompts", "Assets/Art/UI/Prompts", (".png",)),
+    ("godot_assets/fonts", "Assets/Art/Fonts", (".ttf", ".txt")),
+    ("godot_assets/audio", "Assets/Audio", (".wav", ".ogg")),
+    ("godot_assets/shaders", "Assets/Shaders/Godot", (".gdshader",)),
     ("dialogue", "Assets/Data/dialogue", (".json",)),
 ]
 
@@ -260,7 +260,7 @@ def write_if_missing(meta_path: str, text: str) -> bool:
 
 
 def sprite_spec() -> dict:
-    with open(os.path.join(ROOT, "assets", "sprites", "sprites.json")) as handle:
+    with open(os.path.join(ROOT, "godot_assets", "sprites", "sprites.json")) as handle:
         return json.load(handle)
 
 

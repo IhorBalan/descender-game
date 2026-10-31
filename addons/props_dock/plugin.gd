@@ -7,7 +7,7 @@ extends EditorPlugin
 ## then click in the 2D view to drop an instance under the region's `Props`
 ## node at the mouse (a ghost follows the mouse; Shift keeps placing, Esc
 ## or a right click stops). The dock also flips the next placement, makes
-## a new prop from a PNG in assets/props/<key>/ and opens a prop's scene.
+## a new prop from a PNG in godot_assets/props/<key>/ and opens a prop's scene.
 ##
 ## Props are placed in a region's own scene; world.tscn only shows them.
 

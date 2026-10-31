@@ -7,7 +7,7 @@ extends Resource
 
 ## Shown on the health bar.
 @export var display_name := ""
-## The character whose strips it wears (a folder of assets/sprites), and
+## The character whose strips it wears (a folder of godot_assets/sprites), and
 ## the name of their walking loop. The move it has on top comes from the
 ## character too (see Boss.MOVES).
 @export var character := "angel_guard"

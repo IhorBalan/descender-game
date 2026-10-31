@@ -8,9 +8,13 @@ description: Where things live in the Unity project (Assets/Scripts, Assets/Scen
 The Unity project lives at the repository root (`Assets/`, `Packages/`,
 `ProjectSettings/`), Unity 6.3 LTS (`ProjectSettings/ProjectVersion.txt`).
 The Godot project it is ported from still sits beside it (`scenes/`,
-`scripts/`, `levels/`, `resources/`, `project.godot`) as the reference for
-behaviour and numbers until the port is complete; each Unity folder carries
-a `.gdignore` so Godot ignores it. Do not edit the Godot files unless the
+`scripts/`, `levels/`, `resources/`, `godot_assets/`, `project.godot`) as the
+reference for behaviour and numbers until the port is complete; each Unity
+folder carries a `.gdignore` so Godot ignores it. The Godot art lives in
+`godot_assets/`, not `assets/`: on a case-insensitive disk (macOS, Windows)
+`assets/` and `Assets/` are one folder, and Unity would import the Godot
+files and litter them with `.meta`s. Never add a top-level folder whose name
+differs from a Unity one only by case. Do not edit the Godot files unless the
 task is about the port's reference, and never build new features there.
 
 ## Folders

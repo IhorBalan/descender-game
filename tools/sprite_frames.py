@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-"""Write a SpriteFrames resource for every character in assets/sprites/sprites.json.
+"""Write a SpriteFrames resource for every character in godot_assets/sprites/sprites.json.
 
     python3 tools/sprite_frames.py            # every character
     python3 tools/sprite_frames.py imp hero   # just these
 
-Each character gets assets/sprites/<name>/<name>.tres: one animation per
+Each character gets godot_assets/sprites/<name>/<name>.tres: one animation per
 strip, cut into frames at the spec's frame size, with the spec's fps and
 loop flag, and the strip's origin point (feet or centre, in frame pixels)
 stored as the resource's `origin` metadata. The game loads these (see
@@ -23,7 +23,7 @@ import os
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SPRITES = os.path.join(ROOT, "assets", "sprites")
+SPRITES = os.path.join(ROOT, "godot_assets", "sprites")
 SPEC = os.path.join(SPRITES, "sprites.json")
 
 
@@ -38,7 +38,7 @@ def tres_text(name: str, info: dict) -> str:
     for anim_name, anim in anims.items():
         ext_id = "%d_%s" % (len(ext) + 1, anim_name)
         ext.append(
-            '[ext_resource type="Texture2D" path="res://assets/sprites/%s/%s" id="%s"]'
+            '[ext_resource type="Texture2D" path="res://godot_assets/sprites/%s/%s" id="%s"]'
             % (name, anim["file"], ext_id)
         )
         frames = []

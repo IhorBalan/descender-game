@@ -6,7 +6,7 @@ extends Node2D
 ## statue, as its own scene under scenes/props/<region key>/, instanced in
 ## the region's scene under `Props/*` (see WorldRegion). The scene is the
 ## root with this script and, under it, an `Art` Sprite2D drawing the piece's
-## PNG (a CanvasTexture of assets/props/<key>/<name>.png and <name>_n.png,
+## PNG (a CanvasTexture of godot_assets/props/<key>/<name>.png and <name>_n.png,
 ## its normal map) at tile / art_tile of its size from its top-left corner,
 ## and, for a piece that shines, a `Glow` Sprite2D of <name>_glow.png added
 ## unlit on top. Drag an instance to place it, scale it by -1 to flip it,

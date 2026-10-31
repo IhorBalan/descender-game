@@ -31,7 +31,7 @@ extends Node2D
 ## Drag a node to move it; paint the layers with Godot's TileMap tools. The
 ## editor draws the region's band, and each room, door and placement draws
 ## itself, so a level reads at a glance. A region without a Backdrop node,
-## a Fringes node or Fx nodes falls back to its assets/regions/<key>/
+## a Fringes node or Fx nodes falls back to its godot_assets/regions/<key>/
 ## parallax.json, edges.json or fx.json; tools/scene_art.gd turns those
 ## files into the nodes.
 

@@ -8,7 +8,7 @@ extends Node
 ## the editor's src/component-export.ts). This store downloads the ones
 ## that changed into user://components/<id>/ (component.json, textures/ and
 ## a stamp of the revision) when the game starts, and falls back to the
-## copies shipped in res://assets/ui/components/<id>/ (written by the
+## copies shipped in res://godot_assets/ui/components/<id>/ (written by the
 ## editor's `npm run publish-components -- --out ...`) when it cannot reach
 ## Firebase. Components are found by name, ignoring case and spaces.
 ##
@@ -24,7 +24,7 @@ signal finished(ok: bool, message: String)
 
 const FirestoreRest := preload("res://scripts/firestore_rest.gd")
 const DOWNLOAD_DIR := "user://components"
-const BUNDLED_DIR := "res://assets/ui/components"
+const BUNDLED_DIR := "res://godot_assets/ui/components"
 const INDEX_DOCUMENT := "components"
 const HEAD_PREFIX := "component_"
 const STAMP_FILE := "stamp.json"

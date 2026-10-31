@@ -1,8 +1,8 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/world/world_prop.gd" id="1_6mv2x"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/ledge_island.png" id="2_aeh6r"]
-[ext_resource type="Texture2D" path="res://assets/props/paradise/ledge_island_n.png" id="3_1md0n"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/ledge_island.png" id="2_aeh6r"]
+[ext_resource type="Texture2D" path="res://godot_assets/props/paradise/ledge_island_n.png" id="3_1md0n"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_l2u7y"]
 diffuse_texture = ExtResource("2_aeh6r")

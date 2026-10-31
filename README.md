@@ -86,7 +86,7 @@ hint is written as text with `{action}` tokens, such as
 `"{ui_accept} choose   {ui_cancel} back"`, and a `PromptLabel`
 (`scripts/ui/prompt_label.gd`) draws it and redraws it on every switch,
 so new screens get prompts by dropping one in. The icons are drawn by
-`tools/gen_prompts.py` into `assets/ui/prompts/`.
+`tools/gen_prompts.py` into `godot_assets/ui/prompts/`.
 
 **New Game** picks a slot (an occupied
 one asks to be pressed twice before it is overwritten), **Continue** resumes
@@ -171,7 +171,7 @@ Restarting with R does the same from the progress so far.
 
 **The hero's sprite** is a stand-in while the movement is being tuned: a
 plain figure drawn by `tools/hero_placeholder/gen.py` (run it to redraw the
-strips in `assets/sprites/hero/` and the hero entry of `sprites.json`). Its
+strips in `godot_assets/sprites/hero/` and the hero entry of `sprites.json`). Its
 point is that every frame fits the hero's collision box, 14x32 level
 pixels from the soles up: the head, torso and legs of each frame fill the
 box, and the script refuses a pose that does not (only the sword, the arms
@@ -268,7 +268,7 @@ and now and then a **tally bone** or a Basin Flask. The enemy strips are drawn b
 Each enemy body is three files, all openable in the editor: a **profile**
 (`resources/enemies/<name>.tres`, a `WalkerProfile` or `FlyerProfile`: size,
 speed, health, the swing, the drops), its **frames**
-(`assets/sprites/<name>/<name>.tres`, a `SpriteFrames` cut from the strips)
+(`godot_assets/sprites/<name>/<name>.tres`, a `SpriteFrames` cut from the strips)
 and a **scene** (`scenes/enemies/<name>.tscn`, inheriting `walker.tscn` or
 `flyer.tscn`, that wears the two). Open the scene to see the body; select
 its root to tune the profile in the Inspector; select the Sprite to play
@@ -516,12 +516,12 @@ picked per map in the editor's header, and a map without it is pixel art as
 before.
 
 Two kinds of region art turn the grid into a painted shape, each read from
-`assets/regions/<region key>/` (the region's name lowercased without its
+`godot_assets/regions/<region key>/` (the region's name lowercased without its
 number, so `1. Limbo` is `limbo`), and each optional per region:
 
 Both are looked for next to the map's `world.json` first (`<map folder>/regions/<key>/`,
 where the editor's export puts a region's **Sky backdrop** as a parallax set that covers the
-view), then under `assets/regions/<key>/`.
+view), then under `godot_assets/regions/<key>/`.
 
 - **Edges** (`edges.json`, built by `scripts/edge_decor.gd`; a region of
   the game's own world keeps the same set as a `RegionFringes` node in its
@@ -568,15 +568,15 @@ in its `RegionLook` resource (see "The world as scenes"). A top-level
 evenly from the map's top to its bottom. `scripts/look_blend.gd` eases
 all of it over 2.5 s when the hero crosses a region line.
 
-The sky is `assets/shaders/sky.gdshader` on the `Sky` rect, the editor's
+The sky is `godot_assets/shaders/sky.gdshader` on the `Sky` rect, the editor's
 procedural sky ported: a gradient across the region's band keyed to the
 camera, so the horizon rises as the hero falls, with ridges, a sea of
 clouds and puffs drifting over time (stepped and dithered for pixel art,
 smooth for painted maps). The lit tile layers wear
-`assets/shaders/rim.gdshader`, which adds the region's light where a
+`godot_assets/shaders/rim.gdshader`, which adds the region's light where a
 tile's normal map faces up (`LevelBuilder.RIM_STRENGTH`, 0 turns it off).
 Over the level and under the HUD, `scripts/post_fx.gd` draws
-`assets/shaders/post.gdshader`: the region's grade and a soft vignette.
+`godot_assets/shaders/post.gdshader`: the region's grade and a soft vignette.
 A `WorldEnvironment` with glow makes the sky, the glow tiles and the
 lights bloom a little.
 
@@ -671,7 +671,7 @@ level pixels from its top-left corner:
   pans, so each layer can be picked in the tree, moved and tuned in the
   inspector. `SceneWorld` reads the layers into the region's `parallax`
   spec and `Backdrop` builds the same nodes from it; a region without a
-  `Backdrop` node falls back to its `assets/regions/<key>/parallax.json`.
+  `Backdrop` node falls back to its `godot_assets/regions/<key>/parallax.json`.
   `tools/scene_art.gd` turns that file into the nodes
   (`godot --headless --path . --script tools/scene_art.gd -- 00_paradise.tscn`;
   no names does every region, `--replace` redoes a part a scene has).
@@ -701,14 +701,14 @@ level pixels from its top-left corner:
   region's set, lanterns, pillars, floating ledges, clouds, the angel
   statue, each an instance of a scene under `scenes/props/<key>/` (27 for
   Paradise, placed 115 times). A prop scene is its PNGs under
-  `assets/props/<key>/` (`<name>.png`, `<name>_n.png` its normal map and,
+  `godot_assets/props/<key>/` (`<name>.png`, `<name>_n.png` its normal map and,
   for one that shines, `<name>_glow.png`) on an `Art` sprite and a `Glow`
   sprite, so a piece is one object to drag, flip (scale by -1) or delete,
   and repainting its PNG or editing its scene changes every copy. The game
   instances the same scenes over the tile layers, lit and rimmed like them.
   `tools/extract_props.gd` made them from the pieces that were painted as
   tiles from the sheet's props rows (see the script for the two-step run
-  and `assets/props/<key>/names.json`, which names the shapes it finds).
+  and `godot_assets/props/<key>/names.json`, which names the shapes it finds).
   `PropScene` (`scripts/world/prop_scene.gd`) writes a prop's scene from
   its PNGs, so the extractor and the editor make props the same shape.
   The editor's **Props** dock (`addons/props_dock/`, on the right beside
@@ -718,7 +718,7 @@ level pixels from its top-left corner:
   ghost follows the mouse, snapped to the grid; Shift keeps placing, Esc
   or a right click stops, the placement undoes). Flip mirrors the next
   placement, Open opens the prop's scene, and New from PNG makes a prop
-  out of a PNG put under `assets/props/<key>/` (with `<name>_n.png` and
+  out of a PNG put under `godot_assets/props/<key>/` (with `<name>_n.png` and
   `<name>_glow.png` picked up when they exist). Props are placed in a
   region's own scene; `world.tscn` only shows them.
 - `Fringes`: `RegionFringes` (`scripts/world/region_fringes.gd`), the
@@ -874,11 +874,11 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/interactable.gd` | Base for things the hero can talk to or examine; shows the talk key when he is close |
 | `scripts/npc.gd`, `scripts/lore_item.gd`, `scripts/story_trigger.gd` | Someone to talk to, a relic with a description, a spot that speaks on its own |
 | `dialogue/world_1.json` | Every line in the world, by id, with the flags each needs and sets, and whether it plays once |
-| `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `assets/sprites/<name>/` |
+| `tools/npc_sprites/` | The NPC rig (`npcs.py`) and `export.py`, which draws the idle and talk strips into `godot_assets/sprites/<name>/` |
 | `docs/story/script.md` | The story: names, beats from Heaven to both endings, and the script |
 | `scripts/live_map.gd` | Downloads the editor's published live map on start into `user://maps/live/`, a map to select in the Maps menu (see Live map) |
 | `scripts/map_store.gd` | Lists and downloads the other maps the editor published, for the Maps menu and `--map=` |
-| `scripts/component_store.gd` | The `ComponentStore` autoload: downloads the UI components the editor published into `user://components/`, falling back to `assets/ui/components/` |
+| `scripts/component_store.gd` | The `ComponentStore` autoload: downloads the UI components the editor published into `user://components/`, falling back to `godot_assets/ui/components/` |
 | `scripts/ui_component.gd` | Draws an editor UI component (colour boxes, images, fill bars with lag, text) with props the game sets; the HUD's health bar is the `HealthBar` component |
 | `scripts/firestore_rest.gd` | Reads the editor's public Firestore documents, for the two above |
 | `scripts/edge_decor.gd` | The tufts, hanging growth and moss along the terrain's exposed edges, per region |
@@ -886,14 +886,14 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/region_fx.gd` | The drifting particles of a region, from its `fx.json` or the stock presets |
 | `scripts/look_blend.gd` | The sky colours, rim light and grade of the region the hero is in, eased between regions |
 | `scripts/world/region_look.gd`, `resources/regions/<key>.tres` | A region's look as a resource: ambient, sky, cave, rim light, grade, music |
-| `scripts/post_fx.gd`, `assets/shaders/` | The grade and vignette over the level; the procedural sky, the rim light and the post shaders |
+| `scripts/post_fx.gd`, `godot_assets/shaders/` | The grade and vignette over the level; the procedural sky, the rim light and the post shaders |
 | `tools/gen_region_art.py` | Draws a region's edge pieces, parallax layers, particles and editor tile textures from code (needs Pillow and numpy) |
 | `scripts/levels.gd` | The `Levels` autoload: the levels in order, by id, with their names, export paths, sky and starting ambient sound |
 | `scenes/main.tscn`, `scripts/main.gd` | Boots a level, spawns the hero, wires HUD and camera, applies and writes saves, moves on to the next level at the gate |
 | `scripts/screen_fade.gd` | Fades the screen to black between levels |
 | `scripts/audio.gd` | The `Audio` autoload: sound effects, the music loops (crossfaded per region, ducked while paused) and the ambient loop |
 | `scripts/feedback.gd` | The `Feedback` autoload: hit-stop, screen shake, hit flash and sparks |
-| `assets/audio/`, `tools/gen_sounds.py`, `tools/gen_music.py` | Placeholder sounds and music, and the scripts that synthesise them |
+| `godot_assets/audio/`, `tools/gen_sounds.py`, `tools/gen_music.py` | Placeholder sounds and music, and the scripts that synthesise them |
 | `scripts/player.gd` | Hero state machine and tuning constants |
 | `scenes/enemies/walker.tscn`, `scripts/enemies/walker.gd` | Ground patroller with a telegraphed melee swing and, for some, a bark; the base of the imp, angel guard, brute, hound, slug, hoarder and burned scenes |
 | `scenes/enemies/flyer.tscn`, `scripts/enemies/flyer.gd` | Hovering flyer that chases when close; the base of the watcher, shade and siren scenes |
@@ -906,7 +906,7 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `scripts/heal_mote.gd` | Mote of light some enemies drop; touching it restores a heart |
 | `scripts/world_map.gd` | Reads a world export: layers, terrain kinds, regions, rooms, doors, lights, props, and its markers as placements |
 | `scenes/world/world.tscn`, `scenes/world/<nn>_<key>.tscn` | The game's world: the world scene and one scene per region, with the tile layers, lights, rooms, doors, placements, backdrop and props as nodes to edit |
-| `scenes/props/<key>/`, `assets/props/<key>/` | The pieces of a region's set as scenes (`WorldProp`), one PNG, normal map and glow each |
+| `scenes/props/<key>/`, `godot_assets/props/<key>/` | The pieces of a region's set as scenes (`WorldProp`), one PNG, normal map and glow each |
 | `scripts/world/` | The world's node scripts (`WorldScene`, `WorldRegion`, `WorldRoom`, `WorldDoor`, `WorldLight`, `WorldPlacement`, `WorldProp`, `RegionFringes`, `RegionParticles`), `PropScene` (writes a prop scene from its PNGs), `SceneWorld` (reads the scenes into a `WorldMap`) and `WorldMigration` (an export into scenes) |
 | `addons/props_dock/` | The editor's Props dock: a gallery of the open region's props to search, preview and click into the 2D view, flip, open or make from a PNG |
 | `levels/world/world_tiles.tres`, `levels/world/tiles/` | The world's TileSet, an atlas source per region cut from the sheets, a tile per id with its terrain kind and, for ground, its terrain peering bits; `scripts/world/tile_index.gd` names the tiles by the editor's ids, `scripts/world/terrain_rules.gd` reads the peering bits off the map |
@@ -920,11 +920,11 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 | `docs/design/upgrades.md` | The upgrade and power-up design: kinds, counts, placement rules |
 | `scripts/light_barrier.gd` | Wall of light the hero can only light-dash through |
 | `levels/world/` | The world's three tile sheets (diffuse, normal, glow) the TileSet reads |
-| `scripts/anim_loader.gd` | Loads a character's `SpriteFrames` (`assets/sprites/<name>/<name>.tres`) and places it on its origin |
+| `scripts/anim_loader.gd` | Loads a character's `SpriteFrames` (`godot_assets/sprites/<name>/<name>.tres`) and places it on its origin |
 | `tools/sprite_frames.py` | Cuts every character's `SpriteFrames` resource from its strips, as `sprites.json` says; the art tools run it after they write the spec |
-| `assets/sprites/` | Character strips from the art thread and the NPC rig, each folder with its `SpriteFrames`, plus the generated checkpoint, gate and pickups |
-| `assets/ui_theme.tres` | The menus' theme: the Pirata One font (`assets/fonts/`, OFL), the stone button boxes, slider, toggles and the `Title`, `Heading`, `Subheading` and `Muted` label variations |
-| `tools/menu_textures.py` | Regenerates the theme's textures in `assets/ui/theme/`: the 9-slice boxes, grabber, toggles, divider and the title backdrop |
+| `godot_assets/sprites/` | Character strips from the art thread and the NPC rig, each folder with its `SpriteFrames`, plus the generated checkpoint, gate and pickups |
+| `godot_assets/ui_theme.tres` | The menus' theme: the Pirata One font (`godot_assets/fonts/`, OFL), the stone button boxes, slider, toggles and the `Title`, `Heading`, `Subheading` and `Muted` label variations |
+| `tools/menu_textures.py` | Regenerates the theme's textures in `godot_assets/ui/theme/`: the 9-slice boxes, grabber, toggles, divider and the title backdrop |
 | `tools/gen_placeholders.py` | Regenerates the checkpoint, gate, feather, light barrier, relic, upgrade and power-up PNGs |
 | `tools/hero_placeholder/gen.py` | Draws the stand-in hero's strips, every frame fitted to his collision box, and rewrites the hero entry of `sprites.json` |
 | `tools/hero_shots.gd` | Films the hero's moves with his collision box and attack hitbox drawn, one filmstrip per move (needs a display; see the script) |
@@ -997,13 +997,13 @@ Nothing is built on an ordinary push; only tags release.
 
 ## Sounds
 
-Every sound under `assets/audio/` is a synthesised placeholder. To change
+Every sound under `godot_assets/audio/` is a synthesised placeholder. To change
 one, edit its recipe in `tools/gen_sounds.py` and run
 `python3 tools/gen_sounds.py` (needs numpy). Effects are played by name
 (`Audio.play("jump")`), so a real recording only has to keep the file name.
 
 The music is made the same way by `tools/gen_music.py`: one loop per
-region of the world under `assets/audio/music/`, named by the region's
+region of the world under `godot_assets/audio/music/`, named by the region's
 key (`paradise`, `ruined_earth`, `purgatory`, `limbo` ... `treachery`),
 plus `title` for the title screen and `boss` for the fights. Each is a
 short composition for a tiny sequencer (a few synthesised voices, drums, a

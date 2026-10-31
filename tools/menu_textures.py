@@ -1,4 +1,4 @@
-"""Draws the menu theme's textures into assets/ui/theme: the 9-slice button
+"""Draws the menu theme's textures into godot_assets/ui/theme: the 9-slice button
 boxes and panel (12x12, 4 px margins), the slider grabber, the chain divider
 under headings and the title screen's cavern backdrop.
 
@@ -13,7 +13,7 @@ import random
 
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "assets", "ui", "theme")
+OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "godot_assets", "ui", "theme")
 W, H = 320, 180
 
 LEAD = (13, 8, 9, 255)

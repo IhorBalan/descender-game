@@ -13,7 +13,7 @@ extends Node2D
 ## The game never runs this node: SceneWorld reads the region's `Fx/*`
 ## into its `fx` spec and RegionFx emits the same particles across the view
 ## around the camera. A region without Fx nodes falls back to its
-## assets/regions/<key>/fx.json; tools/scene_art.gd turns that file into
+## godot_assets/regions/<key>/fx.json; tools/scene_art.gd turns that file into
 ## the nodes.
 
 ## How many more particles the editor's preview emits than the game, since

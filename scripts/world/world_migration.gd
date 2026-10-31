@@ -14,7 +14,7 @@ const LAYER_NAMES := WorldRegion.LAYER_NAMES
 const TILE_SET_FILE := "world_tiles.tres"
 ## The lights' disc texture, in the project; written next to the TileSet
 ## when a world is migrated somewhere else (the tests).
-const LIGHT_DISC := "res://assets/sprites/light_disc.png"
+const LIGHT_DISC := "res://godot_assets/sprites/light_disc.png"
 const LIGHT_DISC_FILE := "light_disc.png"
 const WORLD_SCENE_FILE := "world.tscn"
 ## The folder next to the TileSet its per-region atlases are written to.

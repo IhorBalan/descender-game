@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3]
 
 [ext_resource type="Script" path="res://scripts/enemies/hanger.gd" id="1_hanger"]
-[ext_resource type="SpriteFrames" path="res://assets/sprites/hanged/hanged.tres" id="2_frames"]
+[ext_resource type="SpriteFrames" path="res://godot_assets/sprites/hanged/hanged.tres" id="2_frames"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_body"]
 size = Vector2(14, 44)

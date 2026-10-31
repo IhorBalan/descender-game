@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Composes the looping music under assets/audio/music from scratch.
+"""Composes the looping music under godot_assets/audio/music from scratch.
 
     python3 tools/gen_music.py            # every track
     python3 tools/gen_music.py wrath boss # just these
@@ -26,7 +26,7 @@ import wave
 import numpy as np
 
 RATE = 22050
-OUT = os.path.join(os.path.dirname(__file__), "..", "assets", "audio", "music")
+OUT = os.path.join(os.path.dirname(__file__), "..", "godot_assets", "audio", "music")
 rng = np.random.default_rng(11)
 
 

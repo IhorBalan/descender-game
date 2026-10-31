@@ -7,7 +7,7 @@ extends Node2D
 ## RegionParticles nodes, which SceneWorld reads into the region's `fx`
 ## spec (the same shape, with the textures in place of file names). A
 ## region of a map without a scene opts in with regions/<key>/fx.json next
-## to the map's world.json, else assets/regions/<key>/fx.json (key as in
+## to the map's world.json, else godot_assets/regions/<key>/fx.json (key as in
 ## EdgeDecor.region_key):
 ##
 ##   {
@@ -31,7 +31,7 @@ extends Node2D
 ## turns a second at most and `sway` the sideways wobble in level pixels.
 ## Switching regions fades the old emitters out.
 
-const REGIONS_DIR := "res://assets/regions"
+const REGIONS_DIR := "res://godot_assets/regions"
 const MARGIN := 48.0
 const FADE := 1.5
 

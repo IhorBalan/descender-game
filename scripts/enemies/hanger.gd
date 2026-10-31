@@ -8,7 +8,7 @@ extends CharacterBody2D
 ## and drops on him, hard. It lies where it lands for a moment, when it can
 ## be hit, and the rope hauls it back up for the next pass. Killed, it
 ## falls for good. Origin at the feet; the rope's knot is at the top of
-## the head. The scene sets the sprite's frames (assets/sprites/hanged/).
+## the head. The scene sets the sprite's frames (godot_assets/sprites/hanged/).
 
 enum State { HANG, CREAK, DROP, REST, CLIMB }
 
