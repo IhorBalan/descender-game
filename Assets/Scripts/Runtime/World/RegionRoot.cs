@@ -38,8 +38,10 @@ namespace Descender.World
             }
             if (globalLight != null)
             {
+                // The look's `light` is the rim colour the sky throws on the tiles,
+                // not an intensity; the global light keeps the intensity it was
+                // authored with and takes only the ambient colour.
                 globalLight.color = look.ambient;
-                globalLight.intensity = look.light;
             }
             if (sky != null)
             {
