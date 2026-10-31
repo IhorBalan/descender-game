@@ -1,0 +1,50 @@
+{
+  "art_tile": 64,
+  "particles": [
+    {
+      "texture": "motes.png",
+      "color": "#ffbee6",
+      "amount": 26,
+      "lifetime": 12,
+      "direction": [
+        0.0,
+        -1.0
+      ],
+      "spread": 80,
+      "speed": [
+        2,
+        5
+      ],
+      "scale": [
+        0.3,
+        0.7
+      ],
+      "sway": 2
+    },
+    {
+      "texture": "ash.png",
+      "color": "#dc96c8",
+      "amount": 14,
+      "lifetime": 14,
+      "direction": [
+        -0.3,
+        1.0
+      ],
+      "spread": 25,
+      "speed": [
+        6,
+        14
+      ],
+      "gravity": [
+        0,
+        2
+      ],
+      "scale": [
+        0.25,
+        0.45
+      ],
+      "spin": 0.3,
+      "sway": 3
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: gardener
+  m_EditorClassIdentifier: 
+  displayName: The Gardener
+  character: angel_guard
+  walkAnim: walk
+  scale: 2.2
+  tint: {r: 1, g: 1, b: 0.95, a: 1}
+  facesLeft: 0
+  body: {x: 40, y: 70}
+  health: 60
+  speed: 75
+  contactDamage: 1
+  third: 
+  attackRange: 56
+  reach: {x: 56, y: 52}
+  windup: 0.35
+  strike: 0.15
+  recover: 0.4
+  cooldown: 0.6
+  attackDamage: 2
+  chargeSpeed: 320
+  chargeWindup: 0.35
+  chargeCooldown: 1.1
+  motes: 0
+  loot:
+    LightMin: 120
+    LightMax: 160
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: gardeners_seed
+    Xp: 120

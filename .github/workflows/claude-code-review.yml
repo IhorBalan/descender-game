@@ -37,8 +37,11 @@ jobs:
             PREVIOUS HEAD: ${{ github.event.before }}
             NEW HEAD: ${{ github.event.pull_request.head.sha }}
 
-            This is a 2D game built with the Godot engine (GDScript, .tscn/.tres scenes and resources).
-            The PR branch is already checked out in the current working directory.
+            This is a 2D game built with Unity 6 (C# scripts under Assets/Scripts, the
+            Universal Render Pipeline's 2D Renderer, the Input System, Tilemaps, and YAML
+            scenes, prefabs and ScriptableObject assets under Assets/). The project skills
+            under .claude/skills/ say how this project writes Unity code; read the ones the
+            diff touches. The PR branch is already checked out in the current working directory.
 
             First read REVIEW.md at the repository root and follow it: focus areas, severity,
             the nit cap, the skip list and the follow-up rules.

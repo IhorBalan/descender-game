@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: the_penitent
+  m_EditorClassIdentifier: 
+  displayName: The Penitent
+  character: angel_guard
+  walkAnim: walk
+  scale: 1.25
+  tint: {r: 0.75, g: 0.75, b: 0.85, a: 1}
+  facesLeft: 0
+  body: {x: 28, y: 68}
+  health: 20
+  speed: 40
+  contactDamage: 1
+  third: 
+  attackRange: 50
+  reach: {x: 44, y: 50}
+  windup: 0.45
+  strike: 0.2
+  recover: 0.5
+  cooldown: 0.8
+  attackDamage: 1
+  chargeSpeed: 250
+  chargeWindup: 0.5
+  chargeCooldown: 2
+  motes: 2
+  loot:
+    LightMin: 45
+    LightMax: 60
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: penitents_shroud
+    Xp: 45

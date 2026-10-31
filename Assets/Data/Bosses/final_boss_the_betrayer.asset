@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: final_boss_the_betrayer
+  m_EditorClassIdentifier: 
+  displayName: The Lowest
+  character: hero
+  walkAnim: run
+  scale: 1.3
+  tint: {r: 0.55, g: 0.5, b: 0.65, a: 1}
+  facesLeft: 0
+  body: {x: 20, y: 42}
+  health: 50
+  speed: 90
+  contactDamage: 1
+  third: mirror
+  attackRange: 36
+  reach: {x: 36, y: 34}
+  windup: 0.25
+  strike: 0.15
+  recover: 0.3
+  cooldown: 0.45
+  attackDamage: 2
+  chargeSpeed: 300
+  chargeWindup: 0.3
+  chargeCooldown: 1.2
+  motes: 0
+  loot:
+    LightMin: 100
+    LightMax: 140
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: brothers_knife
+    Xp: 100

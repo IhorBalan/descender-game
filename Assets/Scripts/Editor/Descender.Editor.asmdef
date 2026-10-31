@@ -1,0 +1,22 @@
+{
+    "name": "Descender.Editor",
+    "rootNamespace": "Descender.EditorTools",
+    "references": [
+        "Descender.Runtime",
+        "Unity.RenderPipelines.Universal.Runtime",
+        "Unity.RenderPipelines.Universal.Editor",
+        "Unity.2D.Sprite.Editor",
+        "Unity.2D.Tilemap.Extras"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

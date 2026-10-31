@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: the_false_king
+  m_EditorClassIdentifier: 
+  displayName: The False King
+  character: imp
+  walkAnim: run
+  scale: 2.8
+  tint: {r: 1, g: 0.85, b: 0.45, a: 1}
+  facesLeft: 0
+  body: {x: 44, y: 62}
+  health: 42
+  speed: 70
+  contactDamage: 1
+  third: court
+  attackRange: 50
+  reach: {x: 50, y: 48}
+  windup: 0.3
+  strike: 0.15
+  recover: 0.35
+  cooldown: 0.5
+  attackDamage: 2
+  chargeSpeed: 300
+  chargeWindup: 0.35
+  chargeCooldown: 1.3
+  motes: 3
+  loot:
+    LightMin: 90
+    LightMax: 110
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: false_crown
+    Xp: 90

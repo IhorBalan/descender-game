@@ -1,0 +1,785 @@
+{
+  "hero": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      44
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hero_idle.png",
+        "frames": 6,
+        "fps": 6,
+        "loop": true
+      },
+      "run": {
+        "file": "hero_run.png",
+        "frames": 8,
+        "fps": 12,
+        "loop": true
+      },
+      "skid": {
+        "file": "hero_skid.png",
+        "frames": 1,
+        "fps": 1,
+        "loop": false
+      },
+      "jump": {
+        "file": "hero_jump.png",
+        "frames": 3,
+        "fps": 8,
+        "loop": false
+      },
+      "fall": {
+        "file": "hero_fall.png",
+        "frames": 2,
+        "fps": 6,
+        "loop": true
+      },
+      "land": {
+        "file": "hero_land.png",
+        "frames": 2,
+        "fps": 15,
+        "loop": false
+      },
+      "dash": {
+        "file": "hero_dash.png",
+        "frames": 2,
+        "fps": 12,
+        "loop": true
+      },
+      "wall": {
+        "file": "hero_wall.png",
+        "frames": 2,
+        "fps": 6,
+        "loop": true
+      },
+      "glide": {
+        "file": "hero_glide.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": true
+      },
+      "double_jump": {
+        "file": "hero_double_jump.png",
+        "frames": 4,
+        "fps": 20,
+        "loop": false
+      },
+      "attack": {
+        "file": "hero_attack.png",
+        "frames": 6,
+        "fps": 21,
+        "loop": false
+      },
+      "cast": {
+        "file": "hero_cast.png",
+        "frames": 3,
+        "fps": 14,
+        "loop": false
+      },
+      "slam": {
+        "file": "hero_slam.png",
+        "frames": 2,
+        "fps": 1,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hero_hurt.png",
+        "frames": 2,
+        "fps": 10,
+        "loop": false
+      },
+      "heal": {
+        "file": "hero_heal.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": true
+      },
+      "death": {
+        "file": "hero_death.png",
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "angel_guard": {
+    "frame_size": [
+      96,
+      64
+    ],
+    "origin": [
+      36,
+      64
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "angel_guard_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "angel_guard_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "angel_guard_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "angel_guard_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "angel_guard_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "watcher": {
+    "frame_size": [
+      72,
+      60
+    ],
+    "origin": [
+      30,
+      29
+    ],
+    "anchor": "centre",
+    "animations": {
+      "idle": {
+        "file": "watcher_idle.png",
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "attack": {
+        "file": "watcher_attack.png",
+        "frames": 5,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "watcher_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "watcher_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "imp": {
+    "frame_size": [
+      56,
+      40
+    ],
+    "origin": [
+      24,
+      40
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "imp_idle.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": true
+      },
+      "run": {
+        "file": "imp_run.png",
+        "frames": 4,
+        "fps": 12,
+        "loop": true
+      },
+      "attack": {
+        "file": "imp_attack.png",
+        "frames": 4,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "file": "imp_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "imp_death.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      }
+    }
+  },
+  "brute": {
+    "frame_size": [
+      112,
+      96
+    ],
+    "origin": [
+      44,
+      95
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "brute_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "brute_walk.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "attack": {
+        "file": "brute_attack.png",
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "brute_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "brute_death.png",
+        "frames": 5,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "mereth": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "mereth_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "mereth_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "pell": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "pell_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "pell_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "hanne": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hanne_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "hanne_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "dace": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "dace_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "dace_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "ava": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "ava_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "ava_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "ferryman": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "ferryman_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "ferryman_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "gorrow": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "gorrow_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "gorrow_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "vael": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "vael_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "vael_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "thorne": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "thorne_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "talk": {
+        "file": "thorne_talk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      }
+    }
+  },
+  "hound": {
+    "frame_size": [
+      56,
+      32
+    ],
+    "origin": [
+      28,
+      32
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hound_idle.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "run": {
+        "file": "hound_run.png",
+        "frames": 4,
+        "fps": 12,
+        "loop": true
+      },
+      "attack": {
+        "file": "hound_attack.png",
+        "frames": 3,
+        "fps": 12,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hound_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "hound_death.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      }
+    }
+  },
+  "hanged": {
+    "frame_size": [
+      40,
+      64
+    ],
+    "origin": [
+      20,
+      64
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hanged_idle.png",
+        "frames": 8,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "hanged_attack.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hanged_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "hanged_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "slug": {
+    "frame_size": [
+      72,
+      40
+    ],
+    "origin": [
+      36,
+      40
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "slug_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "slug_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "slug_attack.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      },
+      "hurt": {
+        "file": "slug_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "slug_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "hoarder": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      28,
+      48
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "hoarder_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "hoarder_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "hoarder_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "hoarder_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "hoarder_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "burned": {
+    "frame_size": [
+      96,
+      64
+    ],
+    "origin": [
+      36,
+      64
+    ],
+    "anchor": "feet",
+    "animations": {
+      "idle": {
+        "file": "burned_idle.png",
+        "frames": 4,
+        "fps": 5,
+        "loop": true
+      },
+      "walk": {
+        "file": "burned_walk.png",
+        "frames": 4,
+        "fps": 6,
+        "loop": true
+      },
+      "attack": {
+        "file": "burned_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "burned_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "burned_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "shade": {
+    "frame_size": [
+      48,
+      48
+    ],
+    "origin": [
+      24,
+      22
+    ],
+    "anchor": "centre",
+    "animations": {
+      "idle": {
+        "file": "shade_idle.png",
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "attack": {
+        "file": "shade_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "shade_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "shade_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  },
+  "siren": {
+    "frame_size": [
+      64,
+      48
+    ],
+    "origin": [
+      32,
+      24
+    ],
+    "anchor": "centre",
+    "animations": {
+      "idle": {
+        "file": "siren_idle.png",
+        "frames": 6,
+        "fps": 8,
+        "loop": true
+      },
+      "attack": {
+        "file": "siren_attack.png",
+        "frames": 4,
+        "fps": 10,
+        "loop": false
+      },
+      "hurt": {
+        "file": "siren_hurt.png",
+        "frames": 2,
+        "fps": 8,
+        "loop": false
+      },
+      "death": {
+        "file": "siren_death.png",
+        "frames": 4,
+        "fps": 8,
+        "loop": false
+      }
+    }
+  }
+}

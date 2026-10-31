@@ -1,110 +1,87 @@
 ---
 name: sprites-and-animation
-description: Character art and animation: the sprites.json strip spec, SpriteFrames resources cut by tools/sprite_frames.py, AnimatedSprite2D with feet origins, when to use AnimationPlayer or tweens instead, and hit feedback (flash, hit-stop, shake, sparks). Use when adding or changing a character's frames, playing animations, tweening a property or adding game feel.
+description: Sprite import settings (PPU, point filter, slicing, pivots), the SpriteFramesImporter that builds Animation Clips and Animators from sprites.json, playing animations by name from code, flipping, hit flash, squash and stretch and other tweens by coroutine. Use when adding or changing character art, animations, or sprite feedback.
 ---
 
 # Sprites and animation
 
-## Frames pipeline
+## Import settings
 
-1. Strips live at `assets/sprites/<name>/<name>_<anim>.png`, listed in
-   `assets/sprites/sprites.json`:
-   ```json
-   "hero": {"frame_size": [64, 48], "origin": [32, 44], "anchor": "feet",
-            "animations": {"run": {"file": "hero_run.png", "frames": 8, "fps": 12, "loop": true}}}
-   ```
-2. `python3 tools/sprite_frames.py` cuts every strip into
-   `assets/sprites/<name>/<name>.tres` (a `SpriteFrames`) and stores the
-   origin as the resource's `origin` metadata.
-3. `AnimLoader` (static): `frames(character)` loads the resource (missing
-   one reports and returns empty frames), `origin`, `offset` turns the
-   origin into the `AnimatedSprite2D.offset` that puts the feet on the
-   node's position, `setup(sprite, character)` does all of it.
-4. The unit test (`test_sprites`, `test_enemies`) checks every strip is
-   listed, cut to its frame count, and that every animation a script plays
-   exists. Add the entry to `sprites.json` **first**, then run the tool.
+Every pixel texture: `Texture Type: Sprite (2D and UI)`, `Pixels Per Unit`
+16 for level art (characters, tiles, UI at 1x) or 64 for painted art
+(props, backdrops, drawn at 4x), `Filter Mode: Point`, `Compression:
+None`, `Generate Mip Maps` off, `Wrap: Clamp`. `Mesh Type: Full Rect` for
+anything with a normal map or that flips (tight meshes clip the normal
+edge). `Read/Write` off.
 
-Enemy scenes set `sprite_frames` and `offset` in the `.tscn` (inheriting
-`walker.tscn`); the hero, NPCs and bosses, whose look is picked in code,
-call `AnimLoader.setup`.
+`tools/unity/import_godot_assets.py` writes these into the `.meta` for art
+it copies, including the slicing below; a texture dropped in by hand gets
+them from the `Descender > Import > Apply pixel art import` menu item.
 
-## AnimatedSprite2D in code
+## Slicing
 
-- `sprite.play("run")` is idempotent for the same animation; set
-  `sprite.flip_h` from facing. Switch animations when the **state**
-  changes, in one place (`_enter_state`), not from scattered calls.
-- Non-looping animations: connect `animation_finished` once in `_ready`
-  and branch on `sprite.animation`; or read `sprite.frame` /
-  `frame_changed` for frame-exact events. The hero's attack instead times
-  its active window with constants (`ATTACK_ACTIVE_FROM / UNTIL`) against
-  the strip's fps, which is documented next to them; keep those two in step
-  when re-cutting a strip.
-- `speed_scale` for slow motion on one sprite; `Engine.time_scale` for
-  everyone (that is what hit-stop uses).
-- Texture filter is nearest project-wide; do not set per-sprite filters.
-- Sprites that bob in `_process` or via tween set
-  `physics_interpolation_mode = PHYSICS_INTERPOLATION_MODE_OFF`.
+Strips in `Assets/Art/Sprites/<character>/<anim>.png` are described by
+`sprites.json` (one entry per character: frame size, animations with
+file, fps, loop). The import script slices them as `Sprite Mode:
+Multiple` with sprites named `<file>_<index>`, pivot bottom-centre for
+characters (feet on the ground; Godot used `offset` for the same). Props
+pivot top-left (Godot `centered = false`). UI pivots centre.
 
-## When to use AnimationPlayer or AnimationTree
+## Clips and Animators
 
-The repo animates characters with `AnimatedSprite2D` and state machines in
-code; nothing uses `AnimationPlayer` yet. Reach for one when a scene needs
-several properties keyed together on a timeline: a cutscene, a boss intro
-that moves the camera and plays sounds, a UI reveal, a door opening. From
-the docs:
+`Descender > Import > Sprite animations` (`SpriteAnimationImporter`)
+builds, per character, `Animations/<character>_<anim>.anim` clips (sprite
+keys at the spec's fps, `Loop Time` from `loop`) and one
+`<character>.controller` with a state per clip, `idle` as default and no
+transitions. Code drives it directly:
 
-- Add an `AnimationPlayer` as a child of the scene root; its tracks
-  address nodes by path relative to it, so keep it next to what it moves.
-- Track types: property tracks (position, modulate, `frame`), **method
-  call tracks** for sounds and signals (`Audio.play` at a keyframe),
-  audio tracks (play an `AudioStream` on an `AudioStreamPlayer` node),
-  animation playback tracks to drive a child `AnimationPlayer`, and
-  Bezier tracks for eased curves.
-- `animation.loop_mode`, `play("name")`, `play_backwards`, `queue`,
-  `animation_finished` signal, `seek(0, true)` to reset, `speed_scale`.
-  Set `callback_mode_process = ANIMATION_CALLBACK_MODE_PROCESS_PHYSICS`
-  when the animation moves bodies.
-- `AnimationTree` with an `AnimationNodeStateMachine` is the editor-driven
-  alternative to a `match state:` machine, with blend times between
-  states; use it only for a character whose animation graph outgrows code.
-- Store the animations in an `AnimationLibrary` on the player; copying a
-  player between scenes shares the library resource, so `duplicate()` it
-  when one scene must diverge.
-- Cut-out (skeletal) animation: `Skeleton2D` + `Bone2D` + `Polygon2D`
-  with an `AnimationPlayer` on the bones; the hero art is strips, so this
-  only applies to new large characters.
+```csharp
+[SerializeField] private Animator animator;
+private static readonly int RunHash = Animator.StringToHash("run");
 
-## Tweens
+private void Play(string state) => animator.Play(state, 0, 0f);   // restarts
+private void PlayIfNew(int hash)
+{
+    if (!animator.GetCurrentAnimatorStateInfo(0).shortNameHash.Equals(hash))
+        animator.Play(hash);
+}
+```
 
-`create_tween()` on the node that owns the effect (the tween dies with the
-node). Chain `tween_property(obj, "modulate:a", 0.0, 0.3)`,
-`tween_interval`, `tween_callback(queue_free)`; `set_parallel(true)` to run
-tracks together; `set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)`
-for curves; `set_process_mode(Tween.TWEEN_PROCESS_PHYSICS)` when moving
-bodies. Keep the `Tween` in a member (`_fade`) and `kill()` it before
-starting a replacement, as `Audio` and `ScreenFade` do. A tween-based
-function returns its `finished` signal (`ScreenFade.fade_out() -> Signal`)
-so callers can `await` it. Shader uniforms tween through
-`"shader_parameter/flash"`. For a pause-proof tween set
-`set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)`.
+Hash the state names in `static readonly int` fields. Animator `Update
+Mode: Normal`, `Culling: Always Animate` on the hero (so off-screen
+timing still matches). Finishing: `animator.GetCurrentAnimatorStateInfo(0)
+.normalizedTime >= 1f` for a non-looping clip, or use an `AnimationEvent`
+only for cosmetic hooks (footstep dust), never gameplay timing.
 
-Use a tween for one-off property motion (fades, pickups bobbing, bars
-filling), `AnimationPlayer` for authored timelines, and the state machine
-for gameplay frames.
+Re-run the importer after editing `sprites.json` or a strip; it keeps
+existing clips' extra curves and the controller's extra states.
 
-## Game feel (`Feedback` autoload)
+## Facing and flipping
 
-`Feedback.hit_stop(seconds)` (scales `Engine.time_scale` to
-`HIT_STOP_SCALE`, real-time stamped so it works while paused),
-`Feedback.shake(amount)` (camera trauma plus gamepad rumble, both scaled by
-`Settings`), `Feedback.flash(sprite, duration)` (gives the sprite a
-`ShaderMaterial` with `hit_flash.gdshader` and tweens `flash` 1 to 0),
-`Feedback.spark(position, color)`, `puff`, `dust`. A hit is usually all
-three lines: flash the victim, spark at the contact point, a small shake;
-a kill adds hit-stop and a puff. The smoke test counts sparks and dust
-(`spark_count`, `dusts_raised`), so new effects should go through these
-helpers to be testable.
+`SpriteRenderer.flipX` for characters whose hitboxes are symmetric;
+otherwise scale the `Visual` child by -1 on X so child hitboxes and light
+offsets flip too (the hero does this). Never flip the Rigidbody's own
+transform.
 
-`HitSpark` / `DeathPuff` are `CPUParticles2D` scenes with `one_shot`,
-set `emitting = true` in `_ready` and free themselves after
-`lifetime + 0.05`; copy that for a new burst.
+## Feedback
+
+- **Hit flash**: swap the renderer's `sharedMaterial` to `Sprite Flash.mat`
+  (unlit white) for `tuning.HitFlashFrames` fixed steps, then back;
+  respects the `hitFlash` setting. Do not touch `.material` (clones).
+- **Squash and stretch** on land/jump: a coroutine scaling the `Visual`
+  child from `(1.3, 0.7)` back to `(1, 1)` over 0.12 s with
+  `Mathf.SmoothStep`. All tweens are small coroutines in
+  `Descender.Fx.Tween` (`Scale`, `Fade`, `Shake`, `Punch`); no tween
+  package.
+- **Afterimages** for the dash: `AfterimagePool` spawns pooled
+  `SpriteRenderer`s with the current sprite, fading over 0.2 s.
+- **Death**: the death clip plays, then `Fade` of the renderer; the
+  object is disabled, not destroyed, until respawn.
+
+## Pivots and offsets from Godot
+
+Godot `AnimatedSprite2D.offset` and `Sprite2D.offset` become the sprite
+pivot in the import (`sprites.json` has `pivot` when it differs from
+bottom-centre). Godot `scale = 0.25` on 4x prop art becomes PPU 64. If a
+sprite appears a pixel off the ground, fix the pivot in the Sprite
+Editor, not with a transform offset.

@@ -1,0 +1,54 @@
+{
+  "art_tile": 64,
+  "particles": [
+    {
+      "texture": "ash.png",
+      "color": "#be966e",
+      "amount": 44,
+      "lifetime": 14,
+      "direction": [
+        -0.3,
+        1.0
+      ],
+      "spread": 25,
+      "speed": [
+        6,
+        14
+      ],
+      "gravity": [
+        0,
+        2
+      ],
+      "scale": [
+        0.3,
+        0.6
+      ],
+      "spin": 0.3,
+      "sway": 3
+    },
+    {
+      "texture": "embers.png",
+      "color": "#ffb450",
+      "amount": 16,
+      "lifetime": 8,
+      "direction": [
+        0.1,
+        -1.0
+      ],
+      "spread": 35,
+      "speed": [
+        10,
+        26
+      ],
+      "gravity": [
+        0,
+        -4
+      ],
+      "scale": [
+        0.3,
+        0.7
+      ],
+      "sway": 5
+    }
+  ]
+}
