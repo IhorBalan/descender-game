@@ -92,7 +92,8 @@ namespace Descender.World
             velocity.space = ParticleSystemSimulationSpace.World;
             velocity.x = new ParticleSystem.MinMaxCurve(Mathf.Min(a.x, b.x), Mathf.Max(a.x, b.x));
             velocity.y = new ParticleSystem.MinMaxCurve(Mathf.Min(a.y, b.y), Mathf.Max(a.y, b.y));
-            velocity.z = new ParticleSystem.MinMaxCurve(0f);
+            // All three axes must share a mode: x and y are two-constant ranges, so z is too.
+            velocity.z = new ParticleSystem.MinMaxCurve(0f, 0f);
 
             if (gravity != Vector2.zero)
             {
