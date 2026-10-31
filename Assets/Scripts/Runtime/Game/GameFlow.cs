@@ -436,7 +436,7 @@ namespace Descender.Game
                 return;
             }
             var look = region.Look;
-            music.Play(look != null && !string.IsNullOrEmpty(look.music) ? look.music : region.Id);
+            music.Play(look != null && !string.IsNullOrEmpty(look.music) ? look.music : region.Key);
         }
 
         private void OnHeroDied()
