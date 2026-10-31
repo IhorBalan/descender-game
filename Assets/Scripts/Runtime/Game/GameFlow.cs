@@ -83,10 +83,24 @@ namespace Descender.Game
             EnsureEventSystem();
         }
 
+        private void OnEnable()
+        {
+            // The in-game screens' stack leaves the time scale and the input map alone while this pauses.
+            UiStack.HostPaused = HostPaused;
+        }
+
         private void Start()
         {
             SettingsApplier.Apply(SettingsData.Current);
             ShowTitle();
+        }
+
+        private void OnDisable()
+        {
+            if (UiStack.HostPaused == (System.Func<bool>)HostPaused)
+            {
+                UiStack.HostPaused = null;
+            }
         }
 
         private void Update()
@@ -432,6 +446,8 @@ namespace Descender.Game
                 transition = StartCoroutine(RestartRoutine());
             }
         }
+
+        private static bool HostPaused() => Instance != null && Instance.Current == Phase.Paused;
 
         private static void ResetStatics()
         {
