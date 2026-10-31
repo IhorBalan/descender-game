@@ -159,7 +159,12 @@ namespace Descender.Tests.PlayMode
             Assert.That(imp.IsDead, Is.True);
             Assert.That(Enemies.Kills.IsDead("test:imp:0"), Is.True);
             yield return Steps(5);
-            var table = new Economy.LootTable { LightMin = 3, LightMax = 3, Xp = 2 };
+            var table = new Economy.LootTable
+            {
+                LightMin = 3,
+                LightMax = 3,
+                Xp = 2,
+            };
             Pickups.Loot.Drop(new Vector2(5f, 1f), table);
             Assert.That(Pickups.Loot.LastDropCount, Is.EqualTo(1), "three light is one drop");
             var drop = Object.FindAnyObjectByType<Pickups.LightDrop>();
