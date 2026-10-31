@@ -288,6 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc14d108d7251c3bd34e54442dac8fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  atlas: {fileID: 11400000, guid: 63311dbd56b659d994d5049433d1ea33, type: 2}
 --- !u!114 &204
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,8 +302,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heroPrefab: {fileID: 0}
-  startRegion: paradise
-  startDoor: start
   gameCamera: {fileID: 104}
   music: {fileID: 205}
   fade: {fileID: 302}

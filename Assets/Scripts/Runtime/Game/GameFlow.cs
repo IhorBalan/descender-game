@@ -37,14 +37,6 @@ namespace Descender.Game
         private PlayerController heroPrefab;
 
         [SerializeField]
-        [Tooltip("The region a new game starts in; its scene is Region_<id>.")]
-        private string startRegion = "paradise";
-
-        [SerializeField]
-        [Tooltip("The door of the start region the hero stands at for a new game.")]
-        private string startDoor = "start";
-
-        [SerializeField]
         private CameraRig.GameCamera gameCamera;
 
         [SerializeField]
@@ -286,7 +278,11 @@ namespace Descender.Game
             {
                 gameCamera.Target = null;
             }
-            WorldStreamer.Instance?.Unload();
+            if (WorldStreamer.Instance != null)
+            {
+                WorldStreamer.Instance.RegionChanged -= OnRegionChanged;
+                WorldStreamer.Instance.Unload();
+            }
             SaveManager.Detach();
             ResetStatics();
             ShowTitle();
@@ -325,9 +321,9 @@ namespace Descender.Game
             {
                 yield return fade.FadeOut();
             }
-            var region = startRegion;
-            var scene = WorldStreamer.SceneName(region);
             var streamer = WorldStreamer.Instance;
+            var atlas = streamer != null ? streamer.Atlas : null;
+            var scene = atlas != null ? WorldAtlas.SceneName(atlas.startRegion) : "";
             string problem = null;
             if (heroPrefab == null)
             {
@@ -336,6 +332,10 @@ namespace Descender.Game
             else if (streamer == null)
             {
                 problem = "Main.unity has no WorldStreamer.";
+            }
+            else if (atlas == null)
+            {
+                problem = "The WorldStreamer has no world atlas (Assets/Data/World.asset).";
             }
             else if (!Application.CanStreamedLevelBeLoaded(scene))
             {
@@ -358,7 +358,17 @@ namespace Descender.Game
                 Hero.SetAbilities(data.Abilities);
             }
             Hero.Died += OnHeroDied;
-            streamer.Enter(Hero, region, startDoor, Vector2.zero);
+            streamer.RegionChanged -= OnRegionChanged;
+            streamer.RegionChanged += OnRegionChanged;
+            if (data != null && data.Checkpoint >= 0)
+            {
+                streamer.ContinueAt(Hero, data.Checkpoint);
+            }
+            else
+            {
+                streamer.StartNewGame(Hero);
+            }
+            yield return null;
             while (streamer.Busy)
             {
                 yield return null;
@@ -368,11 +378,7 @@ namespace Descender.Game
                 gameCamera.Target = Hero.transform;
                 gameCamera.Snap();
             }
-            if (music != null)
-            {
-                var look = streamer.Current != null ? streamer.Current.Look : null;
-                music.Play(look != null && !string.IsNullOrEmpty(look.music) ? look.music : region);
-            }
+            OnRegionChanged(streamer.Current);
             Current = Phase.Playing;
             InputRouter.Instance?.UsePlayer();
             WorldEntered?.Invoke(Hero);
@@ -402,11 +408,21 @@ namespace Descender.Game
             transition = null;
         }
 
-        private Vector2 StartPoint()
+        private static Vector2 StartPoint()
         {
-            var current = WorldStreamer.Instance != null ? WorldStreamer.Instance.Current : null;
-            var door = current != null ? current.FindDoor(startDoor) : null;
-            return door != null ? door.SpawnPoint : Vector2.zero;
+            var atlas = WorldStreamer.Instance != null ? WorldStreamer.Instance.Atlas : null;
+            return atlas != null ? atlas.start : Vector2.zero;
+        }
+
+        /// <summary>The music follows the region the hero is in: the look's loop, else the region's key.</summary>
+        private void OnRegionChanged(RegionRoot region)
+        {
+            if (music == null || region == null)
+            {
+                return;
+            }
+            var look = region.Look;
+            music.Play(look != null && !string.IsNullOrEmpty(look.music) ? look.music : region.Id);
         }
 
         private void OnHeroDied()
