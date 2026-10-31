@@ -47,22 +47,38 @@ namespace Descender.Economy
     {
         public static readonly string[] AdditiveStats =
         {
-            "damage", "guard", "hearts", "charges", "heal", "mote_chance", "halo_at_rest", "heal_on_kill",
+            "damage",
+            "guard",
+            "hearts",
+            "charges",
+            "heal",
+            "mote_chance",
+            "halo_at_rest",
+            "heal_on_kill",
         };
 
         public static readonly string[] FactorStats =
         {
-            "reach", "attack_time", "speed", "dash_cooldown", "light", "prices",
+            "reach",
+            "attack_time",
+            "speed",
+            "dash_cooldown",
+            "light",
+            "prices",
         };
 
         public static string SlotName(ItemSlot slot)
         {
             switch (slot)
             {
-                case ItemSlot.Weapon: return "Sword";
-                case ItemSlot.Armour: return "Armour";
-                case ItemSlot.Charm: return "Charm";
-                default: return "";
+                case ItemSlot.Weapon:
+                    return "Sword";
+                case ItemSlot.Armour:
+                    return "Armour";
+                case ItemSlot.Charm:
+                    return "Charm";
+                default:
+                    return "";
             }
         }
 
@@ -70,78 +86,193 @@ namespace Descender.Economy
         public static readonly ItemDef[] Ordered =
         {
             // --- Old Pell's forge ------------------------------------------------
-            Equip("iron_sword", "Church Iron Sword", ItemSlot.Weapon,
+            Equip(
+                "iron_sword",
+                "Church Iron Sword",
+                ItemSlot.Weapon,
                 "A blade of hinge iron off a church door, hammered flat. Heavier than his, and it goes in further.",
-                new Color(0.75f, 0.78f, 0.85f), ("damage", 1f)),
-            Equip("hinge_blade", "Hinge Blade", ItemSlot.Weapon,
+                new Color(0.75f, 0.78f, 0.85f),
+                ("damage", 1f)
+            ),
+            Equip(
+                "hinge_blade",
+                "Hinge Blade",
+                ItemSlot.Weapon,
                 "Long and thin, a strap hinge ground to an edge. It reaches further than a sword should.",
-                new Color(0.7f, 0.72f, 0.8f), ("reach", 1.35f)),
-            Equip("quilted_coat", "Quilted Coat", ItemSlot.Armour,
+                new Color(0.7f, 0.72f, 0.8f),
+                ("reach", 1.35f)
+            ),
+            Equip(
+                "quilted_coat",
+                "Quilted Coat",
+                ItemSlot.Armour,
                 "Pell's coat, the layers sewn with church iron wire. A blow lands a little softer through it.",
-                new Color(0.6f, 0.45f, 0.3f), ("guard", 1f), ("speed", 0.95f)),
-            Equip("scrap_mail", "Scrap Mail", ItemSlot.Armour,
+                new Color(0.6f, 0.45f, 0.3f),
+                ("guard", 1f),
+                ("speed", 0.95f)
+            ),
+            Equip(
+                "scrap_mail",
+                "Scrap Mail",
+                ItemSlot.Armour,
                 "Hinge plates riveted to a coat. It holds a little more of him in and slows his feet.",
-                new Color(0.55f, 0.55f, 0.62f), ("guard", 1f), ("hearts", 1f), ("speed", 0.85f)),
+                new Color(0.55f, 0.55f, 0.62f),
+                ("guard", 1f),
+                ("hearts", 1f),
+                ("speed", 0.85f)
+            ),
             // --- Vael the Bargainer ----------------------------------------------
-            Equip("imp_tooth", "Imp's Tooth", ItemSlot.Charm,
+            Equip(
+                "imp_tooth",
+                "Imp's Tooth",
+                ItemSlot.Charm,
                 "A tooth on a cord. The light of a killed thing leaks towards it, as if it still wanted to bite.",
-                new Color(0.9f, 0.85f, 0.75f), ("light", 1.5f)),
-            Equip("cold_coin", "Cold Coin", ItemSlot.Charm,
+                new Color(0.9f, 0.85f, 0.75f),
+                ("light", 1.5f)
+            ),
+            Equip(
+                "cold_coin",
+                "Cold Coin",
+                ItemSlot.Charm,
                 "A coin from a dead man's mouth, Vael says. The dying give up more of their light around it.",
-                new Color(0.6f, 0.75f, 0.85f), ("mote_chance", 0.3f)),
-            Equip("basin_shard", "Basin Shard", ItemSlot.Charm,
+                new Color(0.6f, 0.75f, 0.85f),
+                ("mote_chance", 0.3f)
+            ),
+            Equip(
+                "basin_shard",
+                "Basin Shard",
+                ItemSlot.Charm,
                 "Warden's glass from the Basin's rim. Its water closes more of a wound through it.",
-                new Color(0.8f, 0.9f, 1.0f), ("heal", 1f)),
+                new Color(0.8f, 0.9f, 1.0f),
+                ("heal", 1f)
+            ),
             // --- Consumables -----------------------------------------------------
-            Consumable("flask", "Basin Flask",
+            Consumable(
+                "flask",
+                "Basin Flask",
                 "Basin water in a soldier's flask. Drinking it puts a healing charge back.",
-                new Color(1.0f, 0.85f, 0.45f)),
-            Consumable("halo_shard", "Halo Shard",
+                new Color(1.0f, 0.85f, 0.45f)
+            ),
+            Consumable(
+                "halo_shard",
+                "Halo Shard",
                 "A piece of a cracked halo. Held up, it turns the next hit aside.",
-                new Color(1.0f, 0.85f, 0.4f)),
-            Consumable("blade_oil", "Choir Oil",
+                new Color(1.0f, 0.85f, 0.4f)
+            ),
+            Consumable(
+                "blade_oil",
+                "Choir Oil",
                 "Oil that burns with the Choir's fire. The sword hits harder for a while.",
-                new Color(1.0f, 0.7f, 0.3f)),
-            Consumable("zeal_draught", "Draught of Zeal",
+                new Color(1.0f, 0.7f, 0.3f)
+            ),
+            Consumable(
+                "zeal_draught",
+                "Draught of Zeal",
                 "The hurry the Making put in him, bottled. Faster dashes and feet for a while.",
-                new Color(0.6f, 0.9f, 1.0f)),
+                new Color(0.6f, 0.9f, 1.0f)
+            ),
             // --- Unique loot, one per boss ---------------------------------------
-            Unique("wardens_halo", "Warden's Halo", ItemSlot.Charm,
+            Unique(
+                "wardens_halo",
+                "Warden's Halo",
+                ItemSlot.Charm,
                 "The Warden's halo, cracked through. It still remembers how to protect: a Halo at every rest.",
-                new Color(1.0f, 0.9f, 0.5f), ("halo_at_rest", 1f)),
-            Unique("penitents_shroud", "Penitent's Shroud", ItemSlot.Armour,
+                new Color(1.0f, 0.9f, 0.5f),
+                ("halo_at_rest", 1f)
+            ),
+            Unique(
+                "penitents_shroud",
+                "Penitent's Shroud",
+                ItemSlot.Armour,
                 "The cloth an angel fell in. It weighs nothing, and a blow through it lands softer.",
-                new Color(0.8f, 0.8f, 0.9f), ("guard", 1f)),
-            Unique("lords_tally", "Lord's Tally", ItemSlot.Charm,
+                new Color(0.8f, 0.8f, 0.9f),
+                ("guard", 1f)
+            ),
+            Unique(
+                "lords_tally",
+                "Lord's Tally",
+                ItemSlot.Charm,
                 "The Limbo Lord's tally bone, notched to the end. The light of a kill comes to it twice over.",
-                new Color(0.95f, 0.9f, 0.8f), ("light", 2.0f)),
-            Unique("velvet_gloves", "Velvet Gloves", ItemSlot.Charm,
+                new Color(0.95f, 0.9f, 0.8f),
+                ("light", 2.0f)
+            ),
+            Unique(
+                "velvet_gloves",
+                "Velvet Gloves",
+                ItemSlot.Charm,
                 "The Keeper's gloves. Whatever they touch lets go sooner: the dash comes back in half the time.",
-                new Color(0.85f, 0.4f, 0.7f), ("dash_cooldown", 0.5f)),
-            Unique("gluttons_maw", "Glutton's Maw", ItemSlot.Weapon,
+                new Color(0.85f, 0.4f, 0.7f),
+                ("dash_cooldown", 0.5f)
+            ),
+            Unique(
+                "gluttons_maw",
+                "Glutton's Maw",
+                ItemSlot.Weapon,
                 "A jaw of the Bloated One, the teeth still in it. Slow to swing, and nothing it bites stays whole.",
-                new Color(0.55f, 0.75f, 0.35f), ("damage", 2f), ("attack_time", 1.35f)),
-            Unique("vault_seal", "Seal of the Vault", ItemSlot.Charm,
+                new Color(0.55f, 0.75f, 0.35f),
+                ("damage", 2f),
+                ("attack_time", 1.35f)
+            ),
+            Unique(
+                "vault_seal",
+                "Seal of the Vault",
+                ItemSlot.Charm,
                 "The Warden of the Vault's seal. Every trader below knows it, and asks less of whoever carries it.",
-                new Color(1.0f, 0.8f, 0.3f), ("prices", 0.6f)),
-            Unique("furys_edge", "Fury's Edge", ItemSlot.Weapon,
+                new Color(1.0f, 0.8f, 0.3f),
+                ("prices", 0.6f)
+            ),
+            Unique(
+                "furys_edge",
+                "Fury's Edge",
+                ItemSlot.Weapon,
                 "Gorrow's blade, too long for a man. It reaches further and bites deeper than it should.",
-                new Color(1.0f, 0.45f, 0.3f), ("damage", 1f), ("reach", 1.3f)),
-            Unique("bishops_mitre", "Bishop's Mitre", ItemSlot.Armour,
+                new Color(1.0f, 0.45f, 0.3f),
+                ("damage", 1f),
+                ("reach", 1.3f)
+            ),
+            Unique(
+                "bishops_mitre",
+                "Bishop's Mitre",
+                ItemSlot.Armour,
                 "The Cursed Bishop's hat, scorched. A blow lands softer under it and the Basin's water goes further.",
-                new Color(0.9f, 0.6f, 0.3f), ("guard", 1f), ("heal", 1f)),
-            Unique("champions_plate", "Champion's Plate", ItemSlot.Armour,
+                new Color(0.9f, 0.6f, 0.3f),
+                ("guard", 1f),
+                ("heal", 1f)
+            ),
+            Unique(
+                "champions_plate",
+                "Champion's Plate",
+                ItemSlot.Armour,
                 "The Champion's breastplate, dented by the arena. Two hearts of every blow stop at it; so do his feet.",
-                new Color(0.85f, 0.3f, 0.3f), ("guard", 2f), ("speed", 0.8f)),
-            Unique("false_crown", "False Crown", ItemSlot.Charm,
+                new Color(0.85f, 0.3f, 0.3f),
+                ("guard", 2f),
+                ("speed", 0.8f)
+            ),
+            Unique(
+                "false_crown",
+                "False Crown",
+                ItemSlot.Charm,
                 "The False King's crown, which fooled an army. It holds two more hearts in whoever wears it.",
-                new Color(0.7f, 0.5f, 0.9f), ("hearts", 2f)),
-            Unique("brothers_knife", "Brother's Knife", ItemSlot.Weapon,
+                new Color(0.7f, 0.5f, 0.9f),
+                ("hearts", 2f)
+            ),
+            Unique(
+                "brothers_knife",
+                "Brother's Knife",
+                ItemSlot.Weapon,
                 "A kitchen knife from Earth, the handle worn by a hand like his. Quick, and it goes deep.",
-                new Color(0.6f, 0.8f, 1.0f), ("damage", 2f), ("attack_time", 0.75f)),
-            Unique("gardeners_seed", "Gardener's Seed", ItemSlot.Charm,
+                new Color(0.6f, 0.8f, 1.0f),
+                ("damage", 2f),
+                ("attack_time", 0.75f)
+            ),
+            Unique(
+                "gardeners_seed",
+                "Gardener's Seed",
+                ItemSlot.Charm,
                 "The first light, kept as a seed. Every life the sword takes gives a little of it back.",
-                new Color(1.0f, 1.0f, 0.85f), ("heal_on_kill", 1f)),
+                new Color(1.0f, 1.0f, 0.85f),
+                ("heal_on_kill", 1f)
+            ),
         };
 
         public static readonly Dictionary<string, ItemDef> Table = Index(Ordered);
@@ -205,20 +336,48 @@ namespace Descender.Economy
                 var value = pair.Value;
                 switch (pair.Key)
                 {
-                    case "damage": parts.Add($"{Signed(value)} damage"); break;
-                    case "guard": parts.Add($"{Signed(value)} guard"); break;
-                    case "hearts": parts.Add($"{Signed(value)} hearts"); break;
-                    case "charges": parts.Add($"{Signed(value)} healing charges"); break;
-                    case "heal": parts.Add($"{Signed(value)} heart per heal"); break;
-                    case "mote_chance": parts.Add("more heal motes"); break;
-                    case "halo_at_rest": parts.Add("a Halo at every rest"); break;
-                    case "heal_on_kill": parts.Add($"{Signed(value)} heart per kill"); break;
-                    case "reach": parts.Add($"reach x{Short(value)}"); break;
-                    case "attack_time": parts.Add($"swing {(value > 1f ? "slower" : "faster")}"); break;
-                    case "speed": parts.Add($"{(value < 1f ? "slower" : "faster")} feet"); break;
-                    case "dash_cooldown": parts.Add($"dash back x{Short(1f / value)} sooner"); break;
-                    case "light": parts.Add($"light x{Short(value)}"); break;
-                    case "prices": parts.Add($"prices x{Short(value)}"); break;
+                    case "damage":
+                        parts.Add($"{Signed(value)} damage");
+                        break;
+                    case "guard":
+                        parts.Add($"{Signed(value)} guard");
+                        break;
+                    case "hearts":
+                        parts.Add($"{Signed(value)} hearts");
+                        break;
+                    case "charges":
+                        parts.Add($"{Signed(value)} healing charges");
+                        break;
+                    case "heal":
+                        parts.Add($"{Signed(value)} heart per heal");
+                        break;
+                    case "mote_chance":
+                        parts.Add("more heal motes");
+                        break;
+                    case "halo_at_rest":
+                        parts.Add("a Halo at every rest");
+                        break;
+                    case "heal_on_kill":
+                        parts.Add($"{Signed(value)} heart per kill");
+                        break;
+                    case "reach":
+                        parts.Add($"reach x{Short(value)}");
+                        break;
+                    case "attack_time":
+                        parts.Add($"swing {(value > 1f ? "slower" : "faster")}");
+                        break;
+                    case "speed":
+                        parts.Add($"{(value < 1f ? "slower" : "faster")} feet");
+                        break;
+                    case "dash_cooldown":
+                        parts.Add($"dash back x{Short(1f / value)} sooner");
+                        break;
+                    case "light":
+                        parts.Add($"light x{Short(value)}");
+                        break;
+                    case "prices":
+                        parts.Add($"prices x{Short(value)}");
+                        break;
                 }
             }
             return string.Join(", ", parts);
@@ -237,14 +396,26 @@ namespace Descender.Economy
             return ((double)value).ToString("G2", CultureInfo.InvariantCulture);
         }
 
-        private static ItemDef Equip(string id, string name, ItemSlot slot, string text, Color color,
-            params (string stat, float value)[] stats)
+        private static ItemDef Equip(
+            string id,
+            string name,
+            ItemSlot slot,
+            string text,
+            Color color,
+            params (string stat, float value)[] stats
+        )
         {
             return Make(id, name, ItemKind.Equipment, slot, false, text, color, stats);
         }
 
-        private static ItemDef Unique(string id, string name, ItemSlot slot, string text, Color color,
-            params (string stat, float value)[] stats)
+        private static ItemDef Unique(
+            string id,
+            string name,
+            ItemSlot slot,
+            string text,
+            Color color,
+            params (string stat, float value)[] stats
+        )
         {
             return Make(id, name, ItemKind.Equipment, slot, true, text, color, stats);
         }
@@ -254,10 +425,27 @@ namespace Descender.Economy
             return Make(id, name, ItemKind.Consumable, ItemSlot.None, false, text, color);
         }
 
-        private static ItemDef Make(string id, string name, ItemKind kind, ItemSlot slot, bool unique, string text,
-            Color color, params (string stat, float value)[] stats)
+        private static ItemDef Make(
+            string id,
+            string name,
+            ItemKind kind,
+            ItemSlot slot,
+            bool unique,
+            string text,
+            Color color,
+            params (string stat, float value)[] stats
+        )
         {
-            var def = new ItemDef { Id = id, Name = name, Kind = kind, Slot = slot, Unique = unique, Text = text, Color = color };
+            var def = new ItemDef
+            {
+                Id = id,
+                Name = name,
+                Kind = kind,
+                Slot = slot,
+                Unique = unique,
+                Text = text,
+                Color = color,
+            };
             foreach (var (stat, value) in stats)
             {
                 def.Stats[stat] = value;

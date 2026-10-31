@@ -12,19 +12,24 @@ namespace Descender.Enemies
     {
         [Tooltip("Shown on the health bar.")]
         public string displayName = "";
+
         [Tooltip("The character whose strips it wears, and the name of their walking loop.")]
         public string character = "angel_guard";
         public string walkAnim = "walk";
+
         [Tooltip("How much bigger than the strips, and the sprite's colour.")]
         public float scale = 1.5f;
         public Color tint = Color.white;
         public bool facesLeft;
+
         [Tooltip("Collision size, in level pixels, at the scale, with the origin at the feet.")]
         public Vector2 body = new Vector2(32, 80);
         public int health = 24;
         public float speed = 34f;
+
         [Tooltip("Hearts for touching it.")]
         public int contactDamage = 1;
+
         [Tooltip("The third-phase move of the last bosses (rampage, court, mirror), or empty for two phases.")]
         public string third = "";
 

@@ -27,7 +27,9 @@ namespace Descender.Tests.EditMode
         [Test]
         public void JumpReachesItsHeightAtTheApexTime()
         {
-            var height = tuning.JumpVelocity * tuning.jumpTimeToApex - 0.5f * tuning.Gravity * tuning.jumpTimeToApex * tuning.jumpTimeToApex;
+            var height =
+                tuning.JumpVelocity * tuning.jumpTimeToApex
+                - 0.5f * tuning.Gravity * tuning.jumpTimeToApex * tuning.jumpTimeToApex;
             Assert.That(height, Is.EqualTo(tuning.jumpHeight).Within(0.01f));
         }
 

@@ -24,13 +24,25 @@ namespace Descender.Economy
 
         public static readonly Currency[] Currencies =
         {
-            new Currency { Id = "light", Name = "light", Color = new Color(1.0f, 0.95f, 0.7f) },
-            new Currency { Id = "bones", Name = "tally bones", Color = new Color(0.95f, 0.92f, 0.85f) },
+            new Currency
+            {
+                Id = "light",
+                Name = "light",
+                Color = new Color(1.0f, 0.95f, 0.7f),
+            },
+            new Currency
+            {
+                Id = "bones",
+                Name = "tally bones",
+                Color = new Color(0.95f, 0.92f, 0.85f),
+            },
         };
 
         private static readonly Dictionary<string, int> Purse = new Dictionary<string, int>();
+
         /// <summary>Item id -> how many the pack holds.</summary>
         private static readonly Dictionary<string, int> Pack = new Dictionary<string, int>();
+
         /// <summary>Slot -> the id of the piece worn there.</summary>
         private static readonly Dictionary<ItemSlot, string> Worn = new Dictionary<ItemSlot, string>();
 
@@ -243,7 +255,12 @@ namespace Descender.Economy
             {
                 worn[((int)pair.Key).ToString()] = pair.Value;
             }
-            return new JObject { ["purse"] = purse, ["items"] = items, ["equipped"] = worn };
+            return new JObject
+            {
+                ["purse"] = purse,
+                ["items"] = items,
+                ["equipped"] = worn,
+            };
         }
 
         /// <summary>

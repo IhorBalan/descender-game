@@ -6,7 +6,8 @@ namespace Descender.Tests
 {
     public class DialogueDataTests
     {
-        private const string Json = @"{
+        private const string Json =
+            @"{
             ""plain"": {""lines"": [{""who"": ""A"", ""text"": ""one""}, ""a bare line""]},
             ""gated"": {""requires"": [""key""], ""unless"": ""lock"", ""lines"": [{""who"": """", ""text"": ""x""}]},
             ""single"": {""once"": true, ""sets"": [""s1"", ""s2""], ""then"": ""plain"", ""lines"": [{""text"": ""y""}]},

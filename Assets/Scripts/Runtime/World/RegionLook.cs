@@ -19,6 +19,7 @@ namespace Descender.World
         public bool ownSky;
         public Color skyTop = new Color(0.4f, 0.6f, 0.9f);
         public Color skyBottom = new Color(0.8f, 0.85f, 0.95f);
+
         [Tooltip("Flat dark streaks instead of clouds and ridges.")]
         public bool cave;
 
@@ -29,8 +30,12 @@ namespace Descender.World
         [Header("Grade")]
         [Tooltip("A colour the view is multiplied by.")]
         public Color tint = Color.white;
-        [Range(0f, 3f)] public float contrast = 1f;
-        [Range(0f, 3f)] public float saturation = 1f;
+
+        [Range(0f, 3f)]
+        public float contrast = 1f;
+
+        [Range(0f, 3f)]
+        public float saturation = 1f;
 
         [Header("Sound")]
         [Tooltip("The music loop; empty for the region's key.")]

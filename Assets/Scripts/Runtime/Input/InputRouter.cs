@@ -15,7 +15,8 @@ namespace Descender.Input
     {
         public static InputRouter Instance { get; private set; }
 
-        [SerializeField] private InputActionAsset actions;
+        [SerializeField]
+        private InputActionAsset actions;
 
         private InputActionMap player;
         private InputActionMap ui;

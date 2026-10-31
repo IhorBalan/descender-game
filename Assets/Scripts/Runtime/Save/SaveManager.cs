@@ -28,7 +28,8 @@ namespace Descender.Save
         private static SaveSlots slots;
 
         /// <summary>The slots on disk; tests point this at a temporary folder with <see cref="UseDirectory"/>.</summary>
-        public static SaveSlots Slots => slots ?? (slots = new SaveSlots(Path.Combine(Application.persistentDataPath, "saves")));
+        public static SaveSlots Slots =>
+            slots ?? (slots = new SaveSlots(Path.Combine(Application.persistentDataPath, "saves")));
 
         public static void UseDirectory(string directory)
         {
@@ -132,13 +133,20 @@ namespace Descender.Save
         {
             switch (ability)
             {
-                case Ability.Wings: return "Wings";
-                case Ability.LightDash: return "Light Dash";
-                case Ability.WallGrip: return "Wall Grip";
-                case Ability.HolyLight: return "Holy Light";
-                case Ability.Glide: return "Glide";
-                case Ability.Smite: return "Smite";
-                default: return ability.ToString();
+                case Ability.Wings:
+                    return "Wings";
+                case Ability.LightDash:
+                    return "Light Dash";
+                case Ability.WallGrip:
+                    return "Wall Grip";
+                case Ability.HolyLight:
+                    return "Holy Light";
+                case Ability.Glide:
+                    return "Glide";
+                case Ability.Smite:
+                    return "Smite";
+                default:
+                    return ability.ToString();
             }
         }
     }

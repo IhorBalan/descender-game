@@ -55,7 +55,12 @@ namespace Descender.World
             Enter(hero, door.TargetRegion, door.TargetDoor);
         }
 
-        private IEnumerator EnterRoutine(Player.PlayerController hero, string regionId, string doorId, Vector2? fallback)
+        private IEnumerator EnterRoutine(
+            Player.PlayerController hero,
+            string regionId,
+            string doorId,
+            Vector2? fallback
+        )
         {
             Busy = true;
             hero.BeginTravel();

@@ -6,7 +6,8 @@ namespace Descender.Tests
 {
     public class TresParserTests
     {
-        private const string Sample = @"[gd_resource type=""Resource"" script_class=""WalkerProfile"" format=3]
+        private const string Sample =
+            @"[gd_resource type=""Resource"" script_class=""WalkerProfile"" format=3]
 
 [ext_resource type=""Script"" path=""res://scripts/enemies/walker_profile.gd"" id=""1_edfid""]
 

@@ -32,15 +32,78 @@ namespace Descender.Economy
         public static readonly SkillDef[] Ordered =
         {
             S("vigour", "Vigour", "More of him holds together. One more heart for every rank.", 3, 1, ("hearts", 1f)),
-            S("edge", "Edge", "He learns where the sword goes in. One more damage for every rank.", 3, 1, ("damage", 1f)),
-            S("swift_feet", "Swift Feet", "The hurry the Making put in him, kept. He runs a little faster.", 3, 1, ("speed", 1.08f)),
-            S("deep_draught", "Deep Draught", "He learns to make the Basin's water last. One more healing charge.", 2, 3, ("charges", 1f)),
-            S("long_reach", "Long Reach", "The swing starts from the shoulder. The sword reaches further.", 2, 3, ("reach", 1.15f)),
-            S("quick_dash", "Quick Dash", "The light in his legs gathers sooner. The dash comes back faster.", 2, 4, ("dash_cooldown", 0.8f)),
-            S("lightkeeper", "Lightkeeper", "What leaks from a killed thing finds him. The light of a kill comes to him fuller.", 2, 5, ("light", 1.25f)),
-            S("iron_skin", "Iron Skin", "He stops flinching before the blow lands. Every hit takes one heart less.", 2, 6, ("guard", 1f)),
-            S("quick_hand", "Quick Hand", "The sword comes round again before they see it. The swing is faster.", 2, 8, ("attack_time", 0.88f)),
-            S("mender", "Mender", "A healing charge closes more of the wound. One more heart for every heal.", 1, 10, ("heal", 1f)),
+            S(
+                "edge",
+                "Edge",
+                "He learns where the sword goes in. One more damage for every rank.",
+                3,
+                1,
+                ("damage", 1f)
+            ),
+            S(
+                "swift_feet",
+                "Swift Feet",
+                "The hurry the Making put in him, kept. He runs a little faster.",
+                3,
+                1,
+                ("speed", 1.08f)
+            ),
+            S(
+                "deep_draught",
+                "Deep Draught",
+                "He learns to make the Basin's water last. One more healing charge.",
+                2,
+                3,
+                ("charges", 1f)
+            ),
+            S(
+                "long_reach",
+                "Long Reach",
+                "The swing starts from the shoulder. The sword reaches further.",
+                2,
+                3,
+                ("reach", 1.15f)
+            ),
+            S(
+                "quick_dash",
+                "Quick Dash",
+                "The light in his legs gathers sooner. The dash comes back faster.",
+                2,
+                4,
+                ("dash_cooldown", 0.8f)
+            ),
+            S(
+                "lightkeeper",
+                "Lightkeeper",
+                "What leaks from a killed thing finds him. The light of a kill comes to him fuller.",
+                2,
+                5,
+                ("light", 1.25f)
+            ),
+            S(
+                "iron_skin",
+                "Iron Skin",
+                "He stops flinching before the blow lands. Every hit takes one heart less.",
+                2,
+                6,
+                ("guard", 1f)
+            ),
+            S(
+                "quick_hand",
+                "Quick Hand",
+                "The sword comes round again before they see it. The swing is faster.",
+                2,
+                8,
+                ("attack_time", 0.88f)
+            ),
+            S(
+                "mender",
+                "Mender",
+                "A healing charge closes more of the wound. One more heart for every heal.",
+                1,
+                10,
+                ("heal", 1f)
+            ),
         };
 
         public static readonly Dictionary<string, SkillDef> Table = Index(Ordered);
@@ -241,17 +304,39 @@ namespace Descender.Economy
                     var value = pair.Value;
                     switch (pair.Key)
                     {
-                        case "hearts": parts.Add($"{Items.Signed(value)} heart"); break;
-                        case "charges": parts.Add($"{Items.Signed(value)} healing charge"); break;
-                        case "damage": parts.Add($"{Items.Signed(value)} damage"); break;
-                        case "guard": parts.Add($"{Items.Signed(value)} guard"); break;
-                        case "heal": parts.Add($"{Items.Signed(value)} heart per heal"); break;
-                        case "speed": parts.Add($"feet x{F2(value)}"); break;
-                        case "reach": parts.Add($"reach x{F2(value)}"); break;
-                        case "dash_cooldown": parts.Add($"dash back x{F2(1f / value)} sooner"); break;
-                        case "attack_time": parts.Add($"swing x{F2(1f / value)} faster"); break;
-                        case "light": parts.Add($"light x{F2(value)}"); break;
-                        default: parts.Add($"{pair.Key} {value.ToString(CultureInfo.InvariantCulture)}"); break;
+                        case "hearts":
+                            parts.Add($"{Items.Signed(value)} heart");
+                            break;
+                        case "charges":
+                            parts.Add($"{Items.Signed(value)} healing charge");
+                            break;
+                        case "damage":
+                            parts.Add($"{Items.Signed(value)} damage");
+                            break;
+                        case "guard":
+                            parts.Add($"{Items.Signed(value)} guard");
+                            break;
+                        case "heal":
+                            parts.Add($"{Items.Signed(value)} heart per heal");
+                            break;
+                        case "speed":
+                            parts.Add($"feet x{F2(value)}");
+                            break;
+                        case "reach":
+                            parts.Add($"reach x{F2(value)}");
+                            break;
+                        case "dash_cooldown":
+                            parts.Add($"dash back x{F2(1f / value)} sooner");
+                            break;
+                        case "attack_time":
+                            parts.Add($"swing x{F2(1f / value)} faster");
+                            break;
+                        case "light":
+                            parts.Add($"light x{F2(value)}");
+                            break;
+                        default:
+                            parts.Add($"{pair.Key} {value.ToString(CultureInfo.InvariantCulture)}");
+                            break;
                     }
                 }
             }
@@ -329,9 +414,23 @@ namespace Descender.Economy
             }
         }
 
-        private static SkillDef S(string id, string name, string text, int ranks, int level, params (string stat, float value)[] stats)
+        private static SkillDef S(
+            string id,
+            string name,
+            string text,
+            int ranks,
+            int level,
+            params (string stat, float value)[] stats
+        )
         {
-            var def = new SkillDef { Id = id, Name = name, Text = text, Ranks = ranks, Level = level };
+            var def = new SkillDef
+            {
+                Id = id,
+                Name = name,
+                Text = text,
+                Ranks = ranks,
+                Level = level,
+            };
             foreach (var (stat, value) in stats)
             {
                 def.Stats[stat] = value;

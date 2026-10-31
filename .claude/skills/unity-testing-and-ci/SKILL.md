@@ -60,10 +60,11 @@ Format: `csharpier check Assets` (`.csharpierrc.yaml`), fix with
 `.github/workflows/tests.yml` on pull requests and pushes to `main`:
 
 1. `format`: `dotnet tool install csharpier` then `csharpier check Assets`.
-2. `unity-tests` matrix EditMode / PlayMode with `game-ci/unity-test-runner@v4`,
-   `Library/` cached by hash of Assets, Packages and ProjectSettings,
-   `githubToken` so results appear as a check, `coverageEnabled: false`
-   (coverage has crashed PlayMode on Unity 6).
+2. `unity-tests` matrix EditMode / PlayMode with
+   `game-ci/unity-test-runner@v4.3.1` (pinned: the floating `v4` moved to
+   the game-ci CLI, which takes different inputs), `Library/` cached by hash
+   of Assets, Packages and ProjectSettings, `githubToken` so results appear
+   as a check.
 
 `.github/workflows/release.yml` on a `v*` tag: `game-ci/unity-builder@v4`
 for StandaloneLinux64 and StandaloneWindows64, zipped and attached to a

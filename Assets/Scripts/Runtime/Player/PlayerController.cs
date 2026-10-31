@@ -19,9 +19,14 @@ namespace Descender.Player
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
 
-        [SerializeField] private PlayerTuning tuning;
-        [SerializeField] private Transform visual;
-        [SerializeField] private Animator animator;
+        [SerializeField]
+        private PlayerTuning tuning;
+
+        [SerializeField]
+        private Transform visual;
+
+        [SerializeField]
+        private Animator animator;
 
         private Rigidbody2D body;
         private BoxCollider2D box;
@@ -102,8 +107,18 @@ namespace Descender.Player
             body.collisionDetectionMode = CollisionDetectionMode2D.Continuous;
             ledgeLayer = LayerMask.NameToLayer("Ledge");
             playerLayer = LayerMask.NameToLayer("Player");
-            groundFilter = new ContactFilter2D { useLayerMask = true, layerMask = LayerMask.GetMask("World", "Ledge"), useTriggers = false };
-            wallFilter = new ContactFilter2D { useLayerMask = true, layerMask = LayerMask.GetMask("World"), useTriggers = false };
+            groundFilter = new ContactFilter2D
+            {
+                useLayerMask = true,
+                layerMask = LayerMask.GetMask("World", "Ledge"),
+                useTriggers = false,
+            };
+            wallFilter = new ContactFilter2D
+            {
+                useLayerMask = true,
+                layerMask = LayerMask.GetMask("World"),
+                useTriggers = false,
+            };
             health = tuning.maxHealth + Save.SaveManager.BonusHearts();
             healCharges = tuning.maxHealCharges + Save.SaveManager.BonusCharges();
         }
@@ -245,19 +260,29 @@ namespace Descender.Player
             }
 
             // Gravity: rise, apex hang, fall, glide, wall slide.
-            var sliding = !grounded && wallSide != 0 && Has(Save.Ability.WallGrip) && velocity.y <= 0f && Mathf.Sign(moveX) == wallSide;
+            var sliding =
+                !grounded
+                && wallSide != 0
+                && Has(Save.Ability.WallGrip)
+                && velocity.y <= 0f
+                && Mathf.Sign(moveX) == wallSide;
             var gliding = !grounded && velocity.y < 0f && jumpHeld && Has(Save.Ability.Glide) && !sliding;
             float gravity;
             if (velocity.y > 0f)
             {
-                gravity = tuning.Gravity * (Mathf.Abs(velocity.y) < tuning.apexSpeedThreshold ? tuning.apexGravityMultiplier : 1f);
+                gravity =
+                    tuning.Gravity
+                    * (Mathf.Abs(velocity.y) < tuning.apexSpeedThreshold ? tuning.apexGravityMultiplier : 1f);
             }
             else
             {
                 gravity = tuning.FallGravity * (gliding ? tuning.glideGravityMultiplier : 1f);
             }
             velocity.y -= gravity * dt;
-            var fallCap = sliding ? tuning.wallSlideSpeed : gliding ? tuning.glideFallSpeed : tuning.maxFallSpeed;
+            var fallCap =
+                sliding ? tuning.wallSlideSpeed
+                : gliding ? tuning.glideFallSpeed
+                : tuning.maxFallSpeed;
             velocity.y = Mathf.Max(velocity.y, -fallCap);
 
             // Dash.
@@ -284,7 +309,8 @@ namespace Descender.Player
                 var velocity = VelocityPixels;
                 velocity.x = Mathf.Clamp(velocity.x, -tuning.dashEndSpeed, tuning.dashEndSpeed);
                 body.linearVelocity = velocity / Ppu;
-                dashCooldownLeft = tuning.dashCooldown * (Economy.Skills.Rank("zeal") > 0 ? tuning.zealCooldownMultiplier : 1f);
+                dashCooldownLeft =
+                    tuning.dashCooldown * (Economy.Skills.Rank("zeal") > 0 ? tuning.zealCooldownMultiplier : 1f);
                 state = State.Normal;
             }
         }

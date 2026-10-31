@@ -33,7 +33,13 @@ namespace Descender.Tests
             var slot = SaveSlots.SlotCount - 1;
             Assert.IsFalse(slots.HasSave(slot));
             Assert.IsNull(slots.Read(slot));
-            var data = new SaveData { Level = "world_1", Checkpoint = 2, PlayTime = 61.5, SavedAt = 1000 };
+            var data = new SaveData
+            {
+                Level = "world_1",
+                Checkpoint = 2,
+                PlayTime = 61.5,
+                SavedAt = 1000,
+            };
             data.Abilities.Add(Ability.Wings);
             data.Abilities.Add(Ability.LightDash);
             data.Flags.Add("seen:intro");
@@ -52,7 +58,8 @@ namespace Descender.Tests
         [Test]
         public void AGodotSaveLoads()
         {
-            const string godot = @"{
+            const string godot =
+                @"{
                 ""version"": 1, ""level"": ""world_1"", ""checkpoint"": 4, ""abilities"": [0, 1, 3],
                 ""flags"": [""boss:seraph_warden"", ""seen:intro""],
                 ""inventory"": {""purse"": {""light"": 40, ""bones"": 2}, ""items"": {""flask"": 1}, ""equipped"": {}},
@@ -108,7 +115,13 @@ namespace Descender.Tests
         [Test]
         public void SettingsRoundTripAndClamp()
         {
-            var settings = new SettingsData { volume = 2f, scale = 9, textSpeed = 7, prompts = (PromptLayout)5 };
+            var settings = new SettingsData
+            {
+                volume = 2f,
+                scale = 9,
+                textSpeed = 7,
+                prompts = (PromptLayout)5,
+            };
             var back = SettingsData.FromJson(settings.ToJson());
             Assert.AreEqual(1f, back.volume);
             Assert.AreEqual(SettingsData.MaxWindowScale, back.scale);

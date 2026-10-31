@@ -22,7 +22,17 @@ namespace Descender.EditorTools.Setup
         /// <summary>One unit is one tile of 16 level pixels; the hero's numbers are in pixels.</summary>
         public const float PixelsPerUnit = 16f;
 
-        public static readonly string[] Layers = { "World", "Player", "Enemy", "LightBarrier", "Ledge", "Hazard", "Pickup", "Trigger" };
+        public static readonly string[] Layers =
+        {
+            "World",
+            "Player",
+            "Enemy",
+            "LightBarrier",
+            "Ledge",
+            "Hazard",
+            "Pickup",
+            "Trigger",
+        };
 
         [MenuItem("Descender/Setup/Render pipeline and settings")]
         public static void Run()
@@ -69,7 +79,9 @@ namespace Descender.EditorTools.Setup
 
         private static void AddLayers()
         {
-            var tagManager = new SerializedObject(AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]);
+            var tagManager = new SerializedObject(
+                AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]
+            );
             var layers = tagManager.FindProperty("layers");
             foreach (var wanted in Layers)
             {

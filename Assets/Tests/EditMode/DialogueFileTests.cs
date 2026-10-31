@@ -22,7 +22,16 @@ namespace Descender.Tests
         /// here until the relic placements are in the Unity region scenes (Phase 3), when
         /// the relics are read from the scenes as the Godot test read placements.json.
         /// </summary>
-        private static readonly string[] CodeFlagPrefixes = { "boss:", "secret:", "upgrade:", "sword:", "seen:", "room:", "item:" };
+        private static readonly string[] CodeFlagPrefixes =
+        {
+            "boss:",
+            "secret:",
+            "upgrade:",
+            "sword:",
+            "seen:",
+            "room:",
+            "item:",
+        };
 
         private DialogueData dialogue;
         private HashSet<string> setBy;

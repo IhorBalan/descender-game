@@ -32,14 +32,26 @@ namespace Descender.EditorTools.Importers
             text = tresText ?? "";
         }
 
-        public double Number(string key, double fallback) => Values.TryGetValue(key, out var v) && v is double d ? d : fallback;
+        public double Number(string key, double fallback) =>
+            Values.TryGetValue(key, out var v) && v is double d ? d : fallback;
+
         public float Float(string key, float fallback) => (float)Number(key, fallback);
+
         public int Int(string key, int fallback) => (int)Math.Round(Number(key, fallback));
+
         public bool Bool(string key, bool fallback) => Values.TryGetValue(key, out var v) && v is bool b ? b : fallback;
-        public string String(string key, string fallback) => Values.TryGetValue(key, out var v) && v is string s ? s : fallback;
-        public Vector2 Vector(string key, Vector2 fallback) => Values.TryGetValue(key, out var v) && v is Vector2 vec ? vec : fallback;
-        public Color ColorOf(string key, Color fallback) => Values.TryGetValue(key, out var v) && v is Color c ? c : fallback;
-        public Dictionary<string, object> Dict(string key) => Values.TryGetValue(key, out var v) ? v as Dictionary<string, object> : null;
+
+        public string String(string key, string fallback) =>
+            Values.TryGetValue(key, out var v) && v is string s ? s : fallback;
+
+        public Vector2 Vector(string key, Vector2 fallback) =>
+            Values.TryGetValue(key, out var v) && v is Vector2 vec ? vec : fallback;
+
+        public Color ColorOf(string key, Color fallback) =>
+            Values.TryGetValue(key, out var v) && v is Color c ? c : fallback;
+
+        public Dictionary<string, object> Dict(string key) =>
+            Values.TryGetValue(key, out var v) ? v as Dictionary<string, object> : null;
 
         public static double DictNumber(Dictionary<string, object> dict, string key, double fallback) =>
             dict != null && dict.TryGetValue(key, out var v) && v is double d ? d : fallback;
@@ -129,10 +141,14 @@ namespace Descender.EditorTools.Importers
             }
             switch (word)
             {
-                case "true": return true;
-                case "false": return false;
-                case "null": return null;
-                default: return word;
+                case "true":
+                    return true;
+                case "false":
+                    return false;
+                case "null":
+                    return null;
+                default:
+                    return word;
             }
         }
 
@@ -242,9 +258,15 @@ namespace Descender.EditorTools.Importers
                     at++;
                     switch (text[at])
                     {
-                        case 'n': builder.Append('\n'); break;
-                        case 't': builder.Append('\t'); break;
-                        default: builder.Append(text[at]); break;
+                        case 'n':
+                            builder.Append('\n');
+                            break;
+                        case 't':
+                            builder.Append('\t');
+                            break;
+                        default:
+                            builder.Append(text[at]);
+                            break;
                     }
                 }
                 else
@@ -260,12 +282,24 @@ namespace Descender.EditorTools.Importers
         private object ReadNumber()
         {
             var start = at;
-            while (at < text.Length && (char.IsDigit(text[at]) || text[at] == '.' || text[at] == '-' || text[at] == 'e' || text[at] == 'E' || text[at] == '+'))
+            while (
+                at < text.Length
+                && (
+                    char.IsDigit(text[at])
+                    || text[at] == '.'
+                    || text[at] == '-'
+                    || text[at] == 'e'
+                    || text[at] == 'E'
+                    || text[at] == '+'
+                )
+            )
             {
                 at++;
             }
             var token = text.Substring(start, at - start);
-            return double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out var value) ? value : 0.0;
+            return double.TryParse(token, NumberStyles.Float, CultureInfo.InvariantCulture, out var value)
+                ? value
+                : 0.0;
         }
 
         private string ReadIdentifier()

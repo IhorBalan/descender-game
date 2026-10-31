@@ -10,10 +10,17 @@ namespace Descender.World
     /// </summary>
     public sealed class WorldPlacement : MonoBehaviour
     {
-        [SerializeField] private string id = "";
-        [SerializeField] private GameObject prefab;
-        [SerializeField] private bool flipped;
-        [SerializeField] private bool onceOnly;
+        [SerializeField]
+        private string id = "";
+
+        [SerializeField]
+        private GameObject prefab;
+
+        [SerializeField]
+        private bool flipped;
+
+        [SerializeField]
+        private bool onceOnly;
 
         private GameObject spawned;
 

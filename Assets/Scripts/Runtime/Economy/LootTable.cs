@@ -12,6 +12,7 @@ namespace Descender.Economy
         public readonly string ItemId;
 
         public static LootDrop Money(string currency, int amount) => new LootDrop(currency, amount, "");
+
         public static LootDrop Item(string itemId) => new LootDrop("", 0, itemId);
 
         private LootDrop(string currency, int amount, string itemId)
@@ -59,7 +60,11 @@ namespace Descender.Economy
             if (LightMax >= LightMin && LightMax > 0)
             {
                 var light = between(LightMin, LightMax);
-                light = (int)Math.Round(light * Inventory.Factor("light") * Skills.Factor("light"), MidpointRounding.AwayFromZero);
+                light = (int)
+                    Math.Round(
+                        light * Inventory.Factor("light") * Skills.Factor("light"),
+                        MidpointRounding.AwayFromZero
+                    );
                 if (light > 0)
                 {
                     drops.Add(LootDrop.Money("light", light));

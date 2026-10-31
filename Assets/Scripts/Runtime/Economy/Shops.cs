@@ -33,7 +33,8 @@ namespace Descender.Economy
             {
                 Id = "pell",
                 Name = "Old Pell's forge",
-                Greeting = "Church iron, lad, what there is of it. Light pays: it's what they want up there,"
+                Greeting =
+                    "Church iron, lad, what there is of it. Light pays: it's what they want up there,"
                     + " so it's what I want down here.",
                 Stock = new[]
                 {

@@ -43,9 +43,7 @@ namespace Descender.Save
                     return data;
                 }
             }
-            catch (Exception exception) when (exception is IOException || exception is JsonException)
-            {
-            }
+            catch (Exception exception) when (exception is IOException || exception is JsonException) { }
             Warning?.Invoke($"Save slot {slot + 1} is unreadable, treating it as empty");
             return null;
         }

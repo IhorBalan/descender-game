@@ -42,7 +42,8 @@ namespace Descender.EditorTools.Importers
                 AssetDatabase.CreateFolder(folder, "Animations");
             }
             var controllerPath = $"{animFolder}/{name}.controller";
-            var controller = AssetDatabase.LoadAssetAtPath<AnimatorController>(controllerPath)
+            var controller =
+                AssetDatabase.LoadAssetAtPath<AnimatorController>(controllerPath)
                 ?? AnimatorController.CreateAnimatorControllerAtPath(controllerPath);
             var machine = controller.layers[0].stateMachine;
             var count = 0;
@@ -89,7 +90,12 @@ namespace Descender.EditorTools.Importers
         public static void Fill(AnimationClip clip, List<Sprite> frames, float fps, bool loop)
         {
             clip.frameRate = Mathf.Max(fps, 1f);
-            var binding = new EditorCurveBinding { type = typeof(SpriteRenderer), path = "", propertyName = "m_Sprite" };
+            var binding = new EditorCurveBinding
+            {
+                type = typeof(SpriteRenderer),
+                path = "",
+                propertyName = "m_Sprite",
+            };
             var keys = new ObjectReferenceKeyframe[frames.Count];
             for (var i = 0; i < frames.Count; i++)
             {

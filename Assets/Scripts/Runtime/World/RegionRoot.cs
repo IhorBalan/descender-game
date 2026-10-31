@@ -10,10 +10,17 @@ namespace Descender.World
     /// </summary>
     public sealed class RegionRoot : MonoBehaviour
     {
-        [SerializeField] private string id = "";
-        [SerializeField] private RegionLook look;
-        [SerializeField] private Light2D globalLight;
-        [SerializeField] private SpriteRenderer sky;
+        [SerializeField]
+        private string id = "";
+
+        [SerializeField]
+        private RegionLook look;
+
+        [SerializeField]
+        private Light2D globalLight;
+
+        [SerializeField]
+        private SpriteRenderer sky;
 
         public string Id => id;
         public RegionLook Look => look;

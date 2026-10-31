@@ -72,7 +72,11 @@ namespace Descender.EditorTools.Importers
                 glowObject.transform.SetParent(root.transform, false);
                 var glowRenderer = glowObject.AddComponent<SpriteRenderer>();
                 glowRenderer.sprite = glow;
-                glowRenderer.sharedMaterial = Material(GlowMaterialPath, "Universal Render Pipeline/2D/Sprite-Unlit-Default", additive: true);
+                glowRenderer.sharedMaterial = Material(
+                    GlowMaterialPath,
+                    "Universal Render Pipeline/2D/Sprite-Unlit-Default",
+                    additive: true
+                );
                 glowRenderer.sortingLayerName = "Props";
                 glowRenderer.sortingOrder = 1;
             }

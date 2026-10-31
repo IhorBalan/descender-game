@@ -10,7 +10,8 @@ namespace Descender.World
     [RequireComponent(typeof(BoxCollider2D))]
     public sealed class WorldRoom : MonoBehaviour
     {
-        [SerializeField] private string id = "";
+        [SerializeField]
+        private string id = "";
 
         private BoxCollider2D box;
 

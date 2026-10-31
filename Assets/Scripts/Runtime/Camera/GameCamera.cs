@@ -16,17 +16,29 @@ namespace Descender.CameraRig
         /// <summary>The game camera in Main.unity, or null before it exists.</summary>
         public static GameCamera Main { get; private set; }
 
-        [SerializeField] private Transform target;
-        [SerializeField, Min(0f)] private float lookAheadPixels = 24f;
-        [SerializeField, Min(0.01f)] private float smoothTime = 0.12f;
-        [SerializeField, Min(0f)] private float verticalDeadZonePixels = 20f;
+        [SerializeField]
+        private Transform target;
+
+        [SerializeField, Min(0f)]
+        private float lookAheadPixels = 24f;
+
+        [SerializeField, Min(0.01f)]
+        private float smoothTime = 0.12f;
+
+        [SerializeField, Min(0f)]
+        private float verticalDeadZonePixels = 20f;
 
         private Camera cam;
         private Vector2 velocity;
         private float shakePixels;
         private float shakeTime;
         private float shakeLeft;
-        private Rect bounds = new Rect(float.NegativeInfinity, float.NegativeInfinity, float.PositiveInfinity, float.PositiveInfinity);
+        private Rect bounds = new Rect(
+            float.NegativeInfinity,
+            float.NegativeInfinity,
+            float.PositiveInfinity,
+            float.PositiveInfinity
+        );
         private Vector2 focus;
 
         /// <summary>The room the camera is clamped to, in units. Set by WorldRoom when the hero enters.</summary>
@@ -120,10 +132,11 @@ namespace Descender.CameraRig
             {
                 shakeLeft -= Time.deltaTime;
                 var strength = shakePixels * Mathf.Clamp01(shakeLeft / Mathf.Max(shakeTime, 0.0001f));
-                offset = new Vector2(
-                    Mathf.Round(Random.Range(-strength, strength)),
-                    Mathf.Round(Random.Range(-strength, strength))
-                ) / PixelsPerUnit;
+                offset =
+                    new Vector2(
+                        Mathf.Round(Random.Range(-strength, strength)),
+                        Mathf.Round(Random.Range(-strength, strength))
+                    ) / PixelsPerUnit;
                 if (shakeLeft <= 0f)
                 {
                     shakePixels = 0f;

@@ -11,8 +11,11 @@ namespace Descender.World
     [RequireComponent(typeof(Light2D))]
     public sealed class WorldLight : MonoBehaviour
     {
-        [SerializeField, Min(1f)] private float activeDistance = 30f;
-        [SerializeField, Min(0.05f)] private float checkEvery = 0.25f;
+        [SerializeField, Min(1f)]
+        private float activeDistance = 30f;
+
+        [SerializeField, Min(0.05f)]
+        private float checkEvery = 0.25f;
 
         private Light2D light2D;
         private float nextCheck;

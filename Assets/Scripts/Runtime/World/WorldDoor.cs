@@ -11,10 +11,17 @@ namespace Descender.World
     [RequireComponent(typeof(BoxCollider2D))]
     public sealed class WorldDoor : MonoBehaviour
     {
-        [SerializeField] private string id = "";
-        [SerializeField] private string targetRegion = "";
-        [SerializeField] private string targetDoor = "";
-        [SerializeField] private Vector2 spawnOffset = new Vector2(1.5f, 0f);
+        [SerializeField]
+        private string id = "";
+
+        [SerializeField]
+        private string targetRegion = "";
+
+        [SerializeField]
+        private string targetDoor = "";
+
+        [SerializeField]
+        private Vector2 spawnOffset = new Vector2(1.5f, 0f);
 
         public string Id => id;
         public string TargetRegion => targetRegion;

@@ -10,15 +10,26 @@ namespace Descender.World
     [ExecuteAlways]
     public sealed class BackdropLayer : MonoBehaviour
     {
-        [SerializeField, Range(0f, 1f)] private float parallaxFactor = 0.5f;
-        [SerializeField, Min(0f)] private float repeatWidth;
-        [SerializeField] private Vector2 origin;
-        [SerializeField] private bool followY = true;
-        [SerializeField] private float yFactor = 0.8f;
+        [SerializeField, Range(0f, 1f)]
+        private float parallaxFactor = 0.5f;
+
+        [SerializeField, Min(0f)]
+        private float repeatWidth;
+
+        [SerializeField]
+        private Vector2 origin;
+
+        [SerializeField]
+        private bool followY = true;
+
+        [SerializeField]
+        private float yFactor = 0.8f;
 
         private void LateUpdate()
         {
-            var camera = Application.isPlaying ? CameraRig.GameCamera.Main?.transform : UnityEngine.Camera.main?.transform;
+            var camera = Application.isPlaying
+                ? CameraRig.GameCamera.Main?.transform
+                : UnityEngine.Camera.main?.transform;
             if (camera == null)
             {
                 return;

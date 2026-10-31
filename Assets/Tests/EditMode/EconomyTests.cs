@@ -29,7 +29,8 @@ namespace Descender.Tests
                 }
                 foreach (var stat in def.Stats.Keys)
                 {
-                    var known = System.Array.IndexOf(Items.AdditiveStats, stat) >= 0
+                    var known =
+                        System.Array.IndexOf(Items.AdditiveStats, stat) >= 0
                         || System.Array.IndexOf(Items.FactorStats, stat) >= 0;
                     Assert.IsTrue(known, $"{def.Id}: unknown stat {stat}");
                 }
@@ -98,10 +99,18 @@ namespace Descender.Tests
             Inventory.FromJson(saved);
             Assert.AreEqual(12, Inventory.Amount("light"));
             Assert.IsTrue(Inventory.IsEquipped("scrap_mail"));
-            Inventory.FromJson(JObject.Parse(@"{""purse"": {""light"": -4}, ""items"": {""ghost"": 1}, ""equipped"": {""0"": ""scrap_mail""}}"));
+            Inventory.FromJson(
+                JObject.Parse(
+                    @"{""purse"": {""light"": -4}, ""items"": {""ghost"": 1}, ""equipped"": {""0"": ""scrap_mail""}}"
+                )
+            );
             Assert.AreEqual(0, Inventory.Amount("light"));
             Assert.IsFalse(Inventory.Has("ghost"));
-            Assert.AreEqual("", Inventory.EquippedId(ItemSlot.Weapon), "a worn piece that is not in the pack is taken off");
+            Assert.AreEqual(
+                "",
+                Inventory.EquippedId(ItemSlot.Weapon),
+                "a worn piece that is not in the pack is taken off"
+            );
         }
 
         [Test]
@@ -131,7 +140,15 @@ namespace Descender.Tests
         [Test]
         public void TheLootRollFollowsTheTable()
         {
-            var table = new LootTable { LightMin = 3, LightMax = 5, BoneChance = 0.5f, FlaskChance = 0.1f, Unique = "wardens_halo", Xp = 3 };
+            var table = new LootTable
+            {
+                LightMin = 3,
+                LightMax = 5,
+                BoneChance = 0.5f,
+                FlaskChance = 0.1f,
+                Unique = "wardens_halo",
+                Xp = 3,
+            };
             var drops = table.Roll(() => 0.2f, (lo, hi) => hi);
             Assert.AreEqual(3, drops.Count);
             Assert.AreEqual(5, drops[0].Amount);

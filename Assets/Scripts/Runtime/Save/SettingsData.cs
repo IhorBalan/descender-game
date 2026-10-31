@@ -1,7 +1,7 @@
 using System;
 using System.IO;
-using UnityEngine;
 using Newtonsoft.Json;
+using UnityEngine;
 
 namespace Descender.Save
 {
@@ -27,8 +27,10 @@ namespace Descender.Save
         public const int MinWindowScale = 2;
         public const int MaxWindowScale = 6;
         public const int DefaultWindowScale = 4;
+
         /// <summary>Screen shake amounts the settings screen cycles through: off, half, full.</summary>
         public static readonly float[] ShakeLevels = { 0f, 0.5f, 1f };
+
         /// <summary>Dialogue typing speeds in characters per second; the last is instant.</summary>
         public static readonly string[] TextSpeedNames = { "Slow", "Normal", "Fast", "Instant" };
         public static readonly float[] TextSpeeds = { 25f, 45f, 90f, 0f };
@@ -64,6 +66,7 @@ namespace Descender.Save
         public bool hitStop = true;
         public bool rumble = true;
         public PromptLayout prompts = PromptLayout.Auto;
+
         /// <summary>The Input System's binding overrides, as SaveBindingOverridesAsJson writes them; "" for the defaults.</summary>
         public string bindings = "";
 
@@ -88,10 +91,14 @@ namespace Descender.Save
 
         public string TextSpeedName() => TextSpeedNames[Math.Max(0, Math.Min(TextSpeedNames.Length - 1, textSpeed))];
 
-        public (int width, int height) WindowSizeFor(int windowScale) => (BaseSize.width * windowScale, BaseSize.height * windowScale);
+        public (int width, int height) WindowSizeFor(int windowScale) =>
+            (BaseSize.width * windowScale, BaseSize.height * windowScale);
 
         /// <summary>The name of a screen shake level: "Off", "Half" or "Full".</summary>
-        public static string ShakeName(float amount) => amount <= 0f ? "Off" : amount >= 1f ? "Full" : "Half";
+        public static string ShakeName(float amount) =>
+            amount <= 0f ? "Off"
+            : amount >= 1f ? "Full"
+            : "Half";
 
         public void ResetAudio()
         {
