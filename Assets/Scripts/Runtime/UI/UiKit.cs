@@ -77,7 +77,13 @@ namespace Descender.UI
         }
 
         /// <summary>Stretches a rect over its parent, with the given margins.</summary>
-        public static RectTransform Fill(RectTransform rect, float left = 0f, float top = 0f, float right = 0f, float bottom = 0f)
+        public static RectTransform Fill(
+            RectTransform rect,
+            float left = 0f,
+            float top = 0f,
+            float right = 0f,
+            float bottom = 0f
+        )
         {
             rect.anchorMin = Vector2.zero;
             rect.anchorMax = Vector2.one;
@@ -251,7 +257,8 @@ namespace Descender.UI
             }
             var label = Label(image.transform, "Label", text, UiTheme.FontSize, UiTheme.Text, align);
             Fill(label.rectTransform, UiTheme.ButtonPadding, 0f, UiTheme.ButtonPadding, 0f);
-            label.alignment = align == TextAlignmentOptions.Left ? TextAlignmentOptions.Left : TextAlignmentOptions.Center;
+            label.alignment =
+                align == TextAlignmentOptions.Left ? TextAlignmentOptions.Left : TextAlignmentOptions.Center;
             label.verticalAlignment = VerticalAlignmentOptions.Middle;
             var look = image.gameObject.AddComponent<UiButtonLook>();
             look.Bind(button, label);

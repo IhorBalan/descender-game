@@ -52,7 +52,11 @@ namespace Descender.UI
             if (Screens.Count == 0)
             {
                 timeScaleBefore = Time.timeScale;
-                Input.InputRouter.Instance?.UseUi();
+                var router = Input.InputRouter.Instance;
+                if (router != null)
+                {
+                    router.UseUi();
+                }
             }
             Focus.Add(EventSystem.current != null ? EventSystem.current.currentSelectedGameObject : null);
             Screens.Add(screen);
@@ -75,7 +79,11 @@ namespace Descender.UI
             }
             if (Screens.Count == 0)
             {
-                Input.InputRouter.Instance?.UsePlayer();
+                var router = Input.InputRouter.Instance;
+                if (router != null)
+                {
+                    router.UsePlayer();
+                }
             }
             Apply();
         }

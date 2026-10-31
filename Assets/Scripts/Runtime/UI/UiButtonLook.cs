@@ -12,7 +12,12 @@ namespace Descender.UI
     /// Also raises <see cref="Focused"/>, which the menus use for their description line.
     /// </summary>
     [RequireComponent(typeof(Button))]
-    public sealed class UiButtonLook : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointerEnterHandler, IPointerExitHandler
+    public sealed class UiButtonLook
+        : MonoBehaviour,
+            ISelectHandler,
+            IDeselectHandler,
+            IPointerEnterHandler,
+            IPointerExitHandler
     {
         private Button button;
         private TextMeshProUGUI label;

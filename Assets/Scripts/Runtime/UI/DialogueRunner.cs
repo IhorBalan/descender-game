@@ -194,9 +194,12 @@ namespace Descender.UI
                 return false;
             }
             talkingTo = source;
-            source?.SetTalking(true);
+            if (source != null)
+            {
+                source.SetTalking(true);
+            }
             // The box covers the message line.
-            hud?.HideMessage();
+            HideMessage();
             box.Play(entry);
             DialogueStarted?.Invoke(entry);
             return true;
@@ -219,11 +222,11 @@ namespace Descender.UI
                 var kept = Quests.FinishedBy(flag);
                 if (started != null && !StoryFlags.Has(flag))
                 {
-                    hud?.QueueMessage($"A promise: {started.Title}", 3f);
+                    QueueMessage($"A promise: {started.Title}", 3f);
                 }
                 else if (kept != null && !StoryFlags.Has(flag))
                 {
-                    hud?.QueueMessage($"Promise kept: {kept.Title}", 3f);
+                    QueueMessage($"Promise kept: {kept.Title}", 3f);
                 }
                 StoryFlags.Set(flag);
                 forged = forged || flag.StartsWith(MenuText.SwordFlagPrefix, System.StringComparison.Ordinal);
@@ -247,7 +250,7 @@ namespace Descender.UI
             }
             if (DialogueData.Saves(entry) && SaveHandler != null && SaveHandler())
             {
-                hud?.QueueMessage("Game saved", 2f);
+                QueueMessage("Game saved", 2f);
             }
             var source = talkingTo;
             talkingTo = null;
@@ -296,11 +299,35 @@ namespace Descender.UI
             }
         }
 
+        private void QueueMessage(string text, float duration)
+        {
+            if (hud != null)
+            {
+                hud.QueueMessage(text, duration);
+            }
+        }
+
+        private void ShowMessage(string text, float duration)
+        {
+            if (hud != null)
+            {
+                hud.ShowMessage(text, duration);
+            }
+        }
+
+        private void HideMessage()
+        {
+            if (hud != null)
+            {
+                hud.HideMessage();
+            }
+        }
+
         private void EndGame(string flag)
         {
             Ended = true;
             var text = Endings.TryGetValue(flag, out var line) ? line : "The end.";
-            hud?.ShowMessage($"{text}   Press {{restart}} to restart", -1f);
+            ShowMessage($"{text}   Press {{restart}} to restart", -1f);
             EndingReached?.Invoke(flag);
         }
     }

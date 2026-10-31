@@ -87,7 +87,15 @@ namespace Descender.UI
             rect.sizeDelta = new Vector2(40f, 12f);
             rect.localScale = Vector3.one / Ppu;
             rect.localPosition = new Vector3(0f, promptHeight / Ppu, 0f);
-            var label = UiKit.Label(rect, "Text", "", UiTheme.SmallFontSize, UiTheme.Text, TextAlignmentOptions.Center, true);
+            var label = UiKit.Label(
+                rect,
+                "Text",
+                "",
+                UiTheme.SmallFontSize,
+                UiTheme.Text,
+                TextAlignmentOptions.Center,
+                true
+            );
             UiKit.Fill(label.rectTransform);
             label.verticalAlignment = VerticalAlignmentOptions.Middle;
             label.gameObject.AddComponent<PromptLabel>().Template = "{interact}";

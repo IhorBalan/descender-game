@@ -233,7 +233,8 @@ namespace Descender.UI
         }
 
         /// <summary>The colour a speaker's name is shown in.</summary>
-        public static Color SpeakerColor(string who) => SpeakerColors.TryGetValue(who ?? "", out var color) ? color : NameColor;
+        public static Color SpeakerColor(string who) =>
+            SpeakerColors.TryGetValue(who ?? "", out var color) ? color : NameColor;
 
         /// <summary>The blip pitch for a speaker: 0 for a line nobody speaks, which types in silence.</summary>
         public static float PitchOf(string who)

@@ -87,9 +87,25 @@ namespace Descender.UI
             var root = canvas.GetComponent<RectTransform>();
             status = StatusBar.Create(root);
 
-            purseLabel = UiKit.Label(root, "Purse", "", UiTheme.SmallFontSize, Inventory.Currencies[0].Color, TextAlignmentOptions.Right, true);
+            purseLabel = UiKit.Label(
+                root,
+                "Purse",
+                "",
+                UiTheme.SmallFontSize,
+                Inventory.Currencies[0].Color,
+                TextAlignmentOptions.Right,
+                true
+            );
             UiKit.Place(purseLabel.rectTransform, 196f, 3f, 120f, 10f);
-            levelLabel = UiKit.Label(root, "Level", "", UiTheme.SmallFontSize, LevelColor, TextAlignmentOptions.Right, true);
+            levelLabel = UiKit.Label(
+                root,
+                "Level",
+                "",
+                UiTheme.SmallFontSize,
+                LevelColor,
+                TextAlignmentOptions.Right,
+                true
+            );
             UiKit.Place(levelLabel.rectTransform, 196f, 12f, 120f, 10f);
             var xpBack = UiKit.Box(root, "XpBar", XpBarBack);
             UiKit.Place(xpBack.rectTransform, 316f - XpBarWidth, 23f, XpBarWidth, 3f);
@@ -98,7 +114,15 @@ namespace Descender.UI
 
             bossBar = UiKit.Rect(root, "BossBar");
             UiKit.Place(bossBar, (UiTheme.Width - BossBarWidth) / 2f, 140f, BossBarWidth, 16f);
-            bossName = UiKit.Label(bossBar, "Name", "", UiTheme.SmallFontSize, UiTheme.Text, TextAlignmentOptions.Center, true);
+            bossName = UiKit.Label(
+                bossBar,
+                "Name",
+                "",
+                UiTheme.SmallFontSize,
+                UiTheme.Text,
+                TextAlignmentOptions.Center,
+                true
+            );
             UiKit.Place(bossName.rectTransform, 0f, 0f, BossBarWidth, 10f);
             var bossBack = UiKit.Box(bossBar, "Back", BossBarBack);
             UiKit.Place(bossBack.rectTransform, 0f, 11f, BossBarWidth, 4f);
@@ -106,7 +130,15 @@ namespace Descender.UI
             UiKit.Place(bossFill.rectTransform, 1f, 12f, BossBarWidth - 2f, 2f);
             bossBar.gameObject.SetActive(false);
 
-            messageText = UiKit.Label(root, "Message", "", UiTheme.SmallFontSize, UiTheme.Text, TextAlignmentOptions.Bottom, true);
+            messageText = UiKit.Label(
+                root,
+                "Message",
+                "",
+                UiTheme.SmallFontSize,
+                UiTheme.Text,
+                TextAlignmentOptions.Bottom,
+                true
+            );
             UiKit.Place(messageText.rectTransform, 4f, 158f, 312f, 18f);
             messageText.textWrappingMode = TextWrappingModes.Normal;
             message = messageText.gameObject.AddComponent<PromptLabel>();

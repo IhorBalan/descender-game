@@ -23,7 +23,9 @@ namespace Descender.UI
         private static readonly Regex Token = new Regex(@"\{([A-Za-z_][A-Za-z0-9_]*)\}", RegexOptions.Compiled);
 
         /// <summary>Godot action names, and shorthand, to the Input System action names.</summary>
-        public static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+        public static readonly Dictionary<string, string> Aliases = new Dictionary<string, string>(
+            StringComparer.OrdinalIgnoreCase
+        )
         {
             ["ui_accept"] = "Submit",
             ["ui_cancel"] = "Cancel",
@@ -38,7 +40,9 @@ namespace Descender.UI
         };
 
         /// <summary>Button names in the Xbox layout, by the control's name under &lt;Gamepad&gt;/.</summary>
-        public static readonly Dictionary<string, string> XboxNames = new Dictionary<string, string>(StringComparer.Ordinal)
+        public static readonly Dictionary<string, string> XboxNames = new Dictionary<string, string>(
+            StringComparer.Ordinal
+        )
         {
             ["buttonSouth"] = "A",
             ["buttonEast"] = "B",
@@ -55,7 +59,9 @@ namespace Descender.UI
         };
 
         /// <summary>The same in the PlayStation layout.</summary>
-        public static readonly Dictionary<string, string> PlayStationNames = new Dictionary<string, string>(StringComparer.Ordinal)
+        public static readonly Dictionary<string, string> PlayStationNames = new Dictionary<string, string>(
+            StringComparer.Ordinal
+        )
         {
             ["buttonSouth"] = "Cross",
             ["buttonEast"] = "Circle",
@@ -72,7 +78,9 @@ namespace Descender.UI
         };
 
         /// <summary>Key names shortened to fit a hint.</summary>
-        public static readonly Dictionary<string, string> ShortKeyNames = new Dictionary<string, string>(StringComparer.Ordinal)
+        public static readonly Dictionary<string, string> ShortKeyNames = new Dictionary<string, string>(
+            StringComparer.Ordinal
+        )
         {
             ["Escape"] = "Esc",
             ["Backspace"] = "Bksp",
@@ -222,7 +230,9 @@ namespace Descender.UI
                 }
                 var inGroup = (binding.groups ?? "").Contains(group);
                 var path = binding.effectivePath ?? "";
-                var onDevice = gamepad ? path.StartsWith("<Gamepad>", StringComparison.Ordinal) : path.StartsWith("<Keyboard>", StringComparison.Ordinal);
+                var onDevice = gamepad
+                    ? path.StartsWith("<Gamepad>", StringComparison.Ordinal)
+                    : path.StartsWith("<Keyboard>", StringComparison.Ordinal);
                 if (!inGroup && !onDevice)
                 {
                     continue;
@@ -272,7 +282,10 @@ namespace Descender.UI
 
         private static string KeyName(InputAction action, int bindingIndex)
         {
-            var name = action.GetBindingDisplayString(bindingIndex, InputBinding.DisplayStringOptions.DontIncludeInteractions);
+            var name = action.GetBindingDisplayString(
+                bindingIndex,
+                InputBinding.DisplayStringOptions.DontIncludeInteractions
+            );
             if (string.IsNullOrEmpty(name))
             {
                 return null;
