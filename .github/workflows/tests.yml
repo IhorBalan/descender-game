@@ -74,4 +74,7 @@ jobs:
         if: always()
         with:
           name: Test results for ${{ matrix.testMode }}
-          path: ${{ steps.tests.outputs.artifactsPath }}
+          # The runner sets no output when it fails before Unity starts (for
+          # example on a missing licence), so fall back to the path we asked for.
+          path: ${{ steps.tests.outputs.artifactsPath || format('{0}-artifacts', matrix.testMode) }}
+          if-no-files-found: ignore
