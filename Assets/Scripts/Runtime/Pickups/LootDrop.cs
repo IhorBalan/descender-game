@@ -77,7 +77,8 @@ namespace Descender.Pickups
             var size = IsUnique ? 6f : 4f;
             gem = new GameObject("Gem").transform;
             gem.SetParent(transform, false);
-            glow = Shapes.Block(gem, "Glow", Vector2.one * size * 4.4f, Vector2.zero, new Color(color.r, color.g, color.b, 0.25f));
+            var faint = new Color(color.r, color.g, color.b, 0.25f);
+            glow = Shapes.Block(gem, "Glow", Vector2.one * size * 4.4f, Vector2.zero, faint);
             glow.sprite = Shapes.Disc;
             glow.sortingOrder = 5;
             var shadow = Shapes.Block(gem, "Shadow", new Vector2(size * 1.6f, size * 2f), new Vector2(1f, -1f), Shadow);

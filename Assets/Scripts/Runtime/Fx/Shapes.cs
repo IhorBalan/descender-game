@@ -81,7 +81,13 @@ namespace Descender.Fx
         }
 
         /// <summary>A child object with a renderer showing a tinted square of this size (pixels) at an offset (pixels).</summary>
-        public static SpriteRenderer Block(Transform parent, string name, Vector2 sizePixels, Vector2 offsetPixels, Color color)
+        public static SpriteRenderer Block(
+            Transform parent,
+            string name,
+            Vector2 sizePixels,
+            Vector2 offsetPixels,
+            Color color
+        )
         {
             var child = new GameObject(name);
             child.transform.SetParent(parent, false);

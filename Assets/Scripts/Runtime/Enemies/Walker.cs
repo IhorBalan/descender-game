@@ -106,7 +106,9 @@ namespace Descender.Enemies
         [SerializeField]
         private WalkerBehaviour behaviour = WalkerBehaviour.None;
 
-        [Tooltip("A key of the bark sets (fallen, brute): the enemy shouts one of its lines as it winds up, half the time.")]
+        [Tooltip(
+            "A key of the bark sets (fallen, brute): the enemy shouts one of its lines as it winds up, half the time."
+        )]
         [SerializeField]
         private string barks = "";
 
@@ -144,7 +146,8 @@ namespace Descender.Enemies
         public int Health => health;
         public int Direction => direction;
         public WalkerBehaviour Behaviour => behaviour;
-        public bool IsAttacking => state == State.Windup || state == State.Strike || state == State.Leap || state == State.Recover;
+        public bool IsAttacking =>
+            state == State.Windup || state == State.Strike || state == State.Leap || state == State.Recover;
         public bool IsLurking => state == State.Lurk;
         public bool IsChasing => state == State.Chase;
 
@@ -599,7 +602,8 @@ namespace Descender.Enemies
         {
             var hero = EnemyPhysics.LiveHero();
             var from = HandPosition;
-            var aim = hero != null ? (Vector2)hero.transform.position + new Vector2(0f, 12f / Ppu) - from : Vector2.zero;
+            var aim =
+                hero != null ? (Vector2)hero.transform.position + new Vector2(0f, 12f / Ppu) - from : Vector2.zero;
             EnemyShot.Spawn(EnemyShot.Kind.Bolt, from, aim.sqrMagnitude > 0f ? aim : new Vector2(direction, 0f));
             Audio.Sfx.Play("swing", -4f);
         }
@@ -621,7 +625,8 @@ namespace Descender.Enemies
             }
         }
 
-        private Vector2 HandPosition => (Vector2)transform.position + new Vector2(HurlHand.x * direction, HurlHand.y) / Ppu;
+        private Vector2 HandPosition =>
+            (Vector2)transform.position + new Vector2(HurlHand.x * direction, HurlHand.y) / Ppu;
 
         private void StopCrouch()
         {

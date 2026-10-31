@@ -83,7 +83,13 @@ namespace Descender.Pickups
             }
             if (sprite == null)
             {
-                sprite = Fx.Shapes.Block(transform, "Sprite", new Vector2(8f, 24f), new Vector2(0f, 12f), new Color(0.5f, 0.45f, 0.4f));
+                sprite = Fx.Shapes.Block(
+                    transform,
+                    "Sprite",
+                    new Vector2(8f, 24f),
+                    new Vector2(0f, 12f),
+                    new Color(0.5f, 0.45f, 0.4f)
+                );
             }
             sprite.sortingOrder = -1;
             SetActive(false);
@@ -115,7 +121,10 @@ namespace Descender.Pickups
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.attachedRigidbody == null || !other.attachedRigidbody.TryGetComponent<PlayerController>(out var hero))
+            if (
+                other.attachedRigidbody == null
+                || !other.attachedRigidbody.TryGetComponent<PlayerController>(out var hero)
+            )
             {
                 return;
             }

@@ -47,7 +47,13 @@ namespace Descender.Pickups
             Count++;
             rest = transform.position;
             disc = Pickup.Disc(gameObject, Radius);
-            halo = Shapes.Block(transform, "Halo", new Vector2(7f, 7f), Vector2.zero, new Color(Glow.r, Glow.g, Glow.b, 0.35f));
+            halo = Shapes.Block(
+                transform,
+                "Halo",
+                new Vector2(7f, 7f),
+                Vector2.zero,
+                new Color(Glow.r, Glow.g, Glow.b, 0.35f)
+            );
             mote = Shapes.Block(transform, "Light", new Vector2(4f, 4f), Vector2.zero, Glow);
             core = Shapes.Block(transform, "Core", new Vector2(2f, 2f), Vector2.zero, Core);
             halo.sprite = Shapes.Disc;
@@ -86,7 +92,12 @@ namespace Descender.Pickups
         {
             // A hero who was at full health when he stepped on the mote and got hurt while
             // standing on it takes it now, without stepping off and on.
-            var found = Physics2D.OverlapCircle(transform.position, Radius / Ppu, Combat.Layers.Any(Combat.Layers.PlayerMask), hits);
+            var found = Physics2D.OverlapCircle(
+                transform.position,
+                Radius / Ppu,
+                Combat.Layers.Any(Combat.Layers.PlayerMask),
+                hits
+            );
             for (var i = 0; i < found; i++)
             {
                 Take(Pickup.HeroFrom(hits[i]));

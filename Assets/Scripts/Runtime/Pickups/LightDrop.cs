@@ -79,8 +79,10 @@ namespace Descender.Pickups
             }
             if (Currency == "bones")
             {
-                Shapes.Block(transform, "Shade", new Vector2(9f, 2f), new Vector2(0.5f, -1f), BoneShade).sortingOrder = 5;
-                Shapes.Block(transform, "Shaft", new Vector2(9f, 2f), new Vector2(0.5f, 0f), BoneColor).sortingOrder = 6;
+                var shade = Shapes.Block(transform, "Shade", new Vector2(9f, 2f), new Vector2(0.5f, -1f), BoneShade);
+                var shaft = Shapes.Block(transform, "Shaft", new Vector2(9f, 2f), new Vector2(0.5f, 0f), BoneColor);
+                shade.sortingOrder = 5;
+                shaft.sortingOrder = 6;
                 Shapes.Block(transform, "Left", new Vector2(2f, 4f), new Vector2(-4f, 0f), BoneColor).sortingOrder = 6;
                 Shapes.Block(transform, "Right", new Vector2(2f, 4f), new Vector2(5f, 0f), BoneColor).sortingOrder = 6;
                 motes = new Transform[0];
@@ -93,7 +95,8 @@ namespace Descender.Pickups
             {
                 var mote = new GameObject($"Mote {i}").transform;
                 mote.SetParent(transform, false);
-                var halo = Shapes.Block(mote, "Halo", new Vector2(5f, 5f), Vector2.zero, new Color(LightColor.r, LightColor.g, LightColor.b, 0.3f));
+                var faint = new Color(LightColor.r, LightColor.g, LightColor.b, 0.3f);
+                var halo = Shapes.Block(mote, "Halo", new Vector2(5f, 5f), Vector2.zero, faint);
                 var light = Shapes.Block(mote, "Light", new Vector2(3f, 3f), Vector2.zero, LightColor);
                 var core = Shapes.Block(mote, "Core", new Vector2(1f, 1f), Vector2.zero, LightCore);
                 halo.sprite = Shapes.Disc;
@@ -136,7 +139,8 @@ namespace Descender.Pickups
             {
                 var angle = time * 1.5f + i * Mathf.PI * 2f / motes.Length;
                 var spread = motes.Length > 1 ? 3f : 0f;
-                motes[i].localPosition = new Vector3(Mathf.Cos(angle) * spread, Mathf.Sin(angle) * 0.5f * spread, 0f) / Ppu;
+                motes[i].localPosition =
+                    new Vector3(Mathf.Cos(angle) * spread, Mathf.Sin(angle) * 0.5f * spread, 0f) / Ppu;
                 motes[i].localScale = Vector3.one * (1f + Mathf.Sin(time * 6f + i) * 0.25f);
             }
         }

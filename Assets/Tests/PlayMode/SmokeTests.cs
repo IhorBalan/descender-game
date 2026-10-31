@@ -53,7 +53,8 @@ namespace Descender.Tests.PlayMode
             extras.Clear();
         }
 
-        private readonly System.Collections.Generic.List<GameObject> extras = new System.Collections.Generic.List<GameObject>();
+        private readonly System.Collections.Generic.List<GameObject> extras =
+            new System.Collections.Generic.List<GameObject>();
 
         private GameObject Wall(float x)
         {

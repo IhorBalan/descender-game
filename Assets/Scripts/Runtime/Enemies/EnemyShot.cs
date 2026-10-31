@@ -76,7 +76,13 @@ namespace Descender.Enemies
                 go.transform.rotation = Quaternion.Euler(0f, 0f, angle);
                 Shapes.Block(go.transform, "Tail", new Vector2(8f, 3f), new Vector2(-4f, 0f), shot.color);
                 Shapes.Block(go.transform, "Core", new Vector2(4f, 4f), Vector2.zero, core ?? BoltCore);
-                shot.flicker = Shapes.Block(go.transform, "Flicker", new Vector2(2f, 2f), new Vector2(-1f, 4f), shot.color);
+                shot.flicker = Shapes.Block(
+                    go.transform,
+                    "Flicker",
+                    new Vector2(2f, 2f),
+                    new Vector2(-1f, 4f),
+                    shot.color
+                );
             }
             else
             {
@@ -104,7 +110,9 @@ namespace Descender.Enemies
 
         /// <summary>The hit box, in units: the bolt about its centre, the wave a pixel above the floor.</summary>
         private Vector2 Centre =>
-            kind == Kind.Bolt ? (Vector2)transform.position : (Vector2)transform.position + new Vector2(0f, (Size.y / 2f + 1f) / Ppu);
+            kind == Kind.Bolt
+                ? (Vector2)transform.position
+                : (Vector2)transform.position + new Vector2(0f, (Size.y / 2f + 1f) / Ppu);
 
         private void FixedUpdate()
         {

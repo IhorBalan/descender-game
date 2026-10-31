@@ -75,8 +75,20 @@ namespace Descender.Tests.EditMode
                 animator.SetStrips(
                     new[]
                     {
-                        new SpriteAnimator.Strip { name = "idle", fps = 6f, loop = true, frames = new[] { frame, frame } },
-                        new SpriteAnimator.Strip { name = "attack", fps = 12f, loop = false, frames = new[] { frame } },
+                        new SpriteAnimator.Strip
+                        {
+                            name = "idle",
+                            fps = 6f,
+                            loop = true,
+                            frames = new[] { frame, frame },
+                        },
+                        new SpriteAnimator.Strip
+                        {
+                            name = "attack",
+                            fps = 12f,
+                            loop = false,
+                            frames = new[] { frame },
+                        },
                     }
                 );
                 Assert.That(animator.Has("idle"), Is.True);

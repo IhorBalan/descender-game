@@ -36,7 +36,9 @@ namespace Descender.Player
         [SerializeField]
         private LightBolt boltPrefab;
 
-        [Tooltip("Come back at the last checkpoint on its own after the death animation; off when the level flow respawns him.")]
+        [Tooltip(
+            "Come back at the last checkpoint on its own after the death animation; off when the level flow respawns him."
+        )]
         [SerializeField]
         private bool autoRespawn = true;
 
@@ -656,7 +658,10 @@ namespace Descender.Player
 
         private static IHittable FindHittable(Collider2D collider)
         {
-            if (collider.attachedRigidbody != null && collider.attachedRigidbody.TryGetComponent<IHittable>(out var onBody))
+            if (
+                collider.attachedRigidbody != null
+                && collider.attachedRigidbody.TryGetComponent<IHittable>(out var onBody)
+            )
             {
                 return onBody;
             }
@@ -751,7 +756,10 @@ namespace Descender.Player
             Feedback.HitStop(0.06f);
             for (var i = 0; i < 3; i++)
             {
-                Feedback.Spark((Vector2)transform.position + new Vector2((i - 1) * 18f, 4f) / Ppu, PlayerSprite.TintSlam);
+                Feedback.Spark(
+                    (Vector2)transform.position + new Vector2((i - 1) * 18f, 4f) / Ppu,
+                    PlayerSprite.TintSlam
+                );
             }
         }
 
@@ -852,7 +860,10 @@ namespace Descender.Player
             var gravity = velocity.y < 0f ? tuning.FallGravity : tuning.Gravity;
             if (gliding)
             {
-                velocity.y = Mathf.Max(velocity.y - gravity * tuning.glideGravityMultiplier * dt, -tuning.glideFallSpeed);
+                velocity.y = Mathf.Max(
+                    velocity.y - gravity * tuning.glideGravityMultiplier * dt,
+                    -tuning.glideFallSpeed
+                );
                 return;
             }
             var airborne = state == PlayerState.Jump || state == PlayerState.Fall;

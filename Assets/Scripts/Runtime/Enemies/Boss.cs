@@ -493,7 +493,8 @@ namespace Descender.Enemies
                 (Vector2)transform.position
                 + new Vector2(direction * (profile.body.x / 2f + 4f), profile.body.y / 2f) / Ppu;
             var hero = EnemyPhysics.LiveHero();
-            var at = hero != null ? (Vector2)hero.transform.position + new Vector2(0f, 12f / Ppu) : from + Vector2.right;
+            var at =
+                hero != null ? (Vector2)hero.transform.position + new Vector2(0f, 12f / Ppu) : from + Vector2.right;
             var aim = (at - from).normalized;
             if (aim == Vector2.zero)
             {
@@ -837,7 +838,10 @@ namespace Descender.Enemies
             var centre = (Vector2)transform.position + new Vector2(0f, profile.body.y / 2f / Ppu);
             for (var i = 0; i < 4; i++)
             {
-                Feedback.Spark(centre + new Vector2(Random.Range(-12f, 12f), Random.Range(-20f, 20f)) / Ppu, DeathSparks);
+                Feedback.Spark(
+                    centre + new Vector2(Random.Range(-12f, 12f), Random.Range(-20f, 20f)) / Ppu,
+                    DeathSparks
+                );
             }
             box.enabled = false;
             body.linearVelocity = Vector2.zero;

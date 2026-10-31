@@ -25,7 +25,8 @@ namespace Descender.Enemies
             }
         }
 
-        public static bool IsDead(string placementId) => !string.IsNullOrEmpty(placementId) && Dead.Contains(placementId);
+        public static bool IsDead(string placementId) =>
+            !string.IsNullOrEmpty(placementId) && Dead.Contains(placementId);
 
         public static void Clear()
         {
