@@ -119,6 +119,10 @@ namespace Descender.CameraRig
             }
             var wanted = (Vector2)target.position;
             var facing = target.localScale.x < 0f ? -1f : 1f;
+            if (target.TryGetComponent<Player.PlayerController>(out var hero))
+            {
+                facing = hero.Facing;
+            }
             wanted.x += facing * lookAheadPixels / PixelsPerUnit;
             var deadZone = verticalDeadZonePixels / PixelsPerUnit;
             if (Mathf.Abs(wanted.y - focus.y) < deadZone)

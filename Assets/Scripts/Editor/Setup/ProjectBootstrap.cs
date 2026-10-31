@@ -11,7 +11,7 @@ namespace Descender.EditorTools.Setup
     /// and settings: makes the URP asset with a 2D Renderer, assigns it to Graphics
     /// and Quality, and sets the player and physics settings the game depends on
     /// (320x180 at integer scale, 60 Hz physics, the 2D gravity in level pixels,
-    /// the collision layers). Safe to run again: existing assets are reused.
+    /// the collision layers and which of them touch). Safe to run again: existing assets are reused.
     /// </summary>
     public static class ProjectBootstrap
     {
@@ -73,6 +73,7 @@ namespace Descender.EditorTools.Setup
             PlayerSettings.companyName = "Descender";
 
             AddLayers();
+            Descender.Combat.Layers.ApplyCollisionMatrix();
             AssetDatabase.SaveAssets();
             Debug.Log("Descender: render pipeline, physics, player settings and layers are set.");
         }

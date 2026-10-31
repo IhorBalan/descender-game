@@ -301,7 +301,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bac9fabf7e0560f82a2dc438ddb42e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heroPrefab: {fileID: 0}
+  heroPrefab: {fileID: 330757043252729879, guid: 80fb5de8d62a5114bf3b3ebd212ead93, type: 3}
   gameCamera: {fileID: 104}
   music: {fileID: 205}
   fade: {fileID: 302}

@@ -1,6 +1,6 @@
 ---
 name: sprites-and-animation
-description: Sprite import settings (PPU, point filter, slicing, pivots), the SpriteFramesImporter that builds Animation Clips and Animators from sprites.json, playing animations by name from code, flipping, hit flash, squash and stretch and other tweens by coroutine. Use when adding or changing character art, animations, or sprite feedback.
+description: Sprite import settings (PPU, point filter, slicing, pivots), the SpriteAnimator strips that tools/unity/build_prefabs.py fills from sprites.json, playing animations by name from code, flipping, hit flash, squash and stretch and other tweens by coroutine. Use when adding or changing character art, animations, or sprite feedback.
 ---
 
 # Sprites and animation
@@ -27,34 +27,33 @@ Multiple` with sprites named `<file>_<index>`, pivot bottom-centre for
 characters (feet on the ground; Godot used `offset` for the same). Props
 pivot top-left (Godot `centered = false`). UI pivots centre.
 
-## Clips and Animators
+## Strips and the SpriteAnimator
 
-`Descender > Import > Sprite animations` (`SpriteAnimationImporter`)
-builds, per character, `Animations/<character>_<anim>.anim` clips (sprite
-keys at the spec's fps, `Loop Time` from `loop`) and one
-`<character>.controller` with a state per clip, `idle` as default and no
-transitions. Code drives it directly:
+Characters are animated by `Descender.Fx.SpriteAnimator` (on the `Visual`
+child, next to the `SpriteRenderer`), not by Animator controllers: its
+serialized `strips` are `{ name, fps, loop, frames[] }`, and
+`tools/unity/build_prefabs.py` fills them into the prefabs from
+`sprites.json`, so a new strip is a `sprites.json` entry plus a run of
+that script. Code drives it by name:
 
 ```csharp
-[SerializeField] private Animator animator;
-private static readonly int RunHash = Animator.StringToHash("run");
-
-private void Play(string state) => animator.Play(state, 0, 0f);   // restarts
-private void PlayIfNew(int hash)
-{
-    if (!animator.GetCurrentAnimatorStateInfo(0).shortNameHash.Equals(hash))
-        animator.Play(hash);
-}
+sprite.Play("run");            // starts it unless it is already playing
+sprite.Restart("attack");      // from the first frame, even if playing
+sprite.PlayOnce("hurt");       // a one-shot the state machine checks with Finished
+sprite.Pose("attack", 0);      // holds one frame (a windup)
+if (sprite.Finished) ...       // a non-looping strip reached its end
+sprite.SpeedScale = 1.5f;      // hastened loops (a charging boss)
 ```
 
-Hash the state names in `static readonly int` fields. Animator `Update
-Mode: Normal`, `Culling: Always Animate` on the hero (so off-screen
-timing still matches). Finishing: `animator.GetCurrentAnimatorStateInfo(0)
-.normalizedTime >= 1f` for a non-looping clip, or use an `AnimationEvent`
-only for cosmetic hooks (footstep dust), never gameplay timing.
+`Has(name)` and `Length(name)` ask about strips; a missing name logs once
+and keeps the current frame, so a character without a `glide` strip still
+plays. It updates on `Time.deltaTime`, so hit-stop slows it with the game.
+`SpriteAnimator.CreateChild(transform)` makes an empty one for an object
+built in code (tests).
 
-Re-run the importer after editing `sprites.json` or a strip; it keeps
-existing clips' extra curves and the controller's extra states.
+`SpriteAnimationImporter` (`Descender > Import > Sprite animations`) still
+builds `.anim` clips and controllers for anything that wants an Animator
+(UI, cutscenes); gameplay characters do not use them.
 
 ## Facing and flipping
 
@@ -65,18 +64,22 @@ transform.
 
 ## Feedback
 
-- **Hit flash**: swap the renderer's `sharedMaterial` to `Sprite Flash.mat`
-  (unlit white) for `tuning.HitFlashFrames` fixed steps, then back;
-  respects the `hitFlash` setting. Do not touch `.material` (clones).
+- **Hit flash**: `Descender.Fx.HitFlash` swaps its renderers'
+  `sharedMaterial` to `Assets/Settings/Materials/Sprite Flash.mat` (the
+  `Descender/Sprite Flash` shader: the sprite's alpha in flat white) for
+  0.1 s of real time, then back; respects the `hitFlash` setting. Call it
+  through `Feedback.Flash(component)`. Do not touch `.material` (clones).
 - **Squash and stretch** on land/jump: a coroutine scaling the `Visual`
   child from `(1.3, 0.7)` back to `(1, 1)` over 0.12 s with
   `Mathf.SmoothStep`. All tweens are small coroutines in
-  `Descender.Fx.Tween` (`Scale`, `Fade`, `Shake`, `Punch`); no tween
-  package.
-- **Afterimages** for the dash: `AfterimagePool` spawns pooled
-  `SpriteRenderer`s with the current sprite, fading over 0.2 s.
-- **Death**: the death clip plays, then `Fade` of the renderer; the
-  object is disabled, not destroyed, until respawn.
+  `Descender.Fx.Tween` (`Scale`, `Fade`, `Topple`, `Move`, `Wait`); no
+  tween package.
+- **Sparks, puffs, dust**: `Feedback.Spark/Puff/Dust` emit from three
+  ParticleSystems made in code; `Feedback.Shake` and `Feedback.HitStop`
+  respect the `shake`, `rumble` and `hitStop` settings.
+- **Death**: `EnemyDeath.Play` runs the death strip, topples the sprite,
+  waits the corpse time and fades it, then the enemy destroys itself. The
+  hero's death strip plays and the object stays for the respawn.
 
 ## Pivots and offsets from Godot
 

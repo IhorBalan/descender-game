@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ddf1b612c9f5163996226b10822ae29, type: 3}
+  m_Name: SfxLibrary
+  m_EditorClassIdentifier: 
+  entries:
+  - name: ability
+    clip: {fileID: 8300000, guid: 3bd4af9cf4d9509395f87bca0b95ce1b, type: 3}
+  - name: boss_defeat
+    clip: {fileID: 8300000, guid: cb176b29ad8759a7a2c48bbc377da061, type: 3}
+  - name: boss_engage
+    clip: {fileID: 8300000, guid: 1853624aac125e609ab030dcf90ac8e9, type: 3}
+  - name: checkpoint
+    clip: {fileID: 8300000, guid: d6cf9343a8b3588781f52362b98a96b2, type: 3}
+  - name: creak
+    clip: {fileID: 8300000, guid: 262a1de844e650e5b64ce0f46ea8a9a5, type: 3}
+  - name: dash
+    clip: {fileID: 8300000, guid: 1f1ccf5107fc5645badf86e5590a0ec1, type: 3}
+  - name: death
+    clip: {fileID: 8300000, guid: 8bc057451d0354389e2332c5d9ddd83e, type: 3}
+  - name: double_jump
+    clip: {fileID: 8300000, guid: 3c77e09ef12d5e678a06da6cd73850c8, type: 3}
+  - name: enemy_die
+    clip: {fileID: 8300000, guid: f7d8046386565dbfb08208c267ee9cdc, type: 3}
+  - name: heal
+    clip: {fileID: 8300000, guid: e5e5cd75cb48596d95aea2da80b25e0d, type: 3}
+  - name: hit
+    clip: {fileID: 8300000, guid: b1bad59449bd54edbd355aa08548474b, type: 3}
+  - name: hurt
+    clip: {fileID: 8300000, guid: b8108c7ae72c50109284aaff79793767, type: 3}
+  - name: jump
+    clip: {fileID: 8300000, guid: f8a4e36beacf5639a2e0430795c28160, type: 3}
+  - name: land
+    clip: {fileID: 8300000, guid: 21f18fa6172c5490af9c1b76bf810d3f, type: 3}
+  - name: level_complete
+    clip: {fileID: 8300000, guid: 431477a5ae895a6eb6c33605b0a4cc77, type: 3}
+  - name: menu_back
+    clip: {fileID: 8300000, guid: 21f0eaffa6d75ced9933bca58ab5b36a, type: 3}
+  - name: menu_confirm
+    clip: {fileID: 8300000, guid: 9c6726e6e76e50df8a0559994e7a7be4, type: 3}
+  - name: menu_move
+    clip: {fileID: 8300000, guid: 83a65b6e9eb45aeabc64e25c386fac79, type: 3}
+  - name: pause
+    clip: {fileID: 8300000, guid: df8a2bf0cac859c98f05cbf1b7ae3fba, type: 3}
+  - name: pickup
+    clip: {fileID: 8300000, guid: 96c290a6233057a2a4a84ec577fad675, type: 3}
+  - name: roar
+    clip: {fileID: 8300000, guid: e911653faeb3559f93ee554038625372, type: 3}
+  - name: swing
+    clip: {fileID: 8300000, guid: d71c5680094c58a7ae726b35b4a339c6, type: 3}
+  - name: talk
+    clip: {fileID: 8300000, guid: 996bc0210fc25633947c33486bce82ea, type: 3}
