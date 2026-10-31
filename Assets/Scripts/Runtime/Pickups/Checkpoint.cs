@@ -138,6 +138,12 @@ namespace Descender.Pickups
                 return;
             }
             hero.RestAt(transform.position);
+            var flow = Game.GameFlow.Instance;
+            if (flow != null)
+            {
+                flow.ActiveCheckpoint = index;
+                flow.RespawnPoint = transform.position;
+            }
             Audio.Sfx.Play("checkpoint");
             foreach (var other2 in all)
             {

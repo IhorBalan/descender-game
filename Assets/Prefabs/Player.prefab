@@ -275,7 +275,7 @@ MonoBehaviour:
   tuning: {fileID: 11400000, guid: d5744efd623559728c6eec70147680b1, type: 2}
   sprite: {fileID: 3079805236589135789}
   boltPrefab: {fileID: 0}
-  autoRespawn: 1
+  autoRespawn: 0
 --- !u!114 &1530029586933773395
 MonoBehaviour:
   m_ObjectHideFlags: 0

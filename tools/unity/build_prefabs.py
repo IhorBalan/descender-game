@@ -299,7 +299,7 @@ def build_player() -> str:
                 "PlayerController",
                 script("Player/PlayerController"),
                 f"  tuning: {{fileID: 11400000, guid: {guid(PLAYER_TUNING)}, type: 2}}\n  sprite: {{sprite}}\n"
-                "  boltPrefab: {fileID: 0}\n  autoRespawn: 1\n",
+                "  boltPrefab: {fileID: 0}\n  autoRespawn: 0\n",
             ),
             (
                 "PlayerSprite",
