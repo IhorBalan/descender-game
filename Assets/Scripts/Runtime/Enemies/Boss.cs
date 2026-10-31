@@ -226,7 +226,7 @@ namespace Descender.Enemies
             EnemyPhysics.Prepare(body, box);
             if (profile == null)
             {
-                Debug.LogError($"Boss: no profile set on {name}; using defaults.");
+                // A placement sets the profile right after Instantiate; until then the defaults stand in.
                 profile = ScriptableObject.CreateInstance<BossProfile>();
             }
             if (transform.localScale.x < 0f)

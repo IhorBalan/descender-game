@@ -170,7 +170,6 @@ namespace Descender.Enemies
         /// <summary>The text over the head right now, or "".</summary>
         public string MarkText => mark != null ? mark.Text : "";
 
-        /// <summary>Sets the habit from a placement's name ("chase", "ambush"...); "" or an unknown name is plain patrolling.</summary>
         /// <summary>What the map says about this one: its id for the kill list, its habit, its barks, whether it rests.</summary>
         public void Configure(WorldPlacement placement)
         {
@@ -184,6 +183,7 @@ namespace Descender.Enemies
             }
         }
 
+        /// <summary>Sets the habit from a placement's name ("chase", "ambush"...); "" or an unknown name is plain patrolling.</summary>
         public void SetBehaviour(string godotName)
         {
             behaviour = Parse(godotName);
