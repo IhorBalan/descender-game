@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: the_fury
+  m_EditorClassIdentifier: 
+  displayName: Gorrow, the Fury
+  character: brute
+  walkAnim: walk
+  scale: 1.2
+  tint: {r: 1, g: 0.55, b: 0.5, a: 1}
+  facesLeft: 0
+  body: {x: 42, y: 72}
+  health: 40
+  speed: 44
+  contactDamage: 1
+  third: 
+  attackRange: 58
+  reach: {x: 54, y: 54}
+  windup: 0.5
+  strike: 0.25
+  recover: 0.6
+  cooldown: 0.8
+  attackDamage: 2
+  chargeSpeed: 270
+  chargeWindup: 0.45
+  chargeCooldown: 1.6
+  motes: 3
+  loot:
+    LightMin: 70
+    LightMax: 90
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: furys_edge
+    Xp: 75

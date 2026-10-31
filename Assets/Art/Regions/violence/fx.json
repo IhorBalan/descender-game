@@ -1,0 +1,73 @@
+{
+  "art_tile": 64,
+  "particles": [
+    {
+      "texture": "drops.png",
+      "color": "#aa1e28",
+      "amount": 10,
+      "lifetime": 3,
+      "direction": [
+        0.0,
+        1.0
+      ],
+      "spread": 0,
+      "speed": [
+        60,
+        90
+      ],
+      "gravity": [
+        0,
+        60
+      ],
+      "scale": [
+        0.4,
+        0.7
+      ]
+    },
+    {
+      "texture": "ash.png",
+      "color": "#783c46",
+      "amount": 24,
+      "lifetime": 14,
+      "direction": [
+        -0.3,
+        1.0
+      ],
+      "spread": 25,
+      "speed": [
+        6,
+        14
+      ],
+      "gravity": [
+        0,
+        2
+      ],
+      "scale": [
+        0.3,
+        0.6
+      ],
+      "spin": 0.3,
+      "sway": 3
+    },
+    {
+      "texture": "flies.png",
+      "color": "#1e0a0e",
+      "amount": 10,
+      "lifetime": 6,
+      "direction": [
+        1.0,
+        0.0
+      ],
+      "spread": 180,
+      "speed": [
+        14,
+        30
+      ],
+      "scale": [
+        0.2,
+        0.35
+      ],
+      "sway": 12
+    }
+  ]
+}

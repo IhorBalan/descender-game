@@ -1,53 +1,77 @@
 name: Tests
 
+# The Unity project at the repository root: a format check on the C#, then the
+# EditMode (data and unit) and PlayMode (smoke) tests through GameCI. The
+# Unity licence comes from the repository secrets UNITY_LICENSE, UNITY_EMAIL
+# and UNITY_PASSWORD (see .claude/skills/unity-testing-and-ci).
+
 on:
   pull_request:
   push:
     branches: [main]
 
+concurrency:
+  group: tests-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  lint:
+  format:
+    name: C# format
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
 
-      - uses: actions/setup-python@v6
+      - uses: actions/setup-dotnet@v4
         with:
-          python-version: "3.12"
+          dotnet-version: "8.0.x"
 
-      - name: Install gdtoolkit
-        run: pip install "gdtoolkit==4.5.0"
+      - name: Install CSharpier
+        run: dotnet tool install --global csharpier --version 1.0.3
 
-      - name: Lint GDScript
-        run: gdlint scripts tests tools
+      - name: Check C# formatting
+        run: csharpier check Assets
 
-      - name: Check GDScript formatting
-        run: gdformat --check --diff scripts tests tools
-
-  smoke-test:
+  unity-tests:
+    name: Unity ${{ matrix.testMode }} tests
     runs-on: ubuntu-latest
-    timeout-minutes: 10
-    env:
-      GODOT_VERSION: 4.7.2
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        testMode:
+          - EditMode
+          - PlayMode
     steps:
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v4
+        with:
+          lfs: true
 
-      - name: Download Godot
-        run: |
-          curl -fsSL -o godot.zip "https://github.com/godotengine/godot/releases/download/${GODOT_VERSION}-stable/Godot_v${GODOT_VERSION}-stable_linux.x86_64.zip"
-          unzip -q godot.zip
-          mv "Godot_v${GODOT_VERSION}-stable_linux.x86_64" godot
-          ./godot --version
+      - uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-Tests-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-Tests-
+            Library-
 
-      - name: Import project
-        run: ./godot --headless --path . --import
+      - uses: game-ci/unity-test-runner@v4
+        id: tests
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          projectPath: .
+          testMode: ${{ matrix.testMode }}
+          artifactsPath: ${{ matrix.testMode }}-artifacts
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          checkName: ${{ matrix.testMode }} test results
+          # Coverage has crashed PlayMode runs on Unity 6 (see game.ci docs).
+          coverageEnabled: false
 
-      - name: Run unit and data tests
-        run: ./godot --headless --path . res://tests/unit_test.tscn
-
-      - name: Run map pipeline tests
-        run: ./godot --headless --path . res://tests/map_pipeline_test.tscn
-
-      - name: Run smoke test
-        run: ./godot --headless --path . res://tests/smoke_test.tscn
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: Test results for ${{ matrix.testMode }}
+          path: ${{ steps.tests.outputs.artifactsPath }}

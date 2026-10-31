@@ -1,0 +1,27 @@
+{
+  "art_tile": 64,
+  "top": [
+    "top_0.png",
+    "top_1.png",
+    "top_2.png",
+    "top_3.png"
+  ],
+  "bottom": [
+    "hang_0.png",
+    "hang_1.png",
+    "hang_2.png"
+  ],
+  "left": [
+    "side_l0.png",
+    "side_l1.png"
+  ],
+  "right": [
+    "side_r0.png",
+    "side_r1.png"
+  ],
+  "chance": 1.0,
+  "top_chance": 0.8,
+  "bottom_chance": 0.5,
+  "left_chance": 0.4,
+  "right_chance": 0.4
+}

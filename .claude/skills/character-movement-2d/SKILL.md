@@ -1,123 +1,122 @@
 ---
 name: character-movement-2d
-description: Moving bodies in 2D here: CharacterBody2D state machines, jump tuning, physics layers and masks, Area2D hitboxes and hazards, RayCast2D probes, and physics interpolation. Use when touching the player, an enemy, a projectile, a pickup or anything with collision.
+description: Player and enemy movement in Unity 2D for this game: Rigidbody2D (dynamic for the hero, kinematic for walkers), FixedUpdate vs Update, input buffering, coyote time, layers and masks, hitboxes as trigger colliders, hit-stop and screen shake. Use when touching PlayerController, enemies, projectiles, hazards, ledges or collision layers.
 ---
 
-# 2D movement and collision
+# 2D character movement
 
-## The physics layers (`project.godot`)
+Port target for `scripts/player.gd`, `scripts/enemies/*.gd`,
+`scripts/world/ledge.gd` and friends. Numbers come from `PlayerTuning`
+(ScriptableObject in `Assets/Data/PlayerTuning.asset`) in level pixels,
+divided by `PlayerTuning.PixelsPerUnit` (16) at the physics boundary.
 
-| Bit | Name | Who is on it |
-|---|---|---|
-| 1 | `world` | Terrain collision built by `LevelBuilder`, secret walls |
-| 2 | `player` | `Player` body (`collision_layer = 2`) |
-| 4 | `enemy` | Enemy bodies (`collision_layer = 4`) |
-| 8 | `light_barrier` | Barriers the light dash passes through |
-| 16 | `ledge` | One-way platforms (`Player.LEDGE_LAYER_BIT`) |
+## Bodies
 
-Bodies collide with `world + light_barrier + ledge` (`collision_mask = 25`).
-Hitboxes are `Area2D`s with `collision_layer = 0` and a mask of the one
-layer they look for: the enemy's `Hitbox` masks the player (2), the
-player's attack masks enemies (4). `Interactable` and `Hazard` are areas
-with `monitorable = false` when nothing needs to see them. Always set
-layer *and* mask explicitly in the `.tscn`; a default of 1/1 collides with
-the world and is the usual cause of "my hitbox hits terrain".
+- **Hero**: `Rigidbody2D` Dynamic, `gravityScale 0` (gravity is applied by
+  the controller so rise, fall and wall-slide gravity can differ), `Freeze
+  Rotation Z`, `Interpolate`, `Collision Detection: Continuous`. One
+  `BoxCollider2D` for the body (feet slightly inset so a 1 px lip does not
+  catch), and a child `Hitbox` with a trigger collider on the `Trigger`
+  layer for the sword.
+- **Walkers**: `Rigidbody2D` Kinematic with `useFullKinematicContacts`
+  on, moved with `MovePosition` in `FixedUpdate`; a `BoxCollider2D` on
+  `Enemy`, a child trigger `Hurtbox` for the hero's sword.
+- **Flyers and projectiles**: Kinematic, no gravity, moved by setting
+  `linearVelocity` or `MovePosition`; projectiles are trigger colliders
+  on `Hazard`.
+- **Static world**: the Terrain tilemap has `TilemapCollider2D` +
+  `CompositeCollider2D` (its Rigidbody2D Static) on the `World` layer.
+  Ledges (one-way) use `PlatformEffector2D` on their own `Ledge` layer so
+  the hero can drop through by ignoring that layer while `MoveDown` is
+  held.
 
-Every scene's origin is at the **feet**, so placements, sprites
-(`AnimLoader.offset`) and rays agree.
+Movement code reads input in `Update` into a small buffer (`jumpPressedAt`,
+`attackQueued`) and consumes it in `FixedUpdate`, which runs at the fixed
+60 Hz set by `ProjectBootstrap`. Never read `WasPressedThisFrame` in
+`FixedUpdate`: at 144 Hz display the press lands in a frame with no fixed
+step and is lost.
 
-## CharacterBody2D the way the player does it
+## Ground and walls
 
-- All movement runs in `_physics_process(delta)` and ends in
-  `move_and_slide()`. Input is read there too (`Input.is_action_just_pressed`)
-  with a buffer (`INPUT_BUFFER_TIME`) so a press a few ticks early still
-  counts. Never move a body in `_process`.
-- `velocity` is the state; gravity is added each tick and capped at
-  `MAX_FALL_SPEED`. `up_direction` is up by default; `floor_snap_length = 4`
-  keeps him glued over small lips; `is_on_floor()` is only valid *after*
-  `move_and_slide()`.
-- A `match state:` machine (`State.IDLE, RUN, JUMP, FALL, DASH, ATTACK, ...`)
-  with one `_process_<state>` per state. State changes set the animation and
-  the sounds in one place.
-- Jump tuning derives from feel constants, not raw numbers:
-  `JUMP_VELOCITY := -2.0 * JUMP_HEIGHT / JUMP_TIME_TO_APEX`,
-  `GRAVITY := 2.0 * JUMP_HEIGHT / (JUMP_TIME_TO_APEX ** 2)`, a heavier
-  `FALL_GRAVITY`, a jump cut multiplier on release, lighter gravity near the
-  apex, coyote time, and a landing with `_was_on_floor` tracking. Reuse these
-  constants for anything that jumps.
-- Acceleration is separate for ground, air, turning and friction
-  (`GROUND_ACCEL`, `GROUND_TURN`, `AIR_ACCEL`...). Use `move_toward` on
-  `velocity.x`.
-- Corner correction nudges the body sideways by up to `CORNER_CORRECTION`
-  pixels with `test_move` before accepting a ceiling or lip collision.
-- Dropping through a ledge: temporarily clear the ledge bit from
-  `collision_mask` for `DROP_TIME`, then restore it.
-- Walls: `is_on_wall()` and `get_wall_normal()` after the move, with a
-  short `WALL_JUMP_LOCK` on horizontal input after a wall jump.
+```csharp
+private static readonly Collider2D[] Hits = new Collider2D[4];
+private ContactFilter2D groundFilter;   // set in Awake: layerMask World | Ledge, useTriggers false
 
-Enemies (`Walker`, `Flyer`) are also `CharacterBody2D` with their own
-`GRAVITY`, a `FloorRay` `RayCast2D` ahead of the feet (mask `world + ledge`)
-to turn at edges, and `WINDUP / STRIKE / RECOVER` states driven by timers.
-Their numbers come from a `WalkerProfile` resource, not constants, so a new
-body is a `.tres`, not a script.
+private bool CheckGround()
+{
+    var box = feet.bounds;                      // a thin box under the collider, 1 px tall
+    return Physics2D.OverlapBox(box.center, box.size, 0f, groundFilter, Hits) > 0;
+}
+```
 
-## Area2D rules
+- Coyote time (`tuning.CoyoteTime`), jump buffer and variable jump height
+  (cut `velocity.y` to `tuning.JumpCutVelocity` on release) are timers in
+  the controller, counted down in `FixedUpdate` by `Time.fixedDeltaTime`.
+- Wall slide and wall jump check a side box the same way, masked to
+  `World` only.
+- Dash sets velocity directly for `DashTime` and ignores gravity; it
+  switches the hero's layer to `PlayerDashing` (no collision with `Enemy`)
+  for its duration via `gameObject.layer`, and back after.
 
-- Connect `body_entered`/`body_exited` in `_ready`; use `is` to filter
-  (`if body is Player`).
-- A hazard that must keep hurting while the hero stands in it polls
-  `get_overlapping_bodies()` in `_physics_process`, but only while something
-  is inside (`set_physics_process(false)` until `body_entered`) so hundreds of
-  spikes cost nothing (`scripts/hazard.gd`).
-- An attack hitbox is a child `Area2D` whose `CollisionShape2D` is
-  `disabled` until the active frames (`ATTACK_ACTIVE_FROM / UNTIL`), then
-  disabled again. Toggle `shape.disabled` or `set_deferred("disabled", ...)`
-  from within a physics callback.
-- Changing shapes or monitoring from inside a signal callback must be
-  deferred (`set_deferred`, `call_deferred`), since the physics server is
-  flushing.
-- Area detection needs a tick: a shape enabled this frame reports overlaps
-  next frame. Tests account for that.
+## Layers and masks
 
-## Shapes and one-way platforms
+Set once by `ProjectBootstrap` (`Edit > Project Settings > Physics 2D >
+Layer Collision Matrix` after it runs):
 
-- `RectangleShape2D` for bodies, `CapsuleShape2D` only where a round bottom
-  helps; keep collision simpler than the sprite.
-- Ledges are `StaticBody2D`s on layer 16 with `one_way_collision = true`
-  on the shape, built in `LevelBuilder` from the `kind == "ledge"` tiles.
-- Solid runs of tiles are merged into one shape per row by the builder
-  instead of per-tile collision, so `TileSet` physics layers are not used
-  for the world. Keep it that way: new terrain kinds go through the builder.
+| Layer | Collides with |
+|---|---|
+| World | Player, Enemy, Pickup |
+| Ledge | Player (one-way), Enemy |
+| Player | World, Ledge, Enemy, Hazard, Pickup, Trigger |
+| Enemy | World, Ledge, Player |
+| Hazard | Player |
+| Pickup | World, Player |
+| Trigger | Player |
+| LightBarrier | Player (only while the barrier is up) |
 
-## Physics interpolation (on project-wide)
+Read masks through `LayerMask.GetMask("World", "Ledge")` cached in a
+static readonly field, never a magic int. `Physics2D.queriesHitTriggers`
+is off; hit detection that wants triggers passes a `ContactFilter2D` with
+`useTriggers = true`.
 
-`physics/common/physics_interpolation = true`, so rendering interpolates
-between physics ticks and the camera moves smoothly.
+## Hits, damage, invulnerability
 
-- Anything **teleported** (respawn, fast travel, warp) calls
-  `reset_physics_interpolation()` right after setting its position
-  (`main.gd` does this for the player), or it slides across the screen.
-- Anything moved in `_process` or by a tween (floating pickups, the
-  `ParallaxSprite`, `HealMote`) sets
-  `physics_interpolation_mode = Node.PHYSICS_INTERPOLATION_MODE_OFF` on the
-  moved node, or it lags a tick behind.
-- Read positions for rendering (sprites following a body) in `_process`,
-  and for logic in `_physics_process`. Never set `global_position` from
-  `_process` on an interpolated node.
-- Keep the physics tick at 60; use delta, not frame counts, in logic. The
-  smoke test counts ticks because it runs headless at a fixed rate.
+- Hitbox and hurtbox are trigger colliders; `OnTriggerEnter2D` on the
+  hurtbox side looks for an `IHittable`/`Damager` component with
+  `TryGetComponent` and calls `Hit(damage, from)`. No tags.
+- The sword hitbox is enabled for the attack's active frames by the
+  attack state, not by animation events, so the timing is the same at any
+  frame rate.
+- Invulnerability after a hit is a timer; while it runs the hurtbox
+  collider is disabled and the sprite flashes (`sprites-and-animation`).
+- Knockback sets velocity once and lets the controller resume after
+  `tuning.HitStunTime`.
 
-## Spawning and projectiles
+## Feel
 
-- Spawn with a preloaded `PackedScene`, set `global_position` and
-  properties, then `add_child`. `EnemyShot` is an `Area2D` moved by its own
-  velocity in `_physics_process` and freed on hit or after a lifetime.
-- Give every spawned thing a way to die: a lifetime timer, leaving the
-  loaded chunks (`LevelBuilder.is_loaded(cell)`), or the owner freeing it.
+- Hit-stop: `Time.timeScale = 0.05f` for `tuning.HitStopTime` real seconds
+  via a coroutine using `WaitForSecondsRealtime`, respecting the
+  `hitStop` setting. Pausing sets `Time.timeScale = 0` and the hit-stop
+  coroutine must not undo it (check `Pause.IsPaused` before restoring).
+- Screen shake lives on `GameCamera` (see `urp-2d-lighting-and-camera`),
+  scaled by the `shake` setting, in whole pixels so the pixel-perfect
+  camera does not shimmer.
+- Rumble through `Gamepad.current?.SetMotorSpeeds` with a coroutine that
+  resets to zero; respect the `rumble` setting and `Gamepad.current`
+  being null.
 
-## Debugging collision
+## Death, respawn, checkpoints
 
-Run with **Debug → Visible Collision Shapes**, or in headless tests check
-`is_on_floor()` after a few ticks. `Player.LEDGE_LAYER_BIT` and the layer
-names above are the first things to compare when a body falls through or
-sticks.
+The hero's `Die()` disables input and the colliders, plays the death
+animation, then `GameFlow.Respawn()` restores the last checkpoint:
+position, hearts, flasks, and re-enables. Enemies killed since the
+checkpoint stay dead within the region (per-region `KilledIds`) and
+reset on region reload; bosses set `BossIds.FlagFor(id)` permanently.
+
+## Things that went wrong in Godot and must not come back
+
+- Moving a body from `Update` (jitter at any non-60 Hz display).
+- Stuck on tile seams: keep the composite collider, inset the feet.
+- Double damage from overlapping hurtboxes: one hurtbox per enemy, the
+  hero's sword hitbox tracks a `HashSet<Collider2D>` of what it hit this
+  swing, cleared when the swing starts.

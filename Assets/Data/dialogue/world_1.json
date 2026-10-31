@@ -1,0 +1,2443 @@
+{
+	"opening": {
+		"unless": [
+			"opening_seen"
+		],
+		"sets": "opening_seen",
+		"lines": [
+			{
+				"who": "Voice",
+				"text": "You are unfinished."
+			},
+			{
+				"who": "Voice",
+				"text": "Return to the Basin. Lie down. We will take the rest."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "Voice",
+				"text": "Then it will hurt. Everything you carry will hurt."
+			},
+			{
+				"who": "Ansel",
+				"text": "Good. Then I'll know I'm still carrying it."
+			}
+		]
+	},
+	"mereth_intro": {
+		"sets": "met_mereth",
+		"lines": [
+			{
+				"who": "Mereth",
+				"text": "Hush. Don't stand so straight, they'll see the light in you."
+			},
+			{
+				"who": "Mereth",
+				"text": "You're the other one. The brother. I saw you run."
+			},
+			{
+				"who": "Ansel",
+				"text": "Where did they take him?"
+			},
+			{
+				"who": "Mereth",
+				"text": "Down. The Low Gate, past the orchard, past the guards. He went talking."
+			},
+			{
+				"who": "Mereth",
+				"text": "The whole way. Telling the guards what he saw. He wanted them to hear it."
+			},
+			{
+				"who": "Ansel",
+				"text": "That's Tobiah."
+			},
+			{
+				"who": "Mereth",
+				"text": "The gate opens for the gathered and for the dropped. You're neither. You'll have to break it."
+			}
+		],
+		"once": true,
+		"unless": [
+			"met_mereth"
+		]
+	},
+	"mereth_again": {
+		"requires": [
+			"met_mereth"
+		],
+		"lines": [
+			{
+				"who": "Mereth",
+				"text": "Keep count. The sun never sets here; it's the only way to know how long it's been."
+			},
+			{
+				"who": "Mereth",
+				"text": "I've been gathered twice. They put me back both times. \"Not ripe.\" I don't ask what that means."
+			}
+		]
+	},
+	"ithuriel_intro": {
+		"sets": "met_ithuriel",
+		"lines": [
+			{
+				"who": "Ithuriel",
+				"text": "Stop there. I am... I am meant to stop you."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "I sat down an hour ago. I can't remember why. Or how long an hour is."
+			},
+			{
+				"who": "Ansel",
+				"text": "You're a guard. Guard."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "There's a song. I keep humming it. I don't know a single song. Angels don't."
+			},
+			{
+				"who": "Ansel",
+				"text": "Hum it."
+			},
+			{
+				"who": "",
+				"text": "(He hums. You know it.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Where did you hear that?"
+			},
+			{
+				"who": "Ithuriel",
+				"text": "From the one they dropped. He hummed it at the gate. I think... I think I knew it before that."
+			}
+		],
+		"once": true,
+		"unless": [
+			"met_ithuriel"
+		]
+	},
+	"ithuriel_again": {
+		"requires": [
+			"met_ithuriel"
+		],
+		"lines": [
+			{
+				"who": "Ithuriel",
+				"text": "They say the Basin takes everything. It doesn't. Something stays in the hands."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "Go on. I'll say I didn't see you. I'm good at not remembering."
+			}
+		]
+	},
+	"gate": {
+		"unless": [
+			"reached_gate"
+		],
+		"sets": "reached_gate",
+		"lines": [
+			{
+				"who": "Voice",
+				"text": "This is the Low Gate. Nothing that goes through it comes back up."
+			},
+			{
+				"who": "Ansel",
+				"text": "He will."
+			},
+			{
+				"who": "Voice",
+				"text": "The Garden will go on without you both. It always has."
+			}
+		]
+	},
+	"item_token": {
+		"lines": [
+			{
+				"who": "Tobiah's harvest token",
+				"text": "A wooden harvest token, the kind the gathered carry to the Basin."
+			},
+			{
+				"who": "Tobiah's harvest token",
+				"text": "Someone has scratched a tally into the back: four strokes and a bar, over and over, until the wood ran out."
+			}
+		]
+	},
+	"item_ledger": {
+		"lines": [
+			{
+				"who": "Ledger page",
+				"text": "Torn from the Wardens' book. \"Gathered this season: forty. Short of the Choir's need by three.\""
+			},
+			{
+				"who": "Ledger page",
+				"text": "\"Ungathered: one, dropped. Note the brother.\""
+			}
+		]
+	},
+	"item_basin_shard": {
+		"lines": [
+			{
+				"who": "Basin shard",
+				"text": "A curved piece of white stone, smooth as a bowl. It is warm."
+			},
+			{
+				"who": "Basin shard",
+				"text": "When you hold it you cannot remember what you were thinking a moment ago."
+			}
+		]
+	},
+	"mereth_count": {
+		"lines": [
+			{
+				"who": "Mereth",
+				"text": "Three thousand and twelve. Don't ask me what of. Suns, I suppose. Mine."
+			}
+		]
+	},
+	"mereth_orchard": {
+		"lines": [
+			{
+				"who": "Mereth",
+				"text": "The orchard's full again. It fills up the day after a gathering. Nobody plants it."
+			}
+		]
+	},
+	"ithuriel_song": {
+		"lines": [
+			{
+				"who": "Ithuriel",
+				"text": "(He hums. He stops when he notices you.) Still don't know it. Still can't stop."
+			}
+		]
+	},
+	"ithuriel_orders": {
+		"lines": [
+			{
+				"who": "Ithuriel",
+				"text": "My orders say 'none pass'. They don't say I have to stand up."
+			}
+		]
+	},
+	"arrival": {
+		"once": true,
+		"sets": "arrived_earth",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Sky. Under me, then over me. So that is what the floor of Purgatory is."
+			},
+			{
+				"who": "",
+				"text": "(A town under a torn sky. Fires. Something moving in the churchyard, and someone hammering.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Someone is still here."
+			}
+		]
+	},
+	"pell_intro": {
+		"once": true,
+		"sets": "met_pell",
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Don't stand in the light, lad. They see the light. ...You came down out of it, didn't you."
+			},
+			{
+				"who": "Old Pell",
+				"text": "One hand. A brute took the other. I can still hammer; I can't hold the tongs. You hold, I hit. Deal?"
+			},
+			{
+				"who": "Ansel",
+				"text": "What are we making?"
+			},
+			{
+				"who": "Old Pell",
+				"text": "Something that goes down and comes back. Nobody's managed the second part yet."
+			}
+		]
+	},
+	"pell_sky": {
+		"once": true,
+		"requires": [
+			"met_pell"
+		],
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "The sky opened a year ago. First the demons came up out of the churchyard. Then the angels came down. We thought that was help."
+			},
+			{
+				"who": "Old Pell",
+				"text": "It wasn't help. They were gathering. Same as the demons, only cleaner about it."
+			},
+			{
+				"who": "Ansel",
+				"text": "I was one of them. Half of one."
+			},
+			{
+				"who": "Old Pell",
+				"text": "I know. I've seen the hands. Yours haven't learned to hold yet."
+			}
+		]
+	},
+	"pell_hook": {
+		"once": true,
+		"requires": [
+			"item:hook"
+		],
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "That hook. Give it here."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Thigh bone and a hinge. That hinge is off the church door. I hung that door."
+			},
+			{
+				"who": "Old Pell",
+				"text": "They're not animals, whatever Dace says. Animals don't use hinges."
+			}
+		]
+	},
+	"pell_warrant": {
+		"once": true,
+		"requires": [
+			"item:warrant"
+		],
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Forty names on that paper. My wife's is the ninth. 'Called to the Garden early.'"
+			},
+			{
+				"who": "Old Pell",
+				"text": "When you get back up there, you tell me what garden."
+			}
+		]
+	},
+	"pell_forge": {
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Hold it steady. Steadier. Right, now don't move."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Good. That's one more they'll have to get through."
+			}
+		]
+	},
+	"pell_light": {
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Keep your light down when you go in the ground. Both sides can see it."
+			}
+		]
+	},
+	"pell_boy": {
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "I've a boy about your age. Had. Go on, I'm busy."
+			}
+		]
+	},
+	"hanne_intro": {
+		"once": true,
+		"sets": "met_hanne",
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "You're not from the sky. The sky ones don't jump, they just come down."
+			},
+			{
+				"who": "Hanne",
+				"text": "I'm Hanne. I draw what I see so I don't have to keep seeing it."
+			},
+			{
+				"who": "Hanne",
+				"text": "Want to see the big one's flag? Come back and I'll show you."
+			}
+		]
+	},
+	"hanne_drawing": {
+		"once": true,
+		"requires": [
+			"met_hanne"
+		],
+		"sets": "hanne_drawing",
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Here. It's not a picture. It's just lines."
+			},
+			{
+				"who": "",
+				"text": "(A tally mark. Four strokes and a fifth across.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Where did you see this?"
+			},
+			{
+				"who": "Hanne",
+				"text": "On the ones that climb. They cut it into themselves."
+			},
+			{
+				"who": "Hanne",
+				"text": "They say the Lowest says it means 'I'm still counting'."
+			}
+		]
+	},
+	"hanne_token": {
+		"once": true,
+		"requires": [
+			"hanne_drawing",
+			"item:token"
+		],
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "That's the same lines. On your wooden coin. Did you cut them in yourself?"
+			},
+			{
+				"who": "Ansel",
+				"text": "No. Someone counted me."
+			},
+			{
+				"who": "Hanne",
+				"text": "Then he's down there. The one who counts. Say hello from the drawing girl."
+			}
+		]
+	},
+	"hanne_pipes": {
+		"once": true,
+		"requires": [
+			"seen_pipes"
+		],
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "You went down. What's it like? I can't see down from here."
+			},
+			{
+				"who": "Ansel",
+				"text": "Pipes. White stone, going up through all of it. Like a kitchen's."
+			},
+			{
+				"who": "Hanne",
+				"text": "(She draws. Lines, going up.) Where do they go?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Here."
+			}
+		],
+		"sets": "drawing:pipes"
+	},
+	"hanne_camp": {
+		"once": true,
+		"requires": [
+			"seen_camp"
+		],
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Did you find the one who counts?"
+			},
+			{
+				"who": "Ansel",
+				"text": "His army. They're resting. They let me through."
+			},
+			{
+				"who": "Hanne",
+				"text": "Did you say hello from the drawing girl?"
+			},
+			{
+				"who": "Ansel",
+				"text": "...Next time."
+			},
+			{
+				"who": "Hanne",
+				"text": "You said that like there's one."
+			}
+		]
+	},
+	"hanne_churchyard": {
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Don't go near the churchyard. That's where they come up. I drew it. It's a bad one."
+			}
+		]
+	},
+	"hanne_draw_down": {
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Pell says you're going down. Will you look at everything? I can't see down from here."
+			}
+		],
+		"unless": [
+			"quest:drawings"
+		]
+	},
+	"hanne_count": {
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "I counted the angels this morning. Nine. Yesterday it was eleven. Where do they go?"
+			}
+		]
+	},
+	"dace_intro": {
+		"once": true,
+		"sets": "met_dace",
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "Halt. ...Halt doesn't work on your kind, does it. Fine."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "Corporal Dace, Third Company. What's left of it."
+			},
+			{
+				"who": "Ansel",
+				"text": "Where's the rest?"
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "In the ground. Some of them walking about in it."
+			}
+		]
+	},
+	"dace_clock": {
+		"once": true,
+		"requires": [
+			"met_dace"
+		],
+		"sets": "clock_face",
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "Clock face. Church tower. Found it in a demon's pack. Don't know why it wanted it."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "It's the only thing I've seen one of them carry that it didn't eat. Take it. Find out."
+			},
+			{
+				"who": "",
+				"text": "(A brass clock face with no hands. Four shapes are punched around the rim, where the hands would be pinned.)"
+			}
+		]
+	},
+	"dace_letter": {
+		"once": true,
+		"requires": [
+			"item:letter"
+		],
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "You read Thorne's letter. He never sent it. I kept meaning to."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "He's down there now. If you meet a lad in a red scarf, he was mine. Don't tell him I said so."
+			}
+		],
+		"sets": "quest:scarf"
+	},
+	"dace_scarf": {
+		"once": true,
+		"requires": [
+			"item:scarf"
+		],
+		"sets": "quest:scarf:done",
+		"gives": "vial",
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "That's... (He holds it a long time before he takes it.)"
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "You told him. I said don't. ...What did he say.",
+				"requires": [
+					"thorne_told"
+				]
+			},
+			{
+				"who": "Ansel",
+				"text": "That the barricade held.",
+				"requires": [
+					"thorne_told"
+				]
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "It did. It did hold.",
+				"requires": [
+					"thorne_told"
+				]
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "You didn't tell him. Good. Good lad. He always did better not knowing who was watching.",
+				"requires": [
+					"thorne_kept"
+				]
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "He had a flask. Warden's glass, off one of the sky ones, full of their water. He said it closed cuts."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "Take it. He'd want it going down, not sitting at a barricade with me."
+			}
+		]
+	},
+	"dace_army": {
+		"once": true,
+		"requires": [
+			"seen_camp"
+		],
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "They've stopped climbing. Three days now. Nothing out of the churchyard."
+			},
+			{
+				"who": "Ansel",
+				"text": "They're resting. All of them, in the eighth circle. Waiting on him."
+			},
+			{
+				"who": "Corporal Dace",
+				"text": "Waiting for an order. I said. ...And when he gives it?"
+			},
+			{
+				"who": "Ansel",
+				"text": "He won't."
+			}
+		]
+	},
+	"dace_barricade": {
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "Barricade's holding. Barricade's always holding, until it isn't."
+			}
+		]
+	},
+	"dace_waiting": {
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "They don't rush. They climb a bit, look at us, climb back. Like they're waiting for an order."
+			}
+		]
+	},
+	"dace_ticking": {
+		"lines": [
+			{
+				"who": "Corporal Dace",
+				"text": "Clock's still ticking somewhere. I hear it at night. Nobody else does."
+			}
+		]
+	},
+	"ava_intro": {
+		"once": true,
+		"sets": "met_ava",
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "A church is where you go when you want to be heard. I stopped coming for that."
+			},
+			{
+				"who": "Sister Ava",
+				"text": "I stopped praying when I understood who was listening."
+			},
+			{
+				"who": "Ansel",
+				"text": "Who?"
+			},
+			{
+				"who": "Sister Ava",
+				"text": "Someone who keeps a garden. And weeds it."
+			}
+		]
+	},
+	"ava_name": {
+		"once": true,
+		"requires": [
+			"met_ava"
+		],
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "The demons shout upward when they climb. Not at us. Past us. A name. Every time the same name."
+			},
+			{
+				"who": "Ansel",
+				"text": "What name?"
+			},
+			{
+				"who": "Sister Ava",
+				"text": "I won't say it in a church."
+			},
+			{
+				"who": "Sister Ava",
+				"text": "Outside, perhaps. If you come back up."
+			}
+		]
+	},
+	"ava_reveal": {
+		"once": true,
+		"requires": [
+			"reveal"
+		],
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "You've heard it now. It's on your face."
+			},
+			{
+				"who": "Sister Ava",
+				"text": "Then I'll say it, church or no. Tobiah. They shout it like a prayer. Perhaps it is one."
+			}
+		]
+	},
+	"ava_pipes": {
+		"once": true,
+		"requires": [
+			"seen_pipes"
+		],
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "You've seen where the font drains. It's on your hands; you keep looking at them."
+			},
+			{
+				"who": "Ansel",
+				"text": "The Basin runs down into Hell."
+			},
+			{
+				"who": "Sister Ava",
+				"text": "Then it's one house. I had a feeling it was one house."
+			}
+		]
+	},
+	"ava_hand": {
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "The warrant on the door is in the Choir's hand. I used to copy that hand. I taught it."
+			}
+		]
+	},
+	"ava_listen": {
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "Pell swears, Dace counts, Hanne draws. I listen. Someone has to."
+			}
+		]
+	},
+	"ava_below": {
+		"lines": [
+			{
+				"who": "Sister Ava",
+				"text": "Go carefully. Below is only above with the lights put out."
+			}
+		]
+	},
+	"item_warrant": {
+		"lines": [
+			{
+				"who": "Gathering warrant",
+				"text": "Nailed to the church door. 'By the Choir's need, the following are called to the Garden early.'"
+			},
+			{
+				"who": "Gathering warrant",
+				"text": "Forty names. The ink is fresh."
+			},
+			{
+				"who": "Ansel",
+				"text": "Called early. Mereth was 'not ripe'. They're harvesting."
+			}
+		]
+	},
+	"item_hook": {
+		"lines": [
+			{
+				"who": "Climbing hook",
+				"text": "Demon-made, from a thigh bone and a hinge. The hinge is from a church door."
+			},
+			{
+				"who": "Ansel",
+				"text": "They came up with tools. Someone taught them."
+			}
+		]
+	},
+	"item_letter": {
+		"lines": [
+			{
+				"who": "Soldier's letter",
+				"text": "Never sent. 'Mother, they say the ones in the ground were people once. I don't believe it. I don't want to.'"
+			}
+		]
+	},
+	"hole": {
+		"once": true,
+		"sets": "reached_hole",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "The churchyard. A hole, and warm air coming up out of it. Like a kitchen."
+			},
+			{
+				"who": "",
+				"text": "(From far below, faint: 'Up! He said up!')"
+			},
+			{
+				"who": "Ansel",
+				"text": "Down, then."
+			}
+		]
+	},
+	"makinghouse": {
+		"unless": [
+			"makinghouse_seen"
+		],
+		"sets": "makinghouse_seen",
+		"lines": [
+			{
+				"who": "Voice",
+				"text": "You left your other half on the table in there."
+			},
+			{
+				"who": "Ansel",
+				"text": "Keep it."
+			},
+			{
+				"who": "Voice",
+				"text": "We will. We keep everything."
+			}
+		]
+	},
+	"seraph_warden_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Warden",
+				"text": "Ungathered. You were seen at the Making. You will be finished."
+			},
+			{
+				"who": "Ansel",
+				"text": "You dropped my brother."
+			},
+			{
+				"who": "Warden",
+				"text": "I have dropped many. I remember none of them. That is a mercy they give us."
+			}
+		]
+	},
+	"seraph_warden_defeat": {
+		"once": true,
+		"sets": "warden_fallen",
+		"lines": [
+			{
+				"who": "Warden",
+				"text": "The gate... does not open from this side."
+			},
+			{
+				"who": "Ansel",
+				"text": "I know. I'm not opening it."
+			},
+			{
+				"who": "",
+				"text": "(The Warden of the Low Gate lies still. Below the ledge, the gate waits for wings.)"
+			}
+		]
+	},
+	"item_tally_stone": {
+		"lines": [
+			{
+				"who": "Child's tally stone",
+				"text": "A flat stone with eleven strokes scratched into it. The twelfth is half cut."
+			},
+			{
+				"who": "Ansel",
+				"text": "Somebody small was counting too."
+			}
+		]
+	},
+	"item_prayer_card": {
+		"lines": [
+			{
+				"who": "Warden's prayer card",
+				"text": "'What is pressed is not lost. What is lost was never pressed. Sing it until it is true.'"
+			},
+			{
+				"who": "Ansel",
+				"text": "Until it is true. They know it isn't."
+			}
+		]
+	},
+	"item_glove": {
+		"lines": [
+			{
+				"who": "Maker's glove",
+				"text": "Stiff with something that is not blood. The fingers are worn smooth on the inside, where they hold a head still."
+			},
+			{
+				"who": "Ansel",
+				"text": "They held mine. Halfway."
+			}
+		]
+	},
+	"shaft": {
+		"unless": [
+			"shaft_seen"
+		],
+		"sets": "shaft_seen",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Names. Hundreds of them. Scratched going down."
+			},
+			{
+				"who": "",
+				"text": "(One, in a hand he knows: KEEP COUNT.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "I am."
+			}
+		]
+	},
+	"ferryman_intro": {
+		"once": true,
+		"sets": "met_ferryman",
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "You're going the wrong way. Everyone here is, but you're doing it on purpose."
+			},
+			{
+				"who": "Ansel",
+				"text": "What's at the bottom?"
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Whatever's left of you. The fall takes something at every circle. Fear first. Then names. Then faces."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "By the bottom, teeth."
+			},
+			{
+				"who": "Ansel",
+				"text": "And if you hold on?"
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Then you'd be the first. I didn't try. I stopped here. Here's nothing, but it's mine."
+			}
+		]
+	},
+	"ferryman_hand": {
+		"once": true,
+		"requires": [
+			"met_ferryman"
+		],
+		"sets": "clock_hand",
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "The hand of a clock? Had it for ages. Someone fell past with it and let go."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Take it. Time's not a thing I need."
+			},
+			{
+				"who": "",
+				"text": "(A brass clock hand, bent at the tip. It is warm, like the shard.)"
+			}
+		]
+	},
+	"ferryman_left": {
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "I wouldn't go to the Basin and I wouldn't fall. So they left me."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Turns out that's the one thing they can't do: make you choose."
+			}
+		]
+	},
+	"ferryman_nothing": {
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "Nothing comes back up this shaft. Nothing. I've watched a long time."
+			}
+		]
+	},
+	"ferryman_fell": {
+		"lines": [
+			{
+				"who": "The Ferryman",
+				"text": "Someone your shape fell past, years back. Talking. Still talking when he was out of sight."
+			}
+		]
+	},
+	"item_tally_bone": {
+		"lines": [
+			{
+				"who": "Imp's tally bone",
+				"text": "A finger bone with four cuts and a bar across them. The cuts are fresh."
+			},
+			{
+				"who": "Ansel",
+				"text": "They're counting. All of them."
+			}
+		]
+	},
+	"gorrow_meet": {
+		"once": true,
+		"sets": "met_gorrow",
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "Stop. Not to fight. He said a half-made thing would come down, and that I'm not to kill it."
+			},
+			{
+				"who": "Ansel",
+				"text": "Who said?"
+			},
+			{
+				"who": "Gorrow",
+				"text": "The Lowest. He doesn't say why. He says a lot of things and never why."
+			},
+			{
+				"who": "Gorrow",
+				"text": "Go on. If you get past the seal, I'll have to try to kill you anyway. Orders only go so far."
+			}
+		]
+	},
+	"gorrow_orders": {
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "Still here. Still not killing you. Don't make me find out how far orders go."
+			}
+		]
+	},
+	"gorrow_seal": {
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "Below the seal is my ground. The Fury, they call me there. Up here I'm just waiting."
+			}
+		]
+	},
+	"dontfollow": {
+		"unless": [
+			"dontfollow_seen"
+		],
+		"sets": "dontfollow_seen",
+		"lines": [
+			{
+				"who": "",
+				"text": "(Cut into the wall, deep, in a hand he knows: KEEP COUNT. DON'T FOLLOW. And a tally.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Too late."
+			}
+		]
+	},
+	"vael_intro": {
+		"once": true,
+		"sets": "met_vael",
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "Memories. Buying. You've got a lot; I can smell them. Sell me the winter you died in. You won't miss it."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "Vael",
+				"text": "That token, then. Someone below pays very well for anything with that mark. Doesn't say why. Pays, though."
+			},
+			{
+				"who": "Ansel",
+				"text": "Who?"
+			},
+			{
+				"who": "Vael",
+				"text": "Buyers don't give names. That one especially. Though he does say one. To himself. Not his."
+			}
+		]
+	},
+	"vael_smell": {
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "Fresh ones, too. Come back when you want to be lighter. Everyone does, in the end."
+			}
+		]
+	},
+	"vael_price": {
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "The fall takes memories for free. I at least pay. Think about which of us is the thief."
+			}
+		]
+	},
+	"pell_forge_first": {
+		"once": true,
+		"requires": [
+			"met_pell"
+		],
+		"sets": "sword:1",
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Church iron. My own stock, and the last of it. Hold the blade on the horn. No, like that. Steadier."
+			},
+			{
+				"who": "Old Pell",
+				"text": "There. It'll go through a brute's hide now, which is more than mine did."
+			},
+			{
+				"who": "Ansel",
+				"text": "What do I owe you?"
+			},
+			{
+				"who": "Old Pell",
+				"text": "More of it, if the ground has any. They hang their doors with it down there. Bring me a bar and I'll hammer it in."
+			}
+		]
+	},
+	"pell_iron": {
+		"once": true,
+		"requires": [
+			"sword:1",
+			"upgrade:iron:world_1:0"
+		],
+		"sets": "sword:2",
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "That's church iron. Where did you... no. Don't tell me. Give it here."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Hold. Hit. Hold. Hit. ...That's as hard as I can make it, lad. The rest is you."
+			}
+		]
+	},
+	"pell_garden": {
+		"once": true,
+		"requires": [
+			"item:wheel_tablet"
+		],
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "You asked me what garden. It's a farm. They have it in writing."
+			},
+			{
+				"who": "Old Pell",
+				"text": "...A farm."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Then she was a crop. Say it. I'd rather hear it than guess it."
+			},
+			{
+				"who": "Ansel",
+				"text": "She was a crop."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Right. Hold the blade. Steadier. I've work to do."
+			}
+		]
+	},
+	"pell_warden": {
+		"once": true,
+		"requires": [
+			"warden_fallen"
+		],
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "The light over the churchyard went out a while this morning. First time in a year. That you?"
+			},
+			{
+				"who": "Ansel",
+				"text": "The one who dropped my brother."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Good. One hand's enough to shake with."
+			}
+		]
+	},
+	"vael_trade": {
+		"once": true,
+		"requires": [
+			"met_vael",
+			"reveal"
+		],
+		"sets": [
+			"sold_winter",
+			"item:clock_key"
+		],
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "You've been below the Seal. You've got a name now; I can smell it on you. Still want nothing?"
+			},
+			{
+				"who": "Ansel",
+				"text": "A key. To a clock. You said you had one."
+			},
+			{
+				"who": "Vael",
+				"text": "I did. For the winter you died in. Not the token; I've had a better offer for the token."
+			},
+			{
+				"who": "Ansel",
+				"text": "...Take it."
+			},
+			{
+				"who": "Vael",
+				"text": "Done. You'll feel lighter. Everyone does. Here's your key; it was never mine to keep."
+			}
+		]
+	},
+	"vael_lighter": {
+		"requires": [
+			"sold_winter"
+		],
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "Lighter? Told you. There's a spring in there somewhere too, if you ever want to be rid of it."
+			}
+		]
+	},
+	"pipes": {
+		"once": true,
+		"sets": "seen_pipes",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Pipes. White stone pipes, going up. All the way up."
+			},
+			{
+				"who": "The Voice",
+				"text": "The Basin has to drain somewhere."
+			},
+			{
+				"who": "Ansel",
+				"text": "He came down past these. He saw them and kept going. Of course he did.",
+				"requires": [
+					"reveal"
+				]
+			}
+		]
+	},
+	"messenger_intro": {
+		"once": true,
+		"sets": "met_messenger",
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "Go home, Ansel."
+			},
+			{
+				"who": "Ansel",
+				"text": "You first."
+			},
+			{
+				"who": "Tobiah",
+				"text": "There isn't one. You've seen the pipes. You know what the Wheel is."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then come and tell me. Not through this thing."
+			},
+			{
+				"who": "Tobiah",
+				"text": "When you reach the floor. Not before. Keep count."
+			}
+		]
+	},
+	"messenger_floor": {
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "The floor, Ansel. Not before."
+			}
+		]
+	},
+	"messenger_empty": {
+		"lines": [
+			{
+				"who": "",
+				"text": "The angel's mouth moves. Nothing comes out of it now."
+			}
+		]
+	},
+	"vael_army": {
+		"once": true,
+		"requires": [
+			"reveal"
+		],
+		"lines": [
+			{
+				"who": "Vael",
+				"text": "He's climbing with all of them, you know. All nine circles. To break the Basin."
+			},
+			{
+				"who": "Vael",
+				"text": "He's not wrong. I'd just rather he did it without me."
+			},
+			{
+				"who": "Vael",
+				"text": "Keep going. He's counting the days, and he thinks you are too."
+			}
+		]
+	},
+	"item_wheel_tablet": {
+		"lines": [
+			{
+				"who": "The Wheel, in writing",
+				"text": "A Choir tablet, in the same hand as the warrant. 'The Wheel is the Basin. Souls return to the Garden as the Choir's hands.'"
+			},
+			{
+				"who": "The Wheel, in writing",
+				"text": "'Teach the Wheel to the gathered; it calms them.'"
+			}
+		]
+	},
+	"item_clock_weight": {
+		"lines": [
+			{
+				"who": "Clock weight",
+				"text": "Part of a clock that was never meant to run forward. Lead, and heavier than lead should be."
+			}
+		]
+	},
+	"item_pipe_section": {
+		"lines": [
+			{
+				"who": "Pipe section",
+				"text": "White stone, cut square, and cold. The inside is stained the colour of the Basin."
+			},
+			{
+				"who": "Ansel",
+				"text": "It drains to here. All of it."
+			}
+		]
+	},
+	"item_clock_chain": {
+		"lines": [
+			{
+				"who": "Clock chain",
+				"text": "Part of a clock that was never meant to run forward. Every link is stamped with a tally."
+			}
+		]
+	},
+	"thorne_stranger": {
+		"once": true,
+		"unless": [
+			"quest:scarf"
+		],
+		"sets": "met_thorne",
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "You're going the wrong way. ...I've said that before. To someone. I don't know who."
+			},
+			{
+				"who": "Thorne",
+				"text": "Is it holding? The barricade. I had a barricade, and a man who counted at it."
+			},
+			{
+				"who": "Ansel",
+				"text": "It's holding."
+			},
+			{
+				"who": "Thorne",
+				"text": "Good. Good. Then I'll stay here, and it'll hold."
+			}
+		]
+	},
+	"thorne_intro": {
+		"once": true,
+		"requires": [
+			"quest:scarf"
+		],
+		"sets": "met_thorne",
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "You're going the wrong way. ...I've said that before. To someone. I don't know who."
+			},
+			{
+				"who": "Ansel",
+				"text": "A red scarf. You're Thorne. Third Company."
+			},
+			{
+				"who": "Thorne",
+				"text": "Thorne. (He says it twice, trying it on.) Was that the name? It fits in the mouth."
+			},
+			{
+				"who": "Thorne",
+				"text": "Is the barricade holding? I had a barricade, and a man who counted at it. He'd know."
+			},
+			{
+				"who": "Thorne",
+				"text": "Did he send you? Did he say anything?",
+				"choices": [
+					{
+						"text": "He sent me",
+						"then": "thorne_told"
+					},
+					{
+						"text": "Nobody sent me",
+						"then": "thorne_kept"
+					}
+				]
+			}
+		]
+	},
+	"thorne_told": {
+		"sets": [
+			"thorne_told",
+			"item:scarf"
+		],
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "He sent me. He said you were his. He said not to tell you."
+			},
+			{
+				"who": "Thorne",
+				"text": "(He laughs, and it is still a laugh.) That's him. That's the corporal."
+			},
+			{
+				"who": "Thorne",
+				"text": "Take the scarf. Red was the company. Tell him it held. Tell him I said the barricade held."
+			},
+			{
+				"who": "",
+				"text": "(Thorne's scarf. The red is the only colour in Violence that is not blood.)"
+			}
+		]
+	},
+	"thorne_kept": {
+		"sets": [
+			"thorne_kept",
+			"item:scarf"
+		],
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Nobody sent me. I'm going down for my brother."
+			},
+			{
+				"who": "Thorne",
+				"text": "Then you'll pass my mother. Everyone's down here, in the end. (He unwinds the scarf.)"
+			},
+			{
+				"who": "Thorne",
+				"text": "Take it anyway. Red was the company. If there's a man still counting at a barricade up there, he'll know whose."
+			},
+			{
+				"who": "",
+				"text": "(Thorne's scarf. The red is the only colour in Violence that is not blood.)"
+			}
+		]
+	},
+	"thorne_barricade": {
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "Is it holding?"
+			},
+			{
+				"who": "Thorne",
+				"text": "Don't answer. I'd rather it held.",
+				"requires": [
+					"item:scarf"
+				]
+			}
+		]
+	},
+	"thorne_cold": {
+		"lines": [
+			{
+				"who": "Thorne",
+				"text": "It's not cold here. People say it is. It's just that nothing's warm."
+			}
+		]
+	},
+	"camp": {
+		"once": true,
+		"sets": "seen_camp",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The army, resting. Brutes step aside. Imps look up, and then down again. They know who he is.)"
+			},
+			{
+				"who": "The Voice",
+				"text": "They are not going to stop you."
+			},
+			{
+				"who": "Ansel",
+				"text": "No. He told them not to."
+			},
+			{
+				"who": "Ansel",
+				"text": "Four hundred and something. Every one of them counted. He always finished a count.",
+				"requires": [
+					"reveal"
+				]
+			}
+		]
+	},
+	"camp_imp": {
+		"once": true,
+		"sets": "imp_gift",
+		"lines": [
+			{
+				"who": "",
+				"text": "(An imp holds out a tally bone like a gift.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Keep it. Keep counting."
+			}
+		]
+	},
+	"camp_imp_again": {
+		"lines": [
+			{
+				"who": "",
+				"text": "(The imp holds the bone up again, and waits.)"
+			}
+		]
+	},
+	"item_roster": {
+		"lines": [
+			{
+				"who": "Army roster",
+				"text": "Nine circles' worth of names, in columns, each with a tally beside it. The last column is headed with four strokes and a bar."
+			},
+			{
+				"who": "Ansel",
+				"text": "Counted. Every one of them."
+			}
+		]
+	},
+	"item_own_token": {
+		"lines": [
+			{
+				"who": "Tobiah's own token",
+				"text": "A harvest token, the twin of the one from the Garden. Four hundred and ten strokes, and room for none."
+			}
+		]
+	},
+	"final_boss_the_betrayer_intro": {
+		"once": true,
+		"sets": "met_tobiah",
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "You kept count."
+			},
+			{
+				"who": "Ansel",
+				"text": "Every day."
+			},
+			{
+				"who": "Tobiah",
+				"text": "How many?"
+			},
+			{
+				"who": "Ansel",
+				"text": "I don't know. There was a page. The token ran out of wood."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Four hundred and nine. I kept it too."
+			},
+			{
+				"who": "Ansel",
+				"text": "Come home."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Ansel. Say what home is. Say it out loud."
+			},
+			{
+				"who": "Ansel",
+				"text": "..."
+			},
+			{
+				"who": "Tobiah",
+				"text": "It's a farm. You've seen the ledger. You've seen the pipes. We were on a list."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then we'll go somewhere else."
+			},
+			{
+				"who": "Tobiah",
+				"text": "There is nowhere else. There's up and there's down. I'm going up, with everyone they threw away, and I'm going to break the Basin."
+			},
+			{
+				"who": "Ansel",
+				"text": "They'll make you into one of them. Or they'll drop you again."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Then stop me. You've got the light for it. They gave you half of it."
+			},
+			{
+				"who": "Ansel",
+				"text": "I don't want to."
+			},
+			{
+				"who": "Tobiah",
+				"text": "I know. That's why it has to be you."
+			}
+		]
+	},
+	"final_boss_the_betrayer_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Tobiah",
+				"text": "Well. You've still got the better arm."
+			},
+			{
+				"who": "Ansel",
+				"text": "Get up."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Can't. That's all right. I counted. Four hundred and ten. One more than I thought I'd get.",
+				"choices": [
+					{
+						"text": "Carry him",
+						"then": "ending_carry"
+					},
+					{
+						"text": "Sit down",
+						"then": "ending_sit"
+					}
+				]
+			}
+		]
+	},
+	"ending_carry": {
+		"sets": "ending:carry",
+		"lines": [
+			{
+				"who": "",
+				"text": "(Ansel carries Tobiah up through nine circles. The demons let them pass.)"
+			},
+			{
+				"who": "",
+				"text": "(Tobiah talks the whole way, then stops talking somewhere around the Shallows. Ansel keeps climbing.)"
+			},
+			{
+				"who": "",
+				"text": "(The Low Gate, from below.)"
+			}
+		]
+	},
+	"ending_sit": {
+		"sets": "ending:sit",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Then I'll keep counting."
+			},
+			{
+				"who": "Tobiah",
+				"text": "Start at one."
+			},
+			{
+				"who": "",
+				"text": "(The army climbs without them. The sound of the climb fades.)"
+			}
+		]
+	},
+	"clock": {
+		"once": true,
+		"requires": [
+			"clock_face",
+			"clock_hand",
+			"item:clock_weight",
+			"item:clock_chain",
+			"item:clock_key"
+		],
+		"then": "garden",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The five pieces fit. The face, the hand, the weight, the chain, the key.)"
+			},
+			{
+				"who": "The Voice",
+				"text": "That is not a clock."
+			},
+			{
+				"who": "Ansel",
+				"text": "No. It's the only thing in all of this that runs backward."
+			},
+			{
+				"who": "The Voice",
+				"text": "If you turn it, you will not have been made. You will not have the light. You will not be able to come down here."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then I won't need to."
+			}
+		]
+	},
+	"garden": {
+		"sets": "clock_turned",
+		"warp": "start",
+		"lines": [
+			{
+				"who": "",
+				"text": "(Ansel on the orchard edge. The sound of two boys arguing, far off. One of them is him.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Don't look. Don't go to him. He hasn't heard anything yet."
+			},
+			{
+				"who": "Ansel",
+				"text": "Keep count."
+			}
+		]
+	},
+	"clock_missing": {
+		"once": true,
+		"lines": [
+			{
+				"who": "",
+				"text": "(A clock, or the frame of one, with pieces missing. It does not run either way.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "Five. Keep count."
+			}
+		]
+	},
+	"gardener_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Gardener",
+				"text": "Child. You are not from this day."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "The Gardener",
+				"text": "I made you. Or I will. The light in you is mine; I know my own."
+			},
+			{
+				"who": "Ansel",
+				"text": "Why the Basin?"
+			},
+			{
+				"who": "The Gardener",
+				"text": "I was the first. There was no one to wipe me. So I remember being hungry, and I remember the Making, and I remember nothing else."
+			},
+			{
+				"who": "The Gardener",
+				"text": "A heaven must be for something. I could not think what. So it is for me."
+			},
+			{
+				"who": "Ansel",
+				"text": "It was for us."
+			},
+			{
+				"who": "The Gardener",
+				"text": "Then take it."
+			}
+		]
+	},
+	"gardener_defeat": {
+		"once": true,
+		"then": "ending_night",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The light goes out of the first angel like a lamp. The Making stops. The harvest stops.)"
+			}
+		]
+	},
+	"ending_night": {
+		"sets": "ending:clock",
+		"lines": [
+			{
+				"who": "",
+				"text": "(The sun sets in the Garden for the first time. Dark. Stars.)"
+			},
+			{
+				"who": "Tobiah",
+				"text": "Ansel. Ansel, look. What is that?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Night."
+			},
+			{
+				"who": "Tobiah",
+				"text": "What's it for?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Counting, I think. Start at one."
+			}
+		]
+	},
+	"descent": {
+		"once": true,
+		"sets": "descended",
+		"save": true,
+		"lines": [
+			{
+				"who": "",
+				"text": "(The bottom of the churchyard. The hole goes down past where the lantern light stops, and the hammering is far above now.)"
+			},
+			{
+				"who": "The Voice",
+				"text": "This is the way down. Nothing that goes this way comes back up the same."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then I'll come back different. Keep count."
+			}
+		]
+	},
+	"the_fury_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "I told you. Orders only go so far."
+			}
+		]
+	},
+	"the_fury_defeat": {
+		"once": true,
+		"sets": "reveal",
+		"lines": [
+			{
+				"who": "Gorrow",
+				"text": "He asked me. Every day. 'Has a half-angel come down.' Every day, like I'd forget."
+			},
+			{
+				"who": "Gorrow",
+				"text": "He said you'd come. He said your name. He says it when he thinks nobody's there."
+			},
+			{
+				"who": "Ansel",
+				"text": "Say his."
+			},
+			{
+				"who": "Gorrow",
+				"text": "The Lowest doesn't have one."
+			},
+			{
+				"who": "Ansel",
+				"text": "Say it."
+			},
+			{
+				"who": "Gorrow",
+				"text": "...Tobiah."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then I'll bring him home."
+			},
+			{
+				"who": "Gorrow",
+				"text": "Home. You still think that's a place."
+			}
+		]
+	},
+	"the_penitent_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Penitent",
+				"text": "I chose the fall. I chose it. Let me finish choosing."
+			}
+		]
+	},
+	"the_penitent_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Penitent",
+				"text": "Down, then. At last. Thank you."
+			},
+			{
+				"who": "Ansel",
+				"text": "Don't thank me."
+			}
+		]
+	},
+	"limbo_lord_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Limbo Lord",
+				"text": "I was first down. I forget what for. I forget what you are."
+			},
+			{
+				"who": "Ansel",
+				"text": "Then forget me."
+			},
+			{
+				"who": "Limbo Lord",
+				"text": "I will. After."
+			}
+		]
+	},
+	"limbo_lord_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Limbo Lord",
+				"text": "Oh. That was what for."
+			},
+			{
+				"who": "Limbo Lord",
+				"text": "Go on down. I won't remember you came."
+			},
+			{
+				"who": "",
+				"text": "(The Limbo Lord settles into the dust like something that has waited a long time to.)"
+			}
+		]
+	},
+	"palace_of_velvet_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Keeper",
+				"text": "He keeps his army. I keep what they came here to forget."
+			},
+			{
+				"who": "Keeper",
+				"text": "You carry a lot of it. Set it down. Stay."
+			}
+		]
+	},
+	"palace_of_velvet_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Keeper",
+				"text": "You set nothing down."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "Keeper",
+				"text": "Then it gets heavier from here. That is all I was ever for."
+			}
+		]
+	},
+	"the_bloated_one_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Bloated One",
+				"text": "He said don't follow. They followed. I said one more."
+			},
+			{
+				"who": "The Bloated One",
+				"text": "One more."
+			}
+		]
+	},
+	"the_bloated_one_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "The Bloated One",
+				"text": "One... more."
+			},
+			{
+				"who": "",
+				"text": "(It does not ask again.)"
+			},
+			{
+				"who": "Ansel",
+				"text": "That was the last one."
+			}
+		]
+	},
+	"golden_vault_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Warden of the Vault",
+				"text": "Vael sells. I keep. Everything they dropped on the way down is here, in the dark."
+			},
+			{
+				"who": "Warden of the Vault",
+				"text": "A winter, a brother, a name. Yours will fit."
+			}
+		]
+	},
+	"golden_vault_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Warden of the Vault",
+				"text": "It doesn't fit. Nothing of yours. You dropped it all up there, before the hole."
+			},
+			{
+				"who": "Ansel",
+				"text": "Not all of it."
+			},
+			{
+				"who": "Warden of the Vault",
+				"text": "The name. Yes. Keep it in the dark, then, where I can't see it."
+			}
+		]
+	},
+	"cursed_bishop_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Cursed Bishop",
+				"text": "I taught them the Wheel. I taught it true. Here that is heresy."
+			},
+			{
+				"who": "Ansel",
+				"text": "It's a lie."
+			},
+			{
+				"who": "Cursed Bishop",
+				"text": "Then I was sent down for nothing. Hold still, child. The Choir still needs its count."
+			}
+		]
+	},
+	"cursed_bishop_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Cursed Bishop",
+				"text": "Was it true? The Wheel. Tell me once that it was true."
+			},
+			{
+				"who": "Ansel",
+				"text": "It was a farm."
+			},
+			{
+				"who": "Cursed Bishop",
+				"text": "Then count me. Somebody. Count me."
+			}
+		]
+	},
+	"the_red_arena_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Champion",
+				"text": "Nobody comes down here to talk."
+			},
+			{
+				"who": "Champion",
+				"text": "Good."
+			}
+		]
+	},
+	"the_red_arena_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "Champion",
+				"text": "Ha. ...Ha."
+			},
+			{
+				"who": "Champion",
+				"text": "Tell him it was a good one."
+			},
+			{
+				"who": "Ansel",
+				"text": "I'll tell him."
+			}
+		]
+	},
+	"the_false_king_intro": {
+		"once": true,
+		"lines": [
+			{
+				"who": "False King",
+				"text": "They called me king before he came. Before the name. Bow, and I'll tell him you did."
+			},
+			{
+				"who": "Ansel",
+				"text": "No."
+			},
+			{
+				"who": "False King",
+				"text": "Then I'll tell him you knelt."
+			}
+		]
+	},
+	"the_false_king_defeat": {
+		"once": true,
+		"lines": [
+			{
+				"who": "False King",
+				"text": "I'll tell him... you knelt."
+			},
+			{
+				"who": "Ansel",
+				"text": "He'll know."
+			},
+			{
+				"who": "False King",
+				"text": "He always knows. That is the worst of him. He always knows."
+			},
+			{
+				"who": "",
+				"text": "(The court is gone. There was never a crown.)"
+			}
+		]
+	},
+	"hanne_ask": {
+		"once": true,
+		"requires": [
+			"hanne_drawing"
+		],
+		"sets": "quest:drawings",
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Pell says you're going down. Will you look at everything? I can't see down from here."
+			},
+			{
+				"who": "Ansel",
+				"text": "I'll look."
+			},
+			{
+				"who": "Hanne",
+				"text": "Then come back and tell me three things. Not nice things. True things. I'll draw them. That's how I keep them."
+			},
+			{
+				"who": "Hanne",
+				"text": "Three. Then I'll show you the one I can't draw yet."
+			}
+		]
+	},
+	"hanne_shaft": {
+		"once": true,
+		"requires": [
+			"quest:drawings",
+			"shaft_seen"
+		],
+		"sets": "drawing:shaft",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "There's a shaft under the churchyard. Names cut into the wall, all the way down. Hundreds."
+			},
+			{
+				"who": "Hanne",
+				"text": "(She draws. Short lines, close together, going down off the page.) Were they counting?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Someone was."
+			},
+			{
+				"who": "Hanne",
+				"text": "That's one."
+			}
+		]
+	},
+	"hanne_wall": {
+		"once": true,
+		"requires": [
+			"quest:drawings",
+			"dontfollow_seen"
+		],
+		"sets": "drawing:wall",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "A wall, three circles down. Someone cut KEEP COUNT into it. Under that, bigger: DON'T FOLLOW."
+			},
+			{
+				"who": "Hanne",
+				"text": "(She draws. Two rows of letters, the second pressed hard.) Did you follow?"
+			},
+			{
+				"who": "Ansel",
+				"text": "I'm still going down."
+			},
+			{
+				"who": "Hanne",
+				"text": "That's two."
+			}
+		]
+	},
+	"hanne_tobiah": {
+		"once": true,
+		"requires": [
+			"quest:drawings",
+			"drawing:shaft",
+			"drawing:wall",
+			"drawing:pipes",
+			"reveal"
+		],
+		"sets": "quest:drawings:done",
+		"gives": "heart",
+		"lines": [
+			{
+				"who": "Hanne",
+				"text": "Three. You said three. (She turns to a clean page.) Now the one I can't draw."
+			},
+			{
+				"who": "Ansel",
+				"text": "My brother."
+			},
+			{
+				"who": "Hanne",
+				"text": "What does he look like?"
+			},
+			{
+				"who": "Ansel",
+				"text": "Like me. Taller. He talks when he's frightened. He talked the whole way down."
+			},
+			{
+				"who": "Ansel",
+				"text": "He has a mark cut into him now. Like your flag. He did the counting."
+			},
+			{
+				"who": "Hanne",
+				"text": "(She draws a long time. Then she tears the page out.) Take it. So you know him when you get there."
+			},
+			{
+				"who": "",
+				"text": "(A man, in lines. The tally on his chest is the only thing she pressed hard on. Folded inside: a little light she kept back, warm.)"
+			}
+		]
+	},
+	"pell_wife": {
+		"once": true,
+		"requires": [
+			"seen:pell_warrant"
+		],
+		"sets": "quest:wife",
+		"lines": [
+			{
+				"who": "Old Pell",
+				"text": "Her name's Orla. Ninth on the list. Red hair, going grey. She counted things; it steadied her."
+			},
+			{
+				"who": "Old Pell",
+				"text": "The gathered go to the orchard first, Dace says. You came down through it. If any of them up there are still themselves, ask after her."
+			},
+			{
+				"who": "Ansel",
+				"text": "I'll ask."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Don't promise, lad. Just ask."
+			}
+		]
+	},
+	"mereth_orla": {
+		"once": true,
+		"requires": [
+			"quest:wife"
+		],
+		"sets": "wife_word",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Orla. Red hair going grey. Ninth name on a list of forty. She counted things."
+			},
+			{
+				"who": "Mereth",
+				"text": "...The trees. Two hundred and six. She said it every morning so she wouldn't lose it."
+			},
+			{
+				"who": "Mereth",
+				"text": "They took her in the second time I was put back. She went talking. 'Tell him the hammer's under the step.' That's all of it. Whoever him is."
+			},
+			{
+				"who": "Ansel",
+				"text": "A blacksmith."
+			},
+			{
+				"who": "Mereth",
+				"text": "Then tell him. I'd like one thing I remembered to get where it was going."
+			}
+		]
+	},
+	"pell_orla": {
+		"once": true,
+		"requires": [
+			"wife_word"
+		],
+		"sets": "quest:wife:done",
+		"gives": "heart",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "Orla. A woman in the orchard knew her. She counted the trees. Two hundred and six."
+			},
+			{
+				"who": "Ansel",
+				"text": "She said to tell you the hammer's under the step."
+			},
+			{
+				"who": "Old Pell",
+				"text": "(He does not move for a while. Then he goes to the step, and lifts it, with one hand, and there it is.)"
+			},
+			{
+				"who": "Old Pell",
+				"text": "She hid it when the brutes came. So they'd not take the one thing I... Two hundred and six. She never told me the number."
+			},
+			{
+				"who": "Old Pell",
+				"text": "Here. She kept this back from them too; I found it in the handle. It's no use to me. Go on."
+			},
+			{
+				"who": "",
+				"text": "(A little of someone's light, wrapped in a strip of red cloth, warm.)"
+			}
+		]
+	},
+	"ithuriel_ask": {
+		"once": true,
+		"requires": [
+			"seen:ithuriel_intro"
+		],
+		"sets": "quest:song",
+		"lines": [
+			{
+				"who": "Ithuriel",
+				"text": "You know it. The song. I saw your face when I hummed it."
+			},
+			{
+				"who": "Ansel",
+				"text": "I know it. I don't know from where."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "Then find out. Somebody below will know. They all go past here, humming."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "Come back and tell me what I'm humming. I'd like to know one true thing before they wipe me again."
+			}
+		]
+	},
+	"ferryman_song": {
+		"once": true,
+		"requires": [
+			"quest:song",
+			"met_ferryman"
+		],
+		"sets": "song_word",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "(He hums it. Badly.) Do you know that?"
+			},
+			{
+				"who": "The Ferryman",
+				"text": "Everyone who fell past hummed it. It's the Basin's. They sing it on the way in, so you don't hear the pressing."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "It wasn't the Basin's first. It's a cradle song. Mothers sang it. The Choir took it with everything else, and it stuck in the hands."
+			},
+			{
+				"who": "The Ferryman",
+				"text": "The one your shape hummed it the whole way down. Talking in between."
+			}
+		]
+	},
+	"ithuriel_told": {
+		"once": true,
+		"requires": [
+			"song_word"
+		],
+		"sets": "quest:song:done",
+		"gives": "vial",
+		"lines": [
+			{
+				"who": "Ansel",
+				"text": "It's the song they sing going into the Basin. So you don't hear what's being done to you."
+			},
+			{
+				"who": "Ansel",
+				"text": "It was a cradle song first. Somebody's mother sang it. Maybe yours."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "(He is quiet a long time.) Then I had a mother."
+			},
+			{
+				"who": "Ithuriel",
+				"text": "Here. The glass they gave me for the way in. I never went. Take the water; it's the last thing of mine I'll keep from them."
+			},
+			{
+				"who": "",
+				"text": "(Basin water in Warden's glass, still cold.)"
+			}
+		]
+	}
+}

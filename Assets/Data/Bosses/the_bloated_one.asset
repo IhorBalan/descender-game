@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: the_bloated_one
+  m_EditorClassIdentifier: 
+  displayName: The Bloated One
+  character: brute
+  walkAnim: walk
+  scale: 1.5
+  tint: {r: 0.75, g: 1, b: 0.7, a: 1}
+  facesLeft: 0
+  body: {x: 52, y: 90}
+  health: 36
+  speed: 22
+  contactDamage: 2
+  third: 
+  attackRange: 70
+  reach: {x: 68, y: 64}
+  windup: 0.8
+  strike: 0.3
+  recover: 1
+  cooldown: 1.4
+  attackDamage: 2
+  chargeSpeed: 200
+  chargeWindup: 0.8
+  chargeCooldown: 3
+  motes: 3
+  loot:
+    LightMin: 60
+    LightMax: 80
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: gluttons_maw
+    Xp: 60

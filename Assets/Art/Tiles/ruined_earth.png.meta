@@ -1,0 +1,7018 @@
+fileFormatVersion: 2
+guid: 5850e88820105bc580c1c82cf6a7df3d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4557785474930525759
+    second: ruined_earth_0
+  - first:
+      213: 3968932287831917791
+    second: ruined_earth_1
+  - first:
+      213: 1139184117579506274
+    second: ruined_earth_2
+  - first:
+      213: 2937109625955114886
+    second: ruined_earth_3
+  - first:
+      213: 705355598441400519
+    second: ruined_earth_4
+  - first:
+      213: 3896369903977506907
+    second: ruined_earth_5
+  - first:
+      213: 1539281334304810656
+    second: ruined_earth_6
+  - first:
+      213: 164930247040176379
+    second: ruined_earth_7
+  - first:
+      213: 577768430520429764
+    second: ruined_earth_8
+  - first:
+      213: 1142603270396798947
+    second: ruined_earth_9
+  - first:
+      213: 550396503392595967
+    second: ruined_earth_10
+  - first:
+      213: 3174441375788335626
+    second: ruined_earth_11
+  - first:
+      213: 3212515399260089534
+    second: ruined_earth_12
+  - first:
+      213: 1602488436780125004
+    second: ruined_earth_13
+  - first:
+      213: 277985421941718842
+    second: ruined_earth_14
+  - first:
+      213: 4271857257037935947
+    second: ruined_earth_15
+  - first:
+      213: 4591463796056398790
+    second: ruined_earth_16
+  - first:
+      213: 1157581149999099615
+    second: ruined_earth_17
+  - first:
+      213: 2215064706212239626
+    second: ruined_earth_18
+  - first:
+      213: 2445493888435256737
+    second: ruined_earth_19
+  - first:
+      213: 4264816659492346355
+    second: ruined_earth_20
+  - first:
+      213: 1982812085027316070
+    second: ruined_earth_21
+  - first:
+      213: 3566767838125210747
+    second: ruined_earth_22
+  - first:
+      213: 3141922591127571984
+    second: ruined_earth_23
+  - first:
+      213: 3915646886558234149
+    second: ruined_earth_24
+  - first:
+      213: 231526109696297843
+    second: ruined_earth_25
+  - first:
+      213: 3535277448349494299
+    second: ruined_earth_26
+  - first:
+      213: 4181195471578906820
+    second: ruined_earth_27
+  - first:
+      213: 2712287242497865008
+    second: ruined_earth_28
+  - first:
+      213: 1772172176723217403
+    second: ruined_earth_29
+  - first:
+      213: 747007471518181296
+    second: ruined_earth_30
+  - first:
+      213: 982766275733813379
+    second: ruined_earth_31
+  - first:
+      213: 3079897921386498810
+    second: ruined_earth_32
+  - first:
+      213: 4103750861778510264
+    second: ruined_earth_33
+  - first:
+      213: 3334276839749241669
+    second: ruined_earth_34
+  - first:
+      213: 1370075068443483435
+    second: ruined_earth_35
+  - first:
+      213: 78038609831013157
+    second: ruined_earth_36
+  - first:
+      213: 2619055257423708493
+    second: ruined_earth_37
+  - first:
+      213: 1420972989958427813
+    second: ruined_earth_38
+  - first:
+      213: 4328909763192669847
+    second: ruined_earth_39
+  - first:
+      213: 3253844814041636995
+    second: ruined_earth_40
+  - first:
+      213: 1756909588863199723
+    second: ruined_earth_41
+  - first:
+      213: 2856627151476699844
+    second: ruined_earth_42
+  - first:
+      213: 4154018242709676694
+    second: ruined_earth_43
+  - first:
+      213: 3216768185971049230
+    second: ruined_earth_44
+  - first:
+      213: 3101312550652640686
+    second: ruined_earth_45
+  - first:
+      213: 23384204515341783
+    second: ruined_earth_46
+  - first:
+      213: 3537227248926931482
+    second: ruined_earth_47
+  - first:
+      213: 3674774586884860775
+    second: ruined_earth_48
+  - first:
+      213: 3721096637599756086
+    second: ruined_earth_49
+  - first:
+      213: 1993844252120451159
+    second: ruined_earth_50
+  - first:
+      213: 3440928324812122039
+    second: ruined_earth_51
+  - first:
+      213: 1906047592809809082
+    second: ruined_earth_52
+  - first:
+      213: 4395163064810872356
+    second: ruined_earth_53
+  - first:
+      213: 2581790190379994559
+    second: ruined_earth_54
+  - first:
+      213: 3793820690312600405
+    second: ruined_earth_55
+  - first:
+      213: 112727361598830335
+    second: ruined_earth_56
+  - first:
+      213: 3381424167005998591
+    second: ruined_earth_57
+  - first:
+      213: 1338575282171893274
+    second: ruined_earth_58
+  - first:
+      213: 3542838377862572952
+    second: ruined_earth_59
+  - first:
+      213: 1604771421659614587
+    second: ruined_earth_60
+  - first:
+      213: 588868410374144288
+    second: ruined_earth_61
+  - first:
+      213: 636912546750666421
+    second: ruined_earth_62
+  - first:
+      213: 2734055141905308038
+    second: ruined_earth_63
+  - first:
+      213: 2279232515130880102
+    second: ruined_earth_64
+  - first:
+      213: 912583177887610543
+    second: ruined_earth_65
+  - first:
+      213: 843410739665359716
+    second: ruined_earth_66
+  - first:
+      213: 1413739107979704193
+    second: ruined_earth_67
+  - first:
+      213: 2672485783002971170
+    second: ruined_earth_68
+  - first:
+      213: 2224116678872519610
+    second: ruined_earth_69
+  - first:
+      213: 4477639359164725803
+    second: ruined_earth_70
+  - first:
+      213: 1665268674892042088
+    second: ruined_earth_71
+  - first:
+      213: 3448498554376263340
+    second: ruined_earth_72
+  - first:
+      213: 4378179189058454846
+    second: ruined_earth_73
+  - first:
+      213: 2307546153899240124
+    second: ruined_earth_74
+  - first:
+      213: 4539421178786957038
+    second: ruined_earth_75
+  - first:
+      213: 2084443102302091626
+    second: ruined_earth_76
+  - first:
+      213: 3997386640631275967
+    second: ruined_earth_77
+  - first:
+      213: 507486380838045627
+    second: ruined_earth_78
+  - first:
+      213: 1284853835261070308
+    second: ruined_earth_79
+  - first:
+      213: 1099015388134426206
+    second: ruined_earth_80
+  - first:
+      213: 2019051809820906299
+    second: ruined_earth_81
+  - first:
+      213: 34398719405441121
+    second: ruined_earth_82
+  - first:
+      213: 4530903041640565022
+    second: ruined_earth_83
+  - first:
+      213: 2247529868491452000
+    second: ruined_earth_84
+  - first:
+      213: 1628527877558526425
+    second: ruined_earth_85
+  - first:
+      213: 3724179660832448207
+    second: ruined_earth_86
+  - first:
+      213: 162616188379758599
+    second: ruined_earth_87
+  - first:
+      213: 3450178900553913811
+    second: ruined_earth_88
+  - first:
+      213: 661949134251493239
+    second: ruined_earth_89
+  - first:
+      213: 2560470078384933291
+    second: ruined_earth_90
+  - first:
+      213: 2072967803191293197
+    second: ruined_earth_91
+  - first:
+      213: 500979300618015768
+    second: ruined_earth_92
+  - first:
+      213: 1596260666840626566
+    second: ruined_earth_93
+  - first:
+      213: 3558551788149655194
+    second: ruined_earth_94
+  - first:
+      213: 888424233325060304
+    second: ruined_earth_95
+  - first:
+      213: 2466144592852056003
+    second: ruined_earth_96
+  - first:
+      213: 577887956824028276
+    second: ruined_earth_97
+  - first:
+      213: 3048320604834497115
+    second: ruined_earth_98
+  - first:
+      213: 733527482981692878
+    second: ruined_earth_99
+  - first:
+      213: 2052025844907414107
+    second: ruined_earth_100
+  - first:
+      213: 2393066891881504221
+    second: ruined_earth_101
+  - first:
+      213: 975077905058092575
+    second: ruined_earth_102
+  - first:
+      213: 576340945202330700
+    second: ruined_earth_103
+  - first:
+      213: 656363017107250067
+    second: ruined_earth_104
+  - first:
+      213: 3569587760659157449
+    second: ruined_earth_105
+  - first:
+      213: 1057434261916708561
+    second: ruined_earth_106
+  - first:
+      213: 428493428815359431
+    second: ruined_earth_107
+  - first:
+      213: 2101881457398715292
+    second: ruined_earth_108
+  - first:
+      213: 2863868606614930810
+    second: ruined_earth_109
+  - first:
+      213: 2560817538585331899
+    second: ruined_earth_110
+  - first:
+      213: 245623837154088638
+    second: ruined_earth_111
+  - first:
+      213: 3589912925300899997
+    second: ruined_earth_112
+  - first:
+      213: 2726259904663782404
+    second: ruined_earth_113
+  - first:
+      213: 2133941834528234408
+    second: ruined_earth_114
+  - first:
+      213: 467815272129212619
+    second: ruined_earth_115
+  - first:
+      213: 2257237985280103152
+    second: ruined_earth_116
+  - first:
+      213: 754963264499609653
+    second: ruined_earth_117
+  - first:
+      213: 261750949861494004
+    second: ruined_earth_118
+  - first:
+      213: 1082157702332870386
+    second: ruined_earth_119
+  - first:
+      213: 4424628713629249123
+    second: ruined_earth_120
+  - first:
+      213: 2796465147808794005
+    second: ruined_earth_121
+  - first:
+      213: 3474846406396794820
+    second: ruined_earth_122
+  - first:
+      213: 982177370670477644
+    second: ruined_earth_123
+  - first:
+      213: 4306594585923677044
+    second: ruined_earth_124
+  - first:
+      213: 4133181362885708396
+    second: ruined_earth_125
+  - first:
+      213: 1708882081640282641
+    second: ruined_earth_126
+  - first:
+      213: 1467554362952323890
+    second: ruined_earth_127
+  - first:
+      213: 95820439020154153
+    second: ruined_earth_128
+  - first:
+      213: 1209859672991588381
+    second: ruined_earth_129
+  - first:
+      213: 1656332682303611637
+    second: ruined_earth_130
+  - first:
+      213: 2219699030298953193
+    second: ruined_earth_131
+  - first:
+      213: 289906388070003565
+    second: ruined_earth_132
+  - first:
+      213: 1219176242620044750
+    second: ruined_earth_133
+  - first:
+      213: 3651581941782805142
+    second: ruined_earth_134
+  - first:
+      213: 3566001743317395464
+    second: ruined_earth_135
+  - first:
+      213: 2786557900500513983
+    second: ruined_earth_136
+  - first:
+      213: 1404487923392079951
+    second: ruined_earth_137
+  - first:
+      213: 3995711294748359212
+    second: ruined_earth_138
+  - first:
+      213: 1577556361130828379
+    second: ruined_earth_139
+  - first:
+      213: 4355921257239101152
+    second: ruined_earth_140
+  - first:
+      213: 1053700248347943493
+    second: ruined_earth_141
+  - first:
+      213: 4066003283410689729
+    second: ruined_earth_142
+  - first:
+      213: 2810195208680065231
+    second: ruined_earth_143
+  - first:
+      213: 2005346924698001086
+    second: ruined_earth_144
+  - first:
+      213: 1888092520814991144
+    second: ruined_earth_145
+  - first:
+      213: 2131511028079118915
+    second: ruined_earth_146
+  - first:
+      213: 1595049982305562315
+    second: ruined_earth_147
+  - first:
+      213: 159672782272689858
+    second: ruined_earth_148
+  - first:
+      213: 66944724264996986
+    second: ruined_earth_149
+  - first:
+      213: 1085931614369675121
+    second: ruined_earth_150
+  - first:
+      213: 4035099717248717488
+    second: ruined_earth_151
+  - first:
+      213: 1914871921155864977
+    second: ruined_earth_152
+  - first:
+      213: 1988737890110331846
+    second: ruined_earth_153
+  - first:
+      213: 3273662635234907520
+    second: ruined_earth_154
+  - first:
+      213: 2163047511462926235
+    second: ruined_earth_155
+  - first:
+      213: 231806028722232609
+    second: ruined_earth_156
+  - first:
+      213: 2166067179442063398
+    second: ruined_earth_157
+  - first:
+      213: 3873762719394543657
+    second: ruined_earth_158
+  - first:
+      213: 3450825472813190355
+    second: ruined_earth_159
+  - first:
+      213: 392585840077914728
+    second: ruined_earth_160
+  - first:
+      213: 4567694829232726923
+    second: ruined_earth_161
+  - first:
+      213: 1415359518608068877
+    second: ruined_earth_162
+  - first:
+      213: 2159299373069325983
+    second: ruined_earth_163
+  - first:
+      213: 4306187965115808398
+    second: ruined_earth_164
+  - first:
+      213: 224959903672198366
+    second: ruined_earth_165
+  - first:
+      213: 4539124358725575265
+    second: ruined_earth_166
+  - first:
+      213: 2706916883903814894
+    second: ruined_earth_167
+  - first:
+      213: 1243324748535294314
+    second: ruined_earth_168
+  - first:
+      213: 1375059248285191048
+    second: ruined_earth_169
+  - first:
+      213: 3885117903718573475
+    second: ruined_earth_170
+  - first:
+      213: 4294301248305732752
+    second: ruined_earth_171
+  - first:
+      213: 4289593924152654959
+    second: ruined_earth_172
+  - first:
+      213: 4227834881844063255
+    second: ruined_earth_173
+  - first:
+      213: 1427758296886975564
+    second: ruined_earth_174
+  - first:
+      213: 1501977595924335846
+    second: ruined_earth_175
+  - first:
+      213: 934697338112627811
+    second: ruined_earth_176
+  - first:
+      213: 1880740959037756415
+    second: ruined_earth_177
+  - first:
+      213: 970341910204214452
+    second: ruined_earth_178
+  - first:
+      213: 103467891935827598
+    second: ruined_earth_179
+  - first:
+      213: 3436761663908804181
+    second: ruined_earth_180
+  - first:
+      213: 3352143531078476150
+    second: ruined_earth_181
+  - first:
+      213: 2708114015626468807
+    second: ruined_earth_182
+  - first:
+      213: 3517956758501615638
+    second: ruined_earth_183
+  - first:
+      213: 2012551504138371942
+    second: ruined_earth_184
+  - first:
+      213: 780613432829238038
+    second: ruined_earth_185
+  - first:
+      213: 1143322626983416403
+    second: ruined_earth_186
+  - first:
+      213: 2804835547884501907
+    second: ruined_earth_187
+  - first:
+      213: 1749666954956555283
+    second: ruined_earth_188
+  - first:
+      213: 2443127351923465401
+    second: ruined_earth_189
+  - first:
+      213: 3316169113427020405
+    second: ruined_earth_190
+  - first:
+      213: 1649730399862125324
+    second: ruined_earth_191
+  - first:
+      213: 3700709937291313164
+    second: ruined_earth_192
+  - first:
+      213: 884695759036363003
+    second: ruined_earth_193
+  - first:
+      213: 4340140446556052106
+    second: ruined_earth_194
+  - first:
+      213: 3539931387604755767
+    second: ruined_earth_195
+  - first:
+      213: 4436831871516524861
+    second: ruined_earth_196
+  - first:
+      213: 2929195680004206319
+    second: ruined_earth_197
+  - first:
+      213: 1752721134831206393
+    second: ruined_earth_198
+  - first:
+      213: 2595696437792881818
+    second: ruined_earth_199
+  - first:
+      213: 4514647413953027478
+    second: ruined_earth_200
+  - first:
+      213: 2624140639229697902
+    second: ruined_earth_201
+  - first:
+      213: 105879201410785938
+    second: ruined_earth_202
+  - first:
+      213: 2156078616878503050
+    second: ruined_earth_203
+  - first:
+      213: 832048205045563951
+    second: ruined_earth_204
+  - first:
+      213: 2395077353556278639
+    second: ruined_earth_205
+  - first:
+      213: 317962076948108908
+    second: ruined_earth_206
+  - first:
+      213: 1484075327781508104
+    second: ruined_earth_207
+  - first:
+      213: 1342129656816829788
+    second: ruined_earth_208
+  - first:
+      213: 3365310701838397437
+    second: ruined_earth_209
+  - first:
+      213: 681997974299280604
+    second: ruined_earth_210
+  - first:
+      213: 763795955477486665
+    second: ruined_earth_211
+  - first:
+      213: 4575822482354251412
+    second: ruined_earth_212
+  - first:
+      213: 2877919334863413389
+    second: ruined_earth_213
+  - first:
+      213: 1133986578865113809
+    second: ruined_earth_214
+  - first:
+      213: 2056481024860689154
+    second: ruined_earth_215
+  - first:
+      213: 3434327623450500717
+    second: ruined_earth_216
+  - first:
+      213: 2914545051387461607
+    second: ruined_earth_217
+  - first:
+      213: 792214096301380385
+    second: ruined_earth_218
+  - first:
+      213: 3532028680830123449
+    second: ruined_earth_219
+  - first:
+      213: 2476982859041086240
+    second: ruined_earth_220
+  - first:
+      213: 109809714293216895
+    second: ruined_earth_221
+  - first:
+      213: 5102223586228491
+    second: ruined_earth_222
+  - first:
+      213: 2142224206267663897
+    second: ruined_earth_223
+  - first:
+      213: 2878273458607320337
+    second: ruined_earth_224
+  - first:
+      213: 2526102070098427298
+    second: ruined_earth_225
+  - first:
+      213: 2211169988499001212
+    second: ruined_earth_226
+  - first:
+      213: 2320740011447131936
+    second: ruined_earth_227
+  - first:
+      213: 735815082432591509
+    second: ruined_earth_228
+  - first:
+      213: 1503728767917274722
+    second: ruined_earth_229
+  - first:
+      213: 3924371152147009726
+    second: ruined_earth_230
+  - first:
+      213: 4603115898303268448
+    second: ruined_earth_231
+  - first:
+      213: 1511288409215546465
+    second: ruined_earth_232
+  - first:
+      213: 73810267927034474
+    second: ruined_earth_233
+  - first:
+      213: 2101000272141552724
+    second: ruined_earth_234
+  - first:
+      213: 2218329610517611463
+    second: ruined_earth_235
+  - first:
+      213: 813855930055404169
+    second: ruined_earth_236
+  - first:
+      213: 4069087544204894360
+    second: ruined_earth_237
+  - first:
+      213: 2511397981711089738
+    second: ruined_earth_238
+  - first:
+      213: 2168393490580033536
+    second: ruined_earth_239
+  - first:
+      213: 2423974363098754284
+    second: ruined_earth_240
+  - first:
+      213: 1256049467210777600
+    second: ruined_earth_241
+  - first:
+      213: 1359609443851961890
+    second: ruined_earth_242
+  - first:
+      213: 3400881507453444980
+    second: ruined_earth_243
+  - first:
+      213: 1903309920598511381
+    second: ruined_earth_244
+  - first:
+      213: 2468085951391361009
+    second: ruined_earth_245
+  - first:
+      213: 112375415604042949
+    second: ruined_earth_246
+  - first:
+      213: 2713506351167154460
+    second: ruined_earth_247
+  - first:
+      213: 921606327572447778
+    second: ruined_earth_248
+  - first:
+      213: 2358938800495325542
+    second: ruined_earth_249
+  - first:
+      213: 2041808848711678802
+    second: ruined_earth_250
+  - first:
+      213: 3546120247762707820
+    second: ruined_earth_251
+  - first:
+      213: 4418748494763153945
+    second: ruined_earth_252
+  - first:
+      213: 4592607874619841899
+    second: ruined_earth_253
+  - first:
+      213: 611515876507058110
+    second: ruined_earth_254
+  - first:
+      213: 1497541723100465420
+    second: ruined_earth_255
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ruined_earth_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe4713cc27a15dd8bb75b00ccf9650bf
+      internalID: 4557785474930525759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d4987e22a665a8eb736d9de6efb9890
+      internalID: 3968932287831917791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75bd9127c5a25608a20c5a26261df9fc
+      internalID: 1139184117579506274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_3
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45118bb3c49956c4b864760a5f2c9af2
+      internalID: 2937109625955114886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_4
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a225456b85052b6bbe51c649b610c01
+      internalID: 705355598441400519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_5
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52d00a4db56e5b39bed92c443158da8e
+      internalID: 3896369903977506907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_6
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afe920be49365b8c95263f8a58435864
+      internalID: 1539281334304810656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_7
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8953bffb92158f3871e2457ea85904b
+      internalID: 164930247040176379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_8
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84890d0b92e555e394a375a710249e24
+      internalID: 577768430520429764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_9
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea7762e129c8589ab490568fef791c30
+      internalID: 1142603270396798947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_10
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc54e8edf6b85939832319bde2acdc41
+      internalID: 550396503392595967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_11
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 389114a684855b1c949e334038977d9f
+      internalID: 3174441375788335626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_12
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be191a8ba73b5a60ae592aaa25af33a2
+      internalID: 3212515399260089534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_13
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23515c5f8be457838df850f0886c03e5
+      internalID: 1602488436780125004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_14
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adf6d240e9a555c1b647c3569becb822
+      internalID: 277985421941718842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_15
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 221aab7cb483519d982b8b0436e83223
+      internalID: 4271857257037935947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_16
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e50792d72a0e513f950df0dc0bebbb68
+      internalID: 4591463796056398790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_17
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21370cb139115783985c2b95e01cd44c
+      internalID: 1157581149999099615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_18
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce94e30de52c5c89ba7ed77391318e61
+      internalID: 2215064706212239626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_19
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97f7b5dcdc3e504f90836c560fb5f9c0
+      internalID: 2445493888435256737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_20
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e45476bf7d2f5185b9c1689710e9b9ec
+      internalID: 4264816659492346355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_21
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8a4d7268fed54b98097c075ea56f523
+      internalID: 1982812085027316070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_22
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9156ee28f99053f89cd3e941f444313b
+      internalID: 3566767838125210747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_23
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5134164f13c45ed9b2905421704a8019
+      internalID: 3141922591127571984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_24
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2c6f666db125e21a43d33927a0f0808
+      internalID: 3915646886558234149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_25
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18eb1e45ceae506e867e519221b7e970
+      internalID: 231526109696297843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_26
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e5c1292bc275a10a3719b087c7dab48
+      internalID: 3535277448349494299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_27
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da6b433ff2815ffe819026b16774f336
+      internalID: 4181195471578906820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_28
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7722a9c311c50768655139f29c7cd1b
+      internalID: 2712287242497865008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_29
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d9e8de16ef5477bd7b2d345147ce91
+      internalID: 1772172176723217403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_30
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d6a84ce09fd5150b01eec4ed4047859
+      internalID: 747007471518181296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_31
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0de89d4c0d05e81995af3aa551c55c8
+      internalID: 982766275733813379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_32
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 009dcaad60b95f63aee1ec80e86793f0
+      internalID: 3079897921386498810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_33
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe90b1b69ec256bcadaea9067dab6e12
+      internalID: 4103750861778510264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_34
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 329ec5f2b96358c1bfe5beabbd745beb
+      internalID: 3334276839749241669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_35
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bca823d2c6d5f67a3a0019ff6e451cd
+      internalID: 1370075068443483435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_36
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837c1c889fb35ca0b334a7130fae9514
+      internalID: 78038609831013157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_37
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77b90e0dc50c51289516a122c994b4ee
+      internalID: 2619055257423708493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_38
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c4836f16385b588dc83d1bf5d8335f
+      internalID: 1420972989958427813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_39
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d66595c8abf509b8a66961124e38844
+      internalID: 4328909763192669847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_40
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 328126bc01a052d1ab0e023735940763
+      internalID: 3253844814041636995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_41
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f949c386a484506c9a9b6236e2fc4c71
+      internalID: 1756909588863199723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_42
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cef32826b84a58d2acc83278b11dfd8a
+      internalID: 2856627151476699844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_43
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30addada5b0d505f92300253083b70a3
+      internalID: 4154018242709676694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_44
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca640b93a655633a5da540c4751cb40
+      internalID: 3216768185971049230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_45
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6ce074f916c5d189fd79c4bed2461af
+      internalID: 3101312550652640686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_46
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3d4c1eb26a750cc8c11cd9c2854ebd3
+      internalID: 23384204515341783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_47
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 002a59673d2e518caacb80bc93fe0c65
+      internalID: 3537227248926931482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_48
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a1572e7429e56068627f85223f7d1f9
+      internalID: 3674774586884860775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_49
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9a4eb73817b57ebbf2ba482ad279519
+      internalID: 3721096637599756086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_50
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b6f454fedd5460a0bdb1671da2327a
+      internalID: 1993844252120451159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_51
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0d4d7cf9ffd5423b38e0453113730f4
+      internalID: 3440928324812122039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_52
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 223436a4267d5d3e82530cd5cd9b7545
+      internalID: 1906047592809809082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_53
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 700201781f1354d0a025a9887178cf11
+      internalID: 4395163064810872356
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_54
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47680b9fe34b5e0783df5fb8c5dd2023
+      internalID: 2581790190379994559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_55
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb52a91afcac506faf3d32c11f729dc4
+      internalID: 3793820690312600405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_56
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9374e6f14b1854bab572dbc58bc9d2ea
+      internalID: 112727361598830335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_57
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32438109e646537fad6875e5b1fcc8f3
+      internalID: 3381424167005998591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_58
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6578e134834e57399a0c2771bb8150f9
+      internalID: 1338575282171893274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_59
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 819717e2f9c8571cb381e73337395bc3
+      internalID: 3542838377862572952
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_60
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67e9b23537415a0a88ef6b398cbaa5d0
+      internalID: 1604771421659614587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_61
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bfdab3a1f3357df9e621dff322d77ed
+      internalID: 588868410374144288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_62
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1e65ba41db3542c8e4cf32ac362db14
+      internalID: 636912546750666421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_63
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 210ab0902ba35fa1844023f46b54a6e2
+      internalID: 2734055141905308038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_64
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3abeb56b097c5dd5a4972605e16a4627
+      internalID: 2279232515130880102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_65
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa04359e050a5ab7b191ede93102ca30
+      internalID: 912583177887610543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_66
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 209b98d1f21f5b57ab6b86e7be508997
+      internalID: 843410739665359716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_67
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd371ec48c465bcd84ed18c758b8f2f3
+      internalID: 1413739107979704193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_68
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e25c0077f1d5d309bc538f2da6843b0
+      internalID: 2672485783002971170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_69
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a5dd5be45905df39133e720992b8e3d
+      internalID: 2224116678872519610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_70
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b79d26dd8d4f537d973e5c4d10642bf3
+      internalID: 4477639359164725803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_71
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de2abe1ce24d540991d9e0f73397c12f
+      internalID: 1665268674892042088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_72
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd507316ab9b55e8a17035f67a287b32
+      internalID: 3448498554376263340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_73
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6289cdabf6ca54c3b8c1e0026165b7b1
+      internalID: 4378179189058454846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_74
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2d2a7b5ad9a5e619eafa551a362fe22
+      internalID: 2307546153899240124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_75
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0611cc94178b5a689ae9ac444bb97189
+      internalID: 4539421178786957038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_76
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 464f1c44892f545da801b5f0171c3482
+      internalID: 2084443102302091626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_77
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c83744307f0570c93522843a8c3c1b6
+      internalID: 3997386640631275967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_78
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8d6f293dc0f568b92479d6f58514db3
+      internalID: 507486380838045627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_79
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dbfd3bf7df351699d00a7020dee4802
+      internalID: 1284853835261070308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_80
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34546c0fd854584eb787e3b5f3966bea
+      internalID: 1099015388134426206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_81
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07f9a9b900b85f1590cc91167981bf5e
+      internalID: 2019051809820906299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_82
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c806815040d5ebb89e6526e58473985
+      internalID: 34398719405441121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_83
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe1f939949ed582ead91e79e1305068f
+      internalID: 4530903041640565022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_84
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22f12ce6a417533bab5542a59dd2793d
+      internalID: 2247529868491452000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_85
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9f5c921ad76546bbbd90e033c625134
+      internalID: 1628527877558526425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_86
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4229de2d98555eb3a13d28a8faa28d03
+      internalID: 3724179660832448207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_87
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b9fb0ed35cc57f4bf6ce066415effae
+      internalID: 162616188379758599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_88
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f1c0aab525b53b489c5c2b0a3d699ca
+      internalID: 3450178900553913811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_89
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27a503d9294258d0b516fd46094157d7
+      internalID: 661949134251493239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_90
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 419ac98b0a43516589ed96661498caf6
+      internalID: 2560470078384933291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_91
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 350da0b5b5a053e499b92b915e848c97
+      internalID: 2072967803191293197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_92
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5fec8884c955804acc0d6b48e2c34ea
+      internalID: 500979300618015768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_93
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4647809f14fb52cab8f0326a72863f14
+      internalID: 1596260666840626566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_94
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36cf2cc364a1534fa28e0e9ae4406c56
+      internalID: 3558551788149655194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_95
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5c68db858345c7fa1261cdbc5646fc5
+      internalID: 888424233325060304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_96
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 463286e8fedc5b2b9b502d8f83fb898e
+      internalID: 2466144592852056003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_97
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66570410bba05571a6816d7b963f47d3
+      internalID: 577887956824028276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_98
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1db5fda2072c5416a620f8717500cd91
+      internalID: 3048320604834497115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_99
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae96b5092e25dd08127f63c6181a398
+      internalID: 733527482981692878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_100
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d92caf516725dc7b0590a301df4b018
+      internalID: 2052025844907414107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_101
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f507aea703b52879d4dda83dbfcca35
+      internalID: 2393066891881504221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_102
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2f6f538c0a757adb519c017962133cd
+      internalID: 975077905058092575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_103
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2df08ef15a295bf2ad2b1c882700da1d
+      internalID: 576340945202330700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_104
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7e1d756a56d584ebb6cff927a7ea631
+      internalID: 656363017107250067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_105
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a79800c7ae5781a24842eef0c1813f
+      internalID: 3569587760659157449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_106
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f39ae8859e3e5d269fcf664113bca9f7
+      internalID: 1057434261916708561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_107
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f2eef4372205991a77031bf300d7976
+      internalID: 428493428815359431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_108
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a5ca655a9df59c5867b8e0bc5bc66ad
+      internalID: 2101881457398715292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_109
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce60325be155e24a4e4371d98d883a5
+      internalID: 2863868606614930810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_110
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de41bce195c456c3b796fe4cfd8b4bc7
+      internalID: 2560817538585331899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_111
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 425e9e6fa7bc526bb89fe85c84e5f5bc
+      internalID: 245623837154088638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_112
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e562a1d2f1bb58e78e270e51cfa96534
+      internalID: 3589912925300899997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_113
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 690ed690519a55fe9526dba2246c1db6
+      internalID: 2726259904663782404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_114
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03bada7edd015be5b90c411c39f0707c
+      internalID: 2133941834528234408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_115
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85b372d5af925ef68de46fed0c6ea852
+      internalID: 467815272129212619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_116
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8291277982085b9f9f2e47b3e168c13f
+      internalID: 2257237985280103152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_117
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 794f0cfcdc4c511194a2c781f608f28e
+      internalID: 754963264499609653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_118
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e70e1ad1f9751baa237ad1a768167db
+      internalID: 261750949861494004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_119
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c0bd906e4445cb09c5721247d8c3df2
+      internalID: 1082157702332870386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_120
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d2c3f610f4d5ae5abf152097f904c13
+      internalID: 4424628713629249123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_121
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90c938f5a20d55e38e5cf648260254d6
+      internalID: 2796465147808794005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_122
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ae23d601500524a8a95352e3ff956be
+      internalID: 3474846406396794820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_123
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0718100a8bdf57e7a016d76fa412fc38
+      internalID: 982177370670477644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_124
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec764fa08eff55a4abfcd729e6acc7e4
+      internalID: 4306594585923677044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_125
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26e078aba4e558c685057059de635405
+      internalID: 4133181362885708396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_126
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0f1f7ed67ad554f8bf2a68176834dd3
+      internalID: 1708882081640282641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_127
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dec2323e94025e56af37133e4cdee533
+      internalID: 1467554362952323890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_128
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9bff1469cd25d36a7cb958f014f595b
+      internalID: 95820439020154153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_129
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47b67f1669cd51c7bb6db28823b8809a
+      internalID: 1209859672991588381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_130
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b99ca86520d758fca53a6472753816cc
+      internalID: 1656332682303611637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_131
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfdfe91f00e553099e30f36a87fd56a4
+      internalID: 2219699030298953193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_132
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9fbd007bdd25532802b090c7bda7994
+      internalID: 289906388070003565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_133
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef41fdfbaa915ac6acafd7bc54b887b0
+      internalID: 1219176242620044750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_134
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d55dff7df405bbdaa3c6fb66c434421
+      internalID: 3651581941782805142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_135
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a7b06329d1a5e3ba6a266b06214daff
+      internalID: 3566001743317395464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_136
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec981bae8de25a7384c4bc3acabe53d5
+      internalID: 2786557900500513983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_137
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5aef45598dc25f5e882423a9f9f0d653
+      internalID: 1404487923392079951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_138
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de2ed76eaddd5fd7b4df1ad33f7f4325
+      internalID: 3995711294748359212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_139
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b789dd03208150b28272a2d1678a98ce
+      internalID: 1577556361130828379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_140
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bac1b00098e5792b2e8d3a18d76c820
+      internalID: 4355921257239101152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_141
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9283cde014fe58329a359588a61e0cac
+      internalID: 1053700248347943493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_142
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d9c20e5701a5290afffca3e4e77c4c7
+      internalID: 4066003283410689729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_143
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6954736d29ca5b5e8925967599b0dd2e
+      internalID: 2810195208680065231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_144
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22e2e47f94ce5442a57431d8dc5d8629
+      internalID: 2005346924698001086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_145
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46d8f43a1e285555911f9741e4fc3c41
+      internalID: 1888092520814991144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_146
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d2965a9c0fc5188908b26c8f8679ce0
+      internalID: 2131511028079118915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_147
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d314819e7d85227a42390f213a9b074
+      internalID: 1595049982305562315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_148
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d268b2d7703501b94173dbfb8a7bec9
+      internalID: 159672782272689858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_149
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3191969c6a34508aaeda5fb783852c31
+      internalID: 66944724264996986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_150
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d329fa49ed4454a79cb486abfebb8f34
+      internalID: 1085931614369675121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_151
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d3f18d0a7e35b04bb6ce7dc9a0be151
+      internalID: 4035099717248717488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_152
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e02a0c04e91a546caafbd2783892847a
+      internalID: 1914871921155864977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_153
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d76df42342e5988bde51f4acb9aee58
+      internalID: 1988737890110331846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_154
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31fad7f8612c5198bcf43f7b1907440a
+      internalID: 3273662635234907520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_155
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b984db8b73515f4e9e9f82f8c5e867e6
+      internalID: 2163047511462926235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_156
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 972ab2c0758a5a38a5b64240a5553e87
+      internalID: 231806028722232609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_157
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5a7cad833be53beafefd6ad6a4ed810
+      internalID: 2166067179442063398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_158
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d8d6de4e6cc5661943cf8ec35f9420a
+      internalID: 3873762719394543657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_159
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f280da59340b5d81a32e057148f71df9
+      internalID: 3450825472813190355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_160
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d266eab9d72e592b932c2d066a840171
+      internalID: 392585840077914728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_161
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 611b733fb32954c7b37f1469680b59ab
+      internalID: 4567694829232726923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_162
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa9a049046845d5c94e099a2f27111c9
+      internalID: 1415359518608068877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_163
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf60cb62013a5d9a967b5ff43093e64f
+      internalID: 2159299373069325983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_164
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dc4d0d94c6c5b11a01414ce187d5d4d
+      internalID: 4306187965115808398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_165
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60b333ebfd0552dbbd81a08ec8183adc
+      internalID: 224959903672198366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_166
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1047ff65fec59ec93459a9676be0bc8
+      internalID: 4539124358725575265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_167
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9a22fdf8aa75adf9a207e7ed625444d
+      internalID: 2706916883903814894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_168
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0590dc11af765c76b29ae11e38d24f9d
+      internalID: 1243324748535294314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_169
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7e3afadd0045d01aa6dcd4682f109ec
+      internalID: 1375059248285191048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_170
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4d35ef752b5acdb6fabf7a080a267e
+      internalID: 3885117903718573475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_171
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc8c5419fdbe5304a33df77d60be32db
+      internalID: 4294301248305732752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_172
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5b6356ef91054bc9f81ef436ac086ee
+      internalID: 4289593924152654959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_173
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca4ba91da09d51ebbef8e50f99fa0fc8
+      internalID: 4227834881844063255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_174
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4612dcb022835cc0bb92376e7598b2ac
+      internalID: 1427758296886975564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_175
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bf4d8e66c9b59309479ffda496e2fc2
+      internalID: 1501977595924335846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_176
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53a45adaf6f350f7855355a5ecb4bcd3
+      internalID: 934697338112627811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_177
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92929fbf203156f2aaebeca64073da14
+      internalID: 1880740959037756415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_178
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31a51843502e5dd981fa9ab9f6576760
+      internalID: 970341910204214452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_179
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c9066f9a68f5a80bbb8a7e3ae810100
+      internalID: 103467891935827598
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_180
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c399457eec5b55ddb425be11c3c81989
+      internalID: 3436761663908804181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_181
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edc2546b48b65666a400f6709a23ad91
+      internalID: 3352143531078476150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_182
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc01ad0acd7258bd8b398de8501bc27d
+      internalID: 2708114015626468807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_183
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa69add5eaac55508a41400d2063a228
+      internalID: 3517956758501615638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_184
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 295921811a0956e4b356c943fae78824
+      internalID: 2012551504138371942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_185
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f45dee99dd15d138bfa3c893402237e
+      internalID: 780613432829238038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_186
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d6cf37583825afe877b5eb3e178919b
+      internalID: 1143322626983416403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_187
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2d8597388e45734af779f15bc8140b4
+      internalID: 2804835547884501907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_188
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 982f184a14b75cc78eeb1400449834f0
+      internalID: 1749666954956555283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_189
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c70c490e057a522b939c60347f871ebb
+      internalID: 2443127351923465401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_190
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95ca97a602865268bb25b7f22deb5eb7
+      internalID: 3316169113427020405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_191
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2cbf76972525d5a8187e68d79cd1d59
+      internalID: 1649730399862125324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_192
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 375bab29fe6750ff8a6db064d4818d33
+      internalID: 3700709937291313164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_193
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 647dea3058ce5851a58a4342adcaab36
+      internalID: 884695759036363003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_194
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d58b43914a1c5bc1892fe430a4183de6
+      internalID: 4340140446556052106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_195
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f71f49d1248055d0a6ed0df86e9bf10c
+      internalID: 3539931387604755767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_196
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e57133af07d5dc9bc90763d17912b8e
+      internalID: 4436831871516524861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_197
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 923852675fa7583fa1f5fcc41dcb435b
+      internalID: 2929195680004206319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_198
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 305a65521bd65587952c70538f4a1364
+      internalID: 1752721134831206393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_199
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d9be77451525a93a2e3bbff80c16b18
+      internalID: 2595696437792881818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_200
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d7a9e5179eb514287358d54117d1fcd
+      internalID: 4514647413953027478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_201
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 396a562e6b9250bc902aa00c36cce55d
+      internalID: 2624140639229697902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_202
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13eb558e51e85dfd8055ce35a5898977
+      internalID: 105879201410785938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_203
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aca3ef19dfd05efeb56308a3efa9443c
+      internalID: 2156078616878503050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_204
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c0ecd0e6e705893b63bf6060d2a795b
+      internalID: 832048205045563951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_205
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da9734ca0c0c55b284dbd4973dc805b3
+      internalID: 2395077353556278639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_206
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f2fc3f00347507aa72d589a6181b0cc
+      internalID: 317962076948108908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_207
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69479fb425f2553d950bc3d178d8a8dd
+      internalID: 1484075327781508104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_208
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: defe8918e69a5e7b8bb1042d8c18bbbd
+      internalID: 1342129656816829788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_209
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2ecb684c0435e43b85d45e675f2b4c6
+      internalID: 3365310701838397437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_210
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec8068e74825551bb02bc9729b18e4d3
+      internalID: 681997974299280604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_211
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d92ca8e82735554982205831e21907eb
+      internalID: 763795955477486665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_212
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1abf7950349e582d959fac8c1a60b383
+      internalID: 4575822482354251412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_213
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 512bc184695451f29906952e837ba285
+      internalID: 2877919334863413389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_214
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86198f14aa6b5ae5982642e323a088a3
+      internalID: 1133986578865113809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_215
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45377da439285e829fbef5ff5c12d374
+      internalID: 2056481024860689154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_216
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcd79f539abe5ef88eaf5d7a5b94658e
+      internalID: 3434327623450500717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_217
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efa6a9e34aac531a98a0148b969af2be
+      internalID: 2914545051387461607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_218
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f56193618a952ce9fd6a2e2d8c94d8a
+      internalID: 792214096301380385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_219
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a21073b7625eb89b483b87d4c6fc14
+      internalID: 3532028680830123449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_220
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4147588a5ecc5759a1b9ebada1ebd86e
+      internalID: 2476982859041086240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_221
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 755c40e421ab5f5e9488af3f8179ab16
+      internalID: 109809714293216895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_222
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f355b20f49725517a275bffd45754428
+      internalID: 5102223586228491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_223
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8512c1c45fcb5547a2e52b0ace194d60
+      internalID: 2142224206267663897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_224
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b6f818e55af5722a9224d48e811e2b6
+      internalID: 2878273458607320337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_225
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737980615c3b59b08c08e7b45785b359
+      internalID: 2526102070098427298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_226
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26510804c08d58d4818388f8a3218640
+      internalID: 2211169988499001212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_227
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae4feb44b035074a9bd0d1312168c3b
+      internalID: 2320740011447131936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_228
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 767a6efa1dab5347a9c3d6937e0faaa7
+      internalID: 735815082432591509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_229
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f03d12ad3e157daa99a72d36f85f604
+      internalID: 1503728767917274722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_230
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aeb83d88cfd56ab8bfc0982719e8d78
+      internalID: 3924371152147009726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_231
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef512eaaa88d5ba5a520f124d9820c99
+      internalID: 4603115898303268448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_232
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efc21dfa093a557c982f6070fc1fdba0
+      internalID: 1511288409215546465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_233
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c86ef160f155647983a29e51eee8325
+      internalID: 73810267927034474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_234
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b362d7d992b500ebf210243018a323e
+      internalID: 2101000272141552724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_235
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505a2f9506a9537d95012ef90e271df3
+      internalID: 2218329610517611463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_236
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2296d5267a05e85b2df74f1e61a66b7
+      internalID: 813855930055404169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_237
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4104fca431959bfafc4a933d5d5ec80
+      internalID: 4069087544204894360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_238
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d2d870ebc5e558eacf992d8c688d88c
+      internalID: 2511397981711089738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_239
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5923f0a18ab5c62bdafe5d5b55ca565
+      internalID: 2168393490580033536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_240
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089155c17e77584b855bc5e2b5cb95fc
+      internalID: 2423974363098754284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_241
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49823ab2303251d7b19233c68f22c8d7
+      internalID: 1256049467210777600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_242
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45e5e47ebd7152eb84b0baff95c1afaa
+      internalID: 1359609443851961890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_243
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b281c19ab34b58f68f73284c044d0738
+      internalID: 3400881507453444980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_244
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5af352162b18561493f413ed7f1d4693
+      internalID: 1903309920598511381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_245
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7225291103a45a2bb4eb351bbb196b15
+      internalID: 2468085951391361009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_246
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04238f1d588d5703b93194cc75e3f8cb
+      internalID: 112375415604042949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_247
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 595c84f26f9650358b3dd00bffc085d5
+      internalID: 2713506351167154460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_248
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebfc4230c0ee5528a3f603ffcc4ebecb
+      internalID: 921606327572447778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_249
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f31f63a3a8532d9646e9abb675273a
+      internalID: 2358938800495325542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_250
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77d1ba84b94959d6ad6444990e2ad0e6
+      internalID: 2041808848711678802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_251
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e83ecfa86a3c52e99f386cff84037dc1
+      internalID: 3546120247762707820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_252
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6dcaaf515785cc5bb308c3e10e46cc9
+      internalID: 4418748494763153945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_253
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d155bd1082d15b96acbaee296c0e50f3
+      internalID: 4592607874619841899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_254
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79b714af8e585aedab2d6cc6cdd8b5cb
+      internalID: 611515876507058110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: ruined_earth_255
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98eafc7f2de85ef4a0e7fac6364ee85f
+      internalID: 1497541723100465420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 91ff6d936b6a5892a790eb3901c4ff61, type: 3}
+    nameFileIdTable:
+      ruined_earth_0: 4557785474930525759
+      ruined_earth_1: 3968932287831917791
+      ruined_earth_2: 1139184117579506274
+      ruined_earth_3: 2937109625955114886
+      ruined_earth_4: 705355598441400519
+      ruined_earth_5: 3896369903977506907
+      ruined_earth_6: 1539281334304810656
+      ruined_earth_7: 164930247040176379
+      ruined_earth_8: 577768430520429764
+      ruined_earth_9: 1142603270396798947
+      ruined_earth_10: 550396503392595967
+      ruined_earth_11: 3174441375788335626
+      ruined_earth_12: 3212515399260089534
+      ruined_earth_13: 1602488436780125004
+      ruined_earth_14: 277985421941718842
+      ruined_earth_15: 4271857257037935947
+      ruined_earth_16: 4591463796056398790
+      ruined_earth_17: 1157581149999099615
+      ruined_earth_18: 2215064706212239626
+      ruined_earth_19: 2445493888435256737
+      ruined_earth_20: 4264816659492346355
+      ruined_earth_21: 1982812085027316070
+      ruined_earth_22: 3566767838125210747
+      ruined_earth_23: 3141922591127571984
+      ruined_earth_24: 3915646886558234149
+      ruined_earth_25: 231526109696297843
+      ruined_earth_26: 3535277448349494299
+      ruined_earth_27: 4181195471578906820
+      ruined_earth_28: 2712287242497865008
+      ruined_earth_29: 1772172176723217403
+      ruined_earth_30: 747007471518181296
+      ruined_earth_31: 982766275733813379
+      ruined_earth_32: 3079897921386498810
+      ruined_earth_33: 4103750861778510264
+      ruined_earth_34: 3334276839749241669
+      ruined_earth_35: 1370075068443483435
+      ruined_earth_36: 78038609831013157
+      ruined_earth_37: 2619055257423708493
+      ruined_earth_38: 1420972989958427813
+      ruined_earth_39: 4328909763192669847
+      ruined_earth_40: 3253844814041636995
+      ruined_earth_41: 1756909588863199723
+      ruined_earth_42: 2856627151476699844
+      ruined_earth_43: 4154018242709676694
+      ruined_earth_44: 3216768185971049230
+      ruined_earth_45: 3101312550652640686
+      ruined_earth_46: 23384204515341783
+      ruined_earth_47: 3537227248926931482
+      ruined_earth_48: 3674774586884860775
+      ruined_earth_49: 3721096637599756086
+      ruined_earth_50: 1993844252120451159
+      ruined_earth_51: 3440928324812122039
+      ruined_earth_52: 1906047592809809082
+      ruined_earth_53: 4395163064810872356
+      ruined_earth_54: 2581790190379994559
+      ruined_earth_55: 3793820690312600405
+      ruined_earth_56: 112727361598830335
+      ruined_earth_57: 3381424167005998591
+      ruined_earth_58: 1338575282171893274
+      ruined_earth_59: 3542838377862572952
+      ruined_earth_60: 1604771421659614587
+      ruined_earth_61: 588868410374144288
+      ruined_earth_62: 636912546750666421
+      ruined_earth_63: 2734055141905308038
+      ruined_earth_64: 2279232515130880102
+      ruined_earth_65: 912583177887610543
+      ruined_earth_66: 843410739665359716
+      ruined_earth_67: 1413739107979704193
+      ruined_earth_68: 2672485783002971170
+      ruined_earth_69: 2224116678872519610
+      ruined_earth_70: 4477639359164725803
+      ruined_earth_71: 1665268674892042088
+      ruined_earth_72: 3448498554376263340
+      ruined_earth_73: 4378179189058454846
+      ruined_earth_74: 2307546153899240124
+      ruined_earth_75: 4539421178786957038
+      ruined_earth_76: 2084443102302091626
+      ruined_earth_77: 3997386640631275967
+      ruined_earth_78: 507486380838045627
+      ruined_earth_79: 1284853835261070308
+      ruined_earth_80: 1099015388134426206
+      ruined_earth_81: 2019051809820906299
+      ruined_earth_82: 34398719405441121
+      ruined_earth_83: 4530903041640565022
+      ruined_earth_84: 2247529868491452000
+      ruined_earth_85: 1628527877558526425
+      ruined_earth_86: 3724179660832448207
+      ruined_earth_87: 162616188379758599
+      ruined_earth_88: 3450178900553913811
+      ruined_earth_89: 661949134251493239
+      ruined_earth_90: 2560470078384933291
+      ruined_earth_91: 2072967803191293197
+      ruined_earth_92: 500979300618015768
+      ruined_earth_93: 1596260666840626566
+      ruined_earth_94: 3558551788149655194
+      ruined_earth_95: 888424233325060304
+      ruined_earth_96: 2466144592852056003
+      ruined_earth_97: 577887956824028276
+      ruined_earth_98: 3048320604834497115
+      ruined_earth_99: 733527482981692878
+      ruined_earth_100: 2052025844907414107
+      ruined_earth_101: 2393066891881504221
+      ruined_earth_102: 975077905058092575
+      ruined_earth_103: 576340945202330700
+      ruined_earth_104: 656363017107250067
+      ruined_earth_105: 3569587760659157449
+      ruined_earth_106: 1057434261916708561
+      ruined_earth_107: 428493428815359431
+      ruined_earth_108: 2101881457398715292
+      ruined_earth_109: 2863868606614930810
+      ruined_earth_110: 2560817538585331899
+      ruined_earth_111: 245623837154088638
+      ruined_earth_112: 3589912925300899997
+      ruined_earth_113: 2726259904663782404
+      ruined_earth_114: 2133941834528234408
+      ruined_earth_115: 467815272129212619
+      ruined_earth_116: 2257237985280103152
+      ruined_earth_117: 754963264499609653
+      ruined_earth_118: 261750949861494004
+      ruined_earth_119: 1082157702332870386
+      ruined_earth_120: 4424628713629249123
+      ruined_earth_121: 2796465147808794005
+      ruined_earth_122: 3474846406396794820
+      ruined_earth_123: 982177370670477644
+      ruined_earth_124: 4306594585923677044
+      ruined_earth_125: 4133181362885708396
+      ruined_earth_126: 1708882081640282641
+      ruined_earth_127: 1467554362952323890
+      ruined_earth_128: 95820439020154153
+      ruined_earth_129: 1209859672991588381
+      ruined_earth_130: 1656332682303611637
+      ruined_earth_131: 2219699030298953193
+      ruined_earth_132: 289906388070003565
+      ruined_earth_133: 1219176242620044750
+      ruined_earth_134: 3651581941782805142
+      ruined_earth_135: 3566001743317395464
+      ruined_earth_136: 2786557900500513983
+      ruined_earth_137: 1404487923392079951
+      ruined_earth_138: 3995711294748359212
+      ruined_earth_139: 1577556361130828379
+      ruined_earth_140: 4355921257239101152
+      ruined_earth_141: 1053700248347943493
+      ruined_earth_142: 4066003283410689729
+      ruined_earth_143: 2810195208680065231
+      ruined_earth_144: 2005346924698001086
+      ruined_earth_145: 1888092520814991144
+      ruined_earth_146: 2131511028079118915
+      ruined_earth_147: 1595049982305562315
+      ruined_earth_148: 159672782272689858
+      ruined_earth_149: 66944724264996986
+      ruined_earth_150: 1085931614369675121
+      ruined_earth_151: 4035099717248717488
+      ruined_earth_152: 1914871921155864977
+      ruined_earth_153: 1988737890110331846
+      ruined_earth_154: 3273662635234907520
+      ruined_earth_155: 2163047511462926235
+      ruined_earth_156: 231806028722232609
+      ruined_earth_157: 2166067179442063398
+      ruined_earth_158: 3873762719394543657
+      ruined_earth_159: 3450825472813190355
+      ruined_earth_160: 392585840077914728
+      ruined_earth_161: 4567694829232726923
+      ruined_earth_162: 1415359518608068877
+      ruined_earth_163: 2159299373069325983
+      ruined_earth_164: 4306187965115808398
+      ruined_earth_165: 224959903672198366
+      ruined_earth_166: 4539124358725575265
+      ruined_earth_167: 2706916883903814894
+      ruined_earth_168: 1243324748535294314
+      ruined_earth_169: 1375059248285191048
+      ruined_earth_170: 3885117903718573475
+      ruined_earth_171: 4294301248305732752
+      ruined_earth_172: 4289593924152654959
+      ruined_earth_173: 4227834881844063255
+      ruined_earth_174: 1427758296886975564
+      ruined_earth_175: 1501977595924335846
+      ruined_earth_176: 934697338112627811
+      ruined_earth_177: 1880740959037756415
+      ruined_earth_178: 970341910204214452
+      ruined_earth_179: 103467891935827598
+      ruined_earth_180: 3436761663908804181
+      ruined_earth_181: 3352143531078476150
+      ruined_earth_182: 2708114015626468807
+      ruined_earth_183: 3517956758501615638
+      ruined_earth_184: 2012551504138371942
+      ruined_earth_185: 780613432829238038
+      ruined_earth_186: 1143322626983416403
+      ruined_earth_187: 2804835547884501907
+      ruined_earth_188: 1749666954956555283
+      ruined_earth_189: 2443127351923465401
+      ruined_earth_190: 3316169113427020405
+      ruined_earth_191: 1649730399862125324
+      ruined_earth_192: 3700709937291313164
+      ruined_earth_193: 884695759036363003
+      ruined_earth_194: 4340140446556052106
+      ruined_earth_195: 3539931387604755767
+      ruined_earth_196: 4436831871516524861
+      ruined_earth_197: 2929195680004206319
+      ruined_earth_198: 1752721134831206393
+      ruined_earth_199: 2595696437792881818
+      ruined_earth_200: 4514647413953027478
+      ruined_earth_201: 2624140639229697902
+      ruined_earth_202: 105879201410785938
+      ruined_earth_203: 2156078616878503050
+      ruined_earth_204: 832048205045563951
+      ruined_earth_205: 2395077353556278639
+      ruined_earth_206: 317962076948108908
+      ruined_earth_207: 1484075327781508104
+      ruined_earth_208: 1342129656816829788
+      ruined_earth_209: 3365310701838397437
+      ruined_earth_210: 681997974299280604
+      ruined_earth_211: 763795955477486665
+      ruined_earth_212: 4575822482354251412
+      ruined_earth_213: 2877919334863413389
+      ruined_earth_214: 1133986578865113809
+      ruined_earth_215: 2056481024860689154
+      ruined_earth_216: 3434327623450500717
+      ruined_earth_217: 2914545051387461607
+      ruined_earth_218: 792214096301380385
+      ruined_earth_219: 3532028680830123449
+      ruined_earth_220: 2476982859041086240
+      ruined_earth_221: 109809714293216895
+      ruined_earth_222: 5102223586228491
+      ruined_earth_223: 2142224206267663897
+      ruined_earth_224: 2878273458607320337
+      ruined_earth_225: 2526102070098427298
+      ruined_earth_226: 2211169988499001212
+      ruined_earth_227: 2320740011447131936
+      ruined_earth_228: 735815082432591509
+      ruined_earth_229: 1503728767917274722
+      ruined_earth_230: 3924371152147009726
+      ruined_earth_231: 4603115898303268448
+      ruined_earth_232: 1511288409215546465
+      ruined_earth_233: 73810267927034474
+      ruined_earth_234: 2101000272141552724
+      ruined_earth_235: 2218329610517611463
+      ruined_earth_236: 813855930055404169
+      ruined_earth_237: 4069087544204894360
+      ruined_earth_238: 2511397981711089738
+      ruined_earth_239: 2168393490580033536
+      ruined_earth_240: 2423974363098754284
+      ruined_earth_241: 1256049467210777600
+      ruined_earth_242: 1359609443851961890
+      ruined_earth_243: 3400881507453444980
+      ruined_earth_244: 1903309920598511381
+      ruined_earth_245: 2468085951391361009
+      ruined_earth_246: 112375415604042949
+      ruined_earth_247: 2713506351167154460
+      ruined_earth_248: 921606327572447778
+      ruined_earth_249: 2358938800495325542
+      ruined_earth_250: 2041808848711678802
+      ruined_earth_251: 3546120247762707820
+      ruined_earth_252: 4418748494763153945
+      ruined_earth_253: 4592607874619841899
+      ruined_earth_254: 611515876507058110
+      ruined_earth_255: 1497541723100465420
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -11,3 +11,28 @@ Thumbs.db
 
 # Python
 __pycache__/
+
+# Unity (the project at the repository root: Assets/, Packages/, ProjectSettings/)
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+*.csproj
+*.sln
+*.slnx
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.apiScheme
+*.cache
+crashlytics-build.properties
+sysinfo.txt

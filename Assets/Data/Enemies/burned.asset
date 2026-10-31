@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de681d6fb9805977a77843ffa7567e4d, type: 3}
+  m_Name: burned
+  m_EditorClassIdentifier: 
+  body: {x: 24, y: 56}
+  speed: 20
+  health: 5
+  walkAnim: walk
+  facesLeft: 0
+  armour: 0
+  attackRange: 44
+  reach: {x: 36, y: 40}
+  windup: 0.55
+  strike: 0.2
+  recover: 0.7
+  cooldown: 1.2
+  attackDamage: 2
+  dropChance: 0.7
+  power: 2
+  powerChance: 0.15
+  loot:
+    LightMin: 6
+    LightMax: 10
+    BoneChance: 0.06
+    Bones: 0
+    FlaskChance: 0.04
+    Unique: 
+    Xp: 7
+  puff: {r: 0.35, g: 0.3, b: 0.32, a: 1}

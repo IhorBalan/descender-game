@@ -2,21 +2,27 @@
 
 Skills Claude Code loads automatically when working in this repo. Each
 folder holds a `SKILL.md` whose frontmatter `description` says when it
-applies. They distil the official Godot 4 stable docs into how *this*
-project does things, so a change fits the code that is already here.
+applies. They distil the Unity 6.3 LTS manual, the URP 17, Input System 1.20,
+2D Tilemap Extras 6 and Test Framework 1.6 package docs, and GameCI's docs
+into how *this* project does things, so a change fits the code already here.
+
+The Godot skills these replace were removed when the game moved to Unity;
+the Godot files still in the repo are reference for the port and are not
+touched by any skill.
 
 | Skill | Use it for |
 |---|---|
-| `godot-project-structure` | Where things live, autoloads, scenes vs scripts, dependencies between nodes |
-| `gdscript-style` | Writing GDScript that passes gdlint/gdformat and reads like the rest of the repo |
-| `character-movement-2d` | CharacterBody2D movement, physics layers, Area2D hitboxes, physics interpolation |
-| `tilemap-and-terrains` | TileMapLayer, the TileSet, terrains, custom data, chunk streaming, region scenes |
-| `parallax-camera-and-lights` | Camera2D, Parallax2D backdrops, CanvasLayer, PointLight2D and normal maps |
-| `sprites-and-animation` | SpriteFrames, AnimatedSprite2D, AnimationPlayer, tweens, hit feedback |
-| `ui-and-input` | Control nodes, themes, menus, pausing, InputMap and rebinding |
-| `audio` | AudioStreamPlayer pools, buses, music crossfades, looping streams |
-| `saving-and-data` | Save slots, ConfigFile settings, user:// paths, JSON data files, Resources |
-| `shaders-and-particles` | canvas_item shaders, ShaderMaterial, CPUParticles2D, post effects |
-| `testing-headless` | The unit, map pipeline and smoke tests, how to extend them, CI |
-| `export-and-release` | Export presets, feature tags, tags that release, running the exported build |
-| `performance-2d` | Profiling, node counts, batching, physics cost, what not to optimise |
+| `unity-project-structure` | Where things live under Assets/, asmdefs, namespaces, static state, scenes vs prefabs, what the Godot files are for |
+| `csharp-style` | Writing C# that passes CSharpier and reads like the rest of the repo: fields, properties, serialization, naming |
+| `character-movement-2d` | Rigidbody2D + collider movement, FixedUpdate vs Update, layers and masks, hitboxes, hit-stop and feel |
+| `urp-2d-lighting-and-camera` | The 2D Renderer, Light2D, normal maps as secondary textures, Pixel Perfect Camera, bloom, parallax backdrops |
+| `tilemaps-and-rule-tiles` | Tilemap and Tilemap Renderer, Rule Tiles, Tilemap Collider 2D + Composite, the region scenes |
+| `sprites-and-animation` | Sprite import, slicing, Animation Clips and Animator, SpriteRenderer flips, tweens by coroutine |
+| `input-system-and-ui` | Input System actions, rebinding and saving overrides, uGUI + TextMeshPro screens, pausing, prompts |
+| `audio` | AudioSource pools, the Audio Mixer groups, music crossfades, looping |
+| `saving-and-data` | Save slots, SettingsData, persistentDataPath, JSON with Newtonsoft, ScriptableObject profiles |
+| `unity-testing-and-ci` | EditMode and PlayMode tests, what to test where, GameCI, the licence secrets, CSharpier |
+| `shaders-and-particles` | Shader Graph for sprites, material property blocks, Particle System for ambience |
+| `build-and-release` | Player settings, the release workflow, tags that release, running a build |
+| `editor-tooling` | Menu items, importers, AssetDatabase, custom inspectors, the Godot-to-Unity import scripts |
+| `performance-2d` | Profiler, draw calls and batching, physics cost, allocations, what not to optimise |

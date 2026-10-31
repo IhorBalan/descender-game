@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 717440f668e75032b2ca78e212c9c788, type: 3}
+  m_Name: palace_of_velvet
+  m_EditorClassIdentifier: 
+  displayName: Keeper of the Palace
+  character: imp
+  walkAnim: run
+  scale: 2
+  tint: {r: 1, g: 0.6, b: 0.85, a: 1}
+  facesLeft: 0
+  body: {x: 34, y: 46}
+  health: 28
+  speed: 60
+  contactDamage: 1
+  third: 
+  attackRange: 40
+  reach: {x: 40, y: 40}
+  windup: 0.3
+  strike: 0.15
+  recover: 0.4
+  cooldown: 0.6
+  attackDamage: 1
+  chargeSpeed: 280
+  chargeWindup: 0.4
+  chargeCooldown: 1.5
+  motes: 2
+  loot:
+    LightMin: 55
+    LightMax: 70
+    BoneChance: 0
+    Bones: 3
+    FlaskChance: 0
+    Unique: velvet_gloves
+    Xp: 55

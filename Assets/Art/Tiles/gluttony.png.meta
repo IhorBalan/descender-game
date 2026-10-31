@@ -1,0 +1,7018 @@
+fileFormatVersion: 2
+guid: e91432d03d595ef0a6aa176174482dc7
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 775783296206882732
+    second: gluttony_0
+  - first:
+      213: 448113469557976267
+    second: gluttony_1
+  - first:
+      213: 4403325087291523866
+    second: gluttony_2
+  - first:
+      213: 2967544681439967722
+    second: gluttony_3
+  - first:
+      213: 4111962087653477476
+    second: gluttony_4
+  - first:
+      213: 43578296488331506
+    second: gluttony_5
+  - first:
+      213: 3526419155779035508
+    second: gluttony_6
+  - first:
+      213: 1831381944659386422
+    second: gluttony_7
+  - first:
+      213: 2625278795484285636
+    second: gluttony_8
+  - first:
+      213: 2503277282552780668
+    second: gluttony_9
+  - first:
+      213: 3913595285269579166
+    second: gluttony_10
+  - first:
+      213: 1670645843498323826
+    second: gluttony_11
+  - first:
+      213: 3055980914539434402
+    second: gluttony_12
+  - first:
+      213: 3721954299867506609
+    second: gluttony_13
+  - first:
+      213: 4151101777002326856
+    second: gluttony_14
+  - first:
+      213: 1022874333533802048
+    second: gluttony_15
+  - first:
+      213: 188392264576292742
+    second: gluttony_16
+  - first:
+      213: 4165593991014978095
+    second: gluttony_17
+  - first:
+      213: 1627048172116441768
+    second: gluttony_18
+  - first:
+      213: 1020612493640627229
+    second: gluttony_19
+  - first:
+      213: 2773669152715417803
+    second: gluttony_20
+  - first:
+      213: 355435750018512354
+    second: gluttony_21
+  - first:
+      213: 1587216469893418374
+    second: gluttony_22
+  - first:
+      213: 3216229832429569366
+    second: gluttony_23
+  - first:
+      213: 388856320598764624
+    second: gluttony_24
+  - first:
+      213: 806706718207524411
+    second: gluttony_25
+  - first:
+      213: 409235042633710191
+    second: gluttony_26
+  - first:
+      213: 3574320608827662694
+    second: gluttony_27
+  - first:
+      213: 3332932428170061140
+    second: gluttony_28
+  - first:
+      213: 4451946605305819503
+    second: gluttony_29
+  - first:
+      213: 2810137274607905623
+    second: gluttony_30
+  - first:
+      213: 3759927023901803636
+    second: gluttony_31
+  - first:
+      213: 4039093906491670837
+    second: gluttony_32
+  - first:
+      213: 3385013793428515332
+    second: gluttony_33
+  - first:
+      213: 2350696930960523465
+    second: gluttony_34
+  - first:
+      213: 616586763461397488
+    second: gluttony_35
+  - first:
+      213: 3850334811619477119
+    second: gluttony_36
+  - first:
+      213: 4239157896998179481
+    second: gluttony_37
+  - first:
+      213: 765110434958854557
+    second: gluttony_38
+  - first:
+      213: 4129836584354495913
+    second: gluttony_39
+  - first:
+      213: 4084708655435430781
+    second: gluttony_40
+  - first:
+      213: 92051539784185541
+    second: gluttony_41
+  - first:
+      213: 1124231311949127232
+    second: gluttony_42
+  - first:
+      213: 4022208458141012640
+    second: gluttony_43
+  - first:
+      213: 4124308387131669341
+    second: gluttony_44
+  - first:
+      213: 1993696805518271340
+    second: gluttony_45
+  - first:
+      213: 1015667646595445907
+    second: gluttony_46
+  - first:
+      213: 3149306049388282985
+    second: gluttony_47
+  - first:
+      213: 787807858572632
+    second: gluttony_48
+  - first:
+      213: 1311256900234422918
+    second: gluttony_49
+  - first:
+      213: 1888769916012038807
+    second: gluttony_50
+  - first:
+      213: 1945596455125232805
+    second: gluttony_51
+  - first:
+      213: 853902390218114158
+    second: gluttony_52
+  - first:
+      213: 3527084671538344372
+    second: gluttony_53
+  - first:
+      213: 684420617999978703
+    second: gluttony_54
+  - first:
+      213: 2275051057404884721
+    second: gluttony_55
+  - first:
+      213: 3187134849352003401
+    second: gluttony_56
+  - first:
+      213: 1644344966220628141
+    second: gluttony_57
+  - first:
+      213: 4056113809370874594
+    second: gluttony_58
+  - first:
+      213: 4025161433356242459
+    second: gluttony_59
+  - first:
+      213: 684342423848813737
+    second: gluttony_60
+  - first:
+      213: 2780887262349912365
+    second: gluttony_61
+  - first:
+      213: 1695753275492514580
+    second: gluttony_62
+  - first:
+      213: 3672406974749614834
+    second: gluttony_63
+  - first:
+      213: 3027109529430652459
+    second: gluttony_64
+  - first:
+      213: 2929357302180512362
+    second: gluttony_65
+  - first:
+      213: 1424826565240189143
+    second: gluttony_66
+  - first:
+      213: 1434358741958952522
+    second: gluttony_67
+  - first:
+      213: 1120834398253920313
+    second: gluttony_68
+  - first:
+      213: 1162154277283318132
+    second: gluttony_69
+  - first:
+      213: 927824804688760625
+    second: gluttony_70
+  - first:
+      213: 2899756524488522717
+    second: gluttony_71
+  - first:
+      213: 1501124298361275409
+    second: gluttony_72
+  - first:
+      213: 3547417535952512783
+    second: gluttony_73
+  - first:
+      213: 2534955984869708857
+    second: gluttony_74
+  - first:
+      213: 1671525876079777335
+    second: gluttony_75
+  - first:
+      213: 3710531771290293483
+    second: gluttony_76
+  - first:
+      213: 1888023120197123947
+    second: gluttony_77
+  - first:
+      213: 581760922972354614
+    second: gluttony_78
+  - first:
+      213: 2327852729503831592
+    second: gluttony_79
+  - first:
+      213: 4139717922603220385
+    second: gluttony_80
+  - first:
+      213: 1356382815278453993
+    second: gluttony_81
+  - first:
+      213: 1005558438267943586
+    second: gluttony_82
+  - first:
+      213: 2826769646521164542
+    second: gluttony_83
+  - first:
+      213: 3313310601502990446
+    second: gluttony_84
+  - first:
+      213: 1279296469555537917
+    second: gluttony_85
+  - first:
+      213: 1190677948799651096
+    second: gluttony_86
+  - first:
+      213: 3024298948753005136
+    second: gluttony_87
+  - first:
+      213: 1792580950979543282
+    second: gluttony_88
+  - first:
+      213: 4585599382172969171
+    second: gluttony_89
+  - first:
+      213: 974631930905448633
+    second: gluttony_90
+  - first:
+      213: 2527279506988796306
+    second: gluttony_91
+  - first:
+      213: 3099986263937733898
+    second: gluttony_92
+  - first:
+      213: 3490055017448081590
+    second: gluttony_93
+  - first:
+      213: 4257182991085108179
+    second: gluttony_94
+  - first:
+      213: 150428320455534130
+    second: gluttony_95
+  - first:
+      213: 388136700337946472
+    second: gluttony_96
+  - first:
+      213: 4559879938025291930
+    second: gluttony_97
+  - first:
+      213: 3095044921877997638
+    second: gluttony_98
+  - first:
+      213: 3349286405372288205
+    second: gluttony_99
+  - first:
+      213: 4001910998900861190
+    second: gluttony_100
+  - first:
+      213: 289617957972583041
+    second: gluttony_101
+  - first:
+      213: 4454177503893996024
+    second: gluttony_102
+  - first:
+      213: 642585878264244553
+    second: gluttony_103
+  - first:
+      213: 3373701859990068955
+    second: gluttony_104
+  - first:
+      213: 490172888288753561
+    second: gluttony_105
+  - first:
+      213: 3957757101428701822
+    second: gluttony_106
+  - first:
+      213: 3547863019427679696
+    second: gluttony_107
+  - first:
+      213: 1749039270560528893
+    second: gluttony_108
+  - first:
+      213: 2690917689709651274
+    second: gluttony_109
+  - first:
+      213: 1528232523677106834
+    second: gluttony_110
+  - first:
+      213: 4027838581416539542
+    second: gluttony_111
+  - first:
+      213: 2345639173739331899
+    second: gluttony_112
+  - first:
+      213: 3513488809013310298
+    second: gluttony_113
+  - first:
+      213: 2713670790150293741
+    second: gluttony_114
+  - first:
+      213: 4370779606901831266
+    second: gluttony_115
+  - first:
+      213: 2135827218718296909
+    second: gluttony_116
+  - first:
+      213: 23862270303461661
+    second: gluttony_117
+  - first:
+      213: 1524512005622981936
+    second: gluttony_118
+  - first:
+      213: 2312269403084524998
+    second: gluttony_119
+  - first:
+      213: 3767965951465564564
+    second: gluttony_120
+  - first:
+      213: 2221410823860085889
+    second: gluttony_121
+  - first:
+      213: 1527492199187815272
+    second: gluttony_122
+  - first:
+      213: 755437046236845181
+    second: gluttony_123
+  - first:
+      213: 3319817433082530247
+    second: gluttony_124
+  - first:
+      213: 1918521387012862877
+    second: gluttony_125
+  - first:
+      213: 1409253539939733438
+    second: gluttony_126
+  - first:
+      213: 486965328016503217
+    second: gluttony_127
+  - first:
+      213: 2290300496675976073
+    second: gluttony_128
+  - first:
+      213: 3433248367810030591
+    second: gluttony_129
+  - first:
+      213: 2483518913588140921
+    second: gluttony_130
+  - first:
+      213: 2682660256135478925
+    second: gluttony_131
+  - first:
+      213: 2109145956918123234
+    second: gluttony_132
+  - first:
+      213: 1659660789137791083
+    second: gluttony_133
+  - first:
+      213: 1994091509603903097
+    second: gluttony_134
+  - first:
+      213: 4409823218826697807
+    second: gluttony_135
+  - first:
+      213: 6589205696777071
+    second: gluttony_136
+  - first:
+      213: 1425856769677909193
+    second: gluttony_137
+  - first:
+      213: 3605162438764105980
+    second: gluttony_138
+  - first:
+      213: 2028264077580028477
+    second: gluttony_139
+  - first:
+      213: 1901363673316639738
+    second: gluttony_140
+  - first:
+      213: 1349144519225572089
+    second: gluttony_141
+  - first:
+      213: 1568801052661243187
+    second: gluttony_142
+  - first:
+      213: 4094841230406513782
+    second: gluttony_143
+  - first:
+      213: 2378411658379838389
+    second: gluttony_144
+  - first:
+      213: 277367517650194595
+    second: gluttony_145
+  - first:
+      213: 4008185744811428068
+    second: gluttony_146
+  - first:
+      213: 326945005148524447
+    second: gluttony_147
+  - first:
+      213: 3276004901114975937
+    second: gluttony_148
+  - first:
+      213: 3990717647904001413
+    second: gluttony_149
+  - first:
+      213: 456522960259997494
+    second: gluttony_150
+  - first:
+      213: 1455683644266837769
+    second: gluttony_151
+  - first:
+      213: 4521649414670245546
+    second: gluttony_152
+  - first:
+      213: 1267525881874372236
+    second: gluttony_153
+  - first:
+      213: 1598459659302151728
+    second: gluttony_154
+  - first:
+      213: 2277709811726079499
+    second: gluttony_155
+  - first:
+      213: 2060755825168038643
+    second: gluttony_156
+  - first:
+      213: 193496374195815434
+    second: gluttony_157
+  - first:
+      213: 4605137726696937200
+    second: gluttony_158
+  - first:
+      213: 1191895098867404198
+    second: gluttony_159
+  - first:
+      213: 765200087596839914
+    second: gluttony_160
+  - first:
+      213: 3162761968732745490
+    second: gluttony_161
+  - first:
+      213: 3620211079446527480
+    second: gluttony_162
+  - first:
+      213: 284095685401488038
+    second: gluttony_163
+  - first:
+      213: 825171022817498003
+    second: gluttony_164
+  - first:
+      213: 3056530892186030964
+    second: gluttony_165
+  - first:
+      213: 1105521583707045150
+    second: gluttony_166
+  - first:
+      213: 991950675415180717
+    second: gluttony_167
+  - first:
+      213: 3635769413711466596
+    second: gluttony_168
+  - first:
+      213: 2938364594501876275
+    second: gluttony_169
+  - first:
+      213: 3385546978714621708
+    second: gluttony_170
+  - first:
+      213: 1347803963602469395
+    second: gluttony_171
+  - first:
+      213: 3384071912070884621
+    second: gluttony_172
+  - first:
+      213: 2777302850818866588
+    second: gluttony_173
+  - first:
+      213: 2060879304929664932
+    second: gluttony_174
+  - first:
+      213: 599505883332195529
+    second: gluttony_175
+  - first:
+      213: 2212045733607055141
+    second: gluttony_176
+  - first:
+      213: 2130379770750578560
+    second: gluttony_177
+  - first:
+      213: 2694597420971590170
+    second: gluttony_178
+  - first:
+      213: 3069459400083790118
+    second: gluttony_179
+  - first:
+      213: 3795056731314588877
+    second: gluttony_180
+  - first:
+      213: 4575231977316203469
+    second: gluttony_181
+  - first:
+      213: 880311222553397038
+    second: gluttony_182
+  - first:
+      213: 4213028699222356551
+    second: gluttony_183
+  - first:
+      213: 4526567292733907314
+    second: gluttony_184
+  - first:
+      213: 2066802032704456967
+    second: gluttony_185
+  - first:
+      213: 1035758155202007270
+    second: gluttony_186
+  - first:
+      213: 4059530098656633308
+    second: gluttony_187
+  - first:
+      213: 3634785909257194289
+    second: gluttony_188
+  - first:
+      213: 1397906449195244265
+    second: gluttony_189
+  - first:
+      213: 4308233791818312205
+    second: gluttony_190
+  - first:
+      213: 1245443603752435503
+    second: gluttony_191
+  - first:
+      213: 953900898441461605
+    second: gluttony_192
+  - first:
+      213: 4018715931860534961
+    second: gluttony_193
+  - first:
+      213: 1709192137991611669
+    second: gluttony_194
+  - first:
+      213: 271615544166059363
+    second: gluttony_195
+  - first:
+      213: 3973456233796333185
+    second: gluttony_196
+  - first:
+      213: 2269594629787807724
+    second: gluttony_197
+  - first:
+      213: 641457709915458243
+    second: gluttony_198
+  - first:
+      213: 2730850128326694694
+    second: gluttony_199
+  - first:
+      213: 168828656572175824
+    second: gluttony_200
+  - first:
+      213: 2156967461262557233
+    second: gluttony_201
+  - first:
+      213: 1531347263473977473
+    second: gluttony_202
+  - first:
+      213: 3583969979116400841
+    second: gluttony_203
+  - first:
+      213: 2110905646169137964
+    second: gluttony_204
+  - first:
+      213: 2039183054845302950
+    second: gluttony_205
+  - first:
+      213: 2658827385833046563
+    second: gluttony_206
+  - first:
+      213: 4397512784251426022
+    second: gluttony_207
+  - first:
+      213: 1330628203143344723
+    second: gluttony_208
+  - first:
+      213: 42890189699687287
+    second: gluttony_209
+  - first:
+      213: 222021050482262290
+    second: gluttony_210
+  - first:
+      213: 2632193199823303887
+    second: gluttony_211
+  - first:
+      213: 3957624501991607838
+    second: gluttony_212
+  - first:
+      213: 3311233331839507833
+    second: gluttony_213
+  - first:
+      213: 1392512043461770555
+    second: gluttony_214
+  - first:
+      213: 2101827819051286394
+    second: gluttony_215
+  - first:
+      213: 692770990550870012
+    second: gluttony_216
+  - first:
+      213: 4526739064040987497
+    second: gluttony_217
+  - first:
+      213: 4307982013438929296
+    second: gluttony_218
+  - first:
+      213: 1532989060565240162
+    second: gluttony_219
+  - first:
+      213: 3983622684061077153
+    second: gluttony_220
+  - first:
+      213: 1129489425860355371
+    second: gluttony_221
+  - first:
+      213: 1791196757742518448
+    second: gluttony_222
+  - first:
+      213: 2031234461057255819
+    second: gluttony_223
+  - first:
+      213: 132771446576790594
+    second: gluttony_224
+  - first:
+      213: 2180841157106491475
+    second: gluttony_225
+  - first:
+      213: 4504463497308092519
+    second: gluttony_226
+  - first:
+      213: 2281992264384004218
+    second: gluttony_227
+  - first:
+      213: 830436039277974008
+    second: gluttony_228
+  - first:
+      213: 202566472815945407
+    second: gluttony_229
+  - first:
+      213: 3508170621408147922
+    second: gluttony_230
+  - first:
+      213: 1767978296820276086
+    second: gluttony_231
+  - first:
+      213: 736259041957925987
+    second: gluttony_232
+  - first:
+      213: 4329510616455894202
+    second: gluttony_233
+  - first:
+      213: 2094400592395761842
+    second: gluttony_234
+  - first:
+      213: 4274756506013583002
+    second: gluttony_235
+  - first:
+      213: 1942202886121755592
+    second: gluttony_236
+  - first:
+      213: 3574689311645850093
+    second: gluttony_237
+  - first:
+      213: 602882202739138529
+    second: gluttony_238
+  - first:
+      213: 4234883103731500774
+    second: gluttony_239
+  - first:
+      213: 3601475001736774278
+    second: gluttony_240
+  - first:
+      213: 515266945913015259
+    second: gluttony_241
+  - first:
+      213: 2911049673877679303
+    second: gluttony_242
+  - first:
+      213: 1098493719215287857
+    second: gluttony_243
+  - first:
+      213: 3282900898562338507
+    second: gluttony_244
+  - first:
+      213: 1590810842183947029
+    second: gluttony_245
+  - first:
+      213: 1628968255109764738
+    second: gluttony_246
+  - first:
+      213: 2998479665600790574
+    second: gluttony_247
+  - first:
+      213: 1354963669361070206
+    second: gluttony_248
+  - first:
+      213: 110740008705169284
+    second: gluttony_249
+  - first:
+      213: 2264717272618252376
+    second: gluttony_250
+  - first:
+      213: 368320266986578460
+    second: gluttony_251
+  - first:
+      213: 1900566571066329089
+    second: gluttony_252
+  - first:
+      213: 2788042162139437323
+    second: gluttony_253
+  - first:
+      213: 3557925332287841587
+    second: gluttony_254
+  - first:
+      213: 495909293408473973
+    second: gluttony_255
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: gluttony_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe37bcadffc5531b898089ccb5b39753
+      internalID: 775783296206882732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58b70779997f52b09d4a300795862a1e
+      internalID: 448113469557976267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b06b48cbc2be52fd8606304f704fe204
+      internalID: 4403325087291523866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_3
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e27264a96d1594688dbeda2fffacaec
+      internalID: 2967544681439967722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_4
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33577f5c2e155dfa8cba977e9329555a
+      internalID: 4111962087653477476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_5
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ba6f22954a156479b501c8e1a354e69
+      internalID: 43578296488331506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_6
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1153f99c9493597281697b78bddde924
+      internalID: 3526419155779035508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_7
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb97e5c679c5766a020c3bea7256e06
+      internalID: 1831381944659386422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_8
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e0a54f542b95deb8a0cf151ac6595f1
+      internalID: 2625278795484285636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_9
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e30e55df8ecb5c7593b3a2d24f3db581
+      internalID: 2503277282552780668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_10
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76f0c36fc0bc503fb9c4abb0b4ff5d91
+      internalID: 3913595285269579166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_11
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d907feed3c056fab43236b8bb328a07
+      internalID: 1670645843498323826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_12
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38753104650c505f8b09bbbc87bb0eb3
+      internalID: 3055980914539434402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_13
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb95e6a133f5dcca28ad0a50081a1b7
+      internalID: 3721954299867506609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_14
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9385c95fd3465d76bc60672c3062b914
+      internalID: 4151101777002326856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_15
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ea1033e259b50e4979e131f9c40bda6
+      internalID: 1022874333533802048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_16
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7171cab523b455f599fd99768e01dc21
+      internalID: 188392264576292742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_17
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13e8ee3f16605e789cd0f7733148a91c
+      internalID: 4165593991014978095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_18
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc2920b1baf25821b3436e11d8687c14
+      internalID: 1627048172116441768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_19
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d26017faa21d529b847c6a679b4fa0be
+      internalID: 1020612493640627229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_20
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bab32e957c9b575b8fa46af0579af8e5
+      internalID: 2773669152715417803
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_21
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7988c113b25524d98e970ad4a94d63b
+      internalID: 355435750018512354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_22
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be0e57f4f1a15010b48c6aa558f55b16
+      internalID: 1587216469893418374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_23
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26197df92dfc57c984e3b51f02f665a9
+      internalID: 3216229832429569366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_24
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ea514f6ca0a53c9ba041c73df797e5b
+      internalID: 388856320598764624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_25
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 130b16234418578bb3860b71737aa674
+      internalID: 806706718207524411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_26
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8e0e50114d25fcc9373bf08bcbbeb6d
+      internalID: 409235042633710191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_27
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81e9237abe605cff9aab0d22686acf75
+      internalID: 3574320608827662694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_28
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d57c5048e085df5944699cdaa779b86
+      internalID: 3332932428170061140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_29
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f94e5e332e25c5db33763c04cf708d4
+      internalID: 4451946605305819503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_30
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fbfe4a888d45ee680417509dbc4e8f0
+      internalID: 2810137274607905623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_31
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0114996e3065a28baa0777a543ca022
+      internalID: 3759927023901803636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_32
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1f6f1b3c38b5a0ebe99260fb2d0d2ac
+      internalID: 4039093906491670837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_33
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 073dea4cf2dd5360802cf8ba35a1db80
+      internalID: 3385013793428515332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_34
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0fb5bf366f45716a72532860df34ffa
+      internalID: 2350696930960523465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_35
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f34e6624c56b507e81b53ef6f0ed0da1
+      internalID: 616586763461397488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_36
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 887c86a5d92157568b7e606d48715b7f
+      internalID: 3850334811619477119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_37
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5feb1119c61d5d48b657581af9acb540
+      internalID: 4239157896998179481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_38
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c1f25a0e789568ab2d4e0d6cb3d9fee
+      internalID: 765110434958854557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_39
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7443f95d04de5a9e9f8659cd629f9010
+      internalID: 4129836584354495913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_40
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3f0c8012339565e88caed01b791cd50
+      internalID: 4084708655435430781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_41
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b5be96ec7465d9cbfd043850b9cdf7f
+      internalID: 92051539784185541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_42
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e485cd9c8f665d4eae0e3086b6fd083b
+      internalID: 1124231311949127232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_43
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3886506c0e9a53838f15e66d573cee31
+      internalID: 4022208458141012640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_44
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 150b6c56ca6b532fb7b405e4e1656117
+      internalID: 4124308387131669341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_45
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4062043607ad5345a53dc7da2a13bffe
+      internalID: 1993696805518271340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_46
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fc9a428699c56a9863b7a1852e3441f
+      internalID: 1015667646595445907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_47
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7dc65bd69425b89a97f38563f90f2a1
+      internalID: 3149306049388282985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_48
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 440a85e85c645467ba3b74ab10ceccb1
+      internalID: 787807858572632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_49
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ea1ab37e4035654b1b5a26a653d3866
+      internalID: 1311256900234422918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_50
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f14cbd535ca55ccaa13beb0d41c25eaf
+      internalID: 1888769916012038807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_51
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f91e90e2f9225104bb7cac3ec53f5c31
+      internalID: 1945596455125232805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_52
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ee1bf194a2f564c887f3ec940af4764
+      internalID: 853902390218114158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_53
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da1b6ef13c1f5b35b18ab3db729c53c8
+      internalID: 3527084671538344372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_54
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e09365fe3a2b5815a7a4c09172d0cbd4
+      internalID: 684420617999978703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_55
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b15bfabdd825c8bb1d6bc770700baab
+      internalID: 2275051057404884721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_56
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4e53f7095c55a7b81aff6af8a9cde82
+      internalID: 3187134849352003401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_57
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6af7e29f1aea573dbdac76821a7b70c3
+      internalID: 1644344966220628141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_58
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 227973a60d1a53e88c7130c22f5d1395
+      internalID: 4056113809370874594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_59
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fb881eb044d5a33b724da0d1b29aa54
+      internalID: 4025161433356242459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_60
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c45b2a168d085468b143211b51607511
+      internalID: 684342423848813737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_61
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3053cbb8bcc65453928b55f2972108af
+      internalID: 2780887262349912365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_62
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 742ae65e5c9d5a14951f6ebd92aee9af
+      internalID: 1695753275492514580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_63
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a5cb800b66058b39e8d0dec55937781
+      internalID: 3672406974749614834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_64
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2280fc5ae775316b92bbb120f501fb6
+      internalID: 3027109529430652459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_65
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 703caa43beb8550abcdc733167ba5518
+      internalID: 2929357302180512362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_66
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ba5fca7fe16520db9ec15238102b938
+      internalID: 1424826565240189143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_67
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 532c8becd1e2570ebf1a4885cfd93510
+      internalID: 1434358741958952522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_68
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c8c3402f96d555586f12e6b104e55a4
+      internalID: 1120834398253920313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_69
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f5839a98cf57688722f88b806bf0b9
+      internalID: 1162154277283318132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_70
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a3743c4642d54d78ffac0aad5b41feb
+      internalID: 927824804688760625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_71
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1184a103f2c514e9a46dadd93371349
+      internalID: 2899756524488522717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_72
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4091690dd8d75899b1f4eecfaf3399cf
+      internalID: 1501124298361275409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_73
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3600c402f4554be82652e575acddac8
+      internalID: 3547417535952512783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_74
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d10ad12cda7e56139564d06af6505ca9
+      internalID: 2534955984869708857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_75
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da3049446fa056edb3ccdd41734816fb
+      internalID: 1671525876079777335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_76
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66a9b0efb43a5aea9d1c2e88e4e680df
+      internalID: 3710531771290293483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_77
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beed36e7742f56b5a17840089ad63f5b
+      internalID: 1888023120197123947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_78
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03bd1d87a1f950028db20cf0cca056ec
+      internalID: 581760922972354614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_79
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b66e5df318405155b67bad96a0c22311
+      internalID: 2327852729503831592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_80
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3ccaa4e82d752079a213c7c85c8f180
+      internalID: 4139717922603220385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_81
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f0d3cec1e5553709a544df991e9ca19
+      internalID: 1356382815278453993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_82
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b86984769c9852d886c53e84e5a26a2c
+      internalID: 1005558438267943586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_83
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcdea1b47bf450e88e02f2f8fccca85c
+      internalID: 2826769646521164542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_84
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d4f3e27fd55a8b96ea35e6b5d6e38c
+      internalID: 3313310601502990446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_85
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24def88a11c75722887bf350e39aabe3
+      internalID: 1279296469555537917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_86
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf40bbbfcb495e928b500177eee28d41
+      internalID: 1190677948799651096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_87
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ceaafb0889950bb97d189ce7c8aaa97
+      internalID: 3024298948753005136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_88
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ee43d6e2c7159bf8285b0a74913ed6d
+      internalID: 1792580950979543282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_89
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2af02823f1057a4a5c2f122278d9e50
+      internalID: 4585599382172969171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_90
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aec617c97fe05d38bc161edf18c3bb9b
+      internalID: 974631930905448633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_91
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4cc72fa367750cc913208d2b2e801c7
+      internalID: 2527279506988796306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_92
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 792285a95c775efcaa9476265a991f2e
+      internalID: 3099986263937733898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_93
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cd026b90b7a50e09d8ef40b2fba81e8
+      internalID: 3490055017448081590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_94
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8636c9c3bba5aad83f2e8dba25f972d
+      internalID: 4257182991085108179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_95
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f6daf678d9a5d39bde3dd0e0636ff4b
+      internalID: 150428320455534130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_96
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4299bb09f55d58ae89b6b3610a29d898
+      internalID: 388136700337946472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_97
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35cdd77ae6ed567dae0b4f4aec83d1c6
+      internalID: 4559879938025291930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_98
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c01fe2c077f35fca86f6d92c74dc09d8
+      internalID: 3095044921877997638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_99
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a52429579b0556ca9d437883f6ab24ff
+      internalID: 3349286405372288205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_100
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cc820fe77885302b94b69e04b6bcf1b
+      internalID: 4001910998900861190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_101
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61f053ae5a335537b45970582b3de935
+      internalID: 289617957972583041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_102
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ce809046b2e5e559f231fe0a5be8a2f
+      internalID: 4454177503893996024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_103
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceccd9a0d4a657fdb0790474662fdcb8
+      internalID: 642585878264244553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_104
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48e8cff014d65f85a36350d2dd3f19a9
+      internalID: 3373701859990068955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_105
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af866fe91b9b52918a778582aa184443
+      internalID: 490172888288753561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_106
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a77a823e3ca5ed9882d7355b8a78071
+      internalID: 3957757101428701822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_107
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79256ac3ef6752da9fc456aee46cba1f
+      internalID: 3547863019427679696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_108
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 983cd0a6e3985e1c801d4584455b2f59
+      internalID: 1749039270560528893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_109
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 968611d7f1295e6f95f77b7fc2a50c50
+      internalID: 2690917689709651274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_110
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03f4c7b51734544f81c9f39373c0ff6d
+      internalID: 1528232523677106834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_111
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7260e8437f825652b0a6378d82c215ed
+      internalID: 4027838581416539542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_112
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1732533b7500519fb7e2458524dbfb88
+      internalID: 2345639173739331899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_113
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 464d1b86b3e65423895f88574f7d3305
+      internalID: 3513488809013310298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_114
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7748e381ff1a56f19ea94c181240a9b0
+      internalID: 2713670790150293741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_115
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bab3b1c5cdc5940a00c7dcb32a64cc4
+      internalID: 4370779606901831266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_116
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea3343358c6b51bca4471fd44bab6dcb
+      internalID: 2135827218718296909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_117
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bad7b334cdf85abb8cba9eff95751acd
+      internalID: 23862270303461661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_118
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a7e0a2ad0685a0b8273c6a30afe2f2c
+      internalID: 1524512005622981936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_119
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84bc2f3ec28c5afe87acabb91ada2643
+      internalID: 2312269403084524998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_120
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41677e0906a65de282ee8761a737f974
+      internalID: 3767965951465564564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_121
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c50d382a6c7a5be48e57597392b6f0a5
+      internalID: 2221410823860085889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_122
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4c2d08a04e95f43892f22bee1dec332
+      internalID: 1527492199187815272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_123
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de8ac329dbff515f95f1bcda180f01ad
+      internalID: 755437046236845181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_124
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ada690220505164819a50fb03b4c85b
+      internalID: 3319817433082530247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_125
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 337843ab82485ffba3def1599f82c995
+      internalID: 1918521387012862877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_126
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15ef7f9f620b551998267c9ae4fdd495
+      internalID: 1409253539939733438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_127
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 596bf3ea04bf5b7c9947a5c32ac242ec
+      internalID: 486965328016503217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_128
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22a1970327505ec1903b9cde2bd66fca
+      internalID: 2290300496675976073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_129
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b195390b87a5d9fbf1565e58f466c3e
+      internalID: 3433248367810030591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_130
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3cce51bbb6d585089179c8a9a3dad51
+      internalID: 2483518913588140921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_131
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2377d9187345ba2a3984bf29e5bfc93
+      internalID: 2682660256135478925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_132
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d9dcdaae79351469769bfcde5bb159e
+      internalID: 2109145956918123234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_133
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2818fe9be27d5f9eba1df7adf78f5718
+      internalID: 1659660789137791083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_134
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 117cac63dd79520f994d8b7e42b82a1b
+      internalID: 1994091509603903097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_135
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99cc6f6b17c351eb91199675d26d8fb0
+      internalID: 4409823218826697807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_136
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 612248fe19c05017b6646ce8be0953f7
+      internalID: 6589205696777071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_137
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daa84b53682956e6ad0f89033048ffcd
+      internalID: 1425856769677909193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_138
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7e79ad714ad5553b0a8bc2f65249fce
+      internalID: 3605162438764105980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_139
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6b8d775078c5078a0abba0e60550f1d
+      internalID: 2028264077580028477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_140
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a1237384d8c50a3b0570f95325becaf
+      internalID: 1901363673316639738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_141
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24150ab3faf7587599f11079312a350b
+      internalID: 1349144519225572089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_142
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14d59edeae5156eb90dd1a6542628c3b
+      internalID: 1568801052661243187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_143
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0f329c6cc9250ec9696ff07c07274b8
+      internalID: 4094841230406513782
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_144
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5d2587e24cf532fa0e1f22a6f2ef0d9
+      internalID: 2378411658379838389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_145
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbd2ddf51256580f8e9bac328658ea67
+      internalID: 277367517650194595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_146
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2970b6d4c8c35366be10528b846fdbaa
+      internalID: 4008185744811428068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_147
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8044486458e5d31bd963f03987d8ad9
+      internalID: 326945005148524447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_148
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c361f510dff51c5a81259ef4b4a29c9
+      internalID: 3276004901114975937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_149
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4facd2807ac35b8aa337f49289924004
+      internalID: 3990717647904001413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_150
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d88b1ed93105ae580441618b3edede3
+      internalID: 456522960259997494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_151
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89fe9e98a2eb51d38b2f4e47c5c046d2
+      internalID: 1455683644266837769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_152
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 187619b7cdfd5dbb89a1fd127b27d970
+      internalID: 4521649414670245546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_153
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a21136bb27c95228b2b5ebefe4cea17c
+      internalID: 1267525881874372236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_154
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19155e8359d2589a97ac4cd9b2ea8062
+      internalID: 1598459659302151728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_155
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b261f339162d50e7aa0de31873d90894
+      internalID: 2277709811726079499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_156
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e2384e7beaa56b68f8c6698ac8d077b
+      internalID: 2060755825168038643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_157
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da78ab1cb188517192d34b5a0008ed0e
+      internalID: 193496374195815434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_158
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f616d03a2ec5170b3ccf17cf5ec73c6
+      internalID: 4605137726696937200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_159
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 894dfb051ef25d29bbdbbcaaa9d844d1
+      internalID: 1191895098867404198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_160
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 106d9b4fddde557eb000fc2ee677f491
+      internalID: 765200087596839914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_161
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbe55daeeb425f4ba87f99b7be37f835
+      internalID: 3162761968732745490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_162
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb5936c09f0151b58b598195a0ea8981
+      internalID: 3620211079446527480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_163
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5aa54e9639e5d9e88a30fadc23f36f5
+      internalID: 284095685401488038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_164
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fec99d8969525fa7abebfefa92f38aa8
+      internalID: 825171022817498003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_165
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e04ce824f8525e3fb9828aeb1c190964
+      internalID: 3056530892186030964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_166
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0baa01b53c1453b9bcff7c2141a00cf0
+      internalID: 1105521583707045150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_167
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b10489356ca5f31abfe4a311fbc0a36
+      internalID: 991950675415180717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_168
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5d09dad6ecd524eb86ca477645d89ff
+      internalID: 3635769413711466596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_169
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00898104ba3051328ad17f8aafe83384
+      internalID: 2938364594501876275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_170
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0306b8b9291954caa5959e708c5b85d6
+      internalID: 3385546978714621708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_171
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e4ec962b9bb5495ab781ba1a22dd096
+      internalID: 1347803963602469395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_172
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f2f59fdc055d9fb2da978e4fc3b8ba
+      internalID: 3384071912070884621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_173
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e65d5c922f2f5dd3a7da806964951c5a
+      internalID: 2777302850818866588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_174
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c001051b377852779f43afdaab8bf352
+      internalID: 2060879304929664932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_175
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2285d59fe355491869d65bd12b7173f
+      internalID: 599505883332195529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_176
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1bf0e57a3fb53a0be95ea247cdeee66
+      internalID: 2212045733607055141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_177
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 230c9030868b58a3bfcd1ce553b53dbf
+      internalID: 2130379770750578560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_178
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 849e981aa23054819ef3ef1b9c85dbe2
+      internalID: 2694597420971590170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_179
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e39f78da3d695389bb907f69075a99ba
+      internalID: 3069459400083790118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_180
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e5e90cf93fc53e58ffb69b70f0e5f82
+      internalID: 3795056731314588877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_181
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e0e40533825d738ac8a1f27f8b248a
+      internalID: 4575231977316203469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_182
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0238b627fdfc503ba8cabb1fb3769071
+      internalID: 880311222553397038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_183
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a906e0a99aec5e75a174615a015c7933
+      internalID: 4213028699222356551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_184
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51e3387abfc559c8b0032aa571577091
+      internalID: 4526567292733907314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_185
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c95e5a9565b591fa482c044c03c7634
+      internalID: 2066802032704456967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_186
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f6c5957ccdf5ad7a88f95160da8463f
+      internalID: 1035758155202007270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_187
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cb0651b022851e699a08e3d27103391
+      internalID: 4059530098656633308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_188
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68e56fb5f1ac52faacf157a7acb8f037
+      internalID: 3634785909257194289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_189
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4d22335195e565eb265fc1ffd12e5bd
+      internalID: 1397906449195244265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_190
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 393c02ff08975d04b9fe048f1ddeeaed
+      internalID: 4308233791818312205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_191
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f17351931c5512ba02191c2d441b3b8
+      internalID: 1245443603752435503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_192
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3901486716e15a7ab4b6c83847fa78ff
+      internalID: 953900898441461605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_193
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fca119f297958209ddb0deee8133453
+      internalID: 4018715931860534961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_194
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1a2af55c2a0576f9fdf7355ce1359ba
+      internalID: 1709192137991611669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_195
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b22fff7f3c075e37a8ad33277cd2c015
+      internalID: 271615544166059363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_196
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81c19fe050e458c79aac62efd6a3c75f
+      internalID: 3973456233796333185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_197
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47f03ba07b5054e1aa4e84d5795f93a4
+      internalID: 2269594629787807724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_198
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f39ea980fa465ffea9be283d08a04493
+      internalID: 641457709915458243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_199
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3df92faaef8557a929d8f55baf248b2
+      internalID: 2730850128326694694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_200
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cee62738b55f56dd92ea6a81580f656f
+      internalID: 168828656572175824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_201
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c563571f6cb05c628b0ea8b8e68a258f
+      internalID: 2156967461262557233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_202
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf165c034e0d5c388f55528aa92a1547
+      internalID: 1531347263473977473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_203
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b430f699f7c0578e85f46da6b28f7145
+      internalID: 3583969979116400841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_204
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c977aee7a47552a3b28c2893c8436502
+      internalID: 2110905646169137964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_205
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 755c27908cf5596f9ba61d741dbd0fe0
+      internalID: 2039183054845302950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_206
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65ad1f74e61f567fb305df21a284c7f0
+      internalID: 2658827385833046563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_207
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eae74e33f9f508e8ca974945bcb6829
+      internalID: 4397512784251426022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_208
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59bb18c2dddf52298bd09aaafd73ad3f
+      internalID: 1330628203143344723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_209
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae47f3d6676f5091b657ae111fb0fd06
+      internalID: 42890189699687287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_210
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 166309ca1b265df1b31c0716da7c69cb
+      internalID: 222021050482262290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_211
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df320b34e5c058b89bd10e0be4cf1ac8
+      internalID: 2632193199823303887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_212
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aac7b36fa7c556b4814491c69569b1b6
+      internalID: 3957624501991607838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_213
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb4a33c6233a5cc490963cbe970661c8
+      internalID: 3311233331839507833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_214
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48faa7965d2455379c81702809237a9a
+      internalID: 1392512043461770555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_215
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58bd3746bc7d5388bbf4fbbf2c58f8a7
+      internalID: 2101827819051286394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_216
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e92eae369bd5bd8a9e1d4979cab7613
+      internalID: 692770990550870012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_217
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf20758b10325b048f9fa9b4298d6ad1
+      internalID: 4526739064040987497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_218
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e90e38f3bf4c5bbf87c2009399bb0ed2
+      internalID: 4307982013438929296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_219
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55bce20cb9685bb7a545f151919aed0e
+      internalID: 1532989060565240162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_220
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa4e8183e43f56fe8f142437298df80d
+      internalID: 3983622684061077153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_221
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13429d48f2b25d31b6eca4de430a9e7e
+      internalID: 1129489425860355371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_222
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 456e102f99c35ac583575cc3489a2f84
+      internalID: 1791196757742518448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_223
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c70620d03aca5c1b83f25c11d814ff31
+      internalID: 2031234461057255819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_224
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14020695914b5a809aefa9a4481f4ae1
+      internalID: 132771446576790594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_225
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 104c2d587c835765bb169115be40fe0f
+      internalID: 2180841157106491475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_226
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a1daa2d21375d34a7c5e74dff13309f
+      internalID: 4504463497308092519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_227
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e62dcf0635651deb2001478561b5017
+      internalID: 2281992264384004218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_228
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78b80a7401cb5aa1b2a6009638357ba5
+      internalID: 830436039277974008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_229
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebb4b0b516a958cab480cbb342fb10ed
+      internalID: 202566472815945407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_230
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1503d16e0af8507d885f9c6bcc18c24c
+      internalID: 3508170621408147922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_231
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544d81c76346514fa442b5d228fd4ef4
+      internalID: 1767978296820276086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_232
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cee5e536b941597983725337a797f673
+      internalID: 736259041957925987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_233
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7c084e8d05c5d789656af11cd672e86
+      internalID: 4329510616455894202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_234
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67923293cd3c5503bf895990458fd89f
+      internalID: 2094400592395761842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_235
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ced015e3aeb5dd9ac04bbf07f31cec8
+      internalID: 4274756506013583002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_236
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 016194d40c4f5944886e2819dff8a0a6
+      internalID: 1942202886121755592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_237
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49d1b25a4dcc53618f00dc1f8315032e
+      internalID: 3574689311645850093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_238
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 433ffda6a86e59dcad055d5758aa3825
+      internalID: 602882202739138529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_239
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83301ce4bcfb54529b31910131ab7c91
+      internalID: 4234883103731500774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_240
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3dc5933a75d56adb5732b60bf541e77
+      internalID: 3601475001736774278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_241
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1580aae3eabd522aaae22b5544edb2f3
+      internalID: 515266945913015259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_242
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1fa7cd55c2a56d587537965fd2f356e
+      internalID: 2911049673877679303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_243
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a60b1271356e5b05834087d1f8b77234
+      internalID: 1098493719215287857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_244
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ce3cc41aa58542fa134edb320d89b98
+      internalID: 3282900898562338507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_245
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8358baf3f1d57e4a0607b1f969fc2d5
+      internalID: 1590810842183947029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_246
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e76578a736157ac8c16048f0fd5b56c
+      internalID: 1628968255109764738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_247
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b0d6a1657b451f5810ff4273dc3e279
+      internalID: 2998479665600790574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_248
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 018bf21f31c5521aa6b6b759aeb21efe
+      internalID: 1354963669361070206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_249
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7517e244c6e590a93db40aea4ffa69e
+      internalID: 110740008705169284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_250
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2b0a8a83bd35d228a0f0640a7d6be01
+      internalID: 2264717272618252376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_251
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cddf42ba86e54aa9fc8fbfe12da515e
+      internalID: 368320266986578460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_252
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2905573314c571a95cd1f99dfcd7db9
+      internalID: 1900566571066329089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_253
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81a50443b03e5cebaf07deab38666f9a
+      internalID: 2788042162139437323
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_254
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4382c250fe5851488e4aa504187ac591
+      internalID: 3557925332287841587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gluttony_255
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f1ffc2c4be352989737708861f2a606
+      internalID: 495909293408473973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: ab0e954f3f805fc2b8d604e9919fa738, type: 3}
+    nameFileIdTable:
+      gluttony_0: 775783296206882732
+      gluttony_1: 448113469557976267
+      gluttony_2: 4403325087291523866
+      gluttony_3: 2967544681439967722
+      gluttony_4: 4111962087653477476
+      gluttony_5: 43578296488331506
+      gluttony_6: 3526419155779035508
+      gluttony_7: 1831381944659386422
+      gluttony_8: 2625278795484285636
+      gluttony_9: 2503277282552780668
+      gluttony_10: 3913595285269579166
+      gluttony_11: 1670645843498323826
+      gluttony_12: 3055980914539434402
+      gluttony_13: 3721954299867506609
+      gluttony_14: 4151101777002326856
+      gluttony_15: 1022874333533802048
+      gluttony_16: 188392264576292742
+      gluttony_17: 4165593991014978095
+      gluttony_18: 1627048172116441768
+      gluttony_19: 1020612493640627229
+      gluttony_20: 2773669152715417803
+      gluttony_21: 355435750018512354
+      gluttony_22: 1587216469893418374
+      gluttony_23: 3216229832429569366
+      gluttony_24: 388856320598764624
+      gluttony_25: 806706718207524411
+      gluttony_26: 409235042633710191
+      gluttony_27: 3574320608827662694
+      gluttony_28: 3332932428170061140
+      gluttony_29: 4451946605305819503
+      gluttony_30: 2810137274607905623
+      gluttony_31: 3759927023901803636
+      gluttony_32: 4039093906491670837
+      gluttony_33: 3385013793428515332
+      gluttony_34: 2350696930960523465
+      gluttony_35: 616586763461397488
+      gluttony_36: 3850334811619477119
+      gluttony_37: 4239157896998179481
+      gluttony_38: 765110434958854557
+      gluttony_39: 4129836584354495913
+      gluttony_40: 4084708655435430781
+      gluttony_41: 92051539784185541
+      gluttony_42: 1124231311949127232
+      gluttony_43: 4022208458141012640
+      gluttony_44: 4124308387131669341
+      gluttony_45: 1993696805518271340
+      gluttony_46: 1015667646595445907
+      gluttony_47: 3149306049388282985
+      gluttony_48: 787807858572632
+      gluttony_49: 1311256900234422918
+      gluttony_50: 1888769916012038807
+      gluttony_51: 1945596455125232805
+      gluttony_52: 853902390218114158
+      gluttony_53: 3527084671538344372
+      gluttony_54: 684420617999978703
+      gluttony_55: 2275051057404884721
+      gluttony_56: 3187134849352003401
+      gluttony_57: 1644344966220628141
+      gluttony_58: 4056113809370874594
+      gluttony_59: 4025161433356242459
+      gluttony_60: 684342423848813737
+      gluttony_61: 2780887262349912365
+      gluttony_62: 1695753275492514580
+      gluttony_63: 3672406974749614834
+      gluttony_64: 3027109529430652459
+      gluttony_65: 2929357302180512362
+      gluttony_66: 1424826565240189143
+      gluttony_67: 1434358741958952522
+      gluttony_68: 1120834398253920313
+      gluttony_69: 1162154277283318132
+      gluttony_70: 927824804688760625
+      gluttony_71: 2899756524488522717
+      gluttony_72: 1501124298361275409
+      gluttony_73: 3547417535952512783
+      gluttony_74: 2534955984869708857
+      gluttony_75: 1671525876079777335
+      gluttony_76: 3710531771290293483
+      gluttony_77: 1888023120197123947
+      gluttony_78: 581760922972354614
+      gluttony_79: 2327852729503831592
+      gluttony_80: 4139717922603220385
+      gluttony_81: 1356382815278453993
+      gluttony_82: 1005558438267943586
+      gluttony_83: 2826769646521164542
+      gluttony_84: 3313310601502990446
+      gluttony_85: 1279296469555537917
+      gluttony_86: 1190677948799651096
+      gluttony_87: 3024298948753005136
+      gluttony_88: 1792580950979543282
+      gluttony_89: 4585599382172969171
+      gluttony_90: 974631930905448633
+      gluttony_91: 2527279506988796306
+      gluttony_92: 3099986263937733898
+      gluttony_93: 3490055017448081590
+      gluttony_94: 4257182991085108179
+      gluttony_95: 150428320455534130
+      gluttony_96: 388136700337946472
+      gluttony_97: 4559879938025291930
+      gluttony_98: 3095044921877997638
+      gluttony_99: 3349286405372288205
+      gluttony_100: 4001910998900861190
+      gluttony_101: 289617957972583041
+      gluttony_102: 4454177503893996024
+      gluttony_103: 642585878264244553
+      gluttony_104: 3373701859990068955
+      gluttony_105: 490172888288753561
+      gluttony_106: 3957757101428701822
+      gluttony_107: 3547863019427679696
+      gluttony_108: 1749039270560528893
+      gluttony_109: 2690917689709651274
+      gluttony_110: 1528232523677106834
+      gluttony_111: 4027838581416539542
+      gluttony_112: 2345639173739331899
+      gluttony_113: 3513488809013310298
+      gluttony_114: 2713670790150293741
+      gluttony_115: 4370779606901831266
+      gluttony_116: 2135827218718296909
+      gluttony_117: 23862270303461661
+      gluttony_118: 1524512005622981936
+      gluttony_119: 2312269403084524998
+      gluttony_120: 3767965951465564564
+      gluttony_121: 2221410823860085889
+      gluttony_122: 1527492199187815272
+      gluttony_123: 755437046236845181
+      gluttony_124: 3319817433082530247
+      gluttony_125: 1918521387012862877
+      gluttony_126: 1409253539939733438
+      gluttony_127: 486965328016503217
+      gluttony_128: 2290300496675976073
+      gluttony_129: 3433248367810030591
+      gluttony_130: 2483518913588140921
+      gluttony_131: 2682660256135478925
+      gluttony_132: 2109145956918123234
+      gluttony_133: 1659660789137791083
+      gluttony_134: 1994091509603903097
+      gluttony_135: 4409823218826697807
+      gluttony_136: 6589205696777071
+      gluttony_137: 1425856769677909193
+      gluttony_138: 3605162438764105980
+      gluttony_139: 2028264077580028477
+      gluttony_140: 1901363673316639738
+      gluttony_141: 1349144519225572089
+      gluttony_142: 1568801052661243187
+      gluttony_143: 4094841230406513782
+      gluttony_144: 2378411658379838389
+      gluttony_145: 277367517650194595
+      gluttony_146: 4008185744811428068
+      gluttony_147: 326945005148524447
+      gluttony_148: 3276004901114975937
+      gluttony_149: 3990717647904001413
+      gluttony_150: 456522960259997494
+      gluttony_151: 1455683644266837769
+      gluttony_152: 4521649414670245546
+      gluttony_153: 1267525881874372236
+      gluttony_154: 1598459659302151728
+      gluttony_155: 2277709811726079499
+      gluttony_156: 2060755825168038643
+      gluttony_157: 193496374195815434
+      gluttony_158: 4605137726696937200
+      gluttony_159: 1191895098867404198
+      gluttony_160: 765200087596839914
+      gluttony_161: 3162761968732745490
+      gluttony_162: 3620211079446527480
+      gluttony_163: 284095685401488038
+      gluttony_164: 825171022817498003
+      gluttony_165: 3056530892186030964
+      gluttony_166: 1105521583707045150
+      gluttony_167: 991950675415180717
+      gluttony_168: 3635769413711466596
+      gluttony_169: 2938364594501876275
+      gluttony_170: 3385546978714621708
+      gluttony_171: 1347803963602469395
+      gluttony_172: 3384071912070884621
+      gluttony_173: 2777302850818866588
+      gluttony_174: 2060879304929664932
+      gluttony_175: 599505883332195529
+      gluttony_176: 2212045733607055141
+      gluttony_177: 2130379770750578560
+      gluttony_178: 2694597420971590170
+      gluttony_179: 3069459400083790118
+      gluttony_180: 3795056731314588877
+      gluttony_181: 4575231977316203469
+      gluttony_182: 880311222553397038
+      gluttony_183: 4213028699222356551
+      gluttony_184: 4526567292733907314
+      gluttony_185: 2066802032704456967
+      gluttony_186: 1035758155202007270
+      gluttony_187: 4059530098656633308
+      gluttony_188: 3634785909257194289
+      gluttony_189: 1397906449195244265
+      gluttony_190: 4308233791818312205
+      gluttony_191: 1245443603752435503
+      gluttony_192: 953900898441461605
+      gluttony_193: 4018715931860534961
+      gluttony_194: 1709192137991611669
+      gluttony_195: 271615544166059363
+      gluttony_196: 3973456233796333185
+      gluttony_197: 2269594629787807724
+      gluttony_198: 641457709915458243
+      gluttony_199: 2730850128326694694
+      gluttony_200: 168828656572175824
+      gluttony_201: 2156967461262557233
+      gluttony_202: 1531347263473977473
+      gluttony_203: 3583969979116400841
+      gluttony_204: 2110905646169137964
+      gluttony_205: 2039183054845302950
+      gluttony_206: 2658827385833046563
+      gluttony_207: 4397512784251426022
+      gluttony_208: 1330628203143344723
+      gluttony_209: 42890189699687287
+      gluttony_210: 222021050482262290
+      gluttony_211: 2632193199823303887
+      gluttony_212: 3957624501991607838
+      gluttony_213: 3311233331839507833
+      gluttony_214: 1392512043461770555
+      gluttony_215: 2101827819051286394
+      gluttony_216: 692770990550870012
+      gluttony_217: 4526739064040987497
+      gluttony_218: 4307982013438929296
+      gluttony_219: 1532989060565240162
+      gluttony_220: 3983622684061077153
+      gluttony_221: 1129489425860355371
+      gluttony_222: 1791196757742518448
+      gluttony_223: 2031234461057255819
+      gluttony_224: 132771446576790594
+      gluttony_225: 2180841157106491475
+      gluttony_226: 4504463497308092519
+      gluttony_227: 2281992264384004218
+      gluttony_228: 830436039277974008
+      gluttony_229: 202566472815945407
+      gluttony_230: 3508170621408147922
+      gluttony_231: 1767978296820276086
+      gluttony_232: 736259041957925987
+      gluttony_233: 4329510616455894202
+      gluttony_234: 2094400592395761842
+      gluttony_235: 4274756506013583002
+      gluttony_236: 1942202886121755592
+      gluttony_237: 3574689311645850093
+      gluttony_238: 602882202739138529
+      gluttony_239: 4234883103731500774
+      gluttony_240: 3601475001736774278
+      gluttony_241: 515266945913015259
+      gluttony_242: 2911049673877679303
+      gluttony_243: 1098493719215287857
+      gluttony_244: 3282900898562338507
+      gluttony_245: 1590810842183947029
+      gluttony_246: 1628968255109764738
+      gluttony_247: 2998479665600790574
+      gluttony_248: 1354963669361070206
+      gluttony_249: 110740008705169284
+      gluttony_250: 2264717272618252376
+      gluttony_251: 368320266986578460
+      gluttony_252: 1900566571066329089
+      gluttony_253: 2788042162139437323
+      gluttony_254: 3557925332287841587
+      gluttony_255: 495909293408473973
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

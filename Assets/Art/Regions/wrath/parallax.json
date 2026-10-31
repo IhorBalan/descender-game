@@ -1,0 +1,50 @@
+{
+  "art_tile": 64,
+  "layers": [
+    {
+      "file": "sky.png",
+      "cover": true
+    },
+    {
+      "file": "far.png",
+      "scroll": [
+        0.2,
+        0.08
+      ],
+      "y": -1128
+    },
+    {
+      "file": "mid.png",
+      "scroll": [
+        0.45,
+        0.16
+      ],
+      "y": -216
+    },
+    {
+      "file": "glow.png",
+      "scroll": [
+        0.6,
+        0.12
+      ],
+      "y": 455
+    },
+    {
+      "file": "fog.png",
+      "scroll": [
+        0.75,
+        0.25
+      ],
+      "y": 248
+    },
+    {
+      "file": "haze.png",
+      "scroll": [
+        1.18,
+        0.4
+      ],
+      "y": 177,
+      "front": true
+    }
+  ]
+}

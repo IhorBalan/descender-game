@@ -1,0 +1,7018 @@
+fileFormatVersion: 2
+guid: d72b988c11815cb791785bdf2d8f15ef
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2938556329872752622
+    second: purgatory_0
+  - first:
+      213: 3272713529436178958
+    second: purgatory_1
+  - first:
+      213: 3711457093081896755
+    second: purgatory_2
+  - first:
+      213: 2033562888384483979
+    second: purgatory_3
+  - first:
+      213: 3657278822037695939
+    second: purgatory_4
+  - first:
+      213: 2923019389487553171
+    second: purgatory_5
+  - first:
+      213: 502020693796978492
+    second: purgatory_6
+  - first:
+      213: 3895963320496272656
+    second: purgatory_7
+  - first:
+      213: 353162174854956291
+    second: purgatory_8
+  - first:
+      213: 2771247965753850714
+    second: purgatory_9
+  - first:
+      213: 3342028341753573293
+    second: purgatory_10
+  - first:
+      213: 3273329567184518594
+    second: purgatory_11
+  - first:
+      213: 3178547464176231872
+    second: purgatory_12
+  - first:
+      213: 2530731539314941380
+    second: purgatory_13
+  - first:
+      213: 4258826598529955649
+    second: purgatory_14
+  - first:
+      213: 2728793774903558055
+    second: purgatory_15
+  - first:
+      213: 2948185722258122883
+    second: purgatory_16
+  - first:
+      213: 4598885709938184608
+    second: purgatory_17
+  - first:
+      213: 3011780700273703252
+    second: purgatory_18
+  - first:
+      213: 1190795173085679307
+    second: purgatory_19
+  - first:
+      213: 3038389589116178217
+    second: purgatory_20
+  - first:
+      213: 2048313729760713521
+    second: purgatory_21
+  - first:
+      213: 2290468989776866566
+    second: purgatory_22
+  - first:
+      213: 2792518256540120448
+    second: purgatory_23
+  - first:
+      213: 2153216865180935361
+    second: purgatory_24
+  - first:
+      213: 71561759370856933
+    second: purgatory_25
+  - first:
+      213: 758713940934542964
+    second: purgatory_26
+  - first:
+      213: 4373642274099376022
+    second: purgatory_27
+  - first:
+      213: 3474896081083508539
+    second: purgatory_28
+  - first:
+      213: 3199769021561130174
+    second: purgatory_29
+  - first:
+      213: 925102830889125841
+    second: purgatory_30
+  - first:
+      213: 46913627435876006
+    second: purgatory_31
+  - first:
+      213: 2799694339273329470
+    second: purgatory_32
+  - first:
+      213: 3656376189591877412
+    second: purgatory_33
+  - first:
+      213: 3999094579803686759
+    second: purgatory_34
+  - first:
+      213: 3507098685185672805
+    second: purgatory_35
+  - first:
+      213: 3546863632760506166
+    second: purgatory_36
+  - first:
+      213: 3601173700945532089
+    second: purgatory_37
+  - first:
+      213: 2553659510397983418
+    second: purgatory_38
+  - first:
+      213: 614824591766350315
+    second: purgatory_39
+  - first:
+      213: 853691915318723675
+    second: purgatory_40
+  - first:
+      213: 2140816850333917261
+    second: purgatory_41
+  - first:
+      213: 3560285492840904793
+    second: purgatory_42
+  - first:
+      213: 4155442799747385267
+    second: purgatory_43
+  - first:
+      213: 1504118977536294455
+    second: purgatory_44
+  - first:
+      213: 3746102191529660642
+    second: purgatory_45
+  - first:
+      213: 923625031977001889
+    second: purgatory_46
+  - first:
+      213: 904161581757491595
+    second: purgatory_47
+  - first:
+      213: 1835369826117484142
+    second: purgatory_48
+  - first:
+      213: 3067546059415808822
+    second: purgatory_49
+  - first:
+      213: 1598434891970848445
+    second: purgatory_50
+  - first:
+      213: 3597212014132217259
+    second: purgatory_51
+  - first:
+      213: 2614393361130011843
+    second: purgatory_52
+  - first:
+      213: 2821987902981769871
+    second: purgatory_53
+  - first:
+      213: 327167012581563787
+    second: purgatory_54
+  - first:
+      213: 3520985009511101688
+    second: purgatory_55
+  - first:
+      213: 60730991724676178
+    second: purgatory_56
+  - first:
+      213: 18108327472259221
+    second: purgatory_57
+  - first:
+      213: 4254416002829916405
+    second: purgatory_58
+  - first:
+      213: 4219067737707851614
+    second: purgatory_59
+  - first:
+      213: 774182591078870708
+    second: purgatory_60
+  - first:
+      213: 2734187463653917565
+    second: purgatory_61
+  - first:
+      213: 391478365242606312
+    second: purgatory_62
+  - first:
+      213: 3116920471611686110
+    second: purgatory_63
+  - first:
+      213: 1815558871149018691
+    second: purgatory_64
+  - first:
+      213: 1676171732267439674
+    second: purgatory_65
+  - first:
+      213: 3706521626691091186
+    second: purgatory_66
+  - first:
+      213: 2660881560739348351
+    second: purgatory_67
+  - first:
+      213: 4334366610827492703
+    second: purgatory_68
+  - first:
+      213: 307271421607960730
+    second: purgatory_69
+  - first:
+      213: 201201907055513615
+    second: purgatory_70
+  - first:
+      213: 1656989958965053475
+    second: purgatory_71
+  - first:
+      213: 3711646166655053186
+    second: purgatory_72
+  - first:
+      213: 712962772376927509
+    second: purgatory_73
+  - first:
+      213: 3522975912364396531
+    second: purgatory_74
+  - first:
+      213: 1634426731199927435
+    second: purgatory_75
+  - first:
+      213: 2828268081362816162
+    second: purgatory_76
+  - first:
+      213: 1539056255485643570
+    second: purgatory_77
+  - first:
+      213: 1222448926117976408
+    second: purgatory_78
+  - first:
+      213: 415592938684486924
+    second: purgatory_79
+  - first:
+      213: 2605160749058988969
+    second: purgatory_80
+  - first:
+      213: 3888761039052088491
+    second: purgatory_81
+  - first:
+      213: 120819620621044198
+    second: purgatory_82
+  - first:
+      213: 3499886534649388888
+    second: purgatory_83
+  - first:
+      213: 623412441432667368
+    second: purgatory_84
+  - first:
+      213: 145096429222760567
+    second: purgatory_85
+  - first:
+      213: 4196532049086579100
+    second: purgatory_86
+  - first:
+      213: 90626787849596994
+    second: purgatory_87
+  - first:
+      213: 4573075986944907542
+    second: purgatory_88
+  - first:
+      213: 186960433977167816
+    second: purgatory_89
+  - first:
+      213: 404620581635882150
+    second: purgatory_90
+  - first:
+      213: 1501266725517261197
+    second: purgatory_91
+  - first:
+      213: 2717185257642807202
+    second: purgatory_92
+  - first:
+      213: 2239200427647625985
+    second: purgatory_93
+  - first:
+      213: 2561931864742077641
+    second: purgatory_94
+  - first:
+      213: 800550811748438041
+    second: purgatory_95
+  - first:
+      213: 4610336316883452851
+    second: purgatory_96
+  - first:
+      213: 3350958044868239025
+    second: purgatory_97
+  - first:
+      213: 3577318427706121163
+    second: purgatory_98
+  - first:
+      213: 3051020797253171416
+    second: purgatory_99
+  - first:
+      213: 3281397432928502398
+    second: purgatory_100
+  - first:
+      213: 3062873007527647540
+    second: purgatory_101
+  - first:
+      213: 62061920118305405
+    second: purgatory_102
+  - first:
+      213: 4105783917823753574
+    second: purgatory_103
+  - first:
+      213: 3510055103979602284
+    second: purgatory_104
+  - first:
+      213: 1296105904643476318
+    second: purgatory_105
+  - first:
+      213: 2259588468511140403
+    second: purgatory_106
+  - first:
+      213: 478369236122926590
+    second: purgatory_107
+  - first:
+      213: 2914780240351771665
+    second: purgatory_108
+  - first:
+      213: 65557743163966056
+    second: purgatory_109
+  - first:
+      213: 1736850978953734248
+    second: purgatory_110
+  - first:
+      213: 2434410486221662133
+    second: purgatory_111
+  - first:
+      213: 1029790333103337562
+    second: purgatory_112
+  - first:
+      213: 3936095227280065169
+    second: purgatory_113
+  - first:
+      213: 2825160401859037750
+    second: purgatory_114
+  - first:
+      213: 4078840995504164306
+    second: purgatory_115
+  - first:
+      213: 1244907025523090910
+    second: purgatory_116
+  - first:
+      213: 3786533549066729228
+    second: purgatory_117
+  - first:
+      213: 3367490615352815516
+    second: purgatory_118
+  - first:
+      213: 3748464423420930944
+    second: purgatory_119
+  - first:
+      213: 2200154208190380880
+    second: purgatory_120
+  - first:
+      213: 394130429341838048
+    second: purgatory_121
+  - first:
+      213: 1352247218058742205
+    second: purgatory_122
+  - first:
+      213: 3736111046530236607
+    second: purgatory_123
+  - first:
+      213: 4399849306882779272
+    second: purgatory_124
+  - first:
+      213: 1782338769789531435
+    second: purgatory_125
+  - first:
+      213: 3264745553967215363
+    second: purgatory_126
+  - first:
+      213: 1425206324635046306
+    second: purgatory_127
+  - first:
+      213: 1607616705035858175
+    second: purgatory_128
+  - first:
+      213: 4052070625467884616
+    second: purgatory_129
+  - first:
+      213: 2676910763646273294
+    second: purgatory_130
+  - first:
+      213: 193603923815071589
+    second: purgatory_131
+  - first:
+      213: 3814687614340626179
+    second: purgatory_132
+  - first:
+      213: 585674660832714
+    second: purgatory_133
+  - first:
+      213: 743500355240949951
+    second: purgatory_134
+  - first:
+      213: 4382899656730505732
+    second: purgatory_135
+  - first:
+      213: 4025842378837649555
+    second: purgatory_136
+  - first:
+      213: 3770627252446787548
+    second: purgatory_137
+  - first:
+      213: 3631384546376021179
+    second: purgatory_138
+  - first:
+      213: 1233732174918025589
+    second: purgatory_139
+  - first:
+      213: 3020857018686614224
+    second: purgatory_140
+  - first:
+      213: 796344528198182351
+    second: purgatory_141
+  - first:
+      213: 2953626920663337184
+    second: purgatory_142
+  - first:
+      213: 2356635213273909755
+    second: purgatory_143
+  - first:
+      213: 3067930304342120974
+    second: purgatory_144
+  - first:
+      213: 4072867092935921684
+    second: purgatory_145
+  - first:
+      213: 2356243715469663187
+    second: purgatory_146
+  - first:
+      213: 4342965397099230845
+    second: purgatory_147
+  - first:
+      213: 3245363473242336967
+    second: purgatory_148
+  - first:
+      213: 4236619158938858557
+    second: purgatory_149
+  - first:
+      213: 955817064216255662
+    second: purgatory_150
+  - first:
+      213: 2323004024325943738
+    second: purgatory_151
+  - first:
+      213: 4266835639968382330
+    second: purgatory_152
+  - first:
+      213: 764130515390593913
+    second: purgatory_153
+  - first:
+      213: 2165246927693858903
+    second: purgatory_154
+  - first:
+      213: 4452723489768282525
+    second: purgatory_155
+  - first:
+      213: 2594782291650436033
+    second: purgatory_156
+  - first:
+      213: 3412553742496417923
+    second: purgatory_157
+  - first:
+      213: 3626382273489349799
+    second: purgatory_158
+  - first:
+      213: 732661318208492003
+    second: purgatory_159
+  - first:
+      213: 4093537499569724278
+    second: purgatory_160
+  - first:
+      213: 1581388537959848398
+    second: purgatory_161
+  - first:
+      213: 3829863507957081246
+    second: purgatory_162
+  - first:
+      213: 2090394830086258911
+    second: purgatory_163
+  - first:
+      213: 3608827988478341603
+    second: purgatory_164
+  - first:
+      213: 3581986046016501561
+    second: purgatory_165
+  - first:
+      213: 417327441671627703
+    second: purgatory_166
+  - first:
+      213: 3993057585734725153
+    second: purgatory_167
+  - first:
+      213: 1251150942095400510
+    second: purgatory_168
+  - first:
+      213: 1794265824460973550
+    second: purgatory_169
+  - first:
+      213: 3370929371178400132
+    second: purgatory_170
+  - first:
+      213: 3584350423609939923
+    second: purgatory_171
+  - first:
+      213: 3790842344399030184
+    second: purgatory_172
+  - first:
+      213: 2478746033520480244
+    second: purgatory_173
+  - first:
+      213: 36677096222495910
+    second: purgatory_174
+  - first:
+      213: 2688199794699850660
+    second: purgatory_175
+  - first:
+      213: 4581315853230912377
+    second: purgatory_176
+  - first:
+      213: 4383538320398768794
+    second: purgatory_177
+  - first:
+      213: 1374533116054178291
+    second: purgatory_178
+  - first:
+      213: 3550088240622788847
+    second: purgatory_179
+  - first:
+      213: 598764636331717676
+    second: purgatory_180
+  - first:
+      213: 2570677701739124799
+    second: purgatory_181
+  - first:
+      213: 1381937724072431089
+    second: purgatory_182
+  - first:
+      213: 2325356493886606527
+    second: purgatory_183
+  - first:
+      213: 2127654752833008002
+    second: purgatory_184
+  - first:
+      213: 2753962463542095559
+    second: purgatory_185
+  - first:
+      213: 151774703441942819
+    second: purgatory_186
+  - first:
+      213: 1961841200834395617
+    second: purgatory_187
+  - first:
+      213: 3286615181507769343
+    second: purgatory_188
+  - first:
+      213: 2503821862416268586
+    second: purgatory_189
+  - first:
+      213: 3489442855545001131
+    second: purgatory_190
+  - first:
+      213: 828706768337586471
+    second: purgatory_191
+  - first:
+      213: 3763612853287394462
+    second: purgatory_192
+  - first:
+      213: 998979836113231199
+    second: purgatory_193
+  - first:
+      213: 2496674843755352980
+    second: purgatory_194
+  - first:
+      213: 3837240902771621237
+    second: purgatory_195
+  - first:
+      213: 3766963997907474703
+    second: purgatory_196
+  - first:
+      213: 2968230578549468104
+    second: purgatory_197
+  - first:
+      213: 494310953147582527
+    second: purgatory_198
+  - first:
+      213: 683998286478567895
+    second: purgatory_199
+  - first:
+      213: 1031086115693477315
+    second: purgatory_200
+  - first:
+      213: 3449610750192190799
+    second: purgatory_201
+  - first:
+      213: 1433052903646034868
+    second: purgatory_202
+  - first:
+      213: 3266064188752924365
+    second: purgatory_203
+  - first:
+      213: 1178954785061703402
+    second: purgatory_204
+  - first:
+      213: 4270180288944115103
+    second: purgatory_205
+  - first:
+      213: 4582924725372078602
+    second: purgatory_206
+  - first:
+      213: 4030186038119416825
+    second: purgatory_207
+  - first:
+      213: 3199102092630767679
+    second: purgatory_208
+  - first:
+      213: 3582546138864998839
+    second: purgatory_209
+  - first:
+      213: 154213295628045866
+    second: purgatory_210
+  - first:
+      213: 1568558883651099672
+    second: purgatory_211
+  - first:
+      213: 2634336628133771636
+    second: purgatory_212
+  - first:
+      213: 74572910812187358
+    second: purgatory_213
+  - first:
+      213: 1276696359129502283
+    second: purgatory_214
+  - first:
+      213: 3869761694897511567
+    second: purgatory_215
+  - first:
+      213: 4266213763767344052
+    second: purgatory_216
+  - first:
+      213: 335777541586129855
+    second: purgatory_217
+  - first:
+      213: 868680974934055122
+    second: purgatory_218
+  - first:
+      213: 2131185655419277171
+    second: purgatory_219
+  - first:
+      213: 4058838419919653995
+    second: purgatory_220
+  - first:
+      213: 2172293104474014513
+    second: purgatory_221
+  - first:
+      213: 779604822952694734
+    second: purgatory_222
+  - first:
+      213: 1830298559501513111
+    second: purgatory_223
+  - first:
+      213: 1343571592213053844
+    second: purgatory_224
+  - first:
+      213: 1264300426069620516
+    second: purgatory_225
+  - first:
+      213: 225187600477844588
+    second: purgatory_226
+  - first:
+      213: 3292813270874883612
+    second: purgatory_227
+  - first:
+      213: 2079300037309858565
+    second: purgatory_228
+  - first:
+      213: 2606690410350656261
+    second: purgatory_229
+  - first:
+      213: 1329321772682418102
+    second: purgatory_230
+  - first:
+      213: 470735969816406580
+    second: purgatory_231
+  - first:
+      213: 663439221521033174
+    second: purgatory_232
+  - first:
+      213: 1899701015892353958
+    second: purgatory_233
+  - first:
+      213: 3096529280251867724
+    second: purgatory_234
+  - first:
+      213: 3003581452260425682
+    second: purgatory_235
+  - first:
+      213: 1763635972641878271
+    second: purgatory_236
+  - first:
+      213: 4059988766759510367
+    second: purgatory_237
+  - first:
+      213: 3979980907100813956
+    second: purgatory_238
+  - first:
+      213: 4286444463237540499
+    second: purgatory_239
+  - first:
+      213: 1273477210990349883
+    second: purgatory_240
+  - first:
+      213: 1644459832636068933
+    second: purgatory_241
+  - first:
+      213: 1549332614825182421
+    second: purgatory_242
+  - first:
+      213: 255592854835806742
+    second: purgatory_243
+  - first:
+      213: 35608294249263950
+    second: purgatory_244
+  - first:
+      213: 388139911238652789
+    second: purgatory_245
+  - first:
+      213: 1047741354045865393
+    second: purgatory_246
+  - first:
+      213: 1384982879853181345
+    second: purgatory_247
+  - first:
+      213: 1741015393403462696
+    second: purgatory_248
+  - first:
+      213: 64647699849753345
+    second: purgatory_249
+  - first:
+      213: 4228288141601778756
+    second: purgatory_250
+  - first:
+      213: 1404734040475054842
+    second: purgatory_251
+  - first:
+      213: 1125429608019381260
+    second: purgatory_252
+  - first:
+      213: 4295151156934160873
+    second: purgatory_253
+  - first:
+      213: 15098149511191371
+    second: purgatory_254
+  - first:
+      213: 1237497846464841678
+    second: purgatory_255
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: purgatory_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8db0b3daa75c76aa7ee8dd0684cfa1
+      internalID: 2938556329872752622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5d1d535b76b5de097244025f7f8a239
+      internalID: 3272713529436178958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ec1e0a5bba530794255e3d8cf6cb58
+      internalID: 3711457093081896755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_3
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be83d036fcef5825b3bc7667a0d2c1dc
+      internalID: 2033562888384483979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_4
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08628b4c3a065612936b95e61ede8789
+      internalID: 3657278822037695939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_5
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78726a4ea7a958d79e4939fa16e2e9b4
+      internalID: 2923019389487553171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_6
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89e30a2b9eee5fa1962af5a8e4f7533b
+      internalID: 502020693796978492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_7
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 428ed528a5d55a818b38f28d2e07ac88
+      internalID: 3895963320496272656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_8
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c307144ee2955f3a0b18883614efcd2
+      internalID: 353162174854956291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_9
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbf648670ffe59668c1efc209f356575
+      internalID: 2771247965753850714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_10
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 795e17222fa75b628bba37aa23892cf4
+      internalID: 3342028341753573293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_11
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c03aba3745d56bd927323a31196ec54
+      internalID: 3273329567184518594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_12
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bd6de4d110d5d378fa36e086cfd7803
+      internalID: 3178547464176231872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_13
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 004294d8e3c05a60a2fe1ecbee3252b0
+      internalID: 2530731539314941380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_14
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5541f7e28fa95bada8ffec52a49b4662
+      internalID: 4258826598529955649
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_15
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 960
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c6bd4a6f20158cb9ed13262a7f491d3
+      internalID: 2728793774903558055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_16
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e32872056df539a8ab9df51a00fb739
+      internalID: 2948185722258122883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_17
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8eda9140f99b52afb921a543330e194c
+      internalID: 4598885709938184608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_18
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79adc43bcd31570d8d090a7189ac97bb
+      internalID: 3011780700273703252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_19
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7946076065d5bc49eef6ed32fb71812
+      internalID: 1190795173085679307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_20
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab9a953cb446512c9e1a7aad26818a6c
+      internalID: 3038389589116178217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_21
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab92a87a89ce500493badc7c61878ecb
+      internalID: 2048313729760713521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_22
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d63011f9f9556bb9b1a6497eed127d2
+      internalID: 2290468989776866566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_23
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd95d88aa5d523da7ef16776dd19fbd
+      internalID: 2792518256540120448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_24
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e3d912f22d657208aa907d663749194
+      internalID: 2153216865180935361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_25
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61f880a84ca050b4a3a3a1c198bc6b89
+      internalID: 71561759370856933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_26
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bb3edc8cc0c57af8d1eda8a84a085e6
+      internalID: 758713940934542964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_27
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b37b434a722b568b806481b079af15f9
+      internalID: 4373642274099376022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_28
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1ad5a94567756498e96243d9ba195c1
+      internalID: 3474896081083508539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_29
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df8294d72f21519b8548f9f952427875
+      internalID: 3199769021561130174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_30
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e03e979cadb45c0c85cc1e62dace82b7
+      internalID: 925102830889125841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_31
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 896
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1792bb980bf758c5ba99744089e1f40c
+      internalID: 46913627435876006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_32
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd6b78de765d5dc9a7d89a1460fdf3e6
+      internalID: 2799694339273329470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_33
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1ec2b0abad5c9c8a503d73110f300d
+      internalID: 3656376189591877412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_34
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86bd6ed29cff58f38a319fbc57e8f709
+      internalID: 3999094579803686759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_35
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ed285dc177d5dd8aced8e710e0f13e4
+      internalID: 3507098685185672805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_36
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e01fd00454559089171ff140e07ce18
+      internalID: 3546863632760506166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_37
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e89f5fd98fd55f1ba2adb183feb93ca
+      internalID: 3601173700945532089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_38
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7e65a2d0f1552c69d1e72fdefdc3d6b
+      internalID: 2553659510397983418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_39
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b663fc4164c75ba0a3444406bc354269
+      internalID: 614824591766350315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_40
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aac442845ce594c9c92e0bf4a1ee8b0
+      internalID: 853691915318723675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_41
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab04e87370ac5f02a29c08ae3a037a9d
+      internalID: 2140816850333917261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_42
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a821bbd19d85584a0edbc3148f6e3c9
+      internalID: 3560285492840904793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_43
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5325a0e5eeb55ceeac418f4c1408cbc6
+      internalID: 4155442799747385267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_44
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3af6c1c4fe3d5417b20faa03faa7a056
+      internalID: 1504118977536294455
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_45
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2fb538c08b2539cbf7d07456ee73faf
+      internalID: 3746102191529660642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_46
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0299ba31408f5f21976bdf982ce59b9b
+      internalID: 923625031977001889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_47
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 832
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53895bb56faf592d8f78e126b4afb8de
+      internalID: 904161581757491595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_48
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11487c3ec85f531c995fd95b6cbc79eb
+      internalID: 1835369826117484142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_49
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff9ff688077e5c62a0f4f591a13e7a5a
+      internalID: 3067546059415808822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_50
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 156bffb4bd3556e2bb488bc9b7ec7fb8
+      internalID: 1598434891970848445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_51
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3fbb32a66ad523295db02c72a40c11e
+      internalID: 3597212014132217259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_52
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f983d9960c1e50e380c216cb8224c430
+      internalID: 2614393361130011843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_53
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 238ded83509551dab40e7b7f278957c1
+      internalID: 2821987902981769871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_54
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6623aa8948795061934a7b580620025c
+      internalID: 327167012581563787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_55
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd85f7bf7f2c528cb8246fa6406a89fd
+      internalID: 3520985009511101688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_56
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dadd49793f9258d19ebbc4828c1bd292
+      internalID: 60730991724676178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_57
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1cae6e848dd5fb9a6dd3efa6a20874e
+      internalID: 18108327472259221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_58
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a2821041005c83a4da1dc692d0baaa
+      internalID: 4254416002829916405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_59
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4084372d055e2f9e8f2af73a516b4a
+      internalID: 4219067737707851614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_60
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 737df3e03eb1544389e0507c2598f4d5
+      internalID: 774182591078870708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_61
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8bfde37e8e5f8882d250bf00215c4f
+      internalID: 2734187463653917565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_62
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 098293ad61b15e098ad69abfa958c7b4
+      internalID: 391478365242606312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_63
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 768
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffdb6620bb5351c28f9f4b8ea18685f5
+      internalID: 3116920471611686110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_64
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6476f67464cb591183c6bcd096cc63b0
+      internalID: 1815558871149018691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_65
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3124bb0eda9455438251b782687811ca
+      internalID: 1676171732267439674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_66
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 448e31e4827a5b27a08a474e12eab4da
+      internalID: 3706521626691091186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_67
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81f533d0ee9650f2bc36b0e1a0cc7aef
+      internalID: 2660881560739348351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_68
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3c350985cc45231b4bbf091c30faad0
+      internalID: 4334366610827492703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_69
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93e10d2b2d1a562c992db780319dba26
+      internalID: 307271421607960730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_70
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38758b701f7c578fba06bc14e71c1395
+      internalID: 201201907055513615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_71
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3e53a602bc25e418cba7d817af9379f
+      internalID: 1656989958965053475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_72
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbfc9c4149ae544090ef9eebaf3afe43
+      internalID: 3711646166655053186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_73
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f6c17302a25321bad26c2e1a9e43e9
+      internalID: 712962772376927509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_74
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0227c8929235d2f916a03a9dd46c8eb
+      internalID: 3522975912364396531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_75
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44fd411716f15da78edbf584ce424c40
+      internalID: 1634426731199927435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_76
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 836ca269a10d589f8bc1055c6e59fe9a
+      internalID: 2828268081362816162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_77
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9f4fc56346f535b83f6fba70753acfd
+      internalID: 1539056255485643570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_78
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76c085b8d1f451cf95a5a02cd7ead99e
+      internalID: 1222448926117976408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_79
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 704
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e909f9583ab5509a264fb530ee0d36a
+      internalID: 415592938684486924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_80
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 376e18a3e5be5e57a61f74ae42f8bd25
+      internalID: 2605160749058988969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_81
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b66c32cddb13590581034ddce8443aec
+      internalID: 3888761039052088491
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_82
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f7aef85e145380a5ef69c95e144bd2
+      internalID: 120819620621044198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_83
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b9b8666ab8754c3bfe008ccc1216b2c
+      internalID: 3499886534649388888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_84
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddf11bdf1e2d521ea73a67787d7df2d0
+      internalID: 623412441432667368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_85
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a2bbf792cf540d8744fe9021d7f418
+      internalID: 145096429222760567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_86
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8d6384ea4255ab99ff23f348ebb9bb2
+      internalID: 4196532049086579100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_87
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7acf840601815f92b280434da0b187cf
+      internalID: 90626787849596994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_88
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd2a4bae6e3f55caa4f4b46bc2da0ccf
+      internalID: 4573075986944907542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_89
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90e0cb8c1f925c859a8581657bc81ce9
+      internalID: 186960433977167816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_90
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff5dfc3b5d73597ea0c80920c7d4e8f6
+      internalID: 404620581635882150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_91
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b24d7dfa4aa75031becd74aecf1e8829
+      internalID: 1501266725517261197
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_92
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f5e3cca7c25cffa205defbd7ddaa99
+      internalID: 2717185257642807202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_93
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bab2fa2c5da6536ebfaddd5fee8e51dd
+      internalID: 2239200427647625985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_94
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 716fbb03279850c6a6a1f924845c8acc
+      internalID: 2561931864742077641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_95
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 640
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca7869f85e3d5a8187a8720e7a185498
+      internalID: 800550811748438041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_96
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8082c1971dbb5680b69bf07da96df678
+      internalID: 4610336316883452851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_97
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ce2bed772515bb2ab4d45d1c23af3a9
+      internalID: 3350958044868239025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_98
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67ab57b9edec58ad8605a19118271dd7
+      internalID: 3577318427706121163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_99
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ff79a0727dd56578fc170a5c0c0f359
+      internalID: 3051020797253171416
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_100
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a67ad65109254b2ad548e79fedeb8d5
+      internalID: 3281397432928502398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_101
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4b549e5fbf15bcbb5165c24d681b97d
+      internalID: 3062873007527647540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_102
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c0d4cc5b2065918b94034e35047a072
+      internalID: 62061920118305405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_103
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b9fbcb76e05143b03a2962e5e28582
+      internalID: 4105783917823753574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_104
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6214ce0e168e592b8cb830eef12cc9e4
+      internalID: 3510055103979602284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_105
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 759486762f9659ce85269552681b997d
+      internalID: 1296105904643476318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_106
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c01b5eccb06f5874ac66e23089828ff8
+      internalID: 2259588468511140403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_107
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cec9023da115c87b26ca0136c5a928e
+      internalID: 478369236122926590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_108
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c088117dcc514b8fbbab2483b9f95e
+      internalID: 2914780240351771665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_109
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50292658d56a5f47911ee28464a0836e
+      internalID: 65557743163966056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_110
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c7ca4edd1b5588d8fe713e8c1907b5d
+      internalID: 1736850978953734248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_111
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 576
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdf3a8dcafec566088eb91c784063c8e
+      internalID: 2434410486221662133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_112
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b925580c9d53df91e642d08a7e7c55
+      internalID: 1029790333103337562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_113
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 597dc46e55065c7ca661b573ae5185ce
+      internalID: 3936095227280065169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_114
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9ca823171b351a9b8da1e69d424f34f
+      internalID: 2825160401859037750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_115
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0cc563892495262a7370f27c0710162
+      internalID: 4078840995504164306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_116
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8efd59b8f785417ae8b8929723b12ec
+      internalID: 1244907025523090910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_117
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a5e50b79969572a8a54c0c553b950cf
+      internalID: 3786533549066729228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_118
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86e2d034f451527ab6758cd5764044af
+      internalID: 3367490615352815516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_119
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d0510f1362b515283f53626a8376c58
+      internalID: 3748464423420930944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_120
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8a977c102055d61bfc0d3068b9430c8
+      internalID: 2200154208190380880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_121
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81f48e2013b35c3797946a8748cbc275
+      internalID: 394130429341838048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_122
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a005ceb551955bf3b078ba0314af34b4
+      internalID: 1352247218058742205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_123
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 320cd904ba65577ca73fd9d85ecb9cad
+      internalID: 3736111046530236607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_124
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6589a5ddceb35111aa2cd05eeea7cf18
+      internalID: 4399849306882779272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_125
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceb4a19df8b2551682ce42816712a708
+      internalID: 1782338769789531435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_126
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0d8b641065500f847cb64c7bb6d353
+      internalID: 3264745553967215363
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_127
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 512
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a9a2fcc5bbd57a39b1c2b70c46e6e9d
+      internalID: 1425206324635046306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_128
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07619d77fac65551a7d32b7e2b267c62
+      internalID: 1607616705035858175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_129
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfc286d66fed51f898204e6e41bd0082
+      internalID: 4052070625467884616
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_130
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30f322a2e97a5040b14e5f7c8de8bdea
+      internalID: 2676910763646273294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_131
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d5e938fb42fe514cbd982fee92cd37f3
+      internalID: 193603923815071589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_132
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdec80cb13dc5da7a1bcf9cfc38de58c
+      internalID: 3814687614340626179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_133
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 456fab6a9874598e9907a185c27f4b7c
+      internalID: 585674660832714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_134
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f86a1f5b28be5ef9831991c509f814e0
+      internalID: 743500355240949951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_135
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4bc51dd74b05c5a8b8f1d94ff7cf016
+      internalID: 4382899656730505732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_136
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c233adb31c7b55a2aea4bec589a0be83
+      internalID: 4025842378837649555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_137
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c65d11a4acee5ab0957e008b686f38a5
+      internalID: 3770627252446787548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_138
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0096574c272452388be2b48b98363698
+      internalID: 3631384546376021179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_139
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 142fd15195f7578a9464cc20a91d2a6b
+      internalID: 1233732174918025589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_140
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85e38ea40d88502db25fa85d701b019e
+      internalID: 3020857018686614224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_141
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a4131171a275390b6b732196a34fa5c
+      internalID: 796344528198182351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_142
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df87a2f362fd5342892b0aa67c6bcfcc
+      internalID: 2953626920663337184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_143
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 448
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12bbd3d08ffb564aabcc3b40959873a6
+      internalID: 2356635213273909755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_144
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0923c797f642592dbbab42948f52af83
+      internalID: 3067930304342120974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_145
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 61f75a36933454f6a18a8ca93f792fc0
+      internalID: 4072867092935921684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_146
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aea31f4353852dc866972e4dc87387e
+      internalID: 2356243715469663187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_147
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f9490472b115f7c9b01abe2501634d6
+      internalID: 4342965397099230845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_148
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e27db18274359ada6dd51b850fdefd6
+      internalID: 3245363473242336967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_149
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f2bc0a49d3f56f095fe7ef10fdc6872
+      internalID: 4236619158938858557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_150
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76010ad7c5595f148a21e0963e7583e9
+      internalID: 955817064216255662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_151
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76cc7b5c2efe57da8e503545b21676c2
+      internalID: 2323004024325943738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_152
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20ec4c46af8c5239bc91f2e6b7c50795
+      internalID: 4266835639968382330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_153
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df358e026b145423ab1e08260bb6d9ad
+      internalID: 764130515390593913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_154
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 851f2543e125536e9948bacb4fe0f422
+      internalID: 2165246927693858903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_155
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40775c73bc0c546297c3bc2fb72119fe
+      internalID: 4452723489768282525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_156
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b4ae64784d15d1fad84be52f790467e
+      internalID: 2594782291650436033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_157
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c77f6c8dd8f8503aab04aa6442dc9ad3
+      internalID: 3412553742496417923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_158
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebfe4089f74a507994652dfa01b88e2c
+      internalID: 3626382273489349799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_159
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 384
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e719bc67140658f6b48169dbe9411226
+      internalID: 732661318208492003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_160
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aa745880040560fb87df5bb96cbee50
+      internalID: 4093537499569724278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_161
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef6185bdfa695465b16f7f7d2be14885
+      internalID: 1581388537959848398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_162
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: badfafece92d59a5b0d4b830a7a50f28
+      internalID: 3829863507957081246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_163
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f1f68a570b553ed8615678ca02c9af2
+      internalID: 2090394830086258911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_164
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8efc293a15e15734a17a0cb338fe28bb
+      internalID: 3608827988478341603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_165
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81eb125fb4d05a568ff6aa84ba0a4028
+      internalID: 3581986046016501561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_166
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84a6853ed3e4523b882d355f2b2eebcc
+      internalID: 417327441671627703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_167
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34cc38ac3a505b55878cfc4720058ee6
+      internalID: 3993057585734725153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_168
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3425d40cace951118035e66694d50439
+      internalID: 1251150942095400510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_169
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c53e3b5dab651eca92faf4808cb7839
+      internalID: 1794265824460973550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_170
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e34b28e3d00b5d48a5bcf0577e67545c
+      internalID: 3370929371178400132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_171
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03da105dfe6d51c0be164417c5ab687c
+      internalID: 3584350423609939923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_172
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9752e0c35fba5394baf68582860df1d2
+      internalID: 3790842344399030184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_173
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8bfd922bb715a9cb71a2ed74db3ed9f
+      internalID: 2478746033520480244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_174
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0280db166cc45e4695e2899e367b39d5
+      internalID: 36677096222495910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_175
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 320
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a19c2002cf775f3fba770885d2f20ab4
+      internalID: 2688199794699850660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_176
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2c1b5e055cf5c46ae51b9e5604d588d
+      internalID: 4581315853230912377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_177
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4729178fb3eb5c61a0d2d0f163272ebc
+      internalID: 4383538320398768794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_178
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2d604e31faf5e59ae61e4f4ded6628e
+      internalID: 1374533116054178291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_179
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9611f3ddf5fd5b858d52fcbd652078f6
+      internalID: 3550088240622788847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_180
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f852da8602a05901ad39627e20165be4
+      internalID: 598764636331717676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_181
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8263ca1c4f6c56ed94e1d4dfcd02e8c9
+      internalID: 2570677701739124799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_182
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a744138efeed5b388b5b41b5b2622740
+      internalID: 1381937724072431089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_183
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1b0c09ff40659438c85171ad252db25
+      internalID: 2325356493886606527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_184
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e57e47e4c26450b9b3ef0c46881bb57d
+      internalID: 2127654752833008002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_185
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 218d1bfddff35b8d80bebb2b420f37fd
+      internalID: 2753962463542095559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_186
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74c7659039ed5df1903337dee6a0270f
+      internalID: 151774703441942819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_187
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a10353a13554a2ba9f046a2e7050a3
+      internalID: 1961841200834395617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_188
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a8fa6426155585ab12f0fd50f91f9fa
+      internalID: 3286615181507769343
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_189
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de54fbe822b55ad69e1b2348345c9b68
+      internalID: 2503821862416268586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_190
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a16d692c23345d9f9fca178d6122410c
+      internalID: 3489442855545001131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_191
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 256
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e7b8e01d0d25717bacc6a29c914a228
+      internalID: 828706768337586471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_192
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e343cc19294b5407b9e94ff2051bf9c1
+      internalID: 3763612853287394462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_193
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b7ebd7c8e665007a3ab86d600687018
+      internalID: 998979836113231199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_194
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7249cb1ae235a5aaaf2fde750ba2f3f
+      internalID: 2496674843755352980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_195
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e10e2b7d8025055ba28386821a20ab1
+      internalID: 3837240902771621237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_196
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38b87134bc3754d2b0975d0e69962c2e
+      internalID: 3766963997907474703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_197
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7ae25ae1efc5dada32c26f939330066
+      internalID: 2968230578549468104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_198
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eda307dc36a9521180705a5e6cb380e2
+      internalID: 494310953147582527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_199
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2479ec2441bc54bd8883027bda6ffa4c
+      internalID: 683998286478567895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_200
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcbda6136ea959398f1a20d47547c101
+      internalID: 1031086115693477315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_201
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f9a8787c1b75aaab1f27a0a4b575882
+      internalID: 3449610750192190799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_202
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d17586b6055e1ab0f7526eaf7014e7
+      internalID: 1433052903646034868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_203
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 640fa706b8855a62a8a5c572f81f0e5f
+      internalID: 3266064188752924365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_204
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18b970ec2173547b890569dc1b54ba3c
+      internalID: 1178954785061703402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_205
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e124b7468955669392af3b799637f9
+      internalID: 4270180288944115103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_206
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50aee601427d5ddc9e87613c53043569
+      internalID: 4582924725372078602
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_207
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 192
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfb70aa3f54a58d4a899cabd354661c0
+      internalID: 4030186038119416825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_208
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6fb7094ab9b754e39a4c855aa81b434f
+      internalID: 3199102092630767679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_209
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4483599ab79553a6801a1ba36eb55392
+      internalID: 3582546138864998839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_210
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b355ef23e485022bea5db1038b4e553
+      internalID: 154213295628045866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_211
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6ab2ff1b61758fe9f98aa21675da900
+      internalID: 1568558883651099672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_212
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43a7d3bf5c7e5ec89f49c26cc39865fd
+      internalID: 2634336628133771636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_213
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80fed51931c55002ac1d1c62863d50dc
+      internalID: 74572910812187358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_214
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f86313fda395da3ae3f74ba141401e0
+      internalID: 1276696359129502283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_215
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f84f530dc9355105924b5033ca97d6a4
+      internalID: 3869761694897511567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_216
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a51c26ac5bc5b49bade500aab040900
+      internalID: 4266213763767344052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_217
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ce4c3481d4b527d97a8c22e907a75b7
+      internalID: 335777541586129855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_218
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7641295e52953569e181de0facbaecc
+      internalID: 868680974934055122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_219
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bca2c838b09535889de0681488ada13
+      internalID: 2131185655419277171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_220
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 652c49d395ed5906b1f37183e60e3d6b
+      internalID: 4058838419919653995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_221
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0fd897cdef55a00a8ee8fdf09e972b1
+      internalID: 2172293104474014513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_222
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 348fd55753a65940aa658fd92e0fd685
+      internalID: 779604822952694734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_223
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 128
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92fb5ea4ca6850918fd678e0705e7d8b
+      internalID: 1830298559501513111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_224
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bdc4c8baaaa5aa58900318b0deec06d
+      internalID: 1343571592213053844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_225
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e54a44d4fd3c537ca685a9553ca64b3a
+      internalID: 1264300426069620516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_226
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e1e8909ac1a5ebf8b79f6acc77d722a
+      internalID: 225187600477844588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_227
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a80216c485db58f6894c7c5f93e8adcb
+      internalID: 3292813270874883612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_228
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dc12a8288fd58d99f3e82e4f1c325fc
+      internalID: 2079300037309858565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_229
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92c5a7c035d550c38a3322ada159cea4
+      internalID: 2606690410350656261
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_230
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83540781a41158aebfb3c2f24705f2fc
+      internalID: 1329321772682418102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_231
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d18d1d3007775b818102a02b8d14c66a
+      internalID: 470735969816406580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_232
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e9cff8182485654a01299513638750c
+      internalID: 663439221521033174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_233
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 319d3d3b037554728120b3455bad7f62
+      internalID: 1899701015892353958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_234
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56546049bfe3587b8e95a6feefec5fa8
+      internalID: 3096529280251867724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_235
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74b8c950202e503283c05d1866c623fb
+      internalID: 3003581452260425682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_236
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7177ebe79a215d7db4c057ffd0fc393c
+      internalID: 1763635972641878271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_237
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49967c0e663953f8a47194d06b8dbd2d
+      internalID: 4059988766759510367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_238
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0ac8e69b03e5f11a0f5a219f6184de3
+      internalID: 3979980907100813956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_239
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 64
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f9c3cef24a25a84be1e6064debd5479
+      internalID: 4286444463237540499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_240
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bb729eb36f5504f9c8050fe895b4e7e
+      internalID: 1273477210990349883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_241
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8c73ea492f5a73abe0707452067a0a
+      internalID: 1644459832636068933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_242
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6943dc14d3c580b899a02c90e2e5da9
+      internalID: 1549332614825182421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_243
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2914983dcef5a7495155fe6bc75c338
+      internalID: 255592854835806742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_244
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1de5133098e35dc98b3a66adbd830b6d
+      internalID: 35608294249263950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_245
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8622ccccc6875107a140c28509796ec6
+      internalID: 388139911238652789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_246
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af823e9301c35205b524da3644b2be60
+      internalID: 1047741354045865393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_247
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7ab59dbd7eb57d1bc0590269dcf52b1
+      internalID: 1384982879853181345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_248
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 512
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44e3631e5f015447aa8b5b959053dbfe
+      internalID: 1741015393403462696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_249
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ceb07d8adca541bbb757d7b44ea91cd
+      internalID: 64647699849753345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_250
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 640
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3edb1c60da851b3ae695dfd64280288
+      internalID: 4228288141601778756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_251
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 704
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 054da8ca74145e818af722af62a0f05b
+      internalID: 1404734040475054842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_252
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2c1ae5b4c045ac39f089fc817fb88fc
+      internalID: 1125429608019381260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_253
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0e5f683060f53bcb4de508050ac85e5
+      internalID: 4295151156934160873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_254
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 896
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e00a00980c2e50748f2793da62741e24
+      internalID: 15098149511191371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: purgatory_255
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 64
+        height: 64
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34eeba88f02595f9e02aae21c41eb3c
+      internalID: 1237497846464841678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: b4e803c348d65a68b34a82d2089ad135, type: 3}
+    nameFileIdTable:
+      purgatory_0: 2938556329872752622
+      purgatory_1: 3272713529436178958
+      purgatory_2: 3711457093081896755
+      purgatory_3: 2033562888384483979
+      purgatory_4: 3657278822037695939
+      purgatory_5: 2923019389487553171
+      purgatory_6: 502020693796978492
+      purgatory_7: 3895963320496272656
+      purgatory_8: 353162174854956291
+      purgatory_9: 2771247965753850714
+      purgatory_10: 3342028341753573293
+      purgatory_11: 3273329567184518594
+      purgatory_12: 3178547464176231872
+      purgatory_13: 2530731539314941380
+      purgatory_14: 4258826598529955649
+      purgatory_15: 2728793774903558055
+      purgatory_16: 2948185722258122883
+      purgatory_17: 4598885709938184608
+      purgatory_18: 3011780700273703252
+      purgatory_19: 1190795173085679307
+      purgatory_20: 3038389589116178217
+      purgatory_21: 2048313729760713521
+      purgatory_22: 2290468989776866566
+      purgatory_23: 2792518256540120448
+      purgatory_24: 2153216865180935361
+      purgatory_25: 71561759370856933
+      purgatory_26: 758713940934542964
+      purgatory_27: 4373642274099376022
+      purgatory_28: 3474896081083508539
+      purgatory_29: 3199769021561130174
+      purgatory_30: 925102830889125841
+      purgatory_31: 46913627435876006
+      purgatory_32: 2799694339273329470
+      purgatory_33: 3656376189591877412
+      purgatory_34: 3999094579803686759
+      purgatory_35: 3507098685185672805
+      purgatory_36: 3546863632760506166
+      purgatory_37: 3601173700945532089
+      purgatory_38: 2553659510397983418
+      purgatory_39: 614824591766350315
+      purgatory_40: 853691915318723675
+      purgatory_41: 2140816850333917261
+      purgatory_42: 3560285492840904793
+      purgatory_43: 4155442799747385267
+      purgatory_44: 1504118977536294455
+      purgatory_45: 3746102191529660642
+      purgatory_46: 923625031977001889
+      purgatory_47: 904161581757491595
+      purgatory_48: 1835369826117484142
+      purgatory_49: 3067546059415808822
+      purgatory_50: 1598434891970848445
+      purgatory_51: 3597212014132217259
+      purgatory_52: 2614393361130011843
+      purgatory_53: 2821987902981769871
+      purgatory_54: 327167012581563787
+      purgatory_55: 3520985009511101688
+      purgatory_56: 60730991724676178
+      purgatory_57: 18108327472259221
+      purgatory_58: 4254416002829916405
+      purgatory_59: 4219067737707851614
+      purgatory_60: 774182591078870708
+      purgatory_61: 2734187463653917565
+      purgatory_62: 391478365242606312
+      purgatory_63: 3116920471611686110
+      purgatory_64: 1815558871149018691
+      purgatory_65: 1676171732267439674
+      purgatory_66: 3706521626691091186
+      purgatory_67: 2660881560739348351
+      purgatory_68: 4334366610827492703
+      purgatory_69: 307271421607960730
+      purgatory_70: 201201907055513615
+      purgatory_71: 1656989958965053475
+      purgatory_72: 3711646166655053186
+      purgatory_73: 712962772376927509
+      purgatory_74: 3522975912364396531
+      purgatory_75: 1634426731199927435
+      purgatory_76: 2828268081362816162
+      purgatory_77: 1539056255485643570
+      purgatory_78: 1222448926117976408
+      purgatory_79: 415592938684486924
+      purgatory_80: 2605160749058988969
+      purgatory_81: 3888761039052088491
+      purgatory_82: 120819620621044198
+      purgatory_83: 3499886534649388888
+      purgatory_84: 623412441432667368
+      purgatory_85: 145096429222760567
+      purgatory_86: 4196532049086579100
+      purgatory_87: 90626787849596994
+      purgatory_88: 4573075986944907542
+      purgatory_89: 186960433977167816
+      purgatory_90: 404620581635882150
+      purgatory_91: 1501266725517261197
+      purgatory_92: 2717185257642807202
+      purgatory_93: 2239200427647625985
+      purgatory_94: 2561931864742077641
+      purgatory_95: 800550811748438041
+      purgatory_96: 4610336316883452851
+      purgatory_97: 3350958044868239025
+      purgatory_98: 3577318427706121163
+      purgatory_99: 3051020797253171416
+      purgatory_100: 3281397432928502398
+      purgatory_101: 3062873007527647540
+      purgatory_102: 62061920118305405
+      purgatory_103: 4105783917823753574
+      purgatory_104: 3510055103979602284
+      purgatory_105: 1296105904643476318
+      purgatory_106: 2259588468511140403
+      purgatory_107: 478369236122926590
+      purgatory_108: 2914780240351771665
+      purgatory_109: 65557743163966056
+      purgatory_110: 1736850978953734248
+      purgatory_111: 2434410486221662133
+      purgatory_112: 1029790333103337562
+      purgatory_113: 3936095227280065169
+      purgatory_114: 2825160401859037750
+      purgatory_115: 4078840995504164306
+      purgatory_116: 1244907025523090910
+      purgatory_117: 3786533549066729228
+      purgatory_118: 3367490615352815516
+      purgatory_119: 3748464423420930944
+      purgatory_120: 2200154208190380880
+      purgatory_121: 394130429341838048
+      purgatory_122: 1352247218058742205
+      purgatory_123: 3736111046530236607
+      purgatory_124: 4399849306882779272
+      purgatory_125: 1782338769789531435
+      purgatory_126: 3264745553967215363
+      purgatory_127: 1425206324635046306
+      purgatory_128: 1607616705035858175
+      purgatory_129: 4052070625467884616
+      purgatory_130: 2676910763646273294
+      purgatory_131: 193603923815071589
+      purgatory_132: 3814687614340626179
+      purgatory_133: 585674660832714
+      purgatory_134: 743500355240949951
+      purgatory_135: 4382899656730505732
+      purgatory_136: 4025842378837649555
+      purgatory_137: 3770627252446787548
+      purgatory_138: 3631384546376021179
+      purgatory_139: 1233732174918025589
+      purgatory_140: 3020857018686614224
+      purgatory_141: 796344528198182351
+      purgatory_142: 2953626920663337184
+      purgatory_143: 2356635213273909755
+      purgatory_144: 3067930304342120974
+      purgatory_145: 4072867092935921684
+      purgatory_146: 2356243715469663187
+      purgatory_147: 4342965397099230845
+      purgatory_148: 3245363473242336967
+      purgatory_149: 4236619158938858557
+      purgatory_150: 955817064216255662
+      purgatory_151: 2323004024325943738
+      purgatory_152: 4266835639968382330
+      purgatory_153: 764130515390593913
+      purgatory_154: 2165246927693858903
+      purgatory_155: 4452723489768282525
+      purgatory_156: 2594782291650436033
+      purgatory_157: 3412553742496417923
+      purgatory_158: 3626382273489349799
+      purgatory_159: 732661318208492003
+      purgatory_160: 4093537499569724278
+      purgatory_161: 1581388537959848398
+      purgatory_162: 3829863507957081246
+      purgatory_163: 2090394830086258911
+      purgatory_164: 3608827988478341603
+      purgatory_165: 3581986046016501561
+      purgatory_166: 417327441671627703
+      purgatory_167: 3993057585734725153
+      purgatory_168: 1251150942095400510
+      purgatory_169: 1794265824460973550
+      purgatory_170: 3370929371178400132
+      purgatory_171: 3584350423609939923
+      purgatory_172: 3790842344399030184
+      purgatory_173: 2478746033520480244
+      purgatory_174: 36677096222495910
+      purgatory_175: 2688199794699850660
+      purgatory_176: 4581315853230912377
+      purgatory_177: 4383538320398768794
+      purgatory_178: 1374533116054178291
+      purgatory_179: 3550088240622788847
+      purgatory_180: 598764636331717676
+      purgatory_181: 2570677701739124799
+      purgatory_182: 1381937724072431089
+      purgatory_183: 2325356493886606527
+      purgatory_184: 2127654752833008002
+      purgatory_185: 2753962463542095559
+      purgatory_186: 151774703441942819
+      purgatory_187: 1961841200834395617
+      purgatory_188: 3286615181507769343
+      purgatory_189: 2503821862416268586
+      purgatory_190: 3489442855545001131
+      purgatory_191: 828706768337586471
+      purgatory_192: 3763612853287394462
+      purgatory_193: 998979836113231199
+      purgatory_194: 2496674843755352980
+      purgatory_195: 3837240902771621237
+      purgatory_196: 3766963997907474703
+      purgatory_197: 2968230578549468104
+      purgatory_198: 494310953147582527
+      purgatory_199: 683998286478567895
+      purgatory_200: 1031086115693477315
+      purgatory_201: 3449610750192190799
+      purgatory_202: 1433052903646034868
+      purgatory_203: 3266064188752924365
+      purgatory_204: 1178954785061703402
+      purgatory_205: 4270180288944115103
+      purgatory_206: 4582924725372078602
+      purgatory_207: 4030186038119416825
+      purgatory_208: 3199102092630767679
+      purgatory_209: 3582546138864998839
+      purgatory_210: 154213295628045866
+      purgatory_211: 1568558883651099672
+      purgatory_212: 2634336628133771636
+      purgatory_213: 74572910812187358
+      purgatory_214: 1276696359129502283
+      purgatory_215: 3869761694897511567
+      purgatory_216: 4266213763767344052
+      purgatory_217: 335777541586129855
+      purgatory_218: 868680974934055122
+      purgatory_219: 2131185655419277171
+      purgatory_220: 4058838419919653995
+      purgatory_221: 2172293104474014513
+      purgatory_222: 779604822952694734
+      purgatory_223: 1830298559501513111
+      purgatory_224: 1343571592213053844
+      purgatory_225: 1264300426069620516
+      purgatory_226: 225187600477844588
+      purgatory_227: 3292813270874883612
+      purgatory_228: 2079300037309858565
+      purgatory_229: 2606690410350656261
+      purgatory_230: 1329321772682418102
+      purgatory_231: 470735969816406580
+      purgatory_232: 663439221521033174
+      purgatory_233: 1899701015892353958
+      purgatory_234: 3096529280251867724
+      purgatory_235: 3003581452260425682
+      purgatory_236: 1763635972641878271
+      purgatory_237: 4059988766759510367
+      purgatory_238: 3979980907100813956
+      purgatory_239: 4286444463237540499
+      purgatory_240: 1273477210990349883
+      purgatory_241: 1644459832636068933
+      purgatory_242: 1549332614825182421
+      purgatory_243: 255592854835806742
+      purgatory_244: 35608294249263950
+      purgatory_245: 388139911238652789
+      purgatory_246: 1047741354045865393
+      purgatory_247: 1384982879853181345
+      purgatory_248: 1741015393403462696
+      purgatory_249: 64647699849753345
+      purgatory_250: 4228288141601778756
+      purgatory_251: 1404734040475054842
+      purgatory_252: 1125429608019381260
+      purgatory_253: 4295151156934160873
+      purgatory_254: 15098149511191371
+      purgatory_255: 1237497846464841678
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
