@@ -1,0 +1,148 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19440420fd8e5cffa51aea30e9ee0b1a, type: 3}
+  m_Name: World
+  m_EditorClassIdentifier: 
+  regions:
+  - key: paradise
+    displayName: Paradise
+    subtitle: Celestial Gardens
+    topRow: 0
+    rows: 51
+  - key: ruined_earth
+    displayName: Ruined Earth
+    subtitle: The Hub
+    topRow: 51
+    rows: 51
+  - key: purgatory
+    displayName: Purgatory
+    subtitle: The Waiting
+    topRow: 102
+    rows: 51
+  - key: limbo
+    displayName: 1. Limbo
+    subtitle: The Forgotten
+    topRow: 153
+    rows: 34
+  - key: lust
+    displayName: 2. Lust
+    subtitle: The Desire
+    topRow: 187
+    rows: 34
+  - key: gluttony
+    displayName: 3. Gluttony
+    subtitle: The Devourers
+    topRow: 221
+    rows: 34
+  - key: greed
+    displayName: 4. Greed
+    subtitle: The Hoarders
+    topRow: 255
+    rows: 34
+  - key: wrath
+    displayName: 5. Wrath
+    subtitle: The Raging
+    topRow: 289
+    rows: 34
+  - key: heresy
+    displayName: 6. Heresy
+    subtitle: The Burned
+    topRow: 323
+    rows: 34
+  - key: violence
+    displayName: 7. Violence
+    subtitle: The Wounded
+    topRow: 357
+    rows: 34
+  - key: fraud
+    displayName: 8. Fraud
+    subtitle: The Deceivers
+    topRow: 391
+    rows: 34
+  - key: treachery
+    displayName: 9. Treachery
+    subtitle: The Frozen
+    topRow: 425
+    rows: 34
+  width: 480
+  startRegion: paradise
+  start: {x: 74.5, y: -15}
+  checkpoints:
+  - region: paradise
+    position: {x: 46.5, y: -32}
+  - region: paradise
+    position: {x: 254.5, y: -49}
+  - region: paradise
+    position: {x: 374.5, y: -49}
+  - region: ruined_earth
+    position: {x: 104.5, y: -100}
+  - region: ruined_earth
+    position: {x: 464.5, y: -100}
+  - region: purgatory
+    position: {x: 42.5, y: -117}
+  - region: purgatory
+    position: {x: 209.5, y: -117}
+  - region: purgatory
+    position: {x: 389.5, y: -117}
+  - region: purgatory
+    position: {x: 314.5, y: -151}
+  - region: limbo
+    position: {x: 254.5, y: -168}
+  - region: limbo
+    position: {x: 434.5, y: -168}
+  - region: lust
+    position: {x: 179.5, y: -202}
+  - region: lust
+    position: {x: 434.5, y: -202}
+  - region: lust
+    position: {x: 359.5, y: -219}
+  - region: gluttony
+    position: {x: 436.5, y: -236}
+  - region: gluttony
+    position: {x: 194.5, y: -253}
+  - region: greed
+    position: {x: 134.5, y: -263}
+  - region: greed
+    position: {x: 14.5, y: -287}
+  - region: greed
+    position: {x: 254.5, y: -287}
+  - region: wrath
+    position: {x: 284.5, y: -304}
+  - region: wrath
+    position: {x: 462.5, y: -304}
+  - region: wrath
+    position: {x: 314.5, y: -321}
+  - region: heresy
+    position: {x: 344.5, y: -338}
+  - region: heresy
+    position: {x: 254.5, y: -355}
+  - region: violence
+    position: {x: 195.5, y: -372}
+  - region: violence
+    position: {x: 374.5, y: -389}
+  - region: fraud
+    position: {x: 134.5, y: -406}
+  - region: fraud
+    position: {x: 434.5, y: -406}
+  - region: fraud
+    position: {x: 284.5, y: -423}
+  - region: treachery
+    position: {x: 224.5, y: -440}
+  - region: treachery
+    position: {x: 329.5, y: -457}
+  abilities:
+  - Wings (double jump)
+  - Halo Dash
+  - Wall Grip
+  - Holy Light
+  - Glide
+  - Smite
