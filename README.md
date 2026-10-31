@@ -791,6 +791,19 @@ settles the level pipeline question (#34): big maps come from the tool as
 tile layers, and the hand-written ASCII levels of the first prototype are
 gone.
 
+### The world in Unity
+
+The Unity port keeps the same world as one grid. `tools/unity/
+import_godot_regions.py` turns each Godot region scene into
+`Assets/Scenes/Region_<key>.unity` (its lights, rooms, doors, placements,
+backdrop, particles and props as components, the props as prefabs under
+`Assets/Prefabs/Props/<key>/`) and its tiles into a `RegionTileSet` with a
+compact cell file under `Assets/Data/Regions/Tiles/`, which `RegionTiles`
+builds into Tilemaps and colliders when the region loads. `Assets/Data/
+World.asset` (`WorldAtlas`) lists the bands, the start and the checkpoints in
+save order; `WorldStreamer` keeps the hero's region and its neighbours
+loaded. See `.claude/skills/tilemaps-and-rule-tiles`.
+
 ### Running another map
 
 **Maps menu.** The title screen's **Maps** button lists every map the editor published for

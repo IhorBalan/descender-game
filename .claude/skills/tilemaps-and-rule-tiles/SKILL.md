@@ -5,89 +5,84 @@ description: How regions are built from Tilemaps in this project: the Grid with 
 
 # Tilemaps and Rule Tiles
 
-Each Godot region scene (`levels/world/region_*.tscn`, four TileMapLayers
-over one TileSet) becomes `Assets/Scenes/Regions/<name>.unity` with one
-`Grid` (cell size 1 x 1 unit, a 16 px tile) and these child Tilemaps, each
-a `Tilemap` + `TilemapRenderer` on the matching sorting layer:
+The twelve regions are generated, not painted: `tools/unity/
+import_godot_regions.py` (run with `python3 -I`) reads each Godot region
+scene (`scenes/world/<nn>_<key>.tscn`, four TileMapLayers over one TileSet)
+and `scenes/world/world.tscn`, and writes `Assets/Scenes/Region_<key>.unity`
+plus the region's data. Re-run it after the Godot scene changes; never
+hand-edit a `Region_*.unity`, the next run rewrites it.
 
-| Tilemap | Sorting layer | Material | Collider |
+## The tiles
+
+The 200k cells are not painted into the scenes (that would be millions of
+YAML lines). Each region has a `RegionTileSet` asset
+(`Assets/Data/Regions/Tiles/<key>_tiles.asset`: the 256 sprites of its 64 px
+atlas `Assets/Art/Tiles/<key>.png`, index = row * 16 + column, the materials)
+and a `TextAsset` of cells (`<key>_cells.txt`, format in `RegionTileData`:
+base64 int16 triples x, y, tile per layer, plus the `TileKind` of each tile
+index, from the Godot TileSet's custom data "kind").
+
+`RegionTiles` on the region's `Tiles` object builds the Grid and the four
+Tilemaps in `Awake` (a tile is one unit: 64 px art at 64 PPU):
+
+| Tilemap | sortingOrder | Material | Collider |
 |---|---|---|---|
-| Background | Background | Sprite Lit | none |
-| Decor | Decor | Sprite Lit | none |
-| Terrain | Terrain | Sprite Lit | TilemapCollider2D + CompositeCollider2D, layer World |
-| Glow | Glow | Sprite Glow | none |
+| Background | -300 | URP Sprite-Lit-Default | none |
+| Decor | -200 | Sprite-Lit-Default | none |
+| Terrain | -100 | Sprite-Lit-Default | TilemapCollider2D + CompositeCollider2D, layer World, for Solid and Hidden tiles |
+| Glow | -40 | Sprite-Unlit-Default | none |
 
-`TilemapRenderer.Mode: Chunk` for all four (the default; `Individual` only
-if a layer must sort against sprites by Y, which none do). `Sort Order:
-Top Left`.
+Godot cell (x, y), y down from the region's top row, is Unity cell
+(x, -y - 1) under the region root. Ledge tiles become one-way strips
+(BoxCollider2D runs on a `PlatformEffector2D`, layer Ledge, 4 px tall) and
+Hazard tiles trigger runs on layer Hazard with `HazardArea`, as
+`scripts/level_builder.gd` made them. In the editor, `Descender > World >
+Build region tiles` (or the component's context menu) previews the result;
+the built objects carry `HideFlags.DontSave`.
 
-## Tiles
-
-Tile art is `Assets/Art/Tiles/Sheets/*.png` (the Godot atlases), sliced to
-16 x 16 by the import script, PPU 16, point filter, with the `_n.png`
-attached as `_NormalMap`. Tile assets live in `Assets/Art/Tiles/Tiles/`:
-
-- Plain `Tile` for one-off decor.
-- **Rule Tile** (`Create > 2D > Tiles > Rule Tile`) for each Godot terrain
-  (stone, brick, moss, ice...). Rules go from most to least specific:
-  corners and single-tile islands first, then edges, then the inner fill;
-  use the `Any`/`This`/`Not This` neighbour marks; `Output: Random` for the
-  fill so large walls do not repeat.
-- **Animated Tile** for lava and water surfaces (frames in order, speed
-  as in Godot's animation frames_per_second).
-- **Rule Override Tile** when a region has a recoloured copy of a terrain:
-  override the sprites, keep the rules.
-
-Custom data on tiles (hazard, one-way, slippery) is a `DescenderTile`
-subclass of `RuleTile` with `[SerializeField]` fields; gameplay reads it
-with `tilemap.GetTile<DescenderTile>(cell)`. Do not encode it in tile
-names.
-
-## Colliders
-
-The Terrain tilemap's `TilemapCollider2D` has `Use Composite` on and a
-`CompositeCollider2D` with `Geometry Type: Polygons`, `Generation Type:
-Synchronous`, on a `Rigidbody2D` Static. Tiles that should not collide
-set `Collider Type: None` in the sprite's tile asset. Ledges (one-way) are
-their own `Ledge` tilemap with a `PlatformEffector2D` (`Use One Way`,
-`Surface Arc 170`), layer Ledge. Hazards (spikes) are trigger colliders
-on `Hazard`, placed as prefabs, not tiles.
-
-## Painting
-
-`Window > 2D > Tile Palette`; palettes under `Assets/Art/Tiles/Palettes/`,
-one per sheet. Pick the active Tilemap in the palette's dropdown before
-painting; a tile painted on the wrong layer is the usual bug. `Grid
-Selection` + `Edit > Delete` clears a block.
+Rule Tiles and the Tile Palette are for new, hand-painted content only; a
+region's tiles live in the Godot scene and come through the importer.
 
 ## Region layout
 
 ```
-Region_Hollow            (RegionRoot: RegionLook asset, bounds, music)
-  Grid                   (the four Tilemaps + Ledge)
-  Lights                 (WorldLight children, Light2D Point)
-  Props                  (WorldProp prefab instances; see editor-tooling)
-  Rooms                  (WorldRoom: BoxCollider2D trigger bounds for the camera)
-  Doors                  (WorldDoor: trigger, target region + door id)
-  Placements             (WorldPlacement: enemy/pickup spawns by id)
-  Backdrop               (BackdropLayer, RegionFringes, RegionParticles)
+Region_<key>             (RegionRoot: key, look, topRow, rows; at (0, -topRow) in world units)
+  Tiles                  (RegionTiles: the tile set; RegionFringes: tufts, undersides, ivy on exposed edges)
+  Backdrop/*             (BackdropLayer: one SpriteRenderer per parallax layer, repeated at runtime)
+  Fx/*                   (RegionParticles: a ParticleSystem following the camera)
+  Lights/*               (WorldLight: colour, energy, radius in level pixels; makes its Light2D in Awake)
+  Rooms/*                (WorldRoom: id, kind, size; a trigger box on layer Trigger clamps the camera)
+  Doors/*                (WorldDoor: id, rooms, dir, lock; a lock seals its cells with light)
+  Placements/*           (WorldPlacement: type, character, dialogue...; LightBarrier for a wall of light)
+  Props/*                (prefab instances of Assets/Prefabs/Props/<key>/*.prefab, WorldProp)
 ```
 
-`WorldRoom` bounds are what the camera clamps to; every walkable area is
-inside exactly one room. Doors link `region:door` ids; `WorldDoor`
-validation (EditMode test `WorldLinksTests`) checks every target exists.
+Everything under the root is in level coordinates from the region's own
+corner (Godot pixels / 16, Y flipped). The whole world is one grid: regions
+are horizontal bands stacked top to bottom (`WorldAtlas`,
+`Assets/Data/World.asset`), so the hero walks or falls from one into the next.
+
+All renderers sit on the Default sorting layer and sort by `sortingOrder`:
+backdrop -1000 and up, tilemaps -300 to -40, fringes -90, props -50, the
+hero at 0, particles 60, front haze 500.
 
 ## Streaming
 
-Regions are additive scenes. `WorldStreamer` in `Main.unity` loads the
-hero's region and its door neighbours, unloads the rest, and positions
-the hero at the door's spawn point. The Godot chunk culling is replaced by
-Unity's own renderer culling plus `WorldLight` distance disabling; do not
-hide tilemap chunks by hand.
+Regions are additive scenes, every one in the build's scene list.
+`WorldStreamer` (in `Main.unity`, `atlas` set to `Assets/Data/World.asset`)
+keeps the hero's band and its neighbours above and below loaded, unloads the
+rest, owns the one global Light2D (tinted with the current region's
+`RegionLook.ambient`, eased over 2.5 s on a crossing) and shows only the
+current region's backdrop. `StartNewGame(hero)`, `ContinueAt(hero,
+checkpointIndex)` and `EnterAt(hero, point)` place the hero;
+`RegionChanged` fires on a crossing. Checkpoints are numbered as the saves
+number them: top to bottom, left to right over the whole world
+(`WorldAtlas.checkpoints`).
 
-## Converting a Godot region
+## Placements
 
-`tools/unity/import_godot_regions.py` (to be written in Phase 3) reads the
-`.tscn` `tile_map_data` and writes a `.unity` with the four tilemaps and
-the light/prop/room/door nodes. Until it exists, regions are painted by
-hand from the Godot scene as the reference, starting with `hollow`.
+`WorldPlacement` spawns the prefab the `PlacementCatalog`
+(`Assets/Data/Placements.asset`, filled by `Descender > Setup > Placement
+catalog` from `Assets/Prefabs/{Pickups,Enemies,Npcs}`) gives for its type
+and character, and hands itself to the prefab's `IPlacementReceiver`.
+`WorldPlacement.IsGone` is the hook the kills tracker sets.
