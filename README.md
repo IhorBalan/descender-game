@@ -939,6 +939,20 @@ Godot's imported copies, since only the editor re-imports a changed PNG.
 
 ## Tests
 
+The Unity project's tests (`Assets/Tests`, EditMode and PlayMode) run
+from the editor's Test Runner or from the pre-push hook, which refuses a
+push when they fail. Install the hook once per clone:
+
+```
+git config core.hooksPath tools/hooks
+```
+
+CI only checks the C# formatting, since running Unity there would need
+the account's licence secrets in the repository. See
+`.claude/skills/unity-testing-and-ci`.
+
+The Godot reference project's tests:
+
 ```
 godot --headless --path . res://tests/unit_test.tscn
 godot --headless --path . res://tests/map_pipeline_test.tscn
