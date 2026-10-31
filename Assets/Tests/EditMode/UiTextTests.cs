@@ -60,7 +60,7 @@ namespace Descender.Tests
             Assert.That(MenuText.PackLine("hinge_blade"), Does.StartWith("  Hinge Blade"));
             Inventory.Equip("hinge_blade");
             Assert.That(MenuText.PackLine("hinge_blade"), Does.StartWith(MenuText.WornMark + "Hinge Blade"));
-            Assert.That(MenuText.PackLine("hinge_blade"), Does.Contain("reach x1.3"));
+            Assert.That(MenuText.PackLine("hinge_blade"), Does.Contain("reach x1.4"));
             Assert.That(MenuText.WornText(), Is.EqualTo("Sword: Hinge Blade   Armour: -   Charm: -"));
         }
 
@@ -89,7 +89,7 @@ namespace Descender.Tests
             StoryFlags.Set(Shops.BoughtFlag("pell", "iron_sword"));
             Assert.That(MenuText.ShopLine("pell", sword), Does.EndWith("   sold"));
             Assert.That(MenuText.WareNote("flask"), Is.EqualTo(Items.Description("flask")));
-            Assert.That(MenuText.WareNote("hinge_blade"), Does.EndWith("(reach x1.3)"));
+            Assert.That(MenuText.WareNote("hinge_blade"), Does.EndWith("(reach x1.4)"));
         }
 
         [Test]

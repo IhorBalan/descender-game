@@ -3,11 +3,14 @@
     "rootNamespace": "Descender.EditorTools",
     "references": [
         "Descender.Runtime",
+        "Unity.InputSystem",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Universal.2D.Runtime",
         "Unity.RenderPipelines.Universal.Editor",
         "Unity.2D.Sprite.Editor",
-        "Unity.2D.Tilemap.Extras"
+        "Unity.2D.Tilemap.Extras",
+        "Unity.TextMeshPro",
+        "Unity.TextMeshPro.Editor"
     ],
     "includePlatforms": [
         "Editor"
