@@ -19,11 +19,15 @@ namespace Descender.UI
         private const float Ppu = Player.PlayerTuning.PixelsPerUnit;
 
         [SerializeField]
-        [Tooltip("Dialogue ids to try, first match wins. These are the unique lines; mark them `once` in the dialogue file.")]
+        [Tooltip(
+            "Dialogue ids to try, first match wins. These are the unique lines; mark them `once` in the dialogue file."
+        )]
         private List<string> dialogueIds = new List<string>();
 
         [SerializeField]
-        [Tooltip("Repeat lines, used when nothing in the dialogue ids applies any more. Each talk takes the next one, round robin.")]
+        [Tooltip(
+            "Repeat lines, used when nothing in the dialogue ids applies any more. Each talk takes the next one, round robin."
+        )]
         private List<string> rotateIds = new List<string>();
 
         [SerializeField]

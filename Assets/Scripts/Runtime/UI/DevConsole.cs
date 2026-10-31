@@ -50,6 +50,9 @@ namespace Descender.UI
 
         public bool IsOpen { get; private set; }
 
+        /// <summary>Whether any console is open, so screens leave Cancel to it.</summary>
+        public static bool AnyOpen { get; private set; }
+
         /// <summary>Whether the collision overlay is on.</summary>
         public bool BoxesShown => boxes != null;
 
@@ -96,8 +99,7 @@ namespace Descender.UI
             var placeholder = UiKit.Label(
                 textArea,
                 "Placeholder",
-                "type a command,
-                `help` lists them",
+                "type a command, `help` lists them",
                 FontSize,
                 MutedColor
             );
@@ -179,6 +181,7 @@ namespace Descender.UI
                 return;
             }
             IsOpen = true;
+            AnyOpen = true;
             timeScaleBefore = Time.timeScale;
             Time.timeScale = 0f;
             inputWasUi = UiStack.IsAnyOpen;
@@ -200,6 +203,7 @@ namespace Descender.UI
                 return;
             }
             IsOpen = false;
+            AnyOpen = false;
             input.DeactivateInputField();
             canvas.enabled = false;
             Time.timeScale = UiStack.IsPausing ? 0f : timeScaleBefore;

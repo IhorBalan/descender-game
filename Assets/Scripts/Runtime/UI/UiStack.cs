@@ -19,6 +19,15 @@ namespace Descender.UI
 
         public static event System.Action Changed;
 
+        /// <summary>
+        /// Set by the game flow to say it has paused the game itself (time stopped, UI map on).
+        /// While it returns true the stack leaves time and input alone, so the two never fight
+        /// over them when a page opens over the pause menu.
+        /// </summary>
+        public static System.Func<bool> HostPaused { get; set; }
+
+        private static bool HostHoldsTime => HostPaused != null && HostPaused();
+
         public static UiScreen Top => Screens.Count > 0 ? Screens[Screens.Count - 1] : null;
 
         public static bool IsAnyOpen => Screens.Count > 0;
@@ -49,7 +58,7 @@ namespace Descender.UI
             {
                 return;
             }
-            if (Screens.Count == 0)
+            if (Screens.Count == 0 && !HostHoldsTime)
             {
                 timeScaleBefore = Time.timeScale;
                 var router = Input.InputRouter.Instance;
@@ -77,7 +86,7 @@ namespace Descender.UI
             {
                 EventSystem.current.SetSelectedGameObject(focus);
             }
-            if (Screens.Count == 0)
+            if (Screens.Count == 0 && !HostHoldsTime)
             {
                 var router = Input.InputRouter.Instance;
                 if (router != null)
@@ -102,13 +111,17 @@ namespace Descender.UI
         {
             Screens.Clear();
             Focus.Clear();
+            HostPaused = null;
             Time.timeScale = 1f;
             timeScaleBefore = 1f;
         }
 
         private static void Apply()
         {
-            Time.timeScale = IsPausing ? 0f : timeScaleBefore;
+            if (!HostHoldsTime)
+            {
+                Time.timeScale = IsPausing ? 0f : timeScaleBefore;
+            }
             Changed?.Invoke();
         }
     }

@@ -93,7 +93,7 @@ namespace Descender.UI
 
         protected virtual void Update()
         {
-            if (IsOpen && UiStack.Top == this && UiInput.CancelPressed)
+            if (IsOpen && UiStack.Top == this && !DevConsole.AnyOpen && UiInput.CancelPressed)
             {
                 OnCancel();
             }

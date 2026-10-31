@@ -122,7 +122,8 @@ namespace Descender.UI
         public static string SkillLine(string id)
         {
             var rank = Skills.Rank(id);
-            var marks = RankMarks.Substring(0, System.Math.Min(rank, RankMarks.Length))
+            var marks =
+                RankMarks.Substring(0, System.Math.Min(rank, RankMarks.Length))
                 + new string('-', System.Math.Max(Skills.MaxRank(id) - rank, 0));
             var text = $"{Pad(Skills.DisplayName(id), 14)} {Pad(marks, 4)}";
             if (Skills.Level() < Skills.LevelNeeded(id))
