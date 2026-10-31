@@ -5,7 +5,8 @@
         "Descender.Runtime",
         "Descender.Editor",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "Unity.InputSystem"
     ],
     "includePlatforms": [
         "Editor"

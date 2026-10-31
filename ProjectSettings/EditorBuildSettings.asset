@@ -4,6 +4,45 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 302a950bfe735272ad33c87dd0234900
+  - enabled: 1
+    path: Assets/Scenes/Region_fraud.unity
+    guid: 9923aea8efeb56a8aee1015c9010599b
+  - enabled: 1
+    path: Assets/Scenes/Region_gluttony.unity
+    guid: 0d988f29fdee5a3b88a608c038f3793c
+  - enabled: 1
+    path: Assets/Scenes/Region_greed.unity
+    guid: 216365d6cbde521dbd4ee91bba1e19fe
+  - enabled: 1
+    path: Assets/Scenes/Region_heresy.unity
+    guid: 6fa3871d7be45b1ab0c8a7007fdd9fc3
+  - enabled: 1
+    path: Assets/Scenes/Region_limbo.unity
+    guid: df4727d6b9e750ce82dd62fc6160d13b
+  - enabled: 1
+    path: Assets/Scenes/Region_lust.unity
+    guid: 49fc78ae1734554da1555aea8634fde3
+  - enabled: 1
+    path: Assets/Scenes/Region_paradise.unity
+    guid: 9f55d49e0b5b530e9caa032dfb35b89b
+  - enabled: 1
+    path: Assets/Scenes/Region_purgatory.unity
+    guid: ac11d7047eb35828a3d381a071a8ab71
+  - enabled: 1
+    path: Assets/Scenes/Region_ruined_earth.unity
+    guid: 32f9cfe189215faaa2d349e2fb3cf3bc
+  - enabled: 1
+    path: Assets/Scenes/Region_treachery.unity
+    guid: 7c64ce73769351d58af0ff2b3e3eca1a
+  - enabled: 1
+    path: Assets/Scenes/Region_violence.unity
+    guid: ce77a421430a5d1796545ae5d82ee80b
+  - enabled: 1
+    path: Assets/Scenes/Region_wrath.unity
+    guid: 57eab582fb9c5de592e456b6e633197f
   m_configObjects: {}
   m_UseUCBPForAssetBundles: 0
