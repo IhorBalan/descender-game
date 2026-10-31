@@ -46,7 +46,7 @@ outcome; an unexpected error log fails the test.
 ## Running
 
 Editor: `Window > General > Test Runner`, EditMode or PlayMode tab, Run
-All. Command line (the same thing CI does):
+All. Command line (what the pre-push hook does):
 
 ```
 Unity -batchmode -projectPath . -runTests -testPlatform EditMode -testResults results.xml -logFile -
@@ -55,20 +55,39 @@ Unity -batchmode -projectPath . -runTests -testPlatform EditMode -testResults re
 Format: `csharpier check Assets` (`.csharpierrc.yaml`), fix with
 `csharpier format Assets`.
 
+### The pre-push hook
+
+The tests gate pushes from the developer's machine, not from CI.
+`tools/hooks/pre-push` runs the EditMode then the PlayMode tests with the
+editor named in `ProjectSettings/ProjectVersion.txt` (found under the
+Unity Hub install folder, or `UNITY_EDITOR`), prints the compile errors or
+the failing tests, and refuses the push when either run fails. About 20
+seconds with a warm `Library/`. Install it once per clone:
+
+```
+git config core.hooksPath tools/hooks
+```
+
+The project must not be open in the editor while it runs (the editor holds
+`Temp/UnityLockfile`); then run both Test Runner tabs by hand and push with
+`SKIP_UNITY_TESTS=1 git push`. `git push --no-verify` also skips it. A
+pull request's description says the tests passed locally; the reviewer
+trusts that, so do not skip the hook for a change to C#, a scene, a prefab
+or data.
+
 ## Workflows
 
 `.github/workflows/tests.yml` on pull requests and pushes to `main`:
-
-1. `format`: `dotnet tool install csharpier` then `csharpier check Assets`.
-2. `unity-tests` matrix EditMode / PlayMode with
-   `game-ci/unity-test-runner@v4.3.1` (pinned: the floating `v4` moved to
-   the game-ci CLI, which takes different inputs), `Library/` cached by hash
-   of Assets, Packages and ProjectSettings, `githubToken` so results appear
-   as a check.
+`format`, `dotnet tool install csharpier` then `csharpier check Assets`.
+No Unity runs in CI: the test jobs that used GameCI were removed because
+they need a Unity licence and the account's email and password as
+repository secrets, which this project does not keep. The pre-push hook
+above is the test gate.
 
 `.github/workflows/release.yml` on a `v*` tag: `game-ci/unity-builder@v4`
 for StandaloneLinux64 and StandaloneWindows64, zipped and attached to a
-GitHub release (see `build-and-release`).
+GitHub release (see `build-and-release`). This one still needs the Unity
+licence secrets below; until they exist, build releases locally.
 
 `.github/workflows/claude-code-review.yml`: the Claude review of every
 non-draft PR, governed by `REVIEW.md` at the root (focus areas, severity,
@@ -77,25 +96,24 @@ workflow prompt.
 
 ## Secrets
 
-GameCI activates Unity with repository secrets `UNITY_LICENSE` (the
-contents of the `.ulf` file: on a machine with Unity Hub, `Unity Hub >
-Preferences > Licenses`, or `Unity -batchmode -createManualActivationFile`
-then activate at license.unity3d.com/manual), `UNITY_EMAIL` and
-`UNITY_PASSWORD` for the Unity account. A Personal licence works for CI.
-The Claude review needs `CLAUDE_CODE_OAUTH_TOKEN` or `ANTHROPIC_API_KEY`
-as before. Without the Unity secrets the test jobs fail at activation
-with "No valid Unity license"; that is the first thing to check when
-every test job is red.
+Only the release workflow activates Unity, with repository secrets
+`UNITY_LICENSE` (the contents of the `.ulf` file: `Unity -batchmode
+-createManualActivationFile` then activate at license.unity3d.com/manual),
+`UNITY_EMAIL` and `UNITY_PASSWORD` for the Unity account that owns it. A
+Personal licence works. A Unity service account cannot activate a licence
+(Unity's licensing backend rejects its tokens), so there is no
+password-free route short of a Pro serial. The Claude review needs
+`CLAUDE_CODE_OAUTH_TOKEN` or `ANTHROPIC_API_KEY`.
 
-## When CI is red
+## When CI or the hook is red
 
 - Format: run `csharpier format Assets` and commit.
-- Activation error: secrets (above).
-- A test fails only in CI: usually asset import order or a path with
-  `Application.dataPath`; load through `AssetDatabase` in EditMode and
-  through scenes in PlayMode.
-- Compile error in CI only: a `UnityEditor` reference outside the Editor
-  asmdef or missing asmdef reference.
-- Library cache corrupt after a Unity upgrade: bump the cache key prefix.
-
-Never skip, ignore or `[Explicit]` a test to get green.
+- The hook cannot find Unity: install the version in
+  `ProjectSettings/ProjectVersion.txt` through Unity Hub, or point
+  `UNITY_EDITOR` at it.
+- The hook says the project is open: close the editor, or run the Test
+  Runner by hand and push with `SKIP_UNITY_TESTS=1`.
+- Compile error: the log is `Logs/pre-push-<platform>.log`; a `UnityEditor`
+  reference outside the Editor asmdef or a missing asmdef reference are
+  the usual causes.
+- Release activation error: the secrets above.
