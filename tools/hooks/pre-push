@@ -1,0 +1,93 @@
+#!/bin/sh
+# Runs the Unity EditMode and PlayMode tests before a push, so the tests gate
+# the repository without Unity running in CI (CI has no Unity licence).
+#
+# Install once per clone:   git config core.hooksPath tools/hooks
+# Skip once:                SKIP_UNITY_TESTS=1 git push      (or git push --no-verify)
+# Pick the editor:          UNITY_EDITOR=/path/to/Unity git push
+#
+# The editor is found from ProjectSettings/ProjectVersion.txt under the Unity
+# Hub's install folder. The project must not be open in the editor at the same
+# time; run the tests from Window > General > Test Runner instead then.
+
+set -u
+
+if [ "${SKIP_UNITY_TESTS:-}" != "" ]; then
+    echo "pre-push: SKIP_UNITY_TESTS is set, skipping the Unity tests."
+    exit 0
+fi
+
+root=$(git rev-parse --show-toplevel) || exit 1
+cd "$root" || exit 1
+
+version=$(sed -n 's/^m_EditorVersion: *//p' ProjectSettings/ProjectVersion.txt | tr -d '\r')
+if [ -z "$version" ]; then
+    echo "pre-push: cannot read the editor version from ProjectSettings/ProjectVersion.txt." >&2
+    exit 1
+fi
+
+unity="${UNITY_EDITOR:-}"
+if [ -z "$unity" ]; then
+    for candidate in \
+        "/Applications/Unity/Hub/Editor/$version/Unity.app/Contents/MacOS/Unity" \
+        "$HOME/Unity/Hub/Editor/$version/Editor/Unity" \
+        "/opt/unity/editors/$version/Editor/Unity" \
+        "/c/Program Files/Unity/Hub/Editor/$version/Editor/Unity.exe" \
+        "C:/Program Files/Unity/Hub/Editor/$version/Editor/Unity.exe"
+    do
+        if [ -x "$candidate" ]; then
+            unity="$candidate"
+            break
+        fi
+    done
+fi
+if [ -z "$unity" ] || [ ! -x "$unity" ]; then
+    echo "pre-push: Unity $version was not found. Install it through Unity Hub or set UNITY_EDITOR." >&2
+    echo "pre-push: to push without the tests: SKIP_UNITY_TESTS=1 git push" >&2
+    exit 1
+fi
+
+if [ -f Temp/UnityLockfile ]; then
+    echo "pre-push: the project is open in the Unity editor, which blocks the command-line run." >&2
+    echo "pre-push: close it, or run both tabs of Window > General > Test Runner and push with SKIP_UNITY_TESTS=1." >&2
+    exit 1
+fi
+
+mkdir -p Logs
+status=0
+for platform in EditMode PlayMode; do
+    log="Logs/pre-push-$platform.log"
+    results="Logs/pre-push-$platform.xml"
+    rm -f "$results"
+    echo "pre-push: running the $platform tests (log: $log)..."
+    if [ "$platform" = "EditMode" ]; then
+        graphics="-nographics"
+    else
+        graphics=""   # PlayMode needs a graphics device
+    fi
+    # shellcheck disable=SC2086
+    "$unity" -batchmode $graphics -projectPath "$root" -runTests -testPlatform "$platform" \
+        -testResults "$results" -logFile "$log"
+    code=$?
+    if [ $code -ne 0 ]; then
+        status=1
+        echo "pre-push: $platform run failed (exit $code)." >&2
+        if ! grep -qE "error CS[0-9]+|<test-case" "$log" "$results" 2>/dev/null; then
+            echo "pre-push: no compile error or test result was written; another Unity instance may have the project open, or the editor failed to start. See $log." >&2
+        fi
+        grep -E "error CS[0-9]+|Scripts have compiler errors" "$log" | sed 's/^.*Assets/Assets/' | sort -u | head -20 >&2
+        if [ -f "$results" ]; then
+            # The failing test names and their messages, from the NUnit XML.
+            awk '/<test-case/ && /result="Failed"/ { match($0, /fullname="[^"]*"/); print "  failed: " substr($0, RSTART + 10, RLENGTH - 11) }
+                 /<message>/ { gsub(/.*<message><!\[CDATA\[|\]\]><\/message>.*/, ""); print "    " $0 }' "$results" | head -40 >&2
+        fi
+        break
+    fi
+    passed=$(sed -n 's/.*<test-run [^>]*passed="\([0-9]*\)".*/\1/p' "$results" | head -1)
+    echo "pre-push: $platform passed ($passed tests)."
+done
+
+if [ $status -ne 0 ]; then
+    echo "pre-push: fix the tests, or push without them with SKIP_UNITY_TESTS=1 git push." >&2
+fi
+exit $status
