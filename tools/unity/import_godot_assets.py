@@ -112,8 +112,21 @@ def text_meta(guid: str) -> str:
     return META_HEAD % guid + "TextScriptImporter:\n  externalObjects: {}\n" + META_TAIL
 
 
-def native_meta(guid: str) -> str:
-    return META_HEAD % guid + "NativeFormatImporter:\n  externalObjects: {}\n  mainObjectFileID: 11400000\n" + META_TAIL
+def native_meta(guid: str, main_object: int = 11400000) -> str:
+    return META_HEAD % guid + f"NativeFormatImporter:\n  externalObjects: {{}}\n  mainObjectFileID: {main_object}\n" + META_TAIL
+
+
+def prefab_meta(guid: str) -> str:
+    return META_HEAD % guid + "PrefabImporter:\n  externalObjects: {}\n" + META_TAIL
+
+
+def shader_meta(guid: str) -> str:
+    return (
+        META_HEAD % guid
+        + "ShaderImporter:\n  externalObjects: {}\n  defaultTextures: []\n  nonModifiableTextures: []\n"
+        + "  preprocessorOverride: 0\n"
+        + META_TAIL
+    )
 
 
 def audio_meta(guid: str, loop_stream: bool) -> str:
@@ -286,6 +299,10 @@ def grid_sprites(stem: str, size: tuple[int, int], cell: int):
     return result
 
 
+# Standalone sprites under Assets/Art/Sprites that are horizontal frame strips (Godot's hframes).
+STANDALONE_FRAMES = {"checkpoint.png": 2}
+
+
 def texture_meta_for(path: str) -> str:
     """The meta for a PNG under Assets/, by where it lives."""
     relative = rel(path)
@@ -300,6 +317,11 @@ def texture_meta_for(path: str) -> str:
         for anim_name, anim in spec.get("animations", {}).items():
             if anim["file"] == name:
                 return texture_meta(guid, ppu=PPU_LEVEL, point_filter=True, sprites=strip_sprites(character, anim_name, anim, spec, size))
+        if name in STANDALONE_FRAMES:
+            frames = STANDALONE_FRAMES[name]
+            frame_w = size[0] // frames
+            sprites = [(f"{stem}_{i}", i * frame_w, 0, frame_w, size[1], (0.5, 0.0)) for i in range(frames)]
+            return texture_meta(guid, ppu=PPU_LEVEL, point_filter=True, sprites=sprites)
         return texture_meta(guid, ppu=PPU_LEVEL, point_filter=True, pivot=(0.5, 0.0))
     if relative.startswith("Assets/Art/Tiles/Sheets/"):
         return texture_meta(guid, ppu=PPU_PAINTED, point_filter=False, normal_map=stem.endswith("_n"))
@@ -350,6 +372,12 @@ def write_metas() -> int:
                 text = font_meta(guid)
             elif lower.endswith(".asset"):
                 text = native_meta(guid)
+            elif lower.endswith(".mat"):
+                text = native_meta(guid, 2100000)
+            elif lower.endswith(".prefab"):
+                text = prefab_meta(guid)
+            elif lower.endswith(".shader"):
+                text = shader_meta(guid)
             else:
                 text = default_meta(guid)
             written += write_if_missing(path + ".meta", text)

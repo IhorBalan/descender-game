@@ -1,0 +1,530 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!50 &2342463341835584458
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718419819127098976}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 1
+  m_SleepingMode: 1
+  m_CollisionDetection: 1
+  m_Constraints: 4
+--- !u!61 &4374256125673567528
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718419819127098976}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 2.5}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 2, y: 5}
+  m_EdgeRadius: 0
+--- !u!212 &4404281228489034232
+SpriteRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364970463473814075}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 0
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 6
+  m_Sprite: {fileID: 2354606027400322327, guid: f274d005860d5fce9558191937fbc526, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0
+  m_WasSpriteAssigned: 1
+  m_MaskInteraction: 0
+  m_SpriteSortPoint: 0
+--- !u!114 &1718936431165187998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364970463473814075}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13703b780cb251db983ae85134867098, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  strips:
+  - name: idle
+    fps: 5.0
+    loop: 1
+    frames:
+    - {fileID: 2354606027400322327, guid: f274d005860d5fce9558191937fbc526, type: 3}
+    - {fileID: 1022758755972586061, guid: f274d005860d5fce9558191937fbc526, type: 3}
+    - {fileID: 2487372798630548714, guid: f274d005860d5fce9558191937fbc526, type: 3}
+    - {fileID: 2495401119922687425, guid: f274d005860d5fce9558191937fbc526, type: 3}
+  - name: walk
+    fps: 6.0
+    loop: 1
+    frames:
+    - {fileID: 3566298202539264482, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+    - {fileID: 41766624325067769, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+    - {fileID: 2419116297289286614, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+    - {fileID: 4063009057064240914, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+  - name: attack
+    fps: 10.0
+    loop: 0
+    frames:
+    - {fileID: 3804345311405446699, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+    - {fileID: 1700524882321789005, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+    - {fileID: 3321295912825444674, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+    - {fileID: 648999665272495703, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+  - name: hurt
+    fps: 8.0
+    loop: 0
+    frames:
+    - {fileID: 4331766927300677005, guid: 5e1707b19ec252a5a94f1661bde87b78, type: 3}
+    - {fileID: 1452954090439956819, guid: 5e1707b19ec252a5a94f1661bde87b78, type: 3}
+  - name: death
+    fps: 8.0
+    loop: 0
+    frames:
+    - {fileID: 1397409929277121091, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+    - {fileID: 2005448506319161044, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+    - {fileID: 1342210461840720033, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+    - {fileID: 2526583543954353291, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+  startAnimation: idle
+--- !u!114 &1281969971275233177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718419819127098976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6635220ba5f55765be8b6c2db9d17966, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profile: {fileID: 0}
+  sprite: {fileID: 1718936431165187998}
+  wardrobe:
+  - character: angel_guard
+    strips:
+    - name: idle
+      fps: 5.0
+      loop: 1
+      frames:
+      - {fileID: 2354606027400322327, guid: f274d005860d5fce9558191937fbc526, type: 3}
+      - {fileID: 1022758755972586061, guid: f274d005860d5fce9558191937fbc526, type: 3}
+      - {fileID: 2487372798630548714, guid: f274d005860d5fce9558191937fbc526, type: 3}
+      - {fileID: 2495401119922687425, guid: f274d005860d5fce9558191937fbc526, type: 3}
+    - name: walk
+      fps: 6.0
+      loop: 1
+      frames:
+      - {fileID: 3566298202539264482, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+      - {fileID: 41766624325067769, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+      - {fileID: 2419116297289286614, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+      - {fileID: 4063009057064240914, guid: a4acc43716665addb49a430907c9fcdc, type: 3}
+    - name: attack
+      fps: 10.0
+      loop: 0
+      frames:
+      - {fileID: 3804345311405446699, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+      - {fileID: 1700524882321789005, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+      - {fileID: 3321295912825444674, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+      - {fileID: 648999665272495703, guid: a059b123553c5f4e8851e312ab472ba6, type: 3}
+    - name: hurt
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 4331766927300677005, guid: 5e1707b19ec252a5a94f1661bde87b78, type: 3}
+      - {fileID: 1452954090439956819, guid: 5e1707b19ec252a5a94f1661bde87b78, type: 3}
+    - name: death
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 1397409929277121091, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+      - {fileID: 2005448506319161044, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+      - {fileID: 1342210461840720033, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+      - {fileID: 2526583543954353291, guid: abc51c7ceef45bc89ef608ba24ed20a0, type: 3}
+  - character: brute
+    strips:
+    - name: idle
+      fps: 5.0
+      loop: 1
+      frames:
+      - {fileID: 4160027899505031234, guid: b59a6b456f5a57e1bcab76be05520e12, type: 3}
+      - {fileID: 850722748756437967, guid: b59a6b456f5a57e1bcab76be05520e12, type: 3}
+      - {fileID: 753095829339392712, guid: b59a6b456f5a57e1bcab76be05520e12, type: 3}
+      - {fileID: 2448768623753343498, guid: b59a6b456f5a57e1bcab76be05520e12, type: 3}
+    - name: walk
+      fps: 5.0
+      loop: 1
+      frames:
+      - {fileID: 592175569413166855, guid: 5efbb2d59e0957429c2e28a051d3772f, type: 3}
+      - {fileID: 2592169060090824247, guid: 5efbb2d59e0957429c2e28a051d3772f, type: 3}
+      - {fileID: 1533083304395307155, guid: 5efbb2d59e0957429c2e28a051d3772f, type: 3}
+      - {fileID: 3499545186402529134, guid: 5efbb2d59e0957429c2e28a051d3772f, type: 3}
+    - name: attack
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 2945842630239904856, guid: 4fa8a32df0495d378c76382c1ac1859a, type: 3}
+      - {fileID: 3678289277871687554, guid: 4fa8a32df0495d378c76382c1ac1859a, type: 3}
+      - {fileID: 2194232638861232304, guid: 4fa8a32df0495d378c76382c1ac1859a, type: 3}
+      - {fileID: 3420874888329141576, guid: 4fa8a32df0495d378c76382c1ac1859a, type: 3}
+      - {fileID: 3734355397647706742, guid: 4fa8a32df0495d378c76382c1ac1859a, type: 3}
+    - name: hurt
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 2760887916284236717, guid: df562b781c5a5b3bae82748075fde1a1, type: 3}
+      - {fileID: 1496469681869574298, guid: df562b781c5a5b3bae82748075fde1a1, type: 3}
+    - name: death
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 68748256327109763, guid: 2ac5ae83d17d5255a3bc64570a87346b, type: 3}
+      - {fileID: 3735002621121460046, guid: 2ac5ae83d17d5255a3bc64570a87346b, type: 3}
+      - {fileID: 1190842151089966705, guid: 2ac5ae83d17d5255a3bc64570a87346b, type: 3}
+      - {fileID: 4535576261768717338, guid: 2ac5ae83d17d5255a3bc64570a87346b, type: 3}
+      - {fileID: 1300165592537831403, guid: 2ac5ae83d17d5255a3bc64570a87346b, type: 3}
+  - character: imp
+    strips:
+    - name: idle
+      fps: 8.0
+      loop: 1
+      frames:
+      - {fileID: 4342043105351283991, guid: d47628ec1e595f7aa3cf1e5b2bf13bcd, type: 3}
+      - {fileID: 3690187296260338883, guid: d47628ec1e595f7aa3cf1e5b2bf13bcd, type: 3}
+      - {fileID: 4178396572829272451, guid: d47628ec1e595f7aa3cf1e5b2bf13bcd, type: 3}
+      - {fileID: 968073091225704873, guid: d47628ec1e595f7aa3cf1e5b2bf13bcd, type: 3}
+    - name: run
+      fps: 12.0
+      loop: 1
+      frames:
+      - {fileID: 917337534362857056, guid: 4c496d57ad26590499cb024be580fba2, type: 3}
+      - {fileID: 1579049911980121733, guid: 4c496d57ad26590499cb024be580fba2, type: 3}
+      - {fileID: 3073333446263003245, guid: 4c496d57ad26590499cb024be580fba2, type: 3}
+      - {fileID: 1836719099105947717, guid: 4c496d57ad26590499cb024be580fba2, type: 3}
+    - name: attack
+      fps: 12.0
+      loop: 0
+      frames:
+      - {fileID: 231761305456068073, guid: 3b5f7b54d5fc5e19ac6f5bcb7c9bc38c, type: 3}
+      - {fileID: 1048704098555321869, guid: 3b5f7b54d5fc5e19ac6f5bcb7c9bc38c, type: 3}
+      - {fileID: 3720422478159697315, guid: 3b5f7b54d5fc5e19ac6f5bcb7c9bc38c, type: 3}
+      - {fileID: 53144887839624240, guid: 3b5f7b54d5fc5e19ac6f5bcb7c9bc38c, type: 3}
+    - name: hurt
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 1100089829923592685, guid: 304cd2fbca8856a5964eb2db875006cd, type: 3}
+      - {fileID: 2356454725603541457, guid: 304cd2fbca8856a5964eb2db875006cd, type: 3}
+    - name: death
+      fps: 10.0
+      loop: 0
+      frames:
+      - {fileID: 2591309361656564218, guid: 60980dc5bc1f5d9d953457cac0a8ec4f, type: 3}
+      - {fileID: 2670051950376092464, guid: 60980dc5bc1f5d9d953457cac0a8ec4f, type: 3}
+      - {fileID: 2941954859874438439, guid: 60980dc5bc1f5d9d953457cac0a8ec4f, type: 3}
+      - {fileID: 231516942446710953, guid: 60980dc5bc1f5d9d953457cac0a8ec4f, type: 3}
+  - character: hero
+    strips:
+    - name: idle
+      fps: 6.0
+      loop: 1
+      frames:
+      - {fileID: 1174600183966540252, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+      - {fileID: 1058168067886963129, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+      - {fileID: 331743782220057543, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+      - {fileID: 1083099472812612743, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+      - {fileID: 2667461178577044715, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+      - {fileID: 884486761802159073, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - name: run
+      fps: 12.0
+      loop: 1
+      frames:
+      - {fileID: 351525234154100918, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 1371549812516903245, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 4299786103639543246, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 277662735666098764, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 4113492199650037846, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 4368455490914873493, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 3288082137505446869, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+      - {fileID: 1272230044751623913, guid: 3241c020dc7353bba3b491d4af44aa3a, type: 3}
+    - name: skid
+      fps: 1.0
+      loop: 0
+      frames:
+      - {fileID: 3395899851026752513, guid: c3972627ccf4535eb4d8edba66a9cb07, type: 3}
+    - name: jump
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 1613888891545657578, guid: 9a259bd007bd5ba48f8ea02088ee08dd, type: 3}
+      - {fileID: 1787311542952733741, guid: 9a259bd007bd5ba48f8ea02088ee08dd, type: 3}
+      - {fileID: 3897932972538175353, guid: 9a259bd007bd5ba48f8ea02088ee08dd, type: 3}
+    - name: fall
+      fps: 6.0
+      loop: 1
+      frames:
+      - {fileID: 3926625054814688741, guid: a2e33fcb051053c49b708550ac630933, type: 3}
+      - {fileID: 859463107831503616, guid: a2e33fcb051053c49b708550ac630933, type: 3}
+    - name: land
+      fps: 15.0
+      loop: 0
+      frames:
+      - {fileID: 4277468864599012471, guid: 78e0db060f7852da8a86fe068f538aec, type: 3}
+      - {fileID: 4576315587247173948, guid: 78e0db060f7852da8a86fe068f538aec, type: 3}
+    - name: dash
+      fps: 12.0
+      loop: 1
+      frames:
+      - {fileID: 1972968973301049334, guid: db2c602a26a15100a7b98ca980e464f0, type: 3}
+      - {fileID: 1778278921996211273, guid: db2c602a26a15100a7b98ca980e464f0, type: 3}
+    - name: wall
+      fps: 6.0
+      loop: 1
+      frames:
+      - {fileID: 750224285823916982, guid: 8754f2554bc55ae390e0cf4e9b7847a7, type: 3}
+      - {fileID: 3481602842172253430, guid: 8754f2554bc55ae390e0cf4e9b7847a7, type: 3}
+    - name: glide
+      fps: 8.0
+      loop: 1
+      frames:
+      - {fileID: 2581155498835035439, guid: 34d0b9adbf175792ad00f34bf8d424a7, type: 3}
+      - {fileID: 3451903391739933933, guid: 34d0b9adbf175792ad00f34bf8d424a7, type: 3}
+    - name: double_jump
+      fps: 20.0
+      loop: 0
+      frames:
+      - {fileID: 4076191401528265710, guid: 0cd1a55e8df05ed98e08ff8240148b40, type: 3}
+      - {fileID: 4563702684936029233, guid: 0cd1a55e8df05ed98e08ff8240148b40, type: 3}
+      - {fileID: 4092592376188542249, guid: 0cd1a55e8df05ed98e08ff8240148b40, type: 3}
+      - {fileID: 2657130235570435461, guid: 0cd1a55e8df05ed98e08ff8240148b40, type: 3}
+    - name: attack
+      fps: 21.0
+      loop: 0
+      frames:
+      - {fileID: 2431183878136921762, guid: 6f873d8d8b2b57c8bfd386a743fa6ec3, type: 3}
+      - {fileID: 3531522662431833909, guid: 6f873d8d8b2b57c8bfd386a743fa6ec3, type: 3}
+      - {fileID: 1913628495059312388, guid: 6f873d8d8b2b57c8bfd386a743fa6ec3, type: 3}
+      - {fileID: 2151004634930625159, guid: 6f873d8d8b2b57c8bfd386a743fa6ec3, type: 3}
+      - {fileID: 1376784622422927900, guid: 6f873d8d8b2b57c8bfd386a743fa6ec3, type: 3}
+      - {fileID: 15115904473280951, guid: 6f873d8d8b2b57c8bfd386a743fa6ec3, type: 3}
+    - name: cast
+      fps: 14.0
+      loop: 0
+      frames:
+      - {fileID: 3576910111360998202, guid: bbeb6621f660539fa6322d8d0bcdb9aa, type: 3}
+      - {fileID: 3915263949152264337, guid: bbeb6621f660539fa6322d8d0bcdb9aa, type: 3}
+      - {fileID: 2673421750544707523, guid: bbeb6621f660539fa6322d8d0bcdb9aa, type: 3}
+    - name: slam
+      fps: 1.0
+      loop: 0
+      frames:
+      - {fileID: 1227028720557115043, guid: 1ad95fc274045eeeb57bb0d3ee40c7ea, type: 3}
+      - {fileID: 990876596678798930, guid: 1ad95fc274045eeeb57bb0d3ee40c7ea, type: 3}
+    - name: hurt
+      fps: 10.0
+      loop: 0
+      frames:
+      - {fileID: 2379482461991260148, guid: 216b83059f3d5d3f8b9eeaa092d87a4b, type: 3}
+      - {fileID: 3063147531189288257, guid: 216b83059f3d5d3f8b9eeaa092d87a4b, type: 3}
+    - name: heal
+      fps: 8.0
+      loop: 1
+      frames:
+      - {fileID: 2022206300277467581, guid: 18fb5c66977f523eabc98550d84dedd3, type: 3}
+      - {fileID: 2931734662061280222, guid: 18fb5c66977f523eabc98550d84dedd3, type: 3}
+      - {fileID: 197352250057927041, guid: 18fb5c66977f523eabc98550d84dedd3, type: 3}
+      - {fileID: 587986775582509147, guid: 18fb5c66977f523eabc98550d84dedd3, type: 3}
+    - name: death
+      fps: 8.0
+      loop: 0
+      frames:
+      - {fileID: 4306704764969627773, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
+      - {fileID: 2587079367314321455, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
+      - {fileID: 1643514312007971090, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
+      - {fileID: 347659004730887202, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
+      - {fileID: 724837548867942831, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
+  impPrefab: {fileID: 776587051238240714, guid: 05e5823570e752d78a9d8ce5f2222f50, type: 3}
+  arena:
+    serializedVersion: 2
+    x: -8
+    y: -4
+    width: 16
+    height: 8
+--- !u!114 &551590235471738
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718419819127098976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff164bb4d8605e438e4fd404b16720fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  renderers:
+  - {fileID: 4404281228489034232}
+  flashMaterial: {fileID: 2100000, guid: 612b965a5817511b8c581e92d6ef7f60, type: 2}
+--- !u!1 &718419819127098976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1882514776631021987}
+  - component: {fileID: 2342463341835584458}
+  - component: {fileID: 4374256125673567528}
+  - component: {fileID: 1281969971275233177}
+  - component: {fileID: 551590235471738}
+  m_Layer: 10
+  m_Name: Boss
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1882514776631021987
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 718419819127098976}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1886274584198324948}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2364970463473814075
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1886274584198324948}
+  - component: {fileID: 4404281228489034232}
+  - component: {fileID: 1718936431165187998}
+  m_Layer: 10
+  m_Name: Visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1886274584198324948
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2364970463473814075}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1882514776631021987}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

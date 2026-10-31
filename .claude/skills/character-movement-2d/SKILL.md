@@ -1,6 +1,6 @@
 ---
 name: character-movement-2d
-description: Player and enemy movement in Unity 2D for this game: Rigidbody2D (dynamic for the hero, kinematic for walkers), FixedUpdate vs Update, input buffering, coyote time, layers and masks, hitboxes as trigger colliders, hit-stop and screen shake. Use when touching PlayerController, enemies, projectiles, hazards, ledges or collision layers.
+description: Player and enemy movement in Unity 2D for this game: Rigidbody2D (dynamic, gravityScale 0, velocity set in FixedUpdate), input buffering, coyote time, layers and masks, hits by OverlapBox queries rather than hitbox children, hit-stop and screen shake. Use when touching PlayerController, enemies, projectiles, hazards, ledges or collision layers.
 ---
 
 # 2D character movement
@@ -15,15 +15,18 @@ divided by `PlayerTuning.PixelsPerUnit` (16) at the physics boundary.
 - **Hero**: `Rigidbody2D` Dynamic, `gravityScale 0` (gravity is applied by
   the controller so rise, fall and wall-slide gravity can differ), `Freeze
   Rotation Z`, `Interpolate`, `Collision Detection: Continuous`. One
-  `BoxCollider2D` for the body (feet slightly inset so a 1 px lip does not
-  catch), and a child `Hitbox` with a trigger collider on the `Trigger`
-  layer for the sword.
-- **Walkers**: `Rigidbody2D` Kinematic with `useFullKinematicContacts`
-  on, moved with `MovePosition` in `FixedUpdate`; a `BoxCollider2D` on
-  `Enemy`, a child trigger `Hurtbox` for the hero's sword.
-- **Flyers and projectiles**: Kinematic, no gravity, moved by setting
-  `linearVelocity` or `MovePosition`; projectiles are trigger colliders
-  on `Hazard`.
+  `BoxCollider2D` for the body (14x32 px, origin at the feet), friction 0
+  (`PhysicsMaterial2D`). No hitbox children: the sword, the slam and the
+  bolt find enemies with `Physics2D.OverlapBox` and a cached
+  `ContactFilter2D` (`Layers.Any(Layers.EnemyMask)`), calling `IHittable.Hit`.
+- **Walkers, flyers, bosses, the hanged**: also Dynamic with
+  `gravityScale 0`, their own gravity in level pixels, velocity set in
+  `FixedUpdate` (`EnemyPhysics.Prepare`). One `BoxCollider2D` on `Enemy`.
+  They hurt the hero with `EnemyPhysics.HurtHero` (an OverlapBox of the
+  body or the swing's reach over `Player`), never by contact callbacks.
+- **Shots** (`EnemyShot`, `LightBolt`): kinematic trigger boxes moved by
+  `MovePosition`, checking `OverlapBox` each step; they break on
+  `Layers.SolidMask`.
 - **Static world**: the Terrain tilemap has `TilemapCollider2D` +
   `CompositeCollider2D` (its Rigidbody2D Static) on the `World` layer.
   Ledges (one-way) use `PlatformEffector2D` on their own `Ledge` layer so
@@ -54,41 +57,47 @@ private bool CheckGround()
   the controller, counted down in `FixedUpdate` by `Time.fixedDeltaTime`.
 - Wall slide and wall jump check a side box the same way, masked to
   `World` only.
-- Dash sets velocity directly for `DashTime` and ignores gravity; it
-  switches the hero's layer to `PlayerDashing` (no collision with `Enemy`)
-  for its duration via `gameObject.layer`, and back after.
+- Dash sets velocity directly for `DashTime` and ignores gravity. The
+  hero and the enemies never collide physically (as the Godot masks had
+  it), so no layer switch is needed; the light dash passes walls of light
+  with `Physics2D.IgnoreLayerCollision(Player, LightBarrier)` for its
+  duration, and ledge drops and slams do the same with `Ledge`.
 
 ## Layers and masks
 
-Set once by `ProjectBootstrap` (`Edit > Project Settings > Physics 2D >
-Layer Collision Matrix` after it runs):
+Set by `Descender.Combat.Layers.ApplyCollisionMatrix()`, which
+`ProjectBootstrap` runs into the project settings and the hero's `Awake`
+runs again at play time (idempotent), so the matrix is right even in a
+test scene:
 
 | Layer | Collides with |
 |---|---|
-| World | Player, Enemy, Pickup |
+| World | Default, World, Player, Enemy |
 | Ledge | Player (one-way), Enemy |
-| Player | World, Ledge, Enemy, Hazard, Pickup, Trigger |
-| Enemy | World, Ledge, Player |
-| Hazard | Player |
-| Pickup | World, Player |
-| Trigger | Player |
-| LightBarrier | Player (only while the barrier is up) |
+| Player | World, Ledge, LightBarrier, Hazard, Pickup, Trigger |
+| Enemy | World, Ledge |
+| Hazard, Pickup, Trigger | Player |
+| LightBarrier | Player (ignored during a light dash) |
 
-Read masks through `LayerMask.GetMask("World", "Ledge")` cached in a
-static readonly field, never a magic int. `Physics2D.queriesHitTriggers`
+The hero and the enemies pass through each other; hits are queries.
+Read layers and masks through `Descender.Combat.Layers` (`Layers.Enemy`,
+`Layers.GroundMask`, `Layers.Solid(mask)`, `Layers.Any(mask)`), never a
+magic int. `Physics2D.queriesHitTriggers`
 is off; hit detection that wants triggers passes a `ContactFilter2D` with
 `useTriggers = true`.
 
 ## Hits, damage, invulnerability
 
-- Hitbox and hurtbox are trigger colliders; `OnTriggerEnter2D` on the
-  hurtbox side looks for an `IHittable`/`Damager` component with
-  `TryGetComponent` and calls `Hit(damage, from)`. No tags.
-- The sword hitbox is enabled for the attack's active frames by the
+- A hit is an `OverlapBox` over the other side's layer; the hitter looks
+  for `IHittable` on `attachedRigidbody` with `TryGetComponent` and calls
+  `Hit(damage, from)`, which returns false when the target cannot be hurt
+  now. No tags, no hitbox children.
+- The sword's box is queried during the attack's active frames by the
   attack state, not by animation events, so the timing is the same at any
-  frame rate.
-- Invulnerability after a hit is a timer; while it runs the hurtbox
-  collider is disabled and the sprite flashes (`sprites-and-animation`).
+  frame rate; a `HashSet<Collider2D>` per swing stops double hits.
+- Invulnerability after a hit is a timer (`PlayerController.CanBeHurt`);
+  while it runs `Hurt` returns false and the sprite blinks
+  (`sprites-and-animation`).
 - Knockback sets velocity once and lets the controller resume after
   `tuning.HitStunTime`.
 
@@ -107,16 +116,17 @@ is off; hit detection that wants triggers passes a `ContactFilter2D` with
 
 ## Death, respawn, checkpoints
 
-The hero's `Die()` disables input and the colliders, plays the death
-animation, then `GameFlow.Respawn()` restores the last checkpoint:
-position, hearts, flasks, and re-enables. Enemies killed since the
-checkpoint stay dead within the region (per-region `KilledIds`) and
-reset on region reload; bosses set `BossIds.FlagFor(id)` permanently.
+The hero's `Kill()` drops input, plays the death strip and raises `Died`;
+with `autoRespawn` on, `Respawn()` follows after `tuning.deathTime` at the
+last checkpoint (`Checkpoint` calls `RestAt` on touch and raises the
+static `Checkpoint.AnyRested` for the game flow). Enemies killed since
+the checkpoint are in `Enemies.Kills` by placement id, cleared on
+respawn (`Kills.Cleared`); bosses set `BossIds.FlagFor(id)` permanently.
 
 ## Things that went wrong in Godot and must not come back
 
 - Moving a body from `Update` (jitter at any non-60 Hz display).
 - Stuck on tile seams: keep the composite collider, inset the feet.
-- Double damage from overlapping hurtboxes: one hurtbox per enemy, the
-  hero's sword hitbox tracks a `HashSet<Collider2D>` of what it hit this
-  swing, cleared when the swing starts.
+- Double damage from overlapping boxes: one body box per enemy, the
+  hero's sword tracks a `HashSet<Collider2D>` of what it hit this swing,
+  cleared when the swing starts.
