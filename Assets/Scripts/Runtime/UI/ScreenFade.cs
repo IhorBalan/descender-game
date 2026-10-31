@@ -27,16 +27,16 @@ namespace Descender.UI
             var canvas = gameObject.AddComponent<Canvas>();
             canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             canvas.sortingOrder = SortingOrder;
-            var cover = new GameObject("Cover", typeof(RectTransform), typeof(Image));
-            cover.transform.SetParent(transform, false);
-            var rect = cover.GetComponent<RectTransform>();
+            var coverObject = new GameObject("Cover", typeof(RectTransform), typeof(Image));
+            coverObject.transform.SetParent(transform, false);
+            var rect = coverObject.GetComponent<RectTransform>();
             rect.anchorMin = Vector2.zero;
             rect.anchorMax = Vector2.one;
             rect.offsetMin = Vector2.zero;
             rect.offsetMax = Vector2.zero;
-            this.cover = cover.GetComponent<Image>();
-            this.cover.color = new Color(0f, 0f, 0f, 0f);
-            this.cover.raycastTarget = false;
+            cover = coverObject.GetComponent<Image>();
+            cover.color = new Color(0f, 0f, 0f, 0f);
+            cover.raycastTarget = false;
         }
 
         /// <summary>Fades to black; yield the result to wait for the screen to be covered.</summary>

@@ -31,6 +31,7 @@ namespace Descender.EditorTools.Setup
         public const string HeroPrefabPath = "Assets/Prefabs/Player.prefab";
         public const string WorldAtlasPath = "Assets/Data/World.asset";
         public const string MusicFolder = "Assets/Audio/music";
+        public const string MenuThemePath = "Assets/Settings/MenuTheme.asset";
 
         [MenuItem("Descender/Setup/Main scene")]
         public static void Run()
@@ -93,9 +94,18 @@ namespace Descender.EditorTools.Setup
 
             var fadeObject = FindRoot(scene, "ScreenFade") ?? new GameObject("ScreenFade");
             var fade = Ensure<ScreenFade>(fadeObject);
-            if (FindRoot(scene, "UI") == null)
+            var ui = FindRoot(scene, "UI") ?? new GameObject("UI");
+            Ensure<MenuStack>(ui);
+            var menuTheme = AssetDatabase.LoadAssetAtPath<MenuTheme>(MenuThemePath);
+            var settingsScreen = Ensure<SettingsScreen>(ui);
+            var titleScreen = Ensure<TitleScreen>(ui);
+            var pauseScreen = Ensure<PauseScreen>(ui);
+            foreach (var screen in new MenuScreen[] { settingsScreen, titleScreen, pauseScreen })
             {
-                new GameObject("UI");
+                var screenObject = new SerializedObject(screen);
+                SetIfEmpty(screenObject, "theme", menuTheme);
+                SetIfEmpty(screenObject, "settings", settingsScreen);
+                screenObject.ApplyModifiedPropertiesWithoutUndo();
             }
 
             var flow = Ensure<GameFlow>(systems);

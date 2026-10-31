@@ -3,6 +3,7 @@ using Descender.Audio;
 using Descender.Input;
 using Descender.Player;
 using Descender.Save;
+using Descender.Story;
 using Descender.UI;
 using Descender.World;
 using UnityEngine;
