@@ -112,11 +112,7 @@ namespace Descender.Tests
                             Is.InRange(0, atlas.width - 1),
                             $"{band.key} {layer.Key} cell off the grid"
                         );
-                        Assert.That(
-                            cell.Y,
-                            Is.InRange(0, band.rows - 1),
-                            $"{band.key} {layer.Key} cell off the band"
-                        );
+                        Assert.That(cell.Y, Is.InRange(0, band.rows - 1), $"{band.key} {layer.Key} cell off the band");
                         Assert.That(cell.Tile, Is.InRange(0, 255), $"{band.key} {layer.Key} tile off the atlas");
                         if (layer.Key == RegionTiles.TerrainLayer && data.KindOf(cell.Tile) == TileKind.Solid)
                         {
