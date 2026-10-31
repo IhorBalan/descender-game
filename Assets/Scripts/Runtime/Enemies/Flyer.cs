@@ -3,6 +3,7 @@ using Descender.Economy;
 using Descender.Fx;
 using Descender.Pickups;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Enemies
@@ -17,7 +18,7 @@ namespace Descender.Enemies
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
-    public sealed class Flyer : MonoBehaviour, IHittable, IEnemy
+    public sealed class Flyer : MonoBehaviour, IHittable, IEnemy, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float Accel = 220f;
@@ -76,6 +77,13 @@ namespace Descender.Enemies
         public Vector2 Home => home;
         public bool IsDiving => state == State.Dive;
         public bool IsAiming => state == State.Aim;
+
+        /// <summary>What the map says about this one: its id for the kill list, and whether it dives.</summary>
+        public void Configure(WorldPlacement placement)
+        {
+            PlacementId = placement.Id;
+            Dive = placement.Behaviour == "dive";
+        }
 
         public bool Dive
         {

@@ -4,6 +4,7 @@ using Descender.Economy;
 using Descender.Fx;
 using Descender.Pickups;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Enemies
@@ -20,7 +21,7 @@ namespace Descender.Enemies
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
-    public sealed class Walker : MonoBehaviour, IHittable, IEnemy
+    public sealed class Walker : MonoBehaviour, IHittable, IEnemy, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float Gravity = 700f;
@@ -170,6 +171,19 @@ namespace Descender.Enemies
         public string MarkText => mark != null ? mark.Text : "";
 
         /// <summary>Sets the habit from a placement's name ("chase", "ambush"...); "" or an unknown name is plain patrolling.</summary>
+        /// <summary>What the map says about this one: its id for the kill list, its habit, its barks, whether it rests.</summary>
+        public void Configure(WorldPlacement placement)
+        {
+            PlacementId = placement.Id;
+            SetBehaviour(placement.Behaviour);
+            Barks = placement.Barks;
+            Passive = placement.Passive;
+            if (placement.Tint != Color.white && placement.Tint.a > 0f)
+            {
+                sprite.Color = placement.Tint;
+            }
+        }
+
         public void SetBehaviour(string godotName)
         {
             behaviour = Parse(godotName);

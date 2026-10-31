@@ -4,9 +4,9 @@ namespace Descender.World
 {
     /// <summary>
     /// Spikes: a run of hazard tiles as one trigger on the Hazard layer, built by
-    /// RegionTiles. The hero loses health while inside. Port of scripts/hazard.gd;
-    /// it polls with OnTriggerStay2D so a hero still on the spikes when his
-    /// invulnerability ends is hurt again.
+    /// RegionTiles. The hero loses health and is put back on the last safe ground.
+    /// Port of scripts/hazard.gd; it polls with OnTriggerStay2D so a hero still on the
+    /// spikes when his invulnerability ends is hurt again.
     /// </summary>
     public sealed class HazardArea : MonoBehaviour
     {
@@ -19,9 +19,10 @@ namespace Descender.World
 
         private void Hurt(Collider2D other)
         {
-            if (other.TryGetComponent<Player.PlayerController>(out var hero))
+            var body = other.attachedRigidbody;
+            if (body != null && body.TryGetComponent<Player.PlayerController>(out var hero))
             {
-                hero.Hurt(damage, transform.position);
+                hero.TakeHazardDamage(damage);
             }
         }
     }

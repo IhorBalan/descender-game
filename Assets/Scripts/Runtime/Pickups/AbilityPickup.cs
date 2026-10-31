@@ -1,6 +1,7 @@
 using Descender.Fx;
 using Descender.Player;
 using Descender.Save;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Pickups
@@ -10,7 +11,7 @@ namespace Descender.Pickups
     /// angel powers for the rest of the run: pickups are not rebuilt on respawn and the
     /// ability stays unlocked. Origin at the base. Port of scripts/ability_pickup.gd.
     /// </summary>
-    public sealed class AbilityPickup : MonoBehaviour
+    public sealed class AbilityPickup : MonoBehaviour, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float BobHeight = 2f;
@@ -37,6 +38,14 @@ namespace Descender.Pickups
         }
 
         public event System.Action<Ability> Collected;
+
+        public void Configure(WorldPlacement placement)
+        {
+            if (placement.AbilityIndex >= 0)
+            {
+                ability = (Ability)placement.AbilityIndex;
+            }
+        }
 
         private void Awake()
         {

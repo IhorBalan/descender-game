@@ -3,6 +3,7 @@ using Descender.Economy;
 using Descender.Fx;
 using Descender.Pickups;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Enemies
@@ -17,7 +18,7 @@ namespace Descender.Enemies
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
-    public sealed class Hanger : MonoBehaviour, IHittable, IEnemy
+    public sealed class Hanger : MonoBehaviour, IHittable, IEnemy, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float Gravity = 700f;
@@ -85,6 +86,11 @@ namespace Descender.Enemies
         public bool IsHanging => state == State.Hang;
         public bool IsDropping => state == State.Drop;
         public bool IsResting => state == State.Rest;
+
+        public void Configure(WorldPlacement placement)
+        {
+            PlacementId = placement.Id;
+        }
 
         /// <summary>Falling below this y (units) removes it; the level sets it.</summary>
         public float DeathY { get; set; } = float.NegativeInfinity;

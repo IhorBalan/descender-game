@@ -1,5 +1,6 @@
 using Descender.Fx;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Pickups
@@ -11,7 +12,7 @@ namespace Descender.Pickups
     /// death, and the level puts the pickup back with the enemies when the hero
     /// respawns. Origin at the base. Port of scripts/power_up.gd.
     /// </summary>
-    public sealed class PowerUp : MonoBehaviour
+    public sealed class PowerUp : MonoBehaviour, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float BobHeight = 2f;
@@ -66,6 +67,23 @@ namespace Descender.Pickups
             }
             pickup.Set(power);
             return pickup;
+        }
+
+        /// <summary>The map's power-up: halo, blade or zeal.</summary>
+        public void Configure(WorldPlacement placement)
+        {
+            switch ((placement.Power ?? "").ToLowerInvariant())
+            {
+                case "halo":
+                    Set(Power.Halo);
+                    break;
+                case "blade":
+                    Set(Power.Blade);
+                    break;
+                case "zeal":
+                    Set(Power.Zeal);
+                    break;
+            }
         }
 
         public void Set(Power value)

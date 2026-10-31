@@ -33,6 +33,18 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
+        public void KillsTellThePlacementsWhatIsGone()
+        {
+            Kills.Hook();
+            Assert.That(World.WorldPlacement.IsGone, Is.Not.Null);
+            Kills.Record("limbo/imp 3");
+            Assert.That(World.WorldPlacement.IsGone("limbo/imp 3"), Is.True);
+            Assert.That(World.WorldPlacement.IsGone("limbo/imp 4"), Is.False);
+            Kills.Clear();
+            Assert.That(World.WorldPlacement.IsGone("limbo/imp 3"), Is.False);
+        }
+
+        [Test]
         public void UpgradeFlagsFollowTheGodotNames()
         {
             Assert.That(Upgrades.FlagFor(UpgradeKind.Heart, "limbo", "2"), Is.EqualTo("upgrade:heart:limbo:2"));

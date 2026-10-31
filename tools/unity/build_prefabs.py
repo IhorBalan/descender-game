@@ -358,6 +358,10 @@ def build_boss() -> str:
     for character in BOSS_BODIES:
         wardrobe += f"  - character: {character}\n    strips:\n" + strips_yaml(character, indent=4)
     imp_ref = f"{{fileID: {file_id('Assets/Prefabs/Enemies/imp.prefab', 'mb:imp:Walker')}, guid: {guid('Assets/Prefabs/Enemies/imp.prefab')}, type: 3}}"
+    profiles = "  profiles:\n"
+    for filename in sorted(os.listdir(os.path.join(ASSETS, "Data", "Bosses"))):
+        if filename.endswith(".asset"):
+            profiles += f"  - {{fileID: 11400000, guid: {guid(f'Assets/Data/Bosses/{filename}')}, type: 2}}\n"
     animated_body(
         prefab,
         "Boss",
@@ -369,7 +373,7 @@ def build_boss() -> str:
             (
                 "Boss",
                 script("Enemies/Boss"),
-                "  profile: {fileID: 0}\n  sprite: {sprite}\n" + wardrobe + f"  impPrefab: {imp_ref}\n"
+                "  profile: {fileID: 0}\n  sprite: {sprite}\n" + wardrobe + profiles + f"  impPrefab: {imp_ref}\n"
                 "  arena:\n    serializedVersion: 2\n    x: -8\n    y: -4\n    width: 16\n    height: 8\n",
             )
         ],
@@ -536,6 +540,45 @@ def build_sfx_library() -> str:
     )
 
 
+PLACEMENTS = "Assets/Data/Placements.asset"
+
+
+def build_placement_catalog() -> str:
+    """The placement catalog over the prefabs this script writes (the editor menu
+    Descender > Setup > Placement catalog does the same from the asset database)."""
+    rows = [
+        ("save", "Assets/Prefabs/Pickups/Checkpoint.prefab", "Checkpoint"),
+        ("ability", "Assets/Prefabs/Pickups/AbilityPickup.prefab", "AbilityPickup"),
+        ("upgrade", "Assets/Prefabs/Pickups/Upgrade.prefab", "Upgrade"),
+        ("power", "Assets/Prefabs/Pickups/PowerUp.prefab", "PowerUp"),
+        ("item", "Assets/Prefabs/Pickups/LootDrop.prefab", "LootDrop"),
+        ("boss", "Assets/Prefabs/Enemies/Boss.prefab", "Boss"),
+    ]
+    for character in WALKERS + FLYERS + HANGERS:
+        rows.append((f"enemy:{character}", f"Assets/Prefabs/Enemies/{character}.prefab", character))
+    existing_path = os.path.join(ROOT, PLACEMENTS)
+    kept = ""
+    if os.path.exists(existing_path):
+        # Keep the entries made by hand or by the editor for prefabs this script does not write (NPCs, triggers).
+        with open(existing_path) as handle:
+            text = handle.read()
+        own = {key for key, _, _ in rows}
+        for match in re.finditer(r"  - key: (\S+)\n    prefab: (\{[^}]*\})\n", text):
+            if match.group(1) not in own:
+                kept += match.group(0)
+    entries = ""
+    for key, prefab, root in rows:
+        entries += f"  - key: {key}\n    prefab: {{fileID: {file_id(prefab, 'go:' + root)}, guid: {guid(prefab)}, type: 3}}\n"
+    return write_text(
+        PLACEMENTS,
+        HEADER
+        + "--- !u!114 &11400000\nMonoBehaviour:\n  m_ObjectHideFlags: 0\n  m_CorrespondingSourceObject: {fileID: 0}\n"
+        "  m_PrefabInstance: {fileID: 0}\n  m_PrefabAsset: {fileID: 0}\n  m_GameObject: {fileID: 0}\n  m_Enabled: 1\n"
+        f"  m_EditorHideFlags: 0\n  m_Script: {script('World/PlacementCatalog')}\n  m_Name: Placements\n"
+        f"  m_EditorClassIdentifier: \n  entries:\n{entries}{kept}",
+    )
+
+
 def build_player_tuning() -> str:
     """The hero's numbers at the script's defaults: fields left out of the YAML keep
     their initializers, so this asset follows PlayerTuning.cs without repeating it."""
@@ -554,6 +597,7 @@ def main() -> int:
     written += [build_enemy(character) for character in WALKERS + FLYERS + HANGERS]
     written.append(build_boss())
     written += build_pickups()
+    written.append(build_placement_catalog())
     metas = importer.write_metas()
     print(f"wrote {len(written)} assets and {metas} .meta files")
     for relative in written:

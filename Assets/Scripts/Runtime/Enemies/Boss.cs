@@ -2,6 +2,7 @@ using Descender.Combat;
 using Descender.Fx;
 using Descender.Pickups;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Enemies
@@ -19,7 +20,7 @@ namespace Descender.Enemies
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
-    public sealed class Boss : MonoBehaviour, IHittable, IEnemy
+    public sealed class Boss : MonoBehaviour, IHittable, IEnemy, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float Gravity = 700f;
@@ -77,6 +78,10 @@ namespace Descender.Enemies
         [Tooltip("The strips of every body a boss can wear, by character; the profile picks one.")]
         [SerializeField]
         private Wardrobe[] wardrobe = new Wardrobe[0];
+
+        [Tooltip("Every boss's numbers, so a placement can pick one by its id.")]
+        [SerializeField]
+        private BossProfile[] profiles = new BossProfile[0];
 
         [Tooltip("The imp the imp kings call; a Walker prefab.")]
         [SerializeField]
@@ -164,6 +169,36 @@ namespace Descender.Enemies
             var id = (label ?? "").ToLowerInvariant().Trim();
             id = id.Replace(":", "").Replace(",", "").Replace("'", "").Replace(".", "");
             return id.Replace(' ', '_');
+        }
+
+        /// <summary>The map's placement: the boss id is its character; the arena is the room about it.</summary>
+        public void Configure(WorldPlacement placement)
+        {
+            PlacementId = placement.Id;
+            var found = ProfileFor(placement.Character);
+            if (found != null)
+            {
+                SetProfile(found);
+            }
+            else
+            {
+                Debug.LogWarning($"Boss: no profile named '{placement.Character}' on {name}.");
+            }
+            var centre = (Vector2)transform.position + new Vector2(0f, arena.height / 2f);
+            arena = new Rect(centre.x - arena.width / 2f, centre.y - arena.height / 2f, arena.width, arena.height);
+        }
+
+        /// <summary>The profile asset of a boss id, from the ones the prefab carries.</summary>
+        public BossProfile ProfileFor(string id)
+        {
+            foreach (var candidate in profiles)
+            {
+                if (candidate != null && candidate.name == id)
+                {
+                    return candidate;
+                }
+            }
+            return null;
         }
 
         /// <summary>Gives the boss its body before it wakes (the placement does this after Instantiate).</summary>

@@ -1,6 +1,7 @@
 using Descender.Economy;
 using Descender.Fx;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Pickups
@@ -11,7 +12,7 @@ namespace Descender.Pickups
     /// the item in the pack; a unique sets its story flag (`loot:&lt;item&gt;`) so it is
     /// never dropped again. Port of scripts/loot_drop.gd.
     /// </summary>
-    public sealed class LootDrop : MonoBehaviour
+    public sealed class LootDrop : MonoBehaviour, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float BobHeight = 2f;
@@ -42,6 +43,15 @@ namespace Descender.Pickups
             drop.transform.position = at;
             drop.Set(itemId);
             return drop;
+        }
+
+        /// <summary>A relic the map lays down: the placement's item id.</summary>
+        public void Configure(WorldPlacement placement)
+        {
+            if (!string.IsNullOrEmpty(placement.Item))
+            {
+                Set(placement.Item);
+            }
         }
 
         public void Set(string value)
