@@ -12,4 +12,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7eeaaaa9b235fe7903a570f1fe1b512, type: 3}
   m_Name: Placements
   m_EditorClassIdentifier: 
-  entries: []
+  entries:
+  - key: save
+    prefab: {fileID: 3460759084562074928, guid: 4bdcbb6e14e356849a7a6bb521d79c5b, type: 3}
+  - key: ability
+    prefab: {fileID: 2373595885382750733, guid: 622d549f5f925a4dbd769cdc47a7dba4, type: 3}
+  - key: upgrade
+    prefab: {fileID: 2882738507476438332, guid: 8387066718985741a3955e4e5ee01b9a, type: 3}
+  - key: power
+    prefab: {fileID: 149806386811513189, guid: bb6ce37aaad8520eab90e16117e9cc91, type: 3}
+  - key: item
+    prefab: {fileID: 876771760626991188, guid: 8c53a1583f205a4ea35d1c6a6b5a7a30, type: 3}
+  - key: boss
+    prefab: {fileID: 718419819127098976, guid: 8ad17f0107b357dc86cca80c83063d38, type: 3}
+  - key: enemy:imp
+    prefab: {fileID: 395415109089595403, guid: 05e5823570e752d78a9d8ce5f2222f50, type: 3}
+  - key: enemy:angel_guard
+    prefab: {fileID: 1985162360562242442, guid: 6e673ea18dca57bf931bf3e94d26d095, type: 3}
+  - key: enemy:brute
+    prefab: {fileID: 3851345891433482899, guid: 2ee07e3d054d566996904a497eb7dc08, type: 3}
+  - key: enemy:slug
+    prefab: {fileID: 1252461531121549342, guid: 044be0b0dd4a5b85a785f5eaa90f2752, type: 3}
+  - key: enemy:hoarder
+    prefab: {fileID: 3793668915629806002, guid: 74340e00d12c585a8c35d6a7f00ebc49, type: 3}
+  - key: enemy:burned
+    prefab: {fileID: 1713890818505389540, guid: acca27ae951b518e9f82be5f3a316e21, type: 3}
+  - key: enemy:hound
+    prefab: {fileID: 4176040470245168312, guid: 45aafdbe760a5ba89a0ef3e3ec777ccf, type: 3}
+  - key: enemy:watcher
+    prefab: {fileID: 4542775641470936940, guid: 21eaaf383c3e56658caccf0138e06dd8, type: 3}
+  - key: enemy:shade
+    prefab: {fileID: 4536130698621410675, guid: 08a7631745a3536fabd901c7d030b8a1, type: 3}
+  - key: enemy:siren
+    prefab: {fileID: 2103042955597665404, guid: 9249ba572f365aa99ca588120a9abdeb, type: 3}
+  - key: enemy:hanged
+    prefab: {fileID: 139642117640675769, guid: 9aaa081da75b50279e41d0722916cd20, type: 3}

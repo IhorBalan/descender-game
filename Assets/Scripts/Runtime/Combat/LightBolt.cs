@@ -73,8 +73,10 @@ namespace Descender.Combat
             }
             var dt = Time.fixedDeltaTime;
             time += dt;
-            body.MovePosition(body.position + new Vector2(direction * Speed * dt / Ppu, 0f));
-            var count = Physics2D.OverlapBox(body.position, box.size, 0f, hitFilter, hits);
+            // The box is tested where the bolt will be once MovePosition lands, so a hit is seen the step it happens.
+            var next = body.position + new Vector2(direction * Speed * dt / Ppu, 0f);
+            body.MovePosition(next);
+            var count = Physics2D.OverlapBox(next, box.size, 0f, hitFilter, hits);
             for (var i = 0; i < count; i++)
             {
                 var hit = hits[i];

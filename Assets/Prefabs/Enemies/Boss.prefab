@@ -437,6 +437,19 @@ MonoBehaviour:
       - {fileID: 1643514312007971090, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
       - {fileID: 347659004730887202, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
       - {fileID: 724837548867942831, guid: 5b93a69dc6e0527ca3c667998cff4127, type: 3}
+  profiles:
+  - {fileID: 11400000, guid: bd61a5587bfa5ad9aaaf3fa0a4351252, type: 2}
+  - {fileID: 11400000, guid: c82e7aacb9c05d638a3f9a6e1af35ac7, type: 2}
+  - {fileID: 11400000, guid: c82b4321f6f450678629972af81622b0, type: 2}
+  - {fileID: 11400000, guid: 594328f93d2057368369144c15562011, type: 2}
+  - {fileID: 11400000, guid: 5ea855cfdb385f6a85049705e25c9f31, type: 2}
+  - {fileID: 11400000, guid: d735abd24d3559cba011dfb4dcc66472, type: 2}
+  - {fileID: 11400000, guid: 5c30fe13b47554b4948d5cb682cfb560, type: 2}
+  - {fileID: 11400000, guid: 38a87c0066e45fa798d87faf00719c5b, type: 2}
+  - {fileID: 11400000, guid: 49992e4d41385e039c52f4f46bd3cbb1, type: 2}
+  - {fileID: 11400000, guid: 63c78d51646d57e4ba037b1967d79905, type: 2}
+  - {fileID: 11400000, guid: 82d1597d4c8658b1a606d6687a85a251, type: 2}
+  - {fileID: 11400000, guid: 2bc25269e8e85607bd987a75fe3e7461, type: 2}
   impPrefab: {fileID: 776587051238240714, guid: 05e5823570e752d78a9d8ce5f2222f50, type: 3}
   arena:
     serializedVersion: 2

@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using Descender.World;
+using UnityEngine;
 
 namespace Descender.Enemies
 {
@@ -43,6 +45,27 @@ namespace Descender.Enemies
         {
             Dead.Clear();
             Cleared = null;
+            Hook();
+        }
+
+        /// <summary>
+        /// Tells the placements to leave out what is dead, and to stand their enemies and
+        /// drops up again when the set clears (the hero respawned). Runs once at load.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+        public static void Hook()
+        {
+            WorldPlacement.IsGone = IsDead;
+            Cleared -= RespawnPlacements;
+            Cleared += RespawnPlacements;
+        }
+
+        private static void RespawnPlacements()
+        {
+            foreach (var placement in Object.FindObjectsByType<WorldPlacement>(FindObjectsSortMode.None))
+            {
+                placement.Spawn();
+            }
         }
     }
 }

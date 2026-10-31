@@ -1,5 +1,6 @@
 using Descender.Fx;
 using Descender.Player;
+using Descender.World;
 using UnityEngine;
 
 namespace Descender.Pickups
@@ -11,7 +12,7 @@ namespace Descender.Pickups
     /// the save; the pickup is a story flag (see <see cref="Upgrades.FlagFor"/>), so the
     /// level leaves it out once it is taken. Origin at the base. Port of scripts/upgrade.gd.
     /// </summary>
-    public sealed class UpgradePickup : MonoBehaviour
+    public sealed class UpgradePickup : MonoBehaviour, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const float BobHeight = 2f;
@@ -42,6 +43,29 @@ namespace Descender.Pickups
         public string Flag => flag;
 
         public event System.Action<UpgradeKind> Collected;
+
+        /// <summary>The map's upgrade (heart, vial, iron) and the flag that leaves it out once taken.</summary>
+        public void Configure(WorldPlacement placement)
+        {
+            var kindName = (placement.Upgrade ?? "").ToLowerInvariant();
+            var found = kind;
+            for (var i = 0; i < 3; i++)
+            {
+                if (Upgrades.FlagName((UpgradeKind)i) == kindName)
+                {
+                    found = (UpgradeKind)i;
+                }
+            }
+            var storyFlag = placement.Unless;
+            if (string.IsNullOrEmpty(storyFlag))
+            {
+                var slash = placement.Id.IndexOf('/');
+                var region = slash >= 0 ? placement.Id.Substring(0, slash) : placement.Id;
+                var name = slash >= 0 ? placement.Id.Substring(slash + 1) : "0";
+                storyFlag = Upgrades.FlagFor(found, region, name);
+            }
+            Set(found, storyFlag);
+        }
 
         /// <summary>What it is and the flag it sets; call before the first frame, or after to redress it.</summary>
         public void Set(UpgradeKind value, string storyFlag)

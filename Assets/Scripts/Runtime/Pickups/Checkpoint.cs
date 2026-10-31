@@ -1,6 +1,9 @@
 using System.Collections.Generic;
 using Descender.Input;
 using Descender.Player;
+using Descender.UI;
+using Descender.World;
+using TMPro;
 using UnityEngine;
 
 namespace Descender.Pickups
@@ -12,7 +15,7 @@ namespace Descender.Pickups
     /// the base, like the hero's, so the respawn point puts his feet on the floor. The
     /// lit frame marks the active one. Port of scripts/checkpoint.gd.
     /// </summary>
-    public sealed class Checkpoint : MonoBehaviour
+    public sealed class Checkpoint : MonoBehaviour, IPlacementReceiver
     {
         private const float Ppu = PlayerTuning.PixelsPerUnit;
         public const string RestedFlagPrefix = "rested:";
@@ -35,6 +38,7 @@ namespace Descender.Pickups
 
         private bool active;
         private bool playerNear;
+        private Canvas prompt;
 
         /// <summary>The hero rested here.</summary>
         public event System.Action<Checkpoint> Rested;
@@ -62,6 +66,14 @@ namespace Descender.Pickups
         public bool Active => active;
         public bool IsPlayerNear => playerNear;
         public Vector2 PromptPosition => (Vector2)transform.position + PromptOffset / Ppu;
+
+        public void Configure(WorldPlacement placement)
+        {
+            if (placement.CheckpointIndex >= 0)
+            {
+                index = placement.CheckpointIndex;
+            }
+        }
 
         /// <summary>The story flag a checkpoint sets once the hero has rested at it.</summary>
         public static string RestedFlag(int index) => $"{RestedFlagPrefix}{index}";
@@ -93,6 +105,34 @@ namespace Descender.Pickups
             }
             sprite.sortingOrder = -1;
             SetActive(false);
+            BuildPrompt();
+        }
+
+        /// <summary>"{interact} camp" over the fire, shown while the hero stands here; the same canvas an Interactable uses.</summary>
+        private void BuildPrompt()
+        {
+            var go = new GameObject("Prompt", typeof(RectTransform), typeof(Canvas));
+            go.transform.SetParent(transform, false);
+            prompt = go.GetComponent<Canvas>();
+            prompt.renderMode = RenderMode.WorldSpace;
+            prompt.sortingOrder = 50;
+            var rect = go.GetComponent<RectTransform>();
+            rect.sizeDelta = new Vector2(60f, 12f);
+            rect.localScale = Vector3.one / Ppu;
+            rect.localPosition = new Vector3(0f, PromptOffset.y / Ppu, 0f);
+            var label = UiKit.Label(
+                rect,
+                "Text",
+                "",
+                UiTheme.SmallFontSize,
+                UiTheme.Text,
+                TextAlignmentOptions.Center,
+                true
+            );
+            UiKit.Fill(label.rectTransform);
+            label.verticalAlignment = VerticalAlignmentOptions.Middle;
+            label.gameObject.AddComponent<PromptLabel>().Template = "{interact} camp";
+            prompt.gameObject.SetActive(false);
         }
 
         private void OnEnable()
@@ -131,6 +171,7 @@ namespace Descender.Pickups
             // Near even while dead: a body that falls in here and respawns here does not
             // enter again, and the camp still has to open (the flow keeps a dead hero out).
             playerNear = true;
+            prompt.gameObject.SetActive(true);
             NearChanged?.Invoke(this, true);
             // A dead hero falling past, or a respawn landing on an active checkpoint, is not a new rest.
             if (active || !hero.IsAlive)
@@ -159,6 +200,7 @@ namespace Descender.Pickups
             if (other.attachedRigidbody != null && other.attachedRigidbody.GetComponent<PlayerController>() != null)
             {
                 playerNear = false;
+                prompt.gameObject.SetActive(false);
                 NearChanged?.Invoke(this, false);
             }
         }
