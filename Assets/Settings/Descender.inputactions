@@ -63,7 +63,9 @@
                 {"name": "Submit", "type": "Button", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000002", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false},
                 {"name": "Cancel", "type": "Button", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000003", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false},
                 {"name": "PageLeft", "type": "Button", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000004", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false},
-                {"name": "PageRight", "type": "Button", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000005", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false}
+                {"name": "PageRight", "type": "Button", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000005", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": false},
+                {"name": "Point", "type": "PassThrough", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000006", "expectedControlType": "Vector2", "processors": "", "interactions": "", "initialStateCheck": true},
+                {"name": "Click", "type": "PassThrough", "id": "6b7a1c2e-0005-4a1a-9c3b-000000000007", "expectedControlType": "Button", "processors": "", "interactions": "", "initialStateCheck": true}
             ],
             "bindings": [
                 {"name": "Keys", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000001", "path": "2DVector", "interactions": "", "processors": "", "groups": "", "action": "Navigate", "isComposite": true, "isPartOfComposite": false},
@@ -86,7 +88,9 @@
                 {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000012", "path": "<Keyboard>/q", "interactions": "", "processors": "", "groups": "Keyboard", "action": "PageLeft", "isComposite": false, "isPartOfComposite": false},
                 {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000013", "path": "<Gamepad>/leftShoulder", "interactions": "", "processors": "", "groups": "Gamepad", "action": "PageLeft", "isComposite": false, "isPartOfComposite": false},
                 {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000014", "path": "<Keyboard>/e", "interactions": "", "processors": "", "groups": "Keyboard", "action": "PageRight", "isComposite": false, "isPartOfComposite": false},
-                {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000015", "path": "<Gamepad>/rightShoulder", "interactions": "", "processors": "", "groups": "Gamepad", "action": "PageRight", "isComposite": false, "isPartOfComposite": false}
+                {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000015", "path": "<Gamepad>/rightShoulder", "interactions": "", "processors": "", "groups": "Gamepad", "action": "PageRight", "isComposite": false, "isPartOfComposite": false},
+                {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000016", "path": "<Mouse>/position", "interactions": "", "processors": "", "groups": "", "action": "Point", "isComposite": false, "isPartOfComposite": false},
+                {"name": "", "id": "6b7a1c2e-0006-4a1a-9c3b-000000000017", "path": "<Mouse>/leftButton", "interactions": "", "processors": "", "groups": "", "action": "Click", "isComposite": false, "isPartOfComposite": false}
             ]
         }
     ],

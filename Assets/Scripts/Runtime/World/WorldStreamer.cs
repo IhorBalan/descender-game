@@ -94,6 +94,27 @@ namespace Descender.World
             Busy = false;
         }
 
+        /// <summary>Unloads the current region, for quitting to the title; nothing when none is loaded.</summary>
+        public void Unload()
+        {
+            if (Busy)
+            {
+                StopAllCoroutines();
+                Busy = false;
+            }
+            if (string.IsNullOrEmpty(CurrentRegion))
+            {
+                return;
+            }
+            var scene = SceneManager.GetSceneByName(SceneName(CurrentRegion));
+            if (scene.isLoaded)
+            {
+                SceneManager.UnloadSceneAsync(scene);
+            }
+            CurrentRegion = "";
+            Current = null;
+        }
+
         private static RegionRoot FindRoot(string regionId)
         {
             var scene = SceneManager.GetSceneByName(SceneName(regionId));
