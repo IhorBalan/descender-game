@@ -1,0 +1,2007 @@
+{
+  "generator": "tools/paradise_art/gen_paradise_art.py",
+  "pixelsPerUnit": 64,
+  "notes": [
+    "PNG RGBA, straight (non-premultiplied) alpha.",
+    "pivot is normalised (0,0 = bottom-left, Unity convention).",
+    "blend 'additive' files are emissive: glowing parts only on black/transparent.",
+    "Edge strips: surfaceRow is the pixel row (0 = top of the image) where the walkable line sits.",
+    "Backdrops are 2048x1152 = 32x18 units at 64 PPU; tileable ones repeat seamlessly in x."
+  ],
+  "files": [
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/cloud_sea_0.png",
+      "purpose": "Cloud sea, back (hazier); 4 screens wide, varied",
+      "zone": "garden",
+      "size": [
+        8192,
+        512
+      ],
+      "sizeUnits": [
+        128.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/cloud_sea_1.png",
+      "purpose": "Cloud sea, middle; 4 screens wide, varied",
+      "zone": "garden",
+      "size": [
+        8192,
+        512
+      ],
+      "sizeUnits": [
+        128.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 1
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/cloud_sea_2.png",
+      "purpose": "Cloud sea, front (brightest); 4 screens wide, varied",
+      "zone": "garden",
+      "size": [
+        8192,
+        512
+      ],
+      "sizeUnits": [
+        128.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 2
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg0_sky.png",
+      "purpose": "Sky: deep blue to pale horizon, cumulus, sun upper right, god-rays",
+      "zone": "garden",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0,
+      "suggestedParallax": 0.98
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg1_far.png",
+      "purpose": "Far: varied snowy mountain range in blue haze (4 screens wide)",
+      "zone": "garden",
+      "size": [
+        8192,
+        1152
+      ],
+      "sizeUnits": [
+        128.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 1,
+      "screens": 4,
+      "scrollFraction": 0.08
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg2_midfar.png",
+      "purpose": "Midfar: chain of floating islands; ring gate, temple cluster and tall spire each once (4 screens wide)",
+      "zone": "garden",
+      "size": [
+        8192,
+        1152
+      ],
+      "sizeUnits": [
+        128.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 2,
+      "screens": 4,
+      "scrollFraction": 0.2
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg3_mid.png",
+      "purpose": "Mid: nearer cliffs, arcades, trees, waterfalls, breaks of open sky (4 screens wide)",
+      "zone": "garden",
+      "size": [
+        8192,
+        1152
+      ],
+      "sizeUnits": [
+        128.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 3,
+      "screens": 4,
+      "scrollFraction": 0.4
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/golden_tree.png",
+      "purpose": "Landmark: huge tree with a white-gold crown on its own floating island",
+      "zone": "garden",
+      "size": [
+        1536,
+        1280
+      ],
+      "sizeUnits": [
+        24.0,
+        20.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/golden_tree_glow.png",
+      "purpose": "Emissive crown of the golden tree",
+      "zone": "garden",
+      "size": [
+        1536,
+        1280
+      ],
+      "sizeUnits": [
+        24.0,
+        20.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Common/Particles/firefly.png",
+      "purpose": "Bright core + halo",
+      "zone": "common",
+      "size": [
+        32,
+        32
+      ],
+      "sizeUnits": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Common/Particles/light_shaft.png",
+      "purpose": "Soft vertical light ray, widens downward (additive, tint)",
+      "zone": "common",
+      "size": [
+        256,
+        1024
+      ],
+      "sizeUnits": [
+        4.0,
+        16.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Common/Particles/mote.png",
+      "purpose": "Soft round glow mote (tint per zone)",
+      "zone": "common",
+      "size": [
+        32,
+        32
+      ],
+      "sizeUnits": [
+        0.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Common/Particles/petal_strip.png",
+      "purpose": "Three petal variants, 32x32 frames in a 96x32 strip (light, tint pink/gold)",
+      "zone": "common",
+      "size": [
+        96,
+        32
+      ],
+      "sizeUnits": [
+        1.5,
+        0.5
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "frames": 3,
+      "frameSize": [
+        32,
+        32
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Common/Particles/pollen.png",
+      "purpose": "Tiny fuzzy pollen speck",
+      "zone": "common",
+      "size": [
+        16,
+        16
+      ],
+      "sizeUnits": [
+        0.25,
+        0.25
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/arch_span.png",
+      "purpose": "Round arch between column centres 6 units apart: voussoirs, gold keystone, entablature, grassy top",
+      "zone": "garden",
+      "size": [
+        486,
+        256
+      ],
+      "sizeUnits": [
+        7.594,
+        4.0
+      ],
+      "pivot": [
+        0.1049,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "walkableRow": 16,
+      "springingRow": 256,
+      "leftColumnCentreX": 51.0,
+      "rightColumnCentreX": 435.0,
+      "columnSpacingPx": 384,
+      "archInnerRadiusPx": 141.0,
+      "keystoneCentrePx": [
+        243.0,
+        72.0
+      ],
+      "attach": "pivot = left column centre on the springing line (bottom edge) = top of that column's capital; right column centre is columnSpacingPx to the right. Neighbouring spans share a column and overlap by 102 px."
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/arch_span_wide.png",
+      "purpose": "Round arch between column centres 10 units apart: voussoirs, gold keystone, entablature, grassy top",
+      "zone": "garden",
+      "size": [
+        742,
+        384
+      ],
+      "sizeUnits": [
+        11.594,
+        6.0
+      ],
+      "pivot": [
+        0.0687,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "walkableRow": 16,
+      "springingRow": 384,
+      "leftColumnCentreX": 51.0,
+      "rightColumnCentreX": 691.0,
+      "columnSpacingPx": 640,
+      "archInnerRadiusPx": 269.0,
+      "keystoneCentrePx": [
+        371.0,
+        72.0
+      ],
+      "attach": "pivot = left column centre on the springing line (bottom edge) = top of that column's capital; right column centre is columnSpacingPx to the right. Neighbouring spans share a column and overlap by 102 px."
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/balustrade.png",
+      "purpose": "Balustrade for terrace edges (decor in front of the walkway)",
+      "zone": "garden",
+      "size": [
+        512,
+        77
+      ],
+      "sizeUnits": [
+        8.0,
+        1.203
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "railTopRow": 0,
+      "footRow": 77,
+      "attach": "foot (bottom edge) on the walkable line"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/banner.png",
+      "purpose": "Cream banner with gold sun emblem on a gold rod; hangs from the rod",
+      "zone": "garden",
+      "size": [
+        77,
+        224
+      ],
+      "sizeUnits": [
+        1.203,
+        3.5
+      ],
+      "pivot": [
+        0.5,
+        0.9732
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "hangRow": 6
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/broken_column.png",
+      "purpose": "Ruin: broken column on its base, mossy",
+      "zone": "garden",
+      "size": [
+        102,
+        192
+      ],
+      "sizeUnits": [
+        1.594,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/column_base.png",
+      "purpose": "Column base: plinth with torus mouldings, gold fillet",
+      "zone": "garden",
+      "size": [
+        102,
+        64
+      ],
+      "sizeUnits": [
+        1.594,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "topAttachRow": 0,
+      "attach": "pivot = bottom centre on the ground; shaft starts at the top edge (row 0), centred"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/column_capital.png",
+      "purpose": "Corinthian-ish capital: acanthus curls, volutes, gold",
+      "zone": "garden",
+      "size": [
+        102,
+        64
+      ],
+      "sizeUnits": [
+        1.594,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "bottomAttachRow": 63,
+      "springingRow": 0,
+      "attach": "pivot = bottom centre on the shaft top; top edge (row 0) is the arch springing line"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/column_shaft.png",
+      "purpose": "Fluted marble column shaft, repeats vertically (1 x 4 units)",
+      "zone": "garden",
+      "size": [
+        64,
+        256
+      ],
+      "sizeUnits": [
+        1.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "y"
+      ],
+      "shaftWidthPx": 54,
+      "attach": "stack on column_base top edge; capital sits on the top edge"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/deck_top.png",
+      "purpose": "Marble walkway/entablature strip with mossy, flowery top",
+      "zone": "garden",
+      "size": [
+        512,
+        77
+      ],
+      "sizeUnits": [
+        8.0,
+        1.203
+      ],
+      "pivot": [
+        0.5,
+        0.7662
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "walkableRow": 18
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/fallen_arch_fragment.png",
+      "purpose": "Ruin: fallen arch ring segment in the grass",
+      "zone": "garden",
+      "size": [
+        256,
+        128
+      ],
+      "sizeUnits": [
+        4.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/lantern.png",
+      "purpose": "Small hanging gold lantern; hangs from the top",
+      "zone": "garden",
+      "size": [
+        38,
+        77
+      ],
+      "sizeUnits": [
+        0.594,
+        1.203
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/lantern_glow.png",
+      "purpose": "Emissive lantern glass",
+      "zone": "garden",
+      "size": [
+        38,
+        77
+      ],
+      "sizeUnits": [
+        0.594,
+        1.203
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/loggia_frame.png",
+      "purpose": "Foreground framing piece for the screen's left edge: column + arch + entablature, ivy and wisteria",
+      "zone": "garden",
+      "size": [
+        384,
+        704
+      ],
+      "sizeUnits": [
+        6.0,
+        11.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "columnCentreX": 333.0,
+      "springingRow": 256
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_block.png",
+      "purpose": "Noble weathered marble ashlar: 1-3 unit blocks, staggered courses, moss and flowers in some joints (8x8)",
+      "zone": "garden",
+      "size": [
+        512,
+        512
+      ],
+      "sizeUnits": [
+        8.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x",
+        "y"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_cap.png",
+      "purpose": "Marble coping/cornice topping a terrace wall, grass and flowers spilling over",
+      "zone": "garden",
+      "size": [
+        512,
+        96
+      ],
+      "sizeUnits": [
+        8.0,
+        1.5
+      ],
+      "pivot": [
+        0.5,
+        0.6458
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "walkableRow": 34,
+      "attach": "rows below ~70 overlap the top of wall_block"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/waterfall_spout.png",
+      "purpose": "Carved marble channel mouth set into a wall; water leaves over its lip",
+      "zone": "garden",
+      "size": [
+        96,
+        64
+      ],
+      "sizeUnits": [
+        1.5,
+        1.0
+      ],
+      "pivot": [
+        0.0,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [],
+      "lipPointPx": [
+        92.0,
+        26.0
+      ],
+      "attach": "pivot = left edge middle, set against the wall face; start the waterfall at lipPointPx (from the top-left)"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/blossom_tree.png",
+      "purpose": "White-blossom orchard tree with a few golden fruit (8 x 10)",
+      "zone": "garden",
+      "size": [
+        512,
+        640
+      ],
+      "sizeUnits": [
+        8.0,
+        10.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fern.png",
+      "purpose": "Fern with overlapping curled fronds",
+      "zone": "garden",
+      "size": [
+        128,
+        128
+      ],
+      "sizeUnits": [
+        2.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/flower_bush.png",
+      "purpose": "Rounded bush with many white blossoms",
+      "zone": "garden",
+      "size": [
+        160,
+        102
+      ],
+      "sizeUnits": [
+        2.5,
+        1.594
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/grass_lip.png",
+      "purpose": "Lush grass/moss top lip with lilies and blossoms",
+      "zone": "garden",
+      "size": [
+        512,
+        128
+      ],
+      "sizeUnits": [
+        8.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.6016
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "walkableRow": 51
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/grass_tuft_strip.png",
+      "purpose": "Grass tufts strip (foreground/edge dressing)",
+      "zone": "garden",
+      "size": [
+        512,
+        64
+      ],
+      "sizeUnits": [
+        8.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/hedge_flowers.png",
+      "purpose": "Low flowering hedge for terrace edges",
+      "zone": "garden",
+      "size": [
+        512,
+        128
+      ],
+      "sizeUnits": [
+        8.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/island_bottom.png",
+      "purpose": "Rocky underside with hanging roots/moss (rock body on top, hangs downward)",
+      "zone": "garden",
+      "size": [
+        512,
+        160
+      ],
+      "sizeUnits": [
+        8.0,
+        2.5
+      ],
+      "pivot": [
+        0.5,
+        0.95
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "attachRow": 8
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/ivy_curtain.png",
+      "purpose": "Wide ivy curtain; hangs from the top edge",
+      "zone": "garden",
+      "size": [
+        384,
+        192
+      ],
+      "sizeUnits": [
+        6.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/ivy_drape_a.png",
+      "purpose": "Ivy drape variant a; hangs from the top edge",
+      "zone": "garden",
+      "size": [
+        128,
+        256
+      ],
+      "sizeUnits": [
+        2.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/ivy_drape_b.png",
+      "purpose": "Ivy drape variant b; hangs from the top edge",
+      "zone": "garden",
+      "size": [
+        128,
+        256
+      ],
+      "sizeUnits": [
+        2.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/ivy_drape_c.png",
+      "purpose": "Ivy drape variant c; hangs from the top edge",
+      "zone": "garden",
+      "size": [
+        128,
+        256
+      ],
+      "sizeUnits": [
+        2.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/lily_cluster_a.png",
+      "purpose": "White lily cluster variant a (2.4 x 1.8 units)",
+      "zone": "garden",
+      "size": [
+        153,
+        116
+      ],
+      "sizeUnits": [
+        2.391,
+        1.812
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/lily_cluster_b.png",
+      "purpose": "White lily cluster variant b (2.4 x 1.8 units)",
+      "zone": "garden",
+      "size": [
+        153,
+        116
+      ],
+      "sizeUnits": [
+        2.391,
+        1.812
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/lily_cluster_c.png",
+      "purpose": "White lily cluster variant c (2.4 x 1.8 units)",
+      "zone": "garden",
+      "size": [
+        153,
+        116
+      ],
+      "sizeUnits": [
+        2.391,
+        1.812
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/rock_fill.png",
+      "purpose": "Natural mossy cliff rock: fractured faces, soft cracks, moss, ferns and ivy in crevices (8x8)",
+      "zone": "garden",
+      "size": [
+        512,
+        512
+      ],
+      "sizeUnits": [
+        8.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x",
+        "y"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/vine_hanging.png",
+      "purpose": "Hanging vine with blossoms",
+      "zone": "garden",
+      "size": [
+        51,
+        320
+      ],
+      "sizeUnits": [
+        0.797,
+        5.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/wisteria_drape.png",
+      "purpose": "White / pale-gold wisteria curtain to hang from arches",
+      "zone": "garden",
+      "size": [
+        256,
+        256
+      ],
+      "sizeUnits": [
+        4.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Water/mist_soft.png",
+      "purpose": "Soft white mist blob",
+      "zone": "garden",
+      "size": [
+        256,
+        128
+      ],
+      "sizeUnits": [
+        4.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Water/waterfall_foam.png",
+      "purpose": "Splash / mist puff at a waterfall foot",
+      "zone": "garden",
+      "size": [
+        192,
+        128
+      ],
+      "sizeUnits": [
+        3.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Water/waterfall_tex.png",
+      "purpose": "Falling water source for a scrolling shader",
+      "zone": "garden",
+      "size": [
+        256,
+        512
+      ],
+      "sizeUnits": [
+        4.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "y"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Backdrop/z1_bg0_sky.png",
+      "purpose": "Parallax 0 (farthest): dawn sky, rose to gold, sun glow",
+      "zone": "z1",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0,
+      "suggestedParallax": 0.98
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Backdrop/z1_bg1_far.png",
+      "purpose": "Parallax 1: hazy curled-leaf skyline",
+      "zone": "z1",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 1,
+      "suggestedParallax": 0.9
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Backdrop/z1_bg2_midfar.png",
+      "purpose": "Parallax 2: rose curled leaves and stems, gold rims",
+      "zone": "z1",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 2,
+      "suggestedParallax": 0.75
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Backdrop/z1_bg3_mid.png",
+      "purpose": "Parallax 3: dark plum leaves, stems, glowing seed pods",
+      "zone": "z1",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 3,
+      "suggestedParallax": 0.5
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Foreground/z1_fg_curl.png",
+      "purpose": "Foreground silhouette: spiral tendrils with leaves",
+      "zone": "z1",
+      "size": [
+        512,
+        768
+      ],
+      "sizeUnits": [
+        8.0,
+        12.0
+      ],
+      "pivot": [
+        0.45,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Foreground/z1_fg_fern.png",
+      "purpose": "Foreground silhouette: curled fern frond rising from the bottom",
+      "zone": "z1",
+      "size": [
+        640,
+        1024
+      ],
+      "sizeUnits": [
+        10.0,
+        16.0
+      ],
+      "pivot": [
+        0.47,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Foreground/z1_fg_grass.png",
+      "purpose": "Foreground silhouette: clump of curling blades",
+      "zone": "z1",
+      "size": [
+        1024,
+        512
+      ],
+      "sizeUnits": [
+        16.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Foreground/z1_fg_leaf_big.png",
+      "purpose": "Foreground silhouette: huge leaf reaching in from the top-left",
+      "zone": "z1",
+      "size": [
+        1024,
+        768
+      ],
+      "sizeUnits": [
+        16.0,
+        12.0
+      ],
+      "pivot": [
+        0.0,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Foreground/z1_fg_vines.png",
+      "purpose": "Foreground silhouette: hanging vines with small leaves, curled ends",
+      "zone": "z1",
+      "size": [
+        384,
+        1024
+      ],
+      "sizeUnits": [
+        6.0,
+        16.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Ground/z1_ground_bottom.png",
+      "purpose": "SpriteShape side/bottom edge: dark underside with hanging roots and gold drops",
+      "zone": "z1",
+      "size": [
+        512,
+        64
+      ],
+      "sizeUnits": [
+        8.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.9062
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "surfaceRow": 6
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Ground/z1_ground_fill.png",
+      "purpose": "SpriteShape fill: living rose-wood with moss",
+      "zone": "z1",
+      "size": [
+        512,
+        512
+      ],
+      "sizeUnits": [
+        8.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x",
+        "y"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Ground/z1_ground_top.png",
+      "purpose": "SpriteShape top edge: lit gold moss lip with tufts, fiddleheads and rose flowers",
+      "zone": "z1",
+      "size": [
+        512,
+        128
+      ],
+      "sizeUnits": [
+        8.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.6016
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "surfaceRow": 51,
+      "surfaceFromTopUnits": 0.796875
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_flowers_a.png",
+      "purpose": "Flower cluster (rose)",
+      "zone": "z1",
+      "size": [
+        256,
+        192
+      ],
+      "sizeUnits": [
+        4.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_flowers_a_glow.png",
+      "purpose": "Emissive flower hearts (rose)",
+      "zone": "z1",
+      "size": [
+        256,
+        192
+      ],
+      "sizeUnits": [
+        4.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_flowers_b.png",
+      "purpose": "Flower cluster (gold)",
+      "zone": "z1",
+      "size": [
+        256,
+        192
+      ],
+      "sizeUnits": [
+        4.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_flowers_b_glow.png",
+      "purpose": "Emissive flower hearts (gold)",
+      "zone": "z1",
+      "size": [
+        256,
+        192
+      ],
+      "sizeUnits": [
+        4.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_flowers_c.png",
+      "purpose": "Flower cluster (white)",
+      "zone": "z1",
+      "size": [
+        256,
+        192
+      ],
+      "sizeUnits": [
+        4.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_flowers_c_glow.png",
+      "purpose": "Emissive flower hearts (white)",
+      "zone": "z1",
+      "size": [
+        256,
+        192
+      ],
+      "sizeUnits": [
+        4.0,
+        3.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_giant_leaf.png",
+      "purpose": "Giant curled rose leaf (16 units)",
+      "zone": "z1",
+      "size": [
+        1024,
+        1024
+      ],
+      "sizeUnits": [
+        16.0,
+        16.0
+      ],
+      "pivot": [
+        0.0918,
+        0.0974
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_giant_leaf_glow.png",
+      "purpose": "Emissive veins and dew of the giant leaf",
+      "zone": "z1",
+      "size": [
+        1024,
+        1024
+      ],
+      "sizeUnits": [
+        16.0,
+        16.0
+      ],
+      "pivot": [
+        0.0918,
+        0.0974
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_seed_pod.png",
+      "purpose": "Seed pod (attack target that bursts into light)",
+      "zone": "z1",
+      "size": [
+        128,
+        128
+      ],
+      "sizeUnits": [
+        2.0,
+        2.0
+      ],
+      "pivot": [
+        0.5657,
+        0.0708
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z1_WakingHollow/Props/z1_prop_seed_pod_glow.png",
+      "purpose": "Emissive seams of the seed pod",
+      "zone": "z1",
+      "size": [
+        128,
+        128
+      ],
+      "sizeUnits": [
+        2.0,
+        2.0
+      ],
+      "pivot": [
+        0.5657,
+        0.0708
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Backdrop/z2_bg0_sky.png",
+      "purpose": "Parallax 0: teal canopy gloom, light from above",
+      "zone": "z2",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0,
+      "suggestedParallax": 0.98
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Backdrop/z2_bg1_far.png",
+      "purpose": "Parallax 1: two hazy rows of identical orchard trees",
+      "zone": "z2",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 1,
+      "suggestedParallax": 0.9
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Backdrop/z2_bg2_midfar.png",
+      "purpose": "Parallax 2: evenly spaced orchard trees, fruit in rows, hanging vines",
+      "zone": "z2",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 2,
+      "suggestedParallax": 0.75
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Backdrop/z2_bg3_mid.png",
+      "purpose": "Parallax 3: dark numbered trunks (17,18,19), roots, glowing fungi, hanging moss",
+      "zone": "z2",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 3,
+      "suggestedParallax": 0.5
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Foreground/z2_fg_canopy.png",
+      "purpose": "Foreground silhouette: leaf mass hanging into the top of the frame",
+      "zone": "z2",
+      "size": [
+        1024,
+        640
+      ],
+      "sizeUnits": [
+        16.0,
+        10.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Foreground/z2_fg_fern.png",
+      "purpose": "Foreground silhouette: curled fern frond rising from the bottom",
+      "zone": "z2",
+      "size": [
+        640,
+        1024
+      ],
+      "sizeUnits": [
+        10.0,
+        16.0
+      ],
+      "pivot": [
+        0.47,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Foreground/z2_fg_leaf_big.png",
+      "purpose": "Foreground silhouette: huge leaf reaching in from the top-left",
+      "zone": "z2",
+      "size": [
+        1024,
+        768
+      ],
+      "sizeUnits": [
+        16.0,
+        12.0
+      ],
+      "pivot": [
+        0.0,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Foreground/z2_fg_roots.png",
+      "purpose": "Foreground silhouette: arching roots from the bottom",
+      "zone": "z2",
+      "size": [
+        1024,
+        512
+      ],
+      "sizeUnits": [
+        16.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Foreground/z2_fg_vines.png",
+      "purpose": "Foreground silhouette: hanging vines with small glowing beads",
+      "zone": "z2",
+      "size": [
+        384,
+        1024
+      ],
+      "sizeUnits": [
+        6.0,
+        16.0
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Ground/z2_ground_bottom.png",
+      "purpose": "SpriteShape side/bottom edge: dark roots with cyan drops",
+      "zone": "z2",
+      "size": [
+        512,
+        64
+      ],
+      "sizeUnits": [
+        8.0,
+        1.0
+      ],
+      "pivot": [
+        0.5,
+        0.9062
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "surfaceRow": 6
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Ground/z2_ground_fill.png",
+      "purpose": "SpriteShape fill: dark teal mossy root-wood with cyan specks",
+      "zone": "z2",
+      "size": [
+        512,
+        512
+      ],
+      "sizeUnits": [
+        8.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x",
+        "y"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Ground/z2_ground_top.png",
+      "purpose": "SpriteShape top edge: cyan-lit moss lip, tufts, fiddleheads, pale glow-blossoms",
+      "zone": "z2",
+      "size": [
+        512,
+        128
+      ],
+      "sizeUnits": [
+        8.0,
+        2.0
+      ],
+      "pivot": [
+        0.5,
+        0.6016
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "surfaceRow": 51,
+      "surfaceFromTopUnits": 0.796875
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_bounce_pod.png",
+      "purpose": "Bounce pod: giant soft seed head (4 units)",
+      "zone": "z2",
+      "size": [
+        256,
+        256
+      ],
+      "sizeUnits": [
+        4.0,
+        4.0
+      ],
+      "pivot": [
+        0.3462,
+        0.025
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_bounce_pod_glow.png",
+      "purpose": "Emissive bounce pod",
+      "zone": "z2",
+      "size": [
+        256,
+        256
+      ],
+      "sizeUnits": [
+        4.0,
+        4.0
+      ],
+      "pivot": [
+        0.3462,
+        0.025
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_fruit.png",
+      "purpose": "Glowing orchard fruit with a tally scratched in (1 unit)",
+      "zone": "z2",
+      "size": [
+        64,
+        64
+      ],
+      "sizeUnits": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5064,
+        0.9298
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_fruit_glow.png",
+      "purpose": "Emissive fruit",
+      "zone": "z2",
+      "size": [
+        64,
+        64
+      ],
+      "sizeUnits": [
+        1.0,
+        1.0
+      ],
+      "pivot": [
+        0.5064,
+        0.9298
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_mushrooms.png",
+      "purpose": "Luminous mushroom cluster (4 units)",
+      "zone": "z2",
+      "size": [
+        256,
+        256
+      ],
+      "sizeUnits": [
+        4.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_mushrooms_glow.png",
+      "purpose": "Emissive caps, spots and gills",
+      "zone": "z2",
+      "size": [
+        256,
+        256
+      ],
+      "sizeUnits": [
+        4.0,
+        4.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_orchard_tree.png",
+      "purpose": "Orchard tree for the mid layer: numbered plate (41), fruit in exact rows (16x20 units)",
+      "zone": "z2",
+      "size": [
+        1024,
+        1280
+      ],
+      "sizeUnits": [
+        16.0,
+        20.0
+      ],
+      "pivot": [
+        0.4995,
+        0.015
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Z2_Orchard/Props/z2_prop_orchard_tree_glow.png",
+      "purpose": "Emissive fruit of the orchard tree",
+      "zone": "z2",
+      "size": [
+        1024,
+        1280
+      ],
+      "sizeUnits": [
+        16.0,
+        20.0
+      ],
+      "pivot": [
+        0.4995,
+        0.015
+      ],
+      "ppu": 64,
+      "blend": "additive",
+      "tileable": []
+    }
+  ]
+}

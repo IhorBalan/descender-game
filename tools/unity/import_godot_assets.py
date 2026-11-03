@@ -349,7 +349,9 @@ def texture_meta_for(path: str) -> str:
 def write_metas() -> int:
     written = 0
     for dirpath, dirnames, filenames in os.walk(ASSETS):
-        dirnames.sort()
+        # Paradise is authored in Unity (docs/design/paradise.md): Unity writes its
+        # .meta files with the import settings it needs, never this script.
+        dirnames[:] = sorted(d for d in dirnames if d != "Paradise")
         for dirname in dirnames:
             folder = os.path.join(dirpath, dirname)
             written += write_if_missing(folder + ".meta", folder_meta(guid_for(rel(folder))))

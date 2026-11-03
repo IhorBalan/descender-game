@@ -160,7 +160,7 @@ namespace Descender.Fx
             {
                 return;
             }
-            Start(i);
+            Begin(i);
         }
 
         /// <summary>Restarts a strip from its first frame even when it is already showing.</summary>
@@ -168,7 +168,7 @@ namespace Descender.Fx
         {
             if (index.TryGetValue(animation ?? "", out var i))
             {
-                Start(i);
+                Begin(i);
             }
         }
 
@@ -205,7 +205,7 @@ namespace Descender.Fx
 
         public void Pause() => playing = false;
 
-        private void Start(int i)
+        private void Begin(int i)
         {
             current = i;
             frame = 0;

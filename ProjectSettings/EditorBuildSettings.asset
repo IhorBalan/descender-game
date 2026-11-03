@@ -44,5 +44,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Region_wrath.unity
     guid: 57eab582fb9c5de592e456b6e633197f
+  - enabled: 1
+    path: Assets/Scenes/Paradise/Paradise_Z1_WakingHollow.unity
+    guid: 52fea74543a93e54c950ed1b619d3e5d
+  - enabled: 1
+    path: Assets/Scenes/Paradise/Paradise_Z2_Orchard.unity
+    guid: ab42cadd6b4453b419fe67a49a5b2bac
+  - enabled: 1
+    path: Assets/Scenes/Paradise/ParadiseMain.unity
+    guid: 3dfadbf7a4a8e8947b435e16dc902ebd
+  - enabled: 1
+    path: Assets/Scenes/Paradise/Region_paradise_new.unity
+    guid: 3da8424cdd670c245a297b1da47565e1
   m_configObjects: {}
-  m_UseUCBPForAssetBundles: 0

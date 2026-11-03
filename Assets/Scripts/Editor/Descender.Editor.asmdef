@@ -4,10 +4,13 @@
     "references": [
         "Descender.Runtime",
         "Unity.InputSystem",
+        "Unity.RenderPipelines.Core.Runtime",
         "Unity.RenderPipelines.Universal.Runtime",
         "Unity.RenderPipelines.Universal.2D.Runtime",
         "Unity.RenderPipelines.Universal.Editor",
         "Unity.2D.Sprite.Editor",
+        "Unity.2D.SpriteShape.Runtime",
+        "Unity.2D.SpriteShape.Editor",
         "Unity.2D.Tilemap.Extras",
         "Unity.TextMeshPro",
         "Unity.TextMeshPro.Editor"

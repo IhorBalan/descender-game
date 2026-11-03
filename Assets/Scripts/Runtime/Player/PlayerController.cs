@@ -1459,6 +1459,32 @@ namespace Descender.Player
             Respawn();
         }
 
+        /// <summary>
+        /// Throws the hero straight up so he rises `heightPixels` under his own gravity,
+        /// as a bounce pod does (docs/design/paradise.md, zone 2). His sideways speed is
+        /// kept; the air jump and the dash come back, and letting go of jump does not
+        /// cut the launch short. Ignored while he is dead or travelling.
+        /// </summary>
+        public void Launch(float heightPixels)
+        {
+            if (!IsAlive || IsTravelling || heightPixels <= 0f)
+            {
+                return;
+            }
+            var speed = Mathf.Sqrt(2f * tuning.Gravity * heightPixels);
+            body.linearVelocity = new Vector2(body.linearVelocity.x, speed / Ppu);
+            grounded = false;
+            coyoteLeft = 0f;
+            jumpRising = false;
+            airJumpAvailable = true;
+            dashAvailable = true;
+            if (state != PlayerState.Dash)
+            {
+                state = PlayerState.Jump;
+            }
+            Audio.Sfx.Play("jump");
+        }
+
         /// <summary>Puts the hero somewhere at rest, as a door or a respawn does.</summary>
         public void PlaceAt(Vector2 point)
         {

@@ -25,6 +25,9 @@ namespace Descender.World
             public int topRow;
             public int rows;
 
+            [Tooltip("Tiles wide, for a region authored in Unity wider than the world (Paradise); 0 means the world's width.")]
+            public int width;
+
             public string SceneName => ScenePrefix + key;
             public float Top => -topRow;
             public float Bottom => -(topRow + rows);
