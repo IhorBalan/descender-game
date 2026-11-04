@@ -41,7 +41,7 @@ namespace Descender.Fx
             {
                 if (instance == null)
                 {
-                    instance = FindFirstObjectByType<Feedback>();
+                    instance = FindAnyObjectByType<Feedback>();
                     if (instance == null)
                     {
                         instance = new GameObject("Feedback").AddComponent<Feedback>();

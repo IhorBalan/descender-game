@@ -1,0 +1,202 @@
+{
+  "notes": [
+    "Art briefs per manifest file for tools/ai_art/scenario_gen.py, keyed by the path under Assets/Art/Paradise.",
+    "subject: replaces the manifest's purpose in the prompt; say how the engine uses the piece (what repeats, what attaches where).",
+    "extra: appended after the subject. mode: repaint (the default for kit pieces), texture (seamless surfaces) or free.",
+    "cropRaw: [x0, y0, x1, y1] fractions of the repainted piece to keep before fitting it to the manifest size.",
+    "stackPick: which stacked copy of a thin strip to keep (0 = top). remover: another background remover model for this piece.",
+    "remover \"greykey\": cut out the layout's flat grey locally instead (for pale bands a remover deletes).",
+    "panels / panelSubjects: how many 21:9 panels a wide backdrop is stitched from, and what each panel holds. trimTop: drop empty sky above a band. derive: make a piece from another generated one (`derive` command).",
+    "stitch \"blend\": cross-fade a wide cut-out backdrop's panels instead of cutting at an empty column (for clouds).",
+    "solidBelow: make each panel of a band solid from its top edge down before stitching."
+  ],
+  "files": {
+    "Kit/Architecture/arch_span.png": {
+      "subject": "A round marble arch spanning between two column tops: wedge-shaped voussoir stones around the opening, a carved gold keystone at the crown, a flat entablature above with a thin grass and flower lip on top. The two springing points sit exactly on the bottom edge at the left and right column positions shown; the opening under the arch is empty."
+    },
+    "Kit/Architecture/arch_span_wide.png": {
+      "subject": "A wide round marble arch spanning between two column tops: wedge-shaped voussoir stones around the opening, a carved gold keystone at the crown, a flat entablature above with a thin grass and flower lip on top. The springing points sit exactly on the bottom edge at the left and right column positions shown; the opening under the arch is empty."
+    },
+    "Kit/Architecture/balustrade.png": {
+      "subject": "A white marble balustrade seen from the side: a flat top rail, a row of identical turned balusters evenly spaced, a flat bottom plinth on the bottom edge, a few ivy tendrils; the same all along so it repeats left to right.",
+      "stackPick": 2
+    },
+    "Kit/Architecture/banner.png": {
+      "subject": "A long cream silk banner hanging from a thin gold rod at the top, a gold sun emblem in its upper half, a pointed swallow-tail bottom, soft cloth folds."
+    },
+    "Kit/Architecture/broken_column.png": {
+      "subject": "A ruined white marble column standing on its base: the shaft broken off at an angle partway up, chipped edges, moss and a little ivy climbing it, the base sitting flat on the bottom edge."
+    },
+    "Kit/Architecture/column_base.png": {
+      "subject": "The base of a white marble column only: a square plinth on the bottom edge, round torus mouldings with a thin gold fillet above it; the flat top edge is where the shaft starts, centred."
+    },
+    "Kit/Architecture/column_capital.png": {
+      "subject": "The capital of a white marble column only: acanthus leaves and small curled volutes with gold accents, flaring from the narrow neck at the bottom edge to a flat square abacus along the top edge."
+    },
+    "Kit/Architecture/deck_top.png": {
+      "subject": "A side view of a marble walkway's top band: a carved entablature strip with a thin gold line, a lush mossy grass lip with tiny white flowers along its top; the walkable top line stays perfectly straight and at the same height all along, and it repeats left to right."
+    },
+    "Kit/Architecture/fallen_arch_fragment.png": {
+      "subject": "A fallen segment of a marble arch ring lying half sunk in grass: a few voussoir stones still joined, one with gold trim, moss and small flowers around it, resting on the bottom edge."
+    },
+    "Kit/Architecture/lantern.png": {
+      "subject": "A small ornate gold lantern hanging from a short chain at the top edge, warm glass panes, delicate filigree."
+    },
+    "Kit/Architecture/loggia_frame.png": {
+      "subject": "A tall foreground framing piece: a marble column with its capital, the springing of an arch and a section of entablature above, draped in ivy and pale wisteria; seen up close and slightly darker than the play layer, framing the left edge of the screen."
+    },
+    "Kit/Architecture/wall_block.png": {
+      "subject": "Seamless old terrace wall of weathered marble ashlar seen straight on: large blocks (each about a quarter of the image wide) of mixed lengths in staggered horizontal courses, worn rounded edges, soft dark joints, faint water stains running down, moss in some joints. Mid-toned warm grey-beige, clearly darker and less saturated than bright white marble, low contrast, calm even light, no bright highlights, no single focal point."
+    },
+    "Kit/Architecture/wall_cap.png": {
+      "subject": "A marble coping that tops a terrace wall, seen from the side: a carved cornice moulding with a thin gold line, grass, moss and small white flowers spilling over its top edge; the walkable top line stays straight and at the same height all along, and it repeats left to right.",
+      "remover": "greykey"
+    },
+    "Kit/Architecture/waterfall_spout.png": {
+      "subject": "A carved marble channel mouth set into a wall, seen from the side: a short stone trough with a lion-paw or shell carving, water just starting to pour over its lip on the right."
+    },
+    "Kit/Nature/blossom_tree.png": {
+      "subject": "A graceful orchard tree in full white blossom: a curved trunk rising from the bottom edge with roots spreading into a tuft of grass, a broad rounded crown of white flowers with a few golden fruit, petals drifting.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/fern.png": {
+      "subject": "A lush fern growing out of the ground: many overlapping curled fronds arching outwards, two or three fiddleheads, its roots hidden in a small tuft of grass that sits flat on the bottom edge."
+    },
+    "Kit/Nature/flower_bush.png": {
+      "subject": "A rounded low bush covered in small white blossoms, dense green leaves, sitting on a tuft of grass flat on the bottom edge.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/grass_lip.png": {
+      "subject": "The grassy top edge of the ground seen from the side: a lush lip of grass and moss with a few white lilies and blossoms, soil and small roots just under it; the walkable line stays straight and at the same height all along, and it repeats left to right.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal.",
+      "stackPick": 2
+    },
+    "Kit/Nature/grass_tuft_strip.png": {
+      "subject": "A strip of grass tufts of different heights growing up from the bottom edge, a few tiny white flowers, repeating left to right.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/hedge_flowers.png": {
+      "mode": "free",
+      "subject": "A long, low, loosely clipped flowering hedge seen from the side, its base flat along the bottom edge: an uneven, softly rounded bumpy top whose height varies from about half to full along its length, a few small gaps, dotted with small white flowers, darker leaves at its base. It continues past both side edges.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/island_bottom.png": {
+      "subject": "The underside of a floating rock island seen from the side: a band of rock along the top edge breaking into jagged stalactite-like points below, roots and moss and a few vines hanging from it, repeating left to right."
+    },
+    "Kit/Nature/ivy_curtain.png": {
+      "subject": "A wide curtain of ivy hanging from the top edge: dense along the top, falling in uneven strands, a few small white blossoms. Nothing it hangs from is shown.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/ivy_drape_a.png": {
+      "subject": "Ivy hanging straight down from the top edge: dense leaves along the top edge, thinning into a few trailing strands towards the bottom, a few small white blossoms. Nothing it hangs from is shown: no stone, no bracket, no beam.",
+      "extra": "Every leaf is fresh, healthy green of the same hue (lit leaves a warm yellow-green, shaded leaves a deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/ivy_drape_b.png": {
+      "subject": "Ivy hanging straight down from the top edge in two or three long strands of different lengths, a few small white blossoms. Nothing it hangs from is shown.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/ivy_drape_c.png": {
+      "subject": "A short, full bunch of ivy hanging from the top edge with one long trailing strand, a few small white blossoms. Nothing it hangs from is shown.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/lily_cluster_a.png": {
+      "subject": "A clump of white lilies with their green stems and long leaves rising out of a tuft of grass; the tuft sits flat on the bottom edge, the flowers open at different heights."
+    },
+    "Kit/Nature/lily_cluster_b.png": {
+      "subject": "A clump of white lilies, some open and some in bud, with green stems and long leaves rising out of a tuft of grass flat on the bottom edge.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/lily_cluster_c.png": {
+      "subject": "A wide low clump of white lilies leaning a little to one side, green stems and long leaves rising out of a tuft of grass flat on the bottom edge.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/rock_fill.png": {
+      "subject": "Seamless natural cliff rock face for large areas, seen straight on: a few large, softly weathered stone masses (each about a third of the image across) with gentle cracks between them, in mid-toned warm grey with a hint of cream, low contrast, sparse small patches of dark moss. No flowers, no plants, no ledges, no small pebbles, no deep shadows, no bright highlights, no single focal point."
+    },
+    "Kit/Nature/vine_hanging.png": {
+      "subject": "A single thin flowering vine hanging straight down from the top edge, small leaves and a few pale blossoms along it.",
+      "extra": "Every leaf a fresh, healthy green (lit leaves warm yellow-green, shaded ones deeper blue-green), never orange, brown, red or teal."
+    },
+    "Kit/Nature/wisteria_drape.png": {
+      "subject": "A curtain of white and pale-gold wisteria hanging from the top edge in long soft clusters, a few leaves. Nothing it hangs from is shown."
+    },
+    "Kit/Architecture/column_shaft.png": {
+      "subject": "A plain fluted white marble column shaft and nothing else: straight vertical flutes running the full height, soft cream veining, the same all along it so it repeats vertically without a visible join. No capital, no base, no bands, rings or gold trim, and no plants at all: no ivy, no leaves, no flowers.",
+      "cropRaw": [
+        0,
+        0.1,
+        1,
+        0.9
+      ]
+    },
+    "Backdrop_Garden/garden_bg0_sky.png": {
+      "subject": "A wide open sky and nothing else: deep azure at the top fading to a pale, warm, almost white horizon along the bottom edge, a few soft cumulus clouds spread evenly across it, the warm glow of the sun just off the upper right with faint god-rays. No land, no mountains, no islands, no birds."
+    },
+    "Backdrop_Garden/garden_bg1_far.png": {
+      "panels": 3,
+      "subject": "A long range of snowy mountain peaks very far away, varied heights and shapes, the peaks rising through the lower half of the image only, their bases dissolving into soft white mist along the bottom edge. Pale blue-grey, strongly hazed, little contrast. Empty background above the peaks, nothing in the sky.",
+      "panelSubjects": [
+        "a few tall peaks on the left, lower ridges to the right",
+        "one great broad peak in the middle with lower shoulders",
+        "a jagged row of medium peaks, a low saddle at the right end"
+      ]
+    },
+    "Backdrop_Garden/garden_bg2_midfar.png": {
+      "panels": 3,
+      "subject": "Floating rock islands drifting across the middle of the image, far away and hazed toward sky blue: rocky undersides with hanging roots, thin waterfalls falling from them into mist, small white marble buildings and trees on their tops. Islands of different sizes with open sky between them. Empty background above and between them.",
+      "panelSubjects": [
+        "a large island carrying a great silver-white marble ring gate standing upright, two small islands beside it",
+        "an island with a cluster of small white domed temples and colonnades, waterfalls pouring off it",
+        "an island with a single tall slender white spire, and a few tiny islands"
+      ]
+    },
+    "Backdrop_Garden/garden_bg3_mid.png": {
+      "panels": 3,
+      "subject": "Nearer cliffs rising out of a sea of clouds in the lower part of the image: pale rock faces with marble arcades and terraces built into them, round-topped trees and ivy, waterfalls pouring down into the clouds, breaks of open sky between the cliffs. Slightly hazed and softer than the play layer. Empty sky above the cliffs.",
+      "panelSubjects": [
+        "a tall cliff with a long arcade of arches along its top and a waterfall",
+        "a lower, wider cliff with stepped garden terraces and trees, an open gap of sky to its right",
+        "a cliff with a ruined aqueduct bridge leaving it, broken mid-span, water spilling from the break"
+      ]
+    },
+    "Backdrop_Garden/golden_tree.png": {
+      "mode": "free",
+      "subject": "A huge ancient tree standing on its own small floating rock island: a pale, twisting trunk, a vast rounded crown of glowing white-gold leaves, a few petals drifting, roots and a thin waterfall hanging from the island's rocky underside."
+    },
+    "Backdrop_Garden/golden_tree_glow.png": {
+      "derive": {
+        "from": "Backdrop_Garden/golden_tree.png",
+        "glow": true
+      }
+    },
+    "Backdrop_Garden/cloud_sea_1.png": {
+      "panels": 3,
+      "trimTop": true,
+      "subject": "A sea of soft white cumulus clouds seen from the side, filling only the lower third of the image: rounded, billowing tops of different heights along its upper edge, soft blue-grey shading in their hollows, the bottom of the image solid cloud. Empty background above the clouds.",
+      "stitch": "blend"
+    },
+    "Backdrop_Garden/cloud_sea_0.png": {
+      "derive": {
+        "from": "Backdrop_Garden/cloud_sea_1.png",
+        "offset": 0.37,
+        "haze": [
+          [
+            176,
+            206,
+            236
+          ],
+          0.35
+        ],
+        "blur": 1.5
+      }
+    },
+    "Backdrop_Garden/cloud_sea_2.png": {
+      "derive": {
+        "from": "Backdrop_Garden/cloud_sea_1.png",
+        "offset": 0.61,
+        "flip": true,
+        "brightness": 1.06
+      }
+    }
+  }
+}

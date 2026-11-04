@@ -27,7 +27,7 @@ namespace Descender.Tests.PlayMode
             Assert.That(Input.InputRouter.Instance, Is.Not.Null, "Main.unity has no InputRouter");
             Assert.That(World.WorldStreamer.Instance, Is.Not.Null, "Main.unity has no WorldStreamer");
             Assert.That(Audio.Music.Instance, Is.Not.Null, "Main.unity has no Music");
-            var eventSystem = Object.FindFirstObjectByType<EventSystem>();
+            var eventSystem = Object.FindAnyObjectByType<EventSystem>();
             Assert.That(eventSystem, Is.Not.Null, "no EventSystem was made");
             Assert.That(eventSystem.TryGetComponent<InputSystemUIInputModule>(out _), Is.True);
             Assert.That(Audio.Music.Instance.Playing, Is.EqualTo("title"));

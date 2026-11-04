@@ -15,7 +15,7 @@ namespace Descender.EditorTools.World
         public static void Build()
         {
             var count = 0;
-            foreach (var tiles in Object.FindObjectsByType<Descender.World.RegionTiles>(FindObjectsSortMode.None))
+            foreach (var tiles in Object.FindObjectsByType<Descender.World.RegionTiles>())
             {
                 tiles.Build();
                 count++;
@@ -26,7 +26,7 @@ namespace Descender.EditorTools.World
         [MenuItem("Descender/World/Clear region tiles")]
         public static void Clear()
         {
-            foreach (var tiles in Object.FindObjectsByType<Descender.World.RegionTiles>(FindObjectsSortMode.None))
+            foreach (var tiles in Object.FindObjectsByType<Descender.World.RegionTiles>())
             {
                 tiles.Clear();
             }

@@ -62,7 +62,7 @@ namespace Descender.Enemies
 
         private static void RespawnPlacements()
         {
-            foreach (var placement in Object.FindObjectsByType<WorldPlacement>(FindObjectsSortMode.None))
+            foreach (var placement in Object.FindObjectsByType<WorldPlacement>())
             {
                 placement.Spawn();
             }

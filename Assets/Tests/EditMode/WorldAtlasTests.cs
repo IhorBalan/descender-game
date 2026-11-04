@@ -45,9 +45,10 @@ namespace Descender.Tests
         public void IndexAtFindsTheBandOfAWorldPoint()
         {
             var atlas = Atlas();
+            var paradiseRows = atlas.regions[0].rows;
             Assert.That(atlas.IndexAt(-0.5f), Is.EqualTo(0));
-            Assert.That(atlas.IndexAt(-50.5f), Is.EqualTo(0));
-            Assert.That(atlas.IndexAt(-51.5f), Is.EqualTo(1));
+            Assert.That(atlas.IndexAt(-(paradiseRows - 0.5f)), Is.EqualTo(0));
+            Assert.That(atlas.IndexAt(-(paradiseRows + 0.5f)), Is.EqualTo(1));
             Assert.That(atlas.IndexAt(5f), Is.EqualTo(0), "above the world is still the first band");
             Assert.That(atlas.IndexAt(-100000f), Is.EqualTo(11), "below the world is still the last band");
         }

@@ -97,7 +97,7 @@ namespace Descender.UI
         {
             gatherLeft = GatherEvery;
             colliders.Clear();
-            colliders.AddRange(FindObjectsByType<Collider2D>(FindObjectsInactive.Exclude, FindObjectsSortMode.None));
+            colliders.AddRange(FindObjectsByType<Collider2D>(FindObjectsInactive.Exclude));
         }
 
         /// <summary>The colour for a collider by the layer it sits on.</summary>
