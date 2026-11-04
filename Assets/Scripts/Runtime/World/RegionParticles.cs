@@ -54,7 +54,9 @@ namespace Descender.World
         [SerializeField]
         private Material material;
 
-        [Tooltip("Emit only inside this rect (world units) instead of the parent region's band: a Paradise zone's own stretch.")]
+        [Tooltip(
+            "Emit only inside this rect (world units) instead of the parent region's band: a Paradise zone's own stretch."
+        )]
         [SerializeField]
         private bool useArea;
 
@@ -78,7 +80,8 @@ namespace Descender.World
             float spinTurns,
             float swayPixels,
             Material particleMaterial,
-            Rect emitArea)
+            Rect emitArea
+        )
         {
             sprite = particleSprite;
             amount = particleAmount;
@@ -188,7 +191,10 @@ namespace Descender.World
             var at = camera.transform.position;
             var half = camera.HalfExtents + Vector2.one * margin;
             var view = new Rect((Vector2)at - half, half * 2f);
-            var area = useArea ? Clip(view, this.area) : region != null ? Clip(view, region.Bounds) : view;
+            var area =
+                useArea ? Clip(view, this.area)
+                : region != null ? Clip(view, region.Bounds)
+                : view;
             var emission = system.emission;
             if (area.width <= 0f || area.height <= 0f)
             {
@@ -211,7 +217,9 @@ namespace Descender.World
             var yMin = Mathf.Max(a.yMin, b.yMin);
             var xMax = Mathf.Min(a.xMax, b.xMax);
             var yMax = Mathf.Min(a.yMax, b.yMax);
-            return xMax <= xMin || yMax <= yMin ? new Rect(xMin, yMin, 0f, 0f) : Rect.MinMaxRect(xMin, yMin, xMax, yMax);
+            return xMax <= xMin || yMax <= yMin
+                ? new Rect(xMin, yMin, 0f, 0f)
+                : Rect.MinMaxRect(xMin, yMin, xMax, yMax);
         }
 
         private static Vector2 Rotate(Vector2 v, float degrees)

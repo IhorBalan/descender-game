@@ -52,7 +52,9 @@ namespace Descender.EditorTools.Paradise
 
             AssetDatabase.SaveAssets();
             AssetDatabase.Refresh();
-            Debug.Log($"ParadiseLookSetup: wrote {Zone1ProfilePath}, {Zone2ProfilePath} and the materials in {MaterialFolder}");
+            Debug.Log(
+                $"ParadiseLookSetup: wrote {Zone1ProfilePath}, {Zone2ProfilePath} and the materials in {MaterialFolder}"
+            );
         }
 
         /// <summary>
@@ -188,7 +190,14 @@ namespace Descender.EditorTools.Paradise
             EditorUtility.SetDirty(shaft);
         }
 
-        private static void SetSway(Material material, float amount, float speed, float scale, float pushRadius, float pushStrength)
+        private static void SetSway(
+            Material material,
+            float amount,
+            float speed,
+            float scale,
+            float pushRadius,
+            float pushStrength
+        )
         {
             material.SetFloat("_SwayAmount", amount);
             material.SetFloat("_SwaySpeed", speed);
@@ -224,7 +233,8 @@ namespace Descender.EditorTools.Paradise
         /// The profile's component of a type, added (and stored inside the profile asset,
         /// which VolumeProfile.Add alone does not do) the first time.
         /// </summary>
-        private static T GetOrAdd<T>(VolumeProfile profile) where T : VolumeComponent
+        private static T GetOrAdd<T>(VolumeProfile profile)
+            where T : VolumeComponent
         {
             if (!profile.TryGet(out T component))
             {
@@ -241,7 +251,9 @@ namespace Descender.EditorTools.Paradise
             var shader = Shader.Find(shaderName);
             if (shader == null)
             {
-                throw new System.InvalidOperationException($"Shader {shaderName} not found; is Assets/Shaders/Paradise imported?");
+                throw new System.InvalidOperationException(
+                    $"Shader {shaderName} not found; is Assets/Shaders/Paradise imported?"
+                );
             }
             var path = $"{MaterialFolder}/{name}.mat";
             var material = AssetDatabase.LoadAssetAtPath<Material>(path);

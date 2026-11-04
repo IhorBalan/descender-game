@@ -17,7 +17,8 @@ namespace Descender.EditorTools.Setup
     public static class PostProcessingSetup
     {
         public const string RendererPath = "Assets/Settings/Descender 2D Renderer.asset";
-        public const string PostProcessDataPath = "Packages/com.unity.render-pipelines.universal/Runtime/Data/PostProcessData.asset";
+        public const string PostProcessDataPath =
+            "Packages/com.unity.render-pipelines.universal/Runtime/Data/PostProcessData.asset";
         public const string BaseProfilePath = "Assets/Settings/Post/Descender Base.asset";
         public const string MainScenePath = "Assets/Scenes/Paradise/ParadiseMain.unity";
         public const string VolumeName = "Global Volume";
@@ -29,7 +30,9 @@ namespace Descender.EditorTools.Setup
             var data = AssetDatabase.LoadAssetAtPath<ScriptableObject>(PostProcessDataPath);
             if (renderer == null || data == null)
             {
-                throw new System.InvalidOperationException($"Missing {(renderer == null ? RendererPath : PostProcessDataPath)}.");
+                throw new System.InvalidOperationException(
+                    $"Missing {(renderer == null ? RendererPath : PostProcessDataPath)}."
+                );
             }
             var serialized = new SerializedObject(renderer);
             var slot = serialized.FindProperty("m_PostProcessData");
@@ -78,7 +81,10 @@ namespace Descender.EditorTools.Setup
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);
             AssetDatabase.SaveAssets();
-            Debug.Log("PostProcessingSetup: renderer has PostProcessData, ParadiseMain camera renders post-processing, Global Volume uses " + BaseProfilePath);
+            Debug.Log(
+                "PostProcessingSetup: renderer has PostProcessData, ParadiseMain camera renders post-processing, Global Volume uses "
+                    + BaseProfilePath
+            );
         }
     }
 }

@@ -37,6 +37,9 @@ namespace Descender.World
         private float margin = 60f;
 
         private readonly HashSet<string> loaded = new HashSet<string>();
+
+        // Zones whose scene is not in the build: reported once, then never asked for again.
+        private readonly HashSet<string> missing = new HashSet<string>();
         private bool working;
 
         public IReadOnlyList<Zone> Zones => zones;
@@ -90,7 +93,7 @@ namespace Descender.World
             var wanted = Wanted(zones, camera.transform.position.x, HalfView(), margin);
             foreach (var scene in wanted)
             {
-                if (!loaded.Contains(scene))
+                if (!loaded.Contains(scene) && !missing.Contains(scene))
                 {
                     StartCoroutine(Step(Load(scene)));
                     return;
@@ -134,9 +137,14 @@ namespace Descender.World
                 loaded.Add(scene);
                 yield break;
             }
+            if (missing.Contains(scene))
+            {
+                yield break;
+            }
             if (!Application.CanStreamedLevelBeLoaded(scene))
             {
                 Debug.LogError($"Zone scene {scene} is not in the build's scene list.", this);
+                missing.Add(scene);
                 yield break;
             }
             loaded.Add(scene);

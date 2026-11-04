@@ -28,9 +28,21 @@ namespace Descender.Game
             UnityEditor.EditorPrefs.DeleteKey(PointKey);
             allAbilities = UnityEditor.EditorPrefs.GetBool(AbilitiesKey, true);
             var parts = text.Split(',');
-            if (parts.Length != 2
-                || !float.TryParse(parts[0], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var x)
-                || !float.TryParse(parts[1], System.Globalization.NumberStyles.Float, System.Globalization.CultureInfo.InvariantCulture, out var y))
+            if (
+                parts.Length != 2
+                || !float.TryParse(
+                    parts[0],
+                    System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var x
+                )
+                || !float.TryParse(
+                    parts[1],
+                    System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var y
+                )
+            )
             {
                 return false;
             }
@@ -46,7 +58,10 @@ namespace Descender.Game
         {
 #if UNITY_EDITOR
             var culture = System.Globalization.CultureInfo.InvariantCulture;
-            UnityEditor.EditorPrefs.SetString(PointKey, point.x.ToString("R", culture) + "," + point.y.ToString("R", culture));
+            UnityEditor.EditorPrefs.SetString(
+                PointKey,
+                point.x.ToString("R", culture) + "," + point.y.ToString("R", culture)
+            );
             UnityEditor.EditorPrefs.SetBool(AbilitiesKey, allAbilities);
 #endif
         }

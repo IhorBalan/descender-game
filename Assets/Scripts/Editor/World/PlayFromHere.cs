@@ -40,7 +40,11 @@ namespace Descender.EditorTools.World
             var view = SceneView.lastActiveSceneView;
             if (view == null)
             {
-                EditorUtility.DisplayDialog("Play from here", "Open a Scene view and centre it where the hero should start.", "OK");
+                EditorUtility.DisplayDialog(
+                    "Play from here",
+                    "Open a Scene view and centre it where the hero should start.",
+                    "OK"
+                );
                 return;
             }
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -85,7 +89,12 @@ namespace Descender.EditorTools.World
             var restored = new SceneSetup[setup.paths.Count];
             for (var i = 0; i < restored.Length; i++)
             {
-                restored[i] = new SceneSetup { path = setup.paths[i], isLoaded = setup.loaded[i], isActive = setup.active[i] };
+                restored[i] = new SceneSetup
+                {
+                    path = setup.paths[i],
+                    isLoaded = setup.loaded[i],
+                    isActive = setup.active[i],
+                };
             }
             EditorSceneManager.RestoreSceneManagerSetup(restored);
         }

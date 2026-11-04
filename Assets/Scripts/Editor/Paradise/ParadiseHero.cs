@@ -74,7 +74,15 @@ namespace Descender.EditorTools.Paradise
             var hair = Part(head, "HairTuft", "hero_hair_tuft", tuft, 11, lit, Color.white);
 
             var upperF = Part(torso, "UpperArmFront", "hero_upper_arm", shoulderF - hip, 16, lit, Color.white);
-            var foreF = Part(upperF, "ForeArmFront", "hero_fore_arm", new Vector2(0f, -upperLength), 15, lit, Color.white);
+            var foreF = Part(
+                upperF,
+                "ForeArmFront",
+                "hero_fore_arm",
+                new Vector2(0f, -upperLength),
+                15,
+                lit,
+                Color.white
+            );
             var sword = Part(foreF, "Sword", "hero_sword", gripFromElbow, 14, lit, Color.white);
             var upperB = Part(torso, "UpperArmBack", "hero_upper_arm", shoulderB - hip, 4, lit, Far);
             var foreB = Part(upperB, "ForeArmBack", "hero_fore_arm", new Vector2(0f, -upperLength), 3, lit, Far);
@@ -93,12 +101,24 @@ namespace Descender.EditorTools.Paradise
 
             var rig = root.AddComponent<HeroRig>();
             rig.SetBones(
-                hips, torso, head,
-                upperF, foreF, sword,
-                upperB, foreB,
-                thighF, shinF, bootF,
-                thighB, shinB, bootB,
-                wing, wingGlow.GetComponent<SpriteRenderer>(), hair);
+                hips,
+                torso,
+                head,
+                upperF,
+                foreF,
+                sword,
+                upperB,
+                foreB,
+                thighF,
+                shinF,
+                bootF,
+                thighB,
+                shinB,
+                bootB,
+                wing,
+                wingGlow.GetComponent<SpriteRenderer>(),
+                hair
+            );
 
             Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
@@ -116,11 +136,20 @@ namespace Descender.EditorTools.Paradise
             return bone;
         }
 
-        private static Transform Part(Transform parent, string name, string sprite, Vector2 at, int order, Material material, Color tint)
+        private static Transform Part(
+            Transform parent,
+            string name,
+            string sprite,
+            Vector2 at,
+            int order,
+            Material material,
+            Color tint
+        )
         {
             var bone = Bone(parent, name, at);
             var renderer = bone.gameObject.AddComponent<SpriteRenderer>();
-            renderer.sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{HeroFolder}/{sprite}.png")
+            renderer.sprite =
+                AssetDatabase.LoadAssetAtPath<Sprite>($"{HeroFolder}/{sprite}.png")
                 ?? throw new System.InvalidOperationException($"Missing hero part {sprite}.");
             renderer.sharedMaterial = material;
             renderer.sortingOrder = BaseOrder + order;

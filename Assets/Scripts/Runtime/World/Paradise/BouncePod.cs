@@ -56,9 +56,11 @@ namespace Descender.World.Paradise
 
         private void TryThrow(Collider2D other)
         {
-            if (other.attachedRigidbody == null
+            if (
+                other.attachedRigidbody == null
                 || !other.attachedRigidbody.TryGetComponent<Player.PlayerController>(out var hero)
-                || hero.Velocity.y > RisingSpeed)
+                || hero.Velocity.y > RisingSpeed
+            )
             {
                 return;
             }

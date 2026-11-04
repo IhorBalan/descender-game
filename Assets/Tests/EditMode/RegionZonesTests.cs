@@ -14,9 +14,24 @@ namespace Descender.Tests
     {
         private static readonly List<RegionZones.Zone> Zones = new List<RegionZones.Zone>
         {
-            new RegionZones.Zone { scene = "Z1", xMin = 0f, xMax = 400f },
-            new RegionZones.Zone { scene = "Z2", xMin = 400f, xMax = 1300f },
-            new RegionZones.Zone { scene = "Z3", xMin = 1300f, xMax = 2600f },
+            new RegionZones.Zone
+            {
+                scene = "Z1",
+                xMin = 0f,
+                xMax = 400f,
+            },
+            new RegionZones.Zone
+            {
+                scene = "Z2",
+                xMin = 400f,
+                xMax = 1300f,
+            },
+            new RegionZones.Zone
+            {
+                scene = "Z3",
+                xMin = 1300f,
+                xMax = 2600f,
+            },
         };
 
         [Test]

@@ -33,7 +33,9 @@ namespace Descender.EditorTools.Build
             };
             var report = BuildPipeline.BuildPlayer(options);
             var summary = report.summary;
-            Debug.Log($"Paradise build: {summary.result}, {summary.totalErrors} errors, {summary.totalSize / (1024 * 1024)} MB, {summary.totalTime}");
+            Debug.Log(
+                $"Paradise build: {summary.result}, {summary.totalErrors} errors, {summary.totalSize / (1024 * 1024)} MB, {summary.totalTime}"
+            );
             if (Application.isBatchMode && summary.result != BuildResult.Succeeded)
             {
                 EditorApplication.Exit(1);

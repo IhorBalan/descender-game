@@ -123,25 +123,55 @@ namespace Descender.EditorTools.Paradise
                 outline[outline.Count - 1] = new P(last.x, last.y, true);
                 outline.Add(new P(last.x, bottom, true));
                 outline.Add(new P(first.x, bottom, true));
-                shapes.Add(new Shape { name = name, profile = Profile.Ground, outline = outline });
+                shapes.Add(
+                    new Shape
+                    {
+                        name = name,
+                        profile = Profile.Ground,
+                        outline = outline,
+                    }
+                );
             }
 
             /// <summary>A closed shape given by its whole outline, clockwise from its top-left.</summary>
             public void Closed(string name, Profile profile, bool collides, params P[] outline)
             {
-                shapes.Add(new Shape { name = name, profile = profile, outline = new List<P>(outline), collides = collides });
+                shapes.Add(
+                    new Shape
+                    {
+                        name = name,
+                        profile = profile,
+                        outline = new List<P>(outline),
+                        collides = collides,
+                    }
+                );
             }
 
             /// <summary>A deck on columns: see <see cref="Bridge"/>. Spacing is the distance between columns.</summary>
             public void Deck(string name, float spacing, params P[] deck)
             {
-                bridges.Add(new Bridge { name = name, deck = new List<P>(deck), spacing = spacing });
+                bridges.Add(
+                    new Bridge
+                    {
+                        name = name,
+                        deck = new List<P>(deck),
+                        spacing = spacing,
+                    }
+                );
             }
 
             /// <summary>Floating rock, declared: its outline clockwise from its top-left.</summary>
             public void Island(string name, params P[] outline)
             {
-                shapes.Add(new Shape { name = name, profile = Profile.Ground, outline = new List<P>(outline), island = true });
+                shapes.Add(
+                    new Shape
+                    {
+                        name = name,
+                        profile = Profile.Ground,
+                        outline = new List<P>(outline),
+                        island = true,
+                    }
+                );
             }
 
             /// <summary>A one-way ledge with nothing under it. Not used in Paradise: a ledge there is a Deck.</summary>
@@ -150,14 +180,36 @@ namespace Descender.EditorTools.Paradise
                 ledges.Add(new Ledge { name = name, path = new List<P>(path) });
             }
 
-            public void Mark(Descender.World.Paradise.DesignMarker.Kind kind, float x, float y, string label, string note = "")
+            public void Mark(
+                Descender.World.Paradise.DesignMarker.Kind kind,
+                float x,
+                float y,
+                string label,
+                string note = ""
+            )
             {
-                markers.Add(new Marker { kind = kind, label = label, note = note, at = new Vector2(x, y) });
+                markers.Add(
+                    new Marker
+                    {
+                        kind = kind,
+                        label = label,
+                        note = note,
+                        at = new Vector2(x, y),
+                    }
+                );
             }
 
             public void Light(float x, float y, Color color, float radiusTiles, float energy)
             {
-                lamps.Add(new Lamp { at = new Vector2(x, y), color = color, radiusTiles = radiusTiles, energy = energy });
+                lamps.Add(
+                    new Lamp
+                    {
+                        at = new Vector2(x, y),
+                        color = color,
+                        radiusTiles = radiusTiles,
+                        energy = energy,
+                    }
+                );
             }
         }
 
@@ -185,7 +237,13 @@ namespace Descender.EditorTools.Paradise
         /// </summary>
         public static Zone Zone1()
         {
-            var z = new Zone { number = 1, scene = "Paradise_Z1_WakingHollow", xMin = 0f, xMax = 400f };
+            var z = new Zone
+            {
+                number = 1,
+                scene = "Paradise_Z1_WakingHollow",
+                xMin = 0f,
+                xMax = 400f,
+            };
             z.rooms.Add(new Rect(0f, -105f, 400f, 90f));
 
             // The Hollow: the region's west wall curving down into a soft bowl.
@@ -263,8 +321,24 @@ namespace Descender.EditorTools.Paradise
             );
             // A broken bridge stepping down from the arcade's end: three spans on their own
             // columns, with 2, 3 and 3-tile gaps where the old spans fell.
-            z.Deck("BrokenSpan1", 6f, S(204f, -41.5f), C(210f, -42.5f), C(218f, -43.2f), C(226f, -43.8f), S(231f, -44.6f));
-            z.Deck("BrokenSpan2", 6f, S(234f, -45.6f), C(242f, -46.8f), C(250f, -47.4f), C(256f, -48.2f), S(261f, -49f));
+            z.Deck(
+                "BrokenSpan1",
+                6f,
+                S(204f, -41.5f),
+                C(210f, -42.5f),
+                C(218f, -43.2f),
+                C(226f, -43.8f),
+                S(231f, -44.6f)
+            );
+            z.Deck(
+                "BrokenSpan2",
+                6f,
+                S(234f, -45.6f),
+                C(242f, -46.8f),
+                C(250f, -47.4f),
+                C(256f, -48.2f),
+                S(261f, -49f)
+            );
             z.Deck("BrokenSpan3", 6f, S(264f, -50f), C(272f, -51.2f), C(278f, -52.4f), S(283f, -53.6f));
             // The shrine terrace and the slope down under the canopy.
             z.Ground(
@@ -306,9 +380,27 @@ namespace Descender.EditorTools.Paradise
             z.Masonry("Steps", "ShrineTerrace");
 
             var k = Descender.World.Paradise.DesignMarker.Kind.Story;
-            z.Mark(k, 12f, -60f, "Beat 1: opening", "Ansel wakes half-made; the Voice tells him to go back. Trigger 'opening'.");
-            z.Mark(Descender.World.Paradise.DesignMarker.Kind.Secret, 28.5f, -55.6f, "Secret: Wings ledge", "Seen on the first screen, reached after Wings (zone 3).");
-            z.Mark(Descender.World.Paradise.DesignMarker.Kind.Secret, 178f, -76.8f, "Secret: root cave", "A relic or upgrade in the cave under the Rising Arcade.");
+            z.Mark(
+                k,
+                12f,
+                -60f,
+                "Beat 1: opening",
+                "Ansel wakes half-made; the Voice tells him to go back. Trigger 'opening'."
+            );
+            z.Mark(
+                Descender.World.Paradise.DesignMarker.Kind.Secret,
+                28.5f,
+                -55.6f,
+                "Secret: Wings ledge",
+                "Seen on the first screen, reached after Wings (zone 3)."
+            );
+            z.Mark(
+                Descender.World.Paradise.DesignMarker.Kind.Secret,
+                178f,
+                -76.8f,
+                "Secret: root cave",
+                "A relic or upgrade in the cave under the Rising Arcade."
+            );
             z.Mark(Descender.World.Paradise.DesignMarker.Kind.Landmark, 165f, -43f, "Landmark: the Rising Arcade");
             z.Mark(k, 392f, -60f, "Into the Orchard", "The canopy closes overhead; the light turns teal.");
 
@@ -330,7 +422,13 @@ namespace Descender.EditorTools.Paradise
         /// </summary>
         public static Zone Zone2()
         {
-            var z = new Zone { number = 2, scene = "Paradise_Z2_Orchard", xMin = 400f, xMax = 1300f };
+            var z = new Zone
+            {
+                number = 2,
+                scene = "Paradise_Z2_Orchard",
+                xMin = 400f,
+                xMax = 1300f,
+            };
             z.rooms.Add(new Rect(400f, -105f, 900f, 90f));
 
             // Mereth's grove, the hole down to the root hollow at x 545 to 549.
@@ -413,7 +511,15 @@ namespace Descender.EditorTools.Paradise
                 S(1301f, -50f)
             );
             // The roots route under the run: a fall lands here, pods throw back up.
-            z.Ground("RootsRoute", -100f, S(945f, -80f), C(990f, -80.4f), C(1040f, -80f), C(1080f, -80.6f), S(1100f, -80f));
+            z.Ground(
+                "RootsRoute",
+                -100f,
+                S(945f, -80f),
+                C(990f, -80.4f),
+                C(1040f, -80f),
+                C(1080f, -80.6f),
+                S(1100f, -80f)
+            );
 
             // The aqueduct walkway above the orchard, reached by the pod at x 608.
             z.Deck("Aqueduct1", 6f, S(600f, -47f), C(612f, -46.6f), S(626f, -46.5f));
@@ -448,7 +554,15 @@ namespace Descender.EditorTools.Paradise
             // The orchard's trunks behind the play layer, evenly spaced: a little too tidy.
             for (var x = 586f; x <= 742f; x += 12f)
             {
-                z.Closed($"Trunk{x:0}", Profile.Decor, false, S(x, -30f), S(x + 2.4f, -30f), S(x + 2.6f, -62f), S(x - 0.2f, -62f));
+                z.Closed(
+                    $"Trunk{x:0}",
+                    Profile.Decor,
+                    false,
+                    S(x, -30f),
+                    S(x + 2.4f, -30f),
+                    S(x + 2.6f, -62f),
+                    S(x - 0.2f, -62f)
+                );
                 z.Light(x + 1.2f, -52f, Fruit, 5f, 0.7f);
             }
             z.Closed("LanternTrunk", Profile.Decor, false, S(912f, -24f), S(928f, -24f), S(931f, -64f), S(909f, -64f));
@@ -474,8 +588,20 @@ namespace Descender.EditorTools.Paradise
             var item = Descender.World.Paradise.DesignMarker.Kind.Item;
             var secret = Descender.World.Paradise.DesignMarker.Kind.Secret;
             var landmark = Descender.World.Paradise.DesignMarker.Kind.Landmark;
-            z.Mark(npc, 515f, -60.5f, "Beat 2: Mereth", "Tends a tree of tally-marked fruit. Tobiah went to the Low Gate 'talking the whole way'.");
-            z.Mark(item, 568f, -74.6f, "Beat 3: harvest token", "Tobiah's token, his tally scratched in. In the root hollow below Mereth.");
+            z.Mark(
+                npc,
+                515f,
+                -60.5f,
+                "Beat 2: Mereth",
+                "Tends a tree of tally-marked fruit. Tobiah went to the Low Gate 'talking the whole way'."
+            );
+            z.Mark(
+                item,
+                568f,
+                -74.6f,
+                "Beat 3: harvest token",
+                "Tobiah's token, his tally scratched in. In the root hollow below Mereth."
+            );
             z.Mark(landmark, 920f, -36f, "Landmark: the lantern tower");
             z.Mark(secret, 915f, -36.8f, "Secret: Lantern crown", "Wings only: the crown landing is 6.5 up.");
             z.Mark(secret, 1060f, -78.6f, "Secret: roots route", "Something to find under the run.");

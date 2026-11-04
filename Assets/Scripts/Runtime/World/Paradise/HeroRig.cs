@@ -17,31 +17,69 @@ namespace Descender.World.Paradise
     public sealed class HeroRig : MonoBehaviour
     {
         [Header("Bones")]
-        [SerializeField] private Transform hips;
-        [SerializeField] private Transform torso;
-        [SerializeField] private Transform head;
-        [SerializeField] private Transform upperArmFront;
-        [SerializeField] private Transform foreArmFront;
-        [SerializeField] private Transform sword;
-        [SerializeField] private Transform upperArmBack;
-        [SerializeField] private Transform foreArmBack;
-        [SerializeField] private Transform thighFront;
-        [SerializeField] private Transform shinFront;
-        [SerializeField] private Transform bootFront;
-        [SerializeField] private Transform thighBack;
-        [SerializeField] private Transform shinBack;
-        [SerializeField] private Transform bootBack;
-        [SerializeField] private Transform wing;
-        [SerializeField] private SpriteRenderer wingGlow;
-        [SerializeField] private Transform hair;
+        [SerializeField]
+        private Transform hips;
+
+        [SerializeField]
+        private Transform torso;
+
+        [SerializeField]
+        private Transform head;
+
+        [SerializeField]
+        private Transform upperArmFront;
+
+        [SerializeField]
+        private Transform foreArmFront;
+
+        [SerializeField]
+        private Transform sword;
+
+        [SerializeField]
+        private Transform upperArmBack;
+
+        [SerializeField]
+        private Transform foreArmBack;
+
+        [SerializeField]
+        private Transform thighFront;
+
+        [SerializeField]
+        private Transform shinFront;
+
+        [SerializeField]
+        private Transform bootFront;
+
+        [SerializeField]
+        private Transform thighBack;
+
+        [SerializeField]
+        private Transform shinBack;
+
+        [SerializeField]
+        private Transform bootBack;
+
+        [SerializeField]
+        private Transform wing;
+
+        [SerializeField]
+        private SpriteRenderer wingGlow;
+
+        [SerializeField]
+        private Transform hair;
 
         [Header("Motion")]
         [Tooltip("Units of ground covered by one full stride (two steps).")]
-        [SerializeField, Min(0.2f)] private float stride = 1.9f;
+        [SerializeField, Min(0.2f)]
+        private float stride = 1.9f;
+
         [Tooltip("How fast bones ease toward their pose, per second.")]
-        [SerializeField, Min(1f)] private float ease = 20f;
+        [SerializeField, Min(1f)]
+        private float ease = 20f;
+
         [Tooltip("The sword's angle in the hand at rest, relative to the forearm.")]
-        [SerializeField] private float swordRest = -70f;
+        [SerializeField]
+        private float swordRest = -70f;
 
         private Player.PlayerController hero;
         private SpriteRenderer[] renderers;
@@ -124,9 +162,15 @@ namespace Descender.World.Paradise
             Apply(current);
 
             // The wing: a slow beat, faster aloft, a hard flap on the second jump.
-            var beat = hero.DoubleJumpShowing ? 14f : hero.IsGrounded ? 2.2f : 5f;
+            var beat =
+                hero.DoubleJumpShowing ? 14f
+                : hero.IsGrounded ? 2.2f
+                : 5f;
             wingPhase += dt * beat;
-            var flap = hero.DoubleJumpShowing ? 35f : hero.IsGliding ? 10f : 6f;
+            var flap =
+                hero.DoubleJumpShowing ? 35f
+                : hero.IsGliding ? 10f
+                : 6f;
             if (wing != null)
             {
                 wing.localRotation = Quaternion.Euler(0f, 0f, current.wing + Mathf.Sin(wingPhase) * flap);
@@ -134,7 +178,10 @@ namespace Descender.World.Paradise
             if (wingGlow != null)
             {
                 // Always clearly there (it is all that shows of the wing against a pale sky), brighter in flight.
-                var glow = hero.WingFlashing || hero.DoubleJumpShowing || hero.IsGliding ? 1f : 0.85f + Mathf.Sin(Time.time * 2f) * 0.1f;
+                var glow =
+                    hero.WingFlashing || hero.DoubleJumpShowing || hero.IsGliding
+                        ? 1f
+                        : 0.85f + Mathf.Sin(Time.time * 2f) * 0.1f;
                 var c = wingGlow.color;
                 c.a = Mathf.MoveTowards(c.a, glow, dt * 4f);
                 wingGlow.color = c;
@@ -160,7 +207,8 @@ namespace Descender.World.Paradise
                     // Up and over, then a fast cut forward and down across the attack window.
                     var u = Mathf.Clamp01(stateTime / Mathf.Max(0.05f, hero.AttackTime()));
                     // A short windup, then the cut lands by 55% of the window (the hit is live from ~35%).
-                    var cut = u < 0.15f ? Mathf.Lerp(0f, -0.2f, u / 0.15f) : Mathf.SmoothStep(-0.2f, 1f, (u - 0.15f) / 0.4f);
+                    var cut =
+                        u < 0.15f ? Mathf.Lerp(0f, -0.2f, u / 0.15f) : Mathf.SmoothStep(-0.2f, 1f, (u - 0.15f) / 0.4f);
                     // The blade runs along the arm at -90 (it points forward when the arm hangs down).
                     p.upperF = Mathf.Lerp(160f, 40f, Mathf.Clamp01(cut));
                     p.foreF = Mathf.Lerp(15f, 5f, Mathf.Clamp01(cut));
@@ -373,12 +421,24 @@ namespace Descender.World.Paradise
         }
 
         public void SetBones(
-            Transform hipsBone, Transform torsoBone, Transform headBone,
-            Transform upperF, Transform foreF, Transform swordBone,
-            Transform upperB, Transform foreB,
-            Transform thighF, Transform shinF, Transform bootF,
-            Transform thighB, Transform shinB, Transform bootB,
-            Transform wingBone, SpriteRenderer wingGlowRenderer, Transform hairBone)
+            Transform hipsBone,
+            Transform torsoBone,
+            Transform headBone,
+            Transform upperF,
+            Transform foreF,
+            Transform swordBone,
+            Transform upperB,
+            Transform foreB,
+            Transform thighF,
+            Transform shinF,
+            Transform bootF,
+            Transform thighB,
+            Transform shinB,
+            Transform bootB,
+            Transform wingBone,
+            SpriteRenderer wingGlowRenderer,
+            Transform hairBone
+        )
         {
             hips = hipsBone;
             torso = torsoBone;

@@ -39,7 +39,8 @@ namespace Descender.EditorTools.Paradise
         public const string PrototypeMainPath = "Assets/Scenes/Main.unity";
         public const string LookPath = "Assets/Data/Regions/paradise.asset";
         public const string CatalogPath = "Assets/Data/Placements.asset";
-        public const string LitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
+        public const string LitMaterialPath =
+            "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
         public const int RegionRows = 120;
         public const int RegionWidth = 7500;
         public const int SamplesPerSegment = 10;
@@ -78,7 +79,9 @@ namespace Descender.EditorTools.Paradise
                 built++;
             }
             Finish(zones);
-            Debug.Log($"ParadiseGreybox: built {built} new zone(s); existing zones kept as they are. Play {EntryScenePath}.");
+            Debug.Log(
+                $"ParadiseGreybox: built {built} new zone(s); existing zones kept as they are. Play {EntryScenePath}."
+            );
         }
 
         /// <summary>
@@ -89,7 +92,9 @@ namespace Descender.EditorTools.Paradise
         public static void Rebuild(int number)
         {
             var zones = ParadiseLayout.All();
-            var zone = zones.Find(z => z.number == number) ?? throw new System.ArgumentException($"No zone {number} in ParadiseLayout.");
+            var zone =
+                zones.Find(z => z.number == number)
+                ?? throw new System.ArgumentException($"No zone {number} in ParadiseLayout.");
             BuildZone(zone, PrepareArt(), new List<Vector2>());
             Finish(zones);
             Debug.Log($"ParadiseGreybox: rebuilt zone {number} from the layout.");
@@ -113,12 +118,15 @@ namespace Descender.EditorTools.Paradise
 
         private static void AskAndRebuild(int number)
         {
-            if (Application.isBatchMode
+            if (
+                Application.isBatchMode
                 || EditorUtility.DisplayDialog(
                     "Rebuild zone from layout",
                     $"Zone {number}'s scene will be rebuilt from ParadiseLayout. Every change made to it since (by hand or by script) is lost.",
                     "Rebuild",
-                    "Cancel"))
+                    "Cancel"
+                )
+            )
             {
                 Rebuild(number);
             }
@@ -181,8 +189,11 @@ namespace Descender.EditorTools.Paradise
                     {
                         continue;
                     }
-                    var index = saves.FindIndex(s => s.scene == ScenePath(zone) && s.id == so.FindProperty("id").stringValue
-                        && (Vector2)placement.transform.position == s.at);
+                    var index = saves.FindIndex(s =>
+                        s.scene == ScenePath(zone)
+                        && s.id == so.FindProperty("id").stringValue
+                        && (Vector2)placement.transform.position == s.at
+                    );
                     if (so.FindProperty("checkpointIndex").intValue != index)
                     {
                         so.FindProperty("checkpointIndex").intValue = index;
@@ -223,7 +234,10 @@ namespace Descender.EditorTools.Paradise
             {
                 var built = ParadiseLayout.All().FindAll(z => File.Exists(ScenePath(z)));
                 var right = built.Count > 0 ? built[built.Count - 1].xMax : RegionWidth;
-                view.Frame(new Bounds(new Vector3(right / 2f, -RegionRows / 2f, 0f), new Vector3(right, RegionRows, 1f)), false);
+                view.Frame(
+                    new Bounds(new Vector3(right / 2f, -RegionRows / 2f, 0f), new Vector3(right, RegionRows, 1f)),
+                    false
+                );
             }
         }
 
@@ -294,15 +308,22 @@ namespace Descender.EditorTools.Paradise
         private static Art EnsureArt()
         {
             Directory.CreateDirectory(ArtFolder);
-            var art = new Art
-            {
-                lit = AssetDatabase.LoadAssetAtPath<Material>(LitMaterialPath),
-            };
+            var art = new Art { lit = AssetDatabase.LoadAssetAtPath<Material>(LitMaterialPath) };
             var groundFill = Texture("ground_fill", 64, 64, (x, y) => Grid(x, y, new Color(0.56f, 0.54f, 0.5f)), true);
             var leafFill = Texture("leaf_fill", 64, 64, (x, y) => Grid(x, y, new Color(0.46f, 0.6f, 0.43f)), true);
             var decorFill = Texture("decor_fill", 64, 64, (x, y) => new Color(0.24f, 0.29f, 0.31f), true);
-            var groundEdge = SpriteTex("ground_edge", 64, 16, (x, y) => y > 11 ? new Color(0.9f, 0.86f, 0.72f) : new Color(0.66f, 0.63f, 0.56f));
-            var leafEdge = SpriteTex("leaf_edge", 64, 16, (x, y) => y > 11 ? new Color(0.78f, 0.95f, 0.6f) : new Color(0.5f, 0.66f, 0.45f));
+            var groundEdge = SpriteTex(
+                "ground_edge",
+                64,
+                16,
+                (x, y) => y > 11 ? new Color(0.9f, 0.86f, 0.72f) : new Color(0.66f, 0.63f, 0.56f)
+            );
+            var leafEdge = SpriteTex(
+                "leaf_edge",
+                64,
+                16,
+                (x, y) => y > 11 ? new Color(0.78f, 0.95f, 0.6f) : new Color(0.5f, 0.66f, 0.45f)
+            );
             var decorEdge = SpriteTex("decor_edge", 64, 8, (x, y) => new Color(0.2f, 0.24f, 0.26f));
             art.podSprite = SpriteTex("pod", 64, 32, (x, y) => Ellipse(x, y, 64, 32, new Color(0.95f, 0.55f, 0.75f)));
             art.seedSprite = SpriteTex("seed", 32, 32, (x, y) => Ellipse(x, y, 32, 32, new Color(1f, 0.85f, 0.45f)));
@@ -398,7 +419,15 @@ namespace Descender.EditorTools.Paradise
             profile.fillTexture = fill;
             profile.fillOffset = 0f;
             profile.angleRanges.Clear();
-            profile.angleRanges.Add(new AngleRange { start = -180f, end = 180f, order = 0, sprites = new List<Sprite> { edge } });
+            profile.angleRanges.Add(
+                new AngleRange
+                {
+                    start = -180f,
+                    end = 180f,
+                    order = 0,
+                    sprites = new List<Sprite> { edge },
+                }
+            );
             EditorUtility.SetDirty(profile);
             return profile;
         }
@@ -436,7 +465,12 @@ namespace Descender.EditorTools.Paradise
             var supportGroup = Group(root, "Supports");
             foreach (var bridge in zone.bridges)
             {
-                BuildLedge(new ParadiseLayout.Ledge { name = bridge.name, path = bridge.deck }, ledgeGroup, art, zoneArt);
+                BuildLedge(
+                    new ParadiseLayout.Ledge { name = bridge.name, path = bridge.deck },
+                    ledgeGroup,
+                    art,
+                    zoneArt
+                );
                 BuildSupports(bridge, zone, supportGroup, art, zoneArt);
             }
             var podIndex = 0;
@@ -492,7 +526,13 @@ namespace Descender.EditorTools.Paradise
             return group;
         }
 
-        private static void BuildShape(ParadiseLayout.Shape shape, Transform parent, Art art, ParadiseArt.ZoneArt zoneArt, bool masonry = false)
+        private static void BuildShape(
+            ParadiseLayout.Shape shape,
+            Transform parent,
+            Art art,
+            ParadiseArt.ZoneArt zoneArt,
+            bool masonry = false
+        )
         {
             var go = new GameObject(shape.name);
             go.transform.SetParent(parent, false);
@@ -501,11 +541,11 @@ namespace Descender.EditorTools.Paradise
             var controller = go.AddComponent<SpriteShapeController>();
             var renderer = go.GetComponent<SpriteShapeRenderer>();
             renderer.sharedMaterials = new[] { art.lit, art.lit };
-            controller.spriteShape = zoneArt != null
-                ? (masonry && zoneArt.terrace != null ? zoneArt.terrace : zoneArt.ground)
-                : shape.profile == ParadiseLayout.Profile.Ground
-                    ? art.ground
-                    : shape.profile == ParadiseLayout.Profile.Leaf ? art.leaf : art.decor;
+            controller.spriteShape =
+                zoneArt != null ? (masonry && zoneArt.terrace != null ? zoneArt.terrace : zoneArt.ground)
+                : shape.profile == ParadiseLayout.Profile.Ground ? art.ground
+                : shape.profile == ParadiseLayout.Profile.Leaf ? art.leaf
+                : art.decor;
             controller.fillPixelsPerUnit = 64f;
             controller.worldSpaceUVs = true;
             controller.splineDetail = 16;
@@ -521,7 +561,10 @@ namespace Descender.EditorTools.Paradise
             {
                 SetTangents(spline, i, points[i].sharp, left[i], right[i]);
             }
-            renderer.sortingOrder = shape.profile == ParadiseLayout.Profile.Decor ? -200 : shape.profile == ParadiseLayout.Profile.Leaf ? -95 : -100;
+            renderer.sortingOrder =
+                shape.profile == ParadiseLayout.Profile.Decor ? -200
+                : shape.profile == ParadiseLayout.Profile.Leaf ? -95
+                : -100;
             if (shape.collides)
             {
                 go.layer = LayerMask.NameToLayer("World");
@@ -532,7 +575,14 @@ namespace Descender.EditorTools.Paradise
             BakeAndReport(controller, shape.name);
             if (zoneArt != null && shape.profile != ParadiseLayout.Profile.Decor)
             {
-                BuildLips(go.transform, points, left, right, zoneArt, masonry && zoneArt.terraceLip != null ? zoneArt.terraceLip : zoneArt.lip ?? zoneArt.ledge);
+                BuildLips(
+                    go.transform,
+                    points,
+                    left,
+                    right,
+                    zoneArt,
+                    masonry && zoneArt.terraceLip != null ? zoneArt.terraceLip : zoneArt.lip ?? zoneArt.ledge
+                );
             }
         }
 
@@ -542,7 +592,14 @@ namespace Descender.EditorTools.Paradise
         /// open one always does; the top is split at vertical risers so no step face gets
         /// grass on its side. The top is the outline from its first point while x grows.
         /// </summary>
-        private static void BuildLips(Transform parent, List<ParadiseLayout.P> points, Vector2[] left, Vector2[] right, ParadiseArt.ZoneArt zoneArt, SpriteShape lipProfile)
+        private static void BuildLips(
+            Transform parent,
+            List<ParadiseLayout.P> points,
+            Vector2[] left,
+            Vector2[] right,
+            ParadiseArt.ZoneArt zoneArt,
+            SpriteShape lipProfile
+        )
         {
             var end = 0;
             while (end + 1 < points.Count && points[end + 1].x >= points[end].x - 0.001f)
@@ -566,7 +623,17 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
-        private static void BuildLip(Transform parent, string name, List<ParadiseLayout.P> points, Vector2[] left, Vector2[] right, int from, int to, ParadiseArt.ZoneArt zoneArt, SpriteShape lipProfile)
+        private static void BuildLip(
+            Transform parent,
+            string name,
+            List<ParadiseLayout.P> points,
+            Vector2[] left,
+            Vector2[] right,
+            int from,
+            int to,
+            ParadiseArt.ZoneArt zoneArt,
+            SpriteShape lipProfile
+        )
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
@@ -625,7 +692,12 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
-        private static void BuildLedge(ParadiseLayout.Ledge ledge, Transform parent, Art art, ParadiseArt.ZoneArt zoneArt)
+        private static void BuildLedge(
+            ParadiseLayout.Ledge ledge,
+            Transform parent,
+            Art art,
+            ParadiseArt.ZoneArt zoneArt
+        )
         {
             var go = new GameObject(ledge.name) { layer = LayerMask.NameToLayer("Ledge") };
             go.transform.SetParent(parent, false);
@@ -682,7 +754,8 @@ namespace Descender.EditorTools.Paradise
                 {
                     throw new System.InvalidOperationException(
                         $"Zone {zone.number}: '{shape.name}' floats (its lowest point is {lowest}). Ground reaches the clouds (y -95 or lower); "
-                        + "make it an Island (rock with an underside) or a Deck (architecture on columns). docs/design/paradise.md, section 5.");
+                            + "make it an Island (rock with an underside) or a Deck (architecture on columns). docs/design/paradise.md, section 5."
+                    );
                 }
             }
         }
@@ -691,7 +764,13 @@ namespace Descender.EditorTools.Paradise
         /// A deck's columns: one near each end and every `spacing` units between, each from the
         /// deck's underside down to the first surface below it, or into the cloud sea.
         /// </summary>
-        private static void BuildSupports(ParadiseLayout.Bridge bridge, ParadiseLayout.Zone zone, Transform parent, Art art, ParadiseArt.ZoneArt zoneArt)
+        private static void BuildSupports(
+            ParadiseLayout.Bridge bridge,
+            ParadiseLayout.Zone zone,
+            Transform parent,
+            Art art,
+            ParadiseArt.ZoneArt zoneArt
+        )
         {
             var (left, right) = Tangents(bridge.deck, false);
             var line = Sample(bridge.deck, left, right, false);
@@ -732,7 +811,9 @@ namespace Descender.EditorTools.Paradise
             {
                 if (x >= line[i].x && x <= line[i + 1].x)
                 {
-                    var t = Mathf.Approximately(line[i + 1].x, line[i].x) ? 0f : (x - line[i].x) / (line[i + 1].x - line[i].x);
+                    var t = Mathf.Approximately(line[i + 1].x, line[i].x)
+                        ? 0f
+                        : (x - line[i].x) / (line[i + 1].x - line[i].x);
                     return Mathf.Lerp(line[i].y, line[i + 1].y, t);
                 }
             }
@@ -754,7 +835,13 @@ namespace Descender.EditorTools.Paradise
             go.transform.localScale = new Vector3(0.8f / 0.25f, Mathf.Max(0.1f, top - ground) / 0.25f, 1f);
         }
 
-        private static void BuildPod(ParadiseLayout.Pod pod, Transform parent, Art art, int index, ParadiseArt.ZoneArt zoneArt)
+        private static void BuildPod(
+            ParadiseLayout.Pod pod,
+            Transform parent,
+            Art art,
+            int index,
+            ParadiseArt.ZoneArt zoneArt
+        )
         {
             var go = new GameObject($"Pod{index} ({pod.tiles:0} tiles)");
             go.transform.SetParent(parent, false);
@@ -774,7 +861,13 @@ namespace Descender.EditorTools.Paradise
             if (zoneArt != null && zoneArt.Prop("z2_prop_bounce_pod") != null)
             {
                 visual.sortingOrder = -84;
-                ParadiseArt.Skin(visual, zoneArt, "z2_prop_bounce_pod", width / 3.2f, new Vector2(-width * 0.12f, -0.1f));
+                ParadiseArt.Skin(
+                    visual,
+                    zoneArt,
+                    "z2_prop_bounce_pod",
+                    width / 3.2f,
+                    new Vector2(-width * 0.12f, -0.1f)
+                );
             }
             go.AddComponent<BouncePod>().Configure(pod.tiles);
             var serialized = new SerializedObject(go.GetComponent<BouncePod>());
@@ -806,7 +899,13 @@ namespace Descender.EditorTools.Paradise
             go.AddComponent<SeedPod>();
         }
 
-        private static void BuildSave(Vector2 at, Transform parent, PlacementCatalog catalog, int checkpointIndex, int zone)
+        private static void BuildSave(
+            Vector2 at,
+            Transform parent,
+            PlacementCatalog catalog,
+            int checkpointIndex,
+            int zone
+        )
         {
             // Numbered within the zone here; Sync world gives the world-wide save index.
             var go = new GameObject($"Save{checkpointIndex}");
@@ -954,7 +1053,9 @@ namespace Descender.EditorTools.Paradise
                 return;
             }
             var scene = EditorSceneManager.OpenScene(RegionScenePath, OpenSceneMode.Single);
-            var regionZones = Object.FindAnyObjectByType<RegionZones>() ?? throw new System.InvalidOperationException(RegionScenePath + " has no RegionZones.");
+            var regionZones =
+                Object.FindAnyObjectByType<RegionZones>()
+                ?? throw new System.InvalidOperationException(RegionScenePath + " has no RegionZones.");
             SetZones(regionZones, zones);
             if (ParadiseGarden.Available)
             {
@@ -1049,7 +1150,9 @@ namespace Descender.EditorTools.Paradise
             atlas.width = RegionWidth;
             atlas.startRegion = RegionKey;
             atlas.start = start;
-            atlas.checkpoints = checkpoints.Select(c => new WorldAtlas.Checkpoint { region = RegionKey, position = c }).ToArray();
+            atlas.checkpoints = checkpoints
+                .Select(c => new WorldAtlas.Checkpoint { region = RegionKey, position = c })
+                .ToArray();
             // The abilities keep the prototype's order: it is the save format's.
             atlas.abilities = prototype != null ? (string[])prototype.abilities.Clone() : new string[0];
             EditorUtility.SetDirty(atlas);
@@ -1089,14 +1192,18 @@ namespace Descender.EditorTools.Paradise
             if (camera != null && ParadiseHero.Available)
             {
                 // Ansel at full resolution (a cutout rig) in place of the pixel-art sprite.
-                var installer = camera.GetComponent<HeroRigInstaller>() ?? camera.gameObject.AddComponent<HeroRigInstaller>();
+                var installer =
+                    camera.GetComponent<HeroRigInstaller>() ?? camera.gameObject.AddComponent<HeroRigInstaller>();
                 installer.Configure(ParadiseHero.Build());
                 EditorUtility.SetDirty(installer);
             }
             // Painted art needs the full screen resolution: the prototype's pixel-perfect
             // camera renders the world at 320x180 and scales it up, which turns every curve
             // into stairs. Keep its framing (the crop to 16:9) but render at full size.
-            if (camera != null && camera.TryGetComponent<UnityEngine.Rendering.Universal.PixelPerfectCamera>(out var pixelPerfect))
+            if (
+                camera != null
+                && camera.TryGetComponent<UnityEngine.Rendering.Universal.PixelPerfectCamera>(out var pixelPerfect)
+            )
             {
                 var ppc = new SerializedObject(pixelPerfect);
                 ppc.FindProperty("m_GridSnapping").intValue = 0;
@@ -1107,7 +1214,9 @@ namespace Descender.EditorTools.Paradise
             Setup.PostProcessingSetup.Run();
             if (!File.ReadAllText(EntryScenePath).Contains(AssetDatabase.AssetPathToGUID(AtlasPath)))
             {
-                throw new System.InvalidOperationException(EntryScenePath + " was saved without its ParadiseWorld atlas.");
+                throw new System.InvalidOperationException(
+                    EntryScenePath + " was saved without its ParadiseWorld atlas."
+                );
             }
         }
 

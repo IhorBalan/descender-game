@@ -40,7 +40,9 @@ namespace Descender.World
         [SerializeField]
         private Vector2 sway;
 
-        [Tooltip("Shifts the layer from where its scroll puts it, in world units: for a painted backdrop pinned to the view (scroll.y 0), where its horizon sits on screen.")]
+        [Tooltip(
+            "Shifts the layer from where its scroll puts it, in world units: for a painted backdrop pinned to the view (scroll.y 0), where its horizon sits on screen."
+        )]
         [SerializeField]
         private Vector2 viewOffset;
 

@@ -51,7 +51,15 @@ namespace Descender.World.Paradise
         public int Zone => zone;
         public Color Ambient => ambient;
 
-        public void Configure(int number, float left, float right, Color ambientColor, Volume zoneVolume, Transform skyLayer, Transform[] otherLayers)
+        public void Configure(
+            int number,
+            float left,
+            float right,
+            Color ambientColor,
+            Volume zoneVolume,
+            Transform skyLayer,
+            Transform[] otherLayers
+        )
         {
             zone = number;
             xMin = left;

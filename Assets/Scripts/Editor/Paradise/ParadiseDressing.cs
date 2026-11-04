@@ -60,7 +60,9 @@ namespace Descender.EditorTools.Paradise
 
         public static Plan For(ParadiseLayout.Zone zone)
         {
-            return zone.number == 1 ? Zone1(zone) : zone.number == 2 ? Zone2(zone) : new Plan();
+            return zone.number == 1 ? Zone1(zone)
+                : zone.number == 2 ? Zone2(zone)
+                : new Plan();
         }
 
         /// <summary>The highest walkable surface of the zone's ground at x (ledges aside), or `fallback`.</summary>
@@ -93,21 +95,68 @@ namespace Descender.EditorTools.Paradise
             return float.IsNegativeInfinity(best) ? fallback : best;
         }
 
-        private static void Add(Plan plan, ParadiseLayout.Zone zone, string name, float x, float scale = 1f, bool flip = false, PropLayer layer = PropLayer.Ground, float? y = null, float sink = 0.15f)
+        private static void Add(
+            Plan plan,
+            ParadiseLayout.Zone zone,
+            string name,
+            float x,
+            float scale = 1f,
+            bool flip = false,
+            PropLayer layer = PropLayer.Ground,
+            float? y = null,
+            float sink = 0.15f
+        )
         {
             var at = new Vector2(x, (y ?? SurfaceY(zone, x)) - sink);
-            plan.props.Add(new PropSpot { name = name, at = at, scale = scale, flip = flip, layer = layer });
+            plan.props.Add(
+                new PropSpot
+                {
+                    name = name,
+                    at = at,
+                    scale = scale,
+                    flip = flip,
+                    layer = layer,
+                }
+            );
         }
 
-        private static void Fore(Plan plan, ParadiseLayout.Zone zone, int index, float x, float scale, bool flip, bool hanging)
+        private static void Fore(
+            Plan plan,
+            ParadiseLayout.Zone zone,
+            int index,
+            float x,
+            float scale,
+            bool flip,
+            bool hanging
+        )
         {
             var ground = SurfaceY(zone, x);
             // Standing pieces start well below the ground, so their base never shows on screen.
             var y = hanging ? ground + 10f : ground - 6.5f;
-            plan.foreground.Add(new ForeSpot { index = index, at = new Vector2(x, y), scale = scale, flip = flip });
+            plan.foreground.Add(
+                new ForeSpot
+                {
+                    index = index,
+                    at = new Vector2(x, y),
+                    scale = scale,
+                    flip = flip,
+                }
+            );
         }
 
-        private static Air Particles(string name, string kind, int amount, Color color, float life, Vector2 dir, float spread, Vector2 speed, Vector2 size, float spin = 0f, float sway = 4f)
+        private static Air Particles(
+            string name,
+            string kind,
+            int amount,
+            Color color,
+            float life,
+            Vector2 dir,
+            float spread,
+            Vector2 speed,
+            Vector2 size,
+            float spin = 0f,
+            float sway = 4f
+        )
         {
             return new Air
             {
@@ -130,7 +179,36 @@ namespace Descender.EditorTools.Paradise
         {
             var plan = new Plan { backdropY = -56f };
             string[] flowers = { "z1_prop_flowers_a", "z1_prop_flowers_b", "z1_prop_flowers_c" };
-            float[] flowerX = { 18, 27, 37, 62, 78, 84, 97, 112, 120, 136, 148, 162, 178, 192, 210, 220, 241, 252, 270, 279, 296, 308, 322, 340, 356, 372, 388 };
+            float[] flowerX =
+            {
+                18,
+                27,
+                37,
+                62,
+                78,
+                84,
+                97,
+                112,
+                120,
+                136,
+                148,
+                162,
+                178,
+                192,
+                210,
+                220,
+                241,
+                252,
+                270,
+                279,
+                296,
+                308,
+                322,
+                340,
+                356,
+                372,
+                388,
+            };
             for (var i = 0; i < flowerX.Length; i++)
             {
                 Add(plan, zone, flowers[i % 3], flowerX[i], 0.7f + (i * 37 % 10) * 0.04f, i % 2 == 1);
@@ -151,9 +229,49 @@ namespace Descender.EditorTools.Paradise
                 Fore(plan, zone, fore, x, 0.55f + (fore % 3) * 0.08f, fore % 2 == 0, false);
                 fore++;
             }
-            plan.air.Add(Particles("Motes", "mote", 45, new Color(1f, 0.86f, 0.62f), 11f, new Vector2(0.15f, -1f), 30f, new Vector2(2f, 6f), new Vector2(0.4f, 1f), sway: 8f));
-            plan.air.Add(Particles("Petals", "petal", 26, new Color(1f, 0.82f, 0.86f), 13f, new Vector2(-0.35f, 1f), 25f, new Vector2(8f, 16f), new Vector2(0.5f, 0.9f), spin: 0.4f, sway: 5f));
-            plan.air.Add(Particles("Pollen", "pollen", 40, new Color(1f, 0.92f, 0.55f), 8f, new Vector2(0.6f, -0.2f), 40f, new Vector2(3f, 8f), new Vector2(0.5f, 1f), sway: 6f));
+            plan.air.Add(
+                Particles(
+                    "Motes",
+                    "mote",
+                    45,
+                    new Color(1f, 0.86f, 0.62f),
+                    11f,
+                    new Vector2(0.15f, -1f),
+                    30f,
+                    new Vector2(2f, 6f),
+                    new Vector2(0.4f, 1f),
+                    sway: 8f
+                )
+            );
+            plan.air.Add(
+                Particles(
+                    "Petals",
+                    "petal",
+                    26,
+                    new Color(1f, 0.82f, 0.86f),
+                    13f,
+                    new Vector2(-0.35f, 1f),
+                    25f,
+                    new Vector2(8f, 16f),
+                    new Vector2(0.5f, 0.9f),
+                    spin: 0.4f,
+                    sway: 5f
+                )
+            );
+            plan.air.Add(
+                Particles(
+                    "Pollen",
+                    "pollen",
+                    40,
+                    new Color(1f, 0.92f, 0.55f),
+                    8f,
+                    new Vector2(0.6f, -0.2f),
+                    40f,
+                    new Vector2(3f, 8f),
+                    new Vector2(0.5f, 1f),
+                    sway: 6f
+                )
+            );
             return plan;
         }
 
@@ -201,9 +319,48 @@ namespace Descender.EditorTools.Paradise
                 Fore(plan, zone, fore, x, 0.55f + (fore % 2) * 0.1f, fore % 2 == 1, hanging);
                 fore++;
             }
-            plan.air.Add(Particles("Motes", "mote", 70, new Color(0.55f, 1f, 0.92f), 12f, new Vector2(0f, -1f), 50f, new Vector2(1f, 4f), new Vector2(0.4f, 1.1f), sway: 10f));
-            plan.air.Add(Particles("Fireflies", "firefly", 30, new Color(0.75f, 1f, 0.6f), 9f, new Vector2(0.4f, -0.6f), 90f, new Vector2(2f, 6f), new Vector2(0.5f, 0.9f), sway: 14f));
-            plan.air.Add(Particles("Pollen", "pollen", 40, new Color(0.6f, 0.95f, 1f), 9f, new Vector2(0.3f, 0.4f), 60f, new Vector2(2f, 5f), new Vector2(0.4f, 0.8f), sway: 6f));
+            plan.air.Add(
+                Particles(
+                    "Motes",
+                    "mote",
+                    70,
+                    new Color(0.55f, 1f, 0.92f),
+                    12f,
+                    new Vector2(0f, -1f),
+                    50f,
+                    new Vector2(1f, 4f),
+                    new Vector2(0.4f, 1.1f),
+                    sway: 10f
+                )
+            );
+            plan.air.Add(
+                Particles(
+                    "Fireflies",
+                    "firefly",
+                    30,
+                    new Color(0.75f, 1f, 0.6f),
+                    9f,
+                    new Vector2(0.4f, -0.6f),
+                    90f,
+                    new Vector2(2f, 6f),
+                    new Vector2(0.5f, 0.9f),
+                    sway: 14f
+                )
+            );
+            plan.air.Add(
+                Particles(
+                    "Pollen",
+                    "pollen",
+                    40,
+                    new Color(0.6f, 0.95f, 1f),
+                    9f,
+                    new Vector2(0.3f, 0.4f),
+                    60f,
+                    new Vector2(2f, 5f),
+                    new Vector2(0.4f, 0.8f),
+                    sway: 6f
+                )
+            );
             return plan;
         }
     }

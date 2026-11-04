@@ -28,8 +28,10 @@ namespace Descender.EditorTools.Paradise
         public const string MaterialFolder = "Assets/Settings/Materials/Paradise";
         public const string GlowMaterialPath = MaterialFolder + "/Paradise Glow.mat";
         public const string RegionProfilePath = "Assets/Settings/Post/Paradise_Region.asset";
-        public const string LitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
-        public const string UnlitMaterialPath = "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
+        public const string LitMaterialPath =
+            "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
+        public const string UnlitMaterialPath =
+            "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
 
         public static bool Available => File.Exists(ManifestPath);
 
@@ -103,9 +105,21 @@ namespace Descender.EditorTools.Paradise
             Directory.CreateDirectory(DerivedFolder);
             foreach (var z in new[] { 1, 2 })
             {
-                Derive($"{Folder(z)}/Ground/z{z}_ground_bottom.png", $"{DerivedFolder}/z{z}_ground_bottom_flip.png", flipY: true, crop: null, pivotY: 1f - 0.9062f);
+                Derive(
+                    $"{Folder(z)}/Ground/z{z}_ground_bottom.png",
+                    $"{DerivedFolder}/z{z}_ground_bottom_flip.png",
+                    flipY: true,
+                    crop: null,
+                    pivotY: 1f - 0.9062f
+                );
             }
-            Derive($"{ArtRoot}/Common/Particles/petal_strip.png", $"{DerivedFolder}/petal.png", flipY: false, crop: new RectInt(0, 0, 32, 32), pivotY: 0.5f);
+            Derive(
+                $"{ArtRoot}/Common/Particles/petal_strip.png",
+                $"{DerivedFolder}/petal.png",
+                flipY: false,
+                crop: new RectInt(0, 0, 32, 32),
+                pivotY: 0.5f
+            );
 
             CheckShaders();
             ParadiseLookSetup.Run();
@@ -126,15 +140,20 @@ namespace Descender.EditorTools.Paradise
         private static void CheckShaders()
         {
             var problems = new List<string>();
-            foreach (var path in new[]
+            foreach (
+                var path in new[]
+                {
+                    "Assets/Shaders/Paradise/SpriteLitSway.shader",
+                    "Assets/Shaders/Paradise/SpriteUnlitHaze.shader",
+                    "Assets/Shaders/Paradise/LightShaft.shader",
+                    "Assets/Shaders/SpriteGlow.shader",
+                }
+            )
             {
-                "Assets/Shaders/Paradise/SpriteLitSway.shader",
-                "Assets/Shaders/Paradise/SpriteUnlitHaze.shader",
-                "Assets/Shaders/Paradise/LightShaft.shader",
-                "Assets/Shaders/SpriteGlow.shader",
-            })
-            {
-                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport);
+                AssetDatabase.ImportAsset(
+                    path,
+                    ImportAssetOptions.ForceUpdate | ImportAssetOptions.ForceSynchronousImport
+                );
                 var shader = AssetDatabase.LoadAssetAtPath<Shader>(path);
                 if (shader == null)
                 {
@@ -155,7 +174,9 @@ namespace Descender.EditorTools.Paradise
             }
             if (problems.Count > 0)
             {
-                throw new System.InvalidOperationException("Paradise shaders do not compile:\n" + string.Join("\n", problems));
+                throw new System.InvalidOperationException(
+                    "Paradise shaders do not compile:\n" + string.Join("\n", problems)
+                );
             }
         }
 
@@ -183,7 +204,10 @@ namespace Descender.EditorTools.Paradise
                 importer.ReadTextureSettings(settings);
                 settings.spriteMeshType = SpriteMeshType.FullRect;
                 settings.spriteAlignment = (int)SpriteAlignment.Custom;
-                settings.spritePivot = file.pivot != null && file.pivot.Length == 2 ? new Vector2(file.pivot[0], file.pivot[1]) : new Vector2(0.5f, 0.5f);
+                settings.spritePivot =
+                    file.pivot != null && file.pivot.Length == 2
+                        ? new Vector2(file.pivot[0], file.pivot[1])
+                        : new Vector2(0.5f, 0.5f);
                 importer.SetTextureSettings(settings);
             }
             // Repeat only along the axes that tile: a strip that tiles in x must clamp in y, or
@@ -296,15 +320,41 @@ namespace Descender.EditorTools.Paradise
             // Clockwise outlines: a top runs +x (0), an underside -x (180), walls +/-90.
             // The top's lip is its own open spline (ParadiseGreybox.BuildLips): a closed
             // shape does not reliably draw its top edge. The ground keeps the roots below.
-            art.ground = Profile($"Ground_Z{z}", fill, new[]
-            {
-                new AngleRange { start = 120f, end = 180f, order = 0, sprites = new List<Sprite> { under } },
-                new AngleRange { start = -180f, end = -120f, order = 0, sprites = new List<Sprite> { under } },
-            });
-            art.ledge = Profile($"Ledge_Z{z}", null, new[]
-            {
-                new AngleRange { start = -90f, end = 90f, order = 1, sprites = new List<Sprite> { top } },
-            });
+            art.ground = Profile(
+                $"Ground_Z{z}",
+                fill,
+                new[]
+                {
+                    new AngleRange
+                    {
+                        start = 120f,
+                        end = 180f,
+                        order = 0,
+                        sprites = new List<Sprite> { under },
+                    },
+                    new AngleRange
+                    {
+                        start = -180f,
+                        end = -120f,
+                        order = 0,
+                        sprites = new List<Sprite> { under },
+                    },
+                }
+            );
+            art.ledge = Profile(
+                $"Ledge_Z{z}",
+                null,
+                new[]
+                {
+                    new AngleRange
+                    {
+                        start = -90f,
+                        end = 90f,
+                        order = 1,
+                        sprites = new List<Sprite> { top },
+                    },
+                }
+            );
             return art;
         }
 
@@ -328,7 +378,8 @@ namespace Descender.EditorTools.Paradise
         public static Material SaveMaterial(string name, string shaderName)
         {
             var path = $"{MaterialFolder}/{name}.mat";
-            var shader = Shader.Find(shaderName) ?? throw new System.InvalidOperationException("Missing shader " + shaderName);
+            var shader =
+                Shader.Find(shaderName) ?? throw new System.InvalidOperationException("Missing shader " + shaderName);
             var material = AssetDatabase.LoadAssetAtPath<Material>(path);
             if (material == null)
             {
@@ -428,11 +479,48 @@ namespace Descender.EditorTools.Paradise
 
             var backdrop = Group(root, "Backdrop");
             var centre = new Vector2((zone.xMin + zone.xMax) / 2f, plan.backdropY);
-            var sky = Layer(backdrop, "Sky", art.sky, art.unlit, -1000 + zone.number, centre, Vector2.zero, cover: true);
-            var far = Layer(backdrop, "Far", art.backdrop[0], art.backdropFar, -990 + zone.number, centre, new Vector2(0.08f, 0.03f), cover: false);
-            var midFar = Layer(backdrop, "MidFar", art.backdrop[1], art.backdropFar, -980 + zone.number, centre, new Vector2(0.18f, 0.06f), cover: false);
-            var mid = Layer(backdrop, "Mid", art.backdrop[2], art.backdropMid, -970 + zone.number, centre, new Vector2(0.34f, 0.12f), cover: false);
-            root.gameObject.AddComponent<ZoneLook>().Configure(zone.number, zone.xMin, zone.xMax, art.ambient, volume, sky, new[] { far, midFar, mid });
+            var sky = Layer(
+                backdrop,
+                "Sky",
+                art.sky,
+                art.unlit,
+                -1000 + zone.number,
+                centre,
+                Vector2.zero,
+                cover: true
+            );
+            var far = Layer(
+                backdrop,
+                "Far",
+                art.backdrop[0],
+                art.backdropFar,
+                -990 + zone.number,
+                centre,
+                new Vector2(0.08f, 0.03f),
+                cover: false
+            );
+            var midFar = Layer(
+                backdrop,
+                "MidFar",
+                art.backdrop[1],
+                art.backdropFar,
+                -980 + zone.number,
+                centre,
+                new Vector2(0.18f, 0.06f),
+                cover: false
+            );
+            var mid = Layer(
+                backdrop,
+                "Mid",
+                art.backdrop[2],
+                art.backdropMid,
+                -970 + zone.number,
+                centre,
+                new Vector2(0.34f, 0.12f),
+                cover: false
+            );
+            root.gameObject.AddComponent<ZoneLook>()
+                .Configure(zone.number, zone.xMin, zone.xMax, art.ambient, volume, sky, new[] { far, midFar, mid });
 
             var props = Group(root, "Props");
             foreach (var p in plan.props)
@@ -442,7 +530,15 @@ namespace Descender.EditorTools.Paradise
             var shafts = Group(root, "Shafts");
             foreach (var s in plan.shafts)
             {
-                var r = Sprite(shafts, "Shaft", art.lightShaft, art.shaft, -300, new Vector3(s.x, s.y, 0f), new Vector3(s.z, s.w, 1f));
+                var r = Sprite(
+                    shafts,
+                    "Shaft",
+                    art.lightShaft,
+                    art.shaft,
+                    -300,
+                    new Vector3(s.x, s.y, 0f),
+                    new Vector3(s.z, s.w, 1f)
+                );
                 r.color = art.shaftColor;
             }
             var front = Group(root, "Foreground");
@@ -452,7 +548,15 @@ namespace Descender.EditorTools.Paradise
                 var sprite = art.foregrounds[f.index % art.foregrounds.Count];
                 // Tall enough to reach from below the screen's bottom edge up past the ground.
                 var scale = Mathf.Max(f.scale, 8.5f / Mathf.Max(0.1f, sprite.bounds.size.y));
-                var r = Sprite(front, sprite.name, sprite, art.foreground, 400 + i % 3, new Vector3(f.at.x, f.at.y, 0f), Vector3.one * scale);
+                var r = Sprite(
+                    front,
+                    sprite.name,
+                    sprite,
+                    art.foreground,
+                    400 + i % 3,
+                    new Vector3(f.at.x, f.at.y, 0f),
+                    Vector3.one * scale
+                );
                 r.flipX = f.flip;
                 r.gameObject.AddComponent<ForegroundParallax>().Configure(0.3f);
             }
@@ -462,9 +566,27 @@ namespace Descender.EditorTools.Paradise
             {
                 var go = new GameObject(a.name);
                 go.transform.SetParent(air, false);
-                var sprite = a.kind == "mote" ? art.mote : a.kind == "firefly" ? art.firefly : a.kind == "pollen" ? art.pollen : art.petal;
+                var sprite =
+                    a.kind == "mote" ? art.mote
+                    : a.kind == "firefly" ? art.firefly
+                    : a.kind == "pollen" ? art.pollen
+                    : art.petal;
                 var material = a.kind == "petal" ? art.unlit : art.glow;
-                go.AddComponent<RegionParticles>().Configure(sprite, a.amount, a.color, a.life, a.direction, a.spread, a.speed, a.size, a.spin, a.sway, material, area);
+                go.AddComponent<RegionParticles>()
+                    .Configure(
+                        sprite,
+                        a.amount,
+                        a.color,
+                        a.life,
+                        a.direction,
+                        a.spread,
+                        a.speed,
+                        a.size,
+                        a.spin,
+                        a.sway,
+                        material,
+                        area
+                    );
             }
         }
 
@@ -480,7 +602,16 @@ namespace Descender.EditorTools.Paradise
             return group;
         }
 
-        public static Transform Layer(Transform parent, string name, Sprite sprite, Material material, int order, Vector2 at, Vector2 scroll, bool cover)
+        public static Transform Layer(
+            Transform parent,
+            string name,
+            Sprite sprite,
+            Material material,
+            int order,
+            Vector2 at,
+            Vector2 scroll,
+            bool cover
+        )
         {
             var renderer = Sprite(parent, name, sprite, material, order, at, Vector3.one);
             var layer = renderer.gameObject.AddComponent<BackdropLayer>();
@@ -491,7 +622,15 @@ namespace Descender.EditorTools.Paradise
             return renderer.transform;
         }
 
-        public static SpriteRenderer Sprite(Transform parent, string name, Sprite sprite, Material material, int order, Vector3 at, Vector3 scale)
+        public static SpriteRenderer Sprite(
+            Transform parent,
+            string name,
+            Sprite sprite,
+            Material material,
+            int order,
+            Vector3 at,
+            Vector3 scale
+        )
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
@@ -514,7 +653,15 @@ namespace Descender.EditorTools.Paradise
             }
             var material = spot.layer == ParadiseDressing.PropLayer.Mid ? art.mid : art.plant;
             var order = spot.layer == ParadiseDressing.PropLayer.Mid ? -150 : -85;
-            var r = Sprite(parent, spot.name, sprite, material, order, new Vector3(spot.at.x, spot.at.y, 0f), Vector3.one * spot.scale);
+            var r = Sprite(
+                parent,
+                spot.name,
+                sprite,
+                material,
+                order,
+                new Vector3(spot.at.x, spot.at.y, 0f),
+                Vector3.one * spot.scale
+            );
             r.flipX = spot.flip;
             var glow = art.Glow(spot.name);
             if (glow != null)
