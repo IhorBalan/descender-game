@@ -1,0 +1,31 @@
+{
+  "notes": [
+    "The style bible every Scenario prompt is built from (tools/ai_art/scenario_gen.py).",
+    "model: the Scenario model in the URL (POST /generate/custom/{model}).",
+    "trainedModelId: a style model trained on the chosen key art, once there is one (sent as modelId).",
+    "styleReference: asset ids of the chosen key art, uploaded with `scenario_gen.py upload`, sent as referenceImages.",
+    "modelInputs: extra inputs for the model, as `scenario_gen.py check` lists them."
+  ],
+  "model": "model_google-gemini-3-1-flash",
+  "trainedModelId": "",
+  "styleReference": [
+    "asset_iYd25fHrgqvHgEbagqxujn8E"
+  ],
+  "modelInputs": {
+    "resolution": "2K"
+  },
+  "seedInput": "",
+  "repaintNote": "Image 1 is the layout of a game asset on a plain grey background: repaint it completely as finished art. Keep exactly the same silhouette, outline, proportions, position and size of every part; add nothing outside the shape, and keep the plain flat grey background around it untouched. Images after the first only set the painting style (brushwork, palette, rendering, level of detail), as if painted by the same artist for the same game: take nothing else from them, none of their objects or plants. Paint only what the subject below describes.",
+  "referenceNote": "Match the reference image exactly in painting style, brushwork, palette, lighting and level of detail, as if painted by the same artist for the same game; do not copy its composition or its contents beyond the subject asked for.",
+  "style": "High-end hand-painted 2D side-scrolling game art: soft painterly brushwork with crisp, readable silhouettes, refined forms, gentle ambient occlusion in crevices, a soft cream, white, gold and fresh-green palette. Strict side view, orthographic, no perspective distortion.",
+  "avoid": "No text, no logos, no watermark, no signature, no frame or border, no characters or people, no photographic look, no 3D render look, no lens blur.",
+  "depth": {
+    "sky": "The sky only: deep blue at the top fading to a pale warm horizon, soft cumulus clouds, the sun glowing in the upper right with faint god-rays. No land. Warm golden sunlight from the upper right, cool sky-blue fill in the shadows.",
+    "far": "Very far away: low contrast, strongly hazed toward pale sky blue, soft edges, little detail. Everything above the shapes is empty background. Warm golden sunlight from the upper right, cool sky-blue fill in the shadows.",
+    "midfar": "Far away: hazed and desaturated toward sky blue, simplified detail, soft edges. Everything above the shapes is empty background. Warm golden sunlight from the upper right, cool sky-blue fill in the shadows.",
+    "mid": "Middle distance: slightly hazed, a little softer and cooler than the play layer. Everything above the shapes is empty background. Warm golden sunlight from the upper right, cool sky-blue fill in the shadows.",
+    "play": "A piece for the play layer, closest to the viewer: crisp edges and rich detail. Painted under soft, neutral, white overhead light only, with gentle form shading and no coloured or directional light, no rim light, no cast shadows: the game lights it in the engine.",
+    "fill": "A flat, seamless, tileable surface texture seen straight on: soft neutral light, no horizon, no single light source, no vignette, nothing cut off at the edges. It covers large areas behind the walkable surface, so it is calm and mid-toned: clearly darker and less saturated than the bright grass and marble on top, with large shapes and little fine noise."
+  },
+  "isolated": "A single isolated game asset, whole and centred, on a plain flat solid neutral mid-grey background (the asset itself is often white, so never a white background), nothing else in the image, no cast shadow on the ground."
+}

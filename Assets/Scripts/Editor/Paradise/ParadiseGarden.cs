@@ -98,7 +98,12 @@ namespace Descender.EditorTools.Paradise
             return art;
         }
 
-        /// <summary>Sunlit grading: warm highlights, cool sky-blue shadows, a soft sheen on light.</summary>
+        /// <summary>
+        /// Sunlit grading for the painted kit (tools/ai_art), which is already bright: no exposure
+        /// lift in zone 1, enough contrast that the play layer stands off the hazed distance,
+        /// saturation barely lifted, warm highlights, cool sky-blue shadows, a soft sheen on light.
+        /// This is what the zones' profiles end up with; ParadiseLookSetup's numbers are overwritten.
+        /// </summary>
         private static void TuneLook(VolumeProfile profile, int z)
         {
             if (profile == null)
@@ -116,17 +121,17 @@ namespace Descender.EditorTools.Paradise
                 return c;
             }
             var color = Get<ColorAdjustments>();
-            color.postExposure.Override(z == 1 ? 0.15f : 0.1f);
-            color.contrast.Override(z == 1 ? 6f : 8f);
-            color.saturation.Override(z == 1 ? 12f : 16f);
-            color.colorFilter.Override(z == 1 ? new Color(1f, 0.98f, 0.94f) : new Color(0.97f, 1f, 0.95f));
+            color.postExposure.Override(z == 1 ? 0.05f : 0f);
+            color.contrast.Override(z == 1 ? 14f : 12f);
+            color.saturation.Override(z == 1 ? 4f : 8f);
+            color.colorFilter.Override(z == 1 ? new Color(1f, 0.985f, 0.96f) : new Color(0.97f, 1f, 0.97f));
             var split = Get<SplitToning>();
             split.shadows.Override(new Color(0.42f, 0.5f, 0.62f));
             split.highlights.Override(new Color(0.66f, 0.58f, 0.42f));
             split.balance.Override(10f);
             var bloom = Get<Bloom>();
             bloom.threshold.Override(1f);
-            bloom.intensity.Override(0.55f);
+            bloom.intensity.Override(0.5f);
             bloom.scatter.Override(0.7f);
             bloom.tint.Override(new Color(1f, 0.95f, 0.85f));
             var vignette = Get<Vignette>();
@@ -485,7 +490,8 @@ namespace Descender.EditorTools.Paradise
                         var y = ParadiseDressing.SurfaceY(zone, x, float.NaN);
                         if (!float.IsNaN(y) && !NearGap(zone, x))
                         {
-                            plan.walls.Add(new Spot { name = "hedge_flowers", at = new Vector2(x, y - 0.05f), scale = 0.9f + Hash(x, 13f) * 0.3f, flip = Hash(x, 14f) > 0.5f });
+                            // Knee to waist high on the hero (1.1 to 1.5 tiles), so a hedge edges the walk instead of walling it.
+                            plan.walls.Add(new Spot { name = "hedge_flowers", at = new Vector2(x, y - 0.05f), scale = 0.55f + Hash(x, 13f) * 0.2f, flip = Hash(x, 14f) > 0.5f });
                         }
                     }
                 }
