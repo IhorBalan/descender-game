@@ -56,7 +56,16 @@ TEXTURE_MODEL = "model_scenario-texture"
 # (glow masks, particles, water, the hero's parts, the greybox, the first art pass)
 # only with an explicit --only that names them.
 DEFAULT_INCLUDE = ["Kit/Architecture/*", "Kit/Nature/*", "Backdrop_Garden/*"]
-NEVER_BY_DEFAULT = ["*_glow.png"]
+# Not generated unless named with --only: the glows (derived), and the pieces built from the
+# key art itself (keyart_backdrop.py, keyart_foliage.py), which a generation would replace.
+NEVER_BY_DEFAULT = [
+    "*_glow.png",
+    "Kit/Nature/fg_leaves_*.png",
+    "Backdrop_Garden/garden_bg1_far.png",
+    "Backdrop_Garden/garden_bg2_midfar.png",
+    "Backdrop_Garden/garden_bg3_mid.png",
+    "Backdrop_Garden/golden_tree.png",
+]
 
 RATIOS = {"21:9": 21 / 9, "16:9": 16 / 9, "3:2": 3 / 2, "4:3": 4 / 3, "5:4": 5 / 4, "1:1": 1.0,
           "4:5": 4 / 5, "3:4": 3 / 4, "2:3": 2 / 3, "9:16": 9 / 16}

@@ -2002,6 +2002,66 @@
       "ppu": 64,
       "blend": "additive",
       "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_leaves_a.png",
+      "purpose": "Foreground framing: dark leafy branch rising from the bottom, from key art 1",
+      "zone": "garden",
+      "size": [
+        665,
+        593
+      ],
+      "sizeUnits": [
+        10.391,
+        9.266
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_leaves_b.png",
+      "purpose": "Foreground framing: dense dark shrub rising from the bottom, from key art 3",
+      "zone": "garden",
+      "size": [
+        800,
+        536
+      ],
+      "sizeUnits": [
+        12.5,
+        8.375
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_leaves_d.png",
+      "purpose": "Foreground framing: ivy on a branch rising from the bottom, from key art 4",
+      "zone": "garden",
+      "size": [
+        552,
+        586
+      ],
+      "sizeUnits": [
+        8.625,
+        9.156
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": []
     }
   ]
 }

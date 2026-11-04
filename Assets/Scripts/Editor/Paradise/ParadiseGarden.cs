@@ -37,6 +37,7 @@ namespace Descender.EditorTools.Paradise
         public static void Prepare()
         {
             Sprites.Clear();
+            WriteDepthTexture();
             ParadiseArt.DeriveFlipped(
                 $"{KitRoot}/Nature/island_bottom.png",
                 $"{ParadiseArt.DerivedFolder}/island_bottom_flip.png",
@@ -159,6 +160,14 @@ namespace Descender.EditorTools.Paradise
                     },
                 }
             );
+            // Foreground silhouettes: deep cool green, as the key art's framing leaves, keeping
+            // a little of their own colour so they read as leaves, not holes.
+            if (art.foreground != null)
+            {
+                art.foreground.SetColor("_HazeColor", new Color(0.06f, 0.11f, 0.11f));
+                art.foreground.SetFloat("_HazeAmount", 0.5f);
+                EditorUtility.SetDirty(art.foreground);
+            }
             // A bright sky needs only a hint of rays.
             art.shaft.SetFloat("_Intensity", 0.22f);
             EditorUtility.SetDirty(art.shaft);
@@ -336,7 +345,7 @@ namespace Descender.EditorTools.Paradise
             }
             foreach (var p in plan.walls)
             {
-                var hangs = p.name == "ivy_curtain" || p.name == "wisteria_drape";
+                var hangs = p.name == "ivy_curtain" || p.name == "wisteria_drape" || p.name.StartsWith("ivy_drape");
                 Place(props, p.name, p.at, p.scale, p.flip, art.plant, hangs ? -98 : -86, art);
             }
             foreach (var p in plan.framing)
@@ -492,6 +501,471 @@ namespace Descender.EditorTools.Paradise
             );
             g.transform.localScale = Vector3.one;
             g.color = new Color(1f, 1f, 1f, 0.3f);
+        }
+
+        // ------------------------------------------------------------------ depth
+
+        private const string DepthTexturePath = ParadiseArt.DerivedFolder + "/depth_shade.png";
+        private const string DepthMaterialName = "Paradise Depth Shade";
+
+        /// <summary>How far down the shade texture reaches, in units; deeper stays at its last row.</summary>
+        private const float DepthReach = 32f;
+
+        /// <summary>Width of the strips the shade mesh is cut into, in units.</summary>
+        private const float DepthStrip = 1f;
+
+        /// <summary>
+        /// Shade over a ground or terrace shape that deepens with distance below the walkable
+        /// surface above it, as in the key art: the lit coping and the first course stay
+        /// bright, the face below falls into cool shadow, so the walk reads as the brightest
+        /// band and a wall as a cliff with depth, not a flat sheet of blocks. One mesh per
+        /// shape, clipped to its outline in narrow strips; each vertex is shaded from the
+        /// surface height over it, smoothed across steps so a riser casts a soft shadow
+        /// instead of a seam.
+        /// </summary>
+        public static void Depth(Transform parent, List<Vector2> outline, ParadiseArt.ZoneArt art)
+        {
+            var xMin = float.MaxValue;
+            var xMax = float.MinValue;
+            foreach (var p in outline)
+            {
+                xMin = Mathf.Min(xMin, p.x);
+                xMax = Mathf.Max(xMax, p.x);
+            }
+            float Smoothed(float x)
+            {
+                var sum = 0f;
+                for (var k = -3; k <= 3; k++)
+                {
+                    sum += SurfaceOf(outline, Mathf.Clamp(x + k * 0.5f, xMin, xMax));
+                }
+                return sum / 7f;
+            }
+            var vertices = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var triangles = new List<int>();
+            for (var xa = xMin; xa < xMax - 0.001f; xa += DepthStrip)
+            {
+                var strip = ClipToStrip(outline, xa, Mathf.Min(xa + DepthStrip, xMax));
+                if (strip.Count < 3)
+                {
+                    continue;
+                }
+                strip = Simplify(strip);
+                if (strip.Count < 3)
+                {
+                    continue;
+                }
+                var first = vertices.Count;
+                foreach (var p in strip)
+                {
+                    vertices.Add(p);
+                    // v 1 at the surface, falling with depth (the texture clamps past its reach).
+                    uvs.Add(new Vector2(0.5f, 1f - Mathf.Max(0f, Smoothed(p.x) - p.y) / DepthReach));
+                }
+                if (Crossings(outline, xa + DepthStrip * 0.5f) <= 2)
+                {
+                    // One column of rock: star-shaped from its centre, a fan covers it exactly.
+                    var centre = Vector2.zero;
+                    foreach (var p in strip)
+                    {
+                        centre += p;
+                    }
+                    centre /= strip.Count;
+                    var c = vertices.Count;
+                    vertices.Add(centre);
+                    uvs.Add(new Vector2(0.5f, 1f - Mathf.Max(0f, Smoothed(centre.x) - centre.y) / DepthReach));
+                    for (var i = 0; i < strip.Count; i++)
+                    {
+                        triangles.Add(c);
+                        triangles.Add(first + (i + 1) % strip.Count);
+                        triangles.Add(first + i);
+                    }
+                }
+                else
+                {
+                    // Rock above open air (an overhang): clip ears, so the gap stays open.
+                    foreach (var t in Triangulate(strip))
+                    {
+                        triangles.Add(first + t);
+                    }
+                }
+            }
+            if (triangles.Count == 0)
+            {
+                return;
+            }
+            var mesh = new Mesh { name = parent.name + " depth" };
+            mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
+            var colors = new Color[vertices.Count];
+            for (var i = 0; i < colors.Length; i++)
+            {
+                colors[i] = Color.white;
+            }
+            mesh.colors = colors;
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("Depth");
+            go.transform.SetParent(parent, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = DepthMaterial();
+            renderer.sortingOrder = -100;
+        }
+
+        /// <summary>The highest point of the outline over x: the walkable surface there.</summary>
+        private static float SurfaceOf(List<Vector2> outline, float x)
+        {
+            var top = float.MinValue;
+            for (var i = 0; i < outline.Count; i++)
+            {
+                var a = outline[i];
+                var b = outline[(i + 1) % outline.Count];
+                if ((a.x <= x && b.x >= x) || (b.x <= x && a.x >= x))
+                {
+                    var y = Mathf.Approximately(a.x, b.x)
+                        ? Mathf.Max(a.y, b.y)
+                        : Mathf.Lerp(a.y, b.y, (x - a.x) / (b.x - a.x));
+                    top = Mathf.Max(top, y);
+                }
+            }
+            return top;
+        }
+
+        /// <summary>How many times the outline crosses the vertical line at x.</summary>
+        private static int Crossings(List<Vector2> outline, float x)
+        {
+            var n = 0;
+            for (var i = 0; i < outline.Count; i++)
+            {
+                var a = outline[i];
+                var b = outline[(i + 1) % outline.Count];
+                if ((a.x <= x) != (b.x <= x))
+                {
+                    n++;
+                }
+            }
+            return n;
+        }
+
+        /// <summary>The polygon without repeated or collinear points (clipping leaves both).</summary>
+        private static List<Vector2> Simplify(List<Vector2> polygon)
+        {
+            var result = new List<Vector2>();
+            foreach (var p in polygon)
+            {
+                if (result.Count == 0 || (result[result.Count - 1] - p).sqrMagnitude > 1e-6f)
+                {
+                    result.Add(p);
+                }
+            }
+            if (result.Count > 1 && (result[0] - result[result.Count - 1]).sqrMagnitude <= 1e-6f)
+            {
+                result.RemoveAt(result.Count - 1);
+            }
+            for (var i = result.Count - 1; i >= 0 && result.Count > 3; i--)
+            {
+                var a = result[(i + result.Count - 1) % result.Count];
+                var b = result[i];
+                var c = result[(i + 1) % result.Count];
+                if (Mathf.Abs((b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x)) < 1e-5f)
+                {
+                    result.RemoveAt(i);
+                }
+            }
+            return result;
+        }
+
+        /// <summary>Ear clipping: triangles over a simple polygon, as indices into it.</summary>
+        private static List<int> Triangulate(List<Vector2> polygon)
+        {
+            var result = new List<int>();
+            var index = new List<int>();
+            var area = 0f;
+            for (var i = 0; i < polygon.Count; i++)
+            {
+                var a = polygon[i];
+                var b = polygon[(i + 1) % polygon.Count];
+                area += a.x * b.y - b.x * a.y;
+                index.Add(i);
+            }
+            if (area < 0f)
+            {
+                index.Reverse();
+            }
+            var guard = 0;
+            while (index.Count > 3 && guard++ < polygon.Count * polygon.Count)
+            {
+                var clipped = false;
+                for (var i = 0; i < index.Count; i++)
+                {
+                    var ia = index[(i + index.Count - 1) % index.Count];
+                    var ib = index[i];
+                    var ic = index[(i + 1) % index.Count];
+                    var a = polygon[ia];
+                    var b = polygon[ib];
+                    var c = polygon[ic];
+                    var cross = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+                    if (cross <= 1e-6f)
+                    {
+                        continue;
+                    }
+                    var inside = false;
+                    foreach (var j in index)
+                    {
+                        if (j != ia && j != ib && j != ic && InTriangle(polygon[j], a, b, c))
+                        {
+                            inside = true;
+                            break;
+                        }
+                    }
+                    if (inside)
+                    {
+                        continue;
+                    }
+                    result.Add(ia);
+                    result.Add(ib);
+                    result.Add(ic);
+                    index.RemoveAt(i);
+                    clipped = true;
+                    break;
+                }
+                if (!clipped)
+                {
+                    // Degenerate (collinear) leftovers: drop a vertex and go on.
+                    index.RemoveAt(0);
+                }
+            }
+            if (index.Count == 3)
+            {
+                result.Add(index[0]);
+                result.Add(index[1]);
+                result.Add(index[2]);
+            }
+            return result;
+        }
+
+        private static bool InTriangle(Vector2 p, Vector2 a, Vector2 b, Vector2 c)
+        {
+            var d1 = (p.x - b.x) * (a.y - b.y) - (a.x - b.x) * (p.y - b.y);
+            var d2 = (p.x - c.x) * (b.y - c.y) - (b.x - c.x) * (p.y - c.y);
+            var d3 = (p.x - a.x) * (c.y - a.y) - (c.x - a.x) * (p.y - a.y);
+            var negative = d1 < 0f || d2 < 0f || d3 < 0f;
+            var positive = d1 > 0f || d2 > 0f || d3 > 0f;
+            return !(negative && positive);
+        }
+
+        /// <summary>A polygon clipped to the vertical strip x0..x1 (Sutherland-Hodgman, two edges).</summary>
+        private static List<Vector2> ClipToStrip(List<Vector2> polygon, float x0, float x1)
+        {
+            var left = ClipEdge(polygon, x0, true);
+            return ClipEdge(left, x1, false);
+        }
+
+        private static List<Vector2> ClipEdge(List<Vector2> polygon, float x, bool keepRight)
+        {
+            var result = new List<Vector2>();
+            for (var i = 0; i < polygon.Count; i++)
+            {
+                var a = polygon[i];
+                var b = polygon[(i + 1) % polygon.Count];
+                var aIn = keepRight ? a.x >= x : a.x <= x;
+                var bIn = keepRight ? b.x >= x : b.x <= x;
+                if (aIn)
+                {
+                    result.Add(a);
+                }
+                if (aIn != bIn)
+                {
+                    var t = (x - a.x) / (b.x - a.x);
+                    result.Add(new Vector2(x, Mathf.Lerp(a.y, b.y, t)));
+                }
+            }
+            return result;
+        }
+
+        private static Material DepthMaterial()
+        {
+            var material = ParadiseArt.SaveMaterial(
+                DepthMaterialName,
+                "Universal Render Pipeline/2D/Sprite-Unlit-Default"
+            );
+            material.mainTexture = AssetDatabase.LoadAssetAtPath<Texture2D>(DepthTexturePath);
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        /// <summary>The depth shade's texture, written once per build from the curve here.</summary>
+        private static void WriteDepthTexture()
+        {
+            // Rows run bottom-up: the top row (v 1) is at the surface, lower rows deeper.
+            var texture = new Texture2D(4, 256, TextureFormat.RGBA32, false);
+            var shade = new Color(0.15f, 0.19f, 0.3f);
+            for (var y = 0; y < 256; y++)
+            {
+                var depth = (255 - y) / 255f * DepthReach;
+                // The view shows about four units under the walk: the shade has to start within it.
+                var a =
+                    Mathf.SmoothStep(0f, 0.56f, Mathf.InverseLerp(0.8f, 4.6f, depth))
+                    + Mathf.SmoothStep(0f, 0.14f, Mathf.InverseLerp(5f, 22f, depth));
+                for (var x = 0; x < 4; x++)
+                {
+                    texture.SetPixel(x, y, new Color(shade.r, shade.g, shade.b, a));
+                }
+            }
+            Directory.CreateDirectory(ParadiseArt.DerivedFolder);
+            File.WriteAllBytes(DepthTexturePath, texture.EncodeToPNG());
+            Object.DestroyImmediate(texture);
+            AssetDatabase.ImportAsset(DepthTexturePath, ImportAssetOptions.ForceSynchronousImport);
+            var importer = (TextureImporter)AssetImporter.GetAtPath(DepthTexturePath);
+            importer.textureType = TextureImporterType.Default;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.filterMode = FilterMode.Bilinear;
+            importer.mipmapEnabled = false;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
+        }
+
+        public const string CheckpointPath = "Assets/Prefabs/Paradise/Checkpoint Garden.prefab";
+        public const string CatalogPath = "Assets/Data/Placements Paradise.asset";
+        private const string PrototypeCheckpointPath = "Assets/Prefabs/Pickups/Checkpoint.prefab";
+
+        /// <summary>
+        /// The placements catalog for the garden: the shared one, with the save spawning a
+        /// marble shrine (a short column carrying a lantern that lights while it is the active
+        /// save) instead of the prototype's pixel-art campfire. Rebuilt with the zones.
+        /// </summary>
+        public static PlacementCatalog Catalog(ParadiseArt.ZoneArt art)
+        {
+            var source = AssetDatabase.LoadAssetAtPath<PlacementCatalog>(ParadiseGreybox.CatalogPath);
+            if (source == null || !Sprites.ContainsKey("lantern") || !Sprites.ContainsKey("column_shaft"))
+            {
+                return source;
+            }
+            var shrine = CheckpointPrefab(art);
+            var catalog = AssetDatabase.LoadAssetAtPath<PlacementCatalog>(CatalogPath);
+            if (catalog == null)
+            {
+                catalog = Object.Instantiate(source);
+                AssetDatabase.CreateAsset(catalog, CatalogPath);
+            }
+            else
+            {
+                EditorUtility.CopySerialized(source, catalog);
+            }
+            catalog.name = Path.GetFileNameWithoutExtension(CatalogPath);
+            var serialized = new SerializedObject(catalog);
+            var entries = serialized.FindProperty("entries");
+            for (var i = 0; i < entries.arraySize; i++)
+            {
+                var entry = entries.GetArrayElementAtIndex(i);
+                if (entry.FindPropertyRelative("key").stringValue == "save")
+                {
+                    entry.FindPropertyRelative("prefab").objectReferenceValue = shrine;
+                }
+            }
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            EditorUtility.SetDirty(catalog);
+            AssetDatabase.SaveAssets();
+            return catalog;
+        }
+
+        private static GameObject CheckpointPrefab(ParadiseArt.ZoneArt art)
+        {
+            var root = PrefabUtility.LoadPrefabContents(PrototypeCheckpointPath);
+            try
+            {
+                var old = root.transform.Find("Sprite");
+                if (old != null)
+                {
+                    Object.DestroyImmediate(old.gameObject);
+                }
+                // Origin at the foot, like the prototype's, so the respawn point stands the hero on the floor.
+                var shrine = new GameObject("Shrine").transform;
+                shrine.SetParent(root.transform, false);
+                ParadiseArt.Sprite(
+                    shrine,
+                    "Base",
+                    Get("column_base"),
+                    art.lit,
+                    -2,
+                    new Vector3(0f, -0.05f),
+                    Vector3.one * 0.9f
+                );
+                var shaft = ParadiseArt.Sprite(
+                    shrine,
+                    "Shaft",
+                    Get("column_shaft"),
+                    art.lit,
+                    -3,
+                    new Vector3(0f, 0.8f),
+                    new Vector3(0.8f, 1f, 1f)
+                );
+                shaft.drawMode = SpriteDrawMode.Tiled;
+                shaft.tileMode = SpriteTileMode.Continuous;
+                shaft.size = new Vector2(1f, 1.1f);
+                ParadiseArt.Sprite(
+                    shrine,
+                    "Capital",
+                    Get("column_capital"),
+                    art.lit,
+                    -2,
+                    new Vector3(0f, 1.8f),
+                    Vector3.one * 0.9f
+                );
+                // The lantern stands on the capital (its pivot is its top).
+                var lantern = ParadiseArt.Sprite(
+                    shrine,
+                    "Lantern",
+                    Get("lantern"),
+                    art.lit,
+                    -1,
+                    new Vector3(0f, 2.7f + 1.2f * 1.1f),
+                    Vector3.one * 1.1f
+                );
+                var lit = new GameObject("Lit");
+                lit.transform.SetParent(lantern.transform, false);
+                if (Sprites.TryGetValue("lantern_glow", out var glowSprite))
+                {
+                    var glow = ParadiseArt.Sprite(
+                        lit.transform,
+                        "Glow",
+                        glowSprite,
+                        art.glow,
+                        0,
+                        lantern.transform.position,
+                        Vector3.one
+                    );
+                    glow.transform.localScale = Vector3.one;
+                }
+                var light = new GameObject("Light");
+                light.transform.SetParent(lit.transform, false);
+                light.transform.localPosition = new Vector3(0f, -0.6f, 0f);
+                var worldLight = light.AddComponent<WorldLight>();
+                var lightSettings = new SerializedObject(worldLight);
+                lightSettings.FindProperty("color").colorValue = new Color(1f, 0.85f, 0.55f);
+                lightSettings.FindProperty("energy").floatValue = 0.9f;
+                lightSettings.FindProperty("radiusPixels").floatValue = 6f * Player.PlayerTuning.PixelsPerUnit;
+                lightSettings.ApplyModifiedPropertiesWithoutUndo();
+                lit.SetActive(false);
+
+                var checkpoint = root.GetComponent<Descender.Pickups.Checkpoint>();
+                var settings = new SerializedObject(checkpoint);
+                settings.FindProperty("sprite").objectReferenceValue = lantern;
+                var frames = settings.FindProperty("frames");
+                frames.arraySize = 2;
+                frames.GetArrayElementAtIndex(0).objectReferenceValue = lantern.sprite;
+                frames.GetArrayElementAtIndex(1).objectReferenceValue = lantern.sprite;
+                settings.FindProperty("lit").objectReferenceValue = lit;
+                settings.ApplyModifiedPropertiesWithoutUndo();
+                Directory.CreateDirectory(Path.GetDirectoryName(CheckpointPath));
+                return PrefabUtility.SaveAsPrefabAsset(root, CheckpointPath);
+            }
+            finally
+            {
+                PrefabUtility.UnloadPrefabContents(root);
+            }
         }
 
         /// <summary>One screen wide (the paintings are 32 units, the view 20), offset on screen by `y`.</summary>
@@ -667,6 +1141,23 @@ namespace Descender.EditorTools.Paradise
                 );
                 arch.sortingOrder = -118 + (i % 2);
                 arched[i] = arched[i + 1] = true;
+                // A tall aqueduct gets a lower tier, as Roman ones do: from the walk below, its
+                // deck is off the screen, and the columns alone would hang from the sky.
+                var groundLevel = Mathf.Abs(a.ground - b.ground) < 0.3f;
+                var intoClouds = Mathf.Min(a.ground, b.ground) <= ParadiseGreybox.CloudSea + 0.01f;
+                if (groundLevel && !intoClouds && spring - a.ground > 8f)
+                {
+                    var tier = ParadiseArt.Sprite(
+                        parent,
+                        $"Tier{i}",
+                        sprite,
+                        art.lit,
+                        -118 + (i % 2),
+                        new Vector3(a.x, a.ground + 3.2f, 0f),
+                        new Vector3(span / nominal, 1f, 1f)
+                    );
+                    tier.color = new Color(0.94f, 0.94f, 0.96f);
+                }
                 springs[i] = Mathf.Min(springs[i], spring);
                 springs[i + 1] = Mathf.Min(springs[i + 1], spring);
             }
@@ -826,19 +1317,28 @@ namespace Descender.EditorTools.Paradise
                 var line = ParadiseGreybox.Sample(bridge.deck, left, right, false);
                 var x0 = bridge.deck[0].x;
                 var x1 = bridge.deck[bridge.deck.Count - 1].x;
-                var n = 0;
-                for (var x = x0 + 0.8f; x < x1 - 0.5f; x += 2.2f + Hash(x, 5f) * 2.5f, n++)
+                // Growth, not a curtain: clumps with bare stone between them, long strands
+                // and short tufts mixed, the pale wisteria only now and then.
+                var ivy = new[] { "ivy_drape_a", "ivy_drape_b", "ivy_drape_c", "vine_hanging", "ivy_drape_a" };
+                for (var x = x0 + 1.2f; x < x1 - 0.8f; x += 2.6f + Hash(x, 5f) * 4.5f)
                 {
+                    if (Hash(x, 18f) < 0.3f)
+                    {
+                        continue;
+                    }
                     var y = DeckY(line, x) - ParadiseGreybox.DeckThickness + 0.15f;
-                    var ivy = Sprites.ContainsKey("wisteria_drape")
-                        ? new[] { "ivy_drape_a", "ivy_drape_b", "wisteria_drape", "ivy_drape_c", "vine_hanging" }
-                        : new[] { "ivy_drape_a", "ivy_drape_b", "ivy_drape_c", "vine_hanging" };
+                    var name =
+                        Sprites.ContainsKey("wisteria_drape") && Hash(x, 19f) > 0.84f
+                            ? "wisteria_drape"
+                            : ivy[(int)(Hash(x, 6f) * ivy.Length) % ivy.Length];
+                    var length = Hash(x, 7f);
+                    var scale = 0.5f + length * length * 0.85f;
                     plan.hanging.Add(
                         new Spot
                         {
-                            name = ivy[(int)(Hash(x, 6f) * ivy.Length) % ivy.Length],
-                            at = new Vector2(x, y),
-                            scale = 0.9f + Hash(x, 7f) * 0.4f,
+                            name = name,
+                            at = new Vector2(x, y + 0.1f * Hash(x, 20f)),
+                            scale = name == "wisteria_drape" ? Mathf.Min(scale, 0.8f) : scale,
                             flip = Hash(x, 8f) > 0.5f,
                         }
                     );
@@ -890,6 +1390,29 @@ namespace Descender.EditorTools.Paradise
                             );
                         }
                     }
+                }
+                // Ivy spilling over the coping down the face here and there, so the wall is an old
+                // garden wall that things grow on, not a fresh sheet of blocks.
+                for (var x = x0 + 5f; x < x1 - 5f; x += 6f + Hash(x, 23f) * 9f)
+                {
+                    var top = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+                    if (float.IsNaN(top) || NearGap(zone, x) || Hash(x, 24f) < 0.35f)
+                    {
+                        continue;
+                    }
+                    var drape = Hash(x, 25f);
+                    plan.walls.Add(
+                        new Spot
+                        {
+                            name =
+                                drape < 0.4f ? "ivy_drape_a"
+                                : drape < 0.75f ? "ivy_drape_b"
+                                : "ivy_drape_c",
+                            at = new Vector2(x, top - 0.35f),
+                            scale = 0.6f + Hash(x, 26f) * 0.5f,
+                            flip = Hash(x, 27f) > 0.5f,
+                        }
+                    );
                 }
                 // Over the wall's edges (where the coping ends at a drop): a curtain of ivy or wisteria.
                 foreach (var edge in new[] { x0 + 1.2f, x1 - 1.2f })
@@ -1080,10 +1603,11 @@ namespace Descender.EditorTools.Paradise
                 );
                 // The aqueduct over the orchard spills through its gaps; the run's arch bridges are
                 // aqueducts too and spill into the roots route; a stream drops into the dell.
+                // Each fall is 1.2 past its deck's end, so the spout's back sits on the deck.
                 plan.water.Add(
                     new Waterfall
                     {
-                        x = 628f,
+                        x = 627.2f,
                         top = -46.5f,
                         bottom = -62f,
                         width = 1.6f,
@@ -1093,7 +1617,7 @@ namespace Descender.EditorTools.Paradise
                 plan.water.Add(
                     new Waterfall
                     {
-                        x = 657f,
+                        x = 656.2f,
                         top = -45.8f,
                         bottom = -61.8f,
                         width = 1.6f,
@@ -1103,7 +1627,7 @@ namespace Descender.EditorTools.Paradise
                 plan.water.Add(
                     new Waterfall
                     {
-                        x = 686f,
+                        x = 685.2f,
                         top = -46.4f,
                         bottom = -62f,
                         width = 1.6f,
@@ -1123,7 +1647,7 @@ namespace Descender.EditorTools.Paradise
                 plan.water.Add(
                     new Waterfall
                     {
-                        x = 996f,
+                        x = 995.2f,
                         top = -62.4f,
                         bottom = -80.2f,
                         width = 1.5f,
@@ -1133,7 +1657,7 @@ namespace Descender.EditorTools.Paradise
                 plan.water.Add(
                     new Waterfall
                     {
-                        x = 1045f,
+                        x = 1044.2f,
                         top = -61.6f,
                         bottom = -80.2f,
                         width = 1.5f,
@@ -1143,7 +1667,7 @@ namespace Descender.EditorTools.Paradise
                 plan.water.Add(
                     new Waterfall
                     {
-                        x = 1098f,
+                        x = 1097.2f,
                         top = -61.4f,
                         bottom = -80.3f,
                         width = 1.5f,
@@ -1154,12 +1678,27 @@ namespace Descender.EditorTools.Paradise
                 plan.shafts.Add(900f);
                 plan.shafts.Add(1200f);
             }
-            // Foreground: big ferns and bushes rising from below the screen, ivy hanging from above.
+            // Foreground: dark leaves rising into the bottom of the frame, as in the key art,
+            // ivy hanging from above now and then; the kit's ferns and bushes if the leaves are missing.
+            var leaves = new[] { "fg_leaves_a", "fg_leaves_b", "fg_leaves_d" };
             var k = 0;
-            for (var x = zone.xMin + 25f; x < zone.xMax; x += 34f + Hash(x, 10f) * 14f, k++)
+            for (var x = zone.xMin + 18f; x < zone.xMax; x += 20f + Hash(x, 10f) * 16f, k++)
             {
                 var ground = ParadiseDressing.SurfaceY(zone, x);
-                if (k % 3 == 2)
+                if (Sprites.ContainsKey(leaves[0]) && k % 4 != 3)
+                {
+                    var name = leaves[(int)(Hash(x, 21f) * leaves.Length) % leaves.Length];
+                    plan.foreground.Add(
+                        new Spot
+                        {
+                            name = name,
+                            at = new Vector3(x, ground - 5.1f),
+                            scale = 0.5f + Hash(x, 11f) * 0.12f,
+                            flip = Hash(x, 22f) > 0.5f,
+                        }
+                    );
+                }
+                else if (k % 3 == 2)
                 {
                     plan.foreground.Add(
                         new Spot

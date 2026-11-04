@@ -483,7 +483,11 @@ namespace Descender.EditorTools.Paradise
             {
                 BuildSeed(seed, podGroup, art, seedIndex++, zoneArt);
             }
-            var catalog = AssetDatabase.LoadAssetAtPath<PlacementCatalog>(CatalogPath);
+            // The garden's saves are marble shrines; the greybox keeps the prototype's.
+            var catalog =
+                zoneArt != null && zoneArt.garden
+                    ? ParadiseGarden.Catalog(zoneArt)
+                    : AssetDatabase.LoadAssetAtPath<PlacementCatalog>(CatalogPath);
             var saveIndex = 0;
             foreach (var save in zone.saves)
             {
@@ -561,10 +565,11 @@ namespace Descender.EditorTools.Paradise
             {
                 SetTangents(spline, i, points[i].sharp, left[i], right[i]);
             }
+            // Ground at -101: the garden's depth shade (-100) goes over its fill, under its lips (-99).
             renderer.sortingOrder =
                 shape.profile == ParadiseLayout.Profile.Decor ? -200
                 : shape.profile == ParadiseLayout.Profile.Leaf ? -95
-                : -100;
+                : -101;
             if (shape.collides)
             {
                 go.layer = LayerMask.NameToLayer("World");
@@ -583,6 +588,10 @@ namespace Descender.EditorTools.Paradise
                     zoneArt,
                     masonry && zoneArt.terraceLip != null ? zoneArt.terraceLip : zoneArt.lip ?? zoneArt.ledge
                 );
+                if (zoneArt.garden && shape.collides)
+                {
+                    ParadiseGarden.Depth(go.transform, Sample(points, left, right, true), zoneArt);
+                }
             }
         }
 

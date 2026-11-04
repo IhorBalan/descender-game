@@ -36,6 +36,10 @@ namespace Descender.Pickups
         [SerializeField]
         private Sprite[] frames = new Sprite[0];
 
+        [Tooltip("Optional: shown only while this is the active checkpoint (a lantern's glow and light).")]
+        [SerializeField]
+        private GameObject lit;
+
         private bool active;
         private bool playerNear;
         private Canvas prompt;
@@ -208,6 +212,10 @@ namespace Descender.Pickups
         public void SetActive(bool value)
         {
             active = value;
+            if (lit != null)
+            {
+                lit.SetActive(value);
+            }
             var frame = value ? 1 : 0;
             if (frame < frames.Length && frames[frame] != null)
             {
