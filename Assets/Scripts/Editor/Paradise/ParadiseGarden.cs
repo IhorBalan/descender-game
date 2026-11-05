@@ -1571,7 +1571,10 @@ namespace Descender.EditorTools.Paradise
             // The texture's pivot is its top: the fall hangs from its lip, stretched to its foot.
             r.transform.position = new Vector3(w.x, w.top, 0f);
             r.transform.localScale = new Vector3(w.width / tex.bounds.size.x, height / tex.bounds.size.y, 1f);
-            r.gameObject.AddComponent<global::Descender.World.Paradise.Waterfall>().Configure(4f, 1.2f);
+            // A fall with no pool goes down into the clouds: it thins into mist over its last stretch.
+            var intoClouds = !w.foam;
+            var thinOver = Mathf.Min(12f, height * 0.4f);
+            r.gameObject.AddComponent<global::Descender.World.Paradise.Waterfall>().Configure(1f, intoClouds, thinOver);
             if (Sprites.ContainsKey("waterfall_spout"))
             {
                 // The carved channel mouth the water leaves from.
@@ -1588,27 +1591,103 @@ namespace Descender.EditorTools.Paradise
                     art
                 );
             }
+            // The water's look lives in its shaders' defaults: each build puts the materials
+            // back on them (the sheet keeps the zone's tint), so no stale value outlives a retune.
+            void Defaults(Material m)
+            {
+                var fresh = new Material(m.shader);
+                m.CopyPropertiesFromMaterial(fresh);
+                Object.DestroyImmediate(fresh);
+                EditorUtility.SetDirty(m);
+            }
+            Material Water(string name, string shader)
+            {
+                var m = ParadiseArt.SaveMaterial(name, shader);
+                Defaults(m);
+                return m;
+            }
+            var tint = art.water.GetColor("_Color");
+            Defaults(art.water);
+            art.water.SetColor("_Color", tint);
+            var droplets = Water("Paradise Water Droplets", "Descender/Water Spray");
+            droplets.SetFloat("_Round", 1f);
+            var puffs = Water("Paradise Water Puff", "Descender/Water Spray");
+            puffs.SetTexture("_MainTex", Get("mist_soft").texture);
+            puffs.SetFloat("_Round", 0f);
+            var mist = Water("Paradise Water Mist", "Descender/Water Mist");
+            var spray = new GameObject("Spray");
+            spray.transform.SetParent(parent, false);
             if (w.foam)
             {
-                Place(
+                // The pool on the deck where it lands: foam heaped under the fall, rings
+                // spreading across the water. Low, so the deck stays readable underfoot, and
+                // behind the deck's railing and plants, as the fall is.
+                const float poolHeight = 1.8f;
+                const float ground = 0.5f;
+                var poolWidth = w.width * 4.4f;
+                var pool = ParadiseArt.Sprite(
                     parent,
-                    "waterfall_foam",
-                    new Vector2(w.x, w.bottom - 0.2f),
-                    Mathf.Clamp(w.width / 2.5f, 0.6f, 1.3f),
-                    false,
-                    art.unlit,
-                    -86,
-                    art
+                    "Pool",
+                    tex,
+                    Water("Paradise Water Foam", "Descender/Water Foam"),
+                    -95,
+                    new Vector3(w.x, w.bottom - ground + poolHeight, 0f),
+                    new Vector3(poolWidth / tex.bounds.size.x, poolHeight / tex.bounds.size.y, 1f)
                 );
-                Mist(parent, new Vector2(w.x, w.bottom + 0.4f), 0.7f, art, -84);
+                pool.gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
+                    .Configure(new Vector4(w.width * 0.5f, ground, 0f, 0f));
+                Mist(parent, new Vector2(w.x, w.bottom + 0.1f), w.width * 0.6f, 3.2f, 0.34f, mist, -84);
+                spray.transform.position = new Vector3(w.x, w.bottom + 0.05f, 0f);
             }
-            Mist(parent, new Vector2(w.x, w.top - 0.3f), 0.4f, art, -104);
+            else
+            {
+                // Into the clouds: a tall plume over the stretch where the water thins away,
+                // behind the play layer, veiling the fall's end into the sea of cloud.
+                Mist(
+                    parent,
+                    new Vector2(w.x, w.bottom + thinOver * 0.2f),
+                    w.width * 0.8f,
+                    thinOver * 1.1f,
+                    0.5f,
+                    mist,
+                    -104
+                );
+                spray.transform.position = new Vector3(w.x, w.bottom + thinOver * 0.45f, 0f);
+            }
+            spray
+                .AddComponent<global::Descender.World.Paradise.WaterfallSpray>()
+                .Configure(droplets, puffs, w.width, intoClouds, thinOver, w.foam ? -94 : -104);
         }
 
-        private static void Mist(Transform parent, Vector2 at, float scale, ParadiseArt.ZoneArt art, int order)
+        /// <summary>
+        /// A plume of spray mist rising from `source` (its middle, `halfWidth` either side),
+        /// billowing up `rise` units and leaning downwind, at most `alpha` dense.
+        /// </summary>
+        private static void Mist(
+            Transform parent,
+            Vector2 source,
+            float halfWidth,
+            float rise,
+            float alpha,
+            Material material,
+            int order
+        )
         {
-            var r = ParadiseArt.Sprite(parent, "Mist", Get("mist_soft"), art.unlit, order, at, Vector3.one * scale);
-            r.color = new Color(1f, 1f, 1f, 0.45f);
+            var tex = Get("waterfall_tex");
+            const float below = 0.8f;
+            var size = new Vector2(halfWidth * 2f + rise * 1.7f + 1f, rise + below + 0.6f);
+            var r = ParadiseArt.Sprite(
+                parent,
+                "Mist",
+                tex,
+                material,
+                order,
+                new Vector3(source.x + rise * 0.15f, source.y - below + size.y, 0f),
+                new Vector3(size.x / tex.bounds.size.x, size.y / tex.bounds.size.y, 1f)
+            );
+            r.color = new Color(1f, 1f, 1f, alpha);
+            r.gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
+                .Configure(new Vector4(halfWidth, below, rise, -rise * 0.15f));
         }
 
         private static void Air(
