@@ -38,6 +38,8 @@ namespace Descender.EditorTools.Paradise
         {
             Sprites.Clear();
             WriteDepthTexture();
+            WriteContactShadow();
+            WriteCaps();
             ParadiseArt.DeriveFlipped(
                 $"{KitRoot}/Nature/island_bottom.png",
                 $"{ParadiseArt.DerivedFolder}/island_bottom_flip.png",
@@ -169,7 +171,7 @@ namespace Descender.EditorTools.Paradise
                 EditorUtility.SetDirty(art.foreground);
             }
             // A bright sky needs only a hint of rays.
-            art.shaft.SetFloat("_Intensity", 0.22f);
+            art.shaft.SetFloat("_Intensity", 0.15f);
             EditorUtility.SetDirty(art.shaft);
             art.water = ParadiseArt.SaveMaterial("Paradise Waterfall", "Descender/Waterfall");
             art.water.SetColor("_Color", new Color(0.92f, 0.97f, 1f, 0.92f));
@@ -202,17 +204,17 @@ namespace Descender.EditorTools.Paradise
                 return c;
             }
             var color = Get<ColorAdjustments>();
-            color.postExposure.Override(z == 1 ? 0.05f : 0f);
+            color.postExposure.Override(z == 1 ? -0.05f : -0.08f);
             color.contrast.Override(z == 1 ? 14f : 12f);
             color.saturation.Override(z == 1 ? 4f : 8f);
-            color.colorFilter.Override(z == 1 ? new Color(1f, 0.985f, 0.96f) : new Color(0.97f, 1f, 0.97f));
+            color.colorFilter.Override(z == 1 ? new Color(1f, 0.99f, 0.975f) : new Color(0.97f, 1f, 0.975f));
             var split = Get<SplitToning>();
             split.shadows.Override(new Color(0.42f, 0.5f, 0.62f));
             split.highlights.Override(new Color(0.66f, 0.58f, 0.42f));
             split.balance.Override(10f);
             var bloom = Get<Bloom>();
-            bloom.threshold.Override(1f);
-            bloom.intensity.Override(0.5f);
+            bloom.threshold.Override(1.15f);
+            bloom.intensity.Override(0.3f);
             bloom.scatter.Override(0.7f);
             bloom.tint.Override(new Color(1f, 0.95f, 0.85f));
             var vignette = Get<Vignette>();
@@ -330,13 +332,16 @@ namespace Descender.EditorTools.Paradise
 
             var plan = GardenPlan(zone);
             var props = ParadiseArt.Group(root, "Props");
+            var shadows = ParadiseArt.Group(root, "ContactShadows");
             foreach (var p in plan.plants)
             {
-                Place(props, p.name, p.at, p.scale, p.flip, art.plant, -85, art);
+                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, -85, art), p.at.x);
+                ContactShadow(shadows, p.name, p.at, p.scale, art);
             }
             foreach (var p in plan.ruins)
             {
-                Place(props, p.name, p.at, p.scale, p.flip, art.lit, -88, art);
+                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.lit, -88, art), p.at.x);
+                ContactShadow(shadows, p.name, p.at, p.scale, art);
             }
             foreach (var p in plan.trees)
             {
@@ -346,7 +351,11 @@ namespace Descender.EditorTools.Paradise
             foreach (var p in plan.walls)
             {
                 var hangs = p.name == "ivy_curtain" || p.name == "wisteria_drape" || p.name.StartsWith("ivy_drape");
-                Place(props, p.name, p.at, p.scale, p.flip, art.plant, hangs ? -98 : -86, art);
+                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, hangs ? -98 : -86, art), p.at.x);
+                if (!hangs)
+                {
+                    ContactShadow(shadows, p.name, p.at, p.scale, art);
+                }
             }
             foreach (var p in plan.framing)
             {
@@ -362,6 +371,8 @@ namespace Descender.EditorTools.Paradise
                 r.flipX = p.flip;
                 r.gameObject.AddComponent<ForegroundParallax>().Configure(0.15f);
             }
+            Railings(zone, ParadiseArt.Group(root, "Railings"), art);
+            Pilasters(zone, ParadiseArt.Group(root, "Pilasters"), art);
             var hanging = ParadiseArt.Group(root, "Hanging");
             foreach (var p in plan.hanging)
             {
@@ -463,6 +474,196 @@ namespace Descender.EditorTools.Paradise
             );
         }
 
+        // --------------------------------------------------------------- railings
+
+        /// <summary>The steepest a balustrade follows a walk, in degrees: beyond, its balusters would lean.</summary>
+        private const float RailingMaxSlope = 12f;
+
+        private const float RailingPiece = 4f;
+
+        /// <summary>
+        /// Balustrades along the far side of every deck and built terrace, as in the key art:
+        /// behind the hero and the plants, their foot on the walk, in pieces that follow the
+        /// walk's slope where it is gentle and stop where it is steep. Natural rock gets none.
+        /// </summary>
+        private static void Railings(ParadiseLayout.Zone zone, Transform parent, ParadiseArt.ZoneArt art)
+        {
+            if (!Sprites.ContainsKey("balustrade"))
+            {
+                return;
+            }
+            foreach (var bridge in zone.bridges)
+            {
+                var (left, right) = ParadiseGreybox.Tangents(bridge.deck, false);
+                var line = ParadiseGreybox.Sample(bridge.deck, left, right, false);
+                Railing(
+                    parent,
+                    x => DeckY(line, x),
+                    bridge.deck[0].x + 0.3f,
+                    bridge.deck[bridge.deck.Count - 1].x - 0.3f,
+                    art
+                );
+            }
+            foreach (var shape in zone.shapes)
+            {
+                if (!zone.masonry.Contains(shape.name))
+                {
+                    continue;
+                }
+                var end = 0;
+                while (end + 1 < shape.outline.Count && shape.outline[end + 1].x >= shape.outline[end].x - 0.001f)
+                {
+                    end++;
+                }
+                Railing(
+                    parent,
+                    x => ParadiseDressing.SurfaceY(zone, x, float.NaN),
+                    shape.outline[0].x + 0.5f,
+                    shape.outline[end].x - 0.5f,
+                    art
+                );
+            }
+        }
+
+        private static void Railing(
+            Transform parent,
+            System.Func<float, float> surface,
+            float x0,
+            float x1,
+            ParadiseArt.ZoneArt art
+        )
+        {
+            var sprite = Get("balustrade");
+            for (var a = x0; a < x1 - 1f; a += RailingPiece)
+            {
+                var b = Mathf.Min(a + RailingPiece, x1);
+                var ya = surface(a);
+                var yb = surface(b);
+                var ym = surface((a + b) / 2f);
+                var angle = Mathf.Atan2(yb - ya, b - a) * Mathf.Rad2Deg;
+                var fits =
+                    !float.IsNaN(ya)
+                    && !float.IsNaN(yb)
+                    && !float.IsNaN(ym)
+                    // A step or a gap inside the piece: no railing over it.
+                    && Mathf.Abs(ym - (ya + yb) / 2f) <= 0.3f
+                    && Mathf.Abs(angle) <= RailingMaxSlope;
+                if (!fits)
+                {
+                    continue;
+                }
+                var r = ParadiseArt.Sprite(
+                    parent,
+                    "Balustrade",
+                    sprite,
+                    art.lit,
+                    -90,
+                    new Vector3((a + b) / 2f, (ya + yb) / 2f - 0.08f, 0f),
+                    Vector3.one * 0.8f
+                );
+                r.transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                r.drawMode = SpriteDrawMode.Tiled;
+                r.tileMode = SpriteTileMode.Continuous;
+                // A hair longer than the step, so neighbouring pieces meet without a seam.
+                r.size = new Vector2((b - a) / 0.8f / Mathf.Cos(angle * Mathf.Deg2Rad) + 0.1f, sprite.bounds.size.y);
+            }
+        }
+
+        /// <summary>
+        /// A pilaster on every corner of a built terrace: where it steps up (a riser, from the
+        /// lower walk to the upper coping) and where it ends at a drop (from its coping down
+        /// into the shade). Masons finish a wall's corner with a pier, so the blocks and the
+        /// coping never stop in a bare cut.
+        /// </summary>
+        private static void Pilasters(ParadiseLayout.Zone zone, Transform parent, ParadiseArt.ZoneArt art)
+        {
+            if (!Sprites.ContainsKey("column_shaft"))
+            {
+                return;
+            }
+            foreach (var shape in zone.shapes)
+            {
+                if (!zone.masonry.Contains(shape.name))
+                {
+                    continue;
+                }
+                var points = shape.outline;
+                var end = 0;
+                while (end + 1 < points.Count && points[end + 1].x >= points[end].x - 0.001f)
+                {
+                    end++;
+                }
+                for (var i = 0; i < end; i++)
+                {
+                    var a = points[i];
+                    var b = points[i + 1];
+                    if (Mathf.Abs(b.x - a.x) < 0.01f && Mathf.Abs(b.y - a.y) >= 3f)
+                    {
+                        Pilaster(parent, a.x, Mathf.Max(a.y, b.y), Mathf.Min(a.y, b.y), true, art);
+                    }
+                }
+                // The terrace's two ends, where its wall drops away.
+                Pilaster(parent, points[0].x, points[0].y, points[0].y - 14f, false, art);
+                Pilaster(parent, points[end].x, points[end].y, points[end].y - 14f, false, art);
+            }
+        }
+
+        private static void Pilaster(
+            Transform parent,
+            float x,
+            float top,
+            float foot,
+            bool standing,
+            ParadiseArt.ZoneArt art
+        )
+        {
+            const float width = 0.85f;
+            var pilaster = new GameObject("Pilaster").transform;
+            pilaster.SetParent(parent, false);
+            var tint = new Color(0.93f, 0.93f, 0.95f);
+            var shaftFoot = foot;
+            if (standing)
+            {
+                var b = ParadiseArt.Sprite(
+                    pilaster,
+                    "Base",
+                    Get("column_base"),
+                    art.lit,
+                    -97,
+                    new Vector3(x, foot - 0.05f, 0f),
+                    Vector3.one * width
+                );
+                b.color = tint;
+                shaftFoot = foot + 0.8f * width;
+            }
+            // The capital's abacus meets the coping's underside (the coping strip is centred on
+            // the walk line and hangs about 0.7 below it).
+            var capitalFoot = top - 0.68f - width;
+            var shaft = ParadiseArt.Sprite(
+                pilaster,
+                "Shaft",
+                Get("column_shaft"),
+                art.lit,
+                -98,
+                new Vector3(x, shaftFoot, 0f),
+                new Vector3(ShaftWidth * width, 1f, 1f)
+            );
+            shaft.drawMode = SpriteDrawMode.Tiled;
+            shaft.tileMode = SpriteTileMode.Continuous;
+            shaft.size = new Vector2(1f, Mathf.Max(0.2f, capitalFoot - shaftFoot + 0.3f));
+            shaft.color = tint;
+            var cap = ParadiseArt.Sprite(
+                pilaster,
+                "Capital",
+                Get("column_capital"),
+                art.lit,
+                -97,
+                new Vector3(x, capitalFoot, 0f),
+                Vector3.one * width
+            );
+            cap.color = tint;
+        }
+
         /// <summary>The region's far landmark: the golden tree on its island, drifting across Heaven 1.</summary>
         public static void DressRegion(GameObject root)
         {
@@ -561,7 +762,7 @@ namespace Descender.EditorTools.Paradise
                 {
                     vertices.Add(p);
                     // v 1 at the surface, falling with depth (the texture clamps past its reach).
-                    uvs.Add(new Vector2(0.5f, 1f - Mathf.Max(0f, Smoothed(p.x) - p.y) / DepthReach));
+                    uvs.Add(new Vector2(p.x / WeatherPeriod, 1f - Mathf.Max(0f, Smoothed(p.x) - p.y) / DepthReach));
                 }
                 if (Crossings(outline, xa + DepthStrip * 0.5f) <= 2)
                 {
@@ -574,7 +775,12 @@ namespace Descender.EditorTools.Paradise
                     centre /= strip.Count;
                     var c = vertices.Count;
                     vertices.Add(centre);
-                    uvs.Add(new Vector2(0.5f, 1f - Mathf.Max(0f, Smoothed(centre.x) - centre.y) / DepthReach));
+                    uvs.Add(
+                        new Vector2(
+                            centre.x / WeatherPeriod,
+                            1f - Mathf.Max(0f, Smoothed(centre.x) - centre.y) / DepthReach
+                        )
+                    );
                     for (var i = 0; i < strip.Count; i++)
                     {
                         triangles.Add(c);
@@ -796,22 +1002,69 @@ namespace Descender.EditorTools.Paradise
             return material;
         }
 
-        /// <summary>The depth shade's texture, written once per build from the curve here.</summary>
+        /// <summary>How far along the ground the weathering repeats, in units.</summary>
+        private const float WeatherPeriod = 24f;
+
+        /// <summary>
+        /// The depth shade's texture, written once per build: across, one WeatherPeriod of
+        /// ground; down, DepthReach units below the walk (the top row at the surface). It is
+        /// the stone's weathering as well as its shade, so a wall or a rock face looks aged
+        /// and lit by the sky rather than printed:
+        /// - the cool shadow deepening below the walk;
+        /// - broad patches, some darker and warmer (old grime), some paler (sun-bleached),
+        ///   so neighbouring tiles of the same texture never read the same;
+        /// - streaks of grime and moss running down from under the coping, where rain drips.
+        /// Every pattern repeats exactly across the width, so the ground has no seam.
+        /// </summary>
         private static void WriteDepthTexture()
         {
-            // Rows run bottom-up: the top row (v 1) is at the surface, lower rows deeper.
-            var texture = new Texture2D(4, 256, TextureFormat.RGBA32, false);
+            const int w = 512;
+            const int h = 256;
+            var texture = new Texture2D(w, h, TextureFormat.RGBA32, false);
             var shade = new Color(0.15f, 0.19f, 0.3f);
-            for (var y = 0; y < 256; y++)
+            var grime = new Color(0.27f, 0.22f, 0.13f);
+            var moss = new Color(0.24f, 0.31f, 0.14f);
+            var bleach = new Color(1f, 0.97f, 0.9f);
+            var streaks = Streaks();
+            for (var y = 0; y < h; y++)
             {
-                var depth = (255 - y) / 255f * DepthReach;
+                var depth = (h - 1 - y) / (float)(h - 1) * DepthReach;
+                var v = depth / DepthReach;
                 // The view shows about four units under the walk: the shade has to start within it.
                 var a =
                     Mathf.SmoothStep(0f, 0.56f, Mathf.InverseLerp(0.8f, 4.6f, depth))
                     + Mathf.SmoothStep(0f, 0.14f, Mathf.InverseLerp(5f, 22f, depth));
-                for (var x = 0; x < 4; x++)
+                for (var x = 0; x < w; x++)
                 {
-                    texture.SetPixel(x, y, new Color(shade.r, shade.g, shade.b, a));
+                    var u = x / (float)w;
+                    var c = new Color(shade.r, shade.g, shade.b, a);
+                    // Broad patches (periodic in u, so the texture repeats without a seam).
+                    var n =
+                        0.5f * Mathf.Sin(2f * Mathf.PI * (3f * u) + 1.3f + 2.2f * v)
+                        + 0.3f * Mathf.Sin(2f * Mathf.PI * (7f * u) + 2f * Mathf.Sin(2f * Mathf.PI * 1.5f * v))
+                        + 0.2f * Mathf.Sin(2f * Mathf.PI * (13f * u) + 5f * v + 0.7f);
+                    var below = Mathf.InverseLerp(0.4f, 1.6f, depth);
+                    if (n > 0f)
+                    {
+                        c = Over(c, grime, 0.16f * n * below);
+                    }
+                    else
+                    {
+                        c = Over(c, bleach, 0.1f * -n * below);
+                    }
+                    // Drip streaks from under the walk's edge.
+                    foreach (var (sx, width, length, strength, mossy) in streaks)
+                    {
+                        var dx = Mathf.Abs(Mathf.Repeat(u - sx + 0.5f, 1f) - 0.5f) * WeatherPeriod;
+                        if (dx > width || depth < 0.5f || depth > length + 0.5f)
+                        {
+                            continue;
+                        }
+                        var across = 1f - dx / width;
+                        var along = 1f - Mathf.InverseLerp(0.5f, length + 0.5f, depth);
+                        c = Over(c, mossy ? moss : grime, strength * across * across * along);
+                    }
+                    texture.SetPixel(x, y, c);
                 }
             }
             Directory.CreateDirectory(ParadiseArt.DerivedFolder);
@@ -820,11 +1073,224 @@ namespace Descender.EditorTools.Paradise
             AssetDatabase.ImportAsset(DepthTexturePath, ImportAssetOptions.ForceSynchronousImport);
             var importer = (TextureImporter)AssetImporter.GetAtPath(DepthTexturePath);
             importer.textureType = TextureImporterType.Default;
-            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.wrapModeU = TextureWrapMode.Repeat;
+            importer.wrapModeV = TextureWrapMode.Clamp;
             importer.filterMode = FilterMode.Bilinear;
             importer.mipmapEnabled = false;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.SaveAndReimport();
+        }
+
+        /// <summary>The drip streaks in one period: where (0..1), half-width and length (units), strength, moss or grime.</summary>
+        private static List<(float x, float width, float length, float strength, bool mossy)> Streaks()
+        {
+            var result = new List<(float, float, float, float, bool)>();
+            for (var i = 0; i < 26; i++)
+            {
+                var x = Hash(i, 41f);
+                var width = 0.06f + Hash(i, 42f) * 0.22f;
+                var length = 0.8f + Hash(i, 43f) * Hash(i, 44f) * 4.5f;
+                var strength = 0.12f + Hash(i, 45f) * 0.2f;
+                result.Add((x, width, length, strength, Hash(i, 46f) > 0.6f));
+            }
+            return result;
+        }
+
+        /// <summary>Straight-alpha "over": `top` at `amount` laid on `under`.</summary>
+        private static Color Over(Color under, Color top, float amount)
+        {
+            amount = Mathf.Clamp01(amount);
+            var a = amount + under.a * (1f - amount);
+            if (a <= 1e-5f)
+            {
+                return new Color(top.r, top.g, top.b, 0f);
+            }
+            var r = (top.r * amount + under.r * under.a * (1f - amount)) / a;
+            var g = (top.g * amount + under.g * under.a * (1f - amount)) / a;
+            var b = (top.b * amount + under.b * under.a * (1f - amount)) / a;
+            return new Color(r, g, b, a);
+        }
+
+        // ------------------------------------------------------------------- caps
+
+        /// <summary>How much of a strip's length its rounded end cap takes, in units.</summary>
+        public const float CapLength = 0.45f;
+
+        /// <summary>The strips that get rounded end caps: decks, terrace copings, grass lips.</summary>
+        private static readonly string[] CappedStrips = { "deck_top", "wall_cap", "grass_lip" };
+
+        private static string CapPath(string strip, bool left) =>
+            $"{ParadiseArt.DerivedFolder}/{strip}_cap_{(left ? "left" : "right")}.png";
+
+        /// <summary>Whether a strip's two caps exist (made by Prepare from the kit).</summary>
+        public static bool CapsReady(string strip) =>
+            !string.IsNullOrEmpty(strip)
+            && AssetDatabase.LoadAssetAtPath<Sprite>(CapPath(strip, true)) != null
+            && AssetDatabase.LoadAssetAtPath<Sprite>(CapPath(strip, false)) != null;
+
+        /// <summary>
+        /// A rounded cap finishing a strip at one end: its painted strip stops CapLength short
+        /// of `end` (the caller insets it), and the cap fills that length, its outer corners
+        /// rounded like worn stone. `inward` points from the end along the strip.
+        /// </summary>
+        public static void Cap(
+            Transform parent,
+            string strip,
+            Vector2 end,
+            Vector2 inward,
+            bool left,
+            Material material,
+            int order
+        )
+        {
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(CapPath(strip, left));
+            var along = left ? inward : -inward;
+            var r = ParadiseArt.Sprite(
+                parent,
+                left ? "CapLeft" : "CapRight",
+                sprite,
+                material,
+                order,
+                end + inward * CapLength,
+                Vector3.one
+            );
+            r.transform.rotation = Quaternion.Euler(0f, 0f, Mathf.Atan2(along.y, along.x) * Mathf.Rad2Deg);
+        }
+
+        /// <summary>A deck's two ends capped (its strip is inset by ParadiseGreybox.BuildLedge).</summary>
+        public static void DeckCaps(Transform parent, List<ParadiseLayout.P> points, ParadiseArt.ZoneArt art)
+        {
+            var last = points.Count - 1;
+            Cap(parent, "deck_top", points[0].V, (points[1].V - points[0].V).normalized, true, art.lit, -90);
+            Cap(
+                parent,
+                "deck_top",
+                points[last].V,
+                (points[last - 1].V - points[last].V).normalized,
+                false,
+                art.lit,
+                -90
+            );
+        }
+
+        /// <summary>
+        /// Every capped strip's two caps: a slice from the middle of the strip (its ends are
+        /// ragged), with the outer corners rounded, a small radius at the top and a large one
+        /// under the stone, anti-aliased, pivoted like the strip so it lines up with it.
+        /// </summary>
+        private static void WriteCaps()
+        {
+            foreach (var strip in CappedStrips)
+            {
+                var folder = strip == "grass_lip" ? "Nature" : "Architecture";
+                var sourcePath = $"{KitRoot}/{folder}/{strip}.png";
+                if (!File.Exists(sourcePath))
+                {
+                    continue;
+                }
+                var importer = AssetImporter.GetAtPath(sourcePath) as TextureImporter;
+                var ppu = importer != null ? importer.spritePixelsPerUnit : 64f;
+                var pivotY = 0.5f;
+                if (importer != null)
+                {
+                    var settings = new TextureImporterSettings();
+                    importer.ReadTextureSettings(settings);
+                    pivotY = settings.spritePivot.y;
+                }
+                var source = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                source.LoadImage(File.ReadAllBytes(sourcePath));
+                var w = Mathf.Max(4, Mathf.RoundToInt(CapLength * ppu));
+                var x0 = Mathf.RoundToInt(source.width * 0.4f);
+                WriteCap(source, x0, w, true, CapPath(strip, true), ppu, pivotY);
+                WriteCap(source, x0, w, false, CapPath(strip, false), ppu, pivotY);
+                Object.DestroyImmediate(source);
+            }
+        }
+
+        private static void WriteCap(
+            Texture2D source,
+            int x0,
+            int w,
+            bool outerLeft,
+            string path,
+            float ppu,
+            float pivotY
+        )
+        {
+            var h = source.height;
+            var cap = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            // The painted body's extent (rows with real alpha), so the radii fit the stone, not the padding.
+            var lowest = h;
+            var highest = -1;
+            for (var y = 0; y < h; y++)
+            {
+                for (var x = 0; x < w; x++)
+                {
+                    if (source.GetPixel(x0 + x, y).a > 0.5f)
+                    {
+                        lowest = Mathf.Min(lowest, y);
+                        highest = Mathf.Max(highest, y);
+                    }
+                }
+            }
+            if (highest < 0)
+            {
+                lowest = 0;
+                highest = h - 1;
+            }
+            var body = highest - lowest + 1;
+            var top = body * 0.16f;
+            var bottom = Mathf.Min(w * 0.95f, body * 0.45f);
+            for (var y = 0; y < h; y++)
+            {
+                for (var x = 0; x < w; x++)
+                {
+                    var c = source.GetPixel(x0 + x, y);
+                    var fromOuter = outerLeft ? x + 0.5f : w - x - 0.5f;
+                    var fromBottom = y - lowest + 0.5f;
+                    var fromTop = highest - y + 0.5f;
+                    var coverage = 1f;
+                    if (fromOuter < top && fromTop < top)
+                    {
+                        coverage = Corner(fromOuter, fromTop, top);
+                    }
+                    else if (fromOuter < bottom && fromBottom < bottom)
+                    {
+                        coverage = Corner(fromOuter, fromBottom, bottom);
+                    }
+                    c.a *= coverage;
+                    cap.SetPixel(x, y, c);
+                }
+            }
+            File.WriteAllBytes(path, cap.EncodeToPNG());
+            Object.DestroyImmediate(cap);
+            AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+            var importer = (TextureImporter)AssetImporter.GetAtPath(path);
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = ppu;
+            var settings = new TextureImporterSettings();
+            importer.ReadTextureSettings(settings);
+            settings.spriteMeshType = SpriteMeshType.FullRect;
+            settings.spriteAlignment = (int)SpriteAlignment.Custom;
+            // On the joint with the strip, at the strip's own pivot height.
+            settings.spritePivot = new Vector2(outerLeft ? 1f : 0f, pivotY);
+            importer.SetTextureSettings(settings);
+            importer.alphaIsTransparency = true;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.filterMode = FilterMode.Bilinear;
+            importer.mipmapEnabled = false;
+            importer.textureCompression = TextureImporterCompression.CompressedHQ;
+            importer.SaveAndReimport();
+        }
+
+        /// <summary>Coverage of a pixel in a rounded corner of the given radius, with a one-pixel soft edge.</summary>
+        private static float Corner(float u, float v, float radius)
+        {
+            var dx = radius - u;
+            var dy = radius - v;
+            var d = Mathf.Sqrt(dx * dx + dy * dy) - radius;
+            return Mathf.Clamp01(0.5f - d);
         }
 
         public const string CheckpointPath = "Assets/Prefabs/Paradise/Checkpoint Garden.prefab";
@@ -899,12 +1365,12 @@ namespace Descender.EditorTools.Paradise
                     Get("column_shaft"),
                     art.lit,
                     -3,
-                    new Vector3(0f, 0.8f),
-                    new Vector3(0.8f, 1f, 1f)
+                    new Vector3(0f, 0.7f),
+                    new Vector3(ShaftWidth * 0.9f, 1f, 1f)
                 );
                 shaft.drawMode = SpriteDrawMode.Tiled;
                 shaft.tileMode = SpriteTileMode.Continuous;
-                shaft.size = new Vector2(1f, 1.1f);
+                shaft.size = new Vector2(1f, 1.4f);
                 ParadiseArt.Sprite(
                     shrine,
                     "Capital",
@@ -921,7 +1387,7 @@ namespace Descender.EditorTools.Paradise
                     Get("lantern"),
                     art.lit,
                     -1,
-                    new Vector3(0f, 2.7f + 1.2f * 1.1f),
+                    new Vector3(0f, 2.7f + 1.2f * 1.1f - 0.24f),
                     Vector3.one * 1.1f
                 );
                 var lit = new GameObject("Lit");
@@ -985,7 +1451,7 @@ namespace Descender.EditorTools.Paradise
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
-        private static void Place(
+        private static SpriteRenderer Place(
             Transform parent,
             string name,
             Vector2 at,
@@ -1012,6 +1478,81 @@ namespace Descender.EditorTools.Paradise
                 g.transform.localScale = Vector3.one;
                 g.flipX = flip;
             }
+            return r;
+        }
+
+        private const string ContactShadowPath = ParadiseArt.DerivedFolder + "/contact_shadow.png";
+
+        /// <summary>
+        /// A soft shadow where a prop meets the ground (AO, as Playdead grounds its props): a
+        /// flat dark ellipse under its foot, about as wide as the prop, so nothing looks pasted on.
+        /// </summary>
+        private static void ContactShadow(
+            Transform parent,
+            string name,
+            Vector2 at,
+            float scale,
+            ParadiseArt.ZoneArt art
+        )
+        {
+            var shadow = AssetDatabase.LoadAssetAtPath<Sprite>(ContactShadowPath);
+            if (shadow == null || !Sprites.TryGetValue(name, out var sprite))
+            {
+                return;
+            }
+            var width = sprite.bounds.size.x * scale * 0.95f;
+            var r = ParadiseArt.Sprite(
+                parent,
+                "Shadow",
+                shadow,
+                art.unlit,
+                -94,
+                new Vector3(at.x, at.y + 0.04f, 0f),
+                new Vector3(width / shadow.bounds.size.x, 0.42f / shadow.bounds.size.y, 1f)
+            );
+            r.color = new Color(0.1f, 0.12f, 0.2f, 0.5f);
+        }
+
+        /// <summary>A repeated piece made a little lighter or darker, so a run of them is not one stamp.</summary>
+        private static void Vary(SpriteRenderer r, float x)
+        {
+            // Brightness and a little warmth both vary: no two plants of a kind are the same green.
+            var v = 0.88f + Hash(x, 31f) * 0.12f;
+            var warm = Hash(x, 32f) - 0.5f;
+            r.color = new Color(v * (1f + 0.05f * warm), v, v * (1f - 0.07f * warm), 1f);
+        }
+
+        /// <summary>The contact shadow's texture: a soft-edged ellipse, darkest under the middle.</summary>
+        private static void WriteContactShadow()
+        {
+            const int w = 128;
+            const int h = 32;
+            var texture = new Texture2D(w, h, TextureFormat.RGBA32, false);
+            for (var y = 0; y < h; y++)
+            {
+                for (var x = 0; x < w; x++)
+                {
+                    var dx = (x + 0.5f) / w * 2f - 1f;
+                    var dy = (y + 0.5f) / h * 2f - 1f;
+                    var d = Mathf.Sqrt(dx * dx + dy * dy);
+                    var a = Mathf.SmoothStep(1f, 0f, Mathf.Clamp01(d));
+                    texture.SetPixel(x, y, new Color(1f, 1f, 1f, a * a));
+                }
+            }
+            Directory.CreateDirectory(ParadiseArt.DerivedFolder);
+            File.WriteAllBytes(ContactShadowPath, texture.EncodeToPNG());
+            Object.DestroyImmediate(texture);
+            AssetDatabase.ImportAsset(ContactShadowPath, ImportAssetOptions.ForceSynchronousImport);
+            var importer = (TextureImporter)AssetImporter.GetAtPath(ContactShadowPath);
+            importer.textureType = TextureImporterType.Sprite;
+            importer.spriteImportMode = SpriteImportMode.Single;
+            importer.spritePixelsPerUnit = 128f;
+            importer.alphaIsTransparency = true;
+            importer.wrapMode = TextureWrapMode.Clamp;
+            importer.filterMode = FilterMode.Bilinear;
+            importer.mipmapEnabled = false;
+            importer.textureCompression = TextureImporterCompression.Uncompressed;
+            importer.SaveAndReimport();
         }
 
         private static void Fall(Transform parent, Waterfall w, ParadiseArt.ZoneArt art)
@@ -1112,7 +1653,11 @@ namespace Descender.EditorTools.Paradise
             var springs = new float[feet.Count];
             for (var i = 0; i < feet.Count; i++)
             {
-                springs[i] = DeckY(line, feet[i].x) - deckDepth;
+                // Up into the deck by a little, measured at the capital's higher corner, so the
+                // capital carries the deck with no sky between them on a slope either.
+                var x = feet[i].x;
+                var under = Mathf.Max(DeckY(line, x - CapitalHalfWidth), DeckY(line, x + CapitalHalfWidth));
+                springs[i] = under - deckDepth + DeckSeat;
             }
             // Level between neighbours: an arch carries the deck, so the column stops at its springing.
             var arched = new bool[feet.Count];
@@ -1167,6 +1712,15 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
+        /// <summary>Half the capital's width, where it meets the deck above.</summary>
+        private const float CapitalHalfWidth = 0.8f;
+
+        /// <summary>How far a capital reaches up behind the deck it carries, so they meet without a gap.</summary>
+        private const float DeckSeat = 0.3f;
+
+        /// <summary>The shaft's width to match the capital's neck (the painted shaft is 0.86 units across, the neck 1).</summary>
+        private const float ShaftWidth = 1.1f;
+
         /// <summary>How far an arch's crown sits above its springing line (arch_span: 256 px, walkable row 16).</summary>
         public const float ArchRise = (256f - 16f) / 64f;
 
@@ -1194,6 +1748,7 @@ namespace Descender.EditorTools.Paradise
                     new Vector3(x, ground - 0.05f, 0f),
                     Vector3.one
                 );
+                ContactShadow(column, "column_base", new Vector2(x, ground - 0.05f), 1.15f, art);
             }
             var capitalFoot = top - 1f;
             if (capitalFoot - shaftFoot > 0.2f)
@@ -1204,12 +1759,12 @@ namespace Descender.EditorTools.Paradise
                     Get("column_shaft"),
                     art.lit,
                     -121,
-                    new Vector3(x, shaftFoot, 0f),
-                    Vector3.one
+                    new Vector3(x, shaftFoot - 0.15f, 0f),
+                    new Vector3(ShaftWidth, 1f, 1f)
                 );
                 shaft.drawMode = SpriteDrawMode.Tiled;
                 shaft.tileMode = SpriteTileMode.Continuous;
-                shaft.size = new Vector2(1f, capitalFoot - shaftFoot + 0.05f);
+                shaft.size = new Vector2(1f, capitalFoot - shaftFoot + 0.45f);
             }
             ParadiseArt.Sprite(
                 column,
@@ -1439,26 +1994,6 @@ namespace Descender.EditorTools.Paradise
             }
             if (zone.number == 1)
             {
-                if (Sprites.ContainsKey("loggia_frame"))
-                {
-                    plan.framing.Add(
-                        new Spot
-                        {
-                            name = "loggia_frame",
-                            at = new Vector2(8f, ParadiseDressing.SurfaceY(zone, 8f) - 4f),
-                            scale = 1f,
-                        }
-                    );
-                    plan.framing.Add(
-                        new Spot
-                        {
-                            name = "loggia_frame",
-                            at = new Vector2(335f, ParadiseDressing.SurfaceY(zone, 335f) - 4f),
-                            scale = 1f,
-                            flip = true,
-                        }
-                    );
-                }
                 // A ruined garden: a fallen arch and broken columns where the old loggia stood.
                 plan.ruins.Add(
                     new Spot
@@ -1564,17 +2099,6 @@ namespace Descender.EditorTools.Paradise
                             );
                         }
                     }
-                }
-                if (Sprites.ContainsKey("loggia_frame"))
-                {
-                    plan.framing.Add(
-                        new Spot
-                        {
-                            name = "loggia_frame",
-                            at = new Vector2(880f, ParadiseDressing.SurfaceY(zone, 880f) - 4f),
-                            scale = 1f,
-                        }
-                    );
                 }
                 plan.ruins.Add(
                     new Spot

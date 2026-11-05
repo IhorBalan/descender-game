@@ -327,8 +327,8 @@
       "purpose": "Round arch between column centres 6 units apart: voussoirs, gold keystone, entablature, grassy top",
       "zone": "garden",
       "size": [
-        486,
-        256
+        972,
+        512
       ],
       "sizeUnits": [
         7.594,
@@ -338,15 +338,15 @@
         0.1049,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
-      "walkableRow": 16,
-      "springingRow": 256,
-      "leftColumnCentreX": 51.0,
-      "rightColumnCentreX": 435.0,
-      "columnSpacingPx": 384,
-      "archInnerRadiusPx": 141.0,
+      "walkableRow": 32,
+      "springingRow": 512,
+      "leftColumnCentreX": 102,
+      "rightColumnCentreX": 870,
+      "columnSpacingPx": 768,
+      "archInnerRadiusPx": 282,
       "keystoneCentrePx": [
         243.0,
         72.0
@@ -358,8 +358,8 @@
       "purpose": "Round arch between column centres 10 units apart: voussoirs, gold keystone, entablature, grassy top",
       "zone": "garden",
       "size": [
-        742,
-        384
+        1484,
+        768
       ],
       "sizeUnits": [
         11.594,
@@ -369,15 +369,15 @@
         0.0687,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
-      "walkableRow": 16,
-      "springingRow": 384,
-      "leftColumnCentreX": 51.0,
-      "rightColumnCentreX": 691.0,
-      "columnSpacingPx": 640,
-      "archInnerRadiusPx": 269.0,
+      "walkableRow": 32,
+      "springingRow": 768,
+      "leftColumnCentreX": 102,
+      "rightColumnCentreX": 1382,
+      "columnSpacingPx": 1280,
+      "archInnerRadiusPx": 538,
       "keystoneCentrePx": [
         371.0,
         72.0
@@ -389,8 +389,8 @@
       "purpose": "Balustrade for terrace edges (decor in front of the walkway)",
       "zone": "garden",
       "size": [
-        512,
-        77
+        1024,
+        154
       ],
       "sizeUnits": [
         8.0,
@@ -400,13 +400,13 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
       ],
       "railTopRow": 0,
-      "footRow": 77,
+      "footRow": 154,
       "attach": "foot (bottom edge) on the walkable line"
     },
     {
@@ -414,8 +414,8 @@
       "purpose": "Cream banner with gold sun emblem on a gold rod; hangs from the rod",
       "zone": "garden",
       "size": [
-        77,
-        224
+        154,
+        448
       ],
       "sizeUnits": [
         1.203,
@@ -425,18 +425,18 @@
         0.5,
         0.9732
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
-      "hangRow": 6
+      "hangRow": 12
     },
     {
       "path": "Assets/Art/Paradise/Kit/Architecture/broken_column.png",
       "purpose": "Ruin: broken column on its base, mossy",
       "zone": "garden",
       "size": [
-        102,
-        192
+        204,
+        384
       ],
       "sizeUnits": [
         1.594,
@@ -446,7 +446,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -455,8 +455,8 @@
       "purpose": "Column base: plinth with torus mouldings, gold fillet",
       "zone": "garden",
       "size": [
-        102,
-        64
+        204,
+        128
       ],
       "sizeUnits": [
         1.594,
@@ -466,7 +466,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
       "topAttachRow": 0,
@@ -477,8 +477,8 @@
       "purpose": "Corinthian-ish capital: acanthus curls, volutes, gold",
       "zone": "garden",
       "size": [
-        102,
-        64
+        204,
+        128
       ],
       "sizeUnits": [
         1.594,
@@ -488,10 +488,10 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
-      "bottomAttachRow": 63,
+      "bottomAttachRow": 126,
       "springingRow": 0,
       "attach": "pivot = bottom centre on the shaft top; top edge (row 0) is the arch springing line"
     },
@@ -500,8 +500,8 @@
       "purpose": "Fluted marble column shaft, repeats vertically (1 x 4 units)",
       "zone": "garden",
       "size": [
-        64,
-        256
+        128,
+        512
       ],
       "sizeUnits": [
         1.0,
@@ -511,12 +511,12 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "y"
       ],
-      "shaftWidthPx": 54,
+      "shaftWidthPx": 108,
       "attach": "stack on column_base top edge; capital sits on the top edge"
     },
     {
@@ -524,8 +524,8 @@
       "purpose": "Marble walkway/entablature strip with mossy, flowery top",
       "zone": "garden",
       "size": [
-        512,
-        77
+        1024,
+        154
       ],
       "sizeUnits": [
         8.0,
@@ -535,20 +535,20 @@
         0.5,
         0.7662
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
       ],
-      "walkableRow": 18
+      "walkableRow": 36
     },
     {
       "path": "Assets/Art/Paradise/Kit/Architecture/fallen_arch_fragment.png",
       "purpose": "Ruin: fallen arch ring segment in the grass",
       "zone": "garden",
       "size": [
-        256,
-        128
+        512,
+        256
       ],
       "sizeUnits": [
         4.0,
@@ -558,7 +558,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -567,8 +567,8 @@
       "purpose": "Small hanging gold lantern; hangs from the top",
       "zone": "garden",
       "size": [
-        38,
-        77
+        76,
+        154
       ],
       "sizeUnits": [
         0.594,
@@ -578,7 +578,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -607,8 +607,8 @@
       "purpose": "Foreground framing piece for the screen's left edge: column + arch + entablature, ivy and wisteria",
       "zone": "garden",
       "size": [
-        384,
-        704
+        768,
+        1408
       ],
       "sizeUnits": [
         6.0,
@@ -618,19 +618,19 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
-      "columnCentreX": 333.0,
-      "springingRow": 256
+      "columnCentreX": 666,
+      "springingRow": 512
     },
     {
       "path": "Assets/Art/Paradise/Kit/Architecture/wall_block.png",
       "purpose": "Noble weathered marble ashlar: 1-3 unit blocks, staggered courses, moss and flowers in some joints (8x8)",
       "zone": "garden",
       "size": [
-        512,
-        512
+        1024,
+        1024
       ],
       "sizeUnits": [
         8.0,
@@ -640,7 +640,7 @@
         0.5,
         0.5
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x",
@@ -652,8 +652,8 @@
       "purpose": "Marble coping/cornice topping a terrace wall, grass and flowers spilling over",
       "zone": "garden",
       "size": [
-        512,
-        96
+        1024,
+        192
       ],
       "sizeUnits": [
         8.0,
@@ -663,12 +663,12 @@
         0.5,
         0.6458
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
       ],
-      "walkableRow": 34,
+      "walkableRow": 68,
       "attach": "rows below ~70 overlap the top of wall_block"
     },
     {
@@ -676,8 +676,8 @@
       "purpose": "Carved marble channel mouth set into a wall; water leaves over its lip",
       "zone": "garden",
       "size": [
-        96,
-        64
+        192,
+        128
       ],
       "sizeUnits": [
         1.5,
@@ -687,7 +687,7 @@
         0.0,
         0.5
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [],
       "lipPointPx": [
@@ -701,8 +701,8 @@
       "purpose": "White-blossom orchard tree with a few golden fruit (8 x 10)",
       "zone": "garden",
       "size": [
-        512,
-        640
+        1024,
+        1280
       ],
       "sizeUnits": [
         8.0,
@@ -712,7 +712,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -721,8 +721,8 @@
       "purpose": "Fern with overlapping curled fronds",
       "zone": "garden",
       "size": [
-        128,
-        128
+        256,
+        256
       ],
       "sizeUnits": [
         2.0,
@@ -732,7 +732,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -741,8 +741,8 @@
       "purpose": "Rounded bush with many white blossoms",
       "zone": "garden",
       "size": [
-        160,
-        102
+        320,
+        204
       ],
       "sizeUnits": [
         2.5,
@@ -752,7 +752,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -761,8 +761,8 @@
       "purpose": "Lush grass/moss top lip with lilies and blossoms",
       "zone": "garden",
       "size": [
-        512,
-        128
+        1024,
+        256
       ],
       "sizeUnits": [
         8.0,
@@ -772,20 +772,20 @@
         0.5,
         0.6016
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
       ],
-      "walkableRow": 51
+      "walkableRow": 102
     },
     {
       "path": "Assets/Art/Paradise/Kit/Nature/grass_tuft_strip.png",
       "purpose": "Grass tufts strip (foreground/edge dressing)",
       "zone": "garden",
       "size": [
-        512,
-        64
+        1024,
+        128
       ],
       "sizeUnits": [
         8.0,
@@ -795,7 +795,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
@@ -806,8 +806,8 @@
       "purpose": "Low flowering hedge for terrace edges",
       "zone": "garden",
       "size": [
-        512,
-        128
+        1024,
+        256
       ],
       "sizeUnits": [
         8.0,
@@ -817,7 +817,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
@@ -828,8 +828,8 @@
       "purpose": "Rocky underside with hanging roots/moss (rock body on top, hangs downward)",
       "zone": "garden",
       "size": [
-        512,
-        160
+        1024,
+        320
       ],
       "sizeUnits": [
         8.0,
@@ -839,20 +839,20 @@
         0.5,
         0.95
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x"
       ],
-      "attachRow": 8
+      "attachRow": 16
     },
     {
       "path": "Assets/Art/Paradise/Kit/Nature/ivy_curtain.png",
       "purpose": "Wide ivy curtain; hangs from the top edge",
       "zone": "garden",
       "size": [
-        384,
-        192
+        768,
+        384
       ],
       "sizeUnits": [
         6.0,
@@ -862,7 +862,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -871,8 +871,8 @@
       "purpose": "Ivy drape variant a; hangs from the top edge",
       "zone": "garden",
       "size": [
-        128,
-        256
+        256,
+        512
       ],
       "sizeUnits": [
         2.0,
@@ -882,7 +882,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -891,8 +891,8 @@
       "purpose": "Ivy drape variant b; hangs from the top edge",
       "zone": "garden",
       "size": [
-        128,
-        256
+        256,
+        512
       ],
       "sizeUnits": [
         2.0,
@@ -902,7 +902,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -911,8 +911,8 @@
       "purpose": "Ivy drape variant c; hangs from the top edge",
       "zone": "garden",
       "size": [
-        128,
-        256
+        256,
+        512
       ],
       "sizeUnits": [
         2.0,
@@ -922,7 +922,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -931,8 +931,8 @@
       "purpose": "White lily cluster variant a (2.4 x 1.8 units)",
       "zone": "garden",
       "size": [
-        153,
-        116
+        306,
+        232
       ],
       "sizeUnits": [
         2.391,
@@ -942,7 +942,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -951,8 +951,8 @@
       "purpose": "White lily cluster variant b (2.4 x 1.8 units)",
       "zone": "garden",
       "size": [
-        153,
-        116
+        306,
+        232
       ],
       "sizeUnits": [
         2.391,
@@ -962,7 +962,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -971,8 +971,8 @@
       "purpose": "White lily cluster variant c (2.4 x 1.8 units)",
       "zone": "garden",
       "size": [
-        153,
-        116
+        306,
+        232
       ],
       "sizeUnits": [
         2.391,
@@ -982,7 +982,7 @@
         0.5,
         0.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -991,8 +991,8 @@
       "purpose": "Natural mossy cliff rock: fractured faces, soft cracks, moss, ferns and ivy in crevices (8x8)",
       "zone": "garden",
       "size": [
-        512,
-        512
+        1024,
+        1024
       ],
       "sizeUnits": [
         8.0,
@@ -1002,7 +1002,7 @@
         0.5,
         0.5
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": [
         "x",
@@ -1014,8 +1014,8 @@
       "purpose": "Hanging vine with blossoms",
       "zone": "garden",
       "size": [
-        51,
-        320
+        102,
+        640
       ],
       "sizeUnits": [
         0.797,
@@ -1025,7 +1025,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },
@@ -1034,8 +1034,8 @@
       "purpose": "White / pale-gold wisteria curtain to hang from arches",
       "zone": "garden",
       "size": [
-        256,
-        256
+        512,
+        512
       ],
       "sizeUnits": [
         4.0,
@@ -1045,7 +1045,7 @@
         0.5,
         1.0
       ],
-      "ppu": 64,
+      "ppu": 128,
       "blend": "normal",
       "tileable": []
     },

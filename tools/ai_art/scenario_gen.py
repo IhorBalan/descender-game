@@ -758,9 +758,10 @@ def cmd_gen(args) -> None:
             os.makedirs(os.path.dirname(dest), exist_ok=True)
             raw.save(dest[:-4] + ".raw.png")
             if k["mode"] == "repaint":
-                repaint_fit(raw, cache["box"] if "box" in cache else layout_image(e)[1], e, k).save(dest)
+                fitted = repaint_fit(raw, cache["box"] if "box" in cache else layout_image(e)[1], e, k)
             else:
-                fit(raw, e, k).save(dest)
+                fitted = fit(raw, e, k)
+            fade_edges(fitted, e).save(dest)
             with open(dest[:-4] + ".prompt.txt", "w", encoding="utf-8") as f:
                 f.write(prompt + "\n")
             made.append(dest)
@@ -847,6 +848,88 @@ def cmd_restore(args) -> None:
             print(f"restored {r}")
 
 
+def fade_edges(img: Image.Image, entry: dict) -> Image.Image:
+    """
+    prompts.json "fade": {"bottom": 0.1, ...} fades that edge's alpha over that fraction of
+    the piece, for a piece that sits on top of another one (a capital's neck over its shaft)
+    so the two blend instead of meeting at a cut.
+    """
+    fade = load_overrides().get(rel(entry), {}).get("fade")
+    if not fade:
+        return img
+    w, h = img.size
+    ramp = Image.new("L", img.size, 255)
+    draw = ImageDraw.Draw(ramp)
+    for side, amount in fade.items():
+        n = max(1, round(amount * (h if side in ("top", "bottom") else w)))
+        for i in range(n):
+            v = round(255 * (i / n) ** 1.5)
+            if side == "bottom":
+                draw.line([(0, h - 1 - i), (w, h - 1 - i)], fill=v)
+            elif side == "top":
+                draw.line([(0, i), (w, i)], fill=v)
+            elif side == "left":
+                draw.line([(i, 0), (i, h)], fill=v)
+            elif side == "right":
+                draw.line([(w - 1 - i, 0), (w - 1 - i, h)], fill=v)
+    out = img.copy()
+    out.putalpha(ImageChops.multiply(img.getchannel("A"), ramp))
+    return out
+
+
+# Manifest fields measured in the texture's pixels: they scale with it.
+PIXEL_FIELDS = ("Row", "Px", "CentreX")
+
+
+def cmd_refit(args) -> None:
+    """
+    Re-export kit pieces at a higher pixel density from their cached raw generations
+    (out/**/*.raw.png), with no paid call: the texture grows `--ppu / ppu` times and its
+    pixels per unit with it, so it keeps its size in the game and only gains detail.
+    Updates the manifest; run `apply` after.
+    """
+    with open(MANIFEST, encoding="utf-8") as f:
+        data = json.load(f)
+    entries = data["files"]
+    pick = selected(entries, args.only) if args.only else [e for e in entries if rel(e).startswith("Kit/")]
+    names = {id(e) for e in pick}
+    done = 0
+    for e in entries:
+        if id(e) not in names:
+            continue
+        r = rel(e)
+        dest = os.path.join(OUT, r)
+        raw = dest[:-4] + ".raw.png"
+        old = e.get("ppu", 64)
+        if old >= args.ppu and not args.force:
+            continue
+        if not os.path.exists(raw):
+            print(f"{r}: no raw generation, kept at {old} ppu")
+            continue
+        factor = args.ppu / old if old < args.ppu else 1.0
+        bigger = dict(e)
+        bigger["size"] = [round(v * factor) for v in e["size"]]
+        k = kind(bigger)
+        img = Image.open(raw).convert("RGBA")
+        cache_path = dest[:-4] + ".assets.json"
+        cache = json.load(open(cache_path, encoding="utf-8")) if os.path.exists(cache_path) else {}
+        if k["mode"] == "repaint":
+            out = repaint_fit(img, cache["box"] if "box" in cache else layout_image(e)[1], bigger, k)
+        else:
+            out = fit(img, bigger, k)
+        fade_edges(out, e).save(dest)
+        e["size"] = bigger["size"]
+        e["ppu"] = args.ppu
+        for key, value in list(e.items()):
+            if key.endswith(PIXEL_FIELDS) and isinstance(value, (int, float)):
+                e[key] = round(value * factor)
+        done += 1
+        print(f"{r}: {e['size'][0]}x{e['size'][1]} at {args.ppu} ppu")
+    with open(MANIFEST, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
+    print(f"refit {done} pieces; run `apply` to copy them into the project")
+
+
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     sub = ap.add_subparsers(dest="cmd", required=True)
@@ -866,9 +949,13 @@ def main() -> None:
     for name in ("apply", "restore", "derive"):
         p = sub.add_parser(name)
         p.add_argument("--only", nargs="*")
+    p = sub.add_parser("refit")
+    p.add_argument("--only", nargs="*")
+    p.add_argument("--force", action="store_true")
+    p.add_argument("--ppu", type=int, default=128)
     args = ap.parse_args()
     {"check": cmd_check, "list": cmd_list, "keyart": cmd_keyart, "upload": cmd_upload, "gen": cmd_gen,
-     "apply": cmd_apply, "restore": cmd_restore, "derive": cmd_derive}[args.cmd](args)
+     "apply": cmd_apply, "restore": cmd_restore, "derive": cmd_derive, "refit": cmd_refit}[args.cmd](args)
 
 
 if __name__ == "__main__":

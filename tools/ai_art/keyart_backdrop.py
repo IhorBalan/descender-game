@@ -12,7 +12,7 @@ out/Backdrop_Garden, where `scenario_gen.py derive` and `apply` pick it up.
 import os
 import random
 
-from PIL import Image, ImageChops, ImageDraw, ImageFilter
+from PIL import Image, ImageChops, ImageDraw, ImageEnhance, ImageFilter
 
 HERE = os.path.dirname(__file__)
 CUTS = os.path.join(HERE, "out", "keyart_cuts")
@@ -61,9 +61,19 @@ def piece(name: str, erase=(), crop=None, left: int = 0, right: int = 0, bottom:
 
 
 def haze(img: Image.Image, amount: float, colour=HAZE) -> Image.Image:
-    tint = Image.new("RGBA", img.size, colour + (255,))
-    out = Image.blend(img, tint, amount)
-    out.putalpha(img.getchannel("A"))
+    """
+    Atmospheric perspective: toward the air colour by `amount`, and greyer and softer with
+    it (saturation down about a third and a slight blur at the far end), so only the play
+    layer keeps full contrast and crisp edges.
+    """
+    alpha = img.getchannel("A")
+    rgb = ImageEnhance.Color(img.convert("RGB")).enhance(1.0 - 0.6 * amount)
+    tint = Image.new("RGB", img.size, colour)
+    out = Image.blend(rgb, tint, amount).convert("RGBA")
+    if amount >= 0.3:
+        out = out.filter(ImageFilter.GaussianBlur(amount * 2.2))
+        alpha = alpha.filter(ImageFilter.GaussianBlur(amount * 1.2))
+    out.putalpha(alpha)
     return out
 
 
@@ -105,11 +115,11 @@ def far() -> Image.Image:
     back = [k3, k2, k3, k1, k2, k3, k2, k1]
     for i, m in enumerate(back):
         x = i * W / len(back) + rng.uniform(-120, 120)
-        place(canvas, m, x, 880, rng.uniform(330, 400), flip=i % 2 == 1, amount=0.5)
+        place(canvas, m, x, 880, rng.uniform(330, 400), flip=i % 2 == 1, amount=0.62)
     front = [k1, k3, k2, k1, k3]
     for i, m in enumerate(front):
         x = (i + 0.5) * W / len(front) + rng.uniform(-200, 200)
-        place(canvas, m, x, 900, rng.uniform(520, 640), flip=i % 2 == 0, amount=0.28)
+        place(canvas, m, x, 900, rng.uniform(520, 640), flip=i % 2 == 0, amount=0.45)
     horizon(canvas, 640, 880)
     return canvas
 
@@ -135,7 +145,7 @@ def midfar() -> Image.Image:
         (k4, 7150, 760, 470, False),
     ]
     for img, x, base, height, flip in plan:
-        place(canvas, img, x, base, height, flip, amount=0.42)
+        place(canvas, img, x, base, height, flip, amount=0.52)
     horizon(canvas, 760, 1000)
     return canvas
 
@@ -150,7 +160,7 @@ def mid() -> Image.Image:
         (k1, 6200, 1010, 640, False),
     ]
     for img, x, base, height, flip in plan:
-        place(canvas, img, x, base, height, flip, amount=0.2)
+        place(canvas, img, x, base, height, flip, amount=0.32)
     return canvas
 
 

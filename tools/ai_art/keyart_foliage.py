@@ -55,6 +55,8 @@ def main() -> None:
         keep = ImageChops.multiply(keep, edge.filter(ImageFilter.GaussianBlur(14)))
         cut.putalpha(ImageChops.multiply(cut.getchannel("A"), keep))
         cut = cut.crop(cut.getchannel("A").getbbox())
+        # Nearest the camera, out of focus: a soft blur, as the foreground in Ori and the key art.
+        cut = cut.filter(ImageFilter.GaussianBlur(1.6))
         cut.save(os.path.join(OUT, f"{name}.png"))
         print(name, cut.size)
 

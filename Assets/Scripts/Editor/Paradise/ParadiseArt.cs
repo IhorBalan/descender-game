@@ -220,7 +220,24 @@ namespace Descender.EditorTools.Paradise
             importer.mipmapEnabled = false;
             importer.alphaIsTransparency = true;
             importer.textureCompression = TextureImporterCompression.CompressedHQ;
+            // The backdrops are 8192 wide: Unity's default cap (2048) would quarter them.
+            importer.maxTextureSize = MaxTextureSize;
             importer.SaveAndReimport();
+        }
+
+        /// <summary>Large enough for the widest painting, so no art is downscaled on import.</summary>
+        public const int MaxTextureSize = 8192;
+
+        /// <summary>A texture's pixels per unit as imported (64 for anything that is not a sprite).</summary>
+        public static float PixelsPerUnit(Texture texture)
+        {
+            var importer =
+                texture != null
+                    ? AssetImporter.GetAtPath(AssetDatabase.GetAssetPath(texture)) as TextureImporter
+                    : null;
+            return importer != null && importer.textureType == TextureImporterType.Sprite
+                ? importer.spritePixelsPerUnit
+                : 64f;
         }
 
         /// <summary>A vertically flipped copy of a strip, for undersides drawn along a clockwise outline.</summary>
@@ -252,7 +269,11 @@ namespace Descender.EditorTools.Paradise
             var importer = (TextureImporter)AssetImporter.GetAtPath(target);
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
-            importer.spritePixelsPerUnit = 64f;
+            // As dense as its source, so it keeps the source's size in units.
+            importer.spritePixelsPerUnit = AssetImporter.GetAtPath(source) is TextureImporter from
+                ? from.spritePixelsPerUnit
+                : 64f;
+            importer.maxTextureSize = MaxTextureSize;
             var settings = new TextureImporterSettings();
             importer.ReadTextureSettings(settings);
             settings.spriteMeshType = SpriteMeshType.FullRect;

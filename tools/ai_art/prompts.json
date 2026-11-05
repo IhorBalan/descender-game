@@ -31,7 +31,10 @@
       "subject": "The base of a white marble column only: a square plinth on the bottom edge, round torus mouldings with a thin gold fillet above it; the flat top edge is where the shaft starts, centred."
     },
     "Kit/Architecture/column_capital.png": {
-      "subject": "The capital of a white marble column only: acanthus leaves and small curled volutes with gold accents, flaring from the narrow neck at the bottom edge to a flat square abacus along the top edge."
+      "subject": "The capital of a white marble column only: acanthus leaves and small curled volutes with gold accents, flaring from the narrow neck at the bottom edge to a flat square abacus along the top edge.",
+      "fade": {
+        "bottom": 0.14
+      }
     },
     "Kit/Architecture/deck_top.png": {
       "subject": "A side view of a marble walkway's top band: a carved entablature strip with a thin gold line, a lush mossy grass lip with tiny white flowers along its top; the walkable top line stays perfectly straight and at the same height all along, and it repeats left to right."
