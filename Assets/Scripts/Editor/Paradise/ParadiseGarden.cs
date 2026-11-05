@@ -442,7 +442,7 @@ namespace Descender.EditorTools.Paradise
             }
             var air = ParadiseArt.Group(root, "Air");
             var area = new Rect(zone.xMin, -105f, zone.xMax - zone.xMin, 90f);
-            Air(
+            var pollen = Air(
                 air,
                 "Pollen",
                 art.pollen,
@@ -458,6 +458,7 @@ namespace Descender.EditorTools.Paradise
                 6f,
                 area
             );
+            pollen.SetWindCarry(1f);
             var petals = Air(
                 air,
                 "Petals",
@@ -476,6 +477,7 @@ namespace Descender.EditorTools.Paradise
             );
             // Real petals flip and flutter as they fall, never slide flat.
             petals.SetTumble(0.35f);
+            petals.SetWindCarry(1.6f);
             Air(
                 air,
                 "Motes",

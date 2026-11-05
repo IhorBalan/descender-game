@@ -57,6 +57,14 @@ namespace Descender.World
         [SerializeField, Min(0f)]
         private float tumble;
 
+        [Tooltip(
+            "Paradise: how many units a second the garden's wind (GardenWind) carries these along at full strength (0: none)."
+        )]
+        [SerializeField, Min(0f)]
+        private float windCarry;
+
+        private Vector2 baseVelocityX;
+
         [SerializeField]
         private Material material;
 
@@ -110,6 +118,12 @@ namespace Descender.World
             tumble = turnsPerSecond;
         }
 
+        /// <summary>Lets the garden's gusts carry these along (see the field); for editor tools.</summary>
+        public void SetWindCarry(float unitsPerSecond)
+        {
+            windCarry = unitsPerSecond;
+        }
+
         private void Awake()
         {
             region = GetComponentInParent<RegionRoot>();
@@ -148,7 +162,8 @@ namespace Descender.World
             var velocity = system.velocityOverLifetime;
             velocity.enabled = true;
             velocity.space = ParticleSystemSimulationSpace.World;
-            velocity.x = new ParticleSystem.MinMaxCurve(Mathf.Min(a.x, b.x), Mathf.Max(a.x, b.x));
+            baseVelocityX = new Vector2(Mathf.Min(a.x, b.x), Mathf.Max(a.x, b.x));
+            velocity.x = new ParticleSystem.MinMaxCurve(baseVelocityX.x, baseVelocityX.y);
             velocity.y = new ParticleSystem.MinMaxCurve(Mathf.Min(a.y, b.y), Mathf.Max(a.y, b.y));
             // All three axes must share a mode: x and y are two-constant ranges, so z is too.
             velocity.z = new ParticleSystem.MinMaxCurve(0f, 0f);
@@ -223,6 +238,13 @@ namespace Descender.World
             }
             var margin = MarginPixels / Player.PlayerTuning.PixelsPerUnit;
             var at = camera.transform.position;
+            if (windCarry > 0f)
+            {
+                // Everything in the air speeds up and slows with the gust passing the view.
+                var gust = Paradise.GardenWind.At(at.x) * windCarry;
+                var velocity = system.velocityOverLifetime;
+                velocity.x = new ParticleSystem.MinMaxCurve(baseVelocityX.x + gust, baseVelocityX.y + gust);
+            }
             var half = camera.HalfExtents + Vector2.one * margin;
             var view = new Rect((Vector2)at - half, half * 2f);
             var area =

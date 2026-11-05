@@ -118,6 +118,8 @@ namespace Descender.World.Paradise
                         target = b.position + (flee + Vector2.up) * 2f;
                     }
                     b.position = Vector2.Lerp(b.position, target, 1f - Mathf.Exp(-dt * (b.scare > 0f ? 4f : 1.6f)));
+                    // A gust pushes it off its line; it works back against it.
+                    b.position.x += GardenWind.At(b.position.x) * 0.6f * dt;
                     // Fast, uneven beats: never a clean sine.
                     var f = 9f + 3f * Mathf.Sin(t * 0.9f + s);
                     beat = Mathf.Abs(Mathf.Sin(t * f + Mathf.Sin(t * 2.3f + s) * 0.8f));
