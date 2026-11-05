@@ -40,6 +40,7 @@ namespace Descender.EditorTools.Paradise
             WriteDepthTexture();
             WriteContactShadow();
             WriteCaps();
+            WriteTierArches();
             ParadiseArt.DeriveFlipped(
                 $"{KitRoot}/Nature/island_bottom.png",
                 $"{ParadiseArt.DerivedFolder}/island_bottom_flip.png",
@@ -166,8 +167,8 @@ namespace Descender.EditorTools.Paradise
             // a little of their own colour so they read as leaves, not holes.
             if (art.foreground != null)
             {
-                art.foreground.SetColor("_HazeColor", new Color(0.06f, 0.11f, 0.11f));
-                art.foreground.SetFloat("_HazeAmount", 0.5f);
+                art.foreground.SetColor("_HazeColor", new Color(0.1f, 0.17f, 0.15f));
+                art.foreground.SetFloat("_HazeAmount", 0.34f);
                 EditorUtility.SetDirty(art.foreground);
             }
             // A bright sky needs only a hint of rays.
@@ -338,6 +339,21 @@ namespace Descender.EditorTools.Paradise
                 Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, -85, art), p.at.x);
                 ContactShadow(shadows, p.name, p.at, p.scale, art);
             }
+            // Butterflies keep to the flower beds: every other bush or lily clump.
+            var beds = new List<Vector2>();
+            foreach (var p in plan.plants)
+            {
+                if ((p.name == "flower_bush" || p.name.StartsWith("lily")) && Hash(p.at.x, 51f) > 0.5f)
+                {
+                    beds.Add(p.at);
+                }
+            }
+            if (beds.Count > 0)
+            {
+                var butterflies = new GameObject("Butterflies").AddComponent<Butterflies>();
+                butterflies.transform.SetParent(ParadiseArt.Group(root, "Life"), false);
+                butterflies.Configure(beds);
+            }
             foreach (var p in plan.ruins)
             {
                 Vary(Place(props, p.name, p.at, p.scale, p.flip, art.lit, -88, art), p.at.x);
@@ -440,7 +456,7 @@ namespace Descender.EditorTools.Paradise
                 6f,
                 area
             );
-            Air(
+            var petals = Air(
                 air,
                 "Petals",
                 art.petal,
@@ -456,6 +472,8 @@ namespace Descender.EditorTools.Paradise
                 5f,
                 area
             );
+            // Real petals flip and flutter as they fall, never slide flat.
+            petals.SetTumble(0.35f);
             Air(
                 air,
                 "Motes",
@@ -671,6 +689,16 @@ namespace Descender.EditorTools.Paradise
             {
                 return;
             }
+            // Sun and cloud shadows over the whole region.
+            if (root.GetComponent<SunAndClouds>() == null)
+            {
+                root.AddComponent<SunAndClouds>();
+            }
+            // Flocks crossing the far sky now and then.
+            if (root.GetComponent<DistantBirds>() == null)
+            {
+                root.AddComponent<DistantBirds>();
+            }
             var old = root.transform.Find("GoldenTree");
             if (old != null)
             {
@@ -701,7 +729,7 @@ namespace Descender.EditorTools.Paradise
                 Vector3.one
             );
             g.transform.localScale = Vector3.one;
-            g.color = new Color(1f, 1f, 1f, 0.3f);
+            g.color = new Color(1f, 1f, 1f, 0.14f);
         }
 
         // ------------------------------------------------------------------ depth
@@ -1284,6 +1312,70 @@ namespace Descender.EditorTools.Paradise
             importer.SaveAndReimport();
         }
 
+        /// <summary>
+        /// The arches for an aqueduct's lower tier: arch_span and arch_span_wide without the
+        /// walkway band on top (its grass and lip), so a tier reads as an arcade carrying the
+        /// arcade above, not a floating stretch of path. Same size, pivot and density.
+        /// </summary>
+        private static void WriteTierArches()
+        {
+            foreach (var name in new[] { "arch_span", "arch_span_wide" })
+            {
+                var sourcePath = $"{KitRoot}/Architecture/{name}.png";
+                if (!File.Exists(sourcePath))
+                {
+                    continue;
+                }
+                var importer = AssetImporter.GetAtPath(sourcePath) as TextureImporter;
+                var ppu = importer != null ? importer.spritePixelsPerUnit : 64f;
+                var pivot = new Vector2(0.5f, 0f);
+                if (importer != null)
+                {
+                    var read = new TextureImporterSettings();
+                    importer.ReadTextureSettings(read);
+                    pivot = read.spritePivot;
+                }
+                var source = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                source.LoadImage(File.ReadAllBytes(sourcePath));
+                var h = source.height;
+                // The walkway band is the top 9 percent (the walkable row is at 6); cut it with a soft edge.
+                var cut = Mathf.RoundToInt(h * 0.09f);
+                var soft = Mathf.Max(2, Mathf.RoundToInt(h * 0.02f));
+                for (var y = h - cut - soft; y < h; y++)
+                {
+                    var fromTop = h - 1 - y;
+                    var keep = Mathf.Clamp01((fromTop - cut) / (float)soft);
+                    for (var x = 0; x < source.width; x++)
+                    {
+                        var c = source.GetPixel(x, y);
+                        c.a *= keep;
+                        source.SetPixel(x, y, c);
+                    }
+                }
+                var path = $"{ParadiseArt.DerivedFolder}/{name}_tier.png";
+                File.WriteAllBytes(path, source.EncodeToPNG());
+                Object.DestroyImmediate(source);
+                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+                var tierImporter = (TextureImporter)AssetImporter.GetAtPath(path);
+                tierImporter.textureType = TextureImporterType.Sprite;
+                tierImporter.spriteImportMode = SpriteImportMode.Single;
+                tierImporter.spritePixelsPerUnit = ppu;
+                var settings = new TextureImporterSettings();
+                tierImporter.ReadTextureSettings(settings);
+                settings.spriteMeshType = SpriteMeshType.FullRect;
+                settings.spriteAlignment = (int)SpriteAlignment.Custom;
+                settings.spritePivot = pivot;
+                tierImporter.SetTextureSettings(settings);
+                tierImporter.alphaIsTransparency = true;
+                tierImporter.wrapMode = TextureWrapMode.Clamp;
+                tierImporter.filterMode = FilterMode.Bilinear;
+                tierImporter.mipmapEnabled = false;
+                tierImporter.maxTextureSize = ParadiseArt.MaxTextureSize;
+                tierImporter.textureCompression = TextureImporterCompression.CompressedHQ;
+                tierImporter.SaveAndReimport();
+            }
+        }
+
         /// <summary>Coverage of a pixel in a rounded corner of the given radius, with a one-pixel soft edge.</summary>
         private static float Corner(float u, float v, float radius)
         {
@@ -1611,7 +1703,7 @@ namespace Descender.EditorTools.Paradise
             r.color = new Color(1f, 1f, 1f, 0.45f);
         }
 
-        private static void Air(
+        private static RegionParticles Air(
             Transform parent,
             string name,
             Sprite sprite,
@@ -1630,8 +1722,9 @@ namespace Descender.EditorTools.Paradise
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
-            go.AddComponent<RegionParticles>()
-                .Configure(sprite, amount, color, life, dir, spread, speed, size, spin, sway, material, area);
+            var particles = go.AddComponent<RegionParticles>();
+            particles.Configure(sprite, amount, color, life, dir, spread, speed, size, spin, sway, material, area);
+            return particles;
         }
 
         // ---------------------------------------------------------------- columns
@@ -1692,10 +1785,11 @@ namespace Descender.EditorTools.Paradise
                 var intoClouds = Mathf.Min(a.ground, b.ground) <= ParadiseGreybox.CloudSea + 0.01f;
                 if (groundLevel && !intoClouds && spring - a.ground > 8f)
                 {
+                    var tierName = (wide ? "arch_span_wide" : "arch_span") + "_tier";
                     var tier = ParadiseArt.Sprite(
                         parent,
                         $"Tier{i}",
-                        sprite,
+                        Sprites.TryGetValue(tierName, out var tierSprite) ? tierSprite : sprite,
                         art.lit,
                         -118 + (i % 2),
                         new Vector3(a.x, a.ground + 3.2f, 0f),
