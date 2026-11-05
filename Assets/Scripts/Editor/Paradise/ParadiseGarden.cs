@@ -177,6 +177,8 @@ namespace Descender.EditorTools.Paradise
             art.water = ParadiseArt.SaveMaterial("Paradise Waterfall", "Descender/Waterfall");
             art.water.SetColor("_Color", new Color(0.92f, 0.97f, 1f, 0.92f));
             EditorUtility.SetDirty(art.water);
+            // Plants answer the garden's wind (GardenWind) each by its kind: see SwayMaterial.
+            SwayVariants.Clear();
             TuneLook(art.look, z);
             return art;
         }
@@ -1554,6 +1556,7 @@ namespace Descender.EditorTools.Paradise
             ParadiseArt.ZoneArt art
         )
         {
+            material = SwayMaterial(name, material, art);
             var r = ParadiseArt.Sprite(parent, name, Get(name), material, order, at, Vector3.one * scale);
             r.flipX = flip;
             if (Sprites.TryGetValue(name + "_glow", out var glow))
@@ -1571,6 +1574,119 @@ namespace Descender.EditorTools.Paradise
                 g.flipX = flip;
             }
             return r;
+        }
+
+        private static readonly Dictionary<string, Material> SwayVariants = new Dictionary<string, Material>();
+
+        /// <summary>
+        /// The material a garden piece sways with, by what it is, all on the Sprite Lit Sway
+        /// shader so they batch (ParadiseSway.hlsl, driven by GardenWind): lilies, ferns and
+        /// grass light and quick; bushes and hedges a little stiffer; blossom trees slow and
+        /// heavy; ivy, vines and wisteria hanging from their top, rippling down the strands;
+        /// the banner fluttering like cloth; lanterns swinging a touch. Each kind is a copy of
+        /// the material it would have had (its haze kept), saved beside it; anything else,
+        /// or a material on another shader, is returned as it is.
+        /// </summary>
+        public static Material SwayMaterial(string name, Material material, ParadiseArt.ZoneArt art)
+        {
+            if (material == null || art.plant == null)
+            {
+                return material;
+            }
+            // Banners and lanterns were drawn plain lit; they move now, so they take the plant shader.
+            var basis = material == art.lit && (name == "banner" || name == "lantern") ? art.plant : material;
+            if (basis.shader != art.plant.shader)
+            {
+                return material;
+            }
+            var kind = SwayKindOf(name);
+            if (kind == null)
+            {
+                return material;
+            }
+            var key = basis.name + " " + kind;
+            if (SwayVariants.TryGetValue(key, out var variant) && variant != null)
+            {
+                return variant;
+            }
+            variant = ParadiseArt.SaveMaterial(key, basis.shader.name);
+            variant.CopyPropertiesFromMaterial(basis);
+            // amount (units at the tip per unit wind, radians when hanging), natural frequency
+            // (rad/s), variation, flutter (or ripple), flutter speed (times the frequency), lag down
+            // the length (rad/unit), push at the tip; hangs from its pivot.
+            switch (kind)
+            {
+                case "Grass":
+                    SetSway(variant, 0.09f, 6.5f, 0.8f, 0.012f, 1.6f, 0.4f, 0.35f, false);
+                    break;
+                case "Shrub":
+                    SetSway(variant, 0.06f, 4f, 0.7f, 0.012f, 2.2f, 0.4f, 0.25f, false);
+                    break;
+                case "Tree":
+                    SetSway(variant, 0.12f, 1.5f, 0.6f, 0.01f, 4f, 0.4f, 0f, false);
+                    break;
+                case "Ivy":
+                    SetSway(variant, 0.04f, 2.2f, 0.7f, 0.05f, 2.6f, 0.45f, 0.3f, true);
+                    break;
+                case "Cloth":
+                    SetSway(variant, 0.06f, 2.4f, 0.6f, 0.09f, 3.5f, 0.6f, 0.25f, true);
+                    break;
+                default: // Lantern: a rigid pendulum.
+                    SetSway(variant, 0.03f, 2.9f, 0.5f, 0f, 1f, 0.02f, 0.15f, true);
+                    break;
+            }
+            EditorUtility.SetDirty(variant);
+            SwayVariants[key] = variant;
+            return variant;
+        }
+
+        private static string SwayKindOf(string name)
+        {
+            if (name.StartsWith("lily") || name.StartsWith("grass") || name == "fern")
+            {
+                return "Grass";
+            }
+            if (name == "blossom_tree")
+            {
+                return "Tree";
+            }
+            if (name.StartsWith("ivy") || name.StartsWith("vine") || name == "wisteria_drape")
+            {
+                return "Ivy";
+            }
+            if (name == "banner")
+            {
+                return "Cloth";
+            }
+            if (name == "lantern")
+            {
+                return "Lantern";
+            }
+            return name.Contains("bush") || name.Contains("hedge") ? "Shrub" : null;
+        }
+
+        private static void SetSway(
+            Material material,
+            float amount,
+            float frequency,
+            float variation,
+            float flutter,
+            float flutterSpeed,
+            float lag,
+            float push,
+            bool hangs
+        )
+        {
+            material.SetFloat("_SwayAmount", amount);
+            material.SetFloat("_SwaySpeed", frequency);
+            material.SetFloat("_SwayScale", variation);
+            material.SetFloat("_SwayFlutter", flutter);
+            material.SetFloat("_SwayFlutterSpeed", flutterSpeed);
+            material.SetFloat("_SwayLag", lag);
+            material.SetFloat("_SwayHang", hangs ? 1f : 0f);
+            material.SetFloat("_PushStrength", push);
+            material.SetFloat("_PushRadius", hangs ? 1.2f : 1.3f);
+            material.SetFloat("_SwayUseObjectY", 0f);
         }
 
         private const string ContactShadowPath = ParadiseArt.DerivedFolder + "/contact_shadow.png";
