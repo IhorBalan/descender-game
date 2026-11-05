@@ -233,6 +233,8 @@ MonoBehaviour:
   lookAheadPixels: 24
   smoothTime: 0.12
   verticalDeadZonePixels: 20
+  framing: {x: 0, y: 1.25}
+  snapToPixelGrid: 0
 --- !u!114 &105
 MonoBehaviour:
   m_ObjectHideFlags: 0

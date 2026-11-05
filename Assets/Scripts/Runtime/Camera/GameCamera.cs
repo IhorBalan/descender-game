@@ -28,6 +28,14 @@ namespace Descender.CameraRig
         [SerializeField, Min(0f)]
         private float verticalDeadZonePixels = 20f;
 
+        [Tooltip("Where the view centres relative to the target, in units: up shows more above the hero.")]
+        [SerializeField]
+        private Vector2 framing;
+
+        [Tooltip("Snap the view to the 16 px art grid (pixel art); painted art scrolls smoothly without it.")]
+        [SerializeField]
+        private bool snapToPixelGrid = true;
+
         private Camera cam;
         private Vector2 velocity;
         private float shakePixels;
@@ -106,7 +114,7 @@ namespace Descender.CameraRig
             {
                 return;
             }
-            focus = target.position;
+            focus = (Vector2)target.position + framing;
             velocity = Vector2.zero;
             Place(Vector2.zero);
         }
@@ -117,7 +125,7 @@ namespace Descender.CameraRig
             {
                 return;
             }
-            var wanted = (Vector2)target.position;
+            var wanted = (Vector2)target.position + framing;
             var facing = target.localScale.x < 0f ? -1f : 1f;
             if (target.TryGetComponent<Player.PlayerController>(out var hero))
             {
@@ -170,8 +178,11 @@ namespace Descender.CameraRig
                 position.y = bounds.center.y;
             }
             position += offset;
-            position.x = Mathf.Round(position.x * PixelsPerUnit) / PixelsPerUnit;
-            position.y = Mathf.Round(position.y * PixelsPerUnit) / PixelsPerUnit;
+            if (snapToPixelGrid)
+            {
+                position.x = Mathf.Round(position.x * PixelsPerUnit) / PixelsPerUnit;
+                position.y = Mathf.Round(position.y * PixelsPerUnit) / PixelsPerUnit;
+            }
             transform.position = new Vector3(position.x, position.y, transform.position.z);
         }
     }

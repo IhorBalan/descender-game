@@ -483,7 +483,11 @@ namespace Descender.EditorTools.Paradise
             {
                 BuildSeed(seed, podGroup, art, seedIndex++, zoneArt);
             }
-            var catalog = AssetDatabase.LoadAssetAtPath<PlacementCatalog>(CatalogPath);
+            // The garden's saves are marble shrines; the greybox keeps the prototype's.
+            var catalog =
+                zoneArt != null && zoneArt.garden
+                    ? ParadiseGarden.Catalog(zoneArt)
+                    : AssetDatabase.LoadAssetAtPath<PlacementCatalog>(CatalogPath);
             var saveIndex = 0;
             foreach (var save in zone.saves)
             {
@@ -502,7 +506,7 @@ namespace Descender.EditorTools.Paradise
             var lampIndex = 0;
             foreach (var lamp in zone.lamps)
             {
-                BuildLamp(lamp, lightGroup, lampIndex++);
+                BuildLamp(lamp, lightGroup, lampIndex++, zoneArt != null && zoneArt.garden ? GardenLampScale : 1f);
             }
             var roomIndex = 0;
             foreach (var room in zone.rooms)
@@ -536,7 +540,12 @@ namespace Descender.EditorTools.Paradise
         {
             var go = new GameObject(shape.name);
             go.transform.SetParent(parent, false);
-            var points = shape.outline;
+            // The garden's ground has no knife edges: worn marble and weathered rock round
+            // every corner the player can see (the bottom of the band stays square, unseen).
+            var points =
+                zoneArt != null && zoneArt.garden && shape.profile != ParadiseLayout.Profile.Decor
+                    ? RoundCorners(shape.outline, masonry ? MarbleCornerRadius : RockCornerRadius)
+                    : shape.outline;
             var (left, right) = Tangents(points, true);
             var controller = go.AddComponent<SpriteShapeController>();
             var renderer = go.GetComponent<SpriteShapeRenderer>();
@@ -546,7 +555,11 @@ namespace Descender.EditorTools.Paradise
                 : shape.profile == ParadiseLayout.Profile.Ground ? art.ground
                 : shape.profile == ParadiseLayout.Profile.Leaf ? art.leaf
                 : art.decor;
-            controller.fillPixelsPerUnit = 64f;
+            // The fill at its own density (the painted kit is 128 px a unit), so it keeps its size.
+            controller.fillPixelsPerUnit =
+                controller.spriteShape != null && controller.spriteShape.fillTexture != null
+                    ? ParadiseArt.PixelsPerUnit(controller.spriteShape.fillTexture)
+                    : 64f;
             controller.worldSpaceUVs = true;
             controller.splineDetail = 16;
             controller.autoUpdateCollider = false;
@@ -561,15 +574,19 @@ namespace Descender.EditorTools.Paradise
             {
                 SetTangents(spline, i, points[i].sharp, left[i], right[i]);
             }
+            // Ground at -101: the garden's depth shade (-100) goes over its fill, under its lips (-99).
             renderer.sortingOrder =
                 shape.profile == ParadiseLayout.Profile.Decor ? -200
                 : shape.profile == ParadiseLayout.Profile.Leaf ? -95
-                : -100;
+                : -101;
+            // The walk itself stays square: the collider and the lips follow the layout, so the
+            // hero stands where the coping is; only the stone body under them is rounded.
+            var (squareLeft, squareRight) = Tangents(shape.outline, true);
             if (shape.collides)
             {
                 go.layer = LayerMask.NameToLayer("World");
                 var collider = go.AddComponent<PolygonCollider2D>();
-                collider.points = Sample(points, left, right, true).ToArray();
+                collider.points = Sample(shape.outline, squareLeft, squareRight, true).ToArray();
             }
             controller.RefreshSpriteShape();
             BakeAndReport(controller, shape.name);
@@ -577,12 +594,16 @@ namespace Descender.EditorTools.Paradise
             {
                 BuildLips(
                     go.transform,
-                    points,
-                    left,
-                    right,
+                    shape.outline,
+                    squareLeft,
+                    squareRight,
                     zoneArt,
                     masonry && zoneArt.terraceLip != null ? zoneArt.terraceLip : zoneArt.lip ?? zoneArt.ledge
                 );
+                if (zoneArt.garden && shape.collides)
+                {
+                    ParadiseGarden.Depth(go.transform, Sample(points, left, right, true), zoneArt);
+                }
             }
         }
 
@@ -617,7 +638,25 @@ namespace Descender.EditorTools.Paradise
                 }
                 if (i > runStart)
                 {
-                    BuildLip(parent, $"Lip{lip++}", points, left, right, runStart, i, zoneArt, lipProfile);
+                    // An outer corner: the ground falls away past the run's end. Against a wall
+                    // that rises, the strip runs into the wall and needs no cap.
+                    var before = points[(runStart - 1 + points.Count) % points.Count];
+                    var after = points[(i + 1) % points.Count];
+                    var capStart = before.y < points[runStart].y - 0.01f;
+                    var capEnd = after.y < points[i].y - 0.01f;
+                    BuildLip(
+                        parent,
+                        $"Lip{lip++}",
+                        points,
+                        left,
+                        right,
+                        runStart,
+                        i,
+                        zoneArt,
+                        lipProfile,
+                        capStart,
+                        capEnd
+                    );
                 }
                 runStart = i + 1;
             }
@@ -632,9 +671,18 @@ namespace Descender.EditorTools.Paradise
             int from,
             int to,
             ParadiseArt.ZoneArt zoneArt,
-            SpriteShape lipProfile
+            SpriteShape lipProfile,
+            bool capStart = false,
+            bool capEnd = false
         )
         {
+            var strip =
+                lipProfile != null && lipProfile.angleRanges.Count > 0 && lipProfile.angleRanges[0].sprites.Count > 0
+                    ? lipProfile.angleRanges[0].sprites[0].name
+                    : null;
+            var caps = zoneArt.garden && to > from && ParadiseGarden.CapsReady(strip);
+            capStart &= caps;
+            capEnd &= caps;
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
             var controller = go.AddComponent<SpriteShapeController>();
@@ -649,7 +697,13 @@ namespace Descender.EditorTools.Paradise
             spline.isOpenEnded = true;
             for (var i = from; i <= to; i++)
             {
-                spline.InsertPointAt(i - from, new Vector3(points[i].x, points[i].y, 0f));
+                var at = points[i].V;
+                if ((i == from && capStart) || (i == to && capEnd))
+                {
+                    var inward = (points[i == from ? from + 1 : to - 1].V - at).normalized;
+                    at += inward * ParadiseGarden.CapLength;
+                }
+                spline.InsertPointAt(i - from, new Vector3(at.x, at.y, 0f));
             }
             for (var i = from; i <= to; i++)
             {
@@ -661,6 +715,30 @@ namespace Descender.EditorTools.Paradise
                 spline.SetHeight(i - from, 1f);
             }
             controller.RefreshSpriteShape();
+            if (capStart)
+            {
+                ParadiseGarden.Cap(
+                    go.transform,
+                    strip,
+                    points[from].V,
+                    (points[from + 1].V - points[from].V).normalized,
+                    true,
+                    zoneArt.lit,
+                    -99
+                );
+            }
+            if (capEnd)
+            {
+                ParadiseGarden.Cap(
+                    go.transform,
+                    strip,
+                    points[to].V,
+                    (points[to - 1].V - points[to].V).normalized,
+                    false,
+                    zoneArt.lit,
+                    -99
+                );
+            }
         }
 
         /// <summary>
@@ -716,9 +794,17 @@ namespace Descender.EditorTools.Paradise
             // The greybox branch hangs just under the walkable line; the painted lip's
             // pivot is its walkable line, so it sits right on it.
             var drop = zoneArt != null ? 0f : 0.2f;
+            var caps = zoneArt != null && zoneArt.garden && ParadiseGarden.CapsReady("deck_top");
             for (var i = 0; i < points.Count; i++)
             {
-                spline.InsertPointAt(i, new Vector3(points[i].x, points[i].y - drop, 0f));
+                var at = new Vector2(points[i].x, points[i].y - drop);
+                if (caps && (i == 0 || i == points.Count - 1))
+                {
+                    // In along the deck by the cap's length; the collider keeps the full deck.
+                    var inward = (points[i == 0 ? 1 : points.Count - 2].V - points[i].V).normalized;
+                    at += inward * ParadiseGarden.CapLength;
+                }
+                spline.InsertPointAt(i, new Vector3(at.x, at.y, 0f));
             }
             for (var i = 0; i < points.Count; i++)
             {
@@ -735,6 +821,57 @@ namespace Descender.EditorTools.Paradise
             effector.surfaceArc = 170f;
             effector.useSideFriction = false;
             controller.RefreshSpriteShape();
+            if (caps)
+            {
+                ParadiseGarden.DeckCaps(go.transform, points, zoneArt);
+            }
+        }
+
+        public const float MarbleCornerRadius = 0.55f;
+        public const float RockCornerRadius = 1f;
+
+        /// <summary>Below this a corner is under the clouds and stays square.</summary>
+        private const float UnseenBelow = -95f;
+
+        /// <summary>
+        /// The outline with every sharp, visible corner replaced by a fillet: a quadratic arc
+        /// from `radius` before the corner to `radius` after it, tangent to both edges. Sharp
+        /// points stay sharp in the arc (sampled), so the lips and the collider follow it.
+        /// </summary>
+        public static List<ParadiseLayout.P> RoundCorners(List<ParadiseLayout.P> points, float radius)
+        {
+            var n = points.Count;
+            var result = new List<ParadiseLayout.P>();
+            for (var i = 0; i < n; i++)
+            {
+                var p = points[i];
+                if (!p.sharp || p.y < UnseenBelow)
+                {
+                    result.Add(p);
+                    continue;
+                }
+                var c = p.V;
+                var a = points[(i - 1 + n) % n].V - c;
+                var b = points[(i + 1) % n].V - c;
+                var la = a.magnitude;
+                var lb = b.magnitude;
+                if (la < 0.01f || lb < 0.01f || Vector2.Dot(a / la, b / lb) < -0.98f)
+                {
+                    result.Add(p);
+                    continue;
+                }
+                var r = Mathf.Min(radius, la * 0.45f, lb * 0.45f);
+                var start = c + a / la * r;
+                var end = c + b / lb * r;
+                const int steps = 5;
+                for (var k = 0; k <= steps; k++)
+                {
+                    var t = k / (float)steps;
+                    var q = (1 - t) * (1 - t) * start + 2 * (1 - t) * t * c + t * t * end;
+                    result.Add(new ParadiseLayout.P(q.x, q.y, true));
+                }
+            }
+            return result;
         }
 
         /// <summary>The cloud sea's level: a column with nothing under it goes down into it.</summary>
@@ -953,7 +1090,13 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
-        private static void BuildLamp(ParadiseLayout.Lamp lamp, Transform parent, int index)
+        /// <summary>
+        /// The sunlit garden's accent lights at under half strength: the painted kit is already
+        /// lit, and full lamps on top of the sun blow the marble and the leaves out to white.
+        /// </summary>
+        private const float GardenLampScale = 0.4f;
+
+        private static void BuildLamp(ParadiseLayout.Lamp lamp, Transform parent, int index, float scale)
         {
             var go = new GameObject($"Light{index}");
             go.transform.SetParent(parent, false);
@@ -961,7 +1104,7 @@ namespace Descender.EditorTools.Paradise
             var light = go.AddComponent<WorldLight>();
             var serialized = new SerializedObject(light);
             serialized.FindProperty("color").colorValue = lamp.color;
-            serialized.FindProperty("energy").floatValue = lamp.energy;
+            serialized.FindProperty("energy").floatValue = lamp.energy * scale;
             serialized.FindProperty("radiusPixels").floatValue = lamp.radiusTiles * Player.PlayerTuning.PixelsPerUnit;
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
@@ -1196,6 +1339,16 @@ namespace Descender.EditorTools.Paradise
                     camera.GetComponent<HeroRigInstaller>() ?? camera.gameObject.AddComponent<HeroRigInstaller>();
                 installer.Configure(ParadiseHero.Build());
                 EditorUtility.SetDirty(installer);
+            }
+            // Painted art scrolls smoothly (no 16 px grid snapping, which steps 8 screen pixels
+            // at a time at 1440p), and the walk sits below the middle of the view, as in the
+            // key art: more of the garden above the hero, less wall under his feet.
+            if (camera != null && camera.TryGetComponent<CameraRig.GameCamera>(out var follow))
+            {
+                var settings = new SerializedObject(follow);
+                settings.FindProperty("snapToPixelGrid").boolValue = false;
+                settings.FindProperty("framing").vector2Value = new Vector2(0f, 1.25f);
+                settings.ApplyModifiedPropertiesWithoutUndo();
             }
             // Painted art needs the full screen resolution: the prototype's pixel-perfect
             // camera renders the world at 320x180 and scales it up, which turns every curve
