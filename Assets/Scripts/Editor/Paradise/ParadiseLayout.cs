@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Descender.Save;
 using UnityEngine;
 
 namespace Descender.EditorTools.Paradise
@@ -10,7 +11,9 @@ namespace Descender.EditorTools.Paradise
     /// near y = -60 in a 120-row band). Built into zone scenes by ParadiseGreybox.
     /// The numbers follow the construction rules in docs/design/paradise.md: before
     /// Wings, main-path gaps are at most 4 tiles and steps at most 4 up (the jump
-    /// reaches 4.5 high and 5 across).
+    /// reaches 4.5 high and 5 across). Each zone names its main path, the surfaces and
+    /// pods the straight west to east run crosses; ParadiseChecker walks it against
+    /// ParadiseRules before a zone is built.
     /// </summary>
     public static class ParadiseLayout
     {
@@ -69,6 +72,7 @@ namespace Descender.EditorTools.Paradise
 
         public sealed class Pod
         {
+            public string name;
             public Vector2 at;
             public float tiles;
         }
@@ -87,6 +91,19 @@ namespace Descender.EditorTools.Paradise
             public Color color;
             public float radiusTiles;
             public float energy;
+        }
+
+        /// <summary>Where along the region (x, in tiles) an ability becomes the hero's.</summary>
+        public readonly struct Grant
+        {
+            public readonly Ability ability;
+            public readonly float x;
+
+            public Grant(Ability ability, float x)
+            {
+                this.ability = ability;
+                this.x = x;
+            }
         }
 
         public sealed class Zone
@@ -108,9 +125,41 @@ namespace Descender.EditorTools.Paradise
             /// <summary>Ground built by hand (marble terrace walls with a carved coping); the rest is natural cliff rock.</summary>
             public readonly HashSet<string> masonry = new HashSet<string>();
 
+            /// <summary>
+            /// The main path: the surfaces (ground shapes, decks, ledges) and bounce pods the
+            /// straight west to east run crosses, by name and in order. ParadiseChecker walks it.
+            /// </summary>
+            public readonly List<string> mainPath = new List<string>();
+
+            /// <summary>Main-path elements a long fall may land on (water, moss, cloud): no fall limit onto them.</summary>
+            public readonly HashSet<string> soft = new HashSet<string>();
+
             public void Masonry(params string[] names)
             {
                 masonry.UnionWith(names);
+            }
+
+            public void MainPath(params string[] names)
+            {
+                mainPath.AddRange(names);
+            }
+
+            public void Soft(params string[] names)
+            {
+                soft.UnionWith(names);
+            }
+
+            /// <summary>A bounce pod throwing the hero `tiles` high, named so the main path can cross it.</summary>
+            public void Bounce(string name, float x, float y, float tiles)
+            {
+                pods.Add(
+                    new Pod
+                    {
+                        name = name,
+                        at = new Vector2(x, y),
+                        tiles = tiles,
+                    }
+                );
             }
 
             /// <summary>Ground whose top runs left to right along `top`, filled down to `bottom`.</summary>
@@ -216,6 +265,17 @@ namespace Descender.EditorTools.Paradise
         public const string SceneFolder = "Assets/Scenes/Paradise";
 
         public static readonly Vector2 Start = new Vector2(12f, -62.4f);
+
+        /// <summary>
+        /// The abilities found along the region, west to east: Wings with the feather at the
+        /// top of the Crown Vine (zone 3), the light dash on the Terraces (zone 5).
+        /// ParadiseRules reads the jump limits at an x from these.
+        /// </summary>
+        public static readonly IReadOnlyList<Grant> Grants = new List<Grant>
+        {
+            new Grant(Ability.Wings, 2560f),
+            new Grant(Ability.LightDash, 4700f),
+        };
 
         public static List<Zone> All() => new List<Zone> { Zone1(), Zone2() };
 
@@ -376,6 +436,7 @@ namespace Descender.EditorTools.Paradise
             z.seeds.Add(new Vector2(90f, -59.6f));
 
             z.saves.Add(new Vector2(300f, -59.5f));
+            z.MainPath("Hollow", "Steps", "RisingArcade", "BrokenSpan1", "BrokenSpan2", "BrokenSpan3", "ShrineTerrace");
             // The garden's built terraces; the Hollow and the lower garden are the cliff itself.
             z.Masonry("Steps", "ShrineTerrace");
 
@@ -536,15 +597,18 @@ namespace Descender.EditorTools.Paradise
             z.Deck("Landing5", 4f, S(898f, -44.5f), S(906f, -44.5f));
             z.Deck("LanternCrown", 3f, S(912f, -38f), S(918f, -38f));
 
-            z.pods.Add(new Pod { at = new Vector2(547f, -75.6f), tiles = 16f });
-            z.pods.Add(new Pod { at = new Vector2(608f, -61.6f), tiles = 15f });
-            z.pods.Add(new Pod { at = new Vector2(790f, -70.4f), tiles = 6f });
-            z.pods.Add(new Pod { at = new Vector2(826f, -70.2f), tiles = 6f });
-            z.pods.Add(new Pod { at = new Vector2(853f, -69.6f), tiles = 14f });
-            z.pods.Add(new Pod { at = new Vector2(996f, -79.6f), tiles = 19f });
-            z.pods.Add(new Pod { at = new Vector2(1045f, -79.6f), tiles = 19f });
-            z.pods.Add(new Pod { at = new Vector2(1098f, -79.6f), tiles = 20f });
+            z.Bounce("HollowPod", 547f, -75.6f, 16f);
+            z.Bounce("AqueductPod", 608f, -61.6f, 15f);
+            z.Bounce("DellPod1", 790f, -70.4f, 6f);
+            z.Bounce("DellPod2", 826f, -70.2f, 6f);
+            z.Bounce("DellWallPod", 853f, -69.6f, 14f);
+            z.Bounce("RootsPod1", 996f, -79.6f, 19f);
+            z.Bounce("RootsPod2", 1045f, -79.6f, 19f);
+            z.Bounce("RootsPod3", 1098f, -79.6f, 20f);
 
+            // The straight run: over the hole by Mereth's tree, down into the dell, the big pod
+            // over its east wall, the three arch bridges and the climb out.
+            z.MainPath("Grove", "OrchardRows", "DellWallPod", "LanternRise", "Run1", "Run2", "Run3", "ExitClimb");
             z.saves.Add(new Vector2(590f, -62f));
             // The orchard stands on terraces; the root hollow and the roots route are the rock below.
             z.Masonry("Grove", "OrchardRows", "LanternRise", "ExitClimb");
