@@ -12,7 +12,7 @@ story, behind a title screen with three save slots.
 ## Running it
 
 **In Unity (the port):** open the repository root as a project in Unity
-6000.3 and press **Play**. The editor hook `Descender > Play from Main
+6000.6 and press **Play**. The editor hook `Descender > Play from Main
 scene` (ticked by default) makes Play load `Assets/Scenes/Main.unity`, the
 scene with the game systems, whatever scene is open, so a fresh checkout's
 empty untitled scene does not show a bare blue screen. Main boots to the
