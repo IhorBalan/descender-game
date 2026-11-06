@@ -104,9 +104,9 @@ hygiene as each production region lands.
 
 | Task | Title | Status | Priority | Depends on | Attempts | Thread | PR |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| T-0001 | Paradise construction-rule checker | in progress | 1 | none | 1 | T-0001 implementation | |
-| T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | approved | 2 | none | 0 | | |
-| T-0003 | Beats of zones 1 and 2 as layout placements | approved | 3 | T-0001, T-0002 | 0 | | |
+| T-0001 | Paradise construction-rule checker | done | 1 | none | 1 | T-0001 implementation | #139 |
+| T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | done | 2 | none | 1 | T-0002 implementation | #140 |
+| T-0003 | Beats of zones 1 and 2 as layout placements | in review | 3 | T-0001, T-0002 | 1 | T-0003 implementation | |
 | T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
 | T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
 
@@ -149,9 +149,11 @@ zone scenes, `ParadiseWorld.asset` and the build settings.
 - **Undo**: reorder the roadmap; nothing in code depends on the order. Zones
   are separate scenes, so partial Paradise work survives a reorder.
 
-### D-0003: verification runs on the owner's Mac through Remote Control
+### D-0003: verification runs on the owner's Windows PC through Remote Control
 
-- **Decided**: see `verification`. Cloud threads cannot run the Unity tests
+- **Decided**: see `verification`. Threads verify on the Windows PC
+  (Be_Quiet_PC, `D:\Dev\descender-game`; the owner moved from his Mac on
+  2026-11-06). Cloud threads cannot run the Unity tests
   or, with the current network policy, the CSharpier check; the owner chose
   Remote Control sessions on his machine over widening the cloud network.
 - **Alternative**: a cloud environment allowing the .NET and NuGet hosts
@@ -243,7 +245,7 @@ Merges do not deploy: only a `v*` tag releases, and tagging needs the owner.
   the changes were not run in Unity and must not push without the hook
   having run somewhere.
 - **Implementation threads run as Remote Control sessions on the owner's
-  Mac**, in `/Users/ihorbalanpersonal/Documents/Projects/descender-game`,
+  Windows PC** (Be_Quiet_PC), in `D:\Dev\descender-game`,
   where Unity 6000.6.8f1 is installed and the pre-push hook runs fully.
   Install CSharpier there once (`dotnet tool install --global csharpier
   --version 1.0.3`) and run `csharpier check Assets` before pushing; CI
@@ -258,7 +260,7 @@ The checkout at `.../descender-game` is the owner's working copy and may be
 open in the Unity editor. Threads do not work in it directly:
 
 1. **One git worktree per task**, in a sibling folder:
-   `git -C /Users/ihorbalanpersonal/Documents/Projects/descender-game worktree add ../descender-task-T-XXXX -b task/T-XXXX origin/main`.
+   `git -C D:\Dev\descender-game worktree add ../descender-task-T-XXXX -b task/T-XXXX origin/main`.
    A worktree is a separate Unity project folder with its own `Library/`,
    `Temp/` and `Logs/` (all gitignored), so it has its own lock file and the
    editor being open on the main checkout does not block it. Remove it when
@@ -270,7 +272,7 @@ open in the Unity editor. Threads do not work in it directly:
 3. **Unity batchmode instances can run concurrently on different project
    folders**, but each is heavy on CPU and memory. Run at most one Unity
    test run at a time on the machine: take a lock before the hook, for
-   example `mkdir /tmp/descender-unity.lock` and remove it after, or simply
+   example `mkdir "$TEMP/descender-unity.lock"` and remove it after, or simply
    push one task at a time. Two instances must never open the same folder.
 4. **Shared files**: two tasks must not both touch the same scene, prefab,
    ScriptableObject, project setting or `Packages/manifest.json`; the
@@ -292,5 +294,16 @@ open in the Unity editor. Threads do not work in it directly:
 
 ## Playtest
 
-_Nothing to play yet from the pipeline. The current build is `main` at
-d49d0d6 (PR #136)._
+Open items for the owner to play in the editor. Remove an item when it has
+been played and its feedback is in.
+
+- **T-0002, the dialogue pipeline (PR #140).** In `Main.unity`, after New
+  Game: the opening lines play at the start, the gate lines play at the goal
+  gate, Old Pell talks in the hub, and Tobiah's token can be examined (its
+  lines play and it is gone afterwards).
+- **T-0003, the beats of zones 1 and 2.** In `ParadiseMain.unity`, after New
+  Game: the opening lines play as Ansel wakes, Mereth stands by her tree in
+  the Orchard and talks (and says something else when asked again), and
+  Tobiah's token in the root hollow below her can be examined, reads its
+  lines and is gone (`item:token` set). No white, pink or orange beat flags
+  remain at those three spots.
