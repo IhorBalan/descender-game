@@ -21,6 +21,18 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
+        public void PlayFromMainLeavesTheTestRunnerSceneAlone()
+        {
+            // The PlayMode test run boots from Assets/InitTestScene<guid>.unity; Play from Main
+            // must not swap that for the game's entry scene, or the run hangs.
+            Assert.That(PlayFromMain.IsTestRunnerScene("Assets/InitTestScene53412698-01fe.unity"), Is.True);
+            Assert.That(PlayFromMain.IsTestRunnerScene(PlayFromMain.MainScenePath), Is.False);
+            Assert.That(PlayFromMain.IsTestRunnerScene(PlayFromMain.ParadiseEntryPath), Is.False);
+            Assert.That(PlayFromMain.IsTestRunnerScene(""), Is.False);
+            Assert.That(PlayFromMain.IsTestRunnerScene(null), Is.False);
+        }
+
+        [Test]
         public void UiMapHasTheActionsTheEventSystemBindsTo()
         {
             var actions = AssetDatabase.LoadAssetAtPath<InputActionAsset>(MainSceneSetup.ActionsPath);

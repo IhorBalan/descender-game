@@ -5,6 +5,8 @@ These rules apply to the automatic Claude review on every pull request
 here changes what the reviewer posts.
 
 The game is a Unity 6 project (C#, URP 2D Renderer, Input System, Tilemaps).
+`docs/ARCHITECTURE.md` describes the structure and conventions, and the
+"Code review checklist" in `CLAUDE.md` lists what every review checks.
 The project's own conventions are the skills under `.claude/skills/`; a
 change that breaks one of them is a nit unless it also breaks the game.
 
