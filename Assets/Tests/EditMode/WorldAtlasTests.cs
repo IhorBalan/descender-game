@@ -7,7 +7,7 @@ using UnityEngine;
 namespace Descender.Tests
 {
     /// <summary>
-    /// The world as tools/unity/import_godot_regions.py wrote it: twelve contiguous
+    /// The committed world grid (Assets/Data/World.asset): twelve contiguous
     /// bands, a scene and a tile set for each, the start and every checkpoint inside
     /// its band, every cell of every layer inside its atlas and its band.
     /// </summary>
@@ -18,7 +18,7 @@ namespace Descender.Tests
         private static WorldAtlas Atlas()
         {
             var atlas = AssetDatabase.LoadAssetAtPath<WorldAtlas>(AtlasPath);
-            Assert.That(atlas, Is.Not.Null, AtlasPath + " is missing; run tools/unity/import_godot_regions.py");
+            Assert.That(atlas, Is.Not.Null, AtlasPath + " is missing; it is a committed asset, restore it from git");
             return atlas;
         }
 
