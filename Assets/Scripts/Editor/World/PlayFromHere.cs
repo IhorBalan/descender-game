@@ -64,7 +64,8 @@ namespace Descender.EditorTools.World
             SessionState.SetString(RestoreKey, JsonUtility.ToJson(setup));
             DevStart.Leave(view.pivot, allAbilities);
             // The new Paradise has its own entry scene; everything else plays the prototype.
-            var entry = setup.paths.Exists(p => p.StartsWith(ParadiseScenesFolder)) ? ParadiseEntryPath : MainScenePath;
+            var paradise = setup.paths.Find(p => p.StartsWith(ParadiseScenesFolder));
+            var entry = EditorTools.Setup.PlayFromMain.EntryFor(paradise);
             EditorSceneManager.OpenScene(entry, OpenSceneMode.Single);
             EditorApplication.EnterPlaymode();
         }

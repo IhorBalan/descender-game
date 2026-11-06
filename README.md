@@ -11,6 +11,17 @@ story, behind a title screen with three save slots.
 
 ## Running it
 
+**In Unity (the port):** open the repository root as a project in Unity
+6000.6 and press **Play**. The editor hook `Descender > Play from Main
+scene` (ticked by default) makes Play load `Assets/Scenes/Main.unity`, the
+scene with the game systems, whatever scene is open, so a fresh checkout's
+empty untitled scene does not show a bare blue screen. Main boots to the
+title menu; New Game enters the world. Untick the menu item to play exactly
+the scene that is open, or use `Descender > Play from here` (Alt+P) to drop
+the hero at the centre of the Scene view in a region or zone scene.
+
+**In Godot (the original):**
+
 1. Install [Godot 4.7](https://godotengine.org/download) (standard build, no
    .NET needed).
 2. Open `project.godot` in the editor and press **F5**, or run
