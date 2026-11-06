@@ -11,8 +11,90 @@ Task statuses: `proposed`, `approved`, `rejected`, `in progress`,
 
 ## Roadmap
 
-_Empty. The first Planning thread drafts it from `docs/design/`,
-`docs/story/` and the code._
+Drafted 2026-11-06 from `main` after PR #136, `docs/design/paradise.md`, the
+story script, the enemy, economy, upgrades and progression designs, the
+October plans and the 33 open GitHub issues. The full draft with its
+reasoning is in the project files (`planning/roadmap.md`). Ihor corrects it.
+
+**Current milestone: M1, Paradise greybox end to end.**
+
+Principles: one region to production before the next; small milestones,
+each playable; the prototype stays playable in `Main.unity` until a
+production region replaces it; enemies after the map in each region.
+
+### M1. Paradise greybox end to end (current)
+
+Goal: all seven zones exist and the region plays west to east in one run.
+
+- Greybox zones 3 to 7 with `ParadiseLayout` and `ParadiseGreybox`: all
+  paths, the 15 save shrines, the encounter spaces, the Warden arena, the
+  Low Gate exit dropping into the Ruined Earth prototype.
+- Place the Heaven 1 and Heaven 2 beats in the new region: the `opening`
+  and `gate` triggers, Mereth and Ithuriel, the seven story items, the
+  feather (zone 3) and the light dash (zone 5), the Making-house trigger.
+- The construction-rule checker: an EditMode test that walks each zone's
+  main path and fails on a gap, step or fall outside the tables in
+  `paradise.md` section 2, and on a missing shrine spacing.
+- A scripted playtest that runs the whole region's main path.
+- Done when: a 20-minute straight run from zone 1 to the Low Gate works,
+  every beat fires, the checker is green, and a run is on the playtest list.
+
+### M2. Paradise art, zones 3 and 4
+
+The Great Vines and the Tallied Fields dressed to the bar zones 1 and 2 set;
+zones 1 and 2 revisited only where M1 moved them. Done when: a screenshot per
+zone in `docs/screenshots/paradise/` and a play-through with no readability
+complaint on hazards or ledges.
+
+### M3. Paradise art, zones 5 to 7
+
+The Terraces, the Making-house Approach and the Low Gate; per-zone URP
+Volumes blended at the borders; music and ambience hooks that thin from
+zone 5 on. Done when: the region reads as one place from gold to steel blue
+and the frame budgets (300 draw calls, 12 lights, 2,000 particles) hold.
+
+### M4. Paradise enemies and the Warden
+
+Angel guards and watchers in the encounter spaces per `enemies.md`, the
+thorn and light hazards, drops per the economy; the Warden of the Low Gate
+fight with its lines and the drop through the gate; the prototype's upgrades
+and power-ups placed per `economy.md` and `upgrades.md`. Done when: the
+region plays with combat from start to Warden on each difficulty and the
+enemy data tests cover the new placements.
+
+### M5. Paradise polish and the first Unity build
+
+Feel and audio passes, a timed full run (target 20 minutes), a performance
+pass against the budgets, `Main.unity` booting into the new Paradise with
+the prototype Paradise retired, an in-game version string, and a `v0.4.0`
+playtest build on GitHub (needs the Unity licence secrets in CI, which is
+Ihor's to provide; a playtest build, not a release to players). Done when:
+Ihor has played a build of Paradise end to end.
+
+### M6. Ruined Earth: design, then build
+
+M6a: `docs/design/ruined_earth.md` in the shape of `paradise.md`, deciding
+what of the hub prototype (dialogue, quests, camp, shop) carries over.
+M6b: greybox, beats and NPCs. M6c: art and polish. Enemies light by design.
+
+### M7. Purgatory
+
+Design doc, greybox with the Ferryman and the shaft of names, art, polish.
+
+### M8 onward. The nine circles, two at a time
+
+Following the script's pairing and issues #39 to #43: the Shallows and the
+Winds, the Mire and the Furnace, the Seal, the Glass and the Archive, the
+Gate Below and the Floor. Each pair is a design-then-build milestone with
+its bodies from `enemies.md` and its boss. The clock ending and the Gardener
+fight (#20, #31) come last.
+
+### Cross-cutting, folded into milestones as it fits
+
+Unity tests in CI (needs the licence secrets or a self-hosted runner);
+Godot removal and a README rewrite after M5; the open October design items
+(Vials and Church Iron placements, Vael's memory shop, credits text); issue
+hygiene as each production region lands.
 
 ## Backlog
 
@@ -35,7 +117,25 @@ _Empty. The first Planning thread drafts it from `docs/design/`,
 - **Undo**: create the integration branch from `main`, point task branches
   at it in the Implementation stage, and change this entry.
 
-### D-0002: verification runs on the owner's Mac through Remote Control
+### D-0002: region-by-region roadmap, Paradise first
+
+- **Decided**: the roadmap takes Paradise from greybox to a playable Unity
+  build (M1 to M5) before any other region is touched. The current
+  milestone is M1, Paradise greybox end to end. Heaven 2 stays inside
+  Paradise as zones 5 to 7, and Paradise ends at the Low Gate dropping into
+  Ruined Earth, as the world does today.
+- **Why**: `docs/design/paradise.md` section 7 already orders the work this
+  way and the tech base is built for it; one finished region sets the
+  quality bar, tools and budgets the other eleven reuse; the greybox is the
+  smallest step that makes the whole region playable and testable; and the
+  prototype keeps the full story walkable throughout.
+- **Alternative**: breadth first, dressing all twelve prototype regions to a
+  middling standard, or building enemies and combat depth before more map.
+  Rejected because it spreads effort before the bar is known.
+- **Undo**: reorder the roadmap; nothing in code depends on the order. Zones
+  are separate scenes, so partial Paradise work survives a reorder.
+
+### D-0003: verification runs on the owner's Mac through Remote Control
 
 - **Decided**: see `verification`. Cloud threads cannot run the Unity tests
   or, with the current network policy, the CSharpier check; the owner chose
