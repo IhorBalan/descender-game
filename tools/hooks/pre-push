@@ -5,10 +5,22 @@
 # Install once per clone:   git config core.hooksPath tools/hooks
 # Skip once:                SKIP_UNITY_TESTS=1 git push      (or git push --no-verify)
 # Pick the editor:          UNITY_EDITOR=/path/to/Unity git push
+# Stall limit in seconds:   PRE_PUSH_STALL_SECONDS=600 (the default)
 #
 # The editor is found from ProjectSettings/ProjectVersion.txt under the Unity
 # Hub's install folder. The project must not be open in the editor at the same
 # time; run the tests from Window > General > Test Runner instead then.
+#
+# Both platforms run in one editor launch through
+# Descender.EditorTools.Build.PrePushTests (starting the editor twice was most
+# of a warm run). A checkout from before that class existed gets the older
+# form, one -runTests launch per platform. Either way the same tests run and
+# the push is refused unless both platforms ran tests and none failed.
+#
+# While the editor runs, the hook prints the phase (starting, importing,
+# EditMode n/N, PlayMode n/N) with the time elapsed, and how long the last
+# passing run in this checkout took. A run whose log and progress stand still
+# for the stall limit is stopped and fails, instead of holding the push forever.
 
 set -u
 
@@ -54,40 +66,178 @@ if [ -f Temp/UnityLockfile ]; then
 fi
 
 mkdir -p Logs
-status=0
-for platform in EditMode PlayMode; do
-    log="Logs/pre-push-$platform.log"
-    results="Logs/pre-push-$platform.xml"
-    rm -f "$results"
-    echo "pre-push: running the $platform tests (log: $log)..."
-    if [ "$platform" = "EditMode" ]; then
-        graphics="-nographics"
-    else
-        graphics=""   # PlayMode needs a graphics device
-    fi
-    # shellcheck disable=SC2086
-    "$unity" -batchmode $graphics -projectPath "$root" -runTests -testPlatform "$platform" \
-        -testResults "$results" -logFile "$log"
-    code=$?
-    if [ $code -ne 0 ]; then
-        status=1
-        echo "pre-push: $platform run failed (exit $code)." >&2
-        if ! grep -qE "error CS[0-9]+|<test-case" "$log" "$results" 2>/dev/null; then
-            echo "pre-push: no compile error or test result was written; another Unity instance may have the project open, or the editor failed to start. See $log." >&2
-        fi
-        grep -E "error CS[0-9]+|Scripts have compiler errors" "$log" | sed 's/^.*Assets/Assets/' | sort -u | head -20 >&2
-        if [ -f "$results" ]; then
-            # The failing test names and their messages, from the NUnit XML.
-            awk '/<test-case/ && /result="Failed"/ { match($0, /fullname="[^"]*"/); print "  failed: " substr($0, RSTART + 10, RLENGTH - 11) }
-                 /<message>/ { gsub(/.*<message><!\[CDATA\[|\]\]><\/message>.*/, ""); print "    " $0 }' "$results" | head -40 >&2
-        fi
-        break
-    fi
-    passed=$(sed -n 's/.*<test-run [^>]*passed="\([0-9]*\)".*/\1/p' "$results" | head -1)
-    echo "pre-push: $platform passed ($passed tests)."
-done
+status_file="Logs/pre-push-status.txt"
+last_file="Logs/pre-push-last-seconds.txt"
+stall_limit="${PRE_PUSH_STALL_SECONDS:-600}"
+started=$(date +%s)
+unity_pid=""
 
+trap 'if [ -n "$unity_pid" ]; then kill "$unity_pid" 2>/dev/null; fi; exit 1' INT TERM
+
+# 75 -> 1m15s
+clock() {
+    printf '%dm%02ds' $(($1 / 60)) $(($1 % 60))
+}
+
+# What the editor is doing now: "kind|text". The test phases come from the
+# status file PrePushTests keeps; before that, from the editor log.
+phase_of() {
+    if [ -s "$status_file" ]; then
+        text=$(head -1 "$status_file" | tr -d '\r')
+        echo "${text%% *}|$text"
+        return
+    fi
+    imported=$(grep -cE "^Start importing |Importing .GUID: |Imported GUID: " "$1" 2>/dev/null)
+    if [ "${imported:-0}" -gt 0 ]; then
+        echo "import|importing assets ($imported so far)"
+    else
+        echo "start|starting the editor"
+    fi
+}
+
+# run_unity <label> <log> <unity arguments...>: runs the editor, printing a
+# progress line when the phase changes and every 10 seconds. Returns the
+# editor's exit code, or 124 when it was stopped for standing still.
+run_unity() {
+    label=$1
+    log=$2
+    shift 2
+    rm -f "$status_file"
+    "$unity" "$@" -logFile "$log" &
+    unity_pid=$!
+    kind=""
+    beat=0
+    quiet=0
+    seen=""
+    while kill -0 "$unity_pid" 2>/dev/null; do
+        sleep 2
+        beat=$((beat + 2))
+        phase=$(phase_of "$log")
+        if [ "${phase%%|*}" != "$kind" ] || [ $beat -ge 10 ]; then
+            kind=${phase%%|*}
+            beat=0
+            echo "pre-push: [$(clock $(($(date +%s) - started)))] $label: ${phase#*|}"
+        fi
+        now="$(wc -c <"$log" 2>/dev/null) $phase"
+        if [ "$now" = "$seen" ]; then
+            quiet=$((quiet + 2))
+        else
+            quiet=0
+            seen=$now
+        fi
+        if [ "$quiet" -ge "$stall_limit" ]; then
+            echo "pre-push: nothing has happened for $(clock "$quiet") (${phase#*|}); stopping the editor." >&2
+            kill "$unity_pid" 2>/dev/null
+            wait "$unity_pid" 2>/dev/null
+            unity_pid=""
+            rm -f Temp/UnityLockfile Assets/InitTestScene*.unity Assets/InitTestScene*.unity.meta
+            return 124
+        fi
+    done
+    wait "$unity_pid"
+    code=$?
+    unity_pid=""
+    # An editor that aborted (a compile error) leaves its lock behind, and the
+    # next run would take it for an open editor. Ours has exited, and no other
+    # had the project when it started.
+    rm -f Temp/UnityLockfile
+    return $code
+}
+
+# report_failure <platform> <exit code> <log> <results>: why a run failed.
+report_failure() {
+    echo "pre-push: $1 run failed (exit $2)." >&2
+    if ! grep -qE "error CS[0-9]+|<test-case" "$3" "$4" 2>/dev/null; then
+        echo "pre-push: no compile error or test result was written; another Unity instance may have the project open, or the editor failed to start. See $3." >&2
+    fi
+    grep -E "error CS[0-9]+|Scripts have compiler errors" "$3" | sed 's/^.*Assets/Assets/' | sort -u | head -20 >&2
+    if [ -f "$4" ]; then
+        # The failing test names and their messages, from the NUnit XML.
+        awk '/<test-case/ && /result="Failed"/ { match($0, /fullname="[^"]*"/); print "  failed: " substr($0, RSTART + 10, RLENGTH - 11) }
+             /<message>/ && !/One or more child tests had errors/ { gsub(/.*<message><!\[CDATA\[|\]\]><\/message>.*/, ""); print "    " $0 }' "$4" | head -40 >&2
+    fi
+}
+
+# count <results> <attribute>: a number from the <test-run> element.
+count() {
+    sed -n 's/.*<test-run [^>]*[^a-z]'"$2"'="\([0-9]*\)".*/\1/p' "$1" 2>/dev/null | head -1
+}
+
+# passed_line <platform> <results>: prints the summary line and succeeds only
+# when the results file shows tests that ran and none that failed.
+passed_line() {
+    passed=$(count "$2" passed)
+    failed=$(count "$2" failed)
+    if [ ! -f "$2" ] || [ -z "$passed" ] || [ "$passed" -eq 0 ] || [ "${failed:-1}" -ne 0 ]; then
+        return 1
+    fi
+    echo "pre-push: $1 passed ($passed tests)."
+}
+
+if [ -f "$last_file" ]; then
+    echo "pre-push: the last passing run here took $(clock "$(tr -cd '0-9' <"$last_file")")."
+elif [ ! -d Library ]; then
+    echo "pre-push: first run in this checkout, so Unity imports the whole project first (a minute or two)."
+fi
+
+# Burst would compile the packages' jobs to native DLLs under Library/BurstCache.
+# The tests do not need them: the same code runs managed, the game has no Burst
+# code of its own, and on Windows with Smart App Control each unsigned DLL is
+# blocked with a warning to the user anyway.
+burst="--burst-disable-compilation"
+
+status=0
+if [ -f Assets/Scripts/Editor/Build/PrePushTests.cs ]; then
+    log="Logs/pre-push.log"
+    rm -f Logs/pre-push-EditMode.xml Logs/pre-push-PlayMode.xml
+    echo "pre-push: running the EditMode and PlayMode tests in one editor launch."
+    echo "pre-push: watch the editor log with: tail -f $log"
+    # No -nographics: PlayMode needs a graphics device.
+    # shellcheck disable=SC2086
+    run_unity "tests" "$log" -batchmode $burst -projectPath "$root" \
+        -executeMethod Descender.EditorTools.Build.PrePushTests.Run -prePushResults Logs
+    code=$?
+    for platform in EditMode PlayMode; do
+        results="Logs/pre-push-$platform.xml"
+        if ! passed_line "$platform" "$results"; then
+            status=1
+            report_failure "$platform" "$code" "$log" "$results"
+            break
+        fi
+    done
+    if [ $status -eq 0 ] && [ $code -ne 0 ]; then
+        # Both results look fine but the editor did not exit cleanly: not a pass.
+        status=1
+        report_failure "editor" "$code" "$log" "$log"
+    fi
+else
+    for platform in EditMode PlayMode; do
+        log="Logs/pre-push-$platform.log"
+        results="Logs/pre-push-$platform.xml"
+        rm -f "$results"
+        echo "pre-push: running the $platform tests (watch with: tail -f $log)."
+        if [ "$platform" = "EditMode" ]; then
+            graphics="-nographics"
+        else
+            graphics=""   # PlayMode needs a graphics device
+        fi
+        # shellcheck disable=SC2086
+        run_unity "$platform" "$log" -batchmode $burst $graphics -projectPath "$root" -runTests \
+            -testPlatform "$platform" -testResults "$results"
+        code=$?
+        if [ $code -ne 0 ] || ! passed_line "$platform" "$results"; then
+            status=1
+            report_failure "$platform" "$code" "$log" "$results"
+            break
+        fi
+    done
+fi
+
+total=$(($(date +%s) - started))
 if [ $status -ne 0 ]; then
     echo "pre-push: fix the tests, or push without them with SKIP_UNITY_TESTS=1 git push." >&2
+else
+    echo "$total" >"$last_file"
+    echo "pre-push: all tests passed in $(clock "$total")."
 fi
 exit $status

@@ -214,8 +214,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (76 on `main` at d49d0d6) | pre-push hook, developer machine | yes | `tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (6 on `main` at d49d0d6) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | same with `-testPlatform PlayMode` |
+| EditMode tests (79 on `main` after the single-launch hook) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (6) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 
@@ -224,6 +224,13 @@ tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 (6000.6.8f1) under the Unity Hub folder, or at `UNITY_EDITOR`. It refuses to
 run while the same project folder is open in the editor (`Temp/UnityLockfile`).
 Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`.
+
+The hook prints its phase, the time elapsed and the previous run's duration,
+and the editor log is `Logs/pre-push.log` in the checkout being pushed. To
+watch a run from another terminal: `Get-Content <checkout>\Logs\pre-push.log
+-Wait -Tail 20` (PowerShell) or `tail -f`. `Logs/pre-push-status.txt` holds
+the current test count (`PlayMode 4/6`). A run with no log or progress change
+for 10 minutes is stopped and fails.
 
 Merges do not deploy: only a `v*` tag releases, and tagging needs the owner.
 
@@ -257,9 +264,9 @@ open in the Unity editor. Threads do not work in it directly:
    editor being open on the main checkout does not block it. Remove it when
    the PR is merged: `git worktree remove ../descender-task-T-XXXX`.
 2. **The first Unity run in a new worktree imports the whole project**
-   (several minutes, a few GB in `Library/`). Later runs take about 20
-   seconds. Reuse a worktree for a task's fix rounds rather than recreating
-   it.
+   (several minutes on the Mac; about a minute on the Windows PC, where the
+   whole hook takes 1m07s cold and 19 seconds warm; a few GB in `Library/`).
+   Reuse a worktree for a task's fix rounds rather than recreating it.
 3. **Unity batchmode instances can run concurrently on different project
    folders**, but each is heavy on CPU and memory. Run at most one Unity
    test run at a time on the machine: take a lock before the hook, for
@@ -271,7 +278,17 @@ open in the Unity editor. Threads do not work in it directly:
 5. **Hook installation is per checkout**, not per worktree: `core.hooksPath`
    is in the shared `.git/config`, so setting it once in the main checkout
    covers every worktree. Check with `git config core.hooksPath` before the
-   first push from a worktree.
+   first push from a worktree. When the value is an absolute path (as on the
+   Windows PC, `D:\Dev\descender-game\tools\hooks`), every worktree runs the
+   main checkout's copy of the hook against its own files, so a change to the
+   hook takes effect only once the main checkout has pulled it, and a task
+   branch cannot loosen its own gate.
+6. **Do not copy `Library/` from another checkout to save the first import.**
+   It was tried on the Windows PC: the copied script-to-class mapping was
+   wrong until `Library/Bee`, `ScriptAssemblies`, `ArtifactDB`,
+   `SourceAssetDB` and `Artifacts` were deleted, which is the import itself.
+   The first run costs a minute or two there, so the copy is not worth the
+   risk of a test run against a stale import.
 
 ## Playtest
 

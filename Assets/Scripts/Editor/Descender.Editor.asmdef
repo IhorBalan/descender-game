@@ -13,7 +13,9 @@
         "Unity.2D.SpriteShape.Editor",
         "Unity.2D.Tilemap.Extras",
         "Unity.TextMeshPro",
-        "Unity.TextMeshPro.Editor"
+        "Unity.TextMeshPro.Editor",
+        "UnityEngine.TestRunner",
+        "UnityEditor.TestRunner"
     ],
     "includePlatforms": [
         "Editor"
