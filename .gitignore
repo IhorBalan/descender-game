@@ -35,4 +35,7 @@ __pycache__/
 *.apiScheme
 *.cache
 crashlytics-build.properties
+/.vs/
+/ExportedObj/
+*.unitypackage
 sysinfo.txt
