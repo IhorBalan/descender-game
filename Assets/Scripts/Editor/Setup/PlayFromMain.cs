@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
@@ -11,7 +12,9 @@ namespace Descender.EditorTools.Setup
     /// Descender &gt; Play from Main scene is ticked (the default), Play loads the game's entry scene
     /// instead: ParadiseMain for a scene in the new Paradise folder, Main for everything else. The
     /// scene you were editing comes back when play mode ends, as Unity always does. Untick it to play
-    /// exactly the scene that is open.
+    /// exactly the scene that is open. A PlayMode test run is left alone: it enters play mode in
+    /// the Test Framework's own bootstrap scene, and starting in Main instead leaves it waiting
+    /// forever for tests that never begin.
     /// </summary>
     [InitializeOnLoad]
     public static class PlayFromMain
@@ -20,6 +23,13 @@ namespace Descender.EditorTools.Setup
         public const string MainScenePath = "Assets/Scenes/Main.unity";
         public const string ParadiseScenesFolder = "Assets/Scenes/Paradise/";
         public const string ParadiseEntryPath = "Assets/Scenes/Paradise/ParadiseMain.unity";
+
+        /// <summary>
+        /// Where the Unity Test Framework saves the bootstrap scene of a PlayMode test run
+        /// (<c>Assets/InitTestScene&lt;guid&gt;.unity</c>). It holds the test controller, so play
+        /// mode must start in it or the tests never begin.
+        /// </summary>
+        public const string TestRunnerScenePrefix = "Assets/InitTestScene";
         private const string PrefKey = "Descender.PlayFromMain";
 
         static PlayFromMain()
@@ -27,6 +37,9 @@ namespace Descender.EditorTools.Setup
             EditorSceneManager.sceneOpened += (_, _) => Apply();
             EditorSceneManager.activeSceneChangedInEditMode += (_, _) => Apply();
             EditorSceneManager.newSceneCreated += (_, _, _) => Apply();
+            // The test runner makes its bootstrap scene untitled and names it on save.
+            EditorSceneManager.sceneSaved += _ => Apply();
+            EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
             EditorApplication.delayCall += Apply;
         }
 
@@ -58,13 +71,41 @@ namespace Descender.EditorTools.Setup
                 : MainScenePath;
         }
 
+        /// <summary>Whether a scene path is the Test Framework's PlayMode bootstrap scene.</summary>
+        public static bool IsTestRunnerScene(string scenePath)
+        {
+            return scenePath != null && scenePath.StartsWith(TestRunnerScenePrefix, StringComparison.Ordinal);
+        }
+
+        private static bool TestRunnerSceneIsOpen()
+        {
+            for (var i = 0; i < SceneManager.sceneCount; i++)
+            {
+                if (IsTestRunnerScene(SceneManager.GetSceneAt(i).path))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        // The last moment before play mode: a PlayMode test run must start in its own scene, not
+        // in the game's entry scene, whatever an earlier scene event set.
+        private static void OnPlayModeStateChanged(PlayModeStateChange change)
+        {
+            if (change == PlayModeStateChange.ExitingEditMode && TestRunnerSceneIsOpen())
+            {
+                EditorSceneManager.playModeStartScene = null;
+            }
+        }
+
         public static void Apply()
         {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 return;
             }
-            if (!Enabled)
+            if (!Enabled || TestRunnerSceneIsOpen())
             {
                 EditorSceneManager.playModeStartScene = null;
                 return;
