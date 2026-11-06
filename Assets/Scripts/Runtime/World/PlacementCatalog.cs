@@ -5,7 +5,7 @@ namespace Descender.World
 {
     /// <summary>
     /// Which prefab a WorldPlacement spawns, by key: the placement's type ("save",
-    /// "ability", "upgrade", "power", "item", "trigger"), "enemy:&lt;character&gt;" or
+    /// "ability", "upgrade", "power", "item", "relic", "trigger"),"enemy:&lt;character&gt;" or
     /// "npc:&lt;character&gt;" for a particular body, "boss" for an enemy whose character
     /// is a boss id, and "enemy" or "npc" as the fallbacks. One asset at
     /// Assets/Data/Placements.asset, filled by Descender &gt; Setup &gt; Placement catalog
@@ -61,6 +61,24 @@ namespace Descender.World
                 }
             }
             return Find(type);
+        }
+
+        /// <summary>
+        /// As <see cref="Resolve(string, string)"/>, but an "item" that carries dialogue is
+        /// a relic to examine (the "relic" entry) rather than loot to pick up; a catalog
+        /// with no relic falls back to the item.
+        /// </summary>
+        public GameObject Resolve(string type, string character, bool hasDialogue)
+        {
+            if (type == "item" && hasDialogue)
+            {
+                var relic = Find("relic");
+                if (relic != null)
+                {
+                    return relic;
+                }
+            }
+            return Resolve(type, character);
         }
 
         public void Set(string key, GameObject prefab)
