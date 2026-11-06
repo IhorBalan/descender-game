@@ -62,12 +62,13 @@ namespace Descender.World
                     }
                     continue;
                 }
-                if (parts.Length != 4 || parts[0] != "layer")
+                // An empty layer has no base64 after its count, so its line has three parts.
+                if (parts[0] != "layer" || parts.Length < 3 || parts.Length > 4)
                 {
                     throw new FormatException($"Bad tile line {i + 1}: '{line}'.");
                 }
                 var count = int.Parse(parts[2]);
-                var bytes = Convert.FromBase64String(parts[3]);
+                var bytes = parts.Length == 4 ? Convert.FromBase64String(parts[3]) : new byte[0];
                 if (bytes.Length != count * 6)
                 {
                     throw new FormatException($"Layer {parts[1]} says {count} cells but holds {bytes.Length / 6}.");

@@ -92,8 +92,38 @@ namespace Descender.Game
         private void Start()
         {
             SettingsApplier.Apply(SettingsData.Current);
+            if (DevStart.TryTake(out var point, out var allAbilities))
+            {
+                StartTestGame(point, allAbilities);
+                return;
+            }
             ShowTitle();
         }
+
+        /// <summary>
+        /// A throwaway game with the hero at a world point (Play from here): saves go to
+        /// a scratch folder, never the player's slots, and every ability can be granted
+        /// so any spot of a region can be tried.
+        /// </summary>
+        public void StartTestGame(Vector2 point, bool allAbilities)
+        {
+            if (transition != null)
+            {
+                return;
+            }
+            SaveManager.UseDirectory(System.IO.Path.Combine(Application.temporaryCachePath, "play_from_here"));
+            SaveManager.StartNewGame(0, Difficulty.Normal);
+            ResetStatics();
+            PlayTime = 0f;
+            ActiveCheckpoint = -1;
+            RespawnPoint = point;
+            testPoint = point;
+            testAllAbilities = allAbilities;
+            transition = StartCoroutine(EnterWorld(null));
+        }
+
+        private Vector2? testPoint;
+        private bool testAllAbilities;
 
         private void OnDisable()
         {
@@ -374,7 +404,16 @@ namespace Descender.Game
             Hero.Died += OnHeroDied;
             streamer.RegionChanged -= OnRegionChanged;
             streamer.RegionChanged += OnRegionChanged;
-            if (data != null && data.Checkpoint >= 0)
+            if (testPoint.HasValue)
+            {
+                if (testAllAbilities)
+                {
+                    Hero.SetAbilities((Ability[])System.Enum.GetValues(typeof(Ability)));
+                }
+                streamer.EnterAt(Hero, testPoint.Value);
+                testPoint = null;
+            }
+            else if (data != null && data.Checkpoint >= 0)
             {
                 streamer.ContinueAt(Hero, data.Checkpoint);
             }
@@ -436,7 +475,7 @@ namespace Descender.Game
                 return;
             }
             var look = region.Look;
-            music.Play(look != null && !string.IsNullOrEmpty(look.music) ? look.music : region.Id);
+            music.Play(look != null && !string.IsNullOrEmpty(look.music) ? look.music : region.Key);
         }
 
         private void OnHeroDied()
@@ -475,7 +514,7 @@ namespace Descender.Game
         /// </summary>
         private void EnsureEventSystem()
         {
-            if (FindFirstObjectByType<EventSystem>() != null)
+            if (FindAnyObjectByType<EventSystem>() != null)
             {
                 return;
             }

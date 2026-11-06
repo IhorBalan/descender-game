@@ -141,10 +141,16 @@ namespace Descender.UI
             {
                 return false;
             }
-            var lower = padName.ToLowerInvariant();
+            var lower = padName.Trim().ToLowerInvariant();
+            // Sony's generic pad reports itself as exactly "Wireless Controller"; other
+            // makers put the words in a longer name ("Xbox Wireless Controller").
+            if (lower == "wireless controller")
+            {
+                return true;
+            }
             foreach (var mark in PlayStationMarks)
             {
-                if (lower.Contains(mark))
+                if (mark != "wireless controller" && lower.Contains(mark))
                 {
                     return true;
                 }

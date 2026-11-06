@@ -85,18 +85,25 @@ namespace Descender.UI
             {
                 return false;
             }
-            var last = text[after - 1];
             if (after < text.Length && charsPerSecond > 0f)
             {
                 // The rests keep their feel at every speed: shorter when typing faster.
+                // A fast tick can reveal the punctuation and the space after it at once,
+                // so the rest is looked for in every character this tick revealed.
                 var restScale = BaseCharsPerSecond / charsPerSecond;
-                if (SentenceEnds.IndexOf(last) >= 0 && text[after] != last)
+                for (var i = after - 1; i >= before; i--)
                 {
-                    pause = PauseSentence * restScale;
-                }
-                else if (CommaEnds.IndexOf(last) >= 0)
-                {
-                    pause = PauseComma * restScale;
+                    var revealed = text[i];
+                    if (SentenceEnds.IndexOf(revealed) >= 0 && text[i + 1] != revealed)
+                    {
+                        pause = PauseSentence * restScale;
+                        break;
+                    }
+                    if (CommaEnds.IndexOf(revealed) >= 0)
+                    {
+                        pause = PauseComma * restScale;
+                        break;
+                    }
                 }
             }
             sinceBlip += after - before;

@@ -31,6 +31,10 @@ namespace Descender.World
         [SerializeField]
         private int rows = 34;
 
+        [Tooltip("Tiles wide when the region has no generated RegionTiles (a region authored in Unity, Paradise).")]
+        [SerializeField, Min(1)]
+        private int width = 480;
+
         [SerializeField]
         private RegionTiles tiles;
 
@@ -47,7 +51,7 @@ namespace Descender.World
         public Transform Backdrop => backdrop;
 
         /// <summary>The band in world units.</summary>
-        public Rect Bounds => new Rect(0f, -(topRow + rows), tiles != null ? tiles.Width : 480, rows);
+        public Rect Bounds => new Rect(0f, -(topRow + rows), tiles != null ? tiles.Width : width, rows);
 
         /// <summary>The region's ambient tint, the Godot CanvasModulate colour, for the global light.</summary>
         public Color Ambient => look != null ? look.ambient : new Color(0.76f, 0.8f, 0.9f);

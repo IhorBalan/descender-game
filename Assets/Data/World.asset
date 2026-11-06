@@ -18,61 +18,73 @@ MonoBehaviour:
     subtitle: Celestial Gardens
     topRow: 0
     rows: 51
+    width: 0
   - key: ruined_earth
     displayName: Ruined Earth
     subtitle: The Hub
     topRow: 51
     rows: 51
+    width: 0
   - key: purgatory
     displayName: Purgatory
     subtitle: The Waiting
     topRow: 102
     rows: 51
+    width: 0
   - key: limbo
     displayName: 1. Limbo
     subtitle: The Forgotten
     topRow: 153
     rows: 34
+    width: 0
   - key: lust
     displayName: 2. Lust
     subtitle: The Desire
     topRow: 187
     rows: 34
+    width: 0
   - key: gluttony
     displayName: 3. Gluttony
     subtitle: The Devourers
     topRow: 221
     rows: 34
+    width: 0
   - key: greed
     displayName: 4. Greed
     subtitle: The Hoarders
     topRow: 255
     rows: 34
+    width: 0
   - key: wrath
     displayName: 5. Wrath
     subtitle: The Raging
     topRow: 289
     rows: 34
+    width: 0
   - key: heresy
     displayName: 6. Heresy
     subtitle: The Burned
     topRow: 323
     rows: 34
+    width: 0
   - key: violence
     displayName: 7. Violence
     subtitle: The Wounded
     topRow: 357
     rows: 34
+    width: 0
   - key: fraud
     displayName: 8. Fraud
     subtitle: The Deceivers
     topRow: 391
     rows: 34
+    width: 0
   - key: treachery
     displayName: 9. Treachery
     subtitle: The Frozen
     topRow: 425
     rows: 34
+    width: 0
   width: 480
   startRegion: paradise
   start: {x: 74.5, y: -15}

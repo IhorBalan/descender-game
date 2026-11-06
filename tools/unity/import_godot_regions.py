@@ -23,10 +23,16 @@ the repo. Godot's level pixels become Unity units at 16 a unit, Y flipped; a
 region's children stay in level coordinates from the region's own corner, the
 RegionRoot carrying the band's offset. Run again after a Godot scene changes;
 every output is rewritten (the scenes are generated, not hand-edited).
+
+Regions listed in Assets/Data/Regions/native_regions.json are authored in Unity
+instead (Paradise, docs/design/paradise.md): their scenes, tiles and props are
+left alone, their band takes the rows given there (the bands below move down to
+make room) and their start and save points come from that file.
 """
 from __future__ import annotations
 
 import base64
+import json
 import os
 import re
 import struct
@@ -45,6 +51,8 @@ SHEET_TILES = 256
 
 LIT_MATERIAL = "{fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}"  # URP Sprite-Lit-Default
 UNLIT_MATERIAL = "{fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}"  # URP Sprite-Unlit-Default
+# Emissive art, added on top unlit as Godot's glow layers were (Assets/Settings/Materials/Sprite Glow.mat).
+GLOW_MATERIAL = "{fileID: 2100000, guid: 99a72dac4b634f11b1ae3f8d92ff1c41, type: 2}"
 
 LAYER_NAMES = ["Background", "Decor", "Terrain", "Glow"]
 ROOM_DEFAULT_SIZE = (480.0, 272.0)
@@ -524,6 +532,30 @@ class Region:
         return None
 
 
+NATIVE_FILE = "Assets/Data/Regions/native_regions.json"
+
+
+def read_native() -> dict[str, dict]:
+    """The Unity-authored regions by key: rows, width, start and checkpoints in world units."""
+    path = os.path.join(ROOT, NATIVE_FILE)
+    if not os.path.exists(path):
+        return {}
+    data = json.load(open(path, encoding="utf-8"))
+    return {k: v for k, v in data.items() if not k.startswith("_")}
+
+
+def apply_native(regions: list[Region], native: dict[str, dict]) -> None:
+    """A native region's band takes its own rows; every band below moves by the difference."""
+    shift_rows = 0
+    for region in regions:
+        region.top_px += shift_rows * PPU
+        spec = native.get(region.key)
+        if spec is not None:
+            rows = int(spec["rows"])
+            shift_rows += rows - region.rows
+            region.rows = rows
+
+
 def read_world() -> tuple[list[Region], list[str], int]:
     text = open(os.path.join(ROOT, "scenes", "world", "world.tscn")).read()
     ext, nodes = parse_scene(text)
@@ -606,7 +638,7 @@ def write_tiles(region: Region, source_keys: dict[int, str], kinds_by_source: di
         f"  m_Name: {region.key}_tiles\n  m_EditorClassIdentifier: \n"
         "  sprites:\n" + sprites + f"  cells: {{fileID: 4900000, guid: {assets.guid_for(cells_rel)}, type: 3}}\n"
         f"  litMaterial: {LIT_MATERIAL}\n"
-        f"  glowMaterial: {UNLIT_MATERIAL}\n"
+        f"  glowMaterial: {GLOW_MATERIAL}\n"
     )
     write(asset_rel, text)
     return cells_rel, asset_rel
@@ -640,7 +672,7 @@ def prop_prefab(region: Region, scene_rel: str) -> tuple[str, str]:
     if has_glow:
         doc.game_object("Glow", "Glow", [doc.id("tr", "Glow"), doc.id("sr", "Glow")])
         doc.transform("Glow", ".")
-        doc.sprite_renderer("Glow", sprite_ref(glow_rel), UNLIT_MATERIAL, PROP_ORDER + 1)
+        doc.sprite_renderer("Glow", sprite_ref(glow_rel), GLOW_MATERIAL, PROP_ORDER + 1)
     write(prefab_rel, doc.prefab_text())
     write_meta(prefab_rel, prefab_meta(assets.guid_for(prefab_rel)))
     return prefab_rel, tag
@@ -905,22 +937,40 @@ def write_scene(
 # --- The atlas and the catalog ------------------------------------------------------
 
 
-def checkpoints_in_order(regions: list[Region]) -> list[tuple[Region, Node]]:
-    """Every save placement, top to bottom then left to right over the world (level_builder.gd, _above_or_left)."""
+def checkpoints_in_order(
+    regions: list[Region], native: dict[str, dict]
+) -> list[tuple[Region, Node | None, tuple[float, float]]]:
+    """Every save point, top to bottom then left to right over the world (level_builder.gd, _above_or_left),
+    as (region, its placement node or None for a native region's, position in world units)."""
     found = []
     for region in regions:
+        if region.key in native:
+            for x, y in native[region.key].get("checkpoints", []):
+                found.append((region, None, (float(x), float(y))))
+            continue
         for node in region.children("Placements"):
             if node.get("type", "enemy") == "save":
                 x, y = node.get("position", (0.0, 0.0))
-                found.append((y + region.top_px, x, region, node))
-    found.sort(key=lambda f: (f[0], f[1]))
-    return [(r, n) for _, _, r, n in found]
+                found.append((region, node, (to_units(x), -to_units(y + region.top_px))))
+    found.sort(key=lambda f: (-f[2][1], f[2][0]))
+    return found
 
 
-def write_atlas(regions: list[Region], abilities: list[str], width: int, checkpoints: list[tuple[Region, Node]]) -> None:
+def write_atlas(
+    regions: list[Region],
+    abilities: list[str],
+    width: int,
+    checkpoints: list[tuple[Region, Node | None, tuple[float, float]]],
+    native: dict[str, dict],
+) -> None:
     start_region = None
     start = (0.0, 0.0)
     for region in regions:
+        if region.key in native:
+            if native[region.key].get("start") is not None:
+                start_region = region
+                start = tuple(float(v) for v in native[region.key]["start"])
+            continue
         for node in region.children("Placements"):
             if node.get("type", "enemy") == "start":
                 start_region = region
@@ -930,13 +980,12 @@ def write_atlas(regions: list[Region], abilities: list[str], width: int, checkpo
         raise SystemExit("no start placement in the world")
     bands = "".join(
         f"  - key: {r.key}\n    displayName: {ystr(r.name)}\n    subtitle: {ystr(r.subtitle)}\n"
-        f"    topRow: {r.top_row}\n    rows: {r.rows}\n"
+        f"    topRow: {r.top_row}\n    rows: {r.rows}\n    width: {int(native.get(r.key, {}).get('width', 0))}\n"
         for r in regions
     )
     points = ""
-    for region, node in checkpoints:
-        x, y = node.get("position", (0.0, 0.0))
-        points += f"  - region: {region.key}\n    position: {vec2(to_units(x), -to_units(y + region.top_px))}\n"
+    for region, _node, (x, y) in checkpoints:
+        points += f"  - region: {region.key}\n    position: {vec2(x, y)}\n"
     text = (
         YAML_HEAD + "--- !u!114 &11400000\nMonoBehaviour:\n"
         "  m_ObjectHideFlags: 0\n  m_CorrespondingSourceObject: {fileID: 0}\n  m_PrefabInstance: {fileID: 0}\n"
@@ -978,14 +1027,18 @@ def main() -> int:
     check_scripts()
     source_keys, kinds_by_source = read_tile_set()
     regions, abilities, width = read_world()
-    checkpoints = checkpoints_in_order(regions)
-    index = {(r.key, n.name): i for i, (r, n) in enumerate(checkpoints)}
+    native = read_native()
+    apply_native(regions, native)
+    checkpoints = checkpoints_in_order(regions, native)
+    index = {(r.key, n.name): i for i, (r, n, _p) in enumerate(checkpoints) if n is not None}
     write_catalog()
     scenes = []
     for region in regions:
+        if region.key in native:
+            continue  # authored in Unity: its scene, tiles and props are not ours to write
         _cells, tiles_asset = write_tiles(region, source_keys, kinds_by_source)
         scenes.append(write_scene(region, regions, abilities, width, tiles_asset, index))
-    write_atlas(regions, abilities, width, checkpoints)
+    write_atlas(regions, abilities, width, checkpoints, native)
     metas = assets.write_metas()
     print(
         f"{len(scenes)} region scenes, {len(PREFABS_WRITTEN)} prop prefabs, {len(checkpoints)} checkpoints, "

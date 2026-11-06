@@ -40,6 +40,12 @@ namespace Descender.World
         [SerializeField]
         private Vector2 sway;
 
+        [Tooltip(
+            "Shifts the layer from where its scroll puts it, in world units: for a painted backdrop pinned to the view (scroll.y 0), where its horizon sits on screen."
+        )]
+        [SerializeField]
+        private Vector2 viewOffset;
+
         [Tooltip("Tiled up and down too, for a region taller than its art.")]
         [SerializeField]
         private bool repeatY;
@@ -84,19 +90,21 @@ namespace Descender.World
             // The layer drifts by the share of the camera's travel it does not
             // follow, measured from its anchor, plus its own motion.
             var origin = anchor + Vector3.Scale(at - anchor, new Vector3(1f - scroll.x, 1f - scroll.y, 0f));
-            origin += (Vector3)Motion();
+            origin += (Vector3)Motion() + (Vector3)viewOffset;
+            // Copies sit a sprite's local size apart; on screen that is scaled by the layer.
+            var world = Vector3.Scale(size, transform.lossyScale);
             var left = at.x - half.x;
             var right = at.x + half.x;
-            var firstColumn = Mathf.FloorToInt((left - (origin.x - size.x / 2f)) / size.x);
-            var lastColumn = Mathf.CeilToInt((right - (origin.x - size.x / 2f)) / size.x);
+            var firstColumn = Mathf.FloorToInt((left - (origin.x - world.x / 2f)) / world.x);
+            var lastColumn = Mathf.CeilToInt((right - (origin.x - world.x / 2f)) / world.x);
             var firstRow = 0;
             var lastRow = 0;
             if (repeatY)
             {
                 var below = at.y - half.y;
                 var above = at.y + half.y;
-                firstRow = Mathf.FloorToInt((below - (origin.y - size.y / 2f)) / size.y);
-                lastRow = Mathf.CeilToInt((above - (origin.y - size.y / 2f)) / size.y);
+                firstRow = Mathf.FloorToInt((below - (origin.y - world.y / 2f)) / world.y);
+                lastRow = Mathf.CeilToInt((above - (origin.y - world.y / 2f)) / world.y);
             }
             transform.position = new Vector3(origin.x, origin.y, transform.position.z);
             var used = 0;

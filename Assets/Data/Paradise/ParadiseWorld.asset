@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19440420fd8e5cffa51aea30e9ee0b1a, type: 3}
+  m_Name: ParadiseWorld
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.WorldAtlas
+  regions:
+  - key: paradise_new
+    displayName: Paradise
+    subtitle: Celestial Gardens
+    topRow: 0
+    rows: 120
+    width: 7500
+  width: 7500
+  startRegion: paradise_new
+  start: {x: 12, y: -62.4}
+  checkpoints:
+  - region: paradise_new
+    position: {x: 1288, y: -50}
+  - region: paradise_new
+    position: {x: 300, y: -59.5}
+  - region: paradise_new
+    position: {x: 590, y: -62}
+  - region: paradise_new
+    position: {x: 904, y: -64}
+  abilities:
+  - Wings (double jump)
+  - Halo Dash
+  - Wall Grip
+  - Holy Light
+  - Glide
+  - Smite

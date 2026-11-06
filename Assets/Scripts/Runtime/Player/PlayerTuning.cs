@@ -174,9 +174,6 @@ namespace Descender.Player
         public float deathTime = 1.2f;
 
         [Min(0f)]
-        public float powerTime = 20f;
-
-        [Min(0f)]
         public float safeGroundTime = 0.2f;
 
         [Header("Feel")]
@@ -192,6 +189,22 @@ namespace Descender.Player
         [Min(0f)]
         public float skidSpeed = 40f;
         public Vector2 runAnimSpeedRange = new Vector2(0.6f, 1.6f);
+
+        [Tooltip("The launch frame of the jump lasts while the hero rises faster than this (px/s).")]
+        [Min(0f)]
+        public float jumpLaunchSpeed = 200f;
+
+        [Tooltip("The wing beat of the second jump shows this long.")]
+        [Min(0f)]
+        public float doubleJumpAnimTime = 0.2f;
+
+        [Tooltip("The sprite is tinted this long after the second jump.")]
+        [Min(0f)]
+        public float wingFlashTime = 0.15f;
+
+        [Tooltip("How fast the body is thrown up as the hero dies (px/s).")]
+        [Min(0f)]
+        public float deathLaunchSpeed = 90f;
 
         [Min(0f)]
         public float hitStopTime = 0.05f;

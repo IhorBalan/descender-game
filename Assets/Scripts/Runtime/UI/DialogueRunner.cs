@@ -134,7 +134,7 @@ namespace Descender.UI
         {
             if (registered.Add(interactable))
             {
-                interactable.Interacted += Interact;
+                interactable.Interacted += OnInteracted;
             }
         }
 
@@ -142,8 +142,14 @@ namespace Descender.UI
         {
             if (registered.Remove(interactable))
             {
-                interactable.Interacted -= Interact;
+                interactable.Interacted -= OnInteracted;
             }
+        }
+
+        /// <summary>The event handler: an interactable's Interacted carries no result.</summary>
+        private void OnInteracted(Interactable interactable)
+        {
+            Interact(interactable);
         }
 
         /// <summary>Lets the box's input through again after an ending, for a new run.</summary>

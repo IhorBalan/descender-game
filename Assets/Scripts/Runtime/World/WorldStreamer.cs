@@ -28,6 +28,12 @@ namespace Descender.World
         private readonly Dictionary<string, RegionRoot> loaded = new Dictionary<string, RegionRoot>();
         private readonly HashSet<string> loading = new HashSet<string>();
         private Light2D globalLight;
+
+        /// <summary>The one global light; a region's zones (ZoneLook) may tint it as the camera moves.</summary>
+        public Light2D GlobalLight => globalLight;
+
+        /// <summary>Whether the region-change ambient fade is still running (ZoneLook waits for it).</summary>
+        public bool AmbientFading => ambientT < AmbientFade;
         private Color ambientFrom = Color.white;
         private Color ambientTo = Color.white;
         private float ambientT = AmbientFade;
@@ -146,6 +152,11 @@ namespace Descender.World
             var index = atlas.IndexAt(point.y);
             yield return LoadAround(index);
             SetCurrent(index);
+            // A region cut into zone scenes (Paradise) loads the ground under the arrival first.
+            if (Current != null && Current.TryGetComponent<RegionZones>(out var zones))
+            {
+                yield return zones.Prepare(point);
+            }
             hero.PlaceAt(point);
             CameraRig.GameCamera.Main?.Snap();
             hero.EndTravel();
