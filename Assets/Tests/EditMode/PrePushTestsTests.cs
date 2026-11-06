@@ -1,5 +1,5 @@
-using Descender.EditorTools.Build;
 using System.IO;
+using Descender.EditorTools.Build;
 using NUnit.Framework;
 using UnityEditor.TestTools.TestRunner.Api;
 
