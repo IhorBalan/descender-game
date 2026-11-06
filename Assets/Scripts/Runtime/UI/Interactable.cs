@@ -12,7 +12,9 @@ namespace Descender.UI
     /// Shows the interact key, or the pad button, above itself while the hero stands
     /// close. The object's origin is at the base, like the hero's, so a placement
     /// puts it on the floor. The trigger area is a BoxCollider2D made in Awake, in
-    /// level pixels. Port of scripts/interactable.gd.
+    /// level pixels. While enabled it is heard by the <see cref="DialogueRunner"/>: it
+    /// registers in OnEnable and unregisters in OnDisable, so the NPCs, relics and
+    /// triggers of a streamed scene come and go with it. Port of scripts/interactable.gd.
     /// </summary>
     public class Interactable : MonoBehaviour
     {
@@ -47,6 +49,11 @@ namespace Descender.UI
         private int rotation;
         private Player.PlayerController nearHero;
 
+        private static readonly List<Interactable> EnabledNow = new List<Interactable>();
+
+        /// <summary>Every interactable that is enabled right now; a runner that starts late listens to these.</summary>
+        public static IReadOnlyList<Interactable> Enabled => EnabledNow;
+
         /// <summary>Fired when the hero presses interact in range (or, for a trigger, walks in).</summary>
         public event System.Action<Interactable> Interacted;
 
@@ -77,6 +84,31 @@ namespace Descender.UI
             if (!automatic)
             {
                 BuildPrompt();
+            }
+        }
+
+        protected virtual void OnEnable()
+        {
+            EnabledNow.Add(this);
+            var runner = DialogueRunner.Current;
+            if (runner != null)
+            {
+                runner.Register(this);
+            }
+        }
+
+        protected virtual void OnDisable()
+        {
+            EnabledNow.Remove(this);
+            var runner = DialogueRunner.Current;
+            if (runner != null)
+            {
+                runner.Unregister(this);
+            }
+            nearHero = null;
+            if (promptCanvas != null)
+            {
+                promptCanvas.gameObject.SetActive(false);
             }
         }
 

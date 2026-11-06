@@ -13,7 +13,10 @@ namespace Descender.UI
     /// gift, warp and save go out as events for the game session, a trader's wares
     /// open, and its `then` carries straight on. The dialogue file is a TextAsset
     /// (Assets/Data/dialogue/<level>.json). Port of the dialogue part of
-    /// scripts/main.gd; lives in Main.unity beside the box and the HUD.
+    /// scripts/main.gd; lives in Main.unity beside the box and the HUD. While it is
+    /// enabled it is <see cref="Current"/>, and every enabled <see cref="Interactable"/>
+    /// registers with it, so the things of a streamed scene are heard without wiring.
+    /// The hero stands still (<c>PlayerController.Talking</c>) while the box is open.
     /// </summary>
     public sealed class DialogueRunner : MonoBehaviour
     {
@@ -46,6 +49,11 @@ namespace Descender.UI
         private Interactable talkingTo;
         private bool shopPending;
         private readonly HashSet<Interactable> registered = new HashSet<Interactable>();
+        private Player.PlayerController listener;
+        private int closedFrame = -1;
+
+        /// <summary>The runner interactables register with: the one enabled last, or null.</summary>
+        public static DialogueRunner Current { get; private set; }
 
         /// <summary>The level's dialogue, or null when it has none.</summary>
         public DialogueData Dialogue { get; private set; }
@@ -90,6 +98,13 @@ namespace Descender.UI
             {
                 box.Finished += OnFinished;
             }
+            Current = this;
+            // Things that were enabled before the runner (a scene that loaded first).
+            var waiting = Interactable.Enabled;
+            for (var i = 0; i < waiting.Count; i++)
+            {
+                Register(waiting[i]);
+            }
         }
 
         private void OnDisable()
@@ -97,6 +112,19 @@ namespace Descender.UI
             if (box != null)
             {
                 box.Finished -= OnFinished;
+            }
+            foreach (var interactable in registered)
+            {
+                if (interactable != null)
+                {
+                    interactable.Interacted -= OnInteracted;
+                }
+            }
+            registered.Clear();
+            ReleaseListener();
+            if (Current == this)
+            {
+                Current = null;
             }
         }
 
@@ -146,9 +174,18 @@ namespace Descender.UI
             }
         }
 
+        /// <summary>Whether the runner is listening to this interactable.</summary>
+        public bool Hears(Interactable interactable) => registered.Contains(interactable);
+
         /// <summary>The event handler: an interactable's Interacted carries no result.</summary>
         private void OnInteracted(Interactable interactable)
         {
+            // The press that closed the box is not read again as a new talk by the
+            // thing the hero still stands beside.
+            if (Time.frameCount == closedFrame)
+            {
+                return;
+            }
             Interact(interactable);
         }
 
@@ -204,6 +241,7 @@ namespace Descender.UI
             {
                 source.SetTalking(true);
             }
+            HoldListener(source);
             // The box covers the message line.
             HideMessage();
             box.Play(entry);
@@ -271,6 +309,7 @@ namespace Descender.UI
                 source.OnDialogueFinished(entry);
             }
             shopPending = false;
+            closedFrame = Time.frameCount;
             DialogueEnded?.Invoke(entry);
             // The gift, the wares and the next entry land once the hero has been
             // released for this frame, so the press that closed the box is not read twice.
@@ -280,6 +319,8 @@ namespace Descender.UI
         private IEnumerator AfterFrame(JObject entry, string openShop)
         {
             yield return null;
+            // Released a frame late, so the press that closed the box is not also a jump.
+            ReleaseListener();
             var gift = DialogueData.Gives(entry);
             if (System.Array.IndexOf(UpgradeKinds, gift) >= 0)
             {
@@ -302,6 +343,32 @@ namespace Descender.UI
                 {
                     Play(next);
                 }
+            }
+        }
+
+        /// <summary>The hero stands still while the box is open: the one beside the speaker, or the one in the scene.</summary>
+        private void HoldListener(Interactable source)
+        {
+            if (source != null && source.NearHero != null)
+            {
+                listener = source.NearHero;
+            }
+            else if (listener == null)
+            {
+                listener = FindAnyObjectByType<Player.PlayerController>();
+            }
+            if (listener != null)
+            {
+                listener.Talking = true;
+            }
+        }
+
+        /// <summary>Lets the hero move again, unless another entry has opened the box meanwhile.</summary>
+        private void ReleaseListener()
+        {
+            if (listener != null && (box == null || !box.IsOpen))
+            {
+                listener.Talking = false;
             }
         }
 

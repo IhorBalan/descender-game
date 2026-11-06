@@ -47,3 +47,9 @@ MonoBehaviour:
     prefab: {fileID: 2103042955597665404, guid: 9249ba572f365aa99ca588120a9abdeb, type: 3}
   - key: enemy:hanged
     prefab: {fileID: 139642117640675769, guid: 9aaa081da75b50279e41d0722916cd20, type: 3}
+  - key: relic
+    prefab: {fileID: 530843531021314034, guid: 64a7ae1338d90404aad29881f46270bd, type: 3}
+  - key: trigger
+    prefab: {fileID: 2306388803157214886, guid: 529b5ccb78707aa42acef48f4a5f09d1, type: 3}
+  - key: npc
+    prefab: {fileID: 8016265632998975682, guid: 1e9da6bd948161b4ba2829329aff5b6a, type: 3}
