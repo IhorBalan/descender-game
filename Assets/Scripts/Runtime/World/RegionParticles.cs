@@ -51,6 +51,20 @@ namespace Descender.World
         [SerializeField, Min(0f)]
         private float sway;
 
+        [Tooltip(
+            "Petals and leaves: turns a second about their own length and width as they fall, so they flip and catch the light (0: flat)."
+        )]
+        [SerializeField, Min(0f)]
+        private float tumble;
+
+        [Tooltip(
+            "Paradise: how many units a second the garden's wind (GardenWind) carries these along at full strength (0: none)."
+        )]
+        [SerializeField, Min(0f)]
+        private float windCarry;
+
+        private Vector2 baseVelocityX;
+
         [SerializeField]
         private Material material;
 
@@ -98,6 +112,18 @@ namespace Descender.World
             area = emitArea;
         }
 
+        /// <summary>Lets a petal or leaf tumble as it falls (see the field); for editor tools.</summary>
+        public void SetTumble(float turnsPerSecond)
+        {
+            tumble = turnsPerSecond;
+        }
+
+        /// <summary>Lets the garden's gusts carry these along (see the field); for editor tools.</summary>
+        public void SetWindCarry(float unitsPerSecond)
+        {
+            windCarry = unitsPerSecond;
+        }
+
         private void Awake()
         {
             region = GetComponentInParent<RegionRoot>();
@@ -136,7 +162,8 @@ namespace Descender.World
             var velocity = system.velocityOverLifetime;
             velocity.enabled = true;
             velocity.space = ParticleSystemSimulationSpace.World;
-            velocity.x = new ParticleSystem.MinMaxCurve(Mathf.Min(a.x, b.x), Mathf.Max(a.x, b.x));
+            baseVelocityX = new Vector2(Mathf.Min(a.x, b.x), Mathf.Max(a.x, b.x));
+            velocity.x = new ParticleSystem.MinMaxCurve(baseVelocityX.x, baseVelocityX.y);
             velocity.y = new ParticleSystem.MinMaxCurve(Mathf.Min(a.y, b.y), Mathf.Max(a.y, b.y));
             // All three axes must share a mode: x and y are two-constant ranges, so z is too.
             velocity.z = new ParticleSystem.MinMaxCurve(0f, 0f);
@@ -165,6 +192,24 @@ namespace Descender.World
                 noise.scrollSpeed = 0.5f;
             }
 
+            if (tumble > 0f)
+            {
+                // A quad in the world plane turning about its own x and y: seen face on it
+                // foreshortens and flips, as a falling petal does.
+                main.startRotation3D = true;
+                main.startRotationX = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                main.startRotationY = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                main.startRotationZ = new ParticleSystem.MinMaxCurve(0f, Mathf.PI * 2f);
+                var turn = system.rotationOverLifetime;
+                turn.enabled = true;
+                turn.separateAxes = true;
+                var t = tumble * Mathf.PI * 2f;
+                turn.x = new ParticleSystem.MinMaxCurve(-t, t);
+                turn.y = new ParticleSystem.MinMaxCurve(-t * 0.7f, t * 0.7f);
+                var z = Mathf.Max(spin, 0.05f) * Mathf.PI * 2f;
+                turn.z = new ParticleSystem.MinMaxCurve(-z, z);
+            }
+
             var sheet = system.textureSheetAnimation;
             sheet.enabled = true;
             sheet.mode = ParticleSystemAnimationMode.Sprites;
@@ -172,6 +217,10 @@ namespace Descender.World
 
             var renderer = GetComponent<ParticleSystemRenderer>();
             renderer.renderMode = ParticleSystemRenderMode.Billboard;
+            if (tumble > 0f)
+            {
+                renderer.alignment = ParticleSystemRenderSpace.World;
+            }
             renderer.sortingOrder = Order;
             if (material != null)
             {
@@ -189,6 +238,13 @@ namespace Descender.World
             }
             var margin = MarginPixels / Player.PlayerTuning.PixelsPerUnit;
             var at = camera.transform.position;
+            if (windCarry > 0f)
+            {
+                // Everything in the air speeds up and slows with the gust passing the view.
+                var gust = Paradise.GardenWind.At(at.x) * windCarry;
+                var velocity = system.velocityOverLifetime;
+                velocity.x = new ParticleSystem.MinMaxCurve(baseVelocityX.x + gust, baseVelocityX.y + gust);
+            }
             var half = camera.HalfExtents + Vector2.one * margin;
             var view = new Rect((Vector2)at - half, half * 2f);
             var area =

@@ -15,11 +15,15 @@ Shader "Descender/Sprite Unlit Haze"
         _HazeAmount("Haze Amount", Range(0, 1)) = 0.5
 
         [Header(Wind sway off by default)]
-        _SwayAmount("Sway Amount (units at the tip)", Float) = 0
-        _SwaySpeed("Sway Speed (rad per second)", Float) = 0.6
-        _SwayScale("Sway Scale (phase per unit, so neighbours differ)", Float) = 0.3
+        _SwayAmount("Bend Per Unit Wind (units at the tip, or radians when hanging)", Float) = 0
+        _SwaySpeed("Natural Frequency (rad per second)", Float) = 0.6
+        _SwayScale("Variation Between Plants (0-1)", Float) = 0.3
         [ToggleUI] _SwayUseObjectY("Height From Object Y (else UV.y)", Float) = 0
         _SwayHeight("Height In Units (object Y mode)", Float) = 1
+        [ToggleUI] _SwayHang("Hangs From Its Pivot (pendulum)", Float) = 0
+        _SwayFlutter("Flutter (leaf tips, or ripple radians when hanging)", Float) = 0
+        _SwayFlutterSpeed("Flutter Speed (times the natural frequency)", Float) = 2.5
+        _SwayLag("Swing Lag Down The Length (rad per unit, hanging)", Float) = 0.4
 
         [Header(Hero push off by default)]
         _PushRadius("Push Radius (units)", Float) = 1.5
@@ -46,6 +50,26 @@ Shader "Descender/Sprite Unlit Haze"
             HLSLPROGRAM
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/Core2D.hlsl"
 
+            // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
+            CBUFFER_START(UnityPerMaterial)
+                half4 _Color;
+                float _SwayAmount;
+                float _SwaySpeed;
+                float _SwayScale;
+                float _SwayUseObjectY;
+                float _SwayHeight;
+                float _SwayHang;
+                float _SwayFlutter;
+                float _SwayFlutterSpeed;
+                float _SwayLag;
+                float _PushRadius;
+                float _PushStrength;
+                half4 _HazeColor;
+                half _HazeAmount;
+            CBUFFER_END
+
+            #include "Assets/Shaders/Paradise/ParadiseSway.hlsl"
+
             #pragma vertex UnlitVertex
             #pragma fragment UnlitFragment
 
@@ -60,6 +84,7 @@ Shader "Descender/Sprite Unlit Haze"
             {
                 COMMON_2D_OUTPUTS
                 half4 color : COLOR;
+                PARADISE_SWAY_OUTPUTS
             };
 
             #include "Packages/com.unity.render-pipelines.universal/Shaders/2D/Include/2DCommon.hlsl"
@@ -67,22 +92,6 @@ Shader "Descender/Sprite Unlit Haze"
             // GPU Instancing
             #pragma multi_compile_instancing
             #pragma multi_compile _ DEBUG_DISPLAY SKINNED_SPRITE
-
-            // NOTE: Do not ifdef the properties here as SRP batcher can not handle different layouts.
-            CBUFFER_START(UnityPerMaterial)
-                half4 _Color;
-                float _SwayAmount;
-                float _SwaySpeed;
-                float _SwayScale;
-                float _SwayUseObjectY;
-                float _SwayHeight;
-                float _PushRadius;
-                float _PushStrength;
-                half4 _HazeColor;
-                half _HazeAmount;
-            CBUFFER_END
-
-            #include "Assets/Shaders/Paradise/ParadiseSway.hlsl"
 
             Varyings UnlitVertex(Attributes input)
             {
@@ -92,20 +101,30 @@ Shader "Descender/Sprite Unlit Haze"
 
                 // Skip the round trip through world space when the layer is still,
                 // which is the default and most far layers.
+                float4 sway0 = 0.0;
+                float4 sway1 = 0.0;
+                float sway2 = 0.0;
                 UNITY_BRANCH
                 if (_SwayAmount != 0.0 || _PushStrength != 0.0)
                 {
                     UNITY_SETUP_INSTANCE_ID(input); // the object matrix is per instance when instanced
-                    input.positionOS = ParadiseApplySway(input.positionOS, input.uv);
+                    ParadiseSwayVertex(input.positionOS, input.uv, sway0, sway1, sway2);
                 }
 
                 Varyings o = CommonUnlitVertex(input);
+                PARADISE_SWAY_COPY(o);
                 o.color = input.color * _Color * unity_SpriteColor;
                 return o;
             }
 
             half4 UnlitFragment(Varyings input) : SV_Target
             {
+                // The derivatives are taken on every pixel; the branch is uniform per material.
+                float2 swayedUV = ParadiseSwayUV(input.uv, input.sway0, input.sway1, input.sway2);
+                if (_SwayAmount != 0.0 || _PushStrength != 0.0)
+                {
+                    input.uv = swayedUV;
+                }
                 half4 color = CommonUnlitFragment(input, input.color);
                 color.rgb = ParadiseHaze(color.rgb);
                 return color;

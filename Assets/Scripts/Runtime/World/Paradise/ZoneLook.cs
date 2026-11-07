@@ -174,7 +174,8 @@ namespace Descender.World.Paradise
             }
             if (sum > 0.001f)
             {
-                streamer.GlobalLight.color = mixed / sum;
+                // With a sun overhead (SunAndClouds) the global light is only the sky's fill.
+                streamer.GlobalLight.color = mixed / sum * SunAndClouds.SkyShare;
             }
         }
     }

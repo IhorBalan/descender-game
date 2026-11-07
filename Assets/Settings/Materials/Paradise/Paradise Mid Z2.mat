@@ -46,7 +46,11 @@ Material:
     - _PushRadius: 1.5
     - _PushStrength: 0
     - _SwayAmount: 0.04
+    - _SwayFlutter: 0.012
+    - _SwayFlutterSpeed: 2.5
+    - _SwayHang: 0
     - _SwayHeight: 1
+    - _SwayLag: 0.4
     - _SwayScale: 0.5
     - _SwaySpeed: 0.9
     - _SwayUseObjectY: 0

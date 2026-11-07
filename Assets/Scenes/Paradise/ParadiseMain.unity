@@ -316,6 +316,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Descender.Runtime::Descender.Fx.HeroWindPush
   offset: {x: 0, y: 0.75}
+  fullPushSpeed: 7
 --- !u!114 &108
 MonoBehaviour:
   m_ObjectHideFlags: 0
