@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.IO;
 using Descender.EditorTools.Setup;
 using NUnit.Framework;
 using UnityEditor;
@@ -30,6 +32,40 @@ namespace Descender.Tests.EditMode
             Assert.That(PlayFromMain.IsTestRunnerScene(PlayFromMain.ParadiseEntryPath), Is.False);
             Assert.That(PlayFromMain.IsTestRunnerScene(""), Is.False);
             Assert.That(PlayFromMain.IsTestRunnerScene(null), Is.False);
+        }
+
+        [Test]
+        public void MainSceneSetupKeepsTheParadiseScenesInTheBuild()
+        {
+            var before = EditorBuildSettings.scenes;
+            try
+            {
+                MainSceneSetup.SetBuildScenes();
+                var after = EditorBuildSettings.scenes;
+                Assert.That(after[0].path, Is.EqualTo(MainSceneSetup.ScenePath), "Main must stay first");
+                var listed = new List<string>();
+                foreach (var scene in after)
+                {
+                    listed.Add(scene.path);
+                }
+                var paradise = Directory.GetFiles(MainSceneSetup.ParadiseSceneFolder, "*.unity");
+                Assert.That(paradise.Length, Is.GreaterThan(0), "no scene under " + MainSceneSetup.ParadiseSceneFolder);
+                foreach (var file in paradise)
+                {
+                    Assert.That(listed, Does.Contain(file.Replace('\\', '/')), "dropped from the build settings");
+                }
+                // The committed list is already what the setup makes: running it changes nothing.
+                var was = new List<string>();
+                foreach (var scene in before)
+                {
+                    was.Add(scene.path);
+                }
+                Assert.That(listed, Is.EqualTo(was), "the setup should leave EditorBuildSettings.asset as it is");
+            }
+            finally
+            {
+                EditorBuildSettings.scenes = before;
+            }
         }
 
         [Test]

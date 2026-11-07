@@ -436,6 +436,7 @@ namespace Descender.EditorTools.Paradise
 
         private static void BuildZone(ParadiseLayout.Zone zone, Art art, List<Vector2> checkpoints)
         {
+            CheckConstructionRules(zone);
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var root = new GameObject($"Zone{zone.number}").transform;
             var groundGroup = Group(root, "Ground");
@@ -876,6 +877,24 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>The cloud sea's level: a column with nothing under it goes down into it.</summary>
         public const float CloudSea = -112f;
+
+        /// <summary>
+        /// A zone is built only if ParadiseChecker finds nothing on its main path and the
+        /// region's save shrines keep their spacing, so a batch build fails loudly on a jump
+        /// the hero cannot make (docs/design/paradise.md, section 2).
+        /// </summary>
+        public static void CheckConstructionRules(ParadiseLayout.Zone zone)
+        {
+            var violations = ParadiseChecker.CheckZone(zone);
+            violations.AddRange(ParadiseChecker.CheckShrineSpacing(ParadiseLayout.All()));
+            if (violations.Count > 0)
+            {
+                throw new System.InvalidOperationException(
+                    $"Zone {zone.number} breaks the construction rules and was not built:\n"
+                        + string.Join("\n", violations)
+                );
+            }
+        }
 
         /// <summary>Ground must reach the clouds; rock that floats must be declared an island.</summary>
         private static void CheckNothingFloats(ParadiseLayout.Zone zone)

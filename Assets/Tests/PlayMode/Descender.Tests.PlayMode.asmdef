@@ -7,6 +7,7 @@
         "UnityEditor.TestRunner",
         "UnityEngine.UI",
         "Unity.InputSystem",
+        "Unity.TextMeshPro",
         "Unity.2D.SpriteShape.Runtime"
     ],
     "includePlatforms": [],
@@ -14,7 +15,8 @@
     "allowUnsafeCode": false,
     "overrideReferences": true,
     "precompiledReferences": [
-        "nunit.framework.dll"
+        "nunit.framework.dll",
+        "Newtonsoft.Json.dll"
     ],
     "autoReferenced": false,
     "defineConstraints": [

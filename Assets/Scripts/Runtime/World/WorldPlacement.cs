@@ -150,7 +150,7 @@ namespace Descender.World
             {
                 return;
             }
-            var prefab = catalog != null ? catalog.Resolve(type, character) : null;
+            var prefab = catalog != null ? catalog.Resolve(type, character, dialogue.Length > 0) : null;
             if (prefab == null)
             {
                 return;

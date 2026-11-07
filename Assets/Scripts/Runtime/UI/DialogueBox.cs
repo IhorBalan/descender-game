@@ -91,6 +91,7 @@ namespace Descender.UI
         private float blipPitch = 1f;
         private InputAction moveLeft;
         private InputAction moveRight;
+        private int openedFrame = -1;
 
         /// <summary>The entry has been read to the end (or a choice taken): the entry, with `then` and `chosen` filled in.</summary>
         public event System.Action<JObject> Finished;
@@ -166,6 +167,7 @@ namespace Descender.UI
             }
             entry = data;
             index = 0;
+            openedFrame = Time.frameCount;
             if (!IsOpen)
             {
                 IsOpen = true;
@@ -183,7 +185,8 @@ namespace Descender.UI
             }
             Tick(Time.deltaTime);
             var input = Input.InputRouter.Instance;
-            if (input == null)
+            // The press that opened the box is not also the press that skips its typing.
+            if (input == null || Time.frameCount == openedFrame)
             {
                 return;
             }

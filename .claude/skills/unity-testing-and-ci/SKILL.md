@@ -61,8 +61,22 @@ The tests gate pushes from the developer's machine, not from CI.
 `tools/hooks/pre-push` runs the EditMode then the PlayMode tests with the
 editor named in `ProjectSettings/ProjectVersion.txt` (found under the
 Unity Hub install folder, or `UNITY_EDITOR`), prints the compile errors or
-the failing tests, and refuses the push when either run fails. About 20
-seconds with a warm `Library/`. Install it once per clone:
+the failing tests, and refuses the push when either run fails. Both
+platforms run in one editor launch through
+`Descender.EditorTools.Build.PrePushTests` (`-executeMethod`, in
+`Assets/Scripts/Editor/Build/`), which writes the same NUnit XML as
+`-runTests` to `Logs/pre-push-EditMode.xml` and `Logs/pre-push-PlayMode.xml`
+and exits 0 only when both platforms ran tests and none failed. About 20
+seconds with a warm `Library/`, a minute or two the first time in a new
+worktree. While it runs the hook prints the phase (starting, importing,
+`EditMode n/N`, `PlayMode n/N`), the time elapsed and how long the last
+passing run took; the editor log is `Logs/pre-push.log` (`tail -f`, or
+`Get-Content Logs\pre-push.log -Wait -Tail 20` in PowerShell). A run that
+stands still for `PRE_PUSH_STALL_SECONDS` (600) is stopped and fails. The
+editor is started with `--burst-disable-compilation`: the tests do not need
+Burst, the game has no Burst code, and on Windows with Smart App Control
+every unsigned DLL under `Library/BurstCache` raised a warning.
+Install it once per clone:
 
 ```
 git config core.hooksPath tools/hooks
@@ -113,7 +127,13 @@ password-free route short of a Pro serial. The Claude review needs
   `UNITY_EDITOR` at it.
 - The hook says the project is open: close the editor, or run the Test
   Runner by hand and push with `SKIP_UNITY_TESTS=1`.
-- Compile error: the log is `Logs/pre-push-<platform>.log`; a `UnityEditor`
+- A PlayMode run that never starts its tests, with the log ending at
+  `Loaded scene 'Assets/Scenes/Main.unity'`: something set
+  `EditorSceneManager.playModeStartScene` over the Test Framework's
+  `Assets/InitTestScene<guid>.unity` (`PlayFromMain` guards against this).
+  A stopped run leaves that scene, its `.meta` and `Temp/UnityLockfile`
+  behind; delete them.
+- Compile error: the log is `Logs/pre-push.log`; a `UnityEditor`
   reference outside the Editor asmdef or a missing asmdef reference are
   the usual causes.
 - Release activation error: the secrets above.

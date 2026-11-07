@@ -20,9 +20,11 @@ namespace Descender.EditorTools.Setup
     /// Descender > Setup > Main scene: makes sure Assets/Scenes/Main.unity has the
     /// camera, the systems (InputRouter, WorldStreamer, GameFlow, Music) and the
     /// fade, wires their references (the input actions, the music clips, the hero
-    /// prefab and the world atlas when they exist), and puts Main first in the
-    /// build settings followed by every Region_*.unity. Safe to run again: it only
-    /// adds what is missing and fills references that are empty.
+    /// prefab and the world atlas when they exist), adds the dialogue box and runner
+    /// under the UI root (and to the Paradise entry scene, a copy of Main), and puts
+    /// Main first in the build settings followed by every Region_*.unity and the
+    /// Paradise scenes. Safe to run again: it only adds what is missing and fills
+    /// references that are empty.
     /// </summary>
     public static class MainSceneSetup
     {
@@ -32,6 +34,11 @@ namespace Descender.EditorTools.Setup
         public const string WorldAtlasPath = "Assets/Data/World.asset";
         public const string MusicFolder = "Assets/Audio/music";
         public const string MenuThemePath = "Assets/Settings/MenuTheme.asset";
+        public const string DialoguePath = "Assets/Data/dialogue/" + GameFlow.LevelId + ".json";
+        public const string ParadiseSceneFolder = "Assets/Scenes/Paradise";
+        public const string ParadiseEntryScenePath = ParadiseSceneFolder + "/ParadiseMain.unity";
+        public const string DialogueBoxName = "Dialogue Box";
+        public const string DialogueRunnerName = "Dialogue Runner";
 
         [MenuItem("Descender/Setup/Main scene")]
         public static void Run()
@@ -108,6 +115,8 @@ namespace Descender.EditorTools.Setup
                 screenObject.ApplyModifiedPropertiesWithoutUndo();
             }
 
+            notes.AddRange(EnsureDialogue(ui));
+
             var flow = Ensure<GameFlow>(systems);
             var flowObject = new SerializedObject(flow);
             SetIfEmpty(flowObject, "gameCamera", gameCamera);
@@ -123,6 +132,10 @@ namespace Descender.EditorTools.Setup
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath) ?? "Assets");
             EditorSceneManager.SaveScene(scene, ScenePath);
+            if (EnsureDialogueIn(ParadiseEntryScenePath))
+            {
+                notes.Add($"dialogue added to {ParadiseEntryScenePath}");
+            }
             var regions = SetBuildScenes();
             AssetDatabase.SaveAssets();
             Debug.Log(
@@ -132,27 +145,111 @@ namespace Descender.EditorTools.Setup
         }
 
         /// <summary>
-        /// Main first, then every Assets/Scenes/Region_*.unity in name order. Returns the region count.
+        /// The dialogue pair under the UI root: a DialogueBox and a DialogueRunner bound to
+        /// it, the runner reading Assets/Data/dialogue/&lt;GameFlow.LevelId&gt;.json. Its HUD and
+        /// shop stay empty until those screens are in the scene; the runner works without.
+        /// Adds what is missing and fills empty references only. Returns what it did.
+        /// </summary>
+        public static List<string> EnsureDialogue(GameObject ui)
+        {
+            var notes = new List<string>();
+            var box = ui.GetComponentInChildren<DialogueBox>(true);
+            if (box == null)
+            {
+                box = Child(ui, DialogueBoxName).AddComponent<DialogueBox>();
+                notes.Add("dialogue box added");
+            }
+            var runner = ui.GetComponentInChildren<DialogueRunner>(true);
+            if (runner == null)
+            {
+                runner = Child(ui, DialogueRunnerName).AddComponent<DialogueRunner>();
+                notes.Add("dialogue runner added");
+            }
+            var runnerObject = new SerializedObject(runner);
+            var file = runnerObject.FindProperty("dialogueFile");
+            if (file.objectReferenceValue == null)
+            {
+                file.objectReferenceValue = AssetDatabase.LoadAssetAtPath<TextAsset>(DialoguePath);
+                notes.Add(file.objectReferenceValue != null ? "dialogue file set" : $"no {DialoguePath} yet");
+            }
+            SetIfEmpty(runnerObject, "box", box);
+            if (runnerObject.ApplyModifiedPropertiesWithoutUndo())
+            {
+                EditorUtility.SetDirty(runner);
+            }
+            return notes;
+        }
+
+        /// <summary>
+        /// The same dialogue pair in another entry scene (ParadiseMain is a copy of Main with
+        /// its own camera and atlas, so only this part of the setup applies to it). Saves the
+        /// scene only when something was added, and returns whether it was. Leaves the scene open.
+        /// </summary>
+        public static bool EnsureDialogueIn(string scenePath)
+        {
+            if (!File.Exists(scenePath))
+            {
+                return false;
+            }
+            var scene = EditorSceneManager.OpenScene(scenePath, OpenSceneMode.Single);
+            var ui = FindRoot(scene, "UI");
+            if (ui == null)
+            {
+                Debug.LogWarning($"Descender: {scenePath} has no UI root, so no dialogue was added to it.");
+                return false;
+            }
+            if (EnsureDialogue(ui).Count == 0)
+            {
+                return false;
+            }
+            EditorSceneManager.MarkSceneDirty(scene);
+            EditorSceneManager.SaveScene(scene);
+            return true;
+        }
+
+        /// <summary>
+        /// Main first, then every Region_*.unity under Assets/Scenes and every scene of the
+        /// rebuilt Paradise (Assets/Scenes/Paradise: its entry scene and the zones its region
+        /// streams by name). Scenes already listed keep their order and their tick; new ones
+        /// follow in name order. Returns the region count.
         /// </summary>
         public static int SetBuildScenes()
         {
-            var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(ScenePath, true) };
-            var regions = new List<string>();
+            var wanted = new List<string>();
+            var regions = 0;
             foreach (var guid in AssetDatabase.FindAssets("t:Scene", new[] { "Assets/Scenes" }))
             {
                 var path = AssetDatabase.GUIDToAssetPath(guid);
-                if (Path.GetFileName(path).StartsWith(WorldStreamer.ScenePrefix, System.StringComparison.Ordinal))
+                var region = Path.GetFileName(path)
+                    .StartsWith(WorldStreamer.ScenePrefix, System.StringComparison.Ordinal);
+                if (region || path.StartsWith(ParadiseSceneFolder + "/", System.StringComparison.Ordinal))
                 {
-                    regions.Add(path);
+                    wanted.Add(path);
+                    regions += region ? 1 : 0;
                 }
             }
-            regions.Sort(System.StringComparer.Ordinal);
-            foreach (var path in regions)
+            wanted.Sort(System.StringComparer.Ordinal);
+            var scenes = new List<EditorBuildSettingsScene> { new EditorBuildSettingsScene(ScenePath, true) };
+            foreach (var listed in EditorBuildSettings.scenes)
+            {
+                if (wanted.Remove(listed.path))
+                {
+                    scenes.Add(new EditorBuildSettingsScene(listed.path, listed.enabled));
+                }
+            }
+            foreach (var path in wanted)
             {
                 scenes.Add(new EditorBuildSettingsScene(path, true));
             }
             EditorBuildSettings.scenes = scenes.ToArray();
-            return regions.Count;
+            return regions;
+        }
+
+        private static GameObject Child(GameObject parent, string name)
+        {
+            var child = new GameObject(name);
+            child.transform.SetParent(parent.transform, false);
+            return child;
         }
 
         private static GameObject FindRoot(Scene scene, string name)

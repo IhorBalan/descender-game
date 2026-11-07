@@ -28,7 +28,8 @@ Goal: all seven zones exist and the region plays west to east in one run.
 
 - Greybox zones 3 to 7 with `ParadiseLayout` and `ParadiseGreybox`: all
   paths, the 15 save shrines, the encounter spaces, the Warden arena, the
-  Low Gate exit dropping into the Ruined Earth prototype.
+  Low Gate's outer door (the drop into Ruined Earth comes with the Warden
+  fight in M4).
 - Place the Heaven 1 and Heaven 2 beats in the new region: the `opening`
   and `gate` triggers, Mereth and Ithuriel, the seven story items, the
   feather (zone 3) and the light dash (zone 5), the Making-house trigger.
@@ -36,8 +37,9 @@ Goal: all seven zones exist and the region plays west to east in one run.
   main path and fails on a gap, step or fall outside the tables in
   `paradise.md` section 2, and on a missing shrine spacing.
 - A scripted playtest that runs the whole region's main path.
-- Done when: a 20-minute straight run from zone 1 to the Low Gate works,
-  every beat fires, the checker is green, and a run is on the playtest list.
+- Done when: a 20-minute straight run from zone 1 to the Low Gate's outer
+  door works, every beat fires, the checker is green, and a run is on the
+  playtest list.
 
 ### M2. Paradise art, zones 3 and 4
 
@@ -49,9 +51,11 @@ complaint on hazards or ledges.
 ### M3. Paradise art, zones 5 to 7
 
 The Terraces, the Making-house Approach and the Low Gate; per-zone URP
-Volumes blended at the borders; music and ambience hooks that thin from
-zone 5 on. Done when: the region reads as one place from gold to steel blue
-and the frame budgets (300 draw calls, 12 lights, 2,000 particles) hold.
+Volumes blended at the borders; the zone 6 machinery (moving platforms,
+steam vents, timed shutters) and the zone 7 wind, built static in M1; music
+and ambience hooks that thin from zone 5 on. Done when: the region reads as
+one place from gold to steel blue and the frame budgets (300 draw calls, 12
+lights, 2,000 particles) hold.
 
 ### M4. Paradise enemies and the Warden
 
@@ -100,6 +104,16 @@ hygiene as each production region lands.
 
 | Task | Title | Status | Priority | Depends on | Attempts | Thread | PR |
 | --- | --- | --- | --- | --- | --- | --- | --- |
+| T-0001 | Paradise construction-rule checker | in progress | 1 | none | 1 | T-0001 implementation | |
+| T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | approved | 2 | none | 0 | | |
+| T-0003 | Beats of zones 1 and 2 as layout placements | approved | 3 | T-0001, T-0002 | 0 | | |
+| T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
+| T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
+
+Full task text: project files, `planning/m1-tasks.md` (revision 2). Playtest:
+T-0001 no, T-0002 to T-0005 yes. T-0001 and T-0002 run in parallel (disjoint
+files); the rest are sequential because they share `ParadiseLayout.cs`, the
+zone scenes, `ParadiseWorld.asset` and the build settings.
 
 ## Decisions
 
@@ -145,6 +159,53 @@ hygiene as each production region lands.
 - **Undo**: create that environment and move the format check back into
   cloud threads; the Unity tests still need a machine with the editor.
 
+### D-0004: the drop into Ruined Earth comes with the Warden (M4), not M1
+
+- **Decided**: M1's run ends at the Low Gate's outer door, where the `gate`
+  trigger plays and a closed floor with a marker says where the drop goes.
+- **Why**: the design drops the hero after the boss fight; a cross-world
+  hand-off needs the streamer to switch atlases and the save to record its
+  world (a save-format change with a tested migration), none of which the
+  greybox needs to play end to end.
+- **Alternative**: build the hand-off now in T-0005.
+- **Undo**: add the hand-off as a task when M4 starts; nothing in M1 blocks it.
+
+### D-0005: Paradise beats are layout data with an idempotent sync
+
+- **Decided**: story triggers, NPCs, relics and feathers are declared per zone
+  in `ParadiseLayout` and built as `WorldPlacement`s; `Descender > Paradise >
+  Sync placements from layout` adds or updates them by id in an existing scene
+  and touches nothing else, so dressed zones keep their art.
+- **Why**: "Build new zones" skips an existing scene and "Rebuild zone" loses
+  hand edits; a by-id sync is the only way into zones 1 and 2, and it is what
+  `docs/ARCHITECTURE.md` means by idempotent tools.
+- **Alternative**: place the beats by hand in each scene.
+- **Undo**: hand placements still work; the sync only ever adds or moves its own ids.
+
+### D-0006: shrine spacing is "at most 600 tiles, at least 15 shrines"
+
+- **Decided**: the construction-rule checker enforces a 600-tile maximum between
+  consecutive save shrines (and from the start to the first); the region holds at
+  least 15 shrines (16 planned). This deviates from `docs/design/paradise.md`
+  section 2 ("every 400 to 600 tiles, 15 in total").
+- **Why**: zones 1 and 2 as built space theirs at 290 to 384, so a 400 minimum
+  fails the design's own first zones; the maximum is what protects the player;
+  a fixed 15 forced gaps of 750 and 800 in zones 6 and 7.
+- **Alternative**: re-space zones 6 and 7 to hold exactly 15 (loses the shrine
+  before the Warden arena).
+- **Undo**: change the two constants in `ParadiseRules` and the layout tests.
+
+### D-0007: zone 6 machinery and zone 7 wind are static in M1, built in M3
+
+- **Decided**: the greybox builds the surfaces the moving platforms, steam
+  vents, timed shutters and wind will occupy as plain decks with markers, so
+  the main path is complete and checkable; the mechanics are M3 scope, with
+  the art of zones 5 to 7.
+- **Why**: they are new runtime mechanics the run does not need; M3 dresses
+  those surfaces anyway.
+- **Alternative**: build them in M1 (T-0005 grows past one reviewable change).
+- **Undo**: move the line from M3 to a new M1 task.
+
 ## Verification
 
 What a task must pass before it merges, and how a thread runs it.
@@ -153,8 +214,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (76 on `main` at d49d0d6) | pre-push hook, developer machine | yes | `tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (6 on `main` at d49d0d6) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | same with `-testPlatform PlayMode` |
+| EditMode tests (79 on `main` after the single-launch hook) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (6) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 
@@ -163,6 +224,13 @@ tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 (6000.6.8f1) under the Unity Hub folder, or at `UNITY_EDITOR`. It refuses to
 run while the same project folder is open in the editor (`Temp/UnityLockfile`).
 Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`.
+
+The hook prints its phase, the time elapsed and the previous run's duration,
+and the editor log is `Logs/pre-push.log` in the checkout being pushed. To
+watch a run from another terminal: `Get-Content <checkout>\Logs\pre-push.log
+-Wait -Tail 20` (PowerShell) or `tail -f`. `Logs/pre-push-status.txt` holds
+the current test count (`PlayMode 4/6`). A run with no log or progress change
+for 10 minutes is stopped and fails.
 
 Merges do not deploy: only a `v*` tag releases, and tagging needs the owner.
 
@@ -196,9 +264,9 @@ open in the Unity editor. Threads do not work in it directly:
    editor being open on the main checkout does not block it. Remove it when
    the PR is merged: `git worktree remove ../descender-task-T-XXXX`.
 2. **The first Unity run in a new worktree imports the whole project**
-   (several minutes, a few GB in `Library/`). Later runs take about 20
-   seconds. Reuse a worktree for a task's fix rounds rather than recreating
-   it.
+   (several minutes on the Mac; about a minute on the Windows PC, where the
+   whole hook takes 1m07s cold and 19 seconds warm; a few GB in `Library/`).
+   Reuse a worktree for a task's fix rounds rather than recreating it.
 3. **Unity batchmode instances can run concurrently on different project
    folders**, but each is heavy on CPU and memory. Run at most one Unity
    test run at a time on the machine: take a lock before the hook, for
@@ -210,7 +278,17 @@ open in the Unity editor. Threads do not work in it directly:
 5. **Hook installation is per checkout**, not per worktree: `core.hooksPath`
    is in the shared `.git/config`, so setting it once in the main checkout
    covers every worktree. Check with `git config core.hooksPath` before the
-   first push from a worktree.
+   first push from a worktree. When the value is an absolute path (as on the
+   Windows PC, `D:\Dev\descender-game\tools\hooks`), every worktree runs the
+   main checkout's copy of the hook against its own files, so a change to the
+   hook takes effect only once the main checkout has pulled it, and a task
+   branch cannot loosen its own gate.
+6. **Do not copy `Library/` from another checkout to save the first import.**
+   It was tried on the Windows PC: the copied script-to-class mapping was
+   wrong until `Library/Bee`, `ScriptAssemblies`, `ArtifactDB`,
+   `SourceAssetDB` and `Artifacts` were deleted, which is the import itself.
+   The first run costs a minute or two there, so the copy is not worth the
+   risk of a test run against a stale import.
 
 ## Playtest
 
