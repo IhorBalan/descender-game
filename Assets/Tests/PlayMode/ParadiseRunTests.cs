@@ -205,7 +205,8 @@ namespace Descender.Tests.PlayMode
             var report =
                 $"Paradise run: {minutes:0.0} min to the Low Gate (target {TargetMinutes:0}), "
                 + $"{talking / 60f:0.0} min of it talking; {legs.Count} legs, {pilot.AirJumps} air jumps, "
-                + $"{pilot.Dashes} dashes, {pilot.StuckJumps} unplanned hops, {pilot.Retries} retried jumps; "
+                + $"{pilot.Dashes} dashes, {pilot.StuckJumps} unplanned hops, {pilot.Retries} retried jumps, "
+                + $"{pilot.Resumes} resumed legs; "
                 + $"{played.Count} dialogues: {string.Join(", ", played)}.";
             Debug.Log(report);
             if (pilot.Failure != null || calledOff != null)

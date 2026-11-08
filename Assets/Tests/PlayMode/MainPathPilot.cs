@@ -122,6 +122,7 @@ namespace Descender.Tests.PlayMode
         private float stuckX;
         private float pressCooldown;
         private float backtrackX;
+        private int stillSteps;
 
         public MainPathPilot(PlayerController hero, ScriptedInput input, List<Leg> legs)
         {
@@ -140,6 +141,9 @@ namespace Descender.Tests.PlayMode
         public int Dashes { get; private set; }
         public int StuckJumps { get; private set; }
         public int Retries { get; private set; }
+
+        /// <summary>Times he came down on an earlier surface of the plan and took it up again from there.</summary>
+        public int Resumes { get; private set; }
 
         public Leg Current => LegIndex < legs.Count ? legs[LegIndex] : null;
 
@@ -394,6 +398,10 @@ namespace Descender.Tests.PlayMode
                 ResetStuck(at);
                 return;
             }
+            if (at.y < leg.takeoff.y - 3f && !leg.OnFrom(at) && Lost(leg, at))
+            {
+                return;
+            }
             if (leg.kind == Kind.Walk)
             {
                 // Past the junction the leg completes on the next check; keep going the way of travel.
@@ -452,7 +460,10 @@ namespace Descender.Tests.PlayMode
             // Touching down shows up a physics step before the ground check does: the body comes to
             // rest, then the next step finds the ground under it. A resting hero is landed too, or
             // else an air jump pressed in that step takes off again and he never reads as grounded.
-            var resting = !grounded && Mathf.Abs(velocity.y) < 0.01f && airTime > 0.1f;
+            // A dash also holds him level, and so does the top of a jump for a step, so rest is two
+            // still steps outside a dash.
+            stillSteps = !grounded && !hero.IsDashing && Mathf.Abs(velocity.y) < 0.01f ? stillSteps + 1 : 0;
+            var resting = stillSteps >= 2 && airTime > 0.1f;
             if ((grounded || resting) && airTime > 0.1f)
             {
                 if (leg.Reached(at))
@@ -463,7 +474,7 @@ namespace Descender.Tests.PlayMode
                 {
                     Retry(leg, at);
                 }
-                else
+                else if (!Lost(leg, at))
                 {
                     phase = Phase.Approach;
                     ResetStuck(at);
@@ -529,6 +540,39 @@ namespace Descender.Tests.PlayMode
             }
             backtrackX = leg.takeoff.x - leg.dir * 4f;
             phase = Phase.Backtrack;
+        }
+
+        /// <summary>
+        /// Landed somewhere that is neither the leg's landing nor the surface it leaves: back on an
+        /// earlier surface of the plan, the run resumes from the leg that leaves it; anywhere else well
+        /// below the take-off is off the path, and the run fails there rather than pacing under the
+        /// jump until the leg times out. Returns whether the leg changed or the run failed.
+        /// </summary>
+        private bool Lost(Leg leg, Vector2 at)
+        {
+            for (var j = LegIndex - 1; j >= 0; j--)
+            {
+                if (StandsOn(legs[j].ontoLine, at))
+                {
+                    Resumes++;
+                    LegIndex = j;
+                    Next();
+                    return true;
+                }
+            }
+            if (at.y < leg.takeoff.y - 3f)
+            {
+                Fail("fell off the path");
+                return true;
+            }
+            return false;
+        }
+
+        private static bool StandsOn(List<Vector2> line, Vector2 at)
+        {
+            var west = Mathf.Min(line[0].x, line[line.Count - 1].x) - 0.5f;
+            var east = Mathf.Max(line[0].x, line[line.Count - 1].x) + 0.5f;
+            return at.x >= west && at.x <= east && Mathf.Abs(at.y - ParadiseChecker.HeightAt(line, at.x)) < 0.75f;
         }
 
         private void Next()
