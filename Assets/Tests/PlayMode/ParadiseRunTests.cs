@@ -148,7 +148,8 @@ namespace Descender.Tests.PlayMode
                 talkingNow = hero.Talking ? talkingNow + dt : 0f;
                 if (talkingNow > 30f)
                 {
-                    calledOff = $"the hero has been talking for {talkingNow:0} s with the box {(box.IsOpen ? "open" : "closed")}";
+                    var state = box.IsOpen ? "open" : "closed";
+                    calledOff = $"the hero has been talking for {talkingNow:0} s with the box {state}";
                     break;
                 }
                 if (pilot.LegIndex != lastLeg)
