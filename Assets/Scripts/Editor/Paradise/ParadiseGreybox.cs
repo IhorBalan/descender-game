@@ -568,6 +568,10 @@ namespace Descender.EditorTools.Paradise
                 : shape.profile == ParadiseLayout.Profile.Ground ? art.ground
                 : shape.profile == ParadiseLayout.Profile.Leaf ? art.leaf
                 : art.decor;
+            if (zoneArt != null && zoneArt.garden)
+            {
+                ParadiseNormals.Dress(controller, renderer, art.lit);
+            }
             // The fill at its own density (the painted kit is 128 px a unit), so it keeps its size.
             controller.fillPixelsPerUnit =
                 controller.spriteShape != null && controller.spriteShape.fillTexture != null
@@ -703,6 +707,10 @@ namespace Descender.EditorTools.Paradise
             renderer.sharedMaterials = new[] { zoneArt.lit, zoneArt.lit };
             renderer.sortingOrder = -99;
             controller.spriteShape = lipProfile;
+            if (zoneArt.garden)
+            {
+                ParadiseNormals.Dress(controller, renderer, zoneArt.lit);
+            }
             controller.autoUpdateCollider = false;
             controller.splineDetail = 16;
             var spline = controller.spline;
@@ -799,6 +807,10 @@ namespace Descender.EditorTools.Paradise
             renderer.sharedMaterials = new[] { art.lit, art.lit };
             renderer.sortingOrder = -90;
             controller.spriteShape = zoneArt != null ? zoneArt.ledge : art.leaf;
+            if (zoneArt != null && zoneArt.garden)
+            {
+                ParadiseNormals.Dress(controller, renderer, art.lit);
+            }
             controller.autoUpdateCollider = false;
             controller.splineDetail = 16;
             var spline = controller.spline;

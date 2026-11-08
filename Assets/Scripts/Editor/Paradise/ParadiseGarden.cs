@@ -46,6 +46,7 @@ namespace Descender.EditorTools.Paradise
                 $"{ParadiseArt.DerivedFolder}/island_bottom_flip.png",
                 1f - 0.95f
             );
+            ParadiseNormals.Apply(new[] { KitRoot, ParadiseArt.DerivedFolder });
             foreach (var folder in new[] { KitRoot, BackdropRoot, ParadiseArt.DerivedFolder })
             {
                 foreach (var path in Directory.GetFiles(folder, "*.png", SearchOption.AllDirectories))
@@ -71,7 +72,8 @@ namespace Descender.EditorTools.Paradise
         {
             var art = basis;
             art.garden = true;
-            art.ambient = z == 1 ? new Color(1f, 0.97f, 0.92f) : new Color(0.96f, 1f, 0.95f);
+            // The sky's own light is cool: shadows go blue, and only the sun warms what it touches.
+            art.ambient = z == 1 ? new Color(0.88f, 0.93f, 1f) : new Color(0.86f, 0.95f, 1f);
             art.shaftColor = new Color(1f, 0.95f, 0.8f);
             var fill = AssetDatabase.LoadAssetAtPath<Texture2D>($"{KitRoot}/Nature/rock_fill.png");
             art.ground = ParadiseArt.Profile(
@@ -448,12 +450,12 @@ namespace Descender.EditorTools.Paradise
                 art.pollen,
                 art.glow,
                 45,
-                new Color(1f, 0.93f, 0.6f),
+                new Color(1f, 0.9f, 0.62f, 0.5f),
                 9f,
                 new Vector2(0.6f, -0.2f),
                 50f,
                 new Vector2(3f, 8f),
-                new Vector2(0.5f, 1f),
+                new Vector2(0.12f, 0.32f),
                 0f,
                 6f,
                 area
@@ -484,12 +486,12 @@ namespace Descender.EditorTools.Paradise
                 art.mote,
                 art.glow,
                 30,
-                new Color(1f, 0.95f, 0.8f),
+                new Color(1f, 0.95f, 0.8f, 0.4f),
                 11f,
                 new Vector2(0.1f, -1f),
                 40f,
                 new Vector2(2f, 5f),
-                new Vector2(0.3f, 0.7f),
+                new Vector2(0.1f, 0.26f),
                 0f,
                 8f,
                 area
@@ -694,10 +696,7 @@ namespace Descender.EditorTools.Paradise
                 return;
             }
             // Sun and cloud shadows over the whole region.
-            if (root.GetComponent<SunAndClouds>() == null)
-            {
-                root.AddComponent<SunAndClouds>();
-            }
+            ParadiseNormals.BuildSkyLights(root);
             // Flocks crossing the far sky now and then.
             if (root.GetComponent<DistantBirds>() == null)
             {
@@ -1507,7 +1506,7 @@ namespace Descender.EditorTools.Paradise
                 var worldLight = light.AddComponent<WorldLight>();
                 var lightSettings = new SerializedObject(worldLight);
                 lightSettings.FindProperty("color").colorValue = new Color(1f, 0.85f, 0.55f);
-                lightSettings.FindProperty("energy").floatValue = 0.9f;
+                lightSettings.FindProperty("energy").floatValue = 0.45f;
                 lightSettings.FindProperty("radiusPixels").floatValue = 6f * Player.PlayerTuning.PixelsPerUnit;
                 lightSettings.ApplyModifiedPropertiesWithoutUndo();
                 lit.SetActive(false);
