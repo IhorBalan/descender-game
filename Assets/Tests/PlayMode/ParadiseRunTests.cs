@@ -33,6 +33,9 @@ namespace Descender.Tests.PlayMode
 
         private const float GateX = 7470f;
 
+        /// <summary>Real seconds the run may take before it is called off with its trace (the editor stepping slowly).</summary>
+        private const float RealTimeLimit = 1200f;
+
         private readonly List<string> loaded = new List<string>();
         private readonly List<GameObject> made = new List<GameObject>();
         private float captureBefore;
@@ -132,8 +135,22 @@ namespace Descender.Tests.PlayMode
             }
             var trace = new Queue<string>();
             var lastLeg = -1;
+            var startedAt = Time.realtimeSinceStartup;
+            var talkingNow = 0f;
+            var calledOff = (string)null;
             while (!pilot.Done && pilot.Failure == null)
             {
+                if (Time.realtimeSinceStartup - startedAt > RealTimeLimit)
+                {
+                    calledOff = $"called off after {RealTimeLimit:0} real seconds at {elapsed / 60f:0.0} game minutes";
+                    break;
+                }
+                talkingNow = hero.Talking ? talkingNow + dt : 0f;
+                if (talkingNow > 30f)
+                {
+                    calledOff = $"the hero has been talking for {talkingNow:0} s with the box {(box.IsOpen ? "open" : "closed")}";
+                    break;
+                }
                 if (pilot.LegIndex != lastLeg)
                 {
                     lastLeg = pilot.LegIndex;
@@ -187,10 +204,11 @@ namespace Descender.Tests.PlayMode
                 + $"{pilot.Dashes} dashes, {pilot.StuckJumps} unplanned hops, {pilot.Retries} retried jumps; "
                 + $"{played.Count} dialogues: {string.Join(", ", played)}.";
             Debug.Log(report);
-            if (pilot.Failure != null)
+            if (pilot.Failure != null || calledOff != null)
             {
                 Debug.Log("Paradise run, the last frames before the failure:\n" + string.Join("\n", trace));
             }
+            Assert.That(calledOff, Is.Null, $"{report} Where he was: {pilot.Current}, at {hero.transform.position}.");
             Assert.That(pilot.Failure, Is.Null, report);
             Assert.That(pilot.Done, Is.True, report);
             Assert.That(hero.transform.position.x, Is.GreaterThanOrEqualTo(GateX - 1f), report);
