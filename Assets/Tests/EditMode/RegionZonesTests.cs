@@ -63,6 +63,14 @@ namespace Descender.Tests
             Assert.That(atlas.regions[0].rows, Is.EqualTo(120));
             Assert.That(atlas.regions[0].width, Is.EqualTo(7500));
             Assert.That(atlas.startRegion, Is.EqualTo("paradise_new"));
+            // The shrines of zones 1 to 4 (4 + 3 + 2), in the world's save order (y, then x):
+            // the count, since Sync world numbers them top to bottom, not west to east.
+            Assert.That(atlas.checkpoints.Length, Is.EqualTo(9), "run Descender > Paradise > Build new zones");
+            foreach (var checkpoint in atlas.checkpoints)
+            {
+                Assert.That(checkpoint.region, Is.EqualTo("paradise_new"));
+                Assert.That(checkpoint.position.x, Is.InRange(0f, 3700f));
+            }
         }
 
         [Test]
