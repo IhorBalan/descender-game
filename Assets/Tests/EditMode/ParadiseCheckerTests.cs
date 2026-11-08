@@ -13,6 +13,26 @@ namespace Descender.Tests
     public class ParadiseCheckerTests
     {
         [Test]
+        public void TransferPointsAreTheNearEndsApartAndTheClosestHeightsOverlapping()
+        {
+            var low = new List<Vector2> { new Vector2(0f, -60f), new Vector2(20f, -60f) };
+            var east = new List<Vector2> { new Vector2(24f, -56f), new Vector2(40f, -56f) };
+            Assert.That(ParadiseChecker.Transfer(low, east, out var takeoff, out var landing), Is.True, "apart in x");
+            Assert.That(takeoff, Is.EqualTo(new Vector2(20f, -60f)));
+            Assert.That(landing, Is.EqualTo(new Vector2(24f, -56f)));
+            Assert.That(ParadiseChecker.Transfer(east, low, out takeoff, out landing), Is.True, "and back west");
+            Assert.That(takeoff, Is.EqualTo(new Vector2(24f, -56f)));
+            Assert.That(landing, Is.EqualTo(new Vector2(20f, -60f)));
+
+            var above = new List<Vector2> { new Vector2(10f, -58f), new Vector2(30f, -50f) };
+            Assert.That(ParadiseChecker.Transfer(low, above, out takeoff, out landing), Is.False, "overlapping in x");
+            Assert.That(takeoff, Is.EqualTo(new Vector2(10f, -60f)), "where the heights are closest");
+            Assert.That(landing, Is.EqualTo(new Vector2(10f, -58f)));
+            Assert.That(ParadiseChecker.HeightAt(above, 20f), Is.EqualTo(-54f).Within(0.001f));
+            Assert.That(ParadiseChecker.HeightAt(above, 50f), Is.EqualTo(-50f), "beyond the end, the end");
+        }
+
+        [Test]
         public void AZoneWithinTheRulesHasNoViolations()
         {
             var zone = TwoSurfaces(aEnd: 20f, bStart: 24f, aY: -60f, bY: -56f);

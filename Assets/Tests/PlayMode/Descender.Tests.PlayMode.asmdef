@@ -3,6 +3,7 @@
     "rootNamespace": "Descender.Tests",
     "references": [
         "Descender.Runtime",
+        "Descender.Editor",
         "UnityEngine.TestRunner",
         "UnityEditor.TestRunner",
         "UnityEngine.UI",

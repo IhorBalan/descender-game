@@ -411,26 +411,7 @@ namespace Descender.EditorTools.Paradise
             List<string> violations
         )
         {
-            var fromWest = from.line[0];
-            var fromEast = from.line[from.line.Count - 1];
-            var ontoWest = onto.line[0];
-            var ontoEast = onto.line[onto.line.Count - 1];
-            Vector2 takeoff;
-            Vector2 landing;
-            if (ontoWest.x >= fromEast.x)
-            {
-                takeoff = fromEast;
-                landing = ontoWest;
-            }
-            else if (ontoEast.x <= fromWest.x)
-            {
-                takeoff = fromWest;
-                landing = ontoEast;
-            }
-            else
-            {
-                Closest(from.line, onto.line, out takeoff, out landing);
-            }
+            Transfer(from.line, onto.line, out var takeoff, out var landing);
 
             var limits = ParadiseRules.For(takeoff.x);
             var gap = Mathf.Abs(landing.x - takeoff.x);
@@ -469,6 +450,39 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
+        /// <summary>
+        /// Where the hero leaves one surface for the next and where he arrives, by the rule
+        /// of CheckTransfer: the near ends when the surfaces are apart in x (true), the
+        /// points where their heights are closest when they overlap (false). The scripted
+        /// playtest (ParadiseRunTests) aims its jumps with the same points the rules measure.
+        /// </summary>
+        public static bool Transfer(
+            List<Vector2> from,
+            List<Vector2> onto,
+            out Vector2 takeoff,
+            out Vector2 landing
+        )
+        {
+            var fromWest = from[0];
+            var fromEast = from[from.Count - 1];
+            var ontoWest = onto[0];
+            var ontoEast = onto[onto.Count - 1];
+            if (ontoWest.x >= fromEast.x)
+            {
+                takeoff = fromEast;
+                landing = ontoWest;
+                return true;
+            }
+            if (ontoEast.x <= fromWest.x)
+            {
+                takeoff = fromWest;
+                landing = ontoEast;
+                return true;
+            }
+            Closest(from, onto, out takeoff, out landing);
+            return false;
+        }
+
         /// <summary>Over the x two surfaces share, the points where their heights are closest.</summary>
         private static void Closest(List<Vector2> from, List<Vector2> onto, out Vector2 takeoff, out Vector2 landing)
         {
@@ -503,8 +517,8 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
-        /// <summary>The line's height at x; at a wall, the side met first walking east.</summary>
-        private static float HeightAt(List<Vector2> line, float x)
+        /// <summary>The line's height at x; at a wall, the side met first walking east. Beyond an end, that end's height.</summary>
+        public static float HeightAt(List<Vector2> line, float x)
         {
             for (var i = 0; i + 1 < line.Count; i++)
             {
