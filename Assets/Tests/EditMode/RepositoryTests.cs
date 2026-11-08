@@ -128,11 +128,19 @@ namespace Descender.Tests
         public void RegionScenesAreSelfContained()
         {
             var scenes = Directory
-                .GetFiles(Path.Combine(ProjectRoot, RegionSceneFolder), RegionScenePattern, SearchOption.TopDirectoryOnly)
+                .GetFiles(
+                    Path.Combine(ProjectRoot, RegionSceneFolder),
+                    RegionScenePattern,
+                    SearchOption.TopDirectoryOnly
+                )
                 .Select(file => RegionSceneFolder + "/" + Path.GetFileName(file))
                 .OrderBy(path => path, System.StringComparer.Ordinal)
                 .ToArray();
-            Assert.That(scenes.Length, Is.EqualTo(RegionSceneCount), "the prototype region scenes in " + RegionSceneFolder);
+            Assert.That(
+                scenes.Length,
+                Is.EqualTo(RegionSceneCount),
+                "the prototype region scenes in " + RegionSceneFolder
+            );
 
             var problems = new List<string>();
             var setup = EditorSceneManager.GetSceneManagerSetup();
