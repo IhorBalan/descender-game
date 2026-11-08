@@ -787,6 +787,7 @@ namespace Descender.EditorTools.Paradise
             }
             return z;
         }
+
         /// <summary>
         /// Zone 3, the Great Vines (x 1300 to 2600): two flowing runs of curved branches
         /// over a moss floor with the first thorns; two hollow-trunk climbs by pod and
