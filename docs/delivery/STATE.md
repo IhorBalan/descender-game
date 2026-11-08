@@ -117,7 +117,7 @@ hygiene as each production region lands.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | T-0001 | Paradise construction-rule checker | done | 1 | none | 1 | T-0001 implementation | #139 |
 | T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | done | 2 | none | 1 | T-0002 implementation | #140 |
-| T-0003 | Beats of zones 1 and 2 as layout placements | in review | 3 | T-0001, T-0002 | 1 | T-0003 implementation | |
+| T-0003 | Beats of zones 1 and 2 as layout placements | done | 3 | T-0001, T-0002 | 1 | T-0003 implementation | #145 |
 | T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
 | T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
 
