@@ -67,7 +67,7 @@ namespace Descender.Tests
         public void ZonesTileTheRegionWithoutGapsOrOverlaps()
         {
             var zones = ParadiseLayout.All();
-            Assert.That(zones, Has.Count.EqualTo(4), "zones 1 to 4 are laid out");
+            Assert.That(zones, Has.Count.EqualTo(7), "all seven zones are laid out");
             Assert.That(zones[0].xMin, Is.EqualTo(0f), "the region starts at x 0");
             var scenes = new HashSet<string>();
             for (var i = 0; i < zones.Count; i++)
@@ -96,6 +96,149 @@ namespace Descender.Tests
             Assert.That(zones[3].scene, Is.EqualTo("Paradise_Z4_TalliedFields"));
             Assert.That(zones[3].xMin, Is.EqualTo(2600f));
             Assert.That(zones[3].xMax, Is.EqualTo(3700f));
+            Assert.That(zones[4].scene, Is.EqualTo("Paradise_Z5_Terraces"));
+            Assert.That(zones[5].scene, Is.EqualTo("Paradise_Z6_MakingHouse"));
+            Assert.That(zones[6].scene, Is.EqualTo("Paradise_Z7_LowGate"));
+            Assert.That(zones[6].xMax, Is.EqualTo(7500f), "the region is 7,500 tiles wide");
+        }
+
+        [Test]
+        public void TheRegionHasAtLeastFifteenShrinesAndSevenZones()
+        {
+            var zones = ParadiseLayout.All();
+            Assert.That(zones, Has.Count.EqualTo(7));
+            var shrines = 0;
+            foreach (var zone in zones)
+            {
+                shrines += zone.saves.Count;
+            }
+            Assert.That(shrines, Is.GreaterThanOrEqualTo(ParadiseRules.MinShrines), "the design asks for 15 shrines");
+            Assert.That(ParadiseChecker.CheckShrineSpacing(zones), Is.Empty, "every stretch is under 600 tiles");
+
+            // The shrines of zones 5 to 7, where the task puts them, and the save order by zone then x.
+            Assert.That(zones[4].saves.ConvertAll(s => s.x), Is.EqualTo(new[] { 4200f, 4694f }));
+            Assert.That(zones[5].saves.ConvertAll(s => s.x), Is.EqualTo(new[] { 5250f, 5800f }));
+            Assert.That(zones[6].saves.ConvertAll(s => s.x), Is.EqualTo(new[] { 6350f, 6900f, 7350f }));
+            var order = ParadiseGreybox.CheckpointOrder(zones);
+            Assert.That(order, Has.Count.EqualTo(shrines));
+            var zoneIndex = 0;
+            for (var i = 1; i < order.Count; i++)
+            {
+                while (order[i].x > zones[zoneIndex].xMax)
+                {
+                    zoneIndex++;
+                }
+                var sameZone = order[i - 1].x >= zones[zoneIndex].xMin;
+                Assert.That(
+                    !sameZone || order[i].x > order[i - 1].x,
+                    $"checkpoint {i} at x {order[i].x} is west of checkpoint {i - 1} in the same zone"
+                );
+            }
+            Assert.That(
+                order[0],
+                Is.EqualTo(zones[0].saves[0]),
+                "zone 1's shrine is checkpoint 0 whatever is built after it"
+            );
+
+            // The light dash is where the Wings-and-dash limits begin.
+            var dash = zones[4].placements.Find(p => p.id == "paradise/z5/light_dash");
+            Assert.That(dash, Is.Not.Null, "zone 5 declares the light dash");
+            Assert.That(dash.type, Is.EqualTo("ability"));
+            Assert.That(dash.abilityIndex, Is.EqualTo((int)Ability.LightDash), "ability 1 is the light dash");
+            Assert.That(dash.at.x, Is.EqualTo(ParadiseLayout.Grants[1].x));
+            Assert.That(ParadiseChecker.OnMainPath(zones[4], dash.at), "the light dash stands on the main path");
+
+            // The seven zones' beats: the trigger ids and the items the design names.
+            Assert.That(zones[4].placements.Exists(p => p.item == "tally_stone"), "the tally stone is in zone 5");
+            Assert.That(zones[4].placements.Exists(p => p.item == "prayer_card"), "the prayer card is in zone 5");
+            Assert.That(zones[4].placements.Exists(p => p.item == "glove"), "the Maker's glove is in zone 5");
+            var makinghouse = zones[5].placements.Find(p => p.id == "paradise/z6/makinghouse");
+            Assert.That(makinghouse.type, Is.EqualTo("trigger"));
+            Assert.That(makinghouse.dialogue, Is.EqualTo(new[] { "makinghouse" }));
+            Assert.That(
+                zones[5].placements.Exists(p => p.item == "basin_shard"),
+                "the basin shard is in zone 6's drain"
+            );
+            var gate = zones[6].placements.Find(p => p.id == "paradise/z7/gate");
+            Assert.That(gate.type, Is.EqualTo("trigger"));
+            Assert.That(gate.dialogue, Is.EqualTo(new[] { "gate" }));
+            Assert.That(gate.at.x, Is.GreaterThan(7440f), "the Voice speaks at the gate's outer door, past the arena");
+            Assert.That(zones[6].markers.Exists(m => m.label == "Boss: Warden of the Low Gate (M4)"));
+            Assert.That(zones[6].markers.Exists(m => m.label == "Exit: the drop to Ruined Earth (M4)"));
+            Assert.That(
+                zones[5].markers.FindAll(m => m.label.StartsWith("Machinery (M3)")).Count,
+                Is.GreaterThanOrEqualTo(3)
+            );
+        }
+
+        [Test]
+        public void NoBarrierCrossesTheMainPathBeforeTheDash()
+        {
+            // A hand-made zone west of the dash: a barrier standing on the main path's floor
+            // is reported, one on a side ledge is not, and one east of the dash is a door.
+            var zone = new ParadiseLayout.Zone
+            {
+                number = 9,
+                scene = "Test",
+                xMin = 0f,
+                xMax = 60f,
+            };
+            zone.Ground("Floor", -100f, S(0f, -60f), S(60f, -60f));
+            zone.Deck("Side", 6f, S(20f, -50f), S(30f, -50f));
+            zone.MainPath("Floor");
+            zone.Barrier("Across", 10f, -56f, 4);
+            var violations = ParadiseChecker.CheckBarriers(zone);
+            Assert.That(violations, Has.Count.EqualTo(1), string.Join("\n", violations));
+            Assert.That(
+                violations[0],
+                Is.EqualTo(
+                    "Zone 9: barrier 'Across' at x 10 crosses the main path on 'Floor' before the light dash (x 4700)."
+                )
+            );
+            Assert.That(
+                ParadiseChecker.CheckZone(zone),
+                Does.Contain(violations[0]),
+                "the builder's check reports it too"
+            );
+
+            zone.barriers.Clear();
+            zone.Barrier("Beside", 24f, -46f, 4);
+            Assert.That(ParadiseChecker.CheckBarriers(zone), Is.Empty);
+            var floor = ParadiseChecker.SurfaceLine(zone, "Floor");
+            Assert.That(floor, Is.EqualTo(new[] { new Vector2(0f, -60f), new Vector2(60f, -60f) }));
+            Assert.That(
+                zone.barriers[0].Rect.yMin,
+                Is.GreaterThan(floor[0].y),
+                "the side barrier hangs above the floor"
+            );
+            Assert.That(ParadiseChecker.SurfaceLine(zone, "Nowhere"), Is.Null);
+
+            // The same barrier on the path east of the dash is allowed: the hero dashes through.
+            var east = new ParadiseLayout.Zone
+            {
+                number = 9,
+                scene = "Test",
+                xMin = 4800f,
+                xMax = 4860f,
+            };
+            east.Ground("Floor", -100f, S(4800f, -60f), S(4860f, -60f));
+            east.MainPath("Floor");
+            east.Barrier("Door", 4830f, -56f, 4);
+            Assert.That(ParadiseChecker.CheckBarriers(east), Is.Empty);
+
+            // The real layout: zone 5 has at least two barriers west of the dash, none across the path.
+            var zones = ParadiseLayout.All();
+            var west = zones[4].barriers.FindAll(b => b.at.x < ParadiseLayout.Grants[1].x);
+            Assert.That(west, Has.Count.GreaterThanOrEqualTo(2), "two barriers close shortcuts back before the dash");
+            foreach (var built in zones)
+            {
+                Assert.That(ParadiseChecker.CheckBarriers(built), Is.Empty, $"zone {built.number}");
+                foreach (var barrier in built.barriers)
+                {
+                    Assert.That(barrier.height, Is.GreaterThanOrEqualTo(1), barrier.name);
+                    Assert.That(barrier.at.x, Is.InRange(built.xMin, built.xMax), barrier.name);
+                }
+            }
         }
 
         [Test]
