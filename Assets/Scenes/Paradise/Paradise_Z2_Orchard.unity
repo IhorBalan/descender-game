@@ -27217,7 +27217,7 @@ GameObject:
   - component: {fileID: 429315732}
   - component: {fileID: 429315733}
   m_Layer: 0
-  m_Name: Save8
+  m_Name: Save2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -27255,7 +27255,7 @@ MonoBehaviour:
   catalog: {fileID: 11400000, guid: 8b84ce9f052cf16458006b55053b94f5, type: 2}
   ability: 
   abilityIndex: -1
-  checkpointIndex: 8
+  checkpointIndex: 2
   placementName: 
   character: 
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -74630,7 +74630,7 @@ GameObject:
   - component: {fileID: 1138443805}
   - component: {fileID: 1138443806}
   m_Layer: 0
-  m_Name: Save2
+  m_Name: Save3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -74668,7 +74668,7 @@ MonoBehaviour:
   catalog: {fileID: 11400000, guid: 8b84ce9f052cf16458006b55053b94f5, type: 2}
   ability: 
   abilityIndex: -1
-  checkpointIndex: 2
+  checkpointIndex: 3
   placementName: 
   character: 
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -88502,7 +88502,7 @@ GameObject:
   - component: {fileID: 1346340540}
   - component: {fileID: 1346340541}
   m_Layer: 0
-  m_Name: Save7
+  m_Name: Save1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -88540,7 +88540,7 @@ MonoBehaviour:
   catalog: {fileID: 11400000, guid: 8b84ce9f052cf16458006b55053b94f5, type: 2}
   ability: 
   abilityIndex: -1
-  checkpointIndex: 7
+  checkpointIndex: 1
   placementName: 
   character: 
   tint: {r: 1, g: 1, b: 1, a: 1}

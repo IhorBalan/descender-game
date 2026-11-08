@@ -96,6 +96,21 @@ namespace Descender.EditorTools.Paradise
             public Rect rect;
         }
 
+        /// <summary>
+        /// A wall of angel light (LightBarrier): a one-tile column of `height` cells running
+        /// down from `at`, solid unless the hero is light dashing. It closes a shortcut back,
+        /// never the main path before the dash: ParadiseChecker reports one that does.
+        /// </summary>
+        public sealed class Barrier
+        {
+            public string name;
+            public Vector2 at;
+            public int height;
+
+            /// <summary>The cells' rect: one wide, from `at` down.</summary>
+            public Rect Rect => new Rect(at.x, at.y - height, 1f, height);
+        }
+
         public sealed class Lamp
         {
             public Vector2 at;
@@ -171,6 +186,7 @@ namespace Descender.EditorTools.Paradise
             public readonly List<Placement> placements = new List<Placement>();
             public readonly List<Lamp> lamps = new List<Lamp>();
             public readonly List<Hazard> hazards = new List<Hazard>();
+            public readonly List<Barrier> barriers = new List<Barrier>();
             public readonly List<Rect> rooms = new List<Rect>();
 
             /// <summary>Ground built by hand (marble terrace walls with a carved coping); the rest is natural cliff rock.</summary>
@@ -337,6 +353,19 @@ namespace Descender.EditorTools.Paradise
                 hazards.Add(new Hazard { name = name, rect = new Rect(x, y, width, height) });
             }
 
+            /// <summary>A light barrier whose top-left cell corner is (x, top), `height` cells tall.</summary>
+            public void Barrier(string name, float x, float top, int height)
+            {
+                barriers.Add(
+                    new Barrier
+                    {
+                        name = name,
+                        at = new Vector2(x, top),
+                        height = height,
+                    }
+                );
+            }
+
             public void Light(float x, float y, Color color, float radiusTiles, float energy)
             {
                 lamps.Add(
@@ -366,7 +395,8 @@ namespace Descender.EditorTools.Paradise
             new Grant(Ability.LightDash, 4700f),
         };
 
-        public static List<Zone> All() => new List<Zone> { Zone1(), Zone2(), Zone3(), Zone4() };
+        public static List<Zone> All() =>
+            new List<Zone> { Zone1(), Zone2(), Zone3(), Zone4(), Zone5(), Zone6(), Zone7() };
 
         private static P S(float x, float y) => new P(x, y, true);
 
@@ -379,6 +409,9 @@ namespace Descender.EditorTools.Paradise
         private static readonly Color Acid = new Color(0.7f, 1f, 0.45f);
         private static readonly Color Gold = new Color(1f, 0.9f, 0.55f);
         private static readonly Color StreamGlow = new Color(0.75f, 0.95f, 1f);
+        private static readonly Color Marble = new Color(1f, 0.97f, 0.88f);
+        private static readonly Color Pearl = new Color(0.9f, 0.92f, 0.95f);
+        private static readonly Color Steel = new Color(0.6f, 0.7f, 0.85f);
 
         /// <summary>
         /// Zone 1, the Waking Hollow (x 0 to 400): a sheltered bowl at dawn, a teaching
@@ -1244,6 +1277,532 @@ namespace Descender.EditorTools.Paradise
             z.Light(3300f, -50f, Gold, 16f, 0.7f);
             z.Light(3650f, -56f, Dawn, 8f, 1f);
             return z;
+        }
+
+        /// <summary>
+        /// Zone 5, the Terraces (x 3700 to 5100): two flights of marble terraces climbing 42
+        /// tiles in steps of at most 7 to the upper gardens, with two shortcut ledges back
+        /// down closed by light barriers; the Wheel mural on the cliff behind the climb;
+        /// gardens cut by Wings gaps with the three items and two encounter landings; the
+        /// light dash at x 4700, then the first 8 and 9 tile gaps over a pool of light.
+        /// </summary>
+        public static Zone Zone5()
+        {
+            var z = new Zone
+            {
+                number = 5,
+                scene = "Paradise_Z5_Terraces",
+                xMin = 3700f,
+                xMax = 5100f,
+            };
+            z.rooms.Add(new Rect(3700f, -105f, 1400f, 100f));
+
+            z.Ground("TerraceFoot", -100f, S(3699f, -60f), C(3730f, -60.2f), S(3760f, -60.4f));
+            // The first flight: four steps of 6.4 to 6.5, then the first landing.
+            z.Ground(
+                "Terraces1",
+                -100f,
+                S(3764f, -60.4f),
+                S(3780f, -60.4f),
+                S(3780f, -54f),
+                S(3800f, -54f),
+                S(3800f, -47.5f),
+                S(3820f, -47.5f),
+                S(3820f, -41f),
+                S(3845f, -41f),
+                S(3845f, -34.5f),
+                S(3930f, -34.5f)
+            );
+            // The second flight to the upper gardens, 42 tiles above the foot.
+            z.Ground(
+                "Terraces2",
+                -100f,
+                S(3936f, -34.5f),
+                S(3960f, -34.5f),
+                S(3960f, -28.5f),
+                S(3985f, -28.5f),
+                S(3985f, -22f),
+                S(4010f, -22f),
+                S(4010f, -18f),
+                S(4040f, -18f),
+                C(4080f, -18.2f),
+                S(4120f, -18f)
+            );
+            // Shortcut ledges back down the flights, each closed by a light barrier: the hero
+            // passes them only once he can dash, on the way back.
+            z.Deck("ShortcutLedge1", 6f, S(3826f, -30f), S(3860f, -30f));
+            z.Barrier("Barrier1", 3840f, -26f, 4);
+            z.Deck("ShortcutLedge2", 6f, S(3975f, -14f), S(4006f, -14f));
+            z.Barrier("Barrier2", 3990f, -10f, 4);
+            // The Wheel mural: the whole cliff behind the climb.
+            z.Closed(
+                "WheelMural",
+                Profile.Decor,
+                false,
+                S(3970f, -6f),
+                C(4010f, -4f),
+                C(4050f, -6f),
+                S(4066f, -26f),
+                C(4050f, -46f),
+                C(4010f, -48f),
+                C(3970f, -46f),
+                S(3954f, -26f)
+            );
+            // The upper gardens: Wings gaps of 7 over falls of light.
+            z.Ground(
+                "Garden1",
+                -100f,
+                S(4127f, -18.4f),
+                C(4160f, -18.4f),
+                C(4200f, -18.5f),
+                C(4230f, -18.6f),
+                S(4260f, -18.6f)
+            );
+            z.Ground(
+                "Garden2",
+                -100f,
+                S(4267f, -18.8f),
+                C(4300f, -18.8f),
+                C(4330f, -18.9f),
+                C(4370f, -19f),
+                S(4400f, -19f)
+            );
+            z.Ground(
+                "Garden3",
+                -100f,
+                S(4407f, -19.2f),
+                C(4440f, -19.3f),
+                C(4480f, -19.4f),
+                C(4520f, -19.5f),
+                S(4560f, -19.6f)
+            );
+            z.Ground(
+                "DashTerrace",
+                -100f,
+                S(4566f, -19.8f),
+                C(4600f, -19.9f),
+                C(4650f, -20f),
+                C(4700f, -20f),
+                S(4720f, -20f)
+            );
+            // The first dash gaps: 9, 9 and 8 tiles over a pool of light, soft to fall into,
+            // with a pod back up.
+            z.Island("DashIsle1", S(4729f, -20f), S(4745f, -20f), S(4745f, -24f), S(4729f, -24f));
+            z.Island("DashIsle2", S(4754f, -20f), S(4770f, -20f), S(4770f, -24f), S(4754f, -24f));
+            z.Closed("LightPool", Profile.Leaf, true, S(4720f, -40f), S(4778f, -40f), S(4778f, -100f), S(4720f, -100f));
+            z.Bounce("PoolPod", 4749f, -39.6f, 22f);
+            z.Ground(
+                "EastTerrace",
+                -100f,
+                S(4778f, -20.4f),
+                C(4850f, -20.6f),
+                C(4950f, -20.4f),
+                C(5050f, -20.2f),
+                S(5101f, -20f)
+            );
+
+            z.MainPath(
+                "TerraceFoot",
+                "Terraces1",
+                "Terraces2",
+                "Garden1",
+                "Garden2",
+                "Garden3",
+                "DashTerrace",
+                "DashIsle1",
+                "DashIsle2",
+                "EastTerrace"
+            );
+            z.Soft("LightPool");
+            z.Masonry(
+                "TerraceFoot",
+                "Terraces1",
+                "Terraces2",
+                "Garden1",
+                "Garden2",
+                "Garden3",
+                "DashTerrace",
+                "EastTerrace"
+            );
+            z.saves.Add(new Vector2(4200f, -18.5f));
+            z.saves.Add(new Vector2(4694f, -20f));
+
+            var story = Descender.World.Paradise.DesignMarker.Kind.Story;
+            var item = Descender.World.Paradise.DesignMarker.Kind.Item;
+            var secret = Descender.World.Paradise.DesignMarker.Kind.Secret;
+            var encounter = Descender.World.Paradise.DesignMarker.Kind.Encounter;
+            var landmark = Descender.World.Paradise.DesignMarker.Kind.Landmark;
+            z.Mark(encounter, 3900f, -33.5f, "Encounter: first landing", "A terrace landing sized for a guard fight.");
+            z.Mark(
+                landmark,
+                4010f,
+                -26f,
+                "Landmark: the Wheel mural",
+                "The biggest single image in the region, seen from below."
+            );
+            z.Mark(
+                secret,
+                3843f,
+                -29f,
+                "Secret: the first shortcut",
+                "Behind the first barrier: dash through from the east."
+            );
+            z.Mark(
+                secret,
+                3990f,
+                -13f,
+                "Secret: the second shortcut",
+                "Behind the second barrier, above the upper flight."
+            );
+            z.Mark(item, 4060f, -16.5f, "Item: tally stone", "The child's tally stone, dropped on the upper terrace.");
+            var tally = z.Place("tally_stone", "item", 4060f, -18.1f, "Item: tally stone");
+            tally.item = "tally_stone";
+            tally.dialogue = new[] { "item_tally_stone" };
+            z.Mark(
+                story,
+                4300f,
+                -17f,
+                "Beat 9: the gathered",
+                "The gathered walk past the hero without looking at him."
+            );
+            z.Mark(
+                item,
+                4330f,
+                -17.5f,
+                "Item: prayer card",
+                "The Warden's prayer card: 'What is pressed is not lost.'"
+            );
+            var card = z.Place("prayer_card", "item", 4330f, -18.9f, "Item: prayer card");
+            card.item = "prayer_card";
+            card.dialogue = new[] { "item_prayer_card" };
+            z.Mark(encounter, 4400f, -18f, "Encounter: second landing", "The wide garden before the glove.");
+            z.Mark(item, 4480f, -18f, "Item: the Maker's glove", "Left on the garden wall.");
+            var glove = z.Place("glove", "item", 4480f, -19.4f, "Item: the Maker's glove");
+            glove.item = "glove";
+            glove.dialogue = new[] { "item_glove" };
+            z.Mark(item, 4700f, -18.5f, "Beat: light dash", "The light dash, found halfway up the Terraces.");
+            var dash = z.Place("light_dash", "ability", 4700f, -20f, "Beat: light dash");
+            dash.abilityIndex = (int)Ability.LightDash;
+            z.Mark(secret, 4749f, -38.5f, "Secret: the pool of light", "Under the dash gaps.");
+            z.Mark(
+                story,
+                5092f,
+                -19f,
+                "Into the Making-house Approach",
+                "The colour drains to pearl; pipes among the roots."
+            );
+
+            z.Light(3800f, -44f, Marble, 14f, 0.8f);
+            z.Light(3900f, -28f, Dawn, 10f, 0.8f);
+            z.Light(4010f, -26f, Marble, 24f, 1f);
+            z.Light(4200f, -14f, Dawn, 8f, 1f);
+            z.Light(4330f, -14f, Marble, 12f, 0.7f);
+            z.Light(4694f, -16f, Dawn, 8f, 1f);
+            z.Light(4749f, -36f, StreamGlow, 12f, 1f);
+            z.Light(4950f, -16f, Marble, 14f, 0.7f);
+            return z;
+        }
+
+        /// <summary>
+        /// Zone 6, the Making-house Approach (x 5100 to 6300): pipe decks over a soft root
+        /// bed with the dash gaps of 8 and 9, the machinery's surfaces (moving platforms, a
+        /// steam vent, a shutter) built static with "Machinery (M3)" markers, the Making-house
+        /// and its white door behind the whole zone, the trigger where the door comes into
+        /// view, and the drain below with the basin shard.
+        /// </summary>
+        public static Zone Zone6()
+        {
+            var z = new Zone
+            {
+                number = 6,
+                scene = "Paradise_Z6_MakingHouse",
+                xMin = 5100f,
+                xMax = 6300f,
+            };
+            z.rooms.Add(new Rect(5100f, -105f, 1200f, 100f));
+
+            z.Ground("ApproachGarden", -100f, S(5099f, -20f), C(5140f, -20.4f), S(5180f, -20.6f));
+            z.Deck("Pipe1", 8f, S(5188f, -21f), C(5220f, -20.6f), S(5250f, -21f));
+            Machinery(z, "Platform1", 5259f, -20f, 12f, "moving platform");
+            z.Deck("Pipe2", 8f, S(5280f, -21f), C(5330f, -20f), S(5380f, -21.4f));
+            // A steam vent lifts the hero 7: a static step here.
+            Machinery(z, "Vent1", 5386f, -14.4f, 10f, "steam vent");
+            z.Deck("Pipe3", 8f, S(5404f, -15f), C(5460f, -14.6f), S(5520f, -15f));
+            Machinery(z, "Shutter1", 5528f, -15.4f, 12f, "timed shutter");
+            z.Deck("Pipe4", 8f, S(5548f, -16f), C(5600f, -15.6f), S(5660f, -16.4f));
+            Machinery(z, "Platform2", 5669f, -17f, 12f, "moving platform");
+            z.Ground("DoorApproach", -100f, S(5690f, -18f), C(5750f, -18.4f), C(5800f, -18.6f), S(5860f, -18.8f));
+            z.Deck("Pipe5", 8f, S(5868f, -19f), C(5920f, -18.6f), S(5980f, -19.4f));
+            z.Ground("ExitPipe", -100f, S(5989f, -20f), C(6100f, -20.4f), C(6200f, -20.6f), S(6301f, -21f));
+            // The root bed under the pipes: soft, 22 below, with pods back up.
+            z.Closed(
+                "RootBed",
+                Profile.Leaf,
+                true,
+                S(5180f, -42f),
+                C(5400f, -42.4f),
+                C(5600f, -42f),
+                S(5690f, -42f),
+                S(5690f, -100f),
+                S(5180f, -100f)
+            );
+            z.Bounce("BedPod1", 5230f, -41.6f, 22f);
+            z.Bounce("BedPod2", 5330f, -41.6f, 22f);
+            z.Bounce("BedPod3", 5600f, -41.6f, 27f);
+            z.Bounce("BedPod4", 5750f, -41.6f, 25f);
+            // The drain below the pipes: a side path to the basin shard, water at the bottom.
+            z.Closed(
+                "Drain",
+                Profile.Leaf,
+                true,
+                S(5860f, -50f),
+                C(5900f, -50.4f),
+                C(5940f, -50.2f),
+                S(5989f, -50f),
+                S(5989f, -100f),
+                S(5860f, -100f)
+            );
+            z.Deck("DrainLedge", 4f, S(5900f, -34f), S(5912f, -34f));
+            z.Bounce("DrainPod1", 5890f, -49.6f, 17f);
+            z.Bounce("DrainPod2", 5906f, -33.6f, 16f);
+            // The pipes behind, all running one way, and the white door of the Making-house.
+            z.Closed("PipeRun1", Profile.Decor, false, S(5100f, -30f), S(6200f, -30f), S(6200f, -32f), S(5100f, -32f));
+            z.Closed(
+                "PipeRun2",
+                Profile.Decor,
+                false,
+                S(5100f, -36f),
+                S(6200f, -36f),
+                S(6200f, -37.5f),
+                S(5100f, -37.5f)
+            );
+            z.Closed("WhiteDoor", Profile.Decor, false, S(6180f, -2f), S(6232f, -2f), S(6232f, -21f), S(6180f, -21f));
+
+            z.MainPath(
+                "ApproachGarden",
+                "Pipe1",
+                "Platform1",
+                "Pipe2",
+                "Vent1",
+                "Pipe3",
+                "Shutter1",
+                "Pipe4",
+                "Platform2",
+                "DoorApproach",
+                "Pipe5",
+                "ExitPipe"
+            );
+            z.Soft("RootBed", "Drain");
+            z.Masonry("ApproachGarden", "DoorApproach", "ExitPipe");
+            z.saves.Add(new Vector2(5250f, -21f));
+            z.saves.Add(new Vector2(5800f, -18.6f));
+
+            var story = Descender.World.Paradise.DesignMarker.Kind.Story;
+            var item = Descender.World.Paradise.DesignMarker.Kind.Item;
+            var secret = Descender.World.Paradise.DesignMarker.Kind.Secret;
+            var landmark = Descender.World.Paradise.DesignMarker.Kind.Landmark;
+            z.Mark(
+                landmark,
+                5700f,
+                -8f,
+                "Landmark: the Making-house",
+                "In the background for the whole zone, growing closer; the white door at its foot."
+            );
+            z.Mark(story, 5720f, -16.5f, "Beat 10: the Making-house", "The hero sees the door. Trigger 'makinghouse'.");
+            var door = z.Place("makinghouse", "trigger", 5720f, -18.2f, "Beat 10: the Making-house");
+            door.dialogue = new[] { "makinghouse" };
+            z.Mark(item, 5920f, -48.5f, "Beat 7: basin shard", "In the drain below the pipes, a side path.");
+            var shard = z.Place("basin_shard", "item", 5920f, -50.2f, "Beat 7: basin shard");
+            shard.item = "basin_shard";
+            shard.dialogue = new[] { "item_basin_shard" };
+            z.Mark(secret, 5500f, -40.5f, "Secret: among the roots", "On the root bed under the third pipe.");
+            z.Mark(secret, 5906f, -32.5f, "Secret: the drain ledge", "Halfway down the drain.");
+            z.Mark(secret, 6150f, -19f, "Secret: beside the door", "Where the gathered queue.");
+            z.Mark(story, 6292f, -19.5f, "Into the Low Gate", "Past the edge of the garden: cold silver cliffs.");
+
+            z.Light(5150f, -16f, Pearl, 12f, 0.7f);
+            z.Light(5250f, -17f, Dawn, 8f, 1f);
+            z.Light(5391f, -12f, Pearl, 8f, 0.9f);
+            z.Light(5500f, -38f, Fungus, 10f, 0.7f);
+            z.Light(5800f, -14f, Dawn, 8f, 1f);
+            z.Light(5920f, -46f, StreamGlow, 10f, 0.9f);
+            z.Light(6206f, -10f, Marble, 26f, 1.3f);
+            return z;
+        }
+
+        /// <summary>
+        /// Zone 7, the Low Gate (x 6300 to 7500): the cliff top with the first shrine, a
+        /// descent of four rock ledges over a cloud bank to the cliff floor, the last climb
+        /// in marble steps to the road above the cliff, the Warden's arena at the cliff's
+        /// edge, and the Low Gate: the Voice at its outer door, a closed floor where the
+        /// drop to Ruined Earth will be, the silver ring behind.
+        /// </summary>
+        public static Zone Zone7()
+        {
+            var z = new Zone
+            {
+                number = 7,
+                scene = "Paradise_Z7_LowGate",
+                xMin = 6300f,
+                xMax = 7500f,
+            };
+            z.rooms.Add(new Rect(6300f, -105f, 1200f, 100f));
+
+            z.Ground("CliffTop", -100f, S(6299f, -21f), C(6330f, -21.4f), C(6350f, -21.6f), S(6380f, -22f));
+            // The descent: ledges 8 apart, 8 to 14 down, over a soft cloud bank.
+            z.Island("Ledge1", S(6388f, -30f), S(6404f, -30f), S(6404f, -34f), S(6388f, -34f));
+            z.Island("Ledge2", S(6412f, -42f), S(6428f, -42f), S(6428f, -46f), S(6412f, -46f));
+            z.Island("Ledge3", S(6436f, -56f), S(6452f, -56f), S(6452f, -60f), S(6436f, -60f));
+            z.Island("Ledge4", S(6460f, -70f), S(6476f, -70f), S(6476f, -74f), S(6460f, -74f));
+            z.Closed(
+                "CloudBank",
+                Profile.Leaf,
+                true,
+                S(6380f, -80f),
+                C(6430f, -80.6f),
+                S(6484f, -80f),
+                S(6484f, -100f),
+                S(6380f, -100f)
+            );
+            z.Ground("CliffFloor", -100f, S(6484f, -78f), C(6540f, -78.4f), C(6620f, -78.2f), S(6700f, -78f));
+            // The last climb: marble steps of 6.5, a shrine on the road, a second flight.
+            z.Ground(
+                "ClimbTerraces",
+                -100f,
+                S(6704f, -78f),
+                S(6720f, -78f),
+                S(6720f, -71.5f),
+                S(6740f, -71.5f),
+                S(6740f, -65f),
+                S(6760f, -65f),
+                S(6760f, -58.5f),
+                S(6780f, -58.5f),
+                S(6780f, -52f),
+                S(6810f, -52f)
+            );
+            z.Ground("ArenaApproach", -100f, S(6814f, -52f), C(6860f, -52.2f), C(6900f, -52.4f), S(6960f, -52.6f));
+            z.Ground(
+                "UpperClimb",
+                -100f,
+                S(6968f, -52.6f),
+                S(6990f, -52.6f),
+                S(6990f, -46f),
+                S(7010f, -46f),
+                S(7010f, -39.5f),
+                S(7030f, -39.5f),
+                S(7030f, -33f),
+                S(7060f, -33f)
+            );
+            z.Ground(
+                "GateRoad",
+                -100f,
+                S(7068f, -33.4f),
+                C(7120f, -33.6f),
+                C(7200f, -33.8f),
+                C(7300f, -34f),
+                S(7356f, -34f)
+            );
+            // The arena: 80 flat tiles at the cliff's edge, open sky above.
+            z.Ground("Arena", -100f, S(7360f, -34f), C(7400f, -34f), S(7440f, -34f));
+            // The gate's outer door and the closed floor where the drop will be.
+            z.Ground("GateStep", -100f, S(7444f, -34f), C(7470f, -34f), S(7500f, -34f));
+            z.Closed(
+                "LowGateRing",
+                Profile.Decor,
+                false,
+                S(7452f, -4f),
+                S(7488f, -4f),
+                S(7500f, -16f),
+                S(7500f, -22f),
+                S(7488f, -34f),
+                S(7452f, -34f),
+                S(7440f, -22f),
+                S(7440f, -16f)
+            );
+
+            z.MainPath(
+                "CliffTop",
+                "Ledge1",
+                "Ledge2",
+                "Ledge3",
+                "Ledge4",
+                "CliffFloor",
+                "ClimbTerraces",
+                "ArenaApproach",
+                "UpperClimb",
+                "GateRoad",
+                "Arena",
+                "GateStep"
+            );
+            z.Soft("CloudBank");
+            z.Masonry("ClimbTerraces", "ArenaApproach", "UpperClimb", "GateRoad", "Arena", "GateStep");
+            z.saves.Add(new Vector2(6350f, -21.6f));
+            z.saves.Add(new Vector2(6900f, -52.4f));
+            z.saves.Add(new Vector2(7350f, -34f));
+
+            var story = Descender.World.Paradise.DesignMarker.Kind.Story;
+            var secret = Descender.World.Paradise.DesignMarker.Kind.Secret;
+            var encounter = Descender.World.Paradise.DesignMarker.Kind.Encounter;
+            var landmark = Descender.World.Paradise.DesignMarker.Kind.Landmark;
+            z.Mark(story, 6500f, -70f, "Wind (M3)", "The wind that pushes on the descent is built with the art pass.");
+            z.Mark(secret, 6430f, -78.5f, "Secret: the cloud bank", "Under the ledges.");
+            z.Mark(secret, 6650f, -76.5f, "Secret: the cliff foot", "At the far end of the floor, before the climb.");
+            z.Mark(secret, 7100f, -32f, "Secret: the road's edge", "Over the cliff's edge, a ledge only Wings reach.");
+            z.Mark(
+                encounter,
+                7400f,
+                -33f,
+                "Boss: Warden of the Low Gate (M4)",
+                "The arena: 80 wide, open above. The fight comes in M4."
+            );
+            z.Mark(
+                landmark,
+                7470f,
+                -2f,
+                "Landmark: the Low Gate",
+                "A vast ring of silver in the cliff, seen from zone 5 on."
+            );
+            z.Mark(
+                story,
+                7470f,
+                -32.5f,
+                "Beat 8: the Voice at the gate",
+                "The Voice at the outer door. Trigger 'gate'."
+            );
+            z.Place("gate", "trigger", 7470f, -34f, "Beat 8: the Voice at the gate").dialogue = new[] { "gate" };
+            z.Mark(
+                story,
+                7486f,
+                -32.5f,
+                "Exit: the drop to Ruined Earth (M4)",
+                "A closed floor until the Warden falls."
+            );
+
+            z.Light(6350f, -17f, Dawn, 8f, 1f);
+            z.Light(6430f, -60f, Steel, 20f, 0.6f);
+            z.Light(6600f, -72f, Steel, 14f, 0.6f);
+            z.Light(6900f, -48f, Dawn, 8f, 1f);
+            z.Light(7200f, -28f, Steel, 16f, 0.6f);
+            z.Light(7350f, -30f, Dawn, 8f, 1f);
+            z.Light(7470f, -18f, Marble, 24f, 1.2f);
+            return z;
+        }
+
+        /// <summary>
+        /// A piece of the Making-house's machinery, static until M3: an island `width` wide
+        /// and 3 thick with its top-left at (x, top), on the main path, with a marker saying
+        /// what moves here later.
+        /// </summary>
+        private static void Machinery(Zone z, string name, float x, float top, float width, string what)
+        {
+            z.Island(name, S(x, top), S(x + width, top), S(x + width, top - 3f), S(x, top - 3f));
+            z.Mark(
+                Descender.World.Paradise.DesignMarker.Kind.Story,
+                x + width / 2f,
+                top + 1.5f,
+                $"Machinery (M3): {what}",
+                $"'{name}' stands still until the art pass builds the {what}."
+            );
         }
 
         /// <summary>One island of the Wings descent: 14 wide, 4 thick, its top-left at (x, top).</summary>

@@ -115,6 +115,15 @@ namespace Descender.EditorTools.Paradise
         [MenuItem("Descender/Paradise/Rebuild zone 4 from layout (overwrites)")]
         public static void RebuildZone4() => AskAndRebuild(4);
 
+        [MenuItem("Descender/Paradise/Rebuild zone 5 from layout (overwrites)")]
+        public static void RebuildZone5() => AskAndRebuild(5);
+
+        [MenuItem("Descender/Paradise/Rebuild zone 6 from layout (overwrites)")]
+        public static void RebuildZone6() => AskAndRebuild(6);
+
+        [MenuItem("Descender/Paradise/Rebuild zone 7 from layout (overwrites)")]
+        public static void RebuildZone7() => AskAndRebuild(7);
+
         public static void RebuildFromEnvironment()
         {
             var text = System.Environment.GetEnvironmentVariable("PARADISE_REBUILD_ZONE");
@@ -143,8 +152,10 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>
         /// Reads the save shrines and the player start from the zone scenes as they are now,
-        /// numbers the shrines in the world's save order and writes ParadiseWorld.asset. Run
-        /// after moving, adding or removing a shrine or the start by hand.
+        /// numbers the shrines in the world's save order (by zone, west to east, then by x,
+        /// so building a new zone leaves the older zones' indices alone: D-0010) and writes
+        /// ParadiseWorld.asset. Run after moving, adding or removing a shrine or the start
+        /// by hand.
         /// </summary>
         [MenuItem("Descender/Paradise/Sync world from scenes")]
         public static void SyncWorld()
@@ -181,7 +192,17 @@ namespace Descender.EditorTools.Paradise
             {
                 EnsurePlayerStart(zones);
             }
-            saves.Sort((a, b) => a.at.y != b.at.y ? b.at.y.CompareTo(a.at.y) : a.at.x.CompareTo(b.at.x));
+            var zoneOrder = new Dictionary<string, int>();
+            for (var i = 0; i < zones.Count; i++)
+            {
+                zoneOrder[ScenePath(zones[i])] = i;
+            }
+            saves.Sort(
+                (a, b) =>
+                    zoneOrder[a.scene] != zoneOrder[b.scene]
+                        ? zoneOrder[a.scene].CompareTo(zoneOrder[b.scene])
+                        : a.at.x.CompareTo(b.at.x)
+            );
             // Number them in the zone scenes, then write the world in the same order.
             foreach (var zone in zones)
             {
@@ -312,6 +333,7 @@ namespace Descender.EditorTools.Paradise
             public Sprite seedSprite;
             public Sprite flagSprite;
             public Sprite hazardSprite;
+            public Sprite barrierSprite;
             public Material lit;
         }
 
@@ -340,6 +362,14 @@ namespace Descender.EditorTools.Paradise
             art.flagSprite = SpriteTex("flag", 16, 16, (x, y) => Color.white);
             // The one red thing in the greybox: thorns, so a hazard reads at a glance.
             art.hazardSprite = SpriteTex("hazard", 16, 16, (x, y) => new Color(0.85f, 0.08f, 0.1f));
+            // A cell of angel light: pale gold, brighter at its edges.
+            art.barrierSprite = SpriteTex(
+                "barrier",
+                16,
+                16,
+                (x, y) =>
+                    x < 2 || x > 13 || y < 2 || y > 13 ? new Color(1f, 0.98f, 0.8f) : new Color(1f, 0.92f, 0.6f, 0.75f)
+            );
             art.ground = Profile("Ground", groundFill, groundEdge);
             art.leaf = Profile("Leaf", leafFill, leafEdge);
             art.decor = Profile("Decor", decorFill, decorEdge);
@@ -457,6 +487,7 @@ namespace Descender.EditorTools.Paradise
             var podGroup = Group(root, "Pods");
             var placementGroup = Group(root, "Placements");
             var hazardGroup = Group(root, "Hazards");
+            var barrierGroup = Group(root, "Barriers");
             var markerGroup = Group(root, "Markers");
             var lightGroup = Group(root, "Lights");
             var roomGroup = Group(root, "Rooms");
@@ -500,6 +531,10 @@ namespace Descender.EditorTools.Paradise
             foreach (var hazard in zone.hazards)
             {
                 BuildHazard(hazard, hazardGroup, art);
+            }
+            foreach (var barrier in zone.barriers)
+            {
+                BuildBarrier(barrier, barrierGroup, art);
             }
             // The garden's saves are marble shrines; the greybox keeps the prototype's.
             var catalog =
@@ -1110,6 +1145,32 @@ namespace Descender.EditorTools.Paradise
             visual.sortingOrder = -70;
         }
 
+        /// <summary>
+        /// A light barrier: the LightBarrier component (its cells, colliders and shimmer are
+        /// made in Awake) with the greybox's cell sprite, plus a faint stand-in over the whole
+        /// column so the wall shows in the editor before play.
+        /// </summary>
+        private static void BuildBarrier(ParadiseLayout.Barrier barrier, Transform parent, Art art)
+        {
+            var go = new GameObject(barrier.name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = barrier.at;
+            var wall = go.AddComponent<LightBarrier>();
+            var serialized = new SerializedObject(wall);
+            serialized.FindProperty("height").intValue = barrier.height;
+            serialized.FindProperty("sprite").objectReferenceValue = art.barrierSprite;
+            serialized.FindProperty("material").objectReferenceValue = art.lit;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            var visual = new GameObject("Visual").AddComponent<SpriteRenderer>();
+            visual.transform.SetParent(go.transform, false);
+            visual.transform.localPosition = new Vector3(0.5f, -barrier.height / 2f, 0f);
+            visual.transform.localScale = new Vector3(4f, barrier.height * 4f, 1f);
+            visual.sprite = art.barrierSprite;
+            visual.sharedMaterial = art.lit;
+            visual.color = new Color(1f, 1f, 1f, 0.35f);
+            visual.sortingOrder = 19;
+        }
+
         private static void BuildSave(
             Vector2 at,
             Transform parent,
@@ -1667,12 +1728,10 @@ namespace Descender.EditorTools.Paradise
             EditorBuildSettings.scenes = scenes.ToArray();
         }
 
-        /// <summary>The save shrines in the world's save order: top to bottom, then left to right.</summary>
+        /// <summary>The save shrines in the world's save order: zone by zone, west to east within a zone (D-0010).</summary>
         public static List<Vector2> CheckpointOrder(List<ParadiseLayout.Zone> zones)
         {
-            var all = zones.SelectMany(z => z.saves).ToList();
-            all.Sort((a, b) => a.y != b.y ? b.y.CompareTo(a.y) : a.x.CompareTo(b.x));
-            return all;
+            return zones.SelectMany(z => z.saves.OrderBy(s => s.x)).ToList();
         }
     }
 }
