@@ -121,7 +121,7 @@ hygiene as each production region lands.
 | T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
 | T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
 
-| T-0006 | Prove the Unity port is complete and reads nothing from Godot | in progress | 6 | none | 1 | T-0006 implementation | |
+| T-0006 | Prove the Unity port is complete and reads nothing from Godot | done | 6 | none | 1 | T-0006 implementation | #146 |
 | T-0007 | The Python tools stand without the Godot tree | proposed | 7 | none | 0 | | |
 | T-0008 | Godot-format code and reference copies leave Assets/ | queued | 8 | T-0006, T-0007 | 0 | | |
 | T-0009 | Delete the Godot project | queued | 9 | T-0008 | 0 | | |
@@ -283,7 +283,9 @@ The pre-push hook is installed per clone with `git config core.hooksPath
 tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 (6000.6.8f1) under the Unity Hub folder, or at `UNITY_EDITOR`. It refuses to
 run while the same project folder is open in the editor (`Temp/UnityLockfile`).
-Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`.
+Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. Test runs make no
+sound: the PlayMode assembly's `MuteDuringTests` callback mutes the listener
+for the whole run.
 
 The hook prints its phase, the time elapsed and the previous run's duration,
 and the editor log is `Logs/pre-push.log` in the checkout being pushed. To

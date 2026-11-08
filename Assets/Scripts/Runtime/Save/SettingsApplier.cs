@@ -11,6 +11,23 @@ namespace Descender.Save
     /// </summary>
     public static class SettingsApplier
     {
+        private static bool muted;
+
+        /// <summary>
+        /// Set while the tests run (<c>MuteDuringTests</c> in the PlayMode test assembly turns it on
+        /// for the whole run): the listener stays at zero whatever the settings say, so a test run on
+        /// a developer's machine makes no sound. Off again, the listener takes the settings' volume.
+        /// </summary>
+        public static bool Muted
+        {
+            get => muted;
+            set
+            {
+                muted = value;
+                AudioListener.volume = MasterVolume(SettingsData.Current);
+            }
+        }
+
         public static void Apply(SettingsData settings)
         {
             if (settings == null)
@@ -19,11 +36,17 @@ namespace Descender.Save
             }
             ApplyWindow(settings);
             QualitySettings.vSyncCount = settings.vsync ? 1 : 0;
-            AudioListener.volume = settings.volume;
+            AudioListener.volume = MasterVolume(settings);
             if (Audio.Music.Instance != null)
             {
                 Audio.Music.Instance.ApplyVolume();
             }
+        }
+
+        /// <summary>The listener volume the settings ask for: zero while <see cref="Muted"/>.</summary>
+        public static float MasterVolume(SettingsData settings)
+        {
+            return muted ? 0f : settings.volume;
         }
 
         private static void ApplyWindow(SettingsData settings)

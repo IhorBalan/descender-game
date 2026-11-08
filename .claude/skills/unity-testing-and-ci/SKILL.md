@@ -43,6 +43,11 @@ saves, and never depend on test order. `[Timeout(60000)]` on long ones.
 `LogAssert.Expect(LogType.Warning, ...)` when a warning is the expected
 outcome; an unexpected error log fails the test.
 
+Every run is silent: `MuteDuringTests` in the PlayMode assembly (a
+`[assembly: TestRunCallback]`) sets `SettingsApplier.Muted` for the whole
+run, which holds the `AudioListener` at zero even when `Main.unity` boots
+and applies the saved settings. Do not set `AudioListener.volume` in a test.
+
 ## Running
 
 Editor: `Window > General > Test Runner`, EditMode or PlayMode tab, Run
