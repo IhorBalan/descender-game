@@ -11,9 +11,13 @@ so running it twice is safe.
 """
 import os
 
-import cv2
 import numpy as np
 from PIL import Image
+
+try:
+    import cv2
+except ImportError:  # OpenCV is only needed to run this script, not to import it (check_tools.py).
+    cv2 = None
 
 ROOT = os.path.join(os.path.dirname(__file__), "..", "..", "Assets", "Art", "Paradise")
 NATURE = os.path.join(ROOT, "Kit", "Nature")
