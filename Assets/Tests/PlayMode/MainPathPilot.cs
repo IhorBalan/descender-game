@@ -481,7 +481,10 @@ namespace Descender.Tests.PlayMode
                 }
                 return;
             }
-            if (grounded || velocity.y >= 0f || pressCooldown > 0f)
+            // The take-off press takes a step or two to act, and off a sloping top the ground flag
+            // flickers, so the first frames of a jump can read as a fall with him still on the lip:
+            // no decision until the jump is under way.
+            if (grounded || velocity.y >= 0f || pressCooldown > 0f || airTime < 0.1f)
             {
                 return;
             }
