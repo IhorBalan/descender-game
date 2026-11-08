@@ -40,6 +40,7 @@ namespace Descender.EditorTools.Paradise
             WriteDepthTexture();
             WriteContactShadow();
             WriteCaps();
+            WriteTierArches();
             ParadiseArt.DeriveFlipped(
                 $"{KitRoot}/Nature/island_bottom.png",
                 $"{ParadiseArt.DerivedFolder}/island_bottom_flip.png",
@@ -166,8 +167,8 @@ namespace Descender.EditorTools.Paradise
             // a little of their own colour so they read as leaves, not holes.
             if (art.foreground != null)
             {
-                art.foreground.SetColor("_HazeColor", new Color(0.06f, 0.11f, 0.11f));
-                art.foreground.SetFloat("_HazeAmount", 0.5f);
+                art.foreground.SetColor("_HazeColor", new Color(0.1f, 0.17f, 0.15f));
+                art.foreground.SetFloat("_HazeAmount", 0.34f);
                 EditorUtility.SetDirty(art.foreground);
             }
             // A bright sky needs only a hint of rays.
@@ -176,6 +177,8 @@ namespace Descender.EditorTools.Paradise
             art.water = ParadiseArt.SaveMaterial("Paradise Waterfall", "Descender/Waterfall");
             art.water.SetColor("_Color", new Color(0.92f, 0.97f, 1f, 0.92f));
             EditorUtility.SetDirty(art.water);
+            // Plants answer the garden's wind (GardenWind) each by its kind: see SwayMaterial.
+            SwayVariants.Clear();
             TuneLook(art.look, z);
             return art;
         }
@@ -338,6 +341,21 @@ namespace Descender.EditorTools.Paradise
                 Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, -85, art), p.at.x);
                 ContactShadow(shadows, p.name, p.at, p.scale, art);
             }
+            // Butterflies keep to the flower beds: every other bush or lily clump.
+            var beds = new List<Vector2>();
+            foreach (var p in plan.plants)
+            {
+                if ((p.name == "flower_bush" || p.name.StartsWith("lily")) && Hash(p.at.x, 51f) > 0.5f)
+                {
+                    beds.Add(p.at);
+                }
+            }
+            if (beds.Count > 0)
+            {
+                var butterflies = new GameObject("Butterflies").AddComponent<Butterflies>();
+                butterflies.transform.SetParent(ParadiseArt.Group(root, "Life"), false);
+                butterflies.Configure(beds);
+            }
             foreach (var p in plan.ruins)
             {
                 Vary(Place(props, p.name, p.at, p.scale, p.flip, art.lit, -88, art), p.at.x);
@@ -424,7 +442,7 @@ namespace Descender.EditorTools.Paradise
             }
             var air = ParadiseArt.Group(root, "Air");
             var area = new Rect(zone.xMin, -105f, zone.xMax - zone.xMin, 90f);
-            Air(
+            var pollen = Air(
                 air,
                 "Pollen",
                 art.pollen,
@@ -440,7 +458,8 @@ namespace Descender.EditorTools.Paradise
                 6f,
                 area
             );
-            Air(
+            pollen.SetWindCarry(1f);
+            var petals = Air(
                 air,
                 "Petals",
                 art.petal,
@@ -456,6 +475,9 @@ namespace Descender.EditorTools.Paradise
                 5f,
                 area
             );
+            // Real petals flip and flutter as they fall, never slide flat.
+            petals.SetTumble(0.35f);
+            petals.SetWindCarry(1.6f);
             Air(
                 air,
                 "Motes",
@@ -671,6 +693,16 @@ namespace Descender.EditorTools.Paradise
             {
                 return;
             }
+            // Sun and cloud shadows over the whole region.
+            if (root.GetComponent<SunAndClouds>() == null)
+            {
+                root.AddComponent<SunAndClouds>();
+            }
+            // Flocks crossing the far sky now and then.
+            if (root.GetComponent<DistantBirds>() == null)
+            {
+                root.AddComponent<DistantBirds>();
+            }
             var old = root.transform.Find("GoldenTree");
             if (old != null)
             {
@@ -701,7 +733,7 @@ namespace Descender.EditorTools.Paradise
                 Vector3.one
             );
             g.transform.localScale = Vector3.one;
-            g.color = new Color(1f, 1f, 1f, 0.3f);
+            g.color = new Color(1f, 1f, 1f, 0.14f);
         }
 
         // ------------------------------------------------------------------ depth
@@ -1284,6 +1316,70 @@ namespace Descender.EditorTools.Paradise
             importer.SaveAndReimport();
         }
 
+        /// <summary>
+        /// The arches for an aqueduct's lower tier: arch_span and arch_span_wide without the
+        /// walkway band on top (its grass and lip), so a tier reads as an arcade carrying the
+        /// arcade above, not a floating stretch of path. Same size, pivot and density.
+        /// </summary>
+        private static void WriteTierArches()
+        {
+            foreach (var name in new[] { "arch_span", "arch_span_wide" })
+            {
+                var sourcePath = $"{KitRoot}/Architecture/{name}.png";
+                if (!File.Exists(sourcePath))
+                {
+                    continue;
+                }
+                var importer = AssetImporter.GetAtPath(sourcePath) as TextureImporter;
+                var ppu = importer != null ? importer.spritePixelsPerUnit : 64f;
+                var pivot = new Vector2(0.5f, 0f);
+                if (importer != null)
+                {
+                    var read = new TextureImporterSettings();
+                    importer.ReadTextureSettings(read);
+                    pivot = read.spritePivot;
+                }
+                var source = new Texture2D(2, 2, TextureFormat.RGBA32, false);
+                source.LoadImage(File.ReadAllBytes(sourcePath));
+                var h = source.height;
+                // The walkway band is the top 9 percent (the walkable row is at 6); cut it with a soft edge.
+                var cut = Mathf.RoundToInt(h * 0.09f);
+                var soft = Mathf.Max(2, Mathf.RoundToInt(h * 0.02f));
+                for (var y = h - cut - soft; y < h; y++)
+                {
+                    var fromTop = h - 1 - y;
+                    var keep = Mathf.Clamp01((fromTop - cut) / (float)soft);
+                    for (var x = 0; x < source.width; x++)
+                    {
+                        var c = source.GetPixel(x, y);
+                        c.a *= keep;
+                        source.SetPixel(x, y, c);
+                    }
+                }
+                var path = $"{ParadiseArt.DerivedFolder}/{name}_tier.png";
+                File.WriteAllBytes(path, source.EncodeToPNG());
+                Object.DestroyImmediate(source);
+                AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
+                var tierImporter = (TextureImporter)AssetImporter.GetAtPath(path);
+                tierImporter.textureType = TextureImporterType.Sprite;
+                tierImporter.spriteImportMode = SpriteImportMode.Single;
+                tierImporter.spritePixelsPerUnit = ppu;
+                var settings = new TextureImporterSettings();
+                tierImporter.ReadTextureSettings(settings);
+                settings.spriteMeshType = SpriteMeshType.FullRect;
+                settings.spriteAlignment = (int)SpriteAlignment.Custom;
+                settings.spritePivot = pivot;
+                tierImporter.SetTextureSettings(settings);
+                tierImporter.alphaIsTransparency = true;
+                tierImporter.wrapMode = TextureWrapMode.Clamp;
+                tierImporter.filterMode = FilterMode.Bilinear;
+                tierImporter.mipmapEnabled = false;
+                tierImporter.maxTextureSize = ParadiseArt.MaxTextureSize;
+                tierImporter.textureCompression = TextureImporterCompression.CompressedHQ;
+                tierImporter.SaveAndReimport();
+            }
+        }
+
         /// <summary>Coverage of a pixel in a rounded corner of the given radius, with a one-pixel soft edge.</summary>
         private static float Corner(float u, float v, float radius)
         {
@@ -1462,6 +1558,7 @@ namespace Descender.EditorTools.Paradise
             ParadiseArt.ZoneArt art
         )
         {
+            material = SwayMaterial(name, material, art);
             var r = ParadiseArt.Sprite(parent, name, Get(name), material, order, at, Vector3.one * scale);
             r.flipX = flip;
             if (Sprites.TryGetValue(name + "_glow", out var glow))
@@ -1479,6 +1576,119 @@ namespace Descender.EditorTools.Paradise
                 g.flipX = flip;
             }
             return r;
+        }
+
+        private static readonly Dictionary<string, Material> SwayVariants = new Dictionary<string, Material>();
+
+        /// <summary>
+        /// The material a garden piece sways with, by what it is, all on the Sprite Lit Sway
+        /// shader so they batch (ParadiseSway.hlsl, driven by GardenWind): lilies, ferns and
+        /// grass light and quick; bushes and hedges a little stiffer; blossom trees slow and
+        /// heavy; ivy, vines and wisteria hanging from their top, rippling down the strands;
+        /// the banner fluttering like cloth; lanterns swinging a touch. Each kind is a copy of
+        /// the material it would have had (its haze kept), saved beside it; anything else,
+        /// or a material on another shader, is returned as it is.
+        /// </summary>
+        public static Material SwayMaterial(string name, Material material, ParadiseArt.ZoneArt art)
+        {
+            if (material == null || art.plant == null)
+            {
+                return material;
+            }
+            // Banners and lanterns were drawn plain lit; they move now, so they take the plant shader.
+            var basis = material == art.lit && (name == "banner" || name == "lantern") ? art.plant : material;
+            if (basis.shader != art.plant.shader)
+            {
+                return material;
+            }
+            var kind = SwayKindOf(name);
+            if (kind == null)
+            {
+                return material;
+            }
+            var key = basis.name + " " + kind;
+            if (SwayVariants.TryGetValue(key, out var variant) && variant != null)
+            {
+                return variant;
+            }
+            variant = ParadiseArt.SaveMaterial(key, basis.shader.name);
+            variant.CopyPropertiesFromMaterial(basis);
+            // amount (units at the tip per unit wind, radians when hanging), natural frequency
+            // (rad/s), variation, flutter (or ripple), flutter speed (times the frequency), lag down
+            // the length (rad/unit), push at the tip; hangs from its pivot.
+            switch (kind)
+            {
+                case "Grass":
+                    SetSway(variant, 0.09f, 6.5f, 0.8f, 0.012f, 1.6f, 0.4f, 0.35f, false);
+                    break;
+                case "Shrub":
+                    SetSway(variant, 0.06f, 4f, 0.7f, 0.012f, 2.2f, 0.4f, 0.25f, false);
+                    break;
+                case "Tree":
+                    SetSway(variant, 0.12f, 1.5f, 0.6f, 0.01f, 4f, 0.4f, 0f, false);
+                    break;
+                case "Ivy":
+                    SetSway(variant, 0.04f, 2.2f, 0.7f, 0.05f, 2.6f, 0.45f, 0.3f, true);
+                    break;
+                case "Cloth":
+                    SetSway(variant, 0.06f, 2.4f, 0.6f, 0.09f, 3.5f, 0.6f, 0.25f, true);
+                    break;
+                default: // Lantern: a rigid pendulum.
+                    SetSway(variant, 0.03f, 2.9f, 0.5f, 0f, 1f, 0.02f, 0.15f, true);
+                    break;
+            }
+            EditorUtility.SetDirty(variant);
+            SwayVariants[key] = variant;
+            return variant;
+        }
+
+        private static string SwayKindOf(string name)
+        {
+            if (name.StartsWith("lily") || name.StartsWith("grass") || name == "fern")
+            {
+                return "Grass";
+            }
+            if (name == "blossom_tree")
+            {
+                return "Tree";
+            }
+            if (name.StartsWith("ivy") || name.StartsWith("vine") || name == "wisteria_drape")
+            {
+                return "Ivy";
+            }
+            if (name == "banner")
+            {
+                return "Cloth";
+            }
+            if (name == "lantern")
+            {
+                return "Lantern";
+            }
+            return name.Contains("bush") || name.Contains("hedge") ? "Shrub" : null;
+        }
+
+        private static void SetSway(
+            Material material,
+            float amount,
+            float frequency,
+            float variation,
+            float flutter,
+            float flutterSpeed,
+            float lag,
+            float push,
+            bool hangs
+        )
+        {
+            material.SetFloat("_SwayAmount", amount);
+            material.SetFloat("_SwaySpeed", frequency);
+            material.SetFloat("_SwayScale", variation);
+            material.SetFloat("_SwayFlutter", flutter);
+            material.SetFloat("_SwayFlutterSpeed", flutterSpeed);
+            material.SetFloat("_SwayLag", lag);
+            material.SetFloat("_SwayHang", hangs ? 1f : 0f);
+            material.SetFloat("_PushStrength", push);
+            material.SetFloat("_PushRadius", hangs ? 1.2f : 1.3f);
+            material.SetFloat("_SwayUseObjectY", 0f);
         }
 
         private const string ContactShadowPath = ParadiseArt.DerivedFolder + "/contact_shadow.png";
@@ -1571,7 +1781,10 @@ namespace Descender.EditorTools.Paradise
             // The texture's pivot is its top: the fall hangs from its lip, stretched to its foot.
             r.transform.position = new Vector3(w.x, w.top, 0f);
             r.transform.localScale = new Vector3(w.width / tex.bounds.size.x, height / tex.bounds.size.y, 1f);
-            r.gameObject.AddComponent<global::Descender.World.Paradise.Waterfall>().Configure(4f, 1.2f);
+            // A fall with no pool goes down into the clouds: it thins into mist over its last stretch.
+            var intoClouds = !w.foam;
+            var thinOver = Mathf.Min(12f, height * 0.4f);
+            r.gameObject.AddComponent<global::Descender.World.Paradise.Waterfall>().Configure(1f, intoClouds, thinOver);
             if (Sprites.ContainsKey("waterfall_spout"))
             {
                 // The carved channel mouth the water leaves from.
@@ -1588,30 +1801,106 @@ namespace Descender.EditorTools.Paradise
                     art
                 );
             }
+            // The water's look lives in its shaders' defaults: each build puts the materials
+            // back on them (the sheet keeps the zone's tint), so no stale value outlives a retune.
+            void Defaults(Material m)
+            {
+                var fresh = new Material(m.shader);
+                m.CopyPropertiesFromMaterial(fresh);
+                Object.DestroyImmediate(fresh);
+                EditorUtility.SetDirty(m);
+            }
+            Material Water(string name, string shader)
+            {
+                var m = ParadiseArt.SaveMaterial(name, shader);
+                Defaults(m);
+                return m;
+            }
+            var tint = art.water.GetColor("_Color");
+            Defaults(art.water);
+            art.water.SetColor("_Color", tint);
+            var droplets = Water("Paradise Water Droplets", "Descender/Water Spray");
+            droplets.SetFloat("_Round", 1f);
+            var puffs = Water("Paradise Water Puff", "Descender/Water Spray");
+            puffs.SetTexture("_MainTex", Get("mist_soft").texture);
+            puffs.SetFloat("_Round", 0f);
+            var mist = Water("Paradise Water Mist", "Descender/Water Mist");
+            var spray = new GameObject("Spray");
+            spray.transform.SetParent(parent, false);
             if (w.foam)
             {
-                Place(
+                // The pool on the deck where it lands: foam heaped under the fall, rings
+                // spreading across the water. Low, so the deck stays readable underfoot, and
+                // behind the deck's railing and plants, as the fall is.
+                const float poolHeight = 1.8f;
+                const float ground = 0.5f;
+                var poolWidth = w.width * 4.4f;
+                var pool = ParadiseArt.Sprite(
                     parent,
-                    "waterfall_foam",
-                    new Vector2(w.x, w.bottom - 0.2f),
-                    Mathf.Clamp(w.width / 2.5f, 0.6f, 1.3f),
-                    false,
-                    art.unlit,
-                    -86,
-                    art
+                    "Pool",
+                    tex,
+                    Water("Paradise Water Foam", "Descender/Water Foam"),
+                    -95,
+                    new Vector3(w.x, w.bottom - ground + poolHeight, 0f),
+                    new Vector3(poolWidth / tex.bounds.size.x, poolHeight / tex.bounds.size.y, 1f)
                 );
-                Mist(parent, new Vector2(w.x, w.bottom + 0.4f), 0.7f, art, -84);
+                pool.gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
+                    .Configure(new Vector4(w.width * 0.5f, ground, 0f, 0f));
+                Mist(parent, new Vector2(w.x, w.bottom + 0.1f), w.width * 0.6f, 3.2f, 0.34f, mist, -84);
+                spray.transform.position = new Vector3(w.x, w.bottom + 0.05f, 0f);
             }
-            Mist(parent, new Vector2(w.x, w.top - 0.3f), 0.4f, art, -104);
+            else
+            {
+                // Into the clouds: a tall plume over the stretch where the water thins away,
+                // behind the play layer, veiling the fall's end into the sea of cloud.
+                Mist(
+                    parent,
+                    new Vector2(w.x, w.bottom + thinOver * 0.2f),
+                    w.width * 0.8f,
+                    thinOver * 1.1f,
+                    0.5f,
+                    mist,
+                    -104
+                );
+                spray.transform.position = new Vector3(w.x, w.bottom + thinOver * 0.45f, 0f);
+            }
+            spray
+                .AddComponent<global::Descender.World.Paradise.WaterfallSpray>()
+                .Configure(droplets, puffs, w.width, intoClouds, thinOver, w.foam ? -94 : -104);
         }
 
-        private static void Mist(Transform parent, Vector2 at, float scale, ParadiseArt.ZoneArt art, int order)
+        /// <summary>
+        /// A plume of spray mist rising from `source` (its middle, `halfWidth` either side),
+        /// billowing up `rise` units and leaning downwind, at most `alpha` dense.
+        /// </summary>
+        private static void Mist(
+            Transform parent,
+            Vector2 source,
+            float halfWidth,
+            float rise,
+            float alpha,
+            Material material,
+            int order
+        )
         {
-            var r = ParadiseArt.Sprite(parent, "Mist", Get("mist_soft"), art.unlit, order, at, Vector3.one * scale);
-            r.color = new Color(1f, 1f, 1f, 0.45f);
+            var tex = Get("waterfall_tex");
+            const float below = 0.8f;
+            var size = new Vector2(halfWidth * 2f + rise * 1.7f + 1f, rise + below + 0.6f);
+            var r = ParadiseArt.Sprite(
+                parent,
+                "Mist",
+                tex,
+                material,
+                order,
+                new Vector3(source.x + rise * 0.15f, source.y - below + size.y, 0f),
+                new Vector3(size.x / tex.bounds.size.x, size.y / tex.bounds.size.y, 1f)
+            );
+            r.color = new Color(1f, 1f, 1f, alpha);
+            r.gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
+                .Configure(new Vector4(halfWidth, below, rise, -rise * 0.15f));
         }
 
-        private static void Air(
+        private static RegionParticles Air(
             Transform parent,
             string name,
             Sprite sprite,
@@ -1630,8 +1919,9 @@ namespace Descender.EditorTools.Paradise
         {
             var go = new GameObject(name);
             go.transform.SetParent(parent, false);
-            go.AddComponent<RegionParticles>()
-                .Configure(sprite, amount, color, life, dir, spread, speed, size, spin, sway, material, area);
+            var particles = go.AddComponent<RegionParticles>();
+            particles.Configure(sprite, amount, color, life, dir, spread, speed, size, spin, sway, material, area);
+            return particles;
         }
 
         // ---------------------------------------------------------------- columns
@@ -1692,10 +1982,11 @@ namespace Descender.EditorTools.Paradise
                 var intoClouds = Mathf.Min(a.ground, b.ground) <= ParadiseGreybox.CloudSea + 0.01f;
                 if (groundLevel && !intoClouds && spring - a.ground > 8f)
                 {
+                    var tierName = (wide ? "arch_span_wide" : "arch_span") + "_tier";
                     var tier = ParadiseArt.Sprite(
                         parent,
                         $"Tier{i}",
-                        sprite,
+                        Sprites.TryGetValue(tierName, out var tierSprite) ? tierSprite : sprite,
                         art.lit,
                         -118 + (i % 2),
                         new Vector3(a.x, a.ground + 3.2f, 0f),

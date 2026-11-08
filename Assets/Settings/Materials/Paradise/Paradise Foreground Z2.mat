@@ -35,18 +35,22 @@ Material:
     m_Floats:
     - PixelSnap: 0
     - _EnableExternalAlpha: 0
-    - _HazeAmount: 0.5
+    - _HazeAmount: 0.34
     - _PushRadius: 2
     - _PushStrength: 0.3
     - _SwayAmount: 0.1
+    - _SwayFlutter: 0
+    - _SwayFlutterSpeed: 2.5
+    - _SwayHang: 0
     - _SwayHeight: 1
+    - _SwayLag: 0.4
     - _SwayScale: 0.6
     - _SwaySpeed: 1.1
     - _SwayUseObjectY: 0
     - _ZWrite: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _HazeColor: {r: 0.06, g: 0.11, b: 0.11, a: 1}
+    - _HazeColor: {r: 0.1, g: 0.17, b: 0.15, a: 1}
     - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
