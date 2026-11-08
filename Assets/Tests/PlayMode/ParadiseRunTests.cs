@@ -130,8 +130,26 @@ namespace Descender.Tests.PlayMode
             {
                 yield return null;
             }
+            var trace = new Queue<string>();
+            var lastLeg = -1;
             while (!pilot.Done && pilot.Failure == null)
             {
+                if (pilot.LegIndex != lastLeg)
+                {
+                    lastLeg = pilot.LegIndex;
+                    trace.Enqueue($"[{elapsed:0.00}] leg {lastLeg + 1}: {pilot.Current}");
+                }
+                trace.Enqueue(
+                    $"[{elapsed:0.00}] at ({hero.transform.position.x:0.00}, {hero.transform.position.y:0.00})"
+                        + $" v ({hero.Velocity.x:0.0}, {hero.Velocity.y:0.0}) {hero.State}"
+                        + $"{(hero.IsGrounded ? " grounded" : "")}{(hero.Talking ? " talking" : "")}"
+                        + $" move {input.MoveX:0} jump {(input.JumpPressed ? "press" : input.JumpHeld ? "held" : "-")}"
+                        + $"{(input.DashPressed ? " dash" : "")}"
+                );
+                while (trace.Count > 120)
+                {
+                    trace.Dequeue();
+                }
                 if (box.IsOpen)
                 {
                     for (var i = 0; i < 200 && box.IsOpen; i++)
@@ -169,6 +187,10 @@ namespace Descender.Tests.PlayMode
                 + $"{pilot.Dashes} dashes, {pilot.StuckJumps} unplanned hops, {pilot.Retries} retried jumps; "
                 + $"{played.Count} dialogues: {string.Join(", ", played)}.";
             Debug.Log(report);
+            if (pilot.Failure != null)
+            {
+                Debug.Log("Paradise run, the last frames before the failure:\n" + string.Join("\n", trace));
+            }
             Assert.That(pilot.Failure, Is.Null, report);
             Assert.That(pilot.Done, Is.True, report);
             Assert.That(hero.transform.position.x, Is.GreaterThanOrEqualTo(GateX - 1f), report);

@@ -456,12 +456,7 @@ namespace Descender.EditorTools.Paradise
         /// points where their heights are closest when they overlap (false). The scripted
         /// playtest (ParadiseRunTests) aims its jumps with the same points the rules measure.
         /// </summary>
-        public static bool Transfer(
-            List<Vector2> from,
-            List<Vector2> onto,
-            out Vector2 takeoff,
-            out Vector2 landing
-        )
+        public static bool Transfer(List<Vector2> from, List<Vector2> onto, out Vector2 takeoff, out Vector2 landing)
         {
             var fromWest = from[0];
             var fromEast = from[from.Count - 1];

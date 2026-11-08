@@ -210,9 +210,10 @@ namespace Descender.Tests.PlayMode
                 var next = stops[i + 1];
                 var takeoff = exits[i];
                 var landing = entries[i + 1];
-                var dir = Mathf.Abs(landing.x - takeoff.x) > 0.01f
-                    ? (landing.x > takeoff.x ? 1 : -1)
-                    : (takeoff.x >= entries[i].x ? 1 : -1);
+                var dir =
+                    Mathf.Abs(landing.x - takeoff.x) > 0.01f
+                        ? (landing.x > takeoff.x ? 1 : -1)
+                        : (takeoff.x >= entries[i].x ? 1 : -1);
                 Kind kind;
                 if (next.pod != null)
                 {
