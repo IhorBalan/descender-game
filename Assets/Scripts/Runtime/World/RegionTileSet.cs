@@ -4,10 +4,10 @@ namespace Descender.World
 {
     /// <summary>
     /// A region's tiles: the 256 sprites of its 64 px atlas (Assets/Art/Tiles/&lt;key&gt;.png,
-    /// sliced by the import script, index = row * 16 + column), the kind of each
+    /// sliced in its .meta, index = row * 16 + column), the kind of each
     /// (TileKind, from the Godot TileSet's custom data), the compact cell data of its
     /// four layers and the materials the tilemaps draw with. One asset per region
-    /// under Assets/Data/Regions/Tiles, written by tools/unity/import_godot_regions.py.
+    /// under Assets/Data/Regions/Tiles, a committed asset edited in Unity.
     /// </summary>
     [CreateAssetMenu(menuName = "Descender/Region Tile Set", fileName = "region_tiles")]
     public sealed class RegionTileSet : ScriptableObject

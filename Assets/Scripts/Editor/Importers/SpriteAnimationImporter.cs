@@ -13,8 +13,8 @@ namespace Descender.EditorTools.Importers
     /// strip's .meta slices, at the spec's fps, looping as it says) under
     /// Assets/Art/Sprites/&lt;name&gt;/Animations, and an AnimatorController with one
     /// state per clip, so code plays an animation by name as the Godot game did.
-    /// The strips themselves are sliced by tools/unity/import_godot_assets.py, which
-    /// writes their .meta from the same spec.
+    /// The strips themselves are sliced in their committed .meta files, which
+    /// tools/unity/unity_meta.py writes from the same spec.
     /// </summary>
     public static class SpriteAnimationImporter
     {

@@ -7,10 +7,11 @@ description: Shaders and effects in this project: Shader Graph with the Sprite L
 
 ## Shader Graph
 
-The Godot `canvas_item` shaders under `godot_assets/shaders/` (copied to
-`Assets/Shaders/Godot/` as reference) are rewritten as Shader Graphs
+The prototype's Godot `canvas_item` shaders were rewritten as Shader Graphs
 under `Assets/Shaders/`, `Universal` target, `Material: Sprite Lit` (takes
-light and the `_NormalMap`) or `Sprite Unlit` (glow, sky):
+light and the `_NormalMap`) or `Sprite Unlit` (glow, sky). The originals are
+no longer in the working tree; read them from history at the tag
+`godot-last` (`git show godot-last:godot_assets/shaders/<name>.gdshader`):
 
 | Godot shader | Graph | Target |
 |---|---|---|

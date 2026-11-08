@@ -4,8 +4,8 @@ using System.Collections.Generic;
 namespace Descender.World
 {
     /// <summary>
-    /// The compact tile layout of a region, as tools/unity/import_godot_regions.py
-    /// writes it next to the region scene: a header line, then one line per layer,
+    /// The compact tile layout of a region, a committed text asset next to the
+    /// region scene: a header line, then one line per layer,
     /// "layer &lt;Name&gt; &lt;count&gt; &lt;base64&gt;", the base64 holding little-endian
     /// int16 triples (x, y, tile) in Godot cell coordinates (y down from the region's
     /// top row). Kept this small because the twelve regions hold 200k cells, which

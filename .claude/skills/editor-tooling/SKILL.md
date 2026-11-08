@@ -62,9 +62,6 @@ update `SCRIPT_GUIDS` in the Python and the `m_Script` lines, or do the
 move inside Unity, which rewrites the references. The script never
 overwrites a `.meta` or `.asset` that exists.
 
-`TresParser` (editor, tested) reads the Godot `.tres` text format for
-anything that still needs to pull numbers out of the old resources.
-
 ## Inspectors
 
 - Prefer `[Header]`, `[Tooltip]`, `[Range]`, `[Min]` and `OnValidate` over
@@ -91,4 +88,4 @@ enemy patrol extents; pixel-unit conversions through
 Importers are tested in EditMode (`Descender.Tests.EditMode` references
 `Descender.Editor`): generate into `Assets/Tests/Temp/` and delete in
 `[TearDown]` with `AssetDatabase.DeleteAsset`. Pure helpers
-(`PropPrefabImporter.ToTitle`, `TresParser`) are tested directly.
+(`PropPrefabImporter.ToTitle`) are tested directly.

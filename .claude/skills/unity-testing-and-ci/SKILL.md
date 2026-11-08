@@ -10,7 +10,7 @@ description: Tests and CI for the Unity project: the Unity Test Framework EditMo
 - `Assets/Tests/EditMode/` (`Descender.Tests.EditMode`, Editor only):
   anything with no scene: the static state and data classes, `DialogueData`
   against the real JSON (`DialogueFileTests`), profiles loaded through
-  `AssetDatabase`, the editor importers, `TresParser`, save round trips.
+  `AssetDatabase`, the editor importers, save round trips.
   Fast; most tests live here. They may reference `Descender.Editor`.
 - `Assets/Tests/PlayMode/` (`Descender.Tests.PlayMode`): tests that need a
   running scene: load `Main` + a region, spawn the hero, step physics,
