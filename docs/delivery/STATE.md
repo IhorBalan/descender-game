@@ -41,7 +41,7 @@ Goal: all seven zones exist and the region plays west to east in one run.
   door works, every beat fires, the checker is green, and a run is on the
   playtest list.
 
-### MG. Unity-only repository (runs alongside M1)
+### MG. Unity-only repository (done 2026-11-08)
 
 Prove the Unity assets are complete and self-contained, point the remaining
 tools at `Assets/`, delete the Godot project (`project.godot`, `scenes/`,
@@ -50,7 +50,10 @@ tools at `Assets/`, delete the Godot project (`project.godot`, `scenes/`,
 the README and architecture docs for one project. Done when: the
 repository tests `TheRepositoryHoldsNoGodotProject` and
 `UnityCodeNamesNoGodotPath` are green, all Unity tests pass, and the docs
-describe a Unity-only repository.
+describe a Unity-only repository. Done: T-0007 to T-0010 merged (#148 to
+#151); the Godot prototype is in history at the tag `godot-last`
+(24035cf). Still open, Ihor's: the GitHub repository description and
+topics say Godot.
 
 ### M2. Paradise art, zones 3 and 4
 
@@ -118,14 +121,14 @@ hygiene as each production region lands.
 | T-0001 | Paradise construction-rule checker | done | 1 | none | 1 | T-0001 implementation | #139 |
 | T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | done | 2 | none | 1 | T-0002 implementation | #140 |
 | T-0003 | Beats of zones 1 and 2 as layout placements | done | 3 | T-0001, T-0002 | 1 | T-0003 implementation | #145 |
-| T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
-| T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
+| T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | done | 4 | T-0001, T-0003 | 1 | Work through the roadmap tasks | #152 |
+| T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | in review | 5 | T-0004 | 1 | Work through the roadmap tasks | #153 |
 
 | T-0006 | Prove the Unity port is complete and reads nothing from Godot | done | 6 | none | 1 | T-0006 implementation | #146 |
-| T-0007 | The Python tools stand without the Godot tree | proposed | 7 | none | 0 | | |
-| T-0008 | Godot-format code and reference copies leave Assets/ | queued | 8 | T-0006, T-0007 | 0 | | |
-| T-0009 | Delete the Godot project | queued | 9 | T-0008 | 0 | | |
-| T-0010 | The docs describe one Unity project | queued | 10 | T-0009 | 0 | | |
+| T-0007 | The Python tools stand without the Godot tree | done | 7 | none | 1 | Continue the Godot removal milestone | #148 |
+| T-0008 | Godot-format code and reference copies leave Assets/ | done | 8 | T-0006, T-0007 | 1 | Continue the Godot removal milestone | #149 |
+| T-0009 | Delete the Godot project | done | 9 | T-0008 | 1 | Continue the Godot removal milestone | #150 |
+| T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 2) and
 `planning/godot-removal-tasks.md` (revision 2, MG). Playtest:
@@ -266,6 +269,23 @@ follow in order.
   run it; the GUIDs are derived from paths, so the output lands on the same
   ids.
 
+### D-0010: checkpoints are numbered by zone, then west to east
+
+- **Decided** (2026-11-08, coordinator, folded into T-0005): `Sync world from
+  scenes` and `ParadiseGreybox.CheckpointOrder` number the save shrines zone
+  by zone (the zones' order in `ParadiseLayout.All()`), west to east within a
+  zone, instead of top to bottom then left to right.
+- **Why**: the y-then-x order interleaved every new zone's shrines with the
+  older ones, so building zones 3 and 4 (#152) renumbered the shrines of
+  zones 1 and 2 in their scenes, and every later zone would have done the
+  same to every scene before it and to the checkpoint index saved in a slot.
+  By zone, a new zone only appends.
+- **Alternative**: keep the world order and accept the churn in older
+  scenes. Rejected: the task rule "scene diffs of earlier zones are empty"
+  is worth more than a top-to-bottom numbering nothing reads.
+- **Undo**: restore the sort in `SyncWorld` and `CheckpointOrder` and run the
+  sync; saves made in the meantime point at other shrines.
+
 ## Verification
 
 What a task must pass before it merges, and how a thread runs it.
@@ -369,3 +389,22 @@ been played and its feedback is in.
   Tobiah's token in the root hollow below her can be examined, reads its
   lines and is gone (`item:token` set). No white, pink or orange beat flags
   remain at those three spots.
+- **T-0004, zones 3 and 4.** In `ParadiseMain.unity`, after New Game: run
+  from the start through the Great Vines to the Tallied Fields without a
+  jump the hero cannot make (the branch runs and the trunk climbs by pod);
+  the thorns on the moss floors hurt and are the only red thing; the feather
+  at the top of the Crown Vine grants Wings and the descent off the top into
+  zone 4 flows on double jumps; the 7-tile stream gaps need Wings; the
+  ledger page in the keeper's hut can be examined; Ithuriel talks by the
+  Field Shrine (and says something else when asked again); the shrines at
+  about x 1,750, 2,250, 2,580, 3,150 and 3,650 save.
+- **T-0005, zones 5 to 7, the whole run.** In `ParadiseMain.unity`, after
+  New Game: a straight run from the start to the Low Gate's outer door,
+  timed against the 20-minute target (7,500 tiles at 6.25 tiles/s is 20
+  minutes of running); the terraces climb in steps the hero makes; the two
+  light barriers on the shortcut ledges stop him until the light dash at x
+  4,700, after which he dashes through one and across the 9-tile gaps; the
+  tally stone, prayer card and glove can be examined; the `makinghouse`
+  lines play where the door comes into view; the basin shard is in the
+  drain below the pipes; the cliff ledges descend without a killing fall;
+  the `gate` lines play at the outer door and the floor there is closed.

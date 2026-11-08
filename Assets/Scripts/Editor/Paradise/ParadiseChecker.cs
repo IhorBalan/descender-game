@@ -8,9 +8,10 @@ namespace Descender.EditorTools.Paradise
     /// Checks the Paradise layout against the construction rules (ParadiseRules, from
     /// docs/design/paradise.md, section 2) without a scene: it walks each zone's main
     /// path over the top edges of its ground, decks and ledges and its bounce pods, and
-    /// reports every jump the hero cannot make, every killing fall and every stretch
-    /// without a save shrine, as one line each naming the zone, the elements and the
-    /// measured number. ParadiseGreybox refuses to build a zone it reports on, and
+    /// reports every jump the hero cannot make, every killing fall, every thorn patch
+    /// or light barrier lying across the path and every stretch without a save
+    /// shrine, as one line each naming the zone, the elements and the measured
+    /// number. ParadiseGreybox refuses to build a zone it reports on, and
     /// ParadiseCheckerTests keeps the real layout clean.
     ///
     /// Measured on the layout's own points joined by straight lines (the built curves
@@ -48,7 +49,7 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>
         /// One zone's violations: a main path that is missing or names something unknown,
-        /// gaps, steps and drops along it, and save shrines standing off it.
+        /// gaps, steps and drops along it, save shrines standing off it, and hazards across it.
         /// </summary>
         public static List<string> CheckZone(ParadiseLayout.Zone zone)
         {
@@ -113,7 +114,112 @@ namespace Descender.EditorTools.Paradise
                     );
                 }
             }
+            violations.AddRange(CheckHazards(zone));
+            violations.AddRange(CheckBarriers(zone));
             return violations;
+        }
+
+        /// <summary>
+        /// Light barriers across the main path before the light dash: a barrier's column of
+        /// cells meeting the top edge of a main-path surface at an x where the hero cannot
+        /// dash yet (ParadiseLayout.Grants). After the dash a barrier on the path is a door he
+        /// dashes through; before it, a wall he cannot pass.
+        /// </summary>
+        public static List<string> CheckBarriers(ParadiseLayout.Zone zone)
+        {
+            var violations = new List<string>();
+            var where = $"Zone {zone.number}";
+            var dashX = float.PositiveInfinity;
+            foreach (var grant in ParadiseLayout.Grants)
+            {
+                if (grant.ability == Descender.Save.Ability.LightDash)
+                {
+                    dashX = grant.x;
+                }
+            }
+            foreach (var barrier in zone.barriers)
+            {
+                if (barrier.at.x >= dashX)
+                {
+                    continue;
+                }
+                foreach (var name in zone.mainPath)
+                {
+                    var element = Resolve(zone, name);
+                    if (element != null && element.pod == null && Crosses(element.line, barrier.Rect))
+                    {
+                        violations.Add(
+                            $"{where}: barrier '{barrier.name}' at x {Tiles(barrier.at.x)} crosses the main path "
+                                + $"on '{name}' before the light dash (x {Tiles(dashX)})."
+                        );
+                    }
+                }
+            }
+            return violations;
+        }
+
+        /// <summary>
+        /// Hazards lying across the main path: a thorn rect that meets the top edge of a
+        /// main-path surface (its walkable slopes; the walls beside it do not count, thorns
+        /// on a trunk's face are beside the path). Thorns belong beside the path, on ground
+        /// the straight run does not cross.
+        /// </summary>
+        public static List<string> CheckHazards(ParadiseLayout.Zone zone)
+        {
+            var violations = new List<string>();
+            var where = $"Zone {zone.number}";
+            foreach (var hazard in zone.hazards)
+            {
+                foreach (var name in zone.mainPath)
+                {
+                    var element = Resolve(zone, name);
+                    if (element != null && element.pod == null && Crosses(element.line, hazard.rect))
+                    {
+                        violations.Add(
+                            $"{where}: hazard '{hazard.name}' at x {Tiles(hazard.rect.xMin)} to {Tiles(hazard.rect.xMax)} "
+                                + $"lies across the main path on '{name}'."
+                        );
+                    }
+                }
+            }
+            return violations;
+        }
+
+        /// <summary>
+        /// The top edge of the zone's surface called `name` (ground, deck or ledge), west to
+        /// east; null for a pod or an unknown name.
+        /// </summary>
+        public static List<Vector2> SurfaceLine(ParadiseLayout.Zone zone, string name)
+        {
+            var element = Resolve(zone, name);
+            return element?.line;
+        }
+
+        /// <summary>Whether a rect meets any walkable (non-wall) segment of a line.</summary>
+        private static bool Crosses(List<Vector2> line, Rect rect)
+        {
+            for (var i = 0; i + 1 < line.Count; i++)
+            {
+                var a = line[i];
+                var b = line[i + 1];
+                if (b.x - a.x <= Epsilon)
+                {
+                    continue;
+                }
+                var west = Mathf.Max(a.x, rect.xMin);
+                var east = Mathf.Min(b.x, rect.xMax);
+                if (west > east + Epsilon)
+                {
+                    continue;
+                }
+                var yWest = Mathf.Lerp(a.y, b.y, (west - a.x) / (b.x - a.x));
+                var yEast = Mathf.Lerp(a.y, b.y, (east - a.x) / (b.x - a.x));
+                if (Mathf.Max(yWest, yEast) >= rect.yMin - Epsilon && Mathf.Min(yWest, yEast) <= rect.yMax + Epsilon)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         /// <summary>
