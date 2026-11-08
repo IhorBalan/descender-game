@@ -221,9 +221,15 @@ namespace Descender.Tests.PlayMode
                 Kind kind;
                 if (next.pod != null)
                 {
+                    // A pod throws him straight up, so he has to drift onto the landing while he
+                    // rises: aim inside the landing surface, on the side of it the pod is nearest.
                     kind = Kind.Pod;
                     takeoff = next.pod.at;
-                    dir = landing.x >= takeoff.x ? 1 : -1;
+                    var west = Mathf.Min(next.line[0].x, next.line[next.line.Count - 1].x);
+                    var east = Mathf.Max(next.line[0].x, next.line[next.line.Count - 1].x);
+                    dir = (west + east) * 0.5f >= takeoff.x ? 1 : -1;
+                    var inside = Mathf.Clamp(takeoff.x + dir * 1.5f, west + 0.5f, east - 0.5f);
+                    landing = new Vector2(inside, ParadiseChecker.HeightAt(next.line, inside));
                 }
                 else if (apart[i] && (Mathf.Abs(landing.x - takeoff.x) > 0.3f || landing.y > takeoff.y + 0.3f))
                 {
