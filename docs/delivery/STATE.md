@@ -278,6 +278,7 @@ What a task must pass before it merges, and how a thread runs it.
 | PlayMode tests (6) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
+| Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
 
 The pre-push hook is installed per clone with `git config core.hooksPath
 tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
@@ -309,7 +310,8 @@ Merges do not deploy: only a `v*` tag releases, and tagging needs the owner.
   where Unity 6000.6.8f1 is installed and the pre-push hook runs fully.
   Install CSharpier there once (`dotnet tool install --global csharpier
   --version 1.0.3`) and run `csharpier check Assets` before pushing; CI
-  repeats it.
+  repeats it. The Python tool checks run in CI (`Tests / Python tools`, with
+  Pillow and numpy installed on the runner), so the Windows PC needs no Python.
 - **Pull request description** includes the hook's summary lines
   (`pre-push: EditMode passed (N tests).` and `pre-push: PlayMode passed
   (N tests).`) and the CSharpier result, so the Claude review can check them.

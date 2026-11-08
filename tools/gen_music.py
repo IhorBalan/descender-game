@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-"""Composes the looping music under godot_assets/audio/music from scratch.
+"""Composes the looping music under Assets/Audio/music from scratch.
 
-    python3 tools/gen_music.py            # every track
-    python3 tools/gen_music.py wrath boss # just these
+    python3 tools/gen_music.py                    # every track (Python 3 with numpy)
+    python3 tools/gen_music.py wrath boss         # just these
+    py tools/gen_music.py --out scratch/music     # Windows; write somewhere else
 
 One track per region of the world, named by the region's key (its name
 lowercased without its number, see EdgeDecor.region_key), plus `title` for
@@ -12,10 +13,12 @@ synced delay and a little drive. Every tail, echo and filter wraps round
 the loop's end, so the loops join without a click.
 
 Tracks are encoded to Ogg Vorbis with ffmpeg when it is installed, else
-left as WAV; Audio.play_music looks for either. Needs numpy. Rerun after
-changing a composition below; the output files are committed.
+left as WAV; the music player loads either. Rerun after changing a
+composition below; the output files are committed. A new file under Assets/
+gets its .meta (unity_meta); an existing .meta is never touched.
 """
 
+import argparse
 import os
 import shutil
 import subprocess
@@ -25,8 +28,11 @@ import wave
 
 import numpy as np
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "unity"))
+import unity_meta  # noqa: E402
+
 RATE = 22050
-OUT = os.path.join(os.path.dirname(__file__), "..", "godot_assets", "audio", "music")
+OUT = os.path.join(unity_meta.ASSETS, "Audio", "music")
 rng = np.random.default_rng(11)
 
 
@@ -569,6 +575,7 @@ def write(name, data):
     ffmpeg = shutil.which("ffmpeg")
     if ffmpeg is None:
         write_wav(wav, data)
+        unity_meta.ensure_meta(wav)
         print("wrote", os.path.relpath(wav, os.path.dirname(OUT)), "%.1f s (no ffmpeg, left as WAV)" % (len(data) / RATE))
         return
     with tempfile.TemporaryDirectory() as tmp:
@@ -580,11 +587,18 @@ def write(name, data):
         )
     if os.path.exists(wav):
         os.remove(wav)
+    unity_meta.ensure_meta(ogg)
     print("wrote", os.path.relpath(ogg, os.path.dirname(OUT)), "%.1f s" % (len(data) / RATE))
 
 
-def main(names):
-    for name in names or TRACKS:
+def main(argv):
+    global OUT
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("names", nargs="*", help="tracks to write (default: all of them)")
+    parser.add_argument("--out", default=OUT, help="the folder to write into (default: Assets/Audio/music)")
+    args = parser.parse_args(argv)
+    OUT = os.path.abspath(args.out)
+    for name in args.names or TRACKS:
         write(name, TRACKS[name]())
 
 

@@ -1,18 +1,21 @@
 #!/usr/bin/env python3
-"""Draw the placeholder hero's animation strips into godot_assets/sprites/hero/.
+"""Draw the placeholder hero's animation strips into Assets/Art/Sprites/hero/.
 
 The hero is a simple figure built from a few limbs, drawn pose by pose at
-game scale so every frame fits the hero's collision box (Player.tscn: 14x32
-level pixels, the origin at the feet). The body of every frame fills the box
+game scale so every frame fits the hero's collision box (the Player prefab:
+14x32 level pixels, the origin at the feet). The body of every frame fills the box
 from the top of the head to the soles, so what the player sees standing on a
 ledge, pressed to a wall or landing is what the physics has. Only the sword
 and the wings reach outside it.
 
-    python3 tools/hero_placeholder/gen.py            # write the strips
-    python3 tools/hero_placeholder/gen.py --sheet out.png   # and a contact sheet
+    python3 tools/hero_placeholder/gen.py                    # write the strips
+    python3 tools/hero_placeholder/gen.py --sheet out.png    # and a contact sheet
+    py tools/hero_placeholder/gen.py --out scratch/sprites   # Windows; write somewhere else
 
-The script rewrites the hero entry of godot_assets/sprites/sprites.json and checks
-every frame against the box (see check_frame). Needs Python 3 with Pillow.
+The script rewrites the hero entry of Assets/Art/Sprites/sprites.json and checks
+every frame against the box (see check_frame). Needs Python 3 with Pillow. A
+new file under Assets/ gets its .meta (unity_meta); an existing .meta is never
+touched.
 """
 from __future__ import annotations
 
@@ -24,13 +27,10 @@ import sys
 
 from PIL import Image, ImageDraw
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(ROOT, "tools"))
-import sprite_frames  # noqa: E402
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "unity"))
+import unity_meta  # noqa: E402
 
-SPRITES = os.path.join(ROOT, "godot_assets", "sprites")
-OUT_DIR = os.path.join(SPRITES, "hero")
-SPEC_PATH = os.path.join(SPRITES, "sprites.json")
+SPRITES = os.path.join(unity_meta.ASSETS, "Art", "Sprites")
 
 FRAME_W, FRAME_H = 64, 48
 ORIGIN = (32, 44)  # the feet, in the frame
@@ -676,14 +676,17 @@ def build():
     return strips, problems
 
 
-def write(strips):
-    os.makedirs(OUT_DIR, exist_ok=True)
-    for old in os.listdir(OUT_DIR):
+def write(strips, out_root):
+    out_dir = os.path.join(out_root, "hero")
+    os.makedirs(out_dir, exist_ok=True)
+    for old in os.listdir(out_dir):
         if old.endswith(".png"):
-            os.remove(os.path.join(OUT_DIR, old))
+            os.remove(os.path.join(out_dir, old))
     for name, (strip, _, _, _) in strips.items():
-        strip.save(os.path.join(OUT_DIR, "hero_%s.png" % name))
-    with open(SPEC_PATH) as f:
+        strip.save(os.path.join(out_dir, "hero_%s.png" % name))
+        unity_meta.ensure_meta(os.path.join(out_dir, "hero_%s.png" % name))
+    spec_path = os.path.join(out_root, "sprites.json")
+    with open(spec_path if os.path.exists(spec_path) else os.path.join(SPRITES, "sprites.json")) as f:
         spec = json.load(f)
     spec["hero"] = {
         "frame_size": [FRAME_W, FRAME_H],
@@ -694,10 +697,11 @@ def write(strips):
             for name, (_, count, fps, loop) in strips.items()
         },
     }
-    with open(SPEC_PATH, "w") as f:
+    with open(spec_path, "w") as f:
         json.dump(spec, f, indent=2)
         f.write("\n")
-    sprite_frames.write(["hero"])
+    unity_meta.ensure_meta(spec_path)
+    return out_dir
 
 
 def contact_sheet(strips, path, scale=4):
@@ -726,13 +730,14 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--sheet", help="also write a contact sheet with the collision box drawn on every frame")
     parser.add_argument("--check", action="store_true", help="only check the frames against the box; write nothing")
+    parser.add_argument("--out", default=SPRITES, help="the sprites folder to write into (default: Assets/Art/Sprites)")
     args = parser.parse_args()
     strips, problems = build()
     for p in problems:
         print("warning:", p)
     if not args.check:
-        write(strips)
-        print("wrote %d strips to %s" % (len(strips), OUT_DIR))
+        out_dir = write(strips, os.path.abspath(args.out))
+        print("wrote %d strips to %s" % (len(strips), out_dir))
     if args.sheet:
         contact_sheet(strips, args.sheet)
         print("wrote", args.sheet)

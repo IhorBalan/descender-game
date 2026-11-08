@@ -4,12 +4,11 @@ reference (the hit-flash material, the SFX library, the hero tuning), as Unity
 YAML, so a cloud session without an editor can keep them in step with the code.
 
 Safe to run again: every file is rewritten from what is in the repo, with
-deterministic GUIDs and fileIDs (uuid5 of the asset path, as
-import_godot_assets.py does), so references elsewhere never break. Run from
-anywhere; then let Unity import, or run import_godot_assets.py for the .meta
-files of anything new.
+deterministic GUIDs and fileIDs (uuid5 of the asset path, from unity_meta.py),
+so references elsewhere never break. Run from anywhere; a .meta is written for
+anything new (unity_meta.write_metas), then let Unity import.
 
-    python3 tools/unity/build_prefabs.py
+    python3 tools/unity/build_prefabs.py      # Python 3; on Windows: py tools/unity/build_prefabs.py
 """
 
 from __future__ import annotations
@@ -21,10 +20,10 @@ import sys
 import uuid
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import import_godot_assets as importer  # noqa: E402
+import unity_meta  # noqa: E402
 
-ROOT = importer.ROOT
-ASSETS = importer.ASSETS
+ROOT = unity_meta.ROOT
+ASSETS = unity_meta.ASSETS
 PPU = 16.0
 
 SPRITE_LIT_DEFAULT = "a97c105638bdf8b4a8650670310a4cd3"
@@ -43,12 +42,12 @@ BOSS_BODIES = ["angel_guard", "brute", "imp", "hero"]
 
 
 def guid(path: str) -> str:
-    return importer.guid_for(path)
+    return unity_meta.guid_for(path)
 
 
 def file_id(path: str, name: str) -> int:
     """A stable positive int64 for an object inside a prefab or asset."""
-    return int(uuid.uuid5(importer.NAMESPACE, f"fileid:{path}:{name}").int % (2**62)) + 1
+    return int(uuid.uuid5(unity_meta.NAMESPACE, f"fileid:{path}:{name}").int % (2**62)) + 1
 
 
 def script_ref(relative_script: str) -> str:
@@ -61,7 +60,7 @@ def script(name: str) -> str:
 
 
 def num(value: float) -> str:
-    return importer.yaml_number(value)
+    return unity_meta.yaml_number(value)
 
 
 # --- sprites -----------------------------------------------------------------
@@ -98,8 +97,8 @@ def standalone_sprite(stem: str, frame: int | None = None) -> str:
 
 
 def strips_yaml(character: str, indent: int = 2) -> str:
-    """The SpriteAnimator strips of a character from godot_assets/sprites/sprites.json."""
-    spec = importer.sprite_spec()[character]
+    """The SpriteAnimator strips of a character from Assets/Art/Sprites/sprites.json."""
+    spec = unity_meta.sprite_spec()[character]
     pad = " " * indent
     lines = []
     for anim_name, anim in spec["animations"].items():
@@ -114,7 +113,7 @@ def strips_yaml(character: str, indent: int = 2) -> str:
 
 
 def first_frame(character: str, anim: str = "idle") -> str:
-    spec = importer.sprite_spec()[character]
+    spec = unity_meta.sprite_spec()[character]
     texture = f"Assets/Art/Sprites/{character}/{spec['animations'][anim]['file']}"
     return sprite_ref(texture, f"{character}_{anim}_0")
 
@@ -598,7 +597,7 @@ def main() -> int:
     written.append(build_boss())
     written += build_pickups()
     written.append(build_placement_catalog())
-    metas = importer.write_metas()
+    metas = unity_meta.write_metas()
     print(f"wrote {len(written)} assets and {metas} .meta files")
     for relative in written:
         print("  " + relative)

@@ -1,6 +1,8 @@
 name: Tests
 
-# The Unity project at the repository root: a format check on the C#. The Unity
+# The Unity project at the repository root: a format check on the C# and the
+# Python tools' checks (every tools/ module imports and names no Godot path;
+# build_prefabs.py reproduces the committed prefabs and assets). The Unity
 # EditMode and PlayMode tests run on the developer's machine from the pre-push
 # hook (tools/hooks/pre-push), not here: CI has no Unity licence, and the
 # project does not keep Unity account secrets in the repository
@@ -32,3 +34,23 @@ jobs:
 
       - name: Check C# formatting
         run: csharpier check Assets
+
+  tools:
+    name: Python tools
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Pillow and numpy
+        run: pip install pillow numpy
+
+      - name: Check the tools import and name no Godot path
+        run: python3 -I tools/unity/check_tools.py
+
+      - name: Check build_prefabs.py reproduces the committed assets
+        run: python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat

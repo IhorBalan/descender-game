@@ -1,13 +1,16 @@
 #!/usr/bin/env python3
 """Generate the gamepad button prompts: one small PNG per button, in an
-Xbox set and a PlayStation set, under godot_assets/ui/prompts/.
+Xbox set and a PlayStation set, under Assets/Art/UI/Prompts/.
 
-The Prompts autoload (scripts/prompts.gd) shows them in hints and HUD
-messages for whichever gamepad the player last touched. Everything is
-drawn from code so it can be regenerated or replaced without any tooling
-beyond Python + Pillow:
+The game shows them in hints and HUD messages for whichever gamepad the
+player last touched. Everything is drawn from code so it can be regenerated
+or replaced without any tooling beyond Python 3 + Pillow:
 
     python3 tools/gen_prompts.py
+    py tools/gen_prompts.py --out scratch/prompts   # Windows; write somewhere else
+
+A new file under Assets/ gets its .meta (unity_meta); an existing .meta is
+never touched.
 
 Face buttons, the sticks, the d-pad and the menu buttons are 10x10; the
 shoulder buttons and triggers are 14x10, so a prompt sits on a line of
@@ -15,13 +18,16 @@ the 8px UI font.
 """
 from __future__ import annotations
 
+import argparse
 import os
 import sys
 
 from PIL import Image, ImageDraw
 
-OUT_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "godot_assets", "ui", "prompts")
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "unity"))
+import unity_meta  # noqa: E402
+
+OUT_DIR = os.path.join(unity_meta.ASSETS, "Art", "UI", "Prompts")
 
 CLEAR = (0, 0, 0, 0)
 OUTLINE = (24, 18, 40, 255)
@@ -188,6 +194,10 @@ def stick(direction: str | None, letter: str | None = None) -> Image.Image:
 
 
 def main() -> None:
+    global OUT_DIR
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--out", default=OUT_DIR, help="the folder to write into (default: Assets/Art/UI/Prompts)")
+    OUT_DIR = os.path.abspath(parser.parse_args().out)
     os.makedirs(OUT_DIR, exist_ok=True)
     icons = {
         "xbox_a": face(XBOX_GREEN, "A", WHITE),
@@ -221,7 +231,9 @@ def main() -> None:
         icons["dpad_%s" % direction] = dpad(direction)
         icons["stick_%s" % direction] = stick(direction)
     for name, image in icons.items():
-        image.save(os.path.join(OUT_DIR, "%s.png" % name))
+        path = os.path.join(OUT_DIR, "%s.png" % name)
+        image.save(path)
+        unity_meta.ensure_meta(path)
     print("wrote %d prompts to %s" % (len(icons), OUT_DIR))
 
 

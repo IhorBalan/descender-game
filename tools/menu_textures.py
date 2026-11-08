@@ -1,19 +1,26 @@
-"""Draws the menu theme's textures into godot_assets/ui/theme: the 9-slice button
+"""Draws the menu theme's textures into Assets/Art/UI/Theme: the 9-slice button
 boxes and panel (12x12, 4 px margins), the slider grabber, the chain divider
 under headings and the title screen's cavern backdrop.
 
-    python3 tools/menu_textures.py
+    python3 tools/menu_textures.py                 # Python 3 with Pillow
+    py tools/menu_textures.py --out scratch/theme  # Windows; write somewhere else
 
 The style is "hellforged stone": bevelled dark slabs, an ember-orange glow on
-the focused one, sparks rising over a cavern floor.
+the focused one, sparks rising over a cavern floor. A new file under Assets/
+gets its .meta (unity_meta); an existing .meta is never touched.
 """
 
+import argparse
 import os
 import random
+import sys
 
 from PIL import Image, ImageDraw, ImageFilter
 
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "godot_assets", "ui", "theme")
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "unity"))
+import unity_meta  # noqa: E402
+
+OUT = os.path.join(unity_meta.ASSETS, "Art", "UI", "Theme")
 W, H = 320, 180
 
 LEAD = (13, 8, 9, 255)
@@ -31,14 +38,14 @@ def box(name, fill, border, bevel, size=12):
     d.line([1, 1, 1, size - 2], fill=light)
     d.line([1, size - 2, size - 2, size - 2], fill=dark)
     d.line([size - 2, 1, size - 2, size - 2], fill=dark)
-    im.save(os.path.join(OUT, name))
+    save(im, name)
 
 
 def grabber(name, fill, border, r=4):
     im = Image.new("RGBA", (r * 2, r * 2), (0, 0, 0, 0))
     d = ImageDraw.Draw(im)
     d.polygon([(r, 0), (r * 2 - 1, r), (r, r * 2 - 1), (0, r)], fill=fill, outline=border)
-    im.save(os.path.join(OUT, name))
+    save(im, name)
 
 
 def divider(name, color, w=120, h=5):
@@ -47,7 +54,7 @@ def divider(name, color, w=120, h=5):
     d = ImageDraw.Draw(im)
     for x in range(2, w - 4, 4):
         d.rectangle([x, 1, x + 2, 3], outline=color)
-    im.save(os.path.join(OUT, name))
+    save(im, name)
 
 
 def toggle(name, track, knob, on):
@@ -57,7 +64,7 @@ def toggle(name, track, knob, on):
     d.rounded_rectangle([0, 0, 15, 8], radius=4, fill=track, outline=LEAD)
     x = 9 if on else 1
     d.rounded_rectangle([x, 1, x + 5, 7], radius=3, fill=knob, outline=(60, 18, 10, 255) if on else LEAD)
-    im.save(os.path.join(OUT, name))
+    save(im, name)
 
 
 def backdrop(name):
@@ -87,17 +94,36 @@ def backdrop(name):
     for _ in range(60):
         c = random.choice([(255, 138, 58, 255), (255, 200, 90, 255), (200, 60, 20, 255)])
         d.point((random.randrange(W), random.randrange(90, H)), fill=c)
-    im.save(os.path.join(OUT, name))
+    save(im, name)
 
 
-os.makedirs(OUT, exist_ok=True)
-box("button_normal.png", (58, 48, 50, 255), LEAD, ((96, 82, 82, 255), (24, 17, 18, 255)))
-box("button_focus.png", (104, 36, 20, 255), EMBER, ((255, 176, 112, 255), (60, 18, 10, 255)))
-box("button_disabled.png", (42, 34, 36, 255), LEAD, ((60, 50, 50, 255), (20, 14, 14, 255)))
-box("panel.png", (28, 20, 20, 235), LEAD, ((80, 66, 66, 255), (18, 12, 12, 255)))
-grabber("grabber.png", EMBER, (60, 18, 10, 255))
-toggle("toggle_on.png", (150, 48, 20, 255), (255, 206, 150, 255), True)
-toggle("toggle_off.png", (40, 30, 32, 255), (120, 104, 100, 255), False)
-divider("divider.png", EMBER)
-backdrop("title_backdrop.png")
-print("drew", sorted(os.listdir(OUT)))
+def save(im, name):
+    path = os.path.join(OUT, name)
+    im.save(path)
+    unity_meta.ensure_meta(path)
+
+
+def main():
+    global OUT
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--out", default=OUT, help="the folder to write into (default: Assets/Art/UI/Theme)")
+    OUT = os.path.abspath(parser.parse_args().out)
+    os.makedirs(OUT, exist_ok=True)
+    draw_all()
+
+
+def draw_all():
+    box("button_normal.png", (58, 48, 50, 255), LEAD, ((96, 82, 82, 255), (24, 17, 18, 255)))
+    box("button_focus.png", (104, 36, 20, 255), EMBER, ((255, 176, 112, 255), (60, 18, 10, 255)))
+    box("button_disabled.png", (42, 34, 36, 255), LEAD, ((60, 50, 50, 255), (20, 14, 14, 255)))
+    box("panel.png", (28, 20, 20, 235), LEAD, ((80, 66, 66, 255), (18, 12, 12, 255)))
+    grabber("grabber.png", EMBER, (60, 18, 10, 255))
+    toggle("toggle_on.png", (150, 48, 20, 255), (255, 206, 150, 255), True)
+    toggle("toggle_off.png", (40, 30, 32, 255), (120, 104, 100, 255), False)
+    divider("divider.png", EMBER)
+    backdrop("title_backdrop.png")
+    print("drew", sorted(f for f in os.listdir(OUT) if f.endswith(".png")))
+
+
+if __name__ == "__main__":
+    main()
