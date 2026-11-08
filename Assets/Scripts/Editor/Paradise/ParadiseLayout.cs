@@ -93,6 +93,42 @@ namespace Descender.EditorTools.Paradise
             public float energy;
         }
 
+        /// <summary>
+        /// A story beat that is a thing in the world: a trigger, an NPC, a story item or a
+        /// feather, built as a WorldPlacement beside the save shrines. The fields are the
+        /// WorldPlacement's; `type` says which matter. `at` is where its feet stand.
+        /// </summary>
+        public sealed class Placement
+        {
+            /// <summary>"paradise/z&lt;zone&gt;/&lt;name&gt;", as the shrines are numbered; the sync finds a placement by it.</summary>
+            public string id;
+
+            /// <summary>trigger, npc, item or ability.</summary>
+            public string type;
+            public Vector2 at;
+            public string[] dialogue = new string[0];
+            public string[] rotate = new string[0];
+            public string placementName = "";
+            public string character = "";
+            public bool facesLeft;
+            public string item = "";
+            public int abilityIndex = -1;
+            public string unless = "";
+
+            /// <summary>
+            /// The label of the DesignMarker this placement stands in for, or "". A beat is a
+            /// flag or a thing, never both: the marker is not built, and the sync removes it.
+            /// Matched by label (BuildMarker names the object after it), so a moved marker is still found.
+            /// </summary>
+            public string replaces = "";
+
+            /// <summary>The last part of the id: the object's name in the scene.</summary>
+            public string Name => id.Substring(id.LastIndexOf('/') + 1);
+        }
+
+        /// <summary>The placement types a zone may declare.</summary>
+        public static readonly IReadOnlyList<string> PlacementTypes = new[] { "trigger", "npc", "item", "ability" };
+
         /// <summary>Where along the region (x, in tiles) an ability becomes the hero's.</summary>
         public readonly struct Grant
         {
@@ -119,6 +155,9 @@ namespace Descender.EditorTools.Paradise
             public readonly List<Vector2> seeds = new List<Vector2>();
             public readonly List<Vector2> saves = new List<Vector2>();
             public readonly List<Marker> markers = new List<Marker>();
+
+            /// <summary>The story beats that are things: built under Placements, and synced into a built scene by id.</summary>
+            public readonly List<Placement> placements = new List<Placement>();
             public readonly List<Lamp> lamps = new List<Lamp>();
             public readonly List<Rect> rooms = new List<Rect>();
 
@@ -246,6 +285,38 @@ namespace Descender.EditorTools.Paradise
                         at = new Vector2(x, y),
                     }
                 );
+            }
+
+            /// <summary>
+            /// A placement of `type` named `name` in this zone (its id is "paradise/z&lt;zone&gt;/&lt;name&gt;"),
+            /// feet at x, y, in place of the marker labelled `replaces`. Returns it, to set the
+            /// fields its type needs.
+            /// </summary>
+            public Placement Place(string name, string type, float x, float y, string replaces = "")
+            {
+                var placement = new Placement
+                {
+                    id = $"paradise/z{number}/{name}",
+                    type = type,
+                    at = new Vector2(x, y),
+                    replaces = replaces,
+                };
+                placements.Add(placement);
+                return placement;
+            }
+
+            /// <summary>The labels of the markers this zone's placements stand in for.</summary>
+            public HashSet<string> ReplacedMarkers()
+            {
+                var labels = new HashSet<string>();
+                foreach (var placement in placements)
+                {
+                    if (!string.IsNullOrEmpty(placement.replaces))
+                    {
+                        labels.Add(placement.replaces);
+                    }
+                }
+                return labels;
             }
 
             public void Light(float x, float y, Color color, float radiusTiles, float energy)
@@ -448,6 +519,8 @@ namespace Descender.EditorTools.Paradise
                 "Beat 1: opening",
                 "Ansel wakes half-made; the Voice tells him to go back. Trigger 'opening'."
             );
+            // The beat itself: the trigger stands on the start, so the Voice speaks as he wakes.
+            z.Place("opening", "trigger", Start.x, -62.8f, "Beat 1: opening").dialogue = new[] { "opening" };
             z.Mark(
                 Descender.World.Paradise.DesignMarker.Kind.Secret,
                 28.5f,
@@ -666,6 +739,16 @@ namespace Descender.EditorTools.Paradise
                 "Beat 3: harvest token",
                 "Tobiah's token, his tally scratched in. In the root hollow below Mereth."
             );
+            // The beats themselves, feet on the Grove's walk and on the root hollow's floor.
+            var mereth = z.Place("mereth", "npc", 515f, -62f, "Beat 2: Mereth");
+            mereth.placementName = "Mereth";
+            mereth.character = "mereth";
+            mereth.facesLeft = true; // her art faces left, as in the prototype
+            mereth.dialogue = new[] { "mereth_intro" };
+            mereth.rotate = new[] { "mereth_again", "mereth_count", "mereth_orchard" };
+            var token = z.Place("token", "item", 568f, -76.2f, "Beat 3: harvest token");
+            token.item = "token";
+            token.dialogue = new[] { "item_token" };
             z.Mark(landmark, 920f, -36f, "Landmark: the lantern tower");
             z.Mark(secret, 915f, -36.8f, "Secret: Lantern crown", "Wings only: the crown landing is 6.5 up.");
             z.Mark(secret, 1060f, -78.6f, "Secret: roots route", "Something to find under the run.");

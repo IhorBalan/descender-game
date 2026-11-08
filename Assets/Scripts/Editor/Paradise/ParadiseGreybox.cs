@@ -6,6 +6,7 @@ using Descender.World.Paradise;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.U2D;
 
 namespace Descender.EditorTools.Paradise
@@ -494,14 +495,25 @@ namespace Descender.EditorTools.Paradise
             {
                 BuildSave(save, placementGroup, catalog, saveIndex++, zone.number);
             }
+            // The story beats that are things, from the catalog the zone's saves use.
+            foreach (var placement in zone.placements)
+            {
+                BuildPlacement(placement, placementGroup, catalog);
+            }
             if (ParadiseLayout.Start.x >= zone.xMin && ParadiseLayout.Start.x < zone.xMax)
             {
                 var start = new GameObject(PlayerStartName);
                 start.transform.SetParent(placementGroup, false);
                 start.transform.position = ParadiseLayout.Start;
             }
+            // A beat is a flag or a thing, never both: a marker a placement replaces is not built.
+            var replaced = zone.ReplacedMarkers();
             foreach (var marker in zone.markers)
             {
+                if (replaced.Contains(marker.label))
+                {
+                    continue;
+                }
                 BuildMarker(marker, markerGroup, art, zoneArt != null);
             }
             var lampIndex = 0;
@@ -1074,6 +1086,211 @@ namespace Descender.EditorTools.Paradise
             serialized.FindProperty("catalog").objectReferenceValue = catalog;
             serialized.FindProperty("checkpointIndex").intValue = checkpointIndex;
             serialized.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>A story beat as a WorldPlacement, named after the last part of its id.</summary>
+        private static WorldPlacement BuildPlacement(
+            ParadiseLayout.Placement placement,
+            Transform parent,
+            PlacementCatalog catalog
+        )
+        {
+            var go = new GameObject(placement.Name);
+            go.transform.SetParent(parent, false);
+            var built = go.AddComponent<WorldPlacement>();
+            var serialized = new SerializedObject(built);
+            serialized.FindProperty("id").stringValue = placement.id;
+            serialized.FindProperty("catalog").objectReferenceValue = catalog;
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+            ApplyPlacement(built, placement);
+            return built;
+        }
+
+        /// <summary>
+        /// Brings a WorldPlacement's position and fields to the layout's, leaving its id and
+        /// catalog alone. Returns whether anything differed, so a sync that changes nothing
+        /// saves nothing.
+        /// </summary>
+        private static bool ApplyPlacement(WorldPlacement target, ParadiseLayout.Placement placement)
+        {
+            var serialized = new SerializedObject(target);
+            var changed = SetString(serialized, "type", placement.type);
+            changed |= SetStrings(serialized, "dialogue", placement.dialogue);
+            changed |= SetStrings(serialized, "rotate", placement.rotate);
+            changed |= SetString(serialized, "placementName", placement.placementName);
+            changed |= SetString(serialized, "character", placement.character);
+            changed |= SetString(serialized, "item", placement.item);
+            changed |= SetString(serialized, "unless", placement.unless);
+            var facesLeft = serialized.FindProperty("facesLeft");
+            if (facesLeft.boolValue != placement.facesLeft)
+            {
+                facesLeft.boolValue = placement.facesLeft;
+                changed = true;
+            }
+            var abilityIndex = serialized.FindProperty("abilityIndex");
+            if (abilityIndex.intValue != placement.abilityIndex)
+            {
+                abilityIndex.intValue = placement.abilityIndex;
+                changed = true;
+            }
+            if (changed)
+            {
+                serialized.ApplyModifiedPropertiesWithoutUndo();
+            }
+            var at = target.transform.position;
+            if ((Vector2)at != placement.at)
+            {
+                target.transform.position = new Vector3(placement.at.x, placement.at.y, at.z);
+                changed = true;
+            }
+            return changed;
+        }
+
+        private static bool SetString(SerializedObject serialized, string field, string value)
+        {
+            var property = serialized.FindProperty(field);
+            value ??= "";
+            if (property.stringValue == value)
+            {
+                return false;
+            }
+            property.stringValue = value;
+            return true;
+        }
+
+        private static bool SetStrings(SerializedObject serialized, string field, string[] values)
+        {
+            var property = serialized.FindProperty(field);
+            values ??= new string[0];
+            var same = property.arraySize == values.Length;
+            for (var i = 0; same && i < values.Length; i++)
+            {
+                same = property.GetArrayElementAtIndex(i).stringValue == values[i];
+            }
+            if (same)
+            {
+                return false;
+            }
+            property.arraySize = values.Length;
+            for (var i = 0; i < values.Length; i++)
+            {
+                property.GetArrayElementAtIndex(i).stringValue = values[i];
+            }
+            return true;
+        }
+
+        /// <summary>
+        /// Puts the layout's placements into every zone scene that exists, without rebuilding
+        /// it: see <see cref="SyncZonePlacements"/>.
+        /// A scene the sync does not change is not saved, so its diff stays empty. In batch
+        /// mode: -executeMethod Descender.EditorTools.Paradise.ParadiseGreybox.SyncPlacements.
+        /// </summary>
+        [MenuItem("Descender/Paradise/Sync placements from layout")]
+        public static void SyncPlacements()
+        {
+            if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            {
+                return;
+            }
+            var fallback = AssetDatabase.LoadAssetAtPath<PlacementCatalog>(CatalogPath);
+            var changed = new List<string>();
+            foreach (var zone in ParadiseLayout.All())
+            {
+                if (!File.Exists(ScenePath(zone)))
+                {
+                    continue;
+                }
+                var scene = EditorSceneManager.OpenScene(ScenePath(zone), OpenSceneMode.Single);
+                if (SyncZonePlacements(zone, scene, fallback))
+                {
+                    EditorSceneManager.MarkSceneDirty(scene);
+                    EditorSceneManager.SaveScene(scene);
+                    changed.Add(zone.scene);
+                }
+            }
+            Debug.Log(
+                changed.Count > 0
+                    ? $"ParadiseGreybox: placements synced from the layout into {string.Join(", ", changed)}."
+                    : "ParadiseGreybox: placements already match the layout; no scene was changed."
+            );
+        }
+
+        /// <summary>
+        /// Brings one open zone scene's placements to the layout's, by id: adds each that is
+        /// missing (under the group the scene's saves stand in, with the catalog those saves
+        /// use, or `fallback` in a scene without a save), moves and refills each that is
+        /// there, and removes the design markers that placements replace. Nothing else in the
+        /// scene is touched, and a placement the layout no longer names is left alone.
+        /// Returns whether the scene changed; a second run returns false.
+        /// </summary>
+        public static bool SyncZonePlacements(ParadiseLayout.Zone zone, Scene scene, PlacementCatalog fallback)
+        {
+            var roots = scene.GetRootGameObjects();
+            var existing = roots.SelectMany(root => root.GetComponentsInChildren<WorldPlacement>(true)).ToList();
+            var save = existing.Find(p => p.Type == "save");
+            var catalog = save != null ? CatalogOf(save) ?? fallback : fallback;
+            var changed = false;
+            Transform group = null;
+            foreach (var placement in zone.placements)
+            {
+                var present = existing.Find(p => p.Id == placement.id);
+                if (present != null)
+                {
+                    changed |= ApplyPlacement(present, placement);
+                    continue;
+                }
+                group ??= PlacementGroup(zone, scene, roots, save);
+                existing.Add(BuildPlacement(placement, group, catalog));
+                changed = true;
+            }
+            var replaced = zone.ReplacedMarkers();
+            foreach (var marker in roots.SelectMany(root => root.GetComponentsInChildren<DesignMarker>(true)).ToList())
+            {
+                if (replaced.Contains(marker.Label))
+                {
+                    Object.DestroyImmediate(marker.gameObject);
+                    changed = true;
+                }
+            }
+            return changed;
+        }
+
+        private static PlacementCatalog CatalogOf(WorldPlacement placement)
+        {
+            return new SerializedObject(placement).FindProperty("catalog").objectReferenceValue as PlacementCatalog;
+        }
+
+        /// <summary>
+        /// Where a scene keeps its placements: beside its saves, else the Placements group
+        /// BuildZone makes, else a new one under the zone's root (or at the scene's root).
+        /// </summary>
+        private static Transform PlacementGroup(
+            ParadiseLayout.Zone zone,
+            Scene scene,
+            GameObject[] roots,
+            WorldPlacement save
+        )
+        {
+            if (save != null && save.transform.parent != null)
+            {
+                return save.transform.parent;
+            }
+            foreach (var root in roots)
+            {
+                var found = root.transform.Find("Placements");
+                if (found != null)
+                {
+                    return found;
+                }
+            }
+            var group = new GameObject("Placements");
+            SceneManager.MoveGameObjectToScene(group, scene);
+            var zoneRoot = System.Array.Find(roots, root => root.name == $"Zone{zone.number}");
+            if (zoneRoot != null)
+            {
+                group.transform.SetParent(zoneRoot.transform, false);
+            }
+            return group.transform;
         }
 
         private static void BuildMarker(ParadiseLayout.Marker marker, Transform parent, Art art, bool editorOnly)
