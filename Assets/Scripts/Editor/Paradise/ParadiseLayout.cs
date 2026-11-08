@@ -85,6 +85,17 @@ namespace Descender.EditorTools.Paradise
             public Vector2 at;
         }
 
+        /// <summary>
+        /// Thorns: a patch that hurts (Assets/Prefabs/Pickups/Hazard.prefab), its rect in
+        /// world units. Beside the main path, never across it: ParadiseChecker reports a
+        /// hazard whose rect meets the top edge of a main-path surface.
+        /// </summary>
+        public sealed class Hazard
+        {
+            public string name;
+            public Rect rect;
+        }
+
         public sealed class Lamp
         {
             public Vector2 at;
@@ -159,6 +170,7 @@ namespace Descender.EditorTools.Paradise
             /// <summary>The story beats that are things: built under Placements, and synced into a built scene by id.</summary>
             public readonly List<Placement> placements = new List<Placement>();
             public readonly List<Lamp> lamps = new List<Lamp>();
+            public readonly List<Hazard> hazards = new List<Hazard>();
             public readonly List<Rect> rooms = new List<Rect>();
 
             /// <summary>Ground built by hand (marble terrace walls with a carved coping); the rest is natural cliff rock.</summary>
@@ -319,6 +331,12 @@ namespace Descender.EditorTools.Paradise
                 return labels;
             }
 
+            /// <summary>Thorns `width` x `height` tiles with their bottom-left corner at (x, y).</summary>
+            public void Thorns(string name, float x, float y, float width, float height)
+            {
+                hazards.Add(new Hazard { name = name, rect = new Rect(x, y, width, height) });
+            }
+
             public void Light(float x, float y, Color color, float radiusTiles, float energy)
             {
                 lamps.Add(
@@ -348,7 +366,7 @@ namespace Descender.EditorTools.Paradise
             new Grant(Ability.LightDash, 4700f),
         };
 
-        public static List<Zone> All() => new List<Zone> { Zone1(), Zone2() };
+        public static List<Zone> All() => new List<Zone> { Zone1(), Zone2(), Zone3(), Zone4() };
 
         private static P S(float x, float y) => new P(x, y, true);
 
@@ -358,6 +376,9 @@ namespace Descender.EditorTools.Paradise
         private static readonly Color Rose = new Color(1f, 0.7f, 0.72f);
         private static readonly Color Fruit = new Color(0.55f, 1f, 0.92f);
         private static readonly Color Fungus = new Color(0.4f, 0.85f, 1f);
+        private static readonly Color Acid = new Color(0.7f, 1f, 0.45f);
+        private static readonly Color Gold = new Color(1f, 0.9f, 0.55f);
+        private static readonly Color StreamGlow = new Color(0.75f, 0.95f, 1f);
 
         /// <summary>
         /// Zone 1, the Waking Hollow (x 0 to 400): a sheltered bowl at dawn, a teaching
@@ -765,6 +786,483 @@ namespace Descender.EditorTools.Paradise
                 z.Light(x, -53f, Fruit, 6f, 0.6f);
             }
             return z;
+        }
+
+        /// <summary>
+        /// Zone 3, the Great Vines (x 1300 to 2600): two flowing runs of curved branches
+        /// over a moss floor with the first thorns; two hollow-trunk climbs by pod and
+        /// landing; air lanes between the vines for the flyers to come; and the Crown Vine,
+        /// a 50-tile climb to the feather, with the last shrine of the zone at its top. The
+        /// Wings descent off the top is the start of zone 4.
+        /// </summary>
+        public static Zone Zone3()
+        {
+            var z = new Zone
+            {
+                number = 3,
+                scene = "Paradise_Z3_GreatVines",
+                xMin = 1300f,
+                xMax = 2600f,
+            };
+            // The Crown Vine tops out near y -12, so the room reaches almost to the band's top.
+            z.rooms.Add(new Rect(1300f, -105f, 1300f, 100f));
+
+            // Out of the orchard: the last terrace sloping down to the first branch.
+            z.Ground(
+                "VineGate",
+                -100f,
+                S(1299f, -50f),
+                C(1316f, -50.6f),
+                C(1334f, -52.4f),
+                C(1352f, -54.8f),
+                C(1368f, -56.6f),
+                S(1380f, -57f)
+            );
+            // The first flowing run: three branches rising and falling like waves, 4-tile gaps
+            // in rhythm, over the moss floor.
+            z.Deck(
+                "Wave1",
+                8f,
+                S(1384f, -57.2f),
+                C(1396f, -54.6f),
+                C(1408f, -52.8f),
+                C(1420f, -53.6f),
+                C(1432f, -56.2f),
+                C(1444f, -58.6f),
+                S(1456f, -59.4f)
+            );
+            z.Deck(
+                "Wave2",
+                8f,
+                S(1460f, -59.6f),
+                C(1472f, -57f),
+                C(1484f, -55f),
+                C(1496f, -56f),
+                C(1508f, -58.6f),
+                S(1520f, -60.2f)
+            );
+            z.Deck("Wave3", 8f, S(1524f, -60.4f), C(1536f, -57.6f), C(1548f, -55.8f), C(1560f, -57.4f), S(1572f, -60f));
+            // The moss floor under the run: deep and soft, with the first thorns. Pods throw
+            // a fallen hero back up to the branches.
+            z.Closed(
+                "VineFloor",
+                Profile.Leaf,
+                true,
+                S(1380f, -80f),
+                C(1420f, -80.4f),
+                C(1460f, -80f),
+                C(1500f, -80.6f),
+                C(1540f, -80f),
+                S(1576f, -80f),
+                S(1576f, -100f),
+                S(1380f, -100f)
+            );
+            z.Thorns("Thorns1", 1400f, -80.2f, 12f, 1.5f);
+            z.Thorns("Thorns2", 1504f, -80.4f, 10f, 1.5f);
+            z.Bounce("FloorPod1", 1470f, -79.6f, 22f);
+            z.Bounce("FloorPod2", 1540f, -79.6f, 22f);
+            // The first hollow trunk: a pod throws the hero to the landings inside it.
+            z.Ground(
+                "TrunkFoot",
+                -100f,
+                S(1576f, -60.6f),
+                C(1590f, -61f),
+                C(1610f, -61.2f),
+                C(1630f, -61f),
+                S(1644f, -61f)
+            );
+            z.Bounce("TrunkPod", 1636f, -60.6f, 16f);
+            z.Deck("TrunkLanding1", 4f, S(1626f, -46f), S(1636f, -46f));
+            z.Deck("TrunkLanding2", 4f, S(1640f, -42f), S(1650f, -42f));
+            z.Deck("TrunkLanding3", 4f, S(1654f, -38.2f), S(1664f, -38.2f));
+            z.Closed("Trunk1", Profile.Decor, false, S(1618f, -30f), S(1672f, -30f), S(1676f, -62f), S(1614f, -62f));
+            // The high branch down from the trunk to the first shrine.
+            z.Deck("HighWave1", 8f, S(1668f, -38.6f), C(1680f, -41f), C(1692f, -44f), S(1704f, -46.6f));
+            z.Deck("HighWave2", 8f, S(1708f, -47.2f), C(1720f, -50f), C(1732f, -53.4f), S(1744f, -56.4f));
+            // A nest above the high branch, 7.6 up: Wings only.
+            z.Deck("CanopyNest", 4f, S(1690f, -31f), S(1700f, -31f));
+            z.Ground(
+                "ShrineRoot",
+                -100f,
+                S(1748f, -57.4f),
+                C(1770f, -58f),
+                C(1800f, -58.6f),
+                C(1830f, -59f),
+                S(1850f, -59.2f)
+            );
+            // The second flowing run, over a second moss floor.
+            z.Deck(
+                "Wave4",
+                8f,
+                S(1854f, -59.4f),
+                C(1866f, -56.6f),
+                C(1878f, -54.6f),
+                C(1890f, -55.6f),
+                C(1902f, -58.4f),
+                S(1914f, -60f)
+            );
+            z.Deck(
+                "Wave5",
+                8f,
+                S(1918f, -60.2f),
+                C(1930f, -57.4f),
+                C(1942f, -55.4f),
+                C(1954f, -56.6f),
+                C(1966f, -59f),
+                S(1978f, -60.6f)
+            );
+            z.Deck(
+                "Wave6",
+                8f,
+                S(1982f, -60.8f),
+                C(1994f, -58f),
+                C(2006f, -56f),
+                C(2018f, -57f),
+                C(2030f, -59.4f),
+                S(2042f, -61f)
+            );
+            z.Closed(
+                "VineFloor2",
+                Profile.Leaf,
+                true,
+                S(1850f, -80f),
+                C(1900f, -80.4f),
+                C(1950f, -80f),
+                C(2000f, -80.4f),
+                S(2046f, -80f),
+                S(2046f, -100f),
+                S(1850f, -100f)
+            );
+            z.Thorns("Thorns3", 1930f, -80.2f, 12f, 1.5f);
+            z.Thorns("Thorns4", 2010f, -80.3f, 8f, 1.5f);
+            z.Bounce("FloorPod3", 1900f, -79.6f, 22f);
+            z.Bounce("FloorPod4", 2000f, -79.6f, 22f);
+            z.Ground(
+                "MidRoot",
+                -100f,
+                S(2046f, -61.2f),
+                C(2070f, -61.6f),
+                C(2100f, -61.4f),
+                C(2140f, -61.8f),
+                C(2180f, -61.6f),
+                S(2200f, -61.5f)
+            );
+            // The second hollow trunk, up to a canopy walk with the second shrine.
+            z.Bounce("Trunk2Pod", 2192f, -61.1f, 14f);
+            z.Deck("Trunk2Landing1", 4f, S(2186f, -49f), S(2196f, -49f));
+            z.Deck("Trunk2Landing2", 4f, S(2200f, -45f), S(2210f, -45f));
+            z.Closed("Trunk2", Profile.Decor, false, S(2180f, -36f), S(2218f, -36f), S(2222f, -62f), S(2176f, -62f));
+            z.Deck("CanopyWalk", 8f, S(2214f, -45.4f), C(2230f, -46f), C(2250f, -46.4f), S(2270f, -47f));
+            z.Deck("CanopyDrop", 8f, S(2274f, -50.6f), C(2286f, -53f), S(2298f, -55.6f));
+            // The root bed of the Crown Vine: deep moss, so a fall from the top is soft.
+            z.Closed(
+                "CrownRoot",
+                Profile.Leaf,
+                true,
+                S(2302f, -57f),
+                C(2330f, -58.4f),
+                C(2360f, -60f),
+                C(2400f, -61.6f),
+                C(2440f, -62.4f),
+                C(2480f, -63f),
+                C(2520f, -62.6f),
+                C(2560f, -62.5f),
+                S(2601f, -62.6f),
+                S(2601f, -100f),
+                S(2302f, -100f)
+            );
+            // The Crown Vine: two pod throws and five landings inside the hollow trunk, 50
+            // tiles from the root bed to the top, where the feather waits.
+            z.Bounce("CrownPod1", 2486f, -62.6f, 18f);
+            z.Deck("CrownLanding1", 4f, S(2476f, -46f), S(2486f, -46f));
+            z.Deck("CrownLanding2", 4f, S(2490f, -42f), S(2500f, -42f));
+            z.Deck("CrownLanding3", 4f, S(2504f, -38f), S(2514f, -38f));
+            z.Bounce("CrownPod2", 2509f, -37.6f, 18f);
+            z.Deck("CrownLanding4", 4f, S(2498f, -21.2f), S(2508f, -21.2f));
+            z.Deck("CrownLanding5", 4f, S(2512f, -17.2f), S(2522f, -17.2f));
+            z.Deck("CrownTop", 8f, S(2526f, -13.2f), C(2550f, -12.6f), C(2575f, -12.4f), S(2600f, -12.4f));
+            z.Closed("CrownTrunk", Profile.Decor, false, S(2470f, -8f), S(2530f, -8f), S(2536f, -63f), S(2464f, -63f));
+
+            z.MainPath(
+                "VineGate",
+                "Wave1",
+                "Wave2",
+                "Wave3",
+                "TrunkFoot",
+                "TrunkPod",
+                "TrunkLanding1",
+                "TrunkLanding2",
+                "TrunkLanding3",
+                "HighWave1",
+                "HighWave2",
+                "ShrineRoot",
+                "Wave4",
+                "Wave5",
+                "Wave6",
+                "MidRoot",
+                "Trunk2Pod",
+                "Trunk2Landing1",
+                "Trunk2Landing2",
+                "CanopyWalk",
+                "CanopyDrop",
+                "CrownRoot",
+                "CrownPod1",
+                "CrownLanding1",
+                "CrownLanding2",
+                "CrownLanding3",
+                "CrownPod2",
+                "CrownLanding4",
+                "CrownLanding5",
+                "CrownTop"
+            );
+            z.Soft("VineFloor", "VineFloor2", "CrownRoot");
+            z.Masonry("VineGate");
+            z.saves.Add(new Vector2(1756f, -57.6f));
+            z.saves.Add(new Vector2(2250f, -46.4f));
+            z.saves.Add(new Vector2(2580f, -12.4f));
+
+            var story = Descender.World.Paradise.DesignMarker.Kind.Story;
+            var secret = Descender.World.Paradise.DesignMarker.Kind.Secret;
+            var encounter = Descender.World.Paradise.DesignMarker.Kind.Encounter;
+            var landmark = Descender.World.Paradise.DesignMarker.Kind.Landmark;
+            z.Mark(
+                encounter,
+                1500f,
+                -44f,
+                "Encounter: air lane",
+                "A flying lane between the vines, above the first run."
+            );
+            z.Mark(encounter, 1950f, -44f, "Encounter: air lane 2", "A second lane over the second run.");
+            z.Mark(secret, 1480f, -79f, "Secret: thorn hollow", "Between the thorns on the moss floor.");
+            z.Mark(secret, 1695f, -30f, "Secret: canopy nest", "Wings only: 7.6 above the high branch.");
+            z.Mark(secret, 2240f, -79f, "Secret: trunk hollow", "Under the canopy walk, by the second trunk.");
+            z.Mark(landmark, 2500f, -30f, "Landmark: the Crown Vine", "Five screens tall; the feather is at its top.");
+            z.Mark(
+                Descender.World.Paradise.DesignMarker.Kind.Item,
+                2560f,
+                -11f,
+                "Beat 4: feather",
+                "The feather at the top of the Crown Vine: Wings. Jump off the top into the descent."
+            );
+            var feather = z.Place("feather", "ability", 2560f, -12.5f, "Beat 4: feather");
+            feather.abilityIndex = (int)Ability.Wings;
+            z.Mark(
+                story,
+                2594f,
+                -11f,
+                "Into the Fields",
+                "Out from under the trees into the open gold of the meadows."
+            );
+
+            z.Light(1420f, -48f, Acid, 14f, 0.8f);
+            z.Light(1480f, -76f, Fungus, 10f, 0.8f);
+            z.Light(1645f, -40f, Acid, 10f, 0.8f);
+            z.Light(1756f, -53f, Dawn, 8f, 1f);
+            z.Light(1950f, -50f, Acid, 14f, 0.8f);
+            z.Light(1960f, -76f, Fungus, 10f, 0.8f);
+            z.Light(2200f, -42f, Acid, 10f, 0.8f);
+            z.Light(2250f, -42f, Dawn, 8f, 1f);
+            z.Light(2500f, -30f, Acid, 18f, 0.9f);
+            z.Light(2570f, -8f, Dawn, 14f, 1.2f);
+            return z;
+        }
+
+        /// <summary>
+        /// Zone 4, the Tallied Fields (x 2600 to 3700): the Wings descent off the Crown Vine
+        /// over five islands onto a moss bed; open golden meadows cut by glowing streams
+        /// with 7-tile gaps; sky islands only Wings reach; two wide patrol grounds; the
+        /// Sundial; the field-keeper's hut with the ledger page; Ithuriel at the Field
+        /// Shrine; and the gust-return marker at the west edge.
+        /// </summary>
+        public static Zone Zone4()
+        {
+            var z = new Zone
+            {
+                number = 4,
+                scene = "Paradise_Z4_TalliedFields",
+                xMin = 2600f,
+                xMax = 3700f,
+            };
+            z.rooms.Add(new Rect(2600f, -105f, 1100f, 100f));
+
+            // The descent: five islands stepping down 8 at a time with 6-tile gaps, built for
+            // the new double jump, over a soft moss bed.
+            Descent(z, "Descent1", 2606f, -16f);
+            Descent(z, "Descent2", 2626f, -24f);
+            Descent(z, "Descent3", 2646f, -32f);
+            Descent(z, "Descent4", 2666f, -40f);
+            Descent(z, "Descent5", 2686f, -48f);
+            z.Closed(
+                "MossBed",
+                Profile.Leaf,
+                true,
+                S(2599f, -62.6f),
+                C(2640f, -63.2f),
+                C(2680f, -62.8f),
+                S(2700f, -62.4f),
+                S(2700f, -100f),
+                S(2599f, -100f)
+            );
+            // The west meadow: the first patrol ground, and the gust that carries the hero back.
+            z.Ground(
+                "WestMeadow",
+                -100f,
+                S(2700f, -56.4f),
+                C(2730f, -56.8f),
+                C(2760f, -57.6f),
+                C(2800f, -58f),
+                S(2820f, -58f)
+            );
+            // The glowing streams: a 7-tile gap each, the water below safe to fall into.
+            Stream(z, "Stream1", 2820f, -58f);
+            z.Ground("Bank1", -100f, S(2827f, -58.2f), C(2850f, -58.6f), C(2880f, -58.4f), S(2900f, -58.4f));
+            Stream(z, "Stream2", 2900f, -58.4f);
+            z.Ground("Bank2", -100f, S(2907f, -58.6f), C(2940f, -59f), C(2980f, -58.6f), S(3000f, -58.4f));
+            Stream(z, "Stream3", 3000f, -58.4f);
+            // Sky islands 7.6 above the banks: Wings only.
+            z.Island("SkyIsland1", S(2850f, -51f), S(2862f, -51f), S(2862f, -54f), S(2850f, -54f));
+            z.Island("SkyIsland2", S(2944f, -51.4f), S(2958f, -51.4f), S(2958f, -54.4f), S(2944f, -54.4f));
+            // The Sundial's field: the dial, the keeper's hut with the ledger, the Field Shrine.
+            z.Ground(
+                "SundialField",
+                -100f,
+                S(3007f, -58.4f),
+                C(3040f, -58.6f),
+                C(3080f, -58.4f),
+                C(3120f, -58.2f),
+                C(3160f, -58f),
+                S(3200f, -58.2f)
+            );
+            z.Closed(
+                "SundialPlate",
+                Profile.Decor,
+                false,
+                S(3010f, -56f),
+                S(3060f, -56f),
+                S(3060f, -58.6f),
+                S(3010f, -58.6f)
+            );
+            z.Closed(
+                "SundialGnomon",
+                Profile.Decor,
+                false,
+                S(3030f, -40f),
+                S(3034f, -40f),
+                S(3046f, -56f),
+                S(3030f, -56f)
+            );
+            z.Closed(
+                "KeepersHut",
+                Profile.Decor,
+                false,
+                S(3086f, -50f),
+                S(3100f, -50f),
+                S(3100f, -58.4f),
+                S(3086f, -58.4f)
+            );
+            z.Closed("KeepersRoof", Profile.Decor, false, S(3084f, -49.6f), S(3093f, -46f), S(3102f, -49.6f));
+            z.Deck("HutLoft", 4f, S(3088f, -49.6f), S(3098f, -49.6f));
+            Stream(z, "Stream4", 3200f, -58.2f);
+            // The east fields: the second patrol ground, two more streams, the last shrine.
+            z.Ground(
+                "EastField1",
+                -100f,
+                S(3207f, -58.4f),
+                C(3250f, -58.8f),
+                C(3300f, -58.6f),
+                C(3350f, -58.8f),
+                S(3400f, -58.6f)
+            );
+            Stream(z, "Stream5", 3400f, -58.6f);
+            z.Ground("EastField2", -100f, S(3407f, -59f), C(3450f, -59.4f), C(3500f, -59.6f), S(3540f, -59.6f));
+            Stream(z, "Stream6", 3540f, -59.6f);
+            z.Ground("EastMeadow", -100f, S(3547f, -60f), C(3600f, -60.2f), C(3650f, -60.2f), S(3701f, -60f));
+
+            z.MainPath(
+                "Descent1",
+                "Descent2",
+                "Descent3",
+                "Descent4",
+                "Descent5",
+                "WestMeadow",
+                "Bank1",
+                "Bank2",
+                "SundialField",
+                "EastField1",
+                "EastField2",
+                "EastMeadow"
+            );
+            z.Soft("MossBed");
+            z.Masonry("SundialField");
+            z.saves.Add(new Vector2(3150f, -58.05f));
+            z.saves.Add(new Vector2(3650f, -60.2f));
+
+            var story = Descender.World.Paradise.DesignMarker.Kind.Story;
+            var npc = Descender.World.Paradise.DesignMarker.Kind.Npc;
+            var item = Descender.World.Paradise.DesignMarker.Kind.Item;
+            var secret = Descender.World.Paradise.DesignMarker.Kind.Secret;
+            var encounter = Descender.World.Paradise.DesignMarker.Kind.Encounter;
+            var landmark = Descender.World.Paradise.DesignMarker.Kind.Landmark;
+            z.Mark(
+                story,
+                2712f,
+                -55f,
+                "Gust return",
+                "A gust carries the hero back up the Crown Vine for the backtrack (the mechanic comes later; marker only)."
+            );
+            z.Mark(
+                encounter,
+                2760f,
+                -56.8f,
+                "Encounter: patrol ground (west)",
+                "A wide flat stretch for the angel guards to come."
+            );
+            z.Mark(secret, 2856f, -50f, "Secret: sky island", "Wings only: 7.6 above the bank.");
+            z.Mark(secret, 2903f, -63f, "Secret: stream cave", "Under the second stream, between the banks.");
+            z.Mark(secret, 2951f, -50.4f, "Secret: sky island 2", "Wings only: 7.6 above the second bank.");
+            z.Mark(landmark, 3036f, -38f, "Landmark: the Sundial", "A huge stone sundial whose shadow never moves.");
+            z.Mark(item, 3093f, -56.5f, "Beat 5: ledger page", "The tally ledger's page, in the field-keeper's hut.");
+            var ledger = z.Place("ledger", "item", 3093f, -58.4f, "Beat 5: ledger page");
+            ledger.item = "ledger";
+            ledger.dialogue = new[] { "item_ledger" };
+            z.Mark(secret, 3093f, -48.6f, "Secret: hut loft", "Wings: the loft over the keeper's hut.");
+            z.Mark(npc, 3156f, -56.5f, "Beat 6: Ithuriel", "Sits by the Field Shrine, humming Tobiah's song.");
+            var ithuriel = z.Place("ithuriel", "npc", 3156f, -58.05f, "Beat 6: Ithuriel");
+            ithuriel.placementName = "Ithuriel";
+            ithuriel.character = "ithuriel";
+            ithuriel.facesLeft = true; // faces the shrine
+            ithuriel.dialogue = new[] { "ithuriel_intro" };
+            ithuriel.rotate = new[] { "ithuriel_again", "ithuriel_song", "ithuriel_orders" };
+            z.Mark(encounter, 3300f, -58.6f, "Encounter: patrol ground (east)", "The second patrol ground.");
+            z.Mark(story, 3692f, -59f, "Into the Terraces", "The meadows end at the first terrace wall.");
+
+            z.Light(2650f, -40f, Gold, 20f, 0.7f);
+            z.Light(2760f, -50f, Gold, 16f, 0.7f);
+            z.Light(3036f, -44f, Gold, 14f, 0.8f);
+            z.Light(3093f, -54f, Dawn, 8f, 0.9f);
+            z.Light(3150f, -54f, Dawn, 8f, 1f);
+            z.Light(3300f, -50f, Gold, 16f, 0.7f);
+            z.Light(3650f, -56f, Dawn, 8f, 1f);
+            return z;
+        }
+
+        /// <summary>One island of the Wings descent: 14 wide, 4 thick, its top-left at (x, top).</summary>
+        private static void Descent(Zone z, string name, float x, float top)
+        {
+            z.Island(name, S(x, top), S(x + 14f, top), S(x + 14f, top - 4f), S(x, top - 4f));
+        }
+
+        /// <summary>
+        /// A glowing stream in a 7-tile gap east of x: its bed (soft, off the main path) 6
+        /// below the bank, the water a decor sheet on it, and a glow.
+        /// </summary>
+        private static void Stream(Zone z, string name, float x, float bankY)
+        {
+            var bed = bankY - 6f;
+            z.Closed(name + "Bed", Profile.Leaf, true, S(x, bed), S(x + 7f, bed), S(x + 7f, -100f), S(x, -100f));
+            z.Soft(name + "Bed");
+            z.Closed(name, Profile.Decor, false, S(x, bed + 1.5f), S(x + 7f, bed + 1.5f), S(x + 7f, bed), S(x, bed));
+            z.Light(x + 3.5f, bed + 2f, StreamGlow, 8f, 1f);
         }
     }
 }

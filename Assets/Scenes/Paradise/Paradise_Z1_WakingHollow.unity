@@ -40118,7 +40118,7 @@ GameObject:
   - component: {fileID: 1507991475}
   - component: {fileID: 1507991476}
   m_Layer: 0
-  m_Name: Save1
+  m_Name: Save5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40156,7 +40156,7 @@ MonoBehaviour:
   catalog: {fileID: 11400000, guid: 8b84ce9f052cf16458006b55053b94f5, type: 2}
   ability: 
   abilityIndex: -1
-  checkpointIndex: 1
+  checkpointIndex: 5
   placementName: 
   character: 
   tint: {r: 1, g: 1, b: 1, a: 1}

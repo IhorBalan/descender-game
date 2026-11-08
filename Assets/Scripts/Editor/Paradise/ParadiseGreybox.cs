@@ -16,7 +16,8 @@ namespace Descender.EditorTools.Paradise
     /// ParadiseLayout (docs/design/paradise.md), apart from the prototype game: Main.unity,
     /// World.asset and the prototype's Region_paradise.unity are never touched. It writes
     ///
-    /// - the greybox art (plain textures with a one-tile grid, so distances read at a glance);
+    /// - the greybox art (plain textures with a one-tile grid, so distances read at a glance;
+    ///   red is kept for the thorn hazards alone);
     /// - one scene per zone, and the region's root scene Region_paradise_new.unity
     ///   (RegionRoot + RegionZones), under Assets/Scenes/Paradise;
     /// - its own world, Assets/Data/Paradise/ParadiseWorld.asset: the one 7,500 x 120
@@ -40,6 +41,7 @@ namespace Descender.EditorTools.Paradise
         public const string PrototypeMainPath = "Assets/Scenes/Main.unity";
         public const string LookPath = "Assets/Data/Regions/paradise.asset";
         public const string CatalogPath = "Assets/Data/Placements.asset";
+        public const string HazardPrefabPath = "Assets/Prefabs/Pickups/Hazard.prefab";
         public const string LitMaterialPath =
             "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
         public const int RegionRows = 120;
@@ -106,6 +108,12 @@ namespace Descender.EditorTools.Paradise
 
         [MenuItem("Descender/Paradise/Rebuild zone 2 from layout (overwrites)")]
         public static void RebuildZone2() => AskAndRebuild(2);
+
+        [MenuItem("Descender/Paradise/Rebuild zone 3 from layout (overwrites)")]
+        public static void RebuildZone3() => AskAndRebuild(3);
+
+        [MenuItem("Descender/Paradise/Rebuild zone 4 from layout (overwrites)")]
+        public static void RebuildZone4() => AskAndRebuild(4);
 
         public static void RebuildFromEnvironment()
         {
@@ -303,6 +311,7 @@ namespace Descender.EditorTools.Paradise
             public Sprite podSprite;
             public Sprite seedSprite;
             public Sprite flagSprite;
+            public Sprite hazardSprite;
             public Material lit;
         }
 
@@ -329,6 +338,8 @@ namespace Descender.EditorTools.Paradise
             art.podSprite = SpriteTex("pod", 64, 32, (x, y) => Ellipse(x, y, 64, 32, new Color(0.95f, 0.55f, 0.75f)));
             art.seedSprite = SpriteTex("seed", 32, 32, (x, y) => Ellipse(x, y, 32, 32, new Color(1f, 0.85f, 0.45f)));
             art.flagSprite = SpriteTex("flag", 16, 16, (x, y) => Color.white);
+            // The one red thing in the greybox: thorns, so a hazard reads at a glance.
+            art.hazardSprite = SpriteTex("hazard", 16, 16, (x, y) => new Color(0.85f, 0.08f, 0.1f));
             art.ground = Profile("Ground", groundFill, groundEdge);
             art.leaf = Profile("Leaf", leafFill, leafEdge);
             art.decor = Profile("Decor", decorFill, decorEdge);
@@ -445,6 +456,7 @@ namespace Descender.EditorTools.Paradise
             var decorGroup = Group(root, "Decor");
             var podGroup = Group(root, "Pods");
             var placementGroup = Group(root, "Placements");
+            var hazardGroup = Group(root, "Hazards");
             var markerGroup = Group(root, "Markers");
             var lightGroup = Group(root, "Lights");
             var roomGroup = Group(root, "Rooms");
@@ -484,6 +496,10 @@ namespace Descender.EditorTools.Paradise
             foreach (var seed in zone.seeds)
             {
                 BuildSeed(seed, podGroup, art, seedIndex++, zoneArt);
+            }
+            foreach (var hazard in zone.hazards)
+            {
+                BuildHazard(hazard, hazardGroup, art);
             }
             // The garden's saves are marble shrines; the greybox keeps the prototype's.
             var catalog =
@@ -1065,6 +1081,33 @@ namespace Descender.EditorTools.Paradise
                 ParadiseArt.Skin(visual, zoneArt, "z1_prop_seed_pod", 0.55f, new Vector2(0f, -0.6f));
             }
             go.AddComponent<SeedPod>();
+        }
+
+        /// <summary>
+        /// Thorns: the Hazard prefab (its trigger on the Hazard layer hurts the hero) sized to
+        /// the layout's rect, with the greybox's red stand-in over it. The art pass replaces
+        /// the stand-in with briars; the prefab instance stays.
+        /// </summary>
+        private static void BuildHazard(ParadiseLayout.Hazard hazard, Transform parent, Art art)
+        {
+            var prefab =
+                AssetDatabase.LoadAssetAtPath<GameObject>(HazardPrefabPath)
+                ?? throw new System.InvalidOperationException(HazardPrefabPath + " is missing.");
+            var go = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            go.name = hazard.name;
+            go.transform.SetParent(parent, false);
+            go.transform.position = hazard.rect.min;
+            var box = go.GetComponent<BoxCollider2D>();
+            box.size = hazard.rect.size;
+            box.offset = hazard.rect.size / 2f;
+            var visual = new GameObject("Visual").AddComponent<SpriteRenderer>();
+            visual.transform.SetParent(go.transform, false);
+            visual.transform.localPosition = hazard.rect.size / 2f;
+            // The stand-in is 16 px at 64 px per unit: a quarter tile, scaled to the rect.
+            visual.transform.localScale = new Vector3(hazard.rect.width * 4f, hazard.rect.height * 4f, 1f);
+            visual.sprite = art.hazardSprite;
+            visual.sharedMaterial = art.lit;
+            visual.sortingOrder = -70;
         }
 
         private static void BuildSave(
