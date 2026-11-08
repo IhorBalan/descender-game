@@ -7,9 +7,9 @@ namespace Descender.World
     /// to bottom (a band's top row and height in tiles, its scene is
     /// "Region_&lt;key&gt;"), where a new game starts, and every checkpoint in the order
     /// the saves number them (top to bottom, left to right over the whole world).
-    /// One asset at Assets/Data/World.asset, written by
-    /// tools/unity/import_godot_regions.py from scenes/world/world.tscn. Positions are
-    /// world units: X right, Y down from the world's top edge is negative.
+    /// One committed asset at Assets/Data/World.asset, edited in Unity like any
+    /// other. Positions are world units: X right, Y down from the world's top edge
+    /// is negative.
     /// </summary>
     [CreateAssetMenu(menuName = "Descender/World Atlas", fileName = "World")]
     public sealed class WorldAtlas : ScriptableObject

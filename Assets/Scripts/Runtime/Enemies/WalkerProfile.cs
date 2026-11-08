@@ -13,8 +13,8 @@ namespace Descender.Enemies
     /// <summary>
     /// The numbers of one ground enemy body: its size, pace, health, swing and drops.
     /// One asset per body under Assets/Data/Enemies, set on the body's prefab variant,
-    /// so a body is tuned in the Inspector. Filled from the Godot .tres by the
-    /// profile importer (Descender > Import > Profiles).
+    /// so a body is tuned in the Inspector; the committed assets carry the
+    /// prototype's numbers.
     /// </summary>
     [CreateAssetMenu(menuName = "Descender/Walker Profile", fileName = "walker")]
     public sealed class WalkerProfile : ScriptableObject

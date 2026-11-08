@@ -9,7 +9,7 @@ namespace Descender.UI
     /// it, a scrolling list of rows in the middle, a description line that follows
     /// the focused row, a back button and the hint along the bottom. A derived
     /// screen fills the list in <see cref="Refresh"/> and names its texts. Layout as
-    /// scenes/inventory_menu.tscn and its siblings had it, in 320 x 180 pixels.
+    /// the prototype's inventory menu and its siblings had it, in 320 x 180 pixels.
     /// </summary>
     public abstract class ListScreen : UiScreen
     {

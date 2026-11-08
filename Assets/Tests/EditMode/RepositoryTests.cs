@@ -12,7 +12,7 @@ namespace Descender.Tests
 {
     /// <summary>
     /// What the repository as a whole must hold for the Unity project to stand on its own:
-    /// no C# names a file of the Godot project the game was ported from, and the twelve
+    /// no C# line, comment included, names a file of the Godot project the game was ported from, and the twelve
     /// prototype region scenes carry everything they reference. The roots, exclusions and
     /// patterns are constants so later checks on the repository can widen or share them.
     /// </summary>
@@ -21,18 +21,13 @@ namespace Descender.Tests
         /// <summary>The folders whose C# is scanned, from the project root.</summary>
         private static readonly string[] ScannedRoots = { "Assets/Scripts", "Assets/Tests" };
 
-        /// <summary>
-        /// Files the scan leaves out: this one, which has to spell the patterns, and the test
-        /// of the Godot resource reader, whose sample text is a Godot resource (it goes when
-        /// the reader does).
-        /// </summary>
-        private static readonly string[] ExcludedFiles =
-        {
-            "Assets/Tests/EditMode/RepositoryTests.cs",
-            "Assets/Tests/EditMode/TresParserTests.cs",
-        };
+        /// <summary>Files the scan leaves out: this one, which has to spell the patterns.</summary>
+        private static readonly string[] ExcludedFiles = { "Assets/Tests/EditMode/RepositoryTests.cs" };
 
-        /// <summary>What no line of code may contain: Godot paths and formats, and a path that leaves Assets/.</summary>
+        /// <summary>
+        /// What no line, code or comment, may contain: Godot paths and formats, and a path that
+        /// leaves Assets/. A `.gd` script name may still be cited as the origin of a port.
+        /// </summary>
         private static readonly string[] ForbiddenInCode =
         {
             "res://",
@@ -44,9 +39,6 @@ namespace Descender.Tests
             "import_godot",
             "../",
         };
-
-        /// <summary>A comment line starts with this once trimmed; comments are not scanned.</summary>
-        private const string CommentPrefix = "//";
 
         /// <summary>The prototype regions sit directly in this folder; the rebuilt Paradise is in a subfolder and is not one of them.</summary>
         private const string RegionSceneFolder = "Assets/Scenes";
@@ -105,10 +97,6 @@ namespace Descender.Tests
                     var lines = File.ReadAllLines(file);
                     for (var i = 0; i < lines.Length; i++)
                     {
-                        if (lines[i].TrimStart().StartsWith(CommentPrefix, System.StringComparison.Ordinal))
-                        {
-                            continue;
-                        }
                         foreach (var pattern in ForbiddenInCode)
                         {
                             if (lines[i].Contains(pattern))

@@ -5,7 +5,7 @@ using UnityEngine.TextCore.LowLevel;
 namespace Descender.UI
 {
     /// <summary>
-    /// The stone look of the menus, as godot_assets/ui_theme.tres had it: the Pirata
+    /// The stone look of the menus, as the prototype's stone theme had it: the Pirata
     /// One font, the nine-sliced button and panel textures under Assets/Art/UI/Theme
     /// and the colours every screen shares. One asset, Assets/Resources/UiTheme.asset,
     /// reached through <see cref="Current"/>; <see cref="UiKit"/> reads it when it

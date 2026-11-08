@@ -5,7 +5,7 @@ namespace Descender.UI
     /// <summary>
     /// The look of the menus: the Pirata One font, the nine-sliced stone buttons and
     /// panel, the divider, the slider grabber and the toggle icons from
-    /// Assets/Art/UI/Theme, and the text colours of godot_assets/ui_theme.tres. One
+    /// Assets/Art/UI/Theme, and the text colours of the prototype's stone theme. One
     /// asset, Assets/Settings/MenuTheme.asset, referenced by the menu screens in
     /// Main.unity and read by <see cref="MenuKit"/>.
     /// </summary>
