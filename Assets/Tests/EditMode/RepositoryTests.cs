@@ -12,12 +12,55 @@ namespace Descender.Tests
 {
     /// <summary>
     /// What the repository as a whole must hold for the Unity project to stand on its own:
-    /// no C# line, comment included, names a file of the Godot project the game was ported from, and the twelve
-    /// prototype region scenes carry everything they reference. The roots, exclusions and
-    /// patterns are constants so later checks on the repository can widen or share them.
+    /// no C# line, comment included, names a file of the Godot project the game was ported from, the Godot
+    /// project itself is gone from the tree, and the twelve prototype region scenes carry everything
+    /// they reference. The roots, exclusions and patterns are constants so later checks on the
+    /// repository can widen or share them.
     /// </summary>
     public class RepositoryTests
     {
+        /// <summary>
+        /// The Godot project's files and folders at the repository root, deleted with the project.
+        /// The last commit that held them is tagged `godot-last`.
+        /// </summary>
+        private static readonly string[] GodotRootEntries =
+        {
+            "project.godot",
+            "export_presets.cfg",
+            "default_bus_layout.tres",
+            ".gdlintrc",
+            "addons",
+            "dialogue",
+            "godot_assets",
+            "levels",
+            "resources",
+            "scenes",
+            "scripts",
+            "tests",
+        };
+
+        /// <summary>No tracked file anywhere in the repository may end with one of these.</summary>
+        private static readonly string[] GodotFileSuffixes = { ".tscn", ".tres", ".gd", ".import", ".gdignore" };
+
+        /// <summary>
+        /// Folders the tree walk skips when `git` is not on the path: what `.gitignore` names, so an
+        /// editor's or a build's untracked output cannot fail the test.
+        /// </summary>
+        private static readonly string[] UntrackedFolders =
+        {
+            ".git",
+            ".vs",
+            "Library",
+            "Temp",
+            "Obj",
+            "Build",
+            "Builds",
+            "Logs",
+            "UserSettings",
+            "MemoryCaptures",
+            "Recordings",
+        };
+
         /// <summary>The folders whose C# is scanned, from the project root.</summary>
         private static readonly string[] ScannedRoots = { "Assets/Scripts", "Assets/Tests" };
 
@@ -110,6 +153,95 @@ namespace Descender.Tests
 
             Assert.That(scanned, Is.GreaterThan(0), "no C# file was scanned");
             Assert.That(offenders, Is.Empty, Listed("C# names a Godot path or leaves Assets/", offenders));
+        }
+
+        [Test]
+        public void TheRepositoryHoldsNoGodotProject()
+        {
+            var problems = new List<string>();
+            foreach (var entry in GodotRootEntries)
+            {
+                var path = Path.Combine(ProjectRoot, entry);
+                if (File.Exists(path) || Directory.Exists(path))
+                {
+                    problems.Add(entry + " exists at the repository root");
+                }
+            }
+
+            var files = TrackedFiles();
+            Assert.That(files.Count, Is.GreaterThan(0), "no repository file was listed");
+            foreach (var file in files)
+            {
+                foreach (var suffix in GodotFileSuffixes)
+                {
+                    if (file.EndsWith(suffix, System.StringComparison.Ordinal))
+                    {
+                        problems.Add(file);
+                    }
+                }
+            }
+
+            Assert.That(problems, Is.Empty, Listed("the repository still holds Godot files", problems));
+        }
+
+        /// <summary>
+        /// Every tracked file, relative to the repository root with forward slashes: `git ls-files`
+        /// when git is on the path, else a walk of the tree that skips the untracked folders.
+        /// </summary>
+        private static List<string> TrackedFiles()
+        {
+            var listed = GitLsFiles();
+            if (listed != null)
+            {
+                return listed;
+            }
+            var files = new List<string>();
+            Walk(ProjectRoot, files);
+            return files;
+        }
+
+        private static List<string> GitLsFiles()
+        {
+            try
+            {
+                var info = new System.Diagnostics.ProcessStartInfo("git", "ls-files -z")
+                {
+                    WorkingDirectory = ProjectRoot,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    RedirectStandardError = true,
+                    CreateNoWindow = true,
+                };
+                using (var process = System.Diagnostics.Process.Start(info))
+                {
+                    var output = process.StandardOutput.ReadToEnd();
+                    process.WaitForExit();
+                    if (process.ExitCode != 0)
+                    {
+                        return null;
+                    }
+                    return output.Split('\0').Where(path => path.Length > 0).ToList();
+                }
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
+        }
+
+        private static void Walk(string folder, List<string> files)
+        {
+            foreach (var child in Directory.GetDirectories(folder))
+            {
+                if (!UntrackedFolders.Contains(Path.GetFileName(child)))
+                {
+                    Walk(child, files);
+                }
+            }
+            foreach (var file in Directory.GetFiles(folder))
+            {
+                files.Add(file.Substring(ProjectRoot.Length + 1).Replace('\\', '/'));
+            }
         }
 
         [Test]
