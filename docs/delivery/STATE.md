@@ -122,17 +122,18 @@ hygiene as each production region lands.
 | T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | done | 2 | none | 1 | T-0002 implementation | #140 |
 | T-0003 | Beats of zones 1 and 2 as layout placements | done | 3 | T-0001, T-0002 | 1 | T-0003 implementation | #145 |
 | T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | done | 4 | T-0001, T-0003 | 1 | Work through the roadmap tasks | #152 |
-| T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | in review | 5 | T-0004 | 1 | Work through the roadmap tasks | #153 |
+| T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | done | 5 | T-0004 | 1 | Work through the roadmap tasks | #153 |
 
 | T-0006 | Prove the Unity port is complete and reads nothing from Godot | done | 6 | none | 1 | T-0006 implementation | #146 |
 | T-0007 | The Python tools stand without the Godot tree | done | 7 | none | 1 | Continue the Godot removal milestone | #148 |
 | T-0008 | Godot-format code and reference copies leave Assets/ | done | 8 | T-0006, T-0007 | 1 | Continue the Godot removal milestone | #149 |
 | T-0009 | Delete the Godot project | done | 9 | T-0008 | 1 | Continue the Godot removal milestone | #150 |
 | T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
+| T-0011 | The scripted run of the Paradise main path | in review | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
 
-Full task text: project files, `planning/m1-tasks.md` (revision 2) and
-`planning/godot-removal-tasks.md` (revision 2, MG). Playtest:
-T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0010 no. T-0001 and T-0002 run in parallel (disjoint
+Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
+added 2026-11-08) and `planning/godot-removal-tasks.md` (revision 2, MG).
+Playtest: T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0011 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
 zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
 T-0007 run in parallel with M1 (disjoint files); T-0008, T-0009 and T-0010
@@ -294,8 +295,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (79 on `main` after the single-launch hook) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (6) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (120 on `main` after T-0011) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (16 after T-0011; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |

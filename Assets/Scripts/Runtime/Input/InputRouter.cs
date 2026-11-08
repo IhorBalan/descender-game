@@ -8,10 +8,11 @@ namespace Descender.Input
     /// reads the typed accessors in Update and buffers for FixedUpdate; menus
     /// switch to the UI map with <see cref="UseUi"/>. Binding overrides from the
     /// settings are applied here on boot. Actions are looked up by name from the
-    /// asset so no generated wrapper is needed.
+    /// asset so no generated wrapper is needed. It is the hero's IHeroInput unless a
+    /// script gives him another.
     /// </summary>
     [DefaultExecutionOrder(-100)]
-    public sealed class InputRouter : MonoBehaviour
+    public sealed class InputRouter : MonoBehaviour, IHeroInput
     {
         public static InputRouter Instance { get; private set; }
 

@@ -54,6 +54,8 @@ namespace Descender.Player
         private readonly HashSet<Save.Ability> abilities = new HashSet<Save.Ability>();
         private static PhysicsMaterial2D slick;
 
+        private Input.IHeroInput inputSource;
+
         // Buffered input (set in Update, consumed in FixedUpdate).
         private float moveX;
         private bool downHeld;
@@ -155,6 +157,19 @@ namespace Descender.Player
 
         /// <summary>Set while a dialogue box is open: input is ignored and nothing can hurt him.</summary>
         public bool Talking { get; set; }
+
+        /// <summary>
+        /// Where the hero reads his input: the InputRouter in the scene while this is null,
+        /// otherwise what a script set (a ScriptedInput for the scripted playtest).
+        /// </summary>
+        public Input.IHeroInput InputSource
+        {
+            get => inputSource;
+            set => inputSource = value;
+        }
+
+        /// <summary>Whether the Wings' second jump is still to be had before he next lands.</summary>
+        public bool AirJumpAvailable => airJumpAvailable;
 
         // --- Abilities, powers, stats -------------------------------------------
 
@@ -303,7 +318,11 @@ namespace Descender.Player
 
         private void Update()
         {
-            var input = Input.InputRouter.Instance;
+            var input = inputSource;
+            if (input == null)
+            {
+                input = Input.InputRouter.Instance;
+            }
             if (input == null || InputBlocked || state == PlayerState.Dead)
             {
                 moveX = 0f;
