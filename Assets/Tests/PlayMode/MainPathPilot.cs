@@ -449,7 +449,11 @@ namespace Descender.Tests.PlayMode
             var aimX = leg.landing.x + leg.dir * LandingOvershoot;
             input.MoveX = (aimX - at.x) * leg.dir > 0f ? leg.dir : 0f;
             input.JumpHeld = velocity.y > 0f || airTime < 0.05f || holdLeft > 0f;
-            if (grounded && airTime > 0.1f)
+            // Touching down shows up a physics step before the ground check does: the body comes to
+            // rest, then the next step finds the ground under it. A resting hero is landed too, or
+            // else an air jump pressed in that step takes off again and he never reads as grounded.
+            var resting = !grounded && Mathf.Abs(velocity.y) < 0.01f && airTime > 0.1f;
+            if ((grounded || resting) && airTime > 0.1f)
             {
                 if (leg.Reached(at))
                 {
@@ -466,7 +470,7 @@ namespace Descender.Tests.PlayMode
                 }
                 return;
             }
-            if (grounded || velocity.y > 0f || pressCooldown > 0f)
+            if (grounded || velocity.y >= 0f || pressCooldown > 0f)
             {
                 return;
             }

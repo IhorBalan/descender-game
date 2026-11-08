@@ -50,6 +50,9 @@ namespace Descender.Tests.PlayMode
             Pickups.Checkpoint.Reset();
             Save.SaveManager.UseDirectory(System.IO.Path.Combine(Application.temporaryCachePath, "paradise_run"));
             captureBefore = Time.captureDeltaTime;
+            // The hero's physics is deterministic; the world's random bits (bob phases, butterflies)
+            // are seeded so that a run repeats frame for frame.
+            Random.InitState(1);
         }
 
         [TearDown]
