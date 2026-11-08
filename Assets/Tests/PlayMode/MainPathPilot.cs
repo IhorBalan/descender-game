@@ -485,6 +485,12 @@ namespace Descender.Tests.PlayMode
             {
                 return;
             }
+            // Over the landing surface and about to touch it: let him land. An air jump here is
+            // buffered into a ground jump the step he lands, and he pogos on the spot.
+            if (OverSurface(leg.ontoLine, at))
+            {
+                return;
+            }
             // Falling: will he reach the landing?
             var remaining = (leg.landing.x - at.x) * leg.dir;
             var below = at.y < leg.landing.y + 0.25f;
@@ -570,9 +576,25 @@ namespace Descender.Tests.PlayMode
 
         private static bool StandsOn(List<Vector2> line, Vector2 at)
         {
+            return WithinX(line, at.x) && Mathf.Abs(at.y - ParadiseChecker.HeightAt(line, at.x)) < 0.75f;
+        }
+
+        /// <summary>Whether a falling point is above a surface and within a tile of touching it.</summary>
+        private static bool OverSurface(List<Vector2> line, Vector2 at)
+        {
+            if (!WithinX(line, at.x))
+            {
+                return false;
+            }
+            var height = ParadiseChecker.HeightAt(line, at.x);
+            return at.y > height - 0.5f && at.y < height + 1f;
+        }
+
+        private static bool WithinX(List<Vector2> line, float x)
+        {
             var west = Mathf.Min(line[0].x, line[line.Count - 1].x) - 0.5f;
             var east = Mathf.Max(line[0].x, line[line.Count - 1].x) + 0.5f;
-            return at.x >= west && at.x <= east && Mathf.Abs(at.y - ParadiseChecker.HeightAt(line, at.x)) < 0.75f;
+            return x >= west && x <= east;
         }
 
         private void Next()
