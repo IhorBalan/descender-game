@@ -1531,14 +1531,7 @@ namespace Descender.EditorTools.Paradise
             Machinery(z, "Shutter1", 5528f, -15.4f, 12f, "timed shutter");
             z.Deck("Pipe4", 8f, S(5548f, -16f), C(5600f, -15.6f), S(5660f, -16.4f));
             Machinery(z, "Platform2", 5669f, -17f, 12f, "moving platform");
-            z.Ground(
-                "DoorApproach",
-                -100f,
-                S(5690f, -18f),
-                C(5750f, -18.4f),
-                C(5800f, -18.6f),
-                S(5860f, -18.8f)
-            );
+            z.Ground("DoorApproach", -100f, S(5690f, -18f), C(5750f, -18.4f), C(5800f, -18.6f), S(5860f, -18.8f));
             z.Deck("Pipe5", 8f, S(5868f, -19f), C(5920f, -18.6f), S(5980f, -19.4f));
             z.Ground("ExitPipe", -100f, S(5989f, -20f), C(6100f, -20.4f), C(6200f, -20.6f), S(6301f, -21f));
             // The root bed under the pipes: soft, 22 below, with pods back up.

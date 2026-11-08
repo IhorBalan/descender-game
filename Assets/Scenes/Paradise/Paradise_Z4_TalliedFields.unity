@@ -9953,7 +9953,7 @@ GameObject:
   - component: {fileID: 1904259802}
   - component: {fileID: 1904259803}
   m_Layer: 0
-  m_Name: Save6
+  m_Name: Save8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9991,7 +9991,7 @@ MonoBehaviour:
   catalog: {fileID: 11400000, guid: fb807daeee5f527ebfedfc9c30eeb841, type: 2}
   ability: 
   abilityIndex: -1
-  checkpointIndex: 6
+  checkpointIndex: 8
   placementName: 
   character: 
   tint: {r: 1, g: 1, b: 1, a: 1}
@@ -10701,7 +10701,7 @@ GameObject:
   - component: {fileID: 2108414418}
   - component: {fileID: 2108414419}
   m_Layer: 0
-  m_Name: Save4
+  m_Name: Save7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10739,7 +10739,7 @@ MonoBehaviour:
   catalog: {fileID: 11400000, guid: fb807daeee5f527ebfedfc9c30eeb841, type: 2}
   ability: 
   abilityIndex: -1
-  checkpointIndex: 4
+  checkpointIndex: 7
   placementName: 
   character: 
   tint: {r: 1, g: 1, b: 1, a: 1}

@@ -24,23 +24,37 @@ MonoBehaviour:
   start: {x: 12, y: -62.4}
   checkpoints:
   - region: paradise_new
-    position: {x: 2580, y: -12.4}
+    position: {x: 300, y: -59.5}
   - region: paradise_new
-    position: {x: 2250, y: -46.4}
+    position: {x: 590, y: -62}
+  - region: paradise_new
+    position: {x: 904, y: -64}
   - region: paradise_new
     position: {x: 1288, y: -50}
   - region: paradise_new
     position: {x: 1756, y: -57.6}
   - region: paradise_new
-    position: {x: 3150, y: -58.05}
+    position: {x: 2250, y: -46.4}
   - region: paradise_new
-    position: {x: 300, y: -59.5}
+    position: {x: 2580, y: -12.4}
+  - region: paradise_new
+    position: {x: 3150, y: -58.05}
   - region: paradise_new
     position: {x: 3650, y: -60.2}
   - region: paradise_new
-    position: {x: 590, y: -62}
+    position: {x: 4200, y: -18.5}
   - region: paradise_new
-    position: {x: 904, y: -64}
+    position: {x: 4694, y: -20}
+  - region: paradise_new
+    position: {x: 5250, y: -21}
+  - region: paradise_new
+    position: {x: 5800, y: -18.6}
+  - region: paradise_new
+    position: {x: 6350, y: -21.6}
+  - region: paradise_new
+    position: {x: 6900, y: -52.4}
+  - region: paradise_new
+    position: {x: 7350, y: -34}
   abilities:
   - Wings (double jump)
   - Halo Dash
