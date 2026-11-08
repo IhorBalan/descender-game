@@ -865,6 +865,277 @@ namespace Descender.EditorTools.Paradise
             renderer.sortingOrder = -100;
         }
 
+        private const string CastShadowMaterialName = "Paradise Cast Shadow";
+
+        /// <summary>Width of the strips the shadow under a lip is cut into, in units.</summary>
+        private const float ShadowStrip = 0.5f;
+
+        /// <summary>
+        /// The shadow the coping or the grass throws on the face just below it: the one hard
+        /// line that says the lip stands proud of the wall. It follows the surface exactly
+        /// (the depth shade is smoothed across steps, this must not be).
+        /// </summary>
+        public static void UnderLip(Transform parent, List<Vector2> outline, bool masonry)
+        {
+            // It starts behind the lip, whose lower edge is about a unit under the walk
+            // (manifest: walkableRow), so its top is never seen; grass hangs unevenly and
+            // throws a softer shadow than a cut coping.
+            var start = masonry ? 0.75f : 0.45f;
+            var length = masonry ? 1.2f : 1.9f;
+            var strength = masonry ? 0.5f : 0.34f;
+            const int rows = 7;
+            var depths = new float[rows];
+            var alphas = new float[rows];
+            for (var row = 0; row < rows; row++)
+            {
+                var t = row / (rows - 1f);
+                depths[row] = start + length * t;
+                alphas[row] = strength * (1f - Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(0.12f, 1f, t)));
+            }
+            var xMin = float.MaxValue;
+            var xMax = float.MinValue;
+            foreach (var p in outline)
+            {
+                xMin = Mathf.Min(xMin, p.x);
+                xMax = Mathf.Max(xMax, p.x);
+            }
+            var shade = new Color(0.14f, 0.17f, 0.27f);
+            var vertices = new List<Vector3>();
+            var colors = new List<Color>();
+            var triangles = new List<int>();
+            void Column(float x, float surface)
+            {
+                for (var row = 0; row < depths.Length; row++)
+                {
+                    vertices.Add(new Vector3(x, surface - depths[row], 0f));
+                    colors.Add(new Color(shade.r, shade.g, shade.b, alphas[row]));
+                }
+            }
+            var joined = false;
+            for (var x = xMin; x < xMax - 0.001f; x += ShadowStrip)
+            {
+                var next = Mathf.Min(x + ShadowStrip, xMax);
+                var here = SurfaceOf(outline, x);
+                var there = SurfaceOf(outline, next);
+                // A riser inside the strip: the lower lip's shadow runs on up to it.
+                var riser = Mathf.Abs(here - there) > (next - x) * 2.5f;
+                if (riser)
+                {
+                    here = there = Mathf.Min(here, there);
+                    joined = false;
+                }
+                if (!joined)
+                {
+                    Column(x, here);
+                }
+                var a = vertices.Count - depths.Length;
+                Column(next, there);
+                var b = vertices.Count - depths.Length;
+                for (var row = 0; row < depths.Length - 1; row++)
+                {
+                    triangles.AddRange(new[] { a + row, b + row, a + row + 1 });
+                    triangles.AddRange(new[] { a + row + 1, b + row, b + row + 1 });
+                }
+                joined = !riser;
+            }
+            if (triangles.Count == 0)
+            {
+                return;
+            }
+            var mesh = new Mesh { name = parent.name + " under lip" };
+            mesh.SetVertices(vertices);
+            mesh.SetColors(colors);
+            mesh.SetUVs(0, new Vector2[vertices.Count]);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("UnderLip");
+            go.transform.SetParent(parent, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = ParadiseArt.SaveMaterial(
+                CastShadowMaterialName,
+                "Universal Render Pipeline/2D/Sprite-Unlit-Default"
+            );
+            renderer.sortingOrder = -100;
+        }
+
+        /// <summary>How far a rock side's edge fades out, in units: about the softness of the painted kit's edges.</summary>
+        private const float SideFade = 0.07f;
+
+        /// <summary>
+        /// A fading ribbon of the same rock outside each steep edge. The fill's polygon has
+        /// no anti-aliasing, which is invisible on a ruled edge and a pixel staircase on a
+        /// ragged one. The depth shade stops at the outline, so the ribbon carries it itself.
+        /// </summary>
+        public static void SoftenSides(Transform parent, List<Vector2> outline, ParadiseArt.ZoneArt art)
+        {
+            var texture = art.ground.fillTexture;
+            var unit = ParadiseArt.PixelsPerUnit(texture);
+            var scale = new Vector2(unit / texture.width, unit / texture.height);
+            var vertices = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var colors = new List<Color>();
+            var triangles = new List<int>();
+            Color Shaded(Vector2 p, float inward, float alpha)
+            {
+                var depth = Mathf.Max(0f, SurfaceOf(outline, p.x + inward) - p.y);
+                var a = DepthShade(depth);
+                // The fill's mid grey, so multiplying by this lands where the shade laid over it does.
+                const float rock = 0.6f;
+                return new Color(
+                    Mathf.Lerp(1f, DepthShadeColor.r / rock, a),
+                    Mathf.Lerp(1f, DepthShadeColor.g / rock, a),
+                    Mathf.Lerp(1f, DepthShadeColor.b / rock, a),
+                    alpha
+                );
+            }
+            for (var i = 0; i < outline.Count; i++)
+            {
+                var a = outline[i];
+                var b = outline[(i + 1) % outline.Count];
+                var edge = b - a;
+                if (
+                    edge.sqrMagnitude < 1e-6f
+                    || Mathf.Abs(edge.y) < Mathf.Abs(edge.x) * 0.7f
+                    || Mathf.Max(a.y, b.y) < -95f
+                )
+                {
+                    continue;
+                }
+                // The outline runs clockwise, so outward is to its left.
+                var outward = new Vector2(-edge.y, edge.x).normalized;
+                var inward = outward.x > 0f ? -1.5f : 1.5f;
+                var first = vertices.Count;
+                foreach (var p in new[] { a, b, a + outward * SideFade, b + outward * SideFade })
+                {
+                    vertices.Add(p);
+                    uvs.Add(Vector2.Scale(p, scale));
+                }
+                colors.Add(Shaded(a, inward, 1f));
+                colors.Add(Shaded(b, inward, 1f));
+                colors.Add(Shaded(a, inward, 0f));
+                colors.Add(Shaded(b, inward, 0f));
+                triangles.AddRange(new[] { first, first + 1, first + 2, first + 2, first + 1, first + 3 });
+            }
+            if (triangles.Count == 0)
+            {
+                return;
+            }
+            var mesh = new Mesh { name = parent.name + " soft sides" };
+            mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
+            mesh.SetColors(colors);
+            FaceTheCamera(mesh);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("SoftSides");
+            go.transform.SetParent(parent, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = ParadiseNormals.LitMesh(texture, art.lit);
+            renderer.sortingOrder = -102;
+        }
+
+        /// <summary>
+        /// The channels the lit sprite shader's normals pass reads. Sprites and SpriteShape
+        /// come with them; a plain mesh without them writes a zero normal and misses the sun.
+        /// </summary>
+        private static void FaceTheCamera(Mesh mesh)
+        {
+            var normals = new Vector3[mesh.vertexCount];
+            var tangents = new Vector4[mesh.vertexCount];
+            for (var i = 0; i < normals.Length; i++)
+            {
+                normals[i] = Vector3.back;
+                tangents[i] = new Vector4(1f, 0f, 0f, -1f);
+            }
+            mesh.normals = normals;
+            mesh.tangents = tangents;
+        }
+
+        /// <summary>About how far apart a wall's piers stand, in units.</summary>
+        private const float PierSpacing = 16f;
+
+        /// <summary>Width of wall_pier.png, in units (128 px a unit).</summary>
+        private const float PierWidth = 3f;
+
+        /// <summary>Height of wall_pier.png and of wall_block.png, in units: the same courses.</summary>
+        private const float PierTile = 8f;
+
+        /// <summary>How far under the walk a pier's top starts, hidden behind the coping.</summary>
+        private const float PierTuck = 0.45f;
+
+        /// <summary>
+        /// Quoined piers built into a terrace wall at even spacing, so a long wall is a row of
+        /// bays and not one plane. One mesh per wall; v is world height over the tile, the
+        /// mapping the wall's own fill has, so the piers' courses are the wall's courses.
+        /// </summary>
+        public static void Piers(Transform parent, List<Vector2> outline, ParadiseArt.ZoneArt art)
+        {
+            var xMin = float.MaxValue;
+            var xMax = float.MinValue;
+            var bottom = float.MaxValue;
+            foreach (var p in outline)
+            {
+                xMin = Mathf.Min(xMin, p.x);
+                xMax = Mathf.Max(xMax, p.x);
+                bottom = Mathf.Min(bottom, p.y);
+            }
+            var count = Mathf.RoundToInt((xMax - xMin) / PierSpacing);
+            var vertices = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var triangles = new List<int>();
+            for (var i = 0; i < count; i++)
+            {
+                var x = xMin + (i + 0.5f) * (xMax - xMin) / count;
+                var left = x - PierWidth * 0.5f;
+                var right = x + PierWidth * 0.5f;
+                if (left < xMin + 0.5f || right > xMax - 0.5f || Crossings(outline, x) > 2)
+                {
+                    continue;
+                }
+                var topLeft = SurfaceOf(outline, left) - PierTuck;
+                var topRight = SurfaceOf(outline, right) - PierTuck;
+                // Across a step of the wall there is no single coping for it to stand under.
+                if (Mathf.Abs(topLeft - topRight) > PierWidth * 0.6f)
+                {
+                    continue;
+                }
+                var first = vertices.Count;
+                vertices.Add(new Vector3(left, topLeft, 0f));
+                vertices.Add(new Vector3(right, topRight, 0f));
+                vertices.Add(new Vector3(left, bottom, 0f));
+                vertices.Add(new Vector3(right, bottom, 0f));
+                uvs.Add(new Vector2(0f, topLeft / PierTile));
+                uvs.Add(new Vector2(1f, topRight / PierTile));
+                uvs.Add(new Vector2(0f, bottom / PierTile));
+                uvs.Add(new Vector2(1f, bottom / PierTile));
+                triangles.AddRange(new[] { first, first + 1, first + 2, first + 2, first + 1, first + 3 });
+            }
+            if (triangles.Count == 0)
+            {
+                return;
+            }
+            var mesh = new Mesh { name = parent.name + " piers" };
+            mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
+            var colors = new Color[vertices.Count];
+            for (var i = 0; i < colors.Length; i++)
+            {
+                colors[i] = Color.white;
+            }
+            mesh.colors = colors;
+            FaceTheCamera(mesh);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("Piers");
+            go.transform.SetParent(parent, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = ParadiseNormals.LitMesh(Get("wall_pier").texture, art.lit);
+            renderer.sortingOrder = -102;
+        }
+
         /// <summary>The highest point of the outline over x: the walkable surface there.</summary>
         private static float SurfaceOf(List<Vector2> outline, float x)
         {
@@ -1047,6 +1318,14 @@ namespace Descender.EditorTools.Paradise
             return material;
         }
 
+        private static readonly Color DepthShadeColor = new Color(0.15f, 0.19f, 0.3f);
+
+        /// <summary>How much of the cool shade lies on the stone this far under the walk.</summary>
+        private static float DepthShade(float depth) =>
+            // The view shows about four units under the walk: the shade has to start within it.
+            Mathf.SmoothStep(0f, 0.56f, Mathf.InverseLerp(0.8f, 4.6f, depth))
+            + Mathf.SmoothStep(0f, 0.14f, Mathf.InverseLerp(5f, 22f, depth));
+
         /// <summary>How far along the ground the weathering repeats, in units.</summary>
         private const float WeatherPeriod = 24f;
 
@@ -1066,7 +1345,7 @@ namespace Descender.EditorTools.Paradise
             const int w = 512;
             const int h = 256;
             var texture = new Texture2D(w, h, TextureFormat.RGBA32, false);
-            var shade = new Color(0.15f, 0.19f, 0.3f);
+            var shade = DepthShadeColor;
             var grime = new Color(0.27f, 0.22f, 0.13f);
             var moss = new Color(0.24f, 0.31f, 0.14f);
             var bleach = new Color(1f, 0.97f, 0.9f);
@@ -1075,10 +1354,7 @@ namespace Descender.EditorTools.Paradise
             {
                 var depth = (h - 1 - y) / (float)(h - 1) * DepthReach;
                 var v = depth / DepthReach;
-                // The view shows about four units under the walk: the shade has to start within it.
-                var a =
-                    Mathf.SmoothStep(0f, 0.56f, Mathf.InverseLerp(0.8f, 4.6f, depth))
-                    + Mathf.SmoothStep(0f, 0.14f, Mathf.InverseLerp(5f, 22f, depth));
+                var a = DepthShade(depth);
                 for (var x = 0; x < w; x++)
                 {
                     var u = x / (float)w;
@@ -1160,6 +1436,9 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>How much of a strip's length its rounded end cap takes, in units.</summary>
         public const float CapLength = 0.45f;
+
+        /// <summary>How far a strip stops short of its end: it runs a little under the cap, so no seam shows.</summary>
+        public const float CapInset = CapLength - 0.04f;
 
         /// <summary>The strips that get rounded end caps: decks, terrace copings, grass lips.</summary>
         private static readonly string[] CappedStrips = { "deck_top", "wall_cap", "grass_lip" };

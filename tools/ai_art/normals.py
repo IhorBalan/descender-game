@@ -42,6 +42,7 @@ STONE = dict(relief=(3, 10, 8), bevel=14, dome=0, wrap=(False, False))
 PRESETS = [
     ("rock_fill", dict(relief=(1, 3, 26), bevel=0, dome=0, wrap=(True, True))),
     ("wall_block", dict(relief=(1, 9, 6), bevel=0, dome=0, wrap=(True, True))),
+    ("wall_pier", dict(relief=(1, 9, 6), bevel=7, dome=0, wrap=(False, True))),
     ("island_bottom", dict(relief=(3, 10, 10), bevel=6, dome=0, wrap=(True, False))),
     ("grass_lip", dict(relief=(2, 6, 3), bevel=5, dome=10, wrap=(True, False))),
     ("deck_top", dict(relief=(3, 10, 5), bevel=7, dome=0, wrap=(True, False))),
