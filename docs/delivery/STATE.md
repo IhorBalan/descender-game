@@ -16,13 +16,14 @@ story script, the enemy, economy, upgrades and progression designs, the
 October plans and the 33 open GitHub issues. The full draft with its
 reasoning is in the project files (`planning/roadmap.md`). Ihor corrects it.
 
-**Current milestone: M1, Paradise greybox end to end.**
+**Current milestone: M2, Paradise art, zones 3 and 4** (tasks not yet planned;
+M1 closed 2026-11-08).
 
 Principles: one region to production before the next; small milestones,
 each playable; the prototype stays playable in `Main.unity` until a
 production region replaces it; enemies after the map in each region.
 
-### M1. Paradise greybox end to end (current)
+### M1. Paradise greybox end to end (done 2026-11-08)
 
 Goal: all seven zones exist and the region plays west to east in one run.
 
@@ -39,7 +40,10 @@ Goal: all seven zones exist and the region plays west to east in one run.
 - A scripted playtest that runs the whole region's main path.
 - Done when: a 20-minute straight run from zone 1 to the Low Gate's outer
   door works, every beat fires, the checker is green, and a run is on the
-  playtest list.
+  playtest list. Done: T-0001 to T-0005 and T-0011 merged (#139, #140,
+  #145, #152, #153, #154); the scripted run reaches the Low Gate in 20.3
+  game minutes with every beat fired; the playtest items of T-0002 to
+  T-0005 are still Ihor's to play.
 
 ### MG. Unity-only repository (done 2026-11-08)
 
@@ -55,7 +59,7 @@ describe a Unity-only repository. Done: T-0007 to T-0010 merged (#148 to
 (24035cf). Still open, Ihor's: the GitHub repository description and
 topics say Godot.
 
-### M2. Paradise art, zones 3 and 4
+### M2. Paradise art, zones 3 and 4 (current)
 
 The Great Vines and the Tallied Fields dressed to the bar zones 1 and 2 set;
 zones 1 and 2 revisited only where M1 moved them. Done when: a screenshot per
@@ -129,7 +133,7 @@ hygiene as each production region lands.
 | T-0008 | Godot-format code and reference copies leave Assets/ | done | 8 | T-0006, T-0007 | 1 | Continue the Godot removal milestone | #149 |
 | T-0009 | Delete the Godot project | done | 9 | T-0008 | 1 | Continue the Godot removal milestone | #150 |
 | T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
-| T-0011 | The scripted run of the Paradise main path | in review | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
+| T-0011 | The scripted run of the Paradise main path | done | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08) and `planning/godot-removal-tasks.md` (revision 2, MG).
