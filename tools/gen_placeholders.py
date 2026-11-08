@@ -1,25 +1,31 @@
 #!/usr/bin/env python3
 """Generate the placeholder checkpoint, goal gate, ability feather, light
-barrier, story relic, upgrades and power-ups. (The world's tiles come from
-the map tool, under levels/world/.)
+barrier, story relic, upgrades and power-ups, as standalone sprites under
+Assets/Art/Sprites/. (The world's tiles live under Assets/Art/Tiles.)
 
 Everything is drawn from code so it can be regenerated or replaced without
-any tooling beyond Python + Pillow:
+any tooling beyond Python 3 + Pillow:
 
     python3 tools/gen_placeholders.py
+    py tools/gen_placeholders.py --out scratch/sprites   # Windows; write somewhere else
 
-Characters (hero, imp, watcher, angel guard) are the prototype strips from
-the art thread, under godot_assets/sprites/<name>/ with sprites.json.
+Characters (the hero, the enemies, the NPCs) are animation strips under
+Assets/Art/Sprites/<name>/ with sprites.json, written by the exporters in
+tools/*_sprites, tools/hero_cutout and tools/hero_placeholder. A new file
+under Assets/ gets its .meta (unity_meta); an existing .meta is never touched.
 """
 from __future__ import annotations
 
+import argparse
 import os
 import sys
 
 from PIL import Image, ImageDraw
 
-OUT_DIR = sys.argv[1] if len(sys.argv) > 1 else os.path.join(
-    os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "godot_assets", "sprites")
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "unity"))
+import unity_meta  # noqa: E402
+
+OUT_DIR = os.path.join(unity_meta.ASSETS, "Art", "Sprites")
 
 # Palette (RGBA)
 CLEAR = (0, 0, 0, 0)
@@ -80,6 +86,7 @@ def save(img: Image.Image, name: str) -> None:
     os.makedirs(OUT_DIR, exist_ok=True)
     path = os.path.join(OUT_DIR, name)
     img.save(path)
+    unity_meta.ensure_meta(path)
     print("wrote", path)
 
 
@@ -286,7 +293,11 @@ def gen_power_zeal() -> None:
     save(img, "power_zeal.png")
 
 
-if __name__ == "__main__":
+def main() -> None:
+    global OUT_DIR
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--out", default=OUT_DIR, help="the folder to write into (default: Assets/Art/Sprites)")
+    OUT_DIR = os.path.abspath(parser.parse_args().out)
     gen_checkpoint()
     gen_goal()
     gen_feather()
@@ -297,3 +308,7 @@ if __name__ == "__main__":
     gen_power_halo()
     gen_power_blade()
     gen_power_zeal()
+
+
+if __name__ == "__main__":
+    main()

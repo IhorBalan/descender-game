@@ -21,8 +21,12 @@ import json
 import os
 import sys
 
-import cv2
 import numpy as np
+
+try:
+    import cv2
+except ImportError:  # OpenCV is only needed to run this script, not to import it (check_tools.py).
+    cv2 = None
 
 HERE = os.path.dirname(__file__)
 ROOT = os.path.abspath(os.path.join(HERE, "..", ".."))
@@ -163,6 +167,8 @@ def harmonize(entry: dict) -> bool:
 
 
 def main() -> None:
+    if cv2 is None:
+        raise SystemExit("OpenCV is needed to harmonize: pip install opencv-python-headless")
     only = sys.argv[1:]
     with open(MANIFEST, encoding="utf-8") as f:
         entries = json.load(f)["files"]

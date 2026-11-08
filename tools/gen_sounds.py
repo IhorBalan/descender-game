@@ -1,20 +1,28 @@
 #!/usr/bin/env python3
-"""Generates the placeholder sounds under godot_assets/audio from scratch.
+"""Generates the placeholder sounds under Assets/Audio from scratch: the effects
+in Assets/Audio/sfx and the two ambient loops beside the music.
 
-    python3 tools/gen_sounds.py
+    python3 tools/gen_sounds.py                 # Python 3 with numpy
+    py tools/gen_sounds.py --out scratch/audio  # Windows; write somewhere else
 
 Every sound is synthesised (sines, noise, simple envelopes) so the game has
 audio to wire up before real sound design happens. Rerun after changing a
-recipe below; the output files are committed.
+recipe below; the output files are committed. A new file under Assets/ gets
+its .meta (unity_meta); an existing .meta is never touched.
 """
 
+import argparse
 import os
+import sys
 import wave
 
 import numpy as np
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "unity"))
+import unity_meta  # noqa: E402
+
 RATE = 22050
-OUT = os.path.join(os.path.dirname(__file__), "..", "godot_assets", "audio")
+OUT = os.path.join(unity_meta.ASSETS, "Audio")
 rng = np.random.default_rng(7)
 
 
@@ -79,6 +87,7 @@ def write(name, data, gain=0.8):
         f.setsampwidth(2)
         f.setframerate(RATE)
         f.writeframes(pcm.tobytes())
+    unity_meta.ensure_meta(path)
     print("wrote", os.path.relpath(path, os.path.dirname(OUT)), len(pcm) / RATE, "s")
 
 
@@ -93,6 +102,10 @@ def chord(freqs, dur, decay):
 
 
 def main():
+    global OUT
+    parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
+    parser.add_argument("--out", default=OUT, help="the folder to write into (default: Assets/Audio)")
+    OUT = os.path.abspath(parser.parse_args().out)
     # Hero
     write("sfx/jump.wav", sweep(260, 620, 0.14, 0.6) * env(int(RATE * 0.14), decay=0.12))
     write("sfx/double_jump.wav", sweep(420, 980, 0.16, 0.6) * env(int(RATE * 0.16), decay=0.14))
