@@ -121,7 +121,7 @@ hygiene as each production region lands.
 | T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
 | T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
 
-| T-0006 | Prove the Unity port is complete and reads nothing from Godot | in progress | 6 | none | 1 | T-0006 implementation | |
+| T-0006 | Prove the Unity port is complete and reads nothing from Godot | done | 6 | none | 1 | T-0006 implementation | #146 |
 | T-0007 | The Python tools stand without the Godot tree | proposed | 7 | none | 0 | | |
 | T-0008 | Godot-format code and reference copies leave Assets/ | queued | 8 | T-0006, T-0007 | 0 | | |
 | T-0009 | Delete the Godot project | queued | 9 | T-0008 | 0 | | |
