@@ -610,6 +610,11 @@ namespace Descender.EditorTools.Paradise
                 zoneArt != null && zoneArt.garden && shape.profile != ParadiseLayout.Profile.Decor
                     ? RoundCorners(shape.outline, masonry ? MarbleCornerRadius : RockCornerRadius)
                     : shape.outline;
+            // Natural rock does not fall in a ruled line; cut stone does. Only the art moves.
+            if (zoneArt != null && zoneArt.garden && !masonry && shape.profile == ParadiseLayout.Profile.Ground)
+            {
+                points = RoughenSides(points, shape.outline[0].x);
+            }
             var (left, right) = Tangents(points, true);
             var controller = go.AddComponent<SpriteShapeController>();
             var renderer = go.GetComponent<SpriteShapeRenderer>();
@@ -642,11 +647,12 @@ namespace Descender.EditorTools.Paradise
             {
                 SetTangents(spline, i, points[i].sharp, left[i], right[i]);
             }
-            // Ground at -101: the garden's depth shade (-100) goes over its fill, under its lips (-99).
+            // Ground at -103, what is built into a wall at -102: the garden's depth shade (-100)
+            // goes over both, under the lips (-99).
             renderer.sortingOrder =
                 shape.profile == ParadiseLayout.Profile.Decor ? -200
                 : shape.profile == ParadiseLayout.Profile.Leaf ? -95
-                : -101;
+                : -103;
             // The walk itself stays square: the collider and the lips follow the layout, so the
             // hero stands where the coping is; only the stone body under them is rounded.
             var (squareLeft, squareRight) = Tangents(shape.outline, true);
@@ -670,7 +676,17 @@ namespace Descender.EditorTools.Paradise
                 );
                 if (zoneArt.garden && shape.collides)
                 {
-                    ParadiseGarden.Depth(go.transform, Sample(points, left, right, true), zoneArt);
+                    var sampled = Sample(points, left, right, true);
+                    ParadiseGarden.Depth(go.transform, sampled, zoneArt);
+                    ParadiseGarden.UnderLip(go.transform, sampled, masonry);
+                    if (masonry)
+                    {
+                        ParadiseGarden.Piers(go.transform, sampled, zoneArt);
+                    }
+                    else if (shape.profile == ParadiseLayout.Profile.Ground)
+                    {
+                        ParadiseGarden.SoftenSides(go.transform, sampled, zoneArt);
+                    }
                 }
             }
         }
@@ -773,7 +789,7 @@ namespace Descender.EditorTools.Paradise
                 if ((i == from && capStart) || (i == to && capEnd))
                 {
                     var inward = (points[i == from ? from + 1 : to - 1].V - at).normalized;
-                    at += inward * ParadiseGarden.CapLength;
+                    at += inward * ParadiseGarden.CapInset;
                 }
                 spline.InsertPointAt(i - from, new Vector3(at.x, at.y, 0f));
             }
@@ -945,6 +961,54 @@ namespace Descender.EditorTools.Paradise
                     var t = k / (float)steps;
                     var q = (1 - t) * (1 - t) * start + 2 * (1 - t) * t * c + t * t * end;
                     result.Add(new ParadiseLayout.P(q.x, q.y, true));
+                }
+            }
+            return result;
+        }
+
+        private const float RoughStep = 0.4f;
+        private const float RoughFade = 1f;
+        private const float RoughAmount = 0.9f;
+
+        /// <summary>
+        /// The outline with its steep edges broken up: each wanders outward, never inward, so
+        /// the rock can only ever overlap the hero and never leaves a gap beside the collider.
+        /// Flat at both ends, where it meets the lips and the corners, and straight under
+        /// the clouds, where nobody sees it.
+        /// </summary>
+        public static List<ParadiseLayout.P> RoughenSides(List<ParadiseLayout.P> points, float seed)
+        {
+            var n = points.Count;
+            var result = new List<ParadiseLayout.P>();
+            for (var i = 0; i < n; i++)
+            {
+                var a = points[i];
+                result.Add(a);
+                var edge = points[(i + 1) % n].V - a.V;
+                var length = edge.magnitude;
+                if (length < RoughFade * 2f || Mathf.Abs(edge.y) < Mathf.Abs(edge.x) * 2f)
+                {
+                    continue;
+                }
+                var along = edge / length;
+                // The outline runs clockwise, so outward is to its left.
+                var outward = new Vector2(-along.y, along.x);
+                var steps = Mathf.FloorToInt(length / RoughStep);
+                for (var k = 1; k < steps; k++)
+                {
+                    var distance = k * length / steps;
+                    var p = a.V + along * distance;
+                    if (p.y < UnseenBelow)
+                    {
+                        continue;
+                    }
+                    var fade = Mathf.SmoothStep(0f, 1f, Mathf.Min(distance, length - distance) / RoughFade);
+                    var bulge =
+                        0.6f * Mathf.PerlinNoise(p.y * 0.25f, seed)
+                        + 0.3f * Mathf.PerlinNoise(p.y * 0.75f, seed + 7f)
+                        + 0.1f * Mathf.PerlinNoise(p.y * 2.1f, seed + 13f);
+                    p += outward * (RoughAmount * fade * bulge);
+                    result.Add(new ParadiseLayout.P(p.x, p.y, true));
                 }
             }
             return result;

@@ -29,6 +29,7 @@ namespace Descender.EditorTools.Paradise
         {
             "rock_fill",
             "wall_block",
+            "wall_pier",
             "deck_top",
             "wall_cap",
             "grass_lip",
@@ -141,6 +142,20 @@ namespace Descender.EditorTools.Paradise
             }
             var material = ParadiseArt.SaveMaterial($"Paradise Lit {texture.name}", lit.shader.name);
             material.SetTexture(SecondaryName, map);
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        /// <summary>A lit material for a mesh that shows this texture, with the texture's normal map.</summary>
+        public static Material LitMesh(Texture texture, Material lit)
+        {
+            var material = ParadiseArt.SaveMaterial($"Paradise Lit {texture.name}", lit.shader.name);
+            material.mainTexture = texture;
+            var map = AssetDatabase.LoadAssetAtPath<Texture2D>(MapPath(texture.name));
+            if (map != null)
+            {
+                material.SetTexture(SecondaryName, map);
+            }
             EditorUtility.SetDirty(material);
             return material;
         }

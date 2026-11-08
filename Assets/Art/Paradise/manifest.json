@@ -651,14 +651,14 @@
     },
     {
       "path": "Assets/Art/Paradise/Kit/Architecture/wall_block.png",
-      "purpose": "Noble weathered marble ashlar: 1-3 unit blocks, staggered courses, moss and flowers in some joints (8x8)",
+      "purpose": "Noble weathered marble ashlar: 1-3 unit blocks, staggered courses, moss and flowers in some joints (16x8, the second half the first mirrored and joined by cliff_kit.py)",
       "zone": "garden",
       "size": [
-        1024,
+        2048,
         1024
       ],
       "sizeUnits": [
-        8.0,
+        16.0,
         8.0
       ],
       "pivot": [
@@ -669,6 +669,28 @@
       "blend": "normal",
       "tileable": [
         "x",
+        "y"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_pier.png",
+      "purpose": "Quoined pier built into a terrace wall, cut from wall_block course by course (built by cliff_kit.py)",
+      "zone": "garden",
+      "size": [
+        384,
+        1024
+      ],
+      "sizeUnits": [
+        3.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": [
         "y"
       ]
     },
@@ -1013,14 +1035,14 @@
     },
     {
       "path": "Assets/Art/Paradise/Kit/Nature/rock_fill.png",
-      "purpose": "Natural mossy cliff rock: fractured faces, soft cracks, moss, ferns and ivy in crevices (8x8)",
+      "purpose": "Natural mossy cliff rock: fractured faces, soft cracks, moss, ferns and ivy in crevices (16x8, the second half the first mirrored and joined by cliff_kit.py)",
       "zone": "garden",
       "size": [
-        1024,
+        2048,
         1024
       ],
       "sizeUnits": [
-        8.0,
+        16.0,
         8.0
       ],
       "pivot": [
