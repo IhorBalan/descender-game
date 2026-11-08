@@ -162,6 +162,10 @@ played through end to end and tuned.
 
 ## 3. How it is built
 
+This section describes the Godot prototype, kept in history at the tag
+`godot-last` (`git show godot-last:<path>`); the Unity port follows the
+same shape in `Assets/Scripts/Runtime/Economy/` and `UI/`.
+
 - `scripts/items.gd` (`Items`): the item table and the stat keys.
 - `scripts/inventory.gd` (`Inventory`): the purse, the items by count and
   what is worn, as static state like `Story`; `bonus(stat)` sums the worn
@@ -189,6 +193,5 @@ played through end to end and tuned.
   untaken unique back down. `main.gd` opens the `ShopMenu` after a
   trader's repeat line, plays a unique's lines through the text box, and
   saves and restores the pack.
-- `scenes/shop_menu.tscn` / `scripts/ui/shop_menu.gd`: the stall.
-  `scenes/inventory_menu.tscn` / `scripts/ui/inventory_menu.gd`: the pack
-  page, under the pause menu.
+- `shop_menu` (scene and `scripts/ui/shop_menu.gd` at `godot-last`): the
+  stall. `inventory_menu`: the pack page, under the pause menu.

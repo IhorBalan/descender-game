@@ -15,7 +15,7 @@ description: Tests and CI for the Unity project: the Unity Test Framework EditMo
 - `Assets/Tests/PlayMode/` (`Descender.Tests.PlayMode`): tests that need a
   running scene: load `Main` + a region, spawn the hero, step physics,
   check it stands, jumps, takes damage, saves. These are the smoke tests
-  the Godot `smoke_test.gd` did. Slow; keep them few and broad.
+  the Godot prototype's smoke test did. Slow; keep them few and broad.
 
 Both asmdefs set `UNITY_INCLUDE_TESTS`, reference `nunit.framework.dll`,
 `UnityEngine.TestRunner`, `UnityEditor.TestRunner` and the runtime

@@ -51,8 +51,8 @@ Cutting a release: merge to `main`, then
 git tag v0.4.0 && git push origin v0.4.0
 ```
 
-Tags are `vMAJOR.MINOR.PATCH`. The Godot releases before the move keep
-their tags; the first Unity release is `v1.0.0`.
+Tags are `vMAJOR.MINOR.PATCH`. The only other tag is `godot-last`, the
+last commit with the Godot prototype; `release.yml` ignores it.
 
 ## Secrets
 

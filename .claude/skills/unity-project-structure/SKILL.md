@@ -1,21 +1,20 @@
 ---
 name: unity-project-structure
-description: Where things live in the Unity project (Assets/Scripts, Assets/Scenes, Assets/Prefabs, Assets/Data, Assets/Art), the assembly definitions, namespaces, static state classes, scenes vs prefabs, and what the leftover Godot files are for. Use when adding a script, scene, prefab, asset or folder, or when unsure where something goes.
+description: Where things live in the Unity project (Assets/Scripts, Assets/Scenes, Assets/Prefabs, Assets/Data, Assets/Art), the assembly definitions, namespaces, static state classes, scenes vs prefabs, and the tools folder. Use when adding a script, scene, prefab, asset or folder, or when unsure where something goes.
 ---
 
 # Unity project structure
 
 The Unity project lives at the repository root (`Assets/`, `Packages/`,
-`ProjectSettings/`), Unity 6.3 LTS (`ProjectSettings/ProjectVersion.txt`).
-The Godot project it is ported from still sits beside it (`scenes/`,
-`scripts/`, `levels/`, `resources/`, `godot_assets/`, `project.godot`) as the
-reference for behaviour and numbers until the port is complete; each Unity
-folder carries a `.gdignore` so Godot ignores it. The Godot art lives in
-`godot_assets/`, not `assets/`: on a case-insensitive disk (macOS, Windows)
-`assets/` and `Assets/` are one folder, and Unity would import the Godot
-files and litter them with `.meta`s. Never add a top-level folder whose name
-differs from a Unity one only by case. Do not edit the Godot files unless the
-task is about the port's reference, and never build new features there.
+`ProjectSettings/`), Unity 6.3 LTS (`ProjectSettings/ProjectVersion.txt`),
+and is the whole repository apart from `docs/`, `tools/` (the Python
+generators, `tools/unity/` and the pre-push hook) and `.claude/`. The game
+was ported from a Godot 4 prototype, which is in history at the tag
+`godot-last`; `RepositoryTests` fails on any Godot file or path coming back.
+Never add a top-level folder whose name differs from a Unity one only by
+case: on a case-insensitive disk (macOS, Windows) `assets/` and `Assets/` are
+one folder, and Unity would import the stray files and litter them with
+`.meta`s.
 
 ## Folders
 
@@ -94,9 +93,9 @@ when adding static state, add it there and to `SaveData`.
   placed in scenes as prefab instances; edit the prefab, not the instance,
   unless the difference is intentional and local.
 - Enemy and region numbers are ScriptableObjects under `Assets/Data/`
-  (`WalkerProfile`, `FlyerProfile`, `BossProfile`, `RegionLook`), generated
-  from the Godot `.tres` files by `tools/unity/import_godot_assets.py`.
-  Edit the `.asset` in the inspector; the importer does not overwrite them.
+  (`WalkerProfile`, `FlyerProfile`, `BossProfile`, `RegionLook`), committed
+  assets that carry the prototype's numbers. Edit the `.asset` in the
+  inspector.
 
 ## Units
 

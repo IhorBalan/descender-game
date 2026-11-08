@@ -1,6 +1,6 @@
 ---
 name: editor-tooling
-description: Editor scripts in this project: menu items under Descender/, the importers (sprite animations, prop prefabs, .tres profiles via the Python script), ProjectBootstrap, AssetDatabase and PrefabUtility usage, custom inspectors and property drawers, OnValidate, and the deterministic .meta GUID scheme used by tools/unity. Use when writing anything under Assets/Scripts/Editor or tools/unity, or when generating assets.
+description: Editor scripts in this project: menu items under Descender/, the importers (sprite animations, prop prefabs), the profile assets written by tools/unity, ProjectBootstrap, AssetDatabase and PrefabUtility usage, custom inspectors and property drawers, OnValidate, and the deterministic .meta GUID scheme used by tools/unity. Use when writing anything under Assets/Scripts/Editor or tools/unity, or when generating assets.
 ---
 
 # Editor tooling
@@ -44,12 +44,13 @@ AssetDatabase.SaveAssets();          // once, at the end of the whole operation
   `AssetDatabase.LoadAllAssetsAtPath("ProjectSettings/TagManager.asset")[0]`,
   `ApplyModifiedProperties`.
 
-## The Python importers
+## The Python tools
 
-`tools/unity/import_godot_assets.py` (run with `python3 -I`) copies the
-Godot art, audio and data into `Assets/` and writes `.meta` files with
-import settings and sprite slicing from `sprites.json`, plus `.asset`
-ScriptableObjects from the `.tres` profiles. It exists because the port
+`tools/unity/unity_meta.py` holds the `.meta` writers (import settings and
+sprite slicing from `sprites.json`, GUIDs derived from the asset path) that
+`tools/unity/build_prefabs.py` and the art generators use (run them with
+`python3 -I`); `tools/unity/check_tools.py` is the CI guard that every tool
+imports. They exist because the port
 runs without a Unity editor available; once Unity has opened the project
 these files are ordinary assets.
 
