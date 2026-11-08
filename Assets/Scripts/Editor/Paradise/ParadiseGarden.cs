@@ -322,6 +322,20 @@ namespace Descender.EditorTools.Paradise
                 ),
                 -6.4f
             );
+            // Between the walk and the distance: the garden's own architecture, hazed and in its own cloud.
+            var near = Pinned(
+                ParadiseArt.Layer(
+                    backdrop,
+                    "Near",
+                    Get("garden_bg4_near"),
+                    art.backdropMid,
+                    -960 + zone.number,
+                    centre,
+                    new Vector2(0.68f, 0f),
+                    false
+                ),
+                0f
+            );
             Drift(cloudBack, 1.5f);
             Drift(cloudFront, 3f);
             root.gameObject.AddComponent<ZoneLook>()
@@ -332,7 +346,7 @@ namespace Descender.EditorTools.Paradise
                     art.ambient,
                     volume,
                     sky,
-                    new[] { far, midFar, cloudBack, mid, cloudFront }
+                    new[] { far, midFar, cloudBack, mid, cloudFront, near }
                 );
 
             var plan = GardenPlan(zone);

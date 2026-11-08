@@ -178,6 +178,31 @@
       "scrollFraction": 0.4
     },
     {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg4_near.png",
+      "purpose": "Near: aqueducts, terraces and rock stacks in their own cloud, between the walk and the distance (4 screens wide, built by near_backdrop.py)",
+      "zone": "garden",
+      "size": [
+        8192,
+        1152
+      ],
+      "sizeUnits": [
+        128.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 4,
+      "screens": 4,
+      "scrollFraction": 0.68
+    },
+    {
       "path": "Assets/Art/Paradise/Backdrop_Garden/golden_tree.png",
       "purpose": "Landmark: huge tree with a white-gold crown on its own floating island",
       "zone": "garden",
