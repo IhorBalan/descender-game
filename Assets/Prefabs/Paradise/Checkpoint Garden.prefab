@@ -172,7 +172,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Descender.Runtime::Descender.World.WorldLight
   color: {r: 1, g: 0.85, b: 0.55, a: 1}
-  energy: 0.9
+  energy: 0.45
   radiusPixels: 96
   flicker: 0
   activeDistance: 40

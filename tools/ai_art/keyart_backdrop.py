@@ -164,12 +164,57 @@ def mid() -> Image.Image:
     return canvas
 
 
+def crown_top(img: Image.Image, rows: int, seed: int = 11) -> Image.Image:
+    """
+    Finishes a crown the key art's frame cut flat: adds `rows` above the piece, its own
+    leaves mirrored up into them, shaped by an outline of overlapping leaf clumps that is
+    tallest in the middle of the cut.
+    """
+    w, h = img.size
+    out = Image.new("RGBA", (w, h + rows), (0, 0, 0, 0))
+    out.paste(img, (0, rows))
+    out.paste(img.crop((0, 0, w, rows)).transpose(Image.FLIP_TOP_BOTTOM), (0, 0))
+    edge = [x for x in range(w) if img.getpixel((x, 1))[3] > 128]
+    x0, x1 = edge[0], edge[-1]
+    rng = random.Random(seed)
+    mask = Image.new("L", (w * 2, rows * 2), 0)
+    draw = ImageDraw.Draw(mask)
+    x = float(x0)
+    while x < x1:
+        along = (x - x0) / max(1, x1 - x0)
+        tall = (rows - 6) * (0.4 + 0.6 * (4.0 * along * (1.0 - along)) ** 0.5)
+        r = rng.uniform(0.55, 1.0) * tall
+        top = rows - rng.uniform(0.72, 1.0) * tall
+        draw.ellipse([2 * (x - r * 1.35), 2 * top, 2 * (x + r * 1.35), 2 * (top + 2 * r + 40)], fill=255)
+        x += rng.uniform(26, 58)
+    mask = mask.resize((w, rows), Image.LANCZOS).filter(ImageFilter.GaussianBlur(0.8))
+    alpha = out.getchannel("A")
+    rows_alpha = ImageChops.multiply(alpha.crop((0, 0, w, rows)), mask)
+    alpha.paste(rows_alpha, (0, 0))
+    out.putalpha(alpha)
+    return out
+
+
 def golden_tree() -> Image.Image:
-    # The whole crown (the key art's frame cuts its top: faded like the sides) and the
-    # island under it, with the neighbouring islands' edges faded away.
-    tree = piece("tree_k2", crop=(0, 0, 820, 800), left=150, right=130, bottom=120, top=140)
+    # The whole crown, with its natural leafy outline: the sides are faded only below it,
+    # where the neighbouring islands stand, and the bottom where the cloud sea begins. The
+    # key art's frame cuts the very top flat, so that is finished by hand.
+    tree = piece("tree_k2", crop=(0, 0, 820, 800), bottom=120)
+    crown_ends = 350
+    w, h = tree.size
+    ramp = Image.new("L", (w, h), 255)
+    rd = ImageDraw.Draw(ramp)
+    for y in range(crown_ends, h):
+        strength = min(1.0, (y - crown_ends) / 40.0)
+        for x in range(w):
+            left = min(1.0, x / 150.0)
+            right = min(1.0, (w - 1 - x) / 130.0)
+            side = (left * left * (3 - 2 * left)) * (right * right * (3 - 2 * right))
+            rd.point((x, y), fill=round(255 * (1.0 - strength * (1.0 - side))))
+    tree.putalpha(ImageChops.multiply(tree.getchannel("A"), ramp))
+    tree = crown_top(tree, 50)
     canvas = Image.new("RGBA", (1536, 1280), (0, 0, 0, 0))
-    scale = min(1400 / tree.width, 1240 / tree.height)
+    scale = min(1400 / tree.width, 1270 / tree.height)
     t = tree.resize((round(tree.width * scale), round(tree.height * scale)), Image.LANCZOS)
     canvas.paste(t, ((1536 - t.width) // 2, 1280 - t.height), t)
     return canvas
