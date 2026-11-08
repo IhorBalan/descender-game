@@ -98,7 +98,11 @@ namespace Descender.Tests.PlayMode
         /// <summary>How far before the edge he jumps, by attempt: the first is the usual, the rest vary it.</summary>
         private static readonly float[] GapLeads = { 0.35f, 0.8f, 0.1f, 0.6f };
 
-        private static readonly float[] StepLeads = { 0.8f, 1.3f, 0.4f, 1.0f };
+        /// <summary>For a wall: never under half the hero's width, or he stands against it before he jumps.</summary>
+        private static readonly float[] StepLeads = { 0.8f, 1.3f, 0.6f, 1.0f };
+
+        /// <summary>In the air he aims this far past the landing point, so his feet, not his middle, clear the edge.</summary>
+        private const float LandingOvershoot = 0.7f;
 
         /// <summary>A leg that takes longer than this (seconds of game time) has failed.</summary>
         public const float LegTimeLimit = 90f;
@@ -377,7 +381,13 @@ namespace Descender.Tests.PlayMode
                 input.MoveX = leg.dir;
                 return;
             }
-            var aimX = leg.kind == Kind.Walk ? leg.landing.x : leg.takeoff.x;
+            if (!grounded)
+            {
+                // Off the ground without a planned jump (a hop, a drop): keep going the way of travel.
+                input.MoveX = leg.dir;
+                ResetStuck(at);
+                return;
+            }
             if (leg.kind == Kind.Walk)
             {
                 // Past the junction the leg completes on the next check; keep going the way of travel.
@@ -385,7 +395,7 @@ namespace Descender.Tests.PlayMode
             }
             else
             {
-                var dx = aimX - at.x;
+                var dx = leg.takeoff.x - at.x;
                 input.MoveX = Mathf.Abs(dx) < 0.1f ? 0f : Mathf.Sign(dx);
             }
             if (
@@ -428,8 +438,10 @@ namespace Descender.Tests.PlayMode
         private void Air(Leg leg, Vector2 at, bool grounded, Vector2 velocity, float dt)
         {
             airTime += dt;
-            var dx = leg.landing.x - at.x;
-            input.MoveX = Mathf.Abs(dx) < 0.15f ? 0f : Mathf.Sign(dx);
+            // Steer for a point past the landing and never back against the way of travel: turning
+            // round in the air over an edge is how he misses it.
+            var aimX = leg.landing.x + leg.dir * LandingOvershoot;
+            input.MoveX = (aimX - at.x) * leg.dir > 0f ? leg.dir : 0f;
             input.JumpHeld = velocity.y > 0f || airTime < 0.05f || holdLeft > 0f;
             if (grounded && airTime > 0.1f)
             {
