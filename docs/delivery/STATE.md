@@ -283,7 +283,9 @@ The pre-push hook is installed per clone with `git config core.hooksPath
 tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 (6000.6.8f1) under the Unity Hub folder, or at `UNITY_EDITOR`. It refuses to
 run while the same project folder is open in the editor (`Temp/UnityLockfile`).
-Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`.
+Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. Test runs make no
+sound: the PlayMode assembly's `MuteDuringTests` callback mutes the listener
+for the whole run.
 
 The hook prints its phase, the time elapsed and the previous run's duration,
 and the editor log is `Logs/pre-push.log` in the checkout being pushed. To
