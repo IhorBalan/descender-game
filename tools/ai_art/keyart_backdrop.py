@@ -145,7 +145,7 @@ def midfar() -> Image.Image:
         (k4, 7150, 760, 470, False),
     ]
     for img, x, base, height, flip in plan:
-        place(canvas, img, x, base, height, flip, amount=0.52)
+        place(canvas, img, x, base, height, flip, amount=0.62)
     horizon(canvas, 760, 1000)
     return canvas
 
@@ -160,7 +160,7 @@ def mid() -> Image.Image:
         (k1, 6200, 1010, 640, False),
     ]
     for img, x, base, height, flip in plan:
-        place(canvas, img, x, base, height, flip, amount=0.32)
+        place(canvas, img, x, base, height, flip, amount=0.5)
     return canvas
 
 

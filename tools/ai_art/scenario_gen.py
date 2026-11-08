@@ -64,6 +64,7 @@ NEVER_BY_DEFAULT = [
     "Backdrop_Garden/garden_bg1_far.png",
     "Backdrop_Garden/garden_bg2_midfar.png",
     "Backdrop_Garden/garden_bg3_mid.png",
+    "Backdrop_Garden/garden_bg4_near.png",
     "Backdrop_Garden/golden_tree.png",
 ]
 
