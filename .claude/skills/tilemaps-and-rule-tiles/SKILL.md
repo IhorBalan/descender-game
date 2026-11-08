@@ -5,12 +5,13 @@ description: How regions are built from Tilemaps in this project: the Grid with 
 
 # Tilemaps and Rule Tiles
 
-The twelve regions are generated, not painted: `tools/unity/
-import_godot_regions.py` (run with `python3 -I`) reads each Godot region
-scene (`scenes/world/<nn>_<key>.tscn`, four TileMapLayers over one TileSet)
-and `scenes/world/world.tscn`, and writes `Assets/Scenes/Region_<key>.unity`
-plus the region's data. Re-run it after the Godot scene changes; never
-hand-edit a `Region_*.unity`, the next run rewrites it.
+The twelve prototype regions are committed cell data, hand-owned:
+`Assets/Scenes/Region_<key>.unity` and the region's data under
+`Assets/Data/Regions/Tiles/` are Unity assets edited in the editor (or by an
+editor script) like any other scene. They were generated once from the
+Godot prototype's scenes (four TileMapLayers over one TileSet); the
+generator is gone with that project (tag `godot-last`), so a change is made
+in Unity.
 
 ## The tiles
 
@@ -20,7 +21,7 @@ YAML lines). Each region has a `RegionTileSet` asset
 atlas `Assets/Art/Tiles/<key>.png`, index = row * 16 + column, the materials)
 and a `TextAsset` of cells (`<key>_cells.txt`, format in `RegionTileData`:
 base64 int16 triples x, y, tile per layer, plus the `TileKind` of each tile
-index, from the Godot TileSet's custom data "kind").
+index, which came from the Godot TileSet's custom data "kind").
 
 `RegionTiles` on the region's `Tiles` object builds the Grid and the four
 Tilemaps in `Awake` (a tile is one unit: 64 px art at 64 PPU):
@@ -40,8 +41,9 @@ Hazard tiles trigger runs on layer Hazard with `HazardArea`, as
 Build region tiles` (or the component's context menu) previews the result;
 the built objects carry `HideFlags.DontSave`.
 
-Rule Tiles and the Tile Palette are for new, hand-painted content only; a
-region's tiles live in the Godot scene and come through the importer.
+Rule Tiles and the Tile Palette are for new, hand-painted content; a
+prototype region's tiles live in its committed cell data and `RegionTiles`
+builds them at load.
 
 ## Region layout
 

@@ -14,15 +14,16 @@ None`, `Generate Mip Maps` off, `Wrap: Clamp`. `Mesh Type: Full Rect` for
 anything with a normal map or that flips (tight meshes clip the normal
 edge). `Read/Write` off.
 
-`tools/unity/import_godot_assets.py` writes these into the `.meta` for art
-it copies, including the slicing below; a texture dropped in by hand gets
-them from the `Descender > Import > Apply pixel art import` menu item.
+`tools/unity/unity_meta.py` writes these into the `.meta` of a texture the
+generators produce (`ensure_meta`), including the slicing below; a texture
+dropped in by hand gets them from the `Descender > Import > Apply pixel art
+import` menu item.
 
 ## Slicing
 
 Strips in `Assets/Art/Sprites/<character>/<anim>.png` are described by
 `sprites.json` (one entry per character: frame size, animations with
-file, fps, loop). The import script slices them as `Sprite Mode:
+file, fps, loop). `unity_meta.py` slices them as `Sprite Mode:
 Multiple` with sprites named `<file>_<index>`, pivot bottom-centre for
 characters (feet on the ground; Godot used `offset` for the same). Props
 pivot top-left (Godot `centered = false`). UI pivots centre.

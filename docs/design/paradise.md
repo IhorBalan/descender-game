@@ -1,7 +1,7 @@
 # Paradise: level design
 
 Status: **draft for approval**. Replaces the prototype Paradise (the 480-tile
-region generated from `scenes/world/00_paradise.tscn`), which stays playable
+region ported from the Godot prototype at tag `godot-last`), which stays playable
 in `Main.unity` until the new one is ready. Paradise is rebuilt from scratch in
 Unity, as the game's first production-quality region.
 

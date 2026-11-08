@@ -14,25 +14,26 @@ scaled by whole numbers. The design lives in `docs/design/` (economy,
 enemies, progression, upgrades, the Paradise rebuild) and the story in
 `docs/story/`.
 
-## Two projects in one repository
+## Repository
 
 The Unity 6 project (`Assets/`, `Packages/`, `ProjectSettings/`) sits at the
-repository root. The Godot 4 game it was ported from sits beside it
-(`scenes/`, `scripts/`, `levels/`, `resources/`, `godot_assets/`,
-`project.godot`) as the behavioural reference until the port is complete.
-Each Unity folder carries a `.gdignore` so Godot ignores it, and the Godot
-art is under `godot_assets/`, not `assets/`, because `assets/` and `Assets/`
-are one folder on a case-insensitive disk. Rules:
+repository root and is the whole game. `tools/` holds what works on it from
+outside the editor: `tools/unity/build_prefabs.py` (the hero, enemy and
+pickup prefabs and their small data assets as Unity YAML), `unity_meta.py`
+(the shared `.meta` writers and sprite slicing), `check_tools.py` (the CI
+guard that every tool imports and names no Godot path), the art and sound
+generators (`gen_*.py`, `menu_textures.py`, `*_sprites/`, `hero_*/`,
+`paradise_art/`, `ai_art/`) and the pre-push hook (`tools/hooks/`). The game
+was ported from a Godot 4 prototype; that project is in history at the tag
+`godot-last` (`git show godot-last:<path>`) and nothing in the tree reads
+from it (`RepositoryTests` keeps it so). Rules:
 
-- Build new features in Unity only. Do not edit the Godot files unless the
-  task is about the port's reference.
 - Never add a top-level folder whose name differs from a Unity one only by
-  case.
-- `tools/unity/` holds the Python scripts that carried art, audio, data and
-  regions over (`import_godot_assets.py`, `import_godot_regions.py`,
-  `build_prefabs.py`). They write `.meta` files with GUIDs derived from the
-  path, so every clone agrees on the ids; do not regenerate a `.meta` that
-  already exists.
+  case (`assets/` and `Assets/` are one folder on a case-insensitive disk).
+- The `tools/unity/` scripts write `.meta` files with GUIDs derived from the
+  path, so every clone agrees on the ids; never regenerate a `.meta` that
+  already exists. `build_prefabs.py` is deterministic: CI checks that its
+  output matches the committed assets.
 
 ## Layout
 
@@ -50,7 +51,7 @@ Assets/
                      PlayerTuning.asset, Placements*.asset, SfxLibrary.asset, dialogue/*.json
   Art/, Audio/       Imported sprites, tiles, props, backdrops, UI, fonts; music and sfx
   Settings/          URP asset and 2D Renderer, Descender.inputactions, Materials/, Post/, MenuTheme
-  Shaders/           Sprite flash and glow, Paradise shaders, Godot ports
+  Shaders/           Sprite flash and glow, Paradise shaders
   Resources/         UiTheme.asset (the one Resources.Load)
 ```
 

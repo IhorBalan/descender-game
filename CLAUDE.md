@@ -1,8 +1,8 @@
 # Descender
 
 A 2D metroidvania built in Unity 6 at the repository root (`Assets/`,
-`Packages/`, `ProjectSettings/`), ported from the Godot project that still
-sits beside it as reference. Read `docs/ARCHITECTURE.md` first, then the
+`Packages/`, `ProjectSettings/`), ported from a Godot prototype that is in
+history at the tag `godot-last`. Read `docs/ARCHITECTURE.md` first, then the
 skill under `.claude/skills/` for the area you touch. `REVIEW.md` governs the
 automatic review of every pull request.
 

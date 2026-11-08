@@ -124,8 +124,9 @@ the repo uses one). System usings before Unity usings, sorted.
 
 - `///` XML summary on every public type, and on public members whose
   name does not say it all. One paragraph, present tense, says what and
-  why; the Godot file it ports when behaviour should match it
-  (`// Port of scripts/enemies/walker.gd`).
+  why; the Godot script it was ported from when behaviour should match it
+  (`// Port of scripts/enemies/walker.gd`, history: the file is at tag
+  `godot-last`).
 - Inline comments explain intent or a non-obvious number, not what the
   line does. Reference the pixel value when a unit value appears:
   `// 72 px jump height`.

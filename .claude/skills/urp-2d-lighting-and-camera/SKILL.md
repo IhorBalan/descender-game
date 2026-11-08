@@ -13,8 +13,8 @@ URP 2D shaders; a Built-in shader shows magenta.
 
 ## Lights
 
-The Godot regions have 853 `PointLight2D`s with a shared normal-mapped
-look. In URP:
+The prototype's regions had 853 point lights with a shared normal-mapped
+look, carried over as components of the region scenes. In URP:
 
 - `Light2D` component, type **Point** for lanterns and glows (radius in
   units: Godot `texture_scale` x texture half-size / 16), **Freeform** for

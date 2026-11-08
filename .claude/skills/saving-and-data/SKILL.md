@@ -65,9 +65,10 @@ events (`StoryFlags.Changed`) that MonoBehaviours subscribe to in
   flags, `then` targets, items and quests are validated by
   `DialogueFileTests` in EditMode.
 
-`tools/unity/import_godot_assets.py` generated the `.asset` files from the
-`.tres` ones; they are now the source of truth and are edited in the
-inspector. The script never overwrites an existing `.asset`.
+The `.asset` files were generated once from the Godot prototype's
+resources; they are the source of truth and are edited in the inspector.
+`tools/unity/build_prefabs.py` writes a few of the small ones (the SFX
+library, the hero tuning) and never a profile.
 
 ## Creating a profile
 
