@@ -1,4 +1,4 @@
-# Delivery state
+﻿# Delivery state
 
 The shared state of the delivery pipeline. Project memory is off for this
 project, so the coordinator and the threads keep it here. The coordinator
@@ -40,6 +40,17 @@ Goal: all seven zones exist and the region plays west to east in one run.
 - Done when: a 20-minute straight run from zone 1 to the Low Gate's outer
   door works, every beat fires, the checker is green, and a run is on the
   playtest list.
+
+### MG. Unity-only repository (runs alongside M1)
+
+Prove the Unity assets are complete and self-contained, point the remaining
+tools at `Assets/`, delete the Godot project (`project.godot`, `scenes/`,
+`scripts/`, `levels/`, `resources/`, `godot_assets/`, `addons/`,
+`dialogue/`, `tests/`, the Godot tool scripts and importers), and rewrite
+the README and architecture docs for one project. Done when: the
+repository tests `TheRepositoryHoldsNoGodotProject` and
+`UnityCodeNamesNoGodotPath` are green, all Unity tests pass, and the docs
+describe a Unity-only repository.
 
 ### M2. Paradise art, zones 3 and 4
 
@@ -95,8 +106,8 @@ fight (#20, #31) come last.
 
 ### Cross-cutting, folded into milestones as it fits
 
-Unity tests in CI (needs the licence secrets or a self-hosted runner);
-Godot removal and a README rewrite after M5; the open October design items
+Unity tests in CI (needs the licence secrets or a self-hosted runner); the
+open October design items
 (Vials and Church Iron placements, Vael's memory shop, credits text); issue
 hygiene as each production region lands.
 
@@ -106,14 +117,23 @@ hygiene as each production region lands.
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | T-0001 | Paradise construction-rule checker | done | 1 | none | 1 | T-0001 implementation | #139 |
 | T-0002 | The dialogue pipeline works in Unity: triggers, NPCs and relics talk | done | 2 | none | 1 | T-0002 implementation | #140 |
-| T-0003 | Beats of zones 1 and 2 as layout placements | in review | 3 | T-0001, T-0002 | 1 | T-0003 implementation | |
+| T-0003 | Beats of zones 1 and 2 as layout placements | done | 3 | T-0001, T-0002 | 1 | T-0003 implementation | #145 |
 | T-0004 | Greybox zones 3 and 4, the Great Vines and the Tallied Fields | approved | 4 | T-0001, T-0003 | 0 | | |
 | T-0005 | Greybox zones 5 to 7, the Terraces, the Making-house Approach and the Low Gate | approved | 5 | T-0004 | 0 | | |
 
-Full task text: project files, `planning/m1-tasks.md` (revision 2). Playtest:
-T-0001 no, T-0002 to T-0005 yes. T-0001 and T-0002 run in parallel (disjoint
+| T-0006 | Prove the Unity port is complete and reads nothing from Godot | in progress | 6 | none | 1 | T-0006 implementation | |
+| T-0007 | The Python tools stand without the Godot tree | proposed | 7 | none | 0 | | |
+| T-0008 | Godot-format code and reference copies leave Assets/ | queued | 8 | T-0006, T-0007 | 0 | | |
+| T-0009 | Delete the Godot project | queued | 9 | T-0008 | 0 | | |
+| T-0010 | The docs describe one Unity project | queued | 10 | T-0009 | 0 | | |
+
+Full task text: project files, `planning/m1-tasks.md` (revision 2) and
+`planning/godot-removal-tasks.md` (revision 2, MG). Playtest:
+T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0010 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
-zone scenes, `ParadiseWorld.asset` and the build settings.
+zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
+T-0007 run in parallel with M1 (disjoint files); T-0008, T-0009 and T-0010
+follow in order.
 
 ## Decisions
 
@@ -207,6 +227,44 @@ zone scenes, `ParadiseWorld.asset` and the build settings.
   those surfaces anyway.
 - **Alternative**: build them in M1 (T-0005 grows past one reviewable change).
 - **Undo**: move the line from M3 to a new M1 task.
+
+### D-0008: Godot is removed now, alongside M1, not after M5
+
+- **Decided**: milestone MG runs now in parallel with M1 and finishes before
+  M2 starts. Deletion is one squash commit after the Unity assets are proven
+  complete and self-contained and the tools no longer read the Godot tree.
+  No Ihor sign-off is needed: everything deleted stays in git history.
+- **Why**: Ihor asked for a Unity-only repository; nothing in Unity reads a
+  Godot file (checked by T-0006), so the reference has no remaining technical
+  use; the Godot files were last changed on 2026-10-31 and the two trees have
+  already diverged (the rebuilt Paradise exists only in Unity), so the
+  "behavioural reference" is ageing; two projects in one root confuse agents
+  and the review (case-collision rules, `.gdignore`, "do not edit the Godot
+  files"); and MG touches no file M1 touches, so it costs M1 nothing.
+- **Alternative**: keep the Godot tree until M5 as the roadmap draft had it,
+  or move it to a `godot-reference` branch or a separate repository.
+  Rejected: a branch is as recoverable as history and adds a thing to
+  maintain; a separate repository needs Ihor to create it.
+- **Undo**: `git revert` the T-0009 squash commit (and T-0010's if the docs
+  should follow); the files come back with their history. The last commit
+  with the whole Godot project is the parent of T-0009's merge; T-0009 tags
+  it `godot-last` so it is easy to find.
+
+### D-0009: the generated region scenes are hand-owned Unity assets from now on
+
+- **Decided**: `Assets/Scenes/Region_<key>.unity`, `Assets/Data/World.asset`,
+  `Assets/Data/Regions/Tiles/*` and `Assets/Prefabs/Props/**` stop being
+  generator output. The importer is deleted; a change to a prototype region
+  is made in Unity (or by a Unity editor script), like any other scene.
+- **Why**: the generator's only input was the Godot scenes; keeping it means
+  keeping them. The prototype regions are retired one by one as production
+  regions land (M5 retires Paradise), so they will see few edits.
+- **Alternative**: keep `import_godot_regions.py` and the Godot scenes as the
+  level source until every region is rebuilt. Rejected: that is the
+  "after M5 (or later)" plan Ihor just asked to end.
+- **Undo**: restore the importer and the Godot scenes from `godot-last` and
+  run it; the GUIDs are derived from paths, so the output lands on the same
+  ids.
 
 ## Verification
 
