@@ -804,6 +804,120 @@
       "tileable": []
     },
     {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_soft_rise_0.png",
+      "purpose": "Foreground framing, out of focus: a bank of plants rising from below the frame (built by fg_framing.py)",
+      "zone": "garden",
+      "size": [
+        672,
+        384
+      ],
+      "sizeUnits": [
+        14.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 48,
+      "blend": "normal"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_soft_rise_1.png",
+      "purpose": "Foreground framing, out of focus: a bank of plants rising from below the frame (built by fg_framing.py)",
+      "zone": "garden",
+      "size": [
+        672,
+        384
+      ],
+      "sizeUnits": [
+        14.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 48,
+      "blend": "normal"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_soft_rise_2.png",
+      "purpose": "Foreground framing, out of focus: a bank of plants rising from below the frame (built by fg_framing.py)",
+      "zone": "garden",
+      "size": [
+        672,
+        384
+      ],
+      "sizeUnits": [
+        14.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 48,
+      "blend": "normal"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_soft_hang_0.png",
+      "purpose": "Foreground framing, out of focus: growth hanging into the top of the frame (built by fg_framing.py)",
+      "zone": "garden",
+      "size": [
+        624,
+        365
+      ],
+      "sizeUnits": [
+        13.0,
+        7.604166666666667
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 48,
+      "blend": "normal"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_soft_hang_1.png",
+      "purpose": "Foreground framing, out of focus: growth hanging into the top of the frame (built by fg_framing.py)",
+      "zone": "garden",
+      "size": [
+        624,
+        365
+      ],
+      "sizeUnits": [
+        13.0,
+        7.604166666666667
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 48,
+      "blend": "normal"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/fg_soft_hang_2.png",
+      "purpose": "Foreground framing, out of focus: growth hanging into the top of the frame (built by fg_framing.py)",
+      "zone": "garden",
+      "size": [
+        624,
+        365
+      ],
+      "sizeUnits": [
+        13.0,
+        7.604166666666667
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 48,
+      "blend": "normal"
+    },
+    {
       "path": "Assets/Art/Paradise/Kit/Nature/grass_lip.png",
       "purpose": "Lush grass/moss top lip with lilies and blossoms",
       "zone": "garden",

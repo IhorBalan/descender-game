@@ -246,8 +246,8 @@ def stand(canvas: Image.Image, img: Image.Image, x: float, base: float, top: flo
 def near() -> Image.Image:
     canvas = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     rng = random.Random(23)
-    far_row = dict(top=0.5, bottom=0.86, soften=1.7)
-    near_row = dict(top=0.34, bottom=0.8, soften=1.1)
+    far_row = dict(top=0.5, bottom=0.86, soften=2.8)
+    near_row = dict(top=0.34, bottom=0.8, soften=2.0)
     # Everything carries on below the screen, so no foot ever shows where the cloud thins.
     # A row further back, so even this layer has depth of its own.
     stand(canvas, aqueduct(6, 4, 0.23, False, rng), 2500, 1230, **far_row)

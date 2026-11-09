@@ -34,7 +34,7 @@ OUT = os.path.join(ROOT, "Normals")
 SCALE = 0.5
 
 # Never lit from a direction: light itself, water and the soft masks.
-SKIP = ("waterfall", "mist", "foam", "glow", "petal", "contact_shadow", "depth_shade", "fg_leaves")
+SKIP = ("waterfall", "mist", "foam", "glow", "petal", "contact_shadow", "depth_shade", "fg_leaves", "fg_soft")
 
 # (relief bands fine/mid/broad in height per unit of luma, bevel radius, dome radius): all in
 # pixels of the normal map. wrap is (x, y): the sides that tile.
