@@ -5,7 +5,6 @@ using Descender.World.Paradise;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.U2D;
 
 namespace Descender.EditorTools.Paradise
@@ -181,52 +180,8 @@ namespace Descender.EditorTools.Paradise
             EditorUtility.SetDirty(art.water);
             // Plants answer the garden's wind (GardenWind) each by its kind: see SwayMaterial.
             SwayVariants.Clear();
-            TuneLook(art.look, z);
+            ParadiseGrade.Apply(art.look, z);
             return art;
-        }
-
-        /// <summary>
-        /// Sunlit grading for the painted kit (tools/ai_art), which is already bright: no exposure
-        /// lift in zone 1, enough contrast that the play layer stands off the hazed distance,
-        /// saturation barely lifted, warm highlights, cool sky-blue shadows, a soft sheen on light.
-        /// This is what the zones' profiles end up with; ParadiseLookSetup's numbers are overwritten.
-        /// </summary>
-        private static void TuneLook(VolumeProfile profile, int z)
-        {
-            if (profile == null)
-            {
-                return;
-            }
-            T Get<T>()
-                where T : VolumeComponent
-            {
-                if (!profile.TryGet<T>(out var c))
-                {
-                    c = profile.Add<T>(true);
-                    AssetDatabase.AddObjectToAsset(c, profile);
-                }
-                c.active = true;
-                return c;
-            }
-            var color = Get<ColorAdjustments>();
-            color.postExposure.Override(z == 1 ? -0.05f : -0.08f);
-            color.contrast.Override(z == 1 ? 14f : 12f);
-            color.saturation.Override(z == 1 ? 4f : 8f);
-            color.colorFilter.Override(z == 1 ? new Color(1f, 0.99f, 0.975f) : new Color(0.97f, 1f, 0.975f));
-            var split = Get<SplitToning>();
-            split.shadows.Override(new Color(0.42f, 0.5f, 0.62f));
-            split.highlights.Override(new Color(0.66f, 0.58f, 0.42f));
-            split.balance.Override(10f);
-            var bloom = Get<Bloom>();
-            bloom.threshold.Override(1.15f);
-            bloom.intensity.Override(0.3f);
-            bloom.scatter.Override(0.7f);
-            bloom.tint.Override(new Color(1f, 0.95f, 0.85f));
-            var vignette = Get<Vignette>();
-            vignette.color.Override(new Color(0.1f, 0.12f, 0.2f));
-            vignette.intensity.Override(z == 1 ? 0.12f : 0.15f);
-            vignette.smoothness.Override(0.5f);
-            EditorUtility.SetDirty(profile);
         }
 
         // ------------------------------------------------------------------ dress

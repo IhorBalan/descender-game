@@ -9,9 +9,10 @@ namespace Descender.World.Paradise
     /// section 5): its parallax backdrop, its post-processing Volume and its ambient light
     /// fade in over <see cref="blend"/> units either side of the zone's edges, so crossing
     /// from the dawn of the Hollow into the teal of the Orchard is one smooth change. Two
-    /// neighbours' weights always add up to 1 across a border. The lower zone's sky stays
-    /// opaque under the upper zone's, so the screen never dips to the clear colour. Sits
-    /// on the zone scene's root.
+    /// neighbours' weights always add up to 1 across a border. A zone stays whole under the
+    /// next one fading in over it: its sky, so the screen never dips to the clear colour, and
+    /// its grade, so the crossing never dips to the ungraded picture. Sits on the zone scene's
+    /// root.
     /// </summary>
     public sealed class ZoneLook : MonoBehaviour
     {
@@ -78,11 +79,27 @@ namespace Descender.World.Paradise
             return Mathf.Min(enter, leave);
         }
 
+        /// <summary>
+        /// A zone's share while the next zone fades in over it: whole until the next one has
+        /// covered it, then gone. URP lays Volumes over each other in order of priority, each
+        /// lerped over the result so far, so two at half weight would let a quarter of the
+        /// ungraded picture through.
+        /// </summary>
+        public static float WeightUnderNext(float x, float right, float blendUnits, float weight) =>
+            x > right - blendUnits && weight > 0f ? 1f : weight;
+
+        /// <summary>The order zones' Volumes are laid in: each over the one before it.</summary>
+        public static float VolumePriority(int number) => 1f + number;
+
         public float WeightAt(float x) => Weight(x, xMin, xMax, blend);
 
         private void OnEnable()
         {
             Active.Add(this);
+            if (volume != null)
+            {
+                volume.priority = VolumePriority(zone);
+            }
         }
 
         private void OnDisable()
@@ -101,7 +118,7 @@ namespace Descender.World.Paradise
             var weight = WeightAt(x);
             if (volume != null)
             {
-                volume.weight = weight;
+                volume.weight = NextZoneIsGraded() ? WeightUnderNext(x, xMax, blend, weight) : weight;
             }
             ApplyBackdrop(x, weight);
             // One zone mixes the ambient for all, so it is set once a frame.
@@ -109,6 +126,19 @@ namespace Descender.World.Paradise
             {
                 MixAmbient(x);
             }
+        }
+
+        /// <summary>With nothing to lay over it, a zone's grade fades out by itself.</summary>
+        private bool NextZoneIsGraded()
+        {
+            foreach (var look in Active)
+            {
+                if (look.zone == zone + 1 && look.volume != null && look.volume.sharedProfile != null)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void ApplyBackdrop(float x, float weight)
@@ -133,8 +163,7 @@ namespace Descender.World.Paradise
             }
             if (sky != null)
             {
-                // Under a later zone fading in, the sky stays whole; the later sky covers it.
-                var skyAlpha = x > xMax - blend ? (weight > 0f ? 1f : 0f) : weight;
+                var skyAlpha = WeightUnderNext(x, xMax, blend, weight);
                 foreach (var r in sky.GetComponentsInChildren<SpriteRenderer>(true))
                 {
                     SetAlpha(r, skyAlpha);

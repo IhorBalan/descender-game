@@ -1,5 +1,24 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-4464900310507108291
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 221518ef91623a7438a71fef23660601, type: 3}
+  m_Name: WhiteBalance
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.WhiteBalance
+  active: 1
+  temperature:
+    m_OverrideState: 1
+    m_Value: 8
+  tint:
+    m_OverrideState: 1
+    m_Value: 4
 --- !u!114 &-2025279740307303230
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -15,16 +34,16 @@ MonoBehaviour:
   active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.1, g: 0.12, b: 0.2, a: 1}
+    m_Value: {r: 0.14, g: 0.07, b: 0.16, a: 1}
   center:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.12
+    m_Value: 0.18
   smoothness:
     m_OverrideState: 1
-    m_Value: 0.5
+    m_Value: 0.45
   rounded:
     m_OverrideState: 1
     m_Value: 0
@@ -46,6 +65,8 @@ MonoBehaviour:
   - {fileID: 4837945587210105912}
   - {fileID: 5804331780713109871}
   - {fileID: -2025279740307303230}
+  - {fileID: -4464900310507108291}
+  - {fileID: 5093674989737415236}
 --- !u!114 &4837945587210105912
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -61,13 +82,53 @@ MonoBehaviour:
   active: 1
   shadows:
     m_OverrideState: 1
-    m_Value: {r: 0.42, g: 0.5, b: 0.62, a: 1}
+    m_Value: {r: 0.55, g: 0.44, b: 0.6, a: 1}
   highlights:
     m_OverrideState: 1
-    m_Value: {r: 0.66, g: 0.58, b: 0.42, a: 1}
+    m_Value: {r: 0.7, g: 0.57, b: 0.44, a: 1}
   balance:
     m_OverrideState: 1
     m_Value: 10
+--- !u!114 &5093674989737415236
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdfbdbb87d3286943a057f7791b43141, type: 3}
+  m_Name: ChannelMixer
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ChannelMixer
+  active: 1
+  redOutRedIn:
+    m_OverrideState: 0
+    m_Value: 100
+  redOutGreenIn:
+    m_OverrideState: 0
+    m_Value: 0
+  redOutBlueIn:
+    m_OverrideState: 0
+    m_Value: 0
+  greenOutRedIn:
+    m_OverrideState: 0
+    m_Value: 0
+  greenOutGreenIn:
+    m_OverrideState: 1
+    m_Value: 100
+  greenOutBlueIn:
+    m_OverrideState: 1
+    m_Value: 0
+  blueOutRedIn:
+    m_OverrideState: 0
+    m_Value: 0
+  blueOutGreenIn:
+    m_OverrideState: 0
+    m_Value: 0
+  blueOutBlueIn:
+    m_OverrideState: 0
+    m_Value: 100
 --- !u!114 &5804331780713109871
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -86,10 +147,10 @@ MonoBehaviour:
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.15
+    m_Value: 1.1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.3
+    m_Value: 0.36
   scatter:
     m_OverrideState: 1
     m_Value: 0.7
@@ -98,7 +159,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.95, b: 0.85, a: 1}
+    m_Value: {r: 1, g: 0.9, b: 0.78, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -176,13 +237,13 @@ MonoBehaviour:
     m_Value: -0.05
   contrast:
     m_OverrideState: 1
-    m_Value: 14
+    m_Value: 16
   colorFilter:
     m_OverrideState: 1
-    m_Value: {r: 1, g: 0.99, b: 0.975, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   hueShift:
     m_OverrideState: 0
     m_Value: 0
   saturation:
     m_OverrideState: 1
-    m_Value: 4
+    m_Value: 6
