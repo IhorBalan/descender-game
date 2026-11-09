@@ -379,7 +379,7 @@ namespace Descender.EditorTools.Paradise
             var water = ParadiseArt.Group(root, "Water");
             foreach (var w in plan.water)
             {
-                Fall(water, w, art);
+                Fall(zone, water, w, art);
             }
             var shafts = ParadiseArt.Group(root, "Shafts");
             foreach (var x in plan.shafts)
@@ -409,6 +409,7 @@ namespace Descender.EditorTools.Paradise
                     Vector3.one * f.scale
                 );
                 r.flipX = f.flip;
+                r.sortingLayerName = ForegroundLayer;
                 r.gameObject.AddComponent<ForegroundParallax>().Configure(FrontDepth, FrontDepth);
             }
             var air = ParadiseArt.Group(root, "Air");
@@ -2033,7 +2034,63 @@ namespace Descender.EditorTools.Paradise
             importer.SaveAndReimport();
         }
 
-        private static void Fall(Transform parent, Waterfall w, ParadiseArt.ZoneArt art)
+        /// <summary>
+        /// How far water landing at x can spread along its ground, left (x) and right (y), up to
+        /// `limit`: it stops at a wall, at an edge, and where the ground steps or slopes away.
+        /// </summary>
+        public static Vector2 PoolReach(ParadiseLayout.Zone zone, float x, float foot, float limit)
+        {
+            const float step = 0.25f;
+            var ground = ParadiseDressing.SurfaceY(zone, x, float.NaN, foot + PoolSearch);
+            float Side(float sign)
+            {
+                for (var d = step; d <= limit; d += step)
+                {
+                    var at = x + sign * d;
+                    var y = ParadiseDressing.SurfaceY(zone, at, float.NaN, foot + PoolSearch);
+                    if (
+                        float.IsNaN(y)
+                        || Mathf.Abs(y - ground) > PoolMaxStep
+                        || InsideSolid(zone, new Vector2(at + sign * PoolWallGap, ground + PoolWallTest))
+                    )
+                    {
+                        return d - step;
+                    }
+                }
+                return limit;
+            }
+            return float.IsNaN(ground) ? Vector2.zero : new Vector2(Side(-1f), Side(1f));
+        }
+
+        private static bool InsideSolid(ParadiseLayout.Zone zone, Vector2 p)
+        {
+            foreach (var shape in zone.shapes)
+            {
+                if (!shape.collides)
+                {
+                    continue;
+                }
+                var (left, right) = ParadiseGreybox.Tangents(shape.outline, true);
+                var points = ParadiseGreybox.Sample(shape.outline, left, right, true);
+                var inside = false;
+                for (int i = 0, j = points.Count - 1; i < points.Count; j = i++)
+                {
+                    var a = points[i];
+                    var b = points[j];
+                    if ((a.y > p.y) != (b.y > p.y) && p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x)
+                    {
+                        inside = !inside;
+                    }
+                }
+                if (inside)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static void Fall(ParadiseLayout.Zone zone, Transform parent, Waterfall w, ParadiseArt.ZoneArt art)
         {
             var height = w.top - w.bottom;
             var tex = Get("waterfall_tex");
@@ -2097,23 +2154,43 @@ namespace Descender.EditorTools.Paradise
             spray.transform.SetParent(parent, false);
             if (w.foam)
             {
-                // The pool on the deck where it lands: foam heaped under the fall, rings
-                // spreading across the water. Low, so the deck stays readable underfoot, and
-                // behind the deck's railing and plants, as the fall is.
-                const float poolHeight = 1.8f;
+                // Where it lands: foam heaped under the fall, low so the deck stays readable
+                // underfoot and behind the deck's railing and plants, as the fall is. In front of
+                // the deck, the pool it lands in, mirroring what stands over it.
+                const float heapHeight = 1.8f;
                 const float ground = 0.5f;
-                var poolWidth = w.width * 4.4f;
-                var pool = ParadiseArt.Sprite(
+                var reach = PoolReach(zone, w.x, w.bottom, w.width * 2.6f + 1f);
+                var heap = ParadiseArt.Sprite(
                     parent,
-                    "Pool",
+                    "Foam",
                     tex,
                     Water("Paradise Water Foam", "Descender/Water Foam"),
                     -95,
-                    new Vector3(w.x, w.bottom - ground + poolHeight, 0f),
-                    new Vector3(poolWidth / tex.bounds.size.x, poolHeight / tex.bounds.size.y, 1f)
+                    new Vector3(w.x, w.bottom - ground + heapHeight, 0f),
+                    new Vector3(w.width * 4.4f / tex.bounds.size.x, heapHeight / tex.bounds.size.y, 1f)
                 );
-                pool.gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
-                    .Configure(new Vector4(w.width * 0.5f, ground, 0f, 0f));
+                heap.gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
+                    .Configure(new Vector4(w.width * 0.5f, ground, reach.x, reach.y));
+                if (reach.x + reach.y >= PoolLeast)
+                {
+                    var surface = ParadiseArt.Sprite(
+                        parent,
+                        "Pool",
+                        tex,
+                        Water("Paradise Water Reflection", "Descender/Water Reflection"),
+                        0,
+                        new Vector3(w.x, ParadiseDressing.SurfaceY(zone, w.x, w.bottom, w.bottom + PoolSearch), 0f),
+                        new Vector3(
+                            (Mathf.Max(reach.x, reach.y) * 2f + 0.2f) / tex.bounds.size.x,
+                            PoolDepth / tex.bounds.size.y,
+                            1f
+                        )
+                    );
+                    surface.sortingLayerName = WaterLayer;
+                    surface
+                        .gameObject.AddComponent<global::Descender.World.Paradise.WaterQuad>()
+                        .Configure(new Vector4(reach.x, reach.y, 0f, 0f));
+                }
                 Mist(parent, new Vector2(w.x, w.bottom + 0.1f), w.width * 0.6f, 3.2f, 0.34f, mist, -84);
                 spray.transform.position = new Vector3(w.x, w.bottom + 0.05f, 0f);
             }
@@ -2790,6 +2867,25 @@ namespace Descender.EditorTools.Paradise
         }
 
         /// <summary>How much faster than the walk the framing passes, both ways: it is that much nearer the eye.</summary>
+        /// <summary>The sorting layer that can sample the finished Default layer, so pools can mirror it.</summary>
+        public const string WaterLayer = "Water";
+
+        /// <summary>The out-of-focus framing, which has to pass in front of the pools.</summary>
+        public const string ForegroundLayer = "Foreground";
+
+        /// <summary>How far a pool's surface reaches toward the viewer, seen at a grazing angle.</summary>
+        public const float PoolDepth = 0.5f;
+
+        /// <summary>A pool narrower than this, hemmed in on both sides, is left as foam.</summary>
+        public const float PoolLeast = 2f;
+
+        private const float PoolSearch = 1f;
+        private const float PoolMaxStep = 0.35f;
+        private const float PoolWallTest = 0.5f;
+
+        /// <summary>Kept clear of a wall: the column at a wall's end stands proud of its collider.</summary>
+        private const float PoolWallGap = 0.5f;
+
         public const float FrontDepth = 0.4f;
 
         /// <summary>The foot of a rising piece under the walk, in units (RISE_FOOT in fg_framing.py).</summary>

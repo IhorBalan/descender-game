@@ -4,7 +4,8 @@ namespace Descender.World.Paradise
 {
     /// <summary>
     /// A procedural water effect drawn on a SpriteRenderer stretched to its area: a
-    /// waterfall's foam pool (Descender/Water Foam) or its mist (Descender/Water Mist).
+    /// waterfall's foam (Descender/Water Foam), the pool it lands in (Descender/Water
+    /// Reflection) or its mist (Descender/Water Mist).
     /// Tells the shader the area's size in units, a per-place seed and the effect's shape
     /// (what each shader reads from it is in the shader's header), once on Start; the motion
     /// is all shader time. Placed by ParadiseGarden's Fall.
