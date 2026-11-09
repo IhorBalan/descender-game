@@ -1,10 +1,9 @@
-// The foot of a Paradise waterfall that lands on ground: a shallow pool seen almost edge
-// on, with a heap of churning foam under the fall that boils upward and rolls outward,
-// foam rings that spread across the pool and break up as they go, a glassy waterline,
-// and a few glints of sun. All procedural, on a SpriteRenderer stretched to the pool
-// (WaterQuad.cs sets _Size and _Seed; _Shape.x is the fall's half width and _Shape.y
-// the ground's height above the quad's bottom, both in units). Unlit and low: it sits
-// on a walkable deck, so it stays under the hero's knees and lets the deck show through.
+// The foot of a Paradise waterfall that lands on ground: a heap of churning foam under
+// the fall that boils upward and rolls outward, and a few glints of sun. All procedural, on
+// a SpriteRenderer stretched around it (WaterQuad.cs sets _Size and _Seed; _Shape.x is the
+// fall's half width, _Shape.y the ground's height above the quad's bottom, and _Shape.zw how
+// far the ground lets it spread left and right, all in units). Unlit and low: it sits on a
+// walkable deck, so it stays under the hero's knees. The water it lands in is Water Reflection.
 Shader "Descender/Water Foam"
 {
     Properties
@@ -13,9 +12,8 @@ Shader "Descender/Water Foam"
         _Color ("Tint", Color) = (1, 1, 1, 1)
         _FoamColor ("Foam", Color) = (0.93, 0.96, 1, 1)
         _ShadeColor ("Foam In Shadow", Color) = (0.5, 0.62, 0.72, 1)
-        _WaterColor ("Pool Water", Color) = (0.42, 0.62, 0.72, 1)
         _Size ("Quad Size (units, per pool)", Vector) = (5, 2, 0, 0)
-        _Shape ("Fall Half Width, Ground Height (units)", Vector) = (0.8, 0.6, 0, 0)
+        _Shape ("Fall Half Width, Ground Height, Reach Left, Reach Right (units)", Vector) = (0.8, 0.6, 4, 4)
         _Seed ("Seed (per pool)", Float) = 0
         _HeapHeight ("Foam Heap Height (units)", Float) = 0.7
     }
@@ -47,7 +45,6 @@ Shader "Descender/Water Foam"
             float4 _Color;
             float4 _FoamColor;
             float4 _ShadeColor;
-            float4 _WaterColor;
             float4 _Size;
             float4 _Shape;
             float _Seed;
@@ -122,41 +119,11 @@ Shader "Descender/Water Foam"
                 float3 foamRgb = lerp(_ShadeColor.rgb, _FoamColor.rgb, saturate(lit * 0.85 + 0.1 + (bubbles - 0.5) * 0.5));
                 float foam = heap * (0.75 + 0.25 * smoothstep(0.3, 0.7, bubbles));
 
-                // The pool: a thin sheet of water along the ground, a bright waterline.
-                float poolReach = hw * 3.6;
-                float pool = smoothstep(poolReach, poolReach * 0.6, ax) * smoothstep(-0.16, -0.02, q.y)
-                    * smoothstep(0.07, 0.0, q.y);
-                float waterline = exp(-pow(q.y / 0.025, 2.0)) * smoothstep(poolReach, poolReach * 0.5, ax);
+                // It stops where the ground does, at a wall or an edge.
+                foam *= smoothstep(0.0, 0.3, (q.x < 0.0 ? _Shape.z : _Shape.w) - ax);
 
-                // Rings: foam pushed out across the pool, seen edge on as flat ellipses that
-                // widen, thin and break up as they go.
-                float rings = 0.0;
-                [unroll]
-                for (int k = 0; k < 3; k++)
-                {
-                    float phase = frac(t * 0.33 + k / 3.0 + seed * 0.137);
-                    float radius = hw * (0.8 + 3.0 * phase);
-                    float r = length(float2(q.x, q.y / 0.11));
-                    float width = 0.05 + 0.12 * phase;
-                    float ring = exp(-pow((r - radius) / width, 2.0));
-                    float broken = smoothstep(0.3, 0.7, WaterNoise(float2(q.x / radius * 3.0 + k * 11.0 + seed, k * 5.0 + floor(t * 0.33 + k / 3.0 + seed * 0.137) * 3.1)));
-                    float fade = (1.0 - phase) * smoothstep(0.0, 0.12, phase);
-                    rings += ring * broken * fade;
-                }
-                rings = saturate(rings) * smoothstep(0.12, -0.02, q.y);
-
-                // Glints on the waterline and the wet foam.
-                float glint = WaterGlint(float2(q.x * 5.0 + seed, q.y * 9.0), t, 0.22) * saturate(pool + heap) * lit;
-
-                float3 rgb = _WaterColor.rgb;
-                float a = pool * 0.55 + waterline * 0.4;
-                rgb = lerp(rgb, _FoamColor.rgb, saturate(rings + waterline * 0.6));
-                a = max(a, rings * 0.8);
-                rgb = lerp(rgb, foamRgb, saturate(foam * 1.4));
-                a = max(a, foam * 0.95);
-                rgb += glint * 0.35;
-                a = saturate(a + glint * 0.3);
-                return float4(rgb, a) * _Color * i.color;
+                float glint = WaterGlint(float2(q.x * 5.0 + seed, q.y * 9.0), t, 0.22) * foam * lit;
+                return float4(foamRgb + glint * 0.35, saturate(foam * 0.95 + glint * 0.3)) * _Color * i.color;
             }
             ENDCG
         }

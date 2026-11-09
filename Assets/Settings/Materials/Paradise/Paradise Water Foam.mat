@@ -35,8 +35,7 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _FoamColor: {r: 0.93, g: 0.96, b: 1, a: 1}
     - _ShadeColor: {r: 0.5, g: 0.62, b: 0.72, a: 1}
-    - _Shape: {r: 0.8, g: 0.6, b: 0, a: 0}
+    - _Shape: {r: 0.8, g: 0.6, b: 4, a: 4}
     - _Size: {r: 5, g: 2, b: 0, a: 0}
-    - _WaterColor: {r: 0.42, g: 0.62, b: 0.72, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

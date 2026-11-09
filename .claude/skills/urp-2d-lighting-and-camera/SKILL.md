@@ -93,6 +93,12 @@ layer `sortingOrder` orders; the hero is Characters 10, enemies 0,
 projectiles 20. Transparency Sort Mode is `Custom Axis (0,1,0)` so a
 lower Y draws in front within the same order.
 
+Paradise draws everything on `Default`, ordered by `sortingOrder`, with two
+layers above it. The renderer captures the frame after `Default` into
+`_CameraSortingLayerTexture` (at half size), and only a later layer can read
+it: `Water` holds the pools (Descender/Water Reflection), and `Foreground`
+holds the out-of-focus framing, which has to pass in front of them.
+
 ## Region look
 
 `RegionLook` (`Assets/Data/Regions/<name>.asset`) is applied by
