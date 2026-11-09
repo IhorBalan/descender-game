@@ -448,13 +448,13 @@ namespace Descender.EditorTools.Paradise
                     front,
                     f.name,
                     Get(f.name),
-                    art.foreground,
+                    FrontMaterial(f.name.Contains("hang"), art),
                     400 + i % 3,
                     f.at,
                     Vector3.one * f.scale
                 );
                 r.flipX = f.flip;
-                r.gameObject.AddComponent<ForegroundParallax>().Configure(0.3f);
+                r.gameObject.AddComponent<ForegroundParallax>().Configure(FrontDepth, FrontDepth);
             }
             var air = ParadiseArt.Group(root, "Air");
             var area = new Rect(zone.xMin, -105f, zone.xMax - zone.xMin, 90f);
@@ -1934,6 +1934,27 @@ namespace Descender.EditorTools.Paradise
             return variant;
         }
 
+        /// <summary>The framing's material: its shade is in the art, so no haze; slow, heavy sway.</summary>
+        private static Material FrontMaterial(bool hangs, ParadiseArt.ZoneArt art)
+        {
+            var material = ParadiseArt.SaveMaterial(
+                $"{art.foreground.name} {(hangs ? "Hanging" : "Rising")}",
+                art.foreground.shader.name
+            );
+            material.CopyPropertiesFromMaterial(art.foreground);
+            material.SetFloat("_HazeAmount", 0f);
+            if (hangs)
+            {
+                SetSway(material, 0.012f, 1.1f, 0.6f, 0.02f, 2.2f, 0.25f, 0f, true);
+            }
+            else
+            {
+                SetSway(material, 0.14f, 1.1f, 0.6f, 0.01f, 2.5f, 0.4f, 0f, false);
+            }
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
         private static string SwayKindOf(string name)
         {
             if (name.StartsWith("lily") || name.StartsWith("grass") || name == "fern")
@@ -2785,53 +2806,53 @@ namespace Descender.EditorTools.Paradise
                 plan.shafts.Add(900f);
                 plan.shafts.Add(1200f);
             }
-            // Foreground: dark leaves rising into the bottom of the frame, as in the key art,
-            // ivy hanging from above now and then; the kit's ferns and bushes if the leaves are missing.
-            var leaves = new[] { "fg_leaves_a", "fg_leaves_b", "fg_leaves_d" };
-            var k = 0;
-            for (var x = zone.xMin + 18f; x < zone.xMax; x += 20f + Hash(x, 10f) * 16f, k++)
+            // Foreground: the garden between the eye and the walk, out of focus (fg_framing.py),
+            // rising into the bottom of the frame and hanging into its top in turn, with open
+            // view between them. Nothing over a gap: there is no ground there to frame.
+            var side = 0;
+            for (var x = zone.xMin + 20f; x < zone.xMax; x += 30f + Hash(x, 10f) * 16f)
             {
-                var ground = ParadiseDressing.SurfaceY(zone, x);
-                if (Sprites.ContainsKey(leaves[0]) && k % 4 != 3)
+                var ground = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+                if (float.IsNaN(ground))
                 {
-                    var name = leaves[(int)(Hash(x, 21f) * leaves.Length) % leaves.Length];
-                    plan.foreground.Add(
-                        new Spot
-                        {
-                            name = name,
-                            at = new Vector3(x, ground - 5.1f),
-                            scale = 0.5f + Hash(x, 11f) * 0.12f,
-                            flip = Hash(x, 22f) > 0.5f,
-                        }
-                    );
+                    continue;
                 }
-                else if (k % 3 == 2)
-                {
-                    plan.foreground.Add(
-                        new Spot
-                        {
-                            name = "ivy_curtain",
-                            at = new Vector3(x, ground + 9.5f),
-                            scale = 1.6f,
-                            flip = k % 2 == 0,
-                        }
-                    );
-                }
-                else
-                {
-                    plan.foreground.Add(
-                        new Spot
-                        {
-                            name = k % 2 == 0 ? "fern" : "flower_bush",
-                            at = new Vector3(x, ground - 5.2f),
-                            scale = 3.4f + Hash(x, 11f),
-                            flip = k % 2 == 1,
-                        }
-                    );
-                }
+                var rises = side++ % 2 == 0;
+                plan.foreground.Add(
+                    new Spot
+                    {
+                        name = $"fg_soft_{(rises ? "rise" : "hang")}_{Mathf.FloorToInt(Hash(x, 21f) * 2.999f)}",
+                        at = new Vector3(
+                            x,
+                            FrontAnchor(rises ? ground - FrontRiseFoot : ground + FrontHangTop, ground)
+                        ),
+                        scale = 1f,
+                        flip = Hash(x, 22f) > 0.5f,
+                    }
+                );
             }
             return plan;
         }
+
+        /// <summary>How much faster than the walk the framing passes, both ways: it is that much nearer the eye.</summary>
+        public const float FrontDepth = 0.4f;
+
+        /// <summary>The foot of a rising piece under the walk, in units (RISE_FOOT in fg_framing.py).</summary>
+        public const float FrontRiseFoot = 8f;
+
+        /// <summary>The top of a hanging piece over the walk, in units (HANG_TOP in fg_framing.py).</summary>
+        public const float FrontHangTop = 11f;
+
+        /// <summary>How far over the walk the camera sits when the hero stands on it.</summary>
+        public const float CameraOverWalk = 2.1f;
+
+        /// <summary>
+        /// Where to put a piece with vertical parallax so that it is at `target` when the hero
+        /// stands on `ground`: ForegroundParallax shifts it by FrontDepth of the camera's
+        /// distance from its anchor, so the anchor is not the place it should be seen.
+        /// </summary>
+        public static float FrontAnchor(float target, float ground) =>
+            (target + (ground + CameraOverWalk) * FrontDepth) / (1f + FrontDepth);
 
         /// <summary>Whether x is within a tile of a gap's edge (plants there would overhang the drop).</summary>
         private static bool NearGap(ParadiseLayout.Zone zone, float x)

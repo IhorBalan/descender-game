@@ -220,6 +220,21 @@ def golden_tree() -> Image.Image:
     return canvas
 
 
+# The focus is on the walk: how far each layer is out of it, as a blur radius in pixels.
+FOCUS = {"garden_bg1_far": 2.6, "garden_bg2_midfar": 2.2, "garden_bg3_mid": 1.6}
+
+
+def out_of_focus(img: Image.Image, radius: float) -> Image.Image:
+    """A layer blurred with its alpha, wrapping around the sides, as the layer tiles."""
+    pad = int(radius * 4)
+    wide = Image.new("RGBA", (img.width + pad * 2, img.height), (0, 0, 0, 0))
+    wide.paste(img.crop((img.width - pad, 0, img.width, img.height)), (0, 0))
+    wide.paste(img, (pad, 0))
+    wide.paste(img.crop((0, 0, pad, img.height)), (img.width + pad, 0))
+    soft = wide.convert("RGBa").filter(ImageFilter.GaussianBlur(radius)).convert("RGBA")
+    return soft.crop((pad, 0, img.width + pad, img.height))
+
+
 def main() -> None:
     os.makedirs(OUT, exist_ok=True)
     for name, make in (
@@ -229,6 +244,8 @@ def main() -> None:
         ("golden_tree", golden_tree),
     ):
         img = make()
+        if name in FOCUS:
+            img = out_of_focus(img, FOCUS[name])
         img.save(os.path.join(OUT, f"{name}.png"))
         print(f"built {name} {img.size}")
 
