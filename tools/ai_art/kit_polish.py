@@ -5,6 +5,7 @@ so running it twice is safe.
 - plants cut off by the side of their image taper to a point, as a frond would;
 - hanging plants lose the flat row they were cropped along, for a ragged leafy top;
 - wisteria loses the pale band painted over its top, so the leaves are its top edge;
+- the hedge's enclosed gaps are sealed, so the pale stone behind does not show as stars;
 - the bounce pod is recoloured from mint to the garden's cream and gold, its glow calmed.
 
   python tools/ai_art/kit_polish.py
@@ -122,6 +123,29 @@ def polish_plants() -> None:
             print(f"polished {name}")
 
 
+def close_holes() -> None:
+    """Seals the gaps a hedge's leaves were cut around, which read as white stars against pale stone."""
+    path = os.path.join(NATURE, "hedge_flowers.png")
+    rgba = load(path)
+    solid = (rgba[..., 3] > 128).astype(np.uint8)
+    count, labels, stats, _ = cv2.connectedComponentsWithStats(1 - solid, connectivity=4)
+    h, w = solid.shape
+    holes = np.zeros((h, w), np.uint8)
+    for i in range(1, count):
+        x, y, cw, ch, _ = stats[i]
+        if x > 0 and y > 0 and x + cw < w and y + ch < h:
+            holes[labels == i] = 1
+    if not holes.any():
+        return
+    grown = cv2.dilate(holes, np.ones((3, 3), np.uint8)) > 0
+    filled = cv2.inpaint(rgba[..., :3].astype(np.uint8), grown.astype(np.uint8), 5, cv2.INPAINT_TELEA)
+    # Painted as the shade between leaves, the darkest thing in a gap.
+    rgba[..., :3][grown] = filled[grown].astype(np.float32) * 0.55
+    rgba[..., 3][grown] = 255.0
+    save(path, rgba)
+    print("closed the hedge's holes")
+
+
 def recolour_pod() -> None:
     rgba = load(POD)
     rgb = rgba[..., :3].astype(np.uint8)
@@ -160,4 +184,5 @@ def recolour_pod() -> None:
 
 if __name__ == "__main__":
     polish_plants()
+    close_holes()
     recolour_pod()
