@@ -15,19 +15,32 @@ namespace Descender.UI
         public const float Width = 1920f;
         public const float Height = 1080f;
 
+        /// <summary>
+        /// How many times its stage size the art is drawn (tools/title_textures.py), so it
+        /// stays sharp up to 4K; sprites are shown at their size divided by this.
+        /// </summary>
+        public const float ArtScale = 2f;
+
         /// <summary>The gap between two items' middles.</summary>
-        public const float Step = 70f;
+        public const float Step = 62f;
 
         /// <summary>The size of an item's text, and the spacing of its capitals in hundredths of an em.</summary>
-        public const float ItemSize = 34f;
+        public const float ItemSize = 27f;
         public const float CapsSpacing = 26f;
 
         /// <summary>The size and spacing of a mixed-case item (a save slot, a difficulty).</summary>
-        public const float RowSize = 30f;
+        public const float RowSize = 24f;
         public const float RowSpacing = 4f;
 
-        public const float SmallSize = 22f;
+        /// <summary>The tagline's and the key hints' size, and the tagline's spacing.</summary>
+        public const float SmallSize = 18f;
         public const float SmallSpacing = 30f;
+
+        /// <summary>A heading over a column (the slot and difficulty pickers).</summary>
+        public const float HeadingSize = 21f;
+
+        /// <summary>The height of a key cap in the hints along the bottom.</summary>
+        public const float KeyHeight = 36f;
 
         public static readonly Color Background = new Color32(14, 12, 12, 255);
         public static readonly Color Ivory = new Color32(255, 240, 214, 255);
@@ -83,12 +96,15 @@ namespace Descender.UI
         /// <summary>The middle line of a rect placed by <see cref="Center"/>, in pixels from the top.</summary>
         public static float MiddleOf(RectTransform rect) => -rect.anchoredPosition.y;
 
-        /// <summary>A sprite at its own size, centred on (cx, cy).</summary>
+        /// <summary>A sprite's size on the stage: its pixels divided by <see cref="ArtScale"/>.</summary>
+        public static Vector2 SizeOf(Sprite sprite) => sprite != null ? sprite.rect.size / ArtScale : Vector2.zero;
+
+        /// <summary>A sprite at its stage size, centred on (cx, cy).</summary>
         public static Image Sprite(Transform parent, string name, Sprite sprite, float cx, float cy)
         {
             var image = UiKit.Box(parent, name, sprite != null ? Color.white : Color.clear);
             image.sprite = sprite;
-            var size = sprite != null ? sprite.rect.size : Vector2.one;
+            var size = sprite != null ? SizeOf(sprite) : Vector2.one;
             Center(image.rectTransform, cx, cy, size.x, size.y);
             return image;
         }
@@ -176,10 +192,12 @@ namespace Descender.UI
             var box = UiKit.Box(parent, "Key", Color.white);
             box.sprite = cap;
             box.type = Image.Type.Sliced;
+            // The cap is drawn at ArtScale, so its border shows at its stage size.
+            box.pixelsPerUnitMultiplier = ArtScale;
             var label = Label(box.transform, key, SmallSize, Parchment, 4f, 0f, 0f, 400f);
-            var w = Mathf.Max(44f, WidthOf(label) + 26f);
-            Center(box.rectTransform, x + w * 0.5f, cy, w, 44f);
-            Center(label.rectTransform, w * 0.5f, 22f, w, 44f);
+            var w = Mathf.Max(KeyHeight, WidthOf(label) + 22f);
+            Center(box.rectTransform, x + w * 0.5f, cy, w, KeyHeight);
+            Center(label.rectTransform, w * 0.5f, KeyHeight * 0.5f, w, KeyHeight);
             return w;
         }
     }

@@ -44,7 +44,7 @@ namespace Descender.UI
                 embers.images[i] = image;
                 embers.motes[i] = image.rectTransform;
                 embers.Respawn(i, true);
-                var size = 8f + (float)embers.random.NextDouble() * 18f;
+                var size = 7f + (float)embers.random.NextDouble() * 15f;
                 TitleKit.Center(image.rectTransform, embers.x[i], embers.y[i], size, size);
             }
             return embers;

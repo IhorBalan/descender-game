@@ -56,15 +56,22 @@ namespace Descender.UI
 
         // Middle lines on the 1920 x 1080 stage, in pixels from the top.
         private const float Middle = TitleKit.Width * 0.5f;
-        private const float HaloY = 205f;
-        private const float LogoY = 215f;
-        private const float TaglineY = 330f;
-        private const float TaglineGap = 28f;
-        private const float RuleY = 398f;
-        private const float ItemsY = 470f;
-        private const float HintsY = 1005f;
-        private const float ColumnWidth = 900f;
-        private const float WideColumnWidth = 1400f;
+        private const float LogoY = 245f;
+
+        // The halo's ring is centred this far under the logo's middle; its star then sits
+        // about 60 px from the top, so nothing of it leaves the frame.
+        private const float RingBelowLogo = 30f;
+
+        // Where the ring's centre is in the halo image, as a share of its height (tools/title_textures.py).
+        private const float HaloRing = 0.62f;
+        private const float TaglineY = 352f;
+        private const float TaglineGap = 23f;
+        private const float RuleY = 408f;
+        private const float ItemsY = 478f;
+        private const float HintsY = 1002f;
+        private const float ColumnWidth = 820f;
+        private const float WideColumnWidth = 1300f;
+        private const float CornerSize = 21f;
 
         [SerializeField]
         private SettingsScreen settings;
@@ -174,22 +181,33 @@ namespace Descender.UI
             var top = UiKit.Rect(stage, "Header");
             UiKit.Fill(top);
             header = top.gameObject;
-            halo = TitleKit.Sprite(top, "Halo", theme.titleHalo, Middle, HaloY);
+            var haloHeight = TitleKit.SizeOf(theme.titleHalo).y;
+            var haloY = LogoY + RingBelowLogo - (HaloRing - 0.5f) * haloHeight;
+            halo = TitleKit.Sprite(top, "Halo", theme.titleHalo, Middle, haloY);
             TitleKit.Sprite(top, "Logo", theme.titleLogo, Middle, LogoY);
             TitleKit.Sprite(top, "Rule", theme.ruleTagline, Middle, RuleY);
             BuildTagline(top);
 
-            var version = TitleKit.Label(stage, "v" + Application.version, 26f, TitleKit.Faded, 4f, 0f, 46f, 200f);
+            var version = TitleKit.Label(
+                stage,
+                "v" + Application.version,
+                CornerSize,
+                TitleKit.Faded,
+                4f,
+                0f,
+                44f,
+                200f
+            );
             version.alignment = TextAlignmentOptions.Right;
-            TitleKit.Center(version.rectTransform, TitleKit.Width - 150f, 46f, 200f, 52f);
+            TitleKit.Center(version.rectTransform, TitleKit.Width - 148f, 44f, 200f, 44f);
 
-            status = TitleKit.Label(stage, "", TitleKit.SmallSize, TitleKit.Bad, 2f, 0f, 46f, 1200f);
+            status = TitleKit.Label(stage, "", TitleKit.SmallSize, TitleKit.Bad, 2f, 0f, 44f, 1200f);
             status.alignment = TextAlignmentOptions.Left;
-            TitleKit.Center(status.rectTransform, 50f + 600f, 46f, 1200f, 44f);
+            TitleKit.Center(status.rectTransform, 48f + 600f, 44f, 1200f, 40f);
 
             keys = UiKit.Rect(stage, "Keys");
             UiKit.Fill(keys);
-            resume = TitleKit.Label(stage, "", 24f, TitleKit.Muted, 6f, Middle, HintsY);
+            resume = TitleKit.Label(stage, "", 19f, TitleKit.Muted, 6f, Middle, HintsY);
 
             BuildMenu();
             BuildSlots();
@@ -221,7 +239,7 @@ namespace Descender.UI
                 );
                 if (i == TaglineLines.Length - 1 && theme.ruleSide != null)
                 {
-                    var half = TitleKit.WidthOf(line) * 0.5f + 24f + theme.ruleSide.rect.width * 0.5f;
+                    var half = TitleKit.WidthOf(line) * 0.5f + 20f + TitleKit.SizeOf(theme.ruleSide).x * 0.5f;
                     TitleKit.Sprite(
                         group,
                         "Line",
@@ -270,7 +288,15 @@ namespace Descender.UI
 
         /// <summary>A column's heading, in gold where the tagline stands on the main menu.</summary>
         private static TextMeshProUGUI Heading(Transform parent) =>
-            TitleKit.Label(parent, "", 26f, TitleKit.Gold, TitleKit.SmallSpacing, Middle, TaglineY + TaglineGap * 0.5f);
+            TitleKit.Label(
+                parent,
+                "",
+                TitleKit.HeadingSize,
+                TitleKit.Gold,
+                TitleKit.SmallSpacing,
+                Middle,
+                TaglineY + TaglineGap * 0.5f
+            );
 
         private void BuildDifficulty()
         {
@@ -295,7 +321,7 @@ namespace Descender.UI
             TitleKit.Label(
                 difficulty.Root,
                 "The difficulty is kept with the save.",
-                24f,
+                19f,
                 TitleKit.Faded,
                 4f,
                 Middle,
@@ -309,14 +335,14 @@ namespace Descender.UI
             var page = UiKit.Rect(stage, "Credits");
             UiKit.Fill(page);
             credits = page.gameObject;
-            TitleKit.Label(page, "CREDITS", 64f, TitleKit.Gold, TitleKit.CapsSpacing, Middle, 160f);
-            TitleKit.Sprite(page, "Rule", theme.ruleTagline, Middle, 230f);
+            TitleKit.Label(page, "CREDITS", 51f, TitleKit.Gold, TitleKit.CapsSpacing, Middle, 160f);
+            TitleKit.Sprite(page, "Rule", theme.ruleTagline, Middle, 218f);
             for (var i = 0; i < Credits.Length; i++)
             {
                 var color = i == 0 ? TitleKit.Ivory : TitleKit.Parchment;
-                TitleKit.Label(page, Credits[i], 30f, color, 4f, Middle, 300f + i * 52f);
+                TitleKit.Label(page, Credits[i], 24f, color, 4f, Middle, 286f + i * 44f);
             }
-            creditsList = new TitleList(page, "Back", 860f, ColumnWidth, theme.focusBar, theme.ruleItem);
+            creditsList = new TitleList(page, "Back", 820f, ColumnWidth, theme.focusBar, theme.ruleItem);
             creditsBackButton = creditsList.Add("Back", ShowMenu, true, TitleList.BackSound);
             MenuKit.LinkVertical(creditsList.Layout());
             credits.SetActive(false);
@@ -565,13 +591,14 @@ namespace Descender.UI
             if (theme.keyDpad != null)
             {
                 var pad = TitleKit.Sprite(row, "Dpad", theme.keyDpad, 0f, HintsY);
-                pad.rectTransform.anchoredPosition = new Vector2(x + 22f, -HintsY);
+                var padWidth = TitleKit.SizeOf(theme.keyDpad).x;
+                pad.rectTransform.anchoredPosition = new Vector2(x + padWidth * 0.5f, -HintsY);
                 parts.Add(pad.rectTransform);
-                x += 44f + 14f;
+                x += padWidth + 12f;
             }
-            x = Hint(row, parts, "Navigate", x) + 56f;
-            x = Hint(row, parts, "Confirm", x + KeyCapInto(row, parts, gamepad ? "A" : "Enter", x) + 14f) + 56f;
-            x = Hint(row, parts, "Back", x + KeyCapInto(row, parts, gamepad ? "B" : "Esc", x) + 14f);
+            x = Hint(row, parts, "Navigate", x) + 46f;
+            x = Hint(row, parts, "Confirm", x + KeyCapInto(row, parts, gamepad ? "A" : "Enter", x) + 12f) + 46f;
+            x = Hint(row, parts, "Back", x + KeyCapInto(row, parts, gamepad ? "B" : "Esc", x) + 12f);
             // Centre the whole row: everything was laid out from 0, so shift it by half what is left.
             var shift = Middle - x * 0.5f;
             foreach (var part in parts)
@@ -582,7 +609,7 @@ namespace Descender.UI
             {
                 return;
             }
-            var reach = theme.ruleSide.rect.width * 0.5f + 40f;
+            var reach = TitleKit.SizeOf(theme.ruleSide).x * 0.5f + 34f;
             TitleKit.Sprite(keys, "Line", theme.ruleSide, shift - reach, HintsY);
             var right = TitleKit.Sprite(keys, "Line", theme.ruleSide, shift + x + reach, HintsY);
             right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
@@ -609,9 +636,9 @@ namespace Descender.UI
             float x
         )
         {
-            var label = TitleKit.Label(row, text, 26f, TitleKit.Muted, 4f, 0f, HintsY, 400f);
+            var label = TitleKit.Label(row, text, CornerSize, TitleKit.Muted, 4f, 0f, HintsY, 400f);
             var w = TitleKit.WidthOf(label);
-            TitleKit.Center(label.rectTransform, x + w * 0.5f, HintsY, w + 4f, 52f);
+            TitleKit.Center(label.rectTransform, x + w * 0.5f, HintsY, w + 4f, 44f);
             parts.Add(label.rectTransform);
             return x + w;
         }

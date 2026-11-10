@@ -20,7 +20,7 @@ namespace Descender.UI
         public const float MaxStep = 1f / 20f;
 
         /// <summary>How far left of the bar's middle the emblem sits.</summary>
-        public const float EmblemOffset = 300f;
+        public const float EmblemOffset = 270f;
 
         private Image bar;
         private Image emblem;
@@ -60,7 +60,7 @@ namespace Descender.UI
             transform.SetSiblingIndex(column.BarSiblingIndex);
             bar.sprite = column.Bar;
             bar.color = column.Bar != null ? Color.white : Color.clear;
-            var size = column.Bar != null ? column.Bar.rect.size : Vector2.zero;
+            var size = TitleKit.SizeOf(column.Bar);
             TitleKit.Center(bar.rectTransform, TitleKit.Width * 0.5f, y, size.x, size.y);
             // The emblem's parent is the bar, whose own top left is the origin here.
             var emblemSize = emblem.rectTransform.sizeDelta;

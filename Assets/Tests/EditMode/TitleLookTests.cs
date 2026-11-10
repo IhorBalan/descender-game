@@ -56,7 +56,7 @@ namespace Descender.Tests
         }
 
         [Test]
-        public void TheThemeHasEveryPieceOfTitleArtAsASmoothSprite()
+        public void TheThemeHasEveryPieceOfTitleArtAsASharpSmoothSprite()
         {
             var theme = AssetDatabase.LoadAssetAtPath<MenuTheme>(ThemePath);
             Assert.That(theme, Is.Not.Null);
@@ -82,10 +82,21 @@ namespace Descender.Tests
                 var importer = (TextureImporter)AssetImporter.GetAtPath(path);
                 Assert.That(importer.filterMode, Is.EqualTo(FilterMode.Bilinear), path);
                 Assert.That(importer.textureCompression, Is.EqualTo(TextureImporterCompression.Uncompressed), path);
-                Assert.That(importer.mipmapEnabled, Is.False, path);
+                Assert.That(
+                    importer.mipmapEnabled,
+                    Is.True,
+                    path + " is mipmapped, so it stays clean when shown small"
+                );
             }
             Assert.That(theme.focusBarWide.rect.width, Is.GreaterThan(theme.focusBar.rect.width));
-            Assert.That(theme.keyCap.border, Is.EqualTo(new Vector4(14f, 14f, 14f, 14f)), "the key cap stretches");
+            Assert.That(
+                theme.keyCap.border,
+                Is.EqualTo(Vector4.one * 12f * TitleKit.ArtScale),
+                "the key cap stretches"
+            );
+            // Drawn at twice its stage size: the logo is wider than the screen's middle half once halved.
+            Assert.That(TitleKit.SizeOf(theme.titleLogo).x, Is.InRange(800f, 1200f));
+            Assert.That(theme.titleLogo.rect.width, Is.EqualTo(TitleKit.SizeOf(theme.titleLogo).x * TitleKit.ArtScale));
         }
 
         [Test]

@@ -95,5 +95,60 @@ namespace Descender.Tests.PlayMode
             yield return null;
             Assert.That(title.Shown, Is.SameAs(title.Menu), "Cancel goes back to the menu");
         }
+
+        /// <summary>
+        /// Nothing of the header is cut by the top of the frame: the logo's rect, and the
+        /// first row of the halo art that shows any light, are inside the 1080 stage.
+        /// </summary>
+        [UnityTest]
+        [Timeout(60000)]
+        public IEnumerator NothingOfTheHeaderLeavesTheTopOfTheFrame()
+        {
+            var logo = Find("Logo");
+            Assert.That(
+                TitleKit.MiddleOf(logo.rectTransform) - logo.rectTransform.sizeDelta.y * 0.5f,
+                Is.GreaterThan(0f)
+            );
+
+#if UNITY_EDITOR
+            var halo = Find("Halo");
+            var path = UnityEditor.AssetDatabase.GetAssetPath(halo.sprite);
+            var art = new Texture2D(2, 2);
+            Assert.That(art.LoadImage(System.IO.File.ReadAllBytes(path)), Is.True);
+            var pixels = art.GetPixels32();
+            var firstLitRow = -1;
+            // Texture rows count from the bottom; walk down from the top.
+            for (var row = art.height - 1; row >= 0 && firstLitRow < 0; row--)
+            {
+                for (var x = 0; x < art.width; x++)
+                {
+                    if (pixels[row * art.width + x].a > 6)
+                    {
+                        firstLitRow = art.height - 1 - row;
+                        break;
+                    }
+                }
+            }
+            Assert.That(firstLitRow, Is.GreaterThanOrEqualTo(0), "the halo shows some light");
+            var haloTop = TitleKit.MiddleOf(halo.rectTransform) - halo.rectTransform.sizeDelta.y * 0.5f;
+            var firstLight = haloTop + firstLitRow / TitleKit.ArtScale;
+            Assert.That(firstLight, Is.GreaterThan(4f), "the halo's star and spear stay inside the frame");
+            Object.Destroy(art);
+#endif
+            yield break;
+        }
+
+        private Image Find(string name)
+        {
+            foreach (var image in title.Canvas.GetComponentsInChildren<Image>(true))
+            {
+                if (image.name == name)
+                {
+                    return image;
+                }
+            }
+            Assert.Fail($"the title has no {name}");
+            return null;
+        }
     }
 }
