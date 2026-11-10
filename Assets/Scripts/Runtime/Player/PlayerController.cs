@@ -83,6 +83,7 @@ namespace Descender.Player
         private bool grounded;
         private bool wasGrounded;
         private IMovingGround movingGround;
+        private bool unsteadyGround;
         private Vector2 carry;
         private int crushedSteps;
         private float lastFallSpeed;
@@ -1252,7 +1253,8 @@ namespace Descender.Player
 
         private void TrackSafeGround(float dt)
         {
-            if (grounded && movingGround == null && (state == PlayerState.Idle || state == PlayerState.Run))
+            var steady = movingGround == null && !unsteadyGround;
+            if (grounded && steady && (state == PlayerState.Idle || state == PlayerState.Run))
             {
                 safeGroundTime += dt;
                 if (safeGroundTime >= tuning.safeGroundTime)
@@ -1274,6 +1276,11 @@ namespace Descender.Player
             var filter = ledgesIgnored ? worldOnlyFilter : groundFilter;
             var count = Physics2D.OverlapBox(centre, size, 0f, filter, hits);
             movingGround = null;
+            unsteadyGround = false;
+            for (var i = 0; i < count; i++)
+            {
+                unsteadyGround |= hits[i].GetComponentInParent<IUnsteadyGround>() != null;
+            }
             for (var i = 0; i < count && movingGround == null; i++)
             {
                 var under = hits[i].attachedRigidbody;
