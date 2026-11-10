@@ -45,6 +45,7 @@ namespace Descender.UI
         private float timeScaleBefore = 1f;
         private bool inputWasUi;
         private CollisionBoxes boxes;
+        private TuningOverlay tuning;
 
         public ConsoleCommands Commands { get; } = new ConsoleCommands();
 
@@ -55,6 +56,9 @@ namespace Descender.UI
 
         /// <summary>Whether the collision overlay is on.</summary>
         public bool BoxesShown => boxes != null;
+
+        /// <summary>Whether the tuning panel is on.</summary>
+        public bool TuningShown => tuning != null;
 
         private void Awake()
         {
@@ -71,6 +75,18 @@ namespace Descender.UI
                 LabCommand,
                 "lab [station|list]",
                 "Opens the mechanics lab at a station (the first by default); `lab list` names the stations."
+            );
+            Commands.Register(
+                "tune",
+                TuneCommand,
+                "tune [field] [value]",
+                "Shows or sets the hero's numbers while playing; also `tune list`, `tune reset`, `tune save`, `tune panel`."
+            );
+            Commands.Register(
+                "ability",
+                TuneCommands.Ability,
+                "ability [name|all] [on|off|reset]",
+                "Turns an ability of the hero's on or off until the game closes; a save keeps what he really owns."
             );
         }
 
@@ -309,6 +325,55 @@ namespace Descender.UI
             }
             flow.StartLab(station);
             return station.Length > 0 ? $"Opening the lab at '{station}'." : "Opening the lab.";
+        }
+
+        private string TuneCommand(string[] args)
+        {
+            if (args.Length == 0 || args[0].ToLowerInvariant() != "panel")
+            {
+                return TuneCommands.Tune(args);
+            }
+            if (args.Length > 2)
+            {
+                return TuneCommands.TuneUsage;
+            }
+            if (args.Length == 1)
+            {
+                SetTuningShown(!TuningShown);
+                return TuningShown ? "Tuning panel on" : "Tuning panel off";
+            }
+            if (Player.LiveTuning.TryOnOff(args[1], out var on))
+            {
+                SetTuningShown(on);
+                return on ? "Tuning panel on" : "Tuning panel off";
+            }
+            if (TuningOverlay.GroupStarting(args[1]) < 0)
+            {
+                var groups = string.Join(", ", Player.LiveTuning.Groups);
+                return $"No tuning group starts with '{args[1]}'. Groups: {groups}";
+            }
+            SetTuningShown(true);
+            tuning.TurnTo(args[1]);
+            return "Tuning panel on";
+        }
+
+        /// <summary>Shows or hides the tuning panel (what `tune panel` does).</summary>
+        public void SetTuningShown(bool shown)
+        {
+            if (shown == TuningShown)
+            {
+                return;
+            }
+            if (shown)
+            {
+                tuning = new GameObject("TuningOverlay").AddComponent<TuningOverlay>();
+                tuning.transform.SetParent(transform, false);
+            }
+            else
+            {
+                Destroy(tuning.gameObject);
+                tuning = null;
+            }
         }
 
         private string ShowBoxesCommand(string[] args)
