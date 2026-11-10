@@ -82,6 +82,7 @@ namespace Descender.Lab
                 Rebuild(station);
             }
             hero.SetAbilities(station.abilities);
+            hero.GrabsLedges = station.ledgeGrab;
             hero.DeathY = station.room.yMin - 4f;
             hero.Respawn(station.spawn);
             var camera = CameraRig.GameCamera.Main;

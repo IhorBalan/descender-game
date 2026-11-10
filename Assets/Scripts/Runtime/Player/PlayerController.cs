@@ -87,6 +87,9 @@ namespace Descender.Player
         private Triggers.Water water;
         private float strokeLockLeft;
         private float climbLockLeft;
+        private int hangSide;
+        private bool hangUpReady;
+        private float grabLockLeft;
         private bool upHeld;
         private bool unsteadyGround;
         private Vector2 carry;
@@ -191,6 +194,15 @@ namespace Descender.Player
 
         /// <summary>He has hold of something to climb.</summary>
         public bool IsClimbing => state == PlayerState.Climb;
+
+        /// <summary>He hangs from the corner of a ledge by his hands.</summary>
+        public bool IsHanging => state == PlayerState.Hang;
+
+        /// <summary>
+        /// Ledge grab is a trial: off unless the tuning switches it on (`tune ledgeGrab on`)
+        /// or a lab room sets this for as long as he is in it.
+        /// </summary>
+        public bool GrabsLedges { get; set; }
 
         /// <summary>What the wind he is in adds to his speed, in level pixels a second; zero in still air.</summary>
         public Vector2 WindPixels => wind * Ppu;
@@ -469,6 +481,9 @@ namespace Descender.Player
                 case PlayerState.Climb:
                     StepClimb(dt);
                     break;
+                case PlayerState.Hang:
+                    StepHang();
+                    break;
                 case PlayerState.Slam:
                     StepSlam(dt);
                     break;
@@ -520,6 +535,7 @@ namespace Descender.Player
             Tick(ref wingFlashLeft, dt);
             Tick(ref dropLeft, dt);
             Tick(ref climbLockLeft, dt);
+            Tick(ref grabLockLeft, dt);
             Tick(ref strokeLockLeft, dt);
             Tick(ref wallJumpLockLeft, dt);
             Tick(ref landLeft, dt);
@@ -553,6 +569,10 @@ namespace Descender.Player
             if (grounded)
             {
                 coyoteLeft = tuning.coyoteTime;
+            }
+            if (TryGrab(inputDir, velocity))
+            {
+                return;
             }
             UpdateWallGrip(inputDir, ref velocity);
             UpdateGlide();
@@ -790,6 +810,121 @@ namespace Descender.Player
                 velocity.x = 0f;
             }
             body.linearVelocity = velocity / Ppu;
+        }
+
+        /// <summary>
+        /// Ledge grab: falling past the corner of solid ground while pressing towards it,
+        /// he hangs from it with his hands at its top. Not from ground that moves, not in
+        /// water, and only where there is room to hang.
+        /// </summary>
+        private bool TryGrab(float inputDir, Vector2 velocity)
+        {
+            if (!(tuning.ledgeGrab || GrabsLedges) || grounded || InputBlocked || grabLockLeft > 0f || water != null)
+            {
+                return false;
+            }
+            if (inputDir == 0f || velocity.y > 0f)
+            {
+                return false;
+            }
+            var side = inputDir > 0f ? 1 : -1;
+            if (!CheckWall(side) || !FindCorner(side, out var top))
+            {
+                return false;
+            }
+            var bounds = box.bounds;
+            var down = new Vector2(0f, top - bounds.max.y);
+            var size = new Vector2(bounds.size.x - 2f / Ppu, bounds.size.y - 2f / Ppu);
+            if (Blocked((Vector2)bounds.center + down, size))
+            {
+                return false;
+            }
+            Nudge(down);
+            SetState(PlayerState.Hang, 0f);
+            hangSide = side;
+            facing = side;
+            // The up that may be held as he arrives is not the up that climbs.
+            hangUpReady = false;
+            jumpBufferLeft = 0f;
+            jumpRising = false;
+            gliding = false;
+            onWallGrip = false;
+            airJumpAvailable = true;
+            dashAvailable = true;
+            body.linearVelocity = Vector2.zero;
+            return true;
+        }
+
+        /// <summary>
+        /// The top of still, solid ground beside his head on that side: a corner, with
+        /// open air above it, no further below the top of his head than his reach.
+        /// </summary>
+        private bool FindCorner(int side, out float top)
+        {
+            top = 0f;
+            var bounds = box.bounds;
+            var x = (side > 0 ? bounds.max.x : bounds.min.x) + side * 2f / Ppu;
+            var from = new Vector2(x, bounds.max.y + 1f / Ppu);
+            var to = new Vector2(x, bounds.max.y - tuning.ledgeGrabReach / Ppu);
+            if (Physics2D.Linecast(from, to, worldOnlyFilter, lineHits) == 0)
+            {
+                return false;
+            }
+            var hit = lineHits[0];
+            // A line that starts inside the wall reports its own start: no corner there.
+            if (hit.point.y > bounds.max.y + 0.5f / Ppu)
+            {
+                return false;
+            }
+            if (hit.rigidbody != null && hit.rigidbody.bodyType != RigidbodyType2D.Static)
+            {
+                return false;
+            }
+            top = hit.point.y;
+            return true;
+        }
+
+        /// <summary>
+        /// Hanging: he stays put. Up or jump climbs onto the ledge where there is room to
+        /// stand, down lets go, and he falls if the corner is no longer there.
+        /// </summary>
+        private void StepHang()
+        {
+            body.linearVelocity = Vector2.zero;
+            hangUpReady |= !upHeld;
+            if (InputBlocked || !FindCorner(hangSide, out var top))
+            {
+                EndHang();
+                return;
+            }
+            if (jumpBufferLeft > 0f || (upHeld && hangUpReady))
+            {
+                jumpBufferLeft = 0f;
+                var bounds = box.bounds;
+                var face = hangSide > 0 ? bounds.max.x : bounds.min.x;
+                var stand = new Vector2(
+                    face + hangSide * (bounds.extents.x + 1f / Ppu),
+                    top + bounds.extents.y + 0.5f / Ppu
+                );
+                var size = new Vector2(bounds.size.x - 1f / Ppu, bounds.size.y - 1f / Ppu);
+                if (Blocked(stand, size))
+                {
+                    return;
+                }
+                Nudge(stand - (Vector2)bounds.center);
+                state = PlayerState.Idle;
+                return;
+            }
+            if (downHeld)
+            {
+                EndHang();
+            }
+        }
+
+        private void EndHang()
+        {
+            grabLockLeft = tuning.ledgeGrabRegrab;
+            state = PlayerState.Fall;
         }
 
         /// <summary>Lets go of what he climbs, with a speed in pixels a second.</summary>
@@ -1224,11 +1359,16 @@ namespace Descender.Player
         private bool Blocked(Vector2 centre, Vector2 size) =>
             Physics2D.OverlapBox(centre, size, 0f, worldOnlyFilter, hits) > 0;
 
-        /// <summary>Moves him by a few pixels at once, outside the physics step.</summary>
+        /// <summary>
+        /// Moves him by a few pixels at once, outside the physics step. Both the body and
+        /// what is drawn go to the body's new place: what is drawn trails the body between
+        /// steps, and moving it from where it is would carry that trail into the body.
+        /// </summary>
         private void Nudge(Vector2 by)
         {
-            body.position += by;
-            transform.position += (Vector3)by;
+            var to = body.position + by;
+            body.position = to;
+            transform.position = new Vector3(to.x, to.y, transform.position.z);
         }
 
         /// <summary>Wall Grip: holding towards a wall while in the air and falling grips it.</summary>

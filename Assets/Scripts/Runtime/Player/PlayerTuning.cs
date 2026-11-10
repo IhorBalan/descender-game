@@ -275,6 +275,18 @@ namespace Descender.Player
         [Min(0f)]
         public float waterStrokeGap = 0.25f;
 
+        [Header("Ledge grab")]
+        [Tooltip("A trial: falling past a ledge's corner while pressing towards it, he hangs from it.")]
+        public bool ledgeGrab;
+
+        [Tooltip("How far below the top of his head a corner can be and still be caught (px).")]
+        [Min(1f)]
+        public float ledgeGrabReach = 8f;
+
+        [Tooltip("After letting go he cannot catch a ledge again for this long (s).")]
+        [Min(0f)]
+        public float ledgeGrabRegrab = 0.3f;
+
         /// <summary>Upward speed of a stroke in water, px/s: what reaches the stroke height there.</summary>
         public float StrokeVelocity => Mathf.Sqrt(2f * Gravity * waterGravity * waterStrokeHeight);
 

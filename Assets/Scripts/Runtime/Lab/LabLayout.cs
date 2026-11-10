@@ -138,6 +138,9 @@ namespace Descender.Lab
         /// <summary>The abilities the hero has here, and no others.</summary>
         public Ability[] abilities = new Ability[0];
 
+        /// <summary>The hero catches ledges here: the trial of the ledge grab.</summary>
+        public bool ledgeGrab;
+
         /// <summary>Its pieces change in play (pickups, doors), so it is built again each time it is entered.</summary>
         public bool rebuilt;
 
@@ -187,6 +190,7 @@ namespace Descender.Lab
             "wind",
             "climb",
             "water",
+            "grab",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -225,6 +229,7 @@ namespace Descender.Lab
             Wind(Open(stations, "wind", "Wind and lift", Ability.Glide), leap, tuning);
             Climb(Open(stations, "climb", "Ladders and vines"), jump);
             Water(Open(stations, "water", "Water to swim in"), jump);
+            Grab(Open(stations, "grab", "Ledge grab: a trial"), jump);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -618,6 +623,21 @@ namespace Descender.Lab
             var vine = shelf + 3f;
             Add(station, PieceKind.Climb, 27f, FloorTop + 1f, 5f, vine, "jump lets go; a side and jump leaps");
             Add(station, PieceKind.Solid, 35f, FloorTop, 8f, vine - 1f, "leap here");
+        }
+
+        /// <summary>
+        /// The ledge grab, switched on in this room only: a wall a little higher than a
+        /// jump whose corner he catches on the way down, a second one to catch from a
+        /// drop off the first, and a slot too low to stand in, where up does nothing.
+        /// </summary>
+        private static void Grab(Station station, float jump)
+        {
+            station.ledgeGrab = true;
+            var wall = Mathf.Ceil(jump) + 1f;
+            Add(station, PieceKind.Solid, 14f, FloorTop, 6f, wall, "jump, hold towards it: up climbs, down lets go");
+            Add(station, PieceKind.Solid, 24f, FloorTop, 6f, wall - 3f, "walk off and hold back towards the wall");
+            Add(station, PieceKind.Solid, 34f, FloorTop, 6f, wall, "no room to stand");
+            Add(station, PieceKind.Solid, 34f, FloorTop + wall + 1f, 6f, 1f, "");
         }
 
         /// <summary>
