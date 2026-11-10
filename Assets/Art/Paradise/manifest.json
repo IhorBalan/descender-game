@@ -912,6 +912,50 @@
       "tileable": []
     },
     {
+      "path": "Assets/Art/Paradise/Kit/Nature/canopy_back.png",
+      "purpose": "The orchard's roof of leaves seen from below, pinned to the top of the view: blossom crowns in shade, lit through, strands hanging (canopy.py)",
+      "zone": "garden",
+      "size": [
+        4096,
+        512
+      ],
+      "sizeUnits": [
+        64.0,
+        8.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ]
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/canopy_front.png",
+      "purpose": "The canopy's near leaves along the very top of the view, out of focus and dark (canopy.py)",
+      "zone": "garden",
+      "size": [
+        2560,
+        200
+      ],
+      "sizeUnits": [
+        64.0,
+        5.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 40,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ]
+    },
+    {
       "path": "Assets/Art/Paradise/Kit/Nature/fern.png",
       "purpose": "Fern with overlapping curled fronds",
       "zone": "garden",

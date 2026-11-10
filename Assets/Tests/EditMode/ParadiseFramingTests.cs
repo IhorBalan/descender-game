@@ -36,11 +36,28 @@ namespace Descender.Tests
             var zone = ParadiseLayout.All().First(z => z.number == number);
             var front = ParadiseGarden.GardenPlan(zone).foreground;
             Assert.That(front, Is.Not.Empty);
+            // Under a canopy its roof of leaves hangs over the walk, so only rising pieces frame it.
+            var canopy = ParadiseGarden.CanopyOf(number, out var from, out var to);
+            bool Under(float x) =>
+                canopy && x > from - ParadiseGarden.CanopyOpens && x < to + ParadiseGarden.CanopyOpens;
             for (var i = 0; i < front.Count; i++)
             {
-                Assert.That(front[i].name, Does.StartWith(i % 2 == 0 ? "fg_soft_rise_" : "fg_soft_hang_"));
                 Assert.That(float.IsNaN(ParadiseDressing.SurfaceY(zone, front[i].at.x, float.NaN)), Is.False);
+                if (Under(front[i].at.x))
+                {
+                    Assert.That(front[i].name, Does.StartWith("fg_soft_rise_"), $"under the canopy at {front[i].at.x}");
+                }
+                else if (i > 0 && !Under(front[i - 1].at.x))
+                {
+                    var rose = front[i - 1].name.StartsWith("fg_soft_rise_");
+                    Assert.That(
+                        front[i].name,
+                        Does.StartWith(rose ? "fg_soft_hang_" : "fg_soft_rise_"),
+                        $"at {front[i].at.x}"
+                    );
+                }
             }
+            Assert.That(front[0].name, Does.StartWith("fg_soft_rise_"));
         }
 
         [Test]

@@ -316,16 +316,53 @@ namespace Descender.EditorTools.Paradise
             );
             Drift(cloudBack, 1.5f);
             Drift(cloudFront, 3f);
-            root.gameObject.AddComponent<ZoneLook>()
-                .Configure(
-                    zone.number,
-                    zone.xMin,
-                    zone.xMax,
-                    art.ambient,
-                    volume,
-                    sky,
-                    new[] { highClouds, far, midFar, cloudBack, mid, cloudFront, near }
+            var zoneLook = root.gameObject.AddComponent<ZoneLook>();
+            zoneLook.Configure(
+                zone.number,
+                zone.xMin,
+                zone.xMax,
+                art.ambient,
+                volume,
+                sky,
+                new[] { highClouds, far, midFar, cloudBack, mid, cloudFront, near }
+            );
+            if (CanopyOf(zone.number, out var canopyFrom, out var canopyTo) && Sprites.ContainsKey(CanopyBack))
+            {
+                // The orchard's roof of leaves (canopy.py), pinned to the top of the view so its
+                // edge never shows at any height: the blossom crowns seen from below, just behind
+                // the play layer, rocking a little as the leaves stir; and the same growth near
+                // and out of focus along the very top, passing faster than the world.
+                var roof = Pinned(
+                    ParadiseArt.Layer(
+                        backdrop,
+                        "CanopyBack",
+                        Get(CanopyBack),
+                        art.unlit,
+                        CanopyBackOrder,
+                        centre,
+                        new Vector2(CanopyBackScroll, 0f),
+                        false
+                    ),
+                    CanopyBackDrop
                 );
+                Sway(roof, 3f, 9f);
+                var leaves = Pinned(
+                    ParadiseArt.Layer(
+                        backdrop,
+                        "CanopyFront",
+                        Get(CanopyFront),
+                        art.unlit,
+                        CanopyFrontOrder,
+                        centre,
+                        new Vector2(CanopyFrontScroll, 0f),
+                        false
+                    ),
+                    CanopyFrontDrop
+                );
+                leaves.GetComponent<SpriteRenderer>().sortingLayerName = ForegroundLayer;
+                Sway(leaves, 5f, 7f);
+                zoneLook.SetCanopy(CanopyCover, canopyFrom, canopyTo, CanopyOpens, new[] { roof, leaves });
+            }
 
             var plan = GardenPlan(zone);
             var props = ParadiseArt.Group(root, "Props");
@@ -2143,6 +2180,41 @@ namespace Descender.EditorTools.Paradise
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        /// <summary>Rocks a layer sideways by `pixels` (level pixels) over `seconds`.</summary>
+        private static void Sway(Transform layer, float pixels, float seconds)
+        {
+            var serialized = new SerializedObject(layer.GetComponent<BackdropLayer>());
+            serialized.FindProperty("sway").vector2Value = new Vector2(pixels, seconds);
+            serialized.ApplyModifiedPropertiesWithoutUndo();
+        }
+
+        /// <summary>The canopy's two bands (canopy.py).</summary>
+        public const string CanopyBack = "canopy_back";
+
+        public const string CanopyFront = "canopy_front";
+
+        /// <summary>
+        /// Where the canopy's roof draws: over the backdrops (to -958) and behind the sunbeams
+        /// (-300), so the light falls from it, and behind the orchard's own trees (-150).
+        /// </summary>
+        public const int CanopyBackOrder = -310;
+
+        /// <summary>The near leaves draw on the Foreground layer, over the framing (400 to 402).</summary>
+        public const int CanopyFrontOrder = 403;
+
+        /// <summary>How much of the camera's travel the roof follows (nearly the world's), and the near leaves (more).</summary>
+        public const float CanopyBackScroll = 0.9f;
+
+        public const float CanopyFrontScroll = 1.3f;
+
+        /// <summary>
+        /// Where each band hangs from the view's top: its middle this far above the view's middle
+        /// (the roof is 5 units deep on screen, the near leaves 3.1; the view is 11.25 high).
+        /// </summary>
+        public const float CanopyBackDrop = 3.125f;
+
+        public const float CanopyFrontDrop = 4.06f;
+
         private static SpriteRenderer Place(
             Transform parent,
             string name,
@@ -3097,10 +3169,16 @@ namespace Descender.EditorTools.Paradise
                     );
                 }
             }
-            // Sunbeams all along the walk, irregularly spaced.
-            for (var x = zone.xMin + 14f; x < zone.xMax - 6f; x += BeamSpacing + Hash(x, 61f) * BeamSpacingVaries)
+            // Sunbeams all along the walk, irregularly spaced; closer under the canopy, where the
+            // sun reaches the orchard only in shafts through its gaps.
+            var hasCanopy = CanopyOf(zone.number, out var canopyFrom, out var canopyTo);
+            for (var x = zone.xMin + 14f; x < zone.xMax - 6f; )
             {
                 plan.shafts.Add(x);
+                var under = hasCanopy && x > canopyFrom - CanopyOpens && x < canopyTo + CanopyOpens;
+                x += under
+                    ? CanopyBeamSpacing + Hash(x, 61f) * CanopyBeamSpacingVaries
+                    : BeamSpacing + Hash(x, 61f) * BeamSpacingVaries;
             }
             // Arched pergolas behind the walk, on the longest runs of wall and railing, hung with growth.
             foreach (var x in PergolasOf(zone.number))
@@ -3359,6 +3437,11 @@ namespace Descender.EditorTools.Paradise
                     continue;
                 }
                 var rises = side++ % 2 == 0;
+                // Under the canopy its own leaves hang over the walk instead.
+                if (!rises && hasCanopy && x > canopyFrom - CanopyOpens && x < canopyTo + CanopyOpens)
+                {
+                    continue;
+                }
                 plan.foreground.Add(
                     new Spot
                     {
@@ -3375,6 +3458,11 @@ namespace Descender.EditorTools.Paradise
             WallHangings(zone, plan);
             return plan;
         }
+
+        /// <summary>How far apart the sunbeams stand under the canopy, at least, and how much more at most.</summary>
+        public const float CanopyBeamSpacing = 15f;
+
+        public const float CanopyBeamSpacingVaries = 10f;
 
         /// <summary>How little the high clouds follow the walk: they are almost as far off as the sun.</summary>
         public const float HighCloudScroll = 0.03f;
@@ -3807,6 +3895,40 @@ namespace Descender.EditorTools.Paradise
             var renderer = go.AddComponent<MeshRenderer>();
             renderer.sharedMaterial = ParadiseNormals.LitMesh(texture, art.lit);
             renderer.sortingOrder = NumberOrder;
+        }
+
+        /// <summary>The stand-in the layout keeps for the orchard's roof of leaves (a Decor shape the art replaces).</summary>
+        public const string CanopyRoof = "CanopyRoof";
+
+        /// <summary>How much of the sky the orchard's canopy closes: the sun comes through it only in flecks.</summary>
+        public const float CanopyCover = 1f;
+
+        /// <summary>Over how many units either end of the canopy the sky opens out again.</summary>
+        public const float CanopyOpens = 14f;
+
+        /// <summary>
+        /// Where a zone's canopy of leaves runs (zone 2, the Orchard Under the Canopy,
+        /// docs/design/paradise.md): the span of the layout's CanopyRoof, within the zone.
+        /// </summary>
+        public static bool CanopyOf(int number, out float from, out float to)
+        {
+            from = to = 0f;
+            var zone = ParadiseLayout.All().Find(z => z.number == number);
+            var roof = zone?.shapes.Find(s => s.name == CanopyRoof);
+            if (roof == null)
+            {
+                return false;
+            }
+            var left = float.MaxValue;
+            var right = float.MinValue;
+            foreach (var p in roof.outline)
+            {
+                left = Mathf.Min(left, p.x);
+                right = Mathf.Max(right, p.x);
+            }
+            from = Mathf.Max(zone.xMin, left) + CanopyOpens;
+            to = Mathf.Min(zone.xMax, right) - CanopyOpens;
+            return to > from;
         }
 
         /// <summary>The stand-in the layout keeps for the Lantern Tree's trunk (a Decor shape the art replaces).</summary>

@@ -62,6 +62,7 @@ NEVER_BY_DEFAULT = [
     "*_glow.png",
     "Kit/Nature/fg_leaves_*.png",
     "Kit/Nature/fg_soft_*.png",
+    "Kit/Nature/canopy_*.png",
     "Kit/Nature/rock_fill.png",
     "Kit/Architecture/wall_block.png",
     "Kit/Architecture/wall_pier.png",
