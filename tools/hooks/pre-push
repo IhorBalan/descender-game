@@ -21,8 +21,15 @@
 # EditMode n/N, PlayMode n/N) with the time elapsed, and how long the last
 # passing run in this checkout took. A run whose log and progress stand still
 # for the stall limit is stopped and fails, instead of holding the push forever.
+#
+# On Windows the editor is started through unity-background.ps1 (next to this
+# file), with its windows hidden: otherwise the console window the editor opens
+# takes the keyboard and mouse from whatever is in use, a game for one, until it
+# is clicked again. PRE_PUSH_FOREGROUND=1 starts the editor directly instead.
 
 set -u
+
+hook_dir=$(cd "$(dirname "$0")" && pwd)
 
 if [ "${SKIP_UNITY_TESTS:-}" != "" ]; then
     echo "pre-push: SKIP_UNITY_TESTS is set, skipping the Unity tests."
@@ -72,7 +79,29 @@ stall_limit="${PRE_PUSH_STALL_SECONDS:-600}"
 started=$(date +%s)
 unity_pid=""
 
-trap 'if [ -n "$unity_pid" ]; then kill "$unity_pid" 2>/dev/null; fi; exit 1' INT TERM
+trap 'stop_unity; exit 1' INT TERM
+
+# Stops the editor at once and clears what a stopped editor leaves behind: its
+# lock, which the next run would take for an open editor, and the PlayMode
+# bootstrap scene. On Windows kill alone only sends the editor a Ctrl-C, after
+# which it spends up to a minute shutting down (and crashing on the way), so
+# its process tree is ended with taskkill first.
+stop_unity() {
+    if [ -z "$unity_pid" ]; then
+        return
+    fi
+    if [ -r "/proc/$unity_pid/winpid" ]; then
+        taskkill //F //T //PID "$(cat "/proc/$unity_pid/winpid")" >/dev/null 2>&1
+    fi
+    kill "$unity_pid" 2>/dev/null
+    wait "$unity_pid" 2>/dev/null
+    unity_pid=""
+    # A killed editor on Windows holds its lock for a moment longer.
+    for attempt in 1 2 3 4 5; do
+        rm -f Temp/UnityLockfile Assets/InitTestScene*.unity Assets/InitTestScene*.unity.meta 2>/dev/null && break
+        sleep 1
+    done
+}
 
 # 75 -> 1m15s
 clock() {
@@ -95,6 +124,24 @@ phase_of() {
     fi
 }
 
+# start_unity <unity arguments...>: starts the editor and sets unity_pid. On
+# Windows that is the pid of unity-background.ps1, which starts the editor
+# with its windows hidden (so it cannot take the foreground), exits with the
+# editor's exit code and takes the editor down with it when it is killed.
+start_unity() {
+    case "$(uname -s)" in
+        MINGW* | MSYS* | CYGWIN*) direct="${PRE_PUSH_FOREGROUND:-}" ;;
+        *) direct=1 ;;
+    esac
+    if [ -n "$direct" ]; then
+        "$unity" "$@" &
+    else
+        powershell.exe -NoProfile -ExecutionPolicy Bypass \
+            -File "$hook_dir/unity-background.ps1" "$unity" "$@" &
+    fi
+    unity_pid=$!
+}
+
 # run_unity <label> <log> <unity arguments...>: runs the editor, printing a
 # progress line when the phase changes and every 10 seconds. Returns the
 # editor's exit code, or 124 when it was stopped for standing still.
@@ -103,8 +150,7 @@ run_unity() {
     log=$2
     shift 2
     rm -f "$status_file"
-    "$unity" "$@" -logFile "$log" &
-    unity_pid=$!
+    start_unity "$@" -logFile "$log"
     kind=""
     beat=0
     quiet=0
@@ -127,10 +173,7 @@ run_unity() {
         fi
         if [ "$quiet" -ge "$stall_limit" ]; then
             echo "pre-push: nothing has happened for $(clock "$quiet") (${phase#*|}); stopping the editor." >&2
-            kill "$unity_pid" 2>/dev/null
-            wait "$unity_pid" 2>/dev/null
-            unity_pid=""
-            rm -f Temp/UnityLockfile Assets/InitTestScene*.unity Assets/InitTestScene*.unity.meta
+            stop_unity
             return 124
         fi
     done

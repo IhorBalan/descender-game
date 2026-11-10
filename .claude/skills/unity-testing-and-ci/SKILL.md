@@ -81,6 +81,13 @@ stands still for `PRE_PUSH_STALL_SECONDS` (600) is stopped and fails. The
 editor is started with `--burst-disable-compilation`: the tests do not need
 Burst, the game has no Burst code, and on Windows with Smart App Control
 every unsigned DLL under `Library/BurstCache` raised a warning.
+On Windows the hook starts the editor through
+`tools/hooks/unity-background.ps1`, which asks for hidden windows
+(`SW_HIDE`): even with `-batchmode` the editor opens a console window, which took
+the keyboard and mouse from whatever was in use (a game, for one) until it was
+clicked again. Stopping the hook stops that script and, through a job object,
+the editor. `PRE_PUSH_FOREGROUND=1` starts the editor directly, as on macOS
+and Linux.
 Install it once per clone:
 
 ```
