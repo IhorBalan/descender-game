@@ -27,8 +27,13 @@ namespace Descender.World.Paradise
     /// glide; a burst of light on the double jump; a shockwave on the slam; an arc of light
     /// behind the cut. Rotation 0 is the rest pose (as painted); + turns counterclockwise,
     /// which swings a limb forward while he faces right. The rig is mirrored for facing left.
+    ///
+    /// HeroRig.Moves.cs holds what reaches past his own body: the three cuts of the combo,
+    /// hits that throw him away from where they came from, a glance at what is near, a hand
+    /// on the wall he grips, the moments of a long rest, cloth that the wind pushes and the
+    /// ground stops, and feet that scuff the stone or splash in a pool.
     /// </summary>
-    public sealed class HeroRig : MonoBehaviour
+    public sealed partial class HeroRig : MonoBehaviour
     {
         [Header("Bones")]
         [SerializeField]
@@ -115,6 +120,14 @@ namespace Descender.World.Paradise
 
         [SerializeField]
         private SpriteRenderer ring;
+
+        [Tooltip("Droplets thrown up by a foot in a pool.")]
+        [SerializeField]
+        private ParticleSystem splash;
+
+        [Tooltip("Rings spreading on a pool's surface where a foot came down.")]
+        [SerializeField]
+        private ParticleSystem ripples;
 
         [Tooltip("Given to the shared Feedback sparks and dust while he is in the world, so they are soft too.")]
         [SerializeField]
@@ -234,7 +247,8 @@ namespace Descender.World.Paradise
 
         private void Awake()
         {
-            renderers = GetComponentsInChildren<SpriteRenderer>(true);
+            // The contact shadow (HeroShadow) keeps its own colour.
+            renderers = System.Array.FindAll(GetComponentsInChildren<SpriteRenderer>(true), r => r.name != "Shadow");
             colors = new Color[renderers.Length];
             for (var i = 0; i < renderers.Length; i++)
             {
@@ -261,6 +275,7 @@ namespace Descender.World.Paradise
                     thighLength + shinLength - shinBack.localPosition.magnitude - bootBack.localPosition.magnitude;
             }
             current.swordF = swordRest;
+            PrepareMoves();
             cloakAngle = new float[cloakBones.Length];
             cloakSpeed = new float[cloakBones.Length];
             hairAngle = new float[hairBones.Length];
@@ -306,7 +321,24 @@ namespace Descender.World.Paradise
             }
             var now = Time.time;
             var state = hero.State;
-            stateTime = state == lastState ? stateTime + dt : 0f;
+            // A swing can follow the last with no tick between them: the count tells them apart.
+            var newCut = state == Player.PlayerState.Attack && hero.AttackCount != lastAttackCount;
+            stateTime = state == lastState && !newCut ? stateTime + dt : 0f;
+            if (newCut)
+            {
+                cut = RigMath.NextCut(
+                    cut,
+                    lastState == Player.PlayerState.Attack ? 0f : now - attackEndedAt,
+                    ComboWindow,
+                    Cuts
+                );
+                cutStreaked = false;
+            }
+            if (lastState == Player.PlayerState.Attack && state != Player.PlayerState.Attack)
+            {
+                attackEndedAt = now;
+            }
+            lastAttackCount = hero.AttackCount;
             var v = hero.Velocity;
             var runSpeed = hero.Tuning.runSpeed / Player.PlayerTuning.PixelsPerUnit;
             var speed01 = Mathf.Clamp01(Mathf.Abs(v.x) / Mathf.Max(0.01f, runSpeed));
@@ -324,14 +356,17 @@ namespace Descender.World.Paradise
             Events(state, v, speed01, grounded, skidding, face, now);
 
             var target = Target(state, v, speed01, skidding, now);
+            Look(ref target, state, face, dt, now);
             if (state == Player.PlayerState.Idle && grounded && stateTime > 0.4f)
             {
                 Life(ref target, dt, now);
+                Rest(ref target, now);
             }
             else
             {
                 shift = Mathf.MoveTowards(shift, 0f, dt * 2f);
                 glanceUntil = 0f;
+                EndRest();
             }
             Accents(ref target, grounded, now);
             if (grounded && state != Player.PlayerState.Dead)
@@ -367,11 +402,14 @@ namespace Descender.World.Paradise
             deathTurn = Mathf.MoveTowards(deathTurn, state == Player.PlayerState.Dead ? 1f : 0f, dt * 3f);
             transform.localRotation = Quaternion.Euler(0f, 0f, -80f * Mathf.SmoothStep(0f, 1f, deathTurn));
 
+            // Hands that hold on to something: the wall he grips, the blade he wipes.
+            Hands(v, dt, now);
+
             var accel = (v - lastVelocity) / dt;
-            Cloak(dt, v, face, speed01, now);
+            Cloak(dt, v, face, speed01, grounded, now);
             Secondary(dt, v, accel, face, now);
-            Effects(state, now);
-            Flicker();
+            Effects(state, face, now);
+            Tint(now);
 
             lastState = state;
             lastVelocity = v;
@@ -400,16 +438,38 @@ namespace Descender.World.Paradise
             {
                 landImpact = Mathf.Clamp01((fallSpeed - 4f) / 14f);
                 landAt = now;
-                if (landImpact > 0.15f)
+                if (WaterQuad.PoolAt(feet))
+                {
+                    Splash(feet, 0.7f + 0.8f * landImpact);
+                    Audio.Sfx.Play("splash", -4f + 4f * landImpact, 0.1f);
+                }
+                else if (landImpact > 0.15f)
                 {
                     Dust(feet, 4 + Mathf.RoundToInt(10f * landImpact), 1.6f, 0.9f + 0.6f * landImpact);
+                }
+                // The hem flares out as he comes down, and falls back.
+                for (var i = 0; i < cloakSpeed.Length; i++)
+                {
+                    cloakSpeed[i] += 90f * landImpact * ((i % cloakChainLength) + 1f) / cloakChainLength;
                 }
                 fallSpeed = 0f;
             }
             if (!grounded && wasGrounded && v.y > 0.5f)
             {
                 takeoffAt = now;
-                Dust(feet, 4, 0.9f, 0.7f);
+                if (WaterQuad.PoolAt(feet))
+                {
+                    Splash(feet, 0.6f);
+                    Audio.Sfx.Play("splash", -8f, 0.12f);
+                }
+                else
+                {
+                    Dust(feet, 4, 0.9f, 0.7f);
+                }
+            }
+            if (state == Player.PlayerState.Hurt && lastState != Player.PlayerState.Hurt)
+            {
+                Struck(v, face, now);
             }
             if (lastSpeed01 > 0.6f && speed01 < 0.2f && grounded && !skidding)
             {
@@ -433,11 +493,13 @@ namespace Descender.World.Paradise
             {
                 Dust(feet - new Vector3(face * 0.2f, 0f, 0f), 3, 0.8f, 0.6f);
             }
-            // A step: each time a foot comes down at a run, a wisp of dust.
-            var step = Mathf.Sign(Mathf.Sin(phase));
-            if (grounded && speed01 > 0.8f && step != lastStep)
+            // A step: each time a foot comes down (the front as the cycle's cosine turns negative,
+            // the back as it turns positive), a scuff on stone or a splash in a pool.
+            var step = Mathf.Sign(Mathf.Cos(phase));
+            var walking = state == Player.PlayerState.Run || state == Player.PlayerState.Idle;
+            if (grounded && walking && !skidding && speed01 > 0.25f && step != lastStep)
             {
-                Dust(feet, 1, 0.5f, 0.45f);
+                Footfall(step < 0f ? bootFront : bootBack, speed01);
             }
             lastStep = step;
             if (skidding && now >= nextDust)
@@ -587,7 +649,18 @@ namespace Descender.World.Paradise
             switch (state)
             {
                 case Player.PlayerState.Attack:
-                    Slash(ref p, speed01);
+                    switch (cut)
+                    {
+                        case 1:
+                            Rising(ref p, speed01);
+                            break;
+                        case 2:
+                            Thrust(ref p, speed01);
+                            break;
+                        default:
+                            Slash(ref p, speed01);
+                            break;
+                    }
                     break;
                 case Player.PlayerState.Dash:
                     p.torso = -28f;
@@ -606,18 +679,7 @@ namespace Descender.World.Paradise
                     Hold(ref p, -172f);
                     break;
                 case Player.PlayerState.Hurt:
-                    p.torso = 16f;
-                    p.head = 12f;
-                    p.upperF = 70f;
-                    p.foreF = 40f;
-                    p.handF = 30f;
-                    p.upperB = 95f;
-                    p.foreB = 30f;
-                    p.handB = 35f;
-                    p.thighF = 20f;
-                    p.shinF = -30f;
-                    p.thighB = -10f;
-                    p.shinB = -25f;
+                    Hit(ref p, now);
                     break;
                 case Player.PlayerState.Heal:
                 case Player.PlayerState.Cast:
@@ -1061,7 +1123,7 @@ namespace Descender.World.Paradise
         /// he moves. Running and falling stream it behind him, a jump lets it hang, and a ripple
         /// travels from the shoulders to the hem. Stiff at the shoulders, loose at the hem.
         /// </summary>
-        private void Cloak(float dt, Vector2 v, int face, float speed01, float now)
+        private void Cloak(float dt, Vector2 v, int face, float speed01, bool grounded, float now)
         {
             if (cloakBones.Length == 0)
             {
@@ -1075,8 +1137,14 @@ namespace Descender.World.Paradise
             {
                 trail -= 22f;
             }
+            // The garden's wind: blowing the way he faces, it lifts the cloak forward; against
+            // him, it streams it back. Gusts make it flutter.
+            var wind = GardenWind.At(transform.position.x) * face;
+            trail += Mathf.Clamp(wind * 18f, -26f, 26f);
+            var flutter = Mathf.Abs(wind) * 3.5f;
+            var ground = ClothGround(grounded);
             var chainCount = cloakBones.Length / cloakChainLength;
-            var rate = 2.2f + 6f * speed01;
+            var rate = 2.2f + 6f * speed01 + 4f * Mathf.Abs(wind);
             for (var i = 0; i < cloakBones.Length; i++)
             {
                 var chain = i / cloakChainLength;
@@ -1084,10 +1152,12 @@ namespace Descender.World.Paradise
                 var along = (joint + 1f) / cloakChainLength;
                 // The chain at the back of the fan trails most, the one by the chest least.
                 var reach = Mathf.Lerp(1.15f, 0.65f, chainCount > 1 ? chain / (chainCount - 1f) : 0f);
-                var ripple = Mathf.Sin(now * rate - joint * 0.9f - chain * 1.3f) * (1f + 4.5f * speed01) * along;
+                var ripple =
+                    Mathf.Sin(now * rate - joint * 0.9f - chain * 1.3f) * (1f + 4.5f * speed01 + flutter) * along;
                 var target = trail * reach * Mathf.Lerp(0.34f, 0.1f, along) + ripple;
                 Spring(ref cloakAngle[i], ref cloakSpeed[i], target, Mathf.Lerp(75f, 28f, along), 9f, dt);
                 Turn(cloakBones[i], cloakAngle[i]);
+                Settle(i, joint, ground);
             }
         }
 
@@ -1098,11 +1168,16 @@ namespace Descender.World.Paradise
             var forward = v.x * face;
             var push = Mathf.Clamp(accel.x * face, -60f, 60f);
             var lift = Mathf.Clamp(accel.y, -80f, 80f);
+            var wind = GardenWind.At(transform.position.x) * face;
             for (var i = 0; i < hairBones.Length; i++)
             {
                 var target =
-                    Mathf.Clamp(-forward * 2.2f - push * 0.15f + Mathf.Clamp(-v.y, -8f, 12f) * 1.2f, -24f, 24f)
-                    + Mathf.Sin(now * 1.3f + i * 1.7f) * 1.5f;
+                    Mathf.Clamp(
+                        -forward * 2.2f - push * 0.15f + Mathf.Clamp(-v.y, -8f, 12f) * 1.2f + wind * 9f,
+                        -24f,
+                        24f
+                    )
+                    + Mathf.Sin(now * (1.3f + 3f * Mathf.Abs(wind)) + i * 1.7f) * (1.5f + 2f * Mathf.Abs(wind));
                 Spring(ref hairAngle[i], ref hairSpeed[i], target, 60f, 8f, dt);
                 Turn(hairBones[i], hairAngle[i]);
             }
@@ -1111,7 +1186,7 @@ namespace Descender.World.Paradise
             for (var i = 0; i < tailBones.Length; i++)
             {
                 var leg = i == 0 ? current.thighB : current.thighF;
-                var target = Mathf.Clamp(-forward * 3f - push * 0.08f + leg * 0.35f, -35f, 35f);
+                var target = Mathf.Clamp(-forward * 3f - push * 0.08f + leg * 0.35f + wind * 6f, -35f, 35f);
                 Spring(ref tailAngle[i], ref tailSpeed[i], target, 70f, 9f, dt);
                 Turn(tailBones[i], tailAngle[i]);
             }
@@ -1119,24 +1194,36 @@ namespace Descender.World.Paradise
 
         // --- Effects ------------------------------------------------------------------------------
 
-        private void Effects(Player.PlayerState state, float now)
+        private void Effects(Player.PlayerState state, int face, float now)
         {
             if (slashArc != null)
             {
-                // The arc's head rides the blade's tip: the blade sweeps from over his shoulder
-                // (130 degrees) to low in front (-63) as the cut goes through (see Slash).
+                // The arc's head rides the blade's tip (see Slash and Rising for the sweep). The
+                // thrust draws no arc: it throws streaks along the blade instead.
                 var show = 0f;
                 var blade = 0f;
                 if (state == Player.PlayerState.Attack)
                 {
                     var u = Mathf.Clamp01(stateTime / Mathf.Max(0.05f, hero.AttackTime()));
-                    var through = 1f - Mathf.Pow(1f - Mathf.Clamp01((u - 0.18f) / 0.32f), 3f);
+                    var through = Through(u);
                     show = Mathf.Clamp01((u - 0.2f) / 0.06f) * (1f - Mathf.Clamp01((u - 0.5f) / 0.25f));
-                    blade = Mathf.Lerp(130f, -63f, through);
+                    blade = cut == 1 ? Mathf.Lerp(RisingFrom, RisingTo, through) : Mathf.Lerp(130f, -63f, through);
+                    if (cut == 2)
+                    {
+                        show = 0f;
+                        if (!cutStreaked && through > 0.2f)
+                        {
+                            cutStreaked = true;
+                            ThrustStreaks(face);
+                        }
+                    }
                 }
                 slashArc.enabled = show > 0.01f;
                 if (slashArc.enabled)
                 {
+                    // The tail lies where the blade came from: clockwise of the head for the
+                    // downward cut (mirrored), counterclockwise for the rising one.
+                    slashArc.flipX = cut != 1;
                     slashArc.transform.localRotation = Quaternion.Euler(0f, 0f, blade - 90f);
                     var c = slashArc.color;
                     c.a = show;
@@ -1221,23 +1308,6 @@ namespace Descender.World.Paradise
             streaks.Emit(emit, 1);
         }
 
-        /// <summary>While he cannot be hurt after a hit, he flickers, as the old sprite did.</summary>
-        private void Flicker()
-        {
-            var hidden = hero.InvulnerableLeft > 0f && hero.IsAlive && Mathf.Repeat(Time.time * 14f, 1f) < 0.35f;
-            for (var i = 0; i < renderers.Length; i++)
-            {
-                var r = renderers[i];
-                if (r == null || r == slashArc || r == ring)
-                {
-                    continue;
-                }
-                var c = colors[i];
-                c.a = hidden ? colors[i].a * 0.35f : colors[i].a;
-                r.color = c;
-            }
-        }
-
         // --- Built by ParadiseHero ----------------------------------------------------------------
 
         public void SetBones(
@@ -1289,6 +1359,12 @@ namespace Descender.World.Paradise
             ring = shockwave;
             feedbackSprite = softSprite;
             feedbackMaterial = softMaterial;
+        }
+
+        public void SetWater(ParticleSystem droplets, ParticleSystem rings)
+        {
+            splash = droplets;
+            ripples = rings;
         }
     }
 }

@@ -1,4 +1,4 @@
-"""The textures of Ansel's effects: soft light, dust, the sword's arc, a shockwave ring, a streak.
+"""The textures of Ansel's effects: soft light, a contact shadow, dust, the sword's arc, a shockwave ring, a streak.
 
 Painted by numbers in the soft style of the Paradise art (no hard pixels), white so the game
 tints them. Written to Assets/Art/Paradise/Ansel/Fx.
@@ -42,6 +42,14 @@ def soft():
     r = np.sqrt(x * x + y * y)
     a = np.clip(1 - r, 0, 1) ** 2.2
     save("fx_soft", a, glow=a)
+
+
+def shadow():
+    """The contact shadow under his feet: a soft oval, dense in the middle, fading to nothing."""
+    x, y = grid(128)
+    r = np.sqrt(x * x + y * y)
+    a = np.clip(1 - r, 0, 1) ** 1.6
+    save("fx_shadow", a)
 
 
 def dust():
@@ -88,7 +96,7 @@ def streak():
 
 def main():
     os.makedirs(OUT, exist_ok=True)
-    for make in (soft, dust, slash, ring, streak):
+    for make in (soft, shadow, dust, slash, ring, streak):
         make()
         print(make.__name__)
 

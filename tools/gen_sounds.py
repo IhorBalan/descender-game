@@ -170,6 +170,19 @@ def main():
     write("sfx/menu_back.wav", back, 0.5)
     pause = sine(440, 0.12) * 0.6 + sine(660, 0.12) * 0.4
     write("sfx/pause.wav", pause * env(int(RATE * 0.12), 0.005, 0.1), 0.5)
+    # Footsteps for the Paradise Ansel: a soft scuff on stone, quiet enough to sit under
+    # everything else at a run, and a splash for a foot coming down in a pool.
+    step = lowpass(noise(0.06), 0.18) + 0.5 * sweep(140, 80, 0.06)
+    write("sfx/step.wav", step * env(int(RATE * 0.06), 0.002, 0.055), 0.45)
+    dur = 0.32
+    splash = noise(dur) - lowpass(noise(dur), 0.3)
+    for f0, f1, at in ((900, 1500, 0.0), (650, 1200, 0.05), (1100, 1900, 0.11)):
+        bubble = np.zeros(int(RATE * dur))
+        n = int(RATE * 0.07)
+        s0 = int(RATE * at)
+        bubble[s0 : s0 + n] = sweep(f0, f1, 0.07) * env(n, 0.003, 0.06)
+        splash = splash * 1.0 + bubble * 0.6
+    write("sfx/splash.wav", splash * env(int(RATE * dur), 0.004, 0.28), 0.5)
 
 
 if __name__ == "__main__":
