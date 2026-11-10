@@ -60,6 +60,9 @@ namespace Descender.Lab
 
         /// <summary>A <see cref="Triggers.Water"/>: an area he swims in; its top is the surface.</summary>
         Water,
+
+        /// <summary>A <see cref="Combat.Dummy"/>: takes every hit and shows what hit it.</summary>
+        Dummy,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -191,6 +194,7 @@ namespace Descender.Lab
             "climb",
             "water",
             "grab",
+            "dummy",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -230,6 +234,8 @@ namespace Descender.Lab
             Climb(Open(stations, "climb", "Ladders and vines"), jump);
             Water(Open(stations, "water", "Water to swim in"), jump);
             Grab(Open(stations, "grab", "Ledge grab: a trial"), jump);
+            var fighter = new[] { Ability.Wings, Ability.HolyLight, Ability.Smite };
+            Dummies(Open(stations, "dummy", "Training dummies", fighter), jump, tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -393,6 +399,26 @@ namespace Descender.Lab
                 var x = i % 2 == 0 ? 14f : 20f;
                 Add(station, PieceKind.Ledge, x, FloorTop + i * step, 8f, 0.25f, i == 1 ? "down and jump drops" : "");
             }
+        }
+
+        /// <summary>
+        /// Dummies that take every hit and show its damage: one to stand in front of, one
+        /// overhead that only a swing in the air reaches, one down a lane for the bolt, and
+        /// a pair a blade's length apart, the nearer in reach and the farther just out of it.
+        /// </summary>
+        private static void Dummies(Station station, float jump, PlayerTuning tuning)
+        {
+            Add(station, PieceKind.Dummy, 13f, FloorTop, 1f, 2f, "stand and swing");
+            Add(station, PieceKind.Dummy, 18f, FloorTop + Mathf.Floor(jump), 1f, 2f, "jump and swing");
+            Add(station, PieceKind.Solid, 22f, FloorTop, 4f, Mathf.Floor(jump) - 1f, "slam from here");
+            Add(station, PieceKind.Dummy, 27f, FloorTop, 1f, 2f, "slam beside it");
+
+            // The blade's far edge from his middle, in units.
+            var reach = PlayerTuning.Units(tuning.attackOffset.x + tuning.attackShapeSize.x / 2f);
+            Add(station, PieceKind.Mark, 34f, FloorTop, 0.1f, 3f, "stand here");
+            Add(station, PieceKind.Dummy, 34f + reach - 0.5f, FloorTop, 0.5f, 2f, "in reach");
+            Add(station, PieceKind.Dummy, 34f + reach + 0.25f, FloorTop, 0.5f, 2f, "out of reach");
+            Add(station, PieceKind.Dummy, 48f, FloorTop, 1f, 2f, "cast from afar");
         }
 
         private static void Slam(Station station, float jump)

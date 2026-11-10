@@ -84,11 +84,8 @@ namespace Descender.Combat
                 {
                     continue;
                 }
-                var target =
-                    hit.attachedRigidbody != null && hit.attachedRigidbody.TryGetComponent<IHittable>(out var onBody)
-                        ? onBody
-                        : hit.GetComponentInParent<IHittable>();
-                target?.Hit(Damage, body.position - new Vector2(direction * 20f / Ppu, 0f));
+                var from = body.position - new Vector2(direction * 20f / Ppu, 0f);
+                Strikes.Deliver(Strikes.Find(hit), new Strike(StrikeKind.Bolt, Damage, from));
                 Feedback.Spark(body.position, Glow);
                 Fade();
                 return;

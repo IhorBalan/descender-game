@@ -1013,7 +1013,7 @@ namespace Descender.Player
                 var centre =
                     (Vector2)transform.position
                     + new Vector2((tuning.attackOffset.x + extra) * facing, tuning.attackOffset.y) / Ppu;
-                StrikeEnemies(centre, size / Ppu, AttackDamage, attackHit);
+                StrikeEnemies(centre, size / Ppu, StrikeKind.Sword, AttackDamage, attackHit);
             }
             if (stateLeft <= 0f)
             {
@@ -1023,34 +1023,22 @@ namespace Descender.Player
         }
 
         /// <summary>Hurts every enemy in a box once per swing; a landed hit stops time for a moment.</summary>
-        private void StrikeEnemies(Vector2 centre, Vector2 size, int damage, List<IHittable> already)
+        private void StrikeEnemies(Vector2 centre, Vector2 size, StrikeKind kind, int damage, List<IHittable> already)
         {
             var count = Physics2D.OverlapBox(centre, size, 0f, enemyFilter, hits);
             for (var i = 0; i < count; i++)
             {
-                var target = FindHittable(hits[i]);
+                var target = Strikes.Find(hits[i]);
                 if (target == null || already.Contains(target))
                 {
                     continue;
                 }
                 already.Add(target);
-                if (target.Hit(damage, transform.position))
+                if (Strikes.Deliver(target, new Strike(kind, damage, transform.position)))
                 {
                     Feedback.HitStop(tuning.hitStopTime);
                 }
             }
-        }
-
-        private static IHittable FindHittable(Collider2D collider)
-        {
-            if (
-                collider.attachedRigidbody != null
-                && collider.attachedRigidbody.TryGetComponent<IHittable>(out var onBody)
-            )
-            {
-                return onBody;
-            }
-            return collider.GetComponentInParent<IHittable>();
         }
 
         private void EndAttack()
@@ -1122,7 +1110,7 @@ namespace Descender.Player
             if (elapsed <= tuning.slamHitTime)
             {
                 var centre = (Vector2)transform.position + new Vector2(0f, tuning.slamReach.y / 2f) / Ppu;
-                StrikeEnemies(centre, tuning.slamReach / Ppu, tuning.slamDamage, attackHit);
+                StrikeEnemies(centre, tuning.slamReach / Ppu, StrikeKind.Slam, tuning.slamDamage, attackHit);
             }
             if (stateLeft <= 0f)
             {

@@ -30,6 +30,7 @@ namespace Descender.Lab
         public static readonly Color Hazard = new Color(0.9f, 0.15f, 0.2f);
         public static readonly Color Pad = new Color(0.95f, 0.8f, 0.25f);
         public static readonly Color DoorColor = new Color(0.5f, 0.32f, 0.2f);
+        public static readonly Color DummyColor = new Color(0.85f, 0.6f, 0.75f);
 
         /// <summary>Units a second.</summary>
         public const float LiftSpeed = 2f;
@@ -223,6 +224,13 @@ namespace Descender.Lab
                 case PieceKind.Water:
                     go.AddComponent<Water>().Configure(rect.size);
                     Draw(go, ShapeKind.Square, rect.size, WaterColor, piece.label, 4);
+                    break;
+                case PieceKind.Dummy:
+                    // On the enemies' layer, which the hero's attacks look on and his body passes.
+                    go.layer = Layers.Enemy;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Circle, rect.size, DummyColor, "", 2);
+                    go.AddComponent<Dummy>().Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
                     break;
                 case PieceKind.Crumble:
                     go.layer = Layers.World;
