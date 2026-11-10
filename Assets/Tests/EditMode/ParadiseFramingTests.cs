@@ -1,5 +1,6 @@
 using System.Linq;
 using Descender.EditorTools.Paradise;
+using Descender.World.Paradise;
 using NUnit.Framework;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -40,6 +41,26 @@ namespace Descender.Tests
                 Assert.That(front[i].name, Does.StartWith(i % 2 == 0 ? "fg_soft_rise_" : "fg_soft_hang_"));
                 Assert.That(float.IsNaN(ParadiseDressing.SurfaceY(zone, front[i].at.x, float.NaN)), Is.False);
             }
+        }
+
+        [Test]
+        public void FramingFadesAwayOnARouteFarFromItsWalk()
+        {
+            const float walkView = -60f;
+            var near = ParadiseGarden.FrontFadeNear;
+            var far = ParadiseGarden.FrontFadeFar;
+            Assert.That(ForegroundParallax.FadeAt(walkView, walkView, near, far), Is.EqualTo(1f));
+            Assert.That(ForegroundParallax.FadeAt(walkView - near, walkView, near, far), Is.EqualTo(1f));
+            Assert.That(ForegroundParallax.FadeAt(walkView - far, walkView, near, far), Is.Zero);
+            Assert.That(ForegroundParallax.FadeAt(walkView + 14f, walkView, near, far), Is.Zero);
+            var between = ForegroundParallax.FadeAt(walkView - (near + far) / 2f, walkView, near, far);
+            Assert.That(between, Is.InRange(0.1f, 0.9f));
+        }
+
+        [Test]
+        public void TheUndersideFringeNeverReachesARoundedCornersWallSide()
+        {
+            Assert.That(ParadiseGarden.UndersideReach, Is.LessThanOrEqualTo(30f));
         }
 
         [TestCase("fg_soft_rise_0")]

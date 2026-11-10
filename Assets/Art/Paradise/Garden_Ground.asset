@@ -13,13 +13,13 @@ MonoBehaviour:
   m_Name: Garden_Ground
   m_EditorClassIdentifier: Unity.2D.SpriteShape.Runtime::UnityEngine.U2D.SpriteShape
   m_Angles:
-  - m_Start: 120
+  - m_Start: 150
     m_End: 180
     m_Order: 0
     m_Sprites:
     - {fileID: 21300000, guid: 637f0b6b45627204a9cfe33811f1295c, type: 3}
   - m_Start: -180
-    m_End: -120
+    m_End: -150
     m_Order: 0
     m_Sprites:
     - {fileID: 21300000, guid: 637f0b6b45627204a9cfe33811f1295c, type: 3}

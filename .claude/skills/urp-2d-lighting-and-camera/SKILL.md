@@ -37,6 +37,13 @@ normal maps re-reads the normal target. Keep normal-mapped lights to the
 ones near the hero's path; use `WorldLight` (a tiny component that
 disables its `Light2D` when further than 30 units from the camera).
 
+In Paradise, each hanging lantern carries a `WorldLight` child ("Light",
+`ParadiseGarden.LanternLight`): a warm point light on the stone round it,
+4.5 units, no normal maps, with `LanternFlame` slowly swelling its
+intensity and its glass by about 8%. They are a few per zone, so they stay
+well inside the budget of 12 lit point lights per screen
+(docs/design/paradise.md); keep new accent lights to the same budget.
+
 ## Materials and normal maps
 
 - Sprites use `Universal Render Pipeline/2D/Sprite-Lit-Default`

@@ -32,6 +32,7 @@ namespace Descender.EditorTools.Paradise
                 shadows = new Color(0.55f, 0.44f, 0.6f),
                 highlights = new Color(0.7f, 0.57f, 0.44f),
                 balance = 10f,
+                lift = new Vector4(1.01f, 0.985f, 1.01f, 0.007f),
                 bloomThreshold = 1.1f,
                 bloomIntensity = 0.36f,
                 bloomTint = new Color(1f, 0.9f, 0.78f),
@@ -50,6 +51,7 @@ namespace Descender.EditorTools.Paradise
                 shadows = new Color(0.33f, 0.52f, 0.6f),
                 highlights = new Color(0.48f, 0.58f, 0.56f),
                 balance = -15f,
+                lift = new Vector4(0.98f, 1f, 1.02f, 0.012f),
                 bloomThreshold = 1.05f,
                 bloomIntensity = 0.45f,
                 bloomTint = new Color(0.72f, 1f, 0.96f),
@@ -114,6 +116,10 @@ namespace Descender.EditorTools.Paradise
             split.highlights.Override(look.highlights);
             split.balance.Override(look.balance);
 
+            // In light as bright as this no shadow is black: air fills them with the sky's colour.
+            // In linear light a small lift barely touches the midtones and raises only the darkest.
+            Get<LiftGammaGain>().lift.Override(look.lift);
+
             var bloom = Get<Bloom>();
             bloom.threshold.Override(look.bloomThreshold);
             bloom.intensity.Override(look.bloomIntensity);
@@ -141,6 +147,7 @@ namespace Descender.EditorTools.Paradise
             public Color shadows;
             public Color highlights;
             public float balance;
+            public Vector4 lift;
             public float bloomThreshold;
             public float bloomIntensity;
             public Color bloomTint;

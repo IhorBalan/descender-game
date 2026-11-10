@@ -103,6 +103,52 @@
       "suggestedParallax": 0.98
     },
     {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg0_sky_clear.png",
+      "purpose": "Sky with its clouds taken out (sky_split.py): sun and rays, pinned to the view",
+      "zone": "garden",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg0_clouds.png",
+      "purpose": "The painted sky's clouds alone (sky_split.py): two screens wide, scrolling and drifting",
+      "zone": "garden",
+      "size": [
+        4096,
+        1152
+      ],
+      "sizeUnits": [
+        64.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0
+    },
+    {
       "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg1_far.png",
       "purpose": "Far: varied snowy mountain range in blue haze (4 screens wide)",
       "zone": "garden",
@@ -408,6 +454,26 @@
         72.0
       ],
       "attach": "pivot = left column centre on the springing line (bottom edge) = top of that column's capital; right column centre is columnSpacingPx to the right. Neighbouring spans share a column and overlap by 102 px."
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/balustrade_post.png",
+      "purpose": "The square post a run of balustrade ends in, made from the balustrade's own marble (rail_post.py)",
+      "zone": "garden",
+      "size": [
+        84,
+        166
+      ],
+      "sizeUnits": [
+        0.656,
+        1.297
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
     },
     {
       "path": "Assets/Art/Paradise/Kit/Architecture/balustrade.png",
@@ -719,6 +785,68 @@
       "attach": "rows below ~70 overlap the top of wall_block"
     },
     {
+      "path": "Assets/Art/Paradise/Kit/Architecture/numerals.png",
+      "purpose": "Gilded Roman numerals I, V, X, L in 32 px cells, cut into the coping under the orchard's numbered trees (tree_numerals.py)",
+      "zone": "garden",
+      "size": [
+        128,
+        34
+      ],
+      "sizeUnits": [
+        1.0,
+        0.2656
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_niche.png",
+      "purpose": "Blind arch set into a terrace wall for a lantern to hang in: the wide arch's voussoirs, the coping's marble, the wall's blocks in shade (wall_niche.py)",
+      "zone": "garden",
+      "size": [
+        559,
+        576
+      ],
+      "sizeUnits": [
+        4.367,
+        4.5
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_soffit.png",
+      "purpose": "Underside of an overhanging terrace: fascia, gold line and dentils, made from the coping's marble (wall_soffit.py)",
+      "zone": "garden",
+      "size": [
+        1024,
+        92
+      ],
+      "sizeUnits": [
+        8.0,
+        0.719
+      ],
+      "pivot": [
+        0.5,
+        0.8913
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ]
+    },
+    {
       "path": "Assets/Art/Paradise/Kit/Architecture/waterfall_spout.png",
       "purpose": "Carved marble channel mouth set into a wall; water leaves over its lip",
       "zone": "garden",
@@ -742,6 +870,26 @@
         26.0
       ],
       "attach": "pivot = left edge middle, set against the wall face; start the waterfall at lipPointPx (from the top-left)"
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Nature/blossom_tree_glow.png",
+      "purpose": "The orchard's golden fruit giving off a little light of its own (fruit_glow.py)",
+      "zone": "garden",
+      "size": [
+        1024,
+        1280
+      ],
+      "sizeUnits": [
+        8.0,
+        10.0
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 128,
+      "blend": "additive",
+      "tileable": []
     },
     {
       "path": "Assets/Art/Paradise/Kit/Nature/blossom_tree.png",

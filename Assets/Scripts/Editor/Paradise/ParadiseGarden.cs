@@ -45,6 +45,12 @@ namespace Descender.EditorTools.Paradise
                 $"{ParadiseArt.DerivedFolder}/island_bottom_flip.png",
                 1f - 0.95f
             );
+            var soffit = $"{KitRoot}/Architecture/wall_soffit.png";
+            if (File.Exists(soffit))
+            {
+                // The slab's edge is drawn 10 rows down the 92-row band (wall_soffit.py), the rest hangs below.
+                ParadiseArt.DeriveFlipped(soffit, $"{ParadiseArt.DerivedFolder}/{SoffitSprite}.png", 10f / 92f);
+            }
             ParadiseNormals.Apply(new[] { KitRoot, ParadiseArt.DerivedFolder });
             foreach (var folder in new[] { KitRoot, BackdropRoot, ParadiseArt.DerivedFolder })
             {
@@ -82,7 +88,7 @@ namespace Descender.EditorTools.Paradise
                 {
                     new AngleRange
                     {
-                        start = 120f,
+                        start = 180f - UndersideReach,
                         end = 180f,
                         order = 0,
                         sprites = new List<Sprite> { Get("island_bottom_flip") },
@@ -90,7 +96,7 @@ namespace Descender.EditorTools.Paradise
                     new AngleRange
                     {
                         start = -180f,
-                        end = -120f,
+                        end = -180f + UndersideReach,
                         order = 0,
                         sprites = new List<Sprite> { Get("island_bottom_flip") },
                     },
@@ -110,8 +116,10 @@ namespace Descender.EditorTools.Paradise
                     },
                 }
             );
-            // Built terraces: marble ashlar walls under a carved coping (the grass lip until it exists).
+            // Built terraces: marble ashlar walls under a carved coping (the grass lip until it
+            // exists). Where one overhangs, its underside is finished stone, not the islands' rock.
             var wall = AssetDatabase.LoadAssetAtPath<Texture2D>($"{KitRoot}/Architecture/wall_block.png");
+            var underside = Sprites.ContainsKey(SoffitSprite) ? Get(SoffitSprite) : Get("island_bottom_flip");
             art.terrace = ParadiseArt.Profile(
                 "Garden_Terrace",
                 wall,
@@ -119,17 +127,17 @@ namespace Descender.EditorTools.Paradise
                 {
                     new AngleRange
                     {
-                        start = 120f,
+                        start = 180f - UndersideReach,
                         end = 180f,
                         order = 0,
-                        sprites = new List<Sprite> { Get("island_bottom_flip") },
+                        sprites = new List<Sprite> { underside },
                     },
                     new AngleRange
                     {
                         start = -180f,
-                        end = -120f,
+                        end = -180f + UndersideReach,
                         order = 0,
-                        sprites = new List<Sprite> { Get("island_bottom_flip") },
+                        sprites = new List<Sprite> { underside },
                     },
                 }
             );
@@ -172,8 +180,8 @@ namespace Descender.EditorTools.Paradise
                 art.foreground.SetFloat("_HazeAmount", 0.34f);
                 EditorUtility.SetDirty(art.foreground);
             }
-            // A bright sky needs only a hint of rays.
-            art.shaft.SetFloat("_Intensity", 0.15f);
+            // Beams of sun through the air: on a bright sky an added light has to be fairly strong to read.
+            art.shaft.SetFloat("_Intensity", BeamIntensity);
             EditorUtility.SetDirty(art.shaft);
             art.water = ParadiseArt.SaveMaterial("Paradise Waterfall", "Descender/Waterfall");
             art.water.SetColor("_Color", new Color(0.92f, 0.97f, 1f, 0.92f));
@@ -202,13 +210,28 @@ namespace Descender.EditorTools.Paradise
             var sky = ParadiseArt.Layer(
                 backdrop,
                 "Sky",
-                Get("garden_bg0_sky"),
+                Get("garden_bg0_sky_clear"),
                 art.unlit,
                 -1000 + zone.number,
                 centre,
                 Vector2.zero,
                 true
             );
+            // The sun stays where it is; the clouds cut from the same painting move past it.
+            var highClouds = Pinned(
+                ParadiseArt.Layer(
+                    backdrop,
+                    "HighClouds",
+                    Get("garden_bg0_clouds"),
+                    art.unlit,
+                    -995 + zone.number,
+                    centre,
+                    new Vector2(HighCloudScroll, 0f),
+                    false
+                ),
+                0f
+            );
+            Drift(highClouds, HighCloudDrift);
             // The backdrops are painted as whole screens (32 x 18 units); our view is 20 x 11.25,
             // so each is scaled to one screen and pinned to the view vertically (scroll.y 0), its
             // horizon where it was painted; sideways each scrolls at its own depth.
@@ -301,7 +324,7 @@ namespace Descender.EditorTools.Paradise
                     art.ambient,
                     volume,
                     sky,
-                    new[] { far, midFar, cloudBack, mid, cloudFront, near }
+                    new[] { highClouds, far, midFar, cloudBack, mid, cloudFront, near }
                 );
 
             var plan = GardenPlan(zone);
@@ -335,12 +358,24 @@ namespace Descender.EditorTools.Paradise
             foreach (var p in plan.trees)
             {
                 // Behind the play layer, rooted below the terrace's lip.
-                Place(props, p.name, p.at, p.scale, p.flip, art.mid ?? art.plant, -150, art);
+                var tree = Place(props, p.name, p.at, p.scale, p.flip, art.mid ?? art.plant, -150, art);
+                if (Mathf.Approximately(p.scale, LanternTreeScale))
+                {
+                    // In the shade of its own crown, so the marble landings climbing through it
+                    // stand out white against it; its fruit keeps its full glow.
+                    tree.color = LanternTreeShade;
+                }
             }
             foreach (var p in plan.walls)
             {
                 var hangs = p.name == "ivy_curtain" || p.name == "wisteria_drape" || p.name.StartsWith("ivy_drape");
-                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, hangs ? -98 : -86, art), p.at.x);
+                // Ivy over a wall comes out from behind the coping: in front of it, its dense top
+                // would sit on the stone like a box.
+                var order =
+                    !hangs ? -86
+                    : p.name.StartsWith("ivy_drape") ? WallIvyOrder
+                    : -98;
+                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, order, art), p.at.x);
                 if (!hangs)
                 {
                     ContactShadow(shadows, p.name, p.at, p.scale, art);
@@ -362,10 +397,23 @@ namespace Descender.EditorTools.Paradise
             }
             Railings(zone, ParadiseArt.Group(root, "Railings"), art);
             Pilasters(zone, ParadiseArt.Group(root, "Pilasters"), art);
+            if (plan.numbers.Count > 0 && Sprites.ContainsKey(NumeralAtlas))
+            {
+                Numbers(root, plan.numbers, art);
+            }
+            if (Sprites.ContainsKey(WallNiche))
+            {
+                // Set into the wall: over its blocks and piers, under the depth shade and the ivy's spill.
+                var niches = ParadiseArt.Group(root, "Niches");
+                foreach (var p in plan.niches)
+                {
+                    Place(niches, p.name, p.at, p.scale, false, art.lit, NicheOrder, art);
+                }
+            }
             var hanging = ParadiseArt.Group(root, "Hanging");
             foreach (var p in plan.hanging)
             {
-                Place(
+                var r = Place(
                     hanging,
                     p.name,
                     p.at,
@@ -375,25 +423,63 @@ namespace Descender.EditorTools.Paradise
                     -87,
                     art
                 );
+                if (p.name == "lantern")
+                {
+                    LanternLight(r.transform, zone.number);
+                }
             }
             var water = ParadiseArt.Group(root, "Water");
             foreach (var w in plan.water)
             {
                 Fall(zone, water, w, art);
             }
-            var shafts = ParadiseArt.Group(root, "Shafts");
-            foreach (var x in plan.shafts)
+            var pergolas = ParadiseArt.Group(root, "Pergolas");
+            foreach (var x in plan.pergolas)
             {
+                Pergola(zone, pergolas, x, art);
+            }
+            var shafts = ParadiseArt.Group(root, "Shafts");
+            var frontBeam = FrontBeamMaterial(art);
+            for (var i = 0; i < plan.shafts.Count; i++)
+            {
+                var x = plan.shafts[i];
+                var inFront = i % 3 == 1;
                 var r = ParadiseArt.Sprite(
                     shafts,
-                    "Shaft",
+                    inFront ? "Beam Front" : "Beam",
                     art.lightShaft,
-                    art.shaft,
-                    -300,
-                    new Vector3(x, -34f, 0f),
-                    new Vector3(1.8f, 1.9f, 1f)
+                    inFront ? frontBeam : art.shaft,
+                    inFront ? 390 : -300,
+                    new Vector3(x, ParadiseDressing.SurfaceY(zone, x) + BeamTopOverWalk, 0f),
+                    Vector3.one * (0.85f + Hash(x, 62f) * 0.5f)
                 );
+                // Its top is its pivot: it hangs from there and leans the way the sunlight runs.
+                r.transform.rotation = Quaternion.Euler(0f, 0f, BeamLean);
                 r.color = art.shaftColor;
+                if (inFront)
+                {
+                    r.sortingLayerName = ForegroundLayer;
+                    continue;
+                }
+                // Dust caught in the light where the beam comes down past the walk.
+                var walk = ParadiseDressing.SurfaceY(zone, x);
+                var along = (BeamTopOverWalk - BeamDustAbove) * Mathf.Tan(BeamLean * Mathf.Deg2Rad);
+                Air(
+                    shafts,
+                    "Beam Dust",
+                    art.mote,
+                    art.glow,
+                    BeamDust,
+                    new Color(1f, 0.96f, 0.84f, 0.6f),
+                    10f,
+                    -(Vector2)SunAndClouds.SunDirection,
+                    30f,
+                    new Vector2(0.6f, 1.6f),
+                    new Vector2(0.06f, 0.16f),
+                    0f,
+                    6f,
+                    new Rect(x + along - 2f, walk + BeamDustAbove - 2.5f, 4f, 5f)
+                );
             }
             var front = ParadiseArt.Group(root, "Foreground");
             for (var i = 0; i < plan.foreground.Count; i++)
@@ -410,7 +496,13 @@ namespace Descender.EditorTools.Paradise
                 );
                 r.flipX = f.flip;
                 r.sortingLayerName = ForegroundLayer;
-                r.gameObject.AddComponent<ForegroundParallax>().Configure(FrontDepth, FrontDepth);
+                var parallax = r.gameObject.AddComponent<ForegroundParallax>();
+                parallax.Configure(FrontDepth, FrontDepth);
+                parallax.FadeAwayFrom(
+                    ParadiseDressing.SurfaceY(zone, f.at.x, f.at.y) + CameraOverWalk,
+                    FrontFadeNear,
+                    FrontFadeFar
+                );
             }
             var air = ParadiseArt.Group(root, "Air");
             var area = new Rect(zone.xMin, -105f, zone.xMax - zone.xMin, 90f);
@@ -466,7 +558,38 @@ namespace Descender.EditorTools.Paradise
                 8f,
                 area
             );
+            if (zone.number == 2 && art.firefly != null)
+            {
+                // The orchard is lit from within (docs/design/paradise.md): fireflies wander low
+                // over the walk and the dells, each glowing up and dimming as it goes.
+                Air(
+                        air,
+                        "Fireflies",
+                        art.firefly,
+                        art.glow,
+                        Fireflies,
+                        FireflyColor,
+                        7f,
+                        new Vector2(0f, -1f),
+                        180f,
+                        new Vector2(1f, 3f),
+                        new Vector2(0.2f, 0.34f),
+                        0f,
+                        14f,
+                        new Rect(zone.xMin, FireflyFloor, zone.xMax - zone.xMin, FireflyBand)
+                    )
+                    .SetBlinks(2);
+            }
         }
+
+        /// <summary>How many fireflies are in a view of the orchard, their colour, and the band of air they keep to.</summary>
+        public const int Fireflies = 16;
+
+        public static readonly Color FireflyColor = new Color(0.86f, 1f, 0.6f, 0.9f);
+
+        public const float FireflyFloor = -82f;
+
+        public const float FireflyBand = 32f;
 
         // --------------------------------------------------------------- railings
 
@@ -528,6 +651,19 @@ namespace Descender.EditorTools.Paradise
         )
         {
             var sprite = Get("balustrade");
+            // A run of balustrade ends in a square post at each end, as a mason builds one.
+            var runStart = float.NaN;
+            var runEnd = 0f;
+            void EndRun()
+            {
+                if (float.IsNaN(runStart))
+                {
+                    return;
+                }
+                RailPost(parent, runStart + RailPostInset, surface(runStart + RailPostInset), art);
+                RailPost(parent, runEnd - RailPostInset, surface(runEnd - RailPostInset), art);
+                runStart = float.NaN;
+            }
             for (var a = x0; a < x1 - 1f; a += RailingPiece)
             {
                 var b = Mathf.Min(a + RailingPiece, x1);
@@ -544,8 +680,14 @@ namespace Descender.EditorTools.Paradise
                     && Mathf.Abs(angle) <= RailingMaxSlope;
                 if (!fits)
                 {
+                    EndRun();
                     continue;
                 }
+                if (float.IsNaN(runStart))
+                {
+                    runStart = a;
+                }
+                runEnd = b;
                 var r = ParadiseArt.Sprite(
                     parent,
                     "Balustrade",
@@ -561,6 +703,28 @@ namespace Descender.EditorTools.Paradise
                 // A hair longer than the step, so neighbouring pieces meet without a seam.
                 r.size = new Vector2((b - a) / 0.8f / Mathf.Cos(angle * Mathf.Deg2Rad) + 0.1f, sprite.bounds.size.y);
             }
+            EndRun();
+        }
+
+        /// <summary>How far in from a run's end its post stands, so the post covers the cut handrail.</summary>
+        private const float RailPostInset = 0.22f;
+
+        private static void RailPost(Transform parent, float x, float y, ParadiseArt.ZoneArt art)
+        {
+            if (float.IsNaN(y) || !Sprites.ContainsKey("balustrade_post"))
+            {
+                return;
+            }
+            // Upright even where the railing slopes, and over it, so it closes the run.
+            ParadiseArt.Sprite(
+                parent,
+                "Rail Post",
+                Get("balustrade_post"),
+                art.lit,
+                -89,
+                new Vector3(x, y - 0.1f, 0f),
+                Vector3.one * 0.8f
+            );
         }
 
         /// <summary>
@@ -587,6 +751,14 @@ namespace Descender.EditorTools.Paradise
                 {
                     end++;
                 }
+                // A walk that ends at a drop (a slab's end over a hollow) ends at the top of the
+                // drop: its pilaster goes down from the coping, and the drop is not a riser.
+                while (
+                    end > 0 && Mathf.Abs(points[end].x - points[end - 1].x) < 0.01f && points[end].y < points[end - 1].y
+                )
+                {
+                    end--;
+                }
                 for (var i = 0; i < end; i++)
                 {
                     var a = points[i];
@@ -597,9 +769,42 @@ namespace Descender.EditorTools.Paradise
                     }
                 }
                 // The terrace's two ends, where its wall drops away.
-                Pilaster(parent, points[0].x, points[0].y, points[0].y - 14f, false, art);
-                Pilaster(parent, points[end].x, points[end].y, points[end].y - 14f, false, art);
+                EndPilaster(zone, parent, points[0].x, points[0].y, -1f, art);
+                EndPilaster(zone, parent, points[end].x, points[end].y, 1f, art);
             }
+        }
+
+        /// <summary>How far a pilaster at a terrace's end goes down when nothing below it is near.</summary>
+        private const float EndPilasterDepth = 14f;
+
+        /// <summary>
+        /// The pilaster at a terrace's end, on the side `outward` (-1 west, +1 east): down to the
+        /// ground beside it when there is some within reach, standing on it (the root hollow's
+        /// floor, the roots route), else into the shade. None where another terrace stands right
+        /// against the end: that terrace's own corner is the one that shows.
+        /// </summary>
+        private static void EndPilaster(
+            ParadiseLayout.Zone zone,
+            Transform parent,
+            float x,
+            float top,
+            float outward,
+            ParadiseArt.ZoneArt art
+        )
+        {
+            var beside = x + outward * 0.6f;
+            for (var y = top - 0.1f; y > top - EndPilasterDepth - 6f; y -= 0.1f)
+            {
+                if (InsideSolid(zone, new Vector2(beside, y)))
+                {
+                    if (top - y > 1.5f)
+                    {
+                        Pilaster(parent, x, top, y + 0.05f, true, art);
+                    }
+                    return;
+                }
+            }
+            Pilaster(parent, x, top, top - EndPilasterDepth, false, art);
         }
 
         private static void Pilaster(
@@ -1057,6 +1262,12 @@ namespace Descender.EditorTools.Paradise
                 {
                     continue;
                 }
+                // Only where the wall goes all the way down: under a slab over a hollow there is no
+                // wall for a pier to be built into, and it would stand in the air.
+                if (LowestOf(outline, left) > bottom + 0.5f || LowestOf(outline, right) > bottom + 0.5f)
+                {
+                    continue;
+                }
                 var topLeft = SurfaceOf(outline, left) - PierTuck;
                 var topRight = SurfaceOf(outline, right) - PierTuck;
                 // Across a step of the wall there is no single coping for it to stand under.
@@ -1097,6 +1308,136 @@ namespace Descender.EditorTools.Paradise
             var renderer = go.AddComponent<MeshRenderer>();
             renderer.sharedMaterial = ParadiseNormals.LitMesh(Get("wall_pier").texture, art.lit);
             renderer.sortingOrder = -102;
+        }
+
+        /// <summary>The lowest point of the outline over x: where the shape's body ends there.</summary>
+        private static float LowestOf(List<Vector2> outline, float x)
+        {
+            var low = float.MaxValue;
+            for (var i = 0; i < outline.Count; i++)
+            {
+                var a = outline[i];
+                var b = outline[(i + 1) % outline.Count];
+                if ((a.x <= x && b.x >= x) || (b.x <= x && a.x >= x))
+                {
+                    var y = Mathf.Approximately(a.x, b.x)
+                        ? Mathf.Min(a.y, b.y)
+                        : Mathf.Lerp(a.y, b.y, (x - a.x) / (b.x - a.x));
+                    low = Mathf.Min(low, y);
+                }
+            }
+            return low;
+        }
+
+        /// <summary>How tall a terrace's side must be to be built with quoins (a slab's end is not).</summary>
+        public const float QuoinMinFace = 4f;
+
+        /// <summary>How far a corner's long stones stand proud of the face (its short ones are flush).</summary>
+        private const float QuoinProud = 0.28f;
+
+        /// <summary>
+        /// Quoins up every side of a built terrace that shows (the walls of the root hollow, the
+        /// dell's east wall, the ends of the roots route): a wall's corner is built of long and short
+        /// stones bonded into its courses, not cut through them. Each runs from the top of the side
+        /// down to where ground or another wall stands against it. Not at the zone's ends, where the
+        /// next zone's terrace carries on.
+        /// </summary>
+        public static void Quoins(
+            Transform parent,
+            ParadiseLayout.Zone zone,
+            ParadiseLayout.Shape shape,
+            ParadiseArt.ZoneArt art
+        )
+        {
+            var outline = new List<Vector2>();
+            foreach (var p in shape.outline)
+            {
+                outline.Add(new Vector2(p.x, p.y));
+            }
+            var vertices = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var triangles = new List<int>();
+            for (var i = 0; i < outline.Count; i++)
+            {
+                var a = outline[i];
+                var b = outline[(i + 1) % outline.Count];
+                var x = a.x;
+                var top = Mathf.Max(a.y, b.y);
+                var bottom = Mathf.Min(a.y, b.y);
+                if (
+                    Mathf.Abs(a.x - b.x) > 0.01f
+                    || top - bottom < QuoinMinFace
+                    || x < zone.xMin + 1.5f
+                    || x > zone.xMax - 1.5f
+                )
+                {
+                    continue;
+                }
+                // It faces away from the side the shape is on.
+                var outward = Inside(outline, new Vector2(x - 0.3f, (top + bottom) / 2f)) ? 1f : -1f;
+                var end = top;
+                for (var y = top - 0.25f; y > bottom; y -= 0.25f)
+                {
+                    if (InsideSolid(zone, new Vector2(x + outward * 0.3f, y)))
+                    {
+                        break;
+                    }
+                    end = y;
+                }
+                if (top - end < QuoinMinFace)
+                {
+                    continue;
+                }
+                var outer = x + outward * QuoinProud;
+                var inner = outer - outward * PierWidth;
+                var first = vertices.Count;
+                vertices.Add(new Vector3(Mathf.Min(outer, inner), top, 0f));
+                vertices.Add(new Vector3(Mathf.Max(outer, inner), top, 0f));
+                vertices.Add(new Vector3(Mathf.Min(outer, inner), end, 0f));
+                vertices.Add(new Vector3(Mathf.Max(outer, inner), end, 0f));
+                uvs.Add(new Vector2(0f, top / PierTile));
+                uvs.Add(new Vector2(1f, top / PierTile));
+                uvs.Add(new Vector2(0f, end / PierTile));
+                uvs.Add(new Vector2(1f, end / PierTile));
+                triangles.AddRange(new[] { first, first + 1, first + 2, first + 2, first + 1, first + 3 });
+            }
+            if (triangles.Count == 0)
+            {
+                return;
+            }
+            var mesh = new Mesh { name = parent.name + " quoins" };
+            mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
+            var colors = new Color[vertices.Count];
+            for (var i = 0; i < colors.Length; i++)
+            {
+                colors[i] = Color.white;
+            }
+            mesh.colors = colors;
+            FaceTheCamera(mesh);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("Quoins");
+            go.transform.SetParent(parent, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = ParadiseNormals.LitMesh(Get("wall_pier").texture, art.lit);
+            renderer.sortingOrder = -102;
+        }
+
+        private static bool Inside(List<Vector2> points, Vector2 p)
+        {
+            var inside = false;
+            for (int i = 0, j = points.Count - 1; i < points.Count; j = i++)
+            {
+                var a = points[i];
+                var b = points[j];
+                if ((a.y > p.y) != (b.y > p.y) && p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x)
+                {
+                    inside = !inside;
+                }
+            }
+            return inside;
         }
 
         /// <summary>The highest point of the outline over x: the walkable surface there.</summary>
@@ -2069,6 +2410,15 @@ namespace Descender.EditorTools.Paradise
             return float.IsNaN(ground) ? Vector2.zero : new Vector2(Side(-1f), Side(1f));
         }
 
+        /// <summary>Each shape's outline as built (its curves sampled), kept while the shape lives.</summary>
+        private static readonly System.Runtime.CompilerServices.ConditionalWeakTable<
+            ParadiseLayout.Shape,
+            List<Vector2>
+        > SampledOutlines = new System.Runtime.CompilerServices.ConditionalWeakTable<
+            ParadiseLayout.Shape,
+            List<Vector2>
+        >();
+
         private static bool InsideSolid(ParadiseLayout.Zone zone, Vector2 p)
         {
             foreach (var shape in zone.shapes)
@@ -2077,8 +2427,14 @@ namespace Descender.EditorTools.Paradise
                 {
                     continue;
                 }
-                var (left, right) = ParadiseGreybox.Tangents(shape.outline, true);
-                var points = ParadiseGreybox.Sample(shape.outline, left, right, true);
+                var points = SampledOutlines.GetValue(
+                    shape,
+                    s =>
+                    {
+                        var (left, right) = ParadiseGreybox.Tangents(s.outline, true);
+                        return ParadiseGreybox.Sample(s.outline, left, right, true);
+                    }
+                );
                 var inside = false;
                 for (int i = 0, j = points.Count - 1; i < points.Count; j = i++)
                 {
@@ -2096,6 +2452,15 @@ namespace Descender.EditorTools.Paradise
             }
             return false;
         }
+
+        /// <summary>How far a spout is set back into the wall or deck it comes out of, in units.</summary>
+        public const float SpoutTuck = 0.35f;
+
+        /// <summary>Where a fall's spout is pinned: its wall edge, set back into the wall or deck it leaves.</summary>
+        public static float SpoutPivot(Waterfall w) =>
+            w.x + (w.fromRight ? 1f : -1f) * (1.44f * SpoutScale(w) + SpoutTuck);
+
+        public static float SpoutScale(Waterfall w) => Mathf.Clamp(w.width / 1.5f, 0.8f, 1.3f);
 
         private static void Fall(ParadiseLayout.Zone zone, Transform parent, Waterfall w, ParadiseArt.ZoneArt art)
         {
@@ -2121,15 +2486,19 @@ namespace Descender.EditorTools.Paradise
             {
                 // The carved channel mouth the water leaves from.
                 // Its pivot is the wall edge; the water leaves its lip 92 px out and 6 px up (64 px a unit).
-                var scale = Mathf.Clamp(w.width / 1.5f, 0.8f, 1.3f);
+                // Set back into the wall or the deck's end by a little: at the end of a broken span
+                // the deck's rounded corner left sky between them, and the spout hung in the air.
+                var scale = SpoutScale(w);
+                // Turned (its sprite mirrored about the wall edge), it comes out of a wall on the
+                // right, over its face, so it draws over the wall's blocks and piers.
                 Place(
                     parent,
                     "waterfall_spout",
-                    new Vector2(w.x - 1.44f * scale, w.top - 0.09f * scale),
+                    new Vector2(SpoutPivot(w), w.top - 0.09f * scale),
                     scale,
-                    false,
+                    w.fromRight,
                     art.lit,
-                    -103,
+                    w.fromRight ? NicheOrder : -103,
                     art
                 );
             }
@@ -2292,7 +2661,85 @@ namespace Descender.EditorTools.Paradise
             ParadiseArt.ZoneArt art
         )
         {
-            var springs = new float[feet.Count];
+            var arches = Arches(line, feet, deckDepth, out var springs);
+            foreach (var arch in arches)
+            {
+                var i = arch.index;
+                var a = feet[i];
+                var b = feet[i + 1];
+                var sprite = Get(arch.wide ? "arch_span_wide" : "arch_span");
+                var nominal = arch.wide ? 10f : 6f;
+                var r = ParadiseArt.Sprite(
+                    parent,
+                    $"Arch{i}",
+                    sprite,
+                    art.lit,
+                    -118,
+                    new Vector3(arch.x, arch.spring, 0f),
+                    new Vector3(arch.span / nominal, 1f, 1f)
+                );
+                r.sortingOrder = -118 + (i % 2);
+                // A tall aqueduct gets a lower tier, as Roman ones do: from the walk below, its
+                // deck is off the screen, and the columns alone would hang from the sky.
+                var groundLevel = Mathf.Abs(a.ground - b.ground) < 0.3f;
+                var intoClouds = Mathf.Min(a.ground, b.ground) <= ParadiseGreybox.CloudSea + 0.01f;
+                if (groundLevel && !intoClouds && arch.spring - a.ground > 8f)
+                {
+                    var tierName = (arch.wide ? "arch_span_wide" : "arch_span") + "_tier";
+                    var tier = ParadiseArt.Sprite(
+                        parent,
+                        $"Tier{i}",
+                        Sprites.TryGetValue(tierName, out var tierSprite) ? tierSprite : sprite,
+                        art.lit,
+                        -118 + (i % 2),
+                        new Vector3(a.x, a.ground + 3.2f, 0f),
+                        new Vector3(arch.span / nominal, 1f, 1f)
+                    );
+                    tier.color = new Color(0.94f, 0.94f, 0.96f);
+                }
+            }
+            for (var i = 0; i < feet.Count; i++)
+            {
+                Column(parent, $"Column{i}", feet[i].x, springs[i], feet[i].ground, art);
+            }
+        }
+
+        /// <summary>One arch of a colonnade: between columns `index` and `index + 1`, from x, its springing.</summary>
+        public struct ArchSpan
+        {
+            public int index;
+            public float x;
+            public float span;
+            public float spring;
+            public bool wide;
+
+            /// <summary>The middle of its opening, under the keystone.</summary>
+            public float Centre => x + span / 2f;
+
+            /// <summary>The underside of its crown: what a lantern under the arch hangs from.</summary>
+            public float Crown => spring + (wide ? WideArchCrown : ArchCrown);
+        }
+
+        /// <summary>How far above its springing the underside of an arch's crown is (arch_span, arch_span_wide).</summary>
+        public const float ArchCrown = 2.55f;
+
+        public const float WideArchCrown = 538f / 128f;
+
+        /// <summary>
+        /// The arches a colonnade carries, and where each column stops (its springing, or the
+        /// deck's underside): wherever two neighbouring columns stand level, close enough and
+        /// high enough, an arch carries the deck between them. A column that carries one arch
+        /// stops lower, so the next span is not level and gets none: arches and open spans take
+        /// turns along a long deck.
+        /// </summary>
+        public static List<ArchSpan> Arches(
+            List<Vector2> line,
+            List<(float x, float ground)> feet,
+            float deckDepth,
+            out float[] springs
+        )
+        {
+            springs = new float[feet.Count];
             for (var i = 0; i < feet.Count; i++)
             {
                 // Up into the deck by a little, measured at the capital's higher corner, so the
@@ -2301,8 +2748,7 @@ namespace Descender.EditorTools.Paradise
                 var under = Mathf.Max(DeckY(line, x - CapitalHalfWidth), DeckY(line, x + CapitalHalfWidth));
                 springs[i] = under - deckDepth + DeckSeat;
             }
-            // Level between neighbours: an arch carries the deck, so the column stops at its springing.
-            var arched = new bool[feet.Count];
+            var arches = new List<ArchSpan>();
             for (var i = 0; i + 1 < feet.Count; i++)
             {
                 var a = feet[i];
@@ -2314,45 +2760,50 @@ namespace Descender.EditorTools.Paradise
                 {
                     continue;
                 }
-                var wide = span > 8f;
-                var sprite = Get(wide ? "arch_span_wide" : "arch_span");
-                var nominal = wide ? 10f : 6f;
-                var arch = ParadiseArt.Sprite(
-                    parent,
-                    $"Arch{i}",
-                    sprite,
-                    art.lit,
-                    -118,
-                    new Vector3(a.x, spring, 0f),
-                    new Vector3(span / nominal, 1f, 1f)
+                arches.Add(
+                    new ArchSpan
+                    {
+                        index = i,
+                        x = a.x,
+                        span = span,
+                        spring = spring,
+                        wide = span > 8f,
+                    }
                 );
-                arch.sortingOrder = -118 + (i % 2);
-                arched[i] = arched[i + 1] = true;
-                // A tall aqueduct gets a lower tier, as Roman ones do: from the walk below, its
-                // deck is off the screen, and the columns alone would hang from the sky.
-                var groundLevel = Mathf.Abs(a.ground - b.ground) < 0.3f;
-                var intoClouds = Mathf.Min(a.ground, b.ground) <= ParadiseGreybox.CloudSea + 0.01f;
-                if (groundLevel && !intoClouds && spring - a.ground > 8f)
-                {
-                    var tierName = (wide ? "arch_span_wide" : "arch_span") + "_tier";
-                    var tier = ParadiseArt.Sprite(
-                        parent,
-                        $"Tier{i}",
-                        Sprites.TryGetValue(tierName, out var tierSprite) ? tierSprite : sprite,
-                        art.lit,
-                        -118 + (i % 2),
-                        new Vector3(a.x, a.ground + 3.2f, 0f),
-                        new Vector3(span / nominal, 1f, 1f)
-                    );
-                    tier.color = new Color(0.94f, 0.94f, 0.96f);
-                }
                 springs[i] = Mathf.Min(springs[i], spring);
                 springs[i + 1] = Mathf.Min(springs[i + 1], spring);
             }
-            for (var i = 0; i < feet.Count; i++)
-            {
-                Column(parent, $"Column{i}", feet[i].x, springs[i], feet[i].ground, art);
-            }
+            return arches;
+        }
+
+        /// <summary>Where the pergolas stand, each by the x of its left column.</summary>
+        public static float[] PergolasOf(int zone) =>
+            zone == 1 ? new[] { 348f }
+            : zone == 2 ? new[] { 533f, 1258f }
+            : new float[0];
+
+        /// <summary>From one column of a pergola to the other: an arch_span at its painted width.</summary>
+        public const float PergolaSpan = 6f;
+
+        /// <summary>How far above the walk a pergola's arch springs, well clear of the hero's head.</summary>
+        public const float PergolaRise = 3.2f;
+
+        /// <summary>How far above its springing the underside of the arch's crown is.</summary>
+        private const float PergolaCrown = ArchCrown;
+
+        /// <summary>A free-standing arch on two columns: a colonnade carrying nothing but its own coping.</summary>
+        private static void Pergola(ParadiseLayout.Zone zone, Transform parent, float x, ParadiseArt.ZoneArt art)
+        {
+            var left = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+            var right = ParadiseDressing.SurfaceY(zone, x + PergolaSpan, float.NaN);
+            var top = Mathf.Max(left, right) + PergolaRise + ArchRise - DeckSeat;
+            Colonnade(
+                parent,
+                new List<Vector2> { new Vector2(x - 3f, top), new Vector2(x + PergolaSpan + 3f, top) },
+                new List<(float x, float ground)> { (x, left), (x + PergolaSpan, right) },
+                0f,
+                art
+            );
         }
 
         /// <summary>Half the capital's width, where it meets the deck above.</summary>
@@ -2452,6 +2903,9 @@ namespace Descender.EditorTools.Paradise
             public float bottom;
             public float width;
             public bool foam;
+
+            /// <summary>Whether it leaves a wall on its right (its spout turned to face west); else on its left.</summary>
+            public bool fromRight;
         }
 
         public sealed class Plan
@@ -2462,9 +2916,16 @@ namespace Descender.EditorTools.Paradise
             public readonly List<Spot> foreground = new List<Spot>();
             public readonly List<Waterfall> water = new List<Waterfall>();
             public readonly List<float> shafts = new List<float>();
+            public readonly List<float> pergolas = new List<float>();
             public readonly List<Spot> walls = new List<Spot>();
             public readonly List<Spot> trees = new List<Spot>();
             public readonly List<Spot> framing = new List<Spot>();
+
+            /// <summary>Blind arches set into the walls, each with a lantern hung in it (WallHangings).</summary>
+            public readonly List<Spot> niches = new List<Spot>();
+
+            /// <summary>The orchard's tree numbers, cut in the coping: each its numerals (as its name), centred at its spot.</summary>
+            public readonly List<Spot> numbers = new List<Spot>();
         }
 
         /// <summary>A deterministic 0..1 from a position, so the dressing is the same every build.</summary>
@@ -2515,12 +2976,15 @@ namespace Descender.EditorTools.Paradise
                 var line = ParadiseGreybox.Sample(bridge.deck, left, right, false);
                 var x0 = bridge.deck[0].x;
                 var x1 = bridge.deck[bridge.deck.Count - 1].x;
+                var ornament =
+                    x1 - x0 > 9f ? DeckHanging(bridge, zone, line, (x0 + x1) / 2f) : new Vector2(float.NaN, 0f);
                 // Growth, not a curtain: clumps with bare stone between them, long strands
-                // and short tufts mixed, the pale wisteria only now and then.
+                // and short tufts mixed, the pale wisteria only now and then; none over the
+                // deck's banner or lantern.
                 var ivy = new[] { "ivy_drape_a", "ivy_drape_b", "ivy_drape_c", "vine_hanging", "ivy_drape_a" };
                 for (var x = x0 + 1.2f; x < x1 - 0.8f; x += 2.6f + Hash(x, 5f) * 4.5f)
                 {
-                    if (Hash(x, 18f) < 0.3f)
+                    if (Hash(x, 18f) < 0.3f || Mathf.Abs(x - ornament.x) < DeckOrnamentClearance)
                     {
                         continue;
                     }
@@ -2543,13 +3007,11 @@ namespace Descender.EditorTools.Paradise
                 }
                 if (x1 - x0 > 9f)
                 {
-                    var mid = (x0 + x1) / 2f;
-                    var under = DeckY(line, mid) - ParadiseGreybox.DeckThickness - 0.2f;
                     plan.hanging.Add(
                         new Spot
                         {
-                            name = Hash(mid, 9f) > 0.5f ? "banner" : "lantern",
-                            at = new Vector2(mid, under),
+                            name = Hash((x0 + x1) / 2f, 9f) > 0.5f ? "banner" : "lantern",
+                            at = ornament,
                             scale = 1f,
                         }
                     );
@@ -2635,6 +3097,37 @@ namespace Descender.EditorTools.Paradise
                     );
                 }
             }
+            // Sunbeams all along the walk, irregularly spaced.
+            for (var x = zone.xMin + 14f; x < zone.xMax - 6f; x += BeamSpacing + Hash(x, 61f) * BeamSpacingVaries)
+            {
+                plan.shafts.Add(x);
+            }
+            // Arched pergolas behind the walk, on the longest runs of wall and railing, hung with growth.
+            foreach (var x in PergolasOf(zone.number))
+            {
+                plan.pergolas.Add(x);
+                var crown =
+                    Mathf.Max(
+                        ParadiseDressing.SurfaceY(zone, x, float.NaN),
+                        ParadiseDressing.SurfaceY(zone, x + PergolaSpan, float.NaN)
+                    )
+                    + PergolaRise
+                    + PergolaCrown;
+                var growth = new[] { "ivy_drape_b", "wisteria_drape", "ivy_drape_c" };
+                for (var i = 0; i < growth.Length; i++)
+                {
+                    var along = x + PergolaSpan * (i + 1) / (growth.Length + 1f);
+                    plan.hanging.Add(
+                        new Spot
+                        {
+                            name = growth[i],
+                            at = new Vector2(along + (Hash(along, 41f) - 0.5f) * 0.5f, crown),
+                            scale = 0.55f + Hash(along, 42f) * 0.2f,
+                            flip = Hash(along, 43f) > 0.5f,
+                        }
+                    );
+                }
+            }
             if (zone.number == 1)
             {
                 // A ruined garden: a fallen arch and broken columns where the old loggia stood.
@@ -2713,16 +3206,25 @@ namespace Descender.EditorTools.Paradise
                         foam = true,
                     }
                 );
-                plan.shafts.Add(80f);
-                plan.shafts.Add(300f);
             }
             else if (zone.number == 2)
             {
+                // Every tree of the orchard rows is numbered, its number cut in the coping under it.
+                var number = FirstTreeNumber;
+                for (var x = OrchardRowsFrom; x <= OrchardRowsTo; x += OrchardRowSpacing)
+                {
+                    var walk = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+                    if (!float.IsNaN(walk))
+                    {
+                        plan.numbers.Add(new Spot { name = Roman(number), at = new Vector2(x, walk - NumberDrop) });
+                    }
+                    number++;
+                }
                 if (Sprites.ContainsKey("blossom_tree"))
                 {
                     // The orchard: blossom trees rooted on the terraces, in rows a little too even.
                     var rows = new List<float> { 420f, 470f, 515f, 1010f, 1150f, 1240f };
-                    for (var x = 586f; x <= 742f; x += 26f)
+                    for (var x = OrchardRowsFrom; x <= OrchardRowsTo; x += OrchardRowSpacing)
                     {
                         rows.Add(x);
                     }
@@ -2743,6 +3245,7 @@ namespace Descender.EditorTools.Paradise
                         }
                     }
                 }
+                LanternTree(zone, plan);
                 plan.ruins.Add(
                     new Spot
                     {
@@ -2809,6 +3312,8 @@ namespace Descender.EditorTools.Paradise
                         bottom = -70f,
                         width = 1.8f,
                         foam = true,
+                        // Out of the dell's east wall (the Lantern Rise), not the open air west of it.
+                        fromRight = true,
                     }
                 );
                 plan.water.Add(
@@ -2841,9 +3346,6 @@ namespace Descender.EditorTools.Paradise
                         foam = true,
                     }
                 );
-                plan.shafts.Add(520f);
-                plan.shafts.Add(900f);
-                plan.shafts.Add(1200f);
             }
             // Foreground: the garden between the eye and the walk, out of focus (fg_framing.py),
             // rising into the bottom of the frame and hanging into its top in turn, with open
@@ -2870,7 +3372,71 @@ namespace Descender.EditorTools.Paradise
                     }
                 );
             }
+            WallHangings(zone, plan);
             return plan;
+        }
+
+        /// <summary>How little the high clouds follow the walk: they are almost as far off as the sun.</summary>
+        public const float HighCloudScroll = 0.03f;
+
+        /// <summary>Their own slow drift on the wind, in level pixels a second.</summary>
+        public const float HighCloudDrift = 0.6f;
+
+        /// <summary>
+        /// How far from flat an underside may tilt and still carry the hanging rock fringe, in
+        /// degrees. A rounded corner turns through every angle from an underside to a wall; with a
+        /// wider reach its arc took the fringe too, drawn diagonally as long stretched stripes.
+        /// </summary>
+        public const float UndersideReach = 30f;
+
+        /// <summary>The edge a built terrace's underside takes: wall_soffit.png, flipped for the SpriteShape.</summary>
+        public const string SoffitSprite = "wall_soffit_flip";
+
+        /// <summary>How far the camera may be from the walk a framing piece was placed for before it fades.</summary>
+        public const float FrontFadeNear = 2.5f;
+
+        /// <summary>How far, at which it is gone: on a route far below, its cut edge would show.</summary>
+        public const float FrontFadeFar = 6f;
+
+        /// <summary>How far apart the sunbeams stand, at least, and how much more at most.</summary>
+        public const float BeamSpacing = 26f;
+
+        public const float BeamSpacingVaries = 18f;
+
+        /// <summary>
+        /// The beams' lean from upright, in degrees: down the way the sunlight runs, from the
+        /// upper right (SunAndClouds.SunDirection), the same way as the rays painted in the sky.
+        /// </summary>
+        public static readonly float BeamLean =
+            -Mathf.Atan2(SunAndClouds.SunDirection.x, SunAndClouds.SunDirection.y) * Mathf.Rad2Deg;
+
+        /// <summary>Where a beam hangs from: above the top of the view when the hero stands on the walk.</summary>
+        private const float BeamTopOverWalk = 9f;
+
+        /// <summary>
+        /// A beam in front of the walk is lighter than one behind it: it crosses the hero and
+        /// must never hide him, only say the air between him and the eye is lit.
+        /// </summary>
+        public const float FrontBeamIntensity = 0.16f;
+
+        /// <summary>How high over the walk the dust in a beam hangs thickest, and how much of it there is.</summary>
+        private const float BeamDustAbove = 2.5f;
+
+        private const int BeamDust = 60;
+
+        /// <summary>Wall ivy sits under the coping (-99) and over the wall's depth shade (-100) and body.</summary>
+        public const int WallIvyOrder = -101;
+
+        /// <summary>A beam behind the walk.</summary>
+        public const float BeamIntensity = 0.42f;
+
+        private static Material FrontBeamMaterial(ParadiseArt.ZoneArt art)
+        {
+            var material = ParadiseArt.SaveMaterial($"{art.shaft.name} Front", art.shaft.shader.name);
+            material.CopyPropertiesFromMaterial(art.shaft);
+            material.SetFloat("_Intensity", FrontBeamIntensity);
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         /// <summary>The sorting layer that can sample the finished Default layer, so pools can mirror it.</summary>
@@ -2913,6 +3479,442 @@ namespace Descender.EditorTools.Paradise
             (target + (ground + CameraOverWalk) * FrontDepth) / (1f + FrontDepth);
 
         /// <summary>Whether x is within a tile of a gap's edge (plants there would overhang the drop).</summary>
+        /// <summary>
+        /// Banners, and now and then a lantern, hung under the coping of the garden walls at wide
+        /// intervals, so a long wall has a rhythm of its own. Kept clear of the ivy over the coping,
+        /// the falls and the pergolas, and of gaps.
+        /// </summary>
+        private static void WallHangings(ParadiseLayout.Zone zone, Plan plan)
+        {
+            var taken = new List<float>();
+            foreach (var p in plan.walls)
+            {
+                if (p.name.StartsWith("ivy_drape"))
+                {
+                    taken.Add(p.at.x);
+                }
+            }
+            foreach (var w in plan.water)
+            {
+                taken.Add(w.x);
+            }
+            bool Clear(float x)
+            {
+                foreach (var other in taken)
+                {
+                    if (Mathf.Abs(other - x) < WallHangingClearance)
+                    {
+                        return false;
+                    }
+                }
+                foreach (var pergola in plan.pergolas)
+                {
+                    if (x > pergola - 1f && x < pergola + PergolaSpan + 1f)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            foreach (var shape in zone.shapes)
+            {
+                if (!zone.masonry.Contains(shape.name))
+                {
+                    continue;
+                }
+                var end = 0;
+                while (end + 1 < shape.outline.Count && shape.outline[end + 1].x >= shape.outline[end].x - 0.001f)
+                {
+                    end++;
+                }
+                var x1 = shape.outline[end].x;
+                for (
+                    var x = shape.outline[0].x + 9f;
+                    x < x1 - 9f;
+                    x += WallHangingSpacing + Hash(x, 71f) * WallHangingSpacingVaries
+                )
+                {
+                    var top = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+                    if (float.IsNaN(top) || NearGap(zone, x) || !Clear(x))
+                    {
+                        continue;
+                    }
+                    var name = Hash(x, 72f) < 0.7f ? "banner" : "lantern";
+                    var at = new Vector2(x, top - CopingDepth);
+                    // A lantern hangs in a niche of its own where the wall has room for one.
+                    if (name == "lantern" && NicheFits(zone, shape, plan, x, at.y - NicheGap))
+                    {
+                        plan.niches.Add(
+                            new Spot
+                            {
+                                name = WallNiche,
+                                at = new Vector2(x, at.y - NicheGap),
+                                scale = 1f,
+                            }
+                        );
+                        at.y -= NicheGap + NicheCrown;
+                    }
+                    plan.hanging.Add(
+                        new Spot
+                        {
+                            name = name,
+                            at = at,
+                            scale = 1f,
+                        }
+                    );
+                    taken.Add(x);
+                }
+            }
+        }
+
+        /// <summary>The blind arch a wall lantern hangs in (wall_niche.py), placed by its top.</summary>
+        public const string WallNiche = "wall_niche";
+
+        /// <summary>Half the niche's width and its height, in units (559 x 576 px at 128 a unit).</summary>
+        public const float NicheHalfWidth = 2.18f;
+
+        public const float NicheHeight = 4.5f;
+
+        /// <summary>How far under the coping the niche's keystone starts, and its intrados under that (the lantern's hook).</summary>
+        public const float NicheGap = 0.12f;
+
+        public const float NicheCrown = 0.4f;
+
+        /// <summary>How far the walk may rise or fall across a niche's width and still be level enough for one.</summary>
+        public const float NicheLevel = 0.35f;
+
+        /// <summary>Where a niche draws: over the wall (-103) and its piers (-102), under the depth shade (-100).</summary>
+        public const int NicheOrder = -101;
+
+        /// <summary>
+        /// Whether a niche fits in the wall under the coping at x: the wall goes deep enough below
+        /// it on both sides, and it keeps clear of the ivy spilling over the coping, the falls and
+        /// the wall's piers, so it is never half covered or cut into a pier.
+        /// </summary>
+        private static bool NicheFits(
+            ParadiseLayout.Zone zone,
+            ParadiseLayout.Shape shape,
+            Plan plan,
+            float x,
+            float top
+        )
+        {
+            var foot = top - NicheHeight - 0.4f;
+            if (
+                !InsideSolid(zone, new Vector2(x - NicheHalfWidth, foot))
+                || !InsideSolid(zone, new Vector2(x + NicheHalfWidth, foot))
+            )
+            {
+                return false;
+            }
+            // Only under a level coping: under a slope one shoulder of the arch would run into it.
+            var walk = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+            foreach (var side in new[] { x - NicheHalfWidth, x + NicheHalfWidth })
+            {
+                var there = ParadiseDressing.SurfaceY(zone, side, float.NaN);
+                if (float.IsNaN(there) || Mathf.Abs(there - walk) > NicheLevel)
+                {
+                    return false;
+                }
+            }
+            foreach (var p in plan.walls)
+            {
+                if (p.name.StartsWith("ivy_drape") && Mathf.Abs(p.at.x - x) < NicheHalfWidth + 1.2f)
+                {
+                    return false;
+                }
+            }
+            foreach (var w in plan.water)
+            {
+                if (Mathf.Abs(w.x - x) < NicheHalfWidth + w.width)
+                {
+                    return false;
+                }
+            }
+            foreach (var pier in PierCentres(shape))
+            {
+                if (Mathf.Abs(pier - x) < NicheHalfWidth + PierWidth * 0.5f + 0.2f)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <summary>Where Piers spaces a wall's piers (before it skips the ones that do not fit).</summary>
+        private static IEnumerable<float> PierCentres(ParadiseLayout.Shape shape)
+        {
+            var xMin = float.MaxValue;
+            var xMax = float.MinValue;
+            foreach (var p in shape.outline)
+            {
+                xMin = Mathf.Min(xMin, p.x);
+                xMax = Mathf.Max(xMax, p.x);
+            }
+            var count = Mathf.RoundToInt((xMax - xMin) / PierSpacing);
+            for (var i = 0; i < count; i++)
+            {
+                yield return xMin + (i + 0.5f) * (xMax - xMin) / count;
+            }
+        }
+
+        /// <summary>
+        /// Where a deck's banner or lantern hangs: under the crown of the arch nearest the deck's
+        /// middle, inside its opening and below its keystone (hung from under the deck it covered
+        /// the keystone's gold medallion); with no arch, from the deck between the two columns
+        /// nearest the middle, never in front of one.
+        /// </summary>
+        public static Vector2 DeckHanging(
+            ParadiseLayout.Bridge bridge,
+            ParadiseLayout.Zone zone,
+            List<Vector2> line,
+            float mid
+        )
+        {
+            var (_, feet) = ParadiseGreybox.Supports(bridge, zone);
+            var arches = Arches(line, feet, ParadiseGreybox.DeckThickness, out _);
+            if (arches.Count > 0)
+            {
+                var nearest = arches[0];
+                foreach (var a in arches)
+                {
+                    if (Mathf.Abs(a.Centre - mid) < Mathf.Abs(nearest.Centre - mid))
+                    {
+                        nearest = a;
+                    }
+                }
+                return new Vector2(nearest.Centre, nearest.Crown - DeckHangingTuck);
+            }
+            var x = mid;
+            if (feet.Count > 1)
+            {
+                var best = float.MaxValue;
+                for (var i = 0; i + 1 < feet.Count; i++)
+                {
+                    var centre = (feet[i].x + feet[i + 1].x) / 2f;
+                    if (Mathf.Abs(centre - mid) < best)
+                    {
+                        best = Mathf.Abs(centre - mid);
+                        x = centre;
+                    }
+                }
+            }
+            return new Vector2(x, DeckY(line, x) - ParadiseGreybox.DeckThickness - 0.2f);
+        }
+
+        /// <summary>How far under an arch's crown a hanging's hook is.</summary>
+        private const float DeckHangingTuck = 0.05f;
+
+        /// <summary>How close the ivy under a deck may hang to the deck's banner or lantern.</summary>
+        public const float DeckOrnamentClearance = 1.8f;
+
+        /// <summary>
+        /// The orchard rows' trees (zone 2): from, to and between, and the number the first bears.
+        /// The orchard is a little too tidy (docs/design/paradise.md): every tree is numbered.
+        /// </summary>
+        public const float OrchardRowsFrom = 586f;
+
+        public const float OrchardRowsTo = 742f;
+
+        public const float OrchardRowSpacing = 26f;
+
+        public const int FirstTreeNumber = 39;
+
+        /// <summary>How far under the walk the middle of the coping's plain marble band is, where a number is cut.</summary>
+        public const float NumberDrop = 0.77f;
+
+        /// <summary>Over the coping (-99), under the railings (-90) and the plants.</summary>
+        public const int NumberOrder = -98;
+
+        /// <summary>
+        /// The gilded numerals (tree_numerals.py): one texture, the letters of NumeralLetters each
+        /// centred in a cell NumeralCell px wide, each drawn NumeralWidths px wide with an empty
+        /// margin of NumeralMargin either side, at 128 px a unit.
+        /// </summary>
+        public const string NumeralAtlas = "numerals";
+
+        private const string NumeralLetters = "IVXL";
+
+        private const int NumeralCell = 32;
+
+        private static readonly int[] NumeralWidths = { 12, 26, 26, 22 };
+
+        private const int NumeralMargin = 2;
+
+        /// <summary>A number from 1 to 89 in Roman numerals (the orchard has far fewer trees).</summary>
+        public static string Roman(int n)
+        {
+            string[] tens = { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX" };
+            string[] ones = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+            return tens[Mathf.Clamp(n, 1, 89) / 10] + ones[Mathf.Clamp(n, 1, 89) % 10];
+        }
+
+        /// <summary>
+        /// The zone's tree numbers, cut in the coping and gilded: one mesh over the numerals'
+        /// texture, a quad for each letter, the letters of a number set edge to edge (less their
+        /// margins) and centred on its spot. One draw call for every number in the zone.
+        /// </summary>
+        private static void Numbers(Transform root, List<Spot> numbers, ParadiseArt.ZoneArt art)
+        {
+            var texture = Get(NumeralAtlas).texture;
+            var height = texture.height / 128f;
+            var vertices = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var triangles = new List<int>();
+            foreach (var spot in numbers)
+            {
+                var width = 0f;
+                foreach (var letter in spot.name)
+                {
+                    width += NumeralWidths[NumeralLetters.IndexOf(letter)] / 128f;
+                }
+                var x = spot.at.x - width / 2f;
+                foreach (var letter in spot.name)
+                {
+                    var i = NumeralLetters.IndexOf(letter);
+                    var drawn = NumeralWidths[i] + 2 * NumeralMargin;
+                    var left = i * NumeralCell + (NumeralCell - drawn) / 2;
+                    var x0 = x - NumeralMargin / 128f;
+                    var x1 = x0 + drawn / 128f;
+                    var first = vertices.Count;
+                    vertices.Add(new Vector3(x0, spot.at.y + height / 2f, 0f));
+                    vertices.Add(new Vector3(x1, spot.at.y + height / 2f, 0f));
+                    vertices.Add(new Vector3(x0, spot.at.y - height / 2f, 0f));
+                    vertices.Add(new Vector3(x1, spot.at.y - height / 2f, 0f));
+                    uvs.Add(new Vector2((float)left / texture.width, 1f));
+                    uvs.Add(new Vector2((float)(left + drawn) / texture.width, 1f));
+                    uvs.Add(new Vector2((float)left / texture.width, 0f));
+                    uvs.Add(new Vector2((float)(left + drawn) / texture.width, 0f));
+                    triangles.AddRange(new[] { first, first + 1, first + 2, first + 2, first + 1, first + 3 });
+                    x += NumeralWidths[i] / 128f;
+                }
+            }
+            var mesh = new Mesh { name = root.name + " tree numbers" };
+            mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
+            var colors = new Color[vertices.Count];
+            for (var i = 0; i < colors.Length; i++)
+            {
+                colors[i] = Color.white;
+            }
+            mesh.colors = colors;
+            FaceTheCamera(mesh);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("TreeNumbers");
+            go.transform.SetParent(root, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = ParadiseNormals.LitMesh(texture, art.lit);
+            renderer.sortingOrder = NumberOrder;
+        }
+
+        /// <summary>The stand-in the layout keeps for the Lantern Tree's trunk (a Decor shape the art replaces).</summary>
+        public const string LanternTrunk = "LanternTrunk";
+
+        /// <summary>How much bigger than an orchard tree the Lantern Tree is: its crown holds the tower's landings.</summary>
+        public const float LanternTreeScale = 3f;
+
+        /// <summary>The Lantern Tree's tint: the cool shade under the orchard's canopy.</summary>
+        public static readonly Color LanternTreeShade = new Color(0.72f, 0.82f, 0.82f);
+
+        /// <summary>
+        /// The orchard's landmark (docs/design/paradise.md, zone 2): the Lantern Tree, a huge tree
+        /// whose fruit lights the screen, with the save shrine in its roots and the landings climbing
+        /// through its crown. It stands where the layout put its trunk, behind the landings, so they
+        /// read as built up through its branches; its golden fruit glows as every orchard tree's does.
+        /// </summary>
+        private static void LanternTree(ParadiseLayout.Zone zone, Plan plan)
+        {
+            var trunk = zone.shapes.Find(s => s.name == LanternTrunk);
+            if (trunk == null)
+            {
+                return;
+            }
+            var x = 0f;
+            foreach (var p in trunk.outline)
+            {
+                x += p.x;
+            }
+            x /= trunk.outline.Count;
+            var ground = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+            if (float.IsNaN(ground))
+            {
+                return;
+            }
+            plan.trees.Add(
+                new Spot
+                {
+                    name = "blossom_tree",
+                    at = new Vector2(x, ground + 0.3f),
+                    scale = LanternTreeScale,
+                    flip = true,
+                }
+            );
+        }
+
+        /// <summary>
+        /// A hanging lantern's warm light, thrown on the stone round it from its glass. A real
+        /// light, not a glow drawn over the wall, so the pool takes the masonry's own colour and
+        /// relief. Stronger under the orchard's canopy, where the garden is lit from within.
+        /// </summary>
+        private static void LanternLight(Transform lantern, int zone)
+        {
+            var go = new GameObject("Light");
+            go.transform.SetParent(lantern, false);
+            go.transform.localPosition = new Vector3(0f, -LanternGlassDrop, 0f);
+            var light = go.AddComponent<WorldLight>();
+            var settings = new SerializedObject(light);
+            settings.FindProperty("color").colorValue = LanternColor;
+            settings.FindProperty("energy").floatValue = zone == 1 ? LanternEnergy * 0.7f : LanternEnergy;
+            settings.FindProperty("radiusPixels").floatValue = LanternReach * Player.PlayerTuning.PixelsPerUnit;
+            // On only while its pool can reach the view: a 2D light is drawn once for each batch of
+            // sorting layers, so every lantern left on off screen cost a few draw calls.
+            settings.FindProperty("activeDistance").floatValue = LanternActiveDistance;
+            settings.ApplyModifiedPropertiesWithoutUndo();
+            // The glass burns amber: at full strength the additive glow went to white.
+            var glass = lantern.Find("Glow");
+            SpriteRenderer glow = null;
+            if (glass != null && glass.TryGetComponent(out glow))
+            {
+                glow.color = LanternGlass;
+            }
+            go.AddComponent<global::Descender.World.Paradise.LanternFlame>().Configure(glow, LanternBreath, 0.45f);
+        }
+
+        /// <summary>How far a lantern's flame swells and ebbs about its strength.</summary>
+        public const float LanternBreath = 0.08f;
+
+        /// <summary>The colour the lantern's glass glows (its glow sprite's tint).</summary>
+        public static readonly Color LanternGlass = new Color(1f, 0.66f, 0.34f, 0.9f);
+
+        /// <summary>How far below a lantern's hook its glass is, in units (the sprite hangs from its top).</summary>
+        public const float LanternGlassDrop = 0.62f;
+
+        /// <summary>How far a lantern's light reaches, in units, and how strong it is.</summary>
+        public const float LanternReach = 4.5f;
+
+        public const float LanternEnergy = 1.1f;
+
+        /// <summary>
+        /// How far from the camera a lantern's light stays on, plus its reach (WorldLight): the
+        /// view's half diagonal is about 11.5 units, so its pool switches on just before it shows.
+        /// </summary>
+        public const float LanternActiveDistance = 13f;
+
+        public static readonly Color LanternColor = new Color(1f, 0.74f, 0.42f);
+
+        /// <summary>How far apart the hangings on a wall are, at least, and how much more at most.</summary>
+        public const float WallHangingSpacing = 22f;
+
+        public const float WallHangingSpacingVaries = 12f;
+
+        /// <summary>How close a hanging may come to ivy over the coping or a fall.</summary>
+        public const float WallHangingClearance = 2.5f;
+
+        /// <summary>How far below the walk the coping's lower edge is, where a hanging's rod goes.</summary>
+        private const float CopingDepth = 0.95f;
+
         private static bool NearGap(ParadiseLayout.Zone zone, float x)
         {
             var a = ParadiseDressing.SurfaceY(zone, x - 1f, float.NaN);
