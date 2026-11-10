@@ -144,7 +144,8 @@ namespace Descender.Tests.PlayMode
             Assert.That(rows.text, Does.StartWith("Dash  4/8"));
             Assert.That(rows.text, Does.Contain("dashSpeed 260"));
             panel.Turn(panel.Group - 4);
-            Assert.That(panel.Group, Is.EqualTo(6), "turning back past the first page comes round to the last");
+            var last = LiveTuning.Groups.Count - 1;
+            Assert.That(panel.Group, Is.EqualTo(last), "turning back past the first page comes round to the last");
             Assert.That(panel.TurnTo("swim"), Is.False);
         }
 
