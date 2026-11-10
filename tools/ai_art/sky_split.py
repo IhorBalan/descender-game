@@ -134,7 +134,13 @@ def matte(rgb: np.ndarray, sky: np.ndarray, broad: np.ndarray, tight: np.ndarray
     alpha *= blur(cv2.dilate(broad, np.ones((25, 25), np.uint8)).astype(np.float32), 8)
     alpha *= 1.0 - smoothstep(0.16, 0.3, blue)
     deep = cv2.erode(tight, round_kernel(31)).astype(np.float32)
-    alpha = np.maximum(alpha, blur(deep, 4))
+    # Deep in a cloud is cloud, except where the painting shows the sky through it, between two
+    # heads: kept, that blue drifts with the cloud over the clear sky and shows as a dark wedge.
+    through = smoothstep(0.16, 0.3, blue) * (1.0 - smoothstep(0.1, 0.2, paler))
+    alpha = np.maximum(alpha, blur(deep, 4) * (1.0 - through))
+    # The brushwork makes the matte grainy along a rim: settle it, keeping the rim's shape.
+    alpha = cv2.medianBlur((np.clip(alpha, 0.0, 1.0) * 255.0 + 0.5).astype(np.uint8), 5).astype(np.float32) / 255.0
+    alpha = blur(alpha, 0.8)
     a = alpha[..., None]
     colour = np.clip((rgb - (1.0 - a) * sky) / np.maximum(a, 0.04), 0.0, 1.0)
     # A rim takes the colour of the cloud inside it. Left as solved it would carry the blue of
