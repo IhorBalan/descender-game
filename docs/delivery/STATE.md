@@ -63,7 +63,7 @@ A place and a toolkit for building mechanics fast, all in simple shapes.
   change a number and feel the difference, and place a new item with a
   trigger without writing code.
 
-### G2. Movement (current)
+### G2. Movement (done 2026-11-10, to be signed off by play)
 
 Every move finished against its lab station, then the world pieces that
 movement needs. The hero's moves: run, jump (variable height, coyote time,
@@ -80,13 +80,20 @@ Planned as T-0018 to T-0024 (2026-11-10). G1 showed three gaps they start
 from: nothing reads `PlayerTuning.cornerCorrection`, riding a moving platform
 was never tuned or tested, and the hero's input has no "up".
 
-### G3. Combat
+### G3. Combat (current)
 
 The sword (reach, timing, hit-stop, knockback, the air and down attacks),
 the cast (Holy Light), the slam (Smite), healing, damage and invulnerability
 rules, breakable things, and a training dummy and damage read-out in the
 lab. Done when: each attack has a station and a test, and a fight against
 dummies feels right to Ihor.
+
+Planned as T-0026 to T-0031 (2026-11-10). What the code had at the start:
+one forward swing, the same on the ground and in the air; no up or down
+cut and no combo; the enemy decides its own knockback, so attacks cannot
+differ in push; one hit-stop for every hit; no dummy, no damage shown,
+nothing that breaks; and of combat only the slam's speed under a test. The
+dummy comes first, because every later task is tuned against it.
 
 ### G4. Enemies
 
@@ -230,13 +237,20 @@ hygiene as each production region lands.
 | T-0020 | Platforms that crumble and platforms on a timer | done | 20 | T-0018 | 1 | Re-plan the roadmap around mechanics | #180 |
 | T-0021 | Wind and lift | done | 21 | T-0017 | 1 | Re-plan the roadmap around mechanics | #181 |
 | T-0022 | Up, ladders and vines | done | 22 | T-0017 | 1 | Re-plan the roadmap around mechanics | #182 |
-| T-0023 | Ledge grab, to try and maybe drop | in review | 23 | T-0022 | 1 | Re-plan the roadmap around mechanics | |
+| T-0023 | Ledge grab, to try and maybe drop | done | 23 | T-0022 | 1 | Re-plan the roadmap around mechanics | #186 |
 | T-0024 | Water | done | 24 | T-0017 | 1 | Re-plan the roadmap around mechanics | #185 |
+| T-0026 | Training dummy and damage read-out | in review | 26 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
+| T-0027 | Sword directions: up, down and the pogo | approved | 27 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0028 | Sword feel: combo, push, recoil, hit-stop per attack | approved | 28 | T-0027 | 0 | Re-plan the roadmap around mechanics | |
+| T-0029 | Holy Light and Smite against the dummies | approved | 29 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0030 | Health, healing and being hurt | approved | 30 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0031 | Things that break | approved | 31 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
-`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10) and
-`planning/g2-movement-tasks.md` (G2, 2026-11-10).
+`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10),
+`planning/g2-movement-tasks.md` (G2, 2026-11-10) and
+`planning/g3-combat-tasks.md` (G3, 2026-11-10).
 Playtest: T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0011 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
 zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
@@ -415,7 +429,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (284 on `main` after #184) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (84 after T-0023; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (88 after T-0026; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -522,6 +536,13 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0026, training dummies.** `lab dummy` (the room gives the wings,
+  the bolt and the slam). Each dummy shows the last hit (what it was and
+  its damage), the count and total, and the damage a second over three
+  seconds. One to stand at, one overhead for a swing in the air, one to
+  slam beside, a pair that mark the end of the blade's reach, and one to
+  cast at. To check: the numbers read well while fighting, and the reach
+  pair matches what the swing looks like it should hit.
 - **T-0023, ledge grab (a trial).** `lab grab`, the only place it is on;
   elsewhere `tune ledgeGrab on` turns it on. Jump beside a wall a little
   higher than a jump and hold towards it: on the way down he catches the
