@@ -22,20 +22,19 @@ namespace Descender.Tests
                 .First(t => t.name == name);
 
         [Test]
-        public void TheCloudStripTilesSoNoJoinCanShow()
+        public void TheTwoScreensOfCloudsMeetInClearSkySoNoCloudIsCut()
         {
             var image = new Texture2D(2, 2);
             try
             {
                 Assert.That(image.LoadImage(File.ReadAllBytes(Clouds)), Is.True);
-                var last = image.width - 1;
-                for (var y = 0; y < image.height; y += 4)
+                var quarter = image.width / 4;
+                foreach (var column in new[] { quarter - 1, quarter, quarter * 3 - 1, quarter * 3 })
                 {
-                    Assert.That(
-                        image.GetPixel(0, y).a,
-                        Is.EqualTo(image.GetPixel(last, y).a).Within(0.04f),
-                        $"row {y}"
-                    );
+                    for (var y = 0; y < image.height; y += 2)
+                    {
+                        Assert.That(image.GetPixel(column, y).a, Is.Zero.Within(0.01f), $"column {column}, row {y}");
+                    }
                 }
             }
             finally
