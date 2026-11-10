@@ -79,11 +79,11 @@ namespace Descender.Tests.PlayMode
             return Put(PieceKind.Fruit, x - Side / 2f, y - Side / 2f, Side, Side);
         }
 
-        private IEnumerator Begin(Vector2 at)
+        private IEnumerator Begin(Vector2 at, LanternFruitLook look = null)
         {
             var stations = new List<Station>();
             stations.Add(room);
-            lab = LabBuilder.Build(stations);
+            lab = LabBuilder.Build(stations, look);
             made.Add(lab.gameObject);
             var go = new GameObject("Hero");
             go.layer = LayerMask.NameToLayer("Player");
@@ -113,6 +113,27 @@ namespace Descender.Tests.PlayMode
             }
             Assert.Fail("no fruit was built for the piece at " + piece.rect);
             return null;
+        }
+
+        /// <summary>A look of plain one-pixel sprites, each its own, made in code.</summary>
+        private LanternFruitLook MadeLook()
+        {
+            var texture = new Texture2D(1, 1);
+            System.Func<string, Sprite> sprite = name =>
+            {
+                var one = Sprite.Create(texture, new Rect(0f, 0f, 1f, 1f), new Vector2(0.5f, 0.5f), 1f);
+                one.name = name;
+                return one;
+            };
+            var look = ScriptableObject.CreateInstance<LanternFruitLook>();
+            look.Set(
+                sprite("hang"),
+                sprite("ripe"),
+                new[] { sprite("burst 0"), sprite("burst 1") },
+                new[] { sprite("pop 0"), sprite("pop 1") },
+                new[] { sprite("grow 0"), sprite("grow 1") }
+            );
+            return look;
         }
 
         private static int Steps(float seconds) => Mathf.RoundToInt(seconds / Time.fixedDeltaTime);
@@ -192,6 +213,58 @@ namespace Descender.Tests.PlayMode
             Assert.That(fruit.IsGone, Is.True);
             Assert.That(fruit.Bursts, Is.Zero, "a pop is not a burst");
             Assert.That(hero.Health, Is.EqualTo(health), "and hurts no one");
+        }
+
+        [UnityTest]
+        public IEnumerator APaintedFruitRipensInItsLookPlaysItsBurstAndGrowsBackInFrames()
+        {
+            var look = MadeLook();
+            var piece = Hang(FruitX, Floor + 5f);
+            yield return Begin(new Vector2(4f, Floor), look);
+            var fruit = FruitAt(piece);
+            Assert.That(fruit.IsPainted, Is.True, "it wears the look");
+            Assert.That(fruit.Showing, Is.EqualTo(look.Hang));
+            Assert.That(fruit.Ripeness, Is.Zero, "calm while he is away");
+
+            hero.PlaceAt(new Vector2(FruitX, Floor));
+            yield return probe.Until(() => fruit.IsRipening, 10);
+            yield return probe.Step(Steps(LanternFruit.RipenTime / 2f));
+            Assert.That(
+                fruit.Ripeness,
+                Is.GreaterThan(0.2f).And.LessThan(0.8f),
+                "the ripe look comes in as it shivers"
+            );
+            yield return probe.Until(() => fruit.IsGone, 200);
+            Assert.That(fruit.Playing, Is.EqualTo(look.Burst[0]), "the burst plays where it burst");
+            yield return probe.Step(Steps(look.Burst.Length / look.FramesPerSecond) + 3);
+            Assert.That(fruit.Playing, Is.Null, "and is over after its frames");
+
+            hero.PlaceAt(new Vector2(4f, Floor));
+            yield return probe.Until(() => fruit.IsGrowing, Steps(LanternFruit.RegrowTime) + 10);
+            Assert.That(fruit.Showing, Is.EqualTo(look.Grow[0]), "it grows back in its frames");
+            yield return probe.Until(() => fruit.IsHanging, Steps(LanternFruit.GrowTime) + 5);
+            Assert.That(fruit.Showing, Is.EqualTo(look.Hang), "and hangs in its look again");
+            Assert.That(fruit.Ripeness, Is.Zero);
+            Object.Destroy(look);
+        }
+
+        [UnityTest]
+        public IEnumerator APaintedFruitPlaysItsPopWhereItIsStruck()
+        {
+            var look = MadeLook();
+            var tuning = ScriptableObject.CreateInstance<PlayerTuning>();
+            var dx = (tuning.attackOffset.x + 10f) / PlayerTuning.PixelsPerUnit;
+            var dy = tuning.attackOffset.y / PlayerTuning.PixelsPerUnit;
+            Object.Destroy(tuning);
+            var piece = Hang(10f + dx, Floor + dy);
+            yield return Begin(new Vector2(10f, Floor), look);
+            var fruit = FruitAt(piece);
+
+            yield return probe.Press(i => i.AttackPressed = true);
+            yield return probe.Until(() => fruit.Pops > 0, 60);
+            Assert.That(fruit.Pops, Is.EqualTo(1), "the swing popped it");
+            Assert.That(fruit.Playing, Is.EqualTo(look.Pop[0]), "and its pop plays");
+            Object.Destroy(look);
         }
 
         [UnityTest]

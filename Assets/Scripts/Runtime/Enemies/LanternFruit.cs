@@ -11,8 +11,9 @@ namespace Descender.Enemies
     /// hero walks beneath it, it shivers and brightens (the warning), lets go and falls; it
     /// bursts where it lands or on him, hurting him if he is in the burst, and grows back on
     /// its stalk a few seconds later. A strike before it bursts pops it harmlessly. It never
-    /// dies for good and counts as no kill. Stands as a placeholder circle with a small light.
-    /// The object's position is the fruit's middle; <see cref="Configure"/> sets its size.
+    /// dies for good and counts as no kill. Drawn from a <see cref="LanternFruitLook"/> when it
+    /// has one, else as a placeholder circle, with a small light either way. The object's
+    /// position is the fruit's middle; <see cref="Configure"/> sets its size and look.
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
@@ -56,7 +57,14 @@ namespace Descender.Enemies
 
         private Rigidbody2D body;
         private BoxCollider2D box;
+        private Transform visual;
         private Shape shape;
+        private LanternFruitLook look;
+        private SpriteRenderer art;
+        private SpriteRenderer ripeArt;
+        private SpriteRenderer effect;
+        private Sprite[] effectFrames;
+        private float effectTime;
         private Light2D glow;
         private LineRenderer stalk;
         private readonly Collider2D[] hits = new Collider2D[4];
@@ -91,8 +99,20 @@ namespace Descender.Enemies
         public int Bursts { get; private set; }
         public int Pops { get; private set; }
 
-        /// <summary>Sets its size in units; call before its first physics step.</summary>
-        public void Configure(Vector2 fruitSize)
+        /// <summary>Whether it is drawn from a painted look rather than the placeholder.</summary>
+        public bool IsPainted => art != null;
+
+        /// <summary>The sprite the fruit shows now, or null for the placeholder.</summary>
+        public Sprite Showing => art != null ? art.sprite : null;
+
+        /// <summary>The frame of a burst or a pop playing now, or null when none is.</summary>
+        public Sprite Playing => effect != null && effect.enabled ? effect.sprite : null;
+
+        /// <summary>How much of the ripe look shows over the hanging one, 0 to 1.</summary>
+        public float Ripeness => ripeArt != null ? ripeArt.color.a : 0f;
+
+        /// <summary>Sets its size in units and its look (null for the placeholder); call before its first physics step.</summary>
+        public void Configure(Vector2 fruitSize, LanternFruitLook painted = null)
         {
             size = fruitSize;
             if (box != null)
@@ -103,6 +123,34 @@ namespace Descender.Enemies
             {
                 shape.Set(ShapeKind.Circle, size, Glow, "", 2);
             }
+            if (painted != null && painted.Hang != null && art == null)
+            {
+                UseLook(painted);
+            }
+        }
+
+        /// <summary>The painted fruit in place of the circle: the hanging sprite, the ripe one over it, and a player for the burst and the pop.</summary>
+        private void UseLook(LanternFruitLook painted)
+        {
+            look = painted;
+            shape.gameObject.SetActive(false);
+            art = MakeRenderer(visual, "Art", look.Hang, 2);
+            ripeArt = MakeRenderer(visual, "Ripe", look.Ripe, 3);
+            ripeArt.color = new Color(1f, 1f, 1f, 0f);
+            effect = MakeRenderer(transform, "Effect", null, 3);
+            effect.enabled = false;
+        }
+
+        private static SpriteRenderer MakeRenderer(Transform parent, string name, Sprite sprite, int order)
+        {
+            var go = new GameObject(name);
+            go.transform.SetParent(parent, false);
+            var renderer = go.AddComponent<SpriteRenderer>();
+            // A lantern shows its own light, whatever lights the scene.
+            renderer.sharedMaterial = Shapes.Unlit;
+            renderer.sprite = sprite;
+            renderer.sortingOrder = order;
+            return renderer;
         }
 
         private void Awake()
@@ -118,7 +166,9 @@ namespace Descender.Enemies
             box.isTrigger = false;
             box.size = size;
             ground = Layers.Solid(Layers.GroundMask);
-            shape = Shape.Make(transform, "Fruit", ShapeKind.Circle, Vector2.zero, size, Glow, "", 2);
+            visual = new GameObject("Visual").transform;
+            visual.SetParent(transform, false);
+            shape = Shape.Make(visual, "Fruit", ShapeKind.Circle, Vector2.zero, size, Glow, "", 2);
 
             var lightObject = new GameObject("Glow");
             lightObject.transform.SetParent(transform, false);
@@ -148,7 +198,7 @@ namespace Descender.Enemies
         {
             home = transform.position;
             // The stalk runs up to the branch above, or a tile up when there is none.
-            var top = home + new Vector2(0f, size.y / 2f);
+            var top = home + new Vector2(0f, StemTop);
             var hit = Physics2D.Raycast(top, Vector2.up, 20f, Layers.GroundMask);
             anchor = hit.collider != null ? hit.point : top + Vector2.up;
             DrawStalk();
@@ -173,9 +223,9 @@ namespace Descender.Enemies
                 case State.Ripen:
                     // The warning: it shivers on its stalk and burns brighter.
                     var shiver = Mathf.Sin(time * 60f) * 1.5f / Ppu;
-                    shape.transform.localPosition = new Vector3(shiver, 0f, 0f);
+                    visual.localPosition = new Vector3(shiver, 0f, 0f);
                     var ripeness = 1f - Mathf.Clamp01(stateLeft / RipenTime);
-                    shape.Body.color = Color.Lerp(Glow, Ripe, ripeness);
+                    SetRipeness(ripeness);
                     glow.intensity = LightIntensity * (1f + ripeness);
                     if (stateLeft <= 0f)
                     {
@@ -193,7 +243,7 @@ namespace Descender.Enemies
                     break;
                 case State.Grow:
                     var grown = 1f - Mathf.Clamp01(stateLeft / GrowTime);
-                    shape.transform.localScale = Vector3.one * Mathf.Lerp(0.2f, 1f, grown);
+                    ShowGrowing(grown);
                     glow.intensity = LightIntensity * grown;
                     if (stateLeft <= 0f)
                     {
@@ -202,6 +252,66 @@ namespace Descender.Enemies
                     break;
             }
             DrawStalk();
+        }
+
+        private void Update()
+        {
+            // The burst and the pop play in frames where they happened, and then hide.
+            if (effect == null || !effect.enabled)
+            {
+                return;
+            }
+            effectTime += Time.deltaTime;
+            var frame = (int)(effectTime * look.FramesPerSecond);
+            if (frame >= effectFrames.Length)
+            {
+                effect.enabled = false;
+                return;
+            }
+            effect.sprite = effectFrames[frame];
+        }
+
+        /// <summary>Units from its middle to where the stalk meets it: the painted stem's top, or the circle's.</summary>
+        private float StemTop => look != null ? look.StemTop : size.y / 2f;
+
+        private void SetRipeness(float ripeness)
+        {
+            if (ripeArt != null)
+            {
+                ripeArt.color = new Color(1f, 1f, 1f, ripeness);
+            }
+            else
+            {
+                shape.Body.color = Color.Lerp(Glow, Ripe, ripeness);
+            }
+        }
+
+        /// <summary>Growing back: the painted frames in turn, or the circle swelling.</summary>
+        private void ShowGrowing(float grown)
+        {
+            if (art != null && look.Grow.Length > 0)
+            {
+                var frame = Mathf.Min((int)(grown * look.Grow.Length), look.Grow.Length - 1);
+                art.sprite = look.Grow[frame];
+                visual.localScale = Vector3.one;
+            }
+            else
+            {
+                visual.localScale = Vector3.one * Mathf.Lerp(0.2f, 1f, grown);
+            }
+        }
+
+        private void PlayEffect(Sprite[] frames, Vector2 at)
+        {
+            if (effect == null || frames == null || frames.Length == 0)
+            {
+                return;
+            }
+            effect.transform.position = at;
+            effectFrames = frames;
+            effectTime = 0f;
+            effect.sprite = frames[0];
+            effect.enabled = true;
         }
 
         /// <summary>True when the hero is alive, under it and not too far down.</summary>
@@ -227,8 +337,8 @@ namespace Descender.Enemies
         {
             state = State.Fall;
             fallSpeed = 0f;
-            shape.transform.localPosition = Vector3.zero;
-            shape.Body.color = Ripe;
+            visual.localPosition = Vector3.zero;
+            SetRipeness(1f);
         }
 
         /// <summary>Falls by its own gravity; bursts on him, or on the first ground under it.</summary>
@@ -271,6 +381,8 @@ namespace Descender.Enemies
             Feedback.Shake(0.15f);
             Audio.Sfx.Play("enemy_die", -4f);
             Vanish();
+            // The burst's pivot is the ground under it.
+            PlayEffect(look != null ? look.Burst : null, at - new Vector2(0f, size.y / 2f));
         }
 
         public bool Hit(int damage, Vector2 from)
@@ -281,9 +393,11 @@ namespace Descender.Enemies
             }
             // A strike pops it where it is: a spark, and no burst to hurt him.
             Pops++;
-            Feedback.Spark(body.position, Glow);
+            var at = body.position;
+            Feedback.Spark(at, Glow);
             Audio.Sfx.Play("hit");
             Vanish();
+            PlayEffect(look != null ? look.Pop : null, at);
             return true;
         }
 
@@ -293,7 +407,7 @@ namespace Descender.Enemies
             state = State.Gone;
             stateLeft = RegrowTime;
             fallSpeed = 0f;
-            shape.gameObject.SetActive(false);
+            visual.gameObject.SetActive(false);
             glow.enabled = false;
             box.enabled = false;
         }
@@ -305,10 +419,10 @@ namespace Descender.Enemies
             stateLeft = GrowTime;
             body.position = home;
             transform.position = home;
-            shape.transform.localPosition = Vector3.zero;
-            shape.transform.localScale = Vector3.one * 0.2f;
-            shape.Body.color = Glow;
-            shape.gameObject.SetActive(true);
+            visual.localPosition = Vector3.zero;
+            SetRipeness(0f);
+            ShowGrowing(0f);
+            visual.gameObject.SetActive(true);
             glow.enabled = true;
             glow.intensity = 0f;
         }
@@ -317,7 +431,11 @@ namespace Descender.Enemies
         {
             state = State.Hang;
             cooldown = Cooldown;
-            shape.transform.localScale = Vector3.one;
+            visual.localScale = Vector3.one;
+            if (art != null)
+            {
+                art.sprite = look.Hang;
+            }
             box.enabled = true;
         }
 
@@ -334,7 +452,7 @@ namespace Descender.Enemies
             {
                 return;
             }
-            var fruitTop = (Vector2)shape.transform.position + new Vector2(0f, size.y / 2f);
+            var fruitTop = (Vector2)visual.position + new Vector2(0f, StemTop * visual.localScale.y);
             stalk.SetPosition(0, new Vector3(anchor.x, anchor.y, 0f));
             stalk.SetPosition(1, new Vector3(fruitTop.x, fruitTop.y, 0f));
         }

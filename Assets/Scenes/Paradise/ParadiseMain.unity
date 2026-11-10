@@ -397,6 +397,7 @@ MonoBehaviour:
   gameCamera: {fileID: 104}
   music: {fileID: 205}
   fade: {fileID: 302}
+  fruitLook: {fileID: 11400000, guid: 2f733f2851811f040b68df2f6457c3e7, type: 2}
 --- !u!114 &205
 MonoBehaviour:
   m_ObjectHideFlags: 0

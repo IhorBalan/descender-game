@@ -45,6 +45,10 @@ namespace Descender.Game
         [SerializeField]
         private ScreenFade fade;
 
+        [SerializeField]
+        [Tooltip("Assets/Data/Enemies/LanternFruitLook.asset; the lab's lantern fruit wear it.")]
+        private Enemies.LanternFruitLook fruitLook;
+
         private Coroutine transition;
 
         public Phase Current { get; private set; } = Phase.Title;
@@ -208,7 +212,7 @@ namespace Descender.Game
             Hero = Instantiate(heroPrefab);
             Hero.name = "Hero";
             Hero.Died += OnHeroDied;
-            var lab = Lab.LabBuilder.Build(Hero.Tuning);
+            var lab = Lab.LabBuilder.Build(Hero.Tuning, fruitLook);
             lab.Entered += OnLabStation;
             if (gameCamera != null)
             {
