@@ -21,6 +21,7 @@ namespace Descender.Tests.PlayMode
         private static readonly Vector3 Backstage = new Vector3(-500f, 0f, 0f);
 
         private readonly List<Object> made = new List<Object>();
+        private bool parkedBefore;
 
         public DialogueRunner Runner { get; private set; }
         public DialogueBox Box { get; private set; }
@@ -36,6 +37,9 @@ namespace Descender.Tests.PlayMode
             Pickups.Checkpoint.Reset();
             Physics2D.gravity = Vector2.zero;
             var rig = new DialogueRig();
+            // The story is parked in the game; these tests keep the dialogue working for its return.
+            rig.parkedBefore = Story.StoryMode.Parked;
+            Story.StoryMode.Parked = false;
 
             var floor = rig.Thing("Floor");
             floor.layer = LayerMask.NameToLayer("World");
@@ -135,6 +139,7 @@ namespace Descender.Tests.PlayMode
             }
             made.Clear();
             Story.StoryFlags.Reset();
+            Story.StoryMode.Parked = parkedBefore;
         }
 
         private GameObject Thing(string name)

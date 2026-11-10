@@ -89,7 +89,7 @@ runtime code means adding its assembly to the asmdef `references`, not an
 | `Combat/` | `IHittable`, `Layers` (collision layers and masks looked up once), `LightBolt`. |
 | `Pickups/` | `Pickup` base and the things lying in the world: checkpoints, hazards, feathers, upgrades, power-ups, loot and currency. |
 | `World/` | Region streaming (`WorldAtlas`, `WorldStreamer`, `RegionRoot`), tiles (`RegionTileSet`, `RegionTiles`, `RegionTileData`), look and atmosphere (`RegionLook`, `BackdropLayer`, `RegionParticles`, `RegionFringes`), placements (`WorldPlacement`, `PlacementCatalog`, `IPlacementReceiver`), rooms, doors, light barriers. `World/Paradise/` holds the rebuilt Paradise's zone pieces. |
-| `Story/` | `Story` (flags), `DialogueData` (the JSON model), `Quests`. |
+| `Story/` | `Story` (flags), `DialogueData` (the JSON model), `Quests`, `StoryMode` (the story is parked: its triggers, talking NPCs and relics do not spawn; see `docs/story/PARKED.md`). |
 | `Economy/` | `Items`, `Inventory`, `Shops`, `Skills`, `LootTable`. |
 | `Save/` | `SaveData` (versioned JSON, still loads the Godot version 1 file), `SaveSlots`, `SaveManager`, `SettingsData`, `SettingsApplier`. |
 | `UI/` | HUD, title, pause, camp, pack, shop, skills and settings screens, dialogue box, prompts, dev console; `UiKit`/`MenuKit` build uGUI from code in the stone theme. |

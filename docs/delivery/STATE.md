@@ -11,17 +11,97 @@ Task statuses: `proposed`, `approved`, `rejected`, `in progress`,
 
 ## Roadmap
 
-Drafted 2026-11-06 from `main` after PR #136, `docs/design/paradise.md`, the
-story script, the enemy, economy, upgrades and progression designs, the
-October plans and the 33 open GitHub issues. The full draft with its
-reasoning is in the project files (`planning/roadmap.md`). Ihor corrects it.
+Revision 2, 2026-11-10: Ihor set a new direction. The story is parked
+(`docs/story/PARKED.md` points to every part of it), art is not the focus,
+and the game is built mechanics first: the tools that make a mechanic easy
+to build and try, then movement, then combat, then enemies. Everything
+stands in simple shapes until the mechanics are right. Revision 1 (the
+region-by-region roadmap drafted 2026-11-06, in the project files as
+`planning/roadmap.md`) is kept below under "Parked".
 
-**Current milestone: M2, Paradise art, zones 3 and 4** (tasks not yet planned;
-M1 closed 2026-11-08).
+**Current milestone: G1, the mechanics lab and its tools.**
 
-Principles: one region to production before the next; small milestones,
-each playable; the prototype stays playable in `Main.unity` until a
-production region replaces it; enemies after the map in each region.
+Principles: mechanics before content; one mechanic at a time, each with a
+place to try it and a test that measures it; simple shapes, no art; small
+milestones, each playable; the rebuilt Paradise and the prototype world stay
+playable as they are.
+
+### G0. The story is parked (done with T-0012)
+
+The story elements leave the game behind one switch
+(`Story.StoryMode.Parked`): story triggers, talking NPCs and relics do not
+spawn; the script, the dialogue file, the code and the placements stay.
+Done when: a run of Paradise plays no dialogue, the dialogue tests still
+pass with the switch off, and `docs/story/PARKED.md` says how to bring it
+back.
+
+### G1. The mechanics lab and its tools (current)
+
+A place and a toolkit for building mechanics fast, all in simple shapes.
+
+- **The lab**: a scene made from data in code (no art, no hand-placed
+  objects), with a station for each mechanic, reachable from the title
+  screen's developer entry and the dev console; a new station is a few lines
+  of data.
+- **Placeholder shapes**: one component that draws a labelled square,
+  circle, diamond or triangle in a colour, used for every item, trigger,
+  platform and enemy until art exists.
+- **Triggers**: one trigger component with a condition (enter, leave,
+  interact, hit; once or every time; needs an ability, an item or a flag)
+  and a list of actions (grant an ability, give an item, set a flag, open a
+  door, start a platform, show a message, move the camera, spawn something),
+  so an item or a switch is data, not a new script.
+- **Camera zones**: areas that set where the camera sits (offset, zoom,
+  locked axes, look-ahead), blended on entry.
+- **Live tuning**: every number in `PlayerTuning` and every ability can be
+  changed while playing (dev console and an overlay), and a changed value
+  can be written back to the asset.
+- **Measured mechanics**: PlayMode tests that drive the hero through the
+  `IHeroInput` seam in the lab and measure each move against its tuning
+  (jump height, double-jump height, dash length, coyote time, input buffer).
+- Done when: Ihor can open the lab, try every existing move at its station,
+  change a number and feel the difference, and place a new item with a
+  trigger without writing code.
+
+### G2. Movement
+
+Every move finished against its lab station, then the world pieces that
+movement needs. The hero's moves: run, jump (variable height, coyote time,
+buffer, corner correction), double jump (Wings), dash and light dash, wall
+grip and wall jump, glide, drop through a ledge, slam. The world's pieces:
+moving platforms the hero rides, one-way ledges, bounce pods, crumbling and
+timed platforms, wind and lift zones (the zone 6 steam vents and the zone 7
+wind), switches and doors, hazards with a return to safe ground, and
+whatever the audit in G1 shows is missing (candidates: ladders or climbable
+vines, water, ledge grab). Done when: each move and piece has a station, a
+measuring test and tuning Ihor has signed off by play.
+
+### G3. Combat
+
+The sword (reach, timing, hit-stop, knockback, the air and down attacks),
+the cast (Holy Light), the slam (Smite), healing, damage and invulnerability
+rules, breakable things, and a training dummy and damage read-out in the
+lab. Done when: each attack has a station and a test, and a fight against
+dummies feels right to Ihor.
+
+### G4. Enemies
+
+Enemy archetypes in simple shapes, built from behaviours that can be
+combined (patrol, chase, ambush, shoot, dive, shielded, summon), spawners
+and encounter rooms (doors that lock until the room is clear), telegraphs
+before every attack, and one boss pattern as the template for the rest. Done
+when: an arena in the lab runs each archetype and a mixed encounter, with
+the enemy data tests covering them.
+
+### After G4
+
+Content comes back in this order unless Ihor says otherwise: the story
+(`docs/story/PARKED.md`), then art and regions (the parked roadmap below).
+
+### Parked: the region-by-region roadmap (revision 1)
+
+M1 and MG are done and stay as they are. M2 to M8 are parked, not
+cancelled: they are the content plan that follows the mechanics.
 
 ### M1. Paradise greybox end to end (done 2026-11-08)
 
@@ -59,7 +139,7 @@ describe a Unity-only repository. Done: T-0007 to T-0010 merged (#148 to
 (24035cf). Still open, Ihor's: the GitHub repository description and
 topics say Godot.
 
-### M2. Paradise art, zones 3 and 4 (current)
+### M2. Paradise art, zones 3 and 4 (parked)
 
 The Great Vines and the Tallied Fields dressed to the bar zones 1 and 2 set;
 zones 1 and 2 revisited only where M1 moved them. Done when: a screenshot per
@@ -135,8 +215,16 @@ hygiene as each production region lands.
 | T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
 | T-0011 | The scripted run of the Paradise main path | done | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
 
+| T-0012 | The story is parked behind one switch, with a pointer file | in review | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
+| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | approved | 13 | T-0012 | 0 | Re-plan the roadmap around mechanics | |
+| T-0014 | Triggers as data: conditions and actions, items as shapes | approved | 14 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0015 | Camera zones | approved | 15 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0017 | Measured mechanics: a PlayMode test per existing move | approved | 17 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
-added 2026-11-08) and `planning/godot-removal-tasks.md` (revision 2, MG).
+added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG) and
+`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10).
 Playtest: T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0011 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
 zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
@@ -291,6 +379,21 @@ follow in order.
 - **Undo**: restore the sort in `SyncWorld` and `CheckpointOrder` and run the
   sync; saves made in the meantime point at other shrines.
 
+### D-0011: mechanics first; the story is parked, not deleted
+
+- **Decided** (Ihor, 2026-11-10): no story work and no art focus for now.
+  The order is tools for building mechanics, then movement, combat and
+  enemies, in simple shapes. The story elements leave the game behind one
+  switch, `Story.StoryMode.Parked`, and `docs/story/PARKED.md` points to
+  every part.
+- **Why**: the mechanics decide whether the game is fun, and they are
+  cheaper to change before content and art are built on them.
+- **Alternative**: delete the story placements from the layout and the
+  scenes. Rejected: the eleven Paradise beats and the prototype's
+  placements would have to be rebuilt by hand, and a switch costs one line
+  in `WorldPlacement.ShouldSpawn`.
+- **Undo**: `docs/story/PARKED.md`, "Bringing it back".
+
 ## Verification
 
 What a task must pass before it merges, and how a thread runs it.
@@ -299,8 +402,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (120 on `main` after T-0011) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (16 after T-0011; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (214 on `main` after T-0012) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (16 after T-0012; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -382,7 +485,12 @@ open in the Unity editor. Threads do not work in it directly:
 ## Playtest
 
 Open items for the owner to play in the editor. Remove an item when it has
-been played and its feedback is in.
+been played and its feedback is in. While the story is parked (D-0011) the
+parts of these items about lines, NPCs and relics cannot be played: the
+triggers, Mereth, Ithuriel, Old Pell's talk and the examinable items do not
+stand. What is left to play is the movement: the runs, the pods, the thorns,
+the feather and Wings, the stream gaps, the shrines, the light dash and the
+barriers, the cliff descent.
 
 - **T-0002, the dialogue pipeline (PR #140).** In `Main.unity`, after New
   Game: the opening lines play at the start, the gate lines play at the goal

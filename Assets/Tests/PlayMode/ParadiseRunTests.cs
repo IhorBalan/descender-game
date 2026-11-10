@@ -219,9 +219,16 @@ namespace Descender.Tests.PlayMode
             Assert.That(hero.transform.position.x, Is.GreaterThanOrEqualTo(GateX - 1f), report);
             Assert.That(hero.Has(Save.Ability.Wings), Is.True, "the feather in zone 3 was not picked up");
             Assert.That(hero.Has(Save.Ability.LightDash), Is.True, "the light dash in zone 5 was not picked up");
-            Assert.That(Story.StoryFlags.Has("opening_seen"), Is.True, "the opening did not play");
-            Assert.That(Story.StoryFlags.Has("makinghouse_seen"), Is.True, "the Making-house beat did not play");
-            Assert.That(Story.StoryFlags.Has("reached_gate"), Is.True, "the gate beat did not play");
+            if (Story.StoryMode.Parked)
+            {
+                Assert.That(played, Is.Empty, "the story is parked, yet a dialogue played");
+            }
+            else
+            {
+                Assert.That(Story.StoryFlags.Has("opening_seen"), Is.True, "the opening did not play");
+                Assert.That(Story.StoryFlags.Has("makinghouse_seen"), Is.True, "the Making-house beat did not play");
+                Assert.That(Story.StoryFlags.Has("reached_gate"), Is.True, "the gate beat did not play");
+            }
             Assert.That(minutes, Is.LessThan(TargetMinutes * OverTargetAllowed), report);
         }
 
