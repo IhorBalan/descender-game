@@ -103,6 +103,52 @@
       "suggestedParallax": 0.98
     },
     {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg0_sky_clear.png",
+      "purpose": "Sky with its clouds taken out (sky_split.py): sun and rays, pinned to the view",
+      "zone": "garden",
+      "size": [
+        2048,
+        1152
+      ],
+      "sizeUnits": [
+        32.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0
+    },
+    {
+      "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg0_clouds.png",
+      "purpose": "The painted sky's clouds alone (sky_split.py): two screens wide, scrolling and drifting",
+      "zone": "garden",
+      "size": [
+        4096,
+        1152
+      ],
+      "sizeUnits": [
+        64.0,
+        18.0
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 64,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ],
+      "layer": 0
+    },
+    {
       "path": "Assets/Art/Paradise/Backdrop_Garden/garden_bg1_far.png",
       "purpose": "Far: varied snowy mountain range in blue haze (4 screens wide)",
       "zone": "garden",

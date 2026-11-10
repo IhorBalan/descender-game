@@ -1,0 +1,81 @@
+using System.IO;
+using System.Linq;
+using Descender.EditorTools.Paradise;
+using Descender.World;
+using Descender.World.Paradise;
+using NUnit.Framework;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Descender.Tests
+{
+    public sealed class ParadiseSkyTests
+    {
+        private const string Clouds = "Assets/Art/Paradise/Backdrop_Garden/garden_bg0_clouds.png";
+
+        private static Transform Named(Scene scene, string name) =>
+            scene
+                .GetRootGameObjects()
+                .SelectMany(r => r.GetComponentsInChildren<Transform>(true))
+                .First(t => t.name == name);
+
+        [Test]
+        public void TheCloudStripTilesSoNoJoinCanShow()
+        {
+            var image = new Texture2D(2, 2);
+            try
+            {
+                Assert.That(image.LoadImage(File.ReadAllBytes(Clouds)), Is.True);
+                var last = image.width - 1;
+                for (var y = 0; y < image.height; y += 4)
+                {
+                    Assert.That(
+                        image.GetPixel(0, y).a,
+                        Is.EqualTo(image.GetPixel(last, y).a).Within(0.04f),
+                        $"row {y}"
+                    );
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(image);
+            }
+        }
+
+        [TestCase("Assets/Scenes/Paradise/Paradise_Z1_WakingHollow.unity")]
+        [TestCase("Assets/Scenes/Paradise/Paradise_Z2_Orchard.unity")]
+        public void EachZonesCloudsMovePastASkyThatStaysPut(string path)
+        {
+            var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+            try
+            {
+                var sky = Named(scene, "Sky");
+                var clouds = Named(scene, "HighClouds");
+                var far = Named(scene, "Far");
+                Assert.That(sky.GetComponent<SpriteRenderer>().sprite.name, Does.StartWith("garden_bg0_sky_clear"));
+                Assert.That(sky.GetComponent<BackdropLayer>().Cover, Is.True);
+
+                var layer = new SerializedObject(clouds.GetComponent<BackdropLayer>());
+                Assert.That(layer.FindProperty("scroll").vector2Value.x, Is.GreaterThan(0f));
+                Assert.That(layer.FindProperty("drift").vector2Value.x, Is.GreaterThan(0f));
+
+                var order = clouds.GetComponent<SpriteRenderer>().sortingOrder;
+                Assert.That(order, Is.GreaterThan(sky.GetComponent<SpriteRenderer>().sortingOrder));
+                Assert.That(order, Is.LessThan(far.GetComponent<SpriteRenderer>().sortingOrder));
+
+                var look = new SerializedObject(sky.root.GetComponentInChildren<ZoneLook>(true));
+                var layers = look.FindProperty("layers");
+                var faded = Enumerable
+                    .Range(0, layers.arraySize)
+                    .Select(i => layers.GetArrayElementAtIndex(i).objectReferenceValue);
+                Assert.That(faded, Does.Contain(clouds), "the clouds fade with their zone");
+            }
+            finally
+            {
+                EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+    }
+}

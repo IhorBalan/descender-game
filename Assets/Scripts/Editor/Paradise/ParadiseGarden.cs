@@ -202,13 +202,28 @@ namespace Descender.EditorTools.Paradise
             var sky = ParadiseArt.Layer(
                 backdrop,
                 "Sky",
-                Get("garden_bg0_sky"),
+                Get("garden_bg0_sky_clear"),
                 art.unlit,
                 -1000 + zone.number,
                 centre,
                 Vector2.zero,
                 true
             );
+            // The sun stays where it is; the clouds cut from the same painting move past it.
+            var highClouds = Pinned(
+                ParadiseArt.Layer(
+                    backdrop,
+                    "HighClouds",
+                    Get("garden_bg0_clouds"),
+                    art.unlit,
+                    -995 + zone.number,
+                    centre,
+                    new Vector2(HighCloudScroll, 0f),
+                    false
+                ),
+                0f
+            );
+            Drift(highClouds, HighCloudDrift);
             // The backdrops are painted as whole screens (32 x 18 units); our view is 20 x 11.25,
             // so each is scaled to one screen and pinned to the view vertically (scroll.y 0), its
             // horizon where it was painted; sideways each scrolls at its own depth.
@@ -301,7 +316,7 @@ namespace Descender.EditorTools.Paradise
                     art.ambient,
                     volume,
                     sky,
-                    new[] { far, midFar, cloudBack, mid, cloudFront, near }
+                    new[] { highClouds, far, midFar, cloudBack, mid, cloudFront, near }
                 );
 
             var plan = GardenPlan(zone);
@@ -2872,6 +2887,12 @@ namespace Descender.EditorTools.Paradise
             }
             return plan;
         }
+
+        /// <summary>How little the high clouds follow the walk: they are almost as far off as the sun.</summary>
+        public const float HighCloudScroll = 0.03f;
+
+        /// <summary>Their own slow drift on the wind, in level pixels a second.</summary>
+        public const float HighCloudDrift = 0.6f;
 
         /// <summary>The sorting layer that can sample the finished Default layer, so pools can mirror it.</summary>
         public const string WaterLayer = "Water";
