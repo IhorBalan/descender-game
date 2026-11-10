@@ -49,6 +49,9 @@ namespace Descender.UI
         /// <summary>Cinzel as a TextMeshPro distance-field asset, made by Descender > Setup > Title font.</summary>
         public TMPro.TMP_FontAsset titleFont;
 
+        [Header("Settings screen (Assets/Art/UI/Settings, drawn by tools/settings_textures.py)")]
+        public SettingsLook settingsLook = new SettingsLook();
+
         [Header("Colours")]
         public Color text = new Color(0.85f, 0.8f, 0.75f);
         public Color textMuted = new Color(0.6f, 0.54f, 0.51f);

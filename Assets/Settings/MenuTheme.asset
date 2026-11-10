@@ -34,6 +34,29 @@ MonoBehaviour:
   keyCap: {fileID: 21300000, guid: eee5aeb5f531578fb954dbca4a5c3285, type: 3}
   keyDpad: {fileID: 21300000, guid: cc99d47de5c2538bb393bcb0a8e60a67, type: 3}
   titleFont: {fileID: 11400000, guid: 38c45c7a7ece2024da8f5fa840f071e4, type: 2}
+  settingsLook:
+    emblem: {fileID: 21300000, guid: 8588958596195238905c4dc09e8896f7, type: 3}
+    ruleLong: {fileID: 21300000, guid: 5b16a7ca8bf65f00bc585ea603fb866e, type: 3}
+    rulePlain: {fileID: 21300000, guid: 0edb41c50943560bb004ff5ba6433328, type: 3}
+    ruleRow: {fileID: 21300000, guid: 5ac4cc0858295b0bb1c7a339828daeec, type: 3}
+    ruleVertical: {fileID: 21300000, guid: fccdcfaa297853e6adfaf59fa99e99b7, type: 3}
+    tabGlow: {fileID: 21300000, guid: 2af23497368c5b159b0914d6515d0a89, type: 3}
+    sideBar: {fileID: 21300000, guid: 481196915f62561987a11dfeed46e49c, type: 3}
+    rowBar: {fileID: 21300000, guid: 100cfe056c39544f9fbc647b60e97eca, type: 3}
+    toggleOn: {fileID: 21300000, guid: da21972bf05157db8154d69ded2b24ec, type: 3}
+    toggleOff: {fileID: 21300000, guid: 38070e62ae6a5a27885adb27b535c10d, type: 3}
+    sliderTrack: {fileID: 21300000, guid: 28c985080c7e52f7bd80eead61de71db, type: 3}
+    sliderFill: {fileID: 21300000, guid: de3a9d1ed3fb528a8c8d941bd6773b03, type: 3}
+    sliderHandle: {fileID: 21300000, guid: e7377f559aa759cbb796f4b0f48b64c2, type: 3}
+    chevron: {fileID: 21300000, guid: bf206c62919c5bf697c7e76a26722d89, type: 3}
+    iconGameplay: {fileID: 21300000, guid: ef0c09ab0cfc5232833bb5d79ee32825, type: 3}
+    iconInterface: {fileID: 21300000, guid: e4242b9caa7251fe8f8f4252f688ef21, type: 3}
+    iconMovement: {fileID: 21300000, guid: b901f88ee9fa51969673ecb42c6ff4f4, type: 3}
+    iconActions: {fileID: 21300000, guid: 135b1c10ea4a540f9a24512ed6399d47, type: 3}
+    iconScreen: {fileID: 21300000, guid: abc57358bd71504fba9ec59907324795, type: 3}
+    iconEffects: {fileID: 21300000, guid: 7ee58b7b80a35654b7808cf7f38769d4, type: 3}
+    iconVolume: {fileID: 21300000, guid: b27e9d2aebd65864b49fc4ebb9a98190, type: 3}
+    iconVoices: {fileID: 21300000, guid: b6bdf3faef2c58ec90a8a7a4ccdb78a1, type: 3}
   text: {r: 0.85, g: 0.8, b: 0.75, a: 1}
   textMuted: {r: 0.6, g: 0.54, b: 0.51, a: 1}
   textDisabled: {r: 0.42, g: 0.37, b: 0.36, a: 1}
