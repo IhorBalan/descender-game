@@ -4,6 +4,9 @@
 // after the Default sorting layer (_CameraSortingLayerTexture), which is why it has to be
 // drawn on a later layer. Rings spread from where the fall lands and bend the reflection; far
 // away the sheet is nearly a mirror and nearer the viewer it shows more of its own colour.
+// Where the hero wades through it, rings spread from his steps: the trail of where he has
+// been (_HeroTrail, set by HeroWindPush for the plants) is where they start, so a run leaves
+// a wake and standing still barely stirs it.
 //
 // On a SpriteRenderer whose top edge is the waterline (WaterQuad.cs sets _Size and _Seed;
 // _Shape.xy is the pool's reach left and right of the quad's centre, in units).
@@ -53,6 +56,9 @@ Shader "Descender/Water Reflection"
             float4 _Shape;
             float _Seed;
             float _Stretch;
+            // Set every frame by Descender.Fx.HeroWindPush: xy = his chest (0.75 over his feet),
+            // z = age in seconds, w = how hard he pushes (0.55 standing, 1 running).
+            float4 _HeroTrail[12];
 
             struct appdata
             {
@@ -68,6 +74,7 @@ Shader "Descender/Water Reflection"
                 float2 uv : TEXCOORD0;
                 float4 mirror : TEXCOORD1;
                 float4 unit : TEXCOORD2;
+                float2 world : TEXCOORD3;
             };
 
             v2f vert(appdata v)
@@ -77,6 +84,7 @@ Shader "Descender/Water Reflection"
                 o.color = v.color;
                 o.uv = v.texcoord;
                 float3 world = mul(unity_ObjectToWorld, v.vertex).xyz;
+                o.world = world.xy;
                 float below = (1.0 - v.texcoord.y) * _Size.y;
                 // A point this far below the waterline mirrors one _Stretch times as far above it.
                 float3 mirrored = float3(world.x, world.y + below * (1.0 + _Stretch), world.z);
@@ -118,6 +126,23 @@ Shader "Descender/Water Reflection"
                     float ring = exp(-d * d) * (1.0 - phase) * smoothstep(0.0, 0.1, phase);
                     rings += ring * d;
                     crest += ring;
+                }
+
+                // The hero's wake: every third step of his trail, where his feet were in the water,
+                // a ring growing with its age, stronger the faster he was going.
+                float waterlineY = i.world.y + below;
+                [unroll]
+                for (int s = 0; s < 12; s += 3)
+                {
+                    float4 step = _HeroTrail[s];
+                    float age = step.z;
+                    float wading = 1.0 - smoothstep(0.25, 0.7, abs(step.y - 0.75 - waterlineY));
+                    float strength = wading * (0.15 + 0.85 * saturate((step.w - 0.55) / 0.45))
+                        * saturate(1.0 - age / 0.9);
+                    float d = (length(float2(i.world.x - step.x, below * 4.5)) - (0.2 + age * 2.4)) / (0.1 + age * 0.25);
+                    float ring = exp(-d * d) * strength;
+                    rings += ring * d * 1.6;
+                    crest += ring * 0.8;
                 }
 
                 // The sheet's own small waves, finer toward the far edge where they crowd together.
