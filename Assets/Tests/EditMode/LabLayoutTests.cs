@@ -165,6 +165,7 @@ namespace Descender.Tests.EditMode
             Assert.That(LabLayout.Find(stations, "glide").abilities, Does.Contain(Ability.Glide));
             Assert.That(LabLayout.Find(stations, "slam").abilities, Is.EqualTo(new[] { Ability.Smite }));
             Assert.That(LabLayout.Find(stations, "dummy").abilities, Does.Contain(Ability.Smite));
+            Assert.That(LabLayout.Find(stations, "sword").abilities, Is.Empty, "so down and attack is the cut");
             Assert.That(LabLayout.Find(stations, "dummy").abilities, Does.Contain(Ability.HolyLight));
         }
 

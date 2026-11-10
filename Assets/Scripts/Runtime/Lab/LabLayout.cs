@@ -195,6 +195,7 @@ namespace Descender.Lab
             "water",
             "grab",
             "dummy",
+            "sword",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -236,6 +237,7 @@ namespace Descender.Lab
             Grab(Open(stations, "grab", "Ledge grab: a trial"), jump);
             var fighter = new[] { Ability.Wings, Ability.HolyLight, Ability.Smite };
             Dummies(Open(stations, "dummy", "Training dummies", fighter), jump, tuning);
+            Sword(Open(stations, "sword", "The sword: up, down and the bounce"), tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -419,6 +421,31 @@ namespace Descender.Lab
             Add(station, PieceKind.Dummy, 34f + reach - 0.5f, FloorTop, 0.5f, 2f, "in reach");
             Add(station, PieceKind.Dummy, 34f + reach + 0.25f, FloorTop, 0.5f, 2f, "out of reach");
             Add(station, PieceKind.Dummy, 48f, FloorTop, 1f, 2f, "cast from afar");
+        }
+
+        /// <summary>
+        /// The sword's other two cuts, in a room without the slam so down and attack is
+        /// the cut: a dummy overhead that only the upward cut reaches from the ground, and
+        /// a row of dummies over spikes to cross by bouncing off each with a downward cut.
+        /// </summary>
+        private static void Sword(Station station, PlayerTuning tuning)
+        {
+            // Above the cut ahead, inside the cut upward.
+            var ahead = PlayerTuning.Units(tuning.attackOffset.y + tuning.attackShapeSize.y / 2f);
+            Add(station, PieceKind.Dummy, 13f, FloorTop + ahead + 0.5f, 1f, 1f, "up and attack");
+
+            // As far apart as a bounce carries him at a run.
+            var bounce = PlayerTuning.Units(tuning.pogoHeight);
+            var air = tuning.PogoVelocity / tuning.Gravity + Mathf.Sqrt(2f * tuning.pogoHeight / tuning.FallGravity);
+            var step = Mathf.Max(Mathf.Floor(PlayerTuning.Units(tuning.runSpeed) * air * 0.8f), 2f);
+            Add(station, PieceKind.Solid, 18f, FloorTop, 3f, 2f, "jump off: down and attack");
+            Add(station, PieceKind.Hazard, 21f, FloorTop, 3f * step + 2f, 0.5f, "spikes");
+            for (var i = 0; i < 3; i++)
+            {
+                var label = i == 0 ? $"bounce {bounce:0.#} up" : "";
+                Add(station, PieceKind.Dummy, 21f + step * (i + 0.75f), FloorTop + 0.5f, 1f, 1f, label);
+            }
+            Add(station, PieceKind.Solid, 23f + 3f * step, FloorTop, 4f, 2f, "land here");
         }
 
         private static void Slam(Station station, float jump)
