@@ -134,6 +134,7 @@ namespace Descender.EditorTools.Paradise
             );
             Effects(rig, root.transform, lit);
             RimLight(root.transform);
+            WovenLight(rig, root.transform, transforms);
 
             Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
@@ -318,7 +319,8 @@ namespace Descender.EditorTools.Paradise
             shadow.sprite = FxSprite("fx_shadow", 128f);
             shadow.sharedMaterial = unlit;
             shadow.color = new Color(0f, 0f, 0f, 0f);
-            shadow.sortingOrder = BaseOrder;
+            // Behind his outline (HeroLight's, at BaseOrder), which is behind all of him.
+            shadow.sortingOrder = BaseOrder - 1;
             rig.gameObject.AddComponent<HeroShadow>().Configure(shadow);
 
             rig.gameObject.AddComponent<HeroGhosts>().Configure(glow);
@@ -387,6 +389,61 @@ namespace Descender.EditorTools.Paradise
             renderer.sharedMaterial = material;
             renderer.sortingOrder = BaseOrder + order;
             return system;
+        }
+
+        /// <summary>
+        /// The light in him (HeroLight): the cloak and hood woven with light, the outline drawn
+        /// behind him, a light at his hem and the motes it sheds.
+        /// </summary>
+        private static void WovenLight(HeroRig rig, Transform root, Dictionary<string, Transform> transforms)
+        {
+            var woven = ParadiseArt.SaveMaterial("Hero Cloak Light", "Descender/Hero Cloak Light");
+            EditorUtility.SetDirty(woven);
+            var outline = ParadiseArt.SaveMaterial("Hero Silhouette", "Descender/Hero Silhouette");
+            EditorUtility.SetDirty(outline);
+            var cloth = new List<SpriteRenderer>();
+            foreach (var r in root.GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                if (r.name is "Cloak" or "Hood")
+                {
+                    r.sharedMaterial = woven;
+                    cloth.Add(r);
+                }
+            }
+            // The cloak first: HeroLight follows its alpha (his blinking) in the outline.
+            cloth.Sort(
+                (a, b) =>
+                    a.name == "Cloak" ? -1
+                    : b.name == "Cloak" ? 1
+                    : 0
+            );
+
+            var fx = root.Find("Fx");
+            var go = new GameObject("HemLight");
+            go.transform.SetParent(fx, false);
+            var light = go.AddComponent<Light2D>();
+            light.lightType = Light2D.LightType.Point;
+            light.blendStyleIndex = 0;
+            light.color = new Color(1f, 0.84f, 0.58f);
+            light.intensity = 0.55f;
+            light.pointLightOuterRadius = 1.8f;
+            light.pointLightInnerRadius = 0.15f;
+            light.falloffIntensity = 0.7f;
+            var settings = new SerializedObject(light);
+            settings.FindProperty("m_NormalMapQuality").intValue = (int)Light2D.NormalMapQuality.Accurate;
+            settings.FindProperty("m_NormalMapDistance").floatValue = 1f;
+            settings.ApplyModifiedPropertiesWithoutUndo();
+
+            var glow = AssetDatabase.LoadAssetAtPath<Material>(ParadiseArt.GlowMaterialPath);
+            var motes = Particles(fx, "Motes", FxSprite("fx_soft", 64f), glow, 17, -0.04f, 0.9f, 0.3f);
+
+            var tips = new List<Transform>();
+            for (var chain = 0; transforms.TryGetValue($"Cloak{chain}_{CloakJointsPerChain - 1}", out var tip); chain++)
+            {
+                tips.Add(tip);
+            }
+            rig.gameObject.AddComponent<HeroLight>()
+                .Configure(cloth.ToArray(), outline, BaseOrder, light, motes, tips.ToArray());
         }
 
         /// <summary>A small warm light behind and above his head, so the edges of his normal maps catch a rim.</summary>

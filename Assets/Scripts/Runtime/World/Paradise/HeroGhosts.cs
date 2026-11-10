@@ -13,9 +13,6 @@ namespace Descender.World.Paradise
     [DefaultExecutionOrder(100)]
     public sealed class HeroGhosts : MonoBehaviour
     {
-        /// <summary>Children of the rig that are not part of his body, left out of the copies.</summary>
-        private static readonly string[] NotCopied = { "Fx", "RimLight", "SlashArc", "Shockwave", "Shadow" };
-
         [SerializeField]
         private Material material;
 
@@ -45,9 +42,7 @@ namespace Descender.World.Paradise
 
         private sealed class Ghost
         {
-            public GameObject root;
-            public Transform[] bones;
-            public SpriteRenderer[] renderers;
+            public RigCopy.Copy copy;
             public float bornAt;
         }
 
@@ -62,7 +57,7 @@ namespace Descender.World.Paradise
                 {
                     foreach (var ghost in ghosts)
                     {
-                        showing += ghost != null && ghost.root.activeSelf ? 1 : 0;
+                        showing += ghost != null && ghost.copy.root.activeSelf ? 1 : 0;
                     }
                 }
                 return showing;
@@ -94,19 +89,19 @@ namespace Descender.World.Paradise
             }
             foreach (var ghost in ghosts)
             {
-                if (ghost == null || !ghost.root.activeSelf)
+                if (ghost == null || !ghost.copy.root.activeSelf)
                 {
                     continue;
                 }
                 var t = (now - ghost.bornAt) / life;
                 if (t >= 1f)
                 {
-                    ghost.root.SetActive(false);
+                    ghost.copy.root.SetActive(false);
                     continue;
                 }
                 var c = tint;
                 c.a = tint.a * (1f - t) * (1f - t);
-                foreach (var r in ghost.renderers)
+                foreach (var r in ghost.copy.renderers)
                 {
                     r.color = c;
                 }
@@ -121,9 +116,9 @@ namespace Descender.World.Paradise
             }
             foreach (var ghost in ghosts)
             {
-                if (ghost != null && ghost.root != null)
+                if (ghost != null && ghost.copy.root != null)
                 {
-                    Destroy(ghost.root);
+                    Destroy(ghost.copy.root);
                 }
             }
         }
@@ -136,75 +131,14 @@ namespace Descender.World.Paradise
                 live = GetComponentsInChildren<Transform>(true);
                 ghosts = new Ghost[count];
             }
-            var ghost = ghosts[next] ??= Make();
+            var ghost = ghosts[next] ??= new Ghost { copy = RigCopy.Make(gameObject, "AnselGhost", material, order) };
             next = (next + 1) % ghosts.Length;
-            ghost.root.transform.SetPositionAndRotation(transform.position, transform.rotation);
-            ghost.root.transform.localScale = transform.lossyScale;
-            for (var i = 1; i < live.Length && i < ghost.bones.Length; i++)
-            {
-                live[i].GetLocalPositionAndRotation(out var position, out var rotation);
-                ghost.bones[i].SetLocalPositionAndRotation(position, rotation);
-                ghost.bones[i].localScale = live[i].localScale;
-            }
+            var root = ghost.copy.root.transform;
+            root.SetPositionAndRotation(transform.position, transform.rotation);
+            root.localScale = transform.lossyScale;
+            RigCopy.Pose(ghost.copy, live);
             ghost.bornAt = now;
-            ghost.root.SetActive(true);
-        }
-
-        /// <summary>
-        /// A copy of the rig's body. Made under an inactive holder, so nothing on it wakes
-        /// before the animation and effects are taken off.
-        /// </summary>
-        private Ghost Make()
-        {
-            var holder = new GameObject("GhostHolder");
-            holder.SetActive(false);
-            var copy = Instantiate(gameObject, holder.transform);
-            copy.name = "AnselGhost";
-            var bones = copy.GetComponentsInChildren<Transform>(true);
-            foreach (var behaviour in copy.GetComponents<MonoBehaviour>())
-            {
-                DestroyImmediate(behaviour);
-            }
-            foreach (var bone in bones)
-            {
-                if (System.Array.IndexOf(NotCopied, bone.name) >= 0)
-                {
-                    bone.gameObject.SetActive(false);
-                }
-            }
-            var renderers = new System.Collections.Generic.List<SpriteRenderer>();
-            foreach (var r in copy.GetComponentsInChildren<SpriteRenderer>(true))
-            {
-                if (!Copied(r.transform, copy.transform))
-                {
-                    continue;
-                }
-                renderers.Add(r);
-                r.sharedMaterial = material;
-                // Light adds up, so the order of the parts within a copy does not matter.
-                r.sortingOrder = order;
-            }
-            copy.SetActive(false);
-            copy.transform.SetParent(null, false);
-            Destroy(holder);
-            return new Ghost
-            {
-                root = copy,
-                bones = bones,
-                renderers = renderers.ToArray(),
-            };
-        }
-
-        private static bool Copied(Transform part, Transform root)
-        {
-            for (var t = part; t != null && t != root; t = t.parent)
-            {
-                if (System.Array.IndexOf(NotCopied, t.name) >= 0)
-                {
-                    return false;
-                }
-            }
-            return true;
+            ghost.copy.root.SetActive(true);
         }
     }
 }
