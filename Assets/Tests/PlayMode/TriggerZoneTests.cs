@@ -163,6 +163,7 @@ namespace Descender.Tests.PlayMode
             Assert.That(zone.TimesFired, Is.EqualTo(1), "the swing struck the switch");
             Assert.That(bridge.activeSelf, Is.True, "one strike brings the bridge");
             yield return Attack();
+            Assert.That(hero.AttackCount, Is.EqualTo(swings + 2), "he swung again");
             Assert.That(zone.TimesFired, Is.EqualTo(2));
             Assert.That(bridge.activeSelf, Is.False, "the next takes it away");
             Assert.That(hero.transform.position.x, Is.LessThan(strike.transform.position.x), "he did not move");
@@ -280,6 +281,13 @@ namespace Descender.Tests.PlayMode
             input.AttackPressed = true;
             yield return null;
             input.ClearPresses();
+            yield return Steps(40);
+            // A hit that lands slows time for a moment, on the real clock: wait it out.
+            var giveUpAt = Time.realtimeSinceStartup + 5f;
+            while (Fx.Feedback.IsHitStopped && Time.realtimeSinceStartup < giveUpAt)
+            {
+                yield return null;
+            }
             yield return Steps(40);
         }
 
