@@ -21,6 +21,7 @@ namespace Descender.Lab
         public static readonly Color Ledge = new Color(0.55f, 0.5f, 0.35f);
         public static readonly Color Unsteady = new Color(0.75f, 0.55f, 0.3f);
         public static readonly Color ClimbColor = new Color(0.45f, 0.6f, 0.35f, 0.7f);
+        public static readonly Color WaterColor = new Color(0.25f, 0.5f, 0.9f, 0.3f);
         public static readonly Color WindArea = new Color(0.6f, 0.85f, 1f, 0.1f);
         public static readonly Color WindMark = new Color(0.8f, 0.95f, 1f, 0.5f);
         public static readonly Color Mark = new Color(0.6f, 0.65f, 0.75f, 0.6f);
@@ -218,6 +219,10 @@ namespace Descender.Lab
                 case PieceKind.Climb:
                     go.AddComponent<Climbable>().Configure(rect.size);
                     Draw(go, ShapeKind.Square, rect.size, ClimbColor, piece.label, -2);
+                    break;
+                case PieceKind.Water:
+                    go.AddComponent<Water>().Configure(rect.size);
+                    Draw(go, ShapeKind.Square, rect.size, WaterColor, piece.label, 4);
                     break;
                 case PieceKind.Crumble:
                     go.layer = Layers.World;

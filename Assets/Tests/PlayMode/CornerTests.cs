@@ -115,7 +115,9 @@ namespace Descender.Tests.PlayMode
             Assert.That(over, Is.GreaterThan(0));
 
             yield return JumpUnderACorner(over);
-            Assert.That(probe.Apex, Is.GreaterThan(height - 2f), "the jump reached its height");
+            // A bumped head stops him 16 px up. The apex is sampled once a frame and a step
+            // of the fall can pass between two frames, so the measure allows 4 px.
+            Assert.That(probe.Apex, Is.GreaterThan(height - 4f), "the jump reached its height");
             var moved = (10f - heroBody.position.x) / Pixel;
             Assert.That(moved, Is.InRange(over - 1f, over + 1f), "he was moved aside by the overlap and no more");
         }

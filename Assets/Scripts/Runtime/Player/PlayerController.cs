@@ -84,6 +84,8 @@ namespace Descender.Player
         private bool wasGrounded;
         private IMovingGround movingGround;
         private Triggers.Climbable climbing;
+        private Triggers.Water water;
+        private float strokeLockLeft;
         private float climbLockLeft;
         private bool upHeld;
         private bool unsteadyGround;
@@ -183,6 +185,9 @@ namespace Descender.Player
 
         /// <summary>What the moving ground under him adds to his speed, in units a second; zero on still ground.</summary>
         public Vector2 CarryVelocity => carry;
+
+        /// <summary>The middle of his body is in water.</summary>
+        public bool IsInWater => water != null;
 
         /// <summary>He has hold of something to climb.</summary>
         public bool IsClimbing => state == PlayerState.Climb;
@@ -428,6 +433,13 @@ namespace Descender.Player
 
             wasGrounded = grounded;
             grounded = CheckGround();
+            water = Triggers.Water.At(box.bounds.center);
+            if (water != null && state != PlayerState.Dash)
+            {
+                // In water the dash is always ready, and a stroke stands in for the air jump.
+                dashAvailable = true;
+                airJumpAvailable = true;
+            }
             if (grounded && state != PlayerState.Dash)
             {
                 dashAvailable = true;
@@ -508,6 +520,7 @@ namespace Descender.Player
             Tick(ref wingFlashLeft, dt);
             Tick(ref dropLeft, dt);
             Tick(ref climbLockLeft, dt);
+            Tick(ref strokeLockLeft, dt);
             Tick(ref wallJumpLockLeft, dt);
             Tick(ref landLeft, dt);
             Tick(ref doubleJumpLeft, dt);
@@ -545,11 +558,34 @@ namespace Descender.Player
             UpdateGlide();
 
             ApplyGravity(ref velocity, dt);
-            ApplyHorizontal(ref velocity, inputDir, dt);
+            ApplyHorizontal(ref velocity, inputDir, dt, water != null ? tuning.waterMoveShare : 1f);
 
             if (jumpBufferLeft > 0f && grounded && WantsDrop())
             {
                 StartDrop(ref velocity);
+            }
+            else if (jumpBufferLeft > 0f && water != null)
+            {
+                // With his head out the surface is ground enough for a full jump; under
+                // it jump is a stroke, and a press too soon after the last one waits.
+                if (box.bounds.max.y > water.Surface)
+                {
+                    velocity.y = tuning.JumpVelocity;
+                    jumpBufferLeft = 0f;
+                    coyoteLeft = 0f;
+                    jumpRising = true;
+                    grounded = false;
+                    Audio.Sfx.Play("jump");
+                }
+                else if (strokeLockLeft <= 0f)
+                {
+                    velocity.y = tuning.StrokeVelocity;
+                    jumpBufferLeft = 0f;
+                    coyoteLeft = 0f;
+                    jumpRising = false;
+                    grounded = false;
+                    strokeLockLeft = tuning.waterStrokeGap;
+                }
             }
             else if (jumpBufferLeft > 0f && coyoteLeft > 0f)
             {
@@ -777,13 +813,16 @@ namespace Descender.Player
             dashBufferLeft = 0f;
             dashCooldownLeft = DashCooldown();
             dashAvailable = false;
-            body.linearVelocity = new Vector2(tuning.dashSpeed * facing, 0f) / Ppu;
+            body.linearVelocity = new Vector2(DashSpeed() * facing, 0f) / Ppu;
             Audio.Sfx.Play("dash");
         }
 
+        /// <summary>The dash's speed where he is: slower in water.</summary>
+        private float DashSpeed() => tuning.dashSpeed * (water != null ? tuning.waterDashShare : 1f);
+
         private void StepDash(float dt)
         {
-            var velocity = new Vector2(tuning.dashSpeed * facing, 0f);
+            var velocity = new Vector2(DashSpeed() * facing, 0f);
             if (stateLeft <= 0f)
             {
                 velocity.x = tuning.dashEndSpeed * facing;
@@ -1061,6 +1100,19 @@ namespace Descender.Player
                 {
                     velocity.y = 0f;
                 }
+                return;
+            }
+            if (water != null)
+            {
+                gliding = false;
+                if (velocity.y < -tuning.waterSinkSpeed)
+                {
+                    // Coming in fast, the water brakes him to the sink speed in a moment.
+                    velocity.y = Mathf.MoveTowards(velocity.y, -tuning.waterSinkSpeed, 2f * tuning.FallGravity * dt);
+                    return;
+                }
+                var pull = (velocity.y < 0f ? tuning.FallGravity : tuning.Gravity) * tuning.waterGravity;
+                velocity.y = Mathf.Max(velocity.y - pull * dt, -tuning.waterSinkSpeed);
                 return;
             }
             if (onWallGrip)
