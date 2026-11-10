@@ -374,7 +374,7 @@ namespace Descender.Game
             {
                 foreach (Ability ability in System.Enum.GetValues(typeof(Ability)))
                 {
-                    if (Hero.Has(ability))
+                    if (Hero.Owns(ability))
                     {
                         data.Abilities.Add(ability);
                     }

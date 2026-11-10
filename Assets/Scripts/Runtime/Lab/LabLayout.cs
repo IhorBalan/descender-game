@@ -42,6 +42,18 @@ namespace Descender.Lab
 
         /// <summary>A camera zone: while the hero is in it the view takes its framing, zoom and held axes.</summary>
         Camera,
+
+        /// <summary>A solid block on a <see cref="Mover"/>: ridden like a lift, and it pushes and crushes.</summary>
+        Platform,
+
+        /// <summary>A <see cref="Triggers.Crumble"/>: holds for `solidFor` once stood on, gone for `goneFor`.</summary>
+        Crumble,
+
+        /// <summary>A <see cref="Triggers.Blinker"/>: solid for `solidFor`, gone for `goneFor`, in turn.</summary>
+        Blinker,
+
+        /// <summary>A <see cref="ForceZone"/>: an area whose `wind` is added to the hero's speed.</summary>
+        Wind,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -71,8 +83,33 @@ namespace Descender.Lab
         /// <summary>A zone's actions, made when the station is built; the argument finds a built piece by id.</summary>
         public Func<Func<string, GameObject>, TriggerAction[]> actions;
 
-        /// <summary>A lift: where it goes from where it starts.</summary>
+        /// <summary>
+        /// A lift or a platform: where it goes from where it starts, how fast in units a
+        /// second (0 for the lab's usual speed), and whether it runs from the start.
+        /// </summary>
         public Vector2 travel;
+        public float speed;
+        public bool running;
+
+        /// <summary>
+        /// A crumbling or blinking platform: seconds it holds (once stood on, or each
+        /// cycle), seconds it is gone, seconds of warning before a blinker changes, and how
+        /// far along its cycle a blinker starts. A hidden one is gone until switched on.
+        /// </summary>
+        public float solidFor = 1f;
+        public float goneFor = 2f;
+        public float warnFor = 0.4f;
+        public float ahead;
+
+        /// <summary>
+        /// A wind: the speed it adds in level pixels a second, how fast he picks it up
+        /// (pixels a second squared, 0 for at once), and its gusts: seconds blowing and
+        /// seconds resting (0 for a steady wind). A hidden one is still until switched on.
+        /// </summary>
+        public Vector2 wind;
+        public float gain = 600f;
+        public float gustOn;
+        public float gustOff;
 
         /// <summary>A camera zone: the framing offset, the zoom (in `value`) and the axes it holds.</summary>
         public Vector2 framing;
@@ -138,6 +175,10 @@ namespace Descender.Lab
             "spikes",
             "items",
             "camera",
+            "platforms",
+            "corners",
+            "timing",
+            "wind",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -170,6 +211,10 @@ namespace Descender.Lab
             Spikes(Open(stations, "spikes", "Spikes and safe ground"));
             ItemsAndTriggers(Open(stations, "items", "Items and triggers"), jump, second);
             CameraZones(Open(stations, "camera", "Camera zones"));
+            Platforms(Open(stations, "platforms", "Platforms to ride"));
+            Corners(Open(stations, "corners", "Corners a jump forgives"), jump, tuning.cornerCorrection);
+            Timing(Open(stations, "timing", "Platforms that do not stay"));
+            Wind(Open(stations, "wind", "Wind and lift", Ability.Glide), leap, tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -471,6 +516,130 @@ namespace Descender.Lab
             // The arena: the view pulls back to show all of it.
             var arena = Add(station, PieceKind.Camera, 27f, FloorTop, 27f, 12f, "pulled back", ArenaZoom);
             arena.id = "arena";
+        }
+
+        /// <summary>
+        /// A ferry over spikes, a riser up to a shelf, a ferry a switch starts, and a block
+        /// that comes down to the floor: standing under it hurts and puts him beside it.
+        /// </summary>
+        private static void Platforms(Station station)
+        {
+            Add(station, PieceKind.Solid, 11f, FloorTop, 3f, 2f, "step on");
+            Add(station, PieceKind.Hazard, 14f, FloorTop, 12f, 0.5f, "spikes");
+            var ferry = Add(station, PieceKind.Lift, 14f, FloorTop + 1.75f, 3f, 0.25f, "ferry");
+            ferry.id = "ferry";
+            ferry.travel = new Vector2(9f, 0f);
+            ferry.running = true;
+            Add(station, PieceKind.Solid, 26f, FloorTop, 4f, 2f, "step off");
+
+            var riser = Add(station, PieceKind.Lift, 30f, FloorTop + 1.75f, 3f, 0.25f, "riser");
+            riser.id = "riser";
+            riser.travel = new Vector2(0f, 6f);
+            riser.running = true;
+            Add(station, PieceKind.Solid, 33f, FloorTop, 5f, 8f, "shelf");
+
+            var switched = Add(station, PieceKind.Lift, 38f, FloorTop + 7.75f, 3f, 0.25f, "switched");
+            switched.id = "switched";
+            switched.travel = new Vector2(7f, 0f);
+            var blue = new Color(0.4f, 0.6f, 1f);
+            var press = Zone(station, 34f, FloorTop + 8f, 1.5f, 2f, ShapeKind.Square, blue, "interact");
+            press.id = "press";
+            press.on = TriggerEvent.Interact;
+            press.once = false;
+            press.actions = find => List(Do.Mover(find("switched").GetComponent<Mover>(), SwitchTo.Toggle));
+            Add(station, PieceKind.Solid, 48f, FloorTop + 7f, 4f, 1f, "far shelf");
+
+            var crusher = Add(station, PieceKind.Platform, 41f, FloorTop + 3f, 3f, 1.5f, "crusher");
+            crusher.id = "crusher";
+            crusher.travel = new Vector2(0f, -3f);
+            crusher.running = true;
+        }
+
+        /// <summary>
+        /// Low ceilings whose corner hangs over a mark by a few pixels (stand on the mark and
+        /// jump: up to the correction he slips past, with more he bumps), and two steps a
+        /// little higher than a jump: the first is caught at its edge, the second is not.
+        /// </summary>
+        private static void Corners(Station station, float jump, int correction)
+        {
+            const float pixel = 1f / PlayerTuning.PixelsPerUnit;
+            const float halfHero = 0.4375f;
+            var x = 12f;
+            foreach (var over in new[] { Mathf.Max(correction - 2, 1), correction, correction * 2 + 2 })
+            {
+                Add(station, PieceKind.Mark, x - 0.05f, FloorTop, 0.1f, 1.5f, "stand here");
+                Add(station, PieceKind.Solid, x + halfHero - over * pixel, FloorTop + 3f, 3f, 1f, $"{over} px over");
+                x += 7f;
+            }
+            Add(station, PieceKind.Solid, 34f, FloorTop, 4f, jump + 0.3f, "caught at the edge");
+            // A shelf rather than a step, so the way on is under it.
+            Add(station, PieceKind.Solid, 42f, FloorTop + jump + 0.25f, 4f, 0.5f, "too high");
+        }
+
+        /// <summary>
+        /// A corridor with the wind in his face, a gap wider than a jump that a gust at
+        /// his back carries him over, and a shaft whose lift a fall beats and a glide
+        /// rides up to a shelf.
+        /// </summary>
+        private static void Wind(Station station, float leap, PlayerTuning tuning)
+        {
+            var head = Add(station, PieceKind.Wind, 11f, FloorTop, 9f, 5f, "headwind");
+            head.wind = new Vector2(-0.6f * tuning.runSpeed, 0f);
+
+            // The gust makes up what the gap is wider than a jump, and a little more.
+            var gap = Mathf.Ceil(leap * 1.4f);
+            var gust = Add(station, PieceKind.Wind, 20f, FloorTop, gap + 6f, 8f, "gusts: jump with one");
+            gust.wind = new Vector2(0.7f * tuning.runSpeed, 0f);
+            gust.gustOn = 1.5f;
+            gust.gustOff = 1.5f;
+            Add(station, PieceKind.Hazard, 23f, FloorTop, gap, 0.5f, $"{gap:0.#} wide");
+
+            var lift = Add(station, PieceKind.Wind, 36f, FloorTop, 6f, 18f, "lift: glide in it");
+            lift.wind = new Vector2(0f, tuning.glideFallSpeed + 0.4f * tuning.runSpeed);
+            Add(station, PieceKind.Solid, 42f, FloorTop, 10f, 12f, "shelf");
+        }
+
+        /// <summary>
+        /// Over a first bed of spikes, three platforms that crumble once stood on; over a
+        /// second, four that blink one after another; and past them a bridge that is gone
+        /// until the switch brings it.
+        /// </summary>
+        private static void Timing(Station station)
+        {
+            const float top = FloorTop + 1.75f;
+            Add(station, PieceKind.Solid, 10f, FloorTop, 2f, 2f, "step on");
+            Add(station, PieceKind.Hazard, 12f, FloorTop, 9f, 0.5f, "spikes");
+            for (var i = 0; i < 3; i++)
+            {
+                var crumble = Add(station, PieceKind.Crumble, 12.5f + i * 3f, top, 2f, 0.25f, i == 0 ? "crumbles" : "");
+                crumble.solidFor = 0.6f;
+                crumble.goneFor = 2f;
+            }
+            Add(station, PieceKind.Solid, 21f, FloorTop, 3f, 2f, "");
+
+            Add(station, PieceKind.Hazard, 24f, FloorTop, 12f, 0.5f, "spikes");
+            for (var i = 0; i < 4; i++)
+            {
+                var blinker = Add(station, PieceKind.Blinker, 24.5f + i * 3f, top, 2f, 0.25f, i == 0 ? "blinks" : "");
+                blinker.solidFor = 1.6f;
+                blinker.goneFor = 1.6f;
+                blinker.ahead = -0.8f * i;
+            }
+            Add(station, PieceKind.Solid, 36f, FloorTop, 3f, 2f, "");
+
+            Add(station, PieceKind.Hazard, 39f, FloorTop, 7f, 0.5f, "spikes");
+            var bridge = Add(station, PieceKind.Blinker, 39f, top, 7f, 0.25f, "switched");
+            bridge.id = "bridge";
+            bridge.solidFor = 4f;
+            bridge.goneFor = 2f;
+            bridge.warnFor = 1f;
+            bridge.hidden = true;
+            var blue = new Color(0.4f, 0.6f, 1f);
+            var press = Zone(station, 37f, FloorTop + 2f, 1.5f, 2f, ShapeKind.Square, blue, "interact");
+            press.on = TriggerEvent.Interact;
+            press.once = false;
+            press.actions = find => List(Do.Timed(find("bridge").GetComponent<TimedPlatform>(), SwitchTo.Toggle));
+            Add(station, PieceKind.Solid, 46f, FloorTop, 4f, 2f, "");
         }
 
         /// <summary>The lock: takes the key, opens the door and quiets the "locked" line.</summary>

@@ -117,6 +117,12 @@ namespace Descender.Tests.PlayMode
             // The placements spawn on their first frame.
             yield return null;
             yield return null;
+            var ledges = Object.FindObjectsByType<PlatformEffector2D>(FindObjectsSortMode.None);
+            Assert.That(ledges, Is.Not.Empty, "the region has one-way ledges");
+            foreach (var ledge in ledges)
+            {
+                Assert.That(ledge.useColliderMask, Is.False, $"{ledge.name} cannot be dropped through");
+            }
 
             var hero = MakeHero(ParadiseLayout.Start);
             var input = new ScriptedInput();

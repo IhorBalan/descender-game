@@ -4,12 +4,14 @@ namespace Descender.Triggers
 {
     /// <summary>
     /// A platform that travels from where it stands to a point and back at a steady
-    /// speed, while it is running. Its body is kinematic, so what stands on it is
-    /// carried by the physics. A trigger's <see cref="SetMover"/> action starts and
-    /// stops it.
+    /// speed, while it is running. Its body is kinematic and it says how fast it
+    /// moves (<see cref="Velocity"/>), so the hero standing on it rides along; it runs
+    /// before him in each physics step, so he rides this step's movement, not the
+    /// last one's. A trigger's <see cref="SetMover"/> action starts and stops it.
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
-    public sealed class Mover : MonoBehaviour
+    [DefaultExecutionOrder(-50)]
+    public sealed class Mover : MonoBehaviour, Player.IMovingGround
     {
         [SerializeField]
         [Tooltip("Where it goes, from where it starts, in units.")]
@@ -28,6 +30,11 @@ namespace Descender.Triggers
 
         public bool Running => running;
         public Vector2 Travel => travel;
+
+        /// <summary>Units a second.</summary>
+        public float Speed => speed;
+
+        public Vector2 Velocity { get; private set; }
 
         /// <summary>How far along it is: 0 at the start, 1 at the far end.</summary>
         public float Progress => Mathf.PingPong(travelled, 1f);
@@ -54,10 +61,13 @@ namespace Descender.Triggers
             var length = travel.magnitude;
             if (!running || length <= 0f)
             {
+                Velocity = Vector2.zero;
                 return;
             }
             travelled += speed * Time.fixedDeltaTime / length;
-            body.MovePosition(origin + travel * Progress);
+            var next = origin + travel * Progress;
+            Velocity = (next - body.position) / Time.fixedDeltaTime;
+            body.MovePosition(next);
         }
     }
 }

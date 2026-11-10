@@ -27,6 +27,16 @@ namespace Descender.Player
         /// <summary>How many fixed steps a dying hero waits before respawning on his own.</summary>
         private const float RespawnDelayExtra = 0f;
 
+        /// <summary>How deep in the solid world, in pixels and for how many steps, counts as crushed.</summary>
+        private const float CrushDepthPixels = 4f;
+        private const int CrushSteps = 3;
+
+        /// <summary>How many half units to either side a crushed hero looks for room.</summary>
+        private const int CrushSearchSteps = 12;
+
+        /// <summary>Rising faster than this, in units a second, he is passing through a platform, not standing on it.</summary>
+        private const float RisingThrough = 0.5f;
+
         [SerializeField]
         private PlayerTuning tuning;
 
@@ -50,6 +60,7 @@ namespace Descender.Player
         private ContactFilter2D enemyFilter;
         private ContactFilter2D barrierFilter;
         private readonly Collider2D[] hits = new Collider2D[8];
+        private readonly RaycastHit2D[] lineHits = new RaycastHit2D[8];
         private readonly List<IHittable> attackHit = new List<IHittable>(8);
         private readonly HashSet<Save.Ability> abilities = new HashSet<Save.Ability>();
         private static PhysicsMaterial2D slick;
@@ -71,6 +82,14 @@ namespace Descender.Player
         private int facing = 1;
         private bool grounded;
         private bool wasGrounded;
+        private IMovingGround movingGround;
+        private bool unsteadyGround;
+        private Vector2 carry;
+        private Vector2 wind;
+        private Vector2 windAsked;
+        private float windGain;
+        private Vector2 sentVelocity;
+        private int crushedSteps;
         private float lastFallSpeed;
         private float coyoteLeft;
         private float stateLeft;
@@ -123,6 +142,16 @@ namespace Descender.Player
         public static PlayerController Current { get; private set; }
 
         public PlayerTuning Tuning => tuning;
+
+        /// <summary>Hands him another tuning to play with: the live copy of the dev console's `tune`.</summary>
+        public void UseTuning(PlayerTuning value)
+        {
+            if (value != null)
+            {
+                tuning = value;
+            }
+        }
+
         public PlayerState State => state;
         public bool IsGrounded => grounded;
         public bool IsDashing => state == PlayerState.Dash;
@@ -148,6 +177,12 @@ namespace Descender.Player
         public Vector2 RespawnPosition => respawnPosition;
         public Vector2 LastSafePosition => lastSafePosition;
         public Vector2 Velocity => body.linearVelocity;
+
+        /// <summary>What the moving ground under him adds to his speed, in units a second; zero on still ground.</summary>
+        public Vector2 CarryVelocity => carry;
+
+        /// <summary>What the wind he is in adds to his speed, in level pixels a second; zero in still air.</summary>
+        public Vector2 WindPixels => wind * Ppu;
 
         /// <summary>The hero's velocity in level pixels per second.</summary>
         public Vector2 VelocityPixels => body.linearVelocity * Ppu;
@@ -176,7 +211,11 @@ namespace Descender.Player
 
         // --- Abilities, powers, stats -------------------------------------------
 
-        public bool Has(Save.Ability ability) => abilities.Contains(ability);
+        /// <summary>Whether he can use an ability now: one he owns, unless the dev console forced it on or off.</summary>
+        public bool Has(Save.Ability ability) => LiveTuning.Has(ability, abilities.Contains(ability));
+
+        /// <summary>Whether the ability is his to keep, which is what a save records.</summary>
+        public bool Owns(Save.Ability ability) => abilities.Contains(ability);
 
         /// <summary>Unlocks an angel power for the rest of the run. Unlocking one he already has does nothing.</summary>
         public void Grant(Save.Ability ability)
@@ -268,6 +307,7 @@ namespace Descender.Player
             {
                 tuning = ScriptableObject.CreateInstance<PlayerTuning>();
             }
+            tuning = LiveTuning.For(tuning);
             if (sprite == null)
             {
                 sprite = GetComponentInChildren<SpriteAnimator>();
@@ -367,8 +407,16 @@ namespace Descender.Player
             if (IsTravelling)
             {
                 body.linearVelocity = Vector2.zero;
+                carry = Vector2.zero;
+                wind = Vector2.zero;
+                windAsked = Vector2.zero;
+                sentVelocity = Vector2.zero;
                 return;
             }
+            // What the wind and the ground under him added last step comes off first, so
+            // every state works with his own speed.
+            body.linearVelocity -= WindLeft();
+            body.linearVelocity -= carry;
 
             wasGrounded = grounded;
             grounded = CheckGround();
@@ -425,6 +473,9 @@ namespace Descender.Player
                 Landed?.Invoke();
             }
             TrackSafeGround(dt);
+            RideGround();
+            CheckCrushed();
+            TakeWind(dt);
             if (transform.position.y < DeathY && state != PlayerState.Dead && !Frozen)
             {
                 Die();
@@ -534,6 +585,7 @@ namespace Descender.Player
                 jumpRising = false;
             }
 
+            CorrectCorners(ref velocity, inputDir, dt);
             body.linearVelocity = velocity / Ppu;
 
             if (InputBlocked)
@@ -921,6 +973,76 @@ namespace Descender.Player
             }
         }
 
+        /// <summary>
+        /// The two near misses a jump forgives. Rising with his head under the corner of a
+        /// ceiling by no more than <see cref="PlayerTuning.cornerCorrection"/> pixels, he is
+        /// moved aside by that much and keeps rising. Coming down against the side of a
+        /// ledge he is steering at, with his feet no more than
+        /// <see cref="PlayerTuning.ledgeCatch"/> pixels under its top, he is lifted onto it.
+        /// </summary>
+        private void CorrectCorners(ref Vector2 velocity, float inputDir, float dt)
+        {
+            if (grounded || onWallGrip)
+            {
+                return;
+            }
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 1f / Ppu, bounds.size.y - 1f / Ppu);
+            Vector2 centre = bounds.center;
+            if (velocity.y > 0f)
+            {
+                var up = new Vector2(0f, (velocity.y * dt + 1f) / Ppu);
+                if (!Blocked(centre + up, size))
+                {
+                    return;
+                }
+                for (var pixels = 1; pixels <= tuning.cornerCorrection; pixels++)
+                {
+                    for (var side = -1; side <= 1; side += 2)
+                    {
+                        var aside = new Vector2(side * pixels / Ppu, 0f);
+                        if (!Blocked(centre + aside, size) && !Blocked(centre + aside + up, size))
+                        {
+                            // The check is half a pixel slack, so half a pixel more leaves him clear.
+                            Nudge(aside + new Vector2(side * 0.5f / Ppu, 0f));
+                            return;
+                        }
+                    }
+                }
+                return;
+            }
+            var steering = inputDir != 0f && velocity.x != 0f && Mathf.Sign(inputDir) == Mathf.Sign(velocity.x);
+            if (!steering)
+            {
+                return;
+            }
+            var ahead = new Vector2(Mathf.Sign(velocity.x) * (Mathf.Abs(velocity.x) * dt + 1f) / Ppu, 0f);
+            if (!Blocked(centre + ahead, size))
+            {
+                return;
+            }
+            for (var pixels = 1; pixels <= tuning.ledgeCatch; pixels++)
+            {
+                var lift = new Vector2(0f, pixels / Ppu);
+                if (!Blocked(centre + lift, size) && !Blocked(centre + lift + ahead, size))
+                {
+                    Nudge(lift + new Vector2(0f, 0.5f / Ppu));
+                    velocity.y = 0f;
+                    return;
+                }
+            }
+        }
+
+        private bool Blocked(Vector2 centre, Vector2 size) =>
+            Physics2D.OverlapBox(centre, size, 0f, worldOnlyFilter, hits) > 0;
+
+        /// <summary>Moves him by a few pixels at once, outside the physics step.</summary>
+        private void Nudge(Vector2 by)
+        {
+            body.position += by;
+            transform.position += (Vector3)by;
+        }
+
         /// <summary>Wall Grip: holding towards a wall while in the air and falling grips it.</summary>
         private void UpdateWallGrip(float inputDir, ref Vector2 velocity)
         {
@@ -976,11 +1098,29 @@ namespace Descender.Player
             velocity.y = Mathf.Min(velocity.y, -40f);
         }
 
-        /// <summary>The ledges come back once the drop is over, and once a slam has landed.</summary>
+        /// <summary>
+        /// The ledges come back once the drop is over, and once a slam has landed; but not
+        /// while he is still partly in one, or it would lift him back onto itself.
+        /// </summary>
         private void UpdateDropping()
         {
             var ignore = dropLeft > 0f || (state == PlayerState.Slam && !slamLanded);
-            SetLedgesIgnored(ignore);
+            SetLedgesIgnored(ignore || (ledgesIgnored && state != PlayerState.Dead && InsideLedge()));
+        }
+
+        private bool InsideLedge()
+        {
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 2f / Ppu, bounds.size.y - 2f / Ppu);
+            var count = Physics2D.OverlapBox(bounds.center, size, 0f, groundFilter, hits);
+            for (var i = 0; i < count; i++)
+            {
+                if (hits[i].gameObject.layer == Layers.Ledge)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void SetLedgesIgnored(bool ignore)
@@ -1023,9 +1163,162 @@ namespace Descender.Player
             Physics2D.IgnoreLayerCollision(Layers.Player, Layers.LightBarrier, ignore);
         }
 
+        /// <summary>
+        /// Moving ground carries him: its speed is added to his own for the coming step.
+        /// When he leaves it, by a jump or off its end, he keeps a share of its sideways
+        /// speed, and a rising platform adds to the jump up to a cap.
+        /// </summary>
+        private void RideGround()
+        {
+            // Rising through a one-way platform from below touches it without standing on it.
+            var own = body.linearVelocity;
+            var standing = grounded && own.y <= RisingThrough;
+            var riding = standing && movingGround != null && state != PlayerState.Dead;
+            var next = riding ? movingGround.Velocity : Vector2.zero;
+            if (riding && own.y > 0f)
+            {
+                // What a rising platform's push left over would lift him off it.
+                body.linearVelocity = new Vector2(own.x, 0f);
+            }
+            if (!grounded && carry != Vector2.zero)
+            {
+                var kept = carry * tuning.platformMomentum;
+                kept.y = Mathf.Clamp(kept.y, 0f, tuning.platformLiftMax / Ppu);
+                body.linearVelocity += kept;
+            }
+            body.linearVelocity += next;
+            carry = next;
+        }
+
+        /// <summary>
+        /// A wind blows on him for the step now being taken: called by what blows (a
+        /// <see cref="Triggers.ForceZone"/>) before his own step, every step it lasts. The
+        /// wind is a speed in level pixels a second that is added to his own, which he
+        /// picks up, and loses again, at `gain` pixels a second squared (0 for at once).
+        /// Several winds add up.
+        /// </summary>
+        public void Blow(Vector2 pixelsPerSecond, float gain)
+        {
+            windAsked += pixelsPerSecond / Ppu;
+            windGain = Mathf.Max(gain, 0f) / Ppu;
+        }
+
+        /// <summary>
+        /// The wind's part of the speed the body has now. What the world took from the
+        /// speed he was sent off with (a wall he was blown against, the floor under a
+        /// downdraught) is taken from the wind's part first, so being held there is not
+        /// counted as him moving the other way.
+        /// </summary>
+        private Vector2 WindLeft()
+        {
+            if (wind == Vector2.zero)
+            {
+                return Vector2.zero;
+            }
+            var lost = sentVelocity - body.linearVelocity;
+            return new Vector2(Left(wind.x, lost.x), Left(wind.y, lost.y));
+        }
+
+        private static float Left(float blown, float lost)
+        {
+            if (blown > 0f && lost > 0f)
+            {
+                return blown - Mathf.Min(blown, lost);
+            }
+            if (blown < 0f && lost < 0f)
+            {
+                return blown - Mathf.Max(blown, lost);
+            }
+            return blown;
+        }
+
+        /// <summary>Moves the wind on him towards what was asked for this step and adds it to his speed.</summary>
+        private void TakeWind(float dt)
+        {
+            var asked = state == PlayerState.Dead ? Vector2.zero : windAsked;
+            wind = windGain > 0f ? Vector2.MoveTowards(wind, asked, windGain * dt) : asked;
+            windAsked = Vector2.zero;
+            body.linearVelocity += wind;
+            sentVelocity = body.linearVelocity;
+        }
+
+        /// <summary>
+        /// Squeezed into the solid world by something that moves (a platform coming down on
+        /// him, or pressing him to a wall): he is hurt as by a hazard and put beside it.
+        /// </summary>
+        private void CheckCrushed()
+        {
+            if (state == PlayerState.Dead)
+            {
+                crushedSteps = 0;
+                return;
+            }
+            var bounds = box.bounds;
+            var inset = 2f * CrushDepthPixels / Ppu;
+            var size = new Vector2(bounds.size.x - inset, bounds.size.y - inset);
+            var squeezed = Physics2D.OverlapBox(bounds.center, size, 0f, worldOnlyFilter, hits) > 0;
+            crushedSteps = squeezed ? crushedSteps + 1 : 0;
+            if (crushedSteps < CrushSteps)
+            {
+                return;
+            }
+            crushedSteps = 0;
+            var spot = FreeSpotBeside();
+            if (!TakeHazardDamage(1, spot))
+            {
+                PlaceAt(spot);
+            }
+        }
+
+        /// <summary>
+        /// The nearest place to either side where his whole body is clear of the solid world
+        /// and that he could have walked to: nothing that stands still is in between, so he
+        /// is never put through a wall. Else the last safe ground.
+        /// </summary>
+        private Vector2 FreeSpotBeside()
+        {
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 1f / Ppu, bounds.size.y - 1f / Ppu);
+            Vector2 feet = transform.position;
+            Vector2 toCentre = (Vector2)bounds.center - feet;
+            for (var i = 1; i <= CrushSearchSteps; i++)
+            {
+                // A little above where he is too: he may have been pressed into the floor.
+                for (var lift = 0; lift <= 2; lift++)
+                {
+                    for (var side = -1; side <= 1; side += 2)
+                    {
+                        var spot = feet + new Vector2(side * i * 0.5f, lift * 0.25f);
+                        var clear = Physics2D.OverlapBox(spot + toCentre, size, 0f, worldOnlyFilter, hits) == 0;
+                        if (clear && !StillWorldBetween(feet + toCentre, spot + toCentre))
+                        {
+                            return spot;
+                        }
+                    }
+                }
+            }
+            return lastSafePosition;
+        }
+
+        /// <summary>Whether solid world that does not move lies on the line between two points.</summary>
+        private bool StillWorldBetween(Vector2 from, Vector2 to)
+        {
+            var count = Physics2D.Linecast(from, to, worldOnlyFilter, lineHits);
+            for (var i = 0; i < count; i++)
+            {
+                var owner = lineHits[i].rigidbody;
+                if (owner == null || owner.bodyType == RigidbodyType2D.Static)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void TrackSafeGround(float dt)
         {
-            if (grounded && (state == PlayerState.Idle || state == PlayerState.Run))
+            var steady = movingGround == null && !unsteadyGround;
+            if (grounded && steady && (state == PlayerState.Idle || state == PlayerState.Run))
             {
                 safeGroundTime += dt;
                 if (safeGroundTime >= tuning.safeGroundTime)
@@ -1045,7 +1338,22 @@ namespace Descender.Player
             var size = new Vector2(bounds.size.x - 2f / Ppu, 2f / Ppu);
             var centre = new Vector2(bounds.center.x, bounds.min.y);
             var filter = ledgesIgnored ? worldOnlyFilter : groundFilter;
-            return Physics2D.OverlapBox(centre, size, 0f, filter, hits) > 0;
+            var count = Physics2D.OverlapBox(centre, size, 0f, filter, hits);
+            movingGround = null;
+            unsteadyGround = false;
+            for (var i = 0; i < count; i++)
+            {
+                unsteadyGround |= hits[i].GetComponentInParent<IUnsteadyGround>() != null;
+            }
+            for (var i = 0; i < count && movingGround == null; i++)
+            {
+                var under = hits[i].attachedRigidbody;
+                if (under != null && under.TryGetComponent<IMovingGround>(out var moving))
+                {
+                    movingGround = moving;
+                }
+            }
+            return count > 0;
         }
 
         private bool OnLedge()
@@ -1334,7 +1642,10 @@ namespace Descender.Player
         }
 
         /// <summary>Called by spikes: put back on the last safe ground.</summary>
-        public bool TakeHazardDamage(int amount)
+        public bool TakeHazardDamage(int amount) => TakeHazardDamage(amount, lastSafePosition);
+
+        /// <summary>Hurt by something he has to be taken out of: put at `backTo`. False when he cannot be hurt now.</summary>
+        private bool TakeHazardDamage(int amount, Vector2 backTo)
         {
             if (!CanBeHurt)
             {
@@ -1343,7 +1654,7 @@ namespace Descender.Player
             if (SpendHalo())
             {
                 // The Halo spares the heart, but the hero still has to leave the spikes.
-                PlaceAt(lastSafePosition);
+                PlaceAt(backTo);
                 return true;
             }
             if (!LoseHealth(GuardedDamage(amount)))
@@ -1352,7 +1663,7 @@ namespace Descender.Player
             }
             HurtFeedback();
             SetState(PlayerState.Hurt, tuning.hurtTime);
-            PlaceAt(lastSafePosition);
+            PlaceAt(backTo);
             invulnerableLeft = tuning.invulnerableTime;
             return true;
         }
@@ -1521,6 +1832,10 @@ namespace Descender.Player
             body.position = point;
             transform.position = point;
             body.linearVelocity = Vector2.zero;
+            carry = Vector2.zero;
+            wind = Vector2.zero;
+            windAsked = Vector2.zero;
+            sentVelocity = Vector2.zero;
             coyoteLeft = 0f;
             jumpBufferLeft = 0f;
         }

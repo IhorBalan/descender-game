@@ -35,7 +35,7 @@ Done when: a run of Paradise plays no dialogue, the dialogue tests still
 pass with the switch off, and `docs/story/PARKED.md` says how to bring it
 back.
 
-### G1. The mechanics lab and its tools (current)
+### G1. The mechanics lab and its tools (done 2026-11-10, T-0012 to T-0017; Ihor's playtest is open)
 
 A place and a toolkit for building mechanics fast, all in simple shapes.
 
@@ -63,7 +63,7 @@ A place and a toolkit for building mechanics fast, all in simple shapes.
   change a number and feel the difference, and place a new item with a
   trigger without writing code.
 
-### G2. Movement
+### G2. Movement (current)
 
 Every move finished against its lab station, then the world pieces that
 movement needs. The hero's moves: run, jump (variable height, coyote time,
@@ -75,6 +75,10 @@ wind), switches and doors, hazards with a return to safe ground, and
 whatever the audit in G1 shows is missing (candidates: ladders or climbable
 vines, water, ledge grab). Done when: each move and piece has a station, a
 measuring test and tuning Ihor has signed off by play.
+
+Planned as T-0018 to T-0024 (2026-11-10). G1 showed three gaps they start
+from: nothing reads `PlayerTuning.cornerCorrection`, riding a moving platform
+was never tuned or tested, and the hero's input has no "up".
 
 ### G3. Combat
 
@@ -217,13 +221,22 @@ hygiene as each production region lands.
 | T-0012 | The story is parked behind one switch, with a pointer file | done | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
 | T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | done | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
 | T-0014 | Triggers as data: conditions and actions, items as shapes | done | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | #169 |
-| T-0015 | Camera zones | in review | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
-| T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
-| T-0017 | Measured mechanics: a PlayMode test per existing move | approved | 17 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0015 | Camera zones | done | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
+| T-0016 | Live tuning of the hero's numbers and abilities | done | 16 | T-0013 | 1 | Re-plan the roadmap around mechanics | #173 |
+| T-0017 | Measured mechanics: a PlayMode test per existing move | done | 17 | T-0013 | 1 | Re-plan the roadmap around mechanics | #174 |
+| T-0018 | Platforms the hero rides | done | 18 | T-0017 | 1 | Re-plan the roadmap around mechanics | #176 |
+| T-0019 | Corner correction and the rest of the jump | done | 19 | T-0017 | 1 | Re-plan the roadmap around mechanics | #177 |
+| T-0025 | Dropping and slamming through ledges in the regions | done | 19 | T-0018 | 1 | Re-plan the roadmap around mechanics | #179 |
+| T-0020 | Platforms that crumble and platforms on a timer | done | 20 | T-0018 | 1 | Re-plan the roadmap around mechanics | #180 |
+| T-0021 | Wind and lift | in review | 21 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
+| T-0022 | Up, ladders and vines | approved | 22 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0023 | Ledge grab, to try and maybe drop | approved | 23 | T-0022 | 0 | Re-plan the roadmap around mechanics | |
+| T-0024 | Water | approved | 24 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
-added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG) and
-`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10).
+added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
+`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10) and
+`planning/g2-movement-tasks.md` (G2, 2026-11-10).
 Playtest: T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0011 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
 zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
@@ -401,8 +414,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (258 on `main` after T-0015) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (30 after T-0015; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (281 on `main` after T-0017) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (69 after T-0021; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -503,6 +516,43 @@ barriers, the cliff descent.
   check: every room can be finished with the move it names, the marks (jump
   height, dash length, one second of running) match what the hero does, the
   camera stays inside the room, and dying puts him back at the room's start.
+- **T-0018, platforms.** `lab platforms` in the dev console. A ferry over
+  spikes, a riser to a shelf, a ferry the blue switch starts, and a block
+  that comes down to the floor. To check: standing and running on each
+  feels locked to it, jumping off carries its speed in a way that feels
+  right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
+  standing under the block costs a heart and puts you beside it.
+- **T-0021, wind.** `lab wind` (the room gives the glide). A corridor with
+  the wind in his face, a gap wider than a jump that a gust at his back
+  carries him over, and a shaft whose lift only bobs him until he glides
+  in it, which carries him up to the shelf. To check: the drifting marks
+  say which way and whether it blows, running against the wind feels like
+  wind and not like mud, and the lift is found without being told.
+- **T-0020, platforms that do not stay.** `lab timing`. Three platforms
+  over spikes that shake and drop out once stood on, four that blink one
+  after another, and a bridge the blue switch brings and takes away. To
+  check: the shake and the blink say clearly enough what is about to
+  happen, the times feel fair (they are fields on each piece), and
+  nothing ever comes back on top of him.
+- **T-0025, ledges in the regions.** In Paradise, stand on any one-way
+  ledge and press down and jump: he drops through it. With Smite, a slam
+  from above a ledge goes through it to the ground. Neither worked before.
+- **T-0019, corners.** `lab corners`. Three low ceilings whose corner hangs
+  over a mark by a few pixels: stand on each mark and jump. The first two
+  let him slip past, the third stops him. Then two steps a little higher
+  than a jump: holding towards the first puts him on top, the second does
+  not. To check: neither help is noticed when it happens, and
+  `tune cornerCorrection` and `tune ledgeCatch` (pixels) change how much.
+- **T-0016, live tuning.** In a game or the lab, open the dev console
+  (the grave key). `tune` sums up; `tune jump` shows the jump numbers;
+  `tune jumpHeight 90` sets one and the hero plays with it at once; `tune
+  reset` goes back; `tune panel` shows a page of numbers down the right of
+  the view, with changed ones in yellow, and the bracket keys turn its
+  pages; `ability wings on` (or `all on`) gives an ability whatever the
+  room allows. In the editor `tune save` writes the changed numbers into
+  `PlayerTuning.asset`. To check: the numbers you settle on (write them
+  down or save them), that the panel is readable at this size, and that a
+  save made after forcing an ability does not keep it.
 - **T-0015, camera zones.** `lab camera` in the dev console (the last room
   of the lab). On the plateau, under the low roof the view's height stays
   put through a jump; at the edge the view drops to show the landing; in the

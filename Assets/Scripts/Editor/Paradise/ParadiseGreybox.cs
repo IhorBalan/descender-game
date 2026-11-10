@@ -319,23 +319,24 @@ namespace Descender.EditorTools.Paradise
             AssetDatabase.SaveAssets();
             EnsureEntryScene(AssetDatabase.LoadAssetAtPath<WorldAtlas>(AtlasPath));
             AddToBuild(zones);
-            JoinRooms(zones);
+            SyncCameras(zones);
             AssetDatabase.SaveAssets();
         }
 
-        /// <summary>Joins every built zone's rooms (see JoinRooms), without rebuilding a zone; for batch mode.</summary>
-        [MenuItem("Descender/Paradise/Join the zones' rooms")]
-        public static void JoinAllRooms()
+        /// <summary>Syncs every built zone's camera (see SyncCameras), without rebuilding a zone; for batch mode.</summary>
+        [MenuItem("Descender/Paradise/Sync the zones' camera (joined rooms, moments)")]
+        public static void SyncZoneCameras()
         {
-            JoinRooms(ParadiseLayout.All());
+            SyncCameras(ParadiseLayout.All());
         }
 
         /// <summary>
-        /// Paradise's zones are one continuous land: every zone's rooms are joined, so the
-        /// camera keeps to them all as one and never stops at a zone's border. A zone built
-        /// before rooms could be joined is set here, without rebuilding it.
+        /// Brings each built zone's camera in line with the layout without rebuilding it:
+        /// its rooms joined (Paradise's zones are one continuous land, so the camera keeps
+        /// to them all as one and never stops at a border) and its camera moments as the
+        /// layout has them. A scene that already matches is left untouched.
         /// </summary>
-        private static void JoinRooms(List<ParadiseLayout.Zone> zones)
+        private static void SyncCameras(List<ParadiseLayout.Zone> zones)
         {
             foreach (var zone in zones)
             {
@@ -359,12 +360,60 @@ namespace Descender.EditorTools.Paradise
                         changed = true;
                     }
                 }
+                var root = System.Array.Find(scene.GetRootGameObjects(), r => r.name == $"Zone{zone.number}");
+                if (root != null && !MomentsMatch(root.transform, zone))
+                {
+                    var old = root.transform.Find(MomentsGroup);
+                    if (old != null)
+                    {
+                        Object.DestroyImmediate(old.gameObject);
+                    }
+                    if (zone.moments.Count > 0)
+                    {
+                        var group = Group(root.transform, MomentsGroup);
+                        foreach (var moment in zone.moments)
+                        {
+                            BuildMoment(moment, group);
+                        }
+                    }
+                    changed = true;
+                }
                 if (changed)
                 {
                     EditorSceneManager.SaveScene(scene);
                 }
                 EditorSceneManager.CloseScene(scene, true);
             }
+        }
+
+        /// <summary>Whether a zone root's camera moments are the layout's, one for one.</summary>
+        private static bool MomentsMatch(Transform root, ParadiseLayout.Zone zone)
+        {
+            var group = root.Find(MomentsGroup);
+            var built =
+                group != null ? group.GetComponentsInChildren<CameraRig.CameraZone>(true) : new CameraRig.CameraZone[0];
+            if (built.Length != zone.moments.Count)
+            {
+                return false;
+            }
+            for (var i = 0; i < built.Length; i++)
+            {
+                var moment = zone.moments[i];
+                var camera = built[i];
+                var size = new SerializedObject(camera).FindProperty("size").vector2Value;
+                if (
+                    camera.name != moment.name
+                    || (Vector2)camera.transform.position != moment.area.center
+                    || size != moment.area.size
+                    || camera.Framing != moment.framing
+                    || !Mathf.Approximately(camera.Zoom, moment.zoom)
+                    || !Mathf.Approximately(camera.BlendTime, moment.blend)
+                )
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // ------------------------------------------------------------------ art
@@ -967,6 +1016,8 @@ namespace Descender.EditorTools.Paradise
             edge.usedByEffector = true;
             edge.points = Sample(points, left, right, false).ToArray();
             var effector = go.AddComponent<PlatformEffector2D>();
+            // The collision matrix, not the effector's own mask: the hero drops through by the layer pair.
+            effector.useColliderMask = false;
             effector.useOneWay = true;
             effector.surfaceArc = 170f;
             effector.useSideFriction = false;
@@ -1628,7 +1679,7 @@ namespace Descender.EditorTools.Paradise
             serialized.FindProperty("id").intValue = id;
             serialized.FindProperty("roomName").stringValue = go.name;
             serialized.FindProperty("size").vector2Value = rect.size;
-            // One continuous land: the camera never stops at a zone's border (JoinRooms).
+            // One continuous land: the camera never stops at a zone's border (SyncCameras).
             serialized.FindProperty("joined").boolValue = true;
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }

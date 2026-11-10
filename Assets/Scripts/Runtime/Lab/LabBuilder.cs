@@ -19,6 +19,9 @@ namespace Descender.Lab
     {
         public static readonly Color Solid = new Color(0.22f, 0.24f, 0.3f);
         public static readonly Color Ledge = new Color(0.55f, 0.5f, 0.35f);
+        public static readonly Color Unsteady = new Color(0.75f, 0.55f, 0.3f);
+        public static readonly Color WindArea = new Color(0.6f, 0.85f, 1f, 0.1f);
+        public static readonly Color WindMark = new Color(0.8f, 0.95f, 1f, 0.5f);
         public static readonly Color Mark = new Color(0.6f, 0.65f, 0.75f, 0.6f);
         public static readonly Color Barrier = new Color(0.5f, 0.95f, 1f, 0.55f);
         public static readonly Color Pod = new Color(0.45f, 0.85f, 0.4f);
@@ -90,7 +93,10 @@ namespace Descender.Lab
             }
             for (var i = 0; i < built.Count; i++)
             {
-                if (station.pieces[i].hidden)
+                // A hidden platform that does not stay, or a hidden wind, is there but off: a trigger starts it.
+                var kind = station.pieces[i].kind;
+                var switched = kind == PieceKind.Crumble || kind == PieceKind.Blinker || kind == PieceKind.Wind;
+                if (station.pieces[i].hidden && !switched)
                 {
                     built[i].SetActive(false);
                 }
@@ -115,6 +121,9 @@ namespace Descender.Lab
                     go.layer = Layers.Ledge;
                     go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     var effector = go.AddComponent<PlatformEffector2D>();
+                    // The hero drops through by turning the layer pair off,
+                    // which an effector's own mask would override.
+                    effector.useColliderMask = false;
                     effector.useOneWay = true;
                     effector.surfaceArc = 170f;
                     effector.useSideFriction = false;
@@ -181,6 +190,7 @@ namespace Descender.Lab
                     go.layer = Layers.Ledge;
                     go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                     var oneWay = go.AddComponent<PlatformEffector2D>();
+                    oneWay.useColliderMask = false;
                     oneWay.useOneWay = true;
                     oneWay.surfaceArc = 170f;
                     oneWay.useSideFriction = false;
@@ -188,11 +198,64 @@ namespace Descender.Lab
                     deck.usedByEffector = true;
                     deck.size = rect.size;
                     Draw(go, ShapeKind.Square, rect.size, Ledge, piece.label, 1);
-                    go.AddComponent<Mover>().Configure(piece.travel, LiftSpeed);
+                    go.AddComponent<Mover>().Configure(piece.travel, SpeedOf(piece), piece.running);
+                    break;
+                case PieceKind.Platform:
+                    go.layer = Layers.World;
+                    go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, Solid, piece.label, 1);
+                    go.AddComponent<Mover>().Configure(piece.travel, SpeedOf(piece), piece.running);
+                    break;
+                case PieceKind.Wind:
+                    var blow = go.AddComponent<ForceZone>();
+                    blow.Configure(rect.size, piece.wind, piece.gain, piece.hidden);
+                    blow.Gust(piece.gustOn, piece.gustOff, piece.ahead);
+                    Draw(go, ShapeKind.Square, rect.size, WindArea, piece.label, -4);
+                    blow.Drift(WindMarks(go.transform, rect.size, piece.wind));
+                    break;
+                case PieceKind.Crumble:
+                    go.layer = Layers.World;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, Unsteady, piece.label, 1);
+                    go.AddComponent<Crumble>().Configure(piece.solidFor, piece.goneFor, piece.hidden);
+                    break;
+                case PieceKind.Blinker:
+                    go.layer = Layers.World;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, Unsteady, piece.label, 1);
+                    var blinker = go.AddComponent<Blinker>();
+                    blinker.Configure(piece.solidFor, piece.goneFor, piece.warnFor, piece.ahead, piece.hidden);
                     break;
             }
             return go;
         }
+
+        /// <summary>Small triangles over a wind's area, pointing where it blows; the zone drifts them along.</summary>
+        private static Transform[] WindMarks(Transform parent, Vector2 area, Vector2 wind)
+        {
+            var marks = new List<Transform>();
+            var turn = Quaternion.FromToRotation(Vector3.up, wind == Vector2.zero ? Vector2.up : wind.normalized);
+            var size = new Vector2(0.3f, 0.45f);
+            var columns = Mathf.Max(Mathf.RoundToInt(area.x / 2.5f), 1);
+            var rows = Mathf.Max(Mathf.RoundToInt(area.y / 2.5f), 1);
+            for (var row = 0; row < rows; row++)
+            {
+                for (var column = 0; column < columns; column++)
+                {
+                    // Every other row half a step along, so they do not stand in lines.
+                    var along = (column + (row % 2 == 0 ? 0.25f : 0.75f)) / columns;
+                    var at = new Vector2((along - 0.5f) * area.x, ((row + 0.5f) / rows - 0.5f) * area.y);
+                    var mark = Shape.Make(parent, "Drift", ShapeKind.Triangle, at, size, WindMark, "", -3);
+                    mark.transform.localRotation = turn;
+                    marks.Add(mark.transform);
+                }
+            }
+            return marks.ToArray();
+        }
+
+        /// <summary>A moving piece's speed: its own, or the lab's usual one.</summary>
+        private static float SpeedOf(Piece piece) => piece.speed > 0f ? piece.speed : LiftSpeed;
 
         private static void Draw(GameObject go, ShapeKind kind, Vector2 size, Color color, string label, int order)
         {
