@@ -3099,10 +3099,6 @@ namespace Descender.EditorTools.Paradise
         /// </summary>
         private static void WallHangings(ParadiseLayout.Zone zone, Plan plan)
         {
-            if (!Sprites.ContainsKey("banner") || !Sprites.ContainsKey("lantern"))
-            {
-                return;
-            }
             var taken = new List<float>();
             foreach (var p in plan.walls)
             {

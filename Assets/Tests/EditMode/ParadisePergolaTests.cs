@@ -37,5 +37,35 @@ namespace Descender.Tests
             Assert.That(plan.pergolas, Is.EquivalentTo(ParadiseGarden.PergolasOf(number)));
             Assert.That(ParadiseGarden.PergolaRise, Is.GreaterThan(HeroHeight));
         }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        public void WallHangingsKeepClearOfTheIvyTheFallsAndThePergolas(int number)
+        {
+            var zone = Zone(number);
+            var plan = ParadiseGarden.GardenPlan(zone);
+            // Wall hangings hang just under the coping; those under a deck hang lower.
+            var onWalls = plan
+                .hanging.Where(h =>
+                    (h.name == "banner" || h.name == "lantern")
+                    && Mathf.Abs(ParadiseDressing.SurfaceY(zone, h.at.x) - h.at.y - 0.95f) < 0.01f
+                )
+                .ToList();
+            Assert.That(onWalls, Is.Not.Empty);
+            var ivy = plan.walls.Where(w => w.name.StartsWith("ivy_drape")).Select(w => w.at.x).ToList();
+            foreach (var h in onWalls)
+            {
+                var x = h.at.x;
+                Assert.That(ivy.All(i => Mathf.Abs(i - x) >= ParadiseGarden.WallHangingClearance), $"ivy at {x}");
+                Assert.That(
+                    plan.water.All(w => Mathf.Abs(w.x - x) >= ParadiseGarden.WallHangingClearance),
+                    $"fall at {x}"
+                );
+                Assert.That(
+                    plan.pergolas.All(p => x <= p - 1f || x >= p + ParadiseGarden.PergolaSpan + 1f),
+                    $"pergola at {x}"
+                );
+            }
+        }
     }
 }
