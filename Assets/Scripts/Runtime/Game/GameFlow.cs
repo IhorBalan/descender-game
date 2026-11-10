@@ -81,6 +81,7 @@ namespace Descender.Game
             Instance = this;
             Application.targetFrameRate = -1;
             EnsureEventSystem();
+            EnsureConsole();
         }
 
         private void OnEnable()
@@ -631,6 +632,21 @@ namespace Descender.Game
         /// The menus need an EventSystem driven by the Input System's UI map. Made here
         /// rather than saved in the scene so the action references stay in code.
         /// </summary>
+        /// <summary>
+        /// The dev console, made here when the scene has none: no scene or setup tool puts
+        /// one in, and the lab, the tuning and the playtests are reached through it.
+        /// </summary>
+        private void EnsureConsole()
+        {
+            if (FindAnyObjectByType<DevConsole>() != null)
+            {
+                return;
+            }
+            var holder = new GameObject("DevConsole");
+            holder.transform.SetParent(transform, false);
+            holder.AddComponent<DevConsole>();
+        }
+
         private void EnsureEventSystem()
         {
             if (FindAnyObjectByType<EventSystem>() != null)

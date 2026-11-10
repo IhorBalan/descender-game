@@ -31,6 +31,7 @@ namespace Descender.Tests.PlayMode
             Assert.That(eventSystem, Is.Not.Null, "no EventSystem was made");
             Assert.That(eventSystem.TryGetComponent<InputSystemUIInputModule>(out _), Is.True);
             Assert.That(Audio.Music.Instance.Playing, Is.EqualTo("title"));
+            Assert.That(Object.FindAnyObjectByType<UI.DevConsole>(), Is.Not.Null, "no dev console was made");
         }
 
         /// <summary>
