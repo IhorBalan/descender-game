@@ -76,5 +76,43 @@ namespace Descender.Tests
                 EditorSceneManager.CloseScene(scene, true);
             }
         }
+
+        [TestCase("Assets/Scenes/Paradise/Paradise_Z1_WakingHollow.unity")]
+        [TestCase("Assets/Scenes/Paradise/Paradise_Z2_Orchard.unity")]
+        public void SunbeamsLeanWithTheSunAndTheOnesInFrontStayFaint(string path)
+        {
+            var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+            try
+            {
+                var beams = scene
+                    .GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<SpriteRenderer>(true))
+                    .Where(r => r.name.StartsWith("Beam"))
+                    .ToList();
+                Assert.That(beams.Count, Is.GreaterThan(4));
+                // Down the way the light runs: the foot of a beam lies toward the side away from the sun.
+                var lean = SunAndClouds.SunDirection.x > 0f ? -1f : 1f;
+                foreach (var beam in beams)
+                {
+                    var down = beam.transform.rotation * Vector3.down;
+                    Assert.That(Mathf.Sign(down.x), Is.EqualTo(lean), beam.name);
+                    Assert.That(Vector2.Angle(down, -(Vector2)SunAndClouds.SunDirection), Is.LessThan(1f), beam.name);
+                }
+                var inFront = beams.Where(b => b.name == "Beam Front").ToList();
+                Assert.That(inFront, Is.Not.Empty);
+                foreach (var beam in inFront)
+                {
+                    Assert.That(beam.sortingLayerName, Is.EqualTo(ParadiseGarden.ForegroundLayer));
+                    Assert.That(
+                        beam.sharedMaterial.GetFloat("_Intensity"),
+                        Is.LessThan(beams.First(b => b.name == "Beam").sharedMaterial.GetFloat("_Intensity"))
+                    );
+                }
+            }
+            finally
+            {
+                EditorSceneManager.CloseScene(scene, true);
+            }
+        }
     }
 }

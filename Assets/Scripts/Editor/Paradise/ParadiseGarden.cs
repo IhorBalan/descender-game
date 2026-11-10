@@ -172,8 +172,8 @@ namespace Descender.EditorTools.Paradise
                 art.foreground.SetFloat("_HazeAmount", 0.34f);
                 EditorUtility.SetDirty(art.foreground);
             }
-            // A bright sky needs only a hint of rays.
-            art.shaft.SetFloat("_Intensity", 0.15f);
+            // Beams of sun through the air: on a bright sky an added light has to be fairly strong to read.
+            art.shaft.SetFloat("_Intensity", BeamIntensity);
             EditorUtility.SetDirty(art.shaft);
             art.water = ParadiseArt.SaveMaterial("Paradise Waterfall", "Descender/Waterfall");
             art.water.SetColor("_Color", new Color(0.92f, 0.97f, 1f, 0.92f));
@@ -402,18 +402,27 @@ namespace Descender.EditorTools.Paradise
                 Pergola(zone, pergolas, x, art);
             }
             var shafts = ParadiseArt.Group(root, "Shafts");
-            foreach (var x in plan.shafts)
+            var frontBeam = FrontBeamMaterial(art);
+            for (var i = 0; i < plan.shafts.Count; i++)
             {
+                var x = plan.shafts[i];
+                var inFront = i % 3 == 1;
                 var r = ParadiseArt.Sprite(
                     shafts,
-                    "Shaft",
+                    inFront ? "Beam Front" : "Beam",
                     art.lightShaft,
-                    art.shaft,
-                    -300,
-                    new Vector3(x, -34f, 0f),
-                    new Vector3(1.8f, 1.9f, 1f)
+                    inFront ? frontBeam : art.shaft,
+                    inFront ? 390 : -300,
+                    new Vector3(x, ParadiseDressing.SurfaceY(zone, x) + BeamTopOverWalk, 0f),
+                    Vector3.one * (0.85f + Hash(x, 62f) * 0.5f)
                 );
+                // Its top is its pivot: it hangs from there and leans the way the sunlight runs.
+                r.transform.rotation = Quaternion.Euler(0f, 0f, BeamLean);
                 r.color = art.shaftColor;
+                if (inFront)
+                {
+                    r.sortingLayerName = ForegroundLayer;
+                }
             }
             var front = ParadiseArt.Group(root, "Foreground");
             for (var i = 0; i < plan.foreground.Count; i++)
@@ -2692,6 +2701,11 @@ namespace Descender.EditorTools.Paradise
                     );
                 }
             }
+            // Sunbeams all along the walk, irregularly spaced.
+            for (var x = zone.xMin + 14f; x < zone.xMax - 6f; x += BeamSpacing + Hash(x, 61f) * BeamSpacingVaries)
+            {
+                plan.shafts.Add(x);
+            }
             // Arched pergolas behind the walk, on the longest runs of wall and railing, hung with growth.
             foreach (var x in PergolasOf(zone.number))
             {
@@ -2796,8 +2810,6 @@ namespace Descender.EditorTools.Paradise
                         foam = true,
                     }
                 );
-                plan.shafts.Add(80f);
-                plan.shafts.Add(300f);
             }
             else if (zone.number == 2)
             {
@@ -2924,9 +2936,6 @@ namespace Descender.EditorTools.Paradise
                         foam = true,
                     }
                 );
-                plan.shafts.Add(520f);
-                plan.shafts.Add(900f);
-                plan.shafts.Add(1200f);
             }
             // Foreground: the garden between the eye and the walk, out of focus (fg_framing.py),
             // rising into the bottom of the frame and hanging into its top in turn, with open
@@ -2974,6 +2983,39 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>How far, at which it is gone: on a route far below, its cut edge would show.</summary>
         public const float FrontFadeFar = 6f;
+
+        /// <summary>How far apart the sunbeams stand, at least, and how much more at most.</summary>
+        public const float BeamSpacing = 26f;
+
+        public const float BeamSpacingVaries = 18f;
+
+        /// <summary>
+        /// The beams' lean from upright, in degrees: down the way the sunlight runs, from the
+        /// upper right (SunAndClouds.SunDirection), the same way as the rays painted in the sky.
+        /// </summary>
+        public static readonly float BeamLean =
+            -Mathf.Atan2(SunAndClouds.SunDirection.x, SunAndClouds.SunDirection.y) * Mathf.Rad2Deg;
+
+        /// <summary>Where a beam hangs from: above the top of the view when the hero stands on the walk.</summary>
+        private const float BeamTopOverWalk = 9f;
+
+        /// <summary>
+        /// A beam in front of the walk is lighter than one behind it: it crosses the hero and
+        /// must never hide him, only say the air between him and the eye is lit.
+        /// </summary>
+        public const float FrontBeamIntensity = 0.16f;
+
+        /// <summary>A beam behind the walk.</summary>
+        public const float BeamIntensity = 0.42f;
+
+        private static Material FrontBeamMaterial(ParadiseArt.ZoneArt art)
+        {
+            var material = ParadiseArt.SaveMaterial($"{art.shaft.name} Front", art.shaft.shader.name);
+            material.CopyPropertiesFromMaterial(art.shaft);
+            material.SetFloat("_Intensity", FrontBeamIntensity);
+            EditorUtility.SetDirty(material);
+            return material;
+        }
 
         /// <summary>The sorting layer that can sample the finished Default layer, so pools can mirror it.</summary>
         public const string WaterLayer = "Water";
