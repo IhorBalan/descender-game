@@ -82,7 +82,7 @@ namespace Descender.EditorTools.Paradise
                 {
                     new AngleRange
                     {
-                        start = 120f,
+                        start = 180f - UndersideReach,
                         end = 180f,
                         order = 0,
                         sprites = new List<Sprite> { Get("island_bottom_flip") },
@@ -90,7 +90,7 @@ namespace Descender.EditorTools.Paradise
                     new AngleRange
                     {
                         start = -180f,
-                        end = -120f,
+                        end = -180f + UndersideReach,
                         order = 0,
                         sprites = new List<Sprite> { Get("island_bottom_flip") },
                     },
@@ -119,7 +119,7 @@ namespace Descender.EditorTools.Paradise
                 {
                     new AngleRange
                     {
-                        start = 120f,
+                        start = 180f - UndersideReach,
                         end = 180f,
                         order = 0,
                         sprites = new List<Sprite> { Get("island_bottom_flip") },
@@ -127,7 +127,7 @@ namespace Descender.EditorTools.Paradise
                     new AngleRange
                     {
                         start = -180f,
-                        end = -120f,
+                        end = -180f + UndersideReach,
                         order = 0,
                         sprites = new List<Sprite> { Get("island_bottom_flip") },
                     },
@@ -430,7 +430,13 @@ namespace Descender.EditorTools.Paradise
                 );
                 r.flipX = f.flip;
                 r.sortingLayerName = ForegroundLayer;
-                r.gameObject.AddComponent<ForegroundParallax>().Configure(FrontDepth, FrontDepth);
+                var parallax = r.gameObject.AddComponent<ForegroundParallax>();
+                parallax.Configure(FrontDepth, FrontDepth);
+                parallax.FadeAwayFrom(
+                    ParadiseDressing.SurfaceY(zone, f.at.x, f.at.y) + CameraOverWalk,
+                    FrontFadeNear,
+                    FrontFadeFar
+                );
             }
             var air = ParadiseArt.Group(root, "Air");
             var area = new Rect(zone.xMin, -105f, zone.xMax - zone.xMin, 90f);
@@ -2955,6 +2961,19 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>Their own slow drift on the wind, in level pixels a second.</summary>
         public const float HighCloudDrift = 0.6f;
+
+        /// <summary>
+        /// How far from flat an underside may tilt and still carry the hanging rock fringe, in
+        /// degrees. A rounded corner turns through every angle from an underside to a wall; with a
+        /// wider reach its arc took the fringe too, drawn diagonally as long stretched stripes.
+        /// </summary>
+        public const float UndersideReach = 30f;
+
+        /// <summary>How far the camera may be from the walk a framing piece was placed for before it fades.</summary>
+        public const float FrontFadeNear = 2.5f;
+
+        /// <summary>How far, at which it is gone: on a route far below, its cut edge would show.</summary>
+        public const float FrontFadeFar = 6f;
 
         /// <summary>The sorting layer that can sample the finished Default layer, so pools can mirror it.</summary>
         public const string WaterLayer = "Water";

@@ -24,7 +24,17 @@ namespace Descender.World.Paradise
         [SerializeField]
         private Vector2 offset;
 
+        [Tooltip("The camera height the piece was placed for; it fades as the camera leaves it (0..0: never).")]
+        [SerializeField]
+        private float fadeAround;
+
+        [Tooltip("Units from that height at which it starts to fade, and at which it is gone.")]
+        [SerializeField]
+        private Vector2 fadeOver;
+
         private Vector3 anchor;
+        private SpriteRenderer sprite;
+        private float restAlpha = 1f;
 
         public void Configure(float speedUp, float speedUpY = 0f, Vector2 viewOffset = default)
         {
@@ -33,9 +43,34 @@ namespace Descender.World.Paradise
             offset = viewOffset;
         }
 
+        /// <summary>
+        /// Fades the piece as the camera leaves the height it was placed for: framing set for a
+        /// walk would show its cut edge to a route far above or below it.
+        /// </summary>
+        public void FadeAwayFrom(float cameraY, float near, float far)
+        {
+            fadeAround = cameraY;
+            fadeOver = new Vector2(near, far);
+        }
+
+        /// <summary>The share of the piece left with the camera at a height, for a fade from near to far.</summary>
+        public static float FadeAt(float cameraY, float placedFor, float near, float far)
+        {
+            if (far <= near)
+            {
+                return 1f;
+            }
+            var t = Mathf.Clamp01((Mathf.Abs(cameraY - placedFor) - near) / (far - near));
+            return 1f - t * t * (3f - 2f * t);
+        }
+
         private void Awake()
         {
             anchor = transform.position;
+            if (TryGetComponent(out sprite))
+            {
+                restAlpha = sprite.color.a;
+            }
         }
 
         private void LateUpdate()
@@ -51,6 +86,17 @@ namespace Descender.World.Paradise
                 anchor.y - (at.y - anchor.y) * extraY + offset.y,
                 anchor.z
             );
+            if (sprite != null && fadeOver.y > fadeOver.x)
+            {
+                var alpha = restAlpha * FadeAt(at.y, fadeAround, fadeOver.x, fadeOver.y);
+                var c = sprite.color;
+                if (!Mathf.Approximately(c.a, alpha))
+                {
+                    c.a = alpha;
+                    sprite.color = c;
+                }
+                sprite.enabled = alpha > 0.001f;
+            }
         }
     }
 }
