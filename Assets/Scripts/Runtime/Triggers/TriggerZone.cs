@@ -140,8 +140,9 @@ namespace Descender.Triggers
             {
                 return;
             }
+            // The press that turns a page of dialogue is not a press on the zone.
             var input = Input.InputRouter.Instance;
-            if (input != null && input.InteractPressed)
+            if (input != null && input.InteractPressed && !UI.DialogueBox.AnyOpen)
             {
                 Interact();
             }

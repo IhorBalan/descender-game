@@ -169,6 +169,14 @@ namespace Descender.Lab
                     Draw(go, ShapeKind.Square, rect.size, DoorColor, piece.label, 1);
                     go.AddComponent<Door>();
                     break;
+                case PieceKind.Camera:
+                    var view = go.AddComponent<CameraRig.CameraZone>();
+                    view.Configure(rect.size, piece.framing, piece.value, piece.lockX, piece.lockY);
+                    // Only a line along its top, so the zone does not hide the room.
+                    var line = new Vector2(rect.width, 0.1f);
+                    var above = new Vector2(0f, rect.height / 2f);
+                    Shape.Make(go.transform, "Shape", ShapeKind.Square, above, line, Mark, piece.label, -5);
+                    break;
                 case PieceKind.Lift:
                     go.layer = Layers.Ledge;
                     go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;

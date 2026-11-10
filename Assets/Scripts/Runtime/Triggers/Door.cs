@@ -4,8 +4,9 @@ namespace Descender.Triggers
 {
     /// <summary>
     /// A door: solid while closed, passable and faint while open. It is whatever
-    /// colliders and sprites the object has; a trigger's <see cref="SetDoor"/> action
-    /// opens and closes it.
+    /// colliders and sprites the object and its children have, so a trigger zone that
+    /// should outlive the door's state does not go under it; a trigger's
+    /// <see cref="SetDoor"/> action opens and closes it.
     /// </summary>
     public sealed class Door : MonoBehaviour
     {
