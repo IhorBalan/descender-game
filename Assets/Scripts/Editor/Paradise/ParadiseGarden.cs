@@ -397,6 +397,14 @@ namespace Descender.EditorTools.Paradise
             }
             Railings(zone, ParadiseArt.Group(root, "Railings"), art);
             Pilasters(zone, ParadiseArt.Group(root, "Pilasters"), art);
+            if (plan.numbers.Count > 0 && Sprites.ContainsKey("numeral_I"))
+            {
+                var numbers = ParadiseArt.Group(root, "TreeNumbers");
+                foreach (var spot in plan.numbers)
+                {
+                    Number(numbers, spot, art);
+                }
+            }
             if (Sprites.ContainsKey(WallNiche))
             {
                 // Set into the wall: over its blocks and piers, under the depth shade and the ivy's spill.
@@ -2919,6 +2927,9 @@ namespace Descender.EditorTools.Paradise
 
             /// <summary>Blind arches set into the walls, each with a lantern hung in it (WallHangings).</summary>
             public readonly List<Spot> niches = new List<Spot>();
+
+            /// <summary>The orchard's tree numbers, cut in the coping: each its numerals (as its name), centred at its spot.</summary>
+            public readonly List<Spot> numbers = new List<Spot>();
         }
 
         /// <summary>A deterministic 0..1 from a position, so the dressing is the same every build.</summary>
@@ -3202,11 +3213,22 @@ namespace Descender.EditorTools.Paradise
             }
             else if (zone.number == 2)
             {
+                // Every tree of the orchard rows is numbered, its number cut in the coping under it.
+                var number = FirstTreeNumber;
+                for (var x = OrchardRowsFrom; x <= OrchardRowsTo; x += OrchardRowSpacing)
+                {
+                    var walk = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+                    if (!float.IsNaN(walk))
+                    {
+                        plan.numbers.Add(new Spot { name = Roman(number), at = new Vector2(x, walk - NumberDrop) });
+                    }
+                    number++;
+                }
                 if (Sprites.ContainsKey("blossom_tree"))
                 {
                     // The orchard: blossom trees rooted on the terraces, in rows a little too even.
                     var rows = new List<float> { 420f, 470f, 515f, 1010f, 1150f, 1240f };
-                    for (var x = 586f; x <= 742f; x += 26f)
+                    for (var x = OrchardRowsFrom; x <= OrchardRowsTo; x += OrchardRowSpacing)
                     {
                         rows.Add(x);
                     }
@@ -3689,6 +3711,64 @@ namespace Descender.EditorTools.Paradise
 
         /// <summary>How close the ivy under a deck may hang to the deck's banner or lantern.</summary>
         public const float DeckOrnamentClearance = 1.8f;
+
+        /// <summary>
+        /// The orchard rows' trees (zone 2): from, to and between, and the number the first bears.
+        /// The orchard is a little too tidy (docs/design/paradise.md): every tree is numbered.
+        /// </summary>
+        public const float OrchardRowsFrom = 586f;
+
+        public const float OrchardRowsTo = 742f;
+
+        public const float OrchardRowSpacing = 26f;
+
+        public const int FirstTreeNumber = 39;
+
+        /// <summary>How far under the walk the middle of the coping's plain marble band is, where a number is cut.</summary>
+        public const float NumberDrop = 0.77f;
+
+        /// <summary>Over the coping (-99), under the railings (-90) and the plants.</summary>
+        public const int NumberOrder = -98;
+
+        /// <summary>The empty margin round each numeral's sprite, in pixels at 128 a unit (tree_numerals.py).</summary>
+        private const float NumeralMargin = 2f;
+
+        /// <summary>A number from 1 to 89 in Roman numerals (the orchard has far fewer trees).</summary>
+        public static string Roman(int n)
+        {
+            string[] tens = { "", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX" };
+            string[] ones = { "", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX" };
+            return tens[Mathf.Clamp(n, 1, 89) / 10] + ones[Mathf.Clamp(n, 1, 89) % 10];
+        }
+
+        /// <summary>A number cut in the coping and gilded: its numerals set side by side, centred on the spot.</summary>
+        private static void Number(Transform parent, Spot spot, ParadiseArt.ZoneArt art)
+        {
+            var group = new GameObject("Number " + spot.name).transform;
+            group.SetParent(parent, false);
+            var margin = NumeralMargin / 128f;
+            var width = 0f;
+            foreach (var letter in spot.name)
+            {
+                width += Get("numeral_" + letter).bounds.size.x - 2f * margin;
+            }
+            var x = spot.at.x - width / 2f;
+            foreach (var letter in spot.name)
+            {
+                var sprite = Get("numeral_" + letter);
+                var w = sprite.bounds.size.x - 2f * margin;
+                ParadiseArt.Sprite(
+                    group,
+                    "Numeral " + letter,
+                    sprite,
+                    art.lit,
+                    NumberOrder,
+                    new Vector3(x + w / 2f, spot.at.y, 0f),
+                    Vector3.one
+                );
+                x += w;
+            }
+        }
 
         /// <summary>The stand-in the layout keeps for the Lantern Tree's trunk (a Decor shape the art replaces).</summary>
         public const string LanternTrunk = "LanternTrunk";

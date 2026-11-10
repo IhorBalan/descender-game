@@ -785,6 +785,86 @@
       "attach": "rows below ~70 overlap the top of wall_block"
     },
     {
+      "path": "Assets/Art/Paradise/Kit/Architecture/numeral_I.png",
+      "purpose": "Gilded Roman numeral I, cut into the coping under the orchard's numbered trees (tree_numerals.py)",
+      "zone": "garden",
+      "size": [
+        16,
+        34
+      ],
+      "sizeUnits": [
+        0.125,
+        0.2656
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/numeral_V.png",
+      "purpose": "Gilded Roman numeral V, cut into the coping under the orchard's numbered trees (tree_numerals.py)",
+      "zone": "garden",
+      "size": [
+        30,
+        34
+      ],
+      "sizeUnits": [
+        0.2344,
+        0.2656
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/numeral_X.png",
+      "purpose": "Gilded Roman numeral X, cut into the coping under the orchard's numbered trees (tree_numerals.py)",
+      "zone": "garden",
+      "size": [
+        30,
+        34
+      ],
+      "sizeUnits": [
+        0.2344,
+        0.2656
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/numeral_L.png",
+      "purpose": "Gilded Roman numeral L, cut into the coping under the orchard's numbered trees (tree_numerals.py)",
+      "zone": "garden",
+      "size": [
+        26,
+        34
+      ],
+      "sizeUnits": [
+        0.2031,
+        0.2656
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
       "path": "Assets/Art/Paradise/Kit/Architecture/wall_niche.png",
       "purpose": "Blind arch set into a terrace wall for a lantern to hang in: the wide arch's voussoirs, the coping's marble, the wall's blocks in shade (wall_niche.py)",
       "zone": "garden",

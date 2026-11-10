@@ -58,6 +58,67 @@ namespace Descender.Tests
             }
         }
 
+        [TestCase(8, "VIII")]
+        [TestCase(39, "XXXIX")]
+        [TestCase(40, "XL")]
+        [TestCase(44, "XLIV")]
+        [TestCase(45, "XLV")]
+        [TestCase(49, "XLIX")]
+        public void TreeNumbersAreRomanNumerals(int n, string roman)
+        {
+            Assert.That(EditorTools.Paradise.ParadiseGarden.Roman(n), Is.EqualTo(roman));
+        }
+
+        [Test]
+        public void EveryTreeOfTheOrchardRowsIsNumberedInTheCopingUnderIt()
+        {
+            var zone = EditorTools.Paradise.ParadiseLayout.All().First(z => z.number == 2);
+            var plan = EditorTools.Paradise.ParadiseGarden.GardenPlan(zone);
+            var expected = new System.Collections.Generic.List<float>();
+            for (
+                var x = EditorTools.Paradise.ParadiseGarden.OrchardRowsFrom;
+                x <= EditorTools.Paradise.ParadiseGarden.OrchardRowsTo;
+                x += EditorTools.Paradise.ParadiseGarden.OrchardRowSpacing
+            )
+            {
+                expected.Add(x);
+            }
+            Assert.That(
+                plan.numbers.Select(n => n.at.x),
+                Is.EqualTo(expected),
+                "one number under every tree of the rows"
+            );
+            for (var i = 0; i < plan.numbers.Count; i++)
+            {
+                var n = plan.numbers[i];
+                Assert.That(
+                    n.name,
+                    Is.EqualTo(
+                        EditorTools.Paradise.ParadiseGarden.Roman(
+                            EditorTools.Paradise.ParadiseGarden.FirstTreeNumber + i
+                        )
+                    )
+                );
+                var walk = EditorTools.Paradise.ParadiseDressing.SurfaceY(zone, n.at.x);
+                Assert.That(walk - n.at.y, Is.EqualTo(EditorTools.Paradise.ParadiseGarden.NumberDrop).Within(1e-4f));
+            }
+            var scene = EditorSceneManager.OpenScene(Orchard, OpenSceneMode.Additive);
+            try
+            {
+                var numerals = scene
+                    .GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<SpriteRenderer>(true))
+                    .Where(r => r.name.StartsWith("Numeral "))
+                    .ToList();
+                Assert.That(numerals.Count, Is.EqualTo(plan.numbers.Sum(n => n.name.Length)), "every numeral is cut");
+                Assert.That(numerals.All(r => r.sortingOrder == EditorTools.Paradise.ParadiseGarden.NumberOrder));
+            }
+            finally
+            {
+                EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
         [TestCase(1)]
         [TestCase(2)]
         [TestCase(3)]
