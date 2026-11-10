@@ -24,11 +24,14 @@ HAZE = (196, 214, 232)
 HAZE_DEEP = (179, 194, 207)
 
 
-def piece(name: str, erase=(), crop=None, left: int = 0, right: int = 0, bottom: int = 0, top: int = 0) -> Image.Image:
+def piece(
+    name: str, erase=(), crop=None, left: int = 0, right: int = 0, bottom: int = 0, top: int = 0, misty: bool = False
+) -> Image.Image:
     """
     A cut-out, cleaned: stray bits erased, then cropped, then the edges where the crop
     (or the key art's frame) cut through the painting faded out over that many pixels,
-    so no straight edge shows against the sky.
+    so no straight edge shows against the sky. `misty` makes the side fades wander down the
+    piece, as mist eats into a shape, so they do not read as the sides of a rectangle.
     """
     img = Image.open(os.path.join(CUTS, f"{name}_cut.png")).convert("RGBA")
     # The remover leaves a faint veil over the sky it took away: clear it, keep soft edges.
@@ -45,6 +48,8 @@ def piece(name: str, erase=(), crop=None, left: int = 0, right: int = 0, bottom:
         for i in range(n):
             t = i / n
             v = round(255 * t * t * (3 - 2 * t))
+            if side in "lr" and misty:
+                continue
             if side == "l":
                 rd.line([(i, 0), (i, img.height)], fill=v)
             elif side == "r":
@@ -56,8 +61,43 @@ def piece(name: str, erase=(), crop=None, left: int = 0, right: int = 0, bottom:
                 y = img.height - 1 - i
                 row = ramp.crop((0, y, img.width, y + 1)).point(lambda p, v=v: min(p, v))
                 ramp.paste(row, (0, y))
+    if misty:
+        ramp = ImageChops.multiply(ramp, wandering_sides(img.size, left, right, name))
     img.putalpha(ImageChops.multiply(img.getchannel("A"), ramp))
     return img.crop(img.getchannel("A").getbbox())
+
+
+def wandering_sides(size, left: int, right: int, name: str) -> Image.Image:
+    """255 inside; toward each given side it fades over a band whose depth wanders from row to row."""
+    w, h = size
+    rng = random.Random(name)
+    out = Image.new("L", size, 255)
+
+    def wander(depth: int):
+        """How far in the fade reaches on each row: slow swells with quicker ones on top."""
+        slow = [rng.random() for _ in range(h // 90 + 3)]
+        quick = [rng.random() for _ in range(h // 26 + 3)]
+
+        def at(knots, y, step):
+            i = y // step
+            f = (y % step) / step
+            f = f * f * (3 - 2 * f)
+            return knots[i] * (1 - f) + knots[i + 1] * f
+
+        return [depth * (0.25 + 0.75 * at(slow, y, 90)) + depth * 0.3 * at(quick, y, 26) for y in range(h)]
+
+    px = out.load()
+    for depth, is_left in ((left, True), (right, False)):
+        if depth <= 0:
+            continue
+        reach = wander(depth)
+        for y in range(h):
+            for i in range(min(w, round(reach[y]) + 1)):
+                t = i / max(1.0, reach[y])
+                v = round(255 * t * t * (3 - 2 * t))
+                x = i if is_left else w - 1 - i
+                px[x, y] = min(px[x, y], v)
+    return out
 
 
 def haze(img: Image.Image, amount: float, colour=HAZE) -> Image.Image:
@@ -125,8 +165,10 @@ def far() -> Image.Image:
 
 
 def islands():
-    k1 = piece("isle_k1_temple", erase=[(0, 0, 210, 25), (370, 520, 762, 578), (0, 470, 140, 578)], right=170, bottom=70)
-    k4 = piece("isle_k4_temple", erase=[(0, 0, 55, 90), (130, 730, 215, 781)], left=110, right=150, bottom=90)
+    k1 = piece(
+        "isle_k1_temple", erase=[(0, 0, 210, 25), (370, 520, 762, 578), (0, 470, 140, 578)], right=170, bottom=70, misty=True
+    )
+    k4 = piece("isle_k4_temple", erase=[(0, 0, 55, 90), (130, 730, 215, 781)], left=110, right=150, bottom=90, misty=True)
     left = piece("tree_k2", crop=(0, 400, 220, 800), left=60, right=50, bottom=80)
     right = piece("tree_k2", crop=(700, 330, 960, 800), left=70, right=90, bottom=80)
     return k1, k4, left, right
