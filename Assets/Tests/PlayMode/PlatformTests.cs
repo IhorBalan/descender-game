@@ -56,6 +56,7 @@ namespace Descender.Tests.PlayMode
         public void TearDown()
         {
             Time.captureDeltaTime = captureBefore;
+            LiveTuning.ReleaseAll();
             foreach (var thing in made)
             {
                 if (thing != null)
@@ -240,6 +241,25 @@ namespace Descender.Tests.PlayMode
             Assert.That(heroBody.position.y, Is.LessThan(4.74f), "the drop has started");
             yield return probe.Until(() => hero.IsGrounded && heroBody.position.y < 3f, 300);
             Assert.That(heroBody.position.y, Is.EqualTo(Floor).Within(2f * Pixel), "he dropped to the floor");
+        }
+
+        [UnityTest]
+        public IEnumerator ASlamGoesThroughALedge()
+        {
+            Put(PieceKind.Ledge, 10f, 4.5f, 4f, 0.25f);
+            yield return Begin(new Vector2(12f, 4.75f));
+            LiveTuning.Force(Save.Ability.Smite, true);
+
+            yield return probe.PressJump();
+            yield return probe.Step(2);
+            yield return probe.Until(() => hero.VelocityPixels.y <= 0f, 200);
+            input.DownHeld = true;
+            yield return probe.Press(i => i.AttackPressed = true);
+            yield return probe.Step(2);
+            Assert.That(hero.State, Is.EqualTo(PlayerState.Slam));
+            yield return probe.Until(() => hero.IsGrounded, 200);
+            input.DownHeld = false;
+            Assert.That(heroBody.position.y, Is.EqualTo(Floor).Within(2f * Pixel), "he came down on the floor");
         }
 
         [UnityTest]
