@@ -62,6 +62,7 @@ namespace Descender.CameraRig
         private CameraZone zone;
         private float blendTime;
         private float blendElapsed;
+        private bool framingSettled = true;
         private float baseSize;
         private float appliedZoom = 1f;
         private PixelPerfectCamera pixelPerfect;
@@ -168,6 +169,7 @@ namespace Descender.CameraRig
             blendFrom = current;
             blendTime = 0f;
             blendElapsed = 0f;
+            framingSettled = true;
             ApplyZoom(current.zoom);
         }
 
@@ -232,10 +234,19 @@ namespace Descender.CameraRig
             }
             wanted.x += facing * current.lookAheadPixels / PixelsPerUnit;
             // The dead zone is for the hero's small hops. While the settings blend it would
-            // swallow the framing's own movement, so it waits until the blend is over.
+            // swallow the framing's own movement, and the view trails the blend by a few
+            // pixels, so it waits until the blend is over and the view has caught up.
             var deadZone = verticalDeadZonePixels / PixelsPerUnit;
-            var blending = blendElapsed < blendTime;
-            if (!blending && Mathf.Abs(wanted.y - focus.y) < deadZone)
+            var gap = Mathf.Abs(wanted.y - focus.y);
+            if (blendElapsed < blendTime)
+            {
+                framingSettled = false;
+            }
+            else if (!framingSettled && gap < 1f / PixelsPerUnit)
+            {
+                framingSettled = true;
+            }
+            if (framingSettled && gap < deadZone)
             {
                 wanted.y = focus.y;
             }
