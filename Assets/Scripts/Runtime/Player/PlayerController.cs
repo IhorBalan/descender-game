@@ -132,6 +132,7 @@ namespace Descender.Player
                 tuning = value;
             }
         }
+
         public PlayerState State => state;
         public bool IsGrounded => grounded;
         public bool IsDashing => state == PlayerState.Dash;
