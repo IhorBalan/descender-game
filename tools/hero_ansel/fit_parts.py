@@ -1,8 +1,12 @@
 """Fits the cut parts of the new Ansel to his approved proportions and writes the rig layout.
 
 The parts sheet draws each part at its own scale, so every part is measured here against the
-approved full-body picture (the "reference": 1024 x 1536, y down) and resized to match. Writes
-Assets/Art/Paradise/Ansel/ansel_*.png and ansel_rig.json, which ParadiseHero builds the rig from.
+approved full-body picture (reference.png: 1024 x 1536, y down) and resized to match. Writes
+Assets/Art/Paradise/Ansel/ansel_*.png, a normal map ansel_*_n.png for each (so the scene's
+lights shape him), and ansel_rig.json, which ParadiseHero builds the rig from.
+
+The far arm and leg are their own pictures, not the near ones tinted: a little smaller, cooler,
+darker and softer, as limbs on the far side of a body read.
 
     python tools/hero_ansel/cut_parts.py    # parts_sheet.png -> one PNG per part
     python tools/hero_ansel/fit_parts.py    # those parts -> Assets/Art/Paradise/Ansel
@@ -22,7 +26,12 @@ except ImportError:  # OpenCV is only needed to run this script, not to import i
 import numpy as np
 from PIL import Image
 
-OUT = os.path.join(os.path.dirname(__file__), "..", "..", "Assets", "Art", "Paradise", "Ansel")
+HERE = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(HERE, "..", "ai_art"))
+import normals  # noqa: E402
+
+OUT = os.path.join(HERE, "..", "..", "Assets", "Art", "Paradise", "Ansel")
+DEFAULT_PARTS = os.path.join(HERE, "..", "ai_art", "out", "hero_ansel_parts")
 
 GROUND = 1455.0  # the soles, on the reference
 AXIS = 585.0  # the body's axis, on the reference
@@ -30,23 +39,41 @@ REF_PER_UNIT = 860.0  # reference pixels in one world unit: he stands 1.63 units
 ART_SCALE = 0.5  # written pixels per reference pixel
 PPU = REF_PER_UNIT * ART_SCALE
 
-# part: (x scale, y scale, a point on the part, where that point sits on the reference)
-FIT = {
-    "arm": (1.0, 1.15, (55, 35), (550, 320)),
-    "leg": (1.0, 1.31, (100, 60), (565, 680)),
-    "torso": (0.9, 1.15, (90, 10), (585, 205)),
-    "head": (0.88, 0.88, (105, 190), (578, 205)),
-    "hood": (1.0, 1.0, (228, 135), (617, 322)),
-    "cloak": (1.16, 1.16, (410, 95), (640, 320)),
-    "sword": (0.87, 0.87, (67, 64), (557, 820)),
-}
-
 FAR_ARM = 55.0  # how far behind the near shoulder the far one is, along x
 FAR_LEG = 45.0
+FAR_ARM_SCALE = 0.94  # the far limbs are a little smaller, as further away
+FAR_LEG_SCALE = 0.97
+
+# part: (source picture, x scale, y scale, a point on the part, where that point sits on the reference)
+FIT = {
+    "arm": ("arm", 1.0, 1.15, (55, 35), (550, 320)),
+    "arm_far": ("arm", FAR_ARM_SCALE, 1.15 * FAR_ARM_SCALE, (55, 35), (550 + FAR_ARM, 320)),
+    "leg": ("leg", 1.0, 1.31, (100, 60), (565, 680)),
+    "leg_far": ("leg", FAR_LEG_SCALE, 1.31 * FAR_LEG_SCALE, (100, 60), (565 + FAR_LEG, 680)),
+    "torso": ("torso", 0.9, 1.15, (90, 10), (585, 205)),
+    "head": ("head", 0.88, 0.88, (105, 190), (578, 205)),
+    "hood": ("hood", 1.0, 1.0, (228, 135), (617, 322)),
+    "cloak": ("cloak", 1.16, 1.16, (410, 95), (640, 320)),
+    "sword": ("sword", 0.87, 0.87, (67, 64), (557, 820)),
+}
+
+# Normal map settings per part, in the terms of tools/ai_art/normals.py.
+LIMB = dict(relief=(2, 6, 0), bevel=5, dome=0, wrap=(False, False), lathe=True)
+SHAPE = {
+    "arm": LIMB,
+    "arm_far": LIMB,
+    "leg": LIMB,
+    "leg_far": LIMB,
+    "torso": dict(relief=(2, 7, 4), bevel=5, dome=0, wrap=(False, False), lathe=True),
+    "head": dict(relief=(2, 5, 0), bevel=4, dome=16, wrap=(False, False)),
+    "hood": dict(relief=(2, 8, 8), bevel=5, dome=8, wrap=(False, False)),
+    "cloak": dict(relief=(2, 8, 10), bevel=4, dome=0, wrap=(False, False)),
+    "sword": dict(relief=(1, 3, 0), bevel=2, dome=0, wrap=(False, False), lathe=True),
+}
 
 
 def on_ref(part, x, y):
-    sx, sy, (ax, ay), (rx, ry) = FIT[part]
+    _, sx, sy, (ax, ay), (rx, ry) = FIT[part]
     return rx + (x - ax) * sx, ry + (y - ay) * sy
 
 
@@ -64,6 +91,19 @@ def resize_premultiplied(im, size):
     return Image.fromarray((small * 255.0 + 0.5).astype(np.uint8), "RGBA")
 
 
+def far_side(im):
+    """A limb on the far side of the body: darker and cooler, flatter in contrast, a touch soft."""
+    a = np.asarray(im).astype(np.float32) / 255.0
+    rgb = a[..., :3]
+    luma = (rgb * np.array([0.3, 0.59, 0.11])).sum(axis=2, keepdims=True)
+    rgb = luma + (rgb - luma) * 0.8  # less saturated
+    rgb = 0.5 + (rgb - 0.5) * 0.85  # less contrast
+    rgb = rgb * np.array([0.66, 0.68, 0.80]) + np.array([0.02, 0.025, 0.05])
+    rgb = cv2.GaussianBlur(np.clip(rgb, 0, 1), (0, 0), 0.6)
+    out = np.dstack([rgb, a[..., 3:]])
+    return Image.fromarray((np.clip(out, 0, 1) * 255.0 + 0.5).astype(np.uint8), "RGBA")
+
+
 def bone(name, parent, at, tip):
     x, y = unit(*at)
     tx, ty = unit(*tip)
@@ -71,32 +111,30 @@ def bone(name, parent, at, tip):
 
 
 def skeleton():
-    shoulder = on_ref("arm", 55, 35)
-    elbow = on_ref("arm", 45, 235)
-    hand = on_ref("arm", 62, 470)
-    fingertips = on_ref("arm", 65, 518)
-    hip = on_ref("leg", 100, 60)
-    knee = on_ref("leg", 78, 320)
-    ankle = on_ref("leg", 58, 585)
-    toe = on_ref("leg", 140, 635)
     bones = [
         bone("Hips", "", (AXIS, 680), (AXIS, 560)),
         bone("Spine", "Hips", (AXIS, 560), (AXIS, 420)),
         bone("Chest", "Spine", (AXIS, 420), (578, 215)),
-        bone("Head", "Chest", (578, 205), (578, 60)),
+        bone("Head", "Chest", on_ref("head", 105, 190), on_ref("head", 125, 40)),
+        # Hair: two locks that sway on their own, the back tufts and the top.
+        bone("HairBack", "Head", on_ref("head", 62, 78), on_ref("head", 8, 118)),
+        bone("HairTop", "Head", on_ref("head", 140, 32), on_ref("head", 60, 6)),
+        # The hood, thrown back over the shoulders, jostles on its own bone.
+        bone("Hood", "Chest", on_ref("hood", 190, 100), on_ref("hood", 40, 180)),
+        # The tunic's front and back tails swing below the belt.
+        bone("TailBack", "Hips", on_ref("torso", 60, 330), on_ref("torso", 55, 505)),
+        bone("TailFront", "Hips", on_ref("torso", 195, 330), on_ref("torso", 205, 500)),
     ]
-
-    def shifted(p, dx):
-        return p[0] + dx, p[1]
-
-    for suffix, dx in (("Front", 0.0), ("Back", FAR_ARM)):
-        bones.append(bone("UpperArm" + suffix, "Chest", shifted(shoulder, dx), shifted(elbow, dx)))
-        bones.append(bone("ForeArm" + suffix, "UpperArm" + suffix, shifted(elbow, dx), shifted(fingertips, dx)))
-    bones.append(bone("Sword", "ForeArmFront", hand, (hand[0] + 300, hand[1])))
-    for suffix, dx in (("Front", 0.0), ("Back", FAR_LEG)):
-        bones.append(bone("Thigh" + suffix, "Hips", shifted(hip, dx), shifted(knee, dx)))
-        bones.append(bone("Shin" + suffix, "Thigh" + suffix, shifted(knee, dx), shifted(ankle, dx)))
-        bones.append(bone("Boot" + suffix, "Shin" + suffix, shifted(ankle, dx), shifted(toe, dx)))
+    for suffix, part in (("Front", "arm"), ("Back", "arm_far")):
+        bones.append(bone("UpperArm" + suffix, "Chest", on_ref(part, 55, 35), on_ref(part, 45, 235)))
+        bones.append(bone("ForeArm" + suffix, "UpperArm" + suffix, on_ref(part, 45, 235), on_ref(part, 52, 420)))
+        bones.append(bone("Hand" + suffix, "ForeArm" + suffix, on_ref(part, 52, 420), on_ref(part, 65, 518)))
+    grip = on_ref("arm", 62, 470)
+    bones.append(bone("Sword", "HandFront", grip, (grip[0] + 300, grip[1])))
+    for suffix, part in (("Front", "leg"), ("Back", "leg_far")):
+        bones.append(bone("Thigh" + suffix, "Hips", on_ref(part, 100, 60), on_ref(part, 78, 320)))
+        bones.append(bone("Shin" + suffix, "Thigh" + suffix, on_ref(part, 78, 320), on_ref(part, 58, 585)))
+        bones.append(bone("Boot" + suffix, "Shin" + suffix, on_ref(part, 58, 585), on_ref(part, 140, 635)))
     # The cloak: three chains fanning from the shoulders to the hem, in the cloak's own pixels.
     chains = [((250, 40), (40, 930)), ((320, 40), (230, 940)), ((400, 60), (440, 800))]
     for c, (top, bottom) in enumerate(chains):
@@ -106,43 +144,46 @@ def skeleton():
     return bones
 
 
-def origin(part, size, dx=0.0):
+def origin(part, size):
     """The world position, on the rig, of the bottom-left corner of a part."""
-    sx, sy, (ax, ay), (rx, ry) = FIT[part]
-    left = rx - ax * sx + dx
-    bottom = ry - ay * sy + size[1] * sy
-    return unit(left, bottom)
+    _, sx, sy, (ax, ay), (rx, ry) = FIT[part]
+    return unit(rx - ax * sx, ry - ay * sy + size[1] * sy)
 
 
 def main():
     if cv2 is None:
         sys.exit("fit_parts.py needs OpenCV.")
-    parts_dir = sys.argv[1] if len(sys.argv) > 1 else os.path.join(os.path.dirname(__file__), "..", "ai_art", "out", "hero_ansel_parts")
+    parts_dir = sys.argv[1] if len(sys.argv) > 1 else DEFAULT_PARTS
     os.makedirs(OUT, exist_ok=True)
     sizes = {}
-    for name, (sx, sy, _, _) in FIT.items():
-        im = Image.open(os.path.join(parts_dir, name + ".png"))
+    for name, (source, sx, sy, _, _) in FIT.items():
+        im = Image.open(os.path.join(parts_dir, source + ".png"))
         sizes[name] = im.size
         written = (round(im.width * sx * ART_SCALE), round(im.height * sy * ART_SCALE))
-        resize_premultiplied(im, written).save(os.path.join(OUT, f"ansel_{name}.png"), optimize=True)
+        art = resize_premultiplied(im, written)
+        if name.endswith("_far"):
+            art = far_side(art)
+        art.save(os.path.join(OUT, f"ansel_{name}.png"), optimize=True)
+        normal = normals.normal_map(np.asarray(art), SHAPE[name])
+        Image.fromarray(normal, "RGB").save(os.path.join(OUT, f"ansel_{name}_n.png"), optimize=True)
         print(name, im.size, "->", written)
 
-    def entry(name, file, order, skinned, bones, grid=(0, 0), far=False, dx=0.0, attach=""):
-        x, y = origin(file, sizes[file], dx)
-        return {"name": name, "file": f"ansel_{file}", "order": order, "skinned": skinned, "far": far, "bones": bones,
+    def entry(name, file, order, skinned, bones, grid=(0, 0), attach=""):
+        x, y = origin(file, sizes[file])
+        return {"name": name, "file": f"ansel_{file}", "order": order, "skinned": skinned, "bones": bones,
                 "cols": grid[0], "rows": grid[1], "originX": x, "originY": y, "bone": attach}
 
     cloak_bones = ["Chest"] + [f"Cloak{c}_{s}" for c in range(3) for s in range(5)]
     parts = [
         entry("Cloak", "cloak", 1, True, cloak_bones, (12, 24)),
-        entry("ArmBack", "arm", 3, True, ["UpperArmBack", "ForeArmBack"], (6, 20), far=True, dx=FAR_ARM),
-        entry("LegBack", "leg", 5, True, ["ThighBack", "ShinBack", "BootBack"], (8, 26), far=True, dx=FAR_LEG),
+        entry("ArmBack", "arm_far", 3, True, ["UpperArmBack", "ForeArmBack", "HandBack"], (6, 22)),
+        entry("LegBack", "leg_far", 5, True, ["ThighBack", "ShinBack", "BootBack"], (8, 26)),
         entry("LegFront", "leg", 7, True, ["ThighFront", "ShinFront", "BootFront"], (8, 26)),
-        entry("Torso", "torso", 10, True, ["Hips", "Spine", "Chest"], (8, 18)),
-        entry("Head", "head", 12, False, [], attach="Head"),
+        entry("Torso", "torso", 10, True, ["Hips", "Spine", "Chest", "TailBack", "TailFront"], (10, 20)),
+        entry("Head", "head", 12, True, ["Head", "HairBack", "HairTop"], (12, 12)),
         entry("Sword", "sword", 14, False, [], attach="Sword"),
-        entry("ArmFront", "arm", 15, True, ["UpperArmFront", "ForeArmFront"], (6, 20)),
-        entry("Hood", "hood", 16, False, [], attach="Chest"),
+        entry("ArmFront", "arm", 15, True, ["UpperArmFront", "ForeArmFront", "HandFront"], (6, 22)),
+        entry("Hood", "hood", 16, False, [], attach="Hood"),
     ]
     with open(os.path.join(OUT, "ansel_rig.json"), "w", encoding="utf-8", newline="\n") as f:
         json.dump({"generator": "tools/hero_ansel/fit_parts.py", "ppu": PPU, "skeleton": skeleton(), "parts": parts}, f, indent=1)
