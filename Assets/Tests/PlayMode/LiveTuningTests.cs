@@ -137,11 +137,11 @@ namespace Descender.Tests.PlayMode
             yield return null;
             var rows = panelObject.GetComponentInChildren<TextMeshProUGUI>();
             Assert.That(rows, Is.Not.Null);
-            Assert.That(rows.text, Does.StartWith("Run (px/s, px/s²)  1/9"));
+            Assert.That(rows.text, Does.StartWith("Run (px/s, px/s²)  1/10"));
             Assert.That(rows.text, Does.Contain("* runSpeed 160 (asset 100)"));
 
             Assert.That(panel.TurnTo("dash"), Is.True);
-            Assert.That(rows.text, Does.StartWith("Dash  4/9"));
+            Assert.That(rows.text, Does.StartWith("Dash  4/10"));
             Assert.That(rows.text, Does.Contain("dashSpeed 260"));
             panel.Turn(panel.Group - 4);
             var last = LiveTuning.Groups.Count - 1;

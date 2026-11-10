@@ -56,8 +56,9 @@ namespace Descender.Tests.EditMode
             Assert.That(LiveTuning.Find("dashSpeed").Group, Is.EqualTo("Dash"));
             Assert.That(LiveTuning.Find("hitFlashFrames").Group, Is.EqualTo("Feel"));
             Assert.That(LiveTuning.Find("PixelsPerUnit"), Is.Null, "a constant is not a tuning field");
-            Assert.That(LiveTuning.Groups.Count, Is.EqualTo(9));
+            Assert.That(LiveTuning.Groups.Count, Is.EqualTo(10));
             Assert.That(LiveTuning.Find("waterSinkSpeed").Group, Is.EqualTo("Water"));
+            Assert.That(LiveTuning.Find("ledgeGrab").Group, Is.EqualTo("Ledge grab"));
             Assert.That(LiveTuning.Find("climbSpeed").Group, Is.EqualTo("Climb"));
         }
 
@@ -214,7 +215,7 @@ namespace Descender.Tests.EditMode
             var jump = TuningOverlay.GroupStarting("jump");
             Assert.That(jump, Is.EqualTo(1));
             var text = TuningOverlay.Text(live, jump);
-            Assert.That(text, Does.StartWith("Jump (px, s)  2/9\n"));
+            Assert.That(text, Does.StartWith("Jump (px, s)  2/10\n"));
             Assert.That(text, Does.Contain("<color=#FFD966>* jumpHeight 90 (asset 72)</color>"));
             Assert.That(text, Does.Contain("\n  coyoteTime 0.1\n"));
             Assert.That(text, Does.Not.Contain("runSpeed"), "one group at a time");

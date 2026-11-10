@@ -230,8 +230,8 @@ hygiene as each production region lands.
 | T-0020 | Platforms that crumble and platforms on a timer | done | 20 | T-0018 | 1 | Re-plan the roadmap around mechanics | #180 |
 | T-0021 | Wind and lift | done | 21 | T-0017 | 1 | Re-plan the roadmap around mechanics | #181 |
 | T-0022 | Up, ladders and vines | done | 22 | T-0017 | 1 | Re-plan the roadmap around mechanics | #182 |
-| T-0023 | Ledge grab, to try and maybe drop | approved | 23 | T-0022 | 0 | Re-plan the roadmap around mechanics | |
-| T-0024 | Water | in review | 24 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
+| T-0023 | Ledge grab, to try and maybe drop | in review | 23 | T-0022 | 1 | Re-plan the roadmap around mechanics | |
+| T-0024 | Water | done | 24 | T-0017 | 1 | Re-plan the roadmap around mechanics | #185 |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -415,7 +415,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (281 on `main` after T-0017) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (77 after T-0024; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (81 after T-0023; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -522,6 +522,13 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0023, ledge grab (a trial).** `lab grab`, the only place it is on;
+  elsewhere `tune ledgeGrab on` turns it on. Jump beside a wall a little
+  higher than a jump and hold towards it: on the way down he catches the
+  corner and hangs. Up or jump climbs onto it, down lets go. To decide:
+  whether catching ledges suits the game. If yes it becomes a setting or
+  an ability and gets an animation; if no it is removed. `tune
+  ledgeGrabReach` is how far below his head the corner can be.
 - **T-0024, water.** `lab water`. A tank to jump into, sink in, swim
   across with strokes (jump, again and again) and jump out of at the
   surface, and a column of water entered at its foot that strokes take

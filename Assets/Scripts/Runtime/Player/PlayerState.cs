@@ -15,5 +15,6 @@ namespace Descender.Player
         Cast,
         Slam,
         Climb,
+        Hang,
     }
 }
