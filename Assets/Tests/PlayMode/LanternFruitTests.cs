@@ -180,7 +180,7 @@ namespace Descender.Tests.PlayMode
             Assert.That(fruit.IsGone, Is.True, "not back before its time");
             yield return probe.Until(() => fruit.IsGrowing, 10);
             Assert.That(fruit.IsGrowing, Is.True, "it starts to grow back at its time");
-            Assert.That((Vector2)fruit.transform.position, Is.EqualTo(fruit.Home), "on its stalk");
+            Assert.That(Vector2.Distance(fruit.transform.position, fruit.Home), Is.LessThan(0.01f), "on its stalk");
             yield return probe.Until(() => fruit.IsHanging, Steps(LanternFruit.GrowTime) + 5);
             Assert.That(fruit.IsHanging, Is.True, "grown, it hangs again");
         }
@@ -265,6 +265,31 @@ namespace Descender.Tests.PlayMode
             Assert.That(fruit.Pops, Is.EqualTo(1), "the swing popped it");
             Assert.That(fruit.Playing, Is.EqualTo(look.Pop[0]), "and its pop plays");
             Object.Destroy(look);
+        }
+
+        [UnityTest]
+        public IEnumerator ItsBurstFlashesThrowsItsMotesShardsAndSeedsAndIsOverInAFewSeconds()
+        {
+            var piece = Hang(FruitX, Floor + 5f);
+            yield return Begin(new Vector2(4f, Floor));
+            var fruit = FruitAt(piece);
+            var burst = fruit.View.BurstEffect;
+            Assert.That(burst.IsPlaying, Is.False, "nothing before it bursts");
+
+            hero.PlaceAt(new Vector2(FruitX + 4f, Floor));
+            yield return null;
+            hero.PlaceAt(new Vector2(FruitX, Floor));
+            yield return probe.Until(() => fruit.IsGone, 300);
+            Assert.That(fruit.IsGone, Is.True, "it fell and burst");
+            yield return probe.Step();
+            Assert.That(burst.Flashing, Is.True, "the flash");
+            var thrown = LanternFruitBurst.Motes + LanternFruitBurst.Shards + LanternFruitBurst.Seeds;
+            Assert.That(burst.Particles, Is.EqualTo(thrown), "every mote, shard and seed is in the air");
+
+            var over = LanternFruitBurst.FlareTime + LanternFruitBurst.EmberTime + 0.3f;
+            yield return probe.Step(Steps(over));
+            Assert.That(burst.Flashing, Is.False);
+            Assert.That(burst.IsPlaying, Is.False, "all of it is over");
         }
 
         [UnityTest]

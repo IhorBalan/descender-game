@@ -245,7 +245,7 @@ namespace Descender.Enemies
             EnemyPhysics.HurtHero(at, BurstSize / Ppu, BurstDamage, at, hits);
             Feedback.Puff(at, BurstColor);
             Feedback.Spark(at, BurstColor);
-            Feedback.Shake(0.15f);
+            Feedback.Shake(0.35f);
             Audio.Sfx.Play("enemy_die", -4f);
             Vanish();
             // Drawn from the ground under it.

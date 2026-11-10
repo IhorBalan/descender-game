@@ -29,10 +29,9 @@ namespace Descender.Enemies
         /// <summary>Falling at full speed it is this much longer (and half that much thinner).</summary>
         public const float FallStretch = 0.22f;
 
-        /// <summary>The burst's flash of light, and how long it takes to die away.</summary>
-        public const float FlareIntensity = 2.6f;
-        public const float FlareRadius = 3.5f;
-        public const float FlareTime = 0.35f;
+        /// <summary>The painted burst plays this much bigger than the fruit, growing to the second size.</summary>
+        public const float BurstScale = 1.9f;
+        public const float BurstScaleEnd = 2.3f;
 
         /// <summary>The size it starts growing back from, painted (its own frames are small) and as a circle.</summary>
         public const float GrowFromPainted = 0.7f;
@@ -51,7 +50,8 @@ namespace Descender.Enemies
         private SpriteRenderer effectNow;
         private SpriteRenderer effectNext;
         private Light2D glow;
-        private Light2D flare;
+        private LanternFruitBurst burst;
+        private float effectScale = 1f;
         private LineRenderer stalk;
         private Vector2 anchor;
         private Phase phase = Phase.Hang;
@@ -61,7 +61,6 @@ namespace Descender.Enemies
         private Sprite[] effectFrames;
         private float effectSince;
         private bool effectOn;
-        private float flareSince = -1f;
 
         public bool IsPainted => art != null;
 
@@ -70,6 +69,9 @@ namespace Descender.Enemies
 
         /// <summary>The frame of a burst or a pop playing now, or null when none is.</summary>
         public Sprite Playing => effectOn ? effectNow.sprite : null;
+
+        /// <summary>The flash, the ring, the motes, shards and seeds and the flare of its burst.</summary>
+        public LanternFruitBurst BurstEffect => burst;
 
         /// <summary>How far it has ripened, 0 to 1: how much of the ripe look shows.</summary>
         public float Ripeness { get; private set; }
@@ -114,8 +116,7 @@ namespace Descender.Enemies
             effectNext = MakeRenderer(effectRoot, "Frame next", null, 4);
             effectNow.enabled = false;
             effectNext.enabled = false;
-            flare = MakeLight(effectRoot, "Flare", 0f, FlareRadius);
-            flare.enabled = false;
+            burst = LanternFruitBurst.Make(transform);
 
             glow = MakeLight(transform, "Glow", LanternFruit.LightIntensity, LanternFruit.LightRadius);
 
@@ -170,10 +171,8 @@ namespace Descender.Enemies
         {
             Enter(Phase.Gone);
             visual.gameObject.SetActive(false);
-            Play(look != null ? look.Burst : null, ground);
-            effectRoot.position = ground;
-            flareSince = Time.time;
-            flare.enabled = true;
+            Play(look != null ? look.Burst : null, ground, BurstScale);
+            burst.Play(ground);
         }
 
         /// <summary>A strike popped it at `at` (its middle).</summary>
@@ -181,7 +180,7 @@ namespace Descender.Enemies
         {
             Enter(Phase.Gone);
             visual.gameObject.SetActive(false);
-            Play(look != null ? look.Pop : null, at);
+            Play(look != null ? look.Pop : null, at, 1f);
         }
 
         public void Growing()
@@ -244,7 +243,6 @@ namespace Descender.Enemies
             sway.localRotation = Quaternion.Euler(0f, 0f, angle);
             glow.enabled = phase != Phase.Gone;
             UpdateEffect();
-            UpdateFlare();
             DrawStalk();
         }
 
@@ -270,8 +268,9 @@ namespace Descender.Enemies
             artNext.color = new Color(1f, 1f, 1f, Mathf.Clamp01(at - frame));
         }
 
-        private void Play(Sprite[] frames, Vector2 at)
+        private void Play(Sprite[] frames, Vector2 at, float scale)
         {
+            effectScale = scale;
             if (frames == null || frames.Length == 0)
             {
                 return;
@@ -313,23 +312,9 @@ namespace Descender.Enemies
             }
             effectNow.color = new Color(1f, 1f, 1f, last ? 1f - blend : 1f);
             var done = at / effectFrames.Length;
-            effectRoot.localScale = Vector3.one * Mathf.Lerp(0.92f, 1.08f, 1f - (1f - done) * (1f - done));
-        }
-
-        private void UpdateFlare()
-        {
-            if (flareSince < 0f)
-            {
-                return;
-            }
-            var t = (Time.time - flareSince) / FlareTime;
-            if (t >= 1f)
-            {
-                flare.enabled = false;
-                flareSince = -1f;
-                return;
-            }
-            flare.intensity = FlareIntensity * (1f - t) * (1f - t);
+            var grow = effectScale > 1f ? BurstScaleEnd / BurstScale : 1.16f;
+            var eased = 1f - (1f - done) * (1f - done);
+            effectRoot.localScale = Vector3.one * effectScale * Mathf.Lerp(0.92f, 0.92f * grow, eased);
         }
 
         private void SetRipe(float ripe)
