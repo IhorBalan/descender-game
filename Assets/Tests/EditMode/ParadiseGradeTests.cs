@@ -115,6 +115,15 @@ namespace Descender.Tests
             );
         }
 
+        [TestCase(1)]
+        [TestCase(2)]
+        public void NoZonesShadowsSinkToBlack(int zone)
+        {
+            var lift = Effect<LiftGammaGain>(Graded(zone)).lift;
+            Assert.That(lift.overrideState, Is.True);
+            Assert.That(lift.value.w, Is.GreaterThan(0f));
+        }
+
         /// <summary>A hazard can sit in a corner, so the frame may shade it and never hide it.</summary>
         [TestCase(1)]
         [TestCase(2)]
