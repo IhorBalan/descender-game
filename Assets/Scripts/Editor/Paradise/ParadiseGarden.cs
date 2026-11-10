@@ -396,6 +396,11 @@ namespace Descender.EditorTools.Paradise
             {
                 Fall(zone, water, w, art);
             }
+            var pergolas = ParadiseArt.Group(root, "Pergolas");
+            foreach (var x in plan.pergolas)
+            {
+                Pergola(zone, pergolas, x, art);
+            }
             var shafts = ParadiseArt.Group(root, "Shafts");
             foreach (var x in plan.shafts)
             {
@@ -2370,6 +2375,36 @@ namespace Descender.EditorTools.Paradise
             }
         }
 
+        /// <summary>Where the pergolas stand, each by the x of its left column.</summary>
+        public static float[] PergolasOf(int zone) =>
+            zone == 1 ? new[] { 348f }
+            : zone == 2 ? new[] { 533f, 1258f }
+            : new float[0];
+
+        /// <summary>From one column of a pergola to the other: an arch_span at its painted width.</summary>
+        public const float PergolaSpan = 6f;
+
+        /// <summary>How far above the walk a pergola's arch springs, well clear of the hero's head.</summary>
+        public const float PergolaRise = 3.2f;
+
+        /// <summary>How far above its springing the underside of the arch's crown is.</summary>
+        private const float PergolaCrown = 2.55f;
+
+        /// <summary>A free-standing arch on two columns: a colonnade carrying nothing but its own coping.</summary>
+        private static void Pergola(ParadiseLayout.Zone zone, Transform parent, float x, ParadiseArt.ZoneArt art)
+        {
+            var left = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+            var right = ParadiseDressing.SurfaceY(zone, x + PergolaSpan, float.NaN);
+            var top = Mathf.Max(left, right) + PergolaRise + ArchRise - DeckSeat;
+            Colonnade(
+                parent,
+                new List<Vector2> { new Vector2(x - 3f, top), new Vector2(x + PergolaSpan + 3f, top) },
+                new List<(float x, float ground)> { (x, left), (x + PergolaSpan, right) },
+                0f,
+                art
+            );
+        }
+
         /// <summary>Half the capital's width, where it meets the deck above.</summary>
         private const float CapitalHalfWidth = 0.8f;
 
@@ -2477,6 +2512,7 @@ namespace Descender.EditorTools.Paradise
             public readonly List<Spot> foreground = new List<Spot>();
             public readonly List<Waterfall> water = new List<Waterfall>();
             public readonly List<float> shafts = new List<float>();
+            public readonly List<float> pergolas = new List<float>();
             public readonly List<Spot> walls = new List<Spot>();
             public readonly List<Spot> trees = new List<Spot>();
             public readonly List<Spot> framing = new List<Spot>();
@@ -2646,6 +2682,32 @@ namespace Descender.EditorTools.Paradise
                             at = new Vector2(edge, top - 0.5f),
                             scale = 0.8f,
                             flip = edge > x0 + 2f,
+                        }
+                    );
+                }
+            }
+            // Arched pergolas behind the walk, on the longest runs of wall and railing, hung with growth.
+            foreach (var x in PergolasOf(zone.number))
+            {
+                plan.pergolas.Add(x);
+                var crown =
+                    Mathf.Max(
+                        ParadiseDressing.SurfaceY(zone, x, float.NaN),
+                        ParadiseDressing.SurfaceY(zone, x + PergolaSpan, float.NaN)
+                    )
+                    + PergolaRise
+                    + PergolaCrown;
+                var growth = new[] { "ivy_drape_b", "wisteria_drape", "ivy_drape_c" };
+                for (var i = 0; i < growth.Length; i++)
+                {
+                    var along = x + PergolaSpan * (i + 1) / (growth.Length + 1f);
+                    plan.hanging.Add(
+                        new Spot
+                        {
+                            name = growth[i],
+                            at = new Vector2(along + (Hash(along, 41f) - 0.5f) * 0.5f, crown),
+                            scale = 0.55f + Hash(along, 42f) * 0.2f,
+                            flip = Hash(along, 43f) > 0.5f,
                         }
                     );
                 }
