@@ -658,6 +658,13 @@ namespace Descender.EditorTools.Paradise
             cap.color = tint;
         }
 
+        /// <summary>
+        /// The golden tree's place among the backdrops: over the blurred layers that hold the temple
+        /// islands (MidFar and Mid), so a soft ghost never slides across the sharpest thing in the
+        /// distance, and behind the near clouds and the Near layer.
+        /// </summary>
+        public const int GoldenTreeOrder = -967;
+
         /// <summary>The region's far landmark: the golden tree on its island, drifting across Heaven 1.</summary>
         public static void DressRegion(GameObject root)
         {
@@ -687,7 +694,7 @@ namespace Descender.EditorTools.Paradise
                 "GoldenTree",
                 Get("golden_tree"),
                 far,
-                -985,
+                GoldenTreeOrder,
                 new Vector3(1850f, -58f, 0f),
                 Vector3.one * 0.28f
             );
@@ -697,7 +704,7 @@ namespace Descender.EditorTools.Paradise
                 "Glow",
                 Get("golden_tree_glow"),
                 glow,
-                -984,
+                GoldenTreeOrder + 1,
                 tree.transform.position,
                 Vector3.one
             );
@@ -2866,7 +2873,6 @@ namespace Descender.EditorTools.Paradise
             return plan;
         }
 
-        /// <summary>How much faster than the walk the framing passes, both ways: it is that much nearer the eye.</summary>
         /// <summary>The sorting layer that can sample the finished Default layer, so pools can mirror it.</summary>
         public const string WaterLayer = "Water";
 
@@ -2886,6 +2892,7 @@ namespace Descender.EditorTools.Paradise
         /// <summary>Kept clear of a wall: the column at a wall's end stands proud of its collider.</summary>
         private const float PoolWallGap = 0.5f;
 
+        /// <summary>How much faster than the walk the framing passes, both ways: it is that much nearer the eye.</summary>
         public const float FrontDepth = 0.4f;
 
         /// <summary>The foot of a rising piece under the walk, in units (RISE_FOOT in fg_framing.py).</summary>
