@@ -1359,11 +1359,16 @@ namespace Descender.Player
         private bool Blocked(Vector2 centre, Vector2 size) =>
             Physics2D.OverlapBox(centre, size, 0f, worldOnlyFilter, hits) > 0;
 
-        /// <summary>Moves him by a few pixels at once, outside the physics step.</summary>
+        /// <summary>
+        /// Moves him by a few pixels at once, outside the physics step. Both the body and
+        /// what is drawn go to the body's new place: what is drawn trails the body between
+        /// steps, and moving it from where it is would carry that trail into the body.
+        /// </summary>
         private void Nudge(Vector2 by)
         {
-            body.position += by;
-            transform.position += (Vector3)by;
+            var to = body.position + by;
+            body.position = to;
+            transform.position = new Vector3(to.x, to.y, transform.position.z);
         }
 
         /// <summary>Wall Grip: holding towards a wall while in the air and falling grips it.</summary>
