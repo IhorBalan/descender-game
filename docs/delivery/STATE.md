@@ -239,8 +239,8 @@ hygiene as each production region lands.
 | T-0022 | Up, ladders and vines | done | 22 | T-0017 | 1 | Re-plan the roadmap around mechanics | #182 |
 | T-0023 | Ledge grab, to try and maybe drop | done | 23 | T-0022 | 1 | Re-plan the roadmap around mechanics | #186 |
 | T-0024 | Water | done | 24 | T-0017 | 1 | Re-plan the roadmap around mechanics | #185 |
-| T-0026 | Training dummy and damage read-out | in review | 26 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
-| T-0027 | Sword directions: up, down and the pogo | approved | 27 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0026 | Training dummy and damage read-out | done | 26 | T-0017 | 1 | Re-plan the roadmap around mechanics | #187 |
+| T-0027 | Sword directions: up, down and the pogo | in review | 27 | T-0026 | 1 | Re-plan the roadmap around mechanics | |
 | T-0028 | Sword feel: combo, push, recoil, hit-stop per attack | approved | 28 | T-0027 | 0 | Re-plan the roadmap around mechanics | |
 | T-0029 | Holy Light and Smite against the dummies | approved | 29 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
 | T-0030 | Health, healing and being hurt | approved | 30 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
@@ -428,8 +428,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (284 on `main` after #184) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (88 after T-0026; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (298 on `main` after #183) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (96 after T-0027; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -536,6 +536,15 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0027, the sword's aim.** `lab sword` (no slam there, so down and
+  attack is the cut). Up and attack cuts upward: a dummy overhead that the
+  cut ahead cannot reach. Down and attack in the air cuts downward, and a
+  cut that lands bounces him: a row of dummies over spikes to cross by
+  bouncing. To check: the bounce height and the spacing feel right (`tune
+  pogoHeight`), the two boxes reach what they look like they should
+  (`tune attackUpSize`, `attackDownSize` and their offsets). To decide:
+  with Smite owned, down and attack is the slam; `tune downAttackSlams
+  off` makes it the cut, to try both.
 - **T-0026, training dummies.** `lab dummy` (the room gives the wings,
   the bolt and the slam). Each dummy shows the last hit (what it was and
   its damage), the count and total, and the damage a second over three

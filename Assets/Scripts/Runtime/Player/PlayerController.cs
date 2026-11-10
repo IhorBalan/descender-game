@@ -62,6 +62,8 @@ namespace Descender.Player
         private readonly Collider2D[] hits = new Collider2D[8];
         private readonly RaycastHit2D[] lineHits = new RaycastHit2D[8];
         private readonly List<IHittable> attackHit = new List<IHittable>(8);
+        private int attackAim;
+        private bool pogoed;
         private readonly HashSet<Save.Ability> abilities = new HashSet<Save.Ability>();
         private static PhysicsMaterial2D slick;
 
@@ -671,7 +673,7 @@ namespace Descender.Player
                 StartDash();
                 return;
             }
-            if (attackBufferLeft > 0f && !grounded && downHeld && Has(Save.Ability.Smite))
+            if (attackBufferLeft > 0f && !grounded && downHeld && tuning.downAttackSlams && Has(Save.Ability.Smite))
             {
                 StartSlam();
                 return;
@@ -976,6 +978,10 @@ namespace Descender.Player
             SetState(PlayerState.Attack, AttackTime());
             AttackCount++;
             attackBufferLeft = 0f;
+            // Up cuts upward anywhere; down cuts downward in the air only (on the ground
+            // it is the cut ahead). The aim holds for the whole swing.
+            attackAim = upHeld ? 1 : (downHeld && !grounded ? -1 : 0);
+            pogoed = false;
             attackHit.Clear();
             sprite.PlayOnce("attack");
             if (sprite != null)
@@ -1006,14 +1012,18 @@ namespace Descender.Player
             var active = elapsed >= tuning.attackActiveFrom * scale && elapsed <= tuning.attackActiveUntil * scale;
             if (active)
             {
-                // A longer blade widens the hitbox away from the body.
-                var size = tuning.attackShapeSize;
-                size.x *= StatFactor("reach");
-                var extra = (size.x - tuning.attackShapeSize.x) / 2f;
-                var centre =
-                    (Vector2)transform.position
-                    + new Vector2((tuning.attackOffset.x + extra) * facing, tuning.attackOffset.y) / Ppu;
-                StrikeEnemies(centre, size / Ppu, StrikeKind.Sword, AttackDamage, attackHit);
+                AttackBox(out var centre, out var size);
+                var landed = StrikeEnemies(centre, size, StrikeKind.Sword, AttackDamage, attackHit);
+                if (landed && attackAim < 0 && !pogoed && tuning.pogoHeight > 0f)
+                {
+                    // A downward cut that lands throws him back up, with his air moves again.
+                    pogoed = true;
+                    velocity.y = tuning.PogoVelocity;
+                    body.linearVelocity = velocity / Ppu;
+                    jumpRising = false;
+                    airJumpAvailable = true;
+                    dashAvailable = true;
+                }
             }
             if (stateLeft <= 0f)
             {
@@ -1022,9 +1032,41 @@ namespace Descender.Player
             }
         }
 
-        /// <summary>Hurts every enemy in a box once per swing; a landed hit stops time for a moment.</summary>
-        private void StrikeEnemies(Vector2 centre, Vector2 size, StrikeKind kind, int damage, List<IHittable> already)
+        /// <summary>
+        /// The sword's box for this swing, in the world: ahead, above or below by its aim.
+        /// A longer blade lengthens it away from the body.
+        /// </summary>
+        private void AttackBox(out Vector2 centre, out Vector2 size)
         {
+            var reach = StatFactor("reach");
+            Vector2 offset;
+            if (attackAim == 0)
+            {
+                size = tuning.attackShapeSize;
+                var longer = size.x * (reach - 1f);
+                size.x += longer;
+                offset = new Vector2((tuning.attackOffset.x + longer / 2f) * facing, tuning.attackOffset.y);
+            }
+            else
+            {
+                var up = attackAim > 0;
+                size = up ? tuning.attackUpSize : tuning.attackDownSize;
+                offset = up ? tuning.attackUpOffset : tuning.attackDownOffset;
+                var longer = size.y * (reach - 1f);
+                size.y += longer;
+                offset = new Vector2(offset.x * facing, offset.y + longer / 2f * attackAim);
+            }
+            centre = (Vector2)transform.position + offset / Ppu;
+            size /= Ppu;
+        }
+
+        /// <summary>
+        /// Hurts every enemy in a box once per swing; a landed hit stops time for a moment.
+        /// True when a strike landed in this call.
+        /// </summary>
+        private bool StrikeEnemies(Vector2 centre, Vector2 size, StrikeKind kind, int damage, List<IHittable> already)
+        {
+            var landed = false;
             var count = Physics2D.OverlapBox(centre, size, 0f, enemyFilter, hits);
             for (var i = 0; i < count; i++)
             {
@@ -1036,9 +1078,11 @@ namespace Descender.Player
                 already.Add(target);
                 if (Strikes.Deliver(target, new Strike(kind, damage, transform.position)))
                 {
+                    landed = true;
                     Feedback.HitStop(tuning.hitStopTime);
                 }
             }
+            return landed;
         }
 
         private void EndAttack()

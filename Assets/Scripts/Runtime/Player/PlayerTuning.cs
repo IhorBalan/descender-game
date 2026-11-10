@@ -144,6 +144,21 @@ namespace Descender.Player
         public Vector2 attackOffset = new Vector2(20f, 18f);
         public Vector2 attackShapeSize = new Vector2(30f, 28f);
 
+        [Tooltip("The upward cut (up and attack): the middle of its box from his feet, and its size (px).")]
+        public Vector2 attackUpOffset = new Vector2(0f, 40f);
+        public Vector2 attackUpSize = new Vector2(28f, 30f);
+
+        [Tooltip("The downward cut (down and attack in the air): its box's middle from his feet, and its size (px).")]
+        public Vector2 attackDownOffset = new Vector2(0f, -10f);
+        public Vector2 attackDownSize = new Vector2(26f, 28f);
+
+        [Tooltip("A downward cut that lands bounces him this high (px); 0 for no bounce.")]
+        [Min(0f)]
+        public float pogoHeight = 40f;
+
+        [Tooltip("With Smite, down and attack in the air is the slam; off, it is the downward cut.")]
+        public bool downAttackSlams = true;
+
         [Range(0f, 1f)]
         public float attackMoveMultiplier = 0.6f;
 
@@ -289,6 +304,9 @@ namespace Descender.Player
 
         /// <summary>Upward speed of a stroke in water, px/s: what reaches the stroke height there.</summary>
         public float StrokeVelocity => Mathf.Sqrt(2f * Gravity * waterGravity * waterStrokeHeight);
+
+        /// <summary>Upward speed of the bounce off a downward cut, px/s.</summary>
+        public float PogoVelocity => Mathf.Sqrt(2f * Gravity * pogoHeight);
 
         /// <summary>Upward launch speed for the jump, px/s (positive: Y is up in Unity).</summary>
         public float JumpVelocity => 2f * jumpHeight / jumpTimeToApex;
