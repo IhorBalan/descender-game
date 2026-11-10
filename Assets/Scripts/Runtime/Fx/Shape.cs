@@ -114,6 +114,12 @@ namespace Descender.Fx
         {
             if (body == null)
             {
+                // A shape saved in a scene already has its parts.
+                var saved = transform.Find("Body");
+                body = saved != null ? saved.GetComponent<SpriteRenderer>() : null;
+            }
+            if (body == null)
+            {
                 var go = new GameObject("Body");
                 go.transform.SetParent(transform, false);
                 body = go.AddComponent<SpriteRenderer>();
@@ -138,6 +144,12 @@ namespace Descender.Fx
                 return;
             }
             if (labelCanvas == null)
+            {
+                var saved = transform.Find("Label");
+                labelCanvas = saved != null ? saved.GetComponent<Canvas>() : null;
+                labelText = saved != null ? saved.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+            }
+            if (labelCanvas == null || labelText == null)
             {
                 var go = new GameObject("Label", typeof(RectTransform), typeof(Canvas));
                 go.transform.SetParent(transform, false);

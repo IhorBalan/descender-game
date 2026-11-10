@@ -611,6 +611,7 @@ namespace Descender.Game
             StoryFlags.Reset();
             Economy.Inventory.Reset();
             Economy.Skills.Reset();
+            Triggers.Keys.Reset();
         }
 
         private static string Capitalize(string id)

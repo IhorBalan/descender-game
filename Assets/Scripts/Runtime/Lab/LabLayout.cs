@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using Descender.Fx;
 using Descender.Player;
 using Descender.Save;
+using Descender.Triggers;
 using UnityEngine;
 
 namespace Descender.Lab
@@ -27,6 +30,15 @@ namespace Descender.Lab
 
         /// <summary>A pad that takes the hero to station number `value`.</summary>
         Pad,
+
+        /// <summary>A <see cref="TriggerZone"/>: an item, a switch, a lock, drawn as its shape.</summary>
+        Zone,
+
+        /// <summary>A door: solid until a trigger opens it.</summary>
+        Door,
+
+        /// <summary>A ledge on a <see cref="Mover"/>: it travels by `travel` and back once started.</summary>
+        Lift,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -36,6 +48,28 @@ namespace Descender.Lab
         public Rect rect;
         public string label = "";
         public float value;
+
+        /// <summary>A name other pieces of the station find this one by; empty for none.</summary>
+        public string id = "";
+
+        /// <summary>Starts switched off, for a trigger to switch on.</summary>
+        public bool hidden;
+
+        /// <summary>A zone's shape and colour; a clear colour draws nothing.</summary>
+        public ShapeKind shape = ShapeKind.Square;
+        public Color color = Color.clear;
+
+        /// <summary>A zone: what fires it, whether once, whether it disappears, and what it asks for.</summary>
+        public TriggerEvent on = TriggerEvent.Enter;
+        public bool once = true;
+        public bool hide;
+        public TriggerNeeds needs = new TriggerNeeds();
+
+        /// <summary>A zone's actions, made when the station is built; the argument finds a built piece by id.</summary>
+        public Func<Func<string, GameObject>, TriggerAction[]> actions;
+
+        /// <summary>A lift: where it goes from where it starts.</summary>
+        public Vector2 travel;
     }
 
     /// <summary>A room of the lab where one mechanic is tried.</summary>
@@ -52,6 +86,9 @@ namespace Descender.Lab
 
         /// <summary>The abilities the hero has here, and no others.</summary>
         public Ability[] abilities = new Ability[0];
+
+        /// <summary>Its pieces change in play (pickups, doors), so it is built again each time it is entered.</summary>
+        public bool rebuilt;
 
         public readonly List<Piece> pieces = new List<Piece>();
     }
@@ -91,7 +128,14 @@ namespace Descender.Lab
             "slam",
             "pods",
             "spikes",
+            "items",
         };
+
+        /// <summary>The key of the items station.</summary>
+        public const string Key = "lab_key";
+
+        public const string LockedText = "Locked. The key is over the wall.";
+        public const string UnlockedText = "The key turns.";
 
         public static List<Station> Make(PlayerTuning tuning)
         {
@@ -115,6 +159,7 @@ namespace Descender.Lab
             Slam(Open(stations, "slam", "Smite: the slam", Ability.Smite), jump);
             Pods(Open(stations, "pods", "Bounce pods"));
             Spikes(Open(stations, "spikes", "Spikes and safe ground"));
+            ItemsAndTriggers(Open(stations, "items", "Items and triggers"), jump, second);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -303,6 +348,118 @@ namespace Descender.Lab
             Add(station, PieceKind.Hazard, 14f, FloorTop, 4f, 0.5f, "spikes");
             Add(station, PieceKind.Hazard, 26f, FloorTop, 8f, 0.5f, "spikes: too wide to jump");
             Add(station, PieceKind.Ledge, 27f, FloorTop + 3f, 6f, 0.25f);
+        }
+
+        /// <summary>
+        /// Pickups, a key and a door, a switch to strike and a switch to press: every one a
+        /// TriggerZone with a list of actions, drawn as a shape.
+        /// </summary>
+        private static void ItemsAndTriggers(Station station, float jump, float second)
+        {
+            station.rebuilt = true;
+            var clear = Color.clear;
+
+            // Walking on shows a line, once.
+            var hint = Zone(station, 10f, FloorTop, 1f, 3f, ShapeKind.Square, clear, "");
+            hint.actions = find => List(Do.Say("Take the wings, then the key over the wall."));
+
+            // A pickup: touching it grants Wings and it is gone.
+            var lilac = new Color(0.9f, 0.8f, 1f);
+            var wings = Zone(station, 13f, FloorTop + 0.5f, 1f, 1f, ShapeKind.Circle, lilac, "Wings");
+            wings.hide = true;
+            wings.actions = find => List(Do.Grant(Ability.Wings), Do.Say("Wings: jump again in the air."));
+
+            // The other pickups: a heart, a timed power and some light.
+            var pink = new Color(1f, 0.6f, 0.9f);
+            var heart = Zone(station, 14.75f, FloorTop + 0.5f, 1f, 1f, ShapeKind.Circle, pink, "heart");
+            heart.hide = true;
+            heart.actions = find => List(Do.Upgrade(UpgradeKind.Heart, ""));
+            var cyan = new Color(0.6f, 0.9f, 1f);
+            var blade = Zone(station, 16.5f, FloorTop + 0.5f, 1f, 1f, ShapeKind.Triangle, cyan, "blade");
+            blade.hide = true;
+            blade.actions = find => List(Do.Power(Power.Blade));
+            var pale = new Color(1f, 0.95f, 0.7f);
+            var light = Zone(station, 22f, FloorTop + 0.5f, 0.5f, 0.5f, ShapeKind.Square, pale, "light");
+            light.hide = true;
+            light.actions = find => List(Do.Currency("light", 5));
+
+            // A wall a jump does not clear and a double jump does, with the key behind it.
+            var wall = Mathf.Min(jump + second - 1f, jump + 1.5f);
+            Add(station, PieceKind.Solid, 18f, FloorTop, 3f, wall, $"{wall:0.#} high: needs Wings");
+            var gold = new Color(1f, 0.85f, 0.3f);
+            var key = Zone(station, 24.5f, FloorTop + 0.5f, 1f, 1f, ShapeKind.Diamond, gold, "key");
+            key.id = "key";
+            key.hide = true;
+            key.actions = find => List(Do.Give(Key));
+
+            // The door: a lintel down to four units, the door under it, and its lock in front.
+            Add(station, PieceKind.Solid, 30f, FloorTop + 4f, 1f, RoomHeight - 2f * Wall - 4f);
+            Add(station, PieceKind.Door, 30f, FloorTop, 1f, 4f, "door").id = "door";
+            var locked = Zone(station, 26f, FloorTop, 1.5f, 3f, ShapeKind.Square, clear, "");
+            locked.id = "locked";
+            locked.once = false;
+            locked.needs = TriggerNeeds.WithoutItem(Key);
+            locked.actions = find => List(Do.Say(LockedText));
+            var unlock = Zone(station, 27.5f, FloorTop, 2.5f, 3f, ShapeKind.Square, clear, "");
+            unlock.id = "lock";
+            unlock.needs = TriggerNeeds.Item(Key);
+            unlock.actions = Unlock;
+
+            // A switch to strike: a bridge comes and goes.
+            var bridge = Add(station, PieceKind.Ledge, 37f, FloorTop + 3f, 6f, 0.25f, "bridge");
+            bridge.id = "bridge";
+            bridge.hidden = true;
+            var red = new Color(0.95f, 0.45f, 0.3f);
+            var strike = Zone(station, 34f, FloorTop + 0.5f, 1f, 1.5f, ShapeKind.Square, red, "strike");
+            strike.id = "strike";
+            strike.on = TriggerEvent.Hit;
+            strike.once = false;
+            strike.actions = find => List(Do.Active(find("bridge"), SwitchTo.Toggle));
+
+            // A switch to press: a lift starts and stops.
+            var lift = Add(station, PieceKind.Lift, 47.5f, FloorTop + 1f, 3f, 0.25f, "lift");
+            lift.id = "lift";
+            lift.travel = new Vector2(0f, 8f);
+            var blue = new Color(0.4f, 0.6f, 1f);
+            var press = Zone(station, 45f, FloorTop, 1.5f, 2f, ShapeKind.Square, blue, "interact");
+            press.id = "press";
+            press.on = TriggerEvent.Interact;
+            press.once = false;
+            press.actions = find => List(Do.Mover(find("lift").GetComponent<Mover>(), SwitchTo.Toggle));
+        }
+
+        /// <summary>The lock: takes the key, opens the door and quiets the "locked" line.</summary>
+        private static TriggerAction[] Unlock(Func<string, GameObject> find)
+        {
+            var open = Do.Door(find("door").GetComponent<Door>(), SwitchTo.On);
+            var quiet = Do.Active(find("locked"), SwitchTo.Off);
+            return List(Do.Take(Key), open, quiet, Do.Say(UnlockedText));
+        }
+
+        /// <summary>The piece of a station with an id, or null.</summary>
+        public static Piece Find(Station station, string id)
+        {
+            return station.pieces.Find(p => p.id == id);
+        }
+
+        private static TriggerAction[] List(params TriggerAction[] actions) => actions;
+
+        /// <summary>A trigger zone piece: fires once on enter and asks for nothing until told otherwise.</summary>
+        private static Piece Zone(
+            Station station,
+            float x,
+            float y,
+            float width,
+            float height,
+            ShapeKind shape,
+            Color color,
+            string label
+        )
+        {
+            var piece = Add(station, PieceKind.Zone, x, y, width, height, label);
+            piece.shape = shape;
+            piece.color = color;
+            return piece;
         }
 
         /// <summary>The pads to the neighbouring stations, by the walls.</summary>
