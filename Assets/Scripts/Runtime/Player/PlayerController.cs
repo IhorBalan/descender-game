@@ -132,6 +132,9 @@ namespace Descender.Player
         public int WallDir => wallDir;
         public bool IsGliding => gliding;
         public bool SlamLanded => slamLanded;
+
+        /// <summary>How many attacks he has started; a new swing can follow the last with no tick between them.</summary>
+        public int AttackCount { get; private set; }
         public int Facing => facing;
         public int Health => health;
         public int MaxHealth => maxHealth;
@@ -609,6 +612,7 @@ namespace Descender.Player
         private void StartAttack()
         {
             SetState(PlayerState.Attack, AttackTime());
+            AttackCount++;
             attackBufferLeft = 0f;
             attackHit.Clear();
             sprite.PlayOnce("attack");

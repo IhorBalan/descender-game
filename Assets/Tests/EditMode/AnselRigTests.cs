@@ -149,6 +149,39 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
+        public void TheRigCastsAShadowLeavesAfterimagesAndSplashes()
+        {
+            var prefab = Prefab();
+            var shadow = prefab.GetComponent<HeroShadow>();
+            Assert.That(shadow, Is.Not.Null, "no contact shadow");
+            Assert.That(shadow.Blob, Is.Not.Null, "the shadow has no blob");
+            Assert.That(shadow.Blob.sprite, Is.Not.Null, "the shadow blob has no sprite");
+            var ghosts = prefab.GetComponent<HeroGhosts>();
+            Assert.That(ghosts, Is.Not.Null, "no afterimages");
+            Assert.That(ghosts.Material, Is.Not.Null, "the afterimages have no material");
+            var rig = new SerializedObject(prefab.GetComponent<HeroRig>());
+            foreach (var field in new[] { "splash", "ripples" })
+            {
+                Assert.That(rig.FindProperty(field).objectReferenceValue, Is.Not.Null, $"the rig has no {field}");
+            }
+            var ripples = (ParticleSystem)rig.FindProperty("ripples").objectReferenceValue;
+            Assert.That(
+                ripples.GetComponent<ParticleSystemRenderer>().sortingLayerName,
+                Is.EqualTo(ParadiseGarden.WaterLayer),
+                "ripples are drawn over the pools"
+            );
+        }
+
+        [Test]
+        public void HisFootstepsAndSplashesHaveSounds()
+        {
+            var library = AssetDatabase.LoadAssetAtPath<Audio.SfxLibrary>("Assets/Data/SfxLibrary.asset");
+            Assert.That(library, Is.Not.Null);
+            Assert.That(library.Find("step"), Is.Not.Null, "no step sound");
+            Assert.That(library.Find("splash"), Is.Not.Null, "no splash sound");
+        }
+
+        [Test]
         public void TheRigCarriesTheCloakAndNoWing()
         {
             var prefab = Prefab();

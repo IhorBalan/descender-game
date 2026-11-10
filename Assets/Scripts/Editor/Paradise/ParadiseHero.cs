@@ -19,8 +19,9 @@ namespace Descender.EditorTools.Paradise
     /// Assets/Prefabs/Paradise/HeroRig.prefab, which HeroRigInstaller puts on the hero in
     /// ParadiseMain and HeroRig animates. Every part carries its normal map (ansel_*_n.png), so
     /// the scene's lights shape him; a small warm light behind his head rims his outline. Also
-    /// builds his effects: dust, glints of light, streaks, the arc of the cut and a shockwave,
-    /// from the textures in Ansel/Fx (tools/hero_ansel/fx_textures.py).
+    /// builds his effects: dust, glints of light, streaks, the arc of the cut, a shockwave,
+    /// splashes and ripples for the pools, a contact shadow (HeroShadow) and afterimages
+    /// (HeroGhosts), from the textures in Ansel/Fx (tools/hero_ansel/fx_textures.py).
     /// </summary>
     public static class ParadiseHero
     {
@@ -302,6 +303,25 @@ namespace Descender.EditorTools.Paradise
             shockwave.sortingOrder = BaseOrder + 19;
 
             rig.SetEffects(dust, glints, streaks, arc, shockwave, soft, unlit);
+
+            // Water: droplets that fall back, and rings drawn on the pools' own layer, over them.
+            var splash = Particles(fx, "Splash", soft, unlit, 18, 1.1f, 0.6f, 0.7f);
+            var ripples = Particles(fx, "Ripples", FxSprite("fx_ring", 256f), unlit, 5, 0f, 0f, 3.2f);
+            var rippleMain = ripples.main;
+            rippleMain.startSize3D = true;
+            ripples.GetComponent<ParticleSystemRenderer>().sortingLayerName = ParadiseGarden.WaterLayer;
+            rig.SetWater(splash, ripples);
+
+            // The contact shadow under his feet, drawn just behind him.
+            var shadow = new GameObject("Shadow").AddComponent<SpriteRenderer>();
+            shadow.transform.SetParent(root, false);
+            shadow.sprite = FxSprite("fx_shadow", 128f);
+            shadow.sharedMaterial = unlit;
+            shadow.color = new Color(0f, 0f, 0f, 0f);
+            shadow.sortingOrder = BaseOrder;
+            rig.gameObject.AddComponent<HeroShadow>().Configure(shadow);
+
+            rig.gameObject.AddComponent<HeroGhosts>().Configure(glow);
         }
 
         private static ParticleSystem Particles(
