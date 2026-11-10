@@ -60,6 +60,7 @@ namespace Descender.Player
         private ContactFilter2D enemyFilter;
         private ContactFilter2D barrierFilter;
         private readonly Collider2D[] hits = new Collider2D[8];
+        private readonly RaycastHit2D[] lineHits = new RaycastHit2D[8];
         private readonly List<IHittable> attackHit = new List<IHittable>(8);
         private readonly HashSet<Save.Ability> abilities = new HashSet<Save.Ability>();
         private static PhysicsMaterial2D slick;
@@ -1115,7 +1116,11 @@ namespace Descender.Player
             }
         }
 
-        /// <summary>The nearest place to either side where his whole body is clear of the solid world; else the last safe ground.</summary>
+        /// <summary>
+        /// The nearest place to either side where his whole body is clear of the solid world
+        /// and that he could have walked to: nothing that stands still is in between, so he
+        /// is never put through a wall. Else the last safe ground.
+        /// </summary>
         private Vector2 FreeSpotBeside()
         {
             var bounds = box.bounds;
@@ -1130,7 +1135,8 @@ namespace Descender.Player
                     for (var side = -1; side <= 1; side += 2)
                     {
                         var spot = feet + new Vector2(side * i * 0.5f, lift * 0.25f);
-                        if (Physics2D.OverlapBox(spot + toCentre, size, 0f, worldOnlyFilter, hits) == 0)
+                        var clear = Physics2D.OverlapBox(spot + toCentre, size, 0f, worldOnlyFilter, hits) == 0;
+                        if (clear && !StillWorldBetween(feet + toCentre, spot + toCentre))
                         {
                             return spot;
                         }
@@ -1138,6 +1144,21 @@ namespace Descender.Player
                 }
             }
             return lastSafePosition;
+        }
+
+        /// <summary>Whether solid world that does not move lies on the line between two points.</summary>
+        private bool StillWorldBetween(Vector2 from, Vector2 to)
+        {
+            var count = Physics2D.Linecast(from, to, worldOnlyFilter, lineHits);
+            for (var i = 0; i < count; i++)
+            {
+                var owner = lineHits[i].rigidbody;
+                if (owner == null || owner.bodyType == RigidbodyType2D.Static)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void TrackSafeGround(float dt)

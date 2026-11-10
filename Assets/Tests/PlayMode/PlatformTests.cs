@@ -237,11 +237,12 @@ namespace Descender.Tests.PlayMode
 
             // Up through it from the floor, and down onto it.
             yield return probe.Until(() => PlaceOf(mover).x < heroBody.position.x, 400);
+            // Passing up through it he touches it for a moment; standing on it is coming down onto it.
             yield return probe.PressJump();
             yield return probe.Step(3);
-            yield return probe.Until(() => hero.IsGrounded, 300);
+            yield return probe.Until(() => hero.IsGrounded && hero.CarryVelocity != Vector2.zero, 300);
             yield return probe.Step(5);
-            Assert.That(hero.IsGrounded, Is.True);
+            Assert.That(hero.IsGrounded, Is.True, $"he came down on the ledge; he is at {heroBody.position}");
             Assert.That(heroBody.position.y, Is.EqualTo(4.75f).Within(2f * Pixel), "he stands on the ledge");
             Assert.That(Mathf.Abs(hero.CarryVelocity.x), Is.EqualTo(2f).Within(0.01f), "and it carries him");
 
