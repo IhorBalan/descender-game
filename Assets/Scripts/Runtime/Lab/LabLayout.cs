@@ -42,6 +42,9 @@ namespace Descender.Lab
 
         /// <summary>A camera zone: while the hero is in it the view takes its framing, zoom and held axes.</summary>
         Camera,
+
+        /// <summary>A solid block on a <see cref="Mover"/>: ridden like a lift, and it pushes and crushes.</summary>
+        Platform,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -71,8 +74,13 @@ namespace Descender.Lab
         /// <summary>A zone's actions, made when the station is built; the argument finds a built piece by id.</summary>
         public Func<Func<string, GameObject>, TriggerAction[]> actions;
 
-        /// <summary>A lift: where it goes from where it starts.</summary>
+        /// <summary>
+        /// A lift or a platform: where it goes from where it starts, how fast in units a
+        /// second (0 for the lab's usual speed), and whether it runs from the start.
+        /// </summary>
         public Vector2 travel;
+        public float speed;
+        public bool running;
 
         /// <summary>A camera zone: the framing offset, the zoom (in `value`) and the axes it holds.</summary>
         public Vector2 framing;
@@ -138,6 +146,7 @@ namespace Descender.Lab
             "spikes",
             "items",
             "camera",
+            "platforms",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -170,6 +179,7 @@ namespace Descender.Lab
             Spikes(Open(stations, "spikes", "Spikes and safe ground"));
             ItemsAndTriggers(Open(stations, "items", "Items and triggers"), jump, second);
             CameraZones(Open(stations, "camera", "Camera zones"));
+            Platforms(Open(stations, "platforms", "Platforms to ride"));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -471,6 +481,43 @@ namespace Descender.Lab
             // The arena: the view pulls back to show all of it.
             var arena = Add(station, PieceKind.Camera, 27f, FloorTop, 27f, 12f, "pulled back", ArenaZoom);
             arena.id = "arena";
+        }
+
+        /// <summary>
+        /// A ferry over spikes, a riser up to a shelf, a ferry a switch starts, and a block
+        /// that comes down to the floor: standing under it hurts and puts him beside it.
+        /// </summary>
+        private static void Platforms(Station station)
+        {
+            Add(station, PieceKind.Solid, 11f, FloorTop, 3f, 2f, "step on");
+            Add(station, PieceKind.Hazard, 14f, FloorTop, 12f, 0.5f, "spikes");
+            var ferry = Add(station, PieceKind.Lift, 14f, FloorTop + 1.75f, 3f, 0.25f, "ferry");
+            ferry.id = "ferry";
+            ferry.travel = new Vector2(9f, 0f);
+            ferry.running = true;
+            Add(station, PieceKind.Solid, 26f, FloorTop, 4f, 2f, "step off");
+
+            var riser = Add(station, PieceKind.Lift, 30f, FloorTop + 1.75f, 3f, 0.25f, "riser");
+            riser.id = "riser";
+            riser.travel = new Vector2(0f, 6f);
+            riser.running = true;
+            Add(station, PieceKind.Solid, 33f, FloorTop, 5f, 8f, "shelf");
+
+            var switched = Add(station, PieceKind.Lift, 38f, FloorTop + 7.75f, 3f, 0.25f, "switched");
+            switched.id = "switched";
+            switched.travel = new Vector2(7f, 0f);
+            var blue = new Color(0.4f, 0.6f, 1f);
+            var press = Zone(station, 34f, FloorTop + 8f, 1.5f, 2f, ShapeKind.Square, blue, "interact");
+            press.id = "press";
+            press.on = TriggerEvent.Interact;
+            press.once = false;
+            press.actions = find => List(Do.Mover(find("switched").GetComponent<Mover>(), SwitchTo.Toggle));
+            Add(station, PieceKind.Solid, 48f, FloorTop + 7f, 4f, 1f, "far shelf");
+
+            var crusher = Add(station, PieceKind.Platform, 41f, FloorTop + 3f, 3f, 1.5f, "crusher");
+            crusher.id = "crusher";
+            crusher.travel = new Vector2(0f, -3f);
+            crusher.running = true;
         }
 
         /// <summary>The lock: takes the key, opens the door and quiets the "locked" line.</summary>

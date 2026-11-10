@@ -70,6 +70,14 @@ namespace Descender.Player
         [Min(0)]
         public int cornerCorrection = 4;
 
+        [Tooltip("How much of a moving platform's speed he keeps when he leaves it.")]
+        [Range(0f, 1f)]
+        public float platformMomentum = 1f;
+
+        [Tooltip("The most a rising platform adds to a jump, in px/s.")]
+        [Min(0f)]
+        public float platformLiftMax = 120f;
+
         [Header("Wings and glide")]
         [Min(1f)]
         public float doubleJumpHeight = 56f;

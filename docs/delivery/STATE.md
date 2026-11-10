@@ -35,7 +35,7 @@ Done when: a run of Paradise plays no dialogue, the dialogue tests still
 pass with the switch off, and `docs/story/PARKED.md` says how to bring it
 back.
 
-### G1. The mechanics lab and its tools (current)
+### G1. The mechanics lab and its tools (done 2026-11-10, T-0012 to T-0017; Ihor's playtest is open)
 
 A place and a toolkit for building mechanics fast, all in simple shapes.
 
@@ -63,7 +63,7 @@ A place and a toolkit for building mechanics fast, all in simple shapes.
   change a number and feel the difference, and place a new item with a
   trigger without writing code.
 
-### G2. Movement
+### G2. Movement (current)
 
 Every move finished against its lab station, then the world pieces that
 movement needs. The hero's moves: run, jump (variable height, coyote time,
@@ -223,8 +223,8 @@ hygiene as each production region lands.
 | T-0014 | Triggers as data: conditions and actions, items as shapes | done | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | #169 |
 | T-0015 | Camera zones | done | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
 | T-0016 | Live tuning of the hero's numbers and abilities | done | 16 | T-0013 | 1 | Re-plan the roadmap around mechanics | #173 |
-| T-0017 | Measured mechanics: a PlayMode test per existing move | in review | 17 | T-0013 | 1 | Re-plan the roadmap around mechanics | |
-| T-0018 | Platforms the hero rides | approved | 18 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0017 | Measured mechanics: a PlayMode test per existing move | done | 17 | T-0013 | 1 | Re-plan the roadmap around mechanics | #174 |
+| T-0018 | Platforms the hero rides | in review | 18 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
 | T-0019 | Corner correction and the rest of the jump | approved | 19 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
 | T-0020 | Platforms that crumble and platforms on a timer | approved | 20 | T-0018 | 0 | Re-plan the roadmap around mechanics | |
 | T-0021 | Wind and lift | approved | 21 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
@@ -413,8 +413,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (272 on `main` after T-0016) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (43 after T-0017; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (281 on `main` after T-0017) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (52 after T-0018; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -515,6 +515,12 @@ barriers, the cliff descent.
   check: every room can be finished with the move it names, the marks (jump
   height, dash length, one second of running) match what the hero does, the
   camera stays inside the room, and dying puts him back at the room's start.
+- **T-0018, platforms.** `lab platforms` in the dev console. A ferry over
+  spikes, a riser to a shelf, a ferry the blue switch starts, and a block
+  that comes down to the floor. To check: standing and running on each
+  feels locked to it, jumping off carries its speed in a way that feels
+  right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
+  standing under the block costs a heart and puts you beside it.
 - **T-0016, live tuning.** In a game or the lab, open the dev console
   (the grave key). `tune` sums up; `tune jump` shows the jump numbers;
   `tune jumpHeight 90` sets one and the hero plays with it at once; `tune
