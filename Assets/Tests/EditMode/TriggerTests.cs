@@ -216,6 +216,7 @@ namespace Descender.Tests.EditMode
             Assert.That(struck.gameObject.layer, Is.EqualTo(LayerMask.NameToLayer("Enemy")), "where attacks look");
             Assert.That(walked.gameObject.layer, Is.EqualTo(LayerMask.NameToLayer("Trigger")));
             Assert.That(walked.GetComponent<BoxCollider2D>().isTrigger, Is.True);
+            Assert.That(struck.GetComponent<BoxCollider2D>().isTrigger, Is.False, "attacks look for plain colliders");
         }
 
         [Test]

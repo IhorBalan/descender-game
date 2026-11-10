@@ -25,9 +25,10 @@ namespace Descender.Triggers
     /// An item, a switch, a door's lock, a checkpoint: an area that, when something
     /// happens to it (<see cref="TriggerEvent"/>) and its <see cref="TriggerNeeds"/> are
     /// met, runs its list of <see cref="TriggerAction"/>s, once or every time. The area
-    /// is the colliders on the object, which the zone makes triggers; a zone that waits
-    /// to be hit sits on the Enemy layer so the hero's attacks find it, any other on the
-    /// Trigger layer. With a <c>Shape</c> beside it, it is a placeholder pickup.
+    /// is the colliders on the object. A zone that waits to be hit sits on the Enemy
+    /// layer as a plain collider, so the hero's attacks find it and he walks through it;
+    /// any other is a trigger on the Trigger layer. With a <c>Shape</c> beside it, it is
+    /// a placeholder pickup.
     /// </summary>
     public sealed class TriggerZone : MonoBehaviour, IHittable
     {
@@ -89,9 +90,11 @@ namespace Descender.Triggers
         private void ApplyLayer()
         {
             gameObject.layer = on == TriggerEvent.Hit ? Layers.Enemy : Layers.Trigger;
+            // Nothing but the world touches the Enemy layer, so a zone to strike can stay a
+            // plain collider, which is what the attacks' overlap queries find.
             foreach (var area in GetComponents<Collider2D>())
             {
-                area.isTrigger = true;
+                area.isTrigger = on != TriggerEvent.Hit;
             }
         }
 

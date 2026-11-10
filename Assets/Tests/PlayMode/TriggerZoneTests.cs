@@ -152,14 +152,20 @@ namespace Descender.Tests.PlayMode
             yield return Steps(5);
             var bridge = Built("bridge");
             var strike = Built("strike");
+            var zone = strike.GetComponent<TriggerZone>();
             Assert.That(bridge.activeSelf, Is.False);
             hero.PlaceAt(new Vector2(strike.transform.position.x - 1.2f, LabLayout.FloorTop));
             yield return Steps(5);
+            var swings = hero.AttackCount;
 
             yield return Attack();
+            Assert.That(hero.AttackCount, Is.EqualTo(swings + 1), "he swung once");
+            Assert.That(zone.TimesFired, Is.EqualTo(1), "the swing struck the switch");
             Assert.That(bridge.activeSelf, Is.True, "one strike brings the bridge");
             yield return Attack();
+            Assert.That(zone.TimesFired, Is.EqualTo(2));
             Assert.That(bridge.activeSelf, Is.False, "the next takes it away");
+            Assert.That(hero.transform.position.x, Is.LessThan(strike.transform.position.x), "he did not move");
         }
 
         [UnityTest]
@@ -227,6 +233,11 @@ namespace Descender.Tests.PlayMode
             Do.Grant(Ability.LightDash).Run(context);
             Assert.That(hero.Has(Ability.LightDash), Is.True);
 
+            // Coming into a station leaves him untouchable for a moment.
+            for (var i = 0; i < 200 && hero.InvulnerableLeft > 0f; i++)
+            {
+                yield return null;
+            }
             var full = hero.Health;
             var hurt = new Hurt();
             hurt.amount = 1;

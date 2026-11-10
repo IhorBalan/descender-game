@@ -216,7 +216,7 @@ hygiene as each production region lands.
 | T-0011 | The scripted run of the Paradise main path | done | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
 | T-0012 | The story is parked behind one switch, with a pointer file | done | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
 | T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | done | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
-| T-0014 | Triggers as data: conditions and actions, items as shapes | in review | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | |
+| T-0014 | Triggers as data: conditions and actions, items as shapes | in review | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | #169 |
 | T-0015 | Camera zones | approved | 15 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0017 | Measured mechanics: a PlayMode test per existing move | approved | 17 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
@@ -401,7 +401,7 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (242 on `main` after T-0014) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| EditMode tests (251 on `main` after T-0014) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
 | PlayMode tests (27 after T-0014; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
