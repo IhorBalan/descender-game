@@ -27,6 +27,16 @@ namespace Descender.Player
         /// <summary>How many fixed steps a dying hero waits before respawning on his own.</summary>
         private const float RespawnDelayExtra = 0f;
 
+        /// <summary>How deep in the solid world, in pixels and for how many steps, counts as crushed.</summary>
+        private const float CrushDepthPixels = 4f;
+        private const int CrushSteps = 3;
+
+        /// <summary>How many half units to either side a crushed hero looks for room.</summary>
+        private const int CrushSearchSteps = 12;
+
+        /// <summary>Rising faster than this, in units a second, he is passing through a platform, not standing on it.</summary>
+        private const float RisingThrough = 0.5f;
+
         [SerializeField]
         private PlayerTuning tuning;
 
@@ -71,6 +81,9 @@ namespace Descender.Player
         private int facing = 1;
         private bool grounded;
         private bool wasGrounded;
+        private IMovingGround movingGround;
+        private Vector2 carry;
+        private int crushedSteps;
         private float lastFallSpeed;
         private float coyoteLeft;
         private float stateLeft;
@@ -158,6 +171,9 @@ namespace Descender.Player
         public Vector2 RespawnPosition => respawnPosition;
         public Vector2 LastSafePosition => lastSafePosition;
         public Vector2 Velocity => body.linearVelocity;
+
+        /// <summary>What the moving ground under him adds to his speed, in units a second; zero on still ground.</summary>
+        public Vector2 CarryVelocity => carry;
 
         /// <summary>The hero's velocity in level pixels per second.</summary>
         public Vector2 VelocityPixels => body.linearVelocity * Ppu;
@@ -382,8 +398,12 @@ namespace Descender.Player
             if (IsTravelling)
             {
                 body.linearVelocity = Vector2.zero;
+                carry = Vector2.zero;
                 return;
             }
+            // What the ground under him added last step comes off first, so every state
+            // works with his own speed.
+            body.linearVelocity -= carry;
 
             wasGrounded = grounded;
             grounded = CheckGround();
@@ -440,6 +460,8 @@ namespace Descender.Player
                 Landed?.Invoke();
             }
             TrackSafeGround(dt);
+            RideGround();
+            CheckCrushed();
             if (transform.position.y < DeathY && state != PlayerState.Dead && !Frozen)
             {
                 Die();
@@ -1038,9 +1060,89 @@ namespace Descender.Player
             Physics2D.IgnoreLayerCollision(Layers.Player, Layers.LightBarrier, ignore);
         }
 
+        /// <summary>
+        /// Moving ground carries him: its speed is added to his own for the coming step.
+        /// When he leaves it, by a jump or off its end, he keeps a share of its sideways
+        /// speed, and a rising platform adds to the jump up to a cap.
+        /// </summary>
+        private void RideGround()
+        {
+            // Rising through a one-way platform from below touches it without standing on it.
+            var own = body.linearVelocity;
+            var standing = grounded && own.y <= RisingThrough;
+            var riding = standing && movingGround != null && state != PlayerState.Dead;
+            var next = riding ? movingGround.Velocity : Vector2.zero;
+            if (riding && own.y > 0f)
+            {
+                // What a rising platform's push left over would lift him off it.
+                body.linearVelocity = new Vector2(own.x, 0f);
+            }
+            if (!grounded && carry != Vector2.zero)
+            {
+                var kept = carry * tuning.platformMomentum;
+                kept.y = Mathf.Clamp(kept.y, 0f, tuning.platformLiftMax / Ppu);
+                body.linearVelocity += kept;
+            }
+            body.linearVelocity += next;
+            carry = next;
+        }
+
+        /// <summary>
+        /// Squeezed into the solid world by something that moves (a platform coming down on
+        /// him, or pressing him to a wall): he is hurt as by a hazard and put beside it.
+        /// </summary>
+        private void CheckCrushed()
+        {
+            if (state == PlayerState.Dead)
+            {
+                crushedSteps = 0;
+                return;
+            }
+            var bounds = box.bounds;
+            var inset = 2f * CrushDepthPixels / Ppu;
+            var size = new Vector2(bounds.size.x - inset, bounds.size.y - inset);
+            var squeezed = Physics2D.OverlapBox(bounds.center, size, 0f, worldOnlyFilter, hits) > 0;
+            crushedSteps = squeezed ? crushedSteps + 1 : 0;
+            if (crushedSteps < CrushSteps)
+            {
+                return;
+            }
+            crushedSteps = 0;
+            var spot = FreeSpotBeside();
+            if (!TakeHazardDamage(1, spot))
+            {
+                PlaceAt(spot);
+            }
+        }
+
+        /// <summary>The nearest place to either side where his whole body is clear of the solid world; else the last safe ground.</summary>
+        private Vector2 FreeSpotBeside()
+        {
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 1f / Ppu, bounds.size.y - 1f / Ppu);
+            Vector2 feet = transform.position;
+            Vector2 toCentre = (Vector2)bounds.center - feet;
+            for (var i = 1; i <= CrushSearchSteps; i++)
+            {
+                // A little above where he is too: he may have been pressed into the floor.
+                for (var lift = 0; lift <= 2; lift++)
+                {
+                    for (var side = -1; side <= 1; side += 2)
+                    {
+                        var spot = feet + new Vector2(side * i * 0.5f, lift * 0.25f);
+                        if (Physics2D.OverlapBox(spot + toCentre, size, 0f, worldOnlyFilter, hits) == 0)
+                        {
+                            return spot;
+                        }
+                    }
+                }
+            }
+            return lastSafePosition;
+        }
+
         private void TrackSafeGround(float dt)
         {
-            if (grounded && (state == PlayerState.Idle || state == PlayerState.Run))
+            if (grounded && movingGround == null && (state == PlayerState.Idle || state == PlayerState.Run))
             {
                 safeGroundTime += dt;
                 if (safeGroundTime >= tuning.safeGroundTime)
@@ -1060,7 +1162,17 @@ namespace Descender.Player
             var size = new Vector2(bounds.size.x - 2f / Ppu, 2f / Ppu);
             var centre = new Vector2(bounds.center.x, bounds.min.y);
             var filter = ledgesIgnored ? worldOnlyFilter : groundFilter;
-            return Physics2D.OverlapBox(centre, size, 0f, filter, hits) > 0;
+            var count = Physics2D.OverlapBox(centre, size, 0f, filter, hits);
+            movingGround = null;
+            for (var i = 0; i < count && movingGround == null; i++)
+            {
+                var under = hits[i].attachedRigidbody;
+                if (under != null && under.TryGetComponent<IMovingGround>(out var moving))
+                {
+                    movingGround = moving;
+                }
+            }
+            return count > 0;
         }
 
         private bool OnLedge()
@@ -1349,7 +1461,10 @@ namespace Descender.Player
         }
 
         /// <summary>Called by spikes: put back on the last safe ground.</summary>
-        public bool TakeHazardDamage(int amount)
+        public bool TakeHazardDamage(int amount) => TakeHazardDamage(amount, lastSafePosition);
+
+        /// <summary>Hurt by something he has to be taken out of: put at `backTo`. False when he cannot be hurt now.</summary>
+        private bool TakeHazardDamage(int amount, Vector2 backTo)
         {
             if (!CanBeHurt)
             {
@@ -1358,7 +1473,7 @@ namespace Descender.Player
             if (SpendHalo())
             {
                 // The Halo spares the heart, but the hero still has to leave the spikes.
-                PlaceAt(lastSafePosition);
+                PlaceAt(backTo);
                 return true;
             }
             if (!LoseHealth(GuardedDamage(amount)))
@@ -1367,7 +1482,7 @@ namespace Descender.Player
             }
             HurtFeedback();
             SetState(PlayerState.Hurt, tuning.hurtTime);
-            PlaceAt(lastSafePosition);
+            PlaceAt(backTo);
             invulnerableLeft = tuning.invulnerableTime;
             return true;
         }
@@ -1536,6 +1651,7 @@ namespace Descender.Player
             body.position = point;
             transform.position = point;
             body.linearVelocity = Vector2.zero;
+            carry = Vector2.zero;
             coyoteLeft = 0f;
             jumpBufferLeft = 0f;
         }

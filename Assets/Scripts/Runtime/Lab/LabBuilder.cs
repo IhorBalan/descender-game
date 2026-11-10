@@ -188,11 +188,21 @@ namespace Descender.Lab
                     deck.usedByEffector = true;
                     deck.size = rect.size;
                     Draw(go, ShapeKind.Square, rect.size, Ledge, piece.label, 1);
-                    go.AddComponent<Mover>().Configure(piece.travel, LiftSpeed);
+                    go.AddComponent<Mover>().Configure(piece.travel, SpeedOf(piece), piece.running);
+                    break;
+                case PieceKind.Platform:
+                    go.layer = Layers.World;
+                    go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, Solid, piece.label, 1);
+                    go.AddComponent<Mover>().Configure(piece.travel, SpeedOf(piece), piece.running);
                     break;
             }
             return go;
         }
+
+        /// <summary>A moving piece's speed: its own, or the lab's usual one.</summary>
+        private static float SpeedOf(Piece piece) => piece.speed > 0f ? piece.speed : LiftSpeed;
 
         private static void Draw(GameObject go, ShapeKind kind, Vector2 size, Color color, string label, int order)
         {
