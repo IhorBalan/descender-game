@@ -227,6 +227,22 @@ namespace Descender.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator ALedgeThatStandsStillIsDroppedThrough()
+        {
+            Put(PieceKind.Ledge, 10f, 4.5f, 4f, 0.25f);
+            yield return Begin(new Vector2(12f, 4.75f));
+            Assert.That(heroBody.position.y, Is.EqualTo(4.75f).Within(2f * Pixel), "he stands on the ledge");
+
+            input.DownHeld = true;
+            yield return probe.PressJump(false);
+            yield return probe.Step(3);
+            input.DownHeld = false;
+            Assert.That(heroBody.position.y, Is.LessThan(4.74f), "the drop has started");
+            yield return probe.Until(() => hero.IsGrounded && heroBody.position.y < 3f, 300);
+            Assert.That(heroBody.position.y, Is.EqualTo(Floor).Within(2f * Pixel), "he dropped to the floor");
+        }
+
+        [UnityTest]
         public IEnumerator AMovingLedgeIsJumpedUpThroughAndDroppedThrough()
         {
             var piece = PutMover(PieceKind.Lift, new Rect(10f, 4.5f, 4f, 0.25f), new Vector2(6f, 0f), 2f);

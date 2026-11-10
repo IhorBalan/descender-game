@@ -115,6 +115,9 @@ namespace Descender.Lab
                     go.layer = Layers.Ledge;
                     go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
                     var effector = go.AddComponent<PlatformEffector2D>();
+                    // The hero drops through by turning the layer pair off,
+                    // which an effector's own mask would override.
+                    effector.useColliderMask = false;
                     effector.useOneWay = true;
                     effector.surfaceArc = 170f;
                     effector.useSideFriction = false;
@@ -181,6 +184,7 @@ namespace Descender.Lab
                     go.layer = Layers.Ledge;
                     go.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Kinematic;
                     var oneWay = go.AddComponent<PlatformEffector2D>();
+                    oneWay.useColliderMask = false;
                     oneWay.useOneWay = true;
                     oneWay.surfaceArc = 170f;
                     oneWay.useSideFriction = false;
