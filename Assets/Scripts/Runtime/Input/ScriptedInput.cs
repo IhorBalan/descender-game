@@ -10,6 +10,7 @@ namespace Descender.Input
     {
         public float MoveX { get; set; }
         public bool DownHeld { get; set; }
+        public bool UpHeld { get; set; }
         public bool JumpHeld { get; set; }
         public bool JumpPressed { get; set; }
         public bool DashPressed { get; set; }
@@ -31,6 +32,7 @@ namespace Descender.Input
         {
             MoveX = 0f;
             DownHeld = false;
+            UpHeld = false;
             JumpHeld = false;
             ClearPresses();
         }

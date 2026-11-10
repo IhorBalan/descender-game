@@ -83,6 +83,9 @@ namespace Descender.Player
         private bool grounded;
         private bool wasGrounded;
         private IMovingGround movingGround;
+        private Triggers.Climbable climbing;
+        private float climbLockLeft;
+        private bool upHeld;
         private bool unsteadyGround;
         private Vector2 carry;
         private Vector2 wind;
@@ -180,6 +183,9 @@ namespace Descender.Player
 
         /// <summary>What the moving ground under him adds to his speed, in units a second; zero on still ground.</summary>
         public Vector2 CarryVelocity => carry;
+
+        /// <summary>He has hold of something to climb.</summary>
+        public bool IsClimbing => state == PlayerState.Climb;
 
         /// <summary>What the wind he is in adds to his speed, in level pixels a second; zero in still air.</summary>
         public Vector2 WindPixels => wind * Ppu;
@@ -370,11 +376,13 @@ namespace Descender.Player
             {
                 moveX = 0f;
                 downHeld = false;
+                upHeld = false;
                 jumpHeld = false;
                 return;
             }
             moveX = input.MoveX;
             downHeld = input.DownHeld;
+            upHeld = input.UpHeld;
             jumpHeld = input.JumpHeld;
             // Sampled every frame so a press near the end of an attack, dash, heal or
             // hurt is buffered instead of dropped.
@@ -446,6 +454,9 @@ namespace Descender.Player
                 case PlayerState.Cast:
                     StepCast(dt);
                     break;
+                case PlayerState.Climb:
+                    StepClimb(dt);
+                    break;
                 case PlayerState.Slam:
                     StepSlam(dt);
                     break;
@@ -496,6 +507,7 @@ namespace Descender.Player
             Tick(ref invulnerableLeft, dt);
             Tick(ref wingFlashLeft, dt);
             Tick(ref dropLeft, dt);
+            Tick(ref climbLockLeft, dt);
             Tick(ref wallJumpLockLeft, dt);
             Tick(ref landLeft, dt);
             Tick(ref doubleJumpLeft, dt);
@@ -508,6 +520,11 @@ namespace Descender.Player
 
         private void StepNormal(float dt)
         {
+            if (TakeHold())
+            {
+                StepClimb(dt);
+                return;
+            }
             var velocity = VelocityPixels;
             var inputDir = InputBlocked ? 0f : moveX;
             if (wallJumpLockLeft > 0f && (int)Mathf.Sign(inputDir) == wallDir && inputDir != 0f)
@@ -627,6 +644,125 @@ namespace Descender.Player
             {
                 state = Mathf.Abs(velocity.x) > 5f ? PlayerState.Run : PlayerState.Idle;
             }
+        }
+
+        /// <summary>
+        /// Up or down with his feet in something to climb takes hold of it: up when there
+        /// is some of it above his feet, down when there is some below and he is not
+        /// standing on solid ground (on a ledge at its top he is, and climbs down through).
+        /// </summary>
+        private bool TakeHold()
+        {
+            if (InputBlocked || climbLockLeft > 0f || (!upHeld && !downHeld))
+            {
+                return false;
+            }
+            var slack = 2f / Ppu;
+            var feet = Feet();
+            var found = Triggers.Climbable.At(feet, slack);
+            if (found == null)
+            {
+                return false;
+            }
+            var area = found.Area;
+            var up = upHeld && feet.y < area.yMax - slack;
+            var down = downHeld && feet.y > area.yMin + slack && (!grounded || OnLedge());
+            if (!up && !down)
+            {
+                return false;
+            }
+            SetState(PlayerState.Climb, 0f);
+            climbing = found;
+            // Up may be the jump key too: that press took hold and is not also a jump.
+            jumpBufferLeft = 0f;
+            jumpRising = false;
+            airJumpAvailable = true;
+            dashAvailable = true;
+            SetLedgesIgnored(true);
+            return true;
+        }
+
+        /// <summary>The solid world is under his feet, whatever ledges he is passing through.</summary>
+        private bool OnSolidGround()
+        {
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 2f / Ppu, 2f / Ppu);
+            var centre = new Vector2(bounds.center.x, bounds.min.y);
+            return Physics2D.OverlapBox(centre, size, 0f, worldOnlyFilter, hits) > 0;
+        }
+
+        private Vector2 Feet()
+        {
+            var bounds = box.bounds;
+            return new Vector2(bounds.center.x, bounds.min.y);
+        }
+
+        /// <summary>
+        /// Climbing: no gravity, up and down at the climb speed and sideways across it.
+        /// Jump with a side held leaps off, jump alone lets go with a hop (not while up
+        /// is held, which may be the same key), and each end lets go: the top with his
+        /// feet at its edge, the bottom on the ground or out of it.
+        /// </summary>
+        private void StepClimb(float dt)
+        {
+            var slack = 2f / Ppu;
+            var feet = Feet();
+            var held = climbing != null && climbing.isActiveAndEnabled;
+            if (!held || InputBlocked || Triggers.Climbable.At(feet, slack) != climbing)
+            {
+                LetGo(Vector2.zero);
+                return;
+            }
+            if (moveX != 0f)
+            {
+                facing = moveX > 0f ? 1 : -1;
+            }
+            if (jumpBufferLeft > 0f)
+            {
+                jumpBufferLeft = 0f;
+                if (moveX != 0f)
+                {
+                    LetGo(new Vector2(moveX * RunSpeed(), tuning.JumpVelocity * tuning.climbLeap));
+                    jumpRising = true;
+                    Audio.Sfx.Play("jump");
+                    return;
+                }
+                if (!upHeld)
+                {
+                    LetGo(new Vector2(0f, tuning.climbHopSpeed));
+                    return;
+                }
+            }
+            var area = climbing.Area;
+            var way = (upHeld ? 1f : 0f) - (downHeld ? 1f : 0f);
+            if (way > 0f && feet.y >= area.yMax - 0.5f / Ppu)
+            {
+                LetGo(Vector2.zero);
+                return;
+            }
+            if (way < 0f && (OnSolidGround() || feet.y <= area.yMin))
+            {
+                LetGo(Vector2.zero);
+                return;
+            }
+            var velocity = new Vector2(moveX * tuning.climbSideSpeed, way * tuning.climbSpeed);
+            // No further than the top, where he steps off, and not out of its sides.
+            velocity.y = Mathf.Min(velocity.y, (area.yMax - feet.y) * Ppu / dt);
+            var next = feet.x + velocity.x / Ppu * dt;
+            if (next < area.xMin || next > area.xMax)
+            {
+                velocity.x = 0f;
+            }
+            body.linearVelocity = velocity / Ppu;
+        }
+
+        /// <summary>Lets go of what he climbs, with a speed in pixels a second.</summary>
+        private void LetGo(Vector2 velocity)
+        {
+            climbing = null;
+            climbLockLeft = tuning.climbRegrabTime;
+            state = velocity.y > 0f ? PlayerState.Jump : PlayerState.Fall;
+            body.linearVelocity = velocity / Ppu;
         }
 
         private void StartDash()
@@ -1104,7 +1240,8 @@ namespace Descender.Player
         /// </summary>
         private void UpdateDropping()
         {
-            var ignore = dropLeft > 0f || (state == PlayerState.Slam && !slamLanded);
+            var passing = state == PlayerState.Climb || (state == PlayerState.Slam && !slamLanded);
+            var ignore = dropLeft > 0f || passing;
             SetLedgesIgnored(ignore || (ledgesIgnored && state != PlayerState.Dead && InsideLedge()));
         }
 

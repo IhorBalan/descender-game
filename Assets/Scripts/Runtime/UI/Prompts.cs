@@ -36,6 +36,7 @@ namespace Descender.UI
             ["move_left"] = "MoveLeft",
             ["move_right"] = "MoveRight",
             ["move_down"] = "MoveDown",
+            ["move_up"] = "MoveUp",
             ["dev_console"] = "Console",
         };
 

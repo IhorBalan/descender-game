@@ -56,7 +56,8 @@ namespace Descender.Tests.EditMode
             Assert.That(LiveTuning.Find("dashSpeed").Group, Is.EqualTo("Dash"));
             Assert.That(LiveTuning.Find("hitFlashFrames").Group, Is.EqualTo("Feel"));
             Assert.That(LiveTuning.Find("PixelsPerUnit"), Is.Null, "a constant is not a tuning field");
-            Assert.That(LiveTuning.Groups.Count, Is.EqualTo(7));
+            Assert.That(LiveTuning.Groups.Count, Is.EqualTo(8));
+            Assert.That(LiveTuning.Find("climbSpeed").Group, Is.EqualTo("Climb"));
         }
 
         [Test]

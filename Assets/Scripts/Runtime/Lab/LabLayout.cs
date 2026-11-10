@@ -54,6 +54,9 @@ namespace Descender.Lab
 
         /// <summary>A <see cref="ForceZone"/>: an area whose `wind` is added to the hero's speed.</summary>
         Wind,
+
+        /// <summary>A <see cref="Climbable"/>: a ladder or a vine the hero takes hold of with up or down.</summary>
+        Climb,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -179,6 +182,7 @@ namespace Descender.Lab
             "corners",
             "timing",
             "wind",
+            "climb",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -215,6 +219,7 @@ namespace Descender.Lab
             Corners(Open(stations, "corners", "Corners a jump forgives"), jump, tuning.cornerCorrection);
             Timing(Open(stations, "timing", "Platforms that do not stay"));
             Wind(Open(stations, "wind", "Wind and lift", Ability.Glide), leap, tuning);
+            Climb(Open(stations, "climb", "Ladders and vines"), jump);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -574,6 +579,22 @@ namespace Descender.Lab
             Add(station, PieceKind.Solid, 34f, FloorTop, 4f, jump + 0.3f, "caught at the edge");
             // A shelf rather than a step, so the way on is under it.
             Add(station, PieceKind.Solid, 42f, FloorTop + jump + 0.25f, 4f, 0.5f, "too high");
+        }
+
+        /// <summary>
+        /// A ladder up the side of a shelf too high to jump, with a ledge at its top to
+        /// step off onto, and a wide vine to climb and leap from to a shelf across a gap.
+        /// </summary>
+        private static void Climb(Station station, float jump)
+        {
+            var shelf = Mathf.Ceil(jump) + 2f;
+            Add(station, PieceKind.Climb, 14f, FloorTop, 1f, shelf, "up to take hold");
+            Add(station, PieceKind.Ledge, 14f, FloorTop + shelf - 0.25f, 1f, 0.25f, "");
+            Add(station, PieceKind.Solid, 15f, FloorTop, 8f, shelf, "down at the top climbs back");
+
+            var vine = shelf + 3f;
+            Add(station, PieceKind.Climb, 27f, FloorTop + 1f, 5f, vine, "jump lets go; a side and jump leaps");
+            Add(station, PieceKind.Solid, 35f, FloorTop, 8f, vine - 1f, "leap here");
         }
 
         /// <summary>

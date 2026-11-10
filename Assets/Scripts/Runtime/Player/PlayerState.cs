@@ -14,5 +14,6 @@ namespace Descender.Player
         Dead,
         Cast,
         Slam,
+        Climb,
     }
 }

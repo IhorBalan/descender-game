@@ -10,6 +10,7 @@ namespace Descender.Input
         /// <summary>-1 left, 1 right, 0 still.</summary>
         float MoveX { get; }
         bool DownHeld { get; }
+        bool UpHeld { get; }
         bool JumpHeld { get; }
         bool JumpPressed { get; }
         bool DashPressed { get; }
