@@ -19,6 +19,7 @@ namespace Descender.Lab
     {
         public static readonly Color Solid = new Color(0.22f, 0.24f, 0.3f);
         public static readonly Color Ledge = new Color(0.55f, 0.5f, 0.35f);
+        public static readonly Color Unsteady = new Color(0.75f, 0.55f, 0.3f);
         public static readonly Color Mark = new Color(0.6f, 0.65f, 0.75f, 0.6f);
         public static readonly Color Barrier = new Color(0.5f, 0.95f, 1f, 0.55f);
         public static readonly Color Pod = new Color(0.45f, 0.85f, 0.4f);
@@ -90,7 +91,9 @@ namespace Descender.Lab
             }
             for (var i = 0; i < built.Count; i++)
             {
-                if (station.pieces[i].hidden)
+                // A hidden crumbling or blinking platform is gone, not switched off: a trigger brings it.
+                var timed = station.pieces[i].kind == PieceKind.Crumble || station.pieces[i].kind == PieceKind.Blinker;
+                if (station.pieces[i].hidden && !timed)
                 {
                     built[i].SetActive(false);
                 }
@@ -200,6 +203,19 @@ namespace Descender.Lab
                     go.AddComponent<BoxCollider2D>().size = rect.size;
                     Draw(go, ShapeKind.Square, rect.size, Solid, piece.label, 1);
                     go.AddComponent<Mover>().Configure(piece.travel, SpeedOf(piece), piece.running);
+                    break;
+                case PieceKind.Crumble:
+                    go.layer = Layers.World;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, Unsteady, piece.label, 1);
+                    go.AddComponent<Crumble>().Configure(piece.solidFor, piece.goneFor, piece.hidden);
+                    break;
+                case PieceKind.Blinker:
+                    go.layer = Layers.World;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, Unsteady, piece.label, 1);
+                    var blinker = go.AddComponent<Blinker>();
+                    blinker.Configure(piece.solidFor, piece.goneFor, piece.warnFor, piece.ahead, piece.hidden);
                     break;
             }
             return go;

@@ -119,6 +119,22 @@ namespace Descender.Triggers
         }
     }
 
+    /// <summary>Brings back (On), takes away (Off) or flips a crumbling or blinking platform.</summary>
+    [Serializable]
+    public sealed class SetTimed : TriggerAction
+    {
+        public TimedPlatform platform;
+        public SwitchTo to = SwitchTo.On;
+
+        public override void Run(TriggerContext context)
+        {
+            if (platform != null)
+            {
+                platform.Set(to);
+            }
+        }
+    }
+
     /// <summary>Starts (On), stops (Off) or flips a mover.</summary>
     [Serializable]
     public sealed class SetMover : TriggerAction
