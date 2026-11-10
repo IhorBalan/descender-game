@@ -589,6 +589,19 @@ namespace Descender.EditorTools.Paradise
         )
         {
             var sprite = Get("balustrade");
+            // A run of balustrade ends in a square post at each end, as a mason builds one.
+            var runStart = float.NaN;
+            var runEnd = 0f;
+            void EndRun()
+            {
+                if (float.IsNaN(runStart))
+                {
+                    return;
+                }
+                RailPost(parent, runStart + RailPostInset, surface(runStart + RailPostInset), art);
+                RailPost(parent, runEnd - RailPostInset, surface(runEnd - RailPostInset), art);
+                runStart = float.NaN;
+            }
             for (var a = x0; a < x1 - 1f; a += RailingPiece)
             {
                 var b = Mathf.Min(a + RailingPiece, x1);
@@ -605,8 +618,14 @@ namespace Descender.EditorTools.Paradise
                     && Mathf.Abs(angle) <= RailingMaxSlope;
                 if (!fits)
                 {
+                    EndRun();
                     continue;
                 }
+                if (float.IsNaN(runStart))
+                {
+                    runStart = a;
+                }
+                runEnd = b;
                 var r = ParadiseArt.Sprite(
                     parent,
                     "Balustrade",
@@ -622,6 +641,28 @@ namespace Descender.EditorTools.Paradise
                 // A hair longer than the step, so neighbouring pieces meet without a seam.
                 r.size = new Vector2((b - a) / 0.8f / Mathf.Cos(angle * Mathf.Deg2Rad) + 0.1f, sprite.bounds.size.y);
             }
+            EndRun();
+        }
+
+        /// <summary>How far in from a run's end its post stands, so the post covers the cut handrail.</summary>
+        private const float RailPostInset = 0.22f;
+
+        private static void RailPost(Transform parent, float x, float y, ParadiseArt.ZoneArt art)
+        {
+            if (float.IsNaN(y) || !Sprites.ContainsKey("balustrade_post"))
+            {
+                return;
+            }
+            // Upright even where the railing slopes, and over it, so it closes the run.
+            ParadiseArt.Sprite(
+                parent,
+                "Rail Post",
+                Get("balustrade_post"),
+                art.lit,
+                -89,
+                new Vector3(x, y - 0.1f, 0f),
+                Vector3.one * 0.8f
+            );
         }
 
         /// <summary>

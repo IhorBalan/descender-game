@@ -456,6 +456,26 @@
       "attach": "pivot = left column centre on the springing line (bottom edge) = top of that column's capital; right column centre is columnSpacingPx to the right. Neighbouring spans share a column and overlap by 102 px."
     },
     {
+      "path": "Assets/Art/Paradise/Kit/Architecture/balustrade_post.png",
+      "purpose": "The square post a run of balustrade ends in, made from the balustrade's own marble (rail_post.py)",
+      "zone": "garden",
+      "size": [
+        84,
+        166
+      ],
+      "sizeUnits": [
+        0.656,
+        1.297
+      ],
+      "pivot": [
+        0.5,
+        0.0
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
       "path": "Assets/Art/Paradise/Kit/Architecture/balustrade.png",
       "purpose": "Balustrade for terrace edges (decor in front of the walkway)",
       "zone": "garden",
