@@ -13,7 +13,7 @@ namespace Descender.UI
     /// </summary>
     public sealed class ShopScreen : ListScreen
     {
-        public static readonly Color SoldColor = new Color(0.55f, 0.52f, 0.7f);
+        public static readonly Color SoldColor = TitleKit.Faded;
 
         /// <summary>The Shops id open right now, or "".</summary>
         public string ShopId { get; private set; } = "";
@@ -23,7 +23,7 @@ namespace Descender.UI
 
         protected override string HeadingText => "TRADER";
         protected override string BackText => "Leave";
-        protected override string HintTemplate => "{navigate} pick   {ui_accept} buys   {ui_cancel} leaves";
+        protected override string ConfirmText => "Buy";
 
         /// <summary>Shows a trader's wares over the paused game.</summary>
         public void Open(string id)
@@ -40,13 +40,12 @@ namespace Descender.UI
         protected override void Build(RectTransform root)
         {
             base.Build(root);
-            // The greeting wraps under the heading, and the purse sits in the subheading colour.
+            // The greeting wraps under the heading, and the purse sits in gold under it.
             LineOne.textWrappingMode = TMPro.TextWrappingModes.Normal;
-            LineOne.color = UiTheme.Text;
-            UiKit.PlaceRow(LineOne.rectTransform, 28f, 20f, 16f);
-            LineTwo.color = UiTheme.Subheading;
-            UiKit.PlaceRow(LineTwo.rectTransform, 48f, 10f);
-            UiKit.Fill(List.GetComponent<RectTransform>(), 40f, 60f, 40f, 44f);
+            LineOne.color = TitleKit.Parchment;
+            LineOne.rectTransform.sizeDelta = new Vector2(1300f, 70f);
+            LineTwo.color = TitleKit.Gold;
+            LineTwo.rectTransform.anchoredPosition += new Vector2(0f, -14f);
         }
 
         protected override void FillList()
@@ -65,7 +64,7 @@ namespace Descender.UI
                 var picked = ware;
                 List.AddRow(
                     MenuText.ShopLine(ShopId, ware),
-                    sold ? SoldColor : UiTheme.Item,
+                    sold ? SoldColor : TitleKit.Parchment,
                     () => OnWarePressed(picked),
                     () => ShowNote(MenuText.WareNote(picked.Item), UiTheme.Note)
                 );

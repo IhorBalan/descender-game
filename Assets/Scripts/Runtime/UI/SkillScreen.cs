@@ -21,8 +21,7 @@ namespace Descender.UI
 
         protected override string HeadingText => "SKILLS";
         protected override string BackText => "Back";
-        protected override string HintTemplate =>
-            "{navigate} pick   {ui_accept} spends a point   {ui_cancel} goes back";
+        protected override string ConfirmText => "Spend a Point";
         protected override bool Dims => Standalone;
 
         public bool Standalone { get; set; } = true;
@@ -36,11 +35,21 @@ namespace Descender.UI
                 var skillId = id;
                 List.AddRow(
                     MenuText.SkillLine(id),
-                    MenuText.SkillColor(id),
+                    Gilded(MenuText.SkillColor(id)),
                     () => OnSkillPressed(skillId),
                     () => ShowNote(Skills.Description(skillId), UiTheme.Note)
                 );
             }
+        }
+
+        /// <summary>The gilded colour for a skill row's colour: open to a point in gold, locked faded, else parchment.</summary>
+        public static UnityEngine.Color Gilded(UnityEngine.Color color)
+        {
+            if (color == UiTheme.Highlight)
+            {
+                return TitleKit.Gold;
+            }
+            return color == UiTheme.Locked ? TitleKit.Faded : TitleKit.Parchment;
         }
 
         private void OnSkillPressed(string id)

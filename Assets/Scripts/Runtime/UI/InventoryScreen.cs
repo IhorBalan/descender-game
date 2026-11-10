@@ -21,7 +21,7 @@ namespace Descender.UI
 
         protected override string HeadingText => "THE PACK";
         protected override string BackText => "Back";
-        protected override string HintTemplate => "{navigate} pick   {ui_accept} wears or uses   {ui_cancel} goes back";
+        protected override string ConfirmText => "Wear or Use";
         protected override string EmptyText => "The pack is empty.";
         protected override bool Dims => Standalone;
 
@@ -38,7 +38,7 @@ namespace Descender.UI
                 var worn = Inventory.IsEquipped(id);
                 List.AddRow(
                     MenuText.PackLine(id),
-                    worn ? UiTheme.Highlight : UiTheme.Item,
+                    worn ? TitleKit.Gold : TitleKit.Parchment,
                     () => OnItemPressed(itemId),
                     () => ShowNote(Items.Description(itemId), UiTheme.Note)
                 );

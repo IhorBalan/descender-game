@@ -5,14 +5,33 @@ using UnityEngine.UI;
 namespace Descender.UI
 {
     /// <summary>
-    /// The shape the pack, the shop and the skills share: a heading, two lines under
-    /// it, a scrolling list of rows in the middle, a description line that follows
-    /// the focused row, a back button and the hint along the bottom. A derived
-    /// screen fills the list in <see cref="Refresh"/> and names its texts. Layout as
-    /// the prototype's inventory menu and its siblings had it, in 320 x 180 pixels.
+    /// The shape the pack, the shop and the skills share, in the title's gilded look:
+    /// a heading over a jewelled rule, two lines under it, a scrolling list of rows
+    /// that light a gold bar while focused, a description line that follows the
+    /// focused row, a back item and the key hints along the bottom, on the 1920 x 1080
+    /// stage. Standing alone it veils the game; inside the camp it lies over the
+    /// camp's ground. A derived screen fills the list in <see cref="Refresh"/> and
+    /// names its texts.
     /// </summary>
     public abstract class ListScreen : UiScreen
     {
+        private const float Middle = TitleKit.Width * 0.5f;
+        private const float HeadingY = 150f;
+        private const float RuleY = 212f;
+        private const float LineOneY = 262f;
+        private const float LineTwoY = 298f;
+        private const float ListTop = 340f;
+        private const float ListBottom = 820f;
+        private const float ListWidth = 1100f;
+        private const float DescriptionY = 866f;
+        private const float BackY = 930f;
+
+        private RectTransform keys;
+        private TitleList backList;
+        private CanvasGroup stageGroup;
+        private int keysFor = -1;
+        private float openedAt;
+
         protected TextMeshProUGUI Heading { get; private set; }
         protected TextMeshProUGUI LineOne { get; private set; }
         protected TextMeshProUGUI LineTwo { get; private set; }
@@ -20,87 +39,113 @@ namespace Descender.UI
         protected TextMeshProUGUI Empty { get; private set; }
         protected TextMeshProUGUI Description { get; private set; }
         protected Button Back { get; private set; }
-        protected PromptLabel Hint { get; private set; }
+
+        /// <summary>The stage the page is laid out on, 1920 x 1080.</summary>
+        protected RectTransform Stage { get; private set; }
 
         protected abstract string HeadingText { get; }
         protected abstract string BackText { get; }
-        protected abstract string HintTemplate { get; }
+
+        /// <summary>What confirming does on a row, for the key hints ("Wear or Use", "Buy").</summary>
+        protected abstract string ConfirmText { get; }
 
         /// <summary>The line shown in the middle when the list is empty, or "" for none.</summary>
         protected virtual string EmptyText => "";
 
-        /// <summary>Whether the game dims behind the list (a page inside the camp does not).</summary>
+        /// <summary>Whether the game is veiled behind the list (a page inside the camp lies on the camp's ground).</summary>
         protected virtual bool Dims => true;
+
+        /// <summary>The rows shown, in order, for a test.</summary>
+        public System.Collections.Generic.IReadOnlyList<Selectable> RowsShown => List.Rows;
+
+        protected static MenuTheme Theme => UiTheme.Current.MenuTheme;
 
         protected override void Build(RectTransform root)
         {
+            var theme = Theme;
             if (Dims)
             {
-                UiKit.Dim(root);
+                Stage = TitleHints.MakeStage(root, theme, true, 31, out stageGroup);
             }
-            Heading = UiKit.Heading(root, HeadingText, UiTheme.HeadingSize);
-            UiKit.PlaceRow(Heading.rectTransform, 8f, 20f);
-            Heading.verticalAlignment = VerticalAlignmentOptions.Middle;
-            LineOne = UiKit.Label(
-                root,
-                "LineOne",
-                "",
-                UiTheme.FontSize,
-                UiTheme.Highlight,
-                TextAlignmentOptions.Center
-            );
-            UiKit.PlaceRow(LineOne.rectTransform, 28f, 10f);
-            LineOne.verticalAlignment = VerticalAlignmentOptions.Middle;
-            LineTwo = UiKit.Label(root, "LineTwo", "", UiTheme.FontSize, UiTheme.Pale, TextAlignmentOptions.Center);
-            UiKit.PlaceRow(LineTwo.rectTransform, 38f, 10f, 16f);
-            LineTwo.verticalAlignment = VerticalAlignmentOptions.Middle;
-            List = UiKit.ScrollList(root, "Scroll");
+            else
+            {
+                // Inside the camp, whose ground is already down: no second ground, no second embers.
+                TitleScreen.ScaleSmooth(root.GetComponent<Canvas>());
+                Stage = UiKit.Rect(root, "Stage");
+                Stage.anchorMin = new Vector2(0.5f, 0.5f);
+                Stage.anchorMax = new Vector2(0.5f, 0.5f);
+                Stage.pivot = new Vector2(0.5f, 0.5f);
+                Stage.sizeDelta = new Vector2(TitleKit.Width, TitleKit.Height);
+                stageGroup = Stage.gameObject.AddComponent<CanvasGroup>();
+            }
+            if (TitleKit.Font == null && theme != null)
+            {
+                TitleKit.Font = theme.titleFont;
+            }
+            Heading = TitleKit.Label(Stage, HeadingText, 51f, TitleKit.Gold, TitleKit.CapsSpacing, Middle, HeadingY);
+            if (theme != null)
+            {
+                TitleKit.Sprite(Stage, "Rule", theme.ruleTagline, Middle, RuleY);
+            }
+            LineOne = TitleKit.Label(Stage, "", 21f, TitleKit.Muted, 6f, Middle, LineOneY, 1400f);
+            LineTwo = TitleKit.Label(Stage, "", 21f, TitleKit.Parchment, 6f, Middle, LineTwoY, 1400f);
+
+            List = UiKit.ScrollList(Stage, "Scroll");
             var scroll = List.GetComponent<RectTransform>();
-            UiKit.Fill(scroll, 40f, 52f, 40f, 44f);
-            Empty = UiKit.Label(
-                root,
-                "Empty",
-                EmptyText,
-                UiTheme.FontSize,
-                UiTheme.Locked,
-                TextAlignmentOptions.Center
-            );
-            UiKit.PlaceCentered(Empty.rectTransform, UiTheme.Height / 2f - 6f, 200f, 12f);
+            TitleKit.Center(scroll, Middle, (ListTop + ListBottom) * 0.5f, ListWidth, ListBottom - ListTop);
+            List.GetComponent<ScrollRect>().scrollSensitivity = UiScrollList.RowHeight;
+            Empty = TitleKit.Label(Stage, EmptyText, 24f, TitleKit.Faded, 4f, Middle, (ListTop + ListBottom) * 0.5f);
             Empty.gameObject.SetActive(false);
-            Description = UiKit.Paragraph(
-                root,
-                "Description",
-                "",
-                UiTheme.FontSize,
-                UiTheme.Note,
-                TextAlignmentOptions.Center
+
+            Description = TitleKit.Label(Stage, "", 21f, TitleKit.Parchment, 4f, Middle, DescriptionY, 1300f);
+            Description.textWrappingMode = TextWrappingModes.Normal;
+            Description.rectTransform.sizeDelta = new Vector2(1300f, 70f);
+
+            backList = new TitleList(
+                Stage,
+                "Back",
+                BackY,
+                820f,
+                theme != null ? theme.focusBar : null,
+                theme != null ? theme.ruleItem : null
             );
-            UiKit.PlaceBottomRow(Description.rectTransform, 26f, 18f, 16f);
-            Description.verticalAlignment = VerticalAlignmentOptions.Middle;
-            Back = UiKit.Button(root, "Back", BackText, Close);
-            UiKit.PlaceCentered(Back.GetComponent<RectTransform>(), UiTheme.Height - 26f, 60f, UiTheme.ButtonHeight);
-            Back.GetComponent<UiButtonLook>().Focused += () => ShowNote("", UiTheme.Note);
-            var hint = UiKit.Label(
-                root,
-                "Hint",
-                "",
-                UiTheme.SmallFontSize,
-                UiTheme.Locked,
-                TextAlignmentOptions.Center
-            );
-            UiKit.PlaceBottomRow(hint.rectTransform, 2f, 8f);
-            hint.verticalAlignment = VerticalAlignmentOptions.Middle;
-            Hint = hint.gameObject.AddComponent<PromptLabel>();
-            Hint.Template = HintTemplate;
+            Back = backList.Add(BackText, Close, true, TitleList.BackSound);
+            backList.Layout();
+            var focus = TitleFocus.Make(Stage, null);
+            focus.Follow(backList, false);
+            Back.gameObject.AddComponent<UiButtonLook>().Focused += () => ShowNote("", UiTheme.Note);
+
+            keys = UiKit.Rect(Stage, "Keys");
+            UiKit.Fill(keys);
         }
 
         protected override void OnOpen()
         {
+            openedAt = Time.unscaledTime;
+            stageGroup.alpha = 0f;
+            keysFor = -1;
             Refresh();
             ShowNote("", UiTheme.Note);
             if (!List.FocusNear(0))
             {
                 UiKit.Select(Back);
+            }
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            if (!IsOpen)
+            {
+                return;
+            }
+            stageGroup.alpha = TitleScreen.Smooth((Time.unscaledTime - openedAt) / 0.3f);
+            var router = Input.InputRouter.Instance;
+            var gamepad = router != null && router.UsingGamepad ? 1 : 0;
+            if (keysFor != gamepad && Theme != null)
+            {
+                keysFor = gamepad;
+                TitleHints.Build(keys, Theme, gamepad == 1, ConfirmText, BackText);
             }
         }
 
@@ -125,14 +170,19 @@ namespace Descender.UI
         /// <summary>Adds the rows for the state right now, and writes the lines over them.</summary>
         protected abstract void FillList();
 
-        /// <summary>The texts of the rows shown, for a test.</summary>
+        /// <summary>The texts of the rows shown, their columns joined by three spaces, for a test.</summary>
         public System.Collections.Generic.List<string> Lines()
         {
             EnsureBuilt();
             var result = new System.Collections.Generic.List<string>();
             foreach (var row in List.Rows)
             {
-                result.Add(UiKit.LabelOf(row).text);
+                var texts = new System.Collections.Generic.List<string>();
+                foreach (var label in row.GetComponentsInChildren<TextMeshProUGUI>())
+                {
+                    texts.Add(label.text);
+                }
+                result.Add(string.Join("   ", texts));
             }
             return result;
         }
