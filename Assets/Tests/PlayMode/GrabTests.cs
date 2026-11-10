@@ -171,6 +171,7 @@ namespace Descender.Tests.PlayMode
             Assert.That(heroBody.position.y, Is.EqualTo(Floor).Within(2f * Pixel), "and he falls to the floor");
 
             yield return probe.Settle();
+            input.MoveX = 1f;
             yield return probe.PressJump();
             yield return probe.Until(() => hero.IsHanging, 150);
             Assert.That(hero.IsHanging, Is.True, "he catches it again from a new jump");
@@ -193,15 +194,21 @@ namespace Descender.Tests.PlayMode
 
             yield return JumpAtTheWall();
             var hung = false;
+            var left = false;
+            var peak = 0f;
             yield return probe.Until(
                 () =>
                 {
                     hung |= hero.IsHanging;
-                    return hero.IsGrounded;
+                    left |= !hero.IsGrounded;
+                    peak = Mathf.Max(peak, heroBody.position.y);
+                    return left && hero.IsGrounded;
                 },
                 300
             );
             input.JumpHeld = false;
+            var hands = Floor + WallHeight - HeroHeight;
+            Assert.That(peak, Is.GreaterThan(hands + 2f * Pixel), "his head went above the corner and came back");
             Assert.That(hung, Is.False, "switched off, he falls past the corner");
             Assert.That(heroBody.position.y, Is.EqualTo(Floor).Within(2f * Pixel));
 
@@ -209,6 +216,7 @@ namespace Descender.Tests.PlayMode
             tuning.ledgeGrab = true;
             hero.UseTuning(tuning);
             yield return probe.Settle();
+            input.MoveX = 1f;
             yield return probe.PressJump();
             yield return probe.Until(() => hero.IsHanging, 150);
             input.JumpHeld = false;
