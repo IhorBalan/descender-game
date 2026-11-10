@@ -51,6 +51,40 @@ namespace Descender.EditorTools.World
             {
                 return;
             }
+            var setup = RememberOpenScenes();
+            DevStart.Leave(view.pivot, allAbilities);
+            // The new Paradise has its own entry scene; everything else plays the prototype.
+            var paradise = setup.paths.Find(p => p.StartsWith(ParadiseScenesFolder));
+            var entry = EditorTools.Setup.PlayFromMain.EntryFor(paradise);
+            EditorSceneManager.OpenScene(entry, OpenSceneMode.Single);
+            EditorApplication.EnterPlaymode();
+        }
+
+        /// <summary>
+        /// Descender &gt; Lab &gt; Play: starts a throwaway game in the mechanics lab, whatever
+        /// scene is open, and puts the open scenes back when play mode ends. See
+        /// GameFlow.StartLab.
+        /// </summary>
+        [MenuItem("Descender/Lab/Play &l")]
+        public static void PlayLab()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode)
+            {
+                return;
+            }
+            if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+            {
+                return;
+            }
+            RememberOpenScenes();
+            DevStart.LeaveLab("");
+            EditorSceneManager.OpenScene(MainScenePath, OpenSceneMode.Single);
+            EditorApplication.EnterPlaymode();
+        }
+
+        /// <summary>Notes the open scenes so that they come back when play mode ends.</summary>
+        private static Setup RememberOpenScenes()
+        {
             var setup = new Setup();
             foreach (var scene in EditorSceneManager.GetSceneManagerSetup())
             {
@@ -62,12 +96,7 @@ namespace Descender.EditorTools.World
                 }
             }
             SessionState.SetString(RestoreKey, JsonUtility.ToJson(setup));
-            DevStart.Leave(view.pivot, allAbilities);
-            // The new Paradise has its own entry scene; everything else plays the prototype.
-            var paradise = setup.paths.Find(p => p.StartsWith(ParadiseScenesFolder));
-            var entry = EditorTools.Setup.PlayFromMain.EntryFor(paradise);
-            EditorSceneManager.OpenScene(entry, OpenSceneMode.Single);
-            EditorApplication.EnterPlaymode();
+            return setup;
         }
 
         private static void OnPlayModeChanged(PlayModeStateChange change)

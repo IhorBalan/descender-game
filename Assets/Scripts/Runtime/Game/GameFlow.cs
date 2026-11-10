@@ -92,6 +92,11 @@ namespace Descender.Game
         private void Start()
         {
             SettingsApplier.Apply(SettingsData.Current);
+            if (DevStart.TryTakeLab(out var station))
+            {
+                StartLab(station);
+                return;
+            }
             if (DevStart.TryTake(out var point, out var allAbilities))
             {
                 StartTestGame(point, allAbilities);
@@ -124,6 +129,83 @@ namespace Descender.Game
 
         private Vector2? testPoint;
         private bool testAllAbilities;
+
+        /// <summary>
+        /// A throwaway game in the mechanics lab (the dev console's `lab`, Descender &gt; Lab
+        /// &gt; Play): no world is loaded, the lab is built from <see cref="Lab.LabLayout"/> and
+        /// the hero starts in a station (the first when the id is unknown). From a game in
+        /// progress it leaves that game first; whatever was not saved is gone.
+        /// </summary>
+        public void StartLab(string station)
+        {
+            if (Current == Phase.Loading)
+            {
+                return;
+            }
+            if (InLab && Hero != null && Current == Phase.Playing)
+            {
+                // Already in the lab: only the station changes.
+                Lab.LabRoot.Current.Enter(Hero, Lab.LabRoot.Current.IndexOf(station));
+                return;
+            }
+            if (Current != Phase.Title)
+            {
+                LeaveWorld();
+            }
+            SaveManager.UseDirectory(System.IO.Path.Combine(Application.temporaryCachePath, "lab"));
+            SaveManager.StartNewGame(0, Difficulty.Normal);
+            ResetStatics();
+            PlayTime = 0f;
+            ActiveCheckpoint = -1;
+            transition = StartCoroutine(EnterLab(station));
+        }
+
+        /// <summary>Whether the game in progress is the lab.</summary>
+        public bool InLab => Lab.LabRoot.Current != null;
+
+        private IEnumerator EnterLab(string station)
+        {
+            Current = Phase.Loading;
+            if (fade != null)
+            {
+                yield return fade.FadeOut();
+            }
+            if (heroPrefab == null)
+            {
+                var problem = "No hero prefab is assigned on GameFlow (Assets/Prefabs/Player.prefab).";
+                Debug.LogWarning($"GameFlow: cannot enter the lab. {problem}");
+                SaveManager.Detach();
+                transition = null;
+                ShowTitle();
+                WorldUnavailable?.Invoke(problem);
+                yield break;
+            }
+            Hero = Instantiate(heroPrefab);
+            Hero.name = "Hero";
+            Hero.Died += OnHeroDied;
+            var lab = Lab.LabBuilder.Build(Hero.Tuning);
+            lab.Entered += OnLabStation;
+            if (gameCamera != null)
+            {
+                gameCamera.Target = Hero.transform;
+            }
+            // Let the colliders exist for a physics step before the hero stands on them.
+            yield return new WaitForFixedUpdate();
+            lab.Enter(Hero, lab.IndexOf(station));
+            Current = Phase.Playing;
+            InputRouter.Instance?.UsePlayer();
+            WorldEntered?.Invoke(Hero);
+            if (fade != null)
+            {
+                yield return fade.FadeIn();
+            }
+            transition = null;
+        }
+
+        private void OnLabStation(Lab.Station station)
+        {
+            RespawnPoint = station.spawn;
+        }
 
         private void OnDisable()
         {
@@ -301,6 +383,13 @@ namespace Descender.Game
             {
                 return;
             }
+            LeaveWorld();
+            ShowTitle();
+        }
+
+        /// <summary>Takes the game in progress down (the world or the lab, and the hero) without showing the title.</summary>
+        private void LeaveWorld()
+        {
             if (transition != null)
             {
                 StopCoroutine(transition);
@@ -321,6 +410,11 @@ namespace Descender.Game
             if (gameCamera != null)
             {
                 gameCamera.Target = null;
+                gameCamera.Bounds = CameraRig.GameCamera.Unbounded;
+            }
+            if (Lab.LabRoot.Current != null)
+            {
+                Destroy(Lab.LabRoot.Current.gameObject);
             }
             if (WorldStreamer.Instance != null)
             {
@@ -329,7 +423,6 @@ namespace Descender.Game
             }
             SaveManager.Detach();
             ResetStatics();
-            ShowTitle();
         }
 
         /// <summary>One line on where the hero is, for the pause menu and the save button.</summary>

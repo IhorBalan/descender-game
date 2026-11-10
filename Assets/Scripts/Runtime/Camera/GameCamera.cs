@@ -41,12 +41,16 @@ namespace Descender.CameraRig
         private float shakePixels;
         private float shakeTime;
         private float shakeLeft;
-        private Rect bounds = new Rect(
+
+        /// <summary>No room: the camera goes wherever the target does.</summary>
+        public static readonly Rect Unbounded = new Rect(
             float.NegativeInfinity,
             float.NegativeInfinity,
             float.PositiveInfinity,
             float.PositiveInfinity
         );
+
+        private Rect bounds = Unbounded;
         private Vector2 focus;
 
         /// <summary>The room the camera is clamped to, in units. Set by WorldRoom when the hero enters.</summary>

@@ -83,7 +83,7 @@ runtime code means adding its assembly to the asmdef `references`, not an
 
 | Folder | What lives there |
 | --- | --- |
-| `Game/` | `GameFlow`: the phases (title, playing, paused) and the moves between them; spawns the hero, owns the EventSystem. `DevStart` for "Play from here". |
+| `Game/` | `GameFlow`: the phases (title, playing, paused) and the moves between them; spawns the hero, owns the EventSystem. `DevStart` for "Play from here" and for the lab. |
 | `Player/` | `PlayerController` (run, jump, dash, sword, heal, abilities), `PlayerSprite`, `PlayerTuning` (ScriptableObject of movement numbers), `Power`, `Upgrades`. |
 | `Enemies/` | `Walker`, `Flyer`, `Boss`, `Hanger`, their `*Profile` ScriptableObjects, `EnemyPhysics` (shared non-allocating queries), `Kills`, death and health bar visuals. |
 | `Combat/` | `IHittable`, `Layers` (collision layers and masks looked up once), `LightBolt`. |
@@ -96,7 +96,8 @@ runtime code means adding its assembly to the asmdef `references`, not an
 | `Input/` | `InputRouter`: the one owner of `Descender.inputactions`. |
 | `Audio/` | `Music` (one crossfaded loop), `Sfx` (pooled sources), `SfxLibrary`. |
 | `Camera/` | `GameCamera`: look-ahead, room clamp, whole-pixel shake. |
-| `Fx/` | `Feedback` (hit-stop, shake, rumble, particles), `HitFlash`, `Tween`, `Shapes`, `SpriteAnimator`. |
+| `Fx/` | `Feedback` (hit-stop, shake, rumble, particles), `HitFlash`, `Tween`, `Shapes`, `Shape` (the placeholder: a labelled square, circle, diamond or triangle for anything without art), `SpriteAnimator`. |
+| `Lab/` | The mechanics lab, built from data with no scene and no art: `LabLayout` (the stations and their pieces, sized from `PlayerTuning`), `LabBuilder` (colliders and `Shape`s), `LabRoot` (entering a station), `LabPad`. Opened by `GameFlow.StartLab`: the console's `lab`, or Descender > Lab > Play. |
 
 ## Scenes, streaming and state
 

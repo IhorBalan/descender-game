@@ -66,6 +66,12 @@ namespace Descender.UI
                 "show_boxes on|off",
                 "Draws the collision boxes: hero green, enemies red, items blue, walkable world black, hazards orange."
             );
+            Commands.Register(
+                "lab",
+                LabCommand,
+                "lab [station|list]",
+                "Opens the mechanics lab at a station (the first by default); `lab list` names the stations."
+            );
         }
 
         private void Build()
@@ -282,6 +288,27 @@ namespace Descender.UI
             historyIndex = Mathf.Clamp(index, 0, history.Count);
             input.text = historyIndex < history.Count ? history[historyIndex] : "";
             input.caretPosition = input.text.Length;
+        }
+
+        /// <summary>`lab`: what the console says, and the game it starts.</summary>
+        public static string LabCommand(string[] args)
+        {
+            var station = args.Length > 0 ? args[0].ToLowerInvariant() : "";
+            if (station == "list")
+            {
+                return "Stations: " + string.Join(", ", Lab.LabLayout.Ids);
+            }
+            if (station.Length > 0 && System.Array.IndexOf(Lab.LabLayout.Ids, station) < 0)
+            {
+                return $"No station '{station}'. Stations: " + string.Join(", ", Lab.LabLayout.Ids);
+            }
+            var flow = Game.GameFlow.Instance;
+            if (flow == null)
+            {
+                return "No game is running here.";
+            }
+            flow.StartLab(station);
+            return station.Length > 0 ? $"Opening the lab at '{station}'." : "Opening the lab.";
         }
 
         private string ShowBoxesCommand(string[] args)
