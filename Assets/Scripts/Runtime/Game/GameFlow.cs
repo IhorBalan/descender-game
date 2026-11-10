@@ -116,7 +116,7 @@ namespace Descender.Game
             {
                 return;
             }
-            SaveManager.UseDirectory(System.IO.Path.Combine(Application.temporaryCachePath, "play_from_here"));
+            UseScratchSaves("play_from_here");
             SaveManager.StartNewGame(0, Difficulty.Normal);
             ResetStatics();
             PlayTime = 0f;
@@ -152,13 +152,36 @@ namespace Descender.Game
             {
                 LeaveWorld();
             }
-            SaveManager.UseDirectory(System.IO.Path.Combine(Application.temporaryCachePath, "lab"));
+            UseScratchSaves("lab");
             SaveManager.StartNewGame(0, Difficulty.Normal);
             ResetStatics();
             PlayTime = 0f;
             ActiveCheckpoint = -1;
             transition = StartCoroutine(EnterLab(station));
         }
+
+        /// <summary>
+        /// Points the saves at a scratch folder for a throwaway game, remembering where
+        /// they were; <see cref="LeaveWorld"/> points them back, so the player's slots are
+        /// the ones the title reads afterwards.
+        /// </summary>
+        private void UseScratchSaves(string folder)
+        {
+            savesBefore ??= SaveManager.Slots.Directory;
+            SaveManager.UseDirectory(System.IO.Path.Combine(Application.temporaryCachePath, folder));
+        }
+
+        /// <summary>Points the saves back where they were before a throwaway game.</summary>
+        private void RestoreSaves()
+        {
+            if (savesBefore != null)
+            {
+                SaveManager.UseDirectory(savesBefore);
+                savesBefore = null;
+            }
+        }
+
+        private string savesBefore;
 
         /// <summary>Whether the game in progress is the lab.</summary>
         public bool InLab => Lab.LabRoot.Current != null;
@@ -175,6 +198,7 @@ namespace Descender.Game
                 var problem = "No hero prefab is assigned on GameFlow (Assets/Prefabs/Player.prefab).";
                 Debug.LogWarning($"GameFlow: cannot enter the lab. {problem}");
                 SaveManager.Detach();
+                RestoreSaves();
                 transition = null;
                 ShowTitle();
                 WorldUnavailable?.Invoke(problem);
@@ -422,6 +446,7 @@ namespace Descender.Game
                 WorldStreamer.Instance.Unload();
             }
             SaveManager.Detach();
+            RestoreSaves();
             ResetStatics();
         }
 
