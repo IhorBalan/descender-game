@@ -61,7 +61,7 @@ namespace Descender.UI
             bar.sprite = column.Bar;
             bar.color = column.Bar != null ? Color.white : Color.clear;
             var size = TitleKit.SizeOf(column.Bar);
-            TitleKit.Center(bar.rectTransform, TitleKit.Width * 0.5f, y, size.x, size.y);
+            TitleKit.Center(bar.rectTransform, column.CenterX, y, size.x, size.y);
             // The emblem's parent is the bar, whose own top left is the origin here.
             var emblemSize = emblem.rectTransform.sizeDelta;
             TitleKit.Center(

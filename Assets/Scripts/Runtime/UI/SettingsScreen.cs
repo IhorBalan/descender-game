@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Descender.Input;
 using Descender.Save;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,255 +9,471 @@ using UnityEngine.UI;
 namespace Descender.UI
 {
     /// <summary>
-    /// The settings screen, in four pages: Audio (master, music and effect volumes,
-    /// the dialogue blips), Display (fullscreen, window size, v-sync, screen shake),
-    /// Controls (keyboard and gamepad bindings) and Game (text speed, hit flashes,
-    /// hit pause, rumble, which pad's prompts the hints show). Shared by the title
-    /// and the pause menu, which open it and listen for Closed. Q/E and the shoulder
-    /// buttons turn pages. Pressing a binding button waits for the next key or pad
-    /// button; Esc cancels, and so does waiting out the listen time. Every change is
-    /// applied at once and written to the settings file. Port of
-    /// scripts/ui/settings_menu.gd.
+    /// The settings screen, in the title's gilded look on its dark ground with the
+    /// embers rising. Four tabs along the top (Game, Controls, Display, Audio), turned
+    /// with Q and E or the shoulder buttons; each has sections in the left column
+    /// (Gameplay and Interface; Movement and Actions; Screen and Effects; Volume and
+    /// Voices), the chosen section's settings in the middle, and what the focused one
+    /// does on the right. Up and down move, left and right change a value, Enter
+    /// changes it too, Esc goes from the settings to the sections and from there out.
+    /// F (Y on a pad) puts the tab's settings back to their defaults. Pressing a key
+    /// binding waits for the next key or pad button; Esc cancels, and so does waiting
+    /// out the listen time. Every change is applied at once and written to the
+    /// settings file. Shared by the title and the pause menu, which open it and
+    /// listen for Closed.
     /// </summary>
     public sealed class SettingsScreen : MenuScreen
     {
         public const float ListenTime = 5f;
 
-        private readonly Button[] tabs = new Button[4];
-        private readonly GameObject[] pages = new GameObject[4];
-        private readonly Selectable[] firstControls = new Selectable[4];
-        private Button backButton;
-        private Text hint;
-        private Page page = Page.Audio;
-        private bool gamepadBindings;
+        /// <summary>How far a slider moves for one press of left or right.</summary>
+        public const float SliderStep = 0.05f;
 
-        private Slider volumeSlider;
-        private Slider musicSlider;
-        private Slider sfxSlider;
-        private Text volumeValue;
-        private Text musicValue;
-        private Text sfxValue;
-        private Button blipsToggle;
-        private Button fullscreenToggle;
-        private Button scaleButton;
-        private Button vsyncToggle;
-        private Button shakeButton;
-        private Button deviceButton;
-        private Button resetKeysButton;
-        private readonly Dictionary<string, Button> keyButtons = new Dictionary<string, Button>();
-        private Button textSpeedButton;
-        private Button hitFlashToggle;
-        private Button hitStopToggle;
-        private Button rumbleToggle;
-        private Button promptsButton;
-        private readonly HashSet<Button> cycleButtons = new HashSet<Button>();
+        /// <summary>How long left or right is held before a slider starts to run, and how often it then steps.</summary>
+        public const float RepeatDelay = 0.35f;
+        public const float RepeatEvery = 0.05f;
+
+        // Places on the 1920 x 1080 stage, in pixels from its top left.
+        private const float Middle = TitleKit.Width * 0.5f;
+        private const float HeaderY = 92f;
+        private const float HeaderRuleY = 136f;
+        private const float TabsY = 190f;
+        private const float TabsRuleY = 236f;
+        private const float SideX = 290f;
+        private const float RowsX = 940f;
+        private const float RowsTop = 397f;
+        private const float HeadingY = 300f;
+        private const float InfoLeft = 1420f;
+        private const float InfoWidth = 380f;
+        private const float FooterRuleY = 958f;
+        private const float FooterY = 1010f;
+        private const float ColumnsY = 590f;
+
+        private static readonly float[] TabX = { 420f, 640f, 860f, 1080f };
+
+        private readonly List<Tab> tabs = new List<Tab>();
+        private readonly Dictionary<GameObject, SettingsRow> rows = new Dictionary<GameObject, SettingsRow>();
+        private readonly Dictionary<string, SettingsRow> keyRows = new Dictionary<string, SettingsRow>();
+        private RectTransform stage;
+        private CanvasGroup stageGroup;
+        private TitleFocus focus;
+        private Image tabGlow;
+        private Image sideBar;
+        private TextMeshProUGUI heading;
+        private TextMeshProUGUI infoTitle;
+        private TextMeshProUGUI infoBody;
+        private RectTransform footer;
+        private int tab;
+        private Section section;
+        private GameObject lastSelected;
+        private int footerFor = -1;
+        private float openedAt;
+        private float shownAt;
+        private float sideY;
+        private bool gamepadBindings;
 
         private InputAction pageLeft;
         private InputAction pageRight;
         private InputAction navigate;
-        private float lastNavigateX;
+        private InputAction reset;
+        private int heldStep;
+        private float nextRepeat;
         private string listeningAction = "";
         private InputActionRebindingExtensions.RebindingOperation rebind;
-        private bool refreshing;
 
         protected override int SortingOrder => 30;
 
         private static SettingsData Settings => SettingsData.Current;
 
+        private SettingsLook Look => theme.settingsLook;
+
+        /// <summary>The tab on show: 0 Game, 1 Controls, 2 Display, 3 Audio.</summary>
+        public int TabIndex => tab;
+
+        /// <summary>The section on show, by name ("Gameplay", "Volume"...).</summary>
+        public string SectionName => section != null ? section.Name : "";
+
+        /// <summary>The rows of the section on show, in order.</summary>
+        public IReadOnlyList<SettingsRow> Rows => section != null ? section.Rows : new List<SettingsRow>();
+
+        /// <summary>The section entries of the tab on show, in order.</summary>
+        public IReadOnlyList<SettingsRow> Sections
+        {
+            get
+            {
+                var list = new List<SettingsRow>();
+                foreach (var each in tabs[tab].Sections)
+                {
+                    list.Add(each.Entry);
+                }
+                return list;
+            }
+        }
+
+        /// <summary>What the description panel says now.</summary>
+        public string InfoTitle => infoTitle != null ? infoTitle.text : "";
+
+        /// <summary>The bar behind the focused setting.</summary>
+        public TitleFocus Focus => focus;
+
         protected override void Build(RectTransform root)
         {
-            var panel = MenuKit.MakePanel(root, theme);
-            MenuKit.Place(panel.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(300f, 164f));
-
-            var tabRow = MenuKit.MakeRow(root, "Tabs", 2f);
-            MenuKit.Strip(tabRow.GetComponent<RectTransform>(), true, 12f, MenuKit.ButtonHeight);
-            var names = new[] { "Audio", "Display", "Controls", "Game" };
-            var tabItems = new List<Selectable>();
-            for (var i = 0; i < tabs.Length; i++)
+            if (TitleKit.Font == null)
             {
-                var which = (Page)i;
-                tabs[i] = MenuKit.MakeButton(tabRow.transform, theme, names[i], () => OnTabPressed(which));
-                MenuKit.Size(tabs[i], 52f);
-                tabItems.Add(tabs[i]);
+                TitleKit.Font = theme.titleFont;
             }
-            backButton = MenuKit.MakeButton(tabRow.transform, theme, "Back", Close);
-            MenuKit.Size(backButton, 40f);
-            tabItems.Add(backButton);
-            MenuKit.LinkHorizontal(tabItems);
+            TitleScreen.ScaleSmooth(root.GetComponent<Canvas>());
+            var ground = UiKit.Box(root, "Background", TitleKit.Background);
+            UiKit.Fill(ground.rectTransform);
+            stage = UiKit.Rect(root, "Stage");
+            stage.anchorMin = new Vector2(0.5f, 0.5f);
+            stage.anchorMax = new Vector2(0.5f, 0.5f);
+            stage.pivot = new Vector2(0.5f, 0.5f);
+            stage.anchoredPosition = Vector2.zero;
+            stage.sizeDelta = new Vector2(TitleKit.Width, TitleKit.Height);
+            stageGroup = stage.gameObject.AddComponent<CanvasGroup>();
+            TitleEmbers.Make(stage, theme.mote, 11);
 
-            hint = MenuKit.MakeLabel(root, theme, "", MenuTheme.MutedFontSize);
-            hint.color = theme.textMuted;
-            MenuKit.Strip(hint.rectTransform, false, 12f, 12f);
-
-            BuildAudio(root);
-            BuildDisplay(root);
-            BuildControls(root);
-            BuildGame(root);
+            BuildFrame();
+            BuildTabs();
+            BuildGame();
+            BuildControls();
+            BuildDisplay();
+            BuildAudio();
+            focus = TitleFocus.Make(stage, null);
         }
 
-        private static VerticalLayoutGroup PageColumn(RectTransform root, string name)
+        /// <summary>The heading, the rules and the column lines, and the description panel.</summary>
+        private void BuildFrame()
         {
-            var column = MenuKit.MakeColumn(root, name, 3f);
-            column.childAlignment = TextAnchor.UpperLeft;
-            column.childForceExpandWidth = false;
-            var rect = column.GetComponent<RectTransform>();
-            MenuKit.Place(rect, new Vector2(0.5f, 1f), new Vector2(0f, -30f), new Vector2(280f, 0f));
-            return column;
+            TitleKit.Sprite(stage, "Emblem", Look.emblem, 142f, HeaderY);
+            var title = TitleKit.Label(stage, "SETTINGS", 42f, TitleKit.Ivory, 40f, 0f, HeaderY, 900f);
+            title.alignment = TextAlignmentOptions.Left;
+            TitleKit.Center(title.rectTransform, 206f + 450f, HeaderY, 900f, 70f);
+            TitleKit.Sprite(stage, "Rule", Look.ruleLong, Middle, HeaderRuleY);
+            TitleKit.Sprite(stage, "Rule", Look.rulePlain, Middle, TabsRuleY);
+            TitleKit.Sprite(stage, "Line", Look.ruleVertical, 482f, ColumnsY);
+            TitleKit.Sprite(stage, "Line", Look.ruleVertical, 1384f, ColumnsY);
+            TitleKit.Sprite(stage, "Rule", Look.ruleLong, Middle, FooterRuleY);
+
+            sideBar = TitleKit.Sprite(stage, "Section", Look.sideBar, SideX, RowsTop);
+
+            heading = TitleKit.Label(stage, "", 21f, TitleKit.Muted, 50f, 0f, HeadingY, 800f);
+            heading.alignment = TextAlignmentOptions.Left;
+            TitleKit.Center(heading.rectTransform, 556f + 400f, HeadingY, 800f, 50f);
+            var under = TitleKit.Sprite(stage, "Rule", Look.ruleRow, RowsX, HeadingY + 34f);
+            under.rectTransform.sizeDelta = new Vector2(SettingsRow.RowWidth, under.rectTransform.sizeDelta.y);
+
+            infoTitle = TitleKit.Label(stage, "", 28f, TitleKit.Ivory, 2f, 0f, RowsTop, InfoWidth);
+            infoTitle.alignment = TextAlignmentOptions.Left;
+            TitleKit.Center(infoTitle.rectTransform, InfoLeft + InfoWidth * 0.5f, RowsTop - 4f, InfoWidth, 50f);
+            var infoRule = TitleKit.Sprite(stage, "Rule", Look.ruleRow, InfoLeft + InfoWidth * 0.5f, RowsTop + 30f);
+            infoRule.rectTransform.sizeDelta = new Vector2(InfoWidth + 20f, infoRule.rectTransform.sizeDelta.y);
+            infoBody = TitleKit.Label(stage, "", 20f, TitleKit.Parchment, 2f, 0f, 0f, InfoWidth);
+            infoBody.alignment = TextAlignmentOptions.TopLeft;
+            infoBody.textWrappingMode = TextWrappingModes.Normal;
+            infoBody.lineSpacing = 18f;
+            TitleKit.Center(infoBody.rectTransform, InfoLeft + InfoWidth * 0.5f, RowsTop + 50f + 150f, InfoWidth, 300f);
+
+            footer = UiKit.Rect(stage, "Footer");
+            UiKit.Fill(footer);
         }
 
-        /// <summary>A row with a label on the left and a control on the right.</summary>
-        private Transform SettingRow(Transform column, string label)
+        private void BuildTabs()
         {
-            var row = MenuKit.MakeRow(column, label, 4f);
-            row.childAlignment = TextAnchor.MiddleLeft;
-            var text = MenuKit.MakeLabel(row.transform, theme, label, MenuTheme.BaseFontSize, TextAnchor.MiddleLeft);
-            MenuKit.Size(text, 110f);
-            return row.transform;
+            var names = new[] { "Game", "Controls", "Display", "Audio" };
+            tabGlow = TitleKit.Sprite(stage, "Chosen", Look.tabGlow, TabX[0], TabsY + 30f);
+            TitleKit.KeyCap(stage, theme.keyCap, "Q", 230f, TabsY);
+            TitleKit.KeyCap(stage, theme.keyCap, "E", 1190f, TabsY);
+            for (var i = 0; i < names.Length; i++)
+            {
+                var index = i;
+                var rect = UiKit.Rect(stage, names[i]);
+                var hit = rect.gameObject.AddComponent<Image>();
+                hit.color = Color.clear;
+                var button = rect.gameObject.AddComponent<Button>();
+                button.targetGraphic = hit;
+                button.transition = Selectable.Transition.None;
+                button.navigation = new Navigation { mode = Navigation.Mode.None };
+                button.onClick.AddListener(() => ShowTab(index, true));
+                TitleKit.Center(rect, TabX[i], TabsY, 200f, 60f);
+                var label = TitleKit.Label(rect, names[i], 24f, TitleKit.Parchment, 4f, 100f, 30f, 200f);
+                tabs.Add(new Tab { Name = names[i], Label = label });
+            }
         }
 
-        private void BuildAudio(RectTransform root)
+        private void BuildGame()
         {
-            var column = PageColumn(root, "Audio");
-            pages[(int)Page.Audio] = column.gameObject;
-            volumeSlider = VolumeRow(column.transform, "Master volume", OnVolumeChanged, out volumeValue);
-            musicSlider = VolumeRow(column.transform, "Music volume", OnMusicChanged, out musicValue);
-            sfxSlider = VolumeRow(column.transform, "Effects volume", OnSfxChanged, out sfxValue);
-            blipsToggle = MenuKit.MakeToggle(SettingRow(column.transform, "Dialogue blips"), theme, OnBlipsToggled);
-            var defaults = MenuKit.MakeButton(column.transform, theme, "Defaults", OnAudioDefaultsPressed);
-            MenuKit.Size(defaults, 60f);
-            var items = new List<Selectable> { volumeSlider, musicSlider, sfxSlider, blipsToggle, defaults };
-            LinkPage(items);
-            firstControls[(int)Page.Audio] = volumeSlider;
-        }
-
-        private Slider VolumeRow(
-            Transform column,
-            string label,
-            UnityEngine.Events.UnityAction<float> onChanged,
-            out Text value
-        )
-        {
-            var row = SettingRow(column, label);
-            var slider = MenuKit.MakeSlider(row, theme, onChanged);
-            value = MenuKit.MakeLabel(row, theme, "100%", MenuTheme.BaseFontSize, TextAnchor.MiddleRight);
-            MenuKit.Size(value, 30f);
-            return slider;
-        }
-
-        private void BuildDisplay(RectTransform root)
-        {
-            var column = PageColumn(root, "Display");
-            pages[(int)Page.Display] = column.gameObject;
-            fullscreenToggle = MenuKit.MakeToggle(
-                SettingRow(column.transform, "Fullscreen"),
-                theme,
-                OnFullscreenToggled
+            var game = tabs[0];
+            game.Reset = () => Settings.ResetGame();
+            var play = AddSection(
+                game,
+                "Gameplay",
+                Look.iconGameplay,
+                "How the descent feels: how fast words are written, and the flash, the pause and the rumble that mark every blow."
             );
-            scaleButton = Cycle(SettingRow(column.transform, "Window size"), () => OnScaleStepped(1));
-            vsyncToggle = MenuKit.MakeToggle(SettingRow(column.transform, "V-sync"), theme, OnVsyncToggled);
-            shakeButton = Cycle(SettingRow(column.transform, "Screen shake"), () => OnShakeStepped(1));
-            var defaults = MenuKit.MakeButton(column.transform, theme, "Defaults", OnDisplayDefaultsPressed);
-            MenuKit.Size(defaults, 60f);
-            LinkPage(new List<Selectable> { fullscreenToggle, scaleButton, vsyncToggle, shakeButton, defaults });
-            firstControls[(int)Page.Display] = fullscreenToggle;
+            Cycle(
+                play,
+                "Text speed",
+                "How fast the words of a conversation are written out, from slow to all at once.",
+                () => Settings.TextSpeedName(),
+                OnTextSpeedStepped
+            );
+            Toggle(
+                play,
+                "Hit flashes",
+                "Struck foes and the hero flash white for a moment. Turn it off if bright flashes trouble you.",
+                () => Settings.hitFlash,
+                () => Settings.hitFlash = !Settings.hitFlash,
+                false
+            );
+            Toggle(
+                play,
+                "Hit pause",
+                "The action holds still for a split second when a blow lands, so every hit is felt.",
+                () => Settings.hitStop,
+                () => Settings.hitStop = !Settings.hitStop,
+                false
+            );
+            Toggle(
+                play,
+                "Gamepad rumble",
+                "The controller rumbles on hits, hard landings and deaths.",
+                () => Settings.rumble,
+                () => Settings.rumble = !Settings.rumble,
+                false
+            );
+            var face = AddSection(game, "Interface", Look.iconInterface, "How the game shows you its controls.");
+            Cycle(
+                face,
+                "Button prompts",
+                "Which buttons the hints show: those of the pad in use, or always Xbox's or PlayStation's.",
+                () => SettingsData.LayoutNames[(int)Settings.prompts],
+                OnPromptsStepped
+            );
         }
 
-        private void BuildControls(RectTransform root)
+        private void BuildControls()
         {
-            var column = PageColumn(root, "Controls");
-            column.spacing = 2f;
-            pages[(int)Page.Controls] = column.gameObject;
-            var top = MenuKit.MakeRow(column.transform, "KeysRow", 4f);
-            deviceButton = MenuKit.MakeButton(top.transform, theme, "Keyboard", OnDevicePressed);
-            MenuKit.Size(deviceButton, 70f);
-            resetKeysButton = MenuKit.MakeButton(top.transform, theme, "Reset to defaults", OnResetKeysPressed);
-            MenuKit.Size(resetKeysButton, 90f);
-            MenuKit.LinkHorizontal(new List<Selectable> { deviceButton, resetKeysButton }, false);
-
-            // Two actions per row: label, key, label, key.
-            var left = new List<Selectable> { deviceButton };
-            var right = new List<Selectable> { resetKeysButton };
-            Transform row = null;
+            var controls = tabs[1];
+            controls.Reset = () =>
+            {
+                StopListening();
+                if (InputRouter.Instance != null)
+                {
+                    InputRouter.Instance.ResetBindings();
+                }
+            };
+            var move = AddSection(
+                controls,
+                "Movement",
+                Look.iconMovement,
+                "The keys or buttons that move Ansel through the world. Choose one and press the new key."
+            );
+            var act = AddSection(
+                controls,
+                "Actions",
+                Look.iconActions,
+                "The keys or buttons for fighting, healing, talking and pausing."
+            );
+            foreach (var group in new[] { move, act })
+            {
+                Cycle(
+                    group,
+                    "Bindings for",
+                    "Whose bindings these rows show and change: the keyboard's or the gamepad's.",
+                    () => gamepadBindings ? "Gamepad" : "Keyboard",
+                    _ => OnDeviceStepped()
+                );
+            }
             for (var i = 0; i < SettingsData.Rebindable.Length; i++)
             {
                 var (action, label) = SettingsData.Rebindable[i];
-                if (i % 2 == 0)
-                {
-                    row = MenuKit.MakeRow(column.transform, "Keys" + i, 4f).transform;
-                }
-                var text = MenuKit.MakeLabel(row, theme, label, MenuTheme.BaseFontSize, TextAnchor.MiddleLeft);
-                MenuKit.Size(text, 50f, 11f);
+                var group = i < 4 || action == "Jump" || action == "Dash" ? move : act;
                 var name = action;
-                var button = MenuKit.MakeButton(row, theme, "", () => OnKeyButtonPressed(name));
-                MenuKit.Size(button, 86f, 11f);
-                keyButtons[action] = button;
-                (i % 2 == 0 ? left : right).Add(button);
+                var help =
+                    $"Press to choose a new key or button for {label.ToLowerInvariant()}. Esc keeps the old one, and so does waiting {ListenTime:0} seconds.";
+                var row = AddRow(group, SettingsRow.Kind.Key, label, help);
+                row.Bind(() => KeyText(name), null, null);
+                row.Button.onClick.AddListener(() => OnKeyPressed(name));
+                keyRows[name] = row;
             }
-            MenuKit.LinkVertical(left, false);
-            MenuKit.LinkVertical(right, false);
-            for (var i = 0; i < left.Count; i++)
-            {
-                var other = i < right.Count ? right[i] : right[right.Count - 1];
-                var navigation = left[i].navigation;
-                navigation.selectOnRight = other;
-                left[i].navigation = navigation;
-                if (i < right.Count)
-                {
-                    var back = right[i].navigation;
-                    back.selectOnLeft = left[i];
-                    right[i].navigation = back;
-                }
-            }
-            LinkToTabs(left[0]);
-            LinkToTabs(right[0]);
-            firstControls[(int)Page.Controls] = deviceButton;
         }
 
-        private void BuildGame(RectTransform root)
+        private void BuildDisplay()
         {
-            var column = PageColumn(root, "Game");
-            pages[(int)Page.Game] = column.gameObject;
-            textSpeedButton = Cycle(SettingRow(column.transform, "Text speed"), () => OnTextSpeedStepped(1));
-            hitFlashToggle = MenuKit.MakeToggle(SettingRow(column.transform, "Hit flashes"), theme, OnHitFlashToggled);
-            hitStopToggle = MenuKit.MakeToggle(SettingRow(column.transform, "Hit pause"), theme, OnHitStopToggled);
-            rumbleToggle = MenuKit.MakeToggle(SettingRow(column.transform, "Gamepad rumble"), theme, OnRumbleToggled);
-            promptsButton = Cycle(SettingRow(column.transform, "Button prompts"), () => OnPromptsStepped(1));
-            var defaults = MenuKit.MakeButton(column.transform, theme, "Defaults", OnGameDefaultsPressed);
-            MenuKit.Size(defaults, 60f);
-            LinkPage(
-                new List<Selectable>
-                {
-                    textSpeedButton,
-                    hitFlashToggle,
-                    hitStopToggle,
-                    rumbleToggle,
-                    promptsButton,
-                    defaults,
-                }
+            var display = tabs[2];
+            display.Reset = () => Settings.ResetDisplay();
+            var screen = AddSection(
+                display,
+                "Screen",
+                Look.iconScreen,
+                "The window, its size, and how it keeps time with your display."
             );
-            firstControls[(int)Page.Game] = textSpeedButton;
+            Toggle(
+                screen,
+                "Fullscreen",
+                "Fill the whole screen, or play in a window.",
+                () => Settings.fullscreen,
+                () => Settings.fullscreen = !Settings.fullscreen,
+                true
+            );
+            Cycle(
+                screen,
+                "Window size",
+                "How large the window is when the game is not in fullscreen, in whole multiples of its picture.",
+                WindowText,
+                OnScaleStepped
+            );
+            Toggle(
+                screen,
+                "V-sync",
+                "Wait for the display before each frame, so the picture never tears.",
+                () => Settings.vsync,
+                () => Settings.vsync = !Settings.vsync,
+                true
+            );
+            var effects = AddSection(
+                display,
+                "Effects",
+                Look.iconEffects,
+                "How the screen itself answers the fighting."
+            );
+            Cycle(
+                effects,
+                "Screen shake",
+                "How hard the screen shakes when blows land and bosses roar. Lower it, or turn it off, if the motion bothers you.",
+                () => SettingsData.ShakeName(Settings.shake),
+                OnShakeStepped
+            );
         }
 
-        /// <summary>A button that steps a setting: pressed goes forward, left and right either way.</summary>
-        private Button Cycle(Transform row, UnityEngine.Events.UnityAction onPressed)
+        private void BuildAudio()
         {
-            var button = MenuKit.MakeButton(row, theme, "", onPressed);
-            MenuKit.Size(button, 110f);
-            cycleButtons.Add(button);
-            return button;
+            var audio = tabs[3];
+            audio.Reset = () => Settings.ResetAudio();
+            var volume = AddSection(
+                audio,
+                "Volume",
+                Look.iconVolume,
+                "The loudness of everything, of the music and of the sound of the fighting."
+            );
+            Slider(
+                volume,
+                "Master volume",
+                "The loudness of everything the game plays.",
+                () => Settings.volume,
+                v => Settings.volume = v
+            );
+            Slider(
+                volume,
+                "Music volume",
+                "The loudness of the music under each region and boss.",
+                () => Settings.music,
+                v => Settings.music = v
+            );
+            Slider(
+                volume,
+                "Effects volume",
+                "The loudness of blows, steps, pickups and the menus.",
+                () => Settings.sfx,
+                v => Settings.sfx = v
+            );
+            var voices = AddSection(audio, "Voices", Look.iconVoices, "The voices of the people Ansel meets.");
+            Toggle(
+                voices,
+                "Dialogue blips",
+                "The short sounds that speak each line as it is written.",
+                () => Settings.blips,
+                () => Settings.blips = !Settings.blips,
+                false
+            );
         }
 
-        private void LinkPage(List<Selectable> items)
+        private Section AddSection(Tab owner, string name, Sprite icon, string help)
         {
-            MenuKit.LinkVertical(items, false);
-            LinkToTabs(items[0]);
+            var index = owner.Sections.Count;
+            if (owner.Side == null)
+            {
+                owner.Side = UiKit.Rect(stage, owner.Name + " Sections");
+                UiKit.Fill(owner.Side);
+            }
+            var entry = SettingsRow.Make(owner.Side, Look, SettingsRow.Kind.Section, name, help, icon);
+            TitleKit.Center(
+                (RectTransform)entry.transform,
+                SideX,
+                RowsTop + index * 70f,
+                SettingsRow.SectionWidth,
+                TitleKit.Step
+            );
+            var list = new TitleList(stage, name, RowsTop, SettingsRow.RowWidth, Look.rowBar, Look.ruleRow, RowsX);
+            list.Root.gameObject.SetActive(false);
+            var made = new Section
+            {
+                Name = name,
+                Help = help,
+                Entry = entry,
+                List = list,
+                Owner = owner,
+            };
+            entry.Button.onClick.AddListener(() => EnterRows(made));
+            rows[entry.gameObject] = entry;
+            owner.Sections.Add(made);
+            return made;
         }
 
-        private void LinkToTabs(Selectable first)
+        private SettingsRow AddRow(Section owner, SettingsRow.Kind kind, string label, string help)
         {
-            var navigation = first.navigation;
-            navigation.selectOnUp = tabs[(int)page];
-            first.navigation = navigation;
+            var row = SettingsRow.Make(stage, Look, kind, label, help);
+            owner.List.Adopt(row.Button);
+            owner.Rows.Add(row);
+            rows[row.gameObject] = row;
+            return row;
+        }
+
+        private void Cycle(Section owner, string label, string help, System.Func<string> text, System.Action<int> step)
+        {
+            var row = AddRow(owner, SettingsRow.Kind.Cycle, label, help);
+            row.Bind(text, null, direction => Change(() => step(direction)));
+            row.Button.onClick.AddListener(() => row.Step(1));
+        }
+
+        private void Toggle(
+            Section owner,
+            string label,
+            string help,
+            System.Func<bool> get,
+            System.Action flip,
+            bool apply
+        )
+        {
+            var row = AddRow(owner, SettingsRow.Kind.Toggle, label, help);
+            row.Bind(() => get() ? "On" : "Off", () => get() ? 1f : 0f, _ => Change(flip, apply));
+            row.Button.onClick.AddListener(() => row.Step(1));
+        }
+
+        private void Slider(Section owner, string label, string help, System.Func<float> get, System.Action<float> set)
+        {
+            var row = AddRow(owner, SettingsRow.Kind.Slider, label, help);
+            row.Bind(
+                () => Mathf.RoundToInt(get() * 100f).ToString(),
+                get,
+                direction =>
+                    Change(() => set(Mathf.Clamp01(Mathf.Round((get() + direction * SliderStep) * 100f) / 100f))),
+                place => Change(() => set(Mathf.Round(place * 100f) / 100f))
+            );
+        }
+
+        /// <summary>Makes a change, applies it when it touches the display or the sound, and saves it.</summary>
+        private void Change(System.Action change, bool apply = true)
+        {
+            change();
+            if (apply)
+            {
+                SettingsApplier.Apply(Settings);
+            }
+            Settings.Save();
+            Refresh();
         }
 
         protected override void OnOpened()
@@ -269,10 +486,13 @@ namespace Descender.UI
                 pageLeft = ui.FindAction("PageLeft", true);
                 pageRight = ui.FindAction("PageRight", true);
                 navigate = ui.FindAction("Navigate", true);
+                reset = ui.FindAction("Reset", false);
             }
             gamepadBindings = UsingGamepad;
-            ShowPage(page);
-            Select(firstControls[(int)page]);
+            openedAt = Time.unscaledTime;
+            stageGroup.alpha = 0f;
+            footerFor = -1;
+            ShowTab(tab, true);
         }
 
         protected override void OnClosed()
@@ -288,137 +508,297 @@ namespace Descender.UI
                 StopListening();
                 return;
             }
+            Audio.Sfx.Play(TitleList.BackSound);
+            if (section != null && section.List.Contains(Selected))
+            {
+                Select(section.Entry.Button);
+                return;
+            }
             Close();
         }
 
         public override void OnTop()
         {
+            if (footerFor != (UsingGamepad ? 1 : 0))
+            {
+                BuildFooter();
+            }
             if (listeningAction.Length > 0)
             {
                 return;
             }
             if (pageLeft != null && pageLeft.WasPressedThisFrame())
             {
-                TurnPage(-1);
+                TurnTab(-1);
             }
             else if (pageRight != null && pageRight.WasPressedThisFrame())
             {
-                TurnPage(1);
+                TurnTab(1);
             }
-            var x = navigate != null ? navigate.ReadValue<Vector2>().x : 0f;
-            var step = Mathf.Abs(x) > 0.5f && Mathf.Abs(lastNavigateX) <= 0.5f ? (int)Mathf.Sign(x) : 0;
-            lastNavigateX = x;
-            if (step == 0 || Selected == null)
+            else if (reset != null && reset.WasPressedThisFrame())
+            {
+                ResetTab();
+            }
+            var selected = Selected;
+            if (selected != lastSelected)
+            {
+                OnFocusMoved(selected);
+            }
+            StepHeld(navigate != null ? navigate.ReadValue<Vector2>().x : 0f);
+        }
+
+        /// <summary>Left and right change the focused setting: once on a press, and a slider runs while held.</summary>
+        private void StepHeld(float x)
+        {
+            var direction = Mathf.Abs(x) > 0.5f ? (int)Mathf.Sign(x) : 0;
+            var now = Time.unscaledTime;
+            var fire = false;
+            if (direction != heldStep)
+            {
+                heldStep = direction;
+                nextRepeat = now + RepeatDelay;
+                fire = direction != 0;
+            }
+            else if (direction != 0 && now >= nextRepeat)
+            {
+                nextRepeat = now + RepeatEvery;
+                fire =
+                    Selected != null
+                    && rows.TryGetValue(Selected, out var held)
+                    && held.Type == SettingsRow.Kind.Slider;
+            }
+            if (fire && Selected != null && rows.TryGetValue(Selected, out var row) && row.Adjusts)
+            {
+                StepRow(row, direction);
+            }
+        }
+
+        /// <summary>Moves a setting one step, as left or right does.</summary>
+        public void StepRow(SettingsRow row, int direction)
+        {
+            row.Step(direction);
+            Audio.Sfx.Play("menu_move", -8f);
+        }
+
+        private void OnFocusMoved(GameObject selected)
+        {
+            var moved = lastSelected != null;
+            lastSelected = selected;
+            if (selected == null || !rows.TryGetValue(selected, out var row))
             {
                 return;
             }
-            if (Selected.TryGetComponent<Button>(out var button) && cycleButtons.Contains(button))
+            if (moved)
             {
-                StepCycle(button, step);
+                Audio.Sfx.Play("menu_move", -6f);
             }
-        }
-
-        private void TurnPage(int step)
-        {
-            var count = pages.Length;
-            ShowPage((Page)(((int)page + step + count) % count));
-            Select(firstControls[(int)page]);
-        }
-
-        private void ShowPage(Page which)
-        {
-            page = which;
-            for (var i = 0; i < pages.Length; i++)
+            if (row.Type == SettingsRow.Kind.Section)
             {
-                pages[i].SetActive(i == (int)which);
-                var navigation = tabs[i].navigation;
-                navigation.selectOnDown = firstControls[(int)which];
-                tabs[i].navigation = navigation;
-            }
-            var back = backButton.navigation;
-            back.selectOnDown = firstControls[(int)which];
-            backButton.navigation = back;
-            foreach (var first in firstControls)
-            {
-                if (first != null)
+                var chosen = FindSection(row);
+                if (chosen != null && chosen != section)
                 {
-                    var navigation = first.navigation;
-                    navigation.selectOnUp = tabs[(int)which];
-                    first.navigation = navigation;
+                    ShowSection(chosen, false);
                 }
             }
+            Describe(row);
+        }
+
+        private Section FindSection(SettingsRow entry)
+        {
+            foreach (var each in tabs[tab].Sections)
+            {
+                if (each.Entry == entry)
+                {
+                    return each;
+                }
+            }
+            return null;
+        }
+
+        private void Describe(SettingsRow row)
+        {
+            infoTitle.text = row.Label;
+            infoBody.text = row.Help;
+        }
+
+        private void Update()
+        {
+            if (!IsOpen)
+            {
+                return;
+            }
+            var now = Time.unscaledTime;
+            stageGroup.alpha = TitleScreen.Smooth((now - openedAt) / 0.4f);
+            if (section != null)
+            {
+                section.List.Group.alpha = TitleScreen.Smooth((now - shownAt) / TitleScreen.ColumnFadeSeconds);
+                var target = RowsTop + section.Owner.Sections.IndexOf(section) * 70f;
+                sideY = TitleFocus.Ease(sideY, target, Mathf.Min(Time.unscaledDeltaTime, TitleFocus.MaxStep));
+                sideBar.rectTransform.anchoredPosition = new Vector2(SideX, -sideY);
+            }
+            var glow = tabGlow.rectTransform;
+            var x = TitleFocus.Ease(
+                glow.anchoredPosition.x,
+                TabX[tab],
+                Mathf.Min(Time.unscaledDeltaTime, TitleFocus.MaxStep)
+            );
+            glow.anchoredPosition = new Vector2(x, glow.anchoredPosition.y);
+        }
+
+        /// <summary>Shows a tab with its first section, the focus on that section's first setting.</summary>
+        public void ShowTab(int index, bool focusRows)
+        {
+            tab = (index % tabs.Count + tabs.Count) % tabs.Count;
+            for (var i = 0; i < tabs.Count; i++)
+            {
+                tabs[i].Side.gameObject.SetActive(i == tab);
+                tabs[i].Label.color = i == tab ? TitleKit.Ivory : TitleKit.Parchment;
+            }
+            var first = tabs[tab].Sections[0];
+            sideY = RowsTop;
+            ShowSection(first, focusRows);
+        }
+
+        /// <summary>Turns to the tab `step` along, as Q and E do.</summary>
+        public void TurnTab(int step)
+        {
+            StopListening();
+            Audio.Sfx.Play("menu_move", -4f);
+            ShowTab(tab + step, true);
+        }
+
+        /// <summary>Puts the tab's settings back to their defaults, as F does.</summary>
+        public void ResetTab()
+        {
+            tabs[tab].Reset?.Invoke();
+            Audio.Sfx.Play(TitleList.ConfirmSound, -3f);
+            SettingsApplier.Apply(Settings);
+            Settings.Save();
             Refresh();
         }
 
-        private void StepCycle(Button button, int step)
+        private void ShowSection(Section shown, bool focusRows)
         {
-            if (button == scaleButton)
+            if (section != null)
             {
-                OnScaleStepped(step);
+                section.List.Root.gameObject.SetActive(false);
             }
-            else if (button == shakeButton)
+            section = shown;
+            foreach (var each in tabs[tab].Sections)
             {
-                OnShakeStepped(step);
+                each.Entry.Current = each == shown;
             }
-            else if (button == textSpeedButton)
+            var list = shown.List;
+            list.Root.gameObject.SetActive(true);
+            var items = list.Layout();
+            MenuKit.LinkVertical(items);
+            // Rows whose value left and right cannot change go left to the sections.
+            foreach (var row in shown.Rows)
             {
-                OnTextSpeedStepped(step);
+                var navigation = row.Button.navigation;
+                navigation.selectOnLeft = row.Adjusts ? null : shown.Entry.Button;
+                row.Button.navigation = navigation;
             }
-            else if (button == promptsButton)
+            var entries = new List<Selectable>();
+            foreach (var each in tabs[tab].Sections)
             {
-                OnPromptsStepped(step);
+                entries.Add(each.Entry.Button);
             }
+            MenuKit.LinkVertical(entries);
+            foreach (var each in tabs[tab].Sections)
+            {
+                var navigation = each.Entry.Button.navigation;
+                navigation.selectOnRight = each.Rows[0].Button;
+                each.Entry.Button.navigation = navigation;
+            }
+            heading.text = shown.Name.ToUpperInvariant();
+            shownAt = Time.unscaledTime;
+            list.Group.alpha = 0f;
+            focus.Follow(list, false);
+            var target = focusRows ? shown.Rows[0] : shown.Entry;
+            Select(target.Button);
+            lastSelected = target.gameObject;
+            Describe(target);
+            Refresh();
+        }
+
+        private void EnterRows(Section chosen)
+        {
+            if (chosen != section)
+            {
+                ShowSection(chosen, true);
+                return;
+            }
+            Select(chosen.Rows[0].Button);
         }
 
         private void Refresh()
         {
-            refreshing = true;
-            var settings = Settings;
-            volumeSlider.value = Mathf.Round(settings.volume * 100f);
-            musicSlider.value = Mathf.Round(settings.music * 100f);
-            sfxSlider.value = Mathf.Round(settings.sfx * 100f);
-            volumeValue.text = Percent(settings.volume);
-            musicValue.text = Percent(settings.music);
-            sfxValue.text = Percent(settings.sfx);
-            MenuKit.SetToggle(blipsToggle, theme, settings.blips);
-            MenuKit.SetToggle(fullscreenToggle, theme, settings.fullscreen);
-            MenuKit.SetToggle(vsyncToggle, theme, settings.vsync);
-            var (width, height) = settings.WindowSizeFor(settings.scale);
-            MenuKit.SetText(scaleButton, $"< {settings.scale}x  {width} x {height} >");
-            MenuKit.SetText(shakeButton, $"< {SettingsData.ShakeName(settings.shake)} >");
-            MenuKit.SetText(textSpeedButton, $"< {settings.TextSpeedName()} >");
-            MenuKit.SetToggle(hitFlashToggle, theme, settings.hitFlash);
-            MenuKit.SetToggle(hitStopToggle, theme, settings.hitStop);
-            MenuKit.SetToggle(rumbleToggle, theme, settings.rumble);
-            MenuKit.SetText(promptsButton, $"< {SettingsData.LayoutNames[(int)settings.prompts]} >");
-            MenuKit.SetText(deviceButton, gamepadBindings ? "Gamepad" : "Keyboard");
-            foreach (var pair in keyButtons)
+            foreach (var row in rows.Values)
             {
-                if (pair.Key == listeningAction)
-                {
-                    MenuKit.SetText(pair.Value, gamepadBindings ? "Press a button..." : "Press a key...");
-                }
-                else
-                {
-                    MenuKit.SetText(pair.Value, BindingNames(pair.Key));
-                }
+                row.Refresh();
             }
-            if (listeningAction.Length == 0)
-            {
-                var pad = UsingGamepad;
-                hint.text = pad
-                    ? "D-pad move   A changes   LB RB switch pages   B goes back"
-                    : "Arrows move   Enter changes   Q E switch pages   Esc goes back";
-            }
-            else
-            {
-                var what = gamepadBindings ? "gamepad button" : "key";
-                hint.text = $"Press the new {what}, or wait to keep the old one";
-            }
-            refreshing = false;
+            footerFor = -1;
         }
 
-        private static string Percent(float linear) => $"{Mathf.RoundToInt(linear * 100f)}%";
+        /// <summary>The hints along the bottom: going back and resetting on the left, changing on the right.</summary>
+        private void BuildFooter()
+        {
+            var pad = UsingGamepad;
+            footerFor = pad ? 1 : 0;
+            UiKit.Clear(footer);
+            if (listeningAction.Length > 0)
+            {
+                var what = gamepadBindings ? "button" : "key";
+                TitleKit.Label(
+                    footer,
+                    $"Press the new {what}, or Esc to keep the old one",
+                    21f,
+                    TitleKit.Muted,
+                    4f,
+                    Middle,
+                    FooterY
+                );
+                return;
+            }
+            var x = 120f;
+            x = Hint(x, pad ? "B" : "Esc", "Back") + 54f;
+            Hint(x, pad ? "Y" : "F", "Reset to Defaults");
+            var change = "Change";
+            var probe = TitleKit.Label(footer, change, 21f, TitleKit.Muted, 4f, 0f, FooterY, 400f);
+            var w = TitleKit.WidthOf(probe);
+            Object.Destroy(probe.gameObject);
+            var cap = pad ? "A" : "Enter";
+            var capProbe = TitleKit.Label(footer, cap, TitleKit.SmallSize, TitleKit.Muted, 4f, 0f, FooterY, 400f);
+            var capWidth = Mathf.Max(TitleKit.KeyHeight, TitleKit.WidthOf(capProbe) + 22f);
+            Object.Destroy(capProbe.gameObject);
+            Hint(TitleKit.Width - 120f - w - 12f - capWidth, cap, change);
+        }
+
+        /// <summary>A key cap and what it does, from `x`; returns where it ends.</summary>
+        private float Hint(float x, string key, string does)
+        {
+            x += TitleKit.KeyCap(footer, theme.keyCap, key, x, FooterY) + 12f;
+            var label = TitleKit.Label(footer, does, 21f, TitleKit.Muted, 4f, 0f, FooterY, 400f);
+            var w = TitleKit.WidthOf(label);
+            TitleKit.Center(label.rectTransform, x + w * 0.5f, FooterY, w + 4f, 44f);
+            return x + w;
+        }
+
+        private static string WindowText()
+        {
+            var (width, height) = Settings.WindowSizeFor(Settings.scale);
+            return $"{Settings.scale}x   {width} x {height}";
+        }
+
+        private string KeyText(string action)
+        {
+            if (action == listeningAction)
+            {
+                return gamepadBindings ? "Press a button..." : "Press a key...";
+            }
+            return BindingNames(action);
+        }
 
         /// <summary>The keys or pad buttons bound to an action for the shown device, comma separated.</summary>
         private string BindingNames(string actionName)
@@ -456,75 +836,11 @@ namespace Descender.UI
             return router.Actions.FindActionMap("Player", true).FindAction(actionName, false);
         }
 
-        private void OnTabPressed(Page which)
-        {
-            ShowPage(which);
-            Select(tabs[(int)which]);
-        }
-
-        private void OnVolumeChanged(float value)
-        {
-            if (refreshing)
-            {
-                return;
-            }
-            Settings.volume = value / 100f;
-            Apply();
-            volumeValue.text = Percent(Settings.volume);
-        }
-
-        private void OnMusicChanged(float value)
-        {
-            if (refreshing)
-            {
-                return;
-            }
-            Settings.music = value / 100f;
-            Apply();
-            musicValue.text = Percent(Settings.music);
-        }
-
-        private void OnSfxChanged(float value)
-        {
-            if (refreshing)
-            {
-                return;
-            }
-            Settings.sfx = value / 100f;
-            Apply();
-            sfxValue.text = Percent(Settings.sfx);
-        }
-
-        private void OnBlipsToggled()
-        {
-            Settings.blips = !Settings.blips;
-            Save();
-        }
-
-        private void OnAudioDefaultsPressed()
-        {
-            Settings.ResetAudio();
-            Apply();
-        }
-
-        private void OnFullscreenToggled()
-        {
-            Settings.fullscreen = !Settings.fullscreen;
-            Apply();
-        }
-
-        private void OnVsyncToggled()
-        {
-            Settings.vsync = !Settings.vsync;
-            Apply();
-        }
-
         private void OnScaleStepped(int step)
         {
             var range = SettingsData.MaxWindowScale - SettingsData.MinWindowScale + 1;
             var index = Settings.scale - SettingsData.MinWindowScale;
             Settings.scale = SettingsData.MinWindowScale + ((index + step) % range + range) % range;
-            Apply();
         }
 
         private void OnShakeStepped(int step)
@@ -536,67 +852,27 @@ namespace Descender.UI
                 index = levels.Length - 1;
             }
             Settings.shake = levels[((index + step) % levels.Length + levels.Length) % levels.Length];
-            Apply();
-        }
-
-        private void OnDisplayDefaultsPressed()
-        {
-            Settings.ResetDisplay();
-            Apply();
         }
 
         private void OnTextSpeedStepped(int step)
         {
             var count = SettingsData.TextSpeeds.Length;
             Settings.textSpeed = ((Settings.textSpeed + step) % count + count) % count;
-            Save();
-        }
-
-        private void OnHitFlashToggled()
-        {
-            Settings.hitFlash = !Settings.hitFlash;
-            Save();
-        }
-
-        private void OnHitStopToggled()
-        {
-            Settings.hitStop = !Settings.hitStop;
-            Save();
-        }
-
-        private void OnRumbleToggled()
-        {
-            Settings.rumble = !Settings.rumble;
-            Save();
         }
 
         private void OnPromptsStepped(int step)
         {
             var count = SettingsData.LayoutNames.Length;
             Settings.prompts = (PromptLayout)((((int)Settings.prompts + step) % count + count) % count);
-            Save();
         }
 
-        private void OnGameDefaultsPressed()
+        private void OnDeviceStepped()
         {
-            Settings.ResetGame();
-            Save();
-        }
-
-        private void OnDevicePressed()
-        {
+            StopListening();
             gamepadBindings = !gamepadBindings;
-            StopListening();
         }
 
-        private void OnResetKeysPressed()
-        {
-            StopListening();
-            InputRouter.Instance?.ResetBindings();
-            Refresh();
-        }
-
-        private void OnKeyButtonPressed(string actionName)
+        private void OnKeyPressed(string actionName)
         {
             var action = FindPlayerAction(actionName);
             if (action == null)
@@ -657,9 +933,9 @@ namespace Descender.UI
             {
                 action.Enable();
             }
-            if (completed)
+            if (completed && InputRouter.Instance != null)
             {
-                InputRouter.Instance?.SaveBindings();
+                InputRouter.Instance.SaveBindings();
             }
             listeningAction = "";
             Refresh();
@@ -674,27 +950,31 @@ namespace Descender.UI
                 return;
             }
             listeningAction = "";
-            Refresh();
+            if (rows.Count > 0)
+            {
+                Refresh();
+            }
         }
 
-        private void Apply()
+        /// <summary>A tab along the top: its sections, and what F puts back.</summary>
+        private sealed class Tab
         {
-            SettingsApplier.Apply(Settings);
-            Save();
+            public string Name;
+            public TextMeshProUGUI Label;
+            public RectTransform Side;
+            public System.Action Reset;
+            public readonly List<Section> Sections = new List<Section>();
         }
 
-        private void Save()
+        /// <summary>A section in the left column and the settings it shows in the middle.</summary>
+        private sealed class Section
         {
-            Settings.Save();
-            Refresh();
-        }
-
-        private enum Page
-        {
-            Audio = 0,
-            Display = 1,
-            Controls = 2,
-            Game = 3,
+            public string Name;
+            public string Help;
+            public SettingsRow Entry;
+            public TitleList List;
+            public Tab Owner;
+            public readonly List<SettingsRow> Rows = new List<SettingsRow>();
         }
     }
 }

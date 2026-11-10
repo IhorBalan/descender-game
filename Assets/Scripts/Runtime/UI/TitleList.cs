@@ -25,8 +25,18 @@ namespace Descender.UI
         private readonly Sprite ruleSprite;
         private readonly float width;
         private readonly float top;
+        private readonly float centerX;
 
-        public TitleList(Transform stage, string name, float top, float width, Sprite bar, Sprite rule)
+        /// <summary>A column centred on the stage, or on `centerX` when given.</summary>
+        public TitleList(
+            Transform stage,
+            string name,
+            float top,
+            float width,
+            Sprite bar,
+            Sprite rule,
+            float centerX = TitleKit.Width * 0.5f
+        )
         {
             Root = UiKit.Rect(stage, name);
             UiKit.Fill(Root);
@@ -37,6 +47,7 @@ namespace Descender.UI
             UiKit.Fill(itemLayer);
             this.top = top;
             this.width = width;
+            this.centerX = centerX;
             Bar = bar;
             ruleSprite = rule;
         }
@@ -73,6 +84,20 @@ namespace Descender.UI
             return button;
         }
 
+        /// <summary>The column's middle, in pixels from the stage's left.</summary>
+        public float CenterX => centerX;
+
+        /// <summary>The width every item is laid out at.</summary>
+        public float ItemWidth => width;
+
+        /// <summary>Takes in an item built elsewhere (a settings row), sized to the column.</summary>
+        public Button Adopt(Button item)
+        {
+            item.transform.SetParent(itemLayer, false);
+            items.Add(item);
+            return item;
+        }
+
         /// <summary>Whether a selected object is one of this column's items.</summary>
         public bool Contains(GameObject selected)
         {
@@ -107,12 +132,12 @@ namespace Descender.UI
                     continue;
                 }
                 var y = top + shown.Count * TitleKit.Step;
-                TitleKit.Center((RectTransform)item.transform, TitleKit.Width * 0.5f, y, width, TitleKit.Step);
+                TitleKit.Center((RectTransform)item.transform, centerX, y, width, TitleKit.Step);
                 shown.Add(item);
             }
             for (var i = rules.Count; i < shown.Count - 1; i++)
             {
-                rules.Add(TitleKit.Sprite(ruleLayer, "Rule", ruleSprite, TitleKit.Width * 0.5f, 0f));
+                rules.Add(TitleKit.Sprite(ruleLayer, "Rule", ruleSprite, centerX, 0f));
             }
             for (var i = 0; i < rules.Count; i++)
             {
