@@ -63,6 +63,10 @@ namespace Descender.World
         [SerializeField, Min(0f)]
         private float windCarry;
 
+        [Tooltip("Fireflies: how many times each one glows up and dims over its life, fading in and out (0: steady).")]
+        [SerializeField, Range(0, 3)]
+        private int blinks;
+
         private Vector2 baseVelocityX;
 
         [SerializeField]
@@ -122,6 +126,40 @@ namespace Descender.World
         public void SetWindCarry(float unitsPerSecond)
         {
             windCarry = unitsPerSecond;
+        }
+
+        /// <summary>Makes each one glow up and dim this many times over its life (see the field); for editor tools.</summary>
+        public void SetBlinks(int times)
+        {
+            blinks = Mathf.Clamp(times, 0, 3);
+        }
+
+        /// <summary>
+        /// The alpha a blinking particle has over its life (0 to 1): it fades in, glows up and
+        /// dims `times` times, and fades out, never popping on or off.
+        /// </summary>
+        public static Gradient BlinkGradient(int times)
+        {
+            // In, then a peak and a dip for each blink but the last, the last peak, and out.
+            times = Mathf.Clamp(times, 1, 3);
+            var keys = new GradientAlphaKey[2 * times + 1];
+            var step = 1f / times;
+            keys[0] = new GradientAlphaKey(0f, 0f);
+            for (var i = 0; i < times; i++)
+            {
+                keys[1 + 2 * i] = new GradientAlphaKey(1f, step * (i + 0.4f));
+                if (i < times - 1)
+                {
+                    keys[2 + 2 * i] = new GradientAlphaKey(0.15f, step * (i + 0.85f));
+                }
+            }
+            keys[keys.Length - 1] = new GradientAlphaKey(0f, 1f);
+            var gradient = new Gradient();
+            gradient.SetKeys(
+                new[] { new GradientColorKey(Color.white, 0f), new GradientColorKey(Color.white, 1f) },
+                keys
+            );
+            return gradient;
         }
 
         private void Awake()
@@ -208,6 +246,13 @@ namespace Descender.World
                 turn.y = new ParticleSystem.MinMaxCurve(-t * 0.7f, t * 0.7f);
                 var z = Mathf.Max(spin, 0.05f) * Mathf.PI * 2f;
                 turn.z = new ParticleSystem.MinMaxCurve(-z, z);
+            }
+
+            if (blinks > 0)
+            {
+                var fade = system.colorOverLifetime;
+                fade.enabled = true;
+                fade.color = new ParticleSystem.MinMaxGradient(BlinkGradient(blinks));
             }
 
             var sheet = system.textureSheetAnimation;

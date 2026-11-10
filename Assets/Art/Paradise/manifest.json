@@ -785,6 +785,48 @@
       "attach": "rows below ~70 overlap the top of wall_block"
     },
     {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_niche.png",
+      "purpose": "Blind arch set into a terrace wall for a lantern to hang in: the wide arch's voussoirs, the coping's marble, the wall's blocks in shade (wall_niche.py)",
+      "zone": "garden",
+      "size": [
+        559,
+        576
+      ],
+      "sizeUnits": [
+        4.367,
+        4.5
+      ],
+      "pivot": [
+        0.5,
+        1.0
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": []
+    },
+    {
+      "path": "Assets/Art/Paradise/Kit/Architecture/wall_soffit.png",
+      "purpose": "Underside of an overhanging terrace: fascia, gold line and dentils, made from the coping's marble (wall_soffit.py)",
+      "zone": "garden",
+      "size": [
+        1024,
+        92
+      ],
+      "sizeUnits": [
+        8.0,
+        0.719
+      ],
+      "pivot": [
+        0.5,
+        0.8913
+      ],
+      "ppu": 128,
+      "blend": "normal",
+      "tileable": [
+        "x"
+      ]
+    },
+    {
       "path": "Assets/Art/Paradise/Kit/Architecture/waterfall_spout.png",
       "purpose": "Carved marble channel mouth set into a wall; water leaves over its lip",
       "zone": "garden",

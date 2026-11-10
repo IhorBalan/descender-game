@@ -31,6 +31,61 @@ namespace Descender.Tests
 
         [TestCase(1)]
         [TestCase(2)]
+        public void EverySpoutIsSetIntoTheWallOrDeckItsWaterLeaves(int number)
+        {
+            var zone = Zone(number);
+            var falls = ParadiseGarden.GardenPlan(zone).water;
+            Assert.That(falls, Is.Not.Empty);
+            foreach (var w in falls)
+            {
+                // Just behind the spout's wall edge, a little under the water's top: stone, not air.
+                var behind = new Vector2(ParadiseGarden.SpoutPivot(w) + (w.fromRight ? 0.02f : -0.02f), w.top - 0.3f);
+                Assert.That(InStone(zone, behind), $"zone {number}: the spout of the fall at {w.x} hangs in the air");
+            }
+        }
+
+        /// <summary>Inside a solid shape of the zone, or in the slab of one of its decks.</summary>
+        private static bool InStone(ParadiseLayout.Zone zone, Vector2 p)
+        {
+            foreach (var shape in zone.shapes.Where(s => s.collides))
+            {
+                var (left, right) = ParadiseGreybox.Tangents(shape.outline, true);
+                var points = ParadiseGreybox.Sample(shape.outline, left, right, true);
+                var inside = false;
+                for (int i = 0, j = points.Count - 1; i < points.Count; j = i++)
+                {
+                    var a = points[i];
+                    var b = points[j];
+                    if ((a.y > p.y) != (b.y > p.y) && p.x < (b.x - a.x) * (p.y - a.y) / (b.y - a.y) + a.x)
+                    {
+                        inside = !inside;
+                    }
+                }
+                if (inside)
+                {
+                    return true;
+                }
+            }
+            foreach (var bridge in zone.bridges)
+            {
+                var (line, _) = ParadiseGreybox.Supports(bridge, zone);
+                for (var i = 0; i + 1 < line.Count; i++)
+                {
+                    if (p.x >= line[i].x && p.x <= line[i + 1].x)
+                    {
+                        var y = Mathf.Lerp(line[i].y, line[i + 1].y, (p.x - line[i].x) / (line[i + 1].x - line[i].x));
+                        if (p.y <= y + 0.05f && p.y >= y - ParadiseGreybox.DeckThickness)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
         public void EveryPoolEndsOnTheGroundItStartedOn(int number)
         {
             var zone = Zone(number);

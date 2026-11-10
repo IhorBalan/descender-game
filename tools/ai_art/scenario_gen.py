@@ -66,6 +66,8 @@ NEVER_BY_DEFAULT = [
     "Kit/Architecture/wall_block.png",
     "Kit/Architecture/wall_pier.png",
     "Kit/Architecture/balustrade_post.png",
+    "Kit/Architecture/wall_soffit.png",
+    "Kit/Architecture/wall_niche.png",
     "Backdrop_Garden/garden_bg0_sky_clear.png",
     "Backdrop_Garden/garden_bg0_clouds.png",
     "Backdrop_Garden/garden_bg1_far.png",

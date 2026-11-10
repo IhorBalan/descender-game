@@ -500,7 +500,7 @@ namespace Descender.EditorTools.Paradise
                     continue; // the painted backdrop and props replace the greybox stand-ins
                 }
                 var parent = shape.profile == ParadiseLayout.Profile.Decor ? decorGroup : groundGroup;
-                BuildShape(shape, parent, art, zoneArt, zone.masonry.Contains(shape.name));
+                BuildShape(shape, parent, art, zoneArt, zone.masonry.Contains(shape.name), zone);
             }
             foreach (var ledge in zone.ledges)
             {
@@ -599,7 +599,8 @@ namespace Descender.EditorTools.Paradise
             Transform parent,
             Art art,
             ParadiseArt.ZoneArt zoneArt,
-            bool masonry = false
+            bool masonry = false,
+            ParadiseLayout.Zone zone = null
         )
         {
             var go = new GameObject(shape.name);
@@ -682,6 +683,10 @@ namespace Descender.EditorTools.Paradise
                     if (masonry)
                     {
                         ParadiseGarden.Piers(go.transform, sampled, zoneArt);
+                        if (zone != null)
+                        {
+                            ParadiseGarden.Quoins(go.transform, zone, shape, zoneArt);
+                        }
                     }
                     else if (shape.profile == ParadiseLayout.Profile.Ground)
                     {
@@ -1056,15 +1061,13 @@ namespace Descender.EditorTools.Paradise
         }
 
         /// <summary>
-        /// A deck's columns: one near each end and every `spacing` units between, each from the
-        /// deck's underside down to the first surface below it, or into the cloud sea.
+        /// A deck's walk line, sampled, and where its columns stand: one near each end and every
+        /// `spacing` units between, each on the first surface below the deck, or the cloud sea.
+        /// The dressing plans what hangs under the deck from the same columns the builder puts up.
         /// </summary>
-        private static void BuildSupports(
+        public static (List<Vector2> line, List<(float x, float ground)> feet) Supports(
             ParadiseLayout.Bridge bridge,
-            ParadiseLayout.Zone zone,
-            Transform parent,
-            Art art,
-            ParadiseArt.ZoneArt zoneArt
+            ParadiseLayout.Zone zone
         )
         {
             var (left, right) = Tangents(bridge.deck, false);
@@ -1077,8 +1080,6 @@ namespace Descender.EditorTools.Paradise
                 count = 1;
                 x0 = x1 = (x0 + x1) / 2f;
             }
-            var group = new GameObject(bridge.name + " Columns").transform;
-            group.SetParent(parent, false);
             var feet = new List<(float x, float ground)>();
             for (var i = 0; i < count; i++)
             {
@@ -1086,6 +1087,24 @@ namespace Descender.EditorTools.Paradise
                 var top = DeckY(line, x) - DeckThickness;
                 feet.Add((x, ParadiseDressing.SurfaceY(zone, x, CloudSea, top - 0.5f)));
             }
+            return (line, feet);
+        }
+
+        /// <summary>
+        /// A deck's columns: one near each end and every `spacing` units between, each from the
+        /// deck's underside down to the first surface below it, or into the cloud sea.
+        /// </summary>
+        private static void BuildSupports(
+            ParadiseLayout.Bridge bridge,
+            ParadiseLayout.Zone zone,
+            Transform parent,
+            Art art,
+            ParadiseArt.ZoneArt zoneArt
+        )
+        {
+            var (line, feet) = Supports(bridge, zone);
+            var group = new GameObject(bridge.name + " Columns").transform;
+            group.SetParent(parent, false);
             if (zoneArt != null && zoneArt.garden)
             {
                 ParadiseGarden.Colonnade(group, line, feet, DeckThickness, zoneArt);

@@ -35,5 +35,57 @@ namespace Descender.Tests
                 EditorSceneManager.CloseScene(scene, true);
             }
         }
+
+        [Test]
+        public void FirefliesWanderTheOrchardGlowingUpAndDimming()
+        {
+            var scene = EditorSceneManager.OpenScene(Orchard, OpenSceneMode.Additive);
+            try
+            {
+                var fireflies = scene
+                    .GetRootGameObjects()
+                    .SelectMany(r => r.GetComponentsInChildren<World.RegionParticles>(true))
+                    .Where(p => p.name == "Fireflies")
+                    .ToList();
+                Assert.That(fireflies, Has.Count.EqualTo(1));
+                var settings = new UnityEditor.SerializedObject(fireflies[0]);
+                Assert.That(settings.FindProperty("blinks").intValue, Is.EqualTo(2));
+                Assert.That(settings.FindProperty("sprite").objectReferenceValue.name, Is.EqualTo("firefly"));
+            }
+            finally
+            {
+                EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
+        [TestCase(1)]
+        [TestCase(2)]
+        [TestCase(3)]
+        public void ABlinkFadesInAndOutAndGlowsUpAsOftenAsAsked(int times)
+        {
+            var gradient = World.RegionParticles.BlinkGradient(times);
+            Assert.That(gradient.Evaluate(0f).a, Is.EqualTo(0f).Within(1e-4f), "never pops on");
+            Assert.That(gradient.Evaluate(1f).a, Is.EqualTo(0f).Within(1e-4f), "never pops off");
+            // Count the peaks: where it rises to full and falls again.
+            var peaks = 0;
+            var rising = false;
+            var last = 0f;
+            for (var t = 0f; t <= 1f; t += 0.002f)
+            {
+                var a = gradient.Evaluate(t).a;
+                if (a > last + 1e-5f)
+                {
+                    rising = true;
+                }
+                else if (a < last - 1e-5f && rising)
+                {
+                    peaks++;
+                    rising = false;
+                    Assert.That(last, Is.GreaterThan(0.95f), $"a full glow before the dim at {t:0.00}");
+                }
+                last = a;
+            }
+            Assert.That(peaks, Is.EqualTo(times));
+        }
     }
 }
