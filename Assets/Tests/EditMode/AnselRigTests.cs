@@ -59,7 +59,11 @@ namespace Descender.Tests.EditMode
         public void EveryBendingPartIsSkinnedToItsBones()
         {
             var skins = Prefab().GetComponentsInChildren<SpriteSkin>(true);
-            Assert.That(skins.Length, Is.EqualTo(6), "cloak, two arms, two legs and the torso bend");
+            Assert.That(
+                skins.Length,
+                Is.EqualTo(7),
+                "cloak, two arms, two legs, the torso and the head (for the hair) bend"
+            );
             foreach (var skin in skins)
             {
                 var sprite = skin.GetComponent<SpriteRenderer>().sprite;
@@ -104,6 +108,44 @@ namespace Descender.Tests.EditMode
                 Is.GreaterThanOrEqualTo(4),
                 "no vertex around the knee follows both the thigh and the shin"
             );
+        }
+
+        [Test]
+        public void EveryPartHasItsNormalMap()
+        {
+            foreach (var renderer in Prefab().GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                var sprite = renderer.sprite;
+                if (sprite == null || !sprite.name.StartsWith("ansel_"))
+                {
+                    continue;
+                }
+                var path = AssetDatabase.GetAssetPath(sprite);
+                var data = new UnityEditor.U2D.Sprites.SpriteDataProviderFactories();
+                data.Init();
+                var provider = data.GetSpriteEditorDataProviderFromObject(AssetImporter.GetAtPath(path));
+                provider.InitSpriteEditorDataProvider();
+                var textures = provider
+                    .GetDataProvider<UnityEditor.U2D.Sprites.ISecondaryTextureDataProvider>()
+                    .textures;
+                Assert.That(textures, Is.Not.Null.And.Not.Empty, $"{sprite.name} has no normal map");
+                Assert.That(textures[0].name, Is.EqualTo("_NormalMap"), sprite.name);
+                Assert.That(textures[0].texture, Is.Not.Null, $"{sprite.name}'s normal map is missing");
+            }
+        }
+
+        [Test]
+        public void TheRigCarriesItsHairTunicHoodAndEffects()
+        {
+            var rig = new SerializedObject(Prefab().GetComponent<HeroRig>());
+            Assert.That(rig.FindProperty("hairBones").arraySize, Is.EqualTo(2), "two locks of hair");
+            Assert.That(rig.FindProperty("tailBones").arraySize, Is.EqualTo(2), "the tunic's two tails");
+            foreach (
+                var field in new[] { "hood", "handFront", "handBack", "dust", "glints", "streaks", "slashArc", "ring" }
+            )
+            {
+                Assert.That(rig.FindProperty(field).objectReferenceValue, Is.Not.Null, $"the rig has no {field}");
+            }
         }
 
         [Test]

@@ -26,6 +26,7 @@ namespace Descender.Fx
         private ParticleSystem sparks;
         private ParticleSystem puffs;
         private float hitStopUntil;
+        private float sizeScale = 1f;
         private Coroutine rumble;
 
         /// <summary>How many sparks, puffs and dusts were asked for, for the tests.</summary>
@@ -153,6 +154,46 @@ namespace Descender.Fx
             }
         }
 
+        /// <summary>
+        /// Draws the sparks and dust with a sprite and material instead of the default flat
+        /// squares, sizes scaled by sizeScale; null puts the squares back. The new Paradise's
+        /// hero sets it, so the painted world gets soft light and dust; elsewhere nothing changes.
+        /// </summary>
+        public static void UseLook(Sprite sprite, Material material, float sizeScale)
+        {
+            if (instance == null && sprite == null)
+            {
+                return;
+            }
+            var self = Instance;
+            self.sizeScale = sprite != null ? sizeScale : 1f;
+            Dress(self.sparks, sprite, material);
+            Dress(self.puffs, sprite, material);
+        }
+
+        private static void Dress(ParticleSystem system, Sprite sprite, Material material)
+        {
+            if (system == null)
+            {
+                return;
+            }
+            var sheet = system.textureSheetAnimation;
+            sheet.enabled = sprite != null;
+            if (sprite != null)
+            {
+                sheet.mode = ParticleSystemAnimationMode.Sprites;
+                if (sheet.spriteCount == 0)
+                {
+                    sheet.AddSprite(sprite);
+                }
+                else
+                {
+                    sheet.SetSprite(0, sprite);
+                }
+            }
+            system.GetComponent<ParticleSystemRenderer>().sharedMaterial = sprite != null ? material : Shapes.Unlit;
+        }
+
         /// <summary>A burst of sparks at a world position.</summary>
         public static void Spark(Vector2 at, Color color)
         {
@@ -204,7 +245,7 @@ namespace Descender.Fx
                 parameters.position = new Vector3(at.x, at.y, 0f) + (Vector3)(Random.insideUnitCircle * 2f / 16f);
                 parameters.velocity = (direction * speed + drift) / 16f;
                 parameters.startLifetime = Random.Range(minLife, maxLife);
-                parameters.startSize = Random.Range(minSize, maxSize) / 16f;
+                parameters.startSize = Random.Range(minSize, maxSize) / 16f * sizeScale;
                 system.Emit(parameters, 1);
             }
         }
