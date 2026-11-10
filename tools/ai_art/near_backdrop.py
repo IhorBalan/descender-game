@@ -95,21 +95,29 @@ def aqueduct(arches: int, tiers: int, scale: float, broken: bool, rng: random.Ra
     for tier in reversed(range(tiers)):
         for i in range(arches):
             over(out, arch.transpose(Image.FLIP_LEFT_RIGHT) if i % 2 else arch, i * step_x, tier * step_y)
-    for i in range(arches):
+    # Nothing hangs from the last arch of a broken run: a drape cut by the break reads as a spike.
+    for i in range(arches - 1 if broken else arches):
         if rng.random() < 0.7:
             name = rng.choice(("ivy_curtain", "wisteria_drape", "ivy_drape_a", "ivy_drape_c"))
             drape = piece(name, scale * rng.uniform(0.55, 0.8), rng.random() < 0.5)
             over(out, drape, (i + rng.uniform(0.0, 0.5)) * step_x, -drape.height * 0.02 + 8 * scale)
     if not broken:
         return out
-    # The break: a rough line down the last arch, lower toward the outer edge.
+    # The break: masonry gives way along its courses, so each tier ends in a ragged stair down
+    # its last arch, cut short of the keystone so no medallion is left hanging in the air.
+    course = max(9.0, 44.0 * scale)
+    block = course * 1.8
     mask = Image.new("L", out.size, 255)
     points = [(out.width, 0)]
-    y, inner = 0.0, out.width - step_x * rng.uniform(0.35, 0.6)
+    y, x, tier = 0.0, 0.0, -1
     while y < out.height:
-        points.append((inner + rng.uniform(-34, 34) * (1.0 + scale), y))
-        y += rng.uniform(18, 52)
-        inner += rng.uniform(2, 16)
+        if y >= (tier + 1) * step_y:
+            tier += 1
+            base = out.width - step_x * rng.uniform(0.62, 0.84)
+        x = base + rng.choice((-1, -1, 0, 0, 1)) * block * rng.uniform(0.35, 0.8)
+        points.append((x, y))
+        y += course * rng.choice((1, 1, 2))
+        points.append((x, y))
     points.append((out.width, out.height))
     ImageDraw.Draw(mask).polygon(points, fill=0)
     out.putalpha(ImageChops.multiply(out.getchannel("A"), mask.filter(ImageFilter.GaussianBlur(1.0))))
