@@ -91,6 +91,10 @@ namespace Descender.UI
         [SerializeField]
         private Sprite titleBackdrop;
 
+        [SerializeField]
+        [Tooltip("The gilded look of the title, settings and pause menus, which the camp and its pages share.")]
+        private MenuTheme menuTheme;
+
         private TMP_FontAsset runtimeFont;
         private static UiTheme current;
 
@@ -104,6 +108,9 @@ namespace Descender.UI
         public Sprite ToggleOn => toggleOn;
         public Sprite ToggleOff => toggleOff;
         public Sprite TitleBackdrop => titleBackdrop;
+
+        /// <summary>The gilded menu theme (Assets/Settings/MenuTheme.asset), or null.</summary>
+        public MenuTheme MenuTheme => menuTheme;
 
         /// <summary>
         /// The theme in use: the one assigned here, else Assets/Resources/UiTheme.asset,

@@ -68,7 +68,7 @@ namespace Descender.UI
         private const float TaglineGap = 23f;
         private const float RuleY = 408f;
         private const float ItemsY = 478f;
-        private const float HintsY = 1002f;
+        private const float HintsY = TitleHints.Y;
         private const float ColumnWidth = 820f;
         private const float WideColumnWidth = 1300f;
         private const float CornerSize = 21f;
@@ -573,74 +573,8 @@ namespace Descender.UI
             if (keysFor != gamepad)
             {
                 keysFor = gamepad;
-                BuildKeys(gamepad == 1);
+                TitleHints.Build(keys, theme, gamepad == 1, "Confirm", "Back");
             }
-        }
-
-        /// <summary>
-        /// The key hints along the bottom: the D-pad icon and Navigate, then a key cap
-        /// and what it does twice, between two fading hairlines.
-        /// </summary>
-        private void BuildKeys(bool gamepad)
-        {
-            UiKit.Clear(keys);
-            var row = UiKit.Rect(keys, "Row");
-            UiKit.Fill(row);
-            var x = 0f;
-            var parts = new System.Collections.Generic.List<RectTransform>();
-            if (theme.keyDpad != null)
-            {
-                var pad = TitleKit.Sprite(row, "Dpad", theme.keyDpad, 0f, HintsY);
-                var padWidth = TitleKit.SizeOf(theme.keyDpad).x;
-                pad.rectTransform.anchoredPosition = new Vector2(x + padWidth * 0.5f, -HintsY);
-                parts.Add(pad.rectTransform);
-                x += padWidth + 12f;
-            }
-            x = Hint(row, parts, "Navigate", x) + 46f;
-            x = Hint(row, parts, "Confirm", x + KeyCapInto(row, parts, gamepad ? "A" : "Enter", x) + 12f) + 46f;
-            x = Hint(row, parts, "Back", x + KeyCapInto(row, parts, gamepad ? "B" : "Esc", x) + 12f);
-            // Centre the whole row: everything was laid out from 0, so shift it by half what is left.
-            var shift = Middle - x * 0.5f;
-            foreach (var part in parts)
-            {
-                part.anchoredPosition += new Vector2(shift, 0f);
-            }
-            if (theme.ruleSide == null)
-            {
-                return;
-            }
-            var reach = TitleKit.SizeOf(theme.ruleSide).x * 0.5f + 34f;
-            TitleKit.Sprite(keys, "Line", theme.ruleSide, shift - reach, HintsY);
-            var right = TitleKit.Sprite(keys, "Line", theme.ruleSide, shift + x + reach, HintsY);
-            right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
-        }
-
-        /// <summary>A key cap at `x`, added to the row's parts; returns its width.</summary>
-        private float KeyCapInto(
-            Transform row,
-            System.Collections.Generic.List<RectTransform> parts,
-            string key,
-            float x
-        )
-        {
-            var w = TitleKit.KeyCap(row, theme.keyCap, key, x, HintsY);
-            parts.Add((RectTransform)row.GetChild(row.childCount - 1));
-            return w;
-        }
-
-        /// <summary>What a key does, its left edge at `x`; returns where it ends.</summary>
-        private static float Hint(
-            Transform row,
-            System.Collections.Generic.List<RectTransform> parts,
-            string text,
-            float x
-        )
-        {
-            var label = TitleKit.Label(row, text, CornerSize, TitleKit.Muted, 4f, 0f, HintsY, 400f);
-            var w = TitleKit.WidthOf(label);
-            TitleKit.Center(label.rectTransform, x + w * 0.5f, HintsY, w + 4f, 44f);
-            parts.Add(label.rectTransform);
-            return x + w;
         }
 
         private static void Quit()

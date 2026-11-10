@@ -7,7 +7,8 @@ namespace Descender.UI
 {
     /// <summary>
     /// The scrolling column the pack, the shop and the skills list their rows in.
-    /// Rows are stone buttons or plain lines added in order; the list keeps the
+    /// Rows are gilded lines of text that light a gold bar while focused, or plain
+    /// lines of text, added in order (<see cref="RowHeight"/> apart); the list keeps the
     /// focused row in view (Godot's follow_focus) and can put the focus back on
     /// the row that had it after a rebuild. Made by <see cref="UiKit.ScrollList"/>.
     /// </summary>
@@ -17,6 +18,11 @@ namespace Descender.UI
         private RectTransform content;
         private readonly List<Selectable> rows = new List<Selectable>();
         private GameObject lastSelected;
+
+        /// <summary>The height of a row, in pixels of the 1920 x 1080 stage.</summary>
+        public const float RowHeight = 58f;
+
+        public const float TextSize = 24f;
 
         public RectTransform Content => content;
         public IReadOnlyList<Selectable> Rows => rows;
@@ -48,15 +54,47 @@ namespace Descender.UI
             UiKit.Clear(content);
         }
 
-        /// <summary>A left-aligned stone button row in a colour.</summary>
+        /// <summary>
+        /// A row: its text in a colour, and the wide gold bar behind it while it is
+        /// focused or under the mouse. A text laid out in columns with runs of spaces
+        /// (MenuText's lines) keeps its first column on the left and sets the rest
+        /// against the right end, since the spaces do not line up in Cinzel.
+        /// </summary>
         public Button AddRow(string text, Color color, UnityEngine.Events.UnityAction onPress, System.Action onFocus)
         {
-            var button = UiKit.Button(content, $"Row{rows.Count}", text, onPress, TMPro.TextAlignmentOptions.Left);
+            var rect = UiKit.Rect(content, $"Row{rows.Count}");
+            var hit = rect.gameObject.AddComponent<Image>();
+            hit.color = Color.clear;
+            var button = rect.gameObject.AddComponent<Button>();
+            button.targetGraphic = hit;
+            button.transition = Selectable.Transition.None;
+            button.navigation = new Navigation { mode = Navigation.Mode.Explicit };
+            if (onPress != null)
+            {
+                button.onClick.AddListener(onPress);
+            }
+            var theme = UiTheme.Current.MenuTheme;
+            var bar = UiKit.Box(rect, "Bar", Color.white);
+            bar.sprite = theme != null ? theme.focusBarWide : null;
+            UiKit.Fill(bar.rectTransform, 0f, -7f, 0f, -7f);
+            bar.enabled = false;
+            SplitColumns(text, out var name, out var detail);
+            var label = TitleKit.Label(rect, name, TextSize, color, 3f, 0f, 0f);
+            label.alignment = TMPro.TextAlignmentOptions.Left;
+            UiKit.Fill(label.rectTransform, 48f, 0f, 48f, 0f);
+            if (detail.Length > 0)
+            {
+                var right = TitleKit.Label(rect, detail, 21f, TitleKit.Muted, 3f, 0f, 0f);
+                right.alignment = TMPro.TextAlignmentOptions.Right;
+                UiKit.Fill(right.rectTransform, 48f, 0f, 48f, 0f);
+            }
             var layout = button.gameObject.AddComponent<LayoutElement>();
-            layout.preferredHeight = UiKit.RowHeight;
-            layout.minHeight = UiKit.RowHeight;
-            var look = button.GetComponent<UiButtonLook>();
+            layout.preferredHeight = RowHeight;
+            layout.minHeight = RowHeight;
+            var look = rect.gameObject.AddComponent<UiButtonLook>();
+            look.BindGilded(button, label, bar);
             look.SetBaseColor(color);
+            button.onClick.AddListener(() => Audio.Sfx.Play(TitleList.ConfirmSound, -3f));
             if (onFocus != null)
             {
                 look.Focused += onFocus;
@@ -65,13 +103,23 @@ namespace Descender.UI
             return button;
         }
 
+        /// <summary>Splits a line at its first run of three or more spaces: the first column, and the rest.</summary>
+        public static void SplitColumns(string text, out string first, out string rest)
+        {
+            var parts = System.Text.RegularExpressions.Regex.Split(text.TrimEnd(), " {3,}");
+            first = parts[0];
+            rest = parts.Length > 1 ? string.Join("   ", parts, 1, parts.Length - 1) : "";
+        }
+
         /// <summary>A plain line of text between the rows.</summary>
         public void AddLine(string text, Color color)
         {
-            var label = UiKit.Label(content, "Line", text, UiTheme.FontSize, color);
+            var label = TitleKit.Label(content, text, 21f, color, 3f, 0f, 0f);
+            label.alignment = TMPro.TextAlignmentOptions.Left;
+            label.margin = new Vector4(48f, 0f, 48f, 0f);
             var layout = label.gameObject.AddComponent<LayoutElement>();
-            layout.preferredHeight = UiTheme.FontSize + 2f;
-            layout.minHeight = UiTheme.FontSize + 2f;
+            layout.preferredHeight = 40f;
+            layout.minHeight = 40f;
         }
 
         /// <summary>Puts the focus on a row by index, clamped to the rows there are; false when there is none.</summary>

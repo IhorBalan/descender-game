@@ -1,27 +1,35 @@
 using System.Collections.Generic;
-using Descender.Economy;
 using Descender.Player;
 using Descender.Save;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace Descender.UI
 {
     /// <summary>
     /// The camp at a checkpoint: pressing talk at one the hero has rested at opens
-    /// this, over the paused game. The pack, the skills and fast travel on the
-    /// left; save and leave on the right. A line under the heading says which
-    /// checkpoint this is and the level, and a line above the hint describes the
-    /// picked button. The pack and skills pages open over the camp and hand the
-    /// focus back when they close. Fast travel is offered through
-    /// <see cref="SetFastTravel"/> and asks the session to carry the hero with
-    /// <see cref="FastTravelRequested"/>. Port of scripts/ui/checkpoint_menu.gd.
+    /// this, over the paused game, in the title's gilded look on a veil the game
+    /// shows faintly through. CAMP and its number over a jewelled rule, a line with
+    /// the checkpoint, the level and any skill points, then one column: the pack, the
+    /// skills, fast travel, save and leave, with the gold bar gliding to the focused
+    /// one and a line under it that describes it. The pack and skills pages open over
+    /// the camp and hand the focus back when they close. Fast travel is offered
+    /// through <see cref="SetFastTravel"/> and asks the session to carry the hero with
+    /// <see cref="FastTravelRequested"/>.
     /// </summary>
     public sealed class CampScreen : UiScreen
     {
         public const string SaveText = "Save Game";
         public const string TravelClosedNote = "No other camp he has rested at answers from here.";
+
+        private const float Middle = TitleKit.Width * 0.5f;
+        private const float HeadingY = 200f;
+        private const float RuleY = 262f;
+        private const float StatusY = 306f;
+        private const float ItemsY = 400f;
+        private const float NoteY = 760f;
 
         private static readonly Dictionary<string, string> Notes = new Dictionary<string, string>
         {
@@ -38,19 +46,23 @@ namespace Descender.UI
         [SerializeField]
         private SkillScreen skills;
 
+        private RectTransform frame;
+        private CanvasGroup stageGroup;
         private TextMeshProUGUI heading;
         private TextMeshProUGUI status;
-        private Image divider;
-        private RectTransform menu;
+        private TitleList menu;
         private Button packButton;
         private Button skillsButton;
         private Button travelButton;
         private Button saveButton;
-        private Button leaveButton;
         private TextMeshProUGUI description;
-        private PromptLabel hint;
+        private RectTransform keys;
+        private readonly Dictionary<GameObject, string> noteOf = new Dictionary<GameObject, string>();
         private readonly List<int> rested = new List<int>();
+        private GameObject lastSelected;
         private bool canTravel;
+        private int keysFor = -1;
+        private float openedAt;
 
         /// <summary>The checkpoint the camp was opened at, by index in the level.</summary>
         public int CheckpointIndex { get; private set; } = -1;
@@ -73,95 +85,53 @@ namespace Descender.UI
         public SkillScreen Skills => skills;
         public bool CanTravel => canTravel && rested.Contains(CheckpointIndex) && rested.Count > 1;
 
+        /// <summary>The camp's column, for tests.</summary>
+        public TitleList Menu => menu;
+
+        /// <summary>The line describing the focused item.</summary>
+        public string NoteText => description != null ? description.text : "";
+
         protected override void Build(RectTransform root)
         {
-            UiKit.Dim(root);
-            heading = UiKit.Heading(root, "CAMP");
-            UiKit.PlaceRow(heading.rectTransform, 12f, 22f);
-            heading.verticalAlignment = VerticalAlignmentOptions.Middle;
-            status = UiKit.Label(root, "Status", "", UiTheme.FontSize, UiTheme.Muted, TextAlignmentOptions.Center);
-            UiKit.PlaceRow(status.rectTransform, 34f, 12f);
-            status.verticalAlignment = VerticalAlignmentOptions.Middle;
-            divider = UiKit.Box(root, "Divider", Color.white);
-            if (UiTheme.Current.Divider != null)
+            var theme = UiTheme.Current.MenuTheme;
+            var stage = TitleHints.MakeStage(root, theme, true, 41, out stageGroup);
+            frame = UiKit.Rect(stage, "Frame");
+            UiKit.Fill(frame);
+            heading = TitleKit.Label(frame, "CAMP", 51f, TitleKit.Gold, TitleKit.CapsSpacing, Middle, HeadingY);
+            status = TitleKit.Label(frame, "", 21f, TitleKit.Muted, 6f, Middle, StatusY, 1400f);
+            menu = new TitleList(
+                frame,
+                "Menu",
+                ItemsY,
+                820f,
+                theme != null ? theme.focusBar : null,
+                theme != null ? theme.ruleItem : null
+            );
+            packButton = Item("The Pack", OnPackPressed, "pack");
+            skillsButton = Item("Skills", OnSkillsPressed, "skills");
+            travelButton = Item("Fast Travel", OnTravelPressed, "travel");
+            saveButton = Item(SaveText, () => SaveRequested?.Invoke(), "save");
+            var leave = menu.Add("Leave", Close, true, TitleList.BackSound);
+            noteOf[leave.gameObject] = Notes["leave"];
+            MenuKit.LinkVertical(menu.Layout());
+            if (theme != null)
             {
-                divider.sprite = UiTheme.Current.Divider;
+                TitleKit.Sprite(frame, "Rule", theme.ruleTagline, Middle, RuleY);
+                TitleFocus.Make(frame, theme.focusEmblem).Follow(menu, true);
             }
-            else
-            {
-                divider.color = UiTheme.Muted;
-            }
-            UiKit.PlaceCentered(divider.rectTransform, 48f, 120f, 5f);
-
-            menu = UiKit.Rect(root, "Menu");
-            UiKit.PlaceCentered(menu, UiTheme.Height / 2f - 32f, 208f, 70f);
-            var left = UiKit.Rect(menu, "Left");
-            UiKit.Place(left, 0f, 0f, 100f, 70f);
-            var right = UiKit.Rect(menu, "Right");
-            UiKit.Place(right, 108f, 0f, 100f, 70f);
-            packButton = Column(left, 0, "Pack", "The Pack", OnPackPressed);
-            skillsButton = Column(left, 1, "Skills", "Skills", OnSkillsPressed);
-            travelButton = Column(left, 2, "Travel", "Fast Travel", OnTravelPressed);
-            saveButton = Column(right, 0, "Save", SaveText, () => SaveRequested?.Invoke());
-            leaveButton = Column(right, 1, "Leave", "Leave", Close);
-            UiKit.LinkColumns(
-                new Selectable[] { packButton, skillsButton, travelButton },
-                new Selectable[] { saveButton, leaveButton }
-            );
-            Note(packButton, "pack");
-            Note(skillsButton, "skills");
-            Note(travelButton, "travel");
-            Note(saveButton, "save");
-            Note(leaveButton, "leave");
-
-            description = UiKit.Paragraph(
-                root,
-                "Description",
-                "",
-                UiTheme.FontSize,
-                UiTheme.Muted,
-                TextAlignmentOptions.Center
-            );
-            UiKit.PlaceBottomRow(description.rectTransform, 26f, 18f, 16f);
-            description.verticalAlignment = VerticalAlignmentOptions.Middle;
-            var hintLabel = UiKit.Label(
-                root,
-                "Hint",
-                "",
-                UiTheme.SmallFontSize,
-                UiTheme.Muted,
-                TextAlignmentOptions.Center
-            );
-            UiKit.PlaceBottomRow(hintLabel.rectTransform, 2f, 8f);
-            hintLabel.verticalAlignment = VerticalAlignmentOptions.Middle;
-            hint = hintLabel.gameObject.AddComponent<PromptLabel>();
-            hint.Template = "{navigate} pick   {ui_accept} chooses   {ui_cancel} leaves the camp";
-
+            description = TitleKit.Label(frame, "", 21f, TitleKit.Parchment, 4f, Middle, NoteY, 1300f);
+            description.textWrappingMode = TextWrappingModes.Normal;
+            description.rectTransform.sizeDelta = new Vector2(1300f, 70f);
+            keys = UiKit.Rect(frame, "Keys");
+            UiKit.Fill(keys);
             EnsurePages();
         }
 
-        private Button Column(
-            RectTransform column,
-            int row,
-            string name,
-            string text,
-            UnityEngine.Events.UnityAction onClick
-        )
+        private Button Item(string text, UnityEngine.Events.UnityAction onClick, string note)
         {
-            var button = UiKit.Button(column, name, text, onClick);
-            UiKit.Place(
-                button.GetComponent<RectTransform>(),
-                0f,
-                row * (UiTheme.ButtonHeight + 2f),
-                100f,
-                UiTheme.ButtonHeight
-            );
+            var button = menu.Add(text, onClick);
+            noteOf[button.gameObject] = Notes[note];
             return button;
-        }
-
-        private void Note(Button button, string key)
-        {
-            button.GetComponent<UiButtonLook>().Focused += () => ShowNote(Notes[key], UiTheme.Note);
         }
 
         /// <summary>The pack and skills pages, made under the camp when the scene did not give them.</summary>
@@ -193,18 +163,21 @@ namespace Descender.UI
             pack.Hero = hero;
             skills.Hero = hero;
             CheckpointIndex = index;
-            heading.text = index < 0 ? "CAMP" : $"CAMP {index + 1}";
+            heading.text = index < 0 ? "CAMP" : $"CAMP  {index + 1}";
             status.text = MenuText.CampStatusText(index, count);
             saveButton.interactable = SaveManager.CurrentSlot >= 0;
-            UiKit.SetText(saveButton, SaveText);
+            TitleKit.SetText(saveButton, SaveText);
             SetFastTravel(false, new int[0]);
             Open();
         }
 
         protected override void OnOpen()
         {
+            openedAt = Time.unscaledTime;
+            stageGroup.alpha = 0f;
+            keysFor = -1;
             ShowFrame(true);
-            ShowNote("", UiTheme.Note);
+            ShowNote("", TitleKit.Parchment);
             // A point waiting is what the camp is for; the skills take the focus.
             UiKit.Select(Economy.Skills.PointsLeft() > 0 ? skillsButton : packButton);
         }
@@ -213,6 +186,42 @@ namespace Descender.UI
         {
             pack.Close();
             skills.Close();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            if (!IsOpen)
+            {
+                return;
+            }
+            stageGroup.alpha = TitleScreen.Smooth((Time.unscaledTime - openedAt) / 0.3f);
+            if (!frame.gameObject.activeSelf)
+            {
+                return;
+            }
+            var system = EventSystem.current;
+            var selected = system != null ? system.currentSelectedGameObject : null;
+            if (selected != lastSelected)
+            {
+                if (lastSelected != null && menu.Contains(selected))
+                {
+                    Audio.Sfx.Play("menu_move", -6f);
+                }
+                lastSelected = selected;
+                if (selected != null && noteOf.TryGetValue(selected, out var note))
+                {
+                    ShowNote(note, TitleKit.Parchment);
+                }
+            }
+            var router = Input.InputRouter.Instance;
+            var gamepad = router != null && router.UsingGamepad ? 1 : 0;
+            var theme = UiTheme.Current.MenuTheme;
+            if (keysFor != gamepad && theme != null)
+            {
+                keysFor = gamepad;
+                TitleHints.Build(keys, theme, gamepad == 1, "Confirm", "Leave");
+            }
         }
 
         /// <summary>Offers fast travel from this camp: whether there is a map, and the checkpoints rested at.</summary>
@@ -232,7 +241,7 @@ namespace Descender.UI
         {
             if (saved)
             {
-                UiKit.SetText(saveButton, $"Saved at camp {CheckpointIndex + 1}");
+                TitleKit.SetText(saveButton, $"Saved at Camp {CheckpointIndex + 1}");
             }
             else
             {
@@ -287,15 +296,11 @@ namespace Descender.UI
             UiKit.Select(button);
         }
 
-        /// <summary>The menu with its heading, status line and hint; hidden behind a page.</summary>
+        /// <summary>The camp's heading, column, note and hints; hidden behind a page, which keeps the ground and embers.</summary>
         private void ShowFrame(bool shown)
         {
-            menu.gameObject.SetActive(shown);
-            heading.gameObject.SetActive(shown);
-            divider.gameObject.SetActive(shown);
-            status.gameObject.SetActive(shown);
-            description.gameObject.SetActive(shown);
-            hint.gameObject.SetActive(shown);
+            frame.gameObject.SetActive(shown);
+            lastSelected = null;
         }
 
         private void ShowNote(string text, Color color)

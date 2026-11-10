@@ -1,6 +1,6 @@
-using System.Collections.Generic;
 using Descender.Game;
 using Descender.Save;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -8,28 +8,37 @@ using UnityEngine.UI;
 namespace Descender.UI
 {
     /// <summary>
-    /// The pause menu, in two columns: resume, restart at the last checkpoint, save to
-    /// the current slot and quit to the title on the left; the map, the promises
-    /// (quest log), the pack (inventory) and the settings on the right. Quit asks to
-    /// be pressed twice. A line under the heading says which slot the game is in and
-    /// how long it has been played. Opens when <see cref="GameFlow"/> pauses and
-    /// resumes the game when it closes. The map, promises and pack pages belong to
-    /// the in-game UI; they raise events here for those screens to answer. Port of
-    /// scripts/ui/pause_menu.gd.
+    /// The pause menu, in the title's gilded look over a dark veil the game shows
+    /// faintly through: PAUSED over a jewelled rule, a line with the slot, the
+    /// difficulty and the time played, then one column: resume, restart at the last
+    /// checkpoint, save to the current slot, the map, the promises (quest log), the
+    /// pack (inventory), the settings and quit to the title, with the gold bar gliding
+    /// to the focused one. Quit asks to be pressed twice. Opens when
+    /// <see cref="GameFlow"/> pauses and resumes the game when it closes. The map,
+    /// promises and pack pages belong to the in-game UI; they raise events here for
+    /// those screens to answer, and are faded until the in-game UI turns them on.
     /// </summary>
     public sealed class PauseScreen : MenuScreen
     {
         public const string QuitText = "Quit to Title";
         public const string QuitConfirmText = "Quit?  Press again";
 
+        private const float Middle = TitleKit.Width * 0.5f;
+        private const float HeadingY = 200f;
+        private const float RuleY = 262f;
+        private const float StatusY = 306f;
+        private const float ItemsY = 382f;
+
         [SerializeField]
         private SettingsScreen settings;
 
         private GameObject frame;
-        private Text status;
-        private Text hint;
+        private CanvasGroup stageGroup;
+        private TextMeshProUGUI status;
+        private RectTransform keys;
+        private TitleList menu;
+        private TitleFocus focus;
         private Button resumeButton;
-        private Button restartButton;
         private Button saveButton;
         private Button quitButton;
         private Button mapButton;
@@ -37,6 +46,10 @@ namespace Descender.UI
         private Button packButton;
         private Button settingsButton;
         private bool closingToResume;
+        private bool quitAsked;
+        private int keysFor = -1;
+        private float openedAt;
+        private GameObject lastSelected;
 
         /// <summary>The in-game screens open on these; an open page hides the frame with <see cref="ShowFrame"/>.</summary>
         public event System.Action MapRequested;
@@ -47,6 +60,15 @@ namespace Descender.UI
         public bool MapAvailable { get; set; }
         public bool PromisesAvailable { get; set; }
         public bool PackAvailable { get; set; }
+
+        /// <summary>The menu's column, for tests.</summary>
+        public TitleList Menu => menu;
+
+        /// <summary>The bar behind the focused item.</summary>
+        public TitleFocus Focus => focus;
+
+        /// <summary>The line under the heading: the slot, the difficulty and the time played.</summary>
+        public string StatusText => status != null ? status.text : "";
 
         protected override int SortingOrder => 20;
 
@@ -74,62 +96,38 @@ namespace Descender.UI
 
         protected override void Build(RectTransform root)
         {
-            var dim = MenuKit.MakeImage(root, "Dim", null);
-            dim.color = theme.dim;
-            MenuKit.Stretch(dim.rectTransform);
-
-            var frameRect = MenuKit.MakeRect(root, "Frame");
+            var stage = TitleHints.MakeStage(root, theme, true, 23, out stageGroup);
+            var frameRect = UiKit.Rect(stage, "Frame");
+            UiKit.Fill(frameRect);
             frame = frameRect.gameObject;
-            MenuKit.Stretch(frameRect);
-            var panel = MenuKit.MakePanel(frameRect, theme);
-            MenuKit.Place(panel.rectTransform, new Vector2(0.5f, 0.5f), Vector2.zero, new Vector2(220f, 120f));
-            var heading = MenuKit.MakeHeading(panel.transform, theme, "PAUSED", MenuTheme.HeadingFontSize);
-            MenuKit.Strip(heading.rectTransform, true, 6f, 20f);
-            var divider = MenuKit.MakeImage(panel.transform, "Divider", theme.divider);
-            MenuKit.Place(divider.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -26f), new Vector2(120f, 5f));
-            status = MenuKit.MakeLabel(panel.transform, theme, "", MenuTheme.MutedFontSize);
-            status.color = theme.textMuted;
-            MenuKit.Strip(status.rectTransform, true, 30f, 10f);
 
-            var columns = MenuKit.MakeRow(panel.transform, "Menu", 8f);
-            columns.childAlignment = TextAnchor.UpperCenter;
-            MenuKit.Place(
-                columns.GetComponent<RectTransform>(),
-                new Vector2(0.5f, 1f),
-                new Vector2(0f, -44f),
-                new Vector2(200f, 56f)
+            TitleKit.Label(frameRect, "PAUSED", 51f, TitleKit.Gold, TitleKit.CapsSpacing, Middle, HeadingY);
+            TitleKit.Sprite(frameRect, "Rule", theme.ruleTagline, Middle, RuleY);
+            status = TitleKit.Label(
+                frameRect,
+                "",
+                TitleKit.SmallSize,
+                TitleKit.Muted,
+                TitleKit.SmallSpacing,
+                Middle,
+                StatusY
             );
-            var left = MenuKit.MakeColumn(columns.transform, "Left");
-            MenuKit.Size(left, 92f, 56f);
-            var right = MenuKit.MakeColumn(columns.transform, "Right");
-            MenuKit.Size(right, 92f, 56f);
-            resumeButton = MenuKit.MakeButton(left.transform, theme, "Resume", Close);
-            restartButton = MenuKit.MakeButton(left.transform, theme, "Restart at checkpoint", OnRestartPressed);
-            saveButton = MenuKit.MakeButton(left.transform, theme, "Save Game", OnSavePressed);
-            quitButton = MenuKit.MakeButton(left.transform, theme, QuitText, OnQuitPressed);
-            mapButton = MenuKit.MakeButton(right.transform, theme, "Map", OnMapPressed);
-            promisesButton = MenuKit.MakeButton(right.transform, theme, "Promises", OnPromisesPressed);
-            packButton = MenuKit.MakeButton(right.transform, theme, "Pack", OnPackPressed);
-            settingsButton = MenuKit.MakeButton(right.transform, theme, "Settings", OnSettingsPressed);
-            var leftItems = new List<Selectable> { resumeButton, restartButton, saveButton, quitButton };
-            var rightItems = new List<Selectable> { mapButton, promisesButton, packButton, settingsButton };
-            MenuKit.LinkVertical(leftItems);
-            MenuKit.LinkVertical(rightItems);
-            for (var i = 0; i < leftItems.Count; i++)
-            {
-                var navigation = leftItems[i].navigation;
-                navigation.selectOnRight = rightItems[i];
-                navigation.selectOnLeft = rightItems[i];
-                leftItems[i].navigation = navigation;
-                navigation = rightItems[i].navigation;
-                navigation.selectOnLeft = leftItems[i];
-                navigation.selectOnRight = leftItems[i];
-                rightItems[i].navigation = navigation;
-            }
 
-            hint = MenuKit.MakeLabel(panel.transform, theme, "", MenuTheme.MutedFontSize);
-            hint.color = theme.textMuted;
-            MenuKit.Strip(hint.rectTransform, false, 6f, 10f);
+            menu = new TitleList(frameRect, "Menu", ItemsY, 820f, theme.focusBar, theme.ruleItem);
+            resumeButton = menu.Add("Resume", Close);
+            menu.Add("Restart at Checkpoint", OnRestartPressed);
+            saveButton = menu.Add("Save Game", OnSavePressed);
+            mapButton = menu.Add("Map", OnMapPressed);
+            promisesButton = menu.Add("Promises", OnPromisesPressed);
+            packButton = menu.Add("Pack", OnPackPressed);
+            settingsButton = menu.Add("Settings", OnSettingsPressed);
+            quitButton = menu.Add(QuitText, OnQuitPressed);
+            MenuKit.LinkVertical(menu.Layout());
+            focus = TitleFocus.Make(frameRect, theme.focusEmblem);
+            focus.Follow(menu, true);
+
+            keys = UiKit.Rect(frameRect, "Keys");
+            UiKit.Fill(keys);
             if (settings != null)
             {
                 settings.Closed += OnSettingsClosed;
@@ -139,28 +137,31 @@ namespace Descender.UI
         protected override void OnOpened()
         {
             closingToResume = true;
-            ShowFrame(true);
+            openedAt = Time.unscaledTime;
+            stageGroup.alpha = 0f;
             var slot = SaveManager.CurrentSlot;
             var flow = GameFlow.Instance;
             var seconds = flow != null ? (int)flow.PlayTime : 0;
             var played = $"{seconds / 60}:{seconds % 60:00}";
             status.text =
-                slot >= 0 ? $"Slot {slot + 1}   {SaveManager.DifficultyName()}   {played}" : $"No save slot   {played}";
+                slot >= 0
+                    ? $"SLOT {slot + 1}   ·   {SaveManager.DifficultyName().ToUpperInvariant()}   ·   {played}"
+                    : $"NO SAVE SLOT   ·   {played}";
             saveButton.interactable = slot >= 0;
-            MenuKit.SetText(saveButton, "Save Game");
-            MenuKit.SetText(quitButton, QuitText);
+            TitleKit.SetText(saveButton, "Save Game");
+            ResetQuit();
             mapButton.interactable = MapAvailable;
             promisesButton.interactable = PromisesAvailable;
             packButton.interactable = PackAvailable;
-            hint.text = MenuKit.Hint(UsingGamepad, "move", "choose", "resume");
-            Select(resumeButton);
+            keysFor = -1;
+            ShowFrame(true);
         }
 
         protected override void OnClosed()
         {
-            if (closingToResume)
+            if (closingToResume && GameFlow.Instance != null)
             {
-                GameFlow.Instance?.Resume();
+                GameFlow.Instance.Resume();
             }
         }
 
@@ -173,9 +174,32 @@ namespace Descender.UI
                 Close();
                 return;
             }
-            if (Selected != quitButton.gameObject)
+            var selected = Selected;
+            if (selected != lastSelected)
             {
-                MenuKit.SetText(quitButton, QuitText);
+                if (lastSelected != null && menu.Contains(selected))
+                {
+                    Audio.Sfx.Play("menu_move", -6f);
+                }
+                lastSelected = selected;
+                if (selected != quitButton.gameObject)
+                {
+                    ResetQuit();
+                }
+            }
+            var gamepad = UsingGamepad ? 1 : 0;
+            if (keysFor != gamepad)
+            {
+                keysFor = gamepad;
+                TitleHints.Build(keys, theme, gamepad == 1, "Confirm", "Resume");
+            }
+        }
+
+        private void Update()
+        {
+            if (IsOpen)
+            {
+                stageGroup.alpha = TitleScreen.Smooth((Time.unscaledTime - openedAt) / 0.3f);
             }
         }
 
@@ -186,6 +210,16 @@ namespace Descender.UI
             if (shown && IsOpen)
             {
                 Select(resumeButton);
+                lastSelected = resumeButton.gameObject;
+            }
+        }
+
+        private void ResetQuit()
+        {
+            if (quitAsked)
+            {
+                quitAsked = false;
+                TitleKit.SetText(quitButton, QuitText);
             }
         }
 
@@ -202,7 +236,10 @@ namespace Descender.UI
         {
             closingToResume = false;
             Close();
-            GameFlow.Instance?.Restart();
+            if (GameFlow.Instance != null)
+            {
+                GameFlow.Instance.Restart();
+            }
         }
 
         private void OnSavePressed()
@@ -210,22 +247,25 @@ namespace Descender.UI
             var flow = GameFlow.Instance;
             if (flow != null && flow.SaveGame(out var place))
             {
-                MenuKit.SetText(saveButton, $"Saved at {place}");
+                TitleKit.SetText(saveButton, $"Saved at {place}");
             }
         }
 
         /// <summary>The first press asks; the second, with the question still showing, quits.</summary>
         private void OnQuitPressed()
         {
-            var label = quitButton.GetComponentInChildren<Text>();
-            if (label != null && label.text != QuitConfirmText)
+            if (!quitAsked)
             {
-                MenuKit.SetText(quitButton, QuitConfirmText);
+                quitAsked = true;
+                TitleKit.SetText(quitButton, QuitConfirmText);
                 return;
             }
             closingToResume = false;
             Close();
-            GameFlow.Instance?.QuitToTitle();
+            if (GameFlow.Instance != null)
+            {
+                GameFlow.Instance.QuitToTitle();
+            }
         }
 
         private void OnMapPressed() => MapRequested?.Invoke();
@@ -252,6 +292,7 @@ namespace Descender.UI
             }
             frame.SetActive(true);
             Select(settingsButton);
+            lastSelected = settingsButton.gameObject;
         }
     }
 }

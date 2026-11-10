@@ -10,6 +10,8 @@ namespace Descender.UI
     /// is selected or hovered, the disabled colour while it cannot be used, its own
     /// colour otherwise. A row that wants another colour sets <see cref="BaseColor"/>.
     /// Also raises <see cref="Focused"/>, which the menus use for their description line.
+    /// A gilded row (<see cref="BindGilded"/>) shows its glow while focused and takes
+    /// the title's ivory and faded colours.
     /// </summary>
     [RequireComponent(typeof(Button))]
     public sealed class UiButtonLook
@@ -24,6 +26,8 @@ namespace Descender.UI
         private bool selected;
         private bool hovered;
         private bool wasInteractable = true;
+        private Image glow;
+        private bool gilded;
 
         public event System.Action Focused;
 
@@ -35,6 +39,18 @@ namespace Descender.UI
             label = text;
             Refresh();
         }
+
+        /// <summary>Binds a gilded row: `light` shows while it is focused, its text ivory then, faded when it cannot be used.</summary>
+        public void BindGilded(Button target, TextMeshProUGUI text, Image light)
+        {
+            gilded = true;
+            glow = light;
+            BaseColor = TitleKit.Parchment;
+            Bind(target, text);
+        }
+
+        /// <summary>Whether the row shows as focused now (selected or under the mouse).</summary>
+        public bool Lit => selected || hovered;
 
         public void SetBaseColor(Color color)
         {
@@ -82,13 +98,18 @@ namespace Descender.UI
                 return;
             }
             wasInteractable = button.interactable;
+            var lit = button.interactable && (selected || hovered);
+            if (glow != null)
+            {
+                glow.enabled = lit;
+            }
             if (!button.interactable)
             {
-                label.color = UiTheme.TextDisabled;
+                label.color = gilded ? TitleKit.Faded : UiTheme.TextDisabled;
             }
-            else if (selected || hovered)
+            else if (lit)
             {
-                label.color = UiTheme.TextFocus;
+                label.color = gilded ? TitleKit.Ivory : UiTheme.TextFocus;
             }
             else
             {
