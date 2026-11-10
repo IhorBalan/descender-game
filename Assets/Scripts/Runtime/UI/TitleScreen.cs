@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Descender.Game;
 using Descender.Save;
 using UnityEngine;
@@ -12,9 +11,16 @@ namespace Descender.UI
     /// occupied slot asks to be pressed twice before it is overwritten, then the
     /// difficulty picker chooses how hard the run is. The picker's Delete button
     /// turns it into a delete picker. The hint along the bottom says where Continue
-    /// would resume while that button is focused. Port of scripts/ui/title.gd without
-    /// the Maps menu (the map store went with the move to Unity). Opens itself when
+    /// would resume while that button is focused. Opens itself when
     /// <see cref="GameFlow"/> shows the title and closes when the world is entered.
+    /// <para>
+    /// The look is gilded and pixel perfect: a flat dark ground with gold motes
+    /// rising, the haloed DESCENDER logo, items in spaced capitals with only a gold
+    /// rule between them, and one focus bar that glides to the focused item. The
+    /// canvas keeps a whole-number scale (<see cref="PixelCanvasScale"/>) and the
+    /// screen is laid out on a 320 x 180 stage in its middle; the art comes from
+    /// tools/title_textures.py through the <see cref="MenuTheme"/>.
+    /// </para>
     /// </summary>
     public sealed class TitleScreen : MenuScreen
     {
@@ -33,34 +39,67 @@ namespace Descender.UI
             "Made with Unity",
         };
 
+        /// <summary>How long the screen takes to rise out of the dark when it opens.</summary>
+        public const float IntroSeconds = 1.2f;
+
+        /// <summary>How long a column takes to fade in when the screen moves to it.</summary>
+        public const float ColumnFadeSeconds = 0.2f;
+
+        // Rows on the 320 x 180 stage, in pixels from the top.
+        private const float HaloTop = -4f;
+        private const float LogoTop = 18f;
+        private const float TaglineTop = 56f;
+        private const float RuleTop = 66f;
+        private const float ItemsTop = 84f;
+        private const float HintsTop = 166f;
+        private const float ColumnWidth = 200f;
+        private const float WideColumnWidth = 300f;
+
         [SerializeField]
         private SettingsScreen settings;
 
-        private GameObject menu;
-        private GameObject slots;
-        private GameObject difficulty;
+        private RectTransform stage;
+        private CanvasGroup stageGroup;
+        private GameObject header;
+        private Image halo;
+        private PixelText tagline;
         private GameObject credits;
-        private Text slotsHeading;
-        private Text hint;
-        private Text status;
+        private TitleList menu;
+        private TitleList slots;
+        private TitleList difficulty;
+        private TitleList creditsList;
+        private TitleList shown;
+        private TitleFocus focus;
+        private PixelText slotsHeading;
+        private PixelText status;
+        private RectTransform keys;
+        private PixelText resume;
         private Button newGameButton;
         private Button continueButton;
         private Button loadButton;
-        private Button settingsButton;
-        private Button creditsButton;
-        private Button quitButton;
         private readonly Button[] slotButtons = new Button[SaveSlots.SlotCount];
         private Button deleteButton;
         private Button slotsBackButton;
         private readonly Button[] difficultyButtons = new Button[SaveManager.DifficultyNames.Length];
-        private Button difficultyBackButton;
         private Button creditsBackButton;
         private SlotMode slotMode = SlotMode.NewGame;
         private int newGameSlot = -1;
         private int confirmSlot = -1;
         private GameObject lastSelected;
+        private int keysFor = -1;
+        private float openedAt;
+        private float shownAt;
 
         protected override int SortingOrder => 10;
+
+        /// <summary>The column on show: the main menu, the slots, the difficulty or the credits' Back.</summary>
+        public TitleList Shown => shown;
+
+        /// <summary>The main menu's column.</summary>
+        public TitleList Menu => menu;
+
+        /// <summary>The bar behind the focused item.</summary>
+        public TitleFocus Focus => focus;
 
         private void OnEnable()
         {
@@ -92,183 +131,146 @@ namespace Descender.UI
 
         protected override void Build(RectTransform root)
         {
-            var backdrop = MenuKit.MakeImage(root, "Background", theme.titleBackdrop);
-            MenuKit.Stretch(backdrop.rectTransform);
-            backdrop.preserveAspect = false;
-
-            var heading = MenuKit.MakeHeading(root, theme, "DESCENDER", MenuTheme.TitleFontSize);
-            MenuKit.Strip(heading.rectTransform, true, 6f, 32f);
-            var divider = MenuKit.MakeImage(root, "Divider", theme.divider);
-            MenuKit.Place(divider.rectTransform, new Vector2(0.5f, 1f), new Vector2(0f, -38f), new Vector2(120f, 5f));
-            var tagline = MenuKit.MakeLabel(root, theme, Tagline, MenuTheme.MutedFontSize);
-            tagline.color = theme.textMuted;
-            MenuKit.Strip(tagline.rectTransform, true, 42f, 12f);
-
-            var version = MenuKit.MakeLabel(
-                root,
-                theme,
-                "v" + Application.version,
-                MenuTheme.MutedFontSize,
-                TextAnchor.MiddleRight
+            TitleKit.Font = PixelFont.Read(
+                theme.pixelFont,
+                theme.pixelFontMetrics != null ? theme.pixelFontMetrics.text : null
             );
-            version.color = theme.textMuted;
-            MenuKit.Place(version.rectTransform, new Vector2(1f, 1f), new Vector2(-8f, -6f), new Vector2(60f, 12f));
+            root.gameObject.AddComponent<PixelCanvasScale>();
+            var ground = UiKit.Box(root, "Background", TitleKit.Background);
+            UiKit.Fill(ground.rectTransform);
 
-            status = MenuKit.MakeLabel(root, theme, "", MenuTheme.MutedFontSize, TextAnchor.MiddleLeft);
-            status.color = theme.bad;
-            MenuKit.Place(status.rectTransform, new Vector2(0f, 1f), new Vector2(6f, -6f), new Vector2(240f, 12f));
+            stage = UiKit.Rect(root, "Stage");
+            stage.anchorMin = new Vector2(0.5f, 0.5f);
+            stage.anchorMax = new Vector2(0.5f, 0.5f);
+            stage.pivot = new Vector2(0.5f, 0.5f);
+            stage.anchoredPosition = Vector2.zero;
+            stage.sizeDelta = new Vector2(UiTheme.Width, UiTheme.Height);
+            stageGroup = stage.gameObject.AddComponent<CanvasGroup>();
+            TitleEmbers.Make(stage, 7);
 
-            hint = MenuKit.MakeLabel(root, theme, "", MenuTheme.BaseFontSize);
-            hint.color = theme.textMuted;
-            MenuKit.Strip(hint.rectTransform, false, 4f, 12f);
+            var top = UiKit.Rect(stage, "Header");
+            UiKit.Fill(top);
+            header = top.gameObject;
+            halo = TitleKit.Sprite(top, "Halo", theme.titleHalo, UiTheme.Width, HaloTop);
+            TitleKit.Sprite(top, "Logo", theme.titleLogo, UiTheme.Width, LogoTop);
+            TitleKit.Sprite(top, "Rule", theme.ruleTagline, UiTheme.Width, RuleTop);
+            tagline = TitleKit.Label(top, "", TitleKit.Muted);
+            TitleKit.Center(tagline, Tagline, UiTheme.Width, TaglineTop);
 
-            BuildMenu(root);
-            BuildSlots(root);
-            BuildDifficulty(root);
-            BuildCredits(root);
+            var version = TitleKit.Label(stage, "", TitleKit.Faded);
+            TitleKit.Center(version, "v" + Application.version, UiTheme.Width, 1f);
+            var corner = version.rectTransform;
+            corner.anchoredPosition = new Vector2(UiTheme.Width - 4f - corner.sizeDelta.x, corner.anchoredPosition.y);
+
+            status = TitleKit.Label(stage, "", TitleKit.Bad);
+            status.rectTransform.anchoredPosition = new Vector2(4f, -1f);
+
+            keys = UiKit.Rect(stage, "Keys");
+            UiKit.Place(keys, 0f, HintsTop, UiTheme.Width, 12f);
+            resume = TitleKit.Label(stage, "", TitleKit.Muted);
+
+            BuildMenu();
+            BuildSlots();
+            BuildDifficulty();
+            BuildCredits();
+            focus = TitleFocus.Make(stage, theme.focusEmblem);
             if (settings != null)
             {
                 settings.Closed += ShowMenu;
             }
         }
 
-        private void BuildMenu(RectTransform root)
+        private void BuildMenu()
         {
-            var column = MenuKit.MakeColumn(root, "Menu");
-            menu = column.gameObject;
-            var rect = column.GetComponent<RectTransform>();
-            MenuKit.Place(rect, new Vector2(0.5f, 1f), new Vector2(0f, -58f), new Vector2(88f, 0f));
-            newGameButton = MenuKit.MakeButton(column.transform, theme, "New Game", OnNewGamePressed);
-            continueButton = MenuKit.MakeButton(column.transform, theme, "Continue", OnContinuePressed);
-            loadButton = MenuKit.MakeButton(column.transform, theme, "Load Game", OnLoadPressed);
-            settingsButton = MenuKit.MakeButton(column.transform, theme, "Settings", OnSettingsPressed);
-            creditsButton = MenuKit.MakeButton(column.transform, theme, "Credits", ShowCredits);
-            quitButton = MenuKit.MakeButton(column.transform, theme, "Quit", Quit);
-            MenuKit.LinkVertical(
-                new List<Selectable>
-                {
-                    newGameButton,
-                    continueButton,
-                    loadButton,
-                    settingsButton,
-                    creditsButton,
-                    quitButton,
-                }
-            );
+            menu = new TitleList(stage, "Menu", ItemsTop, ColumnWidth, theme.focusBar, theme.ruleItem);
+            newGameButton = menu.Add("New Game", OnNewGamePressed);
+            continueButton = menu.Add("Continue", OnContinuePressed);
+            loadButton = menu.Add("Load Game", OnLoadPressed);
+            menu.Add("Settings", OnSettingsPressed);
+            menu.Add("Credits", ShowCredits);
+            menu.Add("Quit", Quit);
+            MenuKit.LinkVertical(menu.Layout());
+            menu.Root.gameObject.SetActive(false);
         }
 
-        private void BuildSlots(RectTransform root)
+        private void BuildSlots()
         {
-            var column = MenuKit.MakeColumn(root, "Slots", 3f);
-            slots = column.gameObject;
-            var rect = column.GetComponent<RectTransform>();
-            MenuKit.Place(rect, new Vector2(0.5f, 0.5f), new Vector2(0f, 16f), new Vector2(200f, 0f));
-            rect.pivot = new Vector2(0.5f, 1f);
-            slotsHeading = MenuKit.MakeLabel(column.transform, theme, "Load game", MenuTheme.SubheadingFontSize);
-            slotsHeading.color = theme.subheading;
-            MenuKit.Size(slotsHeading, -1f, 14f);
-            var items = new List<Selectable>();
+            slots = new TitleList(stage, "Slots", ItemsTop, WideColumnWidth, theme.focusBarWide, theme.ruleItem);
+            slotsHeading = TitleKit.Label(slots.Root, "", TitleKit.Gold, TitleKit.CapsSpacing);
             for (var slot = 0; slot < slotButtons.Length; slot++)
             {
                 var index = slot;
-                slotButtons[slot] = MenuKit.MakeButton(
-                    column.transform,
-                    theme,
-                    "",
-                    () => OnSlotPressed(index),
-                    TextAnchor.MiddleLeft
-                );
-                items.Add(slotButtons[slot]);
+                slotButtons[slot] = slots.Add("", () => OnSlotPressed(index), false);
             }
-            deleteButton = MenuKit.MakeButton(column.transform, theme, "Delete a save", OnDeletePressed);
-            slotsBackButton = MenuKit.MakeButton(column.transform, theme, "Back", ShowMenu);
-            items.Add(deleteButton);
-            items.Add(slotsBackButton);
-            MenuKit.LinkVertical(items);
-            slots.SetActive(false);
+            deleteButton = slots.Add("Delete a save", OnDeletePressed);
+            slotsBackButton = slots.Add("Back", ShowMenu, true, TitleList.BackSound);
+            slots.Root.gameObject.SetActive(false);
         }
 
-        private void BuildDifficulty(RectTransform root)
+        private void BuildDifficulty()
         {
-            var column = MenuKit.MakeColumn(root, "Difficulty", 3f);
-            difficulty = column.gameObject;
-            var rect = column.GetComponent<RectTransform>();
-            MenuKit.Place(rect, new Vector2(0.5f, 0.5f), new Vector2(0f, 26f), new Vector2(200f, 0f));
-            rect.pivot = new Vector2(0.5f, 1f);
-            var heading = MenuKit.MakeLabel(
-                column.transform,
-                theme,
-                "New game: choose a difficulty",
-                MenuTheme.SubheadingFontSize
+            difficulty = new TitleList(
+                stage,
+                "Difficulty",
+                ItemsTop,
+                WideColumnWidth,
+                theme.focusBarWide,
+                theme.ruleItem
             );
-            heading.color = theme.subheading;
-            MenuKit.Size(heading, -1f, 14f);
-            var items = new List<Selectable>();
+            var heading = TitleKit.Label(difficulty.Root, "", TitleKit.Gold, TitleKit.CapsSpacing);
+            TitleKit.Center(heading, "NEW GAME:  CHOOSE A DIFFICULTY", UiTheme.Width, TaglineTop);
             for (var which = 0; which < difficultyButtons.Length; which++)
             {
                 var index = which;
                 var text = $"{SaveManager.DifficultyNames[which]}   {SaveManager.DifficultyNotes[which]}";
-                difficultyButtons[which] = MenuKit.MakeButton(
-                    column.transform,
-                    theme,
-                    text,
-                    () => OnDifficultyPressed(index),
-                    TextAnchor.MiddleLeft
-                );
-                items.Add(difficultyButtons[which]);
+                difficultyButtons[which] = difficulty.Add(text, () => OnDifficultyPressed(index), false);
             }
-            var note = MenuKit.MakeLabel(
-                column.transform,
-                theme,
-                "The difficulty is kept with the save.",
-                MenuTheme.MutedFontSize
-            );
-            note.color = theme.textMuted;
-            MenuKit.Size(note, -1f, 10f);
-            difficultyBackButton = MenuKit.MakeButton(column.transform, theme, "Back", OnDifficultyBackPressed);
-            items.Add(difficultyBackButton);
-            MenuKit.LinkVertical(items);
-            difficulty.SetActive(false);
+            difficulty.Add("Back", OnDifficultyBackPressed, true, TitleList.BackSound);
+            MenuKit.LinkVertical(difficulty.Layout());
+            var note = TitleKit.Label(difficulty.Root, "", TitleKit.Faded);
+            var below = ItemsTop + difficulty.Items.Count * TitleKit.Step - 2f;
+            TitleKit.Center(note, "The difficulty is kept with the save.", UiTheme.Width, below);
+            difficulty.Root.gameObject.SetActive(false);
         }
 
-        private void BuildCredits(RectTransform root)
+        private void BuildCredits()
         {
-            var page = MenuKit.MakeRect(root, "Credits");
+            var page = UiKit.Rect(stage, "Credits");
+            UiKit.Fill(page);
             credits = page.gameObject;
-            MenuKit.Stretch(page);
-            var backdrop = MenuKit.MakeImage(page, "Background", theme.titleBackdrop);
-            MenuKit.Stretch(backdrop.rectTransform);
-            var heading = MenuKit.MakeHeading(page, theme, "CREDITS", MenuTheme.HeadingFontSize);
-            MenuKit.Strip(heading.rectTransform, true, 6f, 20f);
-            var text = MenuKit.MakeLabel(page, theme, string.Join("\n", Credits));
-            MenuKit.Stretch(text.rectTransform);
-            text.rectTransform.offsetMax = new Vector2(0f, -30f);
-            text.rectTransform.offsetMin = new Vector2(0f, 40f);
-            creditsBackButton = MenuKit.MakeButton(page, theme, "Back", ShowMenu);
-            creditsBackButton.GetComponent<LayoutElement>().enabled = false;
-            MenuKit.Place(
-                creditsBackButton.GetComponent<RectTransform>(),
-                new Vector2(0.5f, 0f),
-                new Vector2(0f, 17f),
-                new Vector2(40f, 13f)
-            );
+            // Twice the pixel size, so each font pixel is a clean two by two.
+            var heading = TitleKit.Label(page, "", TitleKit.Gold, TitleKit.CapsSpacing, 2);
+            TitleKit.Center(heading, "CREDITS", UiTheme.Width, 12f);
+            TitleKit.Sprite(page, "Rule", theme.ruleTagline, UiTheme.Width, 40f);
+            for (var i = 0; i < Credits.Length; i++)
+            {
+                var line = TitleKit.Label(page, "", i == 0 ? TitleKit.Ivory : TitleKit.Parchment);
+                TitleKit.Center(line, Credits[i], UiTheme.Width, 52f + i * 11f);
+            }
+            creditsList = new TitleList(page, "Back", 152f, ColumnWidth, theme.focusBar, theme.ruleItem);
+            creditsBackButton = creditsList.Add("Back", ShowMenu, true, TitleList.BackSound);
+            MenuKit.LinkVertical(creditsList.Layout());
             credits.SetActive(false);
         }
 
         protected override void OnOpened()
         {
-            status.text = "";
+            status.Text = "";
+            openedAt = Time.unscaledTime;
+            stageGroup.alpha = 0f;
             ShowMenu();
         }
 
         public override void OnCancel()
         {
-            if (difficulty.activeSelf)
+            if (shown == difficulty)
             {
+                Audio.Sfx.Play(TitleList.BackSound);
                 ShowSlots(SlotMode.NewGame);
             }
-            else if (slots.activeSelf || credits.activeSelf)
+            else if (shown == slots || shown == creditsList)
             {
+                Audio.Sfx.Play(TitleList.BackSound);
                 ShowMenu();
             }
         }
@@ -278,9 +280,55 @@ namespace Descender.UI
             var selected = Selected;
             if (selected != lastSelected)
             {
+                // A step within the column on show ticks; a jump to another column came from a press, already heard.
+                if (lastSelected != null && shown != null && shown.Contains(selected))
+                {
+                    Audio.Sfx.Play("menu_move", -6f);
+                }
                 lastSelected = selected;
                 RefreshHint();
             }
+            else if (keys.gameObject.activeSelf && keysFor != (UsingGamepad ? 1 : 0))
+            {
+                RefreshHint();
+            }
+        }
+
+        private void Update()
+        {
+            if (!IsOpen)
+            {
+                return;
+            }
+            var now = Time.unscaledTime;
+            stageGroup.alpha = Smooth((now - openedAt) / IntroSeconds);
+            if (shown != null)
+            {
+                shown.Group.alpha = Smooth((now - shownAt) / ColumnFadeSeconds);
+            }
+            var breath = 0.85f + 0.15f * Mathf.Sin(now * 1.3f);
+            halo.color = new Color(1f, 1f, 1f, Mathf.Round(breath * 16f) / 16f);
+        }
+
+        /// <summary>Eases in and out over 0..1, clamped.</summary>
+        public static float Smooth(float t) => Mathf.SmoothStep(0f, 1f, Mathf.Clamp01(t));
+
+        /// <summary>Puts a column on show alone, with the focus bar in it and the focus on `first`.</summary>
+        private void Show(TitleList column, Selectable first, bool showHeader, bool showTagline)
+        {
+            menu.Root.gameObject.SetActive(column == menu);
+            slots.Root.gameObject.SetActive(column == slots);
+            difficulty.Root.gameObject.SetActive(column == difficulty);
+            credits.SetActive(column == creditsList);
+            header.SetActive(showHeader);
+            tagline.gameObject.SetActive(showTagline);
+            shown = column;
+            shownAt = Time.unscaledTime;
+            column.Group.alpha = 0f;
+            focus.Follow(column, column == menu);
+            Select(first);
+            lastSelected = first != null ? first.gameObject : null;
+            RefreshHint();
         }
 
         private void ShowMenu()
@@ -289,66 +337,45 @@ namespace Descender.UI
             {
                 return;
             }
-            slots.SetActive(false);
-            difficulty.SetActive(false);
-            credits.SetActive(false);
-            menu.SetActive(true);
             var anySave = SaveManager.Slots.LatestSlot() >= 0;
             continueButton.interactable = anySave;
             loadButton.interactable = anySave;
-            Select(newGameButton);
-            RefreshHint();
+            Show(menu, newGameButton, true, true);
         }
 
         private void ShowSlots(SlotMode mode)
         {
             slotMode = mode;
             confirmSlot = -1;
-            slotsHeading.text = mode switch
+            var heading = mode switch
             {
-                SlotMode.NewGame => "New game: choose a slot",
-                SlotMode.Load => "Load game",
-                _ => "Delete a save: choose a slot",
+                SlotMode.NewGame => "NEW GAME:  CHOOSE A SLOT",
+                SlotMode.Load => "LOAD GAME",
+                _ => "DELETE A SAVE:  CHOOSE A SLOT",
             };
+            TitleKit.Center(slotsHeading, heading, UiTheme.Width, TaglineTop);
             // Deleting is offered from the load picker, and the delete picker goes back to loading.
             deleteButton.gameObject.SetActive(mode != SlotMode.NewGame);
-            MenuKit.SetText(deleteButton, mode == SlotMode.Delete ? "Load instead" : "Delete a save");
-            var items = new List<Selectable>();
+            TitleKit.SetText(deleteButton, mode == SlotMode.Delete ? "Load instead" : "Delete a save");
             for (var slot = 0; slot < slotButtons.Length; slot++)
             {
                 var button = slotButtons[slot];
-                MenuKit.SetText(button, $"{slot + 1}   {SaveManager.Summary(slot, GameFlow.LevelNameOf)}");
+                TitleKit.SetText(button, $"{slot + 1}   {SaveManager.Summary(slot, GameFlow.LevelNameOf)}");
                 button.interactable = mode == SlotMode.NewGame || SaveManager.Slots.HasSave(slot);
-                items.Add(button);
             }
-            if (mode != SlotMode.NewGame)
-            {
-                items.Add(deleteButton);
-            }
-            items.Add(slotsBackButton);
+            var items = slots.Layout();
             MenuKit.LinkVertical(items);
-            menu.SetActive(false);
-            difficulty.SetActive(false);
-            slots.SetActive(true);
             var first = MenuKit.FirstEnabled(items);
-            Select(first != null ? first : slotsBackButton);
-            RefreshHint();
+            Show(slots, first != null ? first : slotsBackButton, true, false);
         }
 
         private void ShowDifficulty(int slot)
         {
             newGameSlot = slot;
-            slots.SetActive(false);
-            difficulty.SetActive(true);
-            Select(difficultyButtons[(int)Difficulty.Normal]);
+            Show(difficulty, difficultyButtons[(int)Difficulty.Normal], true, false);
         }
 
-        private void ShowCredits()
-        {
-            menu.SetActive(false);
-            credits.SetActive(true);
-            Select(creditsBackButton);
-        }
+        private void ShowCredits() => Show(creditsList, creditsBackButton, false, false);
 
         private void OnNewGamePressed() => ShowSlots(SlotMode.NewGame);
 
@@ -370,7 +397,7 @@ namespace Descender.UI
             {
                 return;
             }
-            menu.SetActive(false);
+            menu.Root.gameObject.SetActive(false);
             settings.Open();
         }
 
@@ -409,7 +436,7 @@ namespace Descender.UI
                 return true;
             }
             confirmSlot = slot;
-            MenuKit.SetText(slotButtons[slot], $"{slot + 1}   {question}  Press again");
+            TitleKit.SetText(slotButtons[slot], $"{slot + 1}   {question}  Press again");
             return false;
         }
 
@@ -430,23 +457,64 @@ namespace Descender.UI
         {
             if (IsOpen)
             {
-                status.text = reason;
+                status.Text = reason;
             }
         }
 
         private void RefreshHint()
         {
-            if (hint == null)
+            if (keys == null)
             {
                 return;
             }
-            if (menu.activeSelf && Selected == continueButton.gameObject && continueButton.interactable)
+            var onContinue = shown == menu && Selected == continueButton.gameObject && continueButton.interactable;
+            keys.gameObject.SetActive(!onContinue);
+            resume.gameObject.SetActive(onContinue);
+            if (onContinue)
             {
                 var slot = SaveManager.Slots.LatestSlot();
-                hint.text = $"Resumes slot {slot + 1}:   {SaveManager.Summary(slot, GameFlow.LevelNameOf)}";
+                var text = $"Resumes slot {slot + 1}:   {SaveManager.Summary(slot, GameFlow.LevelNameOf)}";
+                TitleKit.Center(resume, text, UiTheme.Width, HintsTop + 1f);
                 return;
             }
-            hint.text = MenuKit.Hint(UsingGamepad, "move", "choose", "go back");
+            var gamepad = UsingGamepad ? 1 : 0;
+            if (keysFor != gamepad)
+            {
+                keysFor = gamepad;
+                BuildKeys(gamepad == 1);
+            }
+        }
+
+        /// <summary>The key hints along the bottom: a cap and what it does, three times, between two gold lines.</summary>
+        private void BuildKeys(bool gamepad)
+        {
+            UiKit.Clear(keys);
+            var pairs = gamepad
+                ? new[] { "D-pad", "Navigate", "A", "Confirm", "B", "Back" }
+                : new[] { "Arrows", "Navigate", "Enter", "Confirm", "Esc", "Back" };
+            var row = UiKit.Rect(keys, "Row");
+            var x = 0f;
+            for (var i = 0; i < pairs.Length; i += 2)
+            {
+                x += TitleKit.KeyCap(row, pairs[i], x, 0f) + 4f;
+                var label = TitleKit.Label(row, pairs[i + 1], TitleKit.Muted);
+                var w = label.InkWidth;
+                UiKit.Place(label.rectTransform, x, -1f, w, label.LineHeight);
+                x += w + (i + 2 < pairs.Length ? 14f : 0f);
+            }
+            var left = Mathf.Floor((UiTheme.Width - x) * 0.5f);
+            UiKit.Place(row, left, 0f, x, 12f);
+            if (theme.ruleHints == null)
+            {
+                return;
+            }
+            var length = theme.ruleHints.rect.width;
+            var lead = TitleKit.Sprite(keys, "Line", theme.ruleHints, 0f, 6f);
+            lead.rectTransform.anchoredPosition = new Vector2(left - 8f - length, -6f);
+            // The right line is the left one mirrored, bright at its inner end too.
+            var tail = TitleKit.Sprite(keys, "Line", theme.ruleHints, 0f, 6f);
+            tail.rectTransform.anchoredPosition = new Vector2(left + x + 8f + length, -6f);
+            tail.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
         }
 
         private static void Quit()

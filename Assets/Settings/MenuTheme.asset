@@ -22,6 +22,16 @@ MonoBehaviour:
   toggleOn: {fileID: 21300000, guid: 88b58bdd4ffe51138fd3eff2477b4d1f, type: 3}
   toggleOff: {fileID: 21300000, guid: ac110af75ec85b1d84615ecfe52caee1, type: 3}
   titleBackdrop: {fileID: 21300000, guid: f55b3a39e39a5ccba00bdcb7b9adae17, type: 3}
+  titleLogo: {fileID: 21300000, guid: 8b16306c88485d92aedfd569bb46e1ce, type: 3}
+  titleHalo: {fileID: 21300000, guid: ece39d87a02059b8a7b0f00d7641b651, type: 3}
+  focusBar: {fileID: 21300000, guid: 8a5c29cc93ce5cf28ff9bf8f5b9f2e9b, type: 3}
+  focusBarWide: {fileID: 21300000, guid: 65b17f9aa70055b1b4d5e96e255a18f6, type: 3}
+  focusEmblem: {fileID: 21300000, guid: b51029c42bc65e668c4ffbe2f5b7bf61, type: 3}
+  ruleItem: {fileID: 21300000, guid: a7a3742cdd1456cd953bb5fe66ffe645, type: 3}
+  ruleTagline: {fileID: 21300000, guid: a30f9b6a0e535995b11b35098c9532ae, type: 3}
+  ruleHints: {fileID: 21300000, guid: c52cd02122465eea92af0f82c5923593, type: 3}
+  pixelFont: {fileID: 2800000, guid: beedd54e08ac5e6292efa845c8103957, type: 3}
+  pixelFontMetrics: {fileID: 4900000, guid: 4c7d36de7634545f9b229dce42a00115, type: 3}
   text: {r: 0.85, g: 0.8, b: 0.75, a: 1}
   textMuted: {r: 0.6, g: 0.54, b: 0.51, a: 1}
   textDisabled: {r: 0.42, g: 0.37, b: 0.36, a: 1}

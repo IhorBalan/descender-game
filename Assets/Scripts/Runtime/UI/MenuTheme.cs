@@ -5,7 +5,8 @@ namespace Descender.UI
     /// <summary>
     /// The look of the menus: the Pirata One font, the nine-sliced stone buttons and
     /// panel, the divider, the slider grabber and the toggle icons from
-    /// Assets/Art/UI/Theme, and the text colours of the prototype's stone theme. One
+    /// Assets/Art/UI/Theme, the title screen's gilded logo, halo, focus bar and rules
+    /// from Assets/Art/UI/Title, and the text colours of the prototype's stone theme. One
     /// asset, Assets/Settings/MenuTheme.asset, referenced by the menu screens in
     /// Main.unity and read by <see cref="MenuKit"/>.
     /// </summary>
@@ -31,6 +32,18 @@ namespace Descender.UI
         public Sprite toggleOn;
         public Sprite toggleOff;
         public Sprite titleBackdrop;
+
+        [Header("Title screen (Assets/Art/UI/Title, drawn by tools/title_textures.py)")]
+        public Sprite titleLogo;
+        public Sprite titleHalo;
+        public Sprite focusBar;
+        public Sprite focusBarWide;
+        public Sprite focusEmblem;
+        public Sprite ruleItem;
+        public Sprite ruleTagline;
+        public Sprite ruleHints;
+        public Texture2D pixelFont;
+        public TextAsset pixelFontMetrics;
 
         [Header("Colours")]
         public Color text = new Color(0.85f, 0.8f, 0.75f);
