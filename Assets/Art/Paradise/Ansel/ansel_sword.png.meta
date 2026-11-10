@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: e0b2260e45b68f943b8dae34256fa3dd
+guid: 34a454747ea5a2046937e536bd57fff6
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 1173205739342969838
-    second: hero_fore_arm_0
+      213: 4935539274276635007
+    second: ansel_sword_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,11 +49,11 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
-  alignment: 9
-  spritePivot: {x: 0.455, y: 0.839}
-  spritePixelsToUnits: 128
+  alignment: 6
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 430
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationMethod: 0
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hero_fore_arm_0
+      name: ansel_sword_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 22
-        height: 56
+        width: 301
+        height: 63
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: eebbcfd6760184010800000000000000
-      internalID: 1173205739342969838
+      spriteID: f718f3202de8e7440800000000000000
+      internalID: 4935539274276635007
       vertices: []
       indices: 
       edges: []

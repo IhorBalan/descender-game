@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: aa7b6391f4a8f204fa395bbc0af42688
+guid: 8f3384d3201b6b844b6825e3401218a1
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -5545282852791885289
-    second: hero_head_0
+      213: 5648031153734889261
+    second: ansel_hood_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,11 +49,11 @@ TextureImporter:
   spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 0
-  alignment: 9
-  spritePivot: {x: 0.558, y: 0.237}
-  spritePixelsToUnits: 128
+  alignment: 6
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 430
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
-  spriteGenerateFallbackPhysicsShape: 1
+  spriteGenerateFallbackPhysicsShape: 0
   alphaUsage: 1
   alphaIsTransparency: 1
   spriteTessellationMethod: 0
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: hero_head_0
+      name: ansel_hood_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 43
-        height: 59
+        width: 132
+        height: 120
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 712664420a23b03b0800000000000000
-      internalID: -5545282852791885289
+      spriteID: d2f25b6e866d16e40800000000000000
+      internalID: 5648031153734889261
       vertices: []
       indices: 
       edges: []

@@ -1,178 +1,216 @@
+using System;
+using System.Collections.Generic;
 using System.IO;
 using Descender.World.Paradise;
 using UnityEditor;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
+using UnityEngine.U2D;
+using UnityEngine.U2D.Animation;
 
 namespace Descender.EditorTools.Paradise
 {
     /// <summary>
-    /// Descender &gt; Paradise &gt; Build hero rig: Ansel at full resolution for the new
-    /// Paradise, from the cutout parts painted by tools/paradise_art/pa_hero.py
-    /// (Assets/Art/Paradise/Hero, 128 px a unit, each part's pivot on its joint). Imports
-    /// the parts, stands them on bones in the rest skeleton of hero_rig.json (converted to
-    /// units, feet at the rig's origin) and saves Assets/Prefabs/Paradise/HeroRig.prefab,
-    /// which HeroRigInstaller puts on the hero in ParadiseMain and HeroRig animates.
-    /// Legs hang from the hips, apart from the torso, so the body can lean without
-    /// dragging them. The far limbs are the near ones' sprites, darkened.
+    /// Descender &gt; Paradise &gt; Build hero rig: Ansel for the new Paradise, from the painted
+    /// parts and the layout in Assets/Art/Paradise/Ansel (written by tools/hero_ansel/fit_parts.py).
+    /// Builds one skeleton from ansel_rig.json, gives each bending part a grid mesh weighted to
+    /// its bones so it curves at the joints instead of hinging, and saves
+    /// Assets/Prefabs/Paradise/HeroRig.prefab, which HeroRigInstaller puts on the hero in
+    /// ParadiseMain and HeroRig animates. The far limbs are the near ones' sprites, darkened.
     /// </summary>
     public static class ParadiseHero
     {
-        public const string HeroFolder = ParadiseArt.ArtRoot + "/Hero";
+        public const string HeroFolder = ParadiseArt.ArtRoot + "/Ansel";
         public const string PrefabPath = "Assets/Prefabs/Paradise/HeroRig.prefab";
-        public const float Ppu = 128f;
         public const int BaseOrder = 10;
+        private const int CloakJointsPerChain = 5;
+
+        /// <summary>How close to a bone, in pixels, a vertex counts as wholly on it.</summary>
+        private const float WeightSoftness = 10f;
 
         private static readonly Color Far = new Color(0.58f, 0.58f, 0.70f);
 
-        public static bool Available => File.Exists($"{HeroFolder}/hero_torso.png");
+        private static string LayoutPath => $"{HeroFolder}/ansel_rig.json";
 
-        // Pivots (normalised, Unity's bottom-left origin) from hero_rig.json.
-        private static readonly (string part, float x, float y)[] Pivots =
+        public static bool Available => File.Exists(LayoutPath);
+
+        [Serializable]
+        private sealed class RigBone
         {
-            ("hero_torso", 0.476f, 0.227f),
-            ("hero_head", 0.558f, 0.237f),
-            ("hero_hair_tuft", 0.708f, 0.325f),
-            ("hero_upper_arm", 0.5f, 0.821f),
-            ("hero_fore_arm", 0.455f, 0.839f),
-            ("hero_thigh", 0.48f, 0.833f),
-            ("hero_shin", 0.476f, 0.85f),
-            ("hero_boot", 0.333f, 0.615f),
-            ("hero_sword", 0.154f, 0.5f),
-            ("hero_wing", 0.9f, 0.127f),
-            ("hero_wing_glow", 0.81f, 0.211f),
-        };
+            public string name;
+            public string parent;
+            public float x;
+            public float y;
+            public float tipX;
+            public float tipY;
 
-        /// <summary>The rest skeleton in hero_rig.json's shared frame: pixels, y down, soles at 205.</summary>
-        private static Vector2 At(float x, float y) => new Vector2(x / Ppu, (205f - y) / Ppu);
+            public Vector2 At => new Vector2(x, y);
+            public Vector2 Tip => new Vector2(tipX, tipY);
+        }
+
+        [Serializable]
+        private sealed class RigPart
+        {
+            public string name;
+            public string file;
+            public int order;
+            public bool skinned;
+            public bool far;
+            public string[] bones;
+            public int cols;
+            public int rows;
+            public float originX;
+            public float originY;
+            public string bone;
+
+            public Vector2 Origin => new Vector2(originX, originY);
+        }
+
+        [Serializable]
+        private sealed class RigLayout
+        {
+            public float ppu;
+            public RigBone[] skeleton;
+            public RigPart[] parts;
+        }
 
         [MenuItem("Descender/Paradise/Build hero rig")]
         public static HeroRig Build()
         {
-            foreach (var (part, x, y) in Pivots)
+            var layout = JsonUtility.FromJson<RigLayout>(File.ReadAllText(LayoutPath));
+            var byName = new Dictionary<string, RigBone>();
+            foreach (var bone in layout.skeleton)
             {
-                Import($"{HeroFolder}/{part}.png", new Vector2(x, y));
+                byName[bone.name] = bone;
             }
-            var hip = At(0f, 100f);
-            var neck = At(3f, 38f);
-            var shoulderF = At(1f, 47f);
-            var shoulderB = At(-2f, 46f);
-            var wingRoot = At(-9f, 56f);
-            var upperLength = 0.281f;
-            var gripFromElbow = new Vector2((11.2f - 10f) / Ppu, -(46.5f - 9f) / Ppu);
-            var thighLength = 0.383f;
-            var shinLength = 0.336f;
-            // The hair tuft's root, from the head's pivot (24, 45) to its joint (12, 14.5), y down.
-            var tuft = new Vector2((12f - 24f) / Ppu, (45f - 14.5f) / Ppu);
+
+            var imported = new HashSet<string>();
+            foreach (var part in layout.parts)
+            {
+                if (imported.Add(part.file))
+                {
+                    Import(part, layout.ppu, byName);
+                }
+            }
 
             var root = new GameObject(HeroRigInstaller.RigName);
-            var glow = AssetDatabase.LoadAssetAtPath<Material>(ParadiseArt.GlowMaterialPath);
+            var transforms = new Dictionary<string, Transform>();
+            foreach (var bone in layout.skeleton)
+            {
+                var hasParent = !string.IsNullOrEmpty(bone.parent);
+                var made = new GameObject(bone.name).transform;
+                made.SetParent(hasParent ? transforms[bone.parent] : root.transform, false);
+                made.localPosition = hasParent ? bone.At - byName[bone.parent].At : bone.At;
+                transforms[bone.name] = made;
+            }
+
             var lit = AssetDatabase.LoadAssetAtPath<Material>(ParadiseArt.LitMaterialPath);
+            foreach (var part in layout.parts)
+            {
+                Dress(part, root.transform, transforms, byName, lit);
+            }
 
-            var hips = Bone(root.transform, "Hips", hip);
-            var torso = Part(hips, "Torso", "hero_torso", Vector2.zero, 13, lit, Color.white);
-            var head = Part(torso, "Head", "hero_head", neck - hip, 12, lit, Color.white);
-            var hair = Part(head, "HairTuft", "hero_hair_tuft", tuft, 11, lit, Color.white);
-
-            var upperF = Part(torso, "UpperArmFront", "hero_upper_arm", shoulderF - hip, 16, lit, Color.white);
-            var foreF = Part(
-                upperF,
-                "ForeArmFront",
-                "hero_fore_arm",
-                new Vector2(0f, -upperLength),
-                15,
-                lit,
-                Color.white
-            );
-            var sword = Part(foreF, "Sword", "hero_sword", gripFromElbow, 14, lit, Color.white);
-            var upperB = Part(torso, "UpperArmBack", "hero_upper_arm", shoulderB - hip, 4, lit, Far);
-            var foreB = Part(upperB, "ForeArmBack", "hero_fore_arm", new Vector2(0f, -upperLength), 3, lit, Far);
-
-            // The wing is light, not flesh: unlit, warm, so it reads even in shadow and against the sky.
-            var unlit = AssetDatabase.LoadAssetAtPath<Material>(ParadiseArt.UnlitMaterialPath);
-            var wing = Part(torso, "Wing", "hero_wing", wingRoot - hip, 2, unlit, new Color(1f, 0.95f, 0.82f));
-            var wingGlow = Part(wing, "WingGlow", "hero_wing_glow", Vector2.zero, 1, glow, new Color(1f, 1f, 1f, 0.6f));
-
-            var thighF = Part(hips, "ThighFront", "hero_thigh", Vector2.zero, 10, lit, Color.white);
-            var shinF = Part(thighF, "ShinFront", "hero_shin", new Vector2(0f, -thighLength), 9, lit, Color.white);
-            var bootF = Part(shinF, "BootFront", "hero_boot", new Vector2(0f, -shinLength), 8, lit, Color.white);
-            var thighB = Part(hips, "ThighBack", "hero_thigh", Vector2.zero, 7, lit, Far);
-            var shinB = Part(thighB, "ShinBack", "hero_shin", new Vector2(0f, -thighLength), 6, lit, Far);
-            var bootB = Part(shinB, "BootBack", "hero_boot", new Vector2(0f, -shinLength), 5, lit, Far);
+            var cloak = new List<Transform>();
+            for (var chain = 0; transforms.ContainsKey($"Cloak{chain}_0"); chain++)
+            {
+                for (var joint = 0; joint < CloakJointsPerChain; joint++)
+                {
+                    cloak.Add(transforms[$"Cloak{chain}_{joint}"]);
+                }
+            }
 
             var rig = root.AddComponent<HeroRig>();
             rig.SetBones(
-                hips,
-                torso,
-                head,
-                upperF,
-                foreF,
-                sword,
-                upperB,
-                foreB,
-                thighF,
-                shinF,
-                bootF,
-                thighB,
-                shinB,
-                bootB,
-                wing,
-                wingGlow.GetComponent<SpriteRenderer>(),
-                hair
+                transforms["Hips"],
+                transforms["Spine"],
+                transforms["Chest"],
+                transforms["Head"],
+                transforms["UpperArmFront"],
+                transforms["ForeArmFront"],
+                transforms["Sword"],
+                transforms["UpperArmBack"],
+                transforms["ForeArmBack"],
+                transforms["ThighFront"],
+                transforms["ShinFront"],
+                transforms["BootFront"],
+                transforms["ThighBack"],
+                transforms["ShinBack"],
+                transforms["BootBack"],
+                cloak.ToArray(),
+                CloakJointsPerChain
             );
 
             Directory.CreateDirectory(Path.GetDirectoryName(PrefabPath));
             var prefab = PrefabUtility.SaveAsPrefabAsset(root, PrefabPath);
-            Object.DestroyImmediate(root);
+            UnityEngine.Object.DestroyImmediate(root);
             AssetDatabase.SaveAssets();
             Debug.Log($"ParadiseHero: built {PrefabPath}.");
             return prefab.GetComponent<HeroRig>();
         }
 
-        private static Transform Bone(Transform parent, string name, Vector2 at)
-        {
-            var bone = new GameObject(name).transform;
-            bone.SetParent(parent, false);
-            bone.localPosition = at;
-            return bone;
-        }
-
-        private static Transform Part(
-            Transform parent,
-            string name,
-            string sprite,
-            Vector2 at,
-            int order,
-            Material material,
-            Color tint
+        private static void Dress(
+            RigPart part,
+            Transform root,
+            Dictionary<string, Transform> transforms,
+            Dictionary<string, RigBone> byName,
+            Material material
         )
         {
-            var bone = Bone(parent, name, at);
-            var renderer = bone.gameObject.AddComponent<SpriteRenderer>();
-            renderer.sprite =
-                AssetDatabase.LoadAssetAtPath<Sprite>($"{HeroFolder}/{sprite}.png")
-                ?? throw new System.InvalidOperationException($"Missing hero part {sprite}.");
+            var path = $"{HeroFolder}/{part.file}.png";
+            var sprite =
+                AssetDatabase.LoadAssetAtPath<Sprite>(path)
+                ?? throw new InvalidOperationException($"Missing hero part {path}.");
+            var holder = new GameObject(part.name);
+            if (part.skinned)
+            {
+                holder.transform.SetParent(root, false);
+                holder.transform.localPosition = part.Origin;
+            }
+            else
+            {
+                holder.transform.SetParent(transforms[part.bone], false);
+                holder.transform.localPosition = part.Origin - byName[part.bone].At;
+            }
+
+            var renderer = holder.AddComponent<SpriteRenderer>();
+            renderer.sprite = sprite;
             renderer.sharedMaterial = material;
-            renderer.sortingOrder = BaseOrder + order;
-            renderer.color = tint;
-            return bone;
+            renderer.sortingOrder = BaseOrder + part.order;
+            renderer.color = part.far ? Far : Color.white;
+            if (!part.skinned)
+            {
+                return;
+            }
+
+            var bones = new Transform[part.bones.Length];
+            for (var i = 0; i < bones.Length; i++)
+            {
+                bones[i] = transforms[part.bones[i]];
+            }
+            var skin = holder.AddComponent<SpriteSkin>();
+            skin.SetRootBone(bones[0]);
+            var state = skin.SetBoneTransforms(bones);
+            if (state != SpriteSkinState.Ready)
+            {
+                throw new InvalidOperationException($"The {part.name} skin is not ready: {state}.");
+            }
         }
 
-        private static void Import(string path, Vector2 pivot)
+        private static void Import(RigPart part, float ppu, Dictionary<string, RigBone> byName)
         {
+            var path = $"{HeroFolder}/{part.file}.png";
             AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceSynchronousImport);
-            var importer = AssetImporter.GetAtPath(path) as TextureImporter;
-            if (importer == null)
-            {
-                throw new System.InvalidOperationException("Missing hero part " + path);
-            }
+            var importer =
+                AssetImporter.GetAtPath(path) as TextureImporter
+                ?? throw new InvalidOperationException("Missing hero part " + path);
             importer.textureType = TextureImporterType.Sprite;
             importer.spriteImportMode = SpriteImportMode.Single;
-            importer.spritePixelsPerUnit = Ppu;
+            importer.spritePixelsPerUnit = ppu;
             var settings = new TextureImporterSettings();
             importer.ReadTextureSettings(settings);
             settings.spriteMeshType = SpriteMeshType.FullRect;
-            settings.spriteAlignment = (int)SpriteAlignment.Custom;
-            settings.spritePivot = pivot;
+            settings.spriteAlignment = (int)SpriteAlignment.BottomLeft;
+            settings.spriteGenerateFallbackPhysicsShape = false;
             importer.SetTextureSettings(settings);
             importer.wrapMode = TextureWrapMode.Clamp;
             importer.filterMode = FilterMode.Bilinear;
@@ -180,6 +218,138 @@ namespace Descender.EditorTools.Paradise
             importer.alphaIsTransparency = true;
             importer.textureCompression = TextureImporterCompression.Uncompressed;
             importer.SaveAndReimport();
+            if (part.skinned)
+            {
+                Skin(importer, part, ppu, byName);
+            }
+        }
+
+        /// <summary>Writes the part's bones and a grid mesh weighted to them into its sprite.</summary>
+        private static void Skin(TextureImporter importer, RigPart part, float ppu, Dictionary<string, RigBone> byName)
+        {
+            var factories = new SpriteDataProviderFactories();
+            factories.Init();
+            var data = factories.GetSpriteEditorDataProviderFromObject(importer);
+            data.InitSpriteEditorDataProvider();
+            var rect = data.GetSpriteRects()[0];
+
+            var count = part.bones.Length;
+            var spriteBones = new List<SpriteBone>(count);
+            var from = new Vector2[count];
+            var to = new Vector2[count];
+            for (var i = 0; i < count; i++)
+            {
+                var bone = byName[part.bones[i]];
+                from[i] = (bone.At - part.Origin) * ppu;
+                to[i] = (bone.Tip - part.Origin) * ppu;
+                var parent = Array.IndexOf(part.bones, bone.parent);
+                spriteBones.Add(
+                    new SpriteBone
+                    {
+                        name = bone.name,
+                        guid = Hash128.Compute(part.file + bone.name).ToString(),
+                        position = parent < 0 ? from[i] : (bone.At - byName[bone.parent].At) * ppu,
+                        rotation = Quaternion.identity,
+                        length = Mathf.Max(1f, Vector2.Distance(from[i], to[i])),
+                        parentId = parent,
+                    }
+                );
+            }
+
+            var size = rect.rect.size;
+            var columns = part.cols + 1;
+            var vertices = new Vertex2DMetaData[columns * (part.rows + 1)];
+            for (var y = 0; y <= part.rows; y++)
+            {
+                for (var x = 0; x <= part.cols; x++)
+                {
+                    var at = new Vector2(size.x * x / part.cols, size.y * y / part.rows);
+                    vertices[y * columns + x] = new Vertex2DMetaData
+                    {
+                        position = at,
+                        boneWeight = Weigh(at, from, to),
+                    };
+                }
+            }
+
+            var indices = new List<int>(part.cols * part.rows * 6);
+            for (var y = 0; y < part.rows; y++)
+            {
+                for (var x = 0; x < part.cols; x++)
+                {
+                    var a = y * columns + x;
+                    indices.AddRange(new[] { a, a + columns, a + 1, a + 1, a + columns, a + columns + 1 });
+                }
+            }
+
+            var outline = new List<int>();
+            for (var x = 0; x < part.cols; x++)
+            {
+                outline.Add(x);
+            }
+            for (var y = 0; y < part.rows; y++)
+            {
+                outline.Add(y * columns + part.cols);
+            }
+            for (var x = part.cols; x > 0; x--)
+            {
+                outline.Add(part.rows * columns + x);
+            }
+            for (var y = part.rows; y > 0; y--)
+            {
+                outline.Add(y * columns);
+            }
+            var edges = new Vector2Int[outline.Count];
+            for (var i = 0; i < edges.Length; i++)
+            {
+                edges[i] = new Vector2Int(outline[i], outline[(i + 1) % outline.Count]);
+            }
+
+            data.GetDataProvider<ISpriteBoneDataProvider>().SetBones(rect.spriteID, spriteBones);
+            var mesh = data.GetDataProvider<ISpriteMeshDataProvider>();
+            mesh.SetVertices(rect.spriteID, vertices);
+            mesh.SetIndices(rect.spriteID, indices.ToArray());
+            mesh.SetEdges(rect.spriteID, edges);
+            data.Apply();
+            importer.SaveAndReimport();
+        }
+
+        /// <summary>Weights a vertex to its four nearest bones, falling off steeply with distance.</summary>
+        private static BoneWeight Weigh(Vector2 at, Vector2[] from, Vector2[] to)
+        {
+            var scored = new (float weight, int bone)[from.Length];
+            for (var i = 0; i < from.Length; i++)
+            {
+                var distance = DistanceToSegment(at, from[i], to[i]) + WeightSoftness;
+                scored[i] = (1f / (distance * distance * distance * distance), i);
+            }
+            Array.Sort(scored, (a, b) => b.weight.CompareTo(a.weight));
+
+            var total = 0f;
+            for (var i = 0; i < Mathf.Min(4, scored.Length); i++)
+            {
+                total += scored[i].weight;
+            }
+            float Share(int i) => i < scored.Length ? scored[i].weight / total : 0f;
+            int Index(int i) => i < scored.Length ? scored[i].bone : 0;
+            return new BoneWeight
+            {
+                boneIndex0 = Index(0),
+                boneIndex1 = Index(1),
+                boneIndex2 = Index(2),
+                boneIndex3 = Index(3),
+                weight0 = Share(0),
+                weight1 = Share(1),
+                weight2 = Share(2),
+                weight3 = Share(3),
+            };
+        }
+
+        private static float DistanceToSegment(Vector2 point, Vector2 a, Vector2 b)
+        {
+            var line = b - a;
+            var along = line.sqrMagnitude > 0f ? Mathf.Clamp01(Vector2.Dot(point - a, line) / line.sqrMagnitude) : 0f;
+            return Vector2.Distance(point, a + line * along);
         }
     }
 }
