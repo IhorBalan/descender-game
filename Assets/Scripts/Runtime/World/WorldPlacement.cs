@@ -10,7 +10,8 @@ namespace Descender.World
     /// region loads it spawns the prefab the PlacementCatalog gives for its type and
     /// character, unless its `unless` flag is set or the IsGone hook (the kills since
     /// the last checkpoint) says so, and hands itself to the prefab's
-    /// IPlacementReceiver. The id is "&lt;region&gt;/&lt;name&gt;".
+    /// IPlacementReceiver. The id is "&lt;region&gt;/&lt;name&gt;". While the story is parked
+    /// (<see cref="Story.StoryMode"/>) the story placements are left out.
     /// </summary>
     public sealed class WorldPlacement : MonoBehaviour
     {
@@ -121,6 +122,9 @@ namespace Descender.World
         public string Power => power;
         public GameObject Spawned => spawned;
 
+        /// <summary>Whether this is where the story speaks: a trigger, a talking NPC or a relic.</summary>
+        public bool IsStory => Story.StoryMode.IsStory(type, dialogue.Length > 0, !string.IsNullOrEmpty(shop));
+
         private void Start()
         {
             Spawn();
@@ -130,6 +134,10 @@ namespace Descender.World
         public bool ShouldSpawn()
         {
             if (type == "start")
+            {
+                return false;
+            }
+            if (Story.StoryMode.Parked && IsStory)
             {
                 return false;
             }
