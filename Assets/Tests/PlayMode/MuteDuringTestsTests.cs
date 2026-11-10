@@ -16,5 +16,15 @@ namespace Descender.Tests.PlayMode
             Assert.That(SettingsApplier.Muted, Is.True, "MuteDuringTests did not run before the tests");
             Assert.That(AudioListener.volume, Is.EqualTo(0f));
         }
+
+        [Test]
+        public void TheRunHasNoHitStops()
+        {
+            Assert.That(Fx.Feedback.HitStopOff, Is.True, "MuteDuringTests did not run before the tests");
+            var before = Time.timeScale;
+            Fx.Feedback.HitStop(0.1f);
+            Assert.That(Time.timeScale, Is.EqualTo(before), "a hit-stop slowed the run");
+            Assert.That(Fx.Feedback.IsHitStopped, Is.False);
+        }
     }
 }

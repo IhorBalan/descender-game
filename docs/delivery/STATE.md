@@ -224,8 +224,9 @@ hygiene as each production region lands.
 | T-0015 | Camera zones | done | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
 | T-0016 | Live tuning of the hero's numbers and abilities | done | 16 | T-0013 | 1 | Re-plan the roadmap around mechanics | #173 |
 | T-0017 | Measured mechanics: a PlayMode test per existing move | done | 17 | T-0013 | 1 | Re-plan the roadmap around mechanics | #174 |
-| T-0018 | Platforms the hero rides | in review | 18 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
-| T-0019 | Corner correction and the rest of the jump | approved | 19 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0018 | Platforms the hero rides | done | 18 | T-0017 | 1 | Re-plan the roadmap around mechanics | #176 |
+| T-0019 | Corner correction and the rest of the jump | in review | 19 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
+| T-0025 | Dropping and slamming through ledges in the regions | approved | 19 | T-0018 | 0 | Re-plan the roadmap around mechanics | |
 | T-0020 | Platforms that crumble and platforms on a timer | approved | 20 | T-0018 | 0 | Re-plan the roadmap around mechanics | |
 | T-0021 | Wind and lift | approved | 21 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
 | T-0022 | Up, ladders and vines | approved | 22 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
@@ -414,7 +415,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (281 on `main` after T-0017) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (52 after T-0018; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (57 after T-0019; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -521,6 +522,12 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0019, corners.** `lab corners`. Three low ceilings whose corner hangs
+  over a mark by a few pixels: stand on each mark and jump. The first two
+  let him slip past, the third stops him. Then two steps a little higher
+  than a jump: holding towards the first puts him on top, the second does
+  not. To check: neither help is noticed when it happens, and
+  `tune cornerCorrection` and `tune ledgeCatch` (pixels) change how much.
 - **T-0016, live tuning.** In a game or the lab, open the dev console
   (the grave key). `tune` sums up; `tune jump` shows the jump numbers;
   `tune jumpHeight 90` sets one and the hero plays with it at once; `tune

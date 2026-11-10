@@ -147,6 +147,7 @@ namespace Descender.Lab
             "items",
             "camera",
             "platforms",
+            "corners",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -180,6 +181,7 @@ namespace Descender.Lab
             ItemsAndTriggers(Open(stations, "items", "Items and triggers"), jump, second);
             CameraZones(Open(stations, "camera", "Camera zones"));
             Platforms(Open(stations, "platforms", "Platforms to ride"));
+            Corners(Open(stations, "corners", "Corners a jump forgives"), jump, tuning.cornerCorrection);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -518,6 +520,27 @@ namespace Descender.Lab
             crusher.id = "crusher";
             crusher.travel = new Vector2(0f, -3f);
             crusher.running = true;
+        }
+
+        /// <summary>
+        /// Low ceilings whose corner hangs over a mark by a few pixels (stand on the mark and
+        /// jump: up to the correction he slips past, with more he bumps), and two steps a
+        /// little higher than a jump: the first is caught at its edge, the second is not.
+        /// </summary>
+        private static void Corners(Station station, float jump, int correction)
+        {
+            const float pixel = 1f / PlayerTuning.PixelsPerUnit;
+            const float halfHero = 0.4375f;
+            var x = 12f;
+            foreach (var over in new[] { Mathf.Max(correction - 2, 1), correction, correction * 2 + 2 })
+            {
+                Add(station, PieceKind.Mark, x - 0.05f, FloorTop, 0.1f, 1.5f, "stand here");
+                Add(station, PieceKind.Solid, x + halfHero - over * pixel, FloorTop + 3f, 3f, 1f, $"{over} px over");
+                x += 7f;
+            }
+            Add(station, PieceKind.Solid, 34f, FloorTop, 4f, jump + 0.3f, "caught at the edge");
+            // A shelf rather than a step, so the way on is under it.
+            Add(station, PieceKind.Solid, 42f, FloorTop + jump + 0.25f, 4f, 0.5f, "too high");
         }
 
         /// <summary>The lock: takes the key, opens the door and quiets the "locked" line.</summary>

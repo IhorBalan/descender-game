@@ -89,10 +89,17 @@ namespace Descender.Fx
             }
         }
 
+        /// <summary>
+        /// No hit-stops at all, whatever the setting says. A test run sets it: a hit-stop
+        /// ends on the real clock, so how many frames it slows depends on how fast the
+        /// machine runs them, and a test that counts frames would count on that.
+        /// </summary>
+        public static bool HitStopOff { get; set; }
+
         /// <summary>Freezes the game for a moment of real time; a longer stop replaces a shorter one. Off with the setting.</summary>
         public static void HitStop(float seconds)
         {
-            if (!Save.SettingsData.Current.hitStop || seconds <= 0f)
+            if (HitStopOff || !Save.SettingsData.Current.hitStop || seconds <= 0f)
             {
                 return;
             }

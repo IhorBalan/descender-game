@@ -572,6 +572,7 @@ namespace Descender.Player
                 jumpRising = false;
             }
 
+            CorrectCorners(ref velocity, inputDir, dt);
             body.linearVelocity = velocity / Ppu;
 
             if (InputBlocked)
@@ -957,6 +958,76 @@ namespace Descender.Player
                 var friction = grounded ? tuning.groundFriction : tuning.airFriction;
                 velocity.x = Mathf.MoveTowards(velocity.x, 0f, friction * dt);
             }
+        }
+
+        /// <summary>
+        /// The two near misses a jump forgives. Rising with his head under the corner of a
+        /// ceiling by no more than <see cref="PlayerTuning.cornerCorrection"/> pixels, he is
+        /// moved aside by that much and keeps rising. Coming down against the side of a
+        /// ledge he is steering at, with his feet no more than
+        /// <see cref="PlayerTuning.ledgeCatch"/> pixels under its top, he is lifted onto it.
+        /// </summary>
+        private void CorrectCorners(ref Vector2 velocity, float inputDir, float dt)
+        {
+            if (grounded || onWallGrip)
+            {
+                return;
+            }
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 1f / Ppu, bounds.size.y - 1f / Ppu);
+            Vector2 centre = bounds.center;
+            if (velocity.y > 0f)
+            {
+                var up = new Vector2(0f, (velocity.y * dt + 1f) / Ppu);
+                if (!Blocked(centre + up, size))
+                {
+                    return;
+                }
+                for (var pixels = 1; pixels <= tuning.cornerCorrection; pixels++)
+                {
+                    for (var side = -1; side <= 1; side += 2)
+                    {
+                        var aside = new Vector2(side * pixels / Ppu, 0f);
+                        if (!Blocked(centre + aside, size) && !Blocked(centre + aside + up, size))
+                        {
+                            // The check is half a pixel slack, so half a pixel more leaves him clear.
+                            Nudge(aside + new Vector2(side * 0.5f / Ppu, 0f));
+                            return;
+                        }
+                    }
+                }
+                return;
+            }
+            var steering = inputDir != 0f && velocity.x != 0f && Mathf.Sign(inputDir) == Mathf.Sign(velocity.x);
+            if (!steering)
+            {
+                return;
+            }
+            var ahead = new Vector2(Mathf.Sign(velocity.x) * (Mathf.Abs(velocity.x) * dt + 1f) / Ppu, 0f);
+            if (!Blocked(centre + ahead, size))
+            {
+                return;
+            }
+            for (var pixels = 1; pixels <= tuning.ledgeCatch; pixels++)
+            {
+                var lift = new Vector2(0f, pixels / Ppu);
+                if (!Blocked(centre + lift, size) && !Blocked(centre + lift + ahead, size))
+                {
+                    Nudge(lift + new Vector2(0f, 0.5f / Ppu));
+                    velocity.y = 0f;
+                    return;
+                }
+            }
+        }
+
+        private bool Blocked(Vector2 centre, Vector2 size) =>
+            Physics2D.OverlapBox(centre, size, 0f, worldOnlyFilter, hits) > 0;
+
+        /// <summary>Moves him by a few pixels at once, outside the physics step.</summary>
+        private void Nudge(Vector2 by)
+        {
+            body.position += by;
+            transform.position += (Vector3)by;
         }
 
         /// <summary>Wall Grip: holding towards a wall while in the air and falling grips it.</summary>

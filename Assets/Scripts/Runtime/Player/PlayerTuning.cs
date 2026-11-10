@@ -67,8 +67,17 @@ namespace Descender.Player
         [Min(0f)]
         public float dropTime = 0.25f;
 
+        [Tooltip(
+            "Rising under the corner of a ceiling by up to this many pixels, he is nudged aside and keeps rising."
+        )]
         [Min(0)]
         public int cornerCorrection = 4;
+
+        [Tooltip(
+            "Meeting the side of a ledge with his feet up to this many pixels under its top, he is lifted onto it."
+        )]
+        [Min(0)]
+        public int ledgeCatch = 4;
 
         [Tooltip("How much of a moving platform's speed he keeps when he leaves it.")]
         [Range(0f, 1f)]
