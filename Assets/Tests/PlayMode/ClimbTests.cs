@@ -168,6 +168,8 @@ namespace Descender.Tests.PlayMode
             input.UpHeld = true;
             yield return probe.Step(60);
             input.UpHeld = false;
+            // The leap is measured from where he hangs still, not from a step of climbing.
+            yield return probe.Step(3);
             Assert.That(hero.IsClimbing, Is.True, "he took hold again");
             input.MoveX = 1f;
             probe.Begin();
