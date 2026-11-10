@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,91 +6,133 @@ namespace Descender.UI
 {
     /// <summary>
     /// Builders and colours for the title screen's gilded look: a flat dark ground,
-    /// gold rules, spaced capitals in the 9 px pixel font (<see cref="PixelText"/>), and items that are only
-    /// text until the focus bar lights them. Everything is placed in whole level
-    /// pixels from the top left of the 320 x 180 stage (see <see cref="UiKit.Place"/>),
-    /// so it stays pixel perfect under <see cref="PixelCanvasScale"/>.
+    /// smooth gold ornaments, widely spaced Cinzel capitals, and items that are only
+    /// text until the focus bar lights them. The screen is laid out on a 1920 x 1080
+    /// stage; positions are the centres of things, in pixels from the stage's top left.
     /// </summary>
     public static class TitleKit
     {
-        /// <summary>The one text size: the raster font's own, so no glyph is resampled.</summary>
-        public const int FontSize = UiTheme.FontSize;
+        public const float Width = 1920f;
+        public const float Height = 1080f;
 
         /// <summary>The gap between two items' middles.</summary>
-        public const int Step = 14;
+        public const float Step = 70f;
 
-        /// <summary>A key cap's height.</summary>
-        public const float KeyHeight = 11f;
+        /// <summary>The size of an item's text, and the spacing of its capitals in hundredths of an em.</summary>
+        public const float ItemSize = 34f;
+        public const float CapsSpacing = 26f;
 
-        /// <summary>Where a key cap's text sits in it.</summary>
-        public const float KeyTextTop = -1f;
+        /// <summary>The size and spacing of a mixed-case item (a save slot, a difficulty).</summary>
+        public const float RowSize = 30f;
+        public const float RowSpacing = 4f;
 
-        /// <summary>Where an item's text sits in its strip, so the capitals are centred in it.</summary>
-        public const float ItemTextTop = 0f;
+        public const float SmallSize = 22f;
+        public const float SmallSpacing = 30f;
 
-        /// <summary>The letter spacing of the spaced capitals, in pixels.</summary>
-        public const int CapsSpacing = 2;
-
-        public static readonly Color Background = new Color32(15, 12, 12, 255);
-        public static readonly Color Ivory = new Color32(255, 240, 212, 255);
-        public static readonly Color Parchment = new Color32(196, 178, 156, 255);
-        public static readonly Color Faded = new Color32(98, 88, 82, 255);
-        public static readonly Color Muted = new Color32(150, 134, 118, 255);
-        public static readonly Color Gold = new Color32(240, 190, 104, 255);
-        public static readonly Color KeyFill = new Color32(30, 24, 22, 255);
-        public static readonly Color KeyEdge = new Color32(120, 96, 70, 255);
+        public static readonly Color Background = new Color32(14, 12, 12, 255);
+        public static readonly Color Ivory = new Color32(255, 240, 214, 255);
+        public static readonly Color Parchment = new Color32(198, 182, 160, 255);
+        public static readonly Color Faded = new Color32(108, 98, 90, 255);
+        public static readonly Color Muted = new Color32(186, 170, 150, 255);
+        public static readonly Color Gold = new Color32(236, 190, 112, 255);
+        public static readonly Color Glow = new Color32(226, 132, 40, 150);
         public static readonly Color Bad = new Color32(255, 140, 115, 255);
 
-        /// <summary>The font every title label draws with; set by the title screen from its theme before it builds.</summary>
-        public static PixelFont Font { get; set; }
+        private static Material glowMaterial;
+        private static TMP_FontAsset glowSource;
 
-        /// <summary>A label in the pixel font with `spacing` pixels between letters, drawn `scale` times over.</summary>
-        public static PixelText Label(Transform parent, string text, Color color, int spacing = 0, int scale = 1)
-        {
-            var rect = UiKit.Rect(parent, "Label");
-            // Added first: the graphic needs it and does not always get it from its base class.
-            rect.gameObject.AddComponent<CanvasRenderer>();
-            var label = rect.gameObject.AddComponent<PixelText>();
-            label.Setup(Font, spacing, scale);
-            label.color = color;
-            label.Text = text;
-            rect.sizeDelta = new Vector2(label.InkWidth, label.LineHeight);
-            return label;
-        }
+        /// <summary>The font every title label is set in; the title screen sets it from its theme before it builds.</summary>
+        public static TMP_FontAsset Font { get; set; }
 
-        /// <summary>Sets a label's text and centres its ink in a span `width` wide, `y` from the top, on a whole pixel.</summary>
-        public static void Center(PixelText label, string text, float width, float y)
+        /// <summary>
+        /// The font's material with a soft warm underlay, for the focused item's text:
+        /// one shared copy, made the first time it is asked for.
+        /// </summary>
+        public static Material GlowMaterial
         {
-            label.Text = text;
-            var w = label.InkWidth;
-            UiKit.Place(label.rectTransform, Mathf.Floor((width - w) * 0.5f), y, w, label.LineHeight);
-        }
-
-        /// <summary>A sprite at its own pixel size, centred across a span `width` wide, `y` from the top.</summary>
-        public static Image Sprite(Transform parent, string name, Sprite sprite, float width, float y)
-        {
-            var image = UiKit.Box(parent, name, Color.white);
-            image.sprite = sprite;
-            var size = sprite != null ? sprite.rect.size : new Vector2(1f, 1f);
-            UiKit.Place(image.rectTransform, Mathf.Floor((width - size.x) * 0.5f), y, size.x, size.y);
-            if (sprite == null)
+            get
             {
-                image.color = Color.clear;
+                if (Font == null || Font.material == null)
+                {
+                    return null;
+                }
+                if (glowMaterial == null || glowSource != Font)
+                {
+                    glowSource = Font;
+                    glowMaterial = new Material(Font.material) { name = Font.name + " Glow" };
+                    glowMaterial.EnableKeyword(ShaderUtilities.Keyword_Underlay);
+                    glowMaterial.SetColor(ShaderUtilities.ID_UnderlayColor, Glow);
+                    glowMaterial.SetFloat(ShaderUtilities.ID_UnderlaySoftness, 0.9f);
+                    glowMaterial.SetFloat(ShaderUtilities.ID_UnderlayDilate, 0.6f);
+                }
+                return glowMaterial;
             }
+        }
+
+        /// <summary>Puts a rect `w` by `h` centred on (cx, cy) from the stage's top left.</summary>
+        public static RectTransform Center(RectTransform rect, float cx, float cy, float w, float h)
+        {
+            rect.anchorMin = new Vector2(0f, 1f);
+            rect.anchorMax = new Vector2(0f, 1f);
+            rect.pivot = new Vector2(0.5f, 0.5f);
+            rect.anchoredPosition = new Vector2(cx, -cy);
+            rect.sizeDelta = new Vector2(w, h);
+            return rect;
+        }
+
+        /// <summary>The middle line of a rect placed by <see cref="Center"/>, in pixels from the top.</summary>
+        public static float MiddleOf(RectTransform rect) => -rect.anchoredPosition.y;
+
+        /// <summary>A sprite at its own size, centred on (cx, cy).</summary>
+        public static Image Sprite(Transform parent, string name, Sprite sprite, float cx, float cy)
+        {
+            var image = UiKit.Box(parent, name, sprite != null ? Color.white : Color.clear);
+            image.sprite = sprite;
+            var size = sprite != null ? sprite.rect.size : Vector2.one;
+            Center(image.rectTransform, cx, cy, size.x, size.y);
             return image;
         }
 
-        /// <summary>
-        /// An item: a clickable strip `width` wide with a text in it and no box. Its
-        /// <see cref="TitleItem"/> colours the text by focus and centres it.
-        /// </summary>
-        public static Button Item(
+        /// <summary>A line of text in the title font, centred on (cx, cy) in a rect `w` wide.</summary>
+        public static TextMeshProUGUI Label(
             Transform parent,
             string text,
-            UnityEngine.Events.UnityAction onClick,
-            float width,
-            bool caps
+            float size,
+            Color color,
+            float spacing,
+            float cx,
+            float cy,
+            float w = Width
         )
+        {
+            var rect = UiKit.Rect(parent, "Label");
+            var label = rect.gameObject.AddComponent<TextMeshProUGUI>();
+            if (Font != null)
+            {
+                label.font = Font;
+            }
+            label.fontSize = size;
+            label.color = color;
+            label.characterSpacing = spacing;
+            label.alignment = TextAlignmentOptions.Center;
+            label.textWrappingMode = TextWrappingModes.NoWrap;
+            label.overflowMode = TextOverflowModes.Overflow;
+            label.richText = false;
+            label.raycastTarget = false;
+            label.text = text;
+            Center(rect, cx, cy, w, size * 2f);
+            return label;
+        }
+
+        /// <summary>How wide a label's text is, in stage pixels.</summary>
+        public static float WidthOf(TextMeshProUGUI label) =>
+            string.IsNullOrEmpty(label.text) ? 0f : label.GetPreferredValues(label.text).x;
+
+        /// <summary>
+        /// An item: a clickable strip `width` wide with a text in it and no box. Its
+        /// <see cref="TitleItem"/> colours and lights the text by focus.
+        /// </summary>
+        public static Button Item(Transform parent, string text, float width, bool caps)
         {
             var rect = UiKit.Rect(parent, "Item");
             rect.sizeDelta = new Vector2(width, Step);
@@ -99,11 +142,16 @@ namespace Descender.UI
             button.targetGraphic = hit;
             button.transition = Selectable.Transition.None;
             button.navigation = new Navigation { mode = Navigation.Mode.Explicit };
-            if (onClick != null)
-            {
-                button.onClick.AddListener(onClick);
-            }
-            var label = Label(rect, "", Parchment, caps ? CapsSpacing : 0);
+            var label = Label(
+                rect,
+                "",
+                caps ? ItemSize : RowSize,
+                Parchment,
+                caps ? CapsSpacing : RowSpacing,
+                width * 0.5f,
+                Step * 0.5f,
+                width
+            );
             var item = rect.gameObject.AddComponent<TitleItem>();
             item.Bind(label, caps);
             item.SetText(text);
@@ -119,16 +167,19 @@ namespace Descender.UI
             }
         }
 
-        /// <summary>A key cap: a dark box with a one-pixel edge and the key's name in it. Returns its width.</summary>
-        public static float KeyCap(Transform parent, string key, float x, float y)
+        /// <summary>
+        /// A key cap with a key's name in it, its left edge at `x` and its middle on `cy`;
+        /// returns its width. The cap stretches (nine-sliced) to fit the name.
+        /// </summary>
+        public static float KeyCap(Transform parent, Sprite cap, string key, float x, float cy)
         {
-            var edge = UiKit.Box(parent, "Key", KeyEdge);
-            var fill = UiKit.Box(edge.transform, "Fill", KeyFill);
-            var label = Label(edge.transform, key, Parchment);
-            var w = label.InkWidth + 6f;
-            UiKit.Place(edge.rectTransform, x, y, w, KeyHeight);
-            UiKit.Place(fill.rectTransform, 1f, 1f, w - 2f, KeyHeight - 2f);
-            UiKit.Place(label.rectTransform, 3f, KeyTextTop, label.InkWidth, label.LineHeight);
+            var box = UiKit.Box(parent, "Key", Color.white);
+            box.sprite = cap;
+            box.type = Image.Type.Sliced;
+            var label = Label(box.transform, key, SmallSize, Parchment, 4f, 0f, 0f, 400f);
+            var w = Mathf.Max(44f, WidthOf(label) + 26f);
+            Center(box.rectTransform, x + w * 0.5f, cy, w, 44f);
+            Center(label.rectTransform, w * 0.5f, 22f, w, 44f);
             return w;
         }
     }

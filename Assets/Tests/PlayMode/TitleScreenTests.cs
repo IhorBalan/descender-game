@@ -11,8 +11,8 @@ using UnityEngine.UI;
 namespace Descender.Tests.PlayMode
 {
     /// <summary>
-    /// The title screen in Main.unity: it opens on the main column at a whole-number
-    /// scale, the focus bar sits on New Game, glides to an item the focus moves to
+    /// The title screen in Main.unity: it opens on the main column, scaled smoothly
+    /// from its 1920 x 1080 layout, the focus bar sits on New Game, glides to an item the focus moves to
     /// and lands on its middle, and moves with the focus into the slot picker.
     /// </summary>
     public class TitleScreenTests
@@ -33,14 +33,20 @@ namespace Descender.Tests.PlayMode
 
         [UnityTest]
         [Timeout(60000)]
-        public IEnumerator OpensOnTheMenuAtAWholeScaleWithTheBarOnNewGame()
+        public IEnumerator OpensOnTheMenuScaledSmoothlyFrom1080WithTheBarOnNewGame()
         {
             Assert.That(title.IsOpen, Is.True);
             Assert.That(title.Shown, Is.SameAs(title.Menu));
+            Assert.That(title.Canvas.pixelPerfect, Is.False, "the title is drawn smooth, not snapped to pixels");
             var scaler = title.Canvas.GetComponent<CanvasScaler>();
-            Assert.That(scaler.uiScaleMode, Is.EqualTo(CanvasScaler.ScaleMode.ConstantPixelSize));
-            Assert.That(scaler.scaleFactor, Is.EqualTo(PixelCanvasScale.ScaleFor(Screen.width, Screen.height)));
-            Assert.That(scaler.scaleFactor % 1f, Is.EqualTo(0f), "the canvas scale is a whole number");
+            Assert.That(scaler.uiScaleMode, Is.EqualTo(CanvasScaler.ScaleMode.ScaleWithScreenSize));
+            Assert.That(scaler.referenceResolution, Is.EqualTo(new Vector2(TitleKit.Width, TitleKit.Height)));
+            Assert.That(
+                scaler.screenMatchMode,
+                Is.EqualTo(CanvasScaler.ScreenMatchMode.Expand),
+                "all of it stays in view"
+            );
+            Assert.That(TitleKit.Font, Is.Not.Null, "the title font came from the theme");
 
             var newGame = title.Menu.Items[0].gameObject;
             Assert.That(EventSystem.current.currentSelectedGameObject, Is.SameAs(newGame));
@@ -51,7 +57,7 @@ namespace Descender.Tests.PlayMode
 
         [UnityTest]
         [Timeout(60000)]
-        public IEnumerator TheBarGlidesToTheFocusedItemAndLandsOnAWholePixel()
+        public IEnumerator TheBarGlidesToTheFocusedItemAndLandsOnIt()
         {
             var from = title.Focus.Middle;
             var settings = title.Menu.Items[3].gameObject;
@@ -69,7 +75,6 @@ namespace Descender.Tests.PlayMode
             }
             Assert.That(between, Is.True, "the bar glides rather than jumps");
             Assert.That(title.Focus.Middle, Is.EqualTo(target), "the bar lands on the item's middle");
-            Assert.That(target % 1f, Is.EqualTo(0f));
         }
 
         [UnityTest]

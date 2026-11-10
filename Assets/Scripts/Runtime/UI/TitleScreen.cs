@@ -1,5 +1,6 @@
 using Descender.Game;
 using Descender.Save;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +15,25 @@ namespace Descender.UI
     /// would resume while that button is focused. Opens itself when
     /// <see cref="GameFlow"/> shows the title and closes when the world is entered.
     /// <para>
-    /// The look is gilded and pixel perfect: a flat dark ground with gold motes
-    /// rising, the haloed DESCENDER logo, items in spaced capitals with only a gold
-    /// rule between them, and one focus bar that glides to the focused item. The
-    /// canvas keeps a whole-number scale (<see cref="PixelCanvasScale"/>) and the
-    /// screen is laid out on a 320 x 180 stage in its middle; the art comes from
-    /// tools/title_textures.py through the <see cref="MenuTheme"/>.
+    /// The look is a smooth, gilded dark-fantasy title on a flat dark ground: gold
+    /// embers rising, the haloed DESCENDER logo, the tagline in spaced capitals over
+    /// a jewelled rule, items in Cinzel with only a hairline between them, and one
+    /// glowing focus bar that glides to the focused item. It is laid out on a
+    /// 1920 x 1080 stage that the canvas scales to the window; the art comes from
+    /// tools/title_textures.py and the font from Descender > Setup > Title font,
+    /// both through the <see cref="MenuTheme"/>.
     /// </para>
     /// </summary>
     public sealed class TitleScreen : MenuScreen
     {
         public const string Tagline = "A man with half-finished angel powers descends from Heaven";
+
+        /// <summary>The tagline as the screen sets it, in two lines.</summary>
+        public static readonly string[] TaglineLines =
+        {
+            "A MAN WITH HALF-FINISHED ANGEL POWERS",
+            "DESCENDS FROM HEAVEN",
+        };
 
         /// <summary>The credits, one line each; an empty string is a blank line.</summary>
         public static readonly string[] Credits =
@@ -40,20 +49,22 @@ namespace Descender.UI
         };
 
         /// <summary>How long the screen takes to rise out of the dark when it opens.</summary>
-        public const float IntroSeconds = 1.2f;
+        public const float IntroSeconds = 1.4f;
 
         /// <summary>How long a column takes to fade in when the screen moves to it.</summary>
-        public const float ColumnFadeSeconds = 0.2f;
+        public const float ColumnFadeSeconds = 0.25f;
 
-        // Rows on the 320 x 180 stage, in pixels from the top.
-        private const float HaloTop = -4f;
-        private const float LogoTop = 18f;
-        private const float TaglineTop = 56f;
-        private const float RuleTop = 66f;
-        private const float ItemsTop = 84f;
-        private const float HintsTop = 166f;
-        private const float ColumnWidth = 200f;
-        private const float WideColumnWidth = 300f;
+        // Middle lines on the 1920 x 1080 stage, in pixels from the top.
+        private const float Middle = TitleKit.Width * 0.5f;
+        private const float HaloY = 205f;
+        private const float LogoY = 215f;
+        private const float TaglineY = 330f;
+        private const float TaglineGap = 28f;
+        private const float RuleY = 398f;
+        private const float ItemsY = 470f;
+        private const float HintsY = 1005f;
+        private const float ColumnWidth = 900f;
+        private const float WideColumnWidth = 1400f;
 
         [SerializeField]
         private SettingsScreen settings;
@@ -62,7 +73,7 @@ namespace Descender.UI
         private CanvasGroup stageGroup;
         private GameObject header;
         private Image halo;
-        private PixelText tagline;
+        private GameObject tagline;
         private GameObject credits;
         private TitleList menu;
         private TitleList slots;
@@ -70,10 +81,10 @@ namespace Descender.UI
         private TitleList creditsList;
         private TitleList shown;
         private TitleFocus focus;
-        private PixelText slotsHeading;
-        private PixelText status;
+        private TextMeshProUGUI slotsHeading;
+        private TextMeshProUGUI status;
         private RectTransform keys;
-        private PixelText resume;
+        private TextMeshProUGUI resume;
         private Button newGameButton;
         private Button continueButton;
         private Button loadButton;
@@ -129,13 +140,25 @@ namespace Descender.UI
             flow.WorldUnavailable -= OnWorldUnavailable;
         }
 
+        /// <summary>Scales a 1920 x 1080 layout to the window, smoothly, keeping all of it in view.</summary>
+        public static void ScaleSmooth(Canvas canvas)
+        {
+            canvas.pixelPerfect = false;
+            var scaler = canvas.GetComponent<CanvasScaler>();
+            scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            scaler.referenceResolution = new Vector2(TitleKit.Width, TitleKit.Height);
+            scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.Expand;
+            scaler.referencePixelsPerUnit = 100f;
+        }
+
         protected override void Build(RectTransform root)
         {
-            TitleKit.Font = PixelFont.Read(
-                theme.pixelFont,
-                theme.pixelFontMetrics != null ? theme.pixelFontMetrics.text : null
-            );
-            root.gameObject.AddComponent<PixelCanvasScale>();
+            TitleKit.Font = theme.titleFont;
+            if (theme.titleFont == null)
+            {
+                Debug.LogWarning("TitleScreen: no title font in the menu theme; run Descender > Setup > Title font.");
+            }
+            ScaleSmooth(root.GetComponent<Canvas>());
             var ground = UiKit.Box(root, "Background", TitleKit.Background);
             UiKit.Fill(ground.rectTransform);
 
@@ -144,30 +167,29 @@ namespace Descender.UI
             stage.anchorMax = new Vector2(0.5f, 0.5f);
             stage.pivot = new Vector2(0.5f, 0.5f);
             stage.anchoredPosition = Vector2.zero;
-            stage.sizeDelta = new Vector2(UiTheme.Width, UiTheme.Height);
+            stage.sizeDelta = new Vector2(TitleKit.Width, TitleKit.Height);
             stageGroup = stage.gameObject.AddComponent<CanvasGroup>();
-            TitleEmbers.Make(stage, 7);
+            TitleEmbers.Make(stage, theme.mote, 7);
 
             var top = UiKit.Rect(stage, "Header");
             UiKit.Fill(top);
             header = top.gameObject;
-            halo = TitleKit.Sprite(top, "Halo", theme.titleHalo, UiTheme.Width, HaloTop);
-            TitleKit.Sprite(top, "Logo", theme.titleLogo, UiTheme.Width, LogoTop);
-            TitleKit.Sprite(top, "Rule", theme.ruleTagline, UiTheme.Width, RuleTop);
-            tagline = TitleKit.Label(top, "", TitleKit.Muted);
-            TitleKit.Center(tagline, Tagline, UiTheme.Width, TaglineTop);
+            halo = TitleKit.Sprite(top, "Halo", theme.titleHalo, Middle, HaloY);
+            TitleKit.Sprite(top, "Logo", theme.titleLogo, Middle, LogoY);
+            TitleKit.Sprite(top, "Rule", theme.ruleTagline, Middle, RuleY);
+            BuildTagline(top);
 
-            var version = TitleKit.Label(stage, "", TitleKit.Faded);
-            TitleKit.Center(version, "v" + Application.version, UiTheme.Width, 1f);
-            var corner = version.rectTransform;
-            corner.anchoredPosition = new Vector2(UiTheme.Width - 4f - corner.sizeDelta.x, corner.anchoredPosition.y);
+            var version = TitleKit.Label(stage, "v" + Application.version, 26f, TitleKit.Faded, 4f, 0f, 46f, 200f);
+            version.alignment = TextAlignmentOptions.Right;
+            TitleKit.Center(version.rectTransform, TitleKit.Width - 150f, 46f, 200f, 52f);
 
-            status = TitleKit.Label(stage, "", TitleKit.Bad);
-            status.rectTransform.anchoredPosition = new Vector2(4f, -1f);
+            status = TitleKit.Label(stage, "", TitleKit.SmallSize, TitleKit.Bad, 2f, 0f, 46f, 1200f);
+            status.alignment = TextAlignmentOptions.Left;
+            TitleKit.Center(status.rectTransform, 50f + 600f, 46f, 1200f, 44f);
 
             keys = UiKit.Rect(stage, "Keys");
-            UiKit.Place(keys, 0f, HintsTop, UiTheme.Width, 12f);
-            resume = TitleKit.Label(stage, "", TitleKit.Muted);
+            UiKit.Fill(keys);
+            resume = TitleKit.Label(stage, "", 24f, TitleKit.Muted, 6f, Middle, HintsY);
 
             BuildMenu();
             BuildSlots();
@@ -180,9 +202,48 @@ namespace Descender.UI
             }
         }
 
+        /// <summary>The tagline in two spaced lines, the second framed by short hairlines.</summary>
+        private void BuildTagline(Transform parent)
+        {
+            var group = UiKit.Rect(parent, "Tagline");
+            UiKit.Fill(group);
+            tagline = group.gameObject;
+            for (var i = 0; i < TaglineLines.Length; i++)
+            {
+                var line = TitleKit.Label(
+                    group,
+                    TaglineLines[i],
+                    TitleKit.SmallSize,
+                    TitleKit.Muted,
+                    TitleKit.SmallSpacing,
+                    Middle,
+                    TaglineY + i * TaglineGap
+                );
+                if (i == TaglineLines.Length - 1 && theme.ruleSide != null)
+                {
+                    var half = TitleKit.WidthOf(line) * 0.5f + 24f + theme.ruleSide.rect.width * 0.5f;
+                    TitleKit.Sprite(
+                        group,
+                        "Line",
+                        theme.ruleSide,
+                        Middle - half,
+                        line.rectTransform.anchoredPosition.y * -1f
+                    );
+                    var right = TitleKit.Sprite(
+                        group,
+                        "Line",
+                        theme.ruleSide,
+                        Middle + half,
+                        -line.rectTransform.anchoredPosition.y
+                    );
+                    right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+                }
+            }
+        }
+
         private void BuildMenu()
         {
-            menu = new TitleList(stage, "Menu", ItemsTop, ColumnWidth, theme.focusBar, theme.ruleItem);
+            menu = new TitleList(stage, "Menu", ItemsY, ColumnWidth, theme.focusBar, theme.ruleItem);
             newGameButton = menu.Add("New Game", OnNewGamePressed);
             continueButton = menu.Add("Continue", OnContinuePressed);
             loadButton = menu.Add("Load Game", OnLoadPressed);
@@ -195,8 +256,8 @@ namespace Descender.UI
 
         private void BuildSlots()
         {
-            slots = new TitleList(stage, "Slots", ItemsTop, WideColumnWidth, theme.focusBarWide, theme.ruleItem);
-            slotsHeading = TitleKit.Label(slots.Root, "", TitleKit.Gold, TitleKit.CapsSpacing);
+            slots = new TitleList(stage, "Slots", ItemsY, WideColumnWidth, theme.focusBarWide, theme.ruleItem);
+            slotsHeading = Heading(slots.Root);
             for (var slot = 0; slot < slotButtons.Length; slot++)
             {
                 var index = slot;
@@ -207,29 +268,39 @@ namespace Descender.UI
             slots.Root.gameObject.SetActive(false);
         }
 
+        /// <summary>A column's heading, in gold where the tagline stands on the main menu.</summary>
+        private static TextMeshProUGUI Heading(Transform parent) =>
+            TitleKit.Label(parent, "", 26f, TitleKit.Gold, TitleKit.SmallSpacing, Middle, TaglineY + TaglineGap * 0.5f);
+
         private void BuildDifficulty()
         {
             difficulty = new TitleList(
                 stage,
                 "Difficulty",
-                ItemsTop,
+                ItemsY,
                 WideColumnWidth,
                 theme.focusBarWide,
                 theme.ruleItem
             );
-            var heading = TitleKit.Label(difficulty.Root, "", TitleKit.Gold, TitleKit.CapsSpacing);
-            TitleKit.Center(heading, "NEW GAME:  CHOOSE A DIFFICULTY", UiTheme.Width, TaglineTop);
+            Heading(difficulty.Root).text = "NEW GAME:  CHOOSE A DIFFICULTY";
             for (var which = 0; which < difficultyButtons.Length; which++)
             {
                 var index = which;
-                var text = $"{SaveManager.DifficultyNames[which]}   {SaveManager.DifficultyNotes[which]}";
+                var text = $"{SaveManager.DifficultyNames[which]}    {SaveManager.DifficultyNotes[which]}";
                 difficultyButtons[which] = difficulty.Add(text, () => OnDifficultyPressed(index), false);
             }
             difficulty.Add("Back", OnDifficultyBackPressed, true, TitleList.BackSound);
             MenuKit.LinkVertical(difficulty.Layout());
-            var note = TitleKit.Label(difficulty.Root, "", TitleKit.Faded);
-            var below = ItemsTop + difficulty.Items.Count * TitleKit.Step - 2f;
-            TitleKit.Center(note, "The difficulty is kept with the save.", UiTheme.Width, below);
+            var below = ItemsY + difficulty.Items.Count * TitleKit.Step;
+            TitleKit.Label(
+                difficulty.Root,
+                "The difficulty is kept with the save.",
+                24f,
+                TitleKit.Faded,
+                4f,
+                Middle,
+                below
+            );
             difficulty.Root.gameObject.SetActive(false);
         }
 
@@ -238,16 +309,14 @@ namespace Descender.UI
             var page = UiKit.Rect(stage, "Credits");
             UiKit.Fill(page);
             credits = page.gameObject;
-            // Twice the pixel size, so each font pixel is a clean two by two.
-            var heading = TitleKit.Label(page, "", TitleKit.Gold, TitleKit.CapsSpacing, 2);
-            TitleKit.Center(heading, "CREDITS", UiTheme.Width, 12f);
-            TitleKit.Sprite(page, "Rule", theme.ruleTagline, UiTheme.Width, 40f);
+            TitleKit.Label(page, "CREDITS", 64f, TitleKit.Gold, TitleKit.CapsSpacing, Middle, 160f);
+            TitleKit.Sprite(page, "Rule", theme.ruleTagline, Middle, 230f);
             for (var i = 0; i < Credits.Length; i++)
             {
-                var line = TitleKit.Label(page, "", i == 0 ? TitleKit.Ivory : TitleKit.Parchment);
-                TitleKit.Center(line, Credits[i], UiTheme.Width, 52f + i * 11f);
+                var color = i == 0 ? TitleKit.Ivory : TitleKit.Parchment;
+                TitleKit.Label(page, Credits[i], 30f, color, 4f, Middle, 300f + i * 52f);
             }
-            creditsList = new TitleList(page, "Back", 152f, ColumnWidth, theme.focusBar, theme.ruleItem);
+            creditsList = new TitleList(page, "Back", 860f, ColumnWidth, theme.focusBar, theme.ruleItem);
             creditsBackButton = creditsList.Add("Back", ShowMenu, true, TitleList.BackSound);
             MenuKit.LinkVertical(creditsList.Layout());
             credits.SetActive(false);
@@ -255,7 +324,7 @@ namespace Descender.UI
 
         protected override void OnOpened()
         {
-            status.Text = "";
+            status.text = "";
             openedAt = Time.unscaledTime;
             stageGroup.alpha = 0f;
             ShowMenu();
@@ -306,8 +375,7 @@ namespace Descender.UI
             {
                 shown.Group.alpha = Smooth((now - shownAt) / ColumnFadeSeconds);
             }
-            var breath = 0.85f + 0.15f * Mathf.Sin(now * 1.3f);
-            halo.color = new Color(1f, 1f, 1f, Mathf.Round(breath * 16f) / 16f);
+            halo.color = new Color(1f, 1f, 1f, 0.85f + 0.15f * Mathf.Sin(now * 1.3f));
         }
 
         /// <summary>Eases in and out over 0..1, clamped.</summary>
@@ -321,7 +389,7 @@ namespace Descender.UI
             difficulty.Root.gameObject.SetActive(column == difficulty);
             credits.SetActive(column == creditsList);
             header.SetActive(showHeader);
-            tagline.gameObject.SetActive(showTagline);
+            tagline.SetActive(showTagline);
             shown = column;
             shownAt = Time.unscaledTime;
             column.Group.alpha = 0f;
@@ -347,20 +415,19 @@ namespace Descender.UI
         {
             slotMode = mode;
             confirmSlot = -1;
-            var heading = mode switch
+            slotsHeading.text = mode switch
             {
                 SlotMode.NewGame => "NEW GAME:  CHOOSE A SLOT",
                 SlotMode.Load => "LOAD GAME",
                 _ => "DELETE A SAVE:  CHOOSE A SLOT",
             };
-            TitleKit.Center(slotsHeading, heading, UiTheme.Width, TaglineTop);
             // Deleting is offered from the load picker, and the delete picker goes back to loading.
             deleteButton.gameObject.SetActive(mode != SlotMode.NewGame);
             TitleKit.SetText(deleteButton, mode == SlotMode.Delete ? "Load instead" : "Delete a save");
             for (var slot = 0; slot < slotButtons.Length; slot++)
             {
                 var button = slotButtons[slot];
-                TitleKit.SetText(button, $"{slot + 1}   {SaveManager.Summary(slot, GameFlow.LevelNameOf)}");
+                TitleKit.SetText(button, $"{slot + 1}    {SaveManager.Summary(slot, GameFlow.LevelNameOf)}");
                 button.interactable = mode == SlotMode.NewGame || SaveManager.Slots.HasSave(slot);
             }
             var items = slots.Layout();
@@ -436,7 +503,7 @@ namespace Descender.UI
                 return true;
             }
             confirmSlot = slot;
-            TitleKit.SetText(slotButtons[slot], $"{slot + 1}   {question}  Press again");
+            TitleKit.SetText(slotButtons[slot], $"{slot + 1}    {question}  Press again");
             return false;
         }
 
@@ -457,7 +524,7 @@ namespace Descender.UI
         {
             if (IsOpen)
             {
-                status.Text = reason;
+                status.text = reason;
             }
         }
 
@@ -473,8 +540,7 @@ namespace Descender.UI
             if (onContinue)
             {
                 var slot = SaveManager.Slots.LatestSlot();
-                var text = $"Resumes slot {slot + 1}:   {SaveManager.Summary(slot, GameFlow.LevelNameOf)}";
-                TitleKit.Center(resume, text, UiTheme.Width, HintsTop + 1f);
+                resume.text = $"Resumes slot {slot + 1}:    {SaveManager.Summary(slot, GameFlow.LevelNameOf)}";
                 return;
             }
             var gamepad = UsingGamepad ? 1 : 0;
@@ -485,36 +551,69 @@ namespace Descender.UI
             }
         }
 
-        /// <summary>The key hints along the bottom: a cap and what it does, three times, between two gold lines.</summary>
+        /// <summary>
+        /// The key hints along the bottom: the D-pad icon and Navigate, then a key cap
+        /// and what it does twice, between two fading hairlines.
+        /// </summary>
         private void BuildKeys(bool gamepad)
         {
             UiKit.Clear(keys);
-            var pairs = gamepad
-                ? new[] { "D-pad", "Navigate", "A", "Confirm", "B", "Back" }
-                : new[] { "Arrows", "Navigate", "Enter", "Confirm", "Esc", "Back" };
             var row = UiKit.Rect(keys, "Row");
+            UiKit.Fill(row);
             var x = 0f;
-            for (var i = 0; i < pairs.Length; i += 2)
+            var parts = new System.Collections.Generic.List<RectTransform>();
+            if (theme.keyDpad != null)
             {
-                x += TitleKit.KeyCap(row, pairs[i], x, 0f) + 4f;
-                var label = TitleKit.Label(row, pairs[i + 1], TitleKit.Muted);
-                var w = label.InkWidth;
-                UiKit.Place(label.rectTransform, x, -1f, w, label.LineHeight);
-                x += w + (i + 2 < pairs.Length ? 14f : 0f);
+                var pad = TitleKit.Sprite(row, "Dpad", theme.keyDpad, 0f, HintsY);
+                pad.rectTransform.anchoredPosition = new Vector2(x + 22f, -HintsY);
+                parts.Add(pad.rectTransform);
+                x += 44f + 14f;
             }
-            var left = Mathf.Floor((UiTheme.Width - x) * 0.5f);
-            UiKit.Place(row, left, 0f, x, 12f);
-            if (theme.ruleHints == null)
+            x = Hint(row, parts, "Navigate", x) + 56f;
+            x = Hint(row, parts, "Confirm", x + KeyCapInto(row, parts, gamepad ? "A" : "Enter", x) + 14f) + 56f;
+            x = Hint(row, parts, "Back", x + KeyCapInto(row, parts, gamepad ? "B" : "Esc", x) + 14f);
+            // Centre the whole row: everything was laid out from 0, so shift it by half what is left.
+            var shift = Middle - x * 0.5f;
+            foreach (var part in parts)
+            {
+                part.anchoredPosition += new Vector2(shift, 0f);
+            }
+            if (theme.ruleSide == null)
             {
                 return;
             }
-            var length = theme.ruleHints.rect.width;
-            var lead = TitleKit.Sprite(keys, "Line", theme.ruleHints, 0f, 6f);
-            lead.rectTransform.anchoredPosition = new Vector2(left - 8f - length, -6f);
-            // The right line is the left one mirrored, bright at its inner end too.
-            var tail = TitleKit.Sprite(keys, "Line", theme.ruleHints, 0f, 6f);
-            tail.rectTransform.anchoredPosition = new Vector2(left + x + 8f + length, -6f);
-            tail.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+            var reach = theme.ruleSide.rect.width * 0.5f + 40f;
+            TitleKit.Sprite(keys, "Line", theme.ruleSide, shift - reach, HintsY);
+            var right = TitleKit.Sprite(keys, "Line", theme.ruleSide, shift + x + reach, HintsY);
+            right.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+        }
+
+        /// <summary>A key cap at `x`, added to the row's parts; returns its width.</summary>
+        private float KeyCapInto(
+            Transform row,
+            System.Collections.Generic.List<RectTransform> parts,
+            string key,
+            float x
+        )
+        {
+            var w = TitleKit.KeyCap(row, theme.keyCap, key, x, HintsY);
+            parts.Add((RectTransform)row.GetChild(row.childCount - 1));
+            return w;
+        }
+
+        /// <summary>What a key does, its left edge at `x`; returns where it ends.</summary>
+        private static float Hint(
+            Transform row,
+            System.Collections.Generic.List<RectTransform> parts,
+            string text,
+            float x
+        )
+        {
+            var label = TitleKit.Label(row, text, 26f, TitleKit.Muted, 4f, 0f, HintsY, 400f);
+            var w = TitleKit.WidthOf(label);
+            TitleKit.Center(label.rectTransform, x + w * 0.5f, HintsY, w + 4f, 52f);
+            parts.Add(label.rectTransform);
+            return x + w;
         }
 
         private static void Quit()

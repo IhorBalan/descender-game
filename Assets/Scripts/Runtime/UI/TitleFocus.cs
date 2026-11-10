@@ -6,10 +6,10 @@ namespace Descender.UI
 {
     /// <summary>
     /// The gold bar behind the focused title screen item. It glides to the item the
-    /// focus moves to, eased and on whole pixels, breathes softly, and carries the
-    /// diamond emblem at its left on the main column. It moves into the column that
-    /// is showing (<see cref="Follow"/>) and hides when the focus is elsewhere.
-    /// Times are unscaled, so it moves while the game is paused.
+    /// focus moves to, eased, breathes softly, and carries the diamond emblem at its
+    /// left on the main column. It moves into the column that is showing
+    /// (<see cref="Follow"/>) and hides when the focus is elsewhere. Times are
+    /// unscaled, so it moves while the game is paused.
     /// </summary>
     public sealed class TitleFocus : MonoBehaviour
     {
@@ -19,13 +19,16 @@ namespace Descender.UI
         /// <summary>The longest frame the glide takes in one go, so a hitch slows it rather than skipping it.</summary>
         public const float MaxStep = 1f / 20f;
 
+        /// <summary>How far left of the bar's middle the emblem sits.</summary>
+        public const float EmblemOffset = 300f;
+
         private Image bar;
         private Image emblem;
         private TitleList list;
         private float y;
         private bool placed;
 
-        /// <summary>The bar's middle line now, in pixels from the stage's top; whole once it has arrived.</summary>
+        /// <summary>The bar's middle line now, in pixels from the stage's top.</summary>
         public float Middle => y;
 
         /// <summary>Whether the bar is showing.</summary>
@@ -34,11 +37,10 @@ namespace Descender.UI
         /// <summary>Makes the bar under a stage; `emblemSprite` may be null.</summary>
         public static TitleFocus Make(Transform stage, Sprite emblemSprite)
         {
-            var image = TitleKit.Sprite(stage, "Focus", null, UiTheme.Width, 0f);
+            var image = TitleKit.Sprite(stage, "Focus", null, TitleKit.Width * 0.5f, 0f);
             var focus = image.gameObject.AddComponent<TitleFocus>();
             focus.bar = image;
             focus.emblem = TitleKit.Sprite(image.transform, "Emblem", emblemSprite, 0f, 0f);
-            focus.emblem.enabled = emblemSprite != null;
             image.enabled = false;
             return focus;
         }
@@ -57,13 +59,18 @@ namespace Descender.UI
             transform.SetParent(column.Root, false);
             transform.SetSiblingIndex(column.BarSiblingIndex);
             bar.sprite = column.Bar;
+            bar.color = column.Bar != null ? Color.white : Color.clear;
             var size = column.Bar != null ? column.Bar.rect.size : Vector2.zero;
-            var rect = bar.rectTransform;
-            UiKit.Place(rect, Mathf.Floor((UiTheme.Width - size.x) * 0.5f), 0f, size.x, size.y);
-            var emblemRect = emblem.rectTransform;
-            var emblemSize = emblemRect.sizeDelta;
-            // The emblem's diamond (15 px into its sprite) sits 16 px into the bar, where its glow begins.
-            UiKit.Place(emblemRect, 1f, Mathf.Floor((size.y - emblemSize.y) * 0.5f), emblemSize.x, emblemSize.y);
+            TitleKit.Center(bar.rectTransform, TitleKit.Width * 0.5f, y, size.x, size.y);
+            // The emblem's parent is the bar, whose own top left is the origin here.
+            var emblemSize = emblem.rectTransform.sizeDelta;
+            TitleKit.Center(
+                emblem.rectTransform,
+                size.x * 0.5f - EmblemOffset,
+                size.y * 0.5f,
+                emblemSize.x,
+                emblemSize.y
+            );
             emblem.gameObject.SetActive(withEmblem && emblem.sprite != null);
             placed = false;
         }
@@ -84,14 +91,10 @@ namespace Descender.UI
             y = placed ? Ease(y, target, Mathf.Min(Time.unscaledDeltaTime, MaxStep)) : target;
             placed = true;
             var rect = bar.rectTransform;
-            var top = Mathf.Round(y) - Mathf.Floor(rect.sizeDelta.y * 0.5f);
-            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -top);
+            rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -y);
             var t = Time.unscaledTime;
-            bar.color = new Color(1f, 1f, 1f, Quantize(0.88f + 0.12f * Mathf.Sin(t * 2f)));
-            emblem.color = new Color(1f, 1f, 1f, Quantize(0.8f + 0.2f * Mathf.Sin(t * 3f + 1f)));
+            bar.color = new Color(1f, 1f, 1f, 0.88f + 0.12f * Mathf.Sin(t * 2f));
+            emblem.color = new Color(1f, 1f, 1f, 0.85f + 0.15f * Mathf.Sin(t * 3f + 1f));
         }
-
-        /// <summary>Alpha in sixteenths, so the glow steps as pixel art does instead of sliding.</summary>
-        private static float Quantize(float alpha) => Mathf.Round(alpha * 16f) / 16f;
     }
 }

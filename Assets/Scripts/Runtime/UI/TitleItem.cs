@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -5,8 +6,8 @@ using UnityEngine.UI;
 namespace Descender.UI
 {
     /// <summary>
-    /// One title screen item: its text centred on a whole pixel, ivory while it has
-    /// the focus, parchment otherwise and faded when it cannot be chosen. The mouse
+    /// One title screen item: its text ivory with a soft warm glow while it has the
+    /// focus, parchment otherwise and faded when it cannot be chosen. The mouse
     /// moves the focus onto it, so hovering lights it as the keys and the pad do.
     /// Added by <see cref="TitleKit.Item"/>.
     /// </summary>
@@ -14,12 +15,13 @@ namespace Descender.UI
     public sealed class TitleItem : MonoBehaviour, IPointerEnterHandler
     {
         private Button button;
-        private PixelText label;
+        private TextMeshProUGUI label;
         private bool caps;
+        private bool lit;
 
-        public string Text => label != null ? label.Text : "";
+        public string Text => label != null ? label.text : "";
 
-        public void Bind(PixelText text, bool spacedCaps)
+        public void Bind(TextMeshProUGUI text, bool spacedCaps)
         {
             button = GetComponent<Button>();
             label = text;
@@ -28,13 +30,10 @@ namespace Descender.UI
 
         public void SetText(string text)
         {
-            if (label == null)
+            if (label != null)
             {
-                return;
+                label.text = caps ? text.ToUpperInvariant() : text;
             }
-            var shown = caps ? text.ToUpperInvariant() : text;
-            var width = ((RectTransform)transform).sizeDelta.x;
-            TitleKit.Center(label, shown, width, TitleKit.ItemTextTop);
         }
 
         public void OnPointerEnter(PointerEventData eventData)
@@ -51,14 +50,21 @@ namespace Descender.UI
             {
                 return;
             }
-            if (!button.interactable)
-            {
-                label.color = TitleKit.Faded;
-                return;
-            }
             var system = EventSystem.current;
-            var selected = system != null && system.currentSelectedGameObject == gameObject;
-            label.color = selected ? TitleKit.Ivory : TitleKit.Parchment;
+            var focused = button.interactable && system != null && system.currentSelectedGameObject == gameObject;
+            label.color =
+                !button.interactable ? TitleKit.Faded
+                : focused ? TitleKit.Ivory
+                : TitleKit.Parchment;
+            if (focused != lit)
+            {
+                lit = focused;
+                var glow = TitleKit.GlowMaterial;
+                if (glow != null && TitleKit.Font != null)
+                {
+                    label.fontSharedMaterial = focused ? glow : TitleKit.Font.material;
+                }
+            }
         }
     }
 }

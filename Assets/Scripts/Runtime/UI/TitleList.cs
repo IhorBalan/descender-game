@@ -6,12 +6,18 @@ namespace Descender.UI
 {
     /// <summary>
     /// One column of title screen items on the stage: the items one
-    /// <see cref="TitleKit.Step"/> apart from a top line, a short gold rule between
-    /// each two that are showing, and the focus bar sprite this column lights its
-    /// focused item with. The rules sit in a layer under the bar, the items over it.
+    /// <see cref="TitleKit.Step"/> apart from a first middle line, a gold hairline
+    /// between each two that are showing, and the focus bar sprite this column
+    /// lights its focused item with. The rules sit in a layer under the bar, the
+    /// items over it.
     /// </summary>
     public sealed class TitleList
     {
+        /// <summary>The sound an item that goes back plays; the others play <see cref="ConfirmSound"/>.</summary>
+        public const string BackSound = "menu_back";
+
+        public const string ConfirmSound = "menu_confirm";
+
         private readonly List<Button> items = new List<Button>();
         private readonly List<Image> rules = new List<Image>();
         private readonly RectTransform ruleLayer;
@@ -49,11 +55,6 @@ namespace Descender.UI
         /// <summary>The items in order, hidden ones included.</summary>
         public IReadOnlyList<Button> Items => items;
 
-        /// <summary>The sound an item that goes back plays; the others play <see cref="ConfirmSound"/>.</summary>
-        public const string BackSound = "menu_back";
-
-        public const string ConfirmSound = "menu_confirm";
-
         /// <summary>Adds an item at the end, in spaced capitals unless `caps` is false, that plays `sound` when pressed.</summary>
         public Button Add(
             string text,
@@ -62,7 +63,7 @@ namespace Descender.UI
             string sound = ConfirmSound
         )
         {
-            var button = TitleKit.Item(itemLayer, text, null, width, caps);
+            var button = TitleKit.Item(itemLayer, text, width, caps);
             button.onClick.AddListener(() => Audio.Sfx.Play(sound, -3f));
             if (onClick != null)
             {
@@ -90,30 +91,28 @@ namespace Descender.UI
         }
 
         /// <summary>The middle line of an item, in pixels from the stage's top.</summary>
-        public float MiddleOf(GameObject item) =>
-            -((RectTransform)item.transform).anchoredPosition.y + TitleKit.Step / 2;
+        public float MiddleOf(GameObject item) => TitleKit.MiddleOf((RectTransform)item.transform);
 
         /// <summary>
-        /// Puts the showing items one step apart from the top, centred on the stage,
-        /// with a rule between each two, and returns them in order for linking.
+        /// Puts the showing items one step apart from the first middle line, centred on
+        /// the stage, with a rule between each two, and returns them in order for linking.
         /// </summary>
         public List<Selectable> Layout()
         {
             var shown = new List<Selectable>();
-            var x = Mathf.Floor((UiTheme.Width - width) * 0.5f);
             foreach (var item in items)
             {
                 if (!item.gameObject.activeSelf)
                 {
                     continue;
                 }
-                var y = top + shown.Count * TitleKit.Step - TitleKit.Step / 2;
-                UiKit.Place((RectTransform)item.transform, x, y, width, TitleKit.Step);
+                var y = top + shown.Count * TitleKit.Step;
+                TitleKit.Center((RectTransform)item.transform, TitleKit.Width * 0.5f, y, width, TitleKit.Step);
                 shown.Add(item);
             }
             for (var i = rules.Count; i < shown.Count - 1; i++)
             {
-                rules.Add(TitleKit.Sprite(ruleLayer, "Rule", ruleSprite, UiTheme.Width, 0f));
+                rules.Add(TitleKit.Sprite(ruleLayer, "Rule", ruleSprite, TitleKit.Width * 0.5f, 0f));
             }
             for (var i = 0; i < rules.Count; i++)
             {
@@ -121,11 +120,9 @@ namespace Descender.UI
                 rules[i].gameObject.SetActive(visible);
                 if (visible)
                 {
+                    // Between item i and i + 1.
                     var rect = rules[i].rectTransform;
-                    var h = rect.sizeDelta.y;
-                    // Between item i and i + 1: half a step under item i's middle.
-                    var y = top + i * TitleKit.Step + TitleKit.Step / 2 - Mathf.Floor(h * 0.5f);
-                    rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -y);
+                    rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, -(top + (i + 0.5f) * TitleKit.Step));
                 }
             }
             return shown;

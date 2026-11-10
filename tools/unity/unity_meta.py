@@ -301,6 +301,9 @@ def texture_meta_for(path: str) -> str:
                 secondary = [("_NormalMap", guid_for(rel(normal)))]
         # A prop is placed by its top-left corner, as the Godot prop scenes were.
         return texture_meta(guid, ppu=PPU_PAINTED, point_filter=False, pivot=(0.0, 1.0), secondary=secondary)
+    if relative.startswith("Assets/Art/UI/Title/"):
+        # The title screen is drawn smooth at 1920x1080 (tools/title_textures.py), not as level pixels.
+        return texture_meta(guid, ppu=100, point_filter=False)
     if relative.startswith("Assets/Art/Regions/"):
         return texture_meta(guid, ppu=PPU_PAINTED, point_filter=False, mipmaps=True)
     return texture_meta(guid, ppu=PPU_LEVEL, point_filter=True)

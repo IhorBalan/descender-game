@@ -5,8 +5,8 @@ namespace Descender.UI
     /// <summary>
     /// The look of the menus: the Pirata One font, the nine-sliced stone buttons and
     /// panel, the divider, the slider grabber and the toggle icons from
-    /// Assets/Art/UI/Theme, the title screen's gilded logo, halo, focus bar and rules
-    /// from Assets/Art/UI/Title, and the text colours of the prototype's stone theme. One
+    /// Assets/Art/UI/Theme, the title screen's gilded logo, halo, focus bar, rules,
+    /// motes and key caps from Assets/Art/UI/Title and its Cinzel font, and the text colours of the prototype's stone theme. One
     /// asset, Assets/Settings/MenuTheme.asset, referenced by the menu screens in
     /// Main.unity and read by <see cref="MenuKit"/>.
     /// </summary>
@@ -41,9 +41,13 @@ namespace Descender.UI
         public Sprite focusEmblem;
         public Sprite ruleItem;
         public Sprite ruleTagline;
-        public Sprite ruleHints;
-        public Texture2D pixelFont;
-        public TextAsset pixelFontMetrics;
+        public Sprite ruleSide;
+        public Sprite mote;
+        public Sprite keyCap;
+        public Sprite keyDpad;
+
+        /// <summary>Cinzel as a TextMeshPro distance-field asset, made by Descender > Setup > Title font.</summary>
+        public TMPro.TMP_FontAsset titleFont;
 
         [Header("Colours")]
         public Color text = new Color(0.85f, 0.8f, 0.75f);
