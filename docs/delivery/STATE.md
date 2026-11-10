@@ -217,8 +217,8 @@ hygiene as each production region lands.
 | T-0012 | The story is parked behind one switch, with a pointer file | done | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
 | T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | done | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
 | T-0014 | Triggers as data: conditions and actions, items as shapes | done | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | #169 |
-| T-0015 | Camera zones | in review | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
-| T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0015 | Camera zones | done | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
+| T-0016 | Live tuning of the hero's numbers and abilities | in review | 16 | T-0013 | 1 | Re-plan the roadmap around mechanics | |
 | T-0017 | Measured mechanics: a PlayMode test per existing move | approved | 17 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
@@ -401,8 +401,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (258 on `main` after T-0015) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (30 after T-0015; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (272 on `main` after T-0016) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (33 after T-0016; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -503,6 +503,16 @@ barriers, the cliff descent.
   check: every room can be finished with the move it names, the marks (jump
   height, dash length, one second of running) match what the hero does, the
   camera stays inside the room, and dying puts him back at the room's start.
+- **T-0016, live tuning.** In a game or the lab, open the dev console
+  (the grave key). `tune` sums up; `tune jump` shows the jump numbers;
+  `tune jumpHeight 90` sets one and the hero plays with it at once; `tune
+  reset` goes back; `tune panel` shows a page of numbers down the right of
+  the view, with changed ones in yellow, and the bracket keys turn its
+  pages; `ability wings on` (or `all on`) gives an ability whatever the
+  room allows. In the editor `tune save` writes the changed numbers into
+  `PlayerTuning.asset`. To check: the numbers you settle on (write them
+  down or save them), that the panel is readable at this size, and that a
+  save made after forcing an ability does not keep it.
 - **T-0015, camera zones.** `lab camera` in the dev console (the last room
   of the lab). On the plateau, under the low roof the view's height stays
   put through a jump; at the edge the view drops to show the landing; in the

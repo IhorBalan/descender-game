@@ -123,6 +123,15 @@ namespace Descender.Player
         public static PlayerController Current { get; private set; }
 
         public PlayerTuning Tuning => tuning;
+
+        /// <summary>Hands him another tuning to play with: the live copy of the dev console's `tune`.</summary>
+        public void UseTuning(PlayerTuning value)
+        {
+            if (value != null)
+            {
+                tuning = value;
+            }
+        }
         public PlayerState State => state;
         public bool IsGrounded => grounded;
         public bool IsDashing => state == PlayerState.Dash;
@@ -176,7 +185,11 @@ namespace Descender.Player
 
         // --- Abilities, powers, stats -------------------------------------------
 
-        public bool Has(Save.Ability ability) => abilities.Contains(ability);
+        /// <summary>Whether he can use an ability now: one he owns, unless the dev console forced it on or off.</summary>
+        public bool Has(Save.Ability ability) => LiveTuning.Has(ability, abilities.Contains(ability));
+
+        /// <summary>Whether the ability is his to keep, which is what a save records.</summary>
+        public bool Owns(Save.Ability ability) => abilities.Contains(ability);
 
         /// <summary>Unlocks an angel power for the rest of the run. Unlocking one he already has does nothing.</summary>
         public void Grant(Save.Ability ability)
@@ -268,6 +281,7 @@ namespace Descender.Player
             {
                 tuning = ScriptableObject.CreateInstance<PlayerTuning>();
             }
+            tuning = LiveTuning.For(tuning);
             if (sprite == null)
             {
                 sprite = GetComponentInChildren<SpriteAnimator>();

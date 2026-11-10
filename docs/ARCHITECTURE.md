@@ -84,7 +84,7 @@ runtime code means adding its assembly to the asmdef `references`, not an
 | Folder | What lives there |
 | --- | --- |
 | `Game/` | `GameFlow`: the phases (title, playing, paused) and the moves between them; spawns the hero, owns the EventSystem. `DevStart` for "Play from here" and for the lab. |
-| `Player/` | `PlayerController` (run, jump, dash, sword, heal, abilities), `PlayerSprite`, `PlayerTuning` (ScriptableObject of movement numbers), `Power`, `Upgrades`. |
+| `Player/` | `PlayerController` (run, jump, dash, sword, heal, abilities), `PlayerSprite`, `PlayerTuning` (ScriptableObject of movement numbers), `LiveTuning` (the working copy the dev console's `tune` changes while playing, its fields found by reflection, and the abilities `ability` forces; neither reaches a save), `Power`, `Upgrades`. |
 | `Enemies/` | `Walker`, `Flyer`, `Boss`, `Hanger`, their `*Profile` ScriptableObjects, `EnemyPhysics` (shared non-allocating queries), `Kills`, death and health bar visuals. |
 | `Combat/` | `IHittable`, `Layers` (collision layers and masks looked up once), `LightBolt`. |
 | `Pickups/` | `Pickup` base and the things lying in the world: checkpoints, hazards, feathers, upgrades, power-ups, loot and currency. |
