@@ -58,6 +58,7 @@ namespace Descender.Player
             {
                 case PlayerState.Idle:
                 case PlayerState.Run:
+                case PlayerState.Climb:
                     UpdateGround(velocity, tuning);
                     break;
                 case PlayerState.Jump:

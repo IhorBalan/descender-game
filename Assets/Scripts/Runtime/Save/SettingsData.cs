@@ -43,6 +43,7 @@ namespace Descender.Save
             ("MoveLeft", "Move left"),
             ("MoveRight", "Move right"),
             ("MoveDown", "Move down"),
+            ("MoveUp", "Move up"),
             ("Jump", "Jump"),
             ("Attack", "Attack"),
             ("Dash", "Dash"),

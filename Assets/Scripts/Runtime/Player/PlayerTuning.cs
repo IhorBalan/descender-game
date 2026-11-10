@@ -229,6 +229,27 @@ namespace Descender.Player
         [Min(0)]
         public int hitFlashFrames = 4;
 
+        [Header("Climb")]
+        [Tooltip("Up and down a ladder or a vine (px/s).")]
+        [Min(0f)]
+        public float climbSpeed = 60f;
+
+        [Tooltip("Sideways across something wide to climb (px/s).")]
+        [Min(0f)]
+        public float climbSideSpeed = 40f;
+
+        [Tooltip("Jump alone lets go with a hop this fast upwards (px/s).")]
+        [Min(0f)]
+        public float climbHopSpeed = 110f;
+
+        [Tooltip("Sideways and jump leaps off with this share of a jump's speed.")]
+        [Range(0f, 1.5f)]
+        public float climbLeap = 0.85f;
+
+        [Tooltip("After letting go he cannot take hold again for this long (s).")]
+        [Min(0f)]
+        public float climbRegrabTime = 0.25f;
+
         /// <summary>Upward launch speed for the jump, px/s (positive: Y is up in Unity).</summary>
         public float JumpVelocity => 2f * jumpHeight / jumpTimeToApex;
 

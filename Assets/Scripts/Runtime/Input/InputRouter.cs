@@ -24,6 +24,7 @@ namespace Descender.Input
         private InputAction moveLeft;
         private InputAction moveRight;
         private InputAction moveDown;
+        private InputAction moveUp;
         private InputAction jump;
         private InputAction attack;
         private InputAction dash;
@@ -42,6 +43,7 @@ namespace Descender.Input
 
         public float MoveX => (moveRight.IsPressed() ? 1f : 0f) - (moveLeft.IsPressed() ? 1f : 0f);
         public bool DownHeld => moveDown.IsPressed();
+        public bool UpHeld => moveUp.IsPressed();
         public bool JumpPressed => jump.WasPressedThisFrame();
         public bool JumpHeld => jump.IsPressed();
         public bool JumpReleased => jump.WasReleasedThisFrame();
@@ -72,6 +74,7 @@ namespace Descender.Input
             moveLeft = player.FindAction("MoveLeft", true);
             moveRight = player.FindAction("MoveRight", true);
             moveDown = player.FindAction("MoveDown", true);
+            moveUp = player.FindAction("MoveUp", true);
             jump = player.FindAction("Jump", true);
             attack = player.FindAction("Attack", true);
             dash = player.FindAction("Dash", true);
