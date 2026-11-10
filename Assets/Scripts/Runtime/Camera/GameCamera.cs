@@ -110,6 +110,9 @@ namespace Descender.CameraRig
         /// <summary>Half the view in units, from the orthographic size.</summary>
         public Vector2 HalfExtents => new Vector2(cam.orthographicSize * cam.aspect, cam.orthographicSize);
 
+        /// <summary>How much more than the room's view is shown now: 1 in the room, more where a zone pulls back.</summary>
+        public float Zoom => appliedZoom;
+
         private void OnEnable()
         {
             Main = this;

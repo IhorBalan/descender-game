@@ -85,6 +85,22 @@ nothing, so open sky costs no more. Zone 2's canopy runs over the layout's
   offsets in whole pixels and decays. Runs in `LateUpdate` after the
   interpolated body has moved. Camera position is snapped to the pixel
   grid in `LateUpdate` (`Mathf.Round(x * 16) / 16`).
+- The rebuilt Paradise (`ParadiseMain.unity`) has **no** `Pixel Perfect
+  Camera`: its art is painted, so the camera's own size (5.625 units,
+  `ParadiseLayout.ViewHalfHeight`, the same 20 x 11.25 tile view) frames it,
+  filling any screen and zooming smoothly. `ParadiseGreybox` removes the
+  component from the copied camera. A camera zone's zoom through the
+  pixel-perfect camera steps between whole multiples of 320 x 180, with
+  black bars between them, so do not put it back for Paradise.
+- Camera moments at Paradise's landmarks are `CameraZone`s built from the
+  layout (`zone.CameraMoment(...)`, under `CameraMoments` in the zone scene):
+  a pull-back (`zoom` up to 1.35), a framing toward what matters, a blend of
+  0.5 s or more, never overlapping one another, and wide enough that the hero
+  sees 8 tiles ahead (`ParadiseCameraMomentTests`). Under a zoom, a
+  `BackdropLayer` pinned to the view (scroll.y 0) grows about the view's
+  middle with `GameCamera.Zoom`, so it looks the same on screen and its edges
+  never show; a light that follows the view must reach past the widest
+  moment's view (`SunAndClouds.Reach`).
 - `Volume` (global) with **Bloom** (threshold 1, intensity 0.6, scatter
   0.7) for the glow layer; nothing else. `Universal Additional Camera Data`
   Anti-aliasing none.

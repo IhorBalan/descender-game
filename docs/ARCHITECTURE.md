@@ -144,7 +144,8 @@ map through `UiStack`. Skills: `character-movement-2d`,
 ## Rendering
 
 URP with the 2D Renderer, `Color Space: Gamma`, a Pixel Perfect Camera at
-320 x 180, one global `Light2D` tinted per region, normal maps as sprite
+320 x 180 (not in the rebuilt Paradise, whose painted art is framed by the
+camera's own size so camera zones zoom smoothly), one global `Light2D` tinted per region, normal maps as sprite
 secondary textures, bloom through the Volume framework in the rebuilt
 Paradise. Skill: `urp-2d-lighting-and-camera`, `shaders-and-particles`.
 

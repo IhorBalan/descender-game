@@ -577,6 +577,14 @@ namespace Descender.EditorTools.Paradise
             {
                 BuildRoom(room, roomGroup, zone.number * 100 + roomIndex++);
             }
+            if (zone.moments.Count > 0)
+            {
+                var momentGroup = Group(root, MomentsGroup);
+                foreach (var moment in zone.moments)
+                {
+                    BuildMoment(moment, momentGroup);
+                }
+            }
 
             if (zoneArt != null)
             {
@@ -1544,6 +1552,26 @@ namespace Descender.EditorTools.Paradise
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        /// <summary>The group a zone's camera moments are built under.</summary>
+        public const string MomentsGroup = "CameraMoments";
+
+        private static void BuildMoment(ParadiseLayout.Moment moment, Transform parent)
+        {
+            var go = new GameObject(moment.name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = moment.area.center;
+            go.AddComponent<CameraRig.CameraZone>()
+                .Configure(
+                    moment.area.size,
+                    moment.framing,
+                    moment.zoom,
+                    false,
+                    false,
+                    moment.lookAheadPixels,
+                    moment.blend
+                );
+        }
+
         private static void BuildRoom(Rect rect, Transform parent, int id)
         {
             var go = new GameObject($"Room{id}");
@@ -1785,17 +1813,22 @@ namespace Descender.EditorTools.Paradise
                 settings.FindProperty("framing").vector2Value = new Vector2(0f, 1.25f);
                 settings.ApplyModifiedPropertiesWithoutUndo();
             }
-            // Painted art needs the full screen resolution: the prototype's pixel-perfect
-            // camera renders the world at 320x180 and scales it up, which turns every curve
-            // into stairs. Keep its framing (the crop to 16:9) but render at full size.
+            // Painted art has no pixel grid to keep: the prototype's pixel-perfect camera only
+            // boxed the view in by whole multiples of 320x180, black bars on any screen between
+            // them, and turned a camera zone's pull-back into a jump from one multiple to the
+            // next. The camera's own size (5.625 units, the same 20 x 11.25 tile view) frames
+            // it instead, filling the screen and zooming smoothly.
             if (
                 camera != null
                 && camera.TryGetComponent<UnityEngine.Rendering.Universal.PixelPerfectCamera>(out var pixelPerfect)
             )
             {
-                var ppc = new SerializedObject(pixelPerfect);
-                ppc.FindProperty("m_GridSnapping").intValue = 0;
-                ppc.ApplyModifiedPropertiesWithoutUndo();
+                Object.DestroyImmediate(pixelPerfect);
+            }
+            if (camera != null)
+            {
+                camera.orthographic = true;
+                camera.orthographicSize = ParadiseLayout.ViewHalfHeight;
             }
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);

@@ -111,6 +111,24 @@ namespace Descender.EditorTools.Paradise
             public Rect Rect => new Rect(at.x, at.y - height, 1f, height);
         }
 
+        /// <summary>
+        /// A camera moment at a landmark: while the hero stands in `area` the camera frames
+        /// the place its own way (a CameraZone), pulled back by `zoom` to show it whole and
+        /// shifted by `framing` toward what matters (up to a crown, down to a hollow), blending
+        /// in and back out over `blend` seconds.
+        /// </summary>
+        public sealed class Moment
+        {
+            public string name;
+            public Rect area;
+            public Vector2 framing;
+            public float zoom = 1f;
+            public float blend = 1.2f;
+
+            /// <summary>Its own look-ahead in pixels, or -1 to keep the room's.</summary>
+            public float lookAheadPixels = -1f;
+        }
+
         public sealed class Lamp
         {
             public Vector2 at;
@@ -185,6 +203,9 @@ namespace Descender.EditorTools.Paradise
             /// <summary>The story beats that are things: built under Placements, and synced into a built scene by id.</summary>
             public readonly List<Placement> placements = new List<Placement>();
             public readonly List<Lamp> lamps = new List<Lamp>();
+
+            /// <summary>The landmarks' camera moments, built as CameraZones under CameraMoments.</summary>
+            public readonly List<Moment> moments = new List<Moment>();
             public readonly List<Hazard> hazards = new List<Hazard>();
             public readonly List<Barrier> barriers = new List<Barrier>();
             public readonly List<Rect> rooms = new List<Rect>();
@@ -366,6 +387,30 @@ namespace Descender.EditorTools.Paradise
                 );
             }
 
+            /// <summary>A camera moment over x `from` to `to` and y `bottom` to `top` (see <see cref="Moment"/>).</summary>
+            public Moment CameraMoment(
+                string name,
+                float from,
+                float to,
+                float bottom,
+                float top,
+                Vector2 framing,
+                float zoom,
+                float blend = 1.2f
+            )
+            {
+                var moment = new Moment
+                {
+                    name = name,
+                    area = Rect.MinMaxRect(from, bottom, to, top),
+                    framing = framing,
+                    zoom = zoom,
+                    blend = blend,
+                };
+                moments.Add(moment);
+                return moment;
+            }
+
             public void Light(float x, float y, Color color, float radiusTiles, float energy)
             {
                 lamps.Add(
@@ -381,6 +426,9 @@ namespace Descender.EditorTools.Paradise
         }
 
         public const string SceneFolder = "Assets/Scenes/Paradise";
+
+        /// <summary>Half the height of one screen, 11.25 tiles: the camera's own size, the room's view.</summary>
+        public const float ViewHalfHeight = 5.625f;
 
         public static readonly Vector2 Start = new Vector2(12f, -62.4f);
 
@@ -591,6 +639,14 @@ namespace Descender.EditorTools.Paradise
             );
             z.Mark(Descender.World.Paradise.DesignMarker.Kind.Landmark, 165f, -43f, "Landmark: the Rising Arcade");
             z.Mark(k, 392f, -60f, "Into the Orchard", "The canopy closes overhead; the light turns teal.");
+
+            // Camera moments: the waking pulled back, so the first screen holds the arch and
+            // the Wings ledge overhead; the Rising Arcade pulled back and looking up the climb,
+            // only on its deck (the lower garden under it keeps the room's view); a moment of
+            // rest pushed in at the shrine.
+            z.CameraMoment("Waking", 0f, 42f, -70f, -50f, new Vector2(0f, 1f), 1.2f, 1.6f);
+            z.CameraMoment("RisingArcade", 126f, 204f, -56f, -32f, new Vector2(2f, 1.5f), 1.25f, 1.4f);
+            z.CameraMoment("ShrineRest", 290f, 312f, -64f, -54f, new Vector2(0f, -0.25f), 0.92f, 1.6f);
 
             z.Light(14f, -54f, Dawn, 12f, 0.9f);
             z.Light(60f, -54f, Rose, 10f, 0.7f);
@@ -807,6 +863,19 @@ namespace Descender.EditorTools.Paradise
             z.Mark(secret, 915f, -36.8f, "Secret: Lantern crown", "Wings only: the crown landing is 6.5 up.");
             z.Mark(secret, 1060f, -78.6f, "Secret: roots route", "Something to find under the run.");
             z.Mark(Descender.World.Paradise.DesignMarker.Kind.Story, 1296f, -48.5f, "Into the Great Vines");
+
+            // Camera moments. Mereth: pushed in for the talk. The aqueduct: pulled back, looking
+            // down from the walkway over the orchard's arches. The dell: looking up at
+            // the wall the big pod throws him over. The Lantern Tree: pulled right back and
+            // looking up the tower of landings to its crown. The flowing run: a little wider,
+            // seeing further ahead over the gaps. The exit climb: looking up the way out.
+            z.CameraMoment("Mereth", 503f, 524f, -66f, -56f, new Vector2(0f, -0.25f), 0.92f, 1.6f);
+            z.CameraMoment("Aqueduct", 598f, 708f, -53f, -38f, new Vector2(0f, -1.5f), 1.15f, 1.4f);
+            z.CameraMoment("Dell", 762f, 858f, -74f, -59f, new Vector2(0f, 2.5f), 1.15f, 1.2f);
+            z.CameraMoment("LanternTree", 872f, 945f, -68f, -30f, new Vector2(0f, 2.5f), 1.15f, 1.6f);
+            z.CameraMoment("FlowingRun", 945f, 1100f, -66f, -54f, new Vector2(2f, 0f), 1.15f, 1.2f).lookAheadPixels =
+                40f;
+            z.CameraMoment("ExitClimb", 1165f, 1300f, -64f, -40f, new Vector2(0f, 2f), 1.1f, 1.2f);
 
             z.Light(515f, -55f, Fruit, 8f, 0.9f);
             z.Light(560f, -72f, Fungus, 9f, 0.8f);

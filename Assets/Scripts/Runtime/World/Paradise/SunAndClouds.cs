@@ -22,6 +22,22 @@ namespace Descender.World.Paradise
         private const int CookieWidth = 512;
         private const int CookieHeight = 256;
 
+        /// <summary>Periods each way the clouds' picture holds: it reaches half a period past the view, at least 28 x 14 units.</summary>
+        private const int CloudPeriods = 2;
+
+        /// <summary>
+        /// Periods each way the flecks' picture holds. Their period is small (24 x 12 units), so
+        /// two would reach only 12 x 6 past the view's middle, short of a view a camera moment
+        /// pulls back; three reach a whole period past it, beyond any moment's view.
+        /// </summary>
+        public const int FleckPeriods = 3;
+
+        /// <summary>
+        /// How far past the view's middle a pattern of `periods` periods reaches at least, each
+        /// way: the light is never more than half a period off the view (<see cref="Centre"/>).
+        /// </summary>
+        public static Vector2 Reach(Vector2 period, int periods) => period * (periods - 1) / 2f;
+
         /// <summary>How far away the sun's light sits: far enough that its direction is one across the view.</summary>
         public const float SunDistance = 6000f;
 
@@ -118,8 +134,8 @@ namespace Descender.World.Paradise
                 flecks.enabled = false;
                 var fleckSize = flecks.lightCookieSprite.bounds.size;
                 flecks.transform.localScale = new Vector3(
-                    fleckPeriod.x * 2f / fleckSize.x,
-                    fleckPeriod.y * 2f / fleckSize.y,
+                    fleckPeriod.x * FleckPeriods / fleckSize.x,
+                    fleckPeriod.y * FleckPeriods / fleckSize.y,
                     1f
                 );
             }
@@ -194,7 +210,7 @@ namespace Descender.World.Paradise
         /// <summary>
         /// Where the pattern's picture is centred along one axis with the view at `view`: a
         /// whole number of periods from its drift, and never more than half a period from
-        /// the view, so the two periods it holds always reach past both sides of the screen.
+        /// the view, so the periods it holds always reach past both sides of the screen.
         /// </summary>
         public static float Centre(float view, float drifted, float period) =>
             Mathf.Floor((view - drifted) / period) * period + drifted + period * 0.5f;
@@ -221,7 +237,7 @@ namespace Descender.World.Paradise
         }
 
         /// <summary>
-        /// The sun through leaves: soft flecks of light (white) in the canopy's shade (black), two
+        /// The sun through leaves: soft flecks of light (white) in the canopy's shade (black), three
         /// periods each way. Sunflecks are little round images of the sun, soft at the edge: a few
         /// broad ones and many small, gathered where the leaves are thinnest (a broad mask).
         /// </summary>
@@ -229,7 +245,7 @@ namespace Descender.World.Paradise
         {
             if (fleckCookie == null)
             {
-                fleckCookie = Pattern("Leaf flecks", period, (u, v) => Fleck(u, v, cover));
+                fleckCookie = Pattern("Leaf flecks", period, (u, v) => Fleck(u, v, cover), FleckPeriods);
             }
             return fleckCookie;
         }
@@ -289,36 +305,47 @@ namespace Descender.World.Paradise
             return ((h ^ (h >> 16)) & 0xffffff) / (float)0xffffff;
         }
 
-        /// <summary>A tiling light pattern, two periods each way, as a sprite pinned back along the sun.</summary>
-        private static Sprite Pattern(string name, Vector2 period, System.Func<float, float, float> lit)
+        /// <summary>A tiling light pattern, `periods` periods each way, as a sprite pinned back along the sun.</summary>
+        private static Sprite Pattern(
+            string name,
+            Vector2 period,
+            System.Func<float, float, float> lit,
+            int periods = CloudPeriods
+        )
         {
-            var texture = new Texture2D(CookieWidth, CookieHeight, TextureFormat.RGBA32, false)
+            // Half the cookie's width and height a period, as many periods as asked for.
+            var width = CookieWidth / 2 * periods;
+            var height = CookieHeight / 2 * periods;
+            var texture = new Texture2D(width, height, TextureFormat.RGBA32, false)
             {
                 wrapMode = TextureWrapMode.Clamp,
                 filterMode = FilterMode.Bilinear,
                 name = name,
             };
-            var pixels = new Color32[CookieWidth * CookieHeight];
-            for (var y = 0; y < CookieHeight; y++)
+            var pixels = new Color32[width * height];
+            for (var y = 0; y < height; y++)
             {
-                for (var x = 0; x < CookieWidth; x++)
+                for (var x = 0; x < width; x++)
                 {
-                    // One period is half the texture each way; the noise repeats on it exactly.
+                    // The noise repeats on each period exactly.
                     var u = x / (float)(CookieWidth / 2);
                     var v = y / (float)(CookieHeight / 2);
                     var b = (byte)Mathf.RoundToInt(255f * Mathf.Clamp01(lit(u, v)));
-                    pixels[y * CookieWidth + x] = new Color32(b, b, b, 255);
+                    pixels[y * width + x] = new Color32(b, b, b, 255);
                 }
             }
             texture.SetPixels32(pixels);
             texture.Apply(false, true);
             var sprite = Sprite.Create(
                 texture,
-                new Rect(0f, 0f, CookieWidth, CookieHeight),
+                new Rect(0f, 0f, width, height),
                 // The picture lies back along the sun's direction from the light's own
-                // position: the pivot, in picture sizes (two periods), is that far outside it.
+                // position: the pivot, in picture sizes (`periods` periods), is that far outside it.
                 new Vector2(0.5f, 0.5f)
-                    + Vector2.Scale((Vector2)SunDirection * SunDistance, new Vector2(0.5f / period.x, 0.5f / period.y)),
+                    + Vector2.Scale(
+                        (Vector2)SunDirection * SunDistance,
+                        new Vector2(1f / (periods * period.x), 1f / (periods * period.y))
+                    ),
                 CookieWidth / 4f
             );
             sprite.name = name;
