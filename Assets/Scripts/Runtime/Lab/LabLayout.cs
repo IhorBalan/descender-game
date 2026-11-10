@@ -49,8 +49,11 @@ namespace Descender.Lab
         /// <summary>A <see cref="Triggers.Crumble"/>: holds for `solidFor` once stood on, gone for `goneFor`.</summary>
         Crumble,
 
-        /// <summary>A <see cref="Triggers.Blinker"/>: solid for `solidFor`, gone for `goneFor`, over and over.</summary>
+        /// <summary>A <see cref="Triggers.Blinker"/>: solid for `solidFor`, gone for `goneFor`, in turn.</summary>
         Blinker,
+
+        /// <summary>A <see cref="ForceZone"/>: an area whose `wind` is added to the hero's speed.</summary>
+        Wind,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -97,6 +100,16 @@ namespace Descender.Lab
         public float goneFor = 2f;
         public float warnFor = 0.4f;
         public float ahead;
+
+        /// <summary>
+        /// A wind: the speed it adds in level pixels a second, how fast he picks it up
+        /// (pixels a second squared, 0 for at once), and its gusts: seconds blowing and
+        /// seconds resting (0 for a steady wind). A hidden one is still until switched on.
+        /// </summary>
+        public Vector2 wind;
+        public float gain = 600f;
+        public float gustOn;
+        public float gustOff;
 
         /// <summary>A camera zone: the framing offset, the zoom (in `value`) and the axes it holds.</summary>
         public Vector2 framing;
@@ -165,6 +178,7 @@ namespace Descender.Lab
             "platforms",
             "corners",
             "timing",
+            "wind",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -200,6 +214,7 @@ namespace Descender.Lab
             Platforms(Open(stations, "platforms", "Platforms to ride"));
             Corners(Open(stations, "corners", "Corners a jump forgives"), jump, tuning.cornerCorrection);
             Timing(Open(stations, "timing", "Platforms that do not stay"));
+            Wind(Open(stations, "wind", "Wind and lift", Ability.Glide), leap, tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -559,6 +574,29 @@ namespace Descender.Lab
             Add(station, PieceKind.Solid, 34f, FloorTop, 4f, jump + 0.3f, "caught at the edge");
             // A shelf rather than a step, so the way on is under it.
             Add(station, PieceKind.Solid, 42f, FloorTop + jump + 0.25f, 4f, 0.5f, "too high");
+        }
+
+        /// <summary>
+        /// A corridor with the wind in his face, a gap wider than a jump that a gust at
+        /// his back carries him over, and a shaft whose lift a fall beats and a glide
+        /// rides up to a shelf.
+        /// </summary>
+        private static void Wind(Station station, float leap, PlayerTuning tuning)
+        {
+            var head = Add(station, PieceKind.Wind, 11f, FloorTop, 9f, 5f, "headwind");
+            head.wind = new Vector2(-0.6f * tuning.runSpeed, 0f);
+
+            // The gust makes up what the gap is wider than a jump, and a little more.
+            var gap = Mathf.Ceil(leap * 1.4f);
+            var gust = Add(station, PieceKind.Wind, 20f, FloorTop, gap + 6f, 8f, "gusts: jump with one");
+            gust.wind = new Vector2(0.7f * tuning.runSpeed, 0f);
+            gust.gustOn = 1.5f;
+            gust.gustOff = 1.5f;
+            Add(station, PieceKind.Hazard, 23f, FloorTop, gap, 0.5f, $"{gap:0.#} wide");
+
+            var lift = Add(station, PieceKind.Wind, 36f, FloorTop, 6f, 18f, "lift: glide in it");
+            lift.wind = new Vector2(0f, tuning.glideFallSpeed + 0.4f * tuning.runSpeed);
+            Add(station, PieceKind.Solid, 42f, FloorTop, 10f, 12f, "shelf");
         }
 
         /// <summary>
