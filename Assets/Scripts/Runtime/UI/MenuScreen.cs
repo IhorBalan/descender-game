@@ -30,6 +30,9 @@ namespace Descender.UI
 
         public MenuTheme Theme => theme;
 
+        /// <summary>This screen's own canvas, once built; the screens share one object, so look here, not in children.</summary>
+        public Canvas Canvas => canvas;
+
         public void Open()
         {
             EnsureBuilt();
