@@ -57,6 +57,9 @@ namespace Descender.Lab
 
         /// <summary>A <see cref="Climbable"/>: a ladder or a vine the hero takes hold of with up or down.</summary>
         Climb,
+
+        /// <summary>A <see cref="Triggers.Water"/>: an area he swims in; its top is the surface.</summary>
+        Water,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -183,6 +186,7 @@ namespace Descender.Lab
             "timing",
             "wind",
             "climb",
+            "water",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -220,6 +224,7 @@ namespace Descender.Lab
             Timing(Open(stations, "timing", "Platforms that do not stay"));
             Wind(Open(stations, "wind", "Wind and lift", Ability.Glide), leap, tuning);
             Climb(Open(stations, "climb", "Ladders and vines"), jump);
+            Water(Open(stations, "water", "Water to swim in"), jump);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -579,6 +584,24 @@ namespace Descender.Lab
             Add(station, PieceKind.Solid, 34f, FloorTop, 4f, jump + 0.3f, "caught at the edge");
             // A shelf rather than a step, so the way on is under it.
             Add(station, PieceKind.Solid, 42f, FloorTop + jump + 0.25f, 4f, 0.5f, "too high");
+        }
+
+        /// <summary>
+        /// A tank a jump gets into and a jump at the surface gets out of, and a column
+        /// of water entered at its foot that only strokes take him up, to a shelf.
+        /// </summary>
+        private static void Water(Station station, float jump)
+        {
+            var wall = Mathf.Floor(jump) - 0.5f;
+            Add(station, PieceKind.Solid, 12f, FloorTop, 1f, wall, "jump in");
+            Add(station, PieceKind.Water, 13f, FloorTop, 12f, wall - 0.5f, "sink, swim, jump out at the top");
+            Add(station, PieceKind.Solid, 25f, FloorTop, 1f, wall, "");
+
+            // Open at its foot: he walks in under the wall and strokes up.
+            var column = 2f * jump + 2f;
+            Add(station, PieceKind.Solid, 32f, FloorTop + 3f, 1f, column - 3f, "walk in under");
+            Add(station, PieceKind.Water, 33f, FloorTop, 4f, column, "jump again and again");
+            Add(station, PieceKind.Solid, 37f, FloorTop, 10f, column - 1f, "shelf");
         }
 
         /// <summary>

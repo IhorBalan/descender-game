@@ -250,6 +250,34 @@ namespace Descender.Player
         [Min(0f)]
         public float climbRegrabTime = 0.25f;
 
+        [Header("Water")]
+        [Tooltip("The share of gravity that pulls on him in water.")]
+        [Range(0f, 1f)]
+        public float waterGravity = 0.3f;
+
+        [Tooltip("The fastest he sinks (px/s).")]
+        [Min(0f)]
+        public float waterSinkSpeed = 45f;
+
+        [Tooltip("The share of his run speed he moves at in water.")]
+        [Range(0f, 1f)]
+        public float waterMoveShare = 0.7f;
+
+        [Tooltip("The share of the dash speed a dash has in water.")]
+        [Range(0f, 1f)]
+        public float waterDashShare = 0.6f;
+
+        [Tooltip("How high one stroke lifts him (px).")]
+        [Min(0f)]
+        public float waterStrokeHeight = 24f;
+
+        [Tooltip("The least time between two strokes (s).")]
+        [Min(0f)]
+        public float waterStrokeGap = 0.25f;
+
+        /// <summary>Upward speed of a stroke in water, px/s: what reaches the stroke height there.</summary>
+        public float StrokeVelocity => Mathf.Sqrt(2f * Gravity * waterGravity * waterStrokeHeight);
+
         /// <summary>Upward launch speed for the jump, px/s (positive: Y is up in Unity).</summary>
         public float JumpVelocity => 2f * jumpHeight / jumpTimeToApex;
 
