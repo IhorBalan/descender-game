@@ -413,7 +413,10 @@ tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 run while the same project folder is open in the editor (`Temp/UnityLockfile`).
 Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. Test runs make no
 sound: the PlayMode assembly's `MuteDuringTests` callback mutes the listener
-for the whole run.
+for the whole run. Nor do they take the keyboard and mouse on Windows: the
+hook starts the editor through `tools/hooks/unity-background.ps1` with its
+windows hidden, so the console window the editor opens does not come to the
+foreground (`PRE_PUSH_FOREGROUND=1` starts it directly, the old way).
 
 The hook prints its phase, the time elapsed and the previous run's duration,
 and the editor log is `Logs/pre-push.log` in the checkout being pushed. To
