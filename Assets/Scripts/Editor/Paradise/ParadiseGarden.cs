@@ -2988,6 +2988,7 @@ namespace Descender.EditorTools.Paradise
                     }
                 );
             }
+            WallHangings(zone, plan);
             return plan;
         }
 
@@ -3091,6 +3092,94 @@ namespace Descender.EditorTools.Paradise
             (target + (ground + CameraOverWalk) * FrontDepth) / (1f + FrontDepth);
 
         /// <summary>Whether x is within a tile of a gap's edge (plants there would overhang the drop).</summary>
+        /// <summary>
+        /// Banners, and now and then a lantern, hung under the coping of the garden walls at wide
+        /// intervals, so a long wall has a rhythm of its own. Kept clear of the ivy over the coping,
+        /// the falls and the pergolas, and of gaps.
+        /// </summary>
+        private static void WallHangings(ParadiseLayout.Zone zone, Plan plan)
+        {
+            if (!Sprites.ContainsKey("banner") || !Sprites.ContainsKey("lantern"))
+            {
+                return;
+            }
+            var taken = new List<float>();
+            foreach (var p in plan.walls)
+            {
+                if (p.name.StartsWith("ivy_drape"))
+                {
+                    taken.Add(p.at.x);
+                }
+            }
+            foreach (var w in plan.water)
+            {
+                taken.Add(w.x);
+            }
+            bool Clear(float x)
+            {
+                foreach (var other in taken)
+                {
+                    if (Mathf.Abs(other - x) < WallHangingClearance)
+                    {
+                        return false;
+                    }
+                }
+                foreach (var pergola in plan.pergolas)
+                {
+                    if (x > pergola - 1f && x < pergola + PergolaSpan + 1f)
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            foreach (var shape in zone.shapes)
+            {
+                if (!zone.masonry.Contains(shape.name))
+                {
+                    continue;
+                }
+                var end = 0;
+                while (end + 1 < shape.outline.Count && shape.outline[end + 1].x >= shape.outline[end].x - 0.001f)
+                {
+                    end++;
+                }
+                var x1 = shape.outline[end].x;
+                for (
+                    var x = shape.outline[0].x + 9f;
+                    x < x1 - 9f;
+                    x += WallHangingSpacing + Hash(x, 71f) * WallHangingSpacingVaries
+                )
+                {
+                    var top = ParadiseDressing.SurfaceY(zone, x, float.NaN);
+                    if (float.IsNaN(top) || NearGap(zone, x) || !Clear(x))
+                    {
+                        continue;
+                    }
+                    plan.hanging.Add(
+                        new Spot
+                        {
+                            name = Hash(x, 72f) < 0.7f ? "banner" : "lantern",
+                            at = new Vector2(x, top - CopingDepth),
+                            scale = 1f,
+                        }
+                    );
+                    taken.Add(x);
+                }
+            }
+        }
+
+        /// <summary>How far apart the hangings on a wall are, at least, and how much more at most.</summary>
+        public const float WallHangingSpacing = 22f;
+
+        public const float WallHangingSpacingVaries = 12f;
+
+        /// <summary>How close a hanging may come to ivy over the coping or a fall.</summary>
+        public const float WallHangingClearance = 2.5f;
+
+        /// <summary>How far below the walk the coping's lower edge is, where a hanging's rod goes.</summary>
+        private const float CopingDepth = 0.95f;
+
         private static bool NearGap(ParadiseLayout.Zone zone, float x)
         {
             var a = ParadiseDressing.SurfaceY(zone, x - 1f, float.NaN);
