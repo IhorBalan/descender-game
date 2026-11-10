@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Descender.Combat;
+using Descender.Enemies;
 using Descender.Fx;
 using Descender.Player;
 using Descender.Triggers;
@@ -35,8 +36,11 @@ namespace Descender.Lab
         /// <summary>Units a second.</summary>
         public const float LiftSpeed = 2f;
 
-        /// <summary>The lab's stations from the hero's tuning (the defaults when null), as objects under one root.</summary>
-        public static LabRoot Build(PlayerTuning tuning = null)
+        /// <summary>
+        /// The lab's stations from the hero's tuning (the defaults when null), as objects
+        /// under one root; the fruit wear `fruitLook` when there is one.
+        /// </summary>
+        public static LabRoot Build(PlayerTuning tuning = null, LanternFruitLook fruitLook = null)
         {
             var made = tuning == null;
             if (made)
@@ -52,12 +56,13 @@ namespace Descender.Lab
             {
                 Object.DestroyImmediate(tuning);
             }
-            return Build(stations);
+            return Build(stations, fruitLook);
         }
 
-        public static LabRoot Build(List<Station> stations)
+        public static LabRoot Build(List<Station> stations, LanternFruitLook fruitLook = null)
         {
             var root = new GameObject("Lab").AddComponent<LabRoot>();
+            root.FruitLook = fruitLook;
             root.Init(stations);
             foreach (var station in stations)
             {
@@ -231,6 +236,10 @@ namespace Descender.Lab
                     go.AddComponent<BoxCollider2D>().size = rect.size;
                     Draw(go, ShapeKind.Circle, rect.size, DummyColor, "", 2);
                     go.AddComponent<Dummy>().Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
+                    break;
+                case PieceKind.Fruit:
+                    // The fruit makes its own body, shape, stalk and light; its middle is the piece's.
+                    go.AddComponent<LanternFruit>().Configure(rect.size, root.FruitLook);
                     break;
                 case PieceKind.Crumble:
                     go.layer = Layers.World;

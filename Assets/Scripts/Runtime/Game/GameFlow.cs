@@ -45,6 +45,10 @@ namespace Descender.Game
         [SerializeField]
         private ScreenFade fade;
 
+        [SerializeField]
+        [Tooltip("Assets/Data/Enemies/LanternFruitLook.asset; the lab's lantern fruit wear it.")]
+        private Enemies.LanternFruitLook fruitLook;
+
         private Coroutine transition;
 
         public Phase Current { get; private set; } = Phase.Title;
@@ -81,6 +85,7 @@ namespace Descender.Game
             Instance = this;
             Application.targetFrameRate = -1;
             EnsureEventSystem();
+            EnsureConsole();
         }
 
         private void OnEnable()
@@ -207,7 +212,7 @@ namespace Descender.Game
             Hero = Instantiate(heroPrefab);
             Hero.name = "Hero";
             Hero.Died += OnHeroDied;
-            var lab = Lab.LabBuilder.Build(Hero.Tuning);
+            var lab = Lab.LabBuilder.Build(Hero.Tuning, fruitLook);
             lab.Entered += OnLabStation;
             if (gameCamera != null)
             {
@@ -631,6 +636,21 @@ namespace Descender.Game
         /// The menus need an EventSystem driven by the Input System's UI map. Made here
         /// rather than saved in the scene so the action references stay in code.
         /// </summary>
+        /// <summary>
+        /// The dev console, made here when the scene has none: no scene or setup tool puts
+        /// one in, and the lab, the tuning and the playtests are reached through it.
+        /// </summary>
+        private void EnsureConsole()
+        {
+            if (FindAnyObjectByType<DevConsole>() != null)
+            {
+                return;
+            }
+            var holder = new GameObject("DevConsole");
+            holder.transform.SetParent(transform, false);
+            holder.AddComponent<DevConsole>();
+        }
+
         private void EnsureEventSystem()
         {
             if (FindAnyObjectByType<EventSystem>() != null)

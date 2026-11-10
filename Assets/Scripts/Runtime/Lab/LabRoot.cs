@@ -14,6 +14,9 @@ namespace Descender.Lab
         /// <summary>The lab that is built now, or null.</summary>
         public static LabRoot Current { get; private set; }
 
+        /// <summary>The painted look its lantern fruit wear; null for the placeholder circle.</summary>
+        public Enemies.LanternFruitLook FruitLook { get; set; }
+
         private List<Station> stations = new List<Station>();
         private readonly Dictionary<Station, Transform> parents = new Dictionary<Station, Transform>();
         private readonly HashSet<Station> visited = new HashSet<Station>();
