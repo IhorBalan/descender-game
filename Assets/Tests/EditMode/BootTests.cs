@@ -82,7 +82,7 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
-        public void TheLanternFruitLookIsWholeAndTheEntryScenesGiveItToTheLab()
+        public void TheLanternFruitLookAndSoundsAreWholeAndTheEntryScenesGiveItToTheLab()
         {
             const string path = "Assets/Data/Enemies/LanternFruitLook.asset";
             var look = AssetDatabase.LoadAssetAtPath<Enemies.LanternFruitLook>(path);
@@ -94,6 +94,9 @@ namespace Descender.Tests.EditMode
                 Assert.That(frames, Is.Not.Empty);
                 Assert.That(frames, Has.None.Null);
             }
+            var library = AssetDatabase.LoadAssetAtPath<Audio.SfxLibrary>("Assets/Data/SfxLibrary.asset");
+            Assert.That(library.Find("fruit_ripen"), Is.Not.Null, "no sound for it ripening");
+            Assert.That(library.Find("fruit_burst"), Is.Not.Null, "no sound for its burst");
             var guid = AssetDatabase.AssetPathToGUID(path);
             foreach (var scene in new[] { "Assets/Scenes/Main.unity", "Assets/Scenes/Paradise/ParadiseMain.unity" })
             {

@@ -29,6 +29,16 @@ namespace Descender.Enemies
         /// <summary>Falling at full speed it is this much longer (and half that much thinner).</summary>
         public const float FallStretch = 0.22f;
 
+        /// <summary>Squashed on landing: this much wider, and this much flatter.</summary>
+        public const float SquashWide = 0.4f;
+        public const float SquashFlat = 0.4f;
+
+        /// <summary>Its shadow at its darkest, and its width at its smallest and largest, in fruit widths.</summary>
+        public const float ShadowAlpha = 0.5f;
+        public const float ShadowSmall = 0.8f;
+        public const float ShadowLarge = 1.7f;
+        public static readonly Color ShadowColor = new Color(0.1f, 0.05f, 0.14f);
+
         /// <summary>The painted burst plays this much bigger than the fruit, growing to the second size.</summary>
         public const float BurstScale = 1.9f;
         public const float BurstScaleEnd = 2.3f;
@@ -53,6 +63,11 @@ namespace Descender.Enemies
         private LanternFruitBurst burst;
         private float effectScale = 1f;
         private LineRenderer stalk;
+        private SpriteRenderer shadow;
+        private bool hasGround;
+        private float groundY;
+        private float fallHeight = 1f;
+        private float shadowNow;
         private Vector2 anchor;
         private Phase phase = Phase.Hang;
         private float since;
@@ -72,6 +87,15 @@ namespace Descender.Enemies
 
         /// <summary>The flash, the ring, the motes, shards and seeds and the flare of its burst.</summary>
         public LanternFruitBurst BurstEffect => burst;
+
+        /// <summary>How dark and wide its shadow on the ground is, 0 (none) to 1 (it is about to land).</summary>
+        public float Shadow => shadowNow;
+
+        /// <summary>Where its shadow lies, in the world.</summary>
+        public Vector2 ShadowPoint => shadow != null ? (Vector2)shadow.transform.position : Vector2.zero;
+
+        /// <summary>How far it is squashed, 0 to 1.</summary>
+        public float Squash { get; private set; }
 
         /// <summary>How far it has ripened, 0 to 1: how much of the ripe look shows.</summary>
         public float Ripeness { get; private set; }
@@ -118,6 +142,9 @@ namespace Descender.Enemies
             effectNext.enabled = false;
             burst = LanternFruitBurst.Make(transform);
 
+            shadow = MakeRenderer(transform, "Shadow", LanternFruitBurst.SoftDisc, 1);
+            shadow.enabled = false;
+
             glow = MakeLight(transform, "Glow", LanternFruit.LightIntensity, LanternFruit.LightRadius);
 
             stalk = new GameObject("Stalk").AddComponent<LineRenderer>();
@@ -140,9 +167,24 @@ namespace Descender.Enemies
             anchor = branch;
         }
 
+        /// <summary>The ground beneath it is at `y`: its shadow lies there while it ripens and falls.</summary>
+        public void ShadowOn(float y)
+        {
+            hasGround = true;
+            groundY = y;
+            fallHeight = Mathf.Max(transform.position.y - size.y / 2f - y, 0.1f);
+        }
+
+        /// <summary>It landed: it flattens, its foot on the ground.</summary>
+        public void Squashing()
+        {
+            Enter(Phase.Squash);
+        }
+
         public void Hanging()
         {
             Enter(Phase.Hang);
+            Squash = 0f;
             visual.gameObject.SetActive(true);
             visual.localPosition = new Vector3(0f, -StemTop, 0f);
             sway.localScale = Vector3.one;
@@ -166,13 +208,13 @@ namespace Descender.Enemies
             visual.localPosition = new Vector3(0f, -StemTop, 0f);
         }
 
-        /// <summary>It burst on the ground at `ground` (the point under its middle).</summary>
-        public void Burst(Vector2 ground)
+        /// <summary>It burst at `ground` (the point under its middle): on the ground when `landed`, else on him.</summary>
+        public void Burst(Vector2 ground, bool landed = true)
         {
             Enter(Phase.Gone);
             visual.gameObject.SetActive(false);
             Play(look != null ? look.Burst : null, ground, BurstScale);
-            burst.Play(ground);
+            burst.Play(ground, landed);
         }
 
         /// <summary>A strike popped it at `at` (its middle).</summary>
@@ -186,6 +228,7 @@ namespace Descender.Enemies
         public void Growing()
         {
             Enter(Phase.Grow);
+            Squash = 0f;
             visual.gameObject.SetActive(true);
             visual.localPosition = new Vector3(0f, -StemTop, 0f);
             visual.localScale = Vector3.one;
@@ -236,6 +279,14 @@ namespace Descender.Enemies
                     );
                     visual.localScale = stretch;
                     break;
+                case Phase.Squash:
+                    var flat = 1f - Mathf.Clamp01(t / LanternFruit.SquashTime);
+                    Squash = 1f - flat * flat;
+                    var tall = 1f + Swell - SquashFlat * Squash;
+                    visual.localScale = new Vector3(1f + Swell + SquashWide * Squash, tall, 1f);
+                    // Flattened about its foot, not its middle.
+                    visual.localPosition = new Vector3(0f, -StemTop - (1f - tall) * size.y / 2f, 0f);
+                    break;
                 case Phase.Grow:
                     ShowGrowing(Mathf.Clamp01(t / LanternFruit.GrowTime));
                     break;
@@ -243,6 +294,7 @@ namespace Descender.Enemies
             sway.localRotation = Quaternion.Euler(0f, 0f, angle);
             glow.enabled = phase != Phase.Gone;
             UpdateEffect();
+            UpdateShadow(dt);
             DrawStalk();
         }
 
@@ -317,6 +369,46 @@ namespace Descender.Enemies
             effectRoot.localScale = Vector3.one * effectScale * Mathf.Lerp(0.92f, 0.92f * grow, eased);
         }
 
+        /// <summary>
+        /// Its shadow on the ground: faint as it ripens, darker and wider as it falls nearer,
+        /// so where it will land shows before it does; gone fast once it has.
+        /// </summary>
+        private void UpdateShadow(float dt)
+        {
+            if (!hasGround)
+            {
+                return;
+            }
+            var target = 0f;
+            var follow = false;
+            switch (phase)
+            {
+                case Phase.Ripen:
+                    target = 0.35f * Ripeness;
+                    break;
+                case Phase.Fall:
+                    var height = transform.position.y - size.y / 2f - groundY;
+                    target = Mathf.Lerp(0.35f, 1f, 1f - Mathf.Clamp01(height / fallHeight));
+                    follow = true;
+                    break;
+                case Phase.Squash:
+                    target = 1f;
+                    follow = true;
+                    break;
+            }
+            // It follows the fall at once, and eases in and out otherwise.
+            shadowNow = follow ? target : Mathf.Lerp(shadowNow, target, Ease(dt, 14f));
+            shadow.enabled = shadowNow > 0.01f;
+            if (!shadow.enabled)
+            {
+                return;
+            }
+            var width = size.x * Mathf.Lerp(ShadowSmall, ShadowLarge, shadowNow);
+            shadow.transform.position = new Vector3(transform.position.x, groundY + 0.02f, 0f);
+            shadow.transform.localScale = new Vector3(width, width * 0.25f, 1f);
+            shadow.color = new Color(ShadowColor.r, ShadowColor.g, ShadowColor.b, ShadowAlpha * shadowNow);
+        }
+
         private void SetRipe(float ripe)
         {
             Ripeness = ripe;
@@ -387,6 +479,7 @@ namespace Descender.Enemies
             Hang,
             Ripen,
             Fall,
+            Squash,
             Gone,
             Grow,
         }

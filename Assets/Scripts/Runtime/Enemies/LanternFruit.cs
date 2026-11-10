@@ -33,6 +33,12 @@ namespace Descender.Enemies
         public const float Gravity = 700f;
         public const float MaxFallSpeed = 320f;
 
+        /// <summary>Seconds it sits squashed on the ground before it bursts.</summary>
+        public const float SquashTime = 0.06f;
+
+        /// <summary>Seconds the game holds still on its burst.</summary>
+        public const float BurstHitStop = 0.07f;
+
         /// <summary>Damage when it lands on him, and when he is in its burst.</summary>
         public const int FallDamage = 1;
         public const int BurstDamage = 1;
@@ -73,6 +79,9 @@ namespace Descender.Enemies
         public bool IsRipening => state == State.Ripen;
 
         public bool IsFalling => state == State.Fall;
+
+        /// <summary>Landed and squashed flat, the moment before it bursts.</summary>
+        public bool IsSquashing => state == State.Squash;
 
         /// <summary>Burst or popped, and not yet growing back.</summary>
         public bool IsGone => state == State.Gone;
@@ -142,6 +151,12 @@ namespace Descender.Enemies
             var top = view.StemPoint;
             var hit = Physics2D.Raycast(top, Vector2.up, 20f, Layers.GroundMask);
             view.TieTo(hit.collider != null ? hit.point : top + Vector2.up);
+            // Its shadow falls on the first ground beneath it.
+            var below = Physics2D.Raycast(home, Vector2.down, 40f, Layers.GroundMask);
+            if (below.collider != null)
+            {
+                view.ShadowOn(below.point.y);
+            }
         }
 
         private void FixedUpdate()
@@ -165,6 +180,12 @@ namespace Descender.Enemies
                     break;
                 case State.Fall:
                     Fall(dt);
+                    break;
+                case State.Squash:
+                    if (stateLeft <= 0f)
+                    {
+                        Burst(body.position, true);
+                    }
                     break;
                 case State.Gone:
                     if (stateLeft <= 0f)
@@ -198,7 +219,7 @@ namespace Descender.Enemies
             state = State.Ripen;
             stateLeft = RipenTime;
             view.Ripening();
-            Audio.Sfx.Play("creak", -6f);
+            Audio.Sfx.Play("fruit_ripen", -4f);
         }
 
         private void LetGo()
@@ -229,27 +250,32 @@ namespace Descender.Enemies
             body.MovePosition(next);
             if (EnemyPhysics.HurtHero(next, size, FallDamage, next, hits))
             {
-                Burst(next);
+                Burst(next, false);
                 return;
             }
             if (landed)
             {
-                Burst(next);
+                // It flattens on the ground for a moment, then bursts.
+                state = State.Squash;
+                stateLeft = SquashTime;
+                FallSpeed = 0f;
+                view.Squashing();
             }
         }
 
         /// <summary>It bursts in a puff of light that hurts the hero if he is in it.</summary>
-        private void Burst(Vector2 at)
+        private void Burst(Vector2 at, bool landed)
         {
             Bursts++;
             EnemyPhysics.HurtHero(at, BurstSize / Ppu, BurstDamage, at, hits);
             Feedback.Puff(at, BurstColor);
             Feedback.Spark(at, BurstColor);
             Feedback.Shake(0.35f);
-            Audio.Sfx.Play("enemy_die", -4f);
+            Feedback.HitStop(BurstHitStop);
+            Audio.Sfx.Play("fruit_burst", -2f, 0.08f);
             Vanish();
             // Drawn from the ground under it.
-            view.Burst(at - new Vector2(0f, size.y / 2f));
+            view.Burst(at - new Vector2(0f, size.y / 2f), landed);
         }
 
         public bool Hit(int damage, Vector2 from)
@@ -301,6 +327,7 @@ namespace Descender.Enemies
             Hang,
             Ripen,
             Fall,
+            Squash,
             Gone,
             Grow,
         }

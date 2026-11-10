@@ -31,6 +31,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3c77e09ef12d5e678a06da6cd73850c8, type: 3}
   - name: enemy_die
     clip: {fileID: 8300000, guid: f7d8046386565dbfb08208c267ee9cdc, type: 3}
+  - name: fruit_burst
+    clip: {fileID: 8300000, guid: 767035b7a77953b4b4ac6e143c84ea83, type: 3}
+  - name: fruit_ripen
+    clip: {fileID: 8300000, guid: 3e3b0cba3aa053668fdddeb400de1640, type: 3}
   - name: heal
     clip: {fileID: 8300000, guid: e5e5cd75cb48596d95aea2da80b25e0d, type: 3}
   - name: hit

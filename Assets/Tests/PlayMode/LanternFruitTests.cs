@@ -276,20 +276,73 @@ namespace Descender.Tests.PlayMode
             var burst = fruit.View.BurstEffect;
             Assert.That(burst.IsPlaying, Is.False, "nothing before it bursts");
 
-            hero.PlaceAt(new Vector2(FruitX + 4f, Floor));
-            yield return null;
+            // He sets it off and steps aside, so it bursts on the ground.
             hero.PlaceAt(new Vector2(FruitX, Floor));
+            yield return probe.Until(() => fruit.IsFalling, 60);
+            hero.PlaceAt(new Vector2(FruitX + 4f, Floor));
             yield return probe.Until(() => fruit.IsGone, 300);
             Assert.That(fruit.IsGone, Is.True, "it fell and burst");
             yield return probe.Step();
             Assert.That(burst.Flashing, Is.True, "the flash");
+            Assert.That(burst.Stained, Is.True, "its juice splashes on the ground");
             var thrown = LanternFruitBurst.Motes + LanternFruitBurst.Shards + LanternFruitBurst.Seeds;
             Assert.That(burst.Particles, Is.EqualTo(thrown), "every mote, shard and seed is in the air");
 
-            var over = LanternFruitBurst.FlareTime + LanternFruitBurst.EmberTime + 0.3f;
-            yield return probe.Step(Steps(over));
+            yield return probe.Step(Steps(LanternFruitBurst.FlareTime + LanternFruitBurst.EmberTime + 0.3f));
             Assert.That(burst.Flashing, Is.False);
+            Assert.That(burst.Stained, Is.True, "the juice still glows after the flare");
+            var over = LanternFruitBurst.StainTime + 0.3f;
+            yield return probe.Step(Steps(over - (LanternFruitBurst.FlareTime + LanternFruitBurst.EmberTime + 0.3f)));
+            Assert.That(burst.Stained, Is.False, "and soaks away");
             Assert.That(burst.IsPlaying, Is.False, "all of it is over");
+            Assert.That(fruit.IsGone, Is.True, "before the fruit grows back");
+        }
+
+        [UnityTest]
+        public IEnumerator ItsShadowShowsWhereItWillLandDarkerAsItFallsAndItSquashesBeforeItBursts()
+        {
+            var piece = Hang(FruitX, Floor + 5f);
+            yield return Begin(new Vector2(4f, Floor));
+            var fruit = FruitAt(piece);
+            var view = fruit.View;
+            Assert.That(view.Shadow, Is.Zero, "no shadow while it hangs");
+
+            hero.PlaceAt(new Vector2(FruitX, Floor));
+            yield return probe.Until(() => fruit.IsFalling, 60);
+            Assert.That(view.Shadow, Is.GreaterThan(0f), "its shadow comes as it ripens");
+            Assert.That(view.ShadowPoint.x, Is.EqualTo(FruitX).Within(0.01f), "under it");
+            Assert.That(view.ShadowPoint.y, Is.EqualTo(Floor).Within(0.1f), "on the ground");
+            hero.PlaceAt(new Vector2(FruitX + 4f, Floor));
+            var early = view.Shadow;
+            yield return probe.Until(() => !fruit.IsFalling, 300);
+            Assert.That(fruit.IsSquashing, Is.True, "landed, it squashes first");
+            Assert.That(view.Shadow, Is.GreaterThan(early), "darker and wider the nearer it fell");
+            Assert.That(fruit.Bursts, Is.Zero, "not burst yet");
+            var squashed = 0;
+            while (fruit.IsSquashing && squashed < 20)
+            {
+                yield return null;
+                squashed++;
+            }
+            Assert.That(squashed, Is.EqualTo(Steps(LanternFruit.SquashTime)).Within(1), "for its moment");
+            Assert.That(view.Squash, Is.GreaterThan(0.5f), "flattened");
+            Assert.That(fruit.Bursts, Is.EqualTo(1), "then it bursts");
+            yield return probe.Step(10);
+            Assert.That(view.Shadow, Is.LessThan(0.5f), "and its shadow goes");
+        }
+
+        [UnityTest]
+        public IEnumerator BurstingOnHimItLeavesNoJuiceInTheAir()
+        {
+            var piece = Hang(FruitX, Floor + 5f);
+            yield return Begin(new Vector2(4f, Floor));
+            var fruit = FruitAt(piece);
+            hero.PlaceAt(new Vector2(FruitX, Floor));
+            yield return probe.Until(() => fruit.IsGone, 300);
+            Assert.That(fruit.Bursts, Is.EqualTo(1), "it burst on him");
+            yield return probe.Step();
+            Assert.That(fruit.View.BurstEffect.Flashing, Is.True, "with its flash");
+            Assert.That(fruit.View.BurstEffect.Stained, Is.False, "but no splash on his head");
         }
 
         [UnityTest]

@@ -183,6 +183,26 @@ def main():
         bubble[s0 : s0 + n] = sweep(f0, f1, 0.07) * env(n, 0.003, 0.06)
         splash = splash * 1.0 + bubble * 0.6
     write("sfx/splash.wav", splash * env(int(RATE * dur), 0.004, 0.28), 0.5)
+    # The lantern fruit: a glassy chime that swells and shivers as it ripens, and its
+    # burst, a bright pop over a low thump with a tail of glittering sparks.
+    dur = 0.5
+    shiver = 1.0 + 0.45 * sine(22, dur)
+    ripen = (sine(1318.5, dur) + 0.6 * sine(1975.5, dur) + 0.3 * sine(2637, dur)) * shiver
+    swell = np.linspace(0.0, 1.0, int(RATE * dur)) ** 1.5
+    write("sfx/fruit_ripen.wav", ripen * swell * env(int(RATE * dur), 0.01, 0.06, 0.42), 0.4)
+    dur = 0.9
+    n = int(RATE * dur)
+    thump = sweep(120, 38, dur, 0.5) * env(n, 0.002, 0.3) * 1.4
+    crack = (noise(dur) - lowpass(noise(dur), 0.4)) * env(n, 0.001, 0.05) * 1.6
+    glass = (sweep(2400, 1500, dur, 0.4) + 0.5 * sweep(3600, 2300, dur, 0.4)) * env(n, 0.001, 0.18) * 0.7
+    sparks = np.zeros(n)
+    for i in range(14):
+        at = int(RATE * (0.04 + rng.uniform(0.0, 0.6)))
+        m = int(RATE * 0.06)
+        f = rng.uniform(2000, 4200)
+        tone = sine(f, 0.06) * env(m, 0.001, 0.055) * (1.0 - at / n)
+        sparks[at : at + m] += tone[: n - at] * 0.35
+    write("sfx/fruit_burst.wav", thump + crack + glass + sparks, 0.85)
 
 
 if __name__ == "__main__":

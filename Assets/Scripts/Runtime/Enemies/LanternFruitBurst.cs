@@ -8,7 +8,8 @@ namespace Descender.Enemies
     /// The lantern fruit's burst, beyond its painted frames: a white-gold flash about as big
     /// as the burst that hurts, a faint shockwave ring sweeping out past it, a spray of
     /// glowing motes that drift up, peel shards and seeds thrown out and falling, and a flare
-    /// of light that leaves an ember glow on the ground. Made once per fruit and played
+    /// of light that leaves an ember glow on the ground, and a splash of glowing juice that
+    /// soaks into the floor while the fruit grows back. Made once per fruit and played
     /// where it bursts; everything it draws comes from code, nothing from an asset.
     /// </summary>
     public sealed class LanternFruitBurst : MonoBehaviour
@@ -18,6 +19,11 @@ namespace Descender.Enemies
         public const float RingTime = 0.5f;
         public const float FlareTime = 0.55f;
         public const float EmberTime = 1.6f;
+
+        /// <summary>Seconds the juice splash glows on the ground, and its size in units.</summary>
+        public const float StainTime = 3.5f;
+        public const float StainWidth = 2.8f;
+        public const float StainHeight = 0.55f;
 
         /// <summary>The flash grows to this many units across; about the hurting burst's width.</summary>
         public const float FlashSize = 3.2f;
@@ -43,6 +49,7 @@ namespace Descender.Enemies
         public static readonly Color MoteColor = new Color(1f, 0.9f, 0.55f);
         public static readonly Color ShardColor = new Color(0.98f, 0.9f, 0.72f);
         public static readonly Color SeedColor = new Color(0.95f, 0.7f, 0.3f);
+        public static readonly Color StainColor = new Color(1f, 0.82f, 0.4f);
 
         private static Texture2D discTexture;
         private static Texture2D ringTexture;
@@ -53,12 +60,16 @@ namespace Descender.Enemies
         private static Texture2D pillarTexture;
         private static Sprite pillarSprite;
         private static Sprite ringSprite;
+        private static Texture2D stainTexture;
+        private static Sprite stainSprite;
         private static Material moteMaterial;
         private static Material shardMaterial;
 
         private SpriteRenderer flash;
         private SpriteRenderer ring;
         private SpriteRenderer pillar;
+        private SpriteRenderer stain;
+        private bool stainOn;
         private Light2D flare;
         private ParticleSystem motes;
         private ParticleSystem shards;
@@ -77,6 +88,19 @@ namespace Descender.Enemies
         /// <summary>Whether the flash is showing.</summary>
         public bool Flashing => flash != null && flash.enabled;
 
+        /// <summary>Whether the juice splash is showing on the ground.</summary>
+        public bool Stained => stain != null && stain.enabled;
+
+        /// <summary>A soft white disc, brightest in its middle, one unit across.</summary>
+        public static Sprite SoftDisc
+        {
+            get
+            {
+                Prepare();
+                return discSprite;
+            }
+        }
+
         /// <summary>Makes its parts under `parent`; call once.</summary>
         public static LanternFruitBurst Make(Transform parent)
         {
@@ -94,6 +118,7 @@ namespace Descender.Enemies
             // Behind the ground it lands on, so it reads as a shockwave along the floor.
             ring = MakeSprite(ringSprite, "Ring", -1, 0.05f);
             pillar = MakeSprite(pillarSprite, "Pillar", 5, 0f);
+            stain = MakeSprite(stainSprite, "Stain", 4, 0f);
             var lightObject = new GameObject("Flare");
             lightObject.transform.SetParent(transform, false);
             lightObject.transform.localPosition = new Vector3(0f, 0.5f, 0f);
@@ -155,14 +180,16 @@ namespace Descender.Enemies
             Hide();
         }
 
-        /// <summary>Plays it with its foot at `ground`.</summary>
-        public void Play(Vector2 ground)
+        /// <summary>Plays it with its foot at `ground`; the juice splashes only when it `landed` on the ground.</summary>
+        public void Play(Vector2 ground, bool landed = true)
         {
             transform.position = ground;
             since = Time.time;
             flash.enabled = true;
             ring.enabled = true;
             pillar.enabled = true;
+            stainOn = landed;
+            stain.enabled = landed;
             flare.enabled = true;
             motes.Emit(Motes);
             shards.Emit(Shards);
@@ -205,6 +232,18 @@ namespace Descender.Enemies
             );
             pillar.color = new Color(FlashColor.r, FlashColor.g, FlashColor.b, (1f - p));
 
+            // The juice: splashed out in a blink, then glowing as it soaks away, with a slow flicker.
+            var s = Mathf.Clamp01(t / StainTime);
+            stain.enabled = stainOn && s < 1f;
+            var spread = OutCubic(Mathf.Clamp01(t / 0.15f));
+            stain.transform.localScale = new Vector3(
+                StainWidth * Mathf.Lerp(0.35f, 1f, spread) * (1f - 0.1f * s),
+                StainHeight * Mathf.Lerp(0.6f, 1f, spread),
+                1f
+            );
+            var soak = Mathf.Pow(1f - s, 1.5f) * (0.92f + 0.08f * Mathf.Sin(t * 9f));
+            stain.color = new Color(StainColor.r, StainColor.g, StainColor.b, 0.9f * soak);
+
             // The flare, then an ember glow that dies slowly on the ground.
             if (t < FlareTime)
             {
@@ -218,9 +257,13 @@ namespace Descender.Enemies
                 flare.intensity = EmberIntensity * (1f - e) * (1f - e);
                 flare.pointLightOuterRadius = EmberRadius;
             }
-            else
+            else if (s >= 1f)
             {
                 Hide();
+            }
+            else
+            {
+                flare.enabled = false;
             }
         }
 
@@ -230,6 +273,7 @@ namespace Descender.Enemies
             flash.enabled = false;
             ring.enabled = false;
             pillar.enabled = false;
+            stain.enabled = false;
             flare.enabled = false;
         }
 
@@ -362,6 +406,13 @@ namespace Descender.Enemies
                 );
                 ringSprite = Sprite.Create(ringTexture, new Rect(0, 0, 128, 128), new Vector2(0.5f, 0.5f), 128f);
             }
+            if (stainTexture == null)
+            {
+                // A splash: a ragged blob, brightest in its middle, with droplets thrown out to the sides.
+                stainTexture = Draw(128, 48, Splash);
+                // Its foot a little below the floor's top, so most of it lies on the floor.
+                stainSprite = Sprite.Create(stainTexture, new Rect(0, 0, 128, 48), new Vector2(0.5f, 0.4f), 128f);
+            }
             if (shardTexture == null)
             {
                 // A curled sliver of peel: a soft lens, brighter along its middle.
@@ -379,6 +430,34 @@ namespace Descender.Enemies
                     mainTexture = shardTexture,
                 };
             }
+        }
+
+        /// <summary>The splash's droplets: x, y from -1 to 1 across it, and a radius in its height.</summary>
+        private static readonly Vector3[] Droplets =
+        {
+            new Vector3(0.8f, -0.1f, 0.09f),
+            new Vector3(-0.84f, 0.15f, 0.08f),
+            new Vector3(0.93f, 0.35f, 0.05f),
+            new Vector3(-0.72f, -0.45f, 0.06f),
+            new Vector3(0.66f, 0.5f, 0.05f),
+            new Vector3(-0.95f, -0.1f, 0.04f),
+        };
+
+        private static float Splash(float x, float y)
+        {
+            var r = Mathf.Sqrt(x * x + y * y);
+            var a = Mathf.Atan2(y, x);
+            var edge = 0.58f + 0.09f * Mathf.Sin(5f * a + 1.3f) + 0.05f * Mathf.Sin(11f * a + 0.4f);
+            var blob = Mathf.Clamp01((edge - r) / 0.1f) * (0.55f + 0.45f * Mathf.Clamp01(1f - r / edge));
+            foreach (var drop in Droplets)
+            {
+                // The texture is wider than tall: measure the droplets round in pixels.
+                var dx = (x - drop.x) * 128f / 48f;
+                var dy = y - drop.y;
+                var d = Mathf.Sqrt(dx * dx + dy * dy);
+                blob = Mathf.Max(blob, Mathf.Clamp01((drop.z * 2f - d) / 0.06f) * 0.8f);
+            }
+            return blob;
         }
 
         /// <summary>A white texture whose alpha is `alpha` at x, y from -1 to 1 across it.</summary>
