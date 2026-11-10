@@ -215,7 +215,7 @@ hygiene as each production region lands.
 | T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
 | T-0011 | The scripted run of the Paradise main path | done | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
 | T-0012 | The story is parked behind one switch, with a pointer file | done | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
-| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | in review | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | |
+| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | in review | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
 | T-0014 | Triggers as data: conditions and actions, items as shapes | approved | 14 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0015 | Camera zones | approved | 15 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
