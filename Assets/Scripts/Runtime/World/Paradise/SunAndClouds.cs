@@ -59,8 +59,29 @@ namespace Descender.World.Paradise
         [SerializeField]
         private Transform skyLights;
 
+        [Tooltip(
+            "The sun through a canopy of leaves (type Sprite, built like the sun): flecks of light instead of cloud shadow, as strong as the sun where they fall. ZoneLook.Canopy fades it in as the sun fades out."
+        )]
+        [SerializeField]
+        private Light2D flecks;
+
+        [Tooltip("One period of the flecks' pattern, in units.")]
+        [SerializeField]
+        private Vector2 fleckPeriod = new Vector2(24f, 12f);
+
+        [Tooltip("How much of the ground the flecks light (0 to 1).")]
+        [SerializeField, Range(0f, 1f)]
+        private float fleckCover = 0.3f;
+
+        [Tooltip("How far the flecks waver as the leaves stir, in units, and how fast (cycles a second).")]
+        [SerializeField]
+        private Vector2 fleckSway = new Vector2(0.14f, 0.35f);
+
         private static Sprite cookie;
+        private static Sprite fleckCookie;
         private Vector2 offset;
+        private Vector2 fleckOffset;
+        private float sunIntensity;
 
         /// <summary>The share of the light the sky's fill keeps: 1 without a sun.</summary>
         public static float SkyShare { get; private set; } = 1f;
@@ -84,10 +105,35 @@ namespace Descender.World.Paradise
             sun.lightCookieSprite = Cookie(cover, period);
             sun.color = sunColor;
             // A flat surface faces the viewer and catches SunDirection.z of the light.
-            sun.intensity = sunShare / SunDirection.z;
+            sunIntensity = sunShare / SunDirection.z;
+            sun.intensity = sunIntensity;
             // The sprite holds two periods each way, so it covers the view wherever it wraps.
             var size = sun.lightCookieSprite.bounds.size;
             sun.transform.localScale = new Vector3(period.x * 2f / size.x, period.y * 2f / size.y, 1f);
+            if (flecks != null)
+            {
+                flecks.lightCookieSprite = FleckCookie(fleckCover, fleckPeriod);
+                flecks.color = sunColor;
+                flecks.intensity = 0f;
+                flecks.enabled = false;
+                var fleckSize = flecks.lightCookieSprite.bounds.size;
+                flecks.transform.localScale = new Vector3(
+                    fleckPeriod.x * 2f / fleckSize.x,
+                    fleckPeriod.y * 2f / fleckSize.y,
+                    1f
+                );
+            }
+        }
+
+        /// <summary>
+        /// How the sun's light splits between open sky and the canopy's flecks under a canopy
+        /// that closes `canopy` of the sky: the cloud-shadowed sun's intensity and the flecks'.
+        /// A fleck is the full sun where it falls, so the two are each a share of the same sun.
+        /// </summary>
+        public static Vector2 SunThroughCanopy(float sunIntensity, float canopy)
+        {
+            canopy = Mathf.Clamp01(canopy);
+            return new Vector2(sunIntensity * (1f - canopy), sunIntensity * canopy);
         }
 
         private void LateUpdate()
@@ -113,6 +159,36 @@ namespace Descender.World.Paradise
             {
                 skyLights.position = new Vector3(c.x, c.y, 0f);
             }
+            // Under a canopy the sun comes through only in flecks; each light is off when it
+            // gives nothing, so open sky costs no more than before.
+            var split = SunThroughCanopy(sunIntensity, flecks != null ? ZoneLook.Canopy : 0f);
+            sun.intensity = split.x;
+            sun.enabled = split.x > 0.001f;
+            if (flecks == null)
+            {
+                return;
+            }
+            flecks.intensity = split.y;
+            flecks.enabled = split.y > 0.001f;
+            if (!flecks.enabled)
+            {
+                return;
+            }
+            // The flecks drift with the clouds' breeze, slower, and waver as the leaves stir.
+            fleckOffset += drift * 0.25f * Time.deltaTime;
+            fleckOffset = new Vector2(
+                Mathf.Repeat(fleckOffset.x, fleckPeriod.x),
+                Mathf.Repeat(fleckOffset.y, fleckPeriod.y)
+            );
+            var t = Time.time * fleckSway.y * Mathf.PI * 2f;
+            var stir =
+                new Vector2(Mathf.Sin(t) + 0.4f * Mathf.Sin(t * 2.3f + 1f), 0.5f * Mathf.Sin(t * 0.7f + 2f))
+                * fleckSway.x;
+            flecks.transform.position = new Vector3(
+                Centre(c.x, fleckOffset.x, fleckPeriod.x) + far.x + stir.x,
+                Centre(c.y, fleckOffset.y, fleckPeriod.y) + far.y + stir.y,
+                0f
+            );
         }
 
         /// <summary>
@@ -126,18 +202,103 @@ namespace Descender.World.Paradise
         /// <summary>The cloud pattern: soft-edged shadows (dark) in sun (white), two periods each way.</summary>
         private static Sprite Cookie(float cover, Vector2 period)
         {
-            if (cookie != null)
+            if (cookie == null)
             {
-                return cookie;
+                var threshold = Mathf.Lerp(0.75f, 0.25f, cover);
+                cookie = Pattern(
+                    "Cloud shadows",
+                    period,
+                    (u, v) =>
+                        1f
+                        - Mathf.SmoothStep(
+                            0f,
+                            1f,
+                            Mathf.InverseLerp(threshold - 0.12f, threshold + 0.12f, Fbm(u, v, 2))
+                        )
+                );
             }
+            return cookie;
+        }
+
+        /// <summary>
+        /// The sun through leaves: soft flecks of light (white) in the canopy's shade (black), two
+        /// periods each way. Sunflecks are little round images of the sun, soft at the edge: a few
+        /// broad ones and many small, gathered where the leaves are thinnest (a broad mask).
+        /// </summary>
+        private static Sprite FleckCookie(float cover, Vector2 period)
+        {
+            if (fleckCookie == null)
+            {
+                fleckCookie = Pattern("Leaf flecks", period, (u, v) => Fleck(u, v, cover));
+            }
+            return fleckCookie;
+        }
+
+        /// <summary>How lit the flecks' pattern is at (u, v), in periods: 0 shade to 1 full sun.</summary>
+        public static float Fleck(float u, float v, float cover)
+        {
+            // `cover` opens the canopy's thin places wider (0.3 lights about a tenth of the ground).
+            var open = Mathf.Lerp(0.55f, 0.3f, cover);
+            var gaps = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(open, open + 0.26f, Fbm(u, v, 2)));
+            var broad = Discs(u, v, 8, 4, 0.2f, 0.42f, 0.45f, 10);
+            var small = Discs(u, v, 22, 11, 0.14f, 0.34f, 0.3f, 20);
+            return Mathf.Max(broad * gaps, small * Mathf.Clamp01(gaps * 1.3f));
+        }
+
+        /// <summary>
+        /// Soft discs scattered one to a cell on a grid of nx by ny cells a period (some cells
+        /// empty), each its own size and brightness, a little wider than tall; tiles on the period.
+        /// </summary>
+        private static float Discs(float u, float v, int nx, int ny, float rMin, float rMax, float keepAbove, int salt)
+        {
+            var gx = u * nx;
+            var gy = v * ny;
+            var cx = Mathf.FloorToInt(gx);
+            var cy = Mathf.FloorToInt(gy);
+            var best = 0f;
+            for (var dx = -1; dx <= 1; dx++)
+            {
+                for (var dy = -1; dy <= 1; dy++)
+                {
+                    var ix = cx + dx;
+                    var iy = cy + dy;
+                    if (Cell(ix, iy, nx, ny, salt + 4) <= keepAbove)
+                    {
+                        continue;
+                    }
+                    var px = ix + 0.2f + 0.6f * Cell(ix, iy, nx, ny, salt + 1);
+                    var py = iy + 0.2f + 0.6f * Cell(ix, iy, nx, ny, salt + 2);
+                    var r = Mathf.Lerp(rMin, rMax, Cell(ix, iy, nx, ny, salt + 3));
+                    var ex = (gx - px) / 1.3f;
+                    var ey = gy - py;
+                    var d = Mathf.Sqrt(ex * ex + ey * ey);
+                    var spot = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(r, r * 0.3f, d));
+                    best = Mathf.Max(best, spot * (0.6f + 0.4f * Cell(ix, iy, nx, ny, salt + 5)));
+                }
+            }
+            return best;
+        }
+
+        /// <summary>A number from 0 to 1 for a cell, the same for the cell a period on either way.</summary>
+        private static float Cell(int x, int y, int nx, int ny, int salt)
+        {
+            x = ((x % nx) + nx) % nx;
+            y = ((y % ny) + ny) % ny;
+            var h = (uint)(x * 374761393 + y * 668265263 + salt * 1013904223 + nx * 2147483647);
+            h = (h ^ (h >> 13)) * 1274126177u;
+            return ((h ^ (h >> 16)) & 0xffffff) / (float)0xffffff;
+        }
+
+        /// <summary>A tiling light pattern, two periods each way, as a sprite pinned back along the sun.</summary>
+        private static Sprite Pattern(string name, Vector2 period, System.Func<float, float, float> lit)
+        {
             var texture = new Texture2D(CookieWidth, CookieHeight, TextureFormat.RGBA32, false)
             {
                 wrapMode = TextureWrapMode.Clamp,
                 filterMode = FilterMode.Bilinear,
-                name = "Cloud shadows",
+                name = name,
             };
             var pixels = new Color32[CookieWidth * CookieHeight];
-            var threshold = Mathf.Lerp(0.75f, 0.25f, cover);
             for (var y = 0; y < CookieHeight; y++)
             {
                 for (var x = 0; x < CookieWidth; x++)
@@ -145,15 +306,13 @@ namespace Descender.World.Paradise
                     // One period is half the texture each way; the noise repeats on it exactly.
                     var u = x / (float)(CookieWidth / 2);
                     var v = y / (float)(CookieHeight / 2);
-                    var n = Fbm(u, v);
-                    var shade = Mathf.SmoothStep(0f, 1f, Mathf.InverseLerp(threshold - 0.12f, threshold + 0.12f, n));
-                    var b = (byte)Mathf.RoundToInt(255f * (1f - shade));
+                    var b = (byte)Mathf.RoundToInt(255f * Mathf.Clamp01(lit(u, v)));
                     pixels[y * CookieWidth + x] = new Color32(b, b, b, 255);
                 }
             }
             texture.SetPixels32(pixels);
             texture.Apply(false, true);
-            cookie = Sprite.Create(
+            var sprite = Sprite.Create(
                 texture,
                 new Rect(0f, 0f, CookieWidth, CookieHeight),
                 // The picture lies back along the sun's direction from the light's own
@@ -162,16 +321,19 @@ namespace Descender.World.Paradise
                     + Vector2.Scale((Vector2)SunDirection * SunDistance, new Vector2(0.5f / period.x, 0.5f / period.y)),
                 CookieWidth / 4f
             );
-            cookie.name = "Cloud shadows";
-            return cookie;
+            sprite.name = name;
+            return sprite;
         }
 
-        /// <summary>Fractal noise that tiles on whole numbers of u and v: soft cumulus-shaped patches.</summary>
-        private static float Fbm(float u, float v)
+        /// <summary>
+        /// Fractal noise that tiles on whole numbers of u and v, from `first` cells a period up:
+        /// at 2, soft cumulus-shaped patches; at 16, fine grain.
+        /// </summary>
+        private static float Fbm(float u, float v, int first)
         {
             var sum = 0f;
             var amplitude = 0.5f;
-            var frequency = 2;
+            var frequency = first;
             for (var octave = 0; octave < 4; octave++)
             {
                 sum += amplitude * TileNoise(u * frequency, v * frequency, frequency);

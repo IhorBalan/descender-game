@@ -35,6 +35,23 @@ namespace Descender.World.Paradise
         [SerializeField]
         private Color ambient = Color.white;
 
+        [Tooltip(
+            "How much of the sky a canopy of leaves closes over this zone (0 open, 1 closed): the sun comes through only in flecks (SunAndClouds) and the sky's fill is dimmer."
+        )]
+        [SerializeField, Range(0f, 1f)]
+        private float canopy;
+
+        [Tooltip("Where the canopy runs (x from, to), and over how many units either end it opens out.")]
+        [SerializeField]
+        private Vector3 canopySpan;
+
+        [Tooltip("The canopy's own layers (the roof of leaves), faded with it rather than with the zone.")]
+        [SerializeField]
+        private Transform[] canopyLayers = new Transform[0];
+
+        private readonly List<SpriteRenderer> canopyRenderers = new List<SpriteRenderer>();
+        private readonly List<BackdropLayer> canopyBackdrops = new List<BackdropLayer>();
+
         [SerializeField]
         private Volume volume;
 
@@ -51,6 +68,22 @@ namespace Descender.World.Paradise
 
         public int Zone => zone;
         public Color Ambient => ambient;
+
+        /// <summary>How much of the sky the canopy closes where the camera is now, mixed across zone borders.</summary>
+        public static float Canopy { get; private set; }
+
+        /// <summary>How much of the sky's fill a closed canopy keeps out (the sun's share goes to its flecks).</summary>
+        public const float CanopyShade = 0.32f;
+
+        /// <summary>How far the roof of leaves rises out of the view where the canopy has opened right out.</summary>
+        public const float CanopyLiftUnits = 6f;
+
+        /// <summary>How far the roof is raised with the canopy at `roof` of its cover: 0 closed, all the way open.</summary>
+        public static float CanopyLift(float roof)
+        {
+            var open = 1f - Mathf.Clamp01(roof);
+            return CanopyLiftUnits * open * open * (3f - 2f * open);
+        }
 
         public void Configure(
             int number,
@@ -69,6 +102,34 @@ namespace Descender.World.Paradise
             volume = zoneVolume;
             sky = skyLayer;
             layers = otherLayers;
+        }
+
+        /// <summary>
+        /// Closes `cover` of the sky with a canopy from x `from` to `to`, opening out over `ramp`
+        /// units either end; for editor tools.
+        /// </summary>
+        public void SetCanopy(float cover, float from, float to, float ramp, Transform[] layersOfIt = null)
+        {
+            canopy = cover;
+            canopySpan = new Vector3(from, to, Mathf.Max(0.1f, ramp));
+            canopyLayers = layersOfIt ?? new Transform[0];
+        }
+
+        /// <summary>How much of the sky this zone's canopy closes with the camera at x.</summary>
+        public float CanopyAt(float x) =>
+            canopy <= 0f ? 0f : canopy * Weight(x, canopySpan.x, canopySpan.y, canopySpan.z);
+
+        /// <summary>The canopy's cover mixed from each zone's by its share of the look (weights by zone).</summary>
+        public static float MixCanopy(IReadOnlyList<(float weight, float cover)> zones)
+        {
+            var sum = 0f;
+            var mixed = 0f;
+            foreach (var (weight, cover) in zones)
+            {
+                sum += weight;
+                mixed += weight * cover;
+            }
+            return sum > 0.001f ? mixed / sum : 0f;
         }
 
         /// <summary>This zone's share of the look with the camera at x: 1 inside, a ramp across each edge.</summary>
@@ -105,6 +166,10 @@ namespace Descender.World.Paradise
         private void OnDisable()
         {
             Active.Remove(this);
+            if (Active.Count == 0)
+            {
+                Canopy = 0f;
+            }
         }
 
         private void LateUpdate()
@@ -155,11 +220,38 @@ namespace Descender.World.Paradise
                         renderers.AddRange(layer.GetComponentsInChildren<SpriteRenderer>(true));
                     }
                 }
+                canopyRenderers.Clear();
+                canopyBackdrops.Clear();
+                foreach (var layer in canopyLayers)
+                {
+                    if (layer != null)
+                    {
+                        canopyRenderers.AddRange(layer.GetComponentsInChildren<SpriteRenderer>(true));
+                        if (layer.TryGetComponent<BackdropLayer>(out var backdrop))
+                        {
+                            canopyBackdrops.Add(backdrop);
+                        }
+                    }
+                }
                 refreshLeft = 0.5f;
             }
             foreach (var r in renderers)
             {
                 SetAlpha(r, weight);
+            }
+            // Where the canopy ends the roof of leaves draws back up out of the view, as walking out
+            // from under trees, rather than fading where it hangs (a ghost of leaves over the sky);
+            // it fades only once it is nearly gone.
+            var roof = canopy > 0f ? weight * CanopyAt(x) / canopy : 0f;
+            var lift = CanopyLift(roof);
+            foreach (var backdrop in canopyBackdrops)
+            {
+                backdrop.SetLift(lift);
+            }
+            var shown = Mathf.Clamp01(roof * 4f);
+            foreach (var r in canopyRenderers)
+            {
+                SetAlpha(r, shown);
             }
             if (sky != null)
             {
@@ -188,24 +280,31 @@ namespace Descender.World.Paradise
 
         private static void MixAmbient(float x)
         {
-            var streamer = WorldStreamer.Instance;
-            if (streamer == null || streamer.GlobalLight == null || streamer.AmbientFading)
-            {
-                return;
-            }
             var sum = 0f;
             var mixed = Color.black;
+            Covers.Clear();
             foreach (var look in Active)
             {
                 var w = look.WeightAt(x);
                 sum += w;
                 mixed += look.ambient * w;
+                Covers.Add((w, look.CanopyAt(x)));
+            }
+            // The canopy is mixed even while the ambient fades in, so the sun's flecks never jump.
+            Canopy = MixCanopy(Covers);
+            var streamer = WorldStreamer.Instance;
+            if (streamer == null || streamer.GlobalLight == null || streamer.AmbientFading)
+            {
+                return;
             }
             if (sum > 0.001f)
             {
-                // With a sun overhead (SunAndClouds) the global light is only the sky's fill.
-                streamer.GlobalLight.color = mixed / sum * SunAndClouds.SkyShare;
+                // With a sun overhead (SunAndClouds) the global light is only the sky's fill,
+                // and under a canopy less of the sky reaches the ground.
+                streamer.GlobalLight.color = mixed / sum * SunAndClouds.SkyShare * (1f - Canopy * CanopyShade);
             }
         }
+
+        private static readonly List<(float weight, float cover)> Covers = new List<(float, float)>();
     }
 }

@@ -44,6 +44,14 @@ intensity and its glass by about 8%. They are a few per zone, so they stay
 well inside the budget of 12 lit point lights per screen
 (docs/design/paradise.md); keep new accent lights to the same budget.
 
+Paradise's sun (`SunAndClouds`) is two sprite lights over the view: `Sun`,
+seen through drifting cloud shadows, and `Flecks`, the same sun through a
+canopy of leaves (soft sunflecks). `ZoneLook.Canopy` (a zone's canopy,
+mixed across borders) moves the sun's share from one to the other and dims
+the sky's fill by `ZoneLook.CanopyShade`; each light is off when it gives
+nothing, so open sky costs no more. Zone 2's canopy runs over the layout's
+`CanopyRoof`, with its roof of leaves as two pinned backdrop bands.
+
 ## Materials and normal maps
 
 - Sprites use `Universal Render Pipeline/2D/Sprite-Lit-Default`

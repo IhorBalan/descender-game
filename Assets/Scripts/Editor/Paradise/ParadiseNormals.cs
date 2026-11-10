@@ -168,7 +168,7 @@ namespace Descender.EditorTools.Paradise
             {
                 rig = root.AddComponent<SunAndClouds>();
             }
-            foreach (var old in new[] { "Sun", "SkyLights" })
+            foreach (var old in new[] { "Sun", "SkyLights", "Flecks" })
             {
                 var found = root.transform.Find(old);
                 if (found != null)
@@ -182,6 +182,13 @@ namespace Descender.EditorTools.Paradise
             sun.lightType = Light2D.LightType.Sprite;
             sun.blendStyleIndex = 0;
             FaceNormals(sun, SunAndClouds.SunDirection.z * SunAndClouds.SunDistance);
+            // The same sun seen through a canopy of leaves, in flecks (off in the open).
+            var flecksObject = new GameObject("Flecks");
+            flecksObject.transform.SetParent(root.transform, false);
+            var flecks = flecksObject.AddComponent<Light2D>();
+            flecks.lightType = Light2D.LightType.Sprite;
+            flecks.blendStyleIndex = 0;
+            FaceNormals(flecks, SunAndClouds.SunDirection.z * SunAndClouds.SunDistance);
 
             var sky = new GameObject("SkyLights").transform;
             sky.SetParent(root.transform, false);
@@ -192,6 +199,7 @@ namespace Descender.EditorTools.Paradise
 
             var settings = new SerializedObject(rig);
             settings.FindProperty("sun").objectReferenceValue = sun;
+            settings.FindProperty("flecks").objectReferenceValue = flecks;
             settings.FindProperty("skyLights").objectReferenceValue = sky;
             settings.FindProperty("sunShare").floatValue = 0.4f;
             settings.FindProperty("skyLightShare").floatValue = bounce + rim;

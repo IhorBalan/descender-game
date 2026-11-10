@@ -52,6 +52,17 @@ namespace Descender.World
 
         private readonly List<SpriteRenderer> copies = new List<SpriteRenderer>(); // the extra copies, children
         private SpriteRenderer first;
+        private float lift;
+
+        /// <summary>
+        /// Raises the layer by `units` over where it would sit (a roof of leaves drawing back up
+        /// out of the view where the canopy ends); 0 puts it back.
+        /// </summary>
+        public void SetLift(float units)
+        {
+            lift = units;
+        }
+
         private Vector3 anchor;
         private Vector3 restScale;
         private float time;
@@ -90,7 +101,7 @@ namespace Descender.World
             // The layer drifts by the share of the camera's travel it does not
             // follow, measured from its anchor, plus its own motion.
             var origin = anchor + Vector3.Scale(at - anchor, new Vector3(1f - scroll.x, 1f - scroll.y, 0f));
-            origin += (Vector3)Motion() + (Vector3)viewOffset;
+            origin += (Vector3)Motion() + (Vector3)viewOffset + Vector3.up * lift;
             // Copies sit a sprite's local size apart; on screen that is scaled by the layer.
             var world = Vector3.Scale(size, transform.lossyScale);
             var left = at.x - half.x;
