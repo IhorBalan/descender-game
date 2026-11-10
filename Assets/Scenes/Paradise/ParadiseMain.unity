@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 103}
   - component: {fileID: 104}
   - component: {fileID: 106}
-  - component: {fileID: 105}
   - component: {fileID: 107}
   - component: {fileID: 108}
   - component: {fileID: 109}
@@ -186,9 +185,9 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0
-    y: 0.125
+    y: 0
     width: 1
-    height: 0.75000006
+    height: 1
   near clip plane: 0.3
   far clip plane: 100
   field of view: 60
@@ -235,30 +234,6 @@ MonoBehaviour:
   verticalDeadZonePixels: 20
   framing: {x: 0, y: 1.25}
   snapToPixelGrid: 0
---- !u!114 &105
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 100}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
-  m_ComponentVersion: 1
-  m_AssetsPPU: 16
-  m_RefResolutionX: 320
-  m_RefResolutionY: 180
-  m_CropFrame: 3
-  m_GridSnapping: 0
-  m_FilterMode: 0
-  m_UpscaleRT: 0
-  m_PixelSnapping: 0
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
 --- !u!114 &106
 MonoBehaviour:
   m_ObjectHideFlags: 0

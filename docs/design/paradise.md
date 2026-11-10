@@ -38,7 +38,7 @@ space; the fight is added with the enemies.
 | Straight run, side to side, no stops | **~20 min** |
 | Run speed | 100 px/s = 6.25 tiles/s |
 | Width | **7,500 tiles** (120,000 level px, 7,500 Unity units) |
-| One screen | 20 x 11.25 tiles (Pixel Perfect Camera, 320 x 180 at 16 px/tile) |
+| One screen | 20 x 11.25 tiles (the camera's own size, 5.625 units; 320 x 180 at 16 px/tile) |
 | Width in screens | ~375 |
 | Height | **120 rows** (the prototype has 51): canopy above, roots below |
 | Play time, first visit | ~2 h with exploration, side paths and story |

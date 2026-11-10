@@ -102,6 +102,13 @@ namespace Descender.World
             // follow, measured from its anchor, plus its own motion.
             var origin = anchor + Vector3.Scale(at - anchor, new Vector3(1f - scroll.x, 1f - scroll.y, 0f));
             origin += (Vector3)Motion() + (Vector3)viewOffset + Vector3.up * lift;
+            // Pinned to the view, it is painted for the view: while the camera zooms (pulled back
+            // at a landmark) it grows about the view's middle with it, so it looks the same on
+            // screen and its edges never come into sight.
+            var zoom = PinnedZoom(scroll, camera.Zoom);
+            origin = at + (origin - at) * zoom;
+            origin.z = transform.position.z;
+            transform.localScale = new Vector3(restScale.x * zoom, restScale.y * zoom, restScale.z);
             // Copies sit a sprite's local size apart; on screen that is scaled by the layer.
             var world = Vector3.Scale(size, transform.lossyScale);
             var left = at.x - half.x;
@@ -140,6 +147,14 @@ namespace Descender.World
                 copies[i].enabled = false;
             }
         }
+
+        /// <summary>
+        /// How much a layer grows with the camera's zoom: a layer pinned to the view (scroll.y
+        /// 0) by all of it, so it keeps its look on screen; one that scrolls with the level not
+        /// at all.
+        /// </summary>
+        public static float PinnedZoom(Vector2 scroll, float cameraZoom) =>
+            Mathf.Approximately(scroll.y, 0f) ? Mathf.Max(cameraZoom, 0.01f) : 1f;
 
         private Vector2 Motion()
         {

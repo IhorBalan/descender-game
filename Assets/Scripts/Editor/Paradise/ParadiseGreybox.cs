@@ -319,7 +319,101 @@ namespace Descender.EditorTools.Paradise
             AssetDatabase.SaveAssets();
             EnsureEntryScene(AssetDatabase.LoadAssetAtPath<WorldAtlas>(AtlasPath));
             AddToBuild(zones);
+            SyncCameras(zones);
             AssetDatabase.SaveAssets();
+        }
+
+        /// <summary>Syncs every built zone's camera (see SyncCameras), without rebuilding a zone; for batch mode.</summary>
+        [MenuItem("Descender/Paradise/Sync the zones' camera (joined rooms, moments)")]
+        public static void SyncZoneCameras()
+        {
+            SyncCameras(ParadiseLayout.All());
+        }
+
+        /// <summary>
+        /// Brings each built zone's camera in line with the layout without rebuilding it:
+        /// its rooms joined (Paradise's zones are one continuous land, so the camera keeps
+        /// to them all as one and never stops at a border) and its camera moments as the
+        /// layout has them. A scene that already matches is left untouched.
+        /// </summary>
+        private static void SyncCameras(List<ParadiseLayout.Zone> zones)
+        {
+            foreach (var zone in zones)
+            {
+                var path = ScenePath(zone);
+                if (!File.Exists(path))
+                {
+                    continue;
+                }
+                var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+                var changed = false;
+                foreach (
+                    var room in scene.GetRootGameObjects().SelectMany(r => r.GetComponentsInChildren<WorldRoom>(true))
+                )
+                {
+                    var serialized = new SerializedObject(room);
+                    var joined = serialized.FindProperty("joined");
+                    if (!joined.boolValue)
+                    {
+                        joined.boolValue = true;
+                        serialized.ApplyModifiedPropertiesWithoutUndo();
+                        changed = true;
+                    }
+                }
+                var root = System.Array.Find(scene.GetRootGameObjects(), r => r.name == $"Zone{zone.number}");
+                if (root != null && !MomentsMatch(root.transform, zone))
+                {
+                    var old = root.transform.Find(MomentsGroup);
+                    if (old != null)
+                    {
+                        Object.DestroyImmediate(old.gameObject);
+                    }
+                    if (zone.moments.Count > 0)
+                    {
+                        var group = Group(root.transform, MomentsGroup);
+                        foreach (var moment in zone.moments)
+                        {
+                            BuildMoment(moment, group);
+                        }
+                    }
+                    changed = true;
+                }
+                if (changed)
+                {
+                    EditorSceneManager.SaveScene(scene);
+                }
+                EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
+        /// <summary>Whether a zone root's camera moments are the layout's, one for one.</summary>
+        private static bool MomentsMatch(Transform root, ParadiseLayout.Zone zone)
+        {
+            var group = root.Find(MomentsGroup);
+            var built =
+                group != null ? group.GetComponentsInChildren<CameraRig.CameraZone>(true) : new CameraRig.CameraZone[0];
+            if (built.Length != zone.moments.Count)
+            {
+                return false;
+            }
+            for (var i = 0; i < built.Length; i++)
+            {
+                var moment = zone.moments[i];
+                var camera = built[i];
+                var size = new SerializedObject(camera).FindProperty("size").vector2Value;
+                if (
+                    camera.name != moment.name
+                    || (Vector2)camera.transform.position != moment.area.center
+                    || size != moment.area.size
+                    || camera.Framing != moment.framing
+                    || !Mathf.Approximately(camera.Zoom, moment.zoom)
+                    || !Mathf.Approximately(camera.BlendTime, moment.blend)
+                )
+                {
+                    return false;
+                }
+            }
+            return true;
         }
 
         // ------------------------------------------------------------------ art
@@ -576,6 +670,14 @@ namespace Descender.EditorTools.Paradise
             foreach (var room in zone.rooms)
             {
                 BuildRoom(room, roomGroup, zone.number * 100 + roomIndex++);
+            }
+            if (zone.moments.Count > 0)
+            {
+                var momentGroup = Group(root, MomentsGroup);
+                foreach (var moment in zone.moments)
+                {
+                    BuildMoment(moment, momentGroup);
+                }
             }
 
             if (zoneArt != null)
@@ -1546,6 +1648,26 @@ namespace Descender.EditorTools.Paradise
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
+        /// <summary>The group a zone's camera moments are built under.</summary>
+        public const string MomentsGroup = "CameraMoments";
+
+        private static void BuildMoment(ParadiseLayout.Moment moment, Transform parent)
+        {
+            var go = new GameObject(moment.name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = moment.area.center;
+            go.AddComponent<CameraRig.CameraZone>()
+                .Configure(
+                    moment.area.size,
+                    moment.framing,
+                    moment.zoom,
+                    false,
+                    false,
+                    moment.lookAheadPixels,
+                    moment.blend
+                );
+        }
+
         private static void BuildRoom(Rect rect, Transform parent, int id)
         {
             var go = new GameObject($"Room{id}");
@@ -1557,6 +1679,8 @@ namespace Descender.EditorTools.Paradise
             serialized.FindProperty("id").intValue = id;
             serialized.FindProperty("roomName").stringValue = go.name;
             serialized.FindProperty("size").vector2Value = rect.size;
+            // One continuous land: the camera never stops at a zone's border (SyncCameras).
+            serialized.FindProperty("joined").boolValue = true;
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 
@@ -1787,17 +1911,22 @@ namespace Descender.EditorTools.Paradise
                 settings.FindProperty("framing").vector2Value = new Vector2(0f, 1.25f);
                 settings.ApplyModifiedPropertiesWithoutUndo();
             }
-            // Painted art needs the full screen resolution: the prototype's pixel-perfect
-            // camera renders the world at 320x180 and scales it up, which turns every curve
-            // into stairs. Keep its framing (the crop to 16:9) but render at full size.
+            // Painted art has no pixel grid to keep: the prototype's pixel-perfect camera only
+            // boxed the view in by whole multiples of 320x180, black bars on any screen between
+            // them, and turned a camera zone's pull-back into a jump from one multiple to the
+            // next. The camera's own size (5.625 units, the same 20 x 11.25 tile view) frames
+            // it instead, filling the screen and zooming smoothly.
             if (
                 camera != null
                 && camera.TryGetComponent<UnityEngine.Rendering.Universal.PixelPerfectCamera>(out var pixelPerfect)
             )
             {
-                var ppc = new SerializedObject(pixelPerfect);
-                ppc.FindProperty("m_GridSnapping").intValue = 0;
-                ppc.ApplyModifiedPropertiesWithoutUndo();
+                Object.DestroyImmediate(pixelPerfect);
+            }
+            if (camera != null)
+            {
+                camera.orthographic = true;
+                camera.orthographicSize = ParadiseLayout.ViewHalfHeight;
             }
             EditorSceneManager.MarkSceneDirty(scene);
             EditorSceneManager.SaveScene(scene);

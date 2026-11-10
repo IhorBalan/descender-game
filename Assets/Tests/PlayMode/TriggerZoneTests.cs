@@ -54,9 +54,12 @@ namespace Descender.Tests.PlayMode
             items = lab.Stations[itemsIndex];
         }
 
-        [TearDown]
-        public void TearDown()
+        [UnityTearDown]
+        public IEnumerator TearDown()
         {
+            // A hurt or a hit slows time for a moment of real time, and the tests step frames
+            // far faster than that: wait it out, so the next test does not start slowed down.
+            yield return HitStopOver();
             Time.captureDeltaTime = captureBefore;
             foreach (var thing in made)
             {
@@ -283,12 +286,18 @@ namespace Descender.Tests.PlayMode
             input.ClearPresses();
             yield return Steps(40);
             // A hit that lands slows time for a moment, on the real clock: wait it out.
+            yield return HitStopOver();
+            yield return Steps(40);
+        }
+
+        /// <summary>Waits out a hit-stop, which runs on the real clock, not the tests' stepped one.</summary>
+        private static IEnumerator HitStopOver()
+        {
             var giveUpAt = Time.realtimeSinceStartup + 5f;
             while (Fx.Feedback.IsHitStopped && Time.realtimeSinceStartup < giveUpAt)
             {
                 yield return null;
             }
-            yield return Steps(40);
         }
 
         private static IEnumerator Steps(int count)
