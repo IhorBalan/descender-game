@@ -6,7 +6,9 @@ like the garden's other trim. ParadiseGarden sets the numerals in a row, so four
 every number. Each is drawn as strokes with serifs at four times size and reduced, gold lit along
 its upper right (the sun is high on the right), with a fine dark line where it meets the stone.
 
-  Kit/Architecture/numeral_I.png, numeral_V.png, numeral_X.png, numeral_L.png
+  Kit/Architecture/numerals.png   I, V, X and L side by side, each in a cell CELL px wide
+
+The numbers of a zone are drawn as one mesh over this one texture, so they cost one draw call.
 
   python tools/ai_art/tree_numerals.py
 """
@@ -27,6 +29,9 @@ HEIGHT = 30
 STROKE = 5
 WIDTHS = {"I": 12, "V": 26, "X": 26, "L": 22}
 MARGIN = 2
+# The atlas: the letters in this order, each in a cell this wide (the widest letter and its margin).
+LETTERS = "IVXL"
+CELL = 32
 GOLD = np.array((0.86, 0.68, 0.34), np.float32)
 GOLD_LIGHT = np.array((1.0, 0.9, 0.6), np.float32)
 CUT = np.array((0.32, 0.24, 0.14), np.float32)
@@ -74,12 +79,17 @@ def numeral(letter: str) -> np.ndarray:
 
 
 def main() -> None:
-    for letter in WIDTHS:
-        img = numeral(letter)
-        Image.fromarray((np.clip(img, 0.0, 1.0) * 255.0 + 0.5).astype(np.uint8), "RGBA").save(
-            os.path.join(FOLDER, f"numeral_{letter}.png"), optimize=True
-        )
-    print(f"numerals {''.join(WIDTHS)} at {HEIGHT} px")
+    # Each letter centred in its own cell, the cells in the order of LETTERS (ParadiseGarden.Numerals).
+    cells = [numeral(letter) for letter in LETTERS]
+    h = max(c.shape[0] for c in cells)
+    atlas = np.zeros((h, CELL * len(cells), 4), np.float32)
+    for i, c in enumerate(cells):
+        x = i * CELL + (CELL - c.shape[1]) // 2
+        atlas[(h - c.shape[0]) // 2 : (h - c.shape[0]) // 2 + c.shape[0], x : x + c.shape[1]] = c
+    Image.fromarray((np.clip(atlas, 0.0, 1.0) * 255.0 + 0.5).astype(np.uint8), "RGBA").save(
+        os.path.join(FOLDER, "numerals.png"), optimize=True
+    )
+    print(f"numerals {LETTERS} at {HEIGHT} px, {atlas.shape[1]}x{atlas.shape[0]}")
 
 
 if __name__ == "__main__":

@@ -105,13 +105,22 @@ namespace Descender.Tests
             var scene = EditorSceneManager.OpenScene(Orchard, OpenSceneMode.Additive);
             try
             {
-                var numerals = scene
+                // All of them in one mesh, so they cost one draw call: a quad for each letter.
+                var meshes = scene
                     .GetRootGameObjects()
-                    .SelectMany(r => r.GetComponentsInChildren<SpriteRenderer>(true))
-                    .Where(r => r.name.StartsWith("Numeral "))
+                    .SelectMany(r => r.GetComponentsInChildren<MeshFilter>(true))
+                    .Where(m => m.name == "TreeNumbers")
                     .ToList();
-                Assert.That(numerals.Count, Is.EqualTo(plan.numbers.Sum(n => n.name.Length)), "every numeral is cut");
-                Assert.That(numerals.All(r => r.sortingOrder == EditorTools.Paradise.ParadiseGarden.NumberOrder));
+                Assert.That(meshes, Has.Count.EqualTo(1));
+                Assert.That(
+                    meshes[0].sharedMesh.vertexCount,
+                    Is.EqualTo(4 * plan.numbers.Sum(n => n.name.Length)),
+                    "every numeral is cut"
+                );
+                Assert.That(
+                    meshes[0].GetComponent<MeshRenderer>().sortingOrder,
+                    Is.EqualTo(EditorTools.Paradise.ParadiseGarden.NumberOrder)
+                );
             }
             finally
             {

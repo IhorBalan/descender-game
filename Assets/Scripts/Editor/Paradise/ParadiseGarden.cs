@@ -397,13 +397,9 @@ namespace Descender.EditorTools.Paradise
             }
             Railings(zone, ParadiseArt.Group(root, "Railings"), art);
             Pilasters(zone, ParadiseArt.Group(root, "Pilasters"), art);
-            if (plan.numbers.Count > 0 && Sprites.ContainsKey("numeral_I"))
+            if (plan.numbers.Count > 0 && Sprites.ContainsKey(NumeralAtlas))
             {
-                var numbers = ParadiseArt.Group(root, "TreeNumbers");
-                foreach (var spot in plan.numbers)
-                {
-                    Number(numbers, spot, art);
-                }
+                Numbers(root, plan.numbers, art);
             }
             if (Sprites.ContainsKey(WallNiche))
             {
@@ -3730,8 +3726,20 @@ namespace Descender.EditorTools.Paradise
         /// <summary>Over the coping (-99), under the railings (-90) and the plants.</summary>
         public const int NumberOrder = -98;
 
-        /// <summary>The empty margin round each numeral's sprite, in pixels at 128 a unit (tree_numerals.py).</summary>
-        private const float NumeralMargin = 2f;
+        /// <summary>
+        /// The gilded numerals (tree_numerals.py): one texture, the letters of NumeralLetters each
+        /// centred in a cell NumeralCell px wide, each drawn NumeralWidths px wide with an empty
+        /// margin of NumeralMargin either side, at 128 px a unit.
+        /// </summary>
+        public const string NumeralAtlas = "numerals";
+
+        private const string NumeralLetters = "IVXL";
+
+        private const int NumeralCell = 32;
+
+        private static readonly int[] NumeralWidths = { 12, 26, 26, 22 };
+
+        private const int NumeralMargin = 2;
 
         /// <summary>A number from 1 to 89 in Roman numerals (the orchard has far fewer trees).</summary>
         public static string Roman(int n)
@@ -3741,33 +3749,64 @@ namespace Descender.EditorTools.Paradise
             return tens[Mathf.Clamp(n, 1, 89) / 10] + ones[Mathf.Clamp(n, 1, 89) % 10];
         }
 
-        /// <summary>A number cut in the coping and gilded: its numerals set side by side, centred on the spot.</summary>
-        private static void Number(Transform parent, Spot spot, ParadiseArt.ZoneArt art)
+        /// <summary>
+        /// The zone's tree numbers, cut in the coping and gilded: one mesh over the numerals'
+        /// texture, a quad for each letter, the letters of a number set edge to edge (less their
+        /// margins) and centred on its spot. One draw call for every number in the zone.
+        /// </summary>
+        private static void Numbers(Transform root, List<Spot> numbers, ParadiseArt.ZoneArt art)
         {
-            var group = new GameObject("Number " + spot.name).transform;
-            group.SetParent(parent, false);
-            var margin = NumeralMargin / 128f;
-            var width = 0f;
-            foreach (var letter in spot.name)
+            var texture = Get(NumeralAtlas).texture;
+            var height = texture.height / 128f;
+            var vertices = new List<Vector3>();
+            var uvs = new List<Vector2>();
+            var triangles = new List<int>();
+            foreach (var spot in numbers)
             {
-                width += Get("numeral_" + letter).bounds.size.x - 2f * margin;
+                var width = 0f;
+                foreach (var letter in spot.name)
+                {
+                    width += NumeralWidths[NumeralLetters.IndexOf(letter)] / 128f;
+                }
+                var x = spot.at.x - width / 2f;
+                foreach (var letter in spot.name)
+                {
+                    var i = NumeralLetters.IndexOf(letter);
+                    var drawn = NumeralWidths[i] + 2 * NumeralMargin;
+                    var left = i * NumeralCell + (NumeralCell - drawn) / 2;
+                    var x0 = x - NumeralMargin / 128f;
+                    var x1 = x0 + drawn / 128f;
+                    var first = vertices.Count;
+                    vertices.Add(new Vector3(x0, spot.at.y + height / 2f, 0f));
+                    vertices.Add(new Vector3(x1, spot.at.y + height / 2f, 0f));
+                    vertices.Add(new Vector3(x0, spot.at.y - height / 2f, 0f));
+                    vertices.Add(new Vector3(x1, spot.at.y - height / 2f, 0f));
+                    uvs.Add(new Vector2((float)left / texture.width, 1f));
+                    uvs.Add(new Vector2((float)(left + drawn) / texture.width, 1f));
+                    uvs.Add(new Vector2((float)left / texture.width, 0f));
+                    uvs.Add(new Vector2((float)(left + drawn) / texture.width, 0f));
+                    triangles.AddRange(new[] { first, first + 1, first + 2, first + 2, first + 1, first + 3 });
+                    x += NumeralWidths[i] / 128f;
+                }
             }
-            var x = spot.at.x - width / 2f;
-            foreach (var letter in spot.name)
+            var mesh = new Mesh { name = root.name + " tree numbers" };
+            mesh.SetVertices(vertices);
+            mesh.SetUVs(0, uvs);
+            var colors = new Color[vertices.Count];
+            for (var i = 0; i < colors.Length; i++)
             {
-                var sprite = Get("numeral_" + letter);
-                var w = sprite.bounds.size.x - 2f * margin;
-                ParadiseArt.Sprite(
-                    group,
-                    "Numeral " + letter,
-                    sprite,
-                    art.lit,
-                    NumberOrder,
-                    new Vector3(x + w / 2f, spot.at.y, 0f),
-                    Vector3.one
-                );
-                x += w;
+                colors[i] = Color.white;
             }
+            mesh.colors = colors;
+            FaceTheCamera(mesh);
+            mesh.SetTriangles(triangles, 0);
+            mesh.RecalculateBounds();
+            var go = new GameObject("TreeNumbers");
+            go.transform.SetParent(root, false);
+            go.AddComponent<MeshFilter>().sharedMesh = mesh;
+            var renderer = go.AddComponent<MeshRenderer>();
+            renderer.sharedMaterial = ParadiseNormals.LitMesh(texture, art.lit);
+            renderer.sortingOrder = NumberOrder;
         }
 
         /// <summary>The stand-in the layout keeps for the Lantern Tree's trunk (a Decor shape the art replaces).</summary>
@@ -3829,6 +3868,9 @@ namespace Descender.EditorTools.Paradise
             settings.FindProperty("color").colorValue = LanternColor;
             settings.FindProperty("energy").floatValue = zone == 1 ? LanternEnergy * 0.7f : LanternEnergy;
             settings.FindProperty("radiusPixels").floatValue = LanternReach * Player.PlayerTuning.PixelsPerUnit;
+            // On only while its pool can reach the view: a 2D light is drawn once for each batch of
+            // sorting layers, so every lantern left on off screen cost a few draw calls.
+            settings.FindProperty("activeDistance").floatValue = LanternActiveDistance;
             settings.ApplyModifiedPropertiesWithoutUndo();
             // The glass burns amber: at full strength the additive glow went to white.
             var glass = lantern.Find("Glow");
@@ -3853,6 +3895,12 @@ namespace Descender.EditorTools.Paradise
         public const float LanternReach = 4.5f;
 
         public const float LanternEnergy = 1.1f;
+
+        /// <summary>
+        /// How far from the camera a lantern's light stays on, plus its reach (WorldLight): the
+        /// view's half diagonal is about 11.5 units, so its pool switches on just before it shows.
+        /// </summary>
+        public const float LanternActiveDistance = 13f;
 
         public static readonly Color LanternColor = new Color(1f, 0.74f, 0.42f);
 

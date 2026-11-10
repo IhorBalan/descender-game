@@ -84,6 +84,12 @@ namespace Descender.Tests
                             Assert.That(light, Is.Not.Null, at);
                             Assert.That(light.Color, Is.EqualTo(ParadiseGarden.LanternColor), at);
                             Assert.That(light.Radius, Is.EqualTo(ParadiseGarden.LanternReach).Within(0.01f), at);
+                            // Off while far from the view: each light left on costs draw calls.
+                            Assert.That(
+                                new SerializedObject(light).FindProperty("activeDistance").floatValue,
+                                Is.EqualTo(ParadiseGarden.LanternActiveDistance),
+                                at
+                            );
                             Assert.That(light.Energy, Is.GreaterThan(0f), at);
                             // From its glass, below the hook it hangs from.
                             Assert.That(
