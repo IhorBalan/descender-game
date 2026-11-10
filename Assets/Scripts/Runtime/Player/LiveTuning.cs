@@ -186,6 +186,8 @@ namespace Descender.Player
             source = tuning;
             working = UnityEngine.Object.Instantiate(tuning);
             working.name = tuning.name + " (live)";
+            // Held only by this class between heroes: a scene load must not unload it.
+            working.hideFlags = HideFlags.DontUnloadUnusedAsset;
             return working;
         }
 

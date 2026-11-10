@@ -76,6 +76,10 @@ whatever the audit in G1 shows is missing (candidates: ladders or climbable
 vines, water, ledge grab). Done when: each move and piece has a station, a
 measuring test and tuning Ihor has signed off by play.
 
+Planned as T-0018 to T-0024 (2026-11-10). G1 showed three gaps they start
+from: nothing reads `PlayerTuning.cornerCorrection`, riding a moving platform
+was never tuned or tested, and the hero's input has no "up".
+
 ### G3. Combat
 
 The sword (reach, timing, hit-stop, knockback, the air and down attacks),
@@ -218,12 +222,20 @@ hygiene as each production region lands.
 | T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | done | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
 | T-0014 | Triggers as data: conditions and actions, items as shapes | done | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | #169 |
 | T-0015 | Camera zones | done | 15 | T-0013 | 1 | Re-plan the roadmap around mechanics | #172 |
-| T-0016 | Live tuning of the hero's numbers and abilities | in review | 16 | T-0013 | 1 | Re-plan the roadmap around mechanics | |
-| T-0017 | Measured mechanics: a PlayMode test per existing move | approved | 17 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0016 | Live tuning of the hero's numbers and abilities | done | 16 | T-0013 | 1 | Re-plan the roadmap around mechanics | #173 |
+| T-0017 | Measured mechanics: a PlayMode test per existing move | in review | 17 | T-0013 | 1 | Re-plan the roadmap around mechanics | |
+| T-0018 | Platforms the hero rides | approved | 18 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0019 | Corner correction and the rest of the jump | approved | 19 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0020 | Platforms that crumble and platforms on a timer | approved | 20 | T-0018 | 0 | Re-plan the roadmap around mechanics | |
+| T-0021 | Wind and lift | approved | 21 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0022 | Up, ladders and vines | approved | 22 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0023 | Ledge grab, to try and maybe drop | approved | 23 | T-0022 | 0 | Re-plan the roadmap around mechanics | |
+| T-0024 | Water | approved | 24 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
-added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG) and
-`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10).
+added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
+`planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10) and
+`planning/g2-movement-tasks.md` (G2, 2026-11-10).
 Playtest: T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0011 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
 zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
@@ -402,7 +414,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (272 on `main` after T-0016) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (33 after T-0016; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (43 after T-0017; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
