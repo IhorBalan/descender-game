@@ -143,6 +143,9 @@ namespace Descender.Tests.PlayMode
             yield return Begin(new Vector2(6f, Floor));
             hero.PlaceAt(new Vector2(12f - HalfHero - Pixel, Floor + 3f - under * Pixel));
             input.MoveX = 1f;
+            // He still counts as standing where he was until a step has looked under him.
+            yield return probe.Until(() => !hero.IsGrounded, 5);
+            Assert.That(hero.IsGrounded, Is.False, "he was put in the air");
             yield return probe.Until(() => hero.IsGrounded, 120);
             yield return probe.Step(3);
             input.MoveX = 0f;
@@ -152,7 +155,7 @@ namespace Descender.Tests.PlayMode
         public IEnumerator ALedgeTopJustOverHisFeetIsCaught()
         {
             yield return FallBesideALedge(1f);
-            Assert.That(hero.IsGrounded, Is.True);
+            Assert.That(hero.IsGrounded, Is.True, $"he is at {heroBody.position}");
             Assert.That(heroBody.position.y, Is.EqualTo(Floor + 3f).Within(2f * Pixel), "he stands on the ledge");
             Assert.That(heroBody.position.x, Is.GreaterThan(12f - HalfHero), "and has moved onto it");
         }

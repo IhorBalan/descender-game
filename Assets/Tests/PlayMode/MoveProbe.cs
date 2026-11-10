@@ -113,11 +113,20 @@ namespace Descender.Tests.PlayMode
             input.ClearPresses();
         }
 
-        /// <summary>Lets go of everything and waits until he stands still on the ground.</summary>
+        /// <summary>
+        /// Lets go of everything and waits until he stands still on the ground. A hit in the
+        /// test before may have left time slowed, which ends on the real clock; while it lasts
+        /// a frame is a twentieth of a physics step, so counted steps would count nothing.
+        /// </summary>
         public IEnumerator Settle(int limit = 300)
         {
             input.Release();
             input.ClearPresses();
+            var giveUpAt = Time.realtimeSinceStartup + 5f;
+            while (Fx.Feedback.IsHitStopped && Time.realtimeSinceStartup < giveUpAt)
+            {
+                yield return null;
+            }
             for (var i = 0; i < limit && !hero.IsGrounded; i++)
             {
                 yield return null;
