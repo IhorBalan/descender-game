@@ -236,6 +236,9 @@ namespace Descender.World
             var ledgeBody = ledges.AddComponent<Rigidbody2D>();
             ledgeBody.bodyType = RigidbodyType2D.Static;
             var effector = ledges.AddComponent<PlatformEffector2D>();
+            // The hero drops and slams through by turning the Player and Ledge layer pair
+            // off, which an effector's own mask would override.
+            effector.useColliderMask = false;
             effector.useOneWay = true;
             effector.surfaceArc = 170f;
             effector.useSideFriction = false;

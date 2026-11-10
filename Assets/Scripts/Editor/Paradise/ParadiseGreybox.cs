@@ -914,6 +914,8 @@ namespace Descender.EditorTools.Paradise
             edge.usedByEffector = true;
             edge.points = Sample(points, left, right, false).ToArray();
             var effector = go.AddComponent<PlatformEffector2D>();
+            // The collision matrix, not the effector's own mask: the hero drops through by the layer pair.
+            effector.useColliderMask = false;
             effector.useOneWay = true;
             effector.surfaceArc = 170f;
             effector.useSideFriction = false;

@@ -314,6 +314,15 @@ namespace Descender.Tests
                 }
             }
 
+            // The hero drops through a ledge by turning its layer off, which an effector's own mask overrides.
+            foreach (var effector in objects.SelectMany(o => o.GetComponents<PlatformEffector2D>()))
+            {
+                if (effector.useColliderMask)
+                {
+                    problems.Add($"{sceneName}: {PathOf(effector.gameObject)} uses its own collider mask");
+                }
+            }
+
             var tiles = objects.SelectMany(o => o.GetComponents<RegionTiles>()).ToArray();
             if (tiles.Length == 0)
             {
