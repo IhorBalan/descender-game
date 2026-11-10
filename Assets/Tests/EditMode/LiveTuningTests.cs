@@ -213,7 +213,7 @@ namespace Descender.Tests.EditMode
             var jump = TuningOverlay.GroupStarting("jump");
             Assert.That(jump, Is.EqualTo(1));
             var text = TuningOverlay.Text(live, jump);
-            Assert.That(text, Does.StartWith("Jump (px, s)  2/7\n"));
+            Assert.That(text, Does.StartWith("Jump (px, s)  2/8\n"));
             Assert.That(text, Does.Contain("<color=#FFD966>* jumpHeight 90 (asset 72)</color>"));
             Assert.That(text, Does.Contain("\n  coyoteTime 0.1\n"));
             Assert.That(text, Does.Not.Contain("runSpeed"), "one group at a time");
