@@ -81,13 +81,18 @@ namespace Descender.World.Paradise
         /// <summary>The head's glance at what is near him, in degrees, + up.</summary>
         public float Glance => lookAngle;
 
+        /// <summary>Empty pixels around every part's paint (tools/hero_ansel/fit_parts.py, PAD).</summary>
+        public const float PartPadding = 40f;
+
         private void PrepareMoves()
         {
             lookFilter = Layers.Any(Layers.EnemyMask);
             var blade = sword != null ? sword.GetComponentInChildren<SpriteRenderer>(true) : null;
             if (blade != null && blade.sprite != null)
             {
-                bladeLength = Mathf.Max(0.2f, blade.transform.localPosition.x + blade.sprite.bounds.max.x);
+                // The painted blade ends PartPadding pixels short of its sprite's edge.
+                var tip = blade.sprite.bounds.max.x - PartPadding / blade.sprite.pixelsPerUnit;
+                bladeLength = Mathf.Max(0.2f, blade.transform.localPosition.x + tip);
             }
         }
 

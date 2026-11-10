@@ -44,16 +44,27 @@ FAR_LEG = 45.0
 FAR_ARM_SCALE = 0.94  # the far limbs are a little smaller, as further away
 FAR_LEG_SCALE = 0.97
 
+# How much broader than drawn: a sturdier build through the chest, arms and legs, widened
+# across (not lengthened), so he keeps his height and his joints stay where they were.
+BULK_TORSO = 1.16
+BULK_ARM = 1.2
+BULK_LEG = 1.16
+BULK_CLOAK = 1.06
+
+# Empty pixels written around every part, so the silhouette drawn behind him (an ink line and
+# a halo of light, Descender/Hero Silhouette) has room outside the paint.
+PAD = 40
+
 # part: (source picture, x scale, y scale, a point on the part, where that point sits on the reference)
 FIT = {
-    "arm": ("arm", 1.0, 1.15, (55, 35), (550, 320)),
-    "arm_far": ("arm", FAR_ARM_SCALE, 1.15 * FAR_ARM_SCALE, (55, 35), (550 + FAR_ARM, 320)),
-    "leg": ("leg", 1.0, 1.31, (100, 60), (565, 680)),
-    "leg_far": ("leg", FAR_LEG_SCALE, 1.31 * FAR_LEG_SCALE, (100, 60), (565 + FAR_LEG, 680)),
-    "torso": ("torso", 0.9, 1.15, (90, 10), (585, 205)),
+    "arm": ("arm", BULK_ARM, 1.15, (55, 35), (550, 320)),
+    "arm_far": ("arm", BULK_ARM * FAR_ARM_SCALE, 1.15 * FAR_ARM_SCALE, (55, 35), (550 + FAR_ARM, 320)),
+    "leg": ("leg", BULK_LEG, 1.31, (100, 60), (565, 680)),
+    "leg_far": ("leg", BULK_LEG * FAR_LEG_SCALE, 1.31 * FAR_LEG_SCALE, (100, 60), (565 + FAR_LEG, 680)),
+    "torso": ("torso", 0.9 * BULK_TORSO, 1.15, (90, 10), (585, 205)),
     "head": ("head", 0.88, 0.88, (105, 190), (578, 205)),
     "hood": ("hood", 1.0, 1.0, (228, 135), (617, 322)),
-    "cloak": ("cloak", 1.16, 1.16, (410, 95), (640, 320)),
+    "cloak": ("cloak", 1.16 * BULK_CLOAK, 1.16, (410, 95), (640, 320)),
     "sword": ("sword", 0.87, 0.87, (67, 64), (557, 820)),
 }
 
@@ -145,9 +156,17 @@ def skeleton():
 
 
 def origin(part, size):
-    """The world position, on the rig, of the bottom-left corner of a part."""
+    """The world position, on the rig, of the bottom-left corner of a part (its padding included)."""
     _, sx, sy, (ax, ay), (rx, ry) = FIT[part]
-    return unit(rx - ax * sx, ry - ay * sy + size[1] * sy)
+    pad = PAD / ART_SCALE
+    return unit(rx - ax * sx - pad, ry - ay * sy + size[1] * sy + pad)
+
+
+def padded(im):
+    """The part with PAD empty pixels on every side."""
+    out = Image.new("RGBA", (im.width + 2 * PAD, im.height + 2 * PAD), (0, 0, 0, 0))
+    out.paste(im, (PAD, PAD))
+    return out
 
 
 def main():
@@ -163,6 +182,7 @@ def main():
         art = resize_premultiplied(im, written)
         if name.endswith("_far"):
             art = far_side(art)
+        art = padded(art)
         art.save(os.path.join(OUT, f"ansel_{name}.png"), optimize=True)
         normal = normals.normal_map(np.asarray(art), SHAPE[name])
         Image.fromarray(normal, "RGB").save(os.path.join(OUT, f"ansel_{name}_n.png"), optimize=True)

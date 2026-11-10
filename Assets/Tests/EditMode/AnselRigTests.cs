@@ -173,6 +173,101 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
+        public void TheCloakIsWovenWithLightAndHeIsOutlined()
+        {
+            var prefab = Prefab();
+            var light = prefab.GetComponent<HeroLight>();
+            Assert.That(light, Is.Not.Null, "no HeroLight");
+            var woven = new List<string>();
+            foreach (var r in light.Cloth)
+            {
+                Assert.That(r, Is.Not.Null, "an empty cloth slot");
+                Assert.That(r.sharedMaterial.shader.name, Is.EqualTo("Descender/Hero Cloak Light"), r.name);
+                woven.Add(r.name);
+            }
+            Assert.That(woven, Is.EqualTo(new[] { "Cloak", "Hood" }), "the cloak (first) and the hood carry the light");
+            Assert.That(light.Silhouette, Is.Not.Null, "no outline material");
+            Assert.That(light.Silhouette.shader.name, Is.EqualTo("Descender/Hero Silhouette"));
+            Assert.That(
+                new SerializedObject(light).FindProperty("hemLight").objectReferenceValue,
+                Is.Not.Null,
+                "no light at the hem"
+            );
+            Assert.That(light.Motes, Is.Not.Null, "no motes");
+
+            var order = new SerializedObject(light).FindProperty("outlineOrder").intValue;
+            foreach (var r in prefab.GetComponentsInChildren<SpriteRenderer>(true))
+            {
+                if (r.name == "Shadow")
+                {
+                    Assert.That(r.sortingOrder, Is.LessThan(order), "his shadow is in front of his outline");
+                }
+                else if (RigCopy.IsBody(r.transform, prefab.transform))
+                {
+                    Assert.That(r.sortingOrder, Is.GreaterThan(order), $"{r.name} is behind his outline");
+                }
+            }
+        }
+
+        [Test]
+        public void EveryPartHasRoomAroundItsPaintForTheOutline()
+        {
+            var pad = (int)HeroRig.PartPadding;
+            foreach (var part in Layout()["parts"])
+            {
+                var path = $"{ParadiseHero.HeroFolder}/{part["file"]}.png";
+                var texture = new Texture2D(2, 2);
+                Assert.That(texture.LoadImage(File.ReadAllBytes(path)), Is.True, path);
+                var pixels = texture.GetPixels32();
+                var w = texture.width;
+                var h = texture.height;
+                Object.DestroyImmediate(texture);
+                Assert.That(w, Is.GreaterThan(2 * pad), path);
+                Assert.That(h, Is.GreaterThan(2 * pad), path);
+                var painted = 0;
+                for (var y = 0; y < h; y++)
+                {
+                    for (var x = 0; x < w; x++)
+                    {
+                        var border = x < pad || y < pad || x >= w - pad || y >= h - pad;
+                        if (border && pixels[y * w + x].a > 0)
+                        {
+                            painted++;
+                        }
+                    }
+                }
+                Assert.That(painted, Is.Zero, $"{path} has paint within {pad} pixels of its edge");
+            }
+        }
+
+        [Test]
+        public void ACopyOfHimLeavesOutTheEffectsAndTheOutline()
+        {
+            var root = new GameObject("Rig").transform;
+            try
+            {
+                Transform Child(Transform parent, string name)
+                {
+                    var t = new GameObject(name).transform;
+                    t.SetParent(parent, false);
+                    return t;
+                }
+                var torso = Child(root, "Torso");
+                var outlined = Child(Child(root, RigCopy.Outline), "Torso");
+                var fx = Child(Child(root, "Fx"), "Glints");
+                var shadow = Child(root, "Shadow");
+                Assert.That(RigCopy.IsBody(torso, root), Is.True);
+                Assert.That(RigCopy.IsBody(outlined, root), Is.False, "the outline is copied into a copy");
+                Assert.That(RigCopy.IsBody(fx, root), Is.False);
+                Assert.That(RigCopy.IsBody(shadow, root), Is.False);
+            }
+            finally
+            {
+                Object.DestroyImmediate(root.gameObject);
+            }
+        }
+
+        [Test]
         public void HisFootstepsAndSplashesHaveSounds()
         {
             var library = AssetDatabase.LoadAssetAtPath<Audio.SfxLibrary>("Assets/Data/SfxLibrary.asset");
