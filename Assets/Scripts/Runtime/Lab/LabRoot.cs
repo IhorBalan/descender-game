@@ -15,6 +15,8 @@ namespace Descender.Lab
         public static LabRoot Current { get; private set; }
 
         private List<Station> stations = new List<Station>();
+        private readonly Dictionary<Station, Transform> parents = new Dictionary<Station, Transform>();
+        private readonly HashSet<Station> visited = new HashSet<Station>();
 
         public IReadOnlyList<Station> Stations => stations;
 
@@ -29,6 +31,35 @@ namespace Descender.Lab
         public void Init(List<Station> made)
         {
             stations = made;
+        }
+
+        /// <summary>Notes the objects a station was built as.</summary>
+        public void Hold(Station station, Transform built)
+        {
+            parents[station] = built;
+        }
+
+        /// <summary>The parent of a station's objects.</summary>
+        public Transform ParentOf(Station station)
+        {
+            return parents.TryGetValue(station, out var parent) ? parent : null;
+        }
+
+        /// <summary>
+        /// Puts a station back as the layout has it: its objects are thrown away and
+        /// built again, and the lab's key is taken back.
+        /// </summary>
+        public void Rebuild(Station station)
+        {
+            var old = ParentOf(station);
+            if (old != null)
+            {
+                // Out of the way at once; the object itself goes at the end of the frame.
+                old.gameObject.SetActive(false);
+                Destroy(old.gameObject);
+            }
+            Triggers.Keys.Remove(LabLayout.Key);
+            Hold(station, LabBuilder.BuildStation(this, station));
         }
 
         /// <summary>The number of the station with an id, or 0 (the first) when there is none.</summary>
@@ -46,6 +77,10 @@ namespace Descender.Lab
             }
             Index = Mathf.Clamp(index, 0, stations.Count - 1);
             var station = stations[Index];
+            if (station.rebuilt && !visited.Add(station))
+            {
+                Rebuild(station);
+            }
             hero.SetAbilities(station.abilities);
             hero.DeathY = station.room.yMin - 4f;
             hero.Respawn(station.spawn);

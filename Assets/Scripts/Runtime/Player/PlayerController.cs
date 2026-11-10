@@ -1389,6 +1389,13 @@ namespace Descender.Player
             RestHalo();
         }
 
+        /// <summary>Makes a point the place he comes back to, without resting him.</summary>
+        public void SetRespawnPoint(Vector2 point)
+        {
+            respawnPosition = point;
+            lastSafePosition = point;
+        }
+
         /// <summary>Where he stands, in units; for the screens.</summary>
         public Vector2 Position => transform.position;
 

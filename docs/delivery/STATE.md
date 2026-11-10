@@ -215,8 +215,8 @@ hygiene as each production region lands.
 | T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
 | T-0011 | The scripted run of the Paradise main path | done | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
 | T-0012 | The story is parked behind one switch, with a pointer file | done | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
-| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | in review | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
-| T-0014 | Triggers as data: conditions and actions, items as shapes | approved | 14 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
+| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | done | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
+| T-0014 | Triggers as data: conditions and actions, items as shapes | in review | 14 | T-0013 | 1 | Re-plan the roadmap around mechanics | #169 |
 | T-0015 | Camera zones | approved | 15 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0017 | Measured mechanics: a PlayMode test per existing move | approved | 17 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
@@ -401,8 +401,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (223 on `main` after T-0013) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (20 after T-0013; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (251 on `main` after T-0014) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (27 after T-0014; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -503,6 +503,17 @@ barriers, the cliff descent.
   check: every room can be finished with the move it names, the marks (jump
   height, dash length, one second of running) match what the hero does, the
   camera stays inside the room, and dying puts him back at the room's start.
+- **T-0014, items and triggers.** `lab items` in the dev console (or the
+  last room of the lab). Walking on shows a line; the lilac circle grants
+  Wings, the pink one a heart, the triangle the Lit Blade, the small square
+  some light; the wall needs the double jump; the gold diamond is a key; the
+  door says it is locked without the key and opens with it; striking the red
+  square brings a bridge and takes it away; pressing interact at the blue
+  square starts and stops a lift. Riding the lift is not tuned yet (moving
+  platforms are G2). To check: each of these does what it says, and coming
+  back into the room puts everything back. In a scene: GameObject >
+  Descender > Trigger zone makes a placeholder, and its inspector lists the
+  actions with an "Add action" button.
 - **T-0002, the dialogue pipeline (PR #140).** In `Main.unity`, after New
   Game: the opening lines play at the start, the gate lines play at the goal
   gate, Old Pell talks in the hub, and Tobiah's token can be examined (its

@@ -97,7 +97,8 @@ runtime code means adding its assembly to the asmdef `references`, not an
 | `Audio/` | `Music` (one crossfaded loop), `Sfx` (pooled sources), `SfxLibrary`. |
 | `Camera/` | `GameCamera`: look-ahead, room clamp, whole-pixel shake. |
 | `Fx/` | `Feedback` (hit-stop, shake, rumble, particles), `HitFlash`, `Tween`, `Shapes`, `Shape` (the placeholder: a labelled square, circle, diamond or triangle for anything without art), `SpriteAnimator`. |
-| `Lab/` | The mechanics lab, built from data with no scene and no art: `LabLayout` (the stations and their pieces, sized from `PlayerTuning`), `LabBuilder` (colliders and `Shape`s), `LabRoot` (entering a station), `LabPad`. Opened by `GameFlow.StartLab`: the console's `lab`, or Descender > Lab > Play. |
+| `Lab/` | The mechanics lab, built from data with no scene and no art: `LabLayout` (the stations and their pieces, sized from `PlayerTuning`), `LabBuilder` (colliders and `Shape`s), `LabRoot` (entering a station; a station that changes in play is built again), `LabPad`. Opened by `GameFlow.StartLab`: the console's `lab`, or Descender > Lab > Play. |
+| `Triggers/` | Items, switches, locks and doors as data: `TriggerZone` (fires on enter, leave, interact or hit, once or every time, when its `TriggerNeeds` are met) runs a list of `TriggerAction`s (`TriggerActions.cs`: one small serializable class each, made in one line by `Do`). `Door`, `Mover`, `Keys` (held names that are not pack items), `Notice` (a line on the HUD). A new action is one class; the inspector (`Editor/Triggers`) lists it by itself. |
 
 ## Scenes, streaming and state
 
