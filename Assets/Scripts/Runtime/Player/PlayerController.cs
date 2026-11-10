@@ -1014,11 +1014,29 @@ namespace Descender.Player
             velocity.y = Mathf.Min(velocity.y, -40f);
         }
 
-        /// <summary>The ledges come back once the drop is over, and once a slam has landed.</summary>
+        /// <summary>
+        /// The ledges come back once the drop is over, and once a slam has landed; but not
+        /// while he is still partly in one, or it would lift him back onto itself.
+        /// </summary>
         private void UpdateDropping()
         {
             var ignore = dropLeft > 0f || (state == PlayerState.Slam && !slamLanded);
-            SetLedgesIgnored(ignore);
+            SetLedgesIgnored(ignore || (ledgesIgnored && state != PlayerState.Dead && InsideLedge()));
+        }
+
+        private bool InsideLedge()
+        {
+            var bounds = box.bounds;
+            var size = new Vector2(bounds.size.x - 2f / Ppu, bounds.size.y - 2f / Ppu);
+            var count = Physics2D.OverlapBox(bounds.center, size, 0f, groundFilter, hits);
+            for (var i = 0; i < count; i++)
+            {
+                if (hits[i].gameObject.layer == Layers.Ledge)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private void SetLedgesIgnored(bool ignore)

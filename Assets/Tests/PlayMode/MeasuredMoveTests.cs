@@ -338,6 +338,12 @@ namespace Descender.Tests.PlayMode
             yield return probe.Step(2);
             input.DownHeld = false;
             Assert.That(smotes, Is.EqualTo(1), "the shock goes off once, on landing");
+            // The landing slows time for a moment, on the real clock: wait it out.
+            var giveUpAt = Time.realtimeSinceStartup + 5f;
+            while (Fx.Feedback.IsHitStopped && Time.realtimeSinceStartup < giveUpAt)
+            {
+                yield return null;
+            }
             yield return probe.Until(() => hero.State != PlayerState.Slam, 100);
             Assert.That(hero.State, Is.Not.EqualTo(PlayerState.Slam), "he gets up again");
             Assert.That(Mathf.Abs(probe.Distance), Is.LessThan(0.5f), "straight down");

@@ -252,6 +252,7 @@ namespace Descender.Tests.PlayMode
             yield return probe.PressJump(false);
             yield return probe.Step(3);
             input.DownHeld = false;
+            Assert.That(heroBody.position.y, Is.LessThan(4.74f), "the drop has started");
             yield return probe.Until(() => hero.IsGrounded && heroBody.position.y < 3f, 300);
             Assert.That(heroBody.position.y, Is.EqualTo(Floor).Within(2f * Pixel), "he dropped to the floor");
             Assert.That(hero.CarryVelocity, Is.EqualTo(Vector2.zero));
