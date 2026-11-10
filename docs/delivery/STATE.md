@@ -245,6 +245,7 @@ hygiene as each production region lands.
 | T-0029 | Holy Light and Smite against the dummies | approved | 29 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
 | T-0030 | Health, healing and being hurt | approved | 30 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
 | T-0031 | Things that break | approved | 31 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0032 | Lantern fruit, the first Paradise enemy, in the lab | in review | 32 | T-0026 | 1 | Lantern fruit | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -428,8 +429,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (284 on `main` after #184) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (88 after T-0026; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (299 after T-0032) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (96 after T-0032; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -536,6 +537,15 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0032, lantern fruit.** `lab fruit`. Glowing fruit hang under
+  branches. Under one it shivers and brightens for a moment, then falls and
+  bursts on him (a heart); a hero who keeps running is past before it
+  lands; a swing pops it harmlessly; it grows back on its stalk after four
+  seconds. Over the ledge at the end: jump and strike it while it shivers,
+  or stand under the ledge and let it burst above his head. To check: the
+  shiver is read as a warning in time, the fall feels fair, and the times
+  (`LanternFruit.RipenTime`, `RegrowTime`) feel right. Not in Paradise yet:
+  placing enemies there is M4.
 - **T-0026, training dummies.** `lab dummy` (the room gives the wings,
   the bolt and the slam). Each dummy shows the last hit (what it was and
   its damage), the count and total, and the damage a second over three

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Descender.Combat;
+using Descender.Enemies;
 using Descender.Fx;
 using Descender.Player;
 using Descender.Triggers;
@@ -231,6 +232,10 @@ namespace Descender.Lab
                     go.AddComponent<BoxCollider2D>().size = rect.size;
                     Draw(go, ShapeKind.Circle, rect.size, DummyColor, "", 2);
                     go.AddComponent<Dummy>().Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
+                    break;
+                case PieceKind.Fruit:
+                    // The fruit makes its own body, shape, stalk and light; its middle is the piece's.
+                    go.AddComponent<LanternFruit>().Configure(rect.size);
                     break;
                 case PieceKind.Crumble:
                     go.layer = Layers.World;

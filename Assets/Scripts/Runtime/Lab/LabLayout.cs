@@ -63,6 +63,9 @@ namespace Descender.Lab
 
         /// <summary>A <see cref="Combat.Dummy"/>: takes every hit and shows what hit it.</summary>
         Dummy,
+
+        /// <summary>A <see cref="Enemies.LanternFruit"/>: hangs, falls on the hero beneath, bursts, grows back.</summary>
+        Fruit,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -195,6 +198,7 @@ namespace Descender.Lab
             "water",
             "grab",
             "dummy",
+            "fruit",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -236,6 +240,7 @@ namespace Descender.Lab
             Grab(Open(stations, "grab", "Ledge grab: a trial"), jump);
             var fighter = new[] { Ability.Wings, Ability.HolyLight, Ability.Smite };
             Dummies(Open(stations, "dummy", "Training dummies", fighter), jump, tuning);
+            Fruit(Open(stations, "fruit", "Lantern fruit"));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -406,6 +411,33 @@ namespace Descender.Lab
         /// overhead that only a swing in the air reaches, one down a lane for the bolt, and
         /// a pair a blade's length apart, the nearer in reach and the farther just out of it.
         /// </summary>
+        /// <summary>
+        /// Lantern fruit under branches: one to walk beneath and learn the warning by, a
+        /// row to run beneath that falls behind a hero who keeps moving, and one over a
+        /// ledge it bursts on, low enough to strike while it shivers.
+        /// </summary>
+        private static void Fruit(Station station)
+        {
+            const float side = 0.75f;
+            const float stalk = 0.5f;
+            var high = FloorTop + 7f;
+            Add(station, PieceKind.Solid, 12f, high, 6f, 0.5f, "walk beneath");
+            Add(station, PieceKind.Fruit, 14.625f, high - stalk - side, side, side);
+
+            Add(station, PieceKind.Solid, 22f, high, 16f, 0.5f, "run beneath, keep going");
+            for (var i = 0; i < 4; i++)
+            {
+                Add(station, PieceKind.Fruit, 24f + i * 3.5f, high - stalk - side, side, side);
+            }
+
+            // On the ledge it falls on him; under the ledge it bursts on the ledge above his head.
+            var ledge = FloorTop + 3f;
+            var low = ledge + 4.5f;
+            Add(station, PieceKind.Ledge, 41f, ledge, 7f, 0.25f, "jump and strike it while it shivers, or stand under");
+            Add(station, PieceKind.Solid, 42f, low, 5f, 0.5f, "");
+            Add(station, PieceKind.Fruit, 44.125f, low - stalk - side, side, side);
+        }
+
         private static void Dummies(Station station, float jump, PlayerTuning tuning)
         {
             Add(station, PieceKind.Dummy, 13f, FloorTop, 1f, 2f, "stand and swing");

@@ -103,6 +103,46 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
+        public void EveryLanternFruitHangsUnderABranchAndClearOfTheHerosHead()
+        {
+            var fruits = 0;
+            foreach (var station in stations)
+            {
+                foreach (var fruit in station.pieces)
+                {
+                    if (fruit.kind != PieceKind.Fruit)
+                    {
+                        continue;
+                    }
+                    fruits++;
+                    var what = $"{station.id}: the fruit at {fruit.rect}";
+                    // Something solid straight above it, with a stalk's gap between.
+                    var branch = station.pieces.Find(p =>
+                        p.kind == PieceKind.Solid
+                        && p.rect.xMin <= fruit.rect.center.x
+                        && p.rect.xMax >= fruit.rect.center.x
+                        && p.rect.yMin >= fruit.rect.yMax
+                    );
+                    Assert.That(branch, Is.Not.Null, what + " hangs from nothing");
+                    Assert.That(branch.rect.yMin - fruit.rect.yMax, Is.GreaterThan(0.1f), what + " has no stalk");
+                    // Whatever he stands on beneath it, his head (2 units up) stays under the fruit.
+                    foreach (var floor in station.pieces)
+                    {
+                        var under = floor.kind == PieceKind.Solid || floor.kind == PieceKind.Ledge;
+                        var below = floor.rect.yMax <= fruit.rect.yMin;
+                        var across = floor.rect.xMin <= fruit.rect.center.x && floor.rect.xMax >= fruit.rect.center.x;
+                        if (under && below && across)
+                        {
+                            var head = floor.rect.yMax + 2f;
+                            Assert.That(fruit.rect.yMin - head, Is.GreaterThan(0.5f), what + " touches his head");
+                        }
+                    }
+                }
+            }
+            Assert.That(fruits, Is.GreaterThanOrEqualTo(3), "the fruit station has its fruit");
+        }
+
+        [Test]
         public void PadsLeadToTheNeighbours()
         {
             for (var i = 0; i < stations.Count; i++)
