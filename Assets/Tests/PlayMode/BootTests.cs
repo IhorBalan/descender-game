@@ -50,7 +50,9 @@ namespace Descender.Tests.PlayMode
             Assert.That(flow.Current, Is.EqualTo(GameFlow.Phase.Title));
 
             flow.StartLab("jump");
-            for (var i = 0; i < 1200 && flow.Current != GameFlow.Phase.Playing; i++)
+            // The way in fades the screen on real time, so the wait is in seconds, not frames.
+            var giveUpAt = Time.realtimeSinceStartup + 20f;
+            while (flow.Current != GameFlow.Phase.Playing && Time.realtimeSinceStartup < giveUpAt)
             {
                 yield return null;
             }
