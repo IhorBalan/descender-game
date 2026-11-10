@@ -1,0 +1,400 @@
+{
+ "generator": "tools/hero_ansel/fit_parts.py",
+ "ppu": 430.0,
+ "skeleton": [
+  {
+   "name": "Hips",
+   "parent": "",
+   "x": 0.0,
+   "y": 0.90116,
+   "tipX": 0.0,
+   "tipY": 1.0407
+  },
+  {
+   "name": "Spine",
+   "parent": "Hips",
+   "x": 0.0,
+   "y": 1.0407,
+   "tipX": 0.0,
+   "tipY": 1.20349
+  },
+  {
+   "name": "Chest",
+   "parent": "Spine",
+   "x": 0.0,
+   "y": 1.20349,
+   "tipX": -0.00814,
+   "tipY": 1.44186
+  },
+  {
+   "name": "Head",
+   "parent": "Chest",
+   "x": -0.00814,
+   "y": 1.45349,
+   "tipX": -0.00814,
+   "tipY": 1.62209
+  },
+  {
+   "name": "UpperArmFront",
+   "parent": "Chest",
+   "x": -0.0407,
+   "y": 1.31977,
+   "tipX": -0.05233,
+   "tipY": 1.05233
+  },
+  {
+   "name": "ForeArmFront",
+   "parent": "UpperArmFront",
+   "x": -0.05233,
+   "y": 1.05233,
+   "tipX": -0.02907,
+   "tipY": 0.6739
+  },
+  {
+   "name": "UpperArmBack",
+   "parent": "Chest",
+   "x": 0.02326,
+   "y": 1.31977,
+   "tipX": 0.01163,
+   "tipY": 1.05233
+  },
+  {
+   "name": "ForeArmBack",
+   "parent": "UpperArmBack",
+   "x": 0.01163,
+   "y": 1.05233,
+   "tipX": 0.03488,
+   "tipY": 0.6739
+  },
+  {
+   "name": "Sword",
+   "parent": "ForeArmFront",
+   "x": -0.03256,
+   "y": 0.73808,
+   "tipX": 0.31628,
+   "tipY": 0.73808
+  },
+  {
+   "name": "ThighFront",
+   "parent": "Hips",
+   "x": -0.02326,
+   "y": 0.90116,
+   "tipX": -0.04884,
+   "tipY": 0.50512
+  },
+  {
+   "name": "ShinFront",
+   "parent": "ThighFront",
+   "x": -0.04884,
+   "y": 0.50512,
+   "tipX": -0.07209,
+   "tipY": 0.10145
+  },
+  {
+   "name": "BootFront",
+   "parent": "ShinFront",
+   "x": -0.07209,
+   "y": 0.10145,
+   "tipX": 0.02326,
+   "tipY": 0.02529
+  },
+  {
+   "name": "ThighBack",
+   "parent": "Hips",
+   "x": 0.02907,
+   "y": 0.90116,
+   "tipX": 0.00349,
+   "tipY": 0.50512
+  },
+  {
+   "name": "ShinBack",
+   "parent": "ThighBack",
+   "x": 0.00349,
+   "y": 0.50512,
+   "tipX": -0.01977,
+   "tipY": 0.10145
+  },
+  {
+   "name": "BootBack",
+   "parent": "ShinBack",
+   "x": -0.01977,
+   "y": 0.10145,
+   "tipX": 0.07558,
+   "tipY": 0.02529
+  },
+  {
+   "name": "Cloak0_0",
+   "parent": "Chest",
+   "x": -0.15186,
+   "y": 1.39395,
+   "tipX": -0.20851,
+   "tipY": 1.15386
+  },
+  {
+   "name": "Cloak0_1",
+   "parent": "Cloak0_0",
+   "x": -0.20851,
+   "y": 1.15386,
+   "tipX": -0.26516,
+   "tipY": 0.91377
+  },
+  {
+   "name": "Cloak0_2",
+   "parent": "Cloak0_1",
+   "x": -0.26516,
+   "y": 0.91377,
+   "tipX": -0.32181,
+   "tipY": 0.67367
+  },
+  {
+   "name": "Cloak0_3",
+   "parent": "Cloak0_2",
+   "x": -0.32181,
+   "y": 0.67367,
+   "tipX": -0.37847,
+   "tipY": 0.43358
+  },
+  {
+   "name": "Cloak0_4",
+   "parent": "Cloak0_3",
+   "x": -0.37847,
+   "y": 0.43358,
+   "tipX": -0.43512,
+   "tipY": 0.19349
+  },
+  {
+   "name": "Cloak1_0",
+   "parent": "Chest",
+   "x": -0.05744,
+   "y": 1.39395,
+   "tipX": -0.08172,
+   "tipY": 1.15116
+  },
+  {
+   "name": "Cloak1_1",
+   "parent": "Cloak1_0",
+   "x": -0.08172,
+   "y": 1.15116,
+   "tipX": -0.106,
+   "tipY": 0.90837
+  },
+  {
+   "name": "Cloak1_2",
+   "parent": "Cloak1_1",
+   "x": -0.106,
+   "y": 0.90837,
+   "tipX": -0.13028,
+   "tipY": 0.66558
+  },
+  {
+   "name": "Cloak1_3",
+   "parent": "Cloak1_2",
+   "x": -0.13028,
+   "y": 0.66558,
+   "tipX": -0.15456,
+   "tipY": 0.42279
+  },
+  {
+   "name": "Cloak1_4",
+   "parent": "Cloak1_3",
+   "x": -0.15456,
+   "y": 0.42279,
+   "tipX": -0.17884,
+   "tipY": 0.18
+  },
+  {
+   "name": "Cloak2_0",
+   "parent": "Chest",
+   "x": 0.05047,
+   "y": 1.36698,
+   "tipX": 0.06126,
+   "tipY": 1.16735
+  },
+  {
+   "name": "Cloak2_1",
+   "parent": "Cloak2_0",
+   "x": 0.06126,
+   "y": 1.16735,
+   "tipX": 0.07205,
+   "tipY": 0.96772
+  },
+  {
+   "name": "Cloak2_2",
+   "parent": "Cloak2_1",
+   "x": 0.07205,
+   "y": 0.96772,
+   "tipX": 0.08284,
+   "tipY": 0.76809
+  },
+  {
+   "name": "Cloak2_3",
+   "parent": "Cloak2_2",
+   "x": 0.08284,
+   "y": 0.76809,
+   "tipX": 0.09363,
+   "tipY": 0.56847
+  },
+  {
+   "name": "Cloak2_4",
+   "parent": "Cloak2_3",
+   "x": 0.09363,
+   "y": 0.56847,
+   "tipX": 0.10442,
+   "tipY": 0.36884
+  }
+ ],
+ "parts": [
+  {
+   "name": "Cloak",
+   "file": "ansel_cloak",
+   "order": 1,
+   "skinned": true,
+   "far": false,
+   "bones": [
+    "Chest",
+    "Cloak0_0",
+    "Cloak0_1",
+    "Cloak0_2",
+    "Cloak0_3",
+    "Cloak0_4",
+    "Cloak1_0",
+    "Cloak1_1",
+    "Cloak1_2",
+    "Cloak1_3",
+    "Cloak1_4",
+    "Cloak2_0",
+    "Cloak2_1",
+    "Cloak2_2",
+    "Cloak2_3",
+    "Cloak2_4"
+   ],
+   "cols": 12,
+   "rows": 24,
+   "originX": -0.48907,
+   "originY": 0.13279,
+   "bone": ""
+  },
+  {
+   "name": "ArmBack",
+   "file": "ansel_arm",
+   "order": 3,
+   "skinned": true,
+   "far": true,
+   "bones": [
+    "UpperArmBack",
+    "ForeArmBack"
+   ],
+   "cols": 6,
+   "rows": 20,
+   "originX": -0.0407,
+   "originY": 0.66587,
+   "bone": ""
+  },
+  {
+   "name": "LegBack",
+   "file": "ansel_leg",
+   "order": 5,
+   "skinned": true,
+   "far": true,
+   "bones": [
+    "ThighBack",
+    "ShinBack",
+    "BootBack"
+   ],
+   "cols": 8,
+   "rows": 26,
+   "originX": -0.08721,
+   "originY": -0.01584,
+   "bone": ""
+  },
+  {
+   "name": "LegFront",
+   "file": "ansel_leg",
+   "order": 7,
+   "skinned": true,
+   "far": false,
+   "bones": [
+    "ThighFront",
+    "ShinFront",
+    "BootFront"
+   ],
+   "cols": 8,
+   "rows": 26,
+   "originX": -0.13953,
+   "originY": -0.01584,
+   "bone": ""
+  },
+  {
+   "name": "Torso",
+   "file": "ansel_torso",
+   "order": 10,
+   "skinned": true,
+   "far": false,
+   "bones": [
+    "Hips",
+    "Spine",
+    "Chest"
+   ],
+   "cols": 8,
+   "rows": 18,
+   "originX": -0.09419,
+   "originY": 0.77419,
+   "bone": ""
+  },
+  {
+   "name": "Head",
+   "file": "ansel_head",
+   "order": 12,
+   "skinned": false,
+   "far": false,
+   "bones": [],
+   "cols": 0,
+   "rows": 0,
+   "originX": -0.11558,
+   "originY": 1.39005,
+   "bone": "Head"
+  },
+  {
+   "name": "Sword",
+   "file": "ansel_sword",
+   "order": 14,
+   "skinned": false,
+   "far": false,
+   "bones": [],
+   "cols": 0,
+   "rows": 0,
+   "originX": -0.10034,
+   "originY": 0.65744,
+   "bone": "Sword"
+  },
+  {
+   "name": "ArmFront",
+   "file": "ansel_arm",
+   "order": 15,
+   "skinned": true,
+   "far": false,
+   "bones": [
+    "UpperArmFront",
+    "ForeArmFront"
+   ],
+   "cols": 6,
+   "rows": 20,
+   "originX": -0.10465,
+   "originY": 0.66587,
+   "bone": ""
+  },
+  {
+   "name": "Hood",
+   "file": "ansel_hood",
+   "order": 16,
+   "skinned": false,
+   "far": false,
+   "bones": [],
+   "cols": 0,
+   "rows": 0,
+   "originX": -0.22791,
+   "originY": 1.19419,
+   "bone": "Chest"
+  }
+ ]
+}

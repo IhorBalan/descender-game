@@ -26,8 +26,6 @@ import pa_garden  # noqa: E402
 
 ZONES["z2"] = pa_z2
 ZONES["garden"] = pa_garden
-import pa_hero  # noqa: E402
-ZONES["hero"] = pa_hero  # Ansel cutout rig parts -> Assets/Art/Paradise/Hero/
 
 
 def main(argv):

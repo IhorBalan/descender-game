@@ -3,16 +3,15 @@ using UnityEngine;
 namespace Descender.World.Paradise
 {
     /// <summary>
-    /// Ansel drawn at full resolution for the new Paradise: a cutout of painted parts on
-    /// bones (Assets/Art/Paradise/Hero, assembled by ParadiseHero in the editor), animated
-    /// here in code from what the hero is actually doing, so motion stays fluid at any
-    /// resolution and always matches the controller: a run cycle whose stride follows his
-    /// speed, airborne poses from his vertical speed, the sword's swing timed to the attack
-    /// window, the dash's lean, a hurt flicker, death, wall grip, glide, and the half-formed
-    /// wing of light that beats softly and flaps hard on the second jump. Each bone eases
-    /// toward its target pose, so states blend instead of snapping. Rotation 0 is the rest
-    /// pose (limbs straight down); + turns counterclockwise, which swings a limb forward while
-    /// he faces right. The rig is mirrored for facing left.
+    /// Ansel at full resolution for the new Paradise: painted meshes that bend on a skeleton
+    /// (Assets/Art/Paradise/Ansel, assembled by ParadiseHero in the editor), animated here in
+    /// code from what the hero is actually doing, so motion stays fluid at any resolution and
+    /// always matches the controller: a run cycle whose stride follows his speed, airborne
+    /// poses from his vertical speed, the sword's swing timed to the attack window, the dash's
+    /// lean, a hurt flicker, death, wall grip, and a torn cloak that trails behind him on
+    /// springs. Each bone eases toward its target pose, so states blend instead of snapping.
+    /// Rotation 0 is the rest pose (as painted, limbs down); + turns counterclockwise, which
+    /// swings a limb forward while he faces right. The rig is mirrored for facing left.
     /// </summary>
     public sealed class HeroRig : MonoBehaviour
     {
@@ -22,6 +21,9 @@ namespace Descender.World.Paradise
 
         [SerializeField]
         private Transform torso;
+
+        [SerializeField]
+        private Transform chest;
 
         [SerializeField]
         private Transform head;
@@ -59,19 +61,17 @@ namespace Descender.World.Paradise
         [SerializeField]
         private Transform bootBack;
 
+        [Tooltip("The cloak's bones, chain after chain, each chain from the shoulder to the hem.")]
         [SerializeField]
-        private Transform wing;
+        private Transform[] cloakBones = new Transform[0];
 
-        [SerializeField]
-        private SpriteRenderer wingGlow;
-
-        [SerializeField]
-        private Transform hair;
+        [SerializeField, Min(1)]
+        private int cloakChainLength = 5;
 
         [Header("Motion")]
         [Tooltip("Units of ground covered by one full stride (two steps).")]
         [SerializeField, Min(0.2f)]
-        private float stride = 1.9f;
+        private float stride = 2.2f;
 
         [Tooltip("How fast bones ease toward their pose, per second.")]
         [SerializeField, Min(1f)]
@@ -79,7 +79,7 @@ namespace Descender.World.Paradise
 
         [Tooltip("The sword's angle in the hand at rest, relative to the forearm.")]
         [SerializeField]
-        private float swordRest = -70f;
+        private float swordRest = -35f;
 
         private Player.PlayerController hero;
         private SpriteRenderer[] renderers;
@@ -88,8 +88,11 @@ namespace Descender.World.Paradise
         private float phase;
         private float stateTime;
         private Player.PlayerState lastState;
-        private float wingPhase;
         private float deathTurn;
+        private float thighLength;
+        private float shinLength;
+        private float[] cloakAngle = new float[0];
+        private float[] cloakSpeed = new float[0];
 
         private struct Pose
         {
@@ -107,7 +110,6 @@ namespace Descender.World.Paradise
             public float thighB;
             public float shinB;
             public float bootB;
-            public float wing;
             public float squash;
         }
 
@@ -131,6 +133,10 @@ namespace Descender.World.Paradise
                 hipsRest = hips.localPosition;
             }
             current.swordF = swordRest;
+            thighLength = shinFront != null ? shinFront.localPosition.magnitude : 0f;
+            shinLength = bootFront != null ? bootFront.localPosition.magnitude : 0f;
+            cloakAngle = new float[cloakBones.Length];
+            cloakSpeed = new float[cloakBones.Length];
         }
 
         private void LateUpdate()
@@ -161,77 +167,40 @@ namespace Descender.World.Paradise
             current = Blend(current, target, k);
             Apply(current);
 
-            // The wing: a slow beat, faster aloft, a hard flap on the second jump.
-            var beat =
-                hero.DoubleJumpShowing ? 14f
-                : hero.IsGrounded ? 2.2f
-                : 5f;
-            wingPhase += dt * beat;
-            var flap =
-                hero.DoubleJumpShowing ? 35f
-                : hero.IsGliding ? 10f
-                : 6f;
-            if (wing != null)
-            {
-                wing.localRotation = Quaternion.Euler(0f, 0f, current.wing + Mathf.Sin(wingPhase) * flap);
-            }
-            if (wingGlow != null)
-            {
-                // Always clearly there (it is all that shows of the wing against a pale sky), brighter in flight.
-                var glow =
-                    hero.WingFlashing || hero.DoubleJumpShowing || hero.IsGliding
-                        ? 1f
-                        : 0.85f + Mathf.Sin(Time.time * 2f) * 0.1f;
-                var c = wingGlow.color;
-                c.a = Mathf.MoveTowards(c.a, glow, dt * 4f);
-                wingGlow.color = c;
-            }
-
             // Facing, by mirroring the rig; dying, by turning over onto the ground.
-            var face = hero.IsGrippingWall ? -hero.WallDir : hero.Facing;
+            var face =
+                hero.IsGrippingWall ? -hero.WallDir
+                : Skidding(v) ? (v.x < 0f ? -1 : 1)
+                : hero.Facing;
             transform.localScale = new Vector3(face >= 0 ? 1f : -1f, 1f, 1f);
             deathTurn = Mathf.MoveTowards(deathTurn, state == Player.PlayerState.Dead ? 1f : 0f, dt * 3f);
             transform.localRotation = Quaternion.Euler(0f, 0f, -80f * Mathf.SmoothStep(0f, 1f, deathTurn));
 
+            Cloak(dt, v, face, speed01);
             Flicker();
         }
 
         private Pose Target(Player.PlayerState state, Vector2 v, float speed01)
         {
-            var p = new Pose { swordF = swordRest, wing = 8f };
-            var t = Time.time;
+            var p = new Pose { swordF = swordRest };
             switch (state)
             {
                 case Player.PlayerState.Attack:
-                {
-                    // Up and over, then a fast cut forward and down across the attack window.
-                    var u = Mathf.Clamp01(stateTime / Mathf.Max(0.05f, hero.AttackTime()));
-                    // A short windup, then the cut lands by 55% of the window (the hit is live from ~35%).
-                    var cut =
-                        u < 0.15f ? Mathf.Lerp(0f, -0.2f, u / 0.15f) : Mathf.SmoothStep(-0.2f, 1f, (u - 0.15f) / 0.4f);
-                    // The blade runs along the arm at -90 (it points forward when the arm hangs down).
-                    p.upperF = Mathf.Lerp(160f, 40f, Mathf.Clamp01(cut));
-                    p.foreF = Mathf.Lerp(15f, 5f, Mathf.Clamp01(cut));
-                    p.swordF = Mathf.Lerp(-95f, -85f, Mathf.Clamp01(cut));
-                    p.torso = Mathf.Lerp(8f, -14f, Mathf.Clamp01(cut));
-                    p.upperB = -35f;
-                    p.foreB = 30f;
-                    Legs(ref p, v, speed01 * 0.6f, true);
+                    Slash(ref p, speed01);
                     break;
-                }
                 case Player.PlayerState.Dash:
-                    p.torso = -22f;
-                    p.head = 10f;
-                    p.upperF = -55f;
-                    p.foreF = 20f;
-                    p.upperB = -70f;
-                    p.foreB = 15f;
-                    p.thighF = 35f;
-                    p.shinF = -40f;
-                    p.thighB = -45f;
-                    p.shinB = -15f;
+                    p.torso = -28f;
+                    p.head = 14f;
+                    p.upperF = -70f;
+                    p.foreF = 30f;
+                    p.upperB = -80f;
+                    p.foreB = 25f;
+                    p.thighF = 38f;
+                    p.shinF = -48f;
+                    p.thighB = -52f;
+                    p.shinB = -18f;
                     p.squash = 0.06f;
-                    p.wing = -20f;
+                    Hold(ref p, -172f);
                     break;
                 case Player.PlayerState.Hurt:
                     p.torso = 16f;
@@ -252,8 +221,10 @@ namespace Descender.World.Paradise
                     p.foreF = 35f;
                     p.upperB = 70f;
                     p.foreB = 40f;
-                    p.wing = 25f;
-                    Legs(ref p, v, 0f, true);
+                    Legs(ref p, 0f, true);
+                    break;
+                case Player.PlayerState.Slam:
+                    Slam(ref p);
                     break;
                 case Player.PlayerState.Dead:
                     p.torso = 10f;
@@ -275,32 +246,90 @@ namespace Descender.World.Paradise
                         p.shinF = -55f;
                         p.thighB = 10f;
                         p.shinB = -25f;
+                        Hold(ref p, -120f);
                     }
                     else if (!hero.IsGrounded)
                     {
-                        Air(ref p, v);
+                        if (hero.IsGliding)
+                        {
+                            Glide(ref p);
+                        }
+                        else
+                        {
+                            Air(ref p, v);
+                        }
                     }
                     else
                     {
-                        Ground(ref p, v, speed01, t);
+                        Ground(ref p, v, speed01, Time.time);
                     }
                     break;
+            }
+            if (hero.IsGrounded && state != Player.PlayerState.Dead)
+            {
+                Plant(ref p);
             }
             return p;
         }
 
+        /// <summary>Points the blade at a fixed angle in the world, whatever the arm is doing.</summary>
+        private static void Hold(ref Pose p, float worldAngle)
+        {
+            p.swordF = worldAngle - (p.torso + p.upperF + p.foreF);
+        }
+
+        /// <summary>Lowers the hips until the lower foot is on the ground, so bent legs never float.</summary>
+        private void Plant(ref Pose p)
+        {
+            p.hipsY += Mathf.Max(Reach(p.thighF, p.shinF), Reach(p.thighB, p.shinB)) - thighLength - shinLength;
+        }
+
+        private float Reach(float thigh, float shin)
+        {
+            return thighLength * Mathf.Cos(thigh * Mathf.Deg2Rad)
+                + shinLength * Mathf.Cos((thigh + shin) * Mathf.Deg2Rad);
+        }
+
+        private bool Skidding(Vector2 v)
+        {
+            return hero.State == Player.PlayerState.Run
+                && hero.MoveInput != 0f
+                && Mathf.Sign(hero.MoveInput) != Mathf.Sign(v.x)
+                && Mathf.Abs(v.x) * Player.PlayerTuning.PixelsPerUnit >= hero.Tuning.skidSpeed;
+        }
+
         private void Ground(ref Pose p, Vector2 v, float speed01, float t)
         {
-            Legs(ref p, v, speed01, false);
+            if (Skidding(v))
+            {
+                p.torso = 14f;
+                p.head = -6f;
+                p.upperF = 35f;
+                p.foreF = 20f;
+                p.upperB = 50f;
+                p.foreB = 25f;
+                p.thighF = 30f;
+                p.shinF = -18f;
+                p.thighB = -18f;
+                p.shinB = -28f;
+                p.squash = 0.03f;
+                Hold(ref p, -20f);
+                return;
+            }
+            Legs(ref p, speed01, false);
             var s = Mathf.Sin(phase);
-            // Arms swing against the legs; the body leans into the run and bobs twice a stride.
-            p.upperF = Mathf.Lerp(Mathf.Sin(t * 1.6f) * 2f, -38f * s, speed01);
-            p.foreF = Mathf.Lerp(8f, 35f + 20f * Mathf.Max(0f, s), speed01);
-            p.upperB = Mathf.Lerp(-Mathf.Sin(t * 1.6f) * 2f, 38f * s, speed01);
-            p.foreB = Mathf.Lerp(8f, 35f + 20f * Mathf.Max(0f, -s), speed01);
-            p.torso = Mathf.Lerp(Mathf.Sin(t * 1.6f) * 1.2f, -8f, speed01);
-            p.head = Mathf.Lerp(0f, 5f, speed01);
-            p.hipsY = speed01 * 0.05f * Mathf.Abs(Mathf.Cos(phase)) + (1f - speed01) * Mathf.Sin(t * 1.6f) * 0.008f;
+            var breath = Mathf.Sin(t * 1.6f);
+            // Arms swing against the legs with the elbows bent; the sword arm, carrying weight, swings less.
+            p.upperF = Mathf.Lerp(breath * 2f, -14f - 20f * s, speed01);
+            p.foreF = Mathf.Lerp(8f, 62f + 14f * Mathf.Max(0f, s), speed01);
+            p.upperB = Mathf.Lerp(-breath * 2f, 8f + 42f * s, speed01);
+            p.foreB = Mathf.Lerp(8f, 70f + 16f * Mathf.Max(0f, -s), speed01);
+            p.torso = Mathf.Lerp(breath * 1.2f, -17f, speed01);
+            p.head = Mathf.Lerp(0f, 11f, speed01);
+            // Standing, the sword hangs from the hand; running, the blade streams behind him.
+            var rest = p.swordF;
+            Hold(ref p, -155f);
+            p.swordF = Mathf.LerpAngle(rest, p.swordF, speed01);
             if (hero.LandingShowing)
             {
                 p.squash = 0.08f;
@@ -308,43 +337,137 @@ namespace Descender.World.Paradise
             }
         }
 
-        private void Legs(ref Pose p, Vector2 v, float speed01, bool planted)
+        private void Legs(ref Pose p, float speed01, bool planted)
         {
             if (planted && speed01 < 0.05f)
             {
-                p.thighF = 12f;
-                p.shinF = -14f;
-                p.thighB = -8f;
-                p.shinB = -6f;
+                p.thighF = 22f;
+                p.shinF = -24f;
+                p.thighB = -14f;
+                p.shinB = -8f;
+                p.bootF = 2f;
+                p.bootB = 22f;
                 return;
             }
             var s = Mathf.Sin(phase);
             var c = Mathf.Cos(phase);
-            p.thighF = 36f * s * speed01;
-            p.thighB = -36f * s * speed01;
-            // The knee folds as the leg swings through.
-            p.shinF = -(8f + 62f * Mathf.Max(0f, c)) * speed01;
-            p.shinB = -(8f + 62f * Mathf.Max(0f, -c)) * speed01;
-            p.bootF = 10f * Mathf.Max(0f, -s) * speed01;
-            p.bootB = 10f * Mathf.Max(0f, s) * speed01;
+            // The thighs swing further forward than back, as they do at a run.
+            p.thighF = (10f + 48f * s) * speed01;
+            p.thighB = (10f - 48f * s) * speed01;
+            // The knee folds hard as the leg swings through, and stays nearly straight on the ground.
+            p.shinF = -(10f + 85f * Mathf.Max(0f, c)) * speed01;
+            p.shinB = -(10f + 85f * Mathf.Max(0f, -c)) * speed01;
+            // On the ground the foot stays flat; in the air the toes drop.
+            p.bootF = Foot(p.thighF, p.shinF, -c, c) * speed01;
+            p.bootB = Foot(p.thighB, p.shinB, c, -c) * speed01;
         }
 
-        private static void Air(ref Pose p, Vector2 v)
+        private static float Foot(float thigh, float shin, float contact, float swing)
         {
-            // Rising: knees up, arm reaching; falling: legs open, arms out for balance.
+            return Mathf.Lerp(-18f * Mathf.Max(0f, swing), -(thigh + shin), Mathf.SmoothStep(0f, 1f, contact));
+        }
+
+        /// <summary>The attack: wind up behind the head, cut through in a fast arc, and let the blade follow through.</summary>
+        private void Slash(ref Pose p, float speed01)
+        {
+            var u = Mathf.Clamp01(stateTime / Mathf.Max(0.05f, hero.AttackTime()));
+            var windup = Mathf.SmoothStep(0f, 1f, u / 0.18f);
+            var through = 1f - Mathf.Pow(1f - Mathf.Clamp01((u - 0.18f) / 0.32f), 3f);
+            var settle = Mathf.SmoothStep(0f, 1f, (u - 0.5f) / 0.5f);
+            p.upperF = Mathf.Lerp(Mathf.Lerp(0f, 140f, windup), 30f, through) - 25f * settle;
+            p.foreF = Mathf.Lerp(Mathf.Lerp(8f, 75f, windup), 6f, through) + 10f * settle;
+            p.swordF = Mathf.Lerp(-95f, -81f, through);
+            p.torso = Mathf.Lerp(Mathf.Lerp(0f, 10f, windup), -18f, through) + 6f * settle;
+            p.head = Mathf.Lerp(0f, 6f, through);
+            p.upperB = Mathf.Lerp(-10f, -45f, through);
+            p.foreB = 35f;
+            Legs(ref p, speed01 * 0.6f, true);
+        }
+
+        private void Slam(ref Pose p)
+        {
+            if (hero.SlamLanded)
+            {
+                p.torso = -28f;
+                p.head = 16f;
+                p.upperF = 50f;
+                p.foreF = 25f;
+                p.upperB = -40f;
+                p.foreB = 30f;
+                p.thighF = 62f;
+                p.shinF = -105f;
+                p.thighB = 18f;
+                p.shinB = -95f;
+                p.bootF = 43f;
+                p.bootB = 77f;
+                p.squash = 0.05f;
+            }
+            else
+            {
+                p.torso = -14f;
+                p.head = 12f;
+                p.upperF = 60f;
+                p.foreF = 30f;
+                p.upperB = 35f;
+                p.foreB = 40f;
+                p.thighF = 48f;
+                p.shinF = -85f;
+                p.thighB = 22f;
+                p.shinB = -70f;
+            }
+            Hold(ref p, -90f);
+        }
+
+        private static void Glide(ref Pose p)
+        {
+            p.torso = -20f;
+            p.head = 12f;
+            p.upperF = -50f;
+            p.foreF = 30f;
+            p.upperB = -65f;
+            p.foreB = 25f;
+            p.thighF = -12f;
+            p.shinF = -28f;
+            p.thighB = -28f;
+            p.shinB = -38f;
+            p.bootF = -20f;
+            p.bootB = -20f;
+            Hold(ref p, -165f);
+        }
+
+        private void Air(ref Pose p, Vector2 v)
+        {
+            if (hero.DoubleJumpShowing)
+            {
+                p.torso = -20f;
+                p.head = 10f;
+                p.upperF = 25f;
+                p.foreF = 55f;
+                p.upperB = -35f;
+                p.foreB = 40f;
+                p.thighF = 75f;
+                p.shinF = -105f;
+                p.thighB = 40f;
+                p.shinB = -95f;
+                Hold(ref p, -140f);
+                return;
+            }
+            // Rising: the lead knee up, the blade behind; falling: legs open, arms out for balance.
             var rising = Mathf.Clamp01(v.y / 8f);
             var falling = Mathf.Clamp01(-v.y / 10f);
-            p.thighF = Mathf.Lerp(20f, 55f, rising) - 15f * falling;
-            p.shinF = Mathf.Lerp(-30f, -85f, rising) + 15f * falling;
-            p.thighB = Mathf.Lerp(-15f, -5f, rising) - 10f * falling;
-            p.shinB = Mathf.Lerp(-25f, -50f, rising);
-            p.upperF = Mathf.Lerp(40f, 95f, rising) + 40f * falling;
-            p.foreF = 30f;
-            p.upperB = Mathf.Lerp(-30f, -50f, rising) + 90f * falling;
-            p.foreB = 25f;
-            p.torso = Mathf.Lerp(-4f, -10f, rising) + 6f * falling;
+            p.thighF = Mathf.Lerp(20f, 58f, rising) - 15f * falling;
+            p.shinF = Mathf.Lerp(-30f, -88f, rising) + 15f * falling;
+            p.thighB = Mathf.Lerp(-15f, -8f, rising) - 12f * falling;
+            p.shinB = Mathf.Lerp(-25f, -52f, rising);
+            p.bootF = -12f;
+            p.bootB = -18f;
+            p.upperF = Mathf.Lerp(-8f, -22f, rising) + 30f * falling;
+            p.foreF = 38f;
+            p.upperB = Mathf.Lerp(-30f, -55f, rising) + 75f * falling;
+            p.foreB = 35f;
+            p.torso = Mathf.Lerp(-6f, -12f, rising) + 8f * falling;
             p.head = -4f * rising + 6f * falling;
-            p.wing = Mathf.Lerp(15f, 30f, falling);
+            Hold(ref p, Mathf.Lerp(-105f, -150f, rising));
         }
 
         private static Pose Blend(Pose a, Pose b, float k)
@@ -365,7 +488,6 @@ namespace Descender.World.Paradise
                 thighB = Mathf.LerpAngle(a.thighB, b.thighB, k),
                 shinB = Mathf.LerpAngle(a.shinB, b.shinB, k),
                 bootB = Mathf.LerpAngle(a.bootB, b.bootB, k),
-                wing = Mathf.LerpAngle(a.wing, b.wing, k),
                 squash = Mathf.Lerp(a.squash, b.squash, k),
             };
         }
@@ -377,7 +499,9 @@ namespace Descender.World.Paradise
                 hips.localPosition = hipsRest + new Vector3(0f, p.hipsY, 0f);
                 hips.localScale = new Vector3(1f + p.squash, 1f - p.squash, 1f);
             }
-            Turn(torso, p.torso);
+            // The lean is shared along the spine, so the body curves instead of tipping.
+            Turn(torso, p.torso * 0.55f);
+            Turn(chest, p.torso * 0.45f);
             Turn(head, p.head - p.torso * 0.4f);
             Turn(upperArmFront, p.upperF);
             Turn(foreArmFront, p.foreF);
@@ -390,10 +514,6 @@ namespace Descender.World.Paradise
             Turn(thighBack, p.thighB);
             Turn(shinBack, p.shinB);
             Turn(bootBack, p.bootB);
-            if (hair != null)
-            {
-                hair.localRotation = Quaternion.Euler(0f, 0f, Mathf.Sin(phase * 2f) * 6f - current.torso * 0.5f);
-            }
         }
 
         private static void Turn(Transform bone, float degrees)
@@ -404,13 +524,52 @@ namespace Descender.World.Paradise
             }
         }
 
+        /// <summary>
+        /// The cloak: every joint of every chain is a damped spring chasing an angle set by how
+        /// he moves. Running and falling stream it behind him, a jump lets it hang, and a ripple
+        /// travels from the shoulders to the hem. Stiff at the shoulders, loose at the hem.
+        /// </summary>
+        private void Cloak(float dt, Vector2 v, int face, float speed01)
+        {
+            if (cloakBones.Length == 0)
+            {
+                return;
+            }
+            dt = Mathf.Min(dt, 1f / 30f);
+            var trail = -Mathf.Clamp(v.x * face * 8f, -30f, 58f);
+            trail -= Mathf.Clamp(-v.y * 4.5f, 0f, 42f);
+            trail += Mathf.Clamp(v.y * 2f, 0f, 14f);
+            if (hero.IsGliding)
+            {
+                trail -= 22f;
+            }
+            var chainCount = cloakBones.Length / cloakChainLength;
+            var rate = 2.2f + 6f * speed01;
+            var t = Time.time;
+            for (var i = 0; i < cloakBones.Length; i++)
+            {
+                var chain = i / cloakChainLength;
+                var joint = i % cloakChainLength;
+                var along = (joint + 1f) / cloakChainLength;
+                // The chain at the back of the fan trails most, the one by the chest least.
+                var reach = Mathf.Lerp(1.15f, 0.65f, chainCount > 1 ? chain / (chainCount - 1f) : 0f);
+                var ripple = Mathf.Sin(t * rate - joint * 0.9f - chain * 1.3f) * (1f + 4.5f * speed01) * along;
+                var target = trail * reach * Mathf.Lerp(0.34f, 0.1f, along) + ripple;
+                var stiffness = Mathf.Lerp(75f, 28f, along);
+                cloakSpeed[i] += (target - cloakAngle[i]) * stiffness * dt;
+                cloakSpeed[i] *= Mathf.Exp(-9f * dt);
+                cloakAngle[i] += cloakSpeed[i] * dt;
+                Turn(cloakBones[i], cloakAngle[i]);
+            }
+        }
+
         /// <summary>While he cannot be hurt after a hit, he flickers, as the old sprite did.</summary>
         private void Flicker()
         {
             var hidden = hero.InvulnerableLeft > 0f && hero.IsAlive && Mathf.Repeat(Time.time * 14f, 1f) < 0.35f;
             for (var i = 0; i < renderers.Length; i++)
             {
-                if (renderers[i] == null || renderers[i] == wingGlow)
+                if (renderers[i] == null)
                 {
                     continue;
                 }
@@ -422,7 +581,8 @@ namespace Descender.World.Paradise
 
         public void SetBones(
             Transform hipsBone,
-            Transform torsoBone,
+            Transform spineBone,
+            Transform chestBone,
             Transform headBone,
             Transform upperF,
             Transform foreF,
@@ -435,13 +595,13 @@ namespace Descender.World.Paradise
             Transform thighB,
             Transform shinB,
             Transform bootB,
-            Transform wingBone,
-            SpriteRenderer wingGlowRenderer,
-            Transform hairBone
+            Transform[] cloak,
+            int cloakJointsPerChain
         )
         {
             hips = hipsBone;
-            torso = torsoBone;
+            torso = spineBone;
+            chest = chestBone;
             head = headBone;
             upperArmFront = upperF;
             foreArmFront = foreF;
@@ -454,9 +614,8 @@ namespace Descender.World.Paradise
             thighBack = thighB;
             shinBack = shinB;
             bootBack = bootB;
-            wing = wingBone;
-            wingGlow = wingGlowRenderer;
-            hair = hairBone;
+            cloakBones = cloak;
+            cloakChainLength = cloakJointsPerChain;
         }
     }
 }
