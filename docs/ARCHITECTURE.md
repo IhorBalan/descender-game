@@ -95,7 +95,7 @@ runtime code means adding its assembly to the asmdef `references`, not an
 | `UI/` | HUD, title, pause, camp, pack, shop, skills and settings screens, dialogue box, prompts, dev console; `UiKit`/`MenuKit` build uGUI from code in the stone theme. |
 | `Input/` | `InputRouter`: the one owner of `Descender.inputactions`. |
 | `Audio/` | `Music` (one crossfaded loop), `Sfx` (pooled sources), `SfxLibrary`. |
-| `Camera/` | `GameCamera`: look-ahead, room clamp, whole-pixel shake. |
+| `Camera/` | `GameCamera`: look-ahead, room clamp, whole-pixel shake, and the blend between `CameraSettings` (framing, zoom, look-ahead, held axes). `CameraZone`: an area that gives the camera its own settings while the hero stands in it; the smallest zone wins. |
 | `Fx/` | `Feedback` (hit-stop, shake, rumble, particles), `HitFlash`, `Tween`, `Shapes`, `Shape` (the placeholder: a labelled square, circle, diamond or triangle for anything without art), `SpriteAnimator`. |
 | `Lab/` | The mechanics lab, built from data with no scene and no art: `LabLayout` (the stations and their pieces, sized from `PlayerTuning`), `LabBuilder` (colliders and `Shape`s), `LabRoot` (entering a station; a station that changes in play is built again), `LabPad`. Opened by `GameFlow.StartLab`: the console's `lab`, or Descender > Lab > Play. |
 | `Triggers/` | Items, switches, locks and doors as data: `TriggerZone` (fires on enter, leave, interact or hit, once or every time, when its `TriggerNeeds` are met) runs a list of `TriggerAction`s (`TriggerActions.cs`: one small serializable class each, made in one line by `Do`). `Door`, `Mover`, `Keys` (held names that are not pack items), `Notice` (a line on the HUD). A new action is one class; the inspector (`Editor/Triggers`) lists it by itself. |

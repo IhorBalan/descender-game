@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace Descender.CameraRig
 {
@@ -6,7 +7,9 @@ namespace Descender.CameraRig
     /// Follows the hero with a look-ahead in the facing direction, clamps to the
     /// current room's bounds and shakes in whole pixels so the pixel-perfect
     /// camera never shimmers. Port of scripts/game_camera.gd. Runs in LateUpdate,
-    /// after the interpolated body has moved.
+    /// after the interpolated body has moved. While the hero stands in a
+    /// <see cref="CameraZone"/> the framing, zoom, look-ahead and held axes blend to the
+    /// zone's <see cref="CameraSettings"/>, and back to the room's when he leaves.
     /// </summary>
     [RequireComponent(typeof(Camera))]
     public sealed class GameCamera : MonoBehaviour
@@ -53,6 +56,37 @@ namespace Descender.CameraRig
         private Rect bounds = Unbounded;
         private Vector2 focus;
 
+        // Zones: the settings in force, where the blend started and how far along it is.
+        private CameraSettings current;
+        private CameraSettings blendFrom;
+        private CameraZone zone;
+        private float blendTime;
+        private float blendElapsed;
+        private bool framingSettled = true;
+        private float baseSize;
+        private float appliedZoom = 1f;
+        private PixelPerfectCamera pixelPerfect;
+        private Vector2Int baseResolution;
+
+        /// <summary>The settings in force this frame: the room's, a zone's, or a blend of the two.</summary>
+        public CameraSettings Settings => current;
+
+        /// <summary>The zone the camera obeys, or null in the open room.</summary>
+        public CameraZone Zone => zone;
+
+        /// <summary>The settings outside any zone, from this component's own fields.</summary>
+        public CameraSettings RoomSettings
+        {
+            get
+            {
+                var room = new CameraSettings();
+                room.framing = framing;
+                room.zoom = 1f;
+                room.lookAheadPixels = lookAheadPixels;
+                return room;
+            }
+        }
+
         /// <summary>The room the camera is clamped to, in units. Set by WorldRoom when the hero enters.</summary>
         public Rect Bounds
         {
@@ -92,10 +126,71 @@ namespace Descender.CameraRig
         private void Awake()
         {
             cam = GetComponent<Camera>();
+            baseSize = cam.orthographicSize;
+            if (TryGetComponent(out pixelPerfect))
+            {
+                baseResolution = new Vector2Int(pixelPerfect.refResolutionX, pixelPerfect.refResolutionY);
+            }
+            current = RoomSettings;
             if (target != null)
             {
                 focus = target.position;
             }
+        }
+
+        /// <summary>Moves the settings toward the hero's zone, or the room's; a change of zone starts a blend.</summary>
+        private void StepSettings(float dt)
+        {
+            var now = CameraZone.Current;
+            if (now != zone)
+            {
+                // Out of a zone the blend back takes that zone's time.
+                var timed = now != null ? now : zone;
+                blendTime = timed != null ? timed.BlendTime : 0f;
+                blendFrom = current;
+                blendElapsed = 0f;
+                zone = now;
+            }
+            var wanted = zone != null ? zone.Settings(RoomSettings) : RoomSettings;
+            blendElapsed += dt;
+            current = wanted;
+            if (blendElapsed < blendTime)
+            {
+                current = CameraSettings.Blend(blendFrom, wanted, blendElapsed / blendTime);
+            }
+            ApplyZoom(current.zoom);
+        }
+
+        /// <summary>Takes the settings of where the hero stands at once, with no blend.</summary>
+        private void SettleSettings()
+        {
+            zone = CameraZone.Current;
+            current = zone != null ? zone.Settings(RoomSettings) : RoomSettings;
+            blendFrom = current;
+            blendTime = 0f;
+            blendElapsed = 0f;
+            framingSettled = true;
+            ApplyZoom(current.zoom);
+        }
+
+        /// <summary>
+        /// Shows more or less of the level. Under the Pixel Perfect Camera the view is its
+        /// reference resolution, kept to whole even pixels; without one it is the
+        /// orthographic size.
+        /// </summary>
+        private void ApplyZoom(float zoom)
+        {
+            if (Mathf.Approximately(zoom, appliedZoom))
+            {
+                return;
+            }
+            appliedZoom = zoom;
+            if (pixelPerfect != null)
+            {
+                pixelPerfect.refResolutionX = Mathf.Max(2, Mathf.RoundToInt(baseResolution.x * zoom / 2f) * 2);
+                pixelPerfect.refResolutionY = Mathf.Max(2, Mathf.RoundToInt(baseResolution.y * zoom / 2f) * 2);
+            }
+            cam.orthographicSize = baseSize * zoom;
         }
 
         /// <summary>Shakes for a time; the strength is scaled by the shake setting (0..1).</summary>
@@ -118,7 +213,8 @@ namespace Descender.CameraRig
             {
                 return;
             }
-            focus = (Vector2)target.position + framing;
+            SettleSettings();
+            focus = current.Hold((Vector2)target.position + current.framing);
             velocity = Vector2.zero;
             Place(Vector2.zero);
         }
@@ -129,18 +225,32 @@ namespace Descender.CameraRig
             {
                 return;
             }
-            var wanted = (Vector2)target.position + framing;
+            StepSettings(Time.deltaTime);
+            var wanted = (Vector2)target.position + current.framing;
             var facing = target.localScale.x < 0f ? -1f : 1f;
             if (target.TryGetComponent<Player.PlayerController>(out var hero))
             {
                 facing = hero.Facing;
             }
-            wanted.x += facing * lookAheadPixels / PixelsPerUnit;
+            wanted.x += facing * current.lookAheadPixels / PixelsPerUnit;
+            // The dead zone is for the hero's small hops. While the settings blend it would
+            // swallow the framing's own movement, and the view trails the blend by a few
+            // pixels, so it waits until the blend is over and the view has caught up.
             var deadZone = verticalDeadZonePixels / PixelsPerUnit;
-            if (Mathf.Abs(wanted.y - focus.y) < deadZone)
+            var gap = Mathf.Abs(wanted.y - focus.y);
+            if (blendElapsed < blendTime)
+            {
+                framingSettled = false;
+            }
+            else if (!framingSettled && gap < 1f / PixelsPerUnit)
+            {
+                framingSettled = true;
+            }
+            if (framingSettled && gap < deadZone)
             {
                 wanted.y = focus.y;
             }
+            wanted = current.Hold(wanted);
             focus = Vector2.SmoothDamp(focus, wanted, ref velocity, smoothTime, float.PositiveInfinity, Time.deltaTime);
 
             var offset = Vector2.zero;

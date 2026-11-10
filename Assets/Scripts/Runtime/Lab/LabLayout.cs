@@ -39,6 +39,9 @@ namespace Descender.Lab
 
         /// <summary>A ledge on a <see cref="Mover"/>: it travels by `travel` and back once started.</summary>
         Lift,
+
+        /// <summary>A camera zone: while the hero is in it the view takes its framing, zoom and held axes.</summary>
+        Camera,
     }
 
     /// <summary>One thing in a station, as a rectangle in world units (x and y are its lower left corner).</summary>
@@ -70,6 +73,11 @@ namespace Descender.Lab
 
         /// <summary>A lift: where it goes from where it starts.</summary>
         public Vector2 travel;
+
+        /// <summary>A camera zone: the framing offset, the zoom (in `value`) and the axes it holds.</summary>
+        public Vector2 framing;
+        public bool lockX;
+        public bool lockY;
     }
 
     /// <summary>A room of the lab where one mechanic is tried.</summary>
@@ -129,6 +137,7 @@ namespace Descender.Lab
             "pods",
             "spikes",
             "items",
+            "camera",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -160,6 +169,7 @@ namespace Descender.Lab
             Pods(Open(stations, "pods", "Bounce pods"));
             Spikes(Open(stations, "spikes", "Spikes and safe ground"));
             ItemsAndTriggers(Open(stations, "items", "Items and triggers"), jump, second);
+            CameraZones(Open(stations, "camera", "Camera zones"));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -426,6 +436,41 @@ namespace Descender.Lab
             press.on = TriggerEvent.Interact;
             press.once = false;
             press.actions = find => List(Do.Mover(find("lift").GetComponent<Mover>(), SwitchTo.Toggle));
+        }
+
+        /// <summary>How high the camera station's plateau stands over the floor.</summary>
+        public const float PlateauHeight = 14f;
+
+        /// <summary>How far down the look-down zone shifts the view, in units.</summary>
+        public const float LookDown = 5f;
+
+        /// <summary>How much more the arena zone shows.</summary>
+        public const float ArenaZoom = 1.5f;
+
+        /// <summary>
+        /// A plateau with a low corridor where the view's height is held, an edge where it
+        /// looks down before the drop, and an arena below where it pulls back.
+        /// </summary>
+        private static void CameraZones(Station station)
+        {
+            var top = FloorTop + PlateauHeight;
+            Add(station, PieceKind.Solid, Wall, FloorTop, 24f, PlateauHeight, "plateau");
+            station.spawn = new Vector2(station.room.x + SpawnX, top);
+
+            // The corridor: a low roof, and the view's height held at its middle.
+            Add(station, PieceKind.Solid, 12f, top + 4f, 8f, 2f, "low roof");
+            var corridor = Add(station, PieceKind.Camera, 12f, top, 8f, 4f, "height held", 1f);
+            corridor.id = "corridor";
+            corridor.lockY = true;
+
+            // The edge: the view drops to show where he will land.
+            var edge = Add(station, PieceKind.Camera, 22f, top, 4f, 4f, "look down", 1f);
+            edge.id = "edge";
+            edge.framing = new Vector2(0f, -LookDown);
+
+            // The arena: the view pulls back to show all of it.
+            var arena = Add(station, PieceKind.Camera, 27f, FloorTop, 27f, 12f, "pulled back", ArenaZoom);
+            arena.id = "arena";
         }
 
         /// <summary>The lock: takes the key, opens the door and quiets the "locked" line.</summary>
