@@ -85,6 +85,10 @@ namespace Descender.Player
         private IMovingGround movingGround;
         private bool unsteadyGround;
         private Vector2 carry;
+        private Vector2 wind;
+        private Vector2 windAsked;
+        private float windGain;
+        private Vector2 sentVelocity;
         private int crushedSteps;
         private float lastFallSpeed;
         private float coyoteLeft;
@@ -176,6 +180,9 @@ namespace Descender.Player
 
         /// <summary>What the moving ground under him adds to his speed, in units a second; zero on still ground.</summary>
         public Vector2 CarryVelocity => carry;
+
+        /// <summary>What the wind he is in adds to his speed, in level pixels a second; zero in still air.</summary>
+        public Vector2 WindPixels => wind * Ppu;
 
         /// <summary>The hero's velocity in level pixels per second.</summary>
         public Vector2 VelocityPixels => body.linearVelocity * Ppu;
@@ -401,10 +408,14 @@ namespace Descender.Player
             {
                 body.linearVelocity = Vector2.zero;
                 carry = Vector2.zero;
+                wind = Vector2.zero;
+                windAsked = Vector2.zero;
+                sentVelocity = Vector2.zero;
                 return;
             }
-            // What the ground under him added last step comes off first, so every state
-            // works with his own speed.
+            // What the wind and the ground under him added last step comes off first, so
+            // every state works with his own speed.
+            body.linearVelocity -= WindLeft();
             body.linearVelocity -= carry;
 
             wasGrounded = grounded;
@@ -464,6 +475,7 @@ namespace Descender.Player
             TrackSafeGround(dt);
             RideGround();
             CheckCrushed();
+            TakeWind(dt);
             if (transform.position.y < DeathY && state != PlayerState.Dead && !Frozen)
             {
                 Die();
@@ -1179,6 +1191,58 @@ namespace Descender.Player
         }
 
         /// <summary>
+        /// A wind blows on him for the step now being taken: called by what blows (a
+        /// <see cref="Triggers.ForceZone"/>) before his own step, every step it lasts. The
+        /// wind is a speed in level pixels a second that is added to his own, which he
+        /// picks up, and loses again, at `gain` pixels a second squared (0 for at once).
+        /// Several winds add up.
+        /// </summary>
+        public void Blow(Vector2 pixelsPerSecond, float gain)
+        {
+            windAsked += pixelsPerSecond / Ppu;
+            windGain = Mathf.Max(gain, 0f) / Ppu;
+        }
+
+        /// <summary>
+        /// The wind's part of the speed the body has now. What the world took from the
+        /// speed he was sent off with (a wall he was blown against, the floor under a
+        /// downdraught) is taken from the wind's part first, so being held there is not
+        /// counted as him moving the other way.
+        /// </summary>
+        private Vector2 WindLeft()
+        {
+            if (wind == Vector2.zero)
+            {
+                return Vector2.zero;
+            }
+            var lost = sentVelocity - body.linearVelocity;
+            return new Vector2(Left(wind.x, lost.x), Left(wind.y, lost.y));
+        }
+
+        private static float Left(float blown, float lost)
+        {
+            if (blown > 0f && lost > 0f)
+            {
+                return blown - Mathf.Min(blown, lost);
+            }
+            if (blown < 0f && lost < 0f)
+            {
+                return blown - Mathf.Max(blown, lost);
+            }
+            return blown;
+        }
+
+        /// <summary>Moves the wind on him towards what was asked for this step and adds it to his speed.</summary>
+        private void TakeWind(float dt)
+        {
+            var asked = state == PlayerState.Dead ? Vector2.zero : windAsked;
+            wind = windGain > 0f ? Vector2.MoveTowards(wind, asked, windGain * dt) : asked;
+            windAsked = Vector2.zero;
+            body.linearVelocity += wind;
+            sentVelocity = body.linearVelocity;
+        }
+
+        /// <summary>
         /// Squeezed into the solid world by something that moves (a platform coming down on
         /// him, or pressing him to a wall): he is hurt as by a hazard and put beside it.
         /// </summary>
@@ -1769,6 +1833,9 @@ namespace Descender.Player
             transform.position = point;
             body.linearVelocity = Vector2.zero;
             carry = Vector2.zero;
+            wind = Vector2.zero;
+            windAsked = Vector2.zero;
+            sentVelocity = Vector2.zero;
             coyoteLeft = 0f;
             jumpBufferLeft = 0f;
         }

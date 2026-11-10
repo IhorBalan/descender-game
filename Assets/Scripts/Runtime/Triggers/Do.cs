@@ -61,6 +61,14 @@ namespace Descender.Triggers
             return action;
         }
 
+        public static SetForce Wind(ForceZone zone, SwitchTo to)
+        {
+            var action = new SetForce();
+            action.zone = zone;
+            action.to = to;
+            return action;
+        }
+
         public static SetMover Mover(Triggers.Mover mover, SwitchTo to)
         {
             var action = new SetMover();

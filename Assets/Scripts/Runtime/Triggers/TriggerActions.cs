@@ -135,6 +135,22 @@ namespace Descender.Triggers
         }
     }
 
+    /// <summary>Starts (On), stills (Off) or flips a wind, a lift or a downdraught.</summary>
+    [Serializable]
+    public sealed class SetForce : TriggerAction
+    {
+        public ForceZone zone;
+        public SwitchTo to = SwitchTo.On;
+
+        public override void Run(TriggerContext context)
+        {
+            if (zone != null)
+            {
+                zone.Set(to);
+            }
+        }
+    }
+
     /// <summary>Starts (On), stops (Off) or flips a mover.</summary>
     [Serializable]
     public sealed class SetMover : TriggerAction

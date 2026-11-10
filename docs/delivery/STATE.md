@@ -227,8 +227,8 @@ hygiene as each production region lands.
 | T-0018 | Platforms the hero rides | done | 18 | T-0017 | 1 | Re-plan the roadmap around mechanics | #176 |
 | T-0019 | Corner correction and the rest of the jump | done | 19 | T-0017 | 1 | Re-plan the roadmap around mechanics | #177 |
 | T-0025 | Dropping and slamming through ledges in the regions | done | 19 | T-0018 | 1 | Re-plan the roadmap around mechanics | #179 |
-| T-0020 | Platforms that crumble and platforms on a timer | in review | 20 | T-0018 | 1 | Re-plan the roadmap around mechanics | |
-| T-0021 | Wind and lift | approved | 21 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
+| T-0020 | Platforms that crumble and platforms on a timer | done | 20 | T-0018 | 1 | Re-plan the roadmap around mechanics | #180 |
+| T-0021 | Wind and lift | in review | 21 | T-0017 | 1 | Re-plan the roadmap around mechanics | |
 | T-0022 | Up, ladders and vines | approved | 22 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
 | T-0023 | Ledge grab, to try and maybe drop | approved | 23 | T-0022 | 0 | Re-plan the roadmap around mechanics | |
 | T-0024 | Water | approved | 24 | T-0017 | 0 | Re-plan the roadmap around mechanics | |
@@ -415,7 +415,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (281 on `main` after T-0017) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (63 after T-0020; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (69 after T-0021; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -522,6 +522,12 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0021, wind.** `lab wind` (the room gives the glide). A corridor with
+  the wind in his face, a gap wider than a jump that a gust at his back
+  carries him over, and a shaft whose lift only bobs him until he glides
+  in it, which carries him up to the shelf. To check: the drifting marks
+  say which way and whether it blows, running against the wind feels like
+  wind and not like mud, and the lift is found without being told.
 - **T-0020, platforms that do not stay.** `lab timing`. Three platforms
   over spikes that shake and drop out once stood on, four that blink one
   after another, and a bridge the blue switch brings and takes away. To
