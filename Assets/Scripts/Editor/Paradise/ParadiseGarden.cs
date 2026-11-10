@@ -355,7 +355,13 @@ namespace Descender.EditorTools.Paradise
             foreach (var p in plan.walls)
             {
                 var hangs = p.name == "ivy_curtain" || p.name == "wisteria_drape" || p.name.StartsWith("ivy_drape");
-                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, hangs ? -98 : -86, art), p.at.x);
+                // Ivy over a wall comes out from behind the coping: in front of it, its dense top
+                // would sit on the stone like a box.
+                var order =
+                    !hangs ? -86
+                    : p.name.StartsWith("ivy_drape") ? WallIvyOrder
+                    : -98;
+                Vary(Place(props, p.name, p.at, p.scale, p.flip, art.plant, order, art), p.at.x);
                 if (!hangs)
                 {
                     ContactShadow(shadows, p.name, p.at, p.scale, art);
@@ -422,7 +428,27 @@ namespace Descender.EditorTools.Paradise
                 if (inFront)
                 {
                     r.sortingLayerName = ForegroundLayer;
+                    continue;
                 }
+                // Dust caught in the light where the beam comes down past the walk.
+                var walk = ParadiseDressing.SurfaceY(zone, x);
+                var along = (BeamTopOverWalk - BeamDustAbove) * Mathf.Tan(BeamLean * Mathf.Deg2Rad);
+                Air(
+                    shafts,
+                    "Beam Dust",
+                    art.mote,
+                    art.glow,
+                    BeamDust,
+                    new Color(1f, 0.96f, 0.84f, 0.6f),
+                    10f,
+                    -(Vector2)SunAndClouds.SunDirection,
+                    30f,
+                    new Vector2(0.6f, 1.6f),
+                    new Vector2(0.06f, 0.16f),
+                    0f,
+                    6f,
+                    new Rect(x + along - 2f, walk + BeamDustAbove - 2.5f, 4f, 5f)
+                );
             }
             var front = ParadiseArt.Group(root, "Foreground");
             for (var i = 0; i < plan.foreground.Count; i++)
@@ -3004,6 +3030,14 @@ namespace Descender.EditorTools.Paradise
         /// must never hide him, only say the air between him and the eye is lit.
         /// </summary>
         public const float FrontBeamIntensity = 0.16f;
+
+        /// <summary>How high over the walk the dust in a beam hangs thickest, and how much of it there is.</summary>
+        private const float BeamDustAbove = 2.5f;
+
+        private const int BeamDust = 60;
+
+        /// <summary>Wall ivy sits under the coping (-99) and over the wall's depth shade (-100) and body.</summary>
+        public const int WallIvyOrder = -101;
 
         /// <summary>A beam behind the walk.</summary>
         public const float BeamIntensity = 0.42f;
