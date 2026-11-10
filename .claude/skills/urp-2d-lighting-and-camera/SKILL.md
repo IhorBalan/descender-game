@@ -79,12 +79,23 @@ nothing, so open sky costs no more. Zone 2's canopy runs over the layout's
   Snapping`, `Upscale Render Texture` on, `Stretch Fill` off. The game
   scales by integers to the window; the `scale` setting picks the window
   size (`SettingsData.WindowSizeFor`).
-- `GameCamera` (ours): follows `Player.transform` with a look-ahead in
-  the facing direction, a dead zone, `SmoothDamp` on X only, hard limits
-  from the current `WorldRoom` bounds, and `Shake(pixels, seconds)` that
-  offsets in whole pixels and decays. Runs in `LateUpdate` after the
-  interpolated body has moved. Camera position is snapped to the pixel
-  grid in `LateUpdate` (`Mathf.Round(x * 16) / 16`).
+- `GameCamera` (ours), after the side-scroller practice in Itay Keren's
+  "Scroll Back" (GDC 2015), in `CameraFollow`: a look-ahead that travels to
+  the side the hero faces at `lookAheadCatchUp` of his running speed (so a
+  turn on the spot never swings the view), and platform snapping: the
+  view's height is where he last stood, held through a hop until he rises
+  `riseBeforeFollowPixels` (48, below a 72 px jump) above it or drops
+  `dropBeforeFollowPixels` below it, eased to each new floor. Each axis has
+  its own `SmoothDamp` (`smoothTime` 0.12 s across, `verticalSmoothTime`
+  0.22 s up and down). It runs at `DefaultExecutionOrder(-20)`, after the
+  interpolated body moves and before everything placed by the view
+  (backdrops, framing, the sun, particles), which must keep the default
+  order or later so they never trail the camera by a frame. Hard limits come
+  from the current `WorldRoom`; a `joined` room (every Paradise zone's) is
+  one land with the loaded joined rooms it touches, so the view never stops
+  at a zone's border and cuts across it. `Shake(pixels, seconds)` offsets in
+  whole pixels and decays. With `snapToPixelGrid` (pixel art) the position
+  is snapped to the 16 px grid; Paradise's painted art turns it off.
 - The rebuilt Paradise (`ParadiseMain.unity`) has **no** `Pixel Perfect
   Camera`: its art is painted, so the camera's own size (5.625 units,
   `ParadiseLayout.ViewHalfHeight`, the same 20 x 11.25 tile view) frames it,

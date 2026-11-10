@@ -319,7 +319,52 @@ namespace Descender.EditorTools.Paradise
             AssetDatabase.SaveAssets();
             EnsureEntryScene(AssetDatabase.LoadAssetAtPath<WorldAtlas>(AtlasPath));
             AddToBuild(zones);
+            JoinRooms(zones);
             AssetDatabase.SaveAssets();
+        }
+
+        /// <summary>Joins every built zone's rooms (see JoinRooms), without rebuilding a zone; for batch mode.</summary>
+        [MenuItem("Descender/Paradise/Join the zones' rooms")]
+        public static void JoinAllRooms()
+        {
+            JoinRooms(ParadiseLayout.All());
+        }
+
+        /// <summary>
+        /// Paradise's zones are one continuous land: every zone's rooms are joined, so the
+        /// camera keeps to them all as one and never stops at a zone's border. A zone built
+        /// before rooms could be joined is set here, without rebuilding it.
+        /// </summary>
+        private static void JoinRooms(List<ParadiseLayout.Zone> zones)
+        {
+            foreach (var zone in zones)
+            {
+                var path = ScenePath(zone);
+                if (!File.Exists(path))
+                {
+                    continue;
+                }
+                var scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Additive);
+                var changed = false;
+                foreach (
+                    var room in scene.GetRootGameObjects().SelectMany(r => r.GetComponentsInChildren<WorldRoom>(true))
+                )
+                {
+                    var serialized = new SerializedObject(room);
+                    var joined = serialized.FindProperty("joined");
+                    if (!joined.boolValue)
+                    {
+                        joined.boolValue = true;
+                        serialized.ApplyModifiedPropertiesWithoutUndo();
+                        changed = true;
+                    }
+                }
+                if (changed)
+                {
+                    EditorSceneManager.SaveScene(scene);
+                }
+                EditorSceneManager.CloseScene(scene, true);
+            }
         }
 
         // ------------------------------------------------------------------ art
@@ -1583,6 +1628,8 @@ namespace Descender.EditorTools.Paradise
             serialized.FindProperty("id").intValue = id;
             serialized.FindProperty("roomName").stringValue = go.name;
             serialized.FindProperty("size").vector2Value = rect.size;
+            // One continuous land: the camera never stops at a zone's border (JoinRooms).
+            serialized.FindProperty("joined").boolValue = true;
             serialized.ApplyModifiedPropertiesWithoutUndo();
         }
 

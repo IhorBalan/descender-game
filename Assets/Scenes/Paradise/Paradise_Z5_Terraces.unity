@@ -4132,6 +4132,7 @@ MonoBehaviour:
   roomName: Room500
   ability: 
   size: {x: 1400, y: 100}
+  joined: 1
 --- !u!1 &965566756
 GameObject:
   m_ObjectHideFlags: 0

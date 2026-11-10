@@ -4,17 +4,24 @@ using UnityEngine.Rendering.Universal;
 namespace Descender.CameraRig
 {
     /// <summary>
-    /// Follows the hero with a look-ahead in the facing direction, clamps to the
-    /// current room's bounds and shakes in whole pixels so the pixel-perfect
-    /// camera never shimmers. Port of scripts/game_camera.gd. Runs in LateUpdate,
-    /// after the interpolated body has moved. While the hero stands in a
-    /// <see cref="CameraZone"/> the framing, zoom, look-ahead and held axes blend to the
-    /// zone's <see cref="CameraSettings"/>, and back to the room's when he leaves.
+    /// Follows the hero, clamps to the current room's bounds and shakes in whole pixels so
+    /// the pixel-perfect camera never shimmers. Port of scripts/game_camera.gd. Runs in
+    /// LateUpdate, after the interpolated body has moved and before everything placed by
+    /// the view (backdrops, framing, the sun), so they never trail it by a frame. The aim
+    /// follows <see cref="CameraFollow"/>: a look-ahead that travels to the side he faces
+    /// as he runs, and a height held through his jumps and eased to each new floor, each
+    /// axis smoothed on its own. While the hero stands in a <see cref="CameraZone"/> the
+    /// framing, zoom, look-ahead and held axes blend to the zone's
+    /// <see cref="CameraSettings"/>, and back to the room's when he leaves.
     /// </summary>
     [RequireComponent(typeof(Camera))]
+    [DefaultExecutionOrder(ExecutionOrder)]
     public sealed class GameCamera : MonoBehaviour
     {
         public const float PixelsPerUnit = 16f;
+
+        /// <summary>Before the scripts that place themselves by the view, all at the default order.</summary>
+        public const int ExecutionOrder = -20;
 
         /// <summary>The game camera in Main.unity, or null before it exists.</summary>
         public static GameCamera Main { get; private set; }
@@ -25,11 +32,27 @@ namespace Descender.CameraRig
         [SerializeField, Min(0f)]
         private float lookAheadPixels = 24f;
 
+        [Tooltip("Seconds the view takes to catch up across, about.")]
         [SerializeField, Min(0.01f)]
         private float smoothTime = 0.12f;
 
+        [Tooltip("Seconds the view takes to catch up up and down: a landing eases to the new floor.")]
+        [SerializeField, Min(0.01f)]
+        private float verticalSmoothTime = 0.22f;
+
+        [Tooltip("The share of the hero's running speed the look-ahead travels at when he turns; standing, it stays.")]
         [SerializeField, Min(0f)]
-        private float verticalDeadZonePixels = 20f;
+        private float lookAheadCatchUp = 0.6f;
+
+        [Tooltip(
+            "How far he may rise above the floor he left, in pixels, before the view follows: a hop never moves it."
+        )]
+        [SerializeField, Min(0f)]
+        private float riseBeforeFollowPixels = 48f;
+
+        [Tooltip("How far he may drop below the floor he left, in pixels, before the view follows him down.")]
+        [SerializeField, Min(0f)]
+        private float dropBeforeFollowPixels = 8f;
 
         [Tooltip("Where the view centres relative to the target, in units: up shows more above the hero.")]
         [SerializeField]
@@ -54,7 +77,12 @@ namespace Descender.CameraRig
         );
 
         private Rect bounds = Unbounded;
+        private World.WorldRoom room;
         private Vector2 focus;
+        private Player.PlayerController hero;
+        private float lookAhead;
+        private float baseline;
+        private float lastTargetX;
 
         // Zones: the settings in force, where the blend started and how far along it is.
         private CameraSettings current;
@@ -62,7 +90,6 @@ namespace Descender.CameraRig
         private CameraZone zone;
         private float blendTime;
         private float blendElapsed;
-        private bool framingSettled = true;
         private float baseSize;
         private float appliedZoom = 1f;
         private PixelPerfectCamera pixelPerfect;
@@ -87,11 +114,26 @@ namespace Descender.CameraRig
             }
         }
 
-        /// <summary>The room the camera is clamped to, in units. Set by WorldRoom when the hero enters.</summary>
+        /// <summary>The rect the camera is clamped to, in units: a room, a station, or a boss's arena sealed.</summary>
         public Rect Bounds
         {
             get => bounds;
-            set => bounds = value;
+            set
+            {
+                bounds = value;
+                room = null;
+            }
+        }
+
+        /// <summary>
+        /// Clamps the camera to a room as the hero enters it: a joined room together with the
+        /// loaded rooms joined to it, so it never stops at their shared edges, kept up to date
+        /// as they stream in and out; any other room alone.
+        /// </summary>
+        public void FrameRoom(World.WorldRoom entered)
+        {
+            room = entered != null && entered.Joined ? entered : null;
+            bounds = entered != null ? entered.CameraBounds() : Unbounded;
         }
 
         public Transform Target
@@ -100,9 +142,11 @@ namespace Descender.CameraRig
             set
             {
                 target = value;
+                hero = target != null ? target.GetComponent<Player.PlayerController>() : null;
                 if (target != null)
                 {
                     focus = target.position;
+                    Aim();
                 }
             }
         }
@@ -137,8 +181,27 @@ namespace Descender.CameraRig
             current = RoomSettings;
             if (target != null)
             {
+                hero = target.GetComponent<Player.PlayerController>();
                 focus = target.position;
+                Aim();
             }
+        }
+
+        /// <summary>The aim set straight on the target: the look-ahead to his side, the height at his.</summary>
+        private void Aim()
+        {
+            lookAhead = Facing() * current.lookAheadPixels / PixelsPerUnit;
+            baseline = target.position.y;
+            lastTargetX = target.position.x;
+        }
+
+        private int Facing()
+        {
+            if (hero != null)
+            {
+                return hero.Facing;
+            }
+            return target.localScale.x < 0f ? -1 : 1;
         }
 
         /// <summary>Moves the settings toward the hero's zone, or the room's; a change of zone starts a blend.</summary>
@@ -172,7 +235,6 @@ namespace Descender.CameraRig
             blendFrom = current;
             blendTime = 0f;
             blendElapsed = 0f;
-            framingSettled = true;
             ApplyZoom(current.zoom);
         }
 
@@ -217,7 +279,8 @@ namespace Descender.CameraRig
                 return;
             }
             SettleSettings();
-            focus = current.Hold((Vector2)target.position + current.framing);
+            Aim();
+            focus = current.Hold(new Vector2(target.position.x + lookAhead, baseline) + current.framing);
             velocity = Vector2.zero;
             Place(Vector2.zero);
         }
@@ -228,33 +291,43 @@ namespace Descender.CameraRig
             {
                 return;
             }
-            StepSettings(Time.deltaTime);
-            var wanted = (Vector2)target.position + current.framing;
-            var facing = target.localScale.x < 0f ? -1f : 1f;
-            if (target.TryGetComponent<Player.PlayerController>(out var hero))
+            var dt = Time.deltaTime;
+            StepSettings(dt);
+            if (room != null)
             {
-                facing = hero.Facing;
+                bounds = room.CameraBounds();
             }
-            wanted.x += facing * current.lookAheadPixels / PixelsPerUnit;
-            // The dead zone is for the hero's small hops. While the settings blend it would
-            // swallow the framing's own movement, and the view trails the blend by a few
-            // pixels, so it waits until the blend is over and the view has caught up.
-            var deadZone = verticalDeadZonePixels / PixelsPerUnit;
-            var gap = Mathf.Abs(wanted.y - focus.y);
-            if (blendElapsed < blendTime)
-            {
-                framingSettled = false;
-            }
-            else if (!framingSettled && gap < 1f / PixelsPerUnit)
-            {
-                framingSettled = true;
-            }
-            if (framingSettled && gap < deadZone)
-            {
-                wanted.y = focus.y;
-            }
-            wanted = current.Hold(wanted);
-            focus = Vector2.SmoothDamp(focus, wanted, ref velocity, smoothTime, float.PositiveInfinity, Time.deltaTime);
+            var at = (Vector2)target.position;
+            var speedX =
+                hero != null ? hero.Velocity.x
+                : dt > 0f ? (at.x - lastTargetX) / dt
+                : 0f;
+            lastTargetX = at.x;
+            lookAhead = CameraFollow.LookAhead(
+                lookAhead,
+                Facing(),
+                current.lookAheadPixels / PixelsPerUnit,
+                speedX,
+                lookAheadCatchUp,
+                dt
+            );
+            baseline = CameraFollow.Baseline(
+                baseline,
+                at.y,
+                hero == null || hero.IsGrounded,
+                riseBeforeFollowPixels / PixelsPerUnit,
+                dropBeforeFollowPixels / PixelsPerUnit
+            );
+            var wanted = current.Hold(new Vector2(at.x + lookAhead, baseline) + current.framing);
+            focus.x = Mathf.SmoothDamp(focus.x, wanted.x, ref velocity.x, smoothTime, float.PositiveInfinity, dt);
+            focus.y = Mathf.SmoothDamp(
+                focus.y,
+                wanted.y,
+                ref velocity.y,
+                verticalSmoothTime,
+                float.PositiveInfinity,
+                dt
+            );
 
             var offset = Vector2.zero;
             if (shakeLeft > 0f)
