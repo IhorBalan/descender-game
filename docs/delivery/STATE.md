@@ -214,9 +214,8 @@ hygiene as each production region lands.
 | T-0009 | Delete the Godot project | done | 9 | T-0008 | 1 | Continue the Godot removal milestone | #150 |
 | T-0010 | The docs describe one Unity project | done | 10 | T-0009 | 1 | Continue the Godot removal milestone | #151 |
 | T-0011 | The scripted run of the Paradise main path | done | 11 | T-0005 | 1 | Work through the roadmap tasks | #154 |
-
-| T-0012 | The story is parked behind one switch, with a pointer file | in review | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
-| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | approved | 13 | T-0012 | 0 | Re-plan the roadmap around mechanics | |
+| T-0012 | The story is parked behind one switch, with a pointer file | done | 12 | none | 1 | Re-plan the roadmap around mechanics | #167 |
+| T-0013 | The mechanics lab: a scene from data, placeholder shapes, a station per existing move | in review | 13 | T-0012 | 1 | Re-plan the roadmap around mechanics | #168 |
 | T-0014 | Triggers as data: conditions and actions, items as shapes | approved | 14 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0015 | Camera zones | approved | 15 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
 | T-0016 | Live tuning of the hero's numbers and abilities | approved | 16 | T-0013 | 0 | Re-plan the roadmap around mechanics | |
@@ -402,8 +401,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (214 on `main` after T-0012) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (16 after T-0012; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (223 on `main` after T-0013) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (20 after T-0013; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -492,6 +491,15 @@ stand. What is left to play is the movement: the runs, the pods, the thorns,
 the feather and Wings, the stream gaps, the shrines, the light dash and the
 barriers, the cliff descent.
 
+- **T-0013, the mechanics lab.** Descender > Lab > Play (Alt+L) from any
+  scene, or `lab` in the dev console of a running game (`lab list` names the
+  stations, `lab wings` goes to one). Eleven rooms of plain shapes, one per
+  move: run, jump, gaps, wings, dash, wall, glide, ledges, slam, pods,
+  spikes. The yellow diamonds by the walls lead to the next and the previous
+  room, and each room gives the hero only the abilities its move needs. To
+  check: every room can be finished with the move it names, the marks (jump
+  height, dash length, one second of running) match what the hero does, the
+  camera stays inside the room, and dying puts him back at the room's start.
 - **T-0002, the dialogue pipeline (PR #140).** In `Main.unity`, after New
   Game: the opening lines play at the start, the gate lines play at the goal
   gate, Old Pell talks in the hub, and Tobiah's token can be examined (its

@@ -11,6 +11,8 @@ namespace Descender.Fx
     {
         private static Sprite square;
         private static Sprite disc;
+        private static Sprite diamond;
+        private static Sprite triangle;
         private static Material unlit;
 
         /// <summary>A 4 by 4 pixel white square, pivot in the middle.</summary>
@@ -64,6 +66,53 @@ namespace Descender.Fx
                 }
                 return disc;
             }
+        }
+
+        /// <summary>A 16 pixel white diamond, pivot in the middle.</summary>
+        public static Sprite Diamond
+        {
+            get
+            {
+                if (diamond == null)
+                {
+                    diamond = Drawn((dx, dy) => Mathf.Abs(dx) + Mathf.Abs(dy) <= 0.5f);
+                }
+                return diamond;
+            }
+        }
+
+        /// <summary>A 16 pixel white triangle pointing up, pivot in the middle.</summary>
+        public static Sprite Triangle
+        {
+            get
+            {
+                if (triangle == null)
+                {
+                    // At height dy (from -0.5 at the base to 0.5 at the tip) it is (0.5 - dy) wide.
+                    triangle = Drawn((dx, dy) => Mathf.Abs(dx) * 2f <= 0.5f - dy);
+                }
+                return triangle;
+            }
+        }
+
+        /// <summary>A 16 pixel sprite, one unit across: white where `inside` says so, for a point from -0.5 to 0.5.</summary>
+        private static Sprite Drawn(System.Func<float, float, bool> inside)
+        {
+            const int size = 16;
+            var texture = new Texture2D(size, size, TextureFormat.RGBA32, false) { filterMode = FilterMode.Point };
+            var pixels = new Color32[size * size];
+            for (var y = 0; y < size; y++)
+            {
+                for (var x = 0; x < size; x++)
+                {
+                    var dx = (x + 0.5f) / size - 0.5f;
+                    var dy = (y + 0.5f) / size - 0.5f;
+                    pixels[y * size + x] = inside(dx, dy) ? new Color32(255, 255, 255, 255) : new Color32(0, 0, 0, 0);
+                }
+            }
+            texture.SetPixels32(pixels);
+            texture.Apply();
+            return Sprite.Create(texture, new Rect(0, 0, size, size), new Vector2(0.5f, 0.5f), 16f);
         }
 
         /// <summary>An unlit sprite material for particles, lines and glows.</summary>

@@ -13,6 +13,10 @@ namespace Descender.Game
     {
         public const string PointKey = "Descender.PlayFromHere.Point";
         public const string AbilitiesKey = "Descender.PlayFromHere.AllAbilities";
+        public const string LabKey = "Descender.Lab.Station";
+
+        /// <summary>The station value that means "the first one".</summary>
+        public const string FirstStation = "first";
 
         /// <summary>Takes the pending point, if any, so it is used once.</summary>
         public static bool TryTake(out Vector2 point, out bool allAbilities)
@@ -50,6 +54,31 @@ namespace Descender.Game
             return true;
 #else
             return false;
+#endif
+        }
+
+        /// <summary>Takes the pending lab station (Descender &gt; Lab &gt; Play), if any, so it is used once.</summary>
+        public static bool TryTakeLab(out string station)
+        {
+            station = "";
+#if UNITY_EDITOR
+            station = UnityEditor.EditorPrefs.GetString(LabKey, "");
+            if (string.IsNullOrEmpty(station))
+            {
+                return false;
+            }
+            UnityEditor.EditorPrefs.DeleteKey(LabKey);
+            return true;
+#else
+            return false;
+#endif
+        }
+
+        /// <summary>Leaves a lab station for the next play mode; empty means the first.</summary>
+        public static void LeaveLab(string station)
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorPrefs.SetString(LabKey, string.IsNullOrEmpty(station) ? FirstStation : station);
 #endif
         }
 
