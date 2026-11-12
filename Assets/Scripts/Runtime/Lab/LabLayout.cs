@@ -67,6 +67,9 @@ namespace Descender.Lab
         /// </summary>
         Breakable,
 
+        /// <summary>An enemy made of parts (<see cref="Enemies.Foe"/>) from the recipe in `foe`; the rect is its body.</summary>
+        Foe,
+
         /// <summary>A <see cref="Climbable"/>: a ladder or a vine the hero takes hold of with up or down.</summary>
         Climb,
 
@@ -134,6 +137,9 @@ namespace Descender.Lab
         public float gain = 600f;
         public float gustOn;
         public float gustOff;
+
+        /// <summary>A foe: what it is made of. Its body's size is the piece's rect.</summary>
+        public Enemies.FoeRecipe foe;
 
         /// <summary>A striker: the box around its middle it hits the hero in, in units.</summary>
         public Vector2 reach;
@@ -217,6 +223,7 @@ namespace Descender.Lab
             "light",
             "hurt",
             "break",
+            "foes",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -262,6 +269,7 @@ namespace Descender.Lab
             Light(Open(stations, "light", "Holy Light and Smite", Ability.HolyLight, Ability.Smite), jump, tuning);
             Hurt(Open(stations, "hurt", "Being hurt and healing"), tuning);
             Break(Open(stations, "break", "Things that break", Ability.HolyLight, Ability.Smite), jump);
+            Foes(Open(stations, "foes", "Foes: a body, a patrol, a touch"));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -577,6 +585,45 @@ namespace Descender.Lab
             Add(station, PieceKind.Solid, 40f, FloorTop + 4f, 1f, RoomHeight - 2f * Wall - 4f);
             Add(station, PieceKind.Door, 40f, FloorTop, 1f, 4f, "opens when it breaks").id = "door";
             far.actions = find => List(Do.Door(find("door").GetComponent<Door>(), SwitchTo.On));
+        }
+
+        /// <summary>
+        /// The first foes, in shapes: one that stands, one that walks a platform and turns
+        /// at its edges, one that walks the floor between two walls, and a heavy one a cut
+        /// barely moves.
+        /// </summary>
+        private static void Foes(Station station)
+        {
+            station.rebuilt = true;
+            var still = new Enemies.FoeBody { health = 3, color = new Color(0.8f, 0.45f, 0.4f) };
+            Foe(station, 13f, FloorTop, 1.125f, 1.5f, new Enemies.FoeRecipe("stands: three cuts", still));
+
+            Add(station, PieceKind.Solid, 18f, FloorTop, 8f, 2f, "it turns at the edges");
+            var walker = new Enemies.FoeBody { health = 2 };
+            var patrol = new Enemies.FoeRecipe("walker", walker, new Enemies.Patrol());
+            Foe(station, 21f, FloorTop + 2f, 1.125f, 1.5f, patrol).id = "walker";
+
+            Add(station, PieceKind.Solid, 30f, FloorTop, 1f, 2f);
+            Add(station, PieceKind.Solid, 40f, FloorTop, 1f, 2f, "and at walls");
+            Foe(station, 34f, FloorTop, 1.125f, 1.5f, patrol);
+
+            var heavy = new Enemies.FoeBody
+            {
+                health = 6,
+                speed = 16f,
+                pushShare = 0.2f,
+                shape = ShapeKind.Diamond,
+                color = new Color(0.6f, 0.3f, 0.5f),
+            };
+            Foe(station, 45f, FloorTop, 1.5f, 2f, new Enemies.FoeRecipe("heavy", heavy, new Enemies.Patrol()));
+        }
+
+        /// <summary>A foe standing at (x, y) from the room's lower left corner, its body `width` by `height` units.</summary>
+        private static Piece Foe(Station station, float x, float y, float width, float height, Enemies.FoeRecipe recipe)
+        {
+            var piece = Add(station, PieceKind.Foe, x, y, width, height, recipe.name);
+            piece.foe = recipe;
+            return piece;
         }
 
         private static void Slam(Station station, float jump)

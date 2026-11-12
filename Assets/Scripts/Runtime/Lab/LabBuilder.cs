@@ -248,6 +248,18 @@ namespace Descender.Lab
                     struck.AddComponent<BoxCollider2D>().size = rect.size;
                     go.AddComponent<Breakable>();
                     break;
+                case PieceKind.Foe:
+                    var recipe = piece.foe ?? new Enemies.FoeRecipe();
+                    // The recipe is shared; this foe's body is the size the piece gives it.
+                    var made = recipe.body.Copy();
+                    made.size = rect.size * Enemies.EnemyPhysics.Ppu;
+                    go.AddComponent<Rigidbody2D>();
+                    go.AddComponent<BoxCollider2D>();
+                    var foe = go.AddComponent<Enemies.Foe>();
+                    foe.Configure(made, recipe.behaviours);
+                    Draw(go, made.shape, rect.size, made.color, "", 2);
+                    foe.Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
+                    break;
                 case PieceKind.Striker:
                     go.layer = Layers.Enemy;
                     go.AddComponent<BoxCollider2D>().size = rect.size;

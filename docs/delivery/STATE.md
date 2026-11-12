@@ -80,7 +80,7 @@ Planned as T-0018 to T-0024 (2026-11-10). G1 showed three gaps they start
 from: nothing reads `PlayerTuning.cornerCorrection`, riding a moving platform
 was never tuned or tested, and the hero's input has no "up".
 
-### G3. Combat (current)
+### G3. Combat (done 2026-11-12, to be signed off by play)
 
 The sword (reach, timing, hit-stop, knockback, the air and down attacks),
 the cast (Holy Light), the slam (Smite), healing, damage and invulnerability
@@ -95,7 +95,7 @@ differ in push; one hit-stop for every hit; no dummy, no damage shown,
 nothing that breaks; and of combat only the slam's speed under a test. The
 dummy comes first, because every later task is tuned against it.
 
-### G4. Enemies
+### G4. Enemies (current)
 
 Enemy archetypes in simple shapes, built from behaviours that can be
 combined (patrol, chase, ambush, shoot, dive, shielded, summon), spawners
@@ -103,6 +103,13 @@ and encounter rooms (doors that lock until the room is clear), telegraphs
 before every attack, and one boss pattern as the template for the rest. Done
 when: an arena in the lab runs each archetype and a mixed encounter, with
 the enemy data tests covering them.
+
+Planned as T-0032 to T-0037 (2026-11-12). The ported enemies (`Walker`,
+`Flyer`, `Hanger`, `Boss`) each hold their habits inside one class and
+ignore what a strike is and how it pushes. The plan builds a new enemy,
+`Foe`, from a body and a list of small behaviours, in shapes, in the lab,
+and leaves the ported ones alone until the art comes back; they can then
+be re-made from the same parts one at a time.
 
 ### After G4
 
@@ -244,13 +251,20 @@ hygiene as each production region lands.
 | T-0028 | Sword feel: combo, push, recoil, hit-stop per attack | done | 28 | T-0027 | 1 | Re-plan the roadmap around mechanics | #192 |
 | T-0029 | Holy Light and Smite against the dummies | done | 29 | T-0026 | 1 | Re-plan the roadmap around mechanics | #194 |
 | T-0030 | Health, healing and being hurt | done | 30 | T-0026 | 1 | Re-plan the roadmap around mechanics | #195 |
-| T-0031 | Things that break | in review | 31 | T-0026 | 1 | Re-plan the roadmap around mechanics | |
+| T-0031 | Things that break | done | 31 | T-0026 | 1 | Re-plan the roadmap around mechanics | #196 |
+| T-0032 | A foe in shapes: body, patrol, contact, taking a strike | in review | 32 | T-0031 | 1 | Re-plan the roadmap around mechanics | |
+| T-0033 | Chase, ambush and the telegraph | approved | 33 | T-0032 | 0 | Re-plan the roadmap around mechanics | |
+| T-0034 | Shoot and dive | approved | 34 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
+| T-0035 | Shielded and summon | approved | 35 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
+| T-0036 | Spawners and encounter rooms | approved | 36 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
+| T-0037 | A boss pattern as the template | approved | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
 `planning/g1-mechanics-tasks.md` (G0 and G1, 2026-11-10),
-`planning/g2-movement-tasks.md` (G2, 2026-11-10) and
-`planning/g3-combat-tasks.md` (G3, 2026-11-10).
+`planning/g2-movement-tasks.md` (G2, 2026-11-10),
+`planning/g3-combat-tasks.md` (G3, 2026-11-10) and
+`planning/g4-enemies-tasks.md` (G4, 2026-11-12).
 Playtest: T-0001 no, T-0002 to T-0005 yes, T-0006 to T-0011 no. T-0001 and T-0002 run in parallel (disjoint
 files); the rest are sequential because they share `ParadiseLayout.cs`, the
 zone scenes, `ParadiseWorld.asset` and the build settings. T-0006 and
@@ -429,7 +443,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (123 after T-0031; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (127 after T-0032; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -536,6 +550,11 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0032, the first foes.** `lab foes`. One that stands (three cuts), one
+  that walks a platform and turns at its edges, one that walks between two
+  walls, and a heavy one a cut barely moves. Their touch costs a heart.
+  They are shapes with their name and health on them. To check: a cut's
+  push and the moment a hit holds them feel right, and their pace.
 - **T-0031, things that break.** `lab break` (the room gives Holy Light and
   Smite). A block three cuts break, leaving some light; one only the slam
   breaks, leaving a heart; one over spikes only a bolt breaks, opening
