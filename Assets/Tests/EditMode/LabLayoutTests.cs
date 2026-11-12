@@ -226,6 +226,18 @@ namespace Descender.Tests.EditMode
             {
                 Assert.That(arena.room.Contains(spawn.feet), Is.True, spawn.recipe.name + " stands in the room");
             }
+            var bossFight = LabLayout.Find(LabLayout.Find(stations, "boss"), "fight");
+            var boss = bossFight.waves[0].foes[0].recipe;
+            Assert.That(boss.body.armour, Is.True, "a hit does not stop the boss");
+            var pattern = (Enemies.Pattern)boss.behaviours[0];
+            Assert.That(pattern.phases, Has.Length.EqualTo(3));
+            Assert.That(pattern.phases[0].until, Is.GreaterThan(pattern.phases[1].until), "each threshold is lower");
+            Assert.That(pattern.phases[2].until, Is.EqualTo(0f), "the last phase ends with it");
+            foreach (var phase in pattern.phases)
+            {
+                Assert.That(phase.attacks, Is.Not.Empty);
+                Assert.That(phase.attacks, Has.All.Matches<Enemies.FoeBehaviour>(a => !(a is Enemies.Patrol)));
+            }
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");

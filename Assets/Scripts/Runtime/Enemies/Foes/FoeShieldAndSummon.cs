@@ -98,6 +98,8 @@ namespace Descender.Enemies
             }
         }
 
+        public override bool IsBusy => warning;
+
         public override bool Step(Foe foe, float dt)
         {
             if (!warning)
