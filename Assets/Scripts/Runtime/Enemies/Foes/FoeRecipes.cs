@@ -42,6 +42,39 @@ namespace Descender.Enemies
             return new FoeRecipe("ambusher", body, new Ambush(), new Swing { windup = 0.25f }, rush);
         }
 
+        /// <summary>Walks its platform and throws a bolt at him when he is in range.</summary>
+        public static FoeRecipe Shooter()
+        {
+            var body = new FoeBody
+            {
+                health = 2,
+                speed = 20f,
+                shape = ShapeKind.Circle,
+                color = new Color(0.9f, 0.55f, 0.2f),
+            };
+            return new FoeRecipe("shooter", body, new Shoot(), new Patrol());
+        }
+
+        /// <summary>Stands and throws flat bolts the way it faces: to be jumped.</summary>
+        public static FoeRecipe Turret()
+        {
+            var body = new FoeBody { health = 4, color = new Color(0.7f, 0.5f, 0.3f) };
+            return new FoeRecipe("turret", body, new Shoot { level = true, range = 220f, reach = 260f });
+        }
+
+        /// <summary>Hovers, and dives at him when he passes below.</summary>
+        public static FoeRecipe Diver()
+        {
+            var body = new FoeBody
+            {
+                health = 2,
+                flies = true,
+                shape = ShapeKind.Triangle,
+                color = new Color(0.4f, 0.6f, 0.85f),
+            };
+            return new FoeRecipe("diver", body, new Dive(), new Hover());
+        }
+
         /// <summary>Slow and armoured: a hit does not stop its swing, which is long to come and hurts twice as much.</summary>
         public static FoeRecipe Brute()
         {

@@ -45,11 +45,28 @@ namespace Descender.Enemies
         private bool big;
         private Color color = BoltColor;
         private float time;
+        private float speed = BoltSpeed;
+        private float range = BoltSpeed * BoltLifetime;
+        private float flown;
         private bool done;
         private SpriteRenderer flicker;
 
         public Kind ShotKind => kind;
         public Vector2 Direction => direction;
+
+        /// <summary>How far a bolt has flown, in level pixels.</summary>
+        public float Flown => flown;
+
+        /// <summary>
+        /// A bolt's own numbers, where the thrower has them: its speed in level pixels a
+        /// second and how far it flies in level pixels. Without this it flies as the
+        /// constants say.
+        /// </summary>
+        public void Tune(float pixelsASecond, float pixels)
+        {
+            speed = Mathf.Max(pixelsASecond, 1f);
+            range = Mathf.Max(pixels, 0f);
+        }
 
         /// <summary>A shot at a point (bolt: its centre; wave: its feet) going a way.</summary>
         public static EnemyShot Spawn(
@@ -124,13 +141,14 @@ namespace Descender.Enemies
             time += dt;
             if (kind == Kind.Bolt)
             {
-                transform.position += (Vector3)(direction * BoltSpeed * dt / Ppu);
+                flown += speed * dt;
+                transform.position += (Vector3)(direction * speed * dt / Ppu);
                 if (flicker != null)
                 {
                     var up = (int)(time * 30f) % 2 == 0 ? 1f : -1f;
                     flicker.transform.localPosition = new Vector3(-1f / Ppu, 4f * up / Ppu, 0f);
                 }
-                if (time >= BoltLifetime)
+                if (flown >= range)
                 {
                     Fade();
                     return;
