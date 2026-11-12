@@ -116,6 +116,27 @@ namespace Descender.Enemies
 
         public void Turn() => Facing = -Facing;
 
+        /// <summary>
+        /// A new foe from a recipe, under `parent`, its middle at `centre` (world) and its
+        /// body `size` units: what a summoner and a spawner make.
+        /// </summary>
+        public static Foe Make(FoeRecipe recipe, Transform parent, Vector2 centre, Vector2 size, int order = 2)
+        {
+            recipe = recipe ?? new FoeRecipe();
+            var go = new GameObject(string.IsNullOrEmpty(recipe.name) ? "Foe" : recipe.name);
+            go.transform.SetParent(parent, false);
+            go.transform.position = centre;
+            go.AddComponent<Rigidbody2D>();
+            go.AddComponent<BoxCollider2D>();
+            var foe = go.AddComponent<Foe>();
+            var parts = recipe.body.Copy();
+            parts.size = size * Ppu;
+            foe.Configure(parts, recipe.behaviours);
+            var drawn = Shape.Make(go.transform, "Shape", parts.shape, Vector2.zero, size, parts.color, "", order);
+            foe.Show(drawn, recipe.name, order);
+            return foe;
+        }
+
         /// <summary>The warning before an attack, on or off: its colour and a mark on its label.</summary>
         public void Telegraph(bool on)
         {
@@ -236,6 +257,14 @@ namespace Descender.Enemies
                 return false;
             }
             Find();
+            foreach (var behaviour in behaviours)
+            {
+                if (behaviour.Blocks(this, strike))
+                {
+                    Feedback.Spark(transform.position, Color.white);
+                    return false;
+                }
+            }
             health -= strike.Damage;
             Audio.Sfx.Play("hit");
             Feedback.Spark(transform.position);
@@ -280,8 +309,8 @@ namespace Descender.Enemies
             gameObject.SetActive(false);
         }
 
-        /// <summary>What it looks like now: 1 held by a hit, 2 warning of an attack, 0 otherwise.</summary>
-        private int Look() => IsHurt ? 1 : (IsTelegraphing ? 2 : 0);
+        /// <summary>What it looks like now: 1 held by a hit, 2 warning of an attack, 0 otherwise; and 4 more facing right.</summary>
+        private int Look() => (IsHurt ? 1 : (IsTelegraphing ? 2 : 0)) + (Facing > 0 ? 4 : 0);
 
         private void Write()
         {
@@ -290,10 +319,18 @@ namespace Descender.Enemies
             {
                 return;
             }
-            var label = painted == 2 ? "!\n" : "";
+            var label = IsTelegraphing && !IsHurt ? "!\n" : "";
             label += string.IsNullOrEmpty(title) ? "" : title + "\n";
             label += health + "/" + Mathf.Max(build.health, 1);
-            var color = painted == 1 ? HurtColor : (painted == 2 ? TelegraphColor : build.color);
+            foreach (var behaviour in behaviours)
+            {
+                var mark = behaviour.Mark(this);
+                if (!string.IsNullOrEmpty(mark))
+                {
+                    label += "\n" + mark;
+                }
+            }
+            var color = IsHurt ? HurtColor : (IsTelegraphing ? TelegraphColor : build.color);
             shape.Set(build.shape, box.size, color, label, order);
         }
     }

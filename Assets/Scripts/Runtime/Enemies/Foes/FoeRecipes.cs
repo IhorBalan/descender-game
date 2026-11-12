@@ -81,6 +81,31 @@ namespace Descender.Enemies
             return new FoeRecipe("diver", body, new Dive(), new Hover());
         }
 
+        /// <summary>Patrols behind a shield and swings: to be hit from behind, from above or with the slam.</summary>
+        public static FoeRecipe Guard()
+        {
+            var body = new FoeBody
+            {
+                health = 4,
+                speed = 24f,
+                color = new Color(0.5f, 0.55f, 0.7f),
+            };
+            return new FoeRecipe("guard", body, new Shield(), new Swing(), new Patrol());
+        }
+
+        /// <summary>Stands and makes walkers, two at a time at most.</summary>
+        public static FoeRecipe Summoner()
+        {
+            var body = new FoeBody
+            {
+                health = 4,
+                speed = 0f,
+                shape = ShapeKind.Diamond,
+                color = new Color(0.45f, 0.7f, 0.5f),
+            };
+            return new FoeRecipe("summoner", body, new Summon { summons = Walker() });
+        }
+
         /// <summary>Slow and armoured: a hit does not stop its swing, which is long to come and hurts twice as much.</summary>
         public static FoeRecipe Brute()
         {

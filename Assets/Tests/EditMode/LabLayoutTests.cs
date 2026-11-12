@@ -203,6 +203,15 @@ namespace Descender.Tests.EditMode
             var turret = (Enemies.Shoot)LabLayout.Find(air, "turret").foe.behaviours[0];
             Assert.That(turret.level, Is.True, "its bolts fly flat");
             Assert.That(turret.reach, Is.GreaterThanOrEqualTo(turret.range), "and reach as far as it sees");
+            var guards = LabLayout.Find(stations, "guard");
+            Assert.That(guards.abilities, Does.Contain(Ability.Smite), "the slam is one way past the shield");
+            var guard = LabLayout.Find(guards, "guard").foe;
+            Assert.That(guard.behaviours[0], Is.InstanceOf<Enemies.Shield>());
+            Assert.That(((Enemies.Shield)guard.behaviours[0]).stopsSlam, Is.False);
+            var summon = (Enemies.Summon)LabLayout.Find(guards, "summoner").foe.behaviours[0];
+            Assert.That(summon.cap, Is.EqualTo(2));
+            var makes = summon.summons.behaviours;
+            Assert.That(makes, Has.None.InstanceOf<Enemies.Summon>(), "what it makes makes nothing");
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");
