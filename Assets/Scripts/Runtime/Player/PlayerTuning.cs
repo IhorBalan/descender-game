@@ -159,6 +159,43 @@ namespace Descender.Player
         [Tooltip("With Smite, down and attack in the air is the slam; off, it is the downward cut.")]
         public bool downAttackSlams = true;
 
+        [Tooltip("How many cuts ahead make a combo when attack is pressed again inside the window; 1 for none.")]
+        [Range(1, 3)]
+        public int comboCuts = 3;
+
+        [Tooltip("Seconds after a cut ends in which the next press carries the combo on.")]
+        [Min(0f)]
+        public float comboWindow = 0.35f;
+
+        [Tooltip("The combo's last cut: its time as a share of a cut's, and the damage it adds.")]
+        [Min(0.1f)]
+        public float finisherTimeScale = 1.4f;
+
+        [Min(0)]
+        public int finisherDamage = 1;
+
+        [Tooltip("How hard a cut pushes what it hits, and how hard the combo's last cut does (px/s).")]
+        [Min(0f)]
+        public float attackPush = 60f;
+
+        [Min(0f)]
+        public float finisherPush = 140f;
+
+        [Tooltip("A cut ahead that lands while he stands shoves him back at this speed (px/s); 0 for none.")]
+        [Min(0f)]
+        public float attackRecoil = 60f;
+
+        [Tooltip("How long time stops for the combo's last cut (s); the other cuts use hitStopTime.")]
+        [Min(0f)]
+        public float finisherHitStop = 0.09f;
+
+        [Tooltip("A buffered dash ends a swing early, a buffered jump does, and how far in the swing must be (s).")]
+        public bool dashCancelsAttack = true;
+        public bool jumpCancelsAttack;
+
+        [Min(0f)]
+        public float attackCancelFrom = 0.1f;
+
         [Range(0f, 1f)]
         public float attackMoveMultiplier = 0.6f;
 

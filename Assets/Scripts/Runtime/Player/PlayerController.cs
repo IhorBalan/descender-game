@@ -64,6 +64,9 @@ namespace Descender.Player
         private readonly List<IHittable> attackHit = new List<IHittable>(8);
         private int attackAim;
         private bool pogoed;
+        private bool recoiled;
+        private int comboStep;
+        private float comboLeft;
         private readonly HashSet<Save.Ability> abilities = new HashSet<Save.Ability>();
         private static PhysicsMaterial2D slick;
 
@@ -288,6 +291,18 @@ namespace Descender.Player
 
         /// <summary>How long a swing takes: a heavy blade swings slower, a knife quicker.</summary>
         public float AttackTime() => tuning.attackTime * StatFactor("attack_time");
+
+        /// <summary>Which cut of the combo the swing in progress, or the last one, is: from 1.</summary>
+        public int ComboCut => comboStep + 1;
+
+        /// <summary>True when that cut is the combo's last: slower, stronger, and it pushes harder.</summary>
+        public bool IsFinisher => tuning.comboCuts > 1 && comboStep >= tuning.comboCuts - 1;
+
+        /// <summary>How long that cut takes: the combo's last one is slower.</summary>
+        public float CutTime() => AttackTime() * (IsFinisher ? tuning.finisherTimeScale : 1f);
+
+        /// <summary>The damage of that cut: the combo's last one adds to it.</summary>
+        public int CutDamage => AttackDamage + (IsFinisher ? tuning.finisherDamage : 0);
 
         public int HealAmount() => tuning.healAmount + (int)StatBonus("heal");
 
@@ -528,6 +543,7 @@ namespace Descender.Player
             Tick(ref jumpBufferLeft, dt);
             Tick(ref dashBufferLeft, dt);
             Tick(ref attackBufferLeft, dt);
+            Tick(ref comboLeft, dt);
             Tick(ref castBufferLeft, dt);
             Tick(ref healBufferLeft, dt);
             Tick(ref dashCooldownLeft, dt);
@@ -975,19 +991,25 @@ namespace Descender.Player
 
         private void StartAttack()
         {
-            SetState(PlayerState.Attack, AttackTime());
-            AttackCount++;
-            attackBufferLeft = 0f;
             // Up cuts upward anywhere; down cuts downward in the air only (on the ground
             // it is the cut ahead). The aim holds for the whole swing.
             attackAim = upHeld ? 1 : (downHeld && !grounded ? -1 : 0);
+            // A cut ahead that follows another inside the window is the combo's next;
+            // anything else starts it over.
+            var follows = attackAim == 0 && comboLeft > 0f && comboStep + 1 < tuning.comboCuts;
+            comboStep = follows ? comboStep + 1 : 0;
+            comboLeft = 0f;
+            SetState(PlayerState.Attack, CutTime());
+            AttackCount++;
+            attackBufferLeft = 0f;
             pogoed = false;
+            recoiled = false;
             attackHit.Clear();
             sprite.PlayOnce("attack");
             if (sprite != null)
             {
                 // A slow or quick blade plays the strip to match.
-                sprite.SpeedScale = tuning.attackTime / Mathf.Max(AttackTime(), 0.001f);
+                sprite.SpeedScale = tuning.attackTime / Mathf.Max(CutTime(), 0.001f);
             }
             Audio.Sfx.Play("swing");
         }
@@ -1006,14 +1028,35 @@ namespace Descender.Player
             ApplyHorizontal(ref velocity, InputBlocked ? 0f : moveX, dt, speedMultiplier);
             body.linearVelocity = velocity / Ppu;
 
-            var total = AttackTime();
+            var total = CutTime();
             var scale = total / tuning.attackTime;
             var elapsed = total - stateLeft;
+            if (elapsed >= tuning.attackCancelFrom * scale && CancelsSwing())
+            {
+                // The swing ends here and the buffered dash or jump starts with the next step.
+                EndAttack();
+                state = grounded ? PlayerState.Idle : PlayerState.Fall;
+                return;
+            }
             var active = elapsed >= tuning.attackActiveFrom * scale && elapsed <= tuning.attackActiveUntil * scale;
             if (active)
             {
                 AttackBox(out var centre, out var size);
-                var landed = StrikeEnemies(centre, size, StrikeKind.Sword, AttackDamage, attackHit);
+                var strength = IsFinisher ? tuning.finisherPush : tuning.attackPush;
+                var push = new Vector2(0f, attackAim * strength);
+                if (attackAim == 0)
+                {
+                    push = new Vector2(facing * strength, 0f);
+                }
+                var stop = IsFinisher ? tuning.finisherHitStop : tuning.hitStopTime;
+                var landed = StrikeEnemies(centre, size, StrikeKind.Sword, CutDamage, attackHit, push, stop);
+                if (landed && attackAim == 0 && grounded && !recoiled && tuning.attackRecoil > 0f)
+                {
+                    // A cut that lands shoves him back a little; friction stops him.
+                    recoiled = true;
+                    velocity.x = -facing * tuning.attackRecoil;
+                    body.linearVelocity = velocity / Ppu;
+                }
                 if (landed && attackAim < 0 && !pogoed && tuning.pogoHeight > 0f)
                 {
                     // A downward cut that lands throws him back up, with his air moves again.
@@ -1027,9 +1070,26 @@ namespace Descender.Player
             }
             if (stateLeft <= 0f)
             {
+                // The next press inside the window is the combo's next cut; after the last, none.
+                comboLeft = IsFinisher ? 0f : tuning.comboWindow;
                 EndAttack();
                 state = PlayerState.Idle;
             }
+        }
+
+        /// <summary>True when a buffered dash or jump may end the swing early and could start now.</summary>
+        private bool CancelsSwing()
+        {
+            if (InputBlocked)
+            {
+                return false;
+            }
+            if (tuning.dashCancelsAttack && dashBufferLeft > 0f && dashCooldownLeft <= 0f && dashAvailable)
+            {
+                return true;
+            }
+            var canJump = coyoteLeft > 0f || (airJumpAvailable && Has(Save.Ability.Wings));
+            return tuning.jumpCancelsAttack && jumpBufferLeft > 0f && canJump;
         }
 
         /// <summary>
@@ -1061,10 +1121,18 @@ namespace Descender.Player
         }
 
         /// <summary>
-        /// Hurts every enemy in a box once per swing; a landed hit stops time for a moment.
+        /// Hurts every enemy in a box once per swing, with a push; a landed hit stops time for <paramref name="stop"/>.
         /// True when a strike landed in this call.
         /// </summary>
-        private bool StrikeEnemies(Vector2 centre, Vector2 size, StrikeKind kind, int damage, List<IHittable> already)
+        private bool StrikeEnemies(
+            Vector2 centre,
+            Vector2 size,
+            StrikeKind kind,
+            int damage,
+            List<IHittable> already,
+            Vector2 push,
+            float stop
+        )
         {
             var landed = false;
             var count = Physics2D.OverlapBox(centre, size, 0f, enemyFilter, hits);
@@ -1076,10 +1144,10 @@ namespace Descender.Player
                     continue;
                 }
                 already.Add(target);
-                if (Strikes.Deliver(target, new Strike(kind, damage, transform.position)))
+                if (Strikes.Deliver(target, new Strike(kind, damage, transform.position, push)))
                 {
                     landed = true;
-                    Feedback.HitStop(tuning.hitStopTime);
+                    Feedback.HitStop(stop);
                 }
             }
             return landed;
@@ -1154,7 +1222,9 @@ namespace Descender.Player
             if (elapsed <= tuning.slamHitTime)
             {
                 var centre = (Vector2)transform.position + new Vector2(0f, tuning.slamReach.y / 2f) / Ppu;
-                StrikeEnemies(centre, tuning.slamReach / Ppu, StrikeKind.Slam, tuning.slamDamage, attackHit);
+                var reach = tuning.slamReach / Ppu;
+                var stop = tuning.hitStopTime;
+                StrikeEnemies(centre, reach, StrikeKind.Slam, tuning.slamDamage, attackHit, default, stop);
             }
             if (stateLeft <= 0f)
             {

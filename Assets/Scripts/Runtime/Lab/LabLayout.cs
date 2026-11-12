@@ -237,7 +237,7 @@ namespace Descender.Lab
             Grab(Open(stations, "grab", "Ledge grab: a trial"), jump);
             var fighter = new[] { Ability.Wings, Ability.HolyLight, Ability.Smite };
             Dummies(Open(stations, "dummy", "Training dummies", fighter), jump, tuning);
-            Sword(Open(stations, "sword", "The sword: up, down and the bounce"), tuning);
+            Sword(Open(stations, "sword", "The sword: up, down, the bounce and the combo"), tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -433,6 +433,9 @@ namespace Descender.Lab
             // Above the cut ahead, inside the cut upward.
             var ahead = PlayerTuning.Units(tuning.attackOffset.y + tuning.attackShapeSize.y / 2f);
             Add(station, PieceKind.Dummy, 13f, FloorTop + ahead + 0.5f, 1f, 1f, "up and attack");
+
+            // Three cuts in a row: the read-out shows the last one's damage and how far it was pushed.
+            Add(station, PieceKind.Dummy, 15f, FloorTop, 1f, 2f, "three cuts: the last is the heavy one");
 
             // As far apart as a bounce carries him at a run.
             var bounce = PlayerTuning.Units(tuning.pogoHeight);
