@@ -61,6 +61,12 @@ namespace Descender.Lab
         /// </summary>
         Striker,
 
+        /// <summary>
+        /// A <see cref="Triggers.Breakable"/>: a solid block that `value` strikes of the kind in `by`
+        /// break; its `actions` run when it does.
+        /// </summary>
+        Breakable,
+
         /// <summary>A <see cref="Climbable"/>: a ladder or a vine the hero takes hold of with up or down.</summary>
         Climb,
 
@@ -210,6 +216,7 @@ namespace Descender.Lab
             "sword",
             "light",
             "hurt",
+            "break",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -254,6 +261,7 @@ namespace Descender.Lab
             Sword(Open(stations, "sword", "The sword: up, down, the bounce and the combo"), tuning);
             Light(Open(stations, "light", "Holy Light and Smite", Ability.HolyLight, Ability.Smite), jump, tuning);
             Hurt(Open(stations, "hurt", "Being hurt and healing"), tuning);
+            Break(Open(stations, "break", "Things that break", Ability.HolyLight, Ability.Smite), jump);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -529,6 +537,46 @@ namespace Descender.Lab
 
             var heal = $"stand still and heal: {tuning.healTime:0.#} s, a hit stops it";
             Add(station, PieceKind.Mark, 36f, FloorTop, 6f, 0.1f, heal);
+        }
+
+        /// <summary>
+        /// Blocks to break: one the sword breaks in three cuts and that leaves some light,
+        /// one only the slam breaks and that leaves a heart, and one only a bolt breaks,
+        /// over spikes, that opens the door.
+        /// </summary>
+        private static void Break(Station station, float jump)
+        {
+            station.rebuilt = true;
+            var pale = new Color(1f, 0.95f, 0.7f);
+            var pink = new Color(1f, 0.6f, 0.9f);
+
+            var light = Zone(station, 14.25f, FloorTop + 0.5f, 0.5f, 0.5f, ShapeKind.Square, pale, "light");
+            light.id = "light";
+            light.hide = true;
+            light.hidden = true;
+            light.actions = find => List(Do.Currency("light", 5));
+            var cut = Add(station, PieceKind.Breakable, 14f, FloorTop, 1f, 2f, "three cuts", 3f);
+            cut.id = "cut";
+            cut.actions = find => List(Do.Active(find("light"), SwitchTo.On));
+
+            Add(station, PieceKind.Solid, 19f, FloorTop, 3f, Mathf.Floor(jump) - 1f, "jump off, down and attack");
+            var heart = Zone(station, 24f, FloorTop + 0.5f, 1f, 1f, ShapeKind.Circle, pink, "heart");
+            heart.id = "heart";
+            heart.hide = true;
+            heart.hidden = true;
+            heart.actions = find => List(Do.Upgrade(UpgradeKind.Heart, ""));
+            var slab = Add(station, PieceKind.Breakable, 24f, FloorTop, 1f, 1.5f, "slam beside it", 1f);
+            slab.id = "slab";
+            slab.by = StruckBy.Slam;
+            slab.actions = find => List(Do.Active(find("heart"), SwitchTo.On));
+
+            Add(station, PieceKind.Hazard, 31f, FloorTop, 5f, 0.5f, "spikes");
+            var far = Add(station, PieceKind.Breakable, 34f, FloorTop + 0.5f, 1f, 1.5f, "bolt only", 1f);
+            far.id = "far";
+            far.by = StruckBy.Bolt;
+            Add(station, PieceKind.Solid, 40f, FloorTop + 4f, 1f, RoomHeight - 2f * Wall - 4f);
+            Add(station, PieceKind.Door, 40f, FloorTop, 1f, 4f, "opens when it breaks").id = "door";
+            far.actions = find => List(Do.Door(find("door").GetComponent<Door>(), SwitchTo.On));
         }
 
         private static void Slam(Station station, float jump)

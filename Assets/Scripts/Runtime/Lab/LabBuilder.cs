@@ -31,6 +31,7 @@ namespace Descender.Lab
         public static readonly Color Pad = new Color(0.95f, 0.8f, 0.25f);
         public static readonly Color DoorColor = new Color(0.5f, 0.32f, 0.2f);
         public static readonly Color DummyColor = new Color(0.85f, 0.6f, 0.75f);
+        public static readonly Color BreakColor = new Color(0.7f, 0.62f, 0.5f);
 
         /// <summary>Units a second.</summary>
         public const float LiftSpeed = 2f;
@@ -92,6 +93,11 @@ namespace Descender.Lab
                     var actions = piece.actions != null ? piece.actions(find) : new TriggerAction[0];
                     var zone = built[i].AddComponent<TriggerZone>();
                     zone.Configure(piece.on, piece.once, piece.hide, piece.needs, actions, piece.by);
+                }
+                if (piece.kind == PieceKind.Breakable)
+                {
+                    var actions = piece.actions != null ? piece.actions(find) : new TriggerAction[0];
+                    built[i].GetComponent<Breakable>().Configure(Mathf.RoundToInt(piece.value), piece.by, actions);
                 }
             }
             for (var i = 0; i < built.Count; i++)
@@ -231,6 +237,16 @@ namespace Descender.Lab
                     go.AddComponent<BoxCollider2D>().size = rect.size;
                     Draw(go, ShapeKind.Circle, rect.size, DummyColor, "", 2);
                     go.AddComponent<Dummy>().Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
+                    break;
+                case PieceKind.Breakable:
+                    // Solid to him on the World layer; his attacks find the child on the Enemy layer.
+                    go.layer = Layers.World;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Square, rect.size, BreakColor, piece.label, 1);
+                    var struck = new GameObject("Strike") { layer = Layers.Enemy };
+                    struck.transform.SetParent(go.transform, false);
+                    struck.AddComponent<BoxCollider2D>().size = rect.size;
+                    go.AddComponent<Breakable>();
                     break;
                 case PieceKind.Striker:
                     go.layer = Layers.Enemy;

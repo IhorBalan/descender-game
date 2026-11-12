@@ -37,6 +37,26 @@ namespace Descender.Triggers
         Bolt,
     }
 
+    /// <summary>What a <see cref="StruckBy"/> lets through.</summary>
+    public static class StruckByRules
+    {
+        /// <summary>True when a strike of a kind is one this choice answers to.</summary>
+        public static bool Answers(this StruckBy by, StrikeKind kind)
+        {
+            switch (by)
+            {
+                case StruckBy.Sword:
+                    return kind == StrikeKind.Sword;
+                case StruckBy.Slam:
+                    return kind == StrikeKind.Slam;
+                case StruckBy.Bolt:
+                    return kind == StrikeKind.Bolt;
+                default:
+                    return true;
+            }
+        }
+    }
+
     /// <summary>
     /// An item, a switch, a door's lock, a checkpoint: an area that, when something
     /// happens to it (<see cref="TriggerEvent"/>) and its <see cref="TriggerNeeds"/> are
@@ -162,20 +182,7 @@ namespace Descender.Triggers
         }
 
         /// <summary>True when a strike of a kind is one this zone answers to.</summary>
-        public bool Answers(StrikeKind kind)
-        {
-            switch (struckBy)
-            {
-                case StruckBy.Sword:
-                    return kind == StrikeKind.Sword;
-                case StruckBy.Slam:
-                    return kind == StrikeKind.Slam;
-                case StruckBy.Bolt:
-                    return kind == StrikeKind.Bolt;
-                default:
-                    return true;
-            }
-        }
+        public bool Answers(StrikeKind kind) => struckBy.Answers(kind);
 
         private void Update()
         {

@@ -243,8 +243,8 @@ hygiene as each production region lands.
 | T-0027 | Sword directions: up, down and the pogo | done | 27 | T-0026 | 1 | Re-plan the roadmap around mechanics | #188 |
 | T-0028 | Sword feel: combo, push, recoil, hit-stop per attack | done | 28 | T-0027 | 1 | Re-plan the roadmap around mechanics | #192 |
 | T-0029 | Holy Light and Smite against the dummies | done | 29 | T-0026 | 1 | Re-plan the roadmap around mechanics | #194 |
-| T-0030 | Health, healing and being hurt | in review | 30 | T-0026 | 1 | Re-plan the roadmap around mechanics | |
-| T-0031 | Things that break | approved | 31 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0030 | Health, healing and being hurt | done | 30 | T-0026 | 1 | Re-plan the roadmap around mechanics | #195 |
+| T-0031 | Things that break | in review | 31 | T-0026 | 1 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -429,7 +429,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (121 after T-0030; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (123 after T-0031; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -536,6 +536,12 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0031, things that break.** `lab break` (the room gives Holy Light and
+  Smite). A block three cuts break, leaving some light; one only the slam
+  breaks, leaving a heart; one over spikes only a bolt breaks, opening
+  the door. Leaving the room and coming back rebuilds them. To check:
+  each breaks to its own strike and to no other, and the number of cuts
+  feels right.
 - **T-0030, being hurt and healing.** `lab hurt`. A dummy that hits back
   every second and a half inside the box drawn around it, spikes, and a
   corner to heal in. The rules as they stand: a hit costs its damage,
