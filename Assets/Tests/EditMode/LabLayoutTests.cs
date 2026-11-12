@@ -238,6 +238,33 @@ namespace Descender.Tests.EditMode
                 Assert.That(phase.attacks, Is.Not.Empty);
                 Assert.That(phase.attacks, Has.All.Matches<Enemies.FoeBehaviour>(a => !(a is Enemies.Patrol)));
             }
+            var gauntlet = LabLayout.Find(stations, "gauntlet");
+            Assert.That(stations[stations.Count - 1], Is.SameAs(gauntlet), "wider than the pitch, so it is the last");
+            Assert.That(gauntlet.room.width, Is.EqualTo(LabLayout.GauntletWidth));
+            Assert.That(gauntlet.abilities, Does.Contain(Ability.Wings).And.Contain(Ability.LightDash));
+            var has = gauntlet.pieces.Select(piece => piece.kind).Distinct().ToList();
+            var needs = new[]
+            {
+                PieceKind.Hazard,
+                PieceKind.Ledge,
+                PieceKind.Foe,
+                PieceKind.Breakable,
+                PieceKind.Barrier,
+                PieceKind.Door,
+                PieceKind.Encounter,
+                PieceKind.Zone,
+            };
+            Assert.That(has, Is.SupersetOf(needs), "it uses every kind of thing");
+            var run = LabLayout.Find(gauntlet, "fight");
+            var doorIn = LabLayout.Find(gauntlet, "in").rect.xMax;
+            var doorOut = LabLayout.Find(gauntlet, "out").rect.xMin;
+            foreach (var spawn in run.waves.SelectMany(wave => wave.foes))
+            {
+                var between = Is.InRange(doorIn + 2f, doorOut - 2f);
+                Assert.That(spawn.feet.x, between, spawn.recipe.name + " is between the doors");
+            }
+            Assert.That(LabLayout.Find(gauntlet, "start").rect.xMin, Is.GreaterThan(doorIn), "it begins past the door");
+            Assert.That(LabLayout.Find(gauntlet, "end").rect.xMin, Is.GreaterThan(doorOut), "the end is beyond it");
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");

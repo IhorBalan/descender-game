@@ -239,6 +239,7 @@ namespace Descender.Lab
             "guard",
             "arena",
             "boss",
+            "gauntlet",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -290,6 +291,9 @@ namespace Descender.Lab
             Guard(Open(stations, "guard", "Shields and summoners", Ability.HolyLight, Ability.Smite));
             Arena(Open(stations, "arena", "The arena: three waves behind shut doors", fighter));
             Boss(Open(stations, "boss", "A boss in three phases", fighter));
+            var runner = new[] { Ability.Wings, Ability.LightDash, Ability.HolyLight, Ability.Smite };
+            var gauntlet = OpenWide(stations, "gauntlet", "The gauntlet: everything in one run", GauntletWidth, runner);
+            Gauntlet(gauntlet, jump, second);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -309,19 +313,34 @@ namespace Descender.Lab
         /// <summary>A new empty room with its floor, walls and ceiling, after the ones already made.</summary>
         private static Station Open(List<Station> stations, string id, string title, params Ability[] abilities)
         {
+            return OpenWide(stations, id, title, RoomWidth, abilities);
+        }
+
+        /// <summary>
+        /// A room of another width. The rooms stand a fixed pitch apart, so one wider than
+        /// the pitch allows has to be the last.
+        /// </summary>
+        private static Station OpenWide(
+            List<Station> stations,
+            string id,
+            string title,
+            float width,
+            params Ability[] abilities
+        )
+        {
             var left = stations.Count * Pitch;
             var station = new Station
             {
                 id = id,
                 title = title,
-                room = new Rect(left, 0f, RoomWidth, RoomHeight),
+                room = new Rect(left, 0f, width, RoomHeight),
                 spawn = new Vector2(left + SpawnX, FloorTop),
                 abilities = abilities,
             };
-            Add(station, PieceKind.Solid, 0f, 0f, RoomWidth, Wall, "floor");
-            Add(station, PieceKind.Solid, 0f, RoomHeight - Wall, RoomWidth, Wall, "ceiling");
+            Add(station, PieceKind.Solid, 0f, 0f, width, Wall, "floor");
+            Add(station, PieceKind.Solid, 0f, RoomHeight - Wall, width, Wall, "ceiling");
             Add(station, PieceKind.Solid, 0f, Wall, Wall, RoomHeight - 2f * Wall, "left wall");
-            Add(station, PieceKind.Solid, RoomWidth - Wall, Wall, Wall, RoomHeight - 2f * Wall, "right wall");
+            Add(station, PieceKind.Solid, width - Wall, Wall, Wall, RoomHeight - 2f * Wall, "right wall");
             Add(station, PieceKind.Mark, SpawnX - 4f, FloorTop + 8f, 8f, 0.1f, title);
             stations.Add(station);
             return station;
@@ -742,6 +761,70 @@ namespace Descender.Lab
             start.id = "start";
             start.once = false;
             start.actions = find => List(Do.Fight(find("fight").GetComponent<Enemies.Encounter>()));
+        }
+
+        /// <summary>How wide the gauntlet is: three rooms end to end.</summary>
+        public const float GauntletWidth = 3f * RoomWidth;
+
+        /// <summary>
+        /// One run through everything, left to right: a step and spikes to jump, a walker
+        /// between walls, a wall only the double jump clears, a chaser, spikes crossed by a
+        /// ledge, a block to cut through, a shooter and a diver, a wall of light, a fight
+        /// of two waves behind shut doors, and a heart at the end.
+        /// </summary>
+        private static void Gauntlet(Station station, float jump, float second)
+        {
+            station.rebuilt = true;
+            var tall = RoomHeight - 2f * Wall;
+            var pink = new Color(1f, 0.6f, 0.9f);
+
+            Add(station, PieceKind.Solid, 14f, FloorTop, 3f, 2f, "up");
+            Add(station, PieceKind.Hazard, 20f, FloorTop, 4f, 0.5f, "jump the spikes");
+
+            Add(station, PieceKind.Solid, 28f, FloorTop, 1f, 1.5f);
+            Add(station, PieceKind.Solid, 40f, FloorTop, 1f, 1.5f);
+            Foe(station, 33f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Walker());
+
+            var wall = Mathf.Floor(jump + second) - 1f;
+            Add(station, PieceKind.Solid, 44f, FloorTop, 3f, wall, "jump and Wings");
+            Foe(station, 54f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Chaser());
+
+            Add(station, PieceKind.Hazard, 60f, FloorTop, 8f, 0.5f, "over the top");
+            Add(station, PieceKind.Ledge, 61f, FloorTop + 3f, 6f, 0.25f);
+
+            Add(station, PieceKind.Solid, 74f, FloorTop + 3f, 1f, tall - 3f);
+            Add(station, PieceKind.Breakable, 74f, FloorTop, 1f, 3f, "cut through", 3f).id = "block";
+
+            Add(station, PieceKind.Solid, 82f, FloorTop, 6f, 2f);
+            Foe(station, 84.5f, FloorTop + 2f, 1.125f, 1.5f, Enemies.FoeRecipes.Shooter());
+            Foe(station, 93f, FloorTop + 5f, 1.25f, 0.875f, Enemies.FoeRecipes.Diver());
+
+            Add(station, PieceKind.Barrier, 100f, FloorTop, 1f, tall, "light: dash through");
+
+            Add(station, PieceKind.Door, 106f, FloorTop, 1f, tall, "door").id = "in";
+            Add(station, PieceKind.Door, 150f, FloorTop, 1f, tall, "door").id = "out";
+            var first = new Enemies.EncounterWave();
+            first.Add(Enemies.FoeRecipes.Guard(), At(station, 120f, FloorTop));
+            first.Add(Enemies.FoeRecipes.Ambusher(), At(station, 138f, FloorTop));
+            var last = new Enemies.EncounterWave();
+            last.Add(Enemies.FoeRecipes.Brute(), At(station, 126f, FloorTop), new Vector2(1.5f, 2f));
+            last.Add(Enemies.FoeRecipes.Shooter(), At(station, 144f, FloorTop));
+            last.Add(Enemies.FoeRecipes.Diver(), At(station, 134f, FloorTop + 5f), new Vector2(1.25f, 0.875f));
+            var fight = Add(station, PieceKind.Encounter, 128f, FloorTop + 8f, 1f, 1f);
+            fight.id = "fight";
+            fight.waves = new List<Enemies.EncounterWave>();
+            fight.waves.Add(first);
+            fight.waves.Add(last);
+            fight.doors = new[] { "in", "out" };
+            var start = Zone(station, 108.5f, FloorTop, 1f, 6f, ShapeKind.Square, Color.clear, "");
+            start.id = "start";
+            start.once = false;
+            start.actions = find => List(Do.Fight(find("fight").GetComponent<Enemies.Encounter>()));
+
+            var heart = Zone(station, 158f, FloorTop + 0.5f, 1f, 1f, ShapeKind.Circle, pink, "the end");
+            heart.id = "end";
+            heart.hide = true;
+            heart.actions = find => List(Do.Upgrade(UpgradeKind.Heart, ""), Do.Say("The end of the gauntlet."));
         }
 
         /// <summary>A point of a room, from its lower left corner, in the world.</summary>
