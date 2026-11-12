@@ -59,7 +59,13 @@ namespace Descender.Enemies
         public static FoeRecipe Turret()
         {
             var body = new FoeBody { health = 4, color = new Color(0.7f, 0.5f, 0.3f) };
-            return new FoeRecipe("turret", body, new Shoot { level = true, range = 220f, reach = 260f });
+            var flat = new Shoot
+            {
+                level = true,
+                range = 220f,
+                reach = 260f,
+            };
+            return new FoeRecipe("turret", body, flat);
         }
 
         /// <summary>Hovers, and dives at him when he passes below.</summary>
