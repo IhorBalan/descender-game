@@ -27,10 +27,30 @@ namespace Descender.Combat
         private ContactFilter2D hitFilter;
         private readonly Collider2D[] hits = new Collider2D[4];
         private int direction = 1;
-        private float time;
+        private float speed = Speed;
+        private float range = Speed * Lifetime;
+        private int damage = Damage;
+        private float push;
+        private float flown;
         private bool done;
 
         public int Direction => direction;
+
+        /// <summary>How far it has flown, in level pixels.</summary>
+        public float Flown => flown;
+
+        /// <summary>
+        /// Its numbers, where the caster has its own: speed in level pixels a second, how
+        /// far it flies in level pixels, its damage, and how hard it pushes what it hits.
+        /// Without this it flies as the constants say and pushes nothing.
+        /// </summary>
+        public void Tune(float pixelsASecond, float pixels, int hurts, float pushes)
+        {
+            speed = Mathf.Max(pixelsASecond, 1f);
+            range = Mathf.Max(pixels, 0f);
+            damage = hurts;
+            push = pushes;
+        }
 
         /// <summary>Makes a bolt at a point going one way, from the prefab or, without one, from parts.</summary>
         public static LightBolt Spawn(LightBolt prefab, Vector2 at, int facing)
@@ -72,9 +92,9 @@ namespace Descender.Combat
                 return;
             }
             var dt = Time.fixedDeltaTime;
-            time += dt;
             // The box is tested where the bolt will be once MovePosition lands, so a hit is seen the step it happens.
-            var next = body.position + new Vector2(direction * Speed * dt / Ppu, 0f);
+            flown += speed * dt;
+            var next = body.position + new Vector2(direction * speed * dt / Ppu, 0f);
             body.MovePosition(next);
             var count = Physics2D.OverlapBox(next, box.size, 0f, hitFilter, hits);
             for (var i = 0; i < count; i++)
@@ -85,12 +105,13 @@ namespace Descender.Combat
                     continue;
                 }
                 var from = body.position - new Vector2(direction * 20f / Ppu, 0f);
-                Strikes.Deliver(Strikes.Find(hit), new Strike(StrikeKind.Bolt, Damage, from));
+                var strike = new Strike(StrikeKind.Bolt, damage, from, new Vector2(direction * push, 0f));
+                Strikes.Deliver(Strikes.Find(hit), strike);
                 Feedback.Spark(body.position, Glow);
                 Fade();
                 return;
             }
-            if (time >= Lifetime)
+            if (flown >= range)
             {
                 Fade();
             }

@@ -206,12 +206,29 @@ namespace Descender.Player
         public float castCooldown = 0.45f;
         public Vector2 castOffset = new Vector2(14f, 18f);
 
+        [Tooltip("The bolt of Holy Light: its speed (px/s), how far it flies (px), its damage and its push (px/s).")]
+        [Min(1f)]
+        public float boltSpeed = 230f;
+
+        [Min(0f)]
+        public float boltRange = 126.5f;
+
+        [Min(0)]
+        public int boltDamage = 1;
+
+        [Min(0f)]
+        public float boltPush = 80f;
+
         [Min(0f)]
         public float slamSpeed = 330f;
 
         [Min(0)]
         public int slamDamage = 2;
         public Vector2 slamReach = new Vector2(84f, 28f);
+
+        [Tooltip("How hard the slam's shock pushes what it hurts, away from him (px/s).")]
+        [Min(0f)]
+        public float slamPush = 120f;
 
         [Min(0f)]
         public float slamHitTime = 0.12f;

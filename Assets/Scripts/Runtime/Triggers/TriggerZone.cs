@@ -21,16 +21,33 @@ namespace Descender.Triggers
         Hit,
     }
 
+    /// <summary>Which of the hero's strikes a zone that waits to be hit answers to.</summary>
+    public enum StruckBy
+    {
+        /// <summary>Any of them.</summary>
+        Any,
+
+        /// <summary>Only a cut of the sword.</summary>
+        Sword,
+
+        /// <summary>Only the slam's shock.</summary>
+        Slam,
+
+        /// <summary>Only a bolt of Holy Light.</summary>
+        Bolt,
+    }
+
     /// <summary>
     /// An item, a switch, a door's lock, a checkpoint: an area that, when something
     /// happens to it (<see cref="TriggerEvent"/>) and its <see cref="TriggerNeeds"/> are
     /// met, runs its list of <see cref="TriggerAction"/>s, once or every time. The area
     /// is the colliders on the object. A zone that waits to be hit sits on the Enemy
     /// layer as a plain collider, so the hero's attacks find it and he walks through it;
-    /// any other is a trigger on the Trigger layer. With a <c>Shape</c> beside it, it is
-    /// a placeholder pickup.
+    /// any other is a trigger on the Trigger layer. Such a zone can ask for one kind of
+    /// strike (<see cref="StruckBy"/>): a target only a bolt sets off, a plate only the
+    /// slam does. With a <c>Shape</c> beside it, it is a placeholder pickup.
     /// </summary>
-    public sealed class TriggerZone : MonoBehaviour, IHittable
+    public sealed class TriggerZone : MonoBehaviour, IStruck
     {
         [SerializeField]
         private TriggerEvent on = TriggerEvent.Enter;
@@ -44,6 +61,10 @@ namespace Descender.Triggers
         private bool hideWhenFired;
 
         [SerializeField]
+        [Tooltip("For a zone that waits to be hit: the strike it answers to.")]
+        private StruckBy struckBy = StruckBy.Any;
+
+        [SerializeField]
         private TriggerNeeds needs = new TriggerNeeds();
 
         [SerializeReference]
@@ -53,6 +74,7 @@ namespace Descender.Triggers
 
         public TriggerEvent On => on;
         public bool Once => once;
+        public StruckBy By => struckBy;
         public TriggerNeeds Needs => needs;
         public IReadOnlyList<TriggerAction> Actions => actions;
 
@@ -71,9 +93,11 @@ namespace Descender.Triggers
             bool onlyOnce,
             bool hide,
             TriggerNeeds needed,
-            IEnumerable<TriggerAction> run
+            IEnumerable<TriggerAction> run,
+            StruckBy by = StruckBy.Any
         )
         {
+            struckBy = by;
             on = when;
             once = onlyOnce;
             hideWhenFired = hide;
@@ -128,10 +152,29 @@ namespace Descender.Triggers
             return on == TriggerEvent.Interact && near != null && TryFire(near);
         }
 
-        /// <summary>A strike from the hero's sword or light.</summary>
-        public bool Hit(int damage, Vector2 from)
+        /// <summary>A strike that does not say what it is counts as the sword's.</summary>
+        public bool Hit(int damage, Vector2 from) => Struck(new Strike(StrikeKind.Sword, damage, from));
+
+        /// <summary>A strike from the hero: it fires the zone when it is the kind the zone answers to.</summary>
+        public bool Struck(Strike strike)
         {
-            return on == TriggerEvent.Hit && TryFire(PlayerController.Current);
+            return on == TriggerEvent.Hit && Answers(strike.Kind) && TryFire(PlayerController.Current);
+        }
+
+        /// <summary>True when a strike of a kind is one this zone answers to.</summary>
+        public bool Answers(StrikeKind kind)
+        {
+            switch (struckBy)
+            {
+                case StruckBy.Sword:
+                    return kind == StrikeKind.Sword;
+                case StruckBy.Slam:
+                    return kind == StrikeKind.Slam;
+                case StruckBy.Bolt:
+                    return kind == StrikeKind.Bolt;
+                default:
+                    return true;
+            }
         }
 
         private void Update()

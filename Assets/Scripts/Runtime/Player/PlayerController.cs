@@ -1144,7 +1144,13 @@ namespace Descender.Player
                     continue;
                 }
                 already.Add(target);
-                if (Strikes.Deliver(target, new Strike(kind, damage, transform.position, push)))
+                var sent = push;
+                if (kind == StrikeKind.Slam && hits[i].bounds.center.x < transform.position.x)
+                {
+                    // The shock pushes away from him, to whichever side the thing stands.
+                    sent.x = -sent.x;
+                }
+                if (Strikes.Deliver(target, new Strike(kind, damage, transform.position, sent)))
                 {
                     landed = true;
                     Feedback.HitStop(stop);
@@ -1169,7 +1175,8 @@ namespace Descender.Player
             castBufferLeft = 0f;
             castCooldownLeft = tuning.castCooldown;
             var at = (Vector2)transform.position + new Vector2(tuning.castOffset.x * facing, tuning.castOffset.y) / Ppu;
-            LightBolt.Spawn(boltPrefab, at, facing);
+            var bolt = LightBolt.Spawn(boltPrefab, at, facing);
+            bolt.Tune(tuning.boltSpeed, tuning.boltRange, tuning.boltDamage, tuning.boltPush);
             Audio.Sfx.Play("swing", -3f);
             Feedback.Spark(at, LightBolt.Glow);
         }
@@ -1223,8 +1230,9 @@ namespace Descender.Player
             {
                 var centre = (Vector2)transform.position + new Vector2(0f, tuning.slamReach.y / 2f) / Ppu;
                 var reach = tuning.slamReach / Ppu;
+                var push = new Vector2(tuning.slamPush, 0f);
                 var stop = tuning.hitStopTime;
-                StrikeEnemies(centre, reach, StrikeKind.Slam, tuning.slamDamage, attackHit, default, stop);
+                StrikeEnemies(centre, reach, StrikeKind.Slam, tuning.slamDamage, attackHit, push, stop);
             }
             if (stateLeft <= 0f)
             {
