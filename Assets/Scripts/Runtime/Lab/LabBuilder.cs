@@ -232,6 +232,16 @@ namespace Descender.Lab
                     Draw(go, ShapeKind.Circle, rect.size, DummyColor, "", 2);
                     go.AddComponent<Dummy>().Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
                     break;
+                case PieceKind.Striker:
+                    go.layer = Layers.Enemy;
+                    go.AddComponent<BoxCollider2D>().size = rect.size;
+                    Draw(go, ShapeKind.Triangle, rect.size, Hazard, "", 2);
+                    go.AddComponent<Dummy>().Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
+                    // Its reach, drawn faintly behind it.
+                    var faint = new Color(Hazard.r, Hazard.g, Hazard.b, 0.12f);
+                    Shape.Make(go.transform, "Reach", ShapeKind.Square, Vector2.zero, piece.reach, faint, "", -4);
+                    go.AddComponent<Striker>().Configure(piece.reach, piece.value, 1);
+                    break;
                 case PieceKind.Crumble:
                     go.layer = Layers.World;
                     go.AddComponent<BoxCollider2D>().size = rect.size;

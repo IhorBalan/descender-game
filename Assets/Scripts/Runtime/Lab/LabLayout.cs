@@ -55,6 +55,12 @@ namespace Descender.Lab
         /// <summary>A <see cref="ForceZone"/>: an area whose `wind` is added to the hero's speed.</summary>
         Wind,
 
+        /// <summary>
+        /// A dummy that hits back (<see cref="Combat.Striker"/>): the hero inside `reach` around it is
+        /// hurt every `value` seconds.
+        /// </summary>
+        Striker,
+
         /// <summary>A <see cref="Climbable"/>: a ladder or a vine the hero takes hold of with up or down.</summary>
         Climb,
 
@@ -122,6 +128,9 @@ namespace Descender.Lab
         public float gain = 600f;
         public float gustOn;
         public float gustOff;
+
+        /// <summary>A striker: the box around its middle it hits the hero in, in units.</summary>
+        public Vector2 reach;
 
         /// <summary>A camera zone: the framing offset, the zoom (in `value`) and the axes it holds.</summary>
         public Vector2 framing;
@@ -200,6 +209,7 @@ namespace Descender.Lab
             "dummy",
             "sword",
             "light",
+            "hurt",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -243,6 +253,7 @@ namespace Descender.Lab
             Dummies(Open(stations, "dummy", "Training dummies", fighter), jump, tuning);
             Sword(Open(stations, "sword", "The sword: up, down, the bounce and the combo"), tuning);
             Light(Open(stations, "light", "Holy Light and Smite", Ability.HolyLight, Ability.Smite), jump, tuning);
+            Hurt(Open(stations, "hurt", "Being hurt and healing"), tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -499,6 +510,25 @@ namespace Descender.Lab
             Add(station, PieceKind.Solid, 46f, FloorTop + 4f, 1f, RoomHeight - 2f * Wall - 4f);
             Add(station, PieceKind.Door, 46f, FloorTop, 1f, 4f, "opens to a slam").id = "second";
             plate.actions = find => List(Do.Door(find("second").GetComponent<Door>(), SwitchTo.Toggle));
+        }
+
+        /// <summary>
+        /// Health by its rules: a dummy that hits back every second and a half inside the
+        /// box drawn around it, spikes that cost a heart and put him back, and a quiet
+        /// corner to heal in.
+        /// </summary>
+        private static void Hurt(Station station, PlayerTuning tuning)
+        {
+            var striker = Add(station, PieceKind.Striker, 16f, FloorTop, 1f, 2f, "hits back", 1.5f);
+            striker.id = "striker";
+            striker.reach = new Vector2(6f, 4f);
+            var safe = $"safe for {tuning.invulnerableTime:0.#} s after a hit";
+            Add(station, PieceKind.Mark, 13f, FloorTop + 5f, 6f, 0.1f, safe);
+
+            Add(station, PieceKind.Hazard, 26f, FloorTop, 4f, 0.5f, "spikes: a heart, and back you go");
+
+            var heal = $"stand still and heal: {tuning.healTime:0.#} s, a hit stops it";
+            Add(station, PieceKind.Mark, 36f, FloorTop, 6f, 0.1f, heal);
         }
 
         private static void Slam(Station station, float jump)

@@ -167,6 +167,10 @@ namespace Descender.Tests.EditMode
             Assert.That(LabLayout.Find(stations, "dummy").abilities, Does.Contain(Ability.Smite));
             Assert.That(LabLayout.Find(stations, "sword").abilities, Is.Empty, "so down and attack is the cut");
             Assert.That(LabLayout.Find(stations, "dummy").abilities, Does.Contain(Ability.HolyLight));
+            var striker = LabLayout.Find(LabLayout.Find(stations, "hurt"), "striker");
+            Assert.That(striker.kind, Is.EqualTo(PieceKind.Striker));
+            Assert.That(striker.value, Is.GreaterThan(0f), "it hits on a timer");
+            Assert.That(striker.reach.x, Is.GreaterThan(striker.rect.width), "in a reach wider than itself");
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");
