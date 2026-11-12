@@ -259,6 +259,21 @@ namespace Descender.Triggers
         }
     }
 
+    /// <summary>Begins a fight: its doors shut and its first wave is warned of.</summary>
+    [Serializable]
+    public sealed class StartEncounter : TriggerAction
+    {
+        public Enemies.Encounter encounter;
+
+        public override void Run(TriggerContext context)
+        {
+            if (encounter != null)
+            {
+                encounter.Begin();
+            }
+        }
+    }
+
     /// <summary>Puts a copy of a prefab at a point (the zone itself when none is given).</summary>
     [Serializable]
     public sealed class Spawn : TriggerAction

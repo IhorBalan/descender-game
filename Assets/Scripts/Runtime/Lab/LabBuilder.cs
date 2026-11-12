@@ -94,6 +94,21 @@ namespace Descender.Lab
                     var zone = built[i].AddComponent<TriggerZone>();
                     zone.Configure(piece.on, piece.once, piece.hide, piece.needs, actions, piece.by);
                 }
+                if (piece.kind == PieceKind.Encounter)
+                {
+                    var shuts = new List<Door>();
+                    foreach (var doorId in piece.doors)
+                    {
+                        var door = find(doorId);
+                        if (door != null)
+                        {
+                            shuts.Add(door.GetComponent<Door>());
+                        }
+                    }
+                    var fight = built[i].GetComponent<Enemies.Encounter>();
+                    fight.Configure(piece.waves, shuts);
+                    fight.Cleared += () => Notice.Show("Cleared.");
+                }
                 if (piece.kind == PieceKind.Breakable)
                 {
                     var actions = piece.actions != null ? piece.actions(find) : new TriggerAction[0];
@@ -259,6 +274,9 @@ namespace Descender.Lab
                     foe.Configure(made, recipe.behaviours);
                     Draw(go, made.shape, rect.size, made.color, "", 2);
                     foe.Show(go.GetComponentInChildren<Shape>(), piece.label, 2);
+                    break;
+                case PieceKind.Encounter:
+                    go.AddComponent<Enemies.Encounter>();
                     break;
                 case PieceKind.Striker:
                     go.layer = Layers.Enemy;
