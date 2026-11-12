@@ -22,6 +22,9 @@ namespace Descender.Enemies
         /// </summary>
         public virtual void OnStruck(Foe foe, bool held) { }
 
+        /// <summary>True while an attack of this behaviour is under way, from its warning to the end of its recovery.</summary>
+        public virtual bool IsBusy => false;
+
         /// <summary>True when this stops a strike before it does anything: the foe takes nothing and is not held.</summary>
         public virtual bool Blocks(Foe foe, Strike strike) => false;
 
@@ -87,6 +90,7 @@ namespace Descender.Enemies
         public bool IsWindingUp => stage == 1;
         public bool IsStriking => stage == 2;
         public bool IsAttacking => stage != 0;
+        public override bool IsBusy => stage != 0;
 
         public override bool Step(Foe foe, float dt)
         {

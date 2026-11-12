@@ -40,6 +40,7 @@ namespace Descender.Enemies
         public EnemyShot Last { get; private set; }
 
         public bool IsAttacking => stage != 0;
+        public override bool IsBusy => stage != 0;
 
         public override bool Step(Foe foe, float dt)
         {
@@ -171,6 +172,7 @@ namespace Descender.Enemies
         public bool IsWindingUp => stage == 1;
         public bool IsDiving => stage == 2;
         public bool IsAttacking => stage != 0;
+        public override bool IsBusy => stage != 0;
 
         public override bool Step(Foe foe, float dt)
         {

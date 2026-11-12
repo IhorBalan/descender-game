@@ -106,6 +106,76 @@ namespace Descender.Enemies
             return new FoeRecipe("summoner", body, new Summon { summons = Walker() });
         }
 
+        /// <summary>
+        /// The boss template: armoured, in three phases at two thirds and one third of its
+        /// health. It swings and charges; then shoots, charges and calls walkers; then does
+        /// all three faster.
+        /// </summary>
+        public static FoeRecipe Boss()
+        {
+            var body = new FoeBody
+            {
+                health = 12,
+                speed = 28f,
+                armour = true,
+                pushShare = 0f,
+                color = new Color(0.7f, 0.2f, 0.25f),
+            };
+            var swing = new Swing
+            {
+                range = 34f,
+                reach = new Vector2(30f, 30f),
+                windup = 0.5f,
+                cooldown = 0f,
+            };
+            var charge = new Charge { cooldown = 0f };
+            var first = new BossPhase(0.66f, 0.8f, swing, charge);
+
+            var shot = new Shoot
+            {
+                range = 300f,
+                reach = 320f,
+                cooldown = 0f,
+            };
+            var call = new Summon
+            {
+                summons = Walker(),
+                range = 400f,
+                windup = 0.7f,
+                cooldown = 0f,
+            };
+            var second = new BossPhase(0.33f, 0.6f, shot, new Charge { cooldown = 0f }, call);
+
+            var quickSwing = new Swing
+            {
+                range = 34f,
+                reach = new Vector2(30f, 30f),
+                windup = 0.35f,
+                recover = 0.3f,
+                cooldown = 0f,
+            };
+            var quickShot = new Shoot
+            {
+                range = 300f,
+                reach = 320f,
+                windup = 0.35f,
+                speed = 150f,
+                cooldown = 0f,
+            };
+            var quickCharge = new Charge
+            {
+                windup = 0.4f,
+                speed = 240f,
+                recover = 0.4f,
+                cooldown = 0f,
+            };
+            var third = new BossPhase(0f, 0.35f, quickSwing, quickShot, quickCharge);
+
+            var pattern = new Pattern();
+            pattern.phases = new[] { first, second, third };
+            return new FoeRecipe("boss", body, pattern);
+        }
+
         /// <summary>Slow and armoured: a hit does not stop its swing, which is long to come and hurts twice as much.</summary>
         public static FoeRecipe Brute()
         {

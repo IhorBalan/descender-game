@@ -238,6 +238,7 @@ namespace Descender.Lab
             "air",
             "guard",
             "arena",
+            "boss",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -288,6 +289,7 @@ namespace Descender.Lab
             Air(Open(stations, "air", "Foes that shoot and dive"));
             Guard(Open(stations, "guard", "Shields and summoners", Ability.HolyLight, Ability.Smite));
             Arena(Open(stations, "arena", "The arena: three waves behind shut doors", fighter));
+            Boss(Open(stations, "boss", "A boss in three phases", fighter));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -713,6 +715,29 @@ namespace Descender.Lab
             fight.waves.Add(third);
             fight.doors = new[] { "in", "out" };
             // Past the door: walking on begins it, and again after a death.
+            var start = Zone(station, 15.5f, FloorTop, 1f, 6f, ShapeKind.Square, Color.clear, "");
+            start.id = "start";
+            start.once = false;
+            start.actions = find => List(Do.Fight(find("fight").GetComponent<Enemies.Encounter>()));
+        }
+
+        /// <summary>
+        /// The boss template behind shut doors: one foe whose pattern changes at two thirds
+        /// and at one third of its health.
+        /// </summary>
+        private static void Boss(Station station)
+        {
+            station.rebuilt = true;
+            var tall = RoomHeight - 2f * Wall;
+            Add(station, PieceKind.Door, 13f, FloorTop, 1f, tall, "door").id = "in";
+            Add(station, PieceKind.Door, 49f, FloorTop, 1f, tall, "door").id = "out";
+            var wave = new Enemies.EncounterWave();
+            wave.Add(Enemies.FoeRecipes.Boss(), At(station, 40f, FloorTop), new Vector2(2f, 2.5f));
+            var fight = Add(station, PieceKind.Encounter, 31f, FloorTop + 8f, 1f, 1f);
+            fight.id = "fight";
+            fight.waves = new List<Enemies.EncounterWave>();
+            fight.waves.Add(wave);
+            fight.doors = new[] { "in", "out" };
             var start = Zone(station, 15.5f, FloorTop, 1f, 6f, ShapeKind.Square, Color.clear, "");
             start.id = "start";
             start.once = false;
