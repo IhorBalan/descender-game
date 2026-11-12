@@ -242,8 +242,8 @@ hygiene as each production region lands.
 | T-0026 | Training dummy and damage read-out | done | 26 | T-0017 | 1 | Re-plan the roadmap around mechanics | #187 |
 | T-0027 | Sword directions: up, down and the pogo | done | 27 | T-0026 | 1 | Re-plan the roadmap around mechanics | #188 |
 | T-0028 | Sword feel: combo, push, recoil, hit-stop per attack | done | 28 | T-0027 | 1 | Re-plan the roadmap around mechanics | #192 |
-| T-0029 | Holy Light and Smite against the dummies | in review | 29 | T-0026 | 1 | Re-plan the roadmap around mechanics | |
-| T-0030 | Health, healing and being hurt | approved | 30 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
+| T-0029 | Holy Light and Smite against the dummies | done | 29 | T-0026 | 1 | Re-plan the roadmap around mechanics | #194 |
+| T-0030 | Health, healing and being hurt | in review | 30 | T-0026 | 1 | Re-plan the roadmap around mechanics | |
 | T-0031 | Things that break | approved | 31 | T-0026 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
@@ -428,8 +428,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (305 on `main` after T-0028) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (114 after T-0029; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (121 after T-0030; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -536,6 +536,18 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0030, being hurt and healing.** `lab hurt`. A dummy that hits back
+  every second and a half inside the box drawn around it, spikes, and a
+  corner to heal in. The rules as they stand: a hit costs its damage,
+  throws him away from what hit him and leaves him safe for a while;
+  spikes cost a heart and put him back on the last safe ground with no
+  throw, and wait out that safe time too; a heal needs him standing with
+  a charge and a missing heart, takes its time, and a hit during it stops
+  it without spending the charge. To check: the safe time (`tune
+  invulnerableTime`), the throw (`tune knockback`, `hurtTime`), the heal
+  (`tune healTime`, `healAmount`, `maxHealCharges`). To decide: whether a
+  heal should be allowed in the air, and whether spikes should hurt
+  through the safe time.
 - **T-0029, Holy Light and Smite.** `lab light` (the room gives both). Cast
   at the dummy from the two marks: one is in the bolt's range, one is not.
   A target over spikes that only a bolt sets off opens the first door; a
