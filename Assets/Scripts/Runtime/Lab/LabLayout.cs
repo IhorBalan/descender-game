@@ -226,6 +226,7 @@ namespace Descender.Lab
             "foes",
             "chase",
             "air",
+            "guard",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -274,6 +275,7 @@ namespace Descender.Lab
             Foes(Open(stations, "foes", "Foes: a body, a patrol, a touch"));
             Chase(Open(stations, "chase", "Foes that come for you: the warning, then the swing"));
             Air(Open(stations, "air", "Foes that shoot and dive"));
+            Guard(Open(stations, "guard", "Shields and summoners", Ability.HolyLight, Ability.Smite));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -651,6 +653,20 @@ namespace Descender.Lab
             Foe(station, 30.5f, FloorTop + 5f, 1.25f, 0.875f, Enemies.FoeRecipes.Diver()).id = "diver";
             Add(station, PieceKind.Mark, 38f, FloorTop, 6f, 0.1f, "jump the bolt");
             Foe(station, 46f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Turret()).id = "turret";
+        }
+
+        /// <summary>
+        /// A guard whose shield stops a cut and a bolt from in front, between two low walls,
+        /// and a summoner that keeps two walkers alive until it is killed.
+        /// </summary>
+        private static void Guard(Station station)
+        {
+            station.rebuilt = true;
+            Add(station, PieceKind.Solid, 15f, FloorTop, 1f, 1.5f);
+            Add(station, PieceKind.Solid, 27f, FloorTop, 1f, 1.5f, "behind, above, or the slam");
+            Foe(station, 20f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Guard()).id = "guard";
+            Add(station, PieceKind.Mark, 34f, FloorTop, 8f, 0.1f, "kill the one that makes them");
+            Foe(station, 44f, FloorTop, 1.25f, 1.75f, Enemies.FoeRecipes.Summoner()).id = "summoner";
         }
 
         /// <summary>A foe standing at (x, y) from the room's lower left corner, its body `width` by `height` units.</summary>

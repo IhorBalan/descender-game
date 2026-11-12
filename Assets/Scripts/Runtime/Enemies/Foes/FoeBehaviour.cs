@@ -1,4 +1,5 @@
 using System;
+using Descender.Combat;
 using UnityEngine;
 
 namespace Descender.Enemies
@@ -20,6 +21,12 @@ namespace Descender.Enemies
         /// armoured): an attack in progress is called off.
         /// </summary>
         public virtual void OnStruck(Foe foe, bool held) { }
+
+        /// <summary>True when this stops a strike before it does anything: the foe takes nothing and is not held.</summary>
+        public virtual bool Blocks(Foe foe, Strike strike) => false;
+
+        /// <summary>A line for the foe's label, for what the player has to see; empty for none.</summary>
+        public virtual string Mark(Foe foe) => "";
 
         /// <summary>A copy for one foe, so behaviours that keep time do not share it.</summary>
         public virtual FoeBehaviour Copy() => (FoeBehaviour)MemberwiseClone();
