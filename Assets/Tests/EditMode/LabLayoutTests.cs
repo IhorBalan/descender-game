@@ -194,6 +194,15 @@ namespace Descender.Tests.EditMode
                 Assert.That(swing, Is.Not.Null, recipe.name);
                 Assert.That(swing.windup, Is.GreaterThanOrEqualTo(0.25f), recipe.name + " warns long enough to see");
             }
+            var air = LabLayout.Find(stations, "air");
+            var diver = LabLayout.Find(air, "diver").foe;
+            Assert.That(diver.body.flies, Is.True, "the diver has no gravity");
+            Assert.That(diver.behaviours[0], Is.InstanceOf<Enemies.Dive>(), "the dive is asked before the hover");
+            Assert.That(diver.behaviours[1], Is.InstanceOf<Enemies.Hover>());
+            Assert.That(LabLayout.Find(air, "shooter").foe.behaviours[0], Is.InstanceOf<Enemies.Shoot>());
+            var turret = (Enemies.Shoot)LabLayout.Find(air, "turret").foe.behaviours[0];
+            Assert.That(turret.level, Is.True, "its bolts fly flat");
+            Assert.That(turret.reach, Is.GreaterThanOrEqualTo(turret.range), "and reach as far as it sees");
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");

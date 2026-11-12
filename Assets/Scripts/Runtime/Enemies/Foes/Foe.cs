@@ -65,6 +65,9 @@ namespace Descender.Enemies
         /// <summary>The speed along the ground a behaviour asks for this step, in level pixels a second.</summary>
         public float Move { get; set; }
 
+        /// <summary>The speed up (or, negative, down) a behaviour asks for this step; only a flying body takes it.</summary>
+        public float Lift { get; set; }
+
         public bool IsGrounded { get; private set; }
 
         /// <summary>True while a hit holds it: it does not act.</summary>
@@ -96,6 +99,8 @@ namespace Descender.Enemies
                 }
             }
             health = Mathf.Max(build.health, 1);
+            hurtLeft = 0f;
+            IsTelegraphing = false;
             box.size = build.size / Ppu;
             Write();
         }
@@ -195,6 +200,7 @@ namespace Descender.Enemies
             else
             {
                 Move = 0f;
+                Lift = 0f;
                 foreach (var behaviour in behaviours)
                 {
                     if (behaviour.Step(this, dt))
@@ -203,6 +209,10 @@ namespace Descender.Enemies
                     }
                 }
                 velocity.x = Move;
+                if (build.flies)
+                {
+                    velocity.y = Lift;
+                }
             }
             body.linearVelocity = velocity / Ppu;
             if (painted != Look())

@@ -253,8 +253,8 @@ hygiene as each production region lands.
 | T-0030 | Health, healing and being hurt | done | 30 | T-0026 | 1 | Re-plan the roadmap around mechanics | #195 |
 | T-0031 | Things that break | done | 31 | T-0026 | 1 | Re-plan the roadmap around mechanics | #196 |
 | T-0032 | A foe in shapes: body, patrol, contact, taking a strike | done | 32 | T-0031 | 1 | Re-plan the roadmap around mechanics | #197 |
-| T-0033 | Chase, ambush and the telegraph | in review | 33 | T-0032 | 0 | Re-plan the roadmap around mechanics | |
-| T-0034 | Shoot and dive | approved | 34 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
+| T-0033 | Chase, ambush and the telegraph | done | 33 | T-0032 | 0 | Re-plan the roadmap around mechanics | #198 |
+| T-0034 | Shoot and dive | in review | 34 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
 | T-0035 | Shielded and summon | approved | 35 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
 | T-0036 | Spawners and encounter rooms | approved | 36 | T-0033 | 0 | Re-plan the roadmap around mechanics | |
 | T-0037 | A boss pattern as the template | approved | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | |
@@ -443,7 +443,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (132 after T-0033; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (136 after T-0034; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -550,6 +550,13 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0034, foes that shoot and dive.** `lab air`. A shooter on a platform
+  that aims a bolt at you, a diver that hovers and comes down when you walk
+  under it, and a turret whose flat bolts are jumped. To check: the bolt's
+  speed against a dash and a jump (`Shoot.speed` 110), the diver's warning
+  (0.5 s) and how long it rests on the floor to be hit (`Dive.recover`
+  0.3 s). Known and left: a shooter does not check for a wall between you
+  and it (the bolt breaks on the wall), and the sword does not cut a bolt.
 - **T-0033, foes that attack.** `lab chase`. A chaser that patrols until it
   sees you, comes at nearly twice its walk and swings; an ambusher that
   stands still until you are near, warns and rushes; and an armoured brute
