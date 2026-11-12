@@ -97,6 +97,9 @@ namespace Descender.Tests.PlayMode
             hero.PlaceAt(at);
             yield return probe.Settle();
             Assert.That(hero.IsGrounded, Is.True, "he stands where the test put him");
+            // Arriving in a room leaves him safe for a while; the tests start once he can be hurt.
+            yield return probe.Until(() => hero.CanBeHurt, 100);
+            Assert.That(hero.CanBeHurt, Is.True);
         }
 
         private Piece PutDummy(float x, float y, float width, float height, string label = "")
@@ -276,6 +279,7 @@ namespace Descender.Tests.PlayMode
             yield return probe.Until(() => striker.Landed == 1, 20);
             Assert.That(striker.Landed, Is.EqualTo(1), "it hits as he comes into reach");
             Assert.That(hero.Health, Is.EqualTo(full - 1));
+            yield return probe.Step(3);
             Assert.That(heroBody.position.x, Is.LessThan(HeroAt), "thrown away from it");
 
             yield return probe.Step(100);
