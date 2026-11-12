@@ -248,7 +248,12 @@ namespace Descender.Tests.PlayMode
         [UnityTest]
         public IEnumerator AHeavyBodyIsBarelyMovedAndAStrikeWithNoPushStillShovesItAway()
         {
-            var unmoved = new FoeBody { health = 9, pushShare = 0f, contactDamage = 0 };
+            var unmoved = new FoeBody
+            {
+                health = 9,
+                pushShare = 0f,
+                contactDamage = 0,
+            };
             var heavy = PutFoe(HeroAt + 4f, Floor, 1f, 1.5f, unmoved);
             var light = PutFoe(HeroAt + 8f, Floor, 1f, 1.5f, new FoeBody { health = 9, contactDamage = 0 });
             yield return Begin(new Vector2(HeroAt, Floor));
