@@ -116,6 +116,25 @@ namespace Descender.Tests.PlayMode
 
         private Foe FoeOf(Piece piece) => Built(piece).GetComponent<Foe>();
 
+        private static T Act<T>(Foe foe)
+            where T : FoeBehaviour
+        {
+            foreach (var act in foe.Behaviours)
+            {
+                if (act is T found)
+                {
+                    return found;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>A body that does nothing by touch.</summary>
+        private static FoeBody Harmless()
+        {
+            return new FoeBody { health = 9, contactDamage = 0 };
+        }
+
         private static FoeRecipe Imp()
         {
             var body = new FoeBody
@@ -228,6 +247,71 @@ namespace Descender.Tests.PlayMode
             Assert.That(DoorOf("b").IsOpen, Is.True);
             fight.Begin();
             Assert.That(fight.State, Is.EqualTo(EncounterState.Cleared), "a won fight does not begin again");
+        }
+
+        /// <summary>A fight of one wave: a summoner that keeps one imp alive.</summary>
+        private Piece PutSummonerFight()
+        {
+            var calls = new Summon
+            {
+                summons = Imp(),
+                cap = 1,
+                range = 600f,
+                windup = 0.2f,
+                cooldown = 0.2f,
+            };
+            var wave = new EncounterWave();
+            wave.Add(new FoeRecipe("summoner", Harmless(), calls), new Vector2(22f, Floor));
+            PutDoor(34f, "b");
+            var fight = new Piece();
+            fight.kind = PieceKind.Encounter;
+            fight.rect = new Rect(24f, Floor + 8f, 1f, 1f);
+            fight.waves = new List<EncounterWave>();
+            fight.waves.Add(wave);
+            fight.doors = new[] { "b" };
+            room.pieces.Add(fight);
+            return fight;
+        }
+
+        [UnityTest]
+        public IEnumerator WhatASummonerMakesIsPartOfTheFight()
+        {
+            var piece = PutSummonerFight();
+            yield return Begin(new Vector2(8f, Floor));
+            var fight = Built(piece).GetComponent<Encounter>();
+            fight.Begin();
+            yield return probe.Until(() => fight.Alive == 2, 120);
+            Assert.That(fight.Alive, Is.EqualTo(2), "the summoner and the one it made");
+            var summoner = fight.Foes[0];
+            var imp = Act<Summon>(summoner).Made[0];
+
+            Kill(summoner);
+            yield return probe.Step(10);
+            Assert.That(fight.Alive, Is.EqualTo(1));
+            Assert.That(fight.State, Is.EqualTo(EncounterState.Running), "what it made still lives: not won yet");
+            Assert.That(DoorOf("b").IsOpen, Is.False, "and the door stays shut");
+            Kill(imp);
+            yield return probe.Until(() => fight.State == EncounterState.Cleared, 5);
+            Assert.That(fight.State, Is.EqualTo(EncounterState.Cleared), "now it is won");
+            Assert.That(DoorOf("b").IsOpen, Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator IfHeDiesWhatASummonerMadeGoesToo()
+        {
+            var piece = PutSummonerFight();
+            yield return Begin(new Vector2(8f, Floor));
+            var fight = Built(piece).GetComponent<Encounter>();
+            fight.Begin();
+            yield return probe.Until(() => fight.Alive == 2, 120);
+            Assert.That(fight.Alive, Is.EqualTo(2));
+
+            hero.Kill();
+            yield return probe.Until(() => fight.State == EncounterState.Waiting, 5);
+            Assert.That(fight.State, Is.EqualTo(EncounterState.Waiting));
+            Assert.That(fight.Alive, Is.EqualTo(0), "nothing of the fight is left alive");
+            yield return probe.Step(2);
+            Assert.That(fight.GetComponentsInChildren<Foe>(true), Is.Empty, "and nothing is left in the room");
         }
 
         [UnityTest]

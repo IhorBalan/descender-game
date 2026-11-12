@@ -47,7 +47,8 @@ namespace Descender.Enemies
     /// <summary>
     /// A fight in a room: waves of foes at points, each wave warned of by marks where its
     /// foes will stand, and coming when the wave before is dead. Its doors shut when it
-    /// begins and open when the last wave is dead. If the hero dies it puts itself back:
+    /// begins and open when the last wave is dead. Every foe under it counts, so what a
+    /// summoner of a wave makes is part of the wave. If the hero dies it puts itself back:
     /// the foes go, the doors open, and it can begin again. With no doors it is a plain
     /// spawner. A trigger begins it (<see cref="StartEncounter"/>).
     /// </summary>
@@ -61,6 +62,7 @@ namespace Descender.Enemies
         private readonly List<Door> doors = new List<Door>();
         private readonly List<Foe> foes = new List<Foe>();
         private readonly List<GameObject> marks = new List<GameObject>();
+        private readonly List<Foe> under = new List<Foe>();
         private float warning = DefaultWarning;
         private float left;
 
@@ -74,18 +76,20 @@ namespace Descender.Enemies
         /// <summary>True while the marks of the next wave show and its foes have not come.</summary>
         public bool IsWarning { get; private set; }
 
-        /// <summary>The foes of the wave that is out, dead ones included.</summary>
+        /// <summary>The foes the wave that is out began with, dead ones included.</summary>
         public IReadOnlyList<Foe> Foes => foes;
 
-        /// <summary>How many of them are alive.</summary>
+        /// <summary>How many foes of the fight are alive: the wave's own and any those have made.</summary>
         public int Alive
         {
             get
             {
                 var count = 0;
-                foreach (var foe in foes)
+                GetComponentsInChildren(true, under);
+                foreach (var foe in under)
                 {
-                    if (foe != null && !foe.IsDead)
+                    // One that is being cleared away is switched off, and no longer counts.
+                    if (!foe.IsDead && foe.gameObject.activeSelf)
                     {
                         count++;
                     }
@@ -214,13 +218,14 @@ namespace Descender.Enemies
                 Destroy(mark);
             }
             marks.Clear();
-            foreach (var foe in foes)
+            // Every foe under it, so those a summoner made go too.
+            GetComponentsInChildren(true, under);
+            foreach (var foe in under)
             {
-                if (foe != null)
-                {
-                    Destroy(foe.gameObject);
-                }
+                foe.gameObject.SetActive(false);
+                Destroy(foe.gameObject);
             }
+            under.Clear();
             foes.Clear();
         }
 
