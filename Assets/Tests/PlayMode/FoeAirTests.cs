@@ -232,8 +232,9 @@ namespace Descender.Tests.PlayMode
             var piece = PutFoe(20f, Floor + 5f, 1f, 0.75f, with, new Hover { span = 64f });
             yield return Begin(new Vector2(45f, Floor));
             var foe = FoeOf(piece);
-            var home = (Vector2)foe.transform.position;
-            Assert.That(home.y, Is.EqualTo(Floor + 5.375f).Within(Pixel), "it has not fallen");
+            // Where it was put: it has been hovering about there since the room was built.
+            var home = new Vector2(20.5f, Floor + 5.375f);
+            Assert.That(foe.transform.position.y, Is.EqualTo(home.y).Within(Pixel), "it has not fallen");
 
             var turns = 0;
             var facing = foe.Facing;
