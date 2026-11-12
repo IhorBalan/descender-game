@@ -70,6 +70,12 @@ namespace Descender.Lab
         /// <summary>An enemy made of parts (<see cref="Enemies.Foe"/>) from the recipe in `foe`; the rect is its body.</summary>
         Foe,
 
+        /// <summary>
+        /// A fight (<see cref="Enemies.Encounter"/>): its `waves` come in order, and the doors
+        /// named in `doors` shut while it runs. A zone's action begins it.
+        /// </summary>
+        Encounter,
+
         /// <summary>A <see cref="Climbable"/>: a ladder or a vine the hero takes hold of with up or down.</summary>
         Climb,
 
@@ -140,6 +146,10 @@ namespace Descender.Lab
 
         /// <summary>A foe: what it is made of. Its body's size is the piece's rect.</summary>
         public Enemies.FoeRecipe foe;
+
+        /// <summary>An encounter: its waves in order (feet in world units) and the ids of the doors it shuts.</summary>
+        public List<Enemies.EncounterWave> waves;
+        public string[] doors = new string[0];
 
         /// <summary>A striker: the box around its middle it hits the hero in, in units.</summary>
         public Vector2 reach;
@@ -227,6 +237,7 @@ namespace Descender.Lab
             "chase",
             "air",
             "guard",
+            "arena",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -276,6 +287,7 @@ namespace Descender.Lab
             Chase(Open(stations, "chase", "Foes that come for you: the warning, then the swing"));
             Air(Open(stations, "air", "Foes that shoot and dive"));
             Guard(Open(stations, "guard", "Shields and summoners", Ability.HolyLight, Ability.Smite));
+            Arena(Open(stations, "arena", "The arena: three waves behind shut doors", fighter));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -667,6 +679,50 @@ namespace Descender.Lab
             Foe(station, 20f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Guard()).id = "guard";
             Add(station, PieceKind.Mark, 34f, FloorTop, 8f, 0.1f, "kill the one that makes them");
             Foe(station, 44f, FloorTop, 1.25f, 1.75f, Enemies.FoeRecipes.Summoner()).id = "summoner";
+        }
+
+        /// <summary>
+        /// A mixed fight: walking in shuts both doors, three waves of every kind of foe come
+        /// one after the other, and the doors open when the last is dead.
+        /// </summary>
+        private static void Arena(Station station)
+        {
+            station.rebuilt = true;
+            var tall = RoomHeight - 2f * Wall;
+            Add(station, PieceKind.Door, 13f, FloorTop, 1f, tall, "door").id = "in";
+            Add(station, PieceKind.Door, 49f, FloorTop, 1f, tall, "door").id = "out";
+            Add(station, PieceKind.Solid, 29f, FloorTop, 4f, 1.5f);
+
+            var first = new Enemies.EncounterWave();
+            first.Add(Enemies.FoeRecipes.Walker(), At(station, 24f, FloorTop));
+            first.Add(Enemies.FoeRecipes.Chaser(), At(station, 40f, FloorTop));
+            var second = new Enemies.EncounterWave();
+            second.Add(Enemies.FoeRecipes.Ambusher(), At(station, 22f, FloorTop));
+            second.Add(Enemies.FoeRecipes.Shooter(), At(station, 31f, FloorTop + 1.5f));
+            second.Add(Enemies.FoeRecipes.Diver(), At(station, 40f, FloorTop + 5f), new Vector2(1.25f, 0.875f));
+            var third = new Enemies.EncounterWave();
+            third.Add(Enemies.FoeRecipes.Guard(), At(station, 24f, FloorTop));
+            third.Add(Enemies.FoeRecipes.Brute(), At(station, 38f, FloorTop), new Vector2(1.5f, 2f));
+            third.Add(Enemies.FoeRecipes.Summoner(), At(station, 46f, FloorTop));
+
+            var fight = Add(station, PieceKind.Encounter, 31f, FloorTop + 8f, 1f, 1f);
+            fight.id = "fight";
+            fight.waves = new List<Enemies.EncounterWave>();
+            fight.waves.Add(first);
+            fight.waves.Add(second);
+            fight.waves.Add(third);
+            fight.doors = new[] { "in", "out" };
+            // Past the door: walking on begins it, and again after a death.
+            var start = Zone(station, 15.5f, FloorTop, 1f, 6f, ShapeKind.Square, Color.clear, "");
+            start.id = "start";
+            start.once = false;
+            start.actions = find => List(Do.Fight(find("fight").GetComponent<Enemies.Encounter>()));
+        }
+
+        /// <summary>A point of a room, from its lower left corner, in the world.</summary>
+        private static Vector2 At(Station station, float x, float y)
+        {
+            return new Vector2(station.room.x + x, station.room.y + y);
         }
 
         /// <summary>A foe standing at (x, y) from the room's lower left corner, its body `width` by `height` units.</summary>

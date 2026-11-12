@@ -212,6 +212,20 @@ namespace Descender.Tests.EditMode
             Assert.That(summon.cap, Is.EqualTo(2));
             var makes = summon.summons.behaviours;
             Assert.That(makes, Has.None.InstanceOf<Enemies.Summon>(), "what it makes makes nothing");
+            var arena = LabLayout.Find(stations, "arena");
+            var fight = LabLayout.Find(arena, "fight");
+            Assert.That(fight.kind, Is.EqualTo(PieceKind.Encounter));
+            Assert.That(fight.waves, Has.Count.EqualTo(3));
+            Assert.That(fight.doors, Is.EqualTo(new[] { "in", "out" }));
+            Assert.That(LabLayout.Find(arena, "in").kind, Is.EqualTo(PieceKind.Door));
+            Assert.That(LabLayout.Find(arena, "start").once, Is.False, "so a fight he died in begins again");
+            var kinds = fight.waves.SelectMany(wave => wave.foes).Select(spawn => spawn.recipe.name).ToList();
+            var every = new[] { "walker", "chaser", "ambusher", "shooter", "diver", "guard", "brute", "summoner" };
+            Assert.That(kinds, Is.EquivalentTo(every), "every kind of foe, once");
+            foreach (var spawn in fight.waves.SelectMany(wave => wave.foes))
+            {
+                Assert.That(arena.room.Contains(spawn.feet), Is.True, spawn.recipe.name + " stands in the room");
+            }
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");

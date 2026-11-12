@@ -100,6 +100,13 @@ namespace Descender.Triggers
             return action;
         }
 
+        public static StartEncounter Fight(Enemies.Encounter encounter)
+        {
+            var action = new StartEncounter();
+            action.encounter = encounter;
+            return action;
+        }
+
         public static ShowMessage Say(string text)
         {
             var action = new ShowMessage();
