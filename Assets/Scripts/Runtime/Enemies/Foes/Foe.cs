@@ -12,8 +12,11 @@ namespace Descender.Enemies
     /// physics step, the first that acts taking the step. It stands on the Enemy layer,
     /// so the hero's attacks find it and he passes through it; touching it hurts him. A
     /// strike takes its damage, pushes it by the strike's push and stuns it for a
-    /// moment; at no health it dies. Its origin is the middle of its body. Drawn as a
-    /// <see cref="Shape"/> whose label is its name and health.
+    /// moment; at no health it dies. Every attack a behaviour makes starts with a
+    /// telegraph (<see cref="Telegraph"/>): a colour and a mark for as long as the
+    /// behaviour holds it, before anything can hurt. A hit that holds it cancels what
+    /// its behaviours were doing; an armoured body is not held. Its origin is the middle
+    /// of its body. Drawn as a <see cref="Shape"/> whose label is its name and health.
     /// </summary>
     [RequireComponent(typeof(Rigidbody2D))]
     [RequireComponent(typeof(BoxCollider2D))]
@@ -31,6 +34,7 @@ namespace Descender.Enemies
         /// <summary>The push of a strike that asks for none, away from where it came.</summary>
         public const float PlainPush = 60f;
         public static readonly Color HurtColor = new Color(1f, 0.85f, 0.8f);
+        public static readonly Color TelegraphColor = new Color(1f, 0.75f, 0.3f);
 
         private readonly List<FoeBehaviour> behaviours = new List<FoeBehaviour>();
         private readonly Collider2D[] hits = new Collider2D[4];
@@ -42,7 +46,7 @@ namespace Descender.Enemies
         private int order;
         private int health;
         private float hurtLeft;
-        private bool painted;
+        private int painted;
 
         public string PlacementId { get; set; } = "";
         public bool IsDead { get; private set; }
@@ -66,13 +70,20 @@ namespace Descender.Enemies
         /// <summary>True while a hit holds it: it does not act.</summary>
         public bool IsHurt => hurtLeft > 0f;
 
+        /// <summary>True while a behaviour is warning of an attack.</summary>
+        public bool IsTelegraphing { get; private set; }
+
+        /// <summary>True when a wall, or for a walking body the end of the floor, is just ahead.</summary>
+        public bool IsBlockedAhead =>
+            EnemyPhysics.IsOnWall(box, Facing, hits) || (!build.flies && !EnemyPhysics.FloorAhead(box, Facing, hits));
+
         public IReadOnlyList<FoeBehaviour> Behaviours => behaviours;
 
-        /// <summary>Its body and its behaviours, in the order they are asked. Each behaviour is this foe's own copy.</summary>
+        /// <summary>Its body and its behaviours, in the order they are asked. Both are copied: they are this foe's own.</summary>
         public void Configure(FoeBody with, IEnumerable<FoeBehaviour> acts)
         {
             Find();
-            build = with ?? new FoeBody();
+            build = with != null ? with.Copy() : new FoeBody();
             behaviours.Clear();
             if (acts != null)
             {
@@ -99,6 +110,39 @@ namespace Descender.Enemies
         }
 
         public void Turn() => Facing = -Facing;
+
+        /// <summary>The warning before an attack, on or off: its colour and a mark on its label.</summary>
+        public void Telegraph(bool on)
+        {
+            if (IsTelegraphing != on)
+            {
+                IsTelegraphing = on;
+                Write();
+            }
+        }
+
+        /// <summary>Where the hero's middle is from its own, in level pixels. False when there is no hero to find.</summary>
+        public bool HeroOffset(out Vector2 pixels)
+        {
+            var hero = EnemyPhysics.LiveHero();
+            if (hero == null)
+            {
+                pixels = Vector2.zero;
+                return false;
+            }
+            // His position is his feet; his middle is a unit above them.
+            pixels = ((Vector2)hero.transform.position + Vector2.up - (Vector2)box.bounds.center) * Ppu;
+            return true;
+        }
+
+        /// <summary>Hurts the hero if he is inside a box of a size (level pixels) just ahead of its body. True when it landed.</summary>
+        public bool HurtAhead(Vector2 reach, int damage)
+        {
+            var bounds = box.bounds;
+            var size = reach / Ppu;
+            var centre = new Vector2(bounds.center.x + Facing * (bounds.extents.x + size.x / 2f), bounds.center.y);
+            return EnemyPhysics.HurtHero(centre, size, damage, bounds.center, hits);
+        }
 
         public void Face(int direction)
         {
@@ -161,7 +205,7 @@ namespace Descender.Enemies
                 velocity.x = Move;
             }
             body.linearVelocity = velocity / Ppu;
-            if (painted != IsHurt)
+            if (painted != Look())
             {
                 Write();
             }
@@ -190,6 +234,18 @@ namespace Descender.Enemies
                 Die();
                 return true;
             }
+            var held = !build.armour;
+            foreach (var behaviour in behaviours)
+            {
+                behaviour.OnStruck(this, held);
+            }
+            if (!held)
+            {
+                // Armour: the blow lands, and what it was doing goes on.
+                Write();
+                return true;
+            }
+            Telegraph(false);
             hurtLeft = build.hurtTime;
             var push = strike.Push;
             if (push == Vector2.zero)
@@ -214,16 +270,21 @@ namespace Descender.Enemies
             gameObject.SetActive(false);
         }
 
+        /// <summary>What it looks like now: 1 held by a hit, 2 warning of an attack, 0 otherwise.</summary>
+        private int Look() => IsHurt ? 1 : (IsTelegraphing ? 2 : 0);
+
         private void Write()
         {
-            painted = IsHurt;
+            painted = Look();
             if (shape == null)
             {
                 return;
             }
-            var label = string.IsNullOrEmpty(title) ? "" : title + "\n";
+            var label = painted == 2 ? "!\n" : "";
+            label += string.IsNullOrEmpty(title) ? "" : title + "\n";
             label += health + "/" + Mathf.Max(build.health, 1);
-            shape.Set(build.shape, box.size, IsHurt ? HurtColor : build.color, label, order);
+            var color = painted == 1 ? HurtColor : (painted == 2 ? TelegraphColor : build.color);
+            shape.Set(build.shape, box.size, color, label, order);
         }
     }
 }

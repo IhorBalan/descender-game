@@ -224,6 +224,7 @@ namespace Descender.Lab
             "hurt",
             "break",
             "foes",
+            "chase",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -270,6 +271,7 @@ namespace Descender.Lab
             Hurt(Open(stations, "hurt", "Being hurt and healing"), tuning);
             Break(Open(stations, "break", "Things that break", Ability.HolyLight, Ability.Smite), jump);
             Foes(Open(stations, "foes", "Foes: a body, a patrol, a touch"));
+            Chase(Open(stations, "chase", "Foes that come for you: the warning, then the swing"));
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -616,6 +618,22 @@ namespace Descender.Lab
                 color = new Color(0.6f, 0.3f, 0.5f),
             };
             Foe(station, 45f, FloorTop, 1.5f, 2f, new Enemies.FoeRecipe("heavy", heavy, new Enemies.Patrol()));
+        }
+
+        /// <summary>
+        /// Foes that attack, each warning first: a chaser that patrols until it sees you, an
+        /// ambusher that stands still until you are near, and an armoured brute a cut does
+        /// not stop.
+        /// </summary>
+        private static void Chase(Station station)
+        {
+            station.rebuilt = true;
+            Add(station, PieceKind.Solid, 26f, FloorTop, 1f, 2f, "it stops at walls");
+            Foe(station, 20f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Chaser()).id = "chaser";
+            Add(station, PieceKind.Mark, 30f, FloorTop, 6f, 0.1f, "come near: it wakes");
+            Foe(station, 33f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Ambusher()).id = "ambusher";
+            Add(station, PieceKind.Solid, 39f, FloorTop, 1f, 2f);
+            Foe(station, 45f, FloorTop, 1.5f, 2f, Enemies.FoeRecipes.Brute()).id = "brute";
         }
 
         /// <summary>A foe standing at (x, y) from the room's lower left corner, its body `width` by `height` units.</summary>

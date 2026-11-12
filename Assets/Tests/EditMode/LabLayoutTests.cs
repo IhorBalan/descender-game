@@ -179,6 +179,21 @@ namespace Descender.Tests.EditMode
             Assert.That(walker.kind, Is.EqualTo(PieceKind.Foe));
             Assert.That(walker.foe.behaviours, Has.Length.EqualTo(1), "a patrol and nothing else");
             Assert.That(walker.foe.behaviours[0], Is.InstanceOf<Enemies.Patrol>());
+            var chase = LabLayout.Find(stations, "chase");
+            var chaser = LabLayout.Find(chase, "chaser").foe;
+            Assert.That(chaser.behaviours[0], Is.InstanceOf<Enemies.Swing>(), "the swing is asked before the chase");
+            Assert.That(chaser.behaviours[1], Is.InstanceOf<Enemies.Chase>());
+            Assert.That(chaser.behaviours[2], Is.InstanceOf<Enemies.Patrol>(), "and it patrols when it sees no one");
+            var ambusher = LabLayout.Find(chase, "ambusher").foe;
+            Assert.That(ambusher.behaviours[0], Is.InstanceOf<Enemies.Ambush>(), "nothing acts before it wakes");
+            var brute = LabLayout.Find(chase, "brute").foe;
+            Assert.That(brute.body.armour, Is.True, "a hit does not stop it");
+            foreach (var recipe in new[] { chaser, ambusher, brute })
+            {
+                var swing = System.Array.Find(recipe.behaviours, act => act is Enemies.Swing) as Enemies.Swing;
+                Assert.That(swing, Is.Not.Null, recipe.name);
+                Assert.That(swing.windup, Is.GreaterThanOrEqualTo(0.25f), recipe.name + " warns long enough to see");
+            }
             var light = LabLayout.Find(stations, "light");
             Assert.That(light.abilities, Is.EqualTo(new[] { Ability.HolyLight, Ability.Smite }));
             Assert.That(LabLayout.Find(light, "target").by, Is.EqualTo(Triggers.StruckBy.Bolt), "a bolt only");

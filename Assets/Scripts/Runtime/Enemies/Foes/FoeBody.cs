@@ -31,6 +31,9 @@ namespace Descender.Enemies
         [Min(0f)]
         public float hurtTime = 0.2f;
 
+        [Tooltip("A hit does not hold it, push it or cancel its attack.")]
+        public bool armour;
+
         [Tooltip("No gravity: it stays at the height it is put.")]
         public bool flies;
 
