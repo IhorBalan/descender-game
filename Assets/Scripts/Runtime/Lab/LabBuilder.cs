@@ -91,7 +91,7 @@ namespace Descender.Lab
                 {
                     var actions = piece.actions != null ? piece.actions(find) : new TriggerAction[0];
                     var zone = built[i].AddComponent<TriggerZone>();
-                    zone.Configure(piece.on, piece.once, piece.hide, piece.needs, actions);
+                    zone.Configure(piece.on, piece.once, piece.hide, piece.needs, actions, piece.by);
                 }
             }
             for (var i = 0; i < built.Count; i++)

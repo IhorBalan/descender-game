@@ -89,6 +89,9 @@ namespace Descender.Lab
         public bool hide;
         public TriggerNeeds needs = new TriggerNeeds();
 
+        /// <summary>A zone that waits to be hit: the strike it answers to.</summary>
+        public StruckBy by = StruckBy.Any;
+
         /// <summary>A zone's actions, made when the station is built; the argument finds a built piece by id.</summary>
         public Func<Func<string, GameObject>, TriggerAction[]> actions;
 
@@ -196,6 +199,7 @@ namespace Descender.Lab
             "grab",
             "dummy",
             "sword",
+            "light",
         };
 
         /// <summary>The key of the items station.</summary>
@@ -238,6 +242,7 @@ namespace Descender.Lab
             var fighter = new[] { Ability.Wings, Ability.HolyLight, Ability.Smite };
             Dummies(Open(stations, "dummy", "Training dummies", fighter), jump, tuning);
             Sword(Open(stations, "sword", "The sword: up, down, the bounce and the combo"), tuning);
+            Light(Open(stations, "light", "Holy Light and Smite", Ability.HolyLight, Ability.Smite), jump, tuning);
             for (var i = 0; i < stations.Count; i++)
             {
                 Pads(stations, i);
@@ -449,6 +454,51 @@ namespace Descender.Lab
                 Add(station, PieceKind.Dummy, 21f + step * (i + 0.75f), FloorTop + 0.5f, 1f, 1f, label);
             }
             Add(station, PieceKind.Solid, 23f + 3f * step, FloorTop, 4f, 2f, "land here");
+        }
+
+        /// <summary>
+        /// The bolt and the slam by their numbers: a dummy at the end of the bolt's range
+        /// with a mark in range and one out of it, dummies just inside and just outside the
+        /// slam's shock, a target
+        /// only a bolt sets off and a plate only the slam does, each opening a door.
+        /// </summary>
+        private static void Light(Station station, float jump, PlayerTuning tuning)
+        {
+            station.rebuilt = true;
+
+            // From the mark the bolt leaves his hand and flies its range; its box is ten pixels long.
+            var front = tuning.castOffset.x + tuning.boltRange + Combat.LightBolt.Size.x / 2f;
+            var reach = PlayerTuning.Units(front);
+            Add(station, PieceKind.Mark, 9.5f, FloorTop, 0.1f, 2f, "out of range");
+            Add(station, PieceKind.Mark, 11f, FloorTop, 0.1f, 3f, "in range");
+            Add(station, PieceKind.Dummy, 11f + reach - 0.5f, FloorTop, 0.5f, 2f, "cast from the marks");
+
+            // A target over spikes: only a bolt reaches it, and only a bolt sets it off.
+            var pale = new Color(1f, 0.95f, 0.7f);
+            Add(station, PieceKind.Hazard, 25f, FloorTop, 4f, 0.5f, "spikes");
+            var target = Zone(station, 27f, FloorTop + 0.75f, 0.75f, 1f, ShapeKind.Diamond, pale, "bolt only");
+            target.id = "target";
+            target.on = TriggerEvent.Hit;
+            target.by = StruckBy.Bolt;
+            target.once = false;
+            Add(station, PieceKind.Solid, 31f, FloorTop + 4f, 1f, RoomHeight - 2f * Wall - 4f);
+            Add(station, PieceKind.Door, 31f, FloorTop, 1f, 4f, "opens to a bolt").id = "first";
+            target.actions = find => List(Do.Door(find("first").GetComponent<Door>(), SwitchTo.Toggle));
+
+            // A plate on the floor under a block to jump from: only the slam sets it off.
+            var half = PlayerTuning.Units(tuning.slamReach.x / 2f);
+            var violet = new Color(0.7f, 0.5f, 0.95f);
+            Add(station, PieceKind.Solid, 34f, FloorTop, 3f, Mathf.Floor(jump) - 1f, "jump off, down and attack");
+            var plate = Zone(station, 38f, FloorTop, 2f, 0.25f, ShapeKind.Square, violet, "slam only");
+            plate.id = "plate";
+            plate.on = TriggerEvent.Hit;
+            plate.by = StruckBy.Slam;
+            plate.once = false;
+            Add(station, PieceKind.Dummy, 39f + half - 0.5f, FloorTop, 0.5f, 2f, "in the shock");
+            Add(station, PieceKind.Dummy, 39f + half + 0.5f, FloorTop, 0.5f, 2f, "out of it");
+            Add(station, PieceKind.Solid, 46f, FloorTop + 4f, 1f, RoomHeight - 2f * Wall - 4f);
+            Add(station, PieceKind.Door, 46f, FloorTop, 1f, 4f, "opens to a slam").id = "second";
+            plate.actions = find => List(Do.Door(find("second").GetComponent<Door>(), SwitchTo.Toggle));
         }
 
         private static void Slam(Station station, float jump)
