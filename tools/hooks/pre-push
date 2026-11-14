@@ -87,6 +87,8 @@ unity_on_project() {
                 $root = $env:DESCENDER_ROOT.TrimEnd([char]92).ToLowerInvariant()
                 Get-CimInstance Win32_Process | Where-Object { $_.Name -eq "Unity.exe" } | ForEach-Object {
                     $line = ([string]$_.CommandLine).Replace([char]47, [char]92).ToLowerInvariant()
+                    # A path given with a trailing slash names the same project.
+                    $line = $line.Replace([string][char]92 + [char]34, [string][char]34).Replace([string][char]92 + " ", " ").TrimEnd([char]92)
                     # The path itself, not one it is a prefix of (descender-focus vs descender-focus2).
                     if ($line.Contains($root + [char]34) -or $line.Contains($root + " ") -or $line.EndsWith($root)) {
                         if ($line.Contains("-batchmode")) { "$($_.ProcessId) batch" } else { "$($_.ProcessId) editor" }
