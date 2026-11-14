@@ -111,6 +111,11 @@ ignore what a strike is and how it pushes. The plan builds a new enemy,
 and leaves the ported ones alone until the art comes back; they can then
 be re-made from the same parts one at a time.
 
+All six tasks are merged (2026-11-12, #197 to #202). What is left of the
+milestone is Ihor's playtest of the lab rooms `foes`, `chase`, `air`,
+`guard`, `arena` and `boss`. T-0038 adds one run through everything, the
+`gauntlet`, so the mechanics can be felt together.
+
 ### After G4
 
 Content comes back in this order unless Ihor says otherwise: the story
@@ -257,7 +262,8 @@ hygiene as each production region lands.
 | T-0034 | Shoot and dive | done | 34 | T-0033 | 0 | Re-plan the roadmap around mechanics | #199 |
 | T-0035 | Shielded and summon | done | 35 | T-0033 | 0 | Re-plan the roadmap around mechanics | #200 |
 | T-0036 | Spawners and encounter rooms | done | 36 | T-0033 | 0 | Re-plan the roadmap around mechanics | #201 |
-| T-0037 | A boss pattern as the template | in review | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | |
+| T-0037 | A boss pattern as the template | done | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | #202 |
+| T-0038 | The gauntlet: one run through every mechanic | in review | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -550,6 +556,14 @@ barriers, the cliff descent.
   feels locked to it, jumping off carries its speed in a way that feels
   right (`tune platformMomentum` 0 to 1, `tune platformLiftMax`), and
   standing under the block costs a heart and puts you beside it.
+- **T-0038, the gauntlet.** `lab gauntlet` (the room gives the wings, the
+  light dash, Holy Light and Smite). One run, left to right, through
+  everything: a step and spikes to jump, a walker between walls, a wall
+  only the double jump clears, a chaser, spikes crossed by a ledge, a block
+  to cut through, a shooter and a diver, a wall of light, a fight of two
+  waves behind shut doors, and a heart at the end. To check: how the
+  mechanics feel one after another, where the run drags or spikes in
+  difficulty, and whether five hearts are enough to reach the end.
 - **T-0037, the boss template.** `lab boss` (the room gives the wings, Holy
   Light and Smite). Behind shut doors, one armoured foe with twelve health
   in three phases, changing at two thirds and one third: it swings and
