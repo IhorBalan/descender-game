@@ -66,28 +66,49 @@ The tests gate pushes from the developer's machine, not from CI.
 `tools/hooks/pre-push` runs the EditMode then the PlayMode tests with the
 editor named in `ProjectSettings/ProjectVersion.txt` (found under the
 Unity Hub install folder, or `UNITY_EDITOR`), prints the compile errors or
-the failing tests, and refuses the push when either run fails. Both
-platforms run in one editor launch through
-`Descender.EditorTools.Build.PrePushTests` (`-executeMethod`, in
-`Assets/Scripts/Editor/Build/`), which writes the same NUnit XML as
-`-runTests` to `Logs/pre-push-EditMode.xml` and `Logs/pre-push-PlayMode.xml`
-and exits 0 only when both platforms ran tests and none failed. About 20
-seconds with a warm `Library/`, a minute or two the first time in a new
-worktree. While it runs the hook prints the phase (starting, importing,
-`EditMode n/N`, `PlayMode n/N`), the time elapsed and how long the last
-passing run took; the editor log is `Logs/pre-push.log` (`tail -f`, or
-`Get-Content Logs\pre-push.log -Wait -Tail 20` in PowerShell). A run that
-stands still for `PRE_PUSH_STALL_SECONDS` (600) is stopped and fails. The
-editor is started with `--burst-disable-compilation`: the tests do not need
-Burst, the game has no Burst code, and on Windows with Smart App Control
-every unsigned DLL under `Library/BurstCache` raised a warning.
+the failing tests with the error lines of their log, and refuses the push
+when any run fails. The tests run headless in batch mode with `-runTests`,
+never in a visible editor, in three launches that each write
+`Logs/pre-push-<run>.xml` and `Logs/pre-push-<run>.log`:
+
+| Run | Arguments |
+| --- | --- |
+| `EditMode` | `-testPlatform EditMode -nographics` |
+| `PlayMode` | `-testPlatform PlayMode -testCategory "!Rendering" -nographics` |
+| `PlayModeRendering` | `-testPlatform PlayMode -testCategory Rendering` (offscreen, no window) |
+
+Tag a PlayMode fixture or test `[Category("Rendering")]` when it needs a
+graphics device: cameras rendering, RenderTextures, screenshots, shaders.
+Logic, physics, coroutines and scene loading run without one. The third run
+is skipped while nothing is tagged. A run has `PRE_PUSH_TIMEOUT_SECONDS`
+(600) in all and `PRE_PUSH_STALL_SECONDS` (600) without progress; past
+either the editor is killed and the end of its log printed. Before the
+first run the hook kills a batch-mode editor left on the project by an
+earlier run; an editor someone opened on it is never closed: the hook says
+so and stops. The editor is started with `--burst-disable-compilation`: the
+tests do not need Burst, the game has no Burst code, and on Windows with
+Smart App Control every blocked DLL under `Library/BurstCache` raised a
+notification with a sound.
 On Windows the hook starts the editor through
 `tools/hooks/unity-background.ps1`, which asks for hidden windows
 (`SW_HIDE`): even with `-batchmode` the editor opens a console window, which took
 the keyboard and mouse from whatever was in use (a game, for one) until it was
 clicked again. Stopping the hook stops that script and, through a job object,
 the editor. `PRE_PUSH_FOREGROUND=1` starts the editor directly, as on macOS
-and Linux.
+and Linux. Never start `Unity.exe` directly on the Windows PC.
+
+Test runs are silent: in any batch-mode run `SettingsApplier` holds the
+listener at zero from the first frame (`Application.isBatchMode`), the
+PlayMode assembly's `MuteDuringTests` and `PlayModeAudioOff` (a
+`[SetUpFixture]` with a `[OneTimeSetUp]`) put it at zero as backups, and
+`Feedback` never rumbles a gamepad in batch mode.
+
+PlayMode tests stay headless-safe: drive the hero through a
+`ScriptedInput` (or the Input System's `InputTestFixture`), never a real
+device; set `Time.captureDeltaTime = Time.fixedDeltaTime` so each frame is
+one physics step whatever the machine's frame rate; wait on a condition
+with a step limit, not on a bare frame count; do not depend on the screen
+resolution.
 Install it once per clone:
 
 ```
@@ -145,7 +166,7 @@ password-free route short of a Pro serial. The Claude review needs
   `Assets/InitTestScene<guid>.unity` (`PlayFromMain` guards against this).
   A stopped run leaves that scene, its `.meta` and `Temp/UnityLockfile`
   behind; delete them.
-- Compile error: the log is `Logs/pre-push.log`; a `UnityEditor`
+- Compile error: the log is `Logs/pre-push-EditMode.log`; a `UnityEditor`
   reference outside the Editor asmdef or a missing asmdef reference are
   the usual causes.
 - Release activation error: the secrets above.

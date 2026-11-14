@@ -16,6 +16,7 @@ namespace Descender.Tests.PlayMode
     /// continuous land) never stop the view at their shared edge or cut it across, while a
     /// room on its own still holds the view inside it.
     /// </summary>
+    [Category("Rendering")]
     public class CameraFollowTests
     {
         private const float ViewHalfHeight = 5.625f;

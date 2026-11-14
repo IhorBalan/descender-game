@@ -28,6 +28,20 @@ namespace Descender.Save
             }
         }
 
+        /// <summary>
+        /// A command-line (batch-mode) run of the game or the editor, which is how the tests run on
+        /// a developer's machine, is silent from its first frame: the listener starts at zero before
+        /// any scene loads, and <see cref="Apply"/> keeps it there.
+        /// </summary>
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void SilenceBatchMode()
+        {
+            if (Application.isBatchMode)
+            {
+                AudioListener.volume = 0f;
+            }
+        }
+
         public static void Apply(SettingsData settings)
         {
             if (settings == null)
@@ -43,10 +57,19 @@ namespace Descender.Save
             }
         }
 
-        /// <summary>The listener volume the settings ask for: zero while <see cref="Muted"/>.</summary>
+        /// <summary>
+        /// The listener volume the settings ask for: zero while <see cref="Muted"/> and in any
+        /// batch-mode run, so a test run never plays through the speakers.
+        /// </summary>
         public static float MasterVolume(SettingsData settings)
         {
-            return muted ? 0f : settings.volume;
+            return MasterVolume(settings, muted || Application.isBatchMode);
+        }
+
+        /// <summary>The listener volume for these settings, or zero when <paramref name="silent"/>.</summary>
+        public static float MasterVolume(SettingsData settings, bool silent)
+        {
+            return silent ? 0f : settings.volume;
         }
 
         private static void ApplyWindow(SettingsData settings)

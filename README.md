@@ -282,14 +282,22 @@ git config core.hooksPath tools/hooks
 ```
 
 The hook finds the editor named in `ProjectSettings/ProjectVersion.txt`
-under the Unity Hub folder (or at `UNITY_EDITOR`), runs both platforms in
-one editor launch and prints its phase, the elapsed time and the summary
-lines (`pre-push: EditMode passed (N tests).`). It refuses to run while
-the project is open in the editor. Without the hook, the same run is
+under the Unity Hub folder (or at `UNITY_EDITOR`) and runs the tests
+headless in batch mode, in three launches: EditMode and the PlayMode tests
+not tagged `[Category("Rendering")]` with `-nographics`, then the Rendering
+ones without it (offscreen, no window). It prints the phase, the elapsed
+time and the summary lines (`pre-push: EditMode passed (N tests).`). If the
+project is open in an editor it says so and stops, without closing it.
+Without the hook, one run is
 
 ```
-Unity -batchmode -projectPath . -executeMethod Descender.EditorTools.Build.PrePushTests.Run -prePushResults Logs
+Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log
 ```
+
+(`-testPlatform PlayMode -testCategory "!Rendering"` for the PlayMode tests
+that do not render, and `-testCategory Rendering` without `-nographics` for
+those that do). On the Windows PC, use the hook rather than starting
+`Unity.exe` by hand: it hides the console window that would take the focus.
 
 CI (`.github/workflows/tests.yml`) runs on every pull request and push to
 `main` without a Unity licence: `csharpier check Assets` (CSharpier 1.0.3,
