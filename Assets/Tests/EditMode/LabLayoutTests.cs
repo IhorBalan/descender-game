@@ -238,6 +238,20 @@ namespace Descender.Tests.EditMode
                 Assert.That(phase.attacks, Is.Not.Empty);
                 Assert.That(phase.attacks, Has.All.Matches<Enemies.FoeBehaviour>(a => !(a is Enemies.Patrol)));
             }
+            var habits = LabLayout.Find(stations, "habits");
+            var pouncer = LabLayout.Find(habits, "pouncer").foe;
+            Assert.That(pouncer.behaviours[0], Is.InstanceOf<Enemies.Swing>(), "beside him it swings");
+            var pounce = (Enemies.Pounce)pouncer.behaviours[1];
+            var lunge = (Enemies.Pounce)LabLayout.Find(habits, "lunger").foe.behaviours[1];
+            Assert.That(lunge.spring.x, Is.GreaterThan(pounce.spring.x), "a lunge is faster");
+            Assert.That(lunge.spring.y, Is.LessThan(pounce.spring.y), "and lower");
+            var hurler = LabLayout.Find(habits, "hurler").foe;
+            var hurl = (Enemies.Shoot)hurler.behaviours[0];
+            var back = (Enemies.Retreat)hurler.behaviours[1];
+            Assert.That(hurl.nearest, Is.EqualTo(back.within), "it throws from where it stops backing away");
+            var slammer = LabLayout.Find(habits, "slammer").foe;
+            Assert.That(slammer.body.armour, Is.True);
+            Assert.That(slammer.behaviours[1], Is.InstanceOf<Enemies.Quake>());
             var gauntlet = LabLayout.Find(stations, "gauntlet");
             Assert.That(stations[stations.Count - 1], Is.SameAs(gauntlet), "wider than the pitch, so it is the last");
             Assert.That(gauntlet.room.width, Is.EqualTo(LabLayout.GauntletWidth));

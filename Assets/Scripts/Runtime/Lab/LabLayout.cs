@@ -239,6 +239,7 @@ namespace Descender.Lab
             "guard",
             "arena",
             "boss",
+            "habits",
             "gauntlet",
         };
 
@@ -291,6 +292,7 @@ namespace Descender.Lab
             Guard(Open(stations, "guard", "Shields and summoners", Ability.HolyLight, Ability.Smite));
             Arena(Open(stations, "arena", "The arena: three waves behind shut doors", fighter));
             Boss(Open(stations, "boss", "A boss in three phases", fighter));
+            Habits(Open(stations, "habits", "The old habits: the pounce, the lunge, the hurl and the quake", fighter));
             var runner = new[] { Ability.Wings, Ability.LightDash, Ability.HolyLight, Ability.Smite };
             var gauntlet = OpenWide(stations, "gauntlet", "The gauntlet: everything in one run", GauntletWidth, runner);
             Gauntlet(gauntlet, jump, second);
@@ -764,6 +766,25 @@ namespace Descender.Lab
         }
 
         /// <summary>How wide the gauntlet is: three rooms end to end.</summary>
+        /// <summary>
+        /// What the old walkers did, as parts, each behind a low wall: a pouncer that leaps
+        /// from a few steps off, a lunger that runs in and leaps short and low, a hurler on
+        /// a platform that throws from far and backs away from near, and a slammer whose
+        /// wave along the floor is jumped.
+        /// </summary>
+        private static void Habits(Station station)
+        {
+            station.rebuilt = true;
+            Foe(station, 17f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Pouncer()).id = "pouncer";
+            Add(station, PieceKind.Solid, 23f, FloorTop, 1f, 2f, "it leaps from a few steps off");
+            Foe(station, 28f, FloorTop, 1.125f, 1.5f, Enemies.FoeRecipes.Lunger()).id = "lunger";
+            Add(station, PieceKind.Solid, 33f, FloorTop, 1f, 2f, "short, low and fast");
+            Add(station, PieceKind.Solid, 36f, FloorTop, 6f, 2f, "come close: it backs away");
+            Foe(station, 38.5f, FloorTop + 2f, 1.125f, 1.5f, Enemies.FoeRecipes.Hurler()).id = "hurler";
+            Add(station, PieceKind.Solid, 44f, FloorTop, 1f, 2f, "jump the wave");
+            Foe(station, 49f, FloorTop, 1.5f, 2f, Enemies.FoeRecipes.Slammer()).id = "slammer";
+        }
+
         public const float GauntletWidth = 3f * RoomWidth;
 
         /// <summary>

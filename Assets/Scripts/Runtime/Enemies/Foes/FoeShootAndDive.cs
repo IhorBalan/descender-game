@@ -4,7 +4,8 @@ using UnityEngine;
 namespace Descender.Enemies
 {
     /// <summary>
-    /// The ranged attack: with the hero's middle within `range` of its own it faces him,
+    /// The ranged attack: with the hero's middle within `range` of its own (and no nearer
+    /// than `nearest`) it faces him,
     /// warns for `windup`, throws one bolt (<see cref="EnemyShot"/>) and recovers, then
     /// waits `cooldown`. The bolt is aimed at where he is when it leaves, or with `level`
     /// set flies flat the way the foe faces; it breaks on the world. It has the step from
@@ -15,6 +16,9 @@ namespace Descender.Enemies
     {
         [Tooltip("How far his middle may be from its own, level pixels, for it to shoot.")]
         public float range = 140f;
+
+        [Tooltip("Closer than this, level pixels, it does not shoot: he is too near.")]
+        public float nearest;
 
         [Tooltip("Flies flat the way the foe faces instead of at him.")]
         public bool level;
@@ -48,6 +52,10 @@ namespace Descender.Enemies
             {
                 wait = Mathf.Max(wait - dt, 0f);
                 if (wait > 0f || !foe.HeroOffset(out var at) || at.magnitude > range)
+                {
+                    return false;
+                }
+                if (at.magnitude < nearest)
                 {
                     return false;
                 }
