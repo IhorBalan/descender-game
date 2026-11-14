@@ -241,7 +241,8 @@ namespace Descender.Tests.EditMode
             var gauntlet = LabLayout.Find(stations, "gauntlet");
             Assert.That(stations[stations.Count - 1], Is.SameAs(gauntlet), "wider than the pitch, so it is the last");
             Assert.That(gauntlet.room.width, Is.EqualTo(LabLayout.GauntletWidth));
-            Assert.That(gauntlet.abilities, Does.Contain(Ability.Wings).And.Contain(Ability.LightDash));
+            Assert.That(gauntlet.abilities, Does.Contain(Ability.Wings));
+            Assert.That(gauntlet.abilities, Does.Contain(Ability.LightDash));
             var has = gauntlet.pieces.Select(piece => piece.kind).Distinct().ToList();
             var needs = new[]
             {
