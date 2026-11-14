@@ -11,21 +11,32 @@
 # Hub's install folder. The project must not be open in the editor at the same
 # time; run the tests from Window > General > Test Runner instead then.
 #
-# Both platforms run in one editor launch through
-# Descender.EditorTools.Build.PrePushTests (starting the editor twice was most
-# of a warm run). A checkout from before that class existed gets the older
-# form, one -runTests launch per platform. Either way the same tests run and
-# the push is refused unless both platforms ran tests and none failed.
+# The tests run headless in batch mode, never in a visible editor window, in
+# three -runTests launches (the test runner exits on its own; no -quit):
+#   EditMode                        with -nographics
+#   PlayMode, not [Category("Rendering")]   with -nographics
+#   PlayMode, [Category("Rendering")]       without -nographics: it renders
+#                                           offscreen, still with no window
+# Each writes Logs/pre-push-<run>.xml and Logs/pre-push-<run>.log. The push is
+# refused unless every run ran tests and none failed; the failing tests, their
+# messages and the error lines of the log are printed.
 #
-# While the editor runs, the hook prints the phase (starting, importing,
-# EditMode n/N, PlayMode n/N) with the time elapsed, and how long the last
-# passing run in this checkout took. A run whose log and progress stand still
-# for the stall limit is stopped and fails, instead of holding the push forever.
+# A run gets PRE_PUSH_TIMEOUT_SECONDS (600) in all and PRE_PUSH_STALL_SECONDS
+# (600) without any progress; past either, the editor is killed and the end of
+# its log printed. Before the first run, a batch-mode editor left over on this
+# project from an earlier run is killed and a stale lock removed. An editor
+# that someone opened on the project is never closed: the hook says so and
+# stops, since Unity cannot open one project twice.
+#
+# While a run goes, the hook prints its phase (starting, importing, running
+# the tests) and the time elapsed, and how long the last passing run took.
 #
 # On Windows the editor is started through unity-background.ps1 (next to this
-# file), with its windows hidden: otherwise the console window the editor opens
-# takes the keyboard and mouse from whatever is in use, a game for one, until it
-# is clicked again. PRE_PUSH_FOREGROUND=1 starts the editor directly instead.
+# file), with its windows hidden: even in batch mode the editor opens a console
+# window, which otherwise takes the keyboard and mouse from whatever is in use,
+# a game for one. PRE_PUSH_FOREGROUND=1 starts the editor directly instead.
+# Burst compilation is off: the tests do not need it, and on Windows with Smart
+# App Control each blocked Burst DLL raises a notification with a sound.
 
 set -u
 
@@ -66,16 +77,61 @@ if [ -z "$unity" ] || [ ! -x "$unity" ]; then
     exit 1
 fi
 
-if [ -f Temp/UnityLockfile ]; then
-    echo "pre-push: the project is open in the Unity editor, which blocks the command-line run." >&2
-    echo "pre-push: close it, or run both tabs of Window > General > Test Runner and push with SKIP_UNITY_TESTS=1." >&2
+# unity_on_project: one line per editor process that has this project open,
+# "<pid> batch" for a command-line run and "<pid> editor" for an open editor.
+unity_on_project() {
+    case "$(uname -s)" in
+        MINGW* | MSYS* | CYGWIN*)
+            win_root=$(cygpath -w "$root" 2>/dev/null || echo "$root")
+            DESCENDER_ROOT="$win_root" powershell.exe -NoProfile -Command '
+                $root = $env:DESCENDER_ROOT.TrimEnd([char]92).ToLowerInvariant()
+                Get-CimInstance Win32_Process | Where-Object { $_.Name -eq "Unity.exe" } | ForEach-Object {
+                    $line = ([string]$_.CommandLine).Replace([char]47, [char]92).ToLowerInvariant()
+                    # A path given with a trailing slash names the same project.
+                    $line = $line.Replace([string][char]92 + [char]34, [string][char]34).Replace([string][char]92 + " ", " ").TrimEnd([char]92)
+                    # The path itself, not one it is a prefix of (descender-focus vs descender-focus2).
+                    if ($line.Contains($root + [char]34) -or $line.Contains($root + " ") -or $line.EndsWith($root)) {
+                        if ($line.Contains("-batchmode")) { "$($_.ProcessId) batch" } else { "$($_.ProcessId) editor" }
+                    }
+                }' 2>/dev/null | tr -d '\r'
+            ;;
+        *)
+            ps -axo pid=,args= 2>/dev/null | grep -F "$root" | grep -E "[U]nity( |$)|Unity\.app" | grep -v pre-push |
+                awk '{ kind = ($0 ~ /-batchmode/) ? "batch" : "editor"; print $1, kind }'
+            ;;
+    esac
+}
+
+# kill_pid <pid>: ends a stray editor and everything it started.
+kill_pid() {
+    case "$(uname -s)" in
+        MINGW* | MSYS* | CYGWIN*) taskkill //F //T //PID "$1" >/dev/null 2>&1 ;;
+        *) kill -9 "$1" 2>/dev/null ;;
+    esac
+}
+
+found=$(unity_on_project)
+if echo "$found" | grep -q " editor$"; then
+    echo "pre-push: the project is open in a Unity editor (pid $(echo "$found" | awk '/ editor$/ { print $1 }' | tr '\n' ' ')), and Unity cannot open it twice." >&2
+    echo "pre-push: close that editor yourself and push again; the hook does not close it." >&2
+    exit 1
+fi
+for stray in $(echo "$found" | awk '/ batch$/ { print $1 }'); do
+    echo "pre-push: killing a batch-mode editor left over on this project (pid $stray)."
+    kill_pid "$stray"
+done
+if [ -n "$found" ]; then
+    sleep 2
+fi
+if [ -f Temp/UnityLockfile ] && ! rm -f Temp/UnityLockfile 2>/dev/null; then
+    echo "pre-push: Temp/UnityLockfile is held by a process the hook does not recognise; close it and push again." >&2
     exit 1
 fi
 
 mkdir -p Logs
-status_file="Logs/pre-push-status.txt"
 last_file="Logs/pre-push-last-seconds.txt"
 stall_limit="${PRE_PUSH_STALL_SECONDS:-600}"
+time_limit="${PRE_PUSH_TIMEOUT_SECONDS:-600}"
 started=$(date +%s)
 unity_pid=""
 
@@ -108,12 +164,10 @@ clock() {
     printf '%dm%02ds' $(($1 / 60)) $(($1 % 60))
 }
 
-# What the editor is doing now: "kind|text". The test phases come from the
-# status file PrePushTests keeps; before that, from the editor log.
+# What the editor is doing now, from its log: "kind|text".
 phase_of() {
-    if [ -s "$status_file" ]; then
-        text=$(head -1 "$status_file" | tr -d '\r')
-        echo "${text%% *}|$text"
+    if grep -q "Running tests for\|RunStarted\|Executing tests" "$1" 2>/dev/null; then
+        echo "test|running the tests"
         return
     fi
     imported=$(grep -cE "^Start importing |Importing .GUID: |Imported GUID: " "$1" 2>/dev/null)
@@ -144,12 +198,14 @@ start_unity() {
 
 # run_unity <label> <log> <unity arguments...>: runs the editor, printing a
 # progress line when the phase changes and every 10 seconds. Returns the
-# editor's exit code, or 124 when it was stopped for standing still.
+# editor's exit code, or 124 when it was stopped for standing still or for
+# running past the time limit.
 run_unity() {
     label=$1
     log=$2
     shift 2
-    rm -f "$status_file"
+    rm -f "$log"
+    run_started=$(date +%s)
     start_unity "$@" -logFile "$log"
     kind=""
     beat=0
@@ -176,6 +232,11 @@ run_unity() {
             stop_unity
             return 124
         fi
+        if [ $(($(date +%s) - run_started)) -ge "$time_limit" ]; then
+            echo "pre-push: $label has run past the limit of $(clock "$time_limit") (${phase#*|}); stopping the editor." >&2
+            stop_unity
+            return 124
+        fi
     done
     wait "$unity_pid"
     code=$?
@@ -194,6 +255,16 @@ report_failure() {
         echo "pre-push: no compile error or test result was written; another Unity instance may have the project open, or the editor failed to start. See $3." >&2
     fi
     grep -E "error CS[0-9]+|Scripts have compiler errors" "$3" | sed 's/^.*Assets/Assets/' | sort -u | head -20 >&2
+    # The errors and exceptions the editor logged, else the end of the log.
+    errors=$(grep -nE "Exception|Error|error |Assert|Failed|Aborting|timed out" "$3" 2>/dev/null |
+        grep -vE "error CS[0-9]+|0 errors|ErrorPause|Assert\.cs|\[Licensing" | tail -25)
+    if [ -n "$errors" ]; then
+        echo "pre-push: lines from $3:" >&2
+        echo "$errors" | sed 's/^/  /' >&2
+    elif [ -f "$3" ]; then
+        echo "pre-push: the end of $3:" >&2
+        tail -15 "$3" | sed 's/^/  /' >&2
+    fi
     if [ -f "$4" ]; then
         # The failing test names and their messages, from the NUnit XML.
         awk '/<test-case/ && /result="Failed"/ { match($0, /fullname="[^"]*"/); print "  failed: " substr($0, RSTART + 10, RLENGTH - 11) }
@@ -229,52 +300,41 @@ fi
 # blocked with a warning to the user anyway.
 burst="--burst-disable-compilation"
 
-status=0
-if [ -f Assets/Scripts/Editor/Build/PrePushTests.cs ]; then
-    log="Logs/pre-push.log"
-    rm -f Logs/pre-push-EditMode.xml Logs/pre-push-PlayMode.xml
-    echo "pre-push: running the EditMode and PlayMode tests in one editor launch."
-    echo "pre-push: watch the editor log with: tail -f $log"
-    # No -nographics: PlayMode needs a graphics device.
-    # shellcheck disable=SC2086
-    run_unity "tests" "$log" -batchmode $burst -projectPath "$root" \
-        -executeMethod Descender.EditorTools.Build.PrePushTests.Run -prePushResults Logs
-    code=$?
-    for platform in EditMode PlayMode; do
-        results="Logs/pre-push-$platform.xml"
-        if ! passed_line "$platform" "$results"; then
-            status=1
-            report_failure "$platform" "$code" "$log" "$results"
-            break
-        fi
-    done
-    if [ $status -eq 0 ] && [ $code -ne 0 ]; then
-        # Both results look fine but the editor did not exit cleanly: not a pass.
-        status=1
-        report_failure "editor" "$code" "$log" "$log"
-    fi
-else
-    for platform in EditMode PlayMode; do
-        log="Logs/pre-push-$platform.log"
-        results="Logs/pre-push-$platform.xml"
-        rm -f "$results"
-        echo "pre-push: running the $platform tests (watch with: tail -f $log)."
-        if [ "$platform" = "EditMode" ]; then
-            graphics="-nographics"
-        else
-            graphics=""   # PlayMode needs a graphics device
-        fi
-        # shellcheck disable=SC2086
-        run_unity "$platform" "$log" -batchmode $burst $graphics -projectPath "$root" -runTests \
-            -testPlatform "$platform" -testResults "$results"
-        code=$?
-        if [ $code -ne 0 ] || ! passed_line "$platform" "$results"; then
-            status=1
-            report_failure "$platform" "$code" "$log" "$results"
-            break
-        fi
-    done
+# The runs: "<name> <platform> <graphics> <category filter>". The rendering
+# run is left out while no PlayMode test is tagged [Category("Rendering")].
+runs="EditMode EditMode -nographics -
+PlayMode PlayMode -nographics !Rendering"
+if grep -rqs --include="*.cs" 'Category("Rendering")' Assets/Tests/PlayMode; then
+    runs="$runs
+PlayModeRendering PlayMode - Rendering"
 fi
+
+status=0
+# Read from a here-document, not a pipe, so the loop runs in this shell and
+# the INT/TERM trap can still stop the editor.
+while read -r name platform graphics category; do
+    log="Logs/pre-push-$name.log"
+    results="Logs/pre-push-$name.xml"
+    rm -f "$results"
+    [ "$graphics" = "-" ] && graphics=""
+    if [ "$category" = "-" ]; then
+        set -- -testPlatform "$platform"
+    else
+        set -- -testPlatform "$platform" -testCategory "$category"
+    fi
+    echo "pre-push: running $name (watch with: tail -f $log)."
+    # shellcheck disable=SC2086
+    run_unity "$name" "$log" -batchmode $burst $graphics -projectPath "$root" -runTests \
+        "$@" -testResults "$results" </dev/null
+    code=$?
+    if [ $code -ne 0 ] || ! passed_line "$name" "$results"; then
+        status=1
+        report_failure "$name" "$code" "$log" "$results"
+        break
+    fi
+done <<RUNS
+$runs
+RUNS
 
 total=$(($(date +%s) - started))
 if [ $status -ne 0 ]; then

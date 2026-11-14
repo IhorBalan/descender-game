@@ -128,7 +128,8 @@ namespace Descender.Fx
                 camera.Shake(amount * ShakePixelsPerAmount, ShakeTime);
             }
             var settings = Save.SettingsData.Current;
-            if (settings.rumble && Gamepad.current != null)
+            // A batch-mode run is a test run: never shake the pad of someone playing meanwhile.
+            if (settings.rumble && !Application.isBatchMode && Gamepad.current != null)
             {
                 var self = Instance;
                 Gamepad.current.SetMotorSpeeds(Mathf.Clamp01(amount * 0.5f), Mathf.Clamp01(amount));

@@ -15,6 +15,7 @@ namespace Descender.Tests.PlayMode
     /// ScriptedInput: the view looks down at the edge and comes back without a pop, the
     /// corridor holds its height through a jump, and the arena pulls back.
     /// </summary>
+    [Category("Rendering")]
     public class CameraZoneTests
     {
         private const float ViewHalfHeight = 5.625f;

@@ -510,7 +510,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (323 after T-0044) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (159 after T-0044; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (159 after T-0044; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes; `-nographics` except the `[Category("Rendering")]` ones | the hook runs them in two launches; alone, the EditMode command with `-testPlatform PlayMode -testCategory "!Rendering"`, then `-testCategory Rendering` without `-nographics` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -518,20 +518,25 @@ What a task must pass before it merges, and how a thread runs it.
 The pre-push hook is installed per clone with `git config core.hooksPath
 tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 (6000.6.8f1) under the Unity Hub folder, or at `UNITY_EDITOR`. It refuses to
-run while the same project folder is open in the editor (`Temp/UnityLockfile`).
-Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. Test runs make no
-sound: the PlayMode assembly's `MuteDuringTests` callback mutes the listener
-for the whole run. Nor do they take the keyboard and mouse on Windows: the
-hook starts the editor through `tools/hooks/unity-background.ps1` with its
-windows hidden, so the console window the editor opens does not come to the
-foreground (`PRE_PUSH_FOREGROUND=1` starts it directly, the old way).
+run while the same project folder is open in an editor, and says so rather
+than closing it; a batch-mode editor left on the project by an earlier run is
+killed. Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. The tests
+run headless in batch mode (`-runTests`, three launches: EditMode and the
+non-rendering PlayMode tests with `-nographics`, `[Category("Rendering")]`
+PlayMode tests without it, offscreen), each with a 10-minute limit. Test runs
+make no sound: `SettingsApplier` holds the listener at zero in any batch-mode
+run, with `MuteDuringTests` and `PlayModeAudioOff` as backups. Nor do they take
+the keyboard and mouse on Windows: the hook starts the editor through
+`tools/hooks/unity-background.ps1` with its windows hidden, so the console
+window the editor opens does not come to the foreground
+(`PRE_PUSH_FOREGROUND=1` starts it directly, the old way). Never start
+`Unity.exe` directly on the Windows PC.
 
 The hook prints its phase, the time elapsed and the previous run's duration,
-and the editor log is `Logs/pre-push.log` in the checkout being pushed. To
-watch a run from another terminal: `Get-Content <checkout>\Logs\pre-push.log
--Wait -Tail 20` (PowerShell) or `tail -f`. `Logs/pre-push-status.txt` holds
-the current test count (`PlayMode 4/6`). A run with no log or progress change
-for 10 minutes is stopped and fails.
+and the editor logs are `Logs/pre-push-<run>.log` in the checkout being pushed. To
+watch a run from another terminal: `Get-Content <checkout>\Logs\pre-push-PlayMode.log
+-Wait -Tail 20` (PowerShell) or `tail -f`. A run with no log change for 10
+minutes, or still running after 10 minutes, is stopped and fails.
 
 Merges do not deploy: only a `v*` tag releases, and tagging needs the owner.
 

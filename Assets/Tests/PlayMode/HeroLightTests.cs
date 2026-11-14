@@ -16,6 +16,7 @@ namespace Descender.Tests.PlayMode
     /// carries the light, a cut sends a surge down it and brightens him, and the afterimages
     /// leave the outline out.
     /// </summary>
+    [Category("Rendering")]
     public class HeroLightTests
     {
         private static int made;

@@ -16,6 +16,7 @@ namespace Descender.Tests.PlayMode
     /// the view's middle with the zoom, so it looks the same on screen and its edges never
     /// come into sight, while a layer that scrolls with the level keeps its size.
     /// </summary>
+    [Category("Rendering")]
     public class BackdropZoomTests
     {
         private const float ViewHalfHeight = 5.625f;
