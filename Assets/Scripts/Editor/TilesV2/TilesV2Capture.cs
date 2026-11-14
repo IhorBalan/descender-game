@@ -34,14 +34,23 @@ namespace Descender.EditorTools.TilesV2
             Debug.Log($"Tiles V2: captured the sample to {folder}.");
         }
 
-        /// <summary>Batch entry: builds the tiles and the scenes, captures, and quits.</summary>
+        /// <summary>
+        /// Batch entry: builds the tiles, and the scenes where one is missing (a scene built
+        /// again is the same scene with new ids, which is noise in a diff), captures, and quits.
+        /// </summary>
         public static void BuildAndCapture()
         {
             try
             {
                 TilesV2Builder.Build();
-                TilesV2Sample.BuildPlayground();
-                TilesV2Sample.Build();
+                if (!File.Exists(TilesV2Sample.PlaygroundPath))
+                {
+                    TilesV2Sample.BuildPlayground();
+                }
+                if (!File.Exists(TilesV2Sample.ScenePath))
+                {
+                    TilesV2Sample.Build();
+                }
                 Capture(OutFolder());
                 EditorApplication.Exit(0);
             }

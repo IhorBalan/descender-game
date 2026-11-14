@@ -4,12 +4,19 @@ A new tile system for the map, built apart from the current region art (which
 stays as it is: `Assets/Art/Tiles`, `RegionTiles`, the region scenes). The
 look is the classic side-view sandbox style: small square tiles that join on
 a fixed frame set, flat-shaded materials with a dark outline, walls behind
-the terrain and a layered parallax sky. The art is original, drawn by code;
-it copies no other game's assets.
+the terrain, light worked out tile by tile, and a layered parallax sky. The
+art is original, drawn by code; it copies no other game's assets.
 
-Everything here is made by `tools/tiles_v2/gen_tiles_v2.py`; the numbers in
-this document are constants in that file, and the Unity side reads them from
-the manifest it writes. Change the code and this page together.
+Everything here is made by the Python tools under `tools/tiles_v2/`; the
+numbers in this document are constants there, and the Unity side reads them
+from the manifest the generator writes (`Assets/Art/TilesV2/tiles_v2.json`).
+Change the code and this page together.
+
+| Step | What | Where |
+|---|---|---|
+| 1 | Draw the sheets and write the manifest | `python tools/tiles_v2/gen_tiles_v2.py` |
+| 2 | Make the tiles and the tile set from them | Descender > Tiles V2 > Build tiles |
+| 3 | A world is built from a text map and the tile set when a scene loads | `TilesV2World` |
 
 ## Grid and scale
 
@@ -19,7 +26,7 @@ the manifest it writes. Change the code and this page together.
 | Pixels per unit | 16: one tile is one Unity unit and one collision cell |
 | Camera | Pixel Perfect Camera, 320 x 180 (20 x 11.25 tiles), scaled by whole numbers |
 | Filter | Point, no compression, no mipmaps |
-| Density | One art pixel is one game pixel everywhere: tiles, walls, backdrops. Nothing is scaled, rotated or drawn at another density. |
+| Density | One art pixel is one game pixel everywhere: tiles, walls, decor, backdrops, particles. Nothing is scaled, rotated or drawn at another density. |
 
 ## Frames
 
@@ -34,7 +41,10 @@ texture, not new rules.
 - **3 variants** of each frame, picked by a hash of the cell (not Perlin
   noise), so neighbours differ and repeats do not line up.
 - **Slopes** (terrain only): `up_right` and `up_left`, 45 degrees, solid
-  below the diagonal; their collider is the sprite's outline. Placed by hand.
+  below the diagonal. A slope's collider is the clean triangle under its
+  diagonal, written into the sheet's `.meta`, not the ragged outline of its
+  pixels: the hero walks up it and stands on it. A slope goes on a one-tile
+  step of the ground, on the lower side.
 
 Mask bits (y up): N 1, NE 2, E 4, SE 8, S 16, SW 32, W 64, NW 128. A frame's
 sprite is `tv2_<material>_f<mask>_v<variant>`, a slope's
@@ -44,10 +54,10 @@ Sheet layout (`Assets/Art/TilesV2/<material>.png`): 8 columns; the 47 frames
 in ascending mask order fill 6 rows, one such block per variant, then one row
 of slopes (each slope's variants side by side).
 
-## Light, outline, shading
+## Outline and shading
 
-- **Light comes from the top left.** An edge open to air on top gets a
-  highlight row (ramp 5) under its outline and a dithered row under that; a
+- **The art's light comes from the top left.** An edge open to air on top gets
+  a highlight row (ramp 5) under its outline and a dithered row under that; a
   left edge a lighter rim; bottom and right edges a shade (ramp 1).
 - **Outline**: a 1 px outline in the material's outline colour wherever the
   tile meets air (8-neighbour, so inner corners get one too). Outer corners
@@ -72,99 +82,336 @@ one outline colour, nothing else.
 | sand | `4a3a1c` | `8c7440 a88c4e c2a660 d6bc74 e6cf8a f3e2a8` |
 | clay | `3a1a14` | `6a3024 84402c 9c5236 b4643f c97a4e dc9466` |
 | copper (ore nuggets) | `3a1e10` | `6e3a1c 9a5428 c06e34 de8c44 f0ac62 ffd08a` |
+| cave rock (backdrop) | | `0a0b10 111219 171920 1e2029 262933` |
 
 Walls are the same frames at about half the value, with no highlight and a
-soft two-pixel shade where they meet air, so they sit behind the terrain.
+soft two-pixel shade where they meet air, and the whole wall layer is
+multiplied by the wall tint `(0.68, 0.70, 0.80)`: a wall is further back than
+the ground, so a passage reads darker than the rock round it. Decor draws
+with the ramp of what it grows from (grass, stone, dirt) plus a few colours of
+its own (petals, cactus green, mushroom caps); liquids have their own
+(`tv2_liquid.py`).
 
-## Materials, blends, layers
+## Materials and layers
 
 | Material | Kind | Join group | Collider |
 |---|---|---|---|
-| dirt | terrain | earth | Grid (full cell); slopes: Sprite |
-| grass | terrain: dirt with turf on every face open to air (deep on top, thin on the sides) | earth | Grid |
-| stone | terrain | earth | Grid |
-| sand | terrain: loose grains, wind ripples; slopes for dunes | earth | Grid; slopes: Sprite |
+| dirt | terrain | earth | Grid (full cell); slopes: a triangle |
+| grass | terrain: dirt with turf on every face open to air (deep on top, thin on the sides) | earth | Grid; slopes: a triangle |
+| stone | terrain | earth | Grid; slopes: a triangle |
+| sand | terrain: loose grains, wind ripples; slopes for dunes | earth | Grid; slopes: a triangle |
 | clay | terrain: wavy strata | earth | Grid |
-| copper_ore | terrain: stone with lit nuggets of copper (palette `copper`), never on the outline | earth | Grid |
+| copper_ore | terrain: stone with lit nuggets of copper (palette `copper`), never on the outline; gives a little light and glints | earth | Grid |
 | dirt_wall, stone_wall | wall | walls | none |
 
-**Blends**: `dirt_on_stone`, `dirt_on_sand` and `dirt_on_clay` lay a ragged
-band of dirt over each side of a stone, sand or clay tile that touches dirt or
-grass (15 side masks x 3 variants), on the Blend tilemap; `sand_on_stone`
-lays sand over stone the same way. One overlay a cell: the first blend in
-`BLENDS` that applies wins. Ore joins stone with no blend. Descender > Tiles V2 > Paint blends recomputes it from the
-Terrain tilemap; run it after painting.
+A world is these tilemaps under one Grid (cell size 1) and the things round
+them, all on the Default sorting layer, back to front:
 
-**Tilemaps** under one Grid (cell size 1):
+| Layer | sortingOrder | Holds | Light |
+|---|---|---|---|
+| Sky | -1010 | the sky's bands, painted from the hour's two colours | none |
+| Stars, sun and moon | -1008, -1006 | pinned to the view | none |
+| Clouds | -1004 | drift along the top of the view | none |
+| Ridges | -990, -980, -970 | far mountains, hills, near forest | none |
+| Cave rock | -960, -959 | the rock behind the caves, under the surface line, and its ragged top | tile light |
+| Walls | -300 | wall tiles, tinted back | tile light |
+| Shade | -290 | the shade of the ground on the walls | tile light |
+| Decor | -110 | what stands on or hangs from the ground | tile light |
+| Terrain | -100 | ground tiles; TilemapCollider2D merged by a CompositeCollider2D, layer World | tile light |
+| Blend | -95 | blend overlays | tile light |
+| Torches | -60 | the flames | none: they are the light |
+| Glow | -40 | glints of ore | none |
+| (the hero) | 0 | | |
+| Liquid water | 20 | water, in front of the hero | tile light |
+| Liquid lava | 21 | lava | none: it is the light |
+| Particles | 60 | dust, embers, sand, sparks | dust and sand take the tile light |
 
-| Tilemap | sortingOrder | Holds |
+## The map
+
+A map is text (`TilesV2Map`), so a scene holds none of it:
+
+```
+# a comment
+@surface 20
+@view hall 54 33.5
+................
+..../GGG\.......      the first grid: what stands in each cell
+GGGGDDDDDGGWWGGG
+DDDDDDDDDDDDDDDD
+
+................      a blank line, then the second grid: the wall behind each cell
+................
+................
+dddddddddddddddd
+```
+
+Row 0 is the top. `@surface` is the row the cave rock starts at (under every
+dip of the surface); `@view name column row` names a place, for the captures
+and the playground. The characters are the legend in the manifest:
+
+| Character | Layer | Stands for |
 |---|---|---|
-| Walls | -300 | wall tiles, behind everything |
-| Terrain | -100 | terrain tiles; TilemapCollider2D merged by a CompositeCollider2D, layer World |
-| Blend | -95 | blend overlays, no collider |
+| `G` `D` `S` `A` `C` `O` | terrain | grass, dirt, stone, sand, clay, copper ore |
+| `/` `\` | terrain | grass slopes: up to the right, up to the left |
+| `(` `)` | terrain | sand slopes |
+| `{` `}` | terrain | dirt slopes |
+| `[` `]` | terrain | stone slopes |
+| `W` `L` | liquid | water, lava |
+| `T` | prop | a wall torch |
+| `P` | mark | the hero's start |
+| `d` `s` | wall (second grid) | dirt wall, stone wall |
+| `.` | | air |
 
-**Backdrop**: four layers of 320 x 180 art at 16 PPU, drawn tiled sideways,
-back to front: sky (scroll 0, pinned to the view), far mountains (0.1), hills
-(0.25), near forest (0.45); a layer's scroll is the share of the camera's
-movement it scrolls by (`ParallaxLayer`). Ridges are lit on their left-facing
-slopes, the same light as the tiles.
+The sample map, `Assets/Art/TilesV2/sample_map.txt` (128 x 64), is written by
+`tools/tiles_v2/make_sample_map.py`: a meadow with a hill and a pond, the
+mouth of a sloping tunnel, a shaft open to the sky, a desert of dunes; under
+them a dirt cave, a torch-lit hall, a gallery of copper, a wide cavern with
+no wall behind it and a lake on its floor, a cave under the dunes where sand
+trickles from the roof, and a cavern of lava at the bottom.
+
+## Laid by rule
+
+Four layers are never painted by hand: `TilesV2Painter` lays them from the
+cells alone, so painting again changes nothing and the generator's preview
+shows the same map. For a map painted with the Tile Palette, Descender > Tiles
+V2 > Paint by rule lays them on the tilemaps that are there.
+
+**Blends.** `dirt_on_stone`, `dirt_on_sand` and `dirt_on_clay` lay a ragged
+band of dirt over each side of a stone, sand or clay tile that touches dirt or
+grass (15 side masks x 3 variants); `sand_on_stone` lays sand over stone the
+same way. One overlay a cell: the first blend in `BLENDS` that applies wins.
+Ore joins stone with no blend.
+
+**Shade.** The ground casts a shade on the wall behind it. A wall cell with no
+full tile in it shows the tile for the ground round it: every side that has
+ground, and a corner only when neither side beside it has (46 masks). The
+art's light comes from the top left, so ground above or to the left casts
+further: the shade's alpha by distance in pixels is 0.50 0.42 0.34 0.26 0.18
+0.11 0.05 under a tile, 0.44 0.35 0.26 0.18 0.11 0.05 to the right of one, 0.32
+0.20 0.11 0.05 over or to the left of one, less off a corner; where two meet
+they multiply. Behind a full tile that has open air beside it the wall gets
+the full shade (0.52), seen through the tile's rounded corners.
+
+**Decor.** For each open face of a full ground tile, at most one decor that
+grows on its material, picked by a hash of the cell (`TilesV2Painter.Hash`,
+the generator's `cell_hash`): first what stands on floors, then what hangs
+from ceilings. A decor sprite is a tile wide and 2 px taller at each end, so
+it tucks behind the ragged edge it stands on. Slopes carry none, and a torch's
+cell and the hero's start stay clear. The rules (`DECOR` in `tv2_decor.py`),
+in the order they are tried:
+
+| Decor | Grows | On | Where | Share of fitting cells | Cells tall |
+|---|---|---|---|---|---|
+| flower (4) | floor | grass | open to the sky | 0.10 | 1 |
+| bush (2) | floor | grass | sky | 0.05 | 1 |
+| grass_tall (2) | floor | grass | sky | 0.20 | 1 |
+| tuft (3) | floor | grass | sky | 0.38 | 1 |
+| cactus (2) | floor | sand | sky | 0.07 | 2 to 3: base, middle with an arm, top |
+| dry_bush (2) | floor | sand | sky | 0.08 | 1 |
+| bones | floor | sand | anywhere | 0.02 | 1 |
+| mushroom (3) | floor | dirt, clay, stone | cave | 0.06 | 1 |
+| stalagmite (3) | floor | stone, copper ore | cave | 0.10 | 1 |
+| pebble (3) | floor | stone, dirt, clay, copper ore | cave | 0.12 | 1 |
+| vine (2) | ceiling | grass | anywhere | 0.55 | 1 to 3 |
+| root (2) | ceiling | dirt | cave | 0.22 | 1 |
+| stalactite (3) | ceiling | stone, copper ore | cave | 0.18 | 1 |
+
+"Open to the sky" is the light's own test: nothing over the cell in its column
+shades it.
+
+**Glints.** Every full tile of a material that glints (copper ore) gets the
+glint on the unlit Glow layer: nothing most of the time, and now and then a
+dot and a cross of light on one of the nuggets of the variant the tile shows,
+each cell starting the loop (26 frames at 10 a second) at its own moment.
+
+## Liquids
+
+A liquid (`LiquidTile`) fills whole cells. Its top cell shows the surface
+frames (the liquid stands 3 px under the cell's top, with a ripple that
+travels), every cell under it the body frames; 8 frames each.
+
+| Liquid | Drawn | Frames a second | Share of light a tile passes on (r, g, b) | Light it gives | The hero |
+|---|---|---|---|---|---|
+| water | see-through (alpha 0.59), takes the tile light, in front of the hero | 7 | 0.74, 0.86, 0.93: the deep is blue | none | swims (the game's `Triggers.Water`) |
+| lava | opaque, unlit | 4 | 0.86, 0.80, 0.72 | 1.5, 0.8, 0.3 | is hurt (the game's `HazardArea`) |
+
+An area is made over every stretch of a liquid: a run of columns whose liquid
+spans the same rows, so its top is the true surface above it.
+
+## Backdrop
+
+`TilesV2Backdrops` makes the layers from the manifest's list. A layer's scroll
+is the share of the camera's movement it scrolls by, each way on its own (0
+stays on screen, 1 moves with the world); a layer that repeats jumps by whole
+repeats to stay under the camera, and everything snaps to whole art pixels
+(`ParallaxLayer`).
+
+| Layer | Scroll across, up | Notes |
+|---|---|---|
+| sky, stars, sun, moon | pinned to the view | `Sky`: seven bands between the hour's two colours, meeting in an ordered 4 x 4 dither, painted on a 320 x 180 texture; the sun and the moon cross the view on an arc |
+| clouds | 0.04, 0 | along the top of the view; drift 0.25 units a second |
+| far, mid, near ridges | 0.1 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line; lit on their left-facing slopes |
+| cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, shown only under the surface line (a sprite mask over the ground); it takes the tile light, so it is black until something lights the cave |
+| cave rock's top | 0.55, 1 | a ragged strip along the surface line |
+
+A cell shows the cave rock when it has no wall and lies under the surface
+line: leave the walls out of a cavern to open it onto the rock.
 
 ## Light
 
 Underground is dark, as in the classic sandbox games: light is worked out per
-tile and spreads from the sky and from torches, dying fast in solid ground.
-`TileLight` does the sums, `TileLightMap` shows them, the generator's
-`--preview` runs the same sums.
+tile and per colour channel, and spreads from the sky and from what gives
+light. `TileLight` does the sums, `TileLightMap` shows them, `tv2_light.py`
+runs the same sums for the preview. 1 is full daylight.
 
-1. **Sky.** Every column is lit with daylight (1) from the top down to its first
-   solid tile or wall. A wall shades the sky, so a walled shaft is lit only by
-   the light that spreads into it.
-2. **Torches.** A torch puts `(1, 0.72, 0.42) x 1.6` on its tile.
-3. **Spread.** Each tile ends with the brightest of its own light and of its
-   neighbours' light times the share it keeps: **0.9** for air (walls behind it
-   included), **0.7** for a solid tile. That is 3 sweeps of the map in all four
-   directions, so light follows tunnels round two corners. The surface stays bright
-   about 3 tiles down, and a torch reaches about 20 tiles of open cave.
-4. **Show.** The result is one Sprite Light2D (blend style 0, Multiply) whose
-   texture has one texel per tile (RGBA half), filtered bilinearly between the
-   tile centres. It covers the map's tiles plus 2 rows of sky.
+1. **Sky.** Every column is lit from the top down to its first cell that
+   shades the sky: a ground tile, a wall or a liquid. So a walled shaft and a
+   pond's depths are lit only by the light that spreads into them.
+2. **Sources.** A torch puts `(1, 0.72, 0.42) x 1.6` on its tile, lava `(1.5,
+   0.8, 0.3)` on each of its tiles, copper ore `(0.30, 0.17, 0.07)`.
+3. **Spread.** Each tile ends with the brightest of its own light and of each
+   of its eight neighbours' light times the share that neighbour's medium
+   keeps: **0.91** for air (a wall behind it changes nothing), **0.56** for a
+   ground tile, a liquid's own share per channel. A diagonal step takes the
+   share to the power of the square root of two, its true length, so a lone
+   light is round and not a diamond; a diagonal between two solid tiles is
+   shut. The sweeps repeat until nothing changes. The top tile of the ground
+   is bright (0.91) and the fourth under it dark (0.16); a torch still gives a
+   tenth of full daylight 29 tiles down an open cave, and nothing 6 tiles
+   into rock.
+4. **The hour.** The sky and the sources are spread apart. The light shown is
+   the brighter of the sky's half times the daylight's colour and the
+   sources' half, so the hour changes the daylight without spreading again.
+5. **Show.** The result is one Sprite Light2D (blend style 0, Multiply) whose
+   texture has one texel per tile (RGBA half, alpha 1), filtered bilinearly
+   between the tile centres. It covers the map's tiles plus 4 rows of sky.
 
 | Light | Value |
 |---|---|
-| Ambient | one Global light, intensity 0.04, colour `(0.55, 0.62, 0.85)`: deep rock is near black |
+| Ambient | one Global light, intensity 0.04, colour `(0.55, 0.62, 0.85)`: deep rock is near black. A world in a scene with its own global light is told not to make it. |
 | Tile light | the Sprite light above, intensity 1 |
 | Torch glow | Point, the torch colour, intensity 0.35, radius 3 tiles. It wavers within 8% (`TorchFlame`) and switches off past 30 units from the camera: the flicker on top of the steady tile light |
-| Backdrop | Sprite-Unlit: the far daylit world, untouched by the scene's lights |
+| Unlit | the far backdrop, flames, lava, glints, embers and sparks |
 
-The light is worked out in `OnEnable`, in the editor too. A game that changes
-tiles or torches calls `TileLightMap.Refresh()` afterwards. On a 64 x 30 map this
-costs well under a millisecond, and its cost grows with the map's area.
+A game that changes tiles or torches calls `TileLightMap.Refresh()`
+afterwards; its cost grows with the map's area (two spreads of the grid).
 
-The torch is a prop sheet (`torch.png`, 3 flame frames), drawn unlit: its flame
-is the light. On the sample map it is `T`, on a wall cell that is air in the
-terrain.
+## Day and night
+
+`DayNight` runs the clock: a whole day takes 480 seconds of play and a scene
+starts at 10:00. The hour's values are mixed between these keys, round the
+clock (`DAY_KEYS` in `tv2_base.py`):
+
+| Hour | Daylight (what the sky's half of the light is multiplied by) | Sky, top to low | Tint of ridges and clouds | Stars |
+|---|---|---|---|---|
+| 0:00 to 4:30 | 0.30, 0.36, 0.60 | `04060f` to `101a36` | 0.20, 0.25, 0.44 | 1 |
+| 5:45 | 0.42, 0.36, 0.44 | `1a2250` to `c9705a` | 0.50, 0.42, 0.52 | 0.5 |
+| 6:45 | 0.86, 0.66, 0.52 | `2e4a96` to `f2a86c` | 0.95, 0.74, 0.64 | 0 |
+| 8:30 | 1, 0.96, 0.90 | `3868bc` to `b6dcf0` | 1, 0.97, 0.93 | 0 |
+| 12:00 | 1, 1, 1 | `3b6fc0` to `a9d6ef` | 1, 1, 1 | 0 |
+| 16:30 | 1, 0.97, 0.90 | `3a69b6` to `b9d8ea` | 1, 0.96, 0.90 | 0 |
+| 18:30 | 0.95, 0.64, 0.44 | `2c2f78` to `f08c4e` | 0.96, 0.66, 0.52 | 0 |
+| 19:45 | 0.44, 0.34, 0.46 | `141440` to `7a3f5c` | 0.48, 0.38, 0.52 | 0.5 |
+| 21:00 | 0.30, 0.36, 0.60 | `04060f` to `101a36` | 0.20, 0.25, 0.44 | 1 |
+
+The sun is up from 5:30 to 19:30 and the moon the rest of the clock. A torch
+shows more at night, because the light is the brighter of the two halves.
+
+## Particles
+
+`TilesV2Particles` sets every system up in code from the map; a particle is
+one art pixel. They are pushed by a force of their own (the project has no 3D
+physics for a particle system to take gravity from).
+
+| Particles | Where | Light |
+|---|---|---|
+| Dust | drifts in a circle of 4.5 tiles round every torch, up to 14 motes | takes the tile light: it shows only where there is light |
+| Embers | rise from every flame | none |
+| Sand | trickles from under 45% of the sand tiles that hang over two or more empty cells (a hash of the cell picks them), and lands on what is below | takes the tile light |
+| Sparks | jump from every run of the surface of a liquid that glows | none |
 
 ## In Unity
 
-- `Descender > Tiles V2 > Build tiles` makes one `TerrainTile` (a Rule Tile
-  that treats its join group as "this" and picks variants by hash) per
-  material under `Assets/Art/TilesV2/RuleTiles/`, one per slope and one per
-  blend mask. It loads and refills an existing asset, so GUIDs stay.
-- `Descender > Tiles V2 > Build sample scene` lays out
-  `Assets/Art/TilesV2/sample_map.txt` in `Assets/Scenes/Sandbox/TilesV2Sample.unity`
-  (not in the build).
-- `Descender > Tiles V2 > Capture sample` renders the surface, the cave and
-  the whole map to `Logs/TilesV2/`; `TilesV2Capture.BuildAndCapture` does all
-  three from the command line.
+- **Descender > Tiles V2 > Build tiles** makes, under
+  `Assets/Art/TilesV2/RuleTiles/`, one `TerrainTile` per material (a Rule
+  Tile that treats its join group as "this" and picks variants by hash), one
+  per slope and one per blend mask, the decor and shade tiles, the
+  `LiquidTile`s and the `GlintTile`; then `TilesV2Set.asset`, the one asset a
+  world is built from (the legend's tiles, the rules, the liquids, the
+  backdrops and the numbers of the light and of the day); then the Tile
+  Palette. It loads and refills an existing asset, so GUIDs stay.
+- **`TilesV2World`** builds a world from a map (a `TextAsset`) and the tile
+  set, the way `RegionTiles` builds a region: when the game starts, and in the
+  editor as a preview that is never saved (Build on its context menu builds
+  it again after a change to the map). So a scene with a whole world in it is
+  a few lines.
+- **Descender > Tiles V2 > Build sample scenes** makes the two scenes under
+  `Assets/Scenes/Sandbox/` from the sample map. Neither is in the build's
+  scene list. `TilesV2Sample.unity` is the map alone with a camera;
+  `TilesV2Playground.unity` is the same map made playable.
+- **Descender > Tiles V2 > Paint by rule** lays blends, shade, decor and
+  glints on a map painted by hand.
+- **Descender > Tiles V2 > Capture sample** renders every named place of the
+  map, the first of them again at sunset and at night, and the whole map, to
+  `Logs/TilesV2/`; `TilesV2Capture.BuildAndCapture` does it all from the
+  command line.
 
-## Adding a material
+### The playground
 
-1. Add its palette to `PALETTES` (outline plus a ramp of six) and an entry to
-   `MATERIALS` (key, `terrain` or `wall`, a texture function, join group,
-   slopes or not). A new look of inside is a `texture_*` function returning
-   ramp indices 1-4.
-2. If it should blend into another material, add an entry to `BLENDS`.
-3. Run `python tools/tiles_v2/gen_tiles_v2.py --preview scratch/v2.png` and
-   look at the preview, then `Descender > Tiles V2 > Build tiles` in Unity.
-4. `TilesV2Tests` checks that every material has a rule a frame with all its
-   variants.
+`TilesV2Playground.unity` stands on its own: the hero's prefab with every
+ability, the game's camera (`GameCamera`), its input and its sounds, in the
+sample world, with no title, no saves and no HUD. Open it and press Play, or
+build a Windows player of it alone with **Descender > Tiles V2 > Build Windows
+playground** (`Build/TilesV2Windows64/DescenderTilesV2.exe`; the build's scene
+list never hears of it).
+
+| Key | Does |
+|---|---|
+| A D or arrows, Space, Shift, J | move, jump, dash, sword: the game's own keys |
+| 1 2 3 4 | morning, noon, sunset, night |
+| T (held) | the day runs 60 times faster |
+| P | stops and starts the day |
+| PgDn, PgUp | the next and the last named place of the map |
+| R | back to the start |
+| F2 | puts out and lights the hero's lantern, a small light the playground gives him so he can be seen in a cave no torch reaches (it is not part of the standard: it shines through rock) |
+| F1 | hides the help |
+| Esc | quits |
+
+Started with `-tilesV2Shots <folder>` the player photographs the hero at the
+start and every named place instead, and quits: that is how a build is
+checked. It asks the camera for the frames itself, so `-batchmode` works and
+no window opens.
+
+## Tools
+
+| Module | Does |
+|---|---|
+| `gen_tiles_v2.py` | the entry: writes every sheet, its `.meta` and the manifest; `--preview out.png` lays the sample map out the way Unity shows it (`--hour 19`, `--view hall`, `--scale 4`, `--unlit`) |
+| `tv2_base.py` | the shared vocabulary: palettes, materials, blends, the map's legend, the hash, the numbers of the light and of the day |
+| `tv2_terrain.py` | textures, the 47 frames, slopes, blends, the torch |
+| `tv2_decor.py` | decor sprites and rules, the scatter, the shade tiles, the glints |
+| `tv2_liquid.py` | water and lava |
+| `tv2_backdrop.py` | the sky's bands, clouds, stars, sun, moon, ridges, the cave rock |
+| `tv2_light.py` | the tile light's sums |
+| `tv2_preview.py` | the preview |
+| `make_sample_map.py` | writes the sample map |
+
+A new file under `Assets/` gets its `.meta` with a GUID derived from its path;
+an existing `.meta` is never touched. When a sheet's sprites change, delete
+its `.meta` and run the generator: the GUID and the sprite ids are derived
+from names, so every reference stays.
+
+## Adding to it
+
+- **A material**: add its palette to `PALETTES` (outline plus a ramp of six)
+  and an entry to `MATERIALS` (key, `terrain` or `wall`, a texture function,
+  join group, slopes or not, `emits` if it gives light); a character for it
+  in `LEGEND`; a blend in `BLENDS` if it should reach over another material.
+- **A decor**: a function in `tv2_decor.py` that draws it on a `Pad`, its
+  name in `DRAWERS`, and a rule in `DECOR`. The order of the rules is the
+  order they are tried in.
+- **A liquid**: an entry in `LIQUIDS` and a frame function in `DRAW`, and a
+  character in `LEGEND`.
+- Then run the generator with `--preview`, look, and build the tiles in
+  Unity. `TilesV2Tests` and `TilesV2LightTests` hold the standard to its
+  rules; `TilesV2PlaygroundTests` walks the hero through the sample world.

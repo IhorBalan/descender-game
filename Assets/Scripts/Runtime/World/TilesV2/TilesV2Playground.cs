@@ -6,6 +6,8 @@ using Descender.Player;
 using Descender.Save;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Descender.World.TilesV2
 {
@@ -24,6 +26,10 @@ namespace Descender.World.TilesV2
 
         /// <summary>How many times faster the day runs while its key is held.</summary>
         public const float FastForward = 60f;
+
+        private const float LanternIntensity = 0.5f;
+        private const int ShotWidth = 1280;
+        private const int ShotHeight = 720;
 
         private static readonly (Key key, float hour, string name)[] Hours =
         {
@@ -49,6 +55,7 @@ namespace Descender.World.TilesV2
         private string note = "";
         private float noteLeft;
         private GUIStyle style;
+        private Light2D lantern;
         private string shown = "";
         private int shownMinute = -1;
         private bool shownHelp;
@@ -91,6 +98,7 @@ namespace Descender.World.TilesV2
             {
                 InputRouter.Instance.UsePlayer();
             }
+            lantern = MakeLantern();
             if (world.Map != null)
             {
                 places.AddRange(world.Map.Views.Keys);
@@ -108,6 +116,12 @@ namespace Descender.World.TilesV2
             {
                 noteLeft -= Time.unscaledDeltaTime;
             }
+            if (lantern != null && lantern.enabled && world.Light != null)
+            {
+                // The darker the tile light on him, the more the lantern gives: nothing in daylight.
+                var lit = world.Light.At(world.Terrain.WorldToCell(hero.transform.position + Vector3.up));
+                lantern.intensity = LanternIntensity * Mathf.Clamp01(1f - lit.maxColorComponent);
+            }
             var keys = Keyboard.current;
             if (keys == null || shooting)
             {
@@ -120,6 +134,11 @@ namespace Descender.World.TilesV2
             if (keys.f1Key.wasPressedThisFrame)
             {
                 helpShown = !helpShown;
+            }
+            if (keys.f2Key.wasPressedThisFrame)
+            {
+                lantern.enabled = !lantern.enabled;
+                Say(lantern.enabled ? "lantern lit" : "lantern out: the tile light alone");
             }
             if (InputRouter.Instance != null && InputRouter.Instance.RestartPressed)
             {
@@ -182,7 +201,7 @@ namespace Descender.World.TilesV2
                     ? $"Tiles V2 playground   {clock}\n"
                         + "move A D / arrows   jump Space   dash Shift   sword J\n"
                         + "1 morning  2 noon  3 sunset  4 night   hold T: the day runs fast   P: stop the day\n"
-                        + "PgDn / PgUp: next / last place   R: back to the start   F1: hide this   Esc: quit"
+                        + "PgDn / PgUp: next / last place   R: back to the start   F2: lantern   F1: hide this   Esc: quit"
                     : clock;
                 if (noted)
                 {
@@ -231,6 +250,25 @@ namespace Descender.World.TilesV2
             shownMinute = -1;
         }
 
+        // A small light the hero carries, so he and the ground round him can be seen in a cave no
+        // torch reaches. It is the playground's, not the standard's: it shines through rock.
+        private Light2D MakeLantern()
+        {
+            var holder = new GameObject("Lantern");
+            holder.transform.SetParent(hero.transform, false);
+            holder.transform.localPosition = new Vector3(0f, 1f, 0f);
+            var light = holder.AddComponent<Light2D>();
+            light.lightType = Light2D.LightType.Point;
+            light.blendStyleIndex = 0;
+            light.color = new Color(1f, 0.93f, 0.8f);
+            light.intensity = LanternIntensity;
+            light.pointLightInnerRadius = 0.5f;
+            light.pointLightOuterRadius = 5f;
+            light.falloffIntensity = 0.6f;
+            light.shadowsEnabled = false;
+            return light;
+        }
+
         // Walls at the map's two sides, so the hero cannot walk off the world.
         private void Fence()
         {
@@ -257,18 +295,22 @@ namespace Descender.World.TilesV2
             return null;
         }
 
-        // Photographs the map's named places at noon, and the first of them at sunset and at night, then quits.
+        // Photographs the hero at the start, then the map's named places at noon and the first
+        // of them at sunset and at night, and quits.
         private IEnumerator Shoot(string folder)
         {
             shooting = true;
             System.IO.Directory.CreateDirectory(folder);
+            world.Day.Running = false;
+            // Let him land and the particles fill the air first.
+            yield return new WaitForSeconds(4f);
+            Photograph(System.IO.Path.Combine(folder, "start.png"));
             hero.Freeze();
             hero.gameObject.SetActive(false);
             if (view != null)
             {
                 view.Target = null;
             }
-            world.Day.Running = false;
             var shots = new List<(string place, float hour, string file)>();
             foreach (var name in places)
             {
@@ -279,8 +321,6 @@ namespace Descender.World.TilesV2
                 shots.Add((places[0], 18.75f, places[0] + "_sunset"));
                 shots.Add((places[0], 23f, places[0] + "_night"));
             }
-            // Let the particles fill the air first.
-            yield return new WaitForSeconds(4f);
             foreach (var (name, hour, file) in shots)
             {
                 if (!world.TryView(name, out var point))
@@ -294,12 +334,44 @@ namespace Descender.World.TilesV2
                     eye.transform.position = new Vector3(point.x, point.y, eye.transform.position.z);
                 }
                 yield return new WaitForSeconds(1.2f);
-                yield return new WaitForEndOfFrame();
-                ScreenCapture.CaptureScreenshot(System.IO.Path.Combine(folder, file + ".png"));
-                yield return null;
-                yield return null;
+                Photograph(System.IO.Path.Combine(folder, file + ".png"));
             }
             Application.Quit();
+        }
+
+        // Renders the game's camera into a picture of the default window's size. It asks the
+        // camera for the frame itself, so it also works in a player started with -batchmode,
+        // which has no window to take a screenshot of.
+        private static void Photograph(string file)
+        {
+            var eye = Camera.main;
+            if (eye == null)
+            {
+                return;
+            }
+            var target = new RenderTexture(ShotWidth, ShotHeight, 24, RenderTextureFormat.ARGB32);
+            var request = new RenderPipeline.StandardRequest { destination = target };
+            if (RenderPipeline.SupportsRenderRequest(eye, request))
+            {
+                RenderPipeline.SubmitRenderRequest(eye, request);
+            }
+            else
+            {
+                var before = eye.targetTexture;
+                eye.targetTexture = target;
+                eye.Render();
+                eye.targetTexture = before;
+            }
+            var active = RenderTexture.active;
+            RenderTexture.active = target;
+            var image = new Texture2D(ShotWidth, ShotHeight, TextureFormat.RGBA32, false);
+            image.ReadPixels(new Rect(0, 0, ShotWidth, ShotHeight), 0, 0);
+            image.Apply();
+            RenderTexture.active = active;
+            System.IO.File.WriteAllBytes(file, image.EncodeToPNG());
+            Destroy(image);
+            target.Release();
+            Destroy(target);
         }
     }
 }
