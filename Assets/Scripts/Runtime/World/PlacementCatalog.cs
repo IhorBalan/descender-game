@@ -6,10 +6,12 @@ namespace Descender.World
     /// <summary>
     /// Which prefab a WorldPlacement spawns, by key: the placement's type ("save",
     /// "ability", "upgrade", "power", "item", "relic", "trigger"),"enemy:&lt;character&gt;" or
-    /// "npc:&lt;character&gt;" for a particular body, "boss" for an enemy whose character
-    /// is a boss id, and "enemy" or "npc" as the fallbacks. One asset at
+    /// "npc:&lt;character&gt;" for a particular body, and "enemy" or "npc" as the
+    /// fallbacks; and which profile an enemy is made from, by its character (a body's or
+    /// a boss's id; see <see cref="Enemies.FoeWorld"/>). One asset at
     /// Assets/Data/Placements.asset, filled by Descender &gt; Setup &gt; Placement catalog
-    /// from the prefabs under Assets/Prefabs by their names.
+    /// from the prefabs under Assets/Prefabs and the profiles under Assets/Data/Enemies
+    /// and Assets/Data/Bosses by their names.
     /// </summary>
     [CreateAssetMenu(menuName = "Descender/Placement Catalog", fileName = "Placements")]
     public sealed class PlacementCatalog : ScriptableObject
@@ -21,10 +23,55 @@ namespace Descender.World
             public GameObject prefab;
         }
 
+        /// <summary>The profile an enemy of one character is made from.</summary>
+        [System.Serializable]
+        public struct FoeEntry
+        {
+            public string character;
+            public ScriptableObject profile;
+        }
+
         [SerializeField]
         private List<Entry> entries = new List<Entry>();
 
+        [SerializeField]
+        private List<FoeEntry> foes = new List<FoeEntry>();
+
         public IReadOnlyList<Entry> Entries => entries;
+        public IReadOnlyList<FoeEntry> Foes => foes;
+
+        /// <summary>
+        /// The profile an enemy of `character` is made from (a WalkerProfile, a
+        /// FlyerProfile, a HangerProfile or a BossProfile), or null when the catalog has none.
+        /// </summary>
+        public ScriptableObject FoeFor(string character)
+        {
+            if (string.IsNullOrEmpty(character))
+            {
+                return null;
+            }
+            foreach (var foe in foes)
+            {
+                if (foe.character == character)
+                {
+                    return foe.profile;
+                }
+            }
+            return null;
+        }
+
+        public void SetFoe(string character, ScriptableObject profile)
+        {
+            for (var i = 0; i < foes.Count; i++)
+            {
+                if (foes[i].character == character)
+                {
+                    foes[i] = new FoeEntry { character = character, profile = profile };
+                    return;
+                }
+            }
+            foes.Add(new FoeEntry { character = character, profile = profile });
+        }
 
         public GameObject Find(string key)
         {
@@ -49,14 +96,6 @@ namespace Descender.World
                     if (own != null)
                     {
                         return own;
-                    }
-                    if (type == "enemy" && System.Array.IndexOf(Enemies.BossIds.All, character) >= 0)
-                    {
-                        var boss = Find("boss");
-                        if (boss != null)
-                        {
-                            return boss;
-                        }
                     }
                 }
             }

@@ -96,8 +96,8 @@ namespace Descender.Tests.EditMode
             var lunge = new[] { typeof(Swing), typeof(Pounce), typeof(Chase), typeof(Patrol) };
             var lunger = FoeKinds.FromWalker("a", profile, "lunge", false);
             Assert.That(Parts(lunger), Is.EqualTo(lunge));
-            Assert.That(((Pounce)lunger.behaviours[1]).spring, Is.EqualTo(Walker.LungeVelocity));
-            Assert.That(((Chase)lunger.behaviours[2]).sight, Is.EqualTo(Walker.LungeSight));
+            Assert.That(((Pounce)lunger.behaviours[1]).spring, Is.EqualTo(FoeNumbers.Walker.LungeVelocity));
+            Assert.That(((Chase)lunger.behaviours[2]).sight, Is.EqualTo(FoeNumbers.Walker.LungeSight));
 
             var hurl = new[] { typeof(Swing), typeof(Shoot), typeof(Retreat), typeof(Patrol) };
             var hurler = FoeKinds.FromWalker("a", profile, "hurl", false);
@@ -105,14 +105,14 @@ namespace Descender.Tests.EditMode
             var thrown = (Shoot)hurler.behaviours[1];
             var back = (Retreat)hurler.behaviours[2];
             Assert.That(thrown.nearest, Is.EqualTo(back.within), "it throws from where it stops backing away");
-            Assert.That(thrown.range, Is.EqualTo(Walker.HurlRange));
+            Assert.That(thrown.range, Is.EqualTo(FoeNumbers.Walker.HurlRange));
 
             var slam = new[] { typeof(Swing), typeof(Quake), typeof(Patrol) };
             var slammer = FoeKinds.FromWalker("a", profile, "slam", false);
             Assert.That(Parts(slammer), Is.EqualTo(slam));
             var quake = (Quake)slammer.behaviours[1];
             Assert.That(quake.nearest, Is.EqualTo(profile.attackRange), "beyond its swing");
-            Assert.That(quake.farthest, Is.EqualTo(Walker.SlamMax));
+            Assert.That(quake.farthest, Is.EqualTo(FoeNumbers.Walker.SlamMax));
             Assert.That(slammer.body.shape, Is.EqualTo(ShapeKind.Diamond));
         }
 
@@ -122,7 +122,10 @@ namespace Descender.Tests.EditMode
             var pounce = (Pounce)FoeKinds.FromWalker("a", profile, "pounce", false).behaviours[1];
             // His middle is 16 pixels above the floor and its own 31: he is 15 below it.
             Assert.That(pounce.below, Is.GreaterThanOrEqualTo(15f));
-            Assert.That(pounce.above + pounce.below, Is.EqualTo(Walker.PounceAbove + Walker.PounceBelow));
+            Assert.That(
+                pounce.above + pounce.below,
+                Is.EqualTo(FoeNumbers.Walker.PounceAbove + FoeNumbers.Walker.PounceBelow)
+            );
             Assert.That(pounce.reach, Is.EqualTo(profile.reach));
             Assert.That(pounce.damage, Is.EqualTo(2));
         }
@@ -165,8 +168,8 @@ namespace Descender.Tests.EditMode
             var over = (Haunt)diver.behaviours[1];
             Assert.That(over.above, Is.EqualTo(48f), "it hangs over him: 64 pixels above his feet");
             var dive = (Dive)diver.behaviours[0];
-            Assert.That(dive.windup, Is.EqualTo(Flyer.AimTime));
-            Assert.That(dive.speed, Is.EqualTo(Flyer.DiveSpeed));
+            Assert.That(dive.windup, Is.EqualTo(FoeNumbers.Flyer.AimTime));
+            Assert.That(dive.speed, Is.EqualTo(FoeNumbers.Flyer.DiveSpeed));
             Assert.That(dive.depth, Is.GreaterThanOrEqualTo(over.above), "from over him it can come down");
             Object.DestroyImmediate(flyer);
         }
@@ -176,18 +179,18 @@ namespace Descender.Tests.EditMode
         {
             var recipe = FoeKinds.FromHanger("hanged", 3);
             Assert.That(recipe.body.flies, Is.True, "it hangs where it is put");
-            Assert.That(recipe.body.size, Is.EqualTo(Hanger.BodySize));
+            Assert.That(recipe.body.size, Is.EqualTo(FoeNumbers.Hanger.BodySize));
             Assert.That(recipe.body.health, Is.EqualTo(3));
             Assert.That(recipe.body.pushShare, Is.EqualTo(0f), "a cut does not swing it away");
             Assert.That(Parts(recipe), Is.EqualTo(new[] { typeof(Dive), typeof(Hover) }));
             var drop = (Dive)recipe.behaviours[0];
-            Assert.That(drop.range, Is.EqualTo(Hanger.DropRangeX));
-            Assert.That(drop.depth, Is.EqualTo(Hanger.DropRangeY));
-            Assert.That(drop.windup, Is.EqualTo(Hanger.CreakTime));
-            Assert.That(drop.recover, Is.EqualTo(Hanger.RestTime), "it lies where it lands");
-            Assert.That(drop.damage, Is.EqualTo(Hanger.DropDamage), "the drop takes two hearts");
-            Assert.That(recipe.body.contactDamage, Is.EqualTo(Hanger.ContactDamage));
-            Assert.That(recipe.drops.loot, Is.SameAs(Hanger.Loot));
+            Assert.That(drop.range, Is.EqualTo(FoeNumbers.Hanger.DropRangeX));
+            Assert.That(drop.depth, Is.EqualTo(FoeNumbers.Hanger.DropRangeY));
+            Assert.That(drop.windup, Is.EqualTo(FoeNumbers.Hanger.CreakTime));
+            Assert.That(drop.recover, Is.EqualTo(FoeNumbers.Hanger.RestTime), "it lies where it lands");
+            Assert.That(drop.damage, Is.EqualTo(FoeNumbers.Hanger.DropDamage), "the drop takes two hearts");
+            Assert.That(recipe.body.contactDamage, Is.EqualTo(FoeNumbers.Hanger.ContactDamage));
+            Assert.That(recipe.drops.loot, Is.SameAs(FoeNumbers.Hanger.Loot));
         }
 
         private static BossProfile Boss(string character, string third = "")
@@ -231,7 +234,7 @@ namespace Descender.Tests.EditMode
 
             var pattern = (Pattern)recipe.behaviours[1];
             Assert.That(pattern.phases, Has.Length.EqualTo(2));
-            Assert.That(pattern.phases[0].until, Is.EqualTo(Enemies.Boss.PhaseTwoAt));
+            Assert.That(pattern.phases[0].until, Is.EqualTo(FoeNumbers.Boss.PhaseTwoAt));
             Assert.That(pattern.phases[1].until, Is.EqualTo(0f));
             var both = new[] { typeof(Swing), typeof(Quake), typeof(Charge) };
             Assert.That(Attacks(pattern, 0), Is.EqualTo(both), "a brute's move is the wave");
@@ -263,13 +266,13 @@ namespace Descender.Tests.EditMode
             var court = (Pattern)FoeKinds.FromBoss("a", king, imp).behaviours[1];
             Assert.That(Attacks(court, 0), Is.EqualTo(new[] { typeof(Swing), typeof(Summon), typeof(Charge) }));
             Assert.That(((Summon)court.phases[0].attacks[1]).summons, Is.SameAs(imp), "an imp king calls imps");
-            Assert.That(((Summon)court.phases[0].attacks[1]).cap, Is.EqualTo(Enemies.Boss.SummonCount));
+            Assert.That(((Summon)court.phases[0].attacks[1]).cap, Is.EqualTo(FoeNumbers.Boss.SummonCount));
 
             var other = Boss("hero", "mirror");
             var last = (Pattern)FoeKinds.FromBoss("a", other, null).behaviours[1];
             Assert.That(Attacks(last, 0), Is.EqualTo(new[] { typeof(Swing), typeof(Charge) }), "no move of its own");
             Assert.That(last.phases, Has.Length.EqualTo(3), "a third move is a third phase");
-            Assert.That(last.phases[1].until, Is.EqualTo(Enemies.Boss.PhaseThreeAt));
+            Assert.That(last.phases[1].until, Is.EqualTo(FoeNumbers.Boss.PhaseThreeAt));
             Assert.That(last.phases[2].until, Is.EqualTo(0f));
             var middle = ((Swing)last.phases[1].attacks[0]).windup;
             Assert.That(((Swing)last.phases[2].attacks[0]).windup, Is.LessThan(middle), "and quicker still");

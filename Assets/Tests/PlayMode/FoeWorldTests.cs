@@ -72,39 +72,15 @@ namespace Descender.Tests.PlayMode
             return placement;
         }
 
-        /// <summary>A catalog whose "enemy:imp" is a walker of a profile; the template stays switched off.</summary>
+        /// <summary>A catalog whose "imp" is made from a walker's profile and whose "enemy:slug" is a plain prefab, switched off.</summary>
         private PlacementCatalog CatalogOfAWalker(WalkerProfile profile)
         {
-            var template = new GameObject("imp");
+            var template = new GameObject("slug");
             made.Add(template);
             template.SetActive(false);
-            template.AddComponent<BoxCollider2D>();
-            var walker = template.AddComponent<Walker>();
-            var field = typeof(Walker).GetField("profile", BindingFlags.NonPublic | BindingFlags.Instance);
-            field.SetValue(walker, profile);
             var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
-            catalog.Set("enemy:imp", template);
-            return catalog;
-        }
-
-        /// <summary>A catalog whose "enemy:shade" is a flyer of a profile and whose "enemy:hanged" is a hanger.</summary>
-        private PlacementCatalog CatalogOfAFlyerAndAHanger(FlyerProfile profile)
-        {
-            var shade = new GameObject("shade");
-            made.Add(shade);
-            shade.SetActive(false);
-            shade.AddComponent<BoxCollider2D>();
-            var flyer = shade.AddComponent<Flyer>();
-            var field = typeof(Flyer).GetField("profile", BindingFlags.NonPublic | BindingFlags.Instance);
-            field.SetValue(flyer, profile);
-            var hanged = new GameObject("hanged");
-            made.Add(hanged);
-            hanged.SetActive(false);
-            hanged.AddComponent<BoxCollider2D>();
-            hanged.AddComponent<Hanger>();
-            var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
-            catalog.Set("enemy:shade", shade);
-            catalog.Set("enemy:hanged", hanged);
+            catalog.SetFoe("imp", profile);
+            catalog.Set("enemy:slug", template);
             return catalog;
         }
 
@@ -206,7 +182,7 @@ namespace Descender.Tests.PlayMode
         }
 
         [UnityTest]
-        public IEnumerator APlacementWhosePrefabIsAWalkerMakesAFoeFromItsProfileUnlessThatIsOff()
+        public IEnumerator APlacementWhoseCatalogGivesAWalkerProfileMakesAFoeFromItAndAnyOtherIsLeftToThePrefab()
         {
             var profile = ScriptableObject.CreateInstance<WalkerProfile>();
             profile.body = new Vector2(20f, 36f);
@@ -218,7 +194,6 @@ namespace Descender.Tests.PlayMode
             yield return null;
 
             Assert.That(remade.Spawned != null, Is.True);
-            Assert.That(remade.Spawned.GetComponent<Walker>() == null, Is.True, "no walker stands there");
             var foe = remade.Spawned.GetComponent<Foe>();
             Assert.That(foe != null, Is.True, "a foe does");
             Assert.That(foe.name, Is.EqualTo("imp"));
@@ -229,24 +204,29 @@ namespace Descender.Tests.PlayMode
             Assert.That(foe.Drops, Is.Not.Null);
             Assert.That(foe.PlacementId, Is.EqualTo("test/Imp"));
 
-            FoeWorld.Remakes = false;
-            var old = Place(new Vector2(9f, 3f), json.Replace("test/Imp", "test/Old"), catalog);
+            var slugJson = "{\"id\":\"test/Slug\",\"type\":\"enemy\",\"character\":\"slug\"}";
+            var slug = Place(new Vector2(9f, 3f), slugJson, catalog);
             yield return null;
-            Assert.That(old.Spawned != null, Is.True);
-            Assert.That(old.Spawned.GetComponent<Foe>() == null, Is.True, "off, the catalog's prefab stands");
-            Assert.That(old.Spawned.GetComponent<Walker>() != null, Is.True);
+            Assert.That(slug.Spawned != null, Is.True);
+            Assert.That(slug.Spawned.GetComponent<Foe>() == null, Is.True, "with none, its prefab stands");
+            Assert.That(slug.Spawned.name, Is.EqualTo("slug"));
             Object.Destroy(catalog);
             Object.Destroy(profile);
         }
 
         [UnityTest]
-        public IEnumerator APlacementWhosePrefabIsAFlyerOrAHangerMakesAFlyingFoe()
+        public IEnumerator APlacementWhoseCatalogGivesAFlyerOrAHangerProfileMakesAFlyingFoe()
         {
             var profile = ScriptableObject.CreateInstance<FlyerProfile>();
             profile.health = 2;
+            profile.size = new Vector2(20f, 12f);
             // It keeps still, so where it stands can be read.
             profile.hover = 0f;
-            var catalog = CatalogOfAFlyerAndAHanger(profile);
+            var hanger = ScriptableObject.CreateInstance<HangerProfile>();
+            hanger.health = 3;
+            var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
+            catalog.SetFoe("shade", profile);
+            catalog.SetFoe("hanged", hanger);
             var shadeJson = "{\"id\":\"test/Shade\",\"type\":\"enemy\",\"character\":\"shade\",";
             shadeJson += "\"behaviour\":\"dive\"}";
             var shade = Place(new Vector2(5f, 8f), shadeJson, catalog);
@@ -256,25 +236,26 @@ namespace Descender.Tests.PlayMode
             yield return new WaitForFixedUpdate();
             yield return new WaitForFixedUpdate();
 
-            Assert.That(shade.Spawned.GetComponent<Flyer>() == null, Is.True, "no flyer stands there");
             var flier = shade.Spawned.GetComponent<Foe>();
             Assert.That(flier != null, Is.True, "a foe does");
             Assert.That(flier.Body.flies, Is.True);
             Assert.That(flier.Health, Is.EqualTo(2));
+            Assert.That(flier.Body.size, Is.EqualTo(new Vector2(20f, 12f)), "the size its profile says");
             Assert.That(flier.Behaviours[0], Is.InstanceOf<Dive>(), "with the placement's habit");
             Vector2 middle = flier.Box.bounds.center;
             Assert.That(middle.x, Is.EqualTo(5f).Within(Pixel), "its middle where the placement is");
             Assert.That(middle.y, Is.EqualTo(8f).Within(Pixel));
 
-            Assert.That(hanged.Spawned.GetComponent<Hanger>() == null, Is.True, "no hanger hangs there");
             var hung = hanged.Spawned.GetComponent<Foe>();
             Assert.That(hung != null, Is.True, "a foe does");
             Assert.That(hung.Body.flies, Is.True);
+            Assert.That(hung.Health, Is.EqualTo(3), "the health its profile says");
             Assert.That(hung.Behaviours[0], Is.InstanceOf<Dive>());
             Assert.That(hung.Box.bounds.min.y, Is.EqualTo(8f).Within(Pixel), "its feet where the placement is");
             Assert.That(hung.Box.bounds.center.x, Is.EqualTo(12f).Within(Pixel));
             Object.Destroy(catalog);
             Object.Destroy(profile);
+            Object.Destroy(hanger);
         }
 
         [UnityTest]
@@ -287,20 +268,12 @@ namespace Descender.Tests.PlayMode
             profile.body = new Vector2(32f, 80f);
             profile.health = 24;
             profile.motes = 2;
-            var template = new GameObject("Boss");
-            made.Add(template);
-            template.SetActive(false);
-            template.AddComponent<BoxCollider2D>();
-            var old = template.AddComponent<Boss>();
-            var field = typeof(Boss).GetField("profiles", BindingFlags.NonPublic | BindingFlags.Instance);
-            field.SetValue(old, new[] { profile });
             var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
-            catalog.Set("boss", template);
+            catalog.SetFoe("seraph_warden", profile);
             var json = "{\"id\":\"test/Boss\",\"type\":\"enemy\",\"character\":\"seraph_warden\"}";
             var placement = Place(new Vector2(5f, 3f), json, catalog);
             yield return null;
 
-            Assert.That(placement.Spawned.GetComponent<Boss>() == null, Is.True, "no old boss stands there");
             var boss = placement.Spawned.GetComponent<Foe>();
             Assert.That(boss != null, Is.True, "a foe does");
             Assert.That(boss.name, Is.EqualTo("Seraph Warden"));

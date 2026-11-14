@@ -24,7 +24,7 @@ namespace Descender.UI
         public const float XpBarWidth = 40f;
         public const float DefaultMessageTime = 2.5f;
 
-        /// <summary>The boss bar turns red at and below this share of its health (Boss.PHASE_TWO_AT).</summary>
+        /// <summary>The boss bar turns red at and below this share of its health (FoeNumbers.Boss.PhaseTwoAt).</summary>
         public const float BossHurtAt = 0.5f;
 
         public static readonly Color BossBarBack = new Color(0f, 0f, 0f, 0.6f);

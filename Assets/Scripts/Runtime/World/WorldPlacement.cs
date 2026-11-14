@@ -134,6 +134,12 @@ namespace Descender.World
         /// <summary>The prefab the catalog gives for this placement; null when it has none.</summary>
         public GameObject Prefab => catalog != null ? catalog.Resolve(type, character, dialogue.Length > 0) : null;
 
+        /// <summary>The catalog this placement spawns from; null when it has none.</summary>
+        public PlacementCatalog Catalog => catalog;
+
+        /// <summary>The profile the catalog gives for an enemy of this character; null for anything else.</summary>
+        public ScriptableObject Foe => type == "enemy" && catalog != null ? catalog.FoeFor(character) : null;
+
         /// <summary>Whether this is where the story speaks: a trigger, a talking NPC or a relic.</summary>
         public bool IsStory => Story.StoryMode.IsStory(type, dialogue.Length > 0, !string.IsNullOrEmpty(shop));
 

@@ -47,7 +47,7 @@ namespace Descender.Enemies
         /// </summary>
         public static FoeRecipe FromWalker(string name, WalkerProfile profile, string habit, bool passive)
         {
-            var kind = Walker.Parse(habit);
+            var kind = FoeNumbers.Walker.Parse(habit);
             var body = new FoeBody
             {
                 size = profile.body,
@@ -92,14 +92,14 @@ namespace Descender.Enemies
             var recipe = new FoeRecipe(name ?? "", body, haunt, drift);
             if (dives)
             {
-                haunt.above = Flyer.DivePerch.y - HeroMiddle;
+                haunt.above = FoeNumbers.Flyer.DivePerch.y - HeroMiddle;
                 var dive = new Dive
                 {
                     range = FlyerDiveRange,
                     depth = profile.aggro,
-                    windup = Flyer.AimTime,
-                    speed = Flyer.DiveSpeed,
-                    cooldown = Flyer.DiveCooldown,
+                    windup = FoeNumbers.Flyer.AimTime,
+                    speed = FoeNumbers.Flyer.DiveSpeed,
+                    cooldown = FoeNumbers.Flyer.DiveCooldown,
                 };
                 recipe.behaviours = new FoeBehaviour[] { dive, haunt, drift };
             }
@@ -118,29 +118,29 @@ namespace Descender.Enemies
         {
             var body = new FoeBody
             {
-                size = Hanger.BodySize,
+                size = FoeNumbers.Hanger.BodySize,
                 health = Mathf.Max(health, 1),
                 speed = 0f,
-                contactDamage = Hanger.ContactDamage,
+                contactDamage = FoeNumbers.Hanger.ContactDamage,
                 // It is on a rope: a cut does not swing it away.
                 pushShare = 0f,
                 flies = true,
-                color = Hanger.DeathPuff,
+                color = FoeNumbers.Hanger.DeathPuff,
             };
             var drop = new Dive
             {
-                range = Hanger.DropRangeX,
-                depth = Hanger.DropRangeY,
-                windup = Hanger.CreakTime,
-                speed = Hanger.MaxFallSpeed,
-                recover = Hanger.RestTime,
+                range = FoeNumbers.Hanger.DropRangeX,
+                depth = FoeNumbers.Hanger.DropRangeY,
+                windup = FoeNumbers.Hanger.CreakTime,
+                speed = FoeNumbers.Hanger.MaxFallSpeed,
+                recover = FoeNumbers.Hanger.RestTime,
                 riseSpeed = HangerRise,
-                cooldown = Hanger.DropCooldown,
-                damage = Hanger.DropDamage,
+                cooldown = FoeNumbers.Hanger.DropCooldown,
+                damage = FoeNumbers.Hanger.DropDamage,
             };
             var recipe = new FoeRecipe(name ?? "", body, drop, new Hover { span = 0f });
-            var drops = new FoeDrops { moteChance = Hanger.DropChance, powerChance = 0f };
-            drops.loot = Hanger.Loot;
+            var drops = new FoeDrops { moteChance = FoeNumbers.Hanger.DropChance, powerChance = 0f };
+            drops.loot = FoeNumbers.Hanger.Loot;
             recipe.drops = drops;
             return recipe;
         }
@@ -167,10 +167,10 @@ namespace Descender.Enemies
                 shape = ShapeKind.Diamond,
                 color = BossColor,
             };
-            var last = string.IsNullOrEmpty(profile.third) ? 0f : Boss.PhaseThreeAt;
+            var last = string.IsNullOrEmpty(profile.third) ? 0f : FoeNumbers.Boss.PhaseThreeAt;
             var phases = new List<BossPhase>();
-            phases.Add(new BossPhase(Boss.PhaseTwoAt, BossRest, BossAttacks(profile, imp, 1f)));
-            var quick = Boss.PhaseTwoHaste;
+            phases.Add(new BossPhase(FoeNumbers.Boss.PhaseTwoAt, BossRest, BossAttacks(profile, imp, 1f)));
+            var quick = FoeNumbers.Boss.PhaseTwoHaste;
             phases.Add(new BossPhase(last, BossRest * quick, BossAttacks(profile, imp, quick)));
             if (last > 0f)
             {
@@ -202,7 +202,7 @@ namespace Descender.Enemies
             var swing = new Swing
             {
                 range = Mathf.Max(profile.attackRange - profile.body.x / 2f, 0f),
-                heightTolerance = Boss.AttackHeightTolerance,
+                heightTolerance = FoeNumbers.Boss.AttackHeightTolerance,
                 reach = profile.reach,
                 windup = profile.windup * haste,
                 strike = profile.strike,
@@ -213,7 +213,7 @@ namespace Descender.Enemies
             var charge = new Charge
             {
                 range = BossChargeRange,
-                heightTolerance = Boss.AttackHeightTolerance,
+                heightTolerance = FoeNumbers.Boss.AttackHeightTolerance,
                 windup = profile.chargeWindup * haste,
                 speed = profile.chargeSpeed,
                 distance = BossChargeRange,
@@ -239,10 +239,10 @@ namespace Descender.Enemies
                     var quake = new Quake
                     {
                         nearest = 0f,
-                        farthest = Boss.SlamRange,
-                        heightTolerance = Boss.AttackHeightTolerance,
-                        windup = Boss.SlamWindup * haste,
-                        recover = Boss.SlamRecover * haste,
+                        farthest = FoeNumbers.Boss.SlamRange,
+                        heightTolerance = FoeNumbers.Boss.AttackHeightTolerance,
+                        windup = FoeNumbers.Boss.SlamWindup * haste,
+                        recover = FoeNumbers.Boss.SlamRecover * haste,
                         cooldown = 0f,
                         big = true,
                     };
@@ -252,9 +252,9 @@ namespace Descender.Enemies
                 {
                     var volley = new Shoot
                     {
-                        nearest = Boss.VolleyMin,
-                        range = Boss.VolleyMax,
-                        reach = Boss.VolleyMax + 40f,
+                        nearest = FoeNumbers.Boss.VolleyMin,
+                        range = FoeNumbers.Boss.VolleyMax,
+                        reach = FoeNumbers.Boss.VolleyMax + 40f,
                         windup = BossVolleyWindup * haste,
                         cooldown = 0f,
                         damage = 1,
@@ -266,7 +266,7 @@ namespace Descender.Enemies
                     var call = new Summon
                     {
                         summons = imp,
-                        cap = Boss.SummonCount,
+                        cap = FoeNumbers.Boss.SummonCount,
                         range = BossChargeRange * 3f,
                         windup = BossVolleyWindup * haste,
                         cooldown = 0f,
@@ -316,8 +316,8 @@ namespace Descender.Enemies
         {
             return new Pounce
             {
-                above = Walker.PounceAbove - taller,
-                below = Walker.PounceBelow + taller,
+                above = FoeNumbers.Walker.PounceAbove - taller,
+                below = FoeNumbers.Walker.PounceBelow + taller,
                 reach = profile.reach,
                 damage = profile.attackDamage,
             };
@@ -327,13 +327,13 @@ namespace Descender.Enemies
         {
             return new Pounce
             {
-                nearest = Walker.LungeMin,
-                farthest = Walker.LungeMax,
-                above = Walker.LungeAbove - taller,
-                below = Walker.PounceBelow + taller,
-                windup = Walker.LungeWindup,
-                spring = Walker.LungeVelocity,
-                cooldown = Walker.LungeCooldown,
+                nearest = FoeNumbers.Walker.LungeMin,
+                farthest = FoeNumbers.Walker.LungeMax,
+                above = FoeNumbers.Walker.LungeAbove - taller,
+                below = FoeNumbers.Walker.PounceBelow + taller,
+                windup = FoeNumbers.Walker.LungeWindup,
+                spring = FoeNumbers.Walker.LungeVelocity,
+                cooldown = FoeNumbers.Walker.LungeCooldown,
                 reach = profile.reach,
                 damage = profile.attackDamage,
             };
@@ -341,26 +341,26 @@ namespace Descender.Enemies
 
         private static Chase Run()
         {
-            return new Chase { sight = Walker.LungeSight, pace = Walker.LungeSpeed };
+            return new Chase { sight = FoeNumbers.Walker.LungeSight, pace = FoeNumbers.Walker.LungeSpeed };
         }
 
         private static Shoot Hurl()
         {
             return new Shoot
             {
-                nearest = Walker.HurlRetreat,
-                range = Walker.HurlRange,
-                windup = Walker.HurlWindup,
-                recover = Walker.HurlRecover,
-                cooldown = Walker.HurlCooldown,
+                nearest = FoeNumbers.Walker.HurlRetreat,
+                range = FoeNumbers.Walker.HurlRange,
+                windup = FoeNumbers.Walker.HurlWindup,
+                recover = FoeNumbers.Walker.HurlRecover,
+                cooldown = FoeNumbers.Walker.HurlCooldown,
             };
         }
 
         private static Retreat Back()
         {
             var back = new Retreat();
-            back.within = Walker.HurlRetreat;
-            back.heightTolerance = Walker.HurlHeightTolerance;
+            back.within = FoeNumbers.Walker.HurlRetreat;
+            back.heightTolerance = FoeNumbers.Walker.HurlHeightTolerance;
             return back;
         }
 
@@ -369,10 +369,10 @@ namespace Descender.Enemies
             return new Quake
             {
                 nearest = profile.attackRange,
-                farthest = Walker.SlamMax,
-                windup = Walker.SlamWindup,
-                recover = Walker.SlamRecover,
-                cooldown = Walker.SlamCooldown,
+                farthest = FoeNumbers.Walker.SlamMax,
+                windup = FoeNumbers.Walker.SlamWindup,
+                recover = FoeNumbers.Walker.SlamRecover,
+                cooldown = FoeNumbers.Walker.SlamCooldown,
             };
         }
 

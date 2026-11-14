@@ -9,23 +9,22 @@ namespace Descender.Enemies
 
     /// <summary>
     /// Foes in the regions. A kind registered here by its character id stands in for
-    /// the catalog's prefab wherever a <see cref="WorldPlacement"/> names that
-    /// character: the placement makes a <see cref="Foe"/> from the kind's recipe, feet
-    /// at the placement (a flyer's middle), facing as it says. The foe carries the placement's id, so its
+    /// the catalog wherever a <see cref="WorldPlacement"/> names that character: the
+    /// placement makes a <see cref="Foe"/> from the kind's recipe, feet at the placement
+    /// (a flyer's middle), facing as it says. The foe carries the placement's id, so its
     /// death is remembered in <see cref="Kills"/>, and its object goes when it dies, so
     /// the placement makes another when the hero respawns. A character that is not
-    /// registered but whose prefab is one of the old enemies (a <see cref="Walker"/>,
-    /// a <see cref="Flyer"/>, a <see cref="Hanger"/> or a <see cref="Boss"/>) is made
-    /// from that prefab's numbers and the placement's habit or boss id
-    /// (<see cref="FoeKinds"/>), unless <see cref="Remakes"/> is off; anything else is
-    /// left to the catalog.
+    /// registered is made from the profile the placement's catalog gives for it (a
+    /// <see cref="WalkerProfile"/> and the placement's habit, a <see cref="FlyerProfile"/>,
+    /// a <see cref="HangerProfile"/> or a <see cref="BossProfile"/>; see
+    /// <see cref="FoeKinds"/>); anything else is left to the catalog's prefab.
     /// </summary>
     public static class FoeWorld
     {
-        private static readonly Dictionary<string, FoeKind> Kinds = new Dictionary<string, FoeKind>();
+        /// <summary>The character an imp king calls.</summary>
+        public const string ImpKind = "imp";
 
-        /// <summary>On, a placement whose prefab is an old enemy makes a foe from its numbers; off, the old enemy stands.</summary>
-        public static bool Remakes { get; set; } = true;
+        private static readonly Dictionary<string, FoeKind> Kinds = new Dictionary<string, FoeKind>();
 
         /// <summary>
         /// From now on a placement of this character makes what `recipe` gives for it
@@ -46,7 +45,6 @@ namespace Descender.Enemies
         public static void Reset()
         {
             Kinds.Clear();
-            Remakes = true;
             Hook();
         }
 
@@ -58,48 +56,37 @@ namespace Descender.Enemies
         }
 
         /// <summary>
-        /// The recipe for a placement whose prefab is an old enemy, from its numbers; null
-        /// for any other. `centred` is true for one whose origin is its middle (a flyer).
+        /// The recipe for a placement from the profile its catalog gives for its character;
+        /// null when there is none. `centred` is true for one whose origin is its middle (a
+        /// flyer).
         /// </summary>
-        private static FoeRecipe OldAt(WorldPlacement placement, out bool centred)
+        private static FoeRecipe FromCatalog(WorldPlacement placement, out bool centred)
         {
             centred = false;
-            var prefab = placement.Prefab;
-            if (prefab == null)
+            var name = placement.Character;
+            switch (placement.Foe)
             {
-                return null;
-            }
-            var name = string.IsNullOrEmpty(placement.Character) ? prefab.name : placement.Character;
-            if (prefab.TryGetComponent<Walker>(out var walker) && walker.Profile != null)
-            {
-                return FoeKinds.FromWalker(name, walker.Profile, placement.Behaviour, placement.Passive);
-            }
-            if (prefab.TryGetComponent<Flyer>(out var flyer) && flyer.Profile != null)
-            {
-                centred = true;
-                return FoeKinds.FromFlyer(name, flyer.Profile, flyer.Size, placement.Behaviour == "dive");
-            }
-            if (prefab.TryGetComponent<Hanger>(out var hanger))
-            {
-                return FoeKinds.FromHanger(name, hanger.MaxHealth);
-            }
-            if (prefab.TryGetComponent<Boss>(out var boss))
-            {
-                var profile = boss.ProfileFor(placement.Character);
-                if (profile == null)
+                case WalkerProfile walker:
+                    return FoeKinds.FromWalker(name, walker, placement.Behaviour, placement.Passive);
+                case FlyerProfile flyer:
+                    centred = true;
+                    return FoeKinds.FromFlyer(name, flyer, flyer.size, placement.Behaviour == "dive");
+                case HangerProfile hanger:
+                    return FoeKinds.FromHanger(name, hanger.health);
+                case BossProfile boss:
                 {
-                    return null;
+                    var imp = placement.Catalog.FoeFor(ImpKind) as WalkerProfile;
+                    return FoeKinds.FromBoss(name, boss, imp != null ? Imp(imp) : null);
                 }
-                var imp = boss.Imp != null && boss.Imp.Profile != null ? Imp(boss.Imp.Profile) : null;
-                return FoeKinds.FromBoss(placement.Character, profile, imp);
+                default:
+                    return null;
             }
-            return null;
         }
 
         /// <summary>What an imp king calls: an imp that comes for the hero and leaves nothing.</summary>
         private static FoeRecipe Imp(WalkerProfile profile)
         {
-            var imp = FoeKinds.FromWalker("imp", profile, "chase", false);
+            var imp = FoeKinds.FromWalker(ImpKind, profile, "chase", false);
             imp.drops = null;
             return imp;
         }
@@ -117,9 +104,9 @@ namespace Descender.Enemies
             {
                 recipe = kind(placement);
             }
-            else if (Remakes)
+            else
             {
-                recipe = OldAt(placement, out centred);
+                recipe = FromCatalog(placement, out centred);
             }
             if (recipe == null)
             {

@@ -10,7 +10,8 @@ namespace Descender.Tests.EditMode
     /// <summary>
     /// What a placement spawns: an item with dialogue is a relic to examine, one
     /// without is loot, and both catalogs (the shared one and the garden's copy)
-    /// hold a prefab with the right receiver for every placement type.
+    /// hold a prefab with the right receiver for every placement type and a profile
+    /// for every enemy and boss.
     /// </summary>
     public class PlacementCatalogTests
     {
@@ -71,7 +72,31 @@ namespace Descender.Tests.EditMode
             Expect<UI.StoryTrigger>(catalog, path, "trigger", catalog.Resolve("trigger", "", true));
             // No npc:<character> prefab exists, so a named character falls back to the plain NPC.
             Expect<UI.Npc>(catalog, path, "npc", catalog.Resolve("npc", "pell", true));
-            Expect<Enemies.Boss>(catalog, path, "boss", catalog.Resolve("enemy", Enemies.BossIds.All[0]));
+        }
+
+        [TestCase(PlacementCatalogSetup.CatalogPath)]
+        [TestCase(PlacementCatalogSetup.ParadiseCatalogPath)]
+        public void BothCatalogsGiveEveryEnemyAndBossItsProfile(string path)
+        {
+            var catalog = AssetDatabase.LoadAssetAtPath<PlacementCatalog>(path);
+            Assert.That(catalog, Is.Not.Null, path + " is missing");
+            foreach (var walker in new[] { "imp", "angel_guard", "brute", "slug", "hoarder", "burned", "hound" })
+            {
+                Assert.That(catalog.FoeFor(walker), Is.InstanceOf<Enemies.WalkerProfile>(), $"{path}: {walker}");
+            }
+            foreach (var flyer in new[] { "watcher", "shade", "siren" })
+            {
+                Assert.That(catalog.FoeFor(flyer), Is.InstanceOf<Enemies.FlyerProfile>(), $"{path}: {flyer}");
+            }
+            Assert.That(catalog.FoeFor("hanged"), Is.InstanceOf<Enemies.HangerProfile>(), $"{path}: hanged");
+            foreach (var boss in Enemies.BossIds.All)
+            {
+                var profile = catalog.FoeFor(boss);
+                Assert.That(profile, Is.InstanceOf<Enemies.BossProfile>(), $"{path}: {boss}");
+                Assert.That(profile.name, Is.EqualTo(boss));
+            }
+            Assert.That(catalog.Find("boss"), Is.Null, $"{path}: no prefab stands for a boss");
+            Assert.That(catalog.Resolve("enemy", "imp"), Is.Null, $"{path}: nor for an enemy");
         }
 
         private static void Expect<T>(PlacementCatalog catalog, string path, string key, GameObject resolved)

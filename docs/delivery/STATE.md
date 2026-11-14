@@ -150,11 +150,20 @@ one of the four old classes, and they are deleted.
   from half its health, and with a third phase at a quarter for the bosses
   that had a third move. It leaves its motes, loot and the flag that keeps
   it dead (`FoeDrops.motes`, `FoeDrops.flag`).
-- T-0044: the old classes go. `FoeWorld` finds a placement's numbers through
-  the old prefabs' components today, so deleting `Walker`, `Flyer`,
-  `Hanger` and `Boss` first needs the catalog to point at the profiles
-  themselves; the prefabs, their `.meta` GUIDs and the catalog asset change
-  together, so this is done with the editor open.
+- T-0044: the old classes go. The placement catalog names the profile each
+  enemy is made from by its character (`PlacementCatalog.FoeFor`: a
+  `WalkerProfile`, a `FlyerProfile`, which now carries the flyer's size, a
+  `HangerProfile`, new, for the hanged thing's health, or a `BossProfile`),
+  and `FoeWorld` makes a placement's foe from that. `Walker`, `Flyer`,
+  `Hanger` and `Boss`, their death, health bar and mark visuals, the twelve
+  enemy prefabs and the catalogs' `boss` and `enemy:<body>` entries are
+  deleted; the constants the recipes still read are in `FoeNumbers`, and
+  `FoeWorld.Remakes` is gone with the old enemies. Done without the editor:
+  `build_prefabs.py` writes the shared catalog and the hanged thing's
+  profile, and the garden's catalog got the same profiles.
+- Follow-up from the #208 review: a killed boss sets its `boss:<id>` flag,
+  but no placement reads it, so the boss stands again after a respawn (the
+  old boss did the same). Proposed as T-0045.
 
 ### After G4
 
@@ -308,8 +317,9 @@ hygiene as each production region lands.
 | T-0040 | A foe in the world: placement, kills, drops | done | 40 | T-0039 | 0 | Rebuild the old enemies | #205 |
 | T-0041 | Walker placements make foes | done | 41 | T-0040 | 1 | Rebuild the old enemies | #206 |
 | T-0042 | Flyer and Hanger from parts | done | 42 | T-0041 | 1 | Rebuild the old enemies | #207 |
-| T-0043 | The bosses from the boss pattern | in review | 43 | T-0042 | 1 | Rebuild the old enemies | |
-| T-0044 | The old enemy classes go | todo | 44 | T-0043 | 0 | Rebuild the old enemies | |
+| T-0043 | The bosses from the boss pattern | done | 43 | T-0042 | 1 | Rebuild the old enemies | #208 |
+| T-0044 | The old enemy classes go | in review | 44 | T-0043 | 1 | Finish rebuilding old enemies | |
+| T-0045 | A killed boss stays dead: its flag keeps its placement empty | proposed | 45 | T-0044 | 0 | | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -494,8 +504,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (321 on `main` after T-0043) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (159 after T-0043; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (323 after T-0044) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (159 after T-0044; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -628,8 +638,8 @@ barriers, the cliff descent.
   by the lab's rules: a warning before each swing, pounce, lunge, throw and
   wave, a push from every cut, armour on the brute and the slug. To check:
   the regions are still passable and fair with them, their drops still come,
-  and whether shapes are acceptable there until the art returns. To compare
-  with the old ones, `FoeWorld.Remakes = false` brings them back. Known
+  and whether shapes are acceptable there until the art returns. (The old
+  walkers are deleted since T-0044.) Known
   differences from the old walkers: they do not shout their lines
   (`barks`) and do not take a placement's `tint`.
 - **T-0042, the flyers and the hanged thing.** The shades, sirens and
