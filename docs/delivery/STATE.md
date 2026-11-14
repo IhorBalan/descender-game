@@ -509,8 +509,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (323 after T-0044) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (159 after T-0044; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (325 after the batch-mode mute) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `sh tools/unity/run-editor.sh -nographics -runTests -testPlatform EditMode -testResults Logs/edit.xml`) |
+| PlayMode tests (159 after T-0044; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the `run-editor.sh` command with `-testPlatform PlayMode` and without `-nographics` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -519,11 +519,13 @@ The pre-push hook is installed per clone with `git config core.hooksPath
 tools/hooks`. It finds the editor named in `ProjectSettings/ProjectVersion.txt`
 (6000.6.8f1) under the Unity Hub folder, or at `UNITY_EDITOR`. It refuses to
 run while the same project folder is open in the editor (`Temp/UnityLockfile`).
-Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. Test runs make no
-sound: the PlayMode assembly's `MuteDuringTests` callback mutes the listener
-for the whole run. Nor do they take the keyboard and mouse on Windows: the
-hook starts the editor through `tools/hooks/unity-background.ps1` with its
-windows hidden, so the console window the editor opens does not come to the
+Never skip it with `SKIP_UNITY_TESTS=1` or `--no-verify`. Editor runs make no
+sound: `BatchModeMute` mutes the editor itself (`EditorUtility.audioMasterMute`)
+in every batch-mode run, and the PlayMode assembly's `MuteDuringTests` callback
+mutes the listener for a Test Framework run. Nor do they take the keyboard and
+mouse on Windows: the hook and `tools/unity/run-editor.sh` start the editor
+through `tools/hooks/unity-background.ps1`, on a desktop of its own with its
+windows hidden, so nothing the editor or its helpers open can come to the
 foreground (`PRE_PUSH_FOREGROUND=1` starts it directly, the old way).
 
 The hook prints its phase, the time elapsed and the previous run's duration,
@@ -546,6 +548,15 @@ Merges do not deploy: only a `v*` tag releases, and tagging needs the owner.
 - **Implementation threads run as Remote Control sessions on the owner's
   Windows PC** (Be_Quiet_PC), in `D:\Dev\descender-game`,
   where Unity 6000.6.8f1 is installed and the pre-push hook runs fully.
+  **Never start `Unity.exe` directly there**: the owner plays games on that
+  PC, and an editor started with `Start-Process`, `& Unity.exe` or a bare
+  `-executeMethod` launch takes the keyboard and mouse. Every Unity run goes
+  through the hook (`git push`, or `sh tools/hooks/pre-push` to check
+  without pushing) or `sh tools/unity/run-editor.sh <unity arguments...>`
+  (an `-executeMethod` tool, one test platform, a filter); both start the
+  editor on a desktop of its own, and a batch-mode editor is muted.
+  `run-editor.sh` takes the machine-wide lock itself; around the hook, take
+  it yourself.
   Install CSharpier there once (`dotnet tool install --global csharpier
   --version 1.0.3`) and run `csharpier check Assets` before pushing; CI
   repeats it. The Python tool checks run in CI (`Tests / Python tools`, with

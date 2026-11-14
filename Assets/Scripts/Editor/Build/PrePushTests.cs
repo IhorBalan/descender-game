@@ -67,6 +67,7 @@ namespace Descender.EditorTools.Build
         /// <summary>The <c>-executeMethod</c> entry point. The editor stays open until both runs end.</summary>
         public static void Run()
         {
+            BatchModeMute.Mute();
             var folder = "Logs";
             var args = Environment.GetCommandLineArgs();
             for (var i = 0; i < args.Length - 1; i++)
@@ -82,6 +83,7 @@ namespace Descender.EditorTools.Build
                 Debug.LogError(
                     "pre-push: TestRunnerApi.IsRunActive is gone; update PrePushTests for this Test Framework."
                 );
+                BatchModeMute.Restore();
                 EditorApplication.Exit(1);
                 return;
             }
@@ -136,6 +138,7 @@ namespace Descender.EditorTools.Build
                     if (!EditorApplication.isPlayingOrWillChangePlaymode)
                     {
                         Current = Stage.Idle;
+                        BatchModeMute.Restore();
                         EditorApplication.Exit(SessionState.GetInt(ExitCodeKey, 1));
                     }
                     break;

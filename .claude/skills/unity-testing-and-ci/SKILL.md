@@ -43,19 +43,34 @@ saves, and never depend on test order. `[Timeout(60000)]` on long ones.
 `LogAssert.Expect(LogType.Warning, ...)` when a warning is the expected
 outcome; an unexpected error log fails the test.
 
-Every run is silent: `MuteDuringTests` in the PlayMode assembly (a
-`[assembly: TestRunCallback]`) sets `SettingsApplier.Muted` for the whole
-run, which holds the `AudioListener` at zero even when `Main.unity` boots
-and applies the saved settings. Do not set `AudioListener.volume` in a test.
+Every run is silent. A command-line run is muted at the editor level by
+`BatchModeMute` (`Assets/Scripts/Editor/Build/`, an `[InitializeOnLoad]` that
+sets `EditorUtility.audioMasterMute` whenever `Application.isBatchMode`, so it
+survives the domain reload on entering play mode and covers `-executeMethod`
+tools too; it restores the setting when the editor quits). Inside a Test
+Framework run, also from the Test Runner window, `MuteDuringTests` in the
+PlayMode assembly (a `[assembly: TestRunCallback]`) sets
+`SettingsApplier.Muted`, which holds the `AudioListener` at zero even when
+`Main.unity` boots and applies the saved settings. Do not set
+`AudioListener.volume` in a test.
 
 ## Running
 
 Editor: `Window > General > Test Runner`, EditMode or PlayMode tab, Run
-All. Command line (what the pre-push hook does):
+All. Command line: the pre-push hook (`sh tools/hooks/pre-push`), or for one
+platform or a filter, through `tools/unity/run-editor.sh`:
 
 ```
-Unity -batchmode -projectPath . -runTests -testPlatform EditMode -testResults results.xml -logFile -
+sh tools/unity/run-editor.sh -runTests -testPlatform EditMode -testResults Logs/edit.xml
 ```
+
+**Never start `Unity.exe` directly on the Windows PC** (no `Start-Process`, no
+`& Unity.exe`, no `-executeMethod` launch of your own): the owner may be
+playing a game there, and an editor started any other way takes the keyboard
+and mouse. `run-editor.sh` adds `-batchmode`, `-projectPath`,
+`-logFile Logs/run-editor.log` and `--burst-disable-compilation` when missing, waits for and holds the
+machine-wide lock (`$TEMP/descender-unity.lock`; `UNITY_LOCK_HELD=1` when the
+caller holds it) and exits with the editor's exit code.
 
 Format: `csharpier check Assets` (`.csharpierrc.yaml`), fix with
 `csharpier format Assets`.
@@ -81,13 +96,17 @@ stands still for `PRE_PUSH_STALL_SECONDS` (600) is stopped and fails. The
 editor is started with `--burst-disable-compilation`: the tests do not need
 Burst, the game has no Burst code, and on Windows with Smart App Control
 every unsigned DLL under `Library/BurstCache` raised a warning.
-On Windows the hook starts the editor through
-`tools/hooks/unity-background.ps1`, which asks for hidden windows
-(`SW_HIDE`): even with `-batchmode` the editor opens a console window, which took
-the keyboard and mouse from whatever was in use (a game, for one) until it was
-clicked again. Stopping the hook stops that script and, through a job object,
-the editor. `PRE_PUSH_FOREGROUND=1` starts the editor directly, as on macOS
-and Linux.
+The hook and `run-editor.sh` find and start the editor through
+`tools/hooks/unity-editor.sh`. On Windows that starts it through
+`tools/hooks/unity-background.ps1`, on a desktop of its own (`CreateDesktop`,
+never switched to) with hidden windows (`SW_HIDE`): even with `-batchmode` the
+editor opens a console window, and it and its helper processes can show
+dialogs; on the user's desktop any of them takes the keyboard and mouse from
+whatever is in use (a game, for one). A window that does appear on the
+editor's desktop is reported as `unity-background: ... window shown by ...`.
+Stopping the hook stops that script and, through a job object, the editor.
+`PRE_PUSH_FOREGROUND=1` (or `UNITY_FOREGROUND=1`) starts the editor directly,
+as on macOS and Linux.
 Install it once per clone:
 
 ```

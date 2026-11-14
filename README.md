@@ -288,8 +288,13 @@ lines (`pre-push: EditMode passed (N tests).`). It refuses to run while
 the project is open in the editor. Without the hook, the same run is
 
 ```
-Unity -batchmode -projectPath . -executeMethod Descender.EditorTools.Build.PrePushTests.Run -prePushResults Logs
+sh tools/unity/run-editor.sh -executeMethod Descender.EditorTools.Build.PrePushTests.Run -prePushResults Logs
 ```
+
+`tools/unity/run-editor.sh` is how any script or agent starts Unity: it adds
+`-batchmode` and `-projectPath`, takes the machine-wide lock, and on Windows
+runs the editor on a desktop of its own so it never takes the keyboard and
+mouse. Do not start `Unity.exe` directly on a machine someone is using.
 
 CI (`.github/workflows/tests.yml`) runs on every pull request and push to
 `main` without a Unity licence: `csharpier check Assets` (CSharpier 1.0.3,
