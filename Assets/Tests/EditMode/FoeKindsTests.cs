@@ -134,5 +134,60 @@ namespace Descender.Tests.EditMode
             Assert.That(Parts(recipe), Is.EqualTo(new[] { typeof(Patrol) }));
             Assert.That(recipe.body.contactDamage, Is.EqualTo(0));
         }
+
+        [Test]
+        public void AFlyerHauntsAtItsChaseSpeedWithinItsAggroAndOneThatDivesHangsOverHim()
+        {
+            var flyer = ScriptableObject.CreateInstance<FlyerProfile>();
+            flyer.health = 2;
+            flyer.hover = 25f;
+            flyer.chase = 55f;
+            flyer.aggro = 110f;
+            flyer.dropChance = 0.5f;
+            var size = new Vector2(16f, 16f);
+
+            var plain = FoeKinds.FromFlyer("shade", flyer, size, false);
+            Assert.That(plain.body.flies, Is.True);
+            Assert.That(plain.body.size, Is.EqualTo(size));
+            Assert.That(plain.body.health, Is.EqualTo(2));
+            Assert.That(plain.body.speed, Is.EqualTo(25f), "it drifts at its hover speed");
+            Assert.That(Parts(plain), Is.EqualTo(new[] { typeof(Haunt), typeof(Hover) }));
+            var haunt = (Haunt)plain.behaviours[0];
+            Assert.That(haunt.sight, Is.EqualTo(110f));
+            Assert.That(haunt.pace, Is.EqualTo(55f));
+            Assert.That(haunt.above, Is.EqualTo(0f), "it comes at him");
+            Assert.That(plain.drops.moteChance, Is.EqualTo(0.5f));
+            Assert.That(plain.drops.powerChance, Is.EqualTo(0f));
+            Assert.That(plain.drops.loot, Is.SameAs(flyer.loot));
+
+            var diver = FoeKinds.FromFlyer("watcher", flyer, size, true);
+            Assert.That(Parts(diver), Is.EqualTo(new[] { typeof(Dive), typeof(Haunt), typeof(Hover) }));
+            var over = (Haunt)diver.behaviours[1];
+            Assert.That(over.above, Is.EqualTo(48f), "it hangs over him: 64 pixels above his feet");
+            var dive = (Dive)diver.behaviours[0];
+            Assert.That(dive.windup, Is.EqualTo(Flyer.AimTime));
+            Assert.That(dive.speed, Is.EqualTo(Flyer.DiveSpeed));
+            Assert.That(dive.depth, Is.GreaterThanOrEqualTo(over.above), "from over him it can come down");
+            Object.DestroyImmediate(flyer);
+        }
+
+        [Test]
+        public void TheHangedThingHangsDropsOnAHeroBeneathItAndIsNotSwungAway()
+        {
+            var recipe = FoeKinds.FromHanger("hanged", 3);
+            Assert.That(recipe.body.flies, Is.True, "it hangs where it is put");
+            Assert.That(recipe.body.size, Is.EqualTo(Hanger.BodySize));
+            Assert.That(recipe.body.health, Is.EqualTo(3));
+            Assert.That(recipe.body.pushShare, Is.EqualTo(0f), "a cut does not swing it away");
+            Assert.That(Parts(recipe), Is.EqualTo(new[] { typeof(Dive), typeof(Hover) }));
+            var drop = (Dive)recipe.behaviours[0];
+            Assert.That(drop.range, Is.EqualTo(Hanger.DropRangeX));
+            Assert.That(drop.depth, Is.EqualTo(Hanger.DropRangeY));
+            Assert.That(drop.windup, Is.EqualTo(Hanger.CreakTime));
+            Assert.That(drop.recover, Is.EqualTo(Hanger.RestTime), "it lies where it lands");
+            Assert.That(drop.damage, Is.EqualTo(Hanger.DropDamage), "the drop takes two hearts");
+            Assert.That(recipe.body.contactDamage, Is.EqualTo(Hanger.ContactDamage));
+            Assert.That(recipe.drops.loot, Is.SameAs(Hanger.Loot));
+        }
     }
 }

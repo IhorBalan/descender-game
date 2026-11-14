@@ -154,7 +154,8 @@ namespace Descender.Enemies
     /// more than `depth` down, it stops and warns for `windup`, dives at where he was
     /// when the warning ended, rests for `recover` where the dive ends (at the ground,
     /// a wall, or the end of its reach), and climbs back to where it began before it
-    /// waits `cooldown`. Its touch is what hurts. A hit that holds it sends it back up.
+    /// waits `cooldown`. Its touch is what hurts, or with `damage` set the dive itself.
+    /// A hit that holds it sends it back up.
     /// </summary>
     [Serializable]
     public sealed class Dive : FoeBehaviour
@@ -169,6 +170,9 @@ namespace Descender.Enemies
         public float recover = 0.3f;
         public float riseSpeed = 70f;
         public float cooldown = 1.2f;
+
+        [Tooltip("Hearts the dive itself takes when it lands on him; 0 leaves it to the body's touch.")]
+        public int damage;
 
         private int stage;
         private float left;
@@ -226,6 +230,10 @@ namespace Descender.Enemies
                     left = recover;
                     return true;
                 }
+                if (damage > 0)
+                {
+                    foe.HurtInside(damage);
+                }
                 foe.Move = way.x * speed;
                 foe.Lift = way.y * speed;
                 return true;
@@ -259,6 +267,48 @@ namespace Descender.Enemies
             {
                 stage = 4;
             }
+        }
+    }
+
+    /// <summary>
+    /// A flier's chase: while the hero's middle is within `sight` of its own it flies
+    /// at `pace` to a point `above` his middle (0 to come at him, more to hang over
+    /// him), facing him. A walking body does not do it.
+    /// </summary>
+    [Serializable]
+    public sealed class Haunt : FoeBehaviour
+    {
+        [Tooltip("How far his middle may be from its own, level pixels.")]
+        public float sight = 110f;
+
+        [Tooltip("How fast it flies after him, level pixels a second.")]
+        public float pace = 55f;
+
+        [Tooltip("How far above his middle it flies to, level pixels.")]
+        public float above;
+
+        public bool IsHaunting { get; private set; }
+
+        public override bool Step(Foe foe, float dt)
+        {
+            IsHaunting = false;
+            if (!foe.Body.flies || !foe.HeroOffset(out var at) || at.magnitude > sight)
+            {
+                return false;
+            }
+            IsHaunting = true;
+            foe.Face(at.x >= 0f ? 1 : -1);
+            var to = at + new Vector2(0f, above);
+            if (to.magnitude <= pace * dt)
+            {
+                foe.Move = to.x / dt;
+                foe.Lift = to.y / dt;
+                return true;
+            }
+            var way = to.normalized;
+            foe.Move = way.x * pace;
+            foe.Lift = way.y * pace;
+            return true;
         }
     }
 }

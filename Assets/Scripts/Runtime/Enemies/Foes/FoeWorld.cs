@@ -11,19 +11,20 @@ namespace Descender.Enemies
     /// Foes in the regions. A kind registered here by its character id stands in for
     /// the catalog's prefab wherever a <see cref="WorldPlacement"/> names that
     /// character: the placement makes a <see cref="Foe"/> from the kind's recipe, feet
-    /// at the placement, facing as it says. The foe carries the placement's id, so its
+    /// at the placement (a flyer's middle), facing as it says. The foe carries the placement's id, so its
     /// death is remembered in <see cref="Kills"/>, and its object goes when it dies, so
     /// the placement makes another when the hero respawns. A character that is not
-    /// registered but whose prefab is a <see cref="Walker"/> is made from that walker's
-    /// profile and the placement's habit (<see cref="FoeKinds.FromWalker"/>), unless
-    /// <see cref="RemakesWalkers"/> is off; anything else is left to the catalog.
+    /// registered but whose prefab is one of the old enemies (a <see cref="Walker"/>,
+    /// a <see cref="Flyer"/> or a <see cref="Hanger"/>) is made from that prefab's
+    /// numbers and the placement's habit (<see cref="FoeKinds"/>), unless
+    /// <see cref="Remakes"/> is off; anything else is left to the catalog.
     /// </summary>
     public static class FoeWorld
     {
         private static readonly Dictionary<string, FoeKind> Kinds = new Dictionary<string, FoeKind>();
 
-        /// <summary>On, a placement whose prefab is a walker makes a foe from its profile; off, the old walker stands.</summary>
-        public static bool RemakesWalkers { get; set; } = true;
+        /// <summary>On, a placement whose prefab is an old enemy makes a foe from its numbers; off, the old enemy stands.</summary>
+        public static bool Remakes { get; set; } = true;
 
         /// <summary>
         /// From now on a placement of this character makes what `recipe` gives for it
@@ -44,7 +45,7 @@ namespace Descender.Enemies
         public static void Reset()
         {
             Kinds.Clear();
-            RemakesWalkers = true;
+            Remakes = true;
             Hook();
         }
 
@@ -55,16 +56,33 @@ namespace Descender.Enemies
             WorldPlacement.Remake = Stand;
         }
 
-        /// <summary>The recipe for a placement whose prefab is a walker, from its profile; null for any other.</summary>
-        private static FoeRecipe WalkerAt(WorldPlacement placement)
+        /// <summary>
+        /// The recipe for a placement whose prefab is an old enemy, from its numbers; null
+        /// for any other. `centred` is true for one whose origin is its middle (a flyer).
+        /// </summary>
+        private static FoeRecipe OldAt(WorldPlacement placement, out bool centred)
         {
+            centred = false;
             var prefab = placement.Prefab;
-            if (prefab == null || !prefab.TryGetComponent<Walker>(out var walker) || walker.Profile == null)
+            if (prefab == null)
             {
                 return null;
             }
             var name = string.IsNullOrEmpty(placement.Character) ? prefab.name : placement.Character;
-            return FoeKinds.FromWalker(name, walker.Profile, placement.Behaviour, placement.Passive);
+            if (prefab.TryGetComponent<Walker>(out var walker) && walker.Profile != null)
+            {
+                return FoeKinds.FromWalker(name, walker.Profile, placement.Behaviour, placement.Passive);
+            }
+            if (prefab.TryGetComponent<Flyer>(out var flyer) && flyer.Profile != null)
+            {
+                centred = true;
+                return FoeKinds.FromFlyer(name, flyer.Profile, flyer.Size, placement.Behaviour == "dive");
+            }
+            if (prefab.TryGetComponent<Hanger>(out var hanger))
+            {
+                return FoeKinds.FromHanger(name, hanger.MaxHealth);
+            }
+            return null;
         }
 
         /// <summary>The foe that stands at a placement, or null when its character is not one of these.</summary>
@@ -75,20 +93,25 @@ namespace Descender.Enemies
                 return null;
             }
             FoeRecipe recipe = null;
+            var centred = false;
             if (Kinds.TryGetValue(placement.Character ?? "", out var kind))
             {
                 recipe = kind(placement);
             }
-            else if (RemakesWalkers)
+            else if (Remakes)
             {
-                recipe = WalkerAt(placement);
+                recipe = OldAt(placement, out centred);
             }
             if (recipe == null)
             {
                 return null;
             }
             var size = recipe.body.size / EnemyPhysics.Ppu;
-            var centre = (Vector2)placement.transform.position + new Vector2(0f, size.y / 2f);
+            Vector2 centre = placement.transform.position;
+            if (!centred)
+            {
+                centre.y += size.y / 2f;
+            }
             var foe = Foe.Make(recipe, placement.transform, centre, size);
             foe.PlacementId = placement.Id;
             foe.GoesWhenDead = true;

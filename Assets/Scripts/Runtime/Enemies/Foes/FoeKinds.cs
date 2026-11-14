@@ -5,13 +5,21 @@ namespace Descender.Enemies
 {
     /// <summary>
     /// The old enemies as recipes: a <see cref="WalkerProfile"/> and the habit a
-    /// placement names become a <see cref="FoeRecipe"/> with the same numbers, so a
-    /// region's walkers stand as foes without their data changing.
+    /// placement names, a <see cref="FlyerProfile"/>, or the hanged thing's constants
+    /// become a <see cref="FoeRecipe"/> with the same numbers, so a region's enemies
+    /// stand as foes without their data changing.
     /// </summary>
     public static class FoeKinds
     {
         /// <summary>A hero's middle is this far above his feet, level pixels: the old ranges were feet to feet.</summary>
         private const float HeroMiddle = 16f;
+
+        /// <summary>How wide a flyer drifts about its post, and how near above him one that dives must be, level pixels.</summary>
+        public const float FlyerDrift = 48f;
+        public const float FlyerDiveRange = 16f;
+
+        /// <summary>How fast the rope hauls the hanged thing back up, level pixels a second.</summary>
+        public const float HangerRise = 120f;
 
         /// <summary>
         /// A walker as a foe: its body, its swing and its drops from the profile, and after
@@ -41,6 +49,80 @@ namespace Descender.Enemies
                 power = profile.power,
                 loot = profile.loot,
             };
+            recipe.drops = drops;
+            return recipe;
+        }
+
+        /// <summary>
+        /// A flyer as a foe: a flying body of a size with the profile's health, drifting at
+        /// its hover speed and coming for the hero at its chase speed while he is within
+        /// its aggro. One that dives hangs over him instead and comes down on him.
+        /// </summary>
+        public static FoeRecipe FromFlyer(string name, FlyerProfile profile, Vector2 size, bool dives)
+        {
+            var body = new FoeBody
+            {
+                size = size,
+                health = Mathf.Max(profile.health, 1),
+                speed = profile.hover,
+                flies = true,
+                shape = dives ? ShapeKind.Triangle : ShapeKind.Circle,
+                color = new Color(profile.puff.r, profile.puff.g, profile.puff.b),
+            };
+            var haunt = new Haunt { sight = profile.aggro, pace = profile.chase };
+            var drift = new Hover { span = FlyerDrift };
+            var recipe = new FoeRecipe(name ?? "", body, haunt, drift);
+            if (dives)
+            {
+                haunt.above = Flyer.DivePerch.y - HeroMiddle;
+                var dive = new Dive
+                {
+                    range = FlyerDiveRange,
+                    depth = profile.aggro,
+                    windup = Flyer.AimTime,
+                    speed = Flyer.DiveSpeed,
+                    cooldown = Flyer.DiveCooldown,
+                };
+                recipe.behaviours = new FoeBehaviour[] { dive, haunt, drift };
+            }
+            var drops = new FoeDrops { moteChance = profile.dropChance, powerChance = 0f };
+            drops.loot = profile.loot;
+            recipe.drops = drops;
+            return recipe;
+        }
+
+        /// <summary>
+        /// The hanged thing as a foe: it hangs where it is put, comes straight down on a
+        /// hero who walks beneath it, lies where it lands for a while, and is hauled back
+        /// up. The drop itself takes two hearts.
+        /// </summary>
+        public static FoeRecipe FromHanger(string name, int health)
+        {
+            var body = new FoeBody
+            {
+                size = Hanger.BodySize,
+                health = Mathf.Max(health, 1),
+                speed = 0f,
+                contactDamage = Hanger.ContactDamage,
+                // It is on a rope: a cut does not swing it away.
+                pushShare = 0f,
+                flies = true,
+                color = Hanger.DeathPuff,
+            };
+            var drop = new Dive
+            {
+                range = Hanger.DropRangeX,
+                depth = Hanger.DropRangeY,
+                windup = Hanger.CreakTime,
+                speed = Hanger.MaxFallSpeed,
+                recover = Hanger.RestTime,
+                riseSpeed = HangerRise,
+                cooldown = Hanger.DropCooldown,
+                damage = Hanger.DropDamage,
+            };
+            var recipe = new FoeRecipe(name ?? "", body, drop, new Hover { span = 0f });
+            var drops = new FoeDrops { moteChance = Hanger.DropChance, powerChance = 0f };
+            drops.loot = Hanger.Loot;
             recipe.drops = drops;
             return recipe;
         }

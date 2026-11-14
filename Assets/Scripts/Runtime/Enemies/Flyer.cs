@@ -71,6 +71,7 @@ namespace Descender.Enemies
         public event System.Action<IEnemy> Died;
 
         public FlyerProfile Profile => profile;
+        public Vector2 Size => bodySize;
         public string PlacementId { get; set; } = "";
         public bool IsDead => dead;
         public int Health => health;

@@ -87,6 +87,27 @@ namespace Descender.Tests.PlayMode
             return catalog;
         }
 
+        /// <summary>A catalog whose "enemy:shade" is a flyer of a profile and whose "enemy:hanged" is a hanger.</summary>
+        private PlacementCatalog CatalogOfAFlyerAndAHanger(FlyerProfile profile)
+        {
+            var shade = new GameObject("shade");
+            made.Add(shade);
+            shade.SetActive(false);
+            shade.AddComponent<BoxCollider2D>();
+            var flyer = shade.AddComponent<Flyer>();
+            var field = typeof(Flyer).GetField("profile", BindingFlags.NonPublic | BindingFlags.Instance);
+            field.SetValue(flyer, profile);
+            var hanged = new GameObject("hanged");
+            made.Add(hanged);
+            hanged.SetActive(false);
+            hanged.AddComponent<BoxCollider2D>();
+            hanged.AddComponent<Hanger>();
+            var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
+            catalog.Set("enemy:shade", shade);
+            catalog.Set("enemy:hanged", hanged);
+            return catalog;
+        }
+
         private WorldPlacement Place(Vector2 at, string json, PlacementCatalog catalog)
         {
             var thing = new GameObject("Placement");
@@ -208,12 +229,50 @@ namespace Descender.Tests.PlayMode
             Assert.That(foe.Drops, Is.Not.Null);
             Assert.That(foe.PlacementId, Is.EqualTo("test/Imp"));
 
-            FoeWorld.RemakesWalkers = false;
+            FoeWorld.Remakes = false;
             var old = Place(new Vector2(9f, 3f), json.Replace("test/Imp", "test/Old"), catalog);
             yield return null;
             Assert.That(old.Spawned != null, Is.True);
             Assert.That(old.Spawned.GetComponent<Foe>() == null, Is.True, "off, the catalog's prefab stands");
             Assert.That(old.Spawned.GetComponent<Walker>() != null, Is.True);
+            Object.Destroy(catalog);
+            Object.Destroy(profile);
+        }
+
+        [UnityTest]
+        public IEnumerator APlacementWhosePrefabIsAFlyerOrAHangerMakesAFlyingFoe()
+        {
+            var profile = ScriptableObject.CreateInstance<FlyerProfile>();
+            profile.health = 2;
+            // It keeps still, so where it stands can be read.
+            profile.hover = 0f;
+            var catalog = CatalogOfAFlyerAndAHanger(profile);
+            var shadeJson = "{\"id\":\"test/Shade\",\"type\":\"enemy\",\"character\":\"shade\",";
+            shadeJson += "\"behaviour\":\"dive\"}";
+            var shade = Place(new Vector2(5f, 8f), shadeJson, catalog);
+            var hangedJson = "{\"id\":\"test/Hanged\",\"type\":\"enemy\",\"character\":\"hanged\"}";
+            var hanged = Place(new Vector2(12f, 8f), hangedJson, catalog);
+            yield return null;
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
+
+            Assert.That(shade.Spawned.GetComponent<Flyer>() == null, Is.True, "no flyer stands there");
+            var flier = shade.Spawned.GetComponent<Foe>();
+            Assert.That(flier != null, Is.True, "a foe does");
+            Assert.That(flier.Body.flies, Is.True);
+            Assert.That(flier.Health, Is.EqualTo(2));
+            Assert.That(flier.Behaviours[0], Is.InstanceOf<Dive>(), "with the placement's habit");
+            Vector2 middle = flier.Box.bounds.center;
+            Assert.That(middle.x, Is.EqualTo(5f).Within(Pixel), "its middle where the placement is");
+            Assert.That(middle.y, Is.EqualTo(8f).Within(Pixel));
+
+            Assert.That(hanged.Spawned.GetComponent<Hanger>() == null, Is.True, "no hanger hangs there");
+            var hung = hanged.Spawned.GetComponent<Foe>();
+            Assert.That(hung != null, Is.True, "a foe does");
+            Assert.That(hung.Body.flies, Is.True);
+            Assert.That(hung.Behaviours[0], Is.InstanceOf<Dive>());
+            Assert.That(hung.Box.bounds.min.y, Is.EqualTo(8f).Within(Pixel), "its feet where the placement is");
+            Assert.That(hung.Box.bounds.center.x, Is.EqualTo(12f).Within(Pixel));
             Object.Destroy(catalog);
             Object.Destroy(profile);
         }

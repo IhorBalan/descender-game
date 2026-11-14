@@ -190,6 +190,13 @@ namespace Descender.Enemies
             return EnemyPhysics.HurtHero(centre, size, damage, bounds.center, hits);
         }
 
+        /// <summary>Hurts the hero if he is inside its body: its touch, at a damage. True when it landed.</summary>
+        public bool HurtInside(int damage)
+        {
+            var bounds = box.bounds;
+            return EnemyPhysics.HurtHero(bounds.center, bounds.size, damage, bounds.center, hits);
+        }
+
         public void Face(int direction)
         {
             if (direction != 0)
@@ -267,8 +274,7 @@ namespace Descender.Enemies
             }
             if (build.contactDamage > 0)
             {
-                var bounds = box.bounds;
-                EnemyPhysics.HurtHero(bounds.center, bounds.size, build.contactDamage, bounds.center, hits);
+                HurtInside(build.contactDamage);
             }
         }
 
