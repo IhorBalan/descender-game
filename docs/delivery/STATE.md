@@ -128,9 +128,11 @@ one of the four old classes, and they are deleted.
 - T-0039: the walker's habits that `Foe` lacks, as parts: `Pounce` (long
   and high, or as a lunge short and low), `Retreat` and `Shoot.nearest`
   (the hurl), `Quake` (the old slam's wave). Lab room `habits`.
-- T-0040: a foe in the world: a placement makes one from a recipe, a kill
-  is remembered in `Kills`, it drops what a `WalkerProfile` drops, and it
-  is removed when it falls out of the level.
+- T-0040: a foe in the world: `FoeWorld` registers a kind by its character
+  id and the placements of that character make a foe from its recipe; a
+  kill is remembered in `Kills`, and the foe leaves what a `WalkerProfile`
+  leaves (`FoeDrops`). No kind is registered yet, so the regions do not
+  change.
 - T-0041: the walker placements spawn foes (each `WalkerProfile` and
   `WalkerBehaviour` maps to a recipe); `Walker` goes.
 - T-0042: `Flyer` and `Hanger` the same way.
@@ -284,8 +286,8 @@ hygiene as each production region lands.
 | T-0036 | Spawners and encounter rooms | done | 36 | T-0033 | 0 | Re-plan the roadmap around mechanics | #201 |
 | T-0037 | A boss pattern as the template | done | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | #202 |
 | T-0038 | The gauntlet: one run through every mechanic | done | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | #203 |
-| T-0039 | The walker's habits as parts: pounce, lunge, hurl, quake | in review | 39 | T-0038 | 0 | Rebuild the old enemies | |
-| T-0040 | A foe in the world: placement, kills, drops | todo | 40 | T-0039 | 0 | Rebuild the old enemies | |
+| T-0039 | The walker's habits as parts: pounce, lunge, hurl, quake | done | 39 | T-0038 | 0 | Rebuild the old enemies | #204 |
+| T-0040 | A foe in the world: placement, kills, drops | in review | 40 | T-0039 | 0 | Rebuild the old enemies | |
 | T-0041 | Walker placements spawn foes; Walker goes | todo | 41 | T-0040 | 1 | Rebuild the old enemies | |
 | T-0042 | Flyer and Hanger from parts | todo | 42 | T-0041 | 1 | Rebuild the old enemies | |
 | T-0043 | The Warden from the boss pattern; Boss goes | todo | 43 | T-0042 | 1 | Rebuild the old enemies | |
@@ -474,7 +476,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (150 after T-0039; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (153 after T-0040; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |

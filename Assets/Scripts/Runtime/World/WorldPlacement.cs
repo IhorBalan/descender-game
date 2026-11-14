@@ -10,13 +10,22 @@ namespace Descender.World
     /// region loads it spawns the prefab the PlacementCatalog gives for its type and
     /// character, unless its `unless` flag is set or the IsGone hook (the kills since
     /// the last checkpoint) says so, and hands itself to the prefab's
-    /// IPlacementReceiver. The id is "&lt;region&gt;/&lt;name&gt;". While the story is parked
-    /// (<see cref="Story.StoryMode"/>) the story placements are left out.
+    /// IPlacementReceiver. For an enemy the Remake hook is asked first, and what it
+    /// makes stands there in the prefab's place. The id is "&lt;region&gt;/&lt;name&gt;".
+    /// While the story is parked (<see cref="Story.StoryMode"/>) the story placements
+    /// are left out.
     /// </summary>
     public sealed class WorldPlacement : MonoBehaviour
     {
         /// <summary>Asked with the placement id before spawning; true leaves the thing out. Set by the kills tracker.</summary>
         public static System.Func<string, bool> IsGone;
+
+        /// <summary>
+        /// Asked with an enemy placement before the catalog: what it returns stands there
+        /// instead of the catalog's prefab; null leaves it to the catalog. Set by the
+        /// enemies that are made in code.
+        /// </summary>
+        public static System.Func<WorldPlacement, GameObject> Remake;
 
         [SerializeField]
         private string id = "";
@@ -157,6 +166,14 @@ namespace Descender.World
             if (spawned != null || !ShouldSpawn())
             {
                 return;
+            }
+            if (type == "enemy" && Remake != null)
+            {
+                spawned = Remake(this);
+                if (spawned != null)
+                {
+                    return;
+                }
             }
             var prefab = catalog != null ? catalog.Resolve(type, character, dialogue.Length > 0) : null;
             if (prefab == null)
