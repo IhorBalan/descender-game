@@ -131,6 +131,9 @@ namespace Descender.World
         public string Power => power;
         public GameObject Spawned => spawned;
 
+        /// <summary>The prefab the catalog gives for this placement; null when it has none.</summary>
+        public GameObject Prefab => catalog != null ? catalog.Resolve(type, character, dialogue.Length > 0) : null;
+
         /// <summary>Whether this is where the story speaks: a trigger, a talking NPC or a relic.</summary>
         public bool IsStory => Story.StoryMode.IsStory(type, dialogue.Length > 0, !string.IsNullOrEmpty(shop));
 
@@ -175,7 +178,7 @@ namespace Descender.World
                     return;
                 }
             }
-            var prefab = catalog != null ? catalog.Resolve(type, character, dialogue.Length > 0) : null;
+            var prefab = Prefab;
             if (prefab == null)
             {
                 return;

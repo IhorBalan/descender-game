@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using Descender.Combat;
 using Descender.Economy;
 using Descender.Enemies;
@@ -67,6 +68,36 @@ namespace Descender.Tests.PlayMode
             thing.transform.position = at;
             var placement = thing.AddComponent<WorldPlacement>();
             JsonUtility.FromJsonOverwrite(json, placement);
+            thing.SetActive(true);
+            return placement;
+        }
+
+        /// <summary>A catalog whose "enemy:imp" is a walker of a profile; the template stays switched off.</summary>
+        private PlacementCatalog CatalogOfAWalker(WalkerProfile profile)
+        {
+            var template = new GameObject("imp");
+            made.Add(template);
+            template.SetActive(false);
+            template.AddComponent<BoxCollider2D>();
+            var walker = template.AddComponent<Walker>();
+            var field = typeof(Walker).GetField("profile", BindingFlags.NonPublic | BindingFlags.Instance);
+            field.SetValue(walker, profile);
+            var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
+            catalog.Set("enemy:imp", template);
+            return catalog;
+        }
+
+        private WorldPlacement Place(Vector2 at, string json, PlacementCatalog catalog)
+        {
+            var thing = new GameObject("Placement");
+            made.Add(thing);
+            thing.SetActive(false);
+            thing.transform.position = at;
+            var placement = thing.AddComponent<WorldPlacement>();
+            JsonUtility.FromJsonOverwrite(json, placement);
+            typeof(WorldPlacement)
+                .GetField("catalog", BindingFlags.NonPublic | BindingFlags.Instance)
+                .SetValue(placement, catalog);
             thing.SetActive(true);
             return placement;
         }
@@ -151,6 +182,40 @@ namespace Descender.Tests.PlayMode
             Assert.That(again, Is.Not.SameAs(foe));
             Assert.That(again.IsDead, Is.False);
             Assert.That(again.Health, Is.EqualTo(1));
+        }
+
+        [UnityTest]
+        public IEnumerator APlacementWhosePrefabIsAWalkerMakesAFoeFromItsProfileUnlessThatIsOff()
+        {
+            var profile = ScriptableObject.CreateInstance<WalkerProfile>();
+            profile.body = new Vector2(20f, 36f);
+            profile.health = 4;
+            profile.speed = 22f;
+            var catalog = CatalogOfAWalker(profile);
+            var json = "{\"id\":\"test/Imp\",\"type\":\"enemy\",\"character\":\"imp\",\"behaviour\":\"chase\"}";
+            var remade = Place(new Vector2(5f, 3f), json, catalog);
+            yield return null;
+
+            Assert.That(remade.Spawned != null, Is.True);
+            Assert.That(remade.Spawned.GetComponent<Walker>() == null, Is.True, "no walker stands there");
+            var foe = remade.Spawned.GetComponent<Foe>();
+            Assert.That(foe != null, Is.True, "a foe does");
+            Assert.That(foe.name, Is.EqualTo("imp"));
+            Assert.That(foe.Health, Is.EqualTo(4), "with the profile's numbers");
+            Assert.That(foe.Body.size, Is.EqualTo(new Vector2(20f, 36f)));
+            Assert.That(foe.Body.speed, Is.EqualTo(22f));
+            Assert.That(foe.Behaviours[1], Is.InstanceOf<Chase>(), "and the placement's habit");
+            Assert.That(foe.Drops, Is.Not.Null);
+            Assert.That(foe.PlacementId, Is.EqualTo("test/Imp"));
+
+            FoeWorld.RemakesWalkers = false;
+            var old = Place(new Vector2(9f, 3f), json.Replace("test/Imp", "test/Old"), catalog);
+            yield return null;
+            Assert.That(old.Spawned != null, Is.True);
+            Assert.That(old.Spawned.GetComponent<Foe>() == null, Is.True, "off, the catalog's prefab stands");
+            Assert.That(old.Spawned.GetComponent<Walker>() != null, Is.True);
+            Object.Destroy(catalog);
+            Object.Destroy(profile);
         }
 
         [UnityTest]

@@ -14,11 +14,16 @@ namespace Descender.Enemies
     /// at the placement, facing as it says. The foe carries the placement's id, so its
     /// death is remembered in <see cref="Kills"/>, and its object goes when it dies, so
     /// the placement makes another when the hero respawns. A character that is not
-    /// registered is left to the catalog.
+    /// registered but whose prefab is a <see cref="Walker"/> is made from that walker's
+    /// profile and the placement's habit (<see cref="FoeKinds.FromWalker"/>), unless
+    /// <see cref="RemakesWalkers"/> is off; anything else is left to the catalog.
     /// </summary>
     public static class FoeWorld
     {
         private static readonly Dictionary<string, FoeKind> Kinds = new Dictionary<string, FoeKind>();
+
+        /// <summary>On, a placement whose prefab is a walker makes a foe from its profile; off, the old walker stands.</summary>
+        public static bool RemakesWalkers { get; set; } = true;
 
         /// <summary>
         /// From now on a placement of this character makes what `recipe` gives for it
@@ -39,6 +44,7 @@ namespace Descender.Enemies
         public static void Reset()
         {
             Kinds.Clear();
+            RemakesWalkers = true;
             Hook();
         }
 
@@ -49,14 +55,34 @@ namespace Descender.Enemies
             WorldPlacement.Remake = Stand;
         }
 
-        /// <summary>The foe that stands at a placement, or null when its character is not one of these.</summary>
-        public static GameObject Stand(WorldPlacement placement)
+        /// <summary>The recipe for a placement whose prefab is a walker, from its profile; null for any other.</summary>
+        private static FoeRecipe WalkerAt(WorldPlacement placement)
         {
-            if (placement == null || !Kinds.TryGetValue(placement.Character ?? "", out var kind))
+            var prefab = placement.Prefab;
+            if (prefab == null || !prefab.TryGetComponent<Walker>(out var walker) || walker.Profile == null)
             {
                 return null;
             }
-            var recipe = kind(placement);
+            var name = string.IsNullOrEmpty(placement.Character) ? prefab.name : placement.Character;
+            return FoeKinds.FromWalker(name, walker.Profile, placement.Behaviour, placement.Passive);
+        }
+
+        /// <summary>The foe that stands at a placement, or null when its character is not one of these.</summary>
+        public static GameObject Stand(WorldPlacement placement)
+        {
+            if (placement == null)
+            {
+                return null;
+            }
+            FoeRecipe recipe = null;
+            if (Kinds.TryGetValue(placement.Character ?? "", out var kind))
+            {
+                recipe = kind(placement);
+            }
+            else if (RemakesWalkers)
+            {
+                recipe = WalkerAt(placement);
+            }
             if (recipe == null)
             {
                 return null;
