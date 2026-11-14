@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 12aa7edf685858d6959758117bcaacc3
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4109730924631820664
+    second: tv2_stone_wall_f0_v0
+  - first:
+      213: 534081626969876243
+    second: tv2_stone_wall_f1_v0
+  - first:
+      213: 2872375409061768029
+    second: tv2_stone_wall_f4_v0
+  - first:
+      213: 2928658026346196584
+    second: tv2_stone_wall_f5_v0
+  - first:
+      213: 3866377581407358637
+    second: tv2_stone_wall_f7_v0
+  - first:
+      213: 4300322338025881184
+    second: tv2_stone_wall_f16_v0
+  - first:
+      213: 2552268532465175364
+    second: tv2_stone_wall_f17_v0
+  - first:
+      213: 1352376350208885979
+    second: tv2_stone_wall_f20_v0
+  - first:
+      213: 430126510290378459
+    second: tv2_stone_wall_f21_v0
+  - first:
+      213: 1064817725453859089
+    second: tv2_stone_wall_f23_v0
+  - first:
+      213: 1475426368568915130
+    second: tv2_stone_wall_f28_v0
+  - first:
+      213: 3326232628858145316
+    second: tv2_stone_wall_f29_v0
+  - first:
+      213: 3203449700047858729
+    second: tv2_stone_wall_f31_v0
+  - first:
+      213: 2658873737767507370
+    second: tv2_stone_wall_f64_v0
+  - first:
+      213: 1495372676301968762
+    second: tv2_stone_wall_f65_v0
+  - first:
+      213: 3215411553189602900
+    second: tv2_stone_wall_f68_v0
+  - first:
+      213: 3972818850581251874
+    second: tv2_stone_wall_f69_v0
+  - first:
+      213: 433310388410428446
+    second: tv2_stone_wall_f71_v0
+  - first:
+      213: 4585254336603450582
+    second: tv2_stone_wall_f80_v0
+  - first:
+      213: 2047870667158105237
+    second: tv2_stone_wall_f81_v0
+  - first:
+      213: 1149822874913560164
+    second: tv2_stone_wall_f84_v0
+  - first:
+      213: 2549444872126921332
+    second: tv2_stone_wall_f85_v0
+  - first:
+      213: 3887468751239519780
+    second: tv2_stone_wall_f87_v0
+  - first:
+      213: 4143849835682926282
+    second: tv2_stone_wall_f92_v0
+  - first:
+      213: 1142256396731538726
+    second: tv2_stone_wall_f93_v0
+  - first:
+      213: 3610915369167935241
+    second: tv2_stone_wall_f95_v0
+  - first:
+      213: 2419005727394784013
+    second: tv2_stone_wall_f112_v0
+  - first:
+      213: 3934833675910676891
+    second: tv2_stone_wall_f113_v0
+  - first:
+      213: 1288564297917031166
+    second: tv2_stone_wall_f116_v0
+  - first:
+      213: 3583704339326158771
+    second: tv2_stone_wall_f117_v0
+  - first:
+      213: 3202314569218001198
+    second: tv2_stone_wall_f119_v0
+  - first:
+      213: 4205959186177849522
+    second: tv2_stone_wall_f124_v0
+  - first:
+      213: 4112255665069851426
+    second: tv2_stone_wall_f125_v0
+  - first:
+      213: 581100629633390808
+    second: tv2_stone_wall_f127_v0
+  - first:
+      213: 1158488220227951177
+    second: tv2_stone_wall_f193_v0
+  - first:
+      213: 3264578543233185461
+    second: tv2_stone_wall_f197_v0
+  - first:
+      213: 1933639427370232746
+    second: tv2_stone_wall_f199_v0
+  - first:
+      213: 2389966833719476198
+    second: tv2_stone_wall_f209_v0
+  - first:
+      213: 706368755896951516
+    second: tv2_stone_wall_f213_v0
+  - first:
+      213: 4321628620582268293
+    second: tv2_stone_wall_f215_v0
+  - first:
+      213: 547769625006865399
+    second: tv2_stone_wall_f221_v0
+  - first:
+      213: 1826981305412246593
+    second: tv2_stone_wall_f223_v0
+  - first:
+      213: 390145519229015073
+    second: tv2_stone_wall_f241_v0
+  - first:
+      213: 2033041228526765623
+    second: tv2_stone_wall_f245_v0
+  - first:
+      213: 3139448861483743673
+    second: tv2_stone_wall_f247_v0
+  - first:
+      213: 4171897423050807047
+    second: tv2_stone_wall_f253_v0
+  - first:
+      213: 2840628235511917468
+    second: tv2_stone_wall_f255_v0
+  - first:
+      213: 3683728743125325968
+    second: tv2_stone_wall_f0_v1
+  - first:
+      213: 4472145469703779794
+    second: tv2_stone_wall_f1_v1
+  - first:
+      213: 2585547252898158534
+    second: tv2_stone_wall_f4_v1
+  - first:
+      213: 1573009857753793939
+    second: tv2_stone_wall_f5_v1
+  - first:
+      213: 749902127507649837
+    second: tv2_stone_wall_f7_v1
+  - first:
+      213: 521047940975763929
+    second: tv2_stone_wall_f16_v1
+  - first:
+      213: 2476146225749481850
+    second: tv2_stone_wall_f17_v1
+  - first:
+      213: 1416522381557303061
+    second: tv2_stone_wall_f20_v1
+  - first:
+      213: 3796373900364353894
+    second: tv2_stone_wall_f21_v1
+  - first:
+      213: 2217267970750825391
+    second: tv2_stone_wall_f23_v1
+  - first:
+      213: 2046170591526929457
+    second: tv2_stone_wall_f28_v1
+  - first:
+      213: 2321848975951156043
+    second: tv2_stone_wall_f29_v1
+  - first:
+      213: 3292324701962843824
+    second: tv2_stone_wall_f31_v1
+  - first:
+      213: 3305798762628875377
+    second: tv2_stone_wall_f64_v1
+  - first:
+      213: 2106943626868611580
+    second: tv2_stone_wall_f65_v1
+  - first:
+      213: 1387407253818623509
+    second: tv2_stone_wall_f68_v1
+  - first:
+      213: 1996235750994161395
+    second: tv2_stone_wall_f69_v1
+  - first:
+      213: 304725570406635045
+    second: tv2_stone_wall_f71_v1
+  - first:
+      213: 22613314118107084
+    second: tv2_stone_wall_f80_v1
+  - first:
+      213: 1102891404988606069
+    second: tv2_stone_wall_f81_v1
+  - first:
+      213: 2897484520659014257
+    second: tv2_stone_wall_f84_v1
+  - first:
+      213: 2928296541516925740
+    second: tv2_stone_wall_f85_v1
+  - first:
+      213: 3548617379597223849
+    second: tv2_stone_wall_f87_v1
+  - first:
+      213: 4131671509684653729
+    second: tv2_stone_wall_f92_v1
+  - first:
+      213: 3744942781774802668
+    second: tv2_stone_wall_f93_v1
+  - first:
+      213: 2803061024081332130
+    second: tv2_stone_wall_f95_v1
+  - first:
+      213: 3621466763578383678
+    second: tv2_stone_wall_f112_v1
+  - first:
+      213: 1876246604454004014
+    second: tv2_stone_wall_f113_v1
+  - first:
+      213: 3687247204479154011
+    second: tv2_stone_wall_f116_v1
+  - first:
+      213: 810106724778208357
+    second: tv2_stone_wall_f117_v1
+  - first:
+      213: 3538623876861823295
+    second: tv2_stone_wall_f119_v1
+  - first:
+      213: 3414315945523613362
+    second: tv2_stone_wall_f124_v1
+  - first:
+      213: 152492917706720816
+    second: tv2_stone_wall_f125_v1
+  - first:
+      213: 4157710813008806967
+    second: tv2_stone_wall_f127_v1
+  - first:
+      213: 652565998719988933
+    second: tv2_stone_wall_f193_v1
+  - first:
+      213: 4201493867968950767
+    second: tv2_stone_wall_f197_v1
+  - first:
+      213: 2382166941136142019
+    second: tv2_stone_wall_f199_v1
+  - first:
+      213: 807001401840081239
+    second: tv2_stone_wall_f209_v1
+  - first:
+      213: 1154188046906581436
+    second: tv2_stone_wall_f213_v1
+  - first:
+      213: 851178758827879499
+    second: tv2_stone_wall_f215_v1
+  - first:
+      213: 162358197758775353
+    second: tv2_stone_wall_f221_v1
+  - first:
+      213: 1514506988673766497
+    second: tv2_stone_wall_f223_v1
+  - first:
+      213: 3351139151994648992
+    second: tv2_stone_wall_f241_v1
+  - first:
+      213: 4089987299794063031
+    second: tv2_stone_wall_f245_v1
+  - first:
+      213: 4275081425681632693
+    second: tv2_stone_wall_f247_v1
+  - first:
+      213: 1860299183778458986
+    second: tv2_stone_wall_f253_v1
+  - first:
+      213: 1648482977798774324
+    second: tv2_stone_wall_f255_v1
+  - first:
+      213: 2945809141510361130
+    second: tv2_stone_wall_f0_v2
+  - first:
+      213: 1836276097059198587
+    second: tv2_stone_wall_f1_v2
+  - first:
+      213: 1283444520944962276
+    second: tv2_stone_wall_f4_v2
+  - first:
+      213: 2046087591854475851
+    second: tv2_stone_wall_f5_v2
+  - first:
+      213: 3570120742551836627
+    second: tv2_stone_wall_f7_v2
+  - first:
+      213: 2298225416773717998
+    second: tv2_stone_wall_f16_v2
+  - first:
+      213: 3688432336460867949
+    second: tv2_stone_wall_f17_v2
+  - first:
+      213: 3826112925570503512
+    second: tv2_stone_wall_f20_v2
+  - first:
+      213: 2521630664124312575
+    second: tv2_stone_wall_f21_v2
+  - first:
+      213: 1576025215127616461
+    second: tv2_stone_wall_f23_v2
+  - first:
+      213: 642969918204870720
+    second: tv2_stone_wall_f28_v2
+  - first:
+      213: 1898375031676115001
+    second: tv2_stone_wall_f29_v2
+  - first:
+      213: 3573789812500645937
+    second: tv2_stone_wall_f31_v2
+  - first:
+      213: 2189404167288927467
+    second: tv2_stone_wall_f64_v2
+  - first:
+      213: 638802570641531059
+    second: tv2_stone_wall_f65_v2
+  - first:
+      213: 2417229674167725607
+    second: tv2_stone_wall_f68_v2
+  - first:
+      213: 593845886922972623
+    second: tv2_stone_wall_f69_v2
+  - first:
+      213: 1547789207611106244
+    second: tv2_stone_wall_f71_v2
+  - first:
+      213: 3904500903033679358
+    second: tv2_stone_wall_f80_v2
+  - first:
+      213: 3078061522584698880
+    second: tv2_stone_wall_f81_v2
+  - first:
+      213: 2421052087904499826
+    second: tv2_stone_wall_f84_v2
+  - first:
+      213: 1794016888229440750
+    second: tv2_stone_wall_f85_v2
+  - first:
+      213: 2051940148170306460
+    second: tv2_stone_wall_f87_v2
+  - first:
+      213: 4054200103907645925
+    second: tv2_stone_wall_f92_v2
+  - first:
+      213: 52560131065219472
+    second: tv2_stone_wall_f93_v2
+  - first:
+      213: 16836781674290310
+    second: tv2_stone_wall_f95_v2
+  - first:
+      213: 772862468600117454
+    second: tv2_stone_wall_f112_v2
+  - first:
+      213: 2155906466486171077
+    second: tv2_stone_wall_f113_v2
+  - first:
+      213: 448250930962765161
+    second: tv2_stone_wall_f116_v2
+  - first:
+      213: 3918889544210070770
+    second: tv2_stone_wall_f117_v2
+  - first:
+      213: 3138446517018707292
+    second: tv2_stone_wall_f119_v2
+  - first:
+      213: 2141166788560829847
+    second: tv2_stone_wall_f124_v2
+  - first:
+      213: 3362385568812822342
+    second: tv2_stone_wall_f125_v2
+  - first:
+      213: 4318209617990826000
+    second: tv2_stone_wall_f127_v2
+  - first:
+      213: 607514082857571818
+    second: tv2_stone_wall_f193_v2
+  - first:
+      213: 4542738627283918076
+    second: tv2_stone_wall_f197_v2
+  - first:
+      213: 1507817476797931968
+    second: tv2_stone_wall_f199_v2
+  - first:
+      213: 3173073736723681789
+    second: tv2_stone_wall_f209_v2
+  - first:
+      213: 2378997972011195010
+    second: tv2_stone_wall_f213_v2
+  - first:
+      213: 1546916003997647691
+    second: tv2_stone_wall_f215_v2
+  - first:
+      213: 1815354499203718190
+    second: tv2_stone_wall_f221_v2
+  - first:
+      213: 1488977432996064647
+    second: tv2_stone_wall_f223_v2
+  - first:
+      213: 4067892113019585221
+    second: tv2_stone_wall_f241_v2
+  - first:
+      213: 4104840298981159763
+    second: tv2_stone_wall_f245_v2
+  - first:
+      213: 3315020704782100911
+    second: tv2_stone_wall_f247_v2
+  - first:
+      213: 1058544002494182393
+    second: tv2_stone_wall_f253_v2
+  - first:
+      213: 753572847340753549
+    second: tv2_stone_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_stone_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7eab866a7de25930b6c23b8d822abdf8
+      internalID: 4109730924631820664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 422658b9411851f68a3401d3b7e2bf29
+      internalID: 534081626969876243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28220657cbeb530ba0fc8e8e689a5e72
+      internalID: 2872375409061768029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c344897c3ab65cdebee1632d4313545c
+      internalID: 2928658026346196584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd4cd374914c5e7fb152f3c71ee1d45c
+      internalID: 3866377581407358637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cda1ce8409e522ebadd4dc004a8433c
+      internalID: 4300322338025881184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad004d1f6d7c5df9827897e1a718dc02
+      internalID: 2552268532465175364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cc7d091135f542cb3287b1e054433a0
+      internalID: 1352376350208885979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e572b6b211425560943fc00eaad8b071
+      internalID: 430126510290378459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 241b310c37885d26868179dcc655f259
+      internalID: 1064817725453859089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 566ad947adce51f58a1d285f9379bac8
+      internalID: 1475426368568915130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93e2c467a64f50f080bc192d87b129c5
+      internalID: 3326232628858145316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c11e32e10f6514780840d36b04c7a7f
+      internalID: 3203449700047858729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9abb7b55e75350d885df498165c1cab8
+      internalID: 2658873737767507370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 090eeb796d625a9ba2f5d9ecc5cf2cdb
+      internalID: 1495372676301968762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12e342483a4d597b8edccd354574af6b
+      internalID: 3215411553189602900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c361350fbf57516691c83daa2fc1ed7d
+      internalID: 3972818850581251874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 997312d12f3058f38089dc7101836a5d
+      internalID: 433310388410428446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2dbab947bcb58828e9328905d5fd842
+      internalID: 4585254336603450582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebf0d888ce295383adc49d49192664b1
+      internalID: 2047870667158105237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a20ce003bd55149544f4b741f69fc1
+      internalID: 1149822874913560164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5834073c903754baa036eba2392e643d
+      internalID: 2549444872126921332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 147dca543667597396a330106dc4a3d0
+      internalID: 3887468751239519780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 045f7413a4ce52f7aaab4e74fd259463
+      internalID: 4143849835682926282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d05d56b4d085e3cbf656e39d5cbae98
+      internalID: 1142256396731538726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7be975a114c55a49851b4601aa8be0e8
+      internalID: 3610915369167935241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c9fc67d9c9654b5a50d40fa2d0c4f83
+      internalID: 2419005727394784013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf28b63eef49541d952deed0c8b88a2b
+      internalID: 3934833675910676891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9dfaf599a495610a5dfd2cd01494b3f
+      internalID: 1288564297917031166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a36191676e75bf4ac081e1244c5f8fb
+      internalID: 3583704339326158771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f4c223f22005cfda6b3e931da3ae282
+      internalID: 3202314569218001198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d33c99a5843358808b7f56155b45b4d7
+      internalID: 4205959186177849522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffe5afb911f75a5c88ecd15fd3253f39
+      internalID: 4112255665069851426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a78c724424850f6974fe3ea8d31df57
+      internalID: 581100629633390808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 423c1b6da3065ba9b4dc2c9bd3a9f961
+      internalID: 1158488220227951177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 750ad56447a7527e98ea6b540a4df290
+      internalID: 3264578543233185461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d2f87b4d43f5476854bc66f5361cfb1
+      internalID: 1933639427370232746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2aa0ba0c636e5054a079b6ba817aedbd
+      internalID: 2389966833719476198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fcc71dbe36059fcaa79d7b45dcf8321
+      internalID: 706368755896951516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86c79b87c21051808414726c8e83a1a2
+      internalID: 4321628620582268293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6be5cf780f85645872e0a0cb0098faf
+      internalID: 547769625006865399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a51afb3f3f275efb8e8c8465b4e24965
+      internalID: 1826981305412246593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5df2644e0545fb9bd9f697163cf44bd
+      internalID: 390145519229015073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4f0a73ce76b531bb7da300ebdfbd7a2
+      internalID: 2033041228526765623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a36cc8b7ae925d37a07b82f00dbd169e
+      internalID: 3139448861483743673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4a62157ef815bdaa5d1c51cf2e7a53c
+      internalID: 4171897423050807047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c70e5166b4005345af7bca0ff113e613
+      internalID: 2840628235511917468
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c8457b430bf5e819da67bc59d0945fe
+      internalID: 3683728743125325968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6df7e1ec0382524c9ba31de2bf6838f3
+      internalID: 4472145469703779794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46a876186c5e5540b127320113cb5706
+      internalID: 2585547252898158534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 522a3c67c3575e21beeb72fb9bb01059
+      internalID: 1573009857753793939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fd816fa413350cc9098c5c629c02abb
+      internalID: 749902127507649837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c47e42d6379459b890a7fb8ea4255b41
+      internalID: 521047940975763929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69da207ec11b55b7a4b158dc70001ff0
+      internalID: 2476146225749481850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fa146ac001454bc97292f1b83db8f45
+      internalID: 1416522381557303061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 320d8c18baea53c4a5d62d7b5bcd0f55
+      internalID: 3796373900364353894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94bf49b2875852e7afaf9b70c9dab3ee
+      internalID: 2217267970750825391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bf17ba34ff25b10bd54dc58a14376d2
+      internalID: 2046170591526929457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7960519c24955cb8c14e013e33bd2fd
+      internalID: 2321848975951156043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25bda410787151afaaf7398852cf4870
+      internalID: 3292324701962843824
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72d3050273715c31b0161a12e6429868
+      internalID: 3305798762628875377
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 808ce9d2ac995bdcb0cf5a6b53d90c11
+      internalID: 2106943626868611580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df341b870d475a39931188c45adf813f
+      internalID: 1387407253818623509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 791573cc4beb5c5e8a1e566801839d91
+      internalID: 1996235750994161395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd4b84f29cac5729890ab8e8e2b0f5a8
+      internalID: 304725570406635045
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fed608a63b25a1f960e0935b8886a55
+      internalID: 22613314118107084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bcef941a7a751cf8e22791dfcc886b6
+      internalID: 1102891404988606069
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c53a973475035c6e9ab2052972c683ca
+      internalID: 2897484520659014257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e106f40bb5eb5b189bd3154993f4e219
+      internalID: 2928296541516925740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c1929a407a3566e8cc0235924509441
+      internalID: 3548617379597223849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba06dbfccf105c31b0fc27ea1c350e31
+      internalID: 4131671509684653729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d704557abffc512eafac21464d39c10d
+      internalID: 3744942781774802668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8caa4a00a6c55facb85c1ba0e7c83d7d
+      internalID: 2803061024081332130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 310185a1ed035ecaab385db24062558e
+      internalID: 3621466763578383678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c43685fe1186559f8fb7a9222b69a28c
+      internalID: 1876246604454004014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58beda6654a57b086f281234058c7d5
+      internalID: 3687247204479154011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a04111eb61345511873a3d4ace2683d6
+      internalID: 810106724778208357
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aed1e9fbfc8356f186848da789cc2ed0
+      internalID: 3538623876861823295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a84f429ae51b536eac454bb7e1d1559f
+      internalID: 3414315945523613362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a322f94666bf52c28d4b617037ae682b
+      internalID: 152492917706720816
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34271985c786557ca9e523d26d426b4a
+      internalID: 4157710813008806967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82096dc40b205fb097039d8ba6f6a1bd
+      internalID: 652565998719988933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b99a3a71fe9d560b8d4cebaed243e9dc
+      internalID: 4201493867968950767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f9cc2917557597d9200c8e08db4aa9f
+      internalID: 2382166941136142019
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49dbb425e2ec581991abdb8d0384cf0f
+      internalID: 807001401840081239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 316f57fdc10a5c18903ad11a7bf0ec5d
+      internalID: 1154188046906581436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b295502227d536286e66e1f72762a07
+      internalID: 851178758827879499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97300f08b1a55dc2a9b1a98c6c600dcc
+      internalID: 162358197758775353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3db18db49ac75f50925eb021e44350d2
+      internalID: 1514506988673766497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11e2ee9307ec56a3b75c0b8d114937f6
+      internalID: 3351139151994648992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f564e67e7d1d53ddb958e7d3989faf16
+      internalID: 4089987299794063031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ceebea21f4f519992b5134677e23ae1
+      internalID: 4275081425681632693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 764a550e5a145141ab11ee0a6b6354c2
+      internalID: 1860299183778458986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 426e24b8131d55a586099be7dc9889c2
+      internalID: 1648482977798774324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80e72562b499575094285ed5fa361211
+      internalID: 2945809141510361130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f53b2b49bb5507ba1b082b6e2d66fff
+      internalID: 1836276097059198587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4fc6e9d7eda5f37b27ed79743829a1c
+      internalID: 1283444520944962276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24aaa18ed24a5185bf321a698021f520
+      internalID: 2046087591854475851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57c5e00b4b4c5fb6b05c8a438db3f9b1
+      internalID: 3570120742551836627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f216b134d9d95591843923289af1cac5
+      internalID: 2298225416773717998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24577841c8925b96af80ac96c41f990b
+      internalID: 3688432336460867949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0e03da9455e55df811d10a29b931d24
+      internalID: 3826112925570503512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bcf3902217f59b381c039a58d543f9d
+      internalID: 2521630664124312575
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad0f65b8f9d35069bf63612df4ae4139
+      internalID: 1576025215127616461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 089d4088bb28559a9375c661bd3c3426
+      internalID: 642969918204870720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cfc870d7cd25770854ab3d43b465384
+      internalID: 1898375031676115001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c4ae61525b353e5b77a451a8cd201e9
+      internalID: 3573789812500645937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba8d04b2d4915d4499c1e97ae0db5664
+      internalID: 2189404167288927467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 973ecb43e1ab5c5f9ec19a3df3220646
+      internalID: 638802570641531059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 715613161a7f576aabe20dbb38def685
+      internalID: 2417229674167725607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7d37e3ffede535085dc02082a3842ff
+      internalID: 593845886922972623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc1287b5b4eb5d2c9f94fafc6c855100
+      internalID: 1547789207611106244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 745431db20155e5198273c6144468a78
+      internalID: 3904500903033679358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b458ac29e3f56e7a6ea2fe6813014cb
+      internalID: 3078061522584698880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36c389aecf905690a09620d17d6d1ae6
+      internalID: 2421052087904499826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1214518722345c95bb1a9b5fd0a95074
+      internalID: 1794016888229440750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17bd2c1cf3d551f79a16985ba8c16efa
+      internalID: 2051940148170306460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b323a1b261f55647b910438078ba5244
+      internalID: 4054200103907645925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b4d314ecf9159adac394ddd0a871f51
+      internalID: 52560131065219472
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93da16f4bc6b5d4eba5427f6750e12e2
+      internalID: 16836781674290310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d96d2550e5db56b9963fc34ca641b58e
+      internalID: 772862468600117454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5edbada195eb5e8f836861ef5be412c4
+      internalID: 2155906466486171077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e26ab9506c185c7fa5e70ffe98e30ab2
+      internalID: 448250930962765161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 982787d298c254fa864de774c08e7e6a
+      internalID: 3918889544210070770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d225ddd2ef255b9bb42af8a2bdc55dd6
+      internalID: 3138446517018707292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0428f23e61795870b59f5487e84364c8
+      internalID: 2141166788560829847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4812e5adcb785482adcc56e844a2be23
+      internalID: 3362385568812822342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58818ed971a65a6ea04471c931fb63c0
+      internalID: 4318209617990826000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 505b3cc5a5005b5a8167beb9f1be6319
+      internalID: 607514082857571818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b87beb18c75a5ba7848865ac44226b88
+      internalID: 4542738627283918076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f5ff8fd43fb54159162c1154b2dab8b
+      internalID: 1507817476797931968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf4541d95afb585fb1922490d6157565
+      internalID: 3173073736723681789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c36799be0685913b2b7ca391d836087
+      internalID: 2378997972011195010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8279ba3b09c5ff8982439b155a7c91f
+      internalID: 1546916003997647691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 448ef95667ff54358fe41d50edf0325c
+      internalID: 1815354499203718190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95cf0b8b3bd65c279303c4fde31c5fbc
+      internalID: 1488977432996064647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d96f1472678f5d8382faa4bdcc7061ce
+      internalID: 4067892113019585221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78cf180f5794591a80c98a2f8eb25f61
+      internalID: 4104840298981159763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3e0319ceb205e59b9de8f530dc23528
+      internalID: 3315020704782100911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0195e4462805799ad78ab729f5a9f23
+      internalID: 1058544002494182393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a6e45c3dc48552ab0de7a8eddd804c4
+      internalID: 753572847340753549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_stone_wall_f0_v0: 4109730924631820664
+      tv2_stone_wall_f1_v0: 534081626969876243
+      tv2_stone_wall_f4_v0: 2872375409061768029
+      tv2_stone_wall_f5_v0: 2928658026346196584
+      tv2_stone_wall_f7_v0: 3866377581407358637
+      tv2_stone_wall_f16_v0: 4300322338025881184
+      tv2_stone_wall_f17_v0: 2552268532465175364
+      tv2_stone_wall_f20_v0: 1352376350208885979
+      tv2_stone_wall_f21_v0: 430126510290378459
+      tv2_stone_wall_f23_v0: 1064817725453859089
+      tv2_stone_wall_f28_v0: 1475426368568915130
+      tv2_stone_wall_f29_v0: 3326232628858145316
+      tv2_stone_wall_f31_v0: 3203449700047858729
+      tv2_stone_wall_f64_v0: 2658873737767507370
+      tv2_stone_wall_f65_v0: 1495372676301968762
+      tv2_stone_wall_f68_v0: 3215411553189602900
+      tv2_stone_wall_f69_v0: 3972818850581251874
+      tv2_stone_wall_f71_v0: 433310388410428446
+      tv2_stone_wall_f80_v0: 4585254336603450582
+      tv2_stone_wall_f81_v0: 2047870667158105237
+      tv2_stone_wall_f84_v0: 1149822874913560164
+      tv2_stone_wall_f85_v0: 2549444872126921332
+      tv2_stone_wall_f87_v0: 3887468751239519780
+      tv2_stone_wall_f92_v0: 4143849835682926282
+      tv2_stone_wall_f93_v0: 1142256396731538726
+      tv2_stone_wall_f95_v0: 3610915369167935241
+      tv2_stone_wall_f112_v0: 2419005727394784013
+      tv2_stone_wall_f113_v0: 3934833675910676891
+      tv2_stone_wall_f116_v0: 1288564297917031166
+      tv2_stone_wall_f117_v0: 3583704339326158771
+      tv2_stone_wall_f119_v0: 3202314569218001198
+      tv2_stone_wall_f124_v0: 4205959186177849522
+      tv2_stone_wall_f125_v0: 4112255665069851426
+      tv2_stone_wall_f127_v0: 581100629633390808
+      tv2_stone_wall_f193_v0: 1158488220227951177
+      tv2_stone_wall_f197_v0: 3264578543233185461
+      tv2_stone_wall_f199_v0: 1933639427370232746
+      tv2_stone_wall_f209_v0: 2389966833719476198
+      tv2_stone_wall_f213_v0: 706368755896951516
+      tv2_stone_wall_f215_v0: 4321628620582268293
+      tv2_stone_wall_f221_v0: 547769625006865399
+      tv2_stone_wall_f223_v0: 1826981305412246593
+      tv2_stone_wall_f241_v0: 390145519229015073
+      tv2_stone_wall_f245_v0: 2033041228526765623
+      tv2_stone_wall_f247_v0: 3139448861483743673
+      tv2_stone_wall_f253_v0: 4171897423050807047
+      tv2_stone_wall_f255_v0: 2840628235511917468
+      tv2_stone_wall_f0_v1: 3683728743125325968
+      tv2_stone_wall_f1_v1: 4472145469703779794
+      tv2_stone_wall_f4_v1: 2585547252898158534
+      tv2_stone_wall_f5_v1: 1573009857753793939
+      tv2_stone_wall_f7_v1: 749902127507649837
+      tv2_stone_wall_f16_v1: 521047940975763929
+      tv2_stone_wall_f17_v1: 2476146225749481850
+      tv2_stone_wall_f20_v1: 1416522381557303061
+      tv2_stone_wall_f21_v1: 3796373900364353894
+      tv2_stone_wall_f23_v1: 2217267970750825391
+      tv2_stone_wall_f28_v1: 2046170591526929457
+      tv2_stone_wall_f29_v1: 2321848975951156043
+      tv2_stone_wall_f31_v1: 3292324701962843824
+      tv2_stone_wall_f64_v1: 3305798762628875377
+      tv2_stone_wall_f65_v1: 2106943626868611580
+      tv2_stone_wall_f68_v1: 1387407253818623509
+      tv2_stone_wall_f69_v1: 1996235750994161395
+      tv2_stone_wall_f71_v1: 304725570406635045
+      tv2_stone_wall_f80_v1: 22613314118107084
+      tv2_stone_wall_f81_v1: 1102891404988606069
+      tv2_stone_wall_f84_v1: 2897484520659014257
+      tv2_stone_wall_f85_v1: 2928296541516925740
+      tv2_stone_wall_f87_v1: 3548617379597223849
+      tv2_stone_wall_f92_v1: 4131671509684653729
+      tv2_stone_wall_f93_v1: 3744942781774802668
+      tv2_stone_wall_f95_v1: 2803061024081332130
+      tv2_stone_wall_f112_v1: 3621466763578383678
+      tv2_stone_wall_f113_v1: 1876246604454004014
+      tv2_stone_wall_f116_v1: 3687247204479154011
+      tv2_stone_wall_f117_v1: 810106724778208357
+      tv2_stone_wall_f119_v1: 3538623876861823295
+      tv2_stone_wall_f124_v1: 3414315945523613362
+      tv2_stone_wall_f125_v1: 152492917706720816
+      tv2_stone_wall_f127_v1: 4157710813008806967
+      tv2_stone_wall_f193_v1: 652565998719988933
+      tv2_stone_wall_f197_v1: 4201493867968950767
+      tv2_stone_wall_f199_v1: 2382166941136142019
+      tv2_stone_wall_f209_v1: 807001401840081239
+      tv2_stone_wall_f213_v1: 1154188046906581436
+      tv2_stone_wall_f215_v1: 851178758827879499
+      tv2_stone_wall_f221_v1: 162358197758775353
+      tv2_stone_wall_f223_v1: 1514506988673766497
+      tv2_stone_wall_f241_v1: 3351139151994648992
+      tv2_stone_wall_f245_v1: 4089987299794063031
+      tv2_stone_wall_f247_v1: 4275081425681632693
+      tv2_stone_wall_f253_v1: 1860299183778458986
+      tv2_stone_wall_f255_v1: 1648482977798774324
+      tv2_stone_wall_f0_v2: 2945809141510361130
+      tv2_stone_wall_f1_v2: 1836276097059198587
+      tv2_stone_wall_f4_v2: 1283444520944962276
+      tv2_stone_wall_f5_v2: 2046087591854475851
+      tv2_stone_wall_f7_v2: 3570120742551836627
+      tv2_stone_wall_f16_v2: 2298225416773717998
+      tv2_stone_wall_f17_v2: 3688432336460867949
+      tv2_stone_wall_f20_v2: 3826112925570503512
+      tv2_stone_wall_f21_v2: 2521630664124312575
+      tv2_stone_wall_f23_v2: 1576025215127616461
+      tv2_stone_wall_f28_v2: 642969918204870720
+      tv2_stone_wall_f29_v2: 1898375031676115001
+      tv2_stone_wall_f31_v2: 3573789812500645937
+      tv2_stone_wall_f64_v2: 2189404167288927467
+      tv2_stone_wall_f65_v2: 638802570641531059
+      tv2_stone_wall_f68_v2: 2417229674167725607
+      tv2_stone_wall_f69_v2: 593845886922972623
+      tv2_stone_wall_f71_v2: 1547789207611106244
+      tv2_stone_wall_f80_v2: 3904500903033679358
+      tv2_stone_wall_f81_v2: 3078061522584698880
+      tv2_stone_wall_f84_v2: 2421052087904499826
+      tv2_stone_wall_f85_v2: 1794016888229440750
+      tv2_stone_wall_f87_v2: 2051940148170306460
+      tv2_stone_wall_f92_v2: 4054200103907645925
+      tv2_stone_wall_f93_v2: 52560131065219472
+      tv2_stone_wall_f95_v2: 16836781674290310
+      tv2_stone_wall_f112_v2: 772862468600117454
+      tv2_stone_wall_f113_v2: 2155906466486171077
+      tv2_stone_wall_f116_v2: 448250930962765161
+      tv2_stone_wall_f117_v2: 3918889544210070770
+      tv2_stone_wall_f119_v2: 3138446517018707292
+      tv2_stone_wall_f124_v2: 2141166788560829847
+      tv2_stone_wall_f125_v2: 3362385568812822342
+      tv2_stone_wall_f127_v2: 4318209617990826000
+      tv2_stone_wall_f193_v2: 607514082857571818
+      tv2_stone_wall_f197_v2: 4542738627283918076
+      tv2_stone_wall_f199_v2: 1507817476797931968
+      tv2_stone_wall_f209_v2: 3173073736723681789
+      tv2_stone_wall_f213_v2: 2378997972011195010
+      tv2_stone_wall_f215_v2: 1546916003997647691
+      tv2_stone_wall_f221_v2: 1815354499203718190
+      tv2_stone_wall_f223_v2: 1488977432996064647
+      tv2_stone_wall_f241_v2: 4067892113019585221
+      tv2_stone_wall_f245_v2: 4104840298981159763
+      tv2_stone_wall_f247_v2: 3315020704782100911
+      tv2_stone_wall_f253_v2: 1058544002494182393
+      tv2_stone_wall_f255_v2: 753572847340753549
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

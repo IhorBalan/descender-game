@@ -1,0 +1,155 @@
+{
+  "tile": 16,
+  "ppu": 16,
+  "variants": 3,
+  "bits": {
+    "N": 1,
+    "NE": 2,
+    "E": 4,
+    "SE": 8,
+    "S": 16,
+    "SW": 32,
+    "W": 64,
+    "NW": 128
+  },
+  "frames": [
+    0,
+    1,
+    4,
+    5,
+    7,
+    16,
+    17,
+    20,
+    21,
+    23,
+    28,
+    29,
+    31,
+    64,
+    65,
+    68,
+    69,
+    71,
+    80,
+    81,
+    84,
+    85,
+    87,
+    92,
+    93,
+    95,
+    112,
+    113,
+    116,
+    117,
+    119,
+    124,
+    125,
+    127,
+    193,
+    197,
+    199,
+    209,
+    213,
+    215,
+    221,
+    223,
+    241,
+    245,
+    247,
+    253,
+    255
+  ],
+  "slopes": [
+    "up_right",
+    "up_left"
+  ],
+  "materials": [
+    {
+      "key": "dirt",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "dirt.png",
+      "slopes": true
+    },
+    {
+      "key": "grass",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "grass.png",
+      "slopes": true
+    },
+    {
+      "key": "stone",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "stone.png",
+      "slopes": true
+    },
+    {
+      "key": "dirt_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "dirt_wall.png",
+      "slopes": false
+    },
+    {
+      "key": "stone_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "stone_wall.png",
+      "slopes": false
+    }
+  ],
+  "blends": [
+    {
+      "key": "dirt_on_stone",
+      "onto": "stone",
+      "from": [
+        "dirt",
+        "grass"
+      ],
+      "sheet": "blend_dirt_on_stone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  ],
+  "backdrops": [
+    {
+      "key": "backdrop_sky",
+      "scroll": 0.0,
+      "order": -1000
+    },
+    {
+      "key": "backdrop_far",
+      "scroll": 0.1,
+      "order": -990
+    },
+    {
+      "key": "backdrop_mid",
+      "scroll": 0.25,
+      "order": -980
+    },
+    {
+      "key": "backdrop_near",
+      "scroll": 0.45,
+      "order": -970
+    }
+  ]
+}
