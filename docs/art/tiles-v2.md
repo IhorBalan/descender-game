@@ -18,6 +18,12 @@ Change the code and this page together.
 | 2 | Make the tiles and the tile set from them | Descender > Tiles V2 > Build tiles |
 | 3 | A world is built from a text map and the tile set when a scene loads | `TilesV2World` |
 
+Pictures of the sample world are in `docs/screenshots/tiles-v2/`: its named
+places (`surface`, `pond`, `tunnel`, `hall`, `ore`, `cavern`, `dunes`,
+`trickle`, `lava`), the surface again at sunset and at night, the whole map
+(`map.png`), and a frame from the Windows playground with the hero in it
+(`playground.png`).
+
 ## Grid and scale
 
 | Rule | Value |
