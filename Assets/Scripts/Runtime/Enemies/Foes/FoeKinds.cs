@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Descender.Fx;
 using UnityEngine;
 
@@ -20,6 +21,23 @@ namespace Descender.Enemies
 
         /// <summary>How fast the rope hauls the hanged thing back up, level pixels a second.</summary>
         public const float HangerRise = 120f;
+
+        /// <summary>How near a sleeping boss lets the hero come, level pixels: half its old arena.</summary>
+        public const float BossWake = 128f;
+
+        /// <summary>How long a boss warns as it wakes, seconds.</summary>
+        public const float BossWarning = 1f;
+
+        /// <summary>Seconds between a boss's attacks in its first phase; later phases rest less.</summary>
+        public const float BossRest = 0.6f;
+
+        /// <summary>How far to either side a boss charges from and runs, level pixels.</summary>
+        public const float BossChargeRange = 140f;
+
+        /// <summary>How long a boss warns before its bolt or its call, seconds.</summary>
+        public const float BossVolleyWindup = 0.5f;
+
+        public static readonly Color BossColor = new Color(0.85f, 0.75f, 0.45f);
 
         /// <summary>
         /// A walker as a foe: its body, its swing and its drops from the profile, and after
@@ -125,6 +143,139 @@ namespace Descender.Enemies
             drops.loot = Hanger.Loot;
             recipe.drops = drops;
             return recipe;
+        }
+
+        /// <summary>
+        /// A boss as a foe: armoured and never pushed, it stands where it is put until the
+        /// hero comes within `wake` of it, warns, and then fights in phases built from its
+        /// profile: a swing and a charge, and the move its body has (a brute's wave, an
+        /// angel's bolts, an imp king's imps, called from `imp`). At half its health it
+        /// changes phase and every windup is shorter; a boss with a third move changes
+        /// again at a quarter and is quicker still. It leaves its motes, its loot and the
+        /// flag that keeps it dead.
+        /// </summary>
+        public static FoeRecipe FromBoss(string id, BossProfile profile, FoeRecipe imp)
+        {
+            var body = new FoeBody
+            {
+                size = profile.body,
+                health = Mathf.Max(profile.health, 1),
+                speed = profile.speed,
+                contactDamage = profile.contactDamage,
+                armour = true,
+                pushShare = 0f,
+                shape = ShapeKind.Diamond,
+                color = BossColor,
+            };
+            var last = string.IsNullOrEmpty(profile.third) ? 0f : Boss.PhaseThreeAt;
+            var phases = new List<BossPhase>();
+            phases.Add(new BossPhase(Boss.PhaseTwoAt, BossRest, BossAttacks(profile, imp, 1f)));
+            var quick = Boss.PhaseTwoHaste;
+            phases.Add(new BossPhase(last, BossRest * quick, BossAttacks(profile, imp, quick)));
+            if (last > 0f)
+            {
+                var quicker = quick * quick;
+                phases.Add(new BossPhase(0f, BossRest * quicker, BossAttacks(profile, imp, quicker)));
+            }
+            var pattern = new Pattern();
+            pattern.phases = phases.ToArray();
+            pattern.stopAt = Mathf.Max(profile.attackRange - profile.body.x / 2f - 8f, 0f);
+            var wake = new Ambush { range = BossWake, mark = BossWarning };
+            var title = string.IsNullOrEmpty(profile.displayName) ? id : profile.displayName;
+            var recipe = new FoeRecipe(title, body);
+            recipe.behaviours = new FoeBehaviour[] { wake, pattern };
+            var drops = new FoeDrops
+            {
+                moteChance = 0f,
+                powerChance = 0f,
+                loot = profile.loot,
+                motes = profile.motes,
+                flag = BossIds.FlagFor(id),
+            };
+            recipe.drops = drops;
+            return recipe;
+        }
+
+        /// <summary>One phase's attacks, their windups shortened by `haste` (1 for none).</summary>
+        private static FoeBehaviour[] BossAttacks(BossProfile profile, FoeRecipe imp, float haste)
+        {
+            var swing = new Swing
+            {
+                range = Mathf.Max(profile.attackRange - profile.body.x / 2f, 0f),
+                heightTolerance = Boss.AttackHeightTolerance,
+                reach = profile.reach,
+                windup = profile.windup * haste,
+                strike = profile.strike,
+                recover = profile.recover * haste,
+                cooldown = 0f,
+                damage = profile.attackDamage,
+            };
+            var charge = new Charge
+            {
+                range = BossChargeRange,
+                heightTolerance = Boss.AttackHeightTolerance,
+                windup = profile.chargeWindup * haste,
+                speed = profile.chargeSpeed,
+                distance = BossChargeRange,
+                cooldown = 0f,
+                reach = new Vector2(14f, profile.body.y * 0.75f),
+                damage = profile.attackDamage,
+            };
+            var move = BossMove(profile, imp, haste);
+            if (move == null)
+            {
+                return new FoeBehaviour[] { swing, charge };
+            }
+            return new FoeBehaviour[] { swing, move, charge };
+        }
+
+        /// <summary>The move its body has: a brute's wave, an angel's bolt, an imp king's imps; null for none.</summary>
+        private static FoeBehaviour BossMove(BossProfile profile, FoeRecipe imp, float haste)
+        {
+            switch (profile.character)
+            {
+                case "brute":
+                {
+                    var quake = new Quake
+                    {
+                        nearest = 0f,
+                        farthest = Boss.SlamRange,
+                        heightTolerance = Boss.AttackHeightTolerance,
+                        windup = Boss.SlamWindup * haste,
+                        recover = Boss.SlamRecover * haste,
+                        cooldown = 0f,
+                        big = true,
+                    };
+                    return quake;
+                }
+                case "angel_guard":
+                {
+                    var volley = new Shoot
+                    {
+                        nearest = Boss.VolleyMin,
+                        range = Boss.VolleyMax,
+                        reach = Boss.VolleyMax + 40f,
+                        windup = BossVolleyWindup * haste,
+                        cooldown = 0f,
+                        damage = 1,
+                    };
+                    return volley;
+                }
+                case "imp":
+                {
+                    var call = new Summon
+                    {
+                        summons = imp,
+                        cap = Boss.SummonCount,
+                        range = BossChargeRange * 3f,
+                        windup = BossVolleyWindup * haste,
+                        cooldown = 0f,
+                    };
+                    return call;
+                }
+                default:
+                    return null;
+            }
         }
 
         private static FoeBehaviour[] Habits(WalkerProfile profile, WalkerBehaviour kind)

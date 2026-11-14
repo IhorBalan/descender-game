@@ -46,7 +46,8 @@ namespace Descender.Enemies
 
     /// <summary>
     /// What a foe leaves when it dies, as the old profiles had it: what its
-    /// <see cref="LootTable"/> rolls, and then either a power-up or a mote of healing.
+    /// <see cref="LootTable"/> rolls, a boss's sure motes and its story flag, and then
+    /// either a power-up or a mote of healing.
     /// </summary>
     [Serializable]
     public sealed class FoeDrops
@@ -60,6 +61,13 @@ namespace Descender.Enemies
         public float powerChance = 0.1f;
         public PowerKind power = PowerKind.Blade;
         public LootTable loot = new LootTable();
+
+        [Tooltip("Motes of healing it always leaves, as a boss does, before any by chance.")]
+        [Min(0)]
+        public int motes;
+
+        [Tooltip("A story flag its death sets, as a boss's does; empty for none.")]
+        public string flag = "";
     }
 
     /// <summary>

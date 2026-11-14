@@ -347,7 +347,10 @@ namespace Descender.Enemies
             gameObject.SetActive(false);
         }
 
-        /// <summary>The drops, as the old enemies left them: the loot, then a power-up or else, by chance, a mote.</summary>
+        /// <summary>
+        /// The drops, as the old enemies left them: its flag, the loot and its sure motes,
+        /// then a power-up or else, by chance, a mote.
+        /// </summary>
         private void Leave()
         {
             if (Drops == null)
@@ -355,7 +358,15 @@ namespace Descender.Enemies
                 return;
             }
             Vector2 centre = transform.position;
+            if (!string.IsNullOrEmpty(Drops.flag))
+            {
+                Story.StoryFlags.Set(Drops.flag);
+            }
             Loot.Drop(centre, Drops.loot);
+            for (var i = 0; i < Drops.motes; i++)
+            {
+                HealMote.Spawn(centre + new Vector2((i - (Drops.motes - 1) / 2f) * 20f / Ppu, 0f));
+            }
             if (UnityEngine.Random.value < Drops.powerChance)
             {
                 // At its feet: its box is off by now, so from its size.
