@@ -315,6 +315,34 @@ namespace Descender.Tests.EditMode
             Assert.That(shape.Body.bounds.size.y, Is.EqualTo(0.5f).Within(0.01f));
         }
 
+        /// <summary>
+        /// The world is drawn at 320 x 180, so a sign is drawn at the size the pixel font is
+        /// made at, its left edge and baseline on whole pixels, wherever its shape stands.
+        /// </summary>
+        [Test]
+        public void AShapesLabelIsDrawnAtTheFontsSizeOnWholePixels()
+        {
+            var parent = new GameObject("Parent");
+            made.Add(parent);
+            var centre = new Vector2(3.03f, 2.01f);
+            var shape = Shape.Make(parent.transform, "Mark", ShapeKind.Square, centre, Vector2.one, Color.red, "1 s");
+
+            var sign = shape.LabelSign;
+            Assert.That(sign, Is.Not.Null);
+            Assert.That(sign.Text.text, Is.EqualTo("1 s"));
+            Assert.That(sign.Text.fontSize, Is.EqualTo(UiTheme.FontSize));
+            var at = sign.transform.position * PlayerTuning.PixelsPerUnit;
+            Assert.That(at.x, Is.EqualTo(Mathf.Round(at.x)).Within(0.001f), "the left edge is on a whole pixel");
+            Assert.That(at.y, Is.EqualTo(Mathf.Round(at.y)).Within(0.001f), "the baseline is on a whole pixel");
+            Assert.That(sign.transform.position.y, Is.GreaterThan(centre.y + 0.5f), "the sign is over the shape");
+
+            shape.transform.position = new Vector3(5.47f, 1.33f, 0f);
+            sign.Anchor = sign.Anchor;
+            at = sign.transform.position * PlayerTuning.PixelsPerUnit;
+            Assert.That(at.x, Is.EqualTo(Mathf.Round(at.x)).Within(0.001f), "still whole after the shape moves");
+            Assert.That(at.y, Is.EqualTo(Mathf.Round(at.y)).Within(0.001f));
+        }
+
         [Test]
         public void EveryShapeKindHasItsOwnSprite()
         {

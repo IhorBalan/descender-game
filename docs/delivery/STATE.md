@@ -494,7 +494,7 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (320 on `main` after T-0043) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| EditMode tests (321 on `main` after T-0043) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
 | PlayMode tests (159 after T-0043; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
@@ -591,7 +591,9 @@ barriers, the cliff descent.
   scene (Descender > Lab > Play Gauntlet starts in the last room), or `lab`
   in the dev console of a running game (the console was missing from the
   game until #208 made it in code; it is in the editor and development
-  builds only) (`lab list` names the
+  builds only). The signs over the shapes are drawn at the font's own 9 px
+  on whole pixels since #208 (they were 8 px and unreadable); the key
+  prompts over doors and NPCs got the same fix. (`lab list` names the
   stations, `lab wings` goes to one). Eleven rooms of plain shapes, one per
   move: run, jump, gaps, wings, dash, wall, glide, ledges, slam, pods,
   spikes. The yellow diamonds by the walls lead to the next and the previous
