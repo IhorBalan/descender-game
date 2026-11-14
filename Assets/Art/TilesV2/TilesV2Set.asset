@@ -1,0 +1,680 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55dd9801c9af3b94eb455dee230c1e88, type: 3}
+  m_Name: TilesV2Set
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.TilesV2Set
+  litMaterial: {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  unlitMaterial: {fileID: 2100000, guid: 9dfc825aed78fcd4ba02077103263b40, type: 2}
+  legend:
+  - character: G
+    layer: 0
+    key: grass
+    tile: {fileID: 11400000, guid: 1e48d9ba4ea59804586b271a9434da84, type: 2}
+  - character: D
+    layer: 0
+    key: dirt
+    tile: {fileID: 11400000, guid: e26b7fe4b56c6e949af5eb8ba4251694, type: 2}
+  - character: S
+    layer: 0
+    key: stone
+    tile: {fileID: 11400000, guid: efd8ffb18e3137d489131d76d2f10a88, type: 2}
+  - character: A
+    layer: 0
+    key: sand
+    tile: {fileID: 11400000, guid: 2fa02cac727a75e4d8e841a92008e643, type: 2}
+  - character: C
+    layer: 0
+    key: clay
+    tile: {fileID: 11400000, guid: 0fde89bdfe7fd764ea587cf981e7b051, type: 2}
+  - character: O
+    layer: 0
+    key: copper_ore
+    tile: {fileID: 11400000, guid: 0d2d83a0adcd3b34a8a0b5c174b70bba, type: 2}
+  - character: /
+    layer: 0
+    key: grass
+    tile: {fileID: 11400000, guid: 1db094e613dea3d488bc4c1a51a1c9ce, type: 2}
+  - character: \
+    layer: 0
+    key: grass
+    tile: {fileID: 11400000, guid: f7b022cbb06c4d640965780eeec44314, type: 2}
+  - character: (
+    layer: 0
+    key: sand
+    tile: {fileID: 11400000, guid: f0ef61429269eca4eb920302b8f1e9f2, type: 2}
+  - character: )
+    layer: 0
+    key: sand
+    tile: {fileID: 11400000, guid: c392eb61b97821346a42dbf5008749d1, type: 2}
+  - character: '{'
+    layer: 0
+    key: dirt
+    tile: {fileID: 11400000, guid: 34a4ad5773f72b14a9aea98482347930, type: 2}
+  - character: '}'
+    layer: 0
+    key: dirt
+    tile: {fileID: 11400000, guid: 5ad77090127979d4d93168537d668db8, type: 2}
+  - character: '['
+    layer: 0
+    key: stone
+    tile: {fileID: 11400000, guid: 60780971543e3f2499dda66775f5d22f, type: 2}
+  - character: ']'
+    layer: 0
+    key: stone
+    tile: {fileID: 11400000, guid: fd2a1aa21cc19fd4697f1d6b7d9e881a, type: 2}
+  - character: W
+    layer: 2
+    key: water
+    tile: {fileID: 11400000, guid: ee2506ef59939374e9908342d864f255, type: 2}
+  - character: L
+    layer: 2
+    key: lava
+    tile: {fileID: 11400000, guid: 5435a674a9f516b439556fc2b8fdcf80, type: 2}
+  - character: T
+    layer: 3
+    key: torch
+    tile: {fileID: 0}
+  - character: P
+    layer: 4
+    key: spawn
+    tile: {fileID: 0}
+  - character: d
+    layer: 1
+    key: dirt_wall
+    tile: {fileID: 11400000, guid: 16e4059c5f21a3746929be549903cc87, type: 2}
+  - character: s
+    layer: 1
+    key: stone_wall
+    tile: {fileID: 11400000, guid: d89bfae06978d1a4e93896fc641575e2, type: 2}
+  blends:
+  - key: dirt_on_stone
+    onto: stone
+    from:
+    - dirt
+    - grass
+    overlays:
+    - {fileID: 0}
+    - {fileID: 11400000, guid: fb166f121d97fc8408c7cb3c02563008, type: 2}
+    - {fileID: 11400000, guid: 68bb480660a5c804f8360022c09598ee, type: 2}
+    - {fileID: 11400000, guid: adfdb8097b0297045b69abd66c5d7600, type: 2}
+    - {fileID: 11400000, guid: c1703f1cac516d345b38af4176827d35, type: 2}
+    - {fileID: 11400000, guid: af242b92726c4b741b5c34a2f50a63b5, type: 2}
+    - {fileID: 11400000, guid: ef98484e2124bf341aa85db0cd87cb30, type: 2}
+    - {fileID: 11400000, guid: 6f87c3f0e8e791942a2d16df550f95fb, type: 2}
+    - {fileID: 11400000, guid: 69e77f9e8b2b64a42bdf564b9ecd5483, type: 2}
+    - {fileID: 11400000, guid: d752dde7e8107f74c8a307167e5fa26b, type: 2}
+    - {fileID: 11400000, guid: f02fa20c4ed00514c96a6f2ef6827fd5, type: 2}
+    - {fileID: 11400000, guid: 79a4767f63c17c04ebd735cad95a791a, type: 2}
+    - {fileID: 11400000, guid: 0fa0a1debed5aef44a4ec6357983bfac, type: 2}
+    - {fileID: 11400000, guid: 711505ef0730b4243ba70b0867fc606d, type: 2}
+    - {fileID: 11400000, guid: 677089202fd157448a685f4eb3f36a55, type: 2}
+    - {fileID: 11400000, guid: 26e13483b32eca2478e3c305482793f2, type: 2}
+  - key: dirt_on_sand
+    onto: sand
+    from:
+    - dirt
+    - grass
+    overlays:
+    - {fileID: 0}
+    - {fileID: 11400000, guid: 8ab0a1028db0bb04ebad67a238d9726a, type: 2}
+    - {fileID: 11400000, guid: b16d8f38dd34a1c4fa4fdaa70d9cbf5e, type: 2}
+    - {fileID: 11400000, guid: 20d66e0887fe9f248a9c7582e237ebc2, type: 2}
+    - {fileID: 11400000, guid: 4febb9a744c7caf4085e31c182a15da5, type: 2}
+    - {fileID: 11400000, guid: 5a2f7feb5087ce847a51be419bc32d53, type: 2}
+    - {fileID: 11400000, guid: f92c1a84481b1ba409db0e98f37a7e98, type: 2}
+    - {fileID: 11400000, guid: fd1a1efad89ebe34e940423b92c36fe6, type: 2}
+    - {fileID: 11400000, guid: f495fdb7095d6f240b7a9989f665055c, type: 2}
+    - {fileID: 11400000, guid: 9860f21de88301348a14e5d391da6dd0, type: 2}
+    - {fileID: 11400000, guid: a06e5eeb27c194741b9fe6a626e92a0c, type: 2}
+    - {fileID: 11400000, guid: 5c1228abfac97ac4ab0e1dfe0ab805bf, type: 2}
+    - {fileID: 11400000, guid: af88536824af2bd488c9842094558a1f, type: 2}
+    - {fileID: 11400000, guid: 7dc901afc051f1d4e91f6a7e19aa20e8, type: 2}
+    - {fileID: 11400000, guid: 3d1a19a10af619d4692a67249305e8f6, type: 2}
+    - {fileID: 11400000, guid: 4b4c6bef2f33c204f8462349d1354f0d, type: 2}
+  - key: dirt_on_clay
+    onto: clay
+    from:
+    - dirt
+    - grass
+    overlays:
+    - {fileID: 0}
+    - {fileID: 11400000, guid: 405d2acd457ba5b4e8fe1615d5885791, type: 2}
+    - {fileID: 11400000, guid: d6a4827b39600e84bb89415d30327533, type: 2}
+    - {fileID: 11400000, guid: 50bc318954906a348898ec022f5c1877, type: 2}
+    - {fileID: 11400000, guid: 508f8616a1bfaba4ebe63bcfc54c1d36, type: 2}
+    - {fileID: 11400000, guid: bb2b97f0206229549975d9eea17bff66, type: 2}
+    - {fileID: 11400000, guid: d205a052710eebb4a836b1792e76eaf1, type: 2}
+    - {fileID: 11400000, guid: 0c13456769e6d0343b789f5dee5030cf, type: 2}
+    - {fileID: 11400000, guid: 2bd649eb267a9754fa449171817e0aa3, type: 2}
+    - {fileID: 11400000, guid: b81f91be88a86ee4eade87f6f6f16908, type: 2}
+    - {fileID: 11400000, guid: 7567222e01d87e34bac5cd6943370170, type: 2}
+    - {fileID: 11400000, guid: fec61565a5447a34a9cddead6c7f1828, type: 2}
+    - {fileID: 11400000, guid: 955b2fac34e0dde4abe470d4ed56060b, type: 2}
+    - {fileID: 11400000, guid: 954a2b46764968b4981ef29180a0b314, type: 2}
+    - {fileID: 11400000, guid: c150b5d9b852f2a4ea11ae45b1228da5, type: 2}
+    - {fileID: 11400000, guid: f60f9b0219c46f642b6dafaaa574b02b, type: 2}
+  - key: sand_on_stone
+    onto: stone
+    from:
+    - sand
+    overlays:
+    - {fileID: 0}
+    - {fileID: 11400000, guid: bb7f707780a33d54d9c3f31fca0a8bcb, type: 2}
+    - {fileID: 11400000, guid: 3a41ba7db3e5c524ab63f1ffca032411, type: 2}
+    - {fileID: 11400000, guid: 616f87b214dd5b342affffb7984dafe7, type: 2}
+    - {fileID: 11400000, guid: 97fa0c712ee7b2e49bb8e81a262e1972, type: 2}
+    - {fileID: 11400000, guid: d6e39eda2c1e72d45b6f74723967d3d9, type: 2}
+    - {fileID: 11400000, guid: a22f4dbec01ff8342a2b5b2a191cfead, type: 2}
+    - {fileID: 11400000, guid: 8b9d5f27b9242954fb8f8bb9ef911bb3, type: 2}
+    - {fileID: 11400000, guid: 3dc1204734b410847a9a87f76e82bc55, type: 2}
+    - {fileID: 11400000, guid: 22686d63862849249b0b387230ddfe1d, type: 2}
+    - {fileID: 11400000, guid: 4e68532b3eb13b5428990b70f221c71e, type: 2}
+    - {fileID: 11400000, guid: b774e6b4299f0e4479002641e03af1a4, type: 2}
+    - {fileID: 11400000, guid: a288bbc7cfb9c75439fc360e05e62f30, type: 2}
+    - {fileID: 11400000, guid: 0d1fec70d0951d54eb4d5a804b948405, type: 2}
+    - {fileID: 11400000, guid: bd285b31972a0ac4bb32ca390b896242, type: 2}
+    - {fileID: 11400000, guid: 523df18ce61312f4aa77c02d1c8050c6, type: 2}
+  shadeFull: {fileID: 11400000, guid: 131c6f30f821e52459b568943669bb83, type: 2}
+  shades:
+  - mask: 1
+    tile: {fileID: 11400000, guid: 64b36d91b8fa35b428afa7ebbb8b744a, type: 2}
+  - mask: 2
+    tile: {fileID: 11400000, guid: 152b782be7cd29440a40e5e7309e32e5, type: 2}
+  - mask: 4
+    tile: {fileID: 11400000, guid: 4bd7b2f154092ec4fb4aa2c4e697ad0a, type: 2}
+  - mask: 5
+    tile: {fileID: 11400000, guid: 9a9fca2c101a77a46a51bbced91da641, type: 2}
+  - mask: 8
+    tile: {fileID: 11400000, guid: f8b6b9b274f22fc46b0ba6c273d00ab0, type: 2}
+  - mask: 9
+    tile: {fileID: 11400000, guid: ffa6b07dd6a5d714f87f42f7d8b813c7, type: 2}
+  - mask: 10
+    tile: {fileID: 11400000, guid: a3ba9a62236e1994ead5ba09c449fc52, type: 2}
+  - mask: 16
+    tile: {fileID: 11400000, guid: 3c0b408b506cd6642b17c24dbc3f979c, type: 2}
+  - mask: 17
+    tile: {fileID: 11400000, guid: 536ef189835b7ed41813557fdb864646, type: 2}
+  - mask: 18
+    tile: {fileID: 11400000, guid: c8cb531094c490a4fb537f3a96d06b77, type: 2}
+  - mask: 20
+    tile: {fileID: 11400000, guid: c8c4edb910684c54d9ebde0ca880c775, type: 2}
+  - mask: 21
+    tile: {fileID: 11400000, guid: cf69c2c32509c4749a51430ce9e496d4, type: 2}
+  - mask: 32
+    tile: {fileID: 11400000, guid: c944eae4632215d46b1bb1a421aad5c5, type: 2}
+  - mask: 33
+    tile: {fileID: 11400000, guid: a0cab94cbfa07d14aaee6ea8dd10b3f0, type: 2}
+  - mask: 34
+    tile: {fileID: 11400000, guid: 5a66389909eafd348a9fed1e62c4529d, type: 2}
+  - mask: 36
+    tile: {fileID: 11400000, guid: 161bda67e20dbf446b82f3040761241c, type: 2}
+  - mask: 37
+    tile: {fileID: 11400000, guid: 3279c09364c5b1241a11be1400643dc0, type: 2}
+  - mask: 40
+    tile: {fileID: 11400000, guid: 92a7b8db3d3c7bc44a1865ec88e52230, type: 2}
+  - mask: 41
+    tile: {fileID: 11400000, guid: ee961c978e0d15642b9d20f0653f87e0, type: 2}
+  - mask: 42
+    tile: {fileID: 11400000, guid: a27d437cdf0f60641af679f205296d38, type: 2}
+  - mask: 64
+    tile: {fileID: 11400000, guid: 9a2770ed3c0a7994b8488d4394f72f9c, type: 2}
+  - mask: 65
+    tile: {fileID: 11400000, guid: b219066c19588e24e8496df83094f88d, type: 2}
+  - mask: 66
+    tile: {fileID: 11400000, guid: 36c370934dfb25e4a8ef692be97fed73, type: 2}
+  - mask: 68
+    tile: {fileID: 11400000, guid: 9deea8e2659a41643a1de33099e149dc, type: 2}
+  - mask: 69
+    tile: {fileID: 11400000, guid: e02a2dd157537ba42b50151fa87d836a, type: 2}
+  - mask: 72
+    tile: {fileID: 11400000, guid: 932f7877a723790489098043b395bdf1, type: 2}
+  - mask: 73
+    tile: {fileID: 11400000, guid: 9edc1bd1d308c8c4bb8cdbe642bfb50e, type: 2}
+  - mask: 74
+    tile: {fileID: 11400000, guid: 6a18b71affaa94a4d96bac77d2b36502, type: 2}
+  - mask: 80
+    tile: {fileID: 11400000, guid: 48af7e30df851b14e9324d101ac1ac33, type: 2}
+  - mask: 81
+    tile: {fileID: 11400000, guid: fb1178cdcdcc5ad439d19ae0475497a6, type: 2}
+  - mask: 82
+    tile: {fileID: 11400000, guid: dd89256d3ee75f44bb16bfc01c004517, type: 2}
+  - mask: 84
+    tile: {fileID: 11400000, guid: 29fe1c10289f7f440b31f917570ca833, type: 2}
+  - mask: 85
+    tile: {fileID: 11400000, guid: b4c14d9a96c09b341a68a5f46b30c53c, type: 2}
+  - mask: 128
+    tile: {fileID: 11400000, guid: f278995ce86270347a5b673d5165cdc4, type: 2}
+  - mask: 130
+    tile: {fileID: 11400000, guid: 71c78f1260b77644d8227434097b2a67, type: 2}
+  - mask: 132
+    tile: {fileID: 11400000, guid: 264572899b5815647ac3b3827ce6ff2d, type: 2}
+  - mask: 136
+    tile: {fileID: 11400000, guid: c77df0d09cca57f4593eec3523cb06a6, type: 2}
+  - mask: 138
+    tile: {fileID: 11400000, guid: 3c39331c269c4704180e63d7e822b43a, type: 2}
+  - mask: 144
+    tile: {fileID: 11400000, guid: 89923d80e74bc8146bcb7ccd61080581, type: 2}
+  - mask: 146
+    tile: {fileID: 11400000, guid: 1636dd46f73078b468f091e15b922274, type: 2}
+  - mask: 148
+    tile: {fileID: 11400000, guid: 8504cec10d7d1c64784fcd4d1bb26830, type: 2}
+  - mask: 160
+    tile: {fileID: 11400000, guid: 4d4526adb5aee8249be6804f02fee76d, type: 2}
+  - mask: 162
+    tile: {fileID: 11400000, guid: 93080a22b4783b7409650ac03be2d683, type: 2}
+  - mask: 164
+    tile: {fileID: 11400000, guid: 3b5a6a433554fec4485c5a2d8e48bbcc, type: 2}
+  - mask: 168
+    tile: {fileID: 11400000, guid: 63a6e461ca6a2ac449c6a6266a99fd76, type: 2}
+  - mask: 170
+    tile: {fileID: 11400000, guid: d155f01e102308f4bad43073293947ff, type: 2}
+  decor:
+  - key: flower
+    anchor: 0
+    on:
+    - grass
+    where: 1
+    chance: 0.1
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 6b13a861263f47946bcd1e6ae81dca6f, type: 2}
+    - {fileID: 11400000, guid: f47d811cbe2b7db44a7797d70f36c0c2, type: 2}
+    - {fileID: 11400000, guid: 3aecfd937f0dc8041b9ee035d79618ac, type: 2}
+    - {fileID: 11400000, guid: c1e903e382d0a444aa289aa9d3a12cf6, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 6b13a861263f47946bcd1e6ae81dca6f, type: 2}
+    - {fileID: 11400000, guid: f47d811cbe2b7db44a7797d70f36c0c2, type: 2}
+    - {fileID: 11400000, guid: 3aecfd937f0dc8041b9ee035d79618ac, type: 2}
+    - {fileID: 11400000, guid: c1e903e382d0a444aa289aa9d3a12cf6, type: 2}
+    last:
+    - {fileID: 11400000, guid: 6b13a861263f47946bcd1e6ae81dca6f, type: 2}
+    - {fileID: 11400000, guid: f47d811cbe2b7db44a7797d70f36c0c2, type: 2}
+    - {fileID: 11400000, guid: 3aecfd937f0dc8041b9ee035d79618ac, type: 2}
+    - {fileID: 11400000, guid: c1e903e382d0a444aa289aa9d3a12cf6, type: 2}
+  - key: bush
+    anchor: 0
+    on:
+    - grass
+    where: 1
+    chance: 0.05
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 6c2339c97e8ac164f9fa50c82ad7c53d, type: 2}
+    - {fileID: 11400000, guid: 619c92034311e674f933a7a5928502e8, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 6c2339c97e8ac164f9fa50c82ad7c53d, type: 2}
+    - {fileID: 11400000, guid: 619c92034311e674f933a7a5928502e8, type: 2}
+    last:
+    - {fileID: 11400000, guid: 6c2339c97e8ac164f9fa50c82ad7c53d, type: 2}
+    - {fileID: 11400000, guid: 619c92034311e674f933a7a5928502e8, type: 2}
+  - key: grass_tall
+    anchor: 0
+    on:
+    - grass
+    where: 1
+    chance: 0.2
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: b67837f99485a97439132a0f5a9daa4c, type: 2}
+    - {fileID: 11400000, guid: 17c75b64b11d9b349be2553c6f64cbd0, type: 2}
+    middle:
+    - {fileID: 11400000, guid: b67837f99485a97439132a0f5a9daa4c, type: 2}
+    - {fileID: 11400000, guid: 17c75b64b11d9b349be2553c6f64cbd0, type: 2}
+    last:
+    - {fileID: 11400000, guid: b67837f99485a97439132a0f5a9daa4c, type: 2}
+    - {fileID: 11400000, guid: 17c75b64b11d9b349be2553c6f64cbd0, type: 2}
+  - key: tuft
+    anchor: 0
+    on:
+    - grass
+    where: 1
+    chance: 0.38
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: bc37cf07b9369a643aef899779ba7ad0, type: 2}
+    - {fileID: 11400000, guid: 9287dab963f484743bfc1121127e343e, type: 2}
+    - {fileID: 11400000, guid: fbe1ca4ad826af64f94746dec4d966f7, type: 2}
+    middle:
+    - {fileID: 11400000, guid: bc37cf07b9369a643aef899779ba7ad0, type: 2}
+    - {fileID: 11400000, guid: 9287dab963f484743bfc1121127e343e, type: 2}
+    - {fileID: 11400000, guid: fbe1ca4ad826af64f94746dec4d966f7, type: 2}
+    last:
+    - {fileID: 11400000, guid: bc37cf07b9369a643aef899779ba7ad0, type: 2}
+    - {fileID: 11400000, guid: 9287dab963f484743bfc1121127e343e, type: 2}
+    - {fileID: 11400000, guid: fbe1ca4ad826af64f94746dec4d966f7, type: 2}
+  - key: cactus
+    anchor: 0
+    on:
+    - sand
+    where: 1
+    chance: 0.07
+    min: 2
+    max: 3
+    first:
+    - {fileID: 11400000, guid: a968baf4da0a7434590908791a506676, type: 2}
+    - {fileID: 11400000, guid: 26b422a17d87af84881fd716776a14ae, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 71d0a00804a446045a343ce49af40113, type: 2}
+    - {fileID: 11400000, guid: dd861f9926cf7464eb6bcea7e319f27e, type: 2}
+    last:
+    - {fileID: 11400000, guid: f62a1fbefaab3bc4593f27a6702d2211, type: 2}
+    - {fileID: 11400000, guid: ae65c72feddca9d4ea62d83365e50b9c, type: 2}
+  - key: dry_bush
+    anchor: 0
+    on:
+    - sand
+    where: 1
+    chance: 0.08
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 28b39280a4314b742a750fb2c8b0c902, type: 2}
+    - {fileID: 11400000, guid: 90c47b2f72ad39541a90f5e0d9e41b8c, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 28b39280a4314b742a750fb2c8b0c902, type: 2}
+    - {fileID: 11400000, guid: 90c47b2f72ad39541a90f5e0d9e41b8c, type: 2}
+    last:
+    - {fileID: 11400000, guid: 28b39280a4314b742a750fb2c8b0c902, type: 2}
+    - {fileID: 11400000, guid: 90c47b2f72ad39541a90f5e0d9e41b8c, type: 2}
+  - key: bones
+    anchor: 0
+    on:
+    - sand
+    where: 0
+    chance: 0.02
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 26af2fd819f61b947ac81bf8abc9d6f0, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 26af2fd819f61b947ac81bf8abc9d6f0, type: 2}
+    last:
+    - {fileID: 11400000, guid: 26af2fd819f61b947ac81bf8abc9d6f0, type: 2}
+  - key: mushroom
+    anchor: 0
+    on:
+    - dirt
+    - clay
+    - stone
+    where: 2
+    chance: 0.06
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 5a0347a3ce4c5d54cac2f1a3fe461787, type: 2}
+    - {fileID: 11400000, guid: 8728c833a86f0bb4eb502a3d9e3ad924, type: 2}
+    - {fileID: 11400000, guid: 91f33938d32864147998ef98d3ce2dbd, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 5a0347a3ce4c5d54cac2f1a3fe461787, type: 2}
+    - {fileID: 11400000, guid: 8728c833a86f0bb4eb502a3d9e3ad924, type: 2}
+    - {fileID: 11400000, guid: 91f33938d32864147998ef98d3ce2dbd, type: 2}
+    last:
+    - {fileID: 11400000, guid: 5a0347a3ce4c5d54cac2f1a3fe461787, type: 2}
+    - {fileID: 11400000, guid: 8728c833a86f0bb4eb502a3d9e3ad924, type: 2}
+    - {fileID: 11400000, guid: 91f33938d32864147998ef98d3ce2dbd, type: 2}
+  - key: stalagmite
+    anchor: 0
+    on:
+    - stone
+    - copper_ore
+    where: 2
+    chance: 0.1
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 1a9e8a9186ba79844bf7f1e58b2a3088, type: 2}
+    - {fileID: 11400000, guid: 747d3a9a290c4e844b8222d173857fbe, type: 2}
+    - {fileID: 11400000, guid: 3e852bcd0222ded4fac0027743c9bca8, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 1a9e8a9186ba79844bf7f1e58b2a3088, type: 2}
+    - {fileID: 11400000, guid: 747d3a9a290c4e844b8222d173857fbe, type: 2}
+    - {fileID: 11400000, guid: 3e852bcd0222ded4fac0027743c9bca8, type: 2}
+    last:
+    - {fileID: 11400000, guid: 1a9e8a9186ba79844bf7f1e58b2a3088, type: 2}
+    - {fileID: 11400000, guid: 747d3a9a290c4e844b8222d173857fbe, type: 2}
+    - {fileID: 11400000, guid: 3e852bcd0222ded4fac0027743c9bca8, type: 2}
+  - key: pebble
+    anchor: 0
+    on:
+    - stone
+    - dirt
+    - clay
+    - copper_ore
+    where: 2
+    chance: 0.12
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: fdd9939e1ae76e64a98a449152d51ed5, type: 2}
+    - {fileID: 11400000, guid: 9cf8109d3699e324abcee9c81c6daf76, type: 2}
+    - {fileID: 11400000, guid: 1e5a39be9f248574c99892e59a23e99c, type: 2}
+    middle:
+    - {fileID: 11400000, guid: fdd9939e1ae76e64a98a449152d51ed5, type: 2}
+    - {fileID: 11400000, guid: 9cf8109d3699e324abcee9c81c6daf76, type: 2}
+    - {fileID: 11400000, guid: 1e5a39be9f248574c99892e59a23e99c, type: 2}
+    last:
+    - {fileID: 11400000, guid: fdd9939e1ae76e64a98a449152d51ed5, type: 2}
+    - {fileID: 11400000, guid: 9cf8109d3699e324abcee9c81c6daf76, type: 2}
+    - {fileID: 11400000, guid: 1e5a39be9f248574c99892e59a23e99c, type: 2}
+  - key: vine
+    anchor: 1
+    on:
+    - grass
+    where: 0
+    chance: 0.55
+    min: 1
+    max: 3
+    first:
+    - {fileID: 11400000, guid: ea1ed1f38cbe8e54196ab0496cf15a41, type: 2}
+    - {fileID: 11400000, guid: 2e8f63c2d1bae774f977b3441e03adcd, type: 2}
+    middle:
+    - {fileID: 11400000, guid: ea1ed1f38cbe8e54196ab0496cf15a41, type: 2}
+    - {fileID: 11400000, guid: 2e8f63c2d1bae774f977b3441e03adcd, type: 2}
+    last:
+    - {fileID: 11400000, guid: 94cf25e56f1df9c46be72ad281b78766, type: 2}
+    - {fileID: 11400000, guid: 20ae7fac7b68def4492b262dc0bf7923, type: 2}
+  - key: root
+    anchor: 1
+    on:
+    - dirt
+    where: 2
+    chance: 0.22
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: 5c62f5707efaf18449395e8bedd3d11f, type: 2}
+    - {fileID: 11400000, guid: f3d2cb95e5d35db4a9acaff0d3ecc8fd, type: 2}
+    middle:
+    - {fileID: 11400000, guid: 5c62f5707efaf18449395e8bedd3d11f, type: 2}
+    - {fileID: 11400000, guid: f3d2cb95e5d35db4a9acaff0d3ecc8fd, type: 2}
+    last:
+    - {fileID: 11400000, guid: 5c62f5707efaf18449395e8bedd3d11f, type: 2}
+    - {fileID: 11400000, guid: f3d2cb95e5d35db4a9acaff0d3ecc8fd, type: 2}
+  - key: stalactite
+    anchor: 1
+    on:
+    - stone
+    - copper_ore
+    where: 2
+    chance: 0.18
+    min: 1
+    max: 1
+    first:
+    - {fileID: 11400000, guid: c098e64dccd980e45a87a84a1871ad26, type: 2}
+    - {fileID: 11400000, guid: 20ef8261786f85040abbca06573bceef, type: 2}
+    - {fileID: 11400000, guid: 12f62bcbbac4dfd498b1affc1314bb12, type: 2}
+    middle:
+    - {fileID: 11400000, guid: c098e64dccd980e45a87a84a1871ad26, type: 2}
+    - {fileID: 11400000, guid: 20ef8261786f85040abbca06573bceef, type: 2}
+    - {fileID: 11400000, guid: 12f62bcbbac4dfd498b1affc1314bb12, type: 2}
+    last:
+    - {fileID: 11400000, guid: c098e64dccd980e45a87a84a1871ad26, type: 2}
+    - {fileID: 11400000, guid: 20ef8261786f85040abbca06573bceef, type: 2}
+    - {fileID: 11400000, guid: 12f62bcbbac4dfd498b1affc1314bb12, type: 2}
+  floorSalt: 101
+  ceilingSalt: 211
+  glint: {fileID: 11400000, guid: f2489a9467af7324982e09b758cceda5, type: 2}
+  glintOn:
+  - copper_ore
+  torchFrames:
+  - {fileID: 1198061189516978711, guid: c2fcccd7f21453a6b4d3298e02a7eaa6, type: 3}
+  - {fileID: 3409989629082148953, guid: c2fcccd7f21453a6b4d3298e02a7eaa6, type: 3}
+  - {fileID: 3214964777338540606, guid: c2fcccd7f21453a6b4d3298e02a7eaa6, type: 3}
+  liquids:
+  - key: water
+    tile: {fileID: 11400000, guid: ee2506ef59939374e9908342d864f255, type: 2}
+    lit: 1
+    swim: 1
+    hazard: 0
+    order: 20
+  - key: lava
+    tile: {fileID: 11400000, guid: 5435a674a9f516b439556fc2b8fdcf80, type: 2}
+    lit: 0
+    swim: 0
+    hazard: 1
+    order: 21
+  ambient: 0.04
+  ambientColour: {r: 0.55, g: 0.62, b: 0.85, a: 1}
+  airKeeps: 0.91
+  solidKeeps: 0.56
+  torchColour: {r: 1, g: 0.72, b: 0.42, a: 1}
+  torchIntensity: 1.6
+  torchGlow: 0.35
+  torchGlowRadius: 3
+  wallTint: {r: 0.68, g: 0.7, b: 0.8, a: 1}
+  dayLength: 480
+  dayStart: 10
+  sunrise: 5.5
+  sunset: 19.5
+  day:
+  - hour: 0
+    light: {r: 0.3, g: 0.36, b: 0.6, a: 1}
+    top: {r: 0.0157, g: 0.0235, b: 0.0588, a: 1}
+    low: {r: 0.0627, g: 0.102, b: 0.2118, a: 1}
+    tint: {r: 0.2, g: 0.25, b: 0.44, a: 1}
+    stars: 1
+  - hour: 4.5
+    light: {r: 0.3, g: 0.36, b: 0.6, a: 1}
+    top: {r: 0.0157, g: 0.0235, b: 0.0588, a: 1}
+    low: {r: 0.0627, g: 0.102, b: 0.2118, a: 1}
+    tint: {r: 0.2, g: 0.25, b: 0.44, a: 1}
+    stars: 1
+  - hour: 5.75
+    light: {r: 0.42, g: 0.36, b: 0.44, a: 1}
+    top: {r: 0.102, g: 0.1333, b: 0.3137, a: 1}
+    low: {r: 0.7882, g: 0.4392, b: 0.3529, a: 1}
+    tint: {r: 0.5, g: 0.42, b: 0.52, a: 1}
+    stars: 0.5
+  - hour: 6.75
+    light: {r: 0.86, g: 0.66, b: 0.52, a: 1}
+    top: {r: 0.1804, g: 0.2902, b: 0.5882, a: 1}
+    low: {r: 0.949, g: 0.6588, b: 0.4235, a: 1}
+    tint: {r: 0.95, g: 0.74, b: 0.64, a: 1}
+    stars: 0
+  - hour: 8.5
+    light: {r: 1, g: 0.96, b: 0.9, a: 1}
+    top: {r: 0.2196, g: 0.4078, b: 0.7373, a: 1}
+    low: {r: 0.7137, g: 0.8627, b: 0.9412, a: 1}
+    tint: {r: 1, g: 0.97, b: 0.93, a: 1}
+    stars: 0
+  - hour: 12
+    light: {r: 1, g: 1, b: 1, a: 1}
+    top: {r: 0.2314, g: 0.4353, b: 0.7529, a: 1}
+    low: {r: 0.6627, g: 0.8392, b: 0.9373, a: 1}
+    tint: {r: 1, g: 1, b: 1, a: 1}
+    stars: 0
+  - hour: 16.5
+    light: {r: 1, g: 0.97, b: 0.9, a: 1}
+    top: {r: 0.2275, g: 0.4118, b: 0.7137, a: 1}
+    low: {r: 0.7255, g: 0.8471, b: 0.9176, a: 1}
+    tint: {r: 1, g: 0.96, b: 0.9, a: 1}
+    stars: 0
+  - hour: 18.5
+    light: {r: 0.95, g: 0.64, b: 0.44, a: 1}
+    top: {r: 0.1725, g: 0.1843, b: 0.4706, a: 1}
+    low: {r: 0.9412, g: 0.549, b: 0.3059, a: 1}
+    tint: {r: 0.96, g: 0.66, b: 0.52, a: 1}
+    stars: 0
+  - hour: 19.75
+    light: {r: 0.44, g: 0.34, b: 0.46, a: 1}
+    top: {r: 0.0784, g: 0.0784, b: 0.251, a: 1}
+    low: {r: 0.4784, g: 0.2471, b: 0.3608, a: 1}
+    tint: {r: 0.48, g: 0.38, b: 0.52, a: 1}
+    stars: 0.5
+  - hour: 21
+    light: {r: 0.3, g: 0.36, b: 0.6, a: 1}
+    top: {r: 0.0157, g: 0.0235, b: 0.0588, a: 1}
+    low: {r: 0.0627, g: 0.102, b: 0.2118, a: 1}
+    tint: {r: 0.2, g: 0.25, b: 0.44, a: 1}
+    stars: 1
+  skyBands: 7
+  skyOrder: -1010
+  cloudDrift: 0.25
+  backdrops:
+  - key: backdrop_stars
+    kind: 0
+    sprite: {fileID: 21300000, guid: 5e7ab8809761560db0eece688b550b59, type: 3}
+    scroll: 0
+    order: -1008
+    lit: 0
+  - key: backdrop_sun
+    kind: 1
+    sprite: {fileID: 21300000, guid: 719aa180577a56abac23c43cdddd4c01, type: 3}
+    scroll: 0
+    order: -1006
+    lit: 0
+  - key: backdrop_moon
+    kind: 2
+    sprite: {fileID: 21300000, guid: 1a329f991ee65c118bbbd510369dc647, type: 3}
+    scroll: 0
+    order: -1006
+    lit: 0
+  - key: backdrop_clouds
+    kind: 3
+    sprite: {fileID: 21300000, guid: 799a6517a76d55fd9c399073554e4ce7, type: 3}
+    scroll: 0.04
+    order: -1004
+    lit: 0
+  - key: backdrop_far
+    kind: 4
+    sprite: {fileID: 21300000, guid: 8d96f796f0be50f493b180ef16a33751, type: 3}
+    scroll: 0.1
+    order: -990
+    lit: 0
+  - key: backdrop_mid
+    kind: 4
+    sprite: {fileID: 21300000, guid: f1f5fcde2454598c9ed5c197d1c35e52, type: 3}
+    scroll: 0.25
+    order: -980
+    lit: 0
+  - key: backdrop_near
+    kind: 4
+    sprite: {fileID: 21300000, guid: bd97565814f3577298cb5f1e11f075d2, type: 3}
+    scroll: 0.45
+    order: -970
+    lit: 0
+  - key: backdrop_cave
+    kind: 5
+    sprite: {fileID: 21300000, guid: a2e18befe86b51deb51e346f32bf2c59, type: 3}
+    scroll: 0.55
+    order: -960
+    lit: 1
+  - key: backdrop_cave_top
+    kind: 6
+    sprite: {fileID: 21300000, guid: 1c089d0e9bc85615956e437b4825bcda, type: 3}
+    scroll: 0.55
+    order: -959
+    lit: 1

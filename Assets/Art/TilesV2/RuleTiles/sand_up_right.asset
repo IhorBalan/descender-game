@@ -34,3 +34,6 @@ MonoBehaviour:
     m_RuleTransform: 0
   materialKey: sand_up_right
   joinGroup: earth
+  baseKey: sand
+  slope: 1
+  emits: {r: 0, g: 0, b: 0, a: 1}

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
@@ -5,11 +6,13 @@ using UnityEngine.Tilemaps;
 namespace Descender.World.TilesV2
 {
     /// <summary>
-    /// Lights a Tiles V2 map tile by tile: daylight down every column to its first tile or
-    /// wall, and each torch under the torches holder, spread by TileLight and drawn as one sprite light
-    /// whose texels are the map's tiles, filtered so the light is smooth between them.
-    /// Runs in the editor too, so a scene renders lit without entering play. Call Refresh
-    /// after changing the tiles or the torches.
+    /// Lights a Tiles V2 map tile by tile (docs/art/tiles-v2.md): the open sky, each torch
+    /// under the torches holder, the liquids and the ground that give light, spread by
+    /// TileLight and drawn as one sprite light whose texels are the map's tiles, filtered so
+    /// the light is smooth between them. The sky's half and the sources' half are kept
+    /// apart, so the colour of the daylight (the hour, see DayNight) changes without
+    /// spreading again. Runs in the editor too, so a scene renders lit without entering
+    /// play. Call Refresh after changing the tiles or the torches.
     /// </summary>
     [ExecuteAlways]
     [RequireComponent(typeof(Light2D))]
@@ -21,50 +24,89 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private Tilemap walls;
 
+        [SerializeField]
+        private List<Tilemap> liquids = new List<Tilemap>();
+
         [SerializeField, Tooltip("The torches whose light the tiles spread: every TorchFlame under it.")]
         private Transform torches;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The colour of the daylight: what the sky's half of the light is multiplied by.")]
         private Color daylight = Color.white;
 
-        [SerializeField, Range(0f, 1f)]
-        private float airKeeps = 0.9f;
+        [SerializeField, Range(0f, 1f), Tooltip("The share of its light a tile of air passes on.")]
+        private float airKeeps = 0.91f;
 
-        [SerializeField, Range(0f, 1f)]
-        private float solidKeeps = 0.7f;
-
-        /// <summary>The rows of open air the light covers over the map's top tile.</summary>
-        public const int SkyRows = 2;
+        [SerializeField, Range(0f, 1f), Tooltip("The share a solid tile passes on.")]
+        private float solidKeeps = 0.56f;
 
         private Texture2D texture;
         private Sprite sprite;
+        private Color[] sky = System.Array.Empty<Color>();
+        private Color[] sources = System.Array.Empty<Color>();
+        private Color[] light = System.Array.Empty<Color>();
 
         /// <summary>The light per tile from the last Refresh, row major from the bounds' bottom left.</summary>
-        public Color[] Light { get; private set; } = System.Array.Empty<Color>();
+        public Color[] Light => light;
+
+        /// <summary>The sky's half of the light, for a white daylight.</summary>
+        public Color[] Sky => sky;
+
+        /// <summary>The half that torches, liquids and glowing ground give.</summary>
+        public Color[] Sources => sources;
 
         /// <summary>The cells the light covers.</summary>
         public BoundsInt Bounds { get; private set; }
 
+        /// <summary>What stood in the cells at the last Refresh; null before the first.</summary>
+        public TileField Field { get; private set; }
+
+        /// <summary>The colour of the daylight; setting it mixes the two halves again and shows the result.</summary>
+        public Color Daylight
+        {
+            get => daylight;
+            set
+            {
+                if (daylight == value)
+                {
+                    return;
+                }
+                daylight = value;
+                Show();
+            }
+        }
+
+        private void OnEnable() => Refresh();
+
+        private void OnDisable() => Release();
+
         public void Configure(
             Tilemap terrainMap,
             Tilemap wallMap,
+            IEnumerable<Tilemap> liquidMaps,
             Transform torchHolder,
-            Color day,
             float air,
             float solid
         )
         {
             terrain = terrainMap;
             walls = wallMap;
+            liquids = liquidMaps != null ? new List<Tilemap>(liquidMaps) : new List<Tilemap>();
             torches = torchHolder;
-            daylight = day;
             airKeeps = air;
             solidKeeps = solid;
         }
 
-        private void OnEnable() => Refresh();
-
-        private void OnDisable() => Release();
+        /// <summary>The light at a cell from the last Refresh; black outside the map.</summary>
+        public Color At(Vector3Int cell)
+        {
+            var x = cell.x - Bounds.xMin;
+            var y = cell.y - Bounds.yMin;
+            if (x < 0 || y < 0 || x >= Bounds.size.x || y >= Bounds.size.y || light.Length == 0)
+            {
+                return Color.black;
+            }
+            return light[y * Bounds.size.x + x];
+        }
 
         /// <summary>Works the light out again from the tiles and torches and shows it.</summary>
         public void Refresh()
@@ -73,57 +115,76 @@ namespace Descender.World.TilesV2
             {
                 return;
             }
-            var bounds = terrain.cellBounds;
-            if (walls != null)
-            {
-                var w = walls.cellBounds;
-                var min = Vector3Int.Min(bounds.min, w.min);
-                var max = Vector3Int.Max(bounds.max, w.max);
-                bounds = new BoundsInt(min, max - min);
-            }
-            // Open air over the top tile, so every column starts under the sky.
-            bounds = new BoundsInt(bounds.min, bounds.size + new Vector3Int(0, SkyRows, 0));
-            var width = bounds.size.x;
-            var height = bounds.size.y;
-            if (width <= 0 || height <= 0)
+            var field = TileField.Read(terrain, walls, liquids);
+            if (field == null)
             {
                 return;
             }
-            var solid = new bool[width * height];
-            var backed = new bool[width * height];
-            for (var y = 0; y < height; y++)
+            var count = field.Width * field.Height;
+            var solid = new bool[count];
+            var shades = new bool[count];
+            var keep = new Color[count];
+            var emits = new Color[count];
+            var air = new Color(airKeeps, airKeeps, airKeeps, 1f);
+            var rock = new Color(solidKeeps, solidKeeps, solidKeeps, 1f);
+            for (var i = 0; i < count; i++)
             {
-                for (var x = 0; x < width; x++)
+                var ground = field.Ground[i];
+                var liquid = field.Liquid[i];
+                solid[i] = ground != null;
+                shades[i] = field.Shades(i);
+                keep[i] = ground != null ? rock : air;
+                emits[i] = Color.black;
+                if (ground != null && !ground.IsSlope)
                 {
-                    var cell = new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0);
-                    solid[y * width + x] = terrain.HasTile(cell);
-                    backed[y * width + x] = walls != null && walls.HasTile(cell);
+                    emits[i] = ground.Emits;
+                }
+                if (liquid != null)
+                {
+                    keep[i] = liquid.Keeps;
+                    emits[i] = liquid.Emits;
                 }
             }
-            var seeds = new Color[width * height];
-            TileLight.SeedSky(seeds, solid, backed, width, height, daylight);
             if (torches != null)
             {
                 foreach (var torch in torches.GetComponentsInChildren<TorchFlame>())
                 {
-                    var cell = terrain.WorldToCell(torch.transform.position) - bounds.min;
-                    if (cell.x >= 0 && cell.x < width && cell.y >= 0 && cell.y < height)
+                    var cell = terrain.WorldToCell(torch.transform.position) - field.Bounds.min;
+                    if (field.Inside(cell.x, cell.y))
                     {
-                        var i = cell.y * width + cell.x;
-                        var e = torch.Emission;
-                        var s = seeds[i];
-                        seeds[i] = new Color(Mathf.Max(s.r, e.r), Mathf.Max(s.g, e.g), Mathf.Max(s.b, e.b), 1f);
+                        var i = field.Index(cell.x, cell.y);
+                        var seed = emits[i];
+                        var torchLight = torch.Emission;
+                        emits[i] = new Color(
+                            Mathf.Max(seed.r, torchLight.r),
+                            Mathf.Max(seed.g, torchLight.g),
+                            Mathf.Max(seed.b, torchLight.b),
+                            1f
+                        );
                     }
                 }
             }
-            var decay = new TileLight.Decay(airKeeps, solidKeeps);
-            Light = TileLight.Spread(seeds, solid, width, height, decay);
-            Bounds = bounds;
-            Show(width, height, terrain.CellToWorld(bounds.min));
+            var seeds = new Color[count];
+            TileLight.SeedSky(seeds, shades, field.Width, field.Height, Color.white, null);
+            sky = TileLight.Spread(seeds, keep, solid, field.Width, field.Height);
+            sources = TileLight.Spread(emits, keep, solid, field.Width, field.Height);
+            light = new Color[count];
+            Field = field;
+            Bounds = field.Bounds;
+            transform.position = terrain.CellToWorld(field.Bounds.min);
+            Show();
         }
 
-        private void Show(int width, int height, Vector3 corner)
+        // Mixes the two halves under the daylight and puts the result in the light's texture.
+        private void Show()
         {
+            if (light.Length == 0)
+            {
+                return;
+            }
+            TileLight.Combine(sky, sources, daylight, light);
+            var width = Bounds.size.x;
+            var height = Bounds.size.y;
             if (texture == null || texture.width != width || texture.height != height)
             {
                 Release();
@@ -134,17 +195,24 @@ namespace Descender.World.TilesV2
                     wrapMode = TextureWrapMode.Clamp,
                     hideFlags = HideFlags.HideAndDontSave,
                 };
-                // One texel per tile, its centre on the tile's centre.
-                sprite = Sprite.Create(texture, new Rect(0, 0, width, height), Vector2.zero, 1f);
+                // One texel per tile, its centre on the tile's centre. A full rectangle: the
+                // light's mesh is the sprite's, and it is made again only for a new sprite.
+                sprite = Sprite.Create(
+                    texture,
+                    new Rect(0, 0, width, height),
+                    Vector2.zero,
+                    1f,
+                    0,
+                    SpriteMeshType.FullRect
+                );
                 sprite.name = "Tile light";
                 sprite.hideFlags = HideFlags.HideAndDontSave;
             }
-            texture.SetPixels(Light);
+            texture.SetPixels(light);
             texture.Apply(false);
-            transform.position = corner;
-            var light = GetComponent<Light2D>();
-            light.lightType = Light2D.LightType.Sprite;
-            light.lightCookieSprite = sprite;
+            var shown = GetComponent<Light2D>();
+            shown.lightType = Light2D.LightType.Sprite;
+            shown.lightCookieSprite = sprite;
         }
 
         private void Release()

@@ -1062,3 +1062,6 @@ MonoBehaviour:
     m_RuleTransform: 0
   materialKey: copper_ore
   joinGroup: earth
+  baseKey: copper_ore
+  slope: 0
+  emits: {r: 0.3, g: 0.17, b: 0.07, a: 1}

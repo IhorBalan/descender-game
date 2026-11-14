@@ -8,8 +8,9 @@ namespace Descender.EditorTools.TilesV2
 {
     /// <summary>
     /// The Tiles V2 Tile Palette (Window > 2D > Tile Palette, "TilesV2 Palette"): the
-    /// terrain materials on the top row, their slopes on the next, the walls under them.
-    /// Blend overlays are not in it: Descender > Tiles V2 > Paint blends lays them. Made
+    /// terrain materials on the top row, their slopes on the next, the walls under them,
+    /// the liquids last. What is laid by rule is not in it (blends, shade, decor, glints):
+    /// Descender > Tiles V2 > Paint by rule lays those. Made
     /// once and refilled after, so its GUID stays; Build tiles refreshes it.
     /// </summary>
     public static class TilesV2Palette
@@ -40,6 +41,10 @@ namespace Descender.EditorTools.TilesV2
                 {
                     layout.Add((new Vector3Int(slope++, -1, 0), TilesV2Manifest.SlopePath(material.key, kind)));
                 }
+            }
+            for (var i = 0; i < manifest.liquids.Length; i++)
+            {
+                layout.Add((new Vector3Int(i, -3, 0), TilesV2Manifest.TilePath(manifest.liquids[i].key)));
             }
             return layout;
         }

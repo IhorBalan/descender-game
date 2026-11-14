@@ -22,14 +22,45 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private string joinGroup = "";
 
+        [Tooltip(
+            "The material this tile is of: its own key, or for a slope or an overlay the key of what it is cut from."
+        )]
+        [SerializeField]
+        private string baseKey = "";
+
+        [Tooltip("A slope: half a tile, which neither casts shade nor carries decor.")]
+        [SerializeField]
+        private bool slope;
+
+        [Tooltip("The light the tile gives of its own, in the tile light's units (glowing ore).")]
+        [SerializeField]
+        private Color emits = Color.black;
+
         public string MaterialKey => materialKey;
         public string JoinGroup => joinGroup;
 
-        /// <summary>Sets the key and join group (the builder's one entry point).</summary>
+        /// <summary>The material the tile is of: `grass` for the grass tile and for both grass slopes.</summary>
+        public string BaseKey => string.IsNullOrEmpty(baseKey) ? materialKey : baseKey;
+
+        public bool IsSlope => slope;
+
+        /// <summary>The light the tile gives of its own; black for most.</summary>
+        public Color Emits => emits;
+
+        /// <summary>Sets the key and join group (the builder's entry point for an overlay).</summary>
         public void Configure(string key, string group)
+        {
+            Configure(key, group, key, false, Color.black);
+        }
+
+        /// <summary>Sets what the tile is (the builder's entry point for a material and its slopes).</summary>
+        public void Configure(string key, string group, string material, bool isSlope, Color light)
         {
             materialKey = key ?? "";
             joinGroup = group ?? "";
+            baseKey = material ?? "";
+            slope = isSlope;
+            emits = new Color(light.r, light.g, light.b, 1f);
         }
 
         /// <summary>Whether a neighbouring tile counts as solid ground of this material.</summary>

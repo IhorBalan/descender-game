@@ -7,35 +7,65 @@ using UnityEngine.Tilemaps;
 namespace Descender.EditorTools.TilesV2
 {
     /// <summary>
-    /// Descender > Tiles V2 > Build tiles: makes the Tiles V2 Rule Tiles from the
-    /// generator's manifest and sheets (docs/art/tiles-v2.md). Each material gets one
+    /// Descender > Tiles V2 > Build tiles: makes the Tiles V2 tiles and the tile set from
+    /// the generator's manifest and sheets (docs/art/tiles-v2.md). Each material gets one
     /// <see cref="TerrainTile"/> with a rule per autotile frame (its variants as the rule's
-    /// random sprites), each slope its own tile, and each blend one overlay tile per
-    /// side mask, then refills the Tile Palette (<see cref="TilesV2Palette"/>). Idempotent: an existing asset is loaded and its rules replaced, so its
-    /// GUID and every reference to it stay.
+    /// random sprites), each slope its own tile, each blend one overlay tile per side mask;
+    /// then the decor and shade tiles, the liquids, the glint, and
+    /// <see cref="TilesV2Set"/>, the one asset a world is built from at run time; last, the
+    /// Tile Palette (<see cref="TilesV2Palette"/>). Idempotent: an existing asset is loaded
+    /// and filled again, so its GUID and every reference to it stay.
     /// </summary>
     public static class TilesV2Builder
     {
+        private const string LitMaterialPath =
+            "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Lit-Default.mat";
+        private const string UnlitMaterialPath =
+            "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
+
         [MenuItem("Descender/Tiles V2/Build tiles")]
         public static void BuildMenu()
         {
             var count = Build();
-            Debug.Log($"Tiles V2: built {count} tiles under {TilesV2Manifest.TileFolder}.");
+            Debug.Log(
+                $"Tiles V2: built {count} tiles under {TilesV2Manifest.TileFolder} and {TilesV2Manifest.SetPath}."
+            );
         }
 
-        /// <summary>Builds every tile the manifest names; returns how many.</summary>
+        /// <summary>Builds every tile the manifest names and the tile set; returns how many tiles.</summary>
         public static int Build()
         {
             var manifest = TilesV2Manifest.Load();
             EnsureFolder(TilesV2Manifest.TileFolder);
             EnsureFolder(TilesV2Manifest.TileFolder + "/Blends");
+            EnsureFolder(TilesV2Manifest.TileFolder + "/Decor");
+            EnsureFolder(TilesV2Manifest.TileFolder + "/Shade");
+            var count = BuildTerrain(manifest) + BuildBlends(manifest);
+            count += BuildDecor(manifest) + BuildShade(manifest) + BuildLiquids(manifest) + BuildGlint(manifest);
+            BuildSet(manifest);
+            AssetDatabase.SaveAssets();
+            TilesV2Palette.Build(manifest);
+            return count;
+        }
+
+        /// <summary>The tile set asset, as last built; null before the first build.</summary>
+        public static TilesV2Set LoadSet() => AssetDatabase.LoadAssetAtPath<TilesV2Set>(TilesV2Manifest.SetPath);
+
+        private static int BuildTerrain(TilesV2Manifest manifest)
+        {
             var count = 0;
             foreach (var material in manifest.materials)
             {
-                var sprites = SpritesOf(TilesV2Manifest.Folder + "/" + material.sheet);
+                var sprites = SpritesOf(TilesV2Manifest.SheetPath(material.sheet));
                 var collider = material.IsWall ? Tile.ColliderType.None : Tile.ColliderType.Grid;
-                var tile = LoadOrCreate(TilesV2Manifest.TilePath(material.key));
-                tile.Configure(material.key, material.group);
+                var tile = LoadOrCreate<TerrainTile>(TilesV2Manifest.TilePath(material.key));
+                tile.Configure(
+                    material.key,
+                    material.group,
+                    material.key,
+                    false,
+                    TilesV2Manifest.ColourOf(material.emits)
+                );
                 tile.m_DefaultSprite = Find(sprites, TilesV2Manifest.FrameSprite(material.key, 0, 0));
                 tile.m_DefaultColliderType = collider;
                 var rules = new List<RuleTile.TilingRule>();
@@ -56,8 +86,8 @@ namespace Descender.EditorTools.TilesV2
                 }
                 foreach (var slope in manifest.slopes)
                 {
-                    var slopeTile = LoadOrCreate(TilesV2Manifest.SlopePath(material.key, slope));
-                    slopeTile.Configure(material.key + "_" + slope, material.group);
+                    var slopeTile = LoadOrCreate<TerrainTile>(TilesV2Manifest.SlopePath(material.key, slope));
+                    slopeTile.Configure(material.key + "_" + slope, material.group, material.key, true, Color.black);
                     var variants = new Sprite[manifest.variants];
                     for (var v = 0; v < variants.Length; v++)
                     {
@@ -70,12 +100,18 @@ namespace Descender.EditorTools.TilesV2
                     count++;
                 }
             }
+            return count;
+        }
+
+        private static int BuildBlends(TilesV2Manifest manifest)
+        {
+            var count = 0;
             foreach (var blend in manifest.blends)
             {
-                var sprites = SpritesOf(TilesV2Manifest.Folder + "/" + blend.sheet);
+                var sprites = SpritesOf(TilesV2Manifest.SheetPath(blend.sheet));
                 foreach (var sides in blend.masks)
                 {
-                    var tile = LoadOrCreate(TilesV2Manifest.BlendPath(blend.key, sides));
+                    var tile = LoadOrCreate<TerrainTile>(TilesV2Manifest.BlendPath(blend.key, sides));
                     tile.Configure(blend.key + "_s" + sides, "");
                     var variants = new Sprite[manifest.variants];
                     for (var v = 0; v < variants.Length; v++)
@@ -88,9 +124,262 @@ namespace Descender.EditorTools.TilesV2
                     count++;
                 }
             }
-            AssetDatabase.SaveAssets();
-            TilesV2Palette.Build(manifest);
             return count;
+        }
+
+        private static int BuildDecor(TilesV2Manifest manifest)
+        {
+            var sprites = SpritesOf(TilesV2Manifest.SheetPath(manifest.decor.sheet));
+            var made = new HashSet<string>();
+            foreach (var rule in manifest.decor.rules)
+            {
+                foreach (var part in new[] { rule.first, rule.middle, rule.last })
+                {
+                    for (var v = 0; v < rule.variants; v++)
+                    {
+                        var path = TilesV2Manifest.DecorPath(part, v);
+                        if (made.Add(path))
+                        {
+                            Plain(path, Find(sprites, TilesV2Manifest.DecorSprite(part, v)));
+                        }
+                    }
+                }
+            }
+            return made.Count;
+        }
+
+        private static int BuildShade(TilesV2Manifest manifest)
+        {
+            var sprites = SpritesOf(TilesV2Manifest.SheetPath(manifest.shade.sheet));
+            Plain(TilesV2Manifest.ShadeFullPath, Find(sprites, TilesV2Manifest.ShadeFullSprite));
+            foreach (var mask in manifest.shade.masks)
+            {
+                Plain(TilesV2Manifest.ShadePath(mask), Find(sprites, TilesV2Manifest.ShadeSprite(mask)));
+            }
+            return manifest.shade.masks.Length + 1;
+        }
+
+        private static int BuildLiquids(TilesV2Manifest manifest)
+        {
+            foreach (var liquid in manifest.liquids)
+            {
+                var sprites = SpritesOf(TilesV2Manifest.SheetPath(liquid.sheet));
+                var surface = new Sprite[liquid.frames];
+                var body = new Sprite[liquid.frames];
+                for (var f = 0; f < liquid.frames; f++)
+                {
+                    surface[f] = Find(sprites, TilesV2Manifest.LiquidSprite(liquid.key, "surface", f));
+                    body[f] = Find(sprites, TilesV2Manifest.LiquidSprite(liquid.key, "body", f));
+                }
+                var tile = LoadOrCreate<LiquidTile>(TilesV2Manifest.TilePath(liquid.key));
+                tile.Configure(
+                    liquid.key,
+                    surface,
+                    body,
+                    liquid.fps,
+                    TilesV2Manifest.ColourOf(liquid.keeps),
+                    TilesV2Manifest.ColourOf(liquid.emits)
+                );
+                EditorUtility.SetDirty(tile);
+            }
+            return manifest.liquids.Length;
+        }
+
+        private static int BuildGlint(TilesV2Manifest manifest)
+        {
+            var sprites = SpritesOf(TilesV2Manifest.SheetPath(manifest.glint.sheet));
+            var frames = new Sprite[manifest.variants * GlintTile.FramesPerVariant];
+            for (var v = 0; v < manifest.variants; v++)
+            {
+                for (var f = 0; f < GlintTile.FramesPerVariant; f++)
+                {
+                    frames[v * GlintTile.FramesPerVariant + f] = Find(sprites, TilesV2Manifest.GlintSprite(v, f));
+                }
+            }
+            var tile = LoadOrCreate<GlintTile>(TilesV2Manifest.GlintPath);
+            tile.Configure(
+                Find(sprites, TilesV2Manifest.GlintNoneSprite),
+                frames,
+                (int[])manifest.glint.loop.Clone(),
+                manifest.glint.fps
+            );
+            EditorUtility.SetDirty(tile);
+            return 1;
+        }
+
+        // Fills the tile set from the manifest and the tiles just built.
+        private static void BuildSet(TilesV2Manifest manifest)
+        {
+            var set = LoadOrCreate<TilesV2Set>(TilesV2Manifest.SetPath);
+            set.litMaterial = AssetDatabase.LoadAssetAtPath<Material>(LitMaterialPath);
+            set.unlitMaterial = AssetDatabase.LoadAssetAtPath<Material>(UnlitMaterialPath);
+
+            var legend = new List<TilesV2Set.Glyph>();
+            foreach (var entry in manifest.legend)
+            {
+                var layer = Parse<TilesV2Set.Layer>(entry.layer);
+                var tiled = layer != TilesV2Set.Layer.Prop && layer != TilesV2Set.Layer.Mark;
+                var path = string.IsNullOrEmpty(entry.slope)
+                    ? TilesV2Manifest.TilePath(entry.key)
+                    : TilesV2Manifest.SlopePath(entry.key, entry.slope);
+                legend.Add(
+                    new TilesV2Set.Glyph
+                    {
+                        character = entry.character,
+                        layer = layer,
+                        key = entry.key,
+                        tile = tiled ? Load<TileBase>(path) : null,
+                    }
+                );
+            }
+            set.legend = legend.ToArray();
+
+            var blends = new List<TilesV2Set.Blend>();
+            foreach (var entry in manifest.blends)
+            {
+                var blend = new TilesV2Set.Blend
+                {
+                    key = entry.key,
+                    onto = entry.onto,
+                    from = (string[])entry.from.Clone(),
+                };
+                foreach (var sides in entry.masks)
+                {
+                    blend.overlays[sides] = Load<TileBase>(TilesV2Manifest.BlendPath(entry.key, sides));
+                }
+                blends.Add(blend);
+            }
+            set.blends = blends.ToArray();
+
+            set.shadeFull = Load<TileBase>(TilesV2Manifest.ShadeFullPath);
+            var shades = new List<TilesV2Set.Shade>();
+            foreach (var mask in manifest.shade.masks)
+            {
+                shades.Add(
+                    new TilesV2Set.Shade { mask = mask, tile = Load<TileBase>(TilesV2Manifest.ShadePath(mask)) }
+                );
+            }
+            set.shades = shades.ToArray();
+
+            var decor = new List<TilesV2Set.DecorRule>();
+            foreach (var rule in manifest.decor.rules)
+            {
+                decor.Add(
+                    new TilesV2Set.DecorRule
+                    {
+                        key = rule.key,
+                        anchor = Parse<TilesV2Set.Anchor>(rule.anchor),
+                        on = (string[])rule.on.Clone(),
+                        where = Parse<TilesV2Set.Where>(rule.where),
+                        chance = rule.chance,
+                        min = rule.min,
+                        max = rule.max,
+                        first = DecorTiles(rule.first, rule.variants),
+                        middle = DecorTiles(rule.middle, rule.variants),
+                        last = DecorTiles(rule.last, rule.variants),
+                    }
+                );
+            }
+            set.decor = decor.ToArray();
+            set.floorSalt = manifest.decor.floorSalt;
+            set.ceilingSalt = manifest.decor.ceilingSalt;
+            set.glint = Load<GlintTile>(TilesV2Manifest.GlintPath);
+            set.glintOn = (string[])manifest.glint.on.Clone();
+
+            set.torchFrames = new Sprite[0];
+            foreach (var prop in manifest.props)
+            {
+                if (prop.key != TilesV2World.TorchKey)
+                {
+                    continue;
+                }
+                var sprites = SpritesOf(TilesV2Manifest.SheetPath(prop.sheet));
+                set.torchFrames = new Sprite[prop.frames];
+                for (var f = 0; f < prop.frames; f++)
+                {
+                    set.torchFrames[f] = Find(sprites, TilesV2Manifest.PropSprite(prop.key, f));
+                }
+            }
+
+            var liquids = new List<TilesV2Set.Liquid>();
+            foreach (var entry in manifest.liquids)
+            {
+                liquids.Add(
+                    new TilesV2Set.Liquid
+                    {
+                        key = entry.key,
+                        tile = Load<LiquidTile>(TilesV2Manifest.TilePath(entry.key)),
+                        lit = entry.lit,
+                        swim = entry.swim,
+                        hazard = entry.hazard,
+                        order = entry.order,
+                    }
+                );
+            }
+            set.liquids = liquids.ToArray();
+
+            var light = manifest.light;
+            set.ambient = light.ambient;
+            set.ambientColour = TilesV2Manifest.ColourOf(light.ambientColour);
+            set.airKeeps = light.airKeeps;
+            set.solidKeeps = light.solidKeeps;
+            set.torchColour = TilesV2Manifest.ColourOf(light.torchColour);
+            set.torchIntensity = light.torchIntensity;
+            set.torchGlow = light.torchGlow;
+            set.torchGlowRadius = light.torchGlowRadius;
+            set.wallTint = TilesV2Manifest.ColourOf(light.wallTint);
+
+            set.dayLength = manifest.day.length;
+            set.dayStart = manifest.day.start;
+            set.sunrise = manifest.day.sunrise;
+            set.sunset = manifest.day.sunset;
+            var keys = new List<TilesV2Set.DayKey>();
+            foreach (var key in manifest.day.keys)
+            {
+                keys.Add(
+                    new TilesV2Set.DayKey
+                    {
+                        hour = key.hour,
+                        light = TilesV2Manifest.ColourOf(key.light),
+                        top = TilesV2Manifest.ColourOf(key.top),
+                        low = TilesV2Manifest.ColourOf(key.low),
+                        tint = TilesV2Manifest.ColourOf(key.tint),
+                        stars = key.stars,
+                    }
+                );
+            }
+            set.day = keys.ToArray();
+
+            set.skyBands = manifest.sky.bands;
+            set.skyOrder = manifest.sky.order;
+            set.cloudDrift = manifest.sky.cloudDrift;
+            var backdrops = new List<TilesV2Set.Backdrop>();
+            foreach (var entry in manifest.backdrops)
+            {
+                backdrops.Add(
+                    new TilesV2Set.Backdrop
+                    {
+                        key = entry.key,
+                        kind = Parse<TilesV2Set.BackdropKind>(entry.kind),
+                        sprite = Load<Sprite>(TilesV2Manifest.SheetPath(entry.key + ".png")),
+                        scroll = entry.scroll,
+                        order = entry.order,
+                        lit = entry.lit,
+                    }
+                );
+            }
+            set.backdrops = backdrops.ToArray();
+            EditorUtility.SetDirty(set);
+        }
+
+        private static TileBase[] DecorTiles(string part, int variants)
+        {
+            var tiles = new TileBase[variants];
+            for (var v = 0; v < variants; v++)
+            {
+                tiles[v] = Load<TileBase>(TilesV2Manifest.DecorPath(part, v));
+            }
+            return tiles;
         }
 
         /// <summary>
@@ -138,15 +427,48 @@ namespace Descender.EditorTools.TilesV2
             EditorUtility.SetDirty(tile);
         }
 
-        private static TerrainTile LoadOrCreate(string path)
+        // A tile that is one sprite and nothing else: decor, shade.
+        private static void Plain(string path, Sprite sprite)
         {
-            var tile = AssetDatabase.LoadAssetAtPath<TerrainTile>(path);
-            if (tile == null)
+            var tile = LoadOrCreate<Tile>(path);
+            tile.sprite = sprite;
+            tile.color = Color.white;
+            tile.colliderType = Tile.ColliderType.None;
+            EditorUtility.SetDirty(tile);
+        }
+
+        private static T LoadOrCreate<T>(string path)
+            where T : ScriptableObject
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null)
             {
-                tile = ScriptableObject.CreateInstance<TerrainTile>();
-                AssetDatabase.CreateAsset(tile, path);
+                asset = ScriptableObject.CreateInstance<T>();
+                AssetDatabase.CreateAsset(asset, path);
             }
-            return tile;
+            return asset;
+        }
+
+        private static T Load<T>(string path)
+            where T : Object
+        {
+            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null)
+            {
+                throw new System.IO.FileNotFoundException("Tiles V2: run the generator, then build the tiles.", path);
+            }
+            return asset;
+        }
+
+        // A manifest word as an enum member: `cave_top` is CaveTop.
+        private static T Parse<T>(string word)
+            where T : struct
+        {
+            if (System.Enum.TryParse<T>((word ?? "").Replace("_", ""), true, out var value))
+            {
+                return value;
+            }
+            throw new System.FormatException($"Tiles V2: the manifest says '{word}', which is no {typeof(T).Name}.");
         }
 
         private static Dictionary<string, Sprite> SpritesOf(string sheetPath)

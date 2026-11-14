@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86908f245cfa8554f88ee126d054f727, type: 3}
+  m_Name: glint
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.GlintTile
+  none: {fileID: 2277474133819530431, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  frames:
+  - {fileID: 260738375169510682, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 3856702691713195228, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 1509448423986119717, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 1973096969212531251, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 2109519313465809928, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 3702010709575864310, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 1685499742631580509, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 4419491560860443243, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 4505237478627104923, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 2989552902339008322, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 3002281141359961635, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  - {fileID: 2963147377552960787, guid: f12f5d08986a50ac9302991dc6da0be6, type: 3}
+  loop: ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000000100000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffff020000000300000002000000ffffffffffffffffffffffffffffffffi
+  framesPerSecond: 10

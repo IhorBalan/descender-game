@@ -1,0 +1,1130 @@
+fileFormatVersion: 2
+guid: 7c322e14cc47591d9e6f282410b98266
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 158965221058499760
+    second: tv2_decor_flower_0
+  - first:
+      213: 2274094034003087255
+    second: tv2_decor_flower_1
+  - first:
+      213: 2154291721229936125
+    second: tv2_decor_flower_2
+  - first:
+      213: 614012525057831822
+    second: tv2_decor_flower_3
+  - first:
+      213: 1148059526183946229
+    second: tv2_decor_bush_0
+  - first:
+      213: 1912799605967101279
+    second: tv2_decor_bush_1
+  - first:
+      213: 2839772741084161348
+    second: tv2_decor_grass_tall_0
+  - first:
+      213: 1184566661580133339
+    second: tv2_decor_grass_tall_1
+  - first:
+      213: 817175043759907152
+    second: tv2_decor_tuft_0
+  - first:
+      213: 3309964715664882145
+    second: tv2_decor_tuft_1
+  - first:
+      213: 649961500566682924
+    second: tv2_decor_tuft_2
+  - first:
+      213: 2011851326338466550
+    second: tv2_decor_cactus_base_0
+  - first:
+      213: 2648353714692733352
+    second: tv2_decor_cactus_base_1
+  - first:
+      213: 711104080651721149
+    second: tv2_decor_cactus_mid_0
+  - first:
+      213: 4358189076611812915
+    second: tv2_decor_cactus_mid_1
+  - first:
+      213: 2310033734707010251
+    second: tv2_decor_cactus_top_0
+  - first:
+      213: 1643582296572647336
+    second: tv2_decor_cactus_top_1
+  - first:
+      213: 508559727287980280
+    second: tv2_decor_dry_bush_0
+  - first:
+      213: 3355452508520658440
+    second: tv2_decor_dry_bush_1
+  - first:
+      213: 2194906685504373997
+    second: tv2_decor_bones_0
+  - first:
+      213: 4120010787943698947
+    second: tv2_decor_mushroom_0
+  - first:
+      213: 2689458903066133568
+    second: tv2_decor_mushroom_1
+  - first:
+      213: 1661153157315123071
+    second: tv2_decor_mushroom_2
+  - first:
+      213: 3700786670806666178
+    second: tv2_decor_stalagmite_0
+  - first:
+      213: 129625247083940790
+    second: tv2_decor_stalagmite_1
+  - first:
+      213: 4162435181204801111
+    second: tv2_decor_stalagmite_2
+  - first:
+      213: 776046678740572885
+    second: tv2_decor_pebble_0
+  - first:
+      213: 4068796364377538717
+    second: tv2_decor_pebble_1
+  - first:
+      213: 3486728469217556915
+    second: tv2_decor_pebble_2
+  - first:
+      213: 2099652540215583817
+    second: tv2_decor_vine_mid_0
+  - first:
+      213: 1351575304594591815
+    second: tv2_decor_vine_mid_1
+  - first:
+      213: 1096191037634549287
+    second: tv2_decor_vine_tip_0
+  - first:
+      213: 3409402186486709995
+    second: tv2_decor_vine_tip_1
+  - first:
+      213: 1196892160764346250
+    second: tv2_decor_root_0
+  - first:
+      213: 772518756737895386
+    second: tv2_decor_root_1
+  - first:
+      213: 2580464097564511367
+    second: tv2_decor_stalactite_0
+  - first:
+      213: 4513612442625558443
+    second: tv2_decor_stalactite_1
+  - first:
+      213: 4328779010054286484
+    second: tv2_decor_stalactite_2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_decor_flower_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 300
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6867964263550a8a9447487337a116c
+      internalID: 158965221058499760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_flower_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 300
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20a71a16b0485ba39f7d36bc2fa46d06
+      internalID: 2274094034003087255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_flower_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 300
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 933d2964e55e522b93ae4a954b9e0b64
+      internalID: 2154291721229936125
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_flower_3
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 300
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ece33f15d1735e6cab51706d01337a34
+      internalID: 614012525057831822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_bush_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 280
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a363352d790d5177a7e6a798e68934c1
+      internalID: 1148059526183946229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_bush_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 280
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eb994a2542a5b24a84d5f2ad26fbb5f
+      internalID: 1912799605967101279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_grass_tall_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 260
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb007880d4de519f9f103604288b1bf1
+      internalID: 2839772741084161348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_grass_tall_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 260
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f405e0a259145b7ba572f1ac4caed51e
+      internalID: 1184566661580133339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_tuft_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a27bc7726d275f58a83401c27daef74f
+      internalID: 817175043759907152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_tuft_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de821f5ac9ed5482882ea02c86206724
+      internalID: 3309964715664882145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_tuft_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6475c71e61b759c4a7e1183fa8120a73
+      internalID: 649961500566682924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_cactus_base_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 220
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c75ad3af14b656009a2ecd34698716ec
+      internalID: 2011851326338466550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_cactus_base_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 220
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 711843b8ae40599dabc6713028732973
+      internalID: 2648353714692733352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_cactus_mid_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 200
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e24236c81f358938abb54dbdab8e474
+      internalID: 711104080651721149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_cactus_mid_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 200
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6104c0f1efab52efa1385c8139d2d393
+      internalID: 4358189076611812915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_cactus_top_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 180
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bec6a9998245465a09f11a172c4b5d7
+      internalID: 2310033734707010251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_cactus_top_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 180
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d924479241185be8b8a6eaba6297e90a
+      internalID: 1643582296572647336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_dry_bush_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf979c53d8cf596881b7f18cf5527c4e
+      internalID: 508559727287980280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_dry_bush_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7fb7e81539d5fed9dd3c30b9b54796a
+      internalID: 3355452508520658440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_bones_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 140
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49779537253d563ab42ec77a9262acff
+      internalID: 2194906685504373997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_mushroom_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 120
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 056ef7d3f99f5f9386edc7e1d9000d4f
+      internalID: 4120010787943698947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_mushroom_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 120
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66ea7b8dfb875a68bbffd093d4d9fd15
+      internalID: 2689458903066133568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_mushroom_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 120
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27b860438b725380853848f3088332dd
+      internalID: 1661153157315123071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_stalagmite_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 100
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfa4d763597e56f38a427c58ae1f5c08
+      internalID: 3700786670806666178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_stalagmite_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 100
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d02ccf7d1345b7cbe7f3c7b28eb986c
+      internalID: 129625247083940790
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_stalagmite_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 100
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de04083970de51dea19795c578a14bd0
+      internalID: 4162435181204801111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_pebble_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1f7e33e7808540687986bd40725ad9d
+      internalID: 776046678740572885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_pebble_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab1edfcd9ae1563d98cb3ebc91192e1d
+      internalID: 4068796364377538717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_pebble_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb8c2a16b75d521bae226ff4e6d1bae6
+      internalID: 3486728469217556915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_vine_mid_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 60
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4c0119e7dc453ecb31146f8a990247d
+      internalID: 2099652540215583817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_vine_mid_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 60
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38c8a02f25945e64a507f683bd16ef8a
+      internalID: 1351575304594591815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_vine_tip_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 40
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb0f46905a5d588ea533450704ba0620
+      internalID: 1096191037634549287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_vine_tip_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 40
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cc061e50dcc544b8d2125a2deb078e6
+      internalID: 3409402186486709995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_root_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 20
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37c899d06f2d5990b95fc31341b0430e
+      internalID: 1196892160764346250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_root_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 20
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72be515510b75f7f97cc66c6c8a82444
+      internalID: 772518756737895386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_stalactite_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7961a40ce1e54ffb4db5015cdc5dc57
+      internalID: 2580464097564511367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_stalactite_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc4cd0b86d81593faeaa73a00aab173e
+      internalID: 4513612442625558443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_decor_stalactite_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 20
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4122831fa6d5ae7b14358ab1a2f2bbf
+      internalID: 4328779010054286484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_decor_flower_0: 158965221058499760
+      tv2_decor_flower_1: 2274094034003087255
+      tv2_decor_flower_2: 2154291721229936125
+      tv2_decor_flower_3: 614012525057831822
+      tv2_decor_bush_0: 1148059526183946229
+      tv2_decor_bush_1: 1912799605967101279
+      tv2_decor_grass_tall_0: 2839772741084161348
+      tv2_decor_grass_tall_1: 1184566661580133339
+      tv2_decor_tuft_0: 817175043759907152
+      tv2_decor_tuft_1: 3309964715664882145
+      tv2_decor_tuft_2: 649961500566682924
+      tv2_decor_cactus_base_0: 2011851326338466550
+      tv2_decor_cactus_base_1: 2648353714692733352
+      tv2_decor_cactus_mid_0: 711104080651721149
+      tv2_decor_cactus_mid_1: 4358189076611812915
+      tv2_decor_cactus_top_0: 2310033734707010251
+      tv2_decor_cactus_top_1: 1643582296572647336
+      tv2_decor_dry_bush_0: 508559727287980280
+      tv2_decor_dry_bush_1: 3355452508520658440
+      tv2_decor_bones_0: 2194906685504373997
+      tv2_decor_mushroom_0: 4120010787943698947
+      tv2_decor_mushroom_1: 2689458903066133568
+      tv2_decor_mushroom_2: 1661153157315123071
+      tv2_decor_stalagmite_0: 3700786670806666178
+      tv2_decor_stalagmite_1: 129625247083940790
+      tv2_decor_stalagmite_2: 4162435181204801111
+      tv2_decor_pebble_0: 776046678740572885
+      tv2_decor_pebble_1: 4068796364377538717
+      tv2_decor_pebble_2: 3486728469217556915
+      tv2_decor_vine_mid_0: 2099652540215583817
+      tv2_decor_vine_mid_1: 1351575304594591815
+      tv2_decor_vine_tip_0: 1096191037634549287
+      tv2_decor_vine_tip_1: 3409402186486709995
+      tv2_decor_root_0: 1196892160764346250
+      tv2_decor_root_1: 772518756737895386
+      tv2_decor_stalactite_0: 2580464097564511367
+      tv2_decor_stalactite_1: 4513612442625558443
+      tv2_decor_stalactite_2: 4328779010054286484
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

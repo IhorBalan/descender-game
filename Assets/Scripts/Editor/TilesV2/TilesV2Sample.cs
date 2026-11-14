@@ -1,78 +1,42 @@
-using System.Collections.Generic;
 using System.IO;
+using Descender.Audio;
+using Descender.CameraRig;
+using Descender.Input;
+using Descender.Player;
 using Descender.World.TilesV2;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
-using UnityEngine.Tilemaps;
 
 namespace Descender.EditorTools.TilesV2
 {
     /// <summary>
-    /// Descender > Tiles V2 > Build sample scene: lays the sample map
-    /// (Assets/Art/TilesV2/sample_map.txt) out with the Tiles V2 tiles in its own scene,
-    /// Assets/Scenes/Sandbox/TilesV2Sample.unity, which is not in the build: a Grid with
-    /// Walls, Terrain and Blend tilemaps, the parallax backdrop, a pixel-perfect camera at
-    /// 320 x 180, a faint ambient, the tile light (TileLightMap) and the wall torches. The scene is rebuilt from the map each time.
+    /// Descender > Tiles V2 > Build sample scenes: makes the two Tiles V2 scenes under
+    /// Assets/Scenes/Sandbox from the sample map (Assets/Art/TilesV2/sample_map.txt).
+    /// Neither is in the build's scene list. TilesV2Sample.unity is the map alone with a
+    /// camera at 320 x 180, for a look in the editor and for the captures.
+    /// TilesV2Playground.unity is the same map made playable on its own: the game's camera,
+    /// its input and sounds, and the hero's prefab, run by <see cref="TilesV2Playground"/>.
+    /// A scene holds only a <see cref="TilesV2World"/> pointing at the map and the tile
+    /// set; the world is built from them when the scene opens, never saved in it.
     /// </summary>
     public static class TilesV2Sample
     {
         public const string ScenePath = "Assets/Scenes/Sandbox/TilesV2Sample.unity";
+        public const string PlaygroundPath = "Assets/Scenes/Sandbox/TilesV2Playground.unity";
         public const string MapPath = TilesV2Manifest.Folder + "/sample_map.txt";
 
-        public const int WallsOrder = -300;
-        public const int TerrainOrder = -100;
-        public const int BlendOrder = -95;
+        /// <summary>The map's place the sample scene's camera looks at.</summary>
+        public const string FirstView = "surface";
 
-        /// <summary>Where the scene's camera looks: the hill and the shaft's mouth.</summary>
-        public static readonly Vector2 SurfaceView = new Vector2(16f, 15f);
+        private const string HeroPath = "Assets/Prefabs/Player.prefab";
+        private const string ActionsPath = "Assets/Settings/Descender.inputactions";
+        private const string SfxLibraryPath = "Assets/Data/SfxLibrary.asset";
 
-        /// <summary>The cave under the shaft.</summary>
-        public static readonly Vector2 CaveView = new Vector2(31f, 7.5f);
-
-        /// <summary>The dunes and the dark under them.</summary>
-        public static readonly Vector2 DesertView = new Vector2(54f, 13f);
-
-        /// <summary>The map character for a wall torch (air for the terrain).</summary>
-        public const char TorchChar = 'T';
-
-        // The lighting standard (docs/art/tiles-v2.md), the generator's AMBIENT, *_KEEPS
-        // and TORCH_* constants.
-        public const float Ambient = 0.04f;
-        public const float AirKeeps = 0.9f;
-        public const float SolidKeeps = 0.7f;
-        public const float TorchIntensity = 1.6f;
-        public const float TorchGlow = 0.35f;
-        public const float TorchGlowRadius = 3f;
-        public static readonly Color AmbientColour = new Color(0.55f, 0.62f, 0.85f);
-        public static readonly Color TorchColour = new Color(1f, 0.72f, 0.42f);
-
-        private const string UnlitMaterialPath =
-            "Packages/com.unity.render-pipelines.universal/Runtime/Materials/Sprite-Unlit-Default.mat";
-
-        private static readonly Dictionary<char, string> TerrainTiles = new Dictionary<char, string>
-        {
-            { 'G', TilesV2Manifest.TilePath("grass") },
-            { 'D', TilesV2Manifest.TilePath("dirt") },
-            { 'S', TilesV2Manifest.TilePath("stone") },
-            { 'A', TilesV2Manifest.TilePath("sand") },
-            { 'C', TilesV2Manifest.TilePath("clay") },
-            { 'O', TilesV2Manifest.TilePath("copper_ore") },
-            { '/', TilesV2Manifest.SlopePath("grass", "up_right") },
-            { '\\', TilesV2Manifest.SlopePath("grass", "up_left") },
-            { '(', TilesV2Manifest.SlopePath("sand", "up_right") },
-            { ')', TilesV2Manifest.SlopePath("sand", "up_left") },
-        };
-
-        private static readonly Dictionary<char, string> WallTiles = new Dictionary<char, string>
-        {
-            { 'd', TilesV2Manifest.TilePath("dirt_wall") },
-            { 's', TilesV2Manifest.TilePath("stone_wall") },
-        };
-
-        [MenuItem("Descender/Tiles V2/Build sample scene")]
+        [MenuItem("Descender/Tiles V2/Build sample scenes")]
         public static void BuildMenu()
         {
             if (!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
@@ -80,131 +44,74 @@ namespace Descender.EditorTools.TilesV2
                 return;
             }
             TilesV2Builder.Build();
+            BuildPlayground();
             Build();
-            Debug.Log($"Tiles V2: built {ScenePath} from {MapPath}.");
+            Debug.Log($"Tiles V2: built {ScenePath} and {PlaygroundPath} from {MapPath}.");
         }
 
-        /// <summary>Builds and saves the sample scene; returns it, open.</summary>
+        /// <summary>Builds and saves the sample scene; returns it, open, its world built.</summary>
         public static Scene Build()
         {
-            var manifest = TilesV2Manifest.Load();
-            var (terrainRows, wallRows) = ReadMap(File.ReadAllText(MapPath));
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-
-            var root = new GameObject("TilesV2 Sample");
-            var grid = root.AddComponent<Grid>();
-            grid.cellSize = Vector3.one;
-            var walls = MakeTilemap(root.transform, "Walls", WallsOrder);
-            var terrain = MakeTilemap(root.transform, TilesV2Blends.TerrainName, TerrainOrder);
-            var blend = MakeTilemap(root.transform, TilesV2Blends.BlendName, BlendOrder);
-            AddCollider(terrain.gameObject);
-
-            Lay(walls, wallRows, WallTiles);
-            Lay(terrain, terrainRows, TerrainTiles);
-            TilesV2Blends.Paint(terrain, blend, manifest);
-
-            MakeCamera(SurfaceView);
-            var torches = MakeTorches(terrainRows);
-            MakeLights(terrain, walls, torches);
-            MakeBackdrop(manifest, SurfaceView, terrainRows.Count);
-
-            Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
-            EditorSceneManager.SaveScene(scene, ScenePath);
+            var world = MakeWorld(false);
+            var at = world.TryView(FirstView, out var view) ? view : world.Area.center;
+            MakeCamera(at, false);
+            Save(scene, ScenePath);
             return scene;
         }
 
-        /// <summary>
-        /// The map's two grids, top row first: terrain, then (after a blank line) walls.
-        /// Lines starting with # are comments.
-        /// </summary>
-        public static (List<string> terrain, List<string> walls) ReadMap(string text)
+        /// <summary>Builds and saves the playground scene; returns it, open, its world built.</summary>
+        public static Scene BuildPlayground()
         {
-            var grids = new List<List<string>> { new List<string>() };
-            foreach (var raw in text.Replace("\r", "").Split('\n'))
+            var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
+            var world = MakeWorld(true);
+            var camera = MakeCamera(world.Spawn + new Vector2(0f, 2f), true);
+
+            var systems = new GameObject("Systems");
+            var router = systems.AddComponent<InputRouter>();
+            var actions = Load<InputActionAsset>(ActionsPath);
+            var wiring = new SerializedObject(router);
+            wiring.FindProperty("actions").objectReferenceValue = actions;
+            wiring.ApplyModifiedPropertiesWithoutUndo();
+            var library = AssetDatabase.LoadAssetAtPath<SfxLibrary>(SfxLibraryPath);
+            if (library != null)
             {
-                if (raw.StartsWith("#"))
-                {
-                    continue;
-                }
-                if (raw.Length == 0)
-                {
-                    if (grids[grids.Count - 1].Count > 0)
-                    {
-                        grids.Add(new List<string>());
-                    }
-                    continue;
-                }
-                grids[grids.Count - 1].Add(raw);
+                systems.AddComponent<Sfx>().Library = library;
             }
-            if (grids.Count < 2 || grids[1].Count == 0)
-            {
-                throw new InvalidDataException("Tiles V2: the sample map needs a terrain grid and a wall grid.");
-            }
-            return (grids[0], grids[1]);
+
+            var hero = (GameObject)PrefabUtility.InstantiatePrefab(Load<GameObject>(HeroPath), scene);
+            hero.name = "Hero";
+            hero.transform.position = world.Spawn;
+
+            var playground = new GameObject("Playground").AddComponent<TilesV2Playground>();
+            playground.Configure(world, hero.GetComponent<PlayerController>(), camera.GetComponent<GameCamera>());
+            Save(scene, PlaygroundPath);
+            return scene;
         }
 
-        /// <summary>Map (column, row) with row 0 on top to a cell whose y is up, the map's bottom row at 0.</summary>
-        public static Vector3Int CellOf(int column, int row, int rows) => new Vector3Int(column, rows - 1 - row, 0);
-
-        private static void Lay(Tilemap map, List<string> rows, Dictionary<char, string> legend)
+        // The world of the sample map, built so its start and its places can be read.
+        private static TilesV2World MakeWorld(bool dayRuns)
         {
-            var tiles = new Dictionary<char, TileBase>();
-            foreach (var pair in legend)
+            var set = TilesV2Builder.LoadSet();
+            if (set == null)
             {
-                var tile = AssetDatabase.LoadAssetAtPath<TileBase>(pair.Value);
-                if (tile == null)
-                {
-                    throw new FileNotFoundException("Tiles V2: build the tiles first.", pair.Value);
-                }
-                tiles[pair.Key] = tile;
+                throw new FileNotFoundException("Tiles V2: build the tiles first.", TilesV2Manifest.SetPath);
             }
-            var cells = new List<Vector3Int>();
-            var placed = new List<TileBase>();
-            for (var row = 0; row < rows.Count; row++)
-            {
-                for (var column = 0; column < rows[row].Length; column++)
-                {
-                    if (tiles.TryGetValue(rows[row][column], out var tile))
-                    {
-                        cells.Add(CellOf(column, row, rows.Count));
-                        placed.Add(tile);
-                    }
-                }
-            }
-            map.SetTiles(cells.ToArray(), placed.ToArray());
+            var world = new GameObject("TilesV2 World").AddComponent<TilesV2World>();
+            world.Configure(Load<TextAsset>(MapPath), set, set.dayStart, dayRuns, true);
+            world.Build();
+            return world;
         }
 
-        private static Tilemap MakeTilemap(Transform parent, string name, int order)
-        {
-            var holder = new GameObject(name);
-            holder.transform.SetParent(parent, false);
-            var map = holder.AddComponent<Tilemap>();
-            var renderer = holder.AddComponent<TilemapRenderer>();
-            renderer.sortingOrder = order;
-            renderer.mode = TilemapRenderer.Mode.Chunk;
-            return map;
-        }
-
-        private static void AddCollider(GameObject holder)
-        {
-            holder.layer = LayerMask.NameToLayer("World");
-            var body = holder.AddComponent<Rigidbody2D>();
-            body.bodyType = RigidbodyType2D.Static;
-            var collider = holder.AddComponent<TilemapCollider2D>();
-            collider.compositeOperation = Collider2D.CompositeOperation.Merge;
-            var composite = holder.AddComponent<CompositeCollider2D>();
-            composite.geometryType = CompositeCollider2D.GeometryType.Polygons;
-        }
-
-        private static void MakeCamera(Vector2 at)
+        private static Camera MakeCamera(Vector2 at, bool game)
         {
             var holder = new GameObject("Main Camera") { tag = "MainCamera" };
             holder.transform.position = new Vector3(at.x, at.y, -10f);
             var camera = holder.AddComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 180f / 16f / 2f;
+            camera.orthographicSize = 180f / 16f / 2f; // 180 px tall at 16 px a unit
             camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = new Color(0.23f, 0.44f, 0.75f);
+            camera.backgroundColor = new Color(0.02f, 0.02f, 0.04f);
             camera.GetUniversalAdditionalCameraData();
             var pixelPerfect = holder.AddComponent<PixelPerfectCamera>();
             pixelPerfect.assetsPPU = 16;
@@ -212,127 +119,29 @@ namespace Descender.EditorTools.TilesV2
             pixelPerfect.refResolutionY = 180;
             pixelPerfect.cropFrame = PixelPerfectCamera.CropFrame.Windowbox;
             pixelPerfect.gridSnapping = PixelPerfectCamera.GridSnapping.UpscaleRenderTexture;
+            if (game)
+            {
+                holder.AddComponent<AudioListener>();
+                holder.AddComponent<GameCamera>();
+            }
+            return camera;
         }
 
-        /// <summary>
-        /// A faint, cool ambient everywhere, and the tile light: daylight down from the
-        /// open sky and the torches' light, spread tile by tile and dying fast in rock, so
-        /// deep ground is dark until a torch lights it.
-        /// </summary>
-        private static void MakeLights(Tilemap terrain, Tilemap walls, Transform torches)
+        private static void Save(Scene scene, string path)
         {
-            var ambient = new GameObject("Ambient").AddComponent<Light2D>();
-            ambient.lightType = Light2D.LightType.Global;
-            ambient.blendStyleIndex = 0;
-            ambient.color = AmbientColour;
-            ambient.intensity = Ambient;
-
-            var holder = new GameObject("Tile Light");
-            var light = holder.AddComponent<Light2D>();
-            light.lightType = Light2D.LightType.Sprite;
-            light.blendStyleIndex = 0;
-            light.color = Color.white;
-            light.intensity = 1f;
-            light.shadowsEnabled = false;
-            var map = holder.AddComponent<TileLightMap>();
-            map.Configure(terrain, walls, torches, Color.white, AirKeeps, SolidKeeps);
-            map.Refresh();
+            Directory.CreateDirectory(Path.GetDirectoryName(path));
+            EditorSceneManager.SaveScene(scene, path);
         }
 
-        /// <summary>A torch on the wall at every T of the map: its flame, unlit, its tile light and a small flickering glow.</summary>
-        private static Transform MakeTorches(List<string> terrain)
+        private static T Load<T>(string path)
+            where T : Object
         {
-            var path = TilesV2Manifest.Folder + "/torch.png";
-            var frames = new List<Sprite>();
-            foreach (var item in AssetDatabase.LoadAllAssetsAtPath(path))
+            var asset = AssetDatabase.LoadAssetAtPath<T>(path);
+            if (asset == null)
             {
-                if (item is Sprite sprite)
-                {
-                    frames.Add(sprite);
-                }
+                throw new FileNotFoundException($"Tiles V2: {path} is missing.", path);
             }
-            if (frames.Count == 0)
-            {
-                throw new FileNotFoundException("Tiles V2: run the generator first.", path);
-            }
-            frames.Sort((a, b) => string.CompareOrdinal(a.name, b.name));
-            var unlit = AssetDatabase.LoadAssetAtPath<Material>(UnlitMaterialPath);
-            var parent = new GameObject("Torches").transform;
-            for (var row = 0; row < terrain.Count; row++)
-            {
-                for (var column = 0; column < terrain[row].Length; column++)
-                {
-                    if (terrain[row][column] != TorchChar)
-                    {
-                        continue;
-                    }
-                    var cell = CellOf(column, row, terrain.Count);
-                    var holder = new GameObject($"Torch {column},{row}");
-                    holder.transform.SetParent(parent, false);
-                    holder.transform.position = new Vector3(cell.x + 0.5f, cell.y + 0.5f, 0f);
-                    var renderer = holder.AddComponent<SpriteRenderer>();
-                    renderer.sprite = frames[0];
-                    renderer.sortingOrder = BlendOrder + 1;
-                    if (unlit != null)
-                    {
-                        renderer.sharedMaterial = unlit;
-                    }
-                    var glow = new GameObject("Light").AddComponent<Light2D>();
-                    glow.transform.SetParent(holder.transform, false);
-                    glow.transform.localPosition = new Vector3(0f, 0.1f, 0f);
-                    glow.lightType = Light2D.LightType.Point;
-                    glow.blendStyleIndex = 0;
-                    glow.color = TorchColour;
-                    glow.intensity = TorchGlow;
-                    glow.pointLightInnerRadius = 0f;
-                    glow.pointLightOuterRadius = TorchGlowRadius;
-                    glow.falloffIntensity = 0.5f;
-                    glow.shadowsEnabled = false;
-                    holder
-                        .AddComponent<TorchFlame>()
-                        .Configure(frames.ToArray(), glow, TorchGlow, TorchColour, TorchIntensity);
-                }
-            }
-            return parent;
-        }
-
-        /// <summary>
-        /// The backdrop layers, back to front: the sky pinned to the view, then ridges that
-        /// scroll more the nearer they are, their feet a little below the surface line.
-        /// </summary>
-        private static void MakeBackdrop(TilesV2Manifest manifest, Vector2 view, int rows)
-        {
-            var parent = new GameObject("Backdrop").transform;
-            var unlit = AssetDatabase.LoadAssetAtPath<Material>(UnlitMaterialPath);
-            var surface = rows - 12f; // the sample's surface row, in world units
-            foreach (var entry in manifest.backdrops)
-            {
-                var path = TilesV2Manifest.Folder + "/" + entry.key + ".png";
-                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
-                if (sprite == null)
-                {
-                    throw new FileNotFoundException("Tiles V2: run the generator first.", path);
-                }
-                var holder = new GameObject(entry.key);
-                holder.transform.SetParent(parent, false);
-                var renderer = holder.AddComponent<SpriteRenderer>();
-                renderer.sprite = sprite;
-                renderer.sortingOrder = entry.order;
-                // The backdrop is the far daylit world: the scene's lights do not touch it.
-                if (unlit != null)
-                {
-                    renderer.sharedMaterial = unlit;
-                }
-                renderer.drawMode = SpriteDrawMode.Tiled;
-                renderer.tileMode = SpriteTileMode.Continuous;
-                var size = sprite.bounds.size;
-                renderer.size = new Vector2(size.x * 8f, size.y);
-                var layer = holder.AddComponent<ParallaxLayer>();
-                // The sprite's pivot is its bottom middle; the sky's foot sits at the view's
-                // bottom, a ridge's a tile under the surface.
-                var foot = entry.scroll <= 0f ? view.y - 180f / 16f / 2f : surface - 1f;
-                layer.Configure(entry.scroll, new Vector2(view.x, foot), view);
-            }
+            return asset;
         }
     }
 }

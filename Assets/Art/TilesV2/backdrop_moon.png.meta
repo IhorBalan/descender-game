@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 750f10bf885555778dff54cb45a8b22e
+guid: 1a329f991ee65c118bbbd510369dc647
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8171702686711980315
-    second: backdrop_sky_0
+      213: 3532755028342522018
+    second: backdrop_moon_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -102,13 +102,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: backdrop_sky_0
+      name: backdrop_moon_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 320
-        height: 180
+        width: 16
+        height: 16
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -117,8 +117,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 5ee5d64b3b7489e80800000000000000
-      internalID: -8171702686711980315
+      spriteID: 2a0c4de1bfdd60130800000000000000
+      internalID: 3532755028342522018
       vertices: []
       indices: 
       edges: []

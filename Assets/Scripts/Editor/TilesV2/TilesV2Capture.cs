@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using Descender.World.TilesV2;
 using UnityEditor;
@@ -10,14 +11,21 @@ using UnityEngine.Rendering.Universal;
 namespace Descender.EditorTools.TilesV2
 {
     /// <summary>
-    /// Renders the Tiles V2 sample to PNGs, at one art pixel a screen pixel: the surface
-    /// and the cave at the game's 320 x 180, and the whole map. From the command line
-    /// (no window; not with -nographics, it renders):
+    /// Renders the Tiles V2 sample to PNGs at one art pixel a screen pixel: each of the
+    /// map's named places (`@view`) at the game's 320 x 180, the first of them again at
+    /// sunset and at night, and the whole map. From the command line (no window; not with
+    /// -nographics, it renders):
     /// <code>Unity -batchmode -projectPath . -executeMethod Descender.EditorTools.TilesV2.TilesV2Capture.BuildAndCapture -tilesV2Out &lt;folder&gt;</code>
     /// which runs the generator's output through the builders first.
     /// </summary>
     public static class TilesV2Capture
     {
+        /// <summary>The hours the first place is shown at besides the day's start: sunset and night.</summary>
+        public static readonly (float hour, string suffix)[] ExtraHours = { (18.75f, "_sunset"), (23f, "_night") };
+
+        // How long the particles are run before a capture, in seconds: the air is full by then.
+        private const float ParticleTime = 8f;
+
         [MenuItem("Descender/Tiles V2/Capture sample")]
         public static void CaptureMenu()
         {
@@ -26,12 +34,13 @@ namespace Descender.EditorTools.TilesV2
             Debug.Log($"Tiles V2: captured the sample to {folder}.");
         }
 
-        /// <summary>Batch entry: builds the tiles and the scene, captures, and quits.</summary>
+        /// <summary>Batch entry: builds the tiles and the scenes, captures, and quits.</summary>
         public static void BuildAndCapture()
         {
             try
             {
                 TilesV2Builder.Build();
+                TilesV2Sample.BuildPlayground();
                 TilesV2Sample.Build();
                 Capture(OutFolder());
                 EditorApplication.Exit(0);
@@ -47,6 +56,18 @@ namespace Descender.EditorTools.TilesV2
         {
             Directory.CreateDirectory(folder);
             EditorSceneManager.OpenScene(TilesV2Sample.ScenePath);
+            var world = UnityEngine.Object.FindAnyObjectByType<TilesV2World>();
+            if (world == null)
+            {
+                throw new InvalidOperationException(
+                    $"Tiles V2: {TilesV2Sample.ScenePath} has no world; build the scenes."
+                );
+            }
+            world.Build();
+            foreach (var system in world.GetComponentsInChildren<ParticleSystem>())
+            {
+                system.Simulate(ParticleTime, true, true);
+            }
             BuildLightMeshes();
             // A shader still compiling in the background draws as nothing in the first frame
             // that needs it; compile in line so every capture shows every layer.
@@ -54,41 +75,54 @@ namespace Descender.EditorTools.TilesV2
             ShaderUtil.allowAsyncCompilation = false;
             try
             {
-                CaptureViews(folder);
+                CaptureViews(world, folder);
             }
             finally
             {
                 ShaderUtil.allowAsyncCompilation = async;
             }
-            // Put the backdrop back where the scene's camera has it.
-            PlaceLayers(TilesV2Sample.SurfaceView);
         }
 
-        private static void CaptureViews(string folder)
+        private static void CaptureViews(TilesV2World world, string folder)
         {
-            var (terrain, _) = TilesV2Sample.ReadMap(File.ReadAllText(TilesV2Sample.MapPath));
-            var width = terrain[0].Length;
-            // The first render after the scene opens draws the unlit backdrop wrong (seen
-            // upside down in batch mode); render once and throw it away.
-            Render(TilesV2Sample.SurfaceView, 320, 180, null);
-            Render(TilesV2Sample.SurfaceView, 320, 180, Path.Combine(folder, "surface.png"));
-            Render(TilesV2Sample.CaveView, 320, 180, Path.Combine(folder, "cave.png"));
-            Render(TilesV2Sample.DesertView, 320, 180, Path.Combine(folder, "desert.png"));
-            Render(
-                new Vector2(width / 2f, terrain.Count / 2f),
-                width * 16,
-                terrain.Count * 16,
-                Path.Combine(folder, "map.png")
-            );
+            var game = TilesV2Backdrops.View;
+            var start = world.Day.Hour;
+            var first = true;
+            foreach (var pair in world.Map.Views)
+            {
+                world.TryView(pair.Key, out var at);
+                if (first)
+                {
+                    // The first render after the scene opens draws the unlit backdrop wrong (seen
+                    // upside down in batch mode); render once and throw it away.
+                    Render(world, at, game, null);
+                }
+                Render(world, at, game, Path.Combine(folder, pair.Key + ".png"));
+                if (first)
+                {
+                    foreach (var (hour, suffix) in ExtraHours)
+                    {
+                        world.Day.Hour = hour;
+                        Render(world, at, game, Path.Combine(folder, pair.Key + suffix + ".png"));
+                    }
+                    world.Day.Hour = start;
+                }
+                first = false;
+            }
+            var area = world.Area;
+            Render(world, area.center, area.size, Path.Combine(folder, "map.png"));
         }
 
-        private static void Render(Vector2 at, int width, int height, string file)
+        // Renders a view of `size` units centred on `at`, at 16 pixels a unit, to a PNG (to nothing when `file` is null).
+        private static void Render(TilesV2World world, Vector2 at, Vector2 size, string file)
         {
+            var width = Mathf.RoundToInt(size.x * 16f);
+            var height = Mathf.RoundToInt(size.y * 16f);
             var main = Camera.main;
             var holder = new GameObject("Tiles V2 capture") { hideFlags = HideFlags.HideAndDontSave };
             var camera = holder.AddComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = height / 16f / 2f;
+            camera.orthographicSize = size.y / 2f;
             camera.transform.position = new Vector3(at.x, at.y, -10f);
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = main != null ? main.backgroundColor : Color.black;
@@ -96,7 +130,7 @@ namespace Descender.EditorTools.TilesV2
             {
                 main.enabled = false;
             }
-            PlaceLayers(at);
+            var restore = PlaceBackdrop(world, at, size);
             var target = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32)
             {
                 filterMode = FilterMode.Point,
@@ -131,6 +165,10 @@ namespace Descender.EditorTools.TilesV2
                 target.Release();
                 UnityEngine.Object.DestroyImmediate(target);
                 UnityEngine.Object.DestroyImmediate(holder);
+                foreach (var (picture, pictureSize) in restore)
+                {
+                    picture.size = pictureSize;
+                }
                 if (main != null)
                 {
                     main.enabled = true;
@@ -138,12 +176,43 @@ namespace Descender.EditorTools.TilesV2
             }
         }
 
+        // Puts the sky and the parallax layers where a camera at `at` seeing `size` units has
+        // them. A view larger than the game's needs wider layers: returns the sizes to put back.
+        private static List<(SpriteRenderer, Vector2)> PlaceBackdrop(TilesV2World world, Vector2 at, Vector2 size)
+        {
+            var restore = new List<(SpriteRenderer, Vector2)>();
+            var more = size - TilesV2Backdrops.View;
+            if (world.Sky != null)
+            {
+                world.Sky.Follow(at, size);
+            }
+            foreach (var layer in world.GetComponentsInChildren<ParallaxLayer>())
+            {
+                var picture = layer.GetComponent<SpriteRenderer>();
+                if (more.x > 0.01f || more.y > 0.01f)
+                {
+                    restore.Add((picture, picture.size));
+                    picture.size += new Vector2(
+                        layer.Repeat.x > 0f ? Mathf.Max(more.x, 0f) : 0f,
+                        layer.Repeat.y > 0f ? Mathf.Max(more.y, 0f) : 0f
+                    );
+                }
+                layer.Place(at);
+                if (layer.Scroll.y <= 0f && more.y > 0.01f)
+                {
+                    // Pinned to the view's height (clouds): keep it by the top of this taller view.
+                    layer.transform.position += new Vector3(0f, more.y / 2f, 0f);
+                }
+            }
+            return restore;
+        }
+
         /// <summary>
         /// A batch-mode editor never ticks, so the Light2D components never run the
         /// LateUpdate that builds their meshes and only the global light would show: run it
         /// once for each light, as the first editor frame would.
         /// </summary>
-        private static void BuildLightMeshes()
+        public static void BuildLightMeshes()
         {
             var update = typeof(Light2D).GetMethod(
                 "LateUpdate",
@@ -157,14 +226,6 @@ namespace Descender.EditorTools.TilesV2
             foreach (var light in UnityEngine.Object.FindObjectsByType<Light2D>(FindObjectsInactive.Exclude))
             {
                 update.Invoke(light, null);
-            }
-        }
-
-        private static void PlaceLayers(Vector2 cameraAt)
-        {
-            foreach (var layer in UnityEngine.Object.FindObjectsByType<ParallaxLayer>(FindObjectsInactive.Exclude))
-            {
-                layer.Place(cameraAt);
             }
         }
 

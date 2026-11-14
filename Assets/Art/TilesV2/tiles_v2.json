@@ -71,56 +71,96 @@
       "kind": "terrain",
       "group": "earth",
       "sheet": "dirt.png",
-      "slopes": true
+      "slopes": true,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "grass",
       "kind": "terrain",
       "group": "earth",
       "sheet": "grass.png",
-      "slopes": true
+      "slopes": true,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "stone",
       "kind": "terrain",
       "group": "earth",
       "sheet": "stone.png",
-      "slopes": true
+      "slopes": true,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "dirt_wall",
       "kind": "wall",
       "group": "walls",
       "sheet": "dirt_wall.png",
-      "slopes": false
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "stone_wall",
       "kind": "wall",
       "group": "walls",
       "sheet": "stone_wall.png",
-      "slopes": false
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "sand",
       "kind": "terrain",
       "group": "earth",
       "sheet": "sand.png",
-      "slopes": true
+      "slopes": true,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "clay",
       "kind": "terrain",
       "group": "earth",
       "sheet": "clay.png",
-      "slopes": false
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ]
     },
     {
       "key": "copper_ore",
       "kind": "terrain",
       "group": "earth",
       "sheet": "copper_ore.png",
-      "slopes": false
+      "slopes": false,
+      "emits": [
+        0.3,
+        0.17,
+        0.07
+      ]
     }
   ],
   "blends": [
@@ -228,6 +268,128 @@
       ]
     }
   ],
+  "legend": [
+    {
+      "character": "G",
+      "layer": "terrain",
+      "key": "grass",
+      "slope": ""
+    },
+    {
+      "character": "D",
+      "layer": "terrain",
+      "key": "dirt",
+      "slope": ""
+    },
+    {
+      "character": "S",
+      "layer": "terrain",
+      "key": "stone",
+      "slope": ""
+    },
+    {
+      "character": "A",
+      "layer": "terrain",
+      "key": "sand",
+      "slope": ""
+    },
+    {
+      "character": "C",
+      "layer": "terrain",
+      "key": "clay",
+      "slope": ""
+    },
+    {
+      "character": "O",
+      "layer": "terrain",
+      "key": "copper_ore",
+      "slope": ""
+    },
+    {
+      "character": "/",
+      "layer": "terrain",
+      "key": "grass",
+      "slope": "up_right"
+    },
+    {
+      "character": "\\",
+      "layer": "terrain",
+      "key": "grass",
+      "slope": "up_left"
+    },
+    {
+      "character": "(",
+      "layer": "terrain",
+      "key": "sand",
+      "slope": "up_right"
+    },
+    {
+      "character": ")",
+      "layer": "terrain",
+      "key": "sand",
+      "slope": "up_left"
+    },
+    {
+      "character": "{",
+      "layer": "terrain",
+      "key": "dirt",
+      "slope": "up_right"
+    },
+    {
+      "character": "}",
+      "layer": "terrain",
+      "key": "dirt",
+      "slope": "up_left"
+    },
+    {
+      "character": "[",
+      "layer": "terrain",
+      "key": "stone",
+      "slope": "up_right"
+    },
+    {
+      "character": "]",
+      "layer": "terrain",
+      "key": "stone",
+      "slope": "up_left"
+    },
+    {
+      "character": "W",
+      "layer": "liquid",
+      "key": "water",
+      "slope": ""
+    },
+    {
+      "character": "L",
+      "layer": "liquid",
+      "key": "lava",
+      "slope": ""
+    },
+    {
+      "character": "T",
+      "layer": "prop",
+      "key": "torch",
+      "slope": ""
+    },
+    {
+      "character": "P",
+      "layer": "mark",
+      "key": "spawn",
+      "slope": ""
+    },
+    {
+      "character": "d",
+      "layer": "wall",
+      "key": "dirt_wall",
+      "slope": ""
+    },
+    {
+      "character": "s",
+      "layer": "wall",
+      "key": "stone_wall",
+      "slope": ""
+    }
+  ],
   "props": [
     {
       "key": "torch",
@@ -235,26 +397,682 @@
       "frames": 3
     }
   ],
+  "liquids": [
+    {
+      "key": "water",
+      "sheet": "water.png",
+      "frames": 8,
+      "fps": 7,
+      "lit": true,
+      "keeps": [
+        0.74,
+        0.86,
+        0.93
+      ],
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "swim": true,
+      "hazard": 0,
+      "order": 20
+    },
+    {
+      "key": "lava",
+      "sheet": "lava.png",
+      "frames": 8,
+      "fps": 4,
+      "lit": false,
+      "keeps": [
+        0.86,
+        0.8,
+        0.72
+      ],
+      "emits": [
+        1.5,
+        0.8,
+        0.3
+      ],
+      "swim": false,
+      "hazard": 1,
+      "order": 21
+    }
+  ],
+  "decor": {
+    "sheet": "decor.png",
+    "floorSalt": 101,
+    "ceilingSalt": 211,
+    "rules": [
+      {
+        "key": "flower",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.1,
+        "variants": 4,
+        "min": 1,
+        "max": 1,
+        "first": "flower",
+        "middle": "flower",
+        "last": "flower"
+      },
+      {
+        "key": "bush",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.05,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "bush",
+        "middle": "bush",
+        "last": "bush"
+      },
+      {
+        "key": "grass_tall",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.2,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "grass_tall",
+        "middle": "grass_tall",
+        "last": "grass_tall"
+      },
+      {
+        "key": "tuft",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.38,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "tuft",
+        "middle": "tuft",
+        "last": "tuft"
+      },
+      {
+        "key": "cactus",
+        "anchor": "floor",
+        "on": [
+          "sand"
+        ],
+        "where": "sky",
+        "chance": 0.07,
+        "variants": 2,
+        "min": 2,
+        "max": 3,
+        "first": "cactus_base",
+        "middle": "cactus_mid",
+        "last": "cactus_top"
+      },
+      {
+        "key": "dry_bush",
+        "anchor": "floor",
+        "on": [
+          "sand"
+        ],
+        "where": "sky",
+        "chance": 0.08,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "dry_bush",
+        "middle": "dry_bush",
+        "last": "dry_bush"
+      },
+      {
+        "key": "bones",
+        "anchor": "floor",
+        "on": [
+          "sand"
+        ],
+        "where": "any",
+        "chance": 0.02,
+        "variants": 1,
+        "min": 1,
+        "max": 1,
+        "first": "bones",
+        "middle": "bones",
+        "last": "bones"
+      },
+      {
+        "key": "mushroom",
+        "anchor": "floor",
+        "on": [
+          "dirt",
+          "clay",
+          "stone"
+        ],
+        "where": "cave",
+        "chance": 0.06,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "mushroom",
+        "middle": "mushroom",
+        "last": "mushroom"
+      },
+      {
+        "key": "stalagmite",
+        "anchor": "floor",
+        "on": [
+          "stone",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite",
+        "middle": "stalagmite",
+        "last": "stalagmite"
+      },
+      {
+        "key": "pebble",
+        "anchor": "floor",
+        "on": [
+          "stone",
+          "dirt",
+          "clay",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.12,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble",
+        "middle": "pebble",
+        "last": "pebble"
+      },
+      {
+        "key": "vine",
+        "anchor": "ceiling",
+        "on": [
+          "grass"
+        ],
+        "where": "any",
+        "chance": 0.55,
+        "variants": 2,
+        "min": 1,
+        "max": 3,
+        "first": "vine_mid",
+        "middle": "vine_mid",
+        "last": "vine_tip"
+      },
+      {
+        "key": "root",
+        "anchor": "ceiling",
+        "on": [
+          "dirt"
+        ],
+        "where": "cave",
+        "chance": 0.22,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "root",
+        "middle": "root",
+        "last": "root"
+      },
+      {
+        "key": "stalactite",
+        "anchor": "ceiling",
+        "on": [
+          "stone",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.18,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite",
+        "middle": "stalactite",
+        "last": "stalactite"
+      }
+    ]
+  },
+  "shade": {
+    "sheet": "shade.png",
+    "masks": [
+      1,
+      2,
+      4,
+      5,
+      8,
+      9,
+      10,
+      16,
+      17,
+      18,
+      20,
+      21,
+      32,
+      33,
+      34,
+      36,
+      37,
+      40,
+      41,
+      42,
+      64,
+      65,
+      66,
+      68,
+      69,
+      72,
+      73,
+      74,
+      80,
+      81,
+      82,
+      84,
+      85,
+      128,
+      130,
+      132,
+      136,
+      138,
+      144,
+      146,
+      148,
+      160,
+      162,
+      164,
+      168,
+      170
+    ]
+  },
+  "glint": {
+    "sheet": "glint.png",
+    "on": [
+      "copper_ore"
+    ],
+    "fps": 10,
+    "loop": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      0,
+      1,
+      0,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      2,
+      3,
+      2,
+      -1,
+      -1,
+      -1,
+      -1
+    ]
+  },
+  "light": {
+    "ambient": 0.04,
+    "ambientColour": [
+      0.55,
+      0.62,
+      0.85
+    ],
+    "airKeeps": 0.91,
+    "solidKeeps": 0.56,
+    "torchColour": [
+      1.0,
+      0.72,
+      0.42
+    ],
+    "torchIntensity": 1.6,
+    "torchGlow": 0.35,
+    "torchGlowRadius": 3.0,
+    "wallTint": [
+      0.68,
+      0.7,
+      0.8
+    ]
+  },
+  "day": {
+    "length": 480.0,
+    "start": 10.0,
+    "sunrise": 5.5,
+    "sunset": 19.5,
+    "keys": [
+      {
+        "hour": 0.0,
+        "light": [
+          0.3,
+          0.36,
+          0.6
+        ],
+        "top": [
+          0.0157,
+          0.0235,
+          0.0588
+        ],
+        "low": [
+          0.0627,
+          0.102,
+          0.2118
+        ],
+        "tint": [
+          0.2,
+          0.25,
+          0.44
+        ],
+        "stars": 1.0
+      },
+      {
+        "hour": 4.5,
+        "light": [
+          0.3,
+          0.36,
+          0.6
+        ],
+        "top": [
+          0.0157,
+          0.0235,
+          0.0588
+        ],
+        "low": [
+          0.0627,
+          0.102,
+          0.2118
+        ],
+        "tint": [
+          0.2,
+          0.25,
+          0.44
+        ],
+        "stars": 1.0
+      },
+      {
+        "hour": 5.75,
+        "light": [
+          0.42,
+          0.36,
+          0.44
+        ],
+        "top": [
+          0.102,
+          0.1333,
+          0.3137
+        ],
+        "low": [
+          0.7882,
+          0.4392,
+          0.3529
+        ],
+        "tint": [
+          0.5,
+          0.42,
+          0.52
+        ],
+        "stars": 0.5
+      },
+      {
+        "hour": 6.75,
+        "light": [
+          0.86,
+          0.66,
+          0.52
+        ],
+        "top": [
+          0.1804,
+          0.2902,
+          0.5882
+        ],
+        "low": [
+          0.949,
+          0.6588,
+          0.4235
+        ],
+        "tint": [
+          0.95,
+          0.74,
+          0.64
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 8.5,
+        "light": [
+          1.0,
+          0.96,
+          0.9
+        ],
+        "top": [
+          0.2196,
+          0.4078,
+          0.7373
+        ],
+        "low": [
+          0.7137,
+          0.8627,
+          0.9412
+        ],
+        "tint": [
+          1.0,
+          0.97,
+          0.93
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 12.0,
+        "light": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "top": [
+          0.2314,
+          0.4353,
+          0.7529
+        ],
+        "low": [
+          0.6627,
+          0.8392,
+          0.9373
+        ],
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 16.5,
+        "light": [
+          1.0,
+          0.97,
+          0.9
+        ],
+        "top": [
+          0.2275,
+          0.4118,
+          0.7137
+        ],
+        "low": [
+          0.7255,
+          0.8471,
+          0.9176
+        ],
+        "tint": [
+          1.0,
+          0.96,
+          0.9
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 18.5,
+        "light": [
+          0.95,
+          0.64,
+          0.44
+        ],
+        "top": [
+          0.1725,
+          0.1843,
+          0.4706
+        ],
+        "low": [
+          0.9412,
+          0.549,
+          0.3059
+        ],
+        "tint": [
+          0.96,
+          0.66,
+          0.52
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 19.75,
+        "light": [
+          0.44,
+          0.34,
+          0.46
+        ],
+        "top": [
+          0.0784,
+          0.0784,
+          0.251
+        ],
+        "low": [
+          0.4784,
+          0.2471,
+          0.3608
+        ],
+        "tint": [
+          0.48,
+          0.38,
+          0.52
+        ],
+        "stars": 0.5
+      },
+      {
+        "hour": 21.0,
+        "light": [
+          0.3,
+          0.36,
+          0.6
+        ],
+        "top": [
+          0.0157,
+          0.0235,
+          0.0588
+        ],
+        "low": [
+          0.0627,
+          0.102,
+          0.2118
+        ],
+        "tint": [
+          0.2,
+          0.25,
+          0.44
+        ],
+        "stars": 1.0
+      }
+    ]
+  },
+  "sky": {
+    "bands": 7,
+    "order": -1010,
+    "cloudDrift": 0.25
+  },
   "backdrops": [
     {
-      "key": "backdrop_sky",
+      "key": "backdrop_stars",
+      "kind": "stars",
       "scroll": 0.0,
-      "order": -1000
+      "order": -1008,
+      "lit": false
+    },
+    {
+      "key": "backdrop_sun",
+      "kind": "sun",
+      "scroll": 0.0,
+      "order": -1006,
+      "lit": false
+    },
+    {
+      "key": "backdrop_moon",
+      "kind": "moon",
+      "scroll": 0.0,
+      "order": -1006,
+      "lit": false
+    },
+    {
+      "key": "backdrop_clouds",
+      "kind": "clouds",
+      "scroll": 0.04,
+      "order": -1004,
+      "lit": false
     },
     {
       "key": "backdrop_far",
+      "kind": "ridge",
       "scroll": 0.1,
-      "order": -990
+      "order": -990,
+      "lit": false
     },
     {
       "key": "backdrop_mid",
+      "kind": "ridge",
       "scroll": 0.25,
-      "order": -980
+      "order": -980,
+      "lit": false
     },
     {
       "key": "backdrop_near",
+      "kind": "ridge",
       "scroll": 0.45,
-      "order": -970
+      "order": -970,
+      "lit": false
+    },
+    {
+      "key": "backdrop_cave",
+      "kind": "cave",
+      "scroll": 0.55,
+      "order": -960,
+      "lit": true
+    },
+    {
+      "key": "backdrop_cave_top",
+      "kind": "cave_top",
+      "scroll": 0.55,
+      "order": -959,
+      "lit": true
     }
   ]
 }

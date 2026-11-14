@@ -1062,3 +1062,6 @@ MonoBehaviour:
     m_RuleTransform: 0
   materialKey: stone
   joinGroup: earth
+  baseKey: stone
+  slope: 0
+  emits: {r: 0, g: 0, b: 0, a: 1}

@@ -7,7 +7,9 @@ namespace Descender.EditorTools.TilesV2
     /// <summary>
     /// The manifest tools/tiles_v2/gen_tiles_v2.py writes beside the Tiles V2 sheets
     /// (Assets/Art/TilesV2/tiles_v2.json): the tile size, the autotile frames, the
-    /// materials, the blends and the backdrop layers the Unity builders make assets from.
+    /// materials, the blends, the map legend, the liquids, the decor rules, the shade
+    /// masks, the glint, the numbers of the light and of the day and the backdrop layers.
+    /// The Unity builder makes the tiles and the tile set asset from it.
     /// </summary>
     [Serializable]
     public sealed class TilesV2Manifest
@@ -15,6 +17,11 @@ namespace Descender.EditorTools.TilesV2
         public const string Folder = "Assets/Art/TilesV2";
         public const string TileFolder = Folder + "/RuleTiles";
         public const string ManifestPath = Folder + "/tiles_v2.json";
+        public const string SetPath = Folder + "/TilesV2Set.asset";
+        public const string GlintPath = TileFolder + "/glint.asset";
+        public const string ShadeFullPath = TileFolder + "/Shade/shade_full.asset";
+        public const string ShadeFullSprite = "tv2_shade_full";
+        public const string GlintNoneSprite = "tv2_glint_none";
 
         public int tile;
         public int ppu;
@@ -23,9 +30,18 @@ namespace Descender.EditorTools.TilesV2
         public string[] slopes = Array.Empty<string>();
         public MaterialEntry[] materials = Array.Empty<MaterialEntry>();
         public BlendEntry[] blends = Array.Empty<BlendEntry>();
+        public LegendEntry[] legend = Array.Empty<LegendEntry>();
+        public PropEntry[] props = Array.Empty<PropEntry>();
+        public LiquidEntry[] liquids = Array.Empty<LiquidEntry>();
+        public DecorSection decor = new DecorSection();
+        public ShadeSection shade = new ShadeSection();
+        public GlintSection glint = new GlintSection();
+        public LightSection light = new LightSection();
+        public DaySection day = new DaySection();
+        public SkySection sky = new SkySection();
         public BackdropEntry[] backdrops = Array.Empty<BackdropEntry>();
 
-        /// <summary>One material: its sheet, terrain or wall, and its join group.</summary>
+        /// <summary>One material: its sheet, terrain or wall, its join group and the light it gives.</summary>
         [Serializable]
         public sealed class MaterialEntry
         {
@@ -34,6 +50,7 @@ namespace Descender.EditorTools.TilesV2
             public string group;
             public string sheet;
             public bool slopes;
+            public float[] emits = Array.Empty<float>();
 
             public bool IsWall => kind == "wall";
         }
@@ -49,19 +66,154 @@ namespace Descender.EditorTools.TilesV2
             public int[] masks = Array.Empty<int>();
         }
 
-        /// <summary>One parallax layer of the backdrop, back to front.</summary>
+        /// <summary>One character of a map: the layer it is laid on and the key (and slope) it stands for.</summary>
+        [Serializable]
+        public sealed class LegendEntry
+        {
+            public string character;
+            public string layer;
+            public string key;
+            public string slope;
+        }
+
+        /// <summary>One prop: a sheet of frames.</summary>
+        [Serializable]
+        public sealed class PropEntry
+        {
+            public string key;
+            public string sheet;
+            public int frames;
+        }
+
+        /// <summary>One liquid: its sheet of surface and body frames and what it does.</summary>
+        [Serializable]
+        public sealed class LiquidEntry
+        {
+            public string key;
+            public string sheet;
+            public int frames;
+            public float fps;
+            public bool lit;
+            public float[] keeps = Array.Empty<float>();
+            public float[] emits = Array.Empty<float>();
+            public bool swim;
+            public int hazard;
+            public int order;
+        }
+
+        /// <summary>The decor sheet and the rules that scatter it.</summary>
+        [Serializable]
+        public sealed class DecorSection
+        {
+            public string sheet;
+            public int floorSalt;
+            public int ceilingSalt;
+            public DecorRule[] rules = Array.Empty<DecorRule>();
+        }
+
+        /// <summary>One kind of decor: where it grows and the sprite sets of a stack of it.</summary>
+        [Serializable]
+        public sealed class DecorRule
+        {
+            public string key;
+            public string anchor;
+            public string[] on = Array.Empty<string>();
+            public string where;
+            public float chance;
+            public int variants;
+            public int min;
+            public int max;
+            public string first;
+            public string middle;
+            public string last;
+        }
+
+        /// <summary>The shade sheet: the full tile and one for each mask.</summary>
+        [Serializable]
+        public sealed class ShadeSection
+        {
+            public string sheet;
+            public int[] masks = Array.Empty<int>();
+        }
+
+        /// <summary>The glint sheet, the materials that glint and the loop a glinting tile plays.</summary>
+        [Serializable]
+        public sealed class GlintSection
+        {
+            public string sheet;
+            public string[] on = Array.Empty<string>();
+            public float fps;
+            public int[] loop = Array.Empty<int>();
+        }
+
+        /// <summary>The numbers of the tile light.</summary>
+        [Serializable]
+        public sealed class LightSection
+        {
+            public float ambient;
+            public float[] ambientColour = Array.Empty<float>();
+            public float airKeeps;
+            public float solidKeeps;
+            public float[] torchColour = Array.Empty<float>();
+            public float torchIntensity;
+            public float torchGlow;
+            public float torchGlowRadius;
+            public float[] wallTint = Array.Empty<float>();
+        }
+
+        /// <summary>The day: its length, the hour it starts at, the sun's hours and the keys.</summary>
+        [Serializable]
+        public sealed class DaySection
+        {
+            public float length;
+            public float start;
+            public float sunrise;
+            public float sunset;
+            public DayKey[] keys = Array.Empty<DayKey>();
+        }
+
+        /// <summary>The day's values at one hour.</summary>
+        [Serializable]
+        public sealed class DayKey
+        {
+            public float hour;
+            public float[] light = Array.Empty<float>();
+            public float[] top = Array.Empty<float>();
+            public float[] low = Array.Empty<float>();
+            public float[] tint = Array.Empty<float>();
+            public float stars;
+        }
+
+        /// <summary>How the sky is drawn.</summary>
+        [Serializable]
+        public sealed class SkySection
+        {
+            public int bands;
+            public int order;
+            public float cloudDrift;
+        }
+
+        /// <summary>One layer of the backdrop, back to front.</summary>
         [Serializable]
         public sealed class BackdropEntry
         {
             public string key;
+            public string kind;
             public float scroll;
             public int order;
+            public bool lit;
         }
 
         public static TilesV2Manifest Load()
         {
             return JsonUtility.FromJson<TilesV2Manifest>(File.ReadAllText(ManifestPath));
         }
+
+        /// <summary>A colour from the manifest's three floats; black when they are missing.</summary>
+        public static Color ColourOf(float[] rgb) =>
+            rgb != null && rgb.Length >= 3 ? new Color(rgb[0], rgb[1], rgb[2], 1f) : Color.black;
+
+        public static string SheetPath(string sheet) => Folder + "/" + sheet;
 
         public static string TilePath(string key) => TileFolder + "/" + key + ".asset";
 
@@ -70,10 +222,25 @@ namespace Descender.EditorTools.TilesV2
         public static string BlendPath(string key, int sides) =>
             TileFolder + "/Blends/" + key + "_s" + sides + ".asset";
 
+        public static string DecorPath(string part, int variant) =>
+            TileFolder + "/Decor/" + part + "_" + variant + ".asset";
+
+        public static string ShadePath(int mask) => TileFolder + "/Shade/shade_m" + mask + ".asset";
+
         public static string FrameSprite(string key, int frame, int variant) => $"tv2_{key}_f{frame}_v{variant}";
 
         public static string SlopeSprite(string key, string slope, int variant) => $"tv2_{key}_{slope}_v{variant}";
 
         public static string BlendSprite(string key, int sides, int variant) => $"tv2_{key}_s{sides}_v{variant}";
+
+        public static string DecorSprite(string part, int variant) => $"tv2_decor_{part}_{variant}";
+
+        public static string ShadeSprite(int mask) => $"tv2_shade_m{mask}";
+
+        public static string LiquidSprite(string key, string part, int frame) => $"tv2_{key}_{part}_{frame}";
+
+        public static string GlintSprite(int variant, int frame) => $"tv2_glint_v{variant}_{frame}";
+
+        public static string PropSprite(string key, int frame) => $"tv2_{key}_{frame}";
     }
 }

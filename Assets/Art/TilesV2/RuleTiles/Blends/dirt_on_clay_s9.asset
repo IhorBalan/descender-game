@@ -34,3 +34,6 @@ MonoBehaviour:
     m_RuleTransform: 0
   materialKey: dirt_on_clay_s9
   joinGroup: 
+  baseKey: dirt_on_clay_s9
+  slope: 0
+  emits: {r: 0, g: 0, b: 0, a: 1}
