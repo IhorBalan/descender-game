@@ -143,7 +143,18 @@ one of the four old classes, and they are deleted.
   hero in its sight, or hangs over him), `Dive.damage` (a drop that takes
   its own hearts), `FoeKinds.FromFlyer` and `FromHanger`. The three old
   classes stay until the boss goes, like `Walker`.
-- T-0043: the Warden from `Pattern` and `BossPhase`; `Boss` goes.
+- T-0043: the bosses as foes: `FoeKinds.FromBoss` turns a `BossProfile`
+  into an armoured foe that sleeps (`Ambush`) until the hero is within half
+  its old arena, then fights a `Pattern`: a swing, its body's move (a
+  brute's wave, an angel's bolt, an imp king's imps) and a charge; quicker
+  from half its health, and with a third phase at a quarter for the bosses
+  that had a third move. It leaves its motes, loot and the flag that keeps
+  it dead (`FoeDrops.motes`, `FoeDrops.flag`).
+- T-0044: the old classes go. `FoeWorld` finds a placement's numbers through
+  the old prefabs' components today, so deleting `Walker`, `Flyer`,
+  `Hanger` and `Boss` first needs the catalog to point at the profiles
+  themselves; the prefabs, their `.meta` GUIDs and the catalog asset change
+  together, so this is done with the editor open.
 
 ### After G4
 
@@ -296,8 +307,9 @@ hygiene as each production region lands.
 | T-0039 | The walker's habits as parts: pounce, lunge, hurl, quake | done | 39 | T-0038 | 0 | Rebuild the old enemies | #204 |
 | T-0040 | A foe in the world: placement, kills, drops | done | 40 | T-0039 | 0 | Rebuild the old enemies | #205 |
 | T-0041 | Walker placements make foes | done | 41 | T-0040 | 1 | Rebuild the old enemies | #206 |
-| T-0042 | Flyer and Hanger from parts | in review | 42 | T-0041 | 1 | Rebuild the old enemies | |
-| T-0043 | The Warden from the boss pattern; Boss goes | todo | 43 | T-0042 | 1 | Rebuild the old enemies | |
+| T-0042 | Flyer and Hanger from parts | done | 42 | T-0041 | 1 | Rebuild the old enemies | #207 |
+| T-0043 | The bosses from the boss pattern | in review | 43 | T-0042 | 1 | Rebuild the old enemies | |
+| T-0044 | The old enemy classes go | todo | 44 | T-0043 | 0 | Rebuild the old enemies | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -482,8 +494,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (318 on `main` after T-0042) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (157 after T-0042; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (321 on `main` after T-0043) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (159 after T-0043; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -576,7 +588,12 @@ the feather and Wings, the stream gaps, the shrines, the light dash and the
 barriers, the cliff descent.
 
 - **T-0013, the mechanics lab.** Descender > Lab > Play (Alt+L) from any
-  scene, or `lab` in the dev console of a running game (`lab list` names the
+  scene (Descender > Lab > Play Gauntlet starts in the last room), or `lab`
+  in the dev console of a running game (the console was missing from the
+  game until #208 made it in code; it is in the editor and development
+  builds only). The signs over the shapes are drawn at the font's own 9 px
+  on whole pixels since #208 (they were 8 px and unreadable); the key
+  prompts over doors and NPCs got the same fix. (`lab list` names the
   stations, `lab wings` goes to one). Eleven rooms of plain shapes, one per
   move: run, jump, gaps, wings, dash, wall, glide, ledges, slam, pods,
   spikes. The yellow diamonds by the walls lead to the next and the previous
@@ -622,6 +639,14 @@ barriers, the cliff descent.
   air that warn and drop when you walk beneath, lie for a moment and rise
   again; the drop takes two hearts and there is no rope drawn. To check:
   the flyers can be hit and dodged, and the drop's warning is long enough.
+- **T-0043, the bosses.** The Warden at the end of Paradise (and every other
+  boss) is a large gold diamond that sleeps until you come within about
+  eight tiles, warns for a second, then swings, uses its body's move (the
+  Warden throws bolts), and charges, in turn. At half health it stops,
+  warns, and comes back quicker. Hits never stop or push it. To check: the
+  fight is winnable with five hearts, the wake-up distance suits the room,
+  and the old boss's leap, smite and the last bosses' rampage, court and
+  mirror moves, which are not rebuilt, are not missed.
 - **T-0037, the boss template.** `lab boss` (the room gives the wings, Holy
   Light and Smite). Behind shut doors, one armoured foe with twelve health
   in three phases, changing at two thirds and one third: it swings and

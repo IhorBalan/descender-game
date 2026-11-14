@@ -1,4 +1,3 @@
-using TMPro;
 using UnityEngine;
 
 namespace Descender.Fx
@@ -25,6 +24,12 @@ namespace Descender.Fx
         /// <summary>The square sprite is 4 pixels, a quarter of a unit; the others are one unit across.</summary>
         private const float SquareUnits = 4f / Ppu;
 
+        /// <summary>From the shape's top to its label's baseline, in units.</summary>
+        private const float LabelGap = 4f / Ppu;
+
+        /// <summary>The label over the shape, or null when it has none.</summary>
+        public UI.PixelLabel LabelSign => labelSign;
+
         [SerializeField]
         private ShapeKind kind = ShapeKind.Square;
 
@@ -43,8 +48,7 @@ namespace Descender.Fx
         private int sortingOrder;
 
         private SpriteRenderer body;
-        private Canvas labelCanvas;
-        private TextMeshProUGUI labelText;
+        private UI.PixelLabel labelSign;
 
         public ShapeKind Kind => kind;
         public Vector2 Size => size;
@@ -137,43 +141,32 @@ namespace Descender.Fx
         {
             if (string.IsNullOrEmpty(label))
             {
-                if (labelCanvas != null)
+                if (labelSign != null)
                 {
-                    labelCanvas.gameObject.SetActive(false);
+                    labelSign.gameObject.SetActive(false);
                 }
                 return;
             }
-            if (labelCanvas == null)
+            if (labelSign == null)
             {
                 var saved = transform.Find("Label");
-                labelCanvas = saved != null ? saved.GetComponent<Canvas>() : null;
-                labelText = saved != null ? saved.GetComponentInChildren<TextMeshProUGUI>(true) : null;
+                labelSign = saved != null ? saved.GetComponent<UI.PixelLabel>() : null;
             }
-            if (labelCanvas == null || labelText == null)
+            // A label from before PixelLabel, saved in a scene, is replaced.
+            var old = transform.Find("Label");
+            if (labelSign == null && old != null)
             {
-                var go = new GameObject("Label", typeof(RectTransform), typeof(Canvas));
-                go.transform.SetParent(transform, false);
-                labelCanvas = go.GetComponent<Canvas>();
-                labelCanvas.renderMode = RenderMode.WorldSpace;
-                var rect = go.GetComponent<RectTransform>();
-                rect.sizeDelta = new Vector2(160f, 12f);
-                rect.localScale = Vector3.one / Ppu;
-                labelText = UI.UiKit.Label(
-                    rect,
-                    "Text",
-                    "",
-                    UI.UiTheme.SmallFontSize,
-                    UI.UiTheme.Text,
-                    TextAlignmentOptions.Center,
-                    true
-                );
-                UI.UiKit.Fill(labelText.rectTransform);
-                labelText.verticalAlignment = VerticalAlignmentOptions.Middle;
+                old.gameObject.SetActive(false);
+                old.name = "Label (old)";
             }
-            labelCanvas.gameObject.SetActive(true);
-            labelCanvas.sortingOrder = sortingOrder + 1;
-            labelCanvas.transform.localPosition = new Vector3(0f, size.y / 2f + 0.5f, 0f);
-            labelText.text = label;
+            if (labelSign == null)
+            {
+                labelSign = UI.PixelLabel.Make(transform, "Label", Vector2.zero, sortingOrder + 1, true);
+            }
+            labelSign.gameObject.SetActive(true);
+            labelSign.Canvas.sortingOrder = sortingOrder + 1;
+            labelSign.Anchor = new Vector2(0f, size.y / 2f + LabelGap);
+            labelSign.Show(label);
         }
     }
 }

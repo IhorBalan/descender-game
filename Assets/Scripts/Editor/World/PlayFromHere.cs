@@ -68,6 +68,21 @@ namespace Descender.EditorTools.World
         [MenuItem("Descender/Lab/Play &l")]
         public static void PlayLab()
         {
+            PlayLabAt("");
+        }
+
+        /// <summary>
+        /// Descender &gt; Lab &gt; Play Gauntlet: the same, starting in the gauntlet, the
+        /// last room, which runs through every mechanic.
+        /// </summary>
+        [MenuItem("Descender/Lab/Play Gauntlet")]
+        public static void PlayGauntlet()
+        {
+            PlayLabAt("gauntlet");
+        }
+
+        private static void PlayLabAt(string station)
+        {
             if (EditorApplication.isPlayingOrWillChangePlaymode)
             {
                 return;
@@ -77,7 +92,7 @@ namespace Descender.EditorTools.World
                 return;
             }
             RememberOpenScenes();
-            DevStart.LeaveLab("");
+            DevStart.LeaveLab(station);
             EditorSceneManager.OpenScene(MainScenePath, OpenSceneMode.Single);
             EditorApplication.EnterPlaymode();
         }

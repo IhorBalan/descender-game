@@ -189,5 +189,93 @@ namespace Descender.Tests.EditMode
             Assert.That(recipe.body.contactDamage, Is.EqualTo(Hanger.ContactDamage));
             Assert.That(recipe.drops.loot, Is.SameAs(Hanger.Loot));
         }
+
+        private static BossProfile Boss(string character, string third = "")
+        {
+            var boss = ScriptableObject.CreateInstance<BossProfile>();
+            boss.displayName = "The Test";
+            boss.character = character;
+            boss.third = third;
+            boss.body = new Vector2(32f, 80f);
+            boss.health = 24;
+            boss.speed = 34f;
+            boss.contactDamage = 1;
+            boss.attackRange = 60f;
+            boss.windup = 0.5f;
+            boss.recover = 0.6f;
+            boss.chargeWindup = 0.4f;
+            boss.chargeSpeed = 260f;
+            boss.motes = 2;
+            boss.loot.LightMin = 20;
+            boss.loot.LightMax = 30;
+            return boss;
+        }
+
+        private static System.Type[] Attacks(Pattern pattern, int phase)
+        {
+            return pattern.phases[phase].attacks.Select(part => part.GetType()).ToArray();
+        }
+
+        [Test]
+        public void ABossSleepsUntilHeIsNearThenFightsInTwoPhasesTheSecondQuicker()
+        {
+            var profile = Boss("brute");
+            var recipe = FoeKinds.FromBoss("seraph_warden", profile, null);
+            Assert.That(recipe.name, Is.EqualTo("The Test"));
+            Assert.That(recipe.body.armour, Is.True, "a hit does not stop a boss");
+            Assert.That(recipe.body.pushShare, Is.EqualTo(0f));
+            Assert.That(recipe.body.size, Is.EqualTo(profile.body));
+            Assert.That(recipe.body.health, Is.EqualTo(24));
+            Assert.That(Parts(recipe), Is.EqualTo(new[] { typeof(Ambush), typeof(Pattern) }), "it sleeps, then fights");
+            Assert.That(((Ambush)recipe.behaviours[0]).range, Is.EqualTo(FoeKinds.BossWake));
+
+            var pattern = (Pattern)recipe.behaviours[1];
+            Assert.That(pattern.phases, Has.Length.EqualTo(2));
+            Assert.That(pattern.phases[0].until, Is.EqualTo(Enemies.Boss.PhaseTwoAt));
+            Assert.That(pattern.phases[1].until, Is.EqualTo(0f));
+            var both = new[] { typeof(Swing), typeof(Quake), typeof(Charge) };
+            Assert.That(Attacks(pattern, 0), Is.EqualTo(both), "a brute's move is the wave");
+            Assert.That(Attacks(pattern, 1), Is.EqualTo(both));
+            var first = (Swing)pattern.phases[0].attacks[0];
+            var second = (Swing)pattern.phases[1].attacks[0];
+            Assert.That(first.windup, Is.EqualTo(0.5f));
+            Assert.That(second.windup, Is.LessThan(first.windup), "the second phase is quicker");
+            Assert.That(first.cooldown, Is.EqualTo(0f), "the pattern paces the attacks");
+            Assert.That(((Quake)pattern.phases[0].attacks[1]).big, Is.True);
+
+            Assert.That(recipe.drops.motes, Is.EqualTo(2));
+            Assert.That(recipe.drops.loot, Is.SameAs(profile.loot));
+            Assert.That(recipe.drops.flag, Is.EqualTo(BossIds.FlagFor("seraph_warden")), "its death keeps it dead");
+            Assert.That(recipe.drops.moteChance, Is.EqualTo(0f));
+            Assert.That(recipe.drops.powerChance, Is.EqualTo(0f));
+            Object.DestroyImmediate(profile);
+        }
+
+        [Test]
+        public void EachBodyHasItsMoveAndAThirdMoveMeansAThirdPhase()
+        {
+            var angel = Boss("angel_guard");
+            var bolts = (Pattern)FoeKinds.FromBoss("a", angel, null).behaviours[1];
+            Assert.That(Attacks(bolts, 0), Is.EqualTo(new[] { typeof(Swing), typeof(Shoot), typeof(Charge) }));
+
+            var king = Boss("imp");
+            var imp = new FoeRecipe("imp", new FoeBody());
+            var court = (Pattern)FoeKinds.FromBoss("a", king, imp).behaviours[1];
+            Assert.That(Attacks(court, 0), Is.EqualTo(new[] { typeof(Swing), typeof(Summon), typeof(Charge) }));
+            Assert.That(((Summon)court.phases[0].attacks[1]).summons, Is.SameAs(imp), "an imp king calls imps");
+            Assert.That(((Summon)court.phases[0].attacks[1]).cap, Is.EqualTo(Enemies.Boss.SummonCount));
+
+            var other = Boss("hero", "mirror");
+            var last = (Pattern)FoeKinds.FromBoss("a", other, null).behaviours[1];
+            Assert.That(Attacks(last, 0), Is.EqualTo(new[] { typeof(Swing), typeof(Charge) }), "no move of its own");
+            Assert.That(last.phases, Has.Length.EqualTo(3), "a third move is a third phase");
+            Assert.That(last.phases[1].until, Is.EqualTo(Enemies.Boss.PhaseThreeAt));
+            Assert.That(last.phases[2].until, Is.EqualTo(0f));
+            var middle = ((Swing)last.phases[1].attacks[0]).windup;
+            Assert.That(((Swing)last.phases[2].attacks[0]).windup, Is.LessThan(middle), "and quicker still");
+            Object.DestroyImmediate(angel);
+            Object.DestroyImmediate(king);
+            Object.DestroyImmediate(other);
+        }
     }
 }

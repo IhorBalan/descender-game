@@ -278,6 +278,46 @@ namespace Descender.Tests.PlayMode
         }
 
         [UnityTest]
+        public IEnumerator ABossPlacementMakesItsBossWhichLeavesItsMotesAndTheFlagThatKeepsItDead()
+        {
+            var profile = ScriptableObject.CreateInstance<BossProfile>();
+            profile.name = "seraph_warden";
+            profile.displayName = "Seraph Warden";
+            profile.character = "angel_guard";
+            profile.body = new Vector2(32f, 80f);
+            profile.health = 24;
+            profile.motes = 2;
+            var template = new GameObject("Boss");
+            made.Add(template);
+            template.SetActive(false);
+            template.AddComponent<BoxCollider2D>();
+            var old = template.AddComponent<Boss>();
+            var field = typeof(Boss).GetField("profiles", BindingFlags.NonPublic | BindingFlags.Instance);
+            field.SetValue(old, new[] { profile });
+            var catalog = ScriptableObject.CreateInstance<PlacementCatalog>();
+            catalog.Set("boss", template);
+            var json = "{\"id\":\"test/Boss\",\"type\":\"enemy\",\"character\":\"seraph_warden\"}";
+            var placement = Place(new Vector2(5f, 3f), json, catalog);
+            yield return null;
+
+            Assert.That(placement.Spawned.GetComponent<Boss>() == null, Is.True, "no old boss stands there");
+            var boss = placement.Spawned.GetComponent<Foe>();
+            Assert.That(boss != null, Is.True, "a foe does");
+            Assert.That(boss.name, Is.EqualTo("Seraph Warden"));
+            Assert.That(boss.Health, Is.EqualTo(24));
+            Assert.That(boss.Body.armour, Is.True);
+            Assert.That(boss.Behaviours[1], Is.InstanceOf<Pattern>());
+
+            var motes = HealMote.Count;
+            Assert.That(boss.Struck(new Strike(StrikeKind.Sword, 24, new Vector2(4f, 3f))), Is.True);
+            Assert.That(boss.IsDead, Is.True);
+            Assert.That(Story.StoryFlags.Has(BossIds.FlagFor("seraph_warden")), Is.True, "its flag keeps it dead");
+            Assert.That(HealMote.Count, Is.EqualTo(motes + 2), "and it leaves its two motes");
+            Object.Destroy(catalog);
+            Object.Destroy(profile);
+        }
+
+        [UnityTest]
         public IEnumerator AFoeMadeAnyOtherWayLeavesNothingAndStays()
         {
             var foe = Foe.Make(Hanging(), null, new Vector2(5f, 3f), new Vector2(1f, 1.5f));

@@ -120,6 +120,9 @@ namespace Descender.Enemies
         public event System.Action<IEnemy> Died;
 
         public BossProfile Profile => profile;
+
+        /// <summary>The walker the imp kings call; null when the prefab has none.</summary>
+        public Walker Imp => impPrefab;
         public string Id => profile != null ? profile.name : "";
         public string DisplayName => profile != null ? profile.displayName : "";
         public string PlacementId { get; set; } = "";

@@ -15,9 +15,10 @@ namespace Descender.Enemies
     /// death is remembered in <see cref="Kills"/>, and its object goes when it dies, so
     /// the placement makes another when the hero respawns. A character that is not
     /// registered but whose prefab is one of the old enemies (a <see cref="Walker"/>,
-    /// a <see cref="Flyer"/> or a <see cref="Hanger"/>) is made from that prefab's
-    /// numbers and the placement's habit (<see cref="FoeKinds"/>), unless
-    /// <see cref="Remakes"/> is off; anything else is left to the catalog.
+    /// a <see cref="Flyer"/>, a <see cref="Hanger"/> or a <see cref="Boss"/>) is made
+    /// from that prefab's numbers and the placement's habit or boss id
+    /// (<see cref="FoeKinds"/>), unless <see cref="Remakes"/> is off; anything else is
+    /// left to the catalog.
     /// </summary>
     public static class FoeWorld
     {
@@ -82,7 +83,25 @@ namespace Descender.Enemies
             {
                 return FoeKinds.FromHanger(name, hanger.MaxHealth);
             }
+            if (prefab.TryGetComponent<Boss>(out var boss))
+            {
+                var profile = boss.ProfileFor(placement.Character);
+                if (profile == null)
+                {
+                    return null;
+                }
+                var imp = boss.Imp != null && boss.Imp.Profile != null ? Imp(boss.Imp.Profile) : null;
+                return FoeKinds.FromBoss(placement.Character, profile, imp);
+            }
             return null;
+        }
+
+        /// <summary>What an imp king calls: an imp that comes for the hero and leaves nothing.</summary>
+        private static FoeRecipe Imp(WalkerProfile profile)
+        {
+            var imp = FoeKinds.FromWalker("imp", profile, "chase", false);
+            imp.drops = null;
+            return imp;
         }
 
         /// <summary>The foe that stands at a placement, or null when its character is not one of these.</summary>

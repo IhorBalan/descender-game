@@ -188,5 +188,42 @@ namespace Descender.Tests.PlayMode
             Assert.That(dive.IsDiving, Is.True, "it lands on him in the dive");
             Assert.That(hero.Health, Is.EqualTo(full - 2), "which takes its own two hearts, once");
         }
+
+        [UnityTest]
+        public IEnumerator ABossSleepsUntilHeComesNearThenWarnsAndFights()
+        {
+            var profile = ScriptableObject.CreateInstance<BossProfile>();
+            profile.character = "brute";
+            profile.body = new Vector2(32f, 48f);
+            profile.health = 12;
+            profile.contactDamage = 0;
+            var recipe = FoeKinds.FromBoss("test", profile, null);
+            var piece = PutFoe(20f, Floor, 2f, 3f, recipe.body, recipe.behaviours);
+            yield return Begin(new Vector2(46f, Floor));
+            var boss = FoeOf(piece);
+            var wake = Act<Ambush>(boss);
+            var pattern = Act<Pattern>(boss);
+            var stood = boss.transform.position.x;
+            yield return probe.Step(40);
+            Assert.That(wake.IsAwake, Is.False, "far off, it sleeps");
+            Assert.That(boss.IsTelegraphing, Is.False);
+            Assert.That(boss.transform.position.x, Is.EqualTo(stood).Within(Pixel), "and does not move");
+
+            // Six units from its middle: 96 pixels, inside the 128 it wakes at.
+            hero.PlaceAt(new Vector2(27f, Floor));
+            yield return probe.Until(() => boss.IsTelegraphing, 5);
+            Assert.That(boss.IsTelegraphing, Is.True, "near, it warns as it wakes");
+            Assert.That(wake.IsAwake, Is.False, "for its whole warning");
+            yield return probe.Until(() => wake.IsAwake, 60);
+            Assert.That(wake.IsAwake, Is.True);
+            var fought = false;
+            for (var i = 0; i < 200 && !fought; i++)
+            {
+                yield return probe.Step();
+                fought = pattern.IsBusy;
+            }
+            Assert.That(fought, Is.True, "then it fights");
+            Object.Destroy(profile);
+        }
     }
 }

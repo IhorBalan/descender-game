@@ -81,6 +81,7 @@ namespace Descender.Game
             Instance = this;
             Application.targetFrameRate = -1;
             EnsureEventSystem();
+            EnsureDevConsole();
         }
 
         private void OnEnable()
@@ -625,6 +626,22 @@ namespace Descender.Game
                 }
             }
             return string.Join(" ", words);
+        }
+
+        /// <summary>
+        /// The developer console (the grave key) in the editor and in development builds,
+        /// made here rather than saved in the scene, as the EventSystem is. A release
+        /// build has none.
+        /// </summary>
+        private void EnsureDevConsole()
+        {
+            if (!Debug.isDebugBuild || FindAnyObjectByType<DevConsole>() != null)
+            {
+                return;
+            }
+            var holder = new GameObject("DevConsole");
+            holder.transform.SetParent(transform, false);
+            holder.AddComponent<DevConsole>();
         }
 
         /// <summary>

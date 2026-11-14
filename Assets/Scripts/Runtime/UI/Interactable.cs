@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
-using TMPro;
 using UnityEngine;
 
 namespace Descender.UI
@@ -114,27 +113,11 @@ namespace Descender.UI
 
         private void BuildPrompt()
         {
-            var go = new GameObject("Prompt", typeof(RectTransform), typeof(Canvas));
-            go.transform.SetParent(transform, false);
-            promptCanvas = go.GetComponent<Canvas>();
-            promptCanvas.renderMode = RenderMode.WorldSpace;
-            promptCanvas.sortingOrder = 50;
-            var rect = go.GetComponent<RectTransform>();
-            rect.sizeDelta = new Vector2(40f, 12f);
-            rect.localScale = Vector3.one / Ppu;
-            rect.localPosition = new Vector3(0f, promptHeight / Ppu, 0f);
-            var label = UiKit.Label(
-                rect,
-                "Text",
-                "",
-                UiTheme.SmallFontSize,
-                UiTheme.Text,
-                TextAlignmentOptions.Center,
-                true
-            );
-            UiKit.Fill(label.rectTransform);
-            label.verticalAlignment = VerticalAlignmentOptions.Middle;
-            label.gameObject.AddComponent<PromptLabel>().Template = "{interact}";
+            // The baseline sits a little under the old middle of the prompt, so the text stays where it was.
+            var anchor = new Vector2(0f, (promptHeight - 3f) / Ppu);
+            var prompt = PixelLabel.Make(transform, "Prompt", anchor, 50, true);
+            promptCanvas = prompt.Canvas;
+            prompt.Text.gameObject.AddComponent<PromptLabel>().Template = "{interact}";
             promptCanvas.gameObject.SetActive(false);
         }
 

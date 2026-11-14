@@ -11,7 +11,8 @@ namespace Descender.Tests.PlayMode
 {
     /// <summary>
     /// Main.unity boots to the title: the flow, the input router and an EventSystem
-    /// on the Input System exist after one frame, and nothing errors on the way.
+    /// on the Input System exist after one frame, so does the dev console (tests run as
+    /// a debug build), and nothing errors on the way.
     /// </summary>
     public class BootTests
     {
@@ -31,6 +32,7 @@ namespace Descender.Tests.PlayMode
             Assert.That(eventSystem, Is.Not.Null, "no EventSystem was made");
             Assert.That(eventSystem.TryGetComponent<InputSystemUIInputModule>(out _), Is.True);
             Assert.That(Audio.Music.Instance.Playing, Is.EqualTo("title"));
+            Assert.That(Object.FindAnyObjectByType<UI.DevConsole>(), Is.Not.Null, "no dev console was made");
         }
 
         /// <summary>
