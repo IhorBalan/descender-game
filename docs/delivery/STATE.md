@@ -588,7 +588,10 @@ the feather and Wings, the stream gaps, the shrines, the light dash and the
 barriers, the cliff descent.
 
 - **T-0013, the mechanics lab.** Descender > Lab > Play (Alt+L) from any
-  scene, or `lab` in the dev console of a running game (`lab list` names the
+  scene (Descender > Lab > Play Gauntlet starts in the last room), or `lab`
+  in the dev console of a running game (the console was missing from the
+  game until #208 made it in code; it is in the editor and development
+  builds only) (`lab list` names the
   stations, `lab wings` goes to one). Eleven rooms of plain shapes, one per
   move: run, jump, gaps, wings, dash, wall, glide, ledges, slam, pods,
   spikes. The yellow diamonds by the walls lead to the next and the previous
