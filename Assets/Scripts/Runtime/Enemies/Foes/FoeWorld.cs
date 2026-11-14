@@ -1,10 +1,12 @@
-using System;
 using System.Collections.Generic;
 using Descender.World;
 using UnityEngine;
 
 namespace Descender.Enemies
 {
+    /// <summary>What a placement of one character is made from; null leaves that placement to the catalog.</summary>
+    public delegate FoeRecipe FoeKind(WorldPlacement placement);
+
     /// <summary>
     /// Foes in the regions. A kind registered here by its character id stands in for
     /// the catalog's prefab wherever a <see cref="WorldPlacement"/> names that
@@ -16,15 +18,14 @@ namespace Descender.Enemies
     /// </summary>
     public static class FoeWorld
     {
-        private static readonly Dictionary<string, Func<WorldPlacement, FoeRecipe>> Kinds =
-            new Dictionary<string, Func<WorldPlacement, FoeRecipe>>(StringComparer.Ordinal);
+        private static readonly Dictionary<string, FoeKind> Kinds = new Dictionary<string, FoeKind>();
 
         /// <summary>
         /// From now on a placement of this character makes what `recipe` gives for it
         /// (the body's size is the foe's size); a null recipe leaves that placement to the
         /// catalog.
         /// </summary>
-        public static void Register(string character, Func<WorldPlacement, FoeRecipe> recipe)
+        public static void Register(string character, FoeKind recipe)
         {
             if (!string.IsNullOrEmpty(character) && recipe != null)
             {
