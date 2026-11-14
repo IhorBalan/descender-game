@@ -116,7 +116,7 @@ milestone is Ihor's playtest of the lab rooms `foes`, `chase`, `air`,
 `guard`, `arena` and `boss`. T-0038 (#203, merged 2026-11-14) adds one run
 through everything, the `gauntlet`, so the mechanics can be felt together.
 
-### G5. The old enemies, re-made (current)
+### G5. The old enemies, re-made (done 2026-11-14)
 
 Ihor's choice on 2026-11-14, after the gauntlet. The ported enemies
 (`Walker`, `Flyer`, `Hanger`, `Boss`) are re-made from `Foe` and its
@@ -161,9 +161,13 @@ one of the four old classes, and they are deleted.
   `FoeWorld.Remakes` is gone with the old enemies. Done without the editor:
   `build_prefabs.py` writes the shared catalog and the hanged thing's
   profile, and the garden's catalog got the same profiles.
-- Follow-up from the #208 review: a killed boss sets its `boss:<id>` flag,
-  but no placement reads it, so the boss stands again after a respawn (the
-  old boss did the same). Proposed as T-0045.
+- T-0045, a follow-up from the #208 review: a killed boss set its
+  `boss:<id>` flag, but no placement read it, so the boss stood again after
+  a respawn (the old boss did the same). `WorldPlacement.IsDeadBoss` now
+  keeps a boss placement empty while its flag is set.
+
+All of G5 is merged (#204 to #209, T-0045 in review). What is left is
+Ihor's playtest of the regions' foes (T-0041 to T-0043 below).
 
 ### After G4
 
@@ -318,8 +322,9 @@ hygiene as each production region lands.
 | T-0041 | Walker placements make foes | done | 41 | T-0040 | 1 | Rebuild the old enemies | #206 |
 | T-0042 | Flyer and Hanger from parts | done | 42 | T-0041 | 1 | Rebuild the old enemies | #207 |
 | T-0043 | The bosses from the boss pattern | done | 43 | T-0042 | 1 | Rebuild the old enemies | #208 |
-| T-0044 | The old enemy classes go | in review | 44 | T-0043 | 1 | Finish rebuilding old enemies | |
-| T-0045 | A killed boss stays dead: its flag keeps its placement empty | proposed | 45 | T-0044 | 0 | | |
+| T-0044 | The old enemy classes go | done | 44 | T-0043 | 1 | Finish rebuilding old enemies | #209 |
+| T-0045 | A killed boss stays dead: its flag keeps its placement empty | in review | 45 | T-0044 | 0 | Finish rebuilding old enemies | |
+| T-0046 | A test run leaves the TMP font asset `PirataOne 9px.asset` unchanged (today every PlayMode run writes its kerning pairs into it) | proposed | 46 | none | 0 | | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
