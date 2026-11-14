@@ -14,7 +14,7 @@ namespace Descender.Tests.PlayMode
     /// The Tiles V2 playground played: the scene loads on its own, the world is built from
     /// the sample map, the hero stands at the map's start, walks up the meadow's slopes
     /// onto the hill, comes down the far side into the pond and swims, with the tile
-    /// light on him all the way. The scene is not in the build's list, so it is loaded by
+    /// light on him all the way, and the lava hurts him. The scene is not in the build's list, so it is loaded by
     /// its path, which only the editor can do; it is unloaded again so the tests after
     /// this one get an empty world.
     /// </summary>
@@ -88,6 +88,33 @@ namespace Descender.Tests.PlayMode
             Assert.That(hero.IsInWater, Is.True, "he reached the pond and swims");
             Assert.That(hero.IsAlive, Is.True);
             input.Release();
+
+            // Dropped over the lava at the bottom of the map, he loses a heart.
+            var whole = hero.Health;
+            hero.PlaceAt(OverLava(world));
+            yield return probe.Until(() => hero.Health < whole, 300);
+            Assert.That(hero.Health, Is.LessThan(whole), "lava does not hurt");
+        }
+
+        // A point two tiles over the middle of the first stretch of lava's surface.
+        private static Vector2 OverLava(TilesV2World world)
+        {
+            var lava = world.Set.LiquidOf("lava").tile;
+            foreach (var map in world.Liquids)
+            {
+                var bounds = map.cellBounds;
+                var top = bounds.yMax - 1;
+                for (var x = bounds.xMin; x < bounds.xMax; x++)
+                {
+                    if (map.GetTile(new Vector3Int(x, top, 0)) == lava)
+                    {
+                        // Two cells in from the stretch's left end, clear of its bank.
+                        return map.CellToWorld(new Vector3Int(x + 2, top, 0)) + new Vector3(0.5f, 3f, 0f);
+                    }
+                }
+            }
+            Assert.Fail("the sample map has no lava");
+            return Vector2.zero;
         }
 
         private static Color LightOn(TilesV2World world, PlayerController hero)
