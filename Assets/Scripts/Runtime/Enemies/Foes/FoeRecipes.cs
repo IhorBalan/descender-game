@@ -176,6 +176,73 @@ namespace Descender.Enemies
             return new FoeRecipe("boss", body, pattern);
         }
 
+        /// <summary>Comes for him and, from a few steps off, leaps: long and high.</summary>
+        public static FoeRecipe Pouncer()
+        {
+            var body = new FoeBody
+            {
+                health = 2,
+                shape = ShapeKind.Triangle,
+                color = new Color(0.85f, 0.5f, 0.3f),
+            };
+            return new FoeRecipe("pouncer", body, new Swing(), new Pounce(), new Chase(), new Patrol());
+        }
+
+        /// <summary>Sees him from far, runs at him and lunges: a short, low, fast leap.</summary>
+        public static FoeRecipe Lunger()
+        {
+            var body = new FoeBody
+            {
+                health = 2,
+                shape = ShapeKind.Triangle,
+                color = new Color(0.75f, 0.3f, 0.45f),
+            };
+            var lunge = new Pounce
+            {
+                nearest = 28f,
+                farthest = 72f,
+                above = 24f,
+                windup = 0.25f,
+                spring = new Vector2(210f, 90f),
+                cooldown = 1.2f,
+            };
+            var run = new Chase { sight = 200f, pace = 2.4f };
+            return new FoeRecipe("lunger", body, new Swing(), lunge, run, new Patrol());
+        }
+
+        /// <summary>Throws bolts from a distance and backs away when he comes close.</summary>
+        public static FoeRecipe Hurler()
+        {
+            var body = new FoeBody
+            {
+                health = 2,
+                speed = 28f,
+                shape = ShapeKind.Circle,
+                color = new Color(0.9f, 0.7f, 0.25f),
+            };
+            var hurl = new Shoot
+            {
+                nearest = 48f,
+                range = 150f,
+                cooldown = 1.8f,
+            };
+            return new FoeRecipe("hurler", body, hurl, new Retreat(), new Patrol());
+        }
+
+        /// <summary>Slow and armoured: swings at a hero beside it and, at one further off, sends a wave along the floor.</summary>
+        public static FoeRecipe Slammer()
+        {
+            var body = new FoeBody
+            {
+                health = 6,
+                speed = 20f,
+                armour = true,
+                shape = ShapeKind.Diamond,
+                color = new Color(0.55f, 0.4f, 0.3f),
+            };
+            return new FoeRecipe("slammer", body, new Swing(), new Quake(), new Patrol());
+        }
+
         /// <summary>Slow and armoured: a hit does not stop its swing, which is long to come and hurts twice as much.</summary>
         public static FoeRecipe Brute()
         {

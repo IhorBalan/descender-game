@@ -47,6 +47,7 @@ namespace Descender.Enemies
         private int health;
         private float hurtLeft;
         private int painted;
+        private float spring;
 
         public string PlacementId { get; set; } = "";
         public bool IsDead { get; private set; }
@@ -67,6 +68,12 @@ namespace Descender.Enemies
 
         /// <summary>The speed up (or, negative, down) a behaviour asks for this step; only a flying body takes it.</summary>
         public float Lift { get; set; }
+
+        /// <summary>
+        /// Throws a walking body up at a speed (level pixels a second) on this step: a
+        /// leap. A flying body ignores it.
+        /// </summary>
+        public void Spring(float up) => spring = Mathf.Max(up, 0f);
 
         public bool IsGrounded { get; private set; }
 
@@ -234,7 +241,12 @@ namespace Descender.Enemies
                 {
                     velocity.y = Lift;
                 }
+                else if (spring > 0f)
+                {
+                    velocity.y = spring;
+                }
             }
+            spring = 0f;
             body.linearVelocity = velocity / Ppu;
             if (painted != Look())
             {

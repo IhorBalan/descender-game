@@ -95,7 +95,7 @@ differ in push; one hit-stop for every hit; no dummy, no damage shown,
 nothing that breaks; and of combat only the slam's speed under a test. The
 dummy comes first, because every later task is tuned against it.
 
-### G4. Enemies (current)
+### G4. Enemies (done 2026-11-14)
 
 Enemy archetypes in simple shapes, built from behaviours that can be
 combined (patrol, chase, ambush, shoot, dive, shielded, summon), spawners
@@ -113,8 +113,28 @@ be re-made from the same parts one at a time.
 
 All six tasks are merged (2026-11-12, #197 to #202). What is left of the
 milestone is Ihor's playtest of the lab rooms `foes`, `chase`, `air`,
-`guard`, `arena` and `boss`. T-0038 adds one run through everything, the
-`gauntlet`, so the mechanics can be felt together.
+`guard`, `arena` and `boss`. T-0038 (#203, merged 2026-11-14) adds one run
+through everything, the `gauntlet`, so the mechanics can be felt together.
+
+### G5. The old enemies, re-made (current)
+
+Ihor's choice on 2026-11-14, after the gauntlet. The ported enemies
+(`Walker`, `Flyer`, `Hanger`, `Boss`) are re-made from `Foe` and its
+behaviours one at a time, so the regions play by the lab's rules: a strike
+with its push, a telegraph before every attack, armour, encounters. Shapes
+stand in for the art, as in the lab. Done when: no region placement spawns
+one of the four old classes, and they are deleted.
+
+- T-0039: the walker's habits that `Foe` lacks, as parts: `Pounce` (long
+  and high, or as a lunge short and low), `Retreat` and `Shoot.nearest`
+  (the hurl), `Quake` (the old slam's wave). Lab room `habits`.
+- T-0040: a foe in the world: a placement makes one from a recipe, a kill
+  is remembered in `Kills`, it drops what a `WalkerProfile` drops, and it
+  is removed when it falls out of the level.
+- T-0041: the walker placements spawn foes (each `WalkerProfile` and
+  `WalkerBehaviour` maps to a recipe); `Walker` goes.
+- T-0042: `Flyer` and `Hanger` the same way.
+- T-0043: the Warden from `Pattern` and `BossPhase`; `Boss` goes.
 
 ### After G4
 
@@ -263,7 +283,12 @@ hygiene as each production region lands.
 | T-0035 | Shielded and summon | done | 35 | T-0033 | 0 | Re-plan the roadmap around mechanics | #200 |
 | T-0036 | Spawners and encounter rooms | done | 36 | T-0033 | 0 | Re-plan the roadmap around mechanics | #201 |
 | T-0037 | A boss pattern as the template | done | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | #202 |
-| T-0038 | The gauntlet: one run through every mechanic | in review | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | |
+| T-0038 | The gauntlet: one run through every mechanic | done | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | #203 |
+| T-0039 | The walker's habits as parts: pounce, lunge, hurl, quake | in review | 39 | T-0038 | 0 | Rebuild the old enemies | |
+| T-0040 | A foe in the world: placement, kills, drops | todo | 40 | T-0039 | 0 | Rebuild the old enemies | |
+| T-0041 | Walker placements spawn foes; Walker goes | todo | 41 | T-0040 | 1 | Rebuild the old enemies | |
+| T-0042 | Flyer and Hanger from parts | todo | 42 | T-0041 | 1 | Rebuild the old enemies | |
+| T-0043 | The Warden from the boss pattern; Boss goes | todo | 43 | T-0042 | 1 | Rebuild the old enemies | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
@@ -449,7 +474,7 @@ What a task must pass before it merges, and how a thread runs it.
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
 | EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (146 after T-0037; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| PlayMode tests (150 after T-0039; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -564,6 +589,13 @@ barriers, the cliff descent.
   waves behind shut doors, and a heart at the end. To check: how the
   mechanics feel one after another, where the run drags or spikes in
   difficulty, and whether five hearts are enough to reach the end.
+- **T-0039, the old habits.** `lab habits`. Four foes behind low walls: a
+  pouncer that leaps from a few steps off, a lunger that runs in and leaps
+  short and low, a hurler on a platform that throws from far and backs away
+  when you come close, and an armoured slammer whose wave along the floor
+  is jumped. To check: each warning is long enough to react to, the leap
+  can be stepped under or back from, and the wave reads as something to
+  jump.
 - **T-0037, the boss template.** `lab boss` (the room gives the wings, Holy
   Light and Smite). Behind shut doors, one armoured foe with twelve health
   in three phases, changing at two thirds and one third: it swings and
