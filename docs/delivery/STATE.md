@@ -166,7 +166,7 @@ one of the four old classes, and they are deleted.
   a respawn (the old boss did the same). `WorldPlacement.IsDeadBoss` now
   keeps a boss placement empty while its flag is set.
 
-All of G5 is merged (#204 to #209, T-0045 in review). What is left is
+All of G5 is merged (#204 to #210). What is left is
 Ihor's playtest of the regions' foes (T-0041 to T-0043 below).
 
 ### After G4
@@ -323,8 +323,8 @@ hygiene as each production region lands.
 | T-0042 | Flyer and Hanger from parts | done | 42 | T-0041 | 1 | Rebuild the old enemies | #207 |
 | T-0043 | The bosses from the boss pattern | done | 43 | T-0042 | 1 | Rebuild the old enemies | #208 |
 | T-0044 | The old enemy classes go | done | 44 | T-0043 | 1 | Finish rebuilding old enemies | #209 |
-| T-0045 | A killed boss stays dead: its flag keeps its placement empty | in review | 45 | T-0044 | 0 | Finish rebuilding old enemies | |
-| T-0046 | A test run leaves the TMP font asset `PirataOne 9px.asset` unchanged (today every PlayMode run writes its kerning pairs into it) | proposed | 46 | none | 0 | | |
+| T-0045 | A killed boss stays dead: its flag keeps its placement empty | done | 45 | T-0044 | 1 | Finish rebuilding old enemies | #210 |
+| T-0046 | A test run leaves the TMP font asset `PirataOne 9px.asset` unchanged (today every PlayMode run writes its kerning pairs into it) | in review | 46 | none | 0 | Finish rebuilding old enemies | |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
