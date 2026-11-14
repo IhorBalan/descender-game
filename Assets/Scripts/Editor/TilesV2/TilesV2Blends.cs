@@ -49,7 +49,7 @@ namespace Descender.EditorTools.TilesV2
             Debug.Log($"Tiles V2: painted {painted} blend overlays.");
         }
 
-        /// <summary>Clears `blend` and paints the overlays `terrain` calls for; returns how many.</summary>
+        /// <summary>Clears `blend` and paints the overlays `terrain` calls for, one a cell; returns how many.</summary>
         public static int Paint(Tilemap terrain, Tilemap blend, TilesV2Manifest manifest)
         {
             blend.ClearAllTiles();
@@ -67,7 +67,12 @@ namespace Descender.EditorTools.TilesV2
                 }
                 foreach (var cell in bounds.allPositionsWithin)
                 {
-                    if (!(terrain.GetTile(cell) is TerrainTile tile) || tile.MaterialKey != entry.onto)
+                    // One overlay a cell: the first blend in the manifest that applies wins.
+                    if (
+                        !(terrain.GetTile(cell) is TerrainTile tile)
+                        || tile.MaterialKey != entry.onto
+                        || blend.HasTile(cell)
+                    )
                     {
                         continue;
                     }

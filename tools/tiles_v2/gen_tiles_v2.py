@@ -98,6 +98,18 @@ PALETTES = {
         "outline": hexes("16171d")[0],
         "ramp": hexes("23242c", "2b2d36", "343641", "3d3f4b", "474a56", "525562"),
     },
+    "sand": {
+        "outline": hexes("4a3a1c")[0],
+        "ramp": hexes("8c7440", "a88c4e", "c2a660", "d6bc74", "e6cf8a", "f3e2a8"),
+    },
+    "clay": {
+        "outline": hexes("3a1a14")[0],
+        "ramp": hexes("6a3024", "84402c", "9c5236", "b4643f", "c97a4e", "dc9466"),
+    },
+    "copper": {
+        "outline": hexes("3a1e10")[0],
+        "ramp": hexes("6e3a1c", "9a5428", "c06e34", "de8c44", "f0ac62", "ffd08a"),
+    },
 }
 
 # Materials: the sheet, how its inside is drawn, and what it joins (no edge
@@ -108,10 +120,18 @@ MATERIALS = [
     {"key": "stone", "kind": "terrain", "texture": "stone", "palette": "stone", "group": "earth", "slopes": True},
     {"key": "dirt_wall", "kind": "wall", "texture": "dirt", "palette": "dirt_wall", "group": "walls", "slopes": False},
     {"key": "stone_wall", "kind": "wall", "texture": "rubble", "palette": "stone_wall", "group": "walls", "slopes": False},
+    {"key": "sand", "kind": "terrain", "texture": "sand", "palette": "sand", "group": "earth", "slopes": True},
+    {"key": "clay", "kind": "terrain", "texture": "clay", "palette": "clay", "group": "earth", "slopes": False},
+    {"key": "copper_ore", "kind": "terrain", "texture": "stone", "palette": "stone", "ore": "copper", "group": "earth", "slopes": False},
 ]
 
 # Blends: `from` laid over the edge of an `onto` tile that touches it.
-BLENDS = [{"key": "dirt_on_stone", "onto": "stone", "from": ["dirt", "grass"], "texture": "dirt", "palette": "dirt"}]
+BLENDS = [
+    {"key": "dirt_on_stone", "onto": "stone", "from": ["dirt", "grass"], "texture": "dirt", "palette": "dirt"},
+    {"key": "dirt_on_sand", "onto": "sand", "from": ["dirt", "grass"], "texture": "dirt", "palette": "dirt"},
+    {"key": "dirt_on_clay", "onto": "clay", "from": ["dirt", "grass"], "texture": "dirt", "palette": "dirt"},
+    {"key": "sand_on_stone", "onto": "stone", "from": ["sand"], "texture": "sand", "palette": "sand"},
+]
 
 SLOPES = ["up_right", "up_left"]  # rising to the right / to the left; solid below the diagonal
 
@@ -274,7 +294,71 @@ def texture_rubble(seed) -> np.ndarray:
     return texture_stone(seed + 11, cells=3)
 
 
-TEXTURES = {"dirt": texture_dirt, "stone": texture_stone, "bricks": texture_bricks, "rubble": texture_rubble}
+def texture_sand(seed) -> np.ndarray:
+    """Loose sand: a light field of single grains a step darker or lighter,
+    and a couple of short wind ripples, shaded under."""
+    r = rng("sand", seed)
+    t = np.full((TILE, TILE), 3, dtype=np.int16)
+    for y in range(TILE):
+        for x in range(TILE):
+            roll = r.random()
+            if roll < 0.14:
+                t[y, x] = 2
+            elif roll < 0.21:
+                t[y, x] = 4
+    for _ in range(2):
+        x0, y0, n = r.randrange(TILE), r.randrange(TILE), r.randint(3, 5)
+        for k in range(n):
+            t[y0, (x0 + k) % TILE] = 4
+            t[(y0 + 1) % TILE, (x0 + k) % TILE] = 2
+    return t
+
+
+def texture_clay(seed) -> np.ndarray:
+    """Layered clay: wavy darker strata twice a tile (so it wraps), a few lit
+    pebbles with a shade under them."""
+    r = rng("clay", seed)
+    phase = r.uniform(0, 6.283)
+    t = np.full((TILE, TILE), 3, dtype=np.int16)
+    for y in range(TILE):
+        for x in range(TILE):
+            wob = int(round(1.2 * np.sin(2 * np.pi * x / TILE + phase)))
+            band = (y + wob) % 8
+            if band < 2:
+                t[y, x] = 2
+            elif band == 2:
+                t[y, x] = 4 if (x + y) % 3 == 0 else 3
+    for _ in range(3):
+        x, y = r.randrange(TILE), r.randrange(TILE)
+        t[y, x] = 4
+        t[(y + 1) % TILE, x] = 1
+    return t
+
+
+TEXTURES = {
+    "dirt": texture_dirt,
+    "stone": texture_stone,
+    "bricks": texture_bricks,
+    "rubble": texture_rubble,
+    "sand": texture_sand,
+    "clay": texture_clay,
+}
+
+
+def ore_mask(seed) -> np.ndarray:
+    """Where an ore tile's nuggets are: two or three clusters of a few pixels
+    each, wrapped round the tile."""
+    r = rng("ore", seed)
+    mask = np.zeros((TILE, TILE), dtype=bool)
+    for _ in range(r.choice([3, 3, 4])):
+        x, y = r.randrange(TILE), r.randrange(TILE)
+        for _ in range(r.randint(6, 11)):
+            mask[y % TILE, x % TILE] = True
+            mask[(y + 1) % TILE, x % TILE] = True
+            mask[y % TILE, (x + 1) % TILE] = True
+            x += r.choice([-1, 0, 1, 1])
+            y += r.choice([-1, 0, 1])
+    return mask
 
 
 # --- Frames -------------------------------------------------------------------
@@ -417,6 +501,36 @@ def blade_tips(solid: np.ndarray, mask: int, r: random.Random):
     solid[c, c] = middle
 
 
+def ore_over(rgba: np.ndarray, solid: np.ndarray, palette: dict, variant: int) -> np.ndarray:
+    """Nuggets of ore set in the tile: lit on their top-left, shaded on their
+    bottom-right, a dark rim cut into the rock under them; never on the outline."""
+    c = slice(TILE, 2 * TILE)
+    mid = solid[c, c]
+    edge = np.zeros((TILE, TILE), dtype=bool)
+    for dx, dy in [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]:
+        edge |= ~shift(solid, dx, dy, True)[c, c]
+    ore = ore_mask(variant) & mid & ~edge
+    ramp = palette["ramp"]
+    out = rgba.copy()
+    for y in range(TILE):
+        for x in range(TILE):
+            if ore[y, x]:
+                above = y > 0 and ore[y - 1, x]
+                left = x > 0 and ore[y, x - 1]
+                below = y < TILE - 1 and ore[y + 1, x]
+                colour = ramp[3]
+                if not above:
+                    colour = ramp[5]
+                elif not left:
+                    colour = ramp[4]
+                elif not below:
+                    colour = ramp[1]
+                out[y, x, :3] = colour
+            elif mid[y, x] and not edge[y, x] and y > 0 and ore[y - 1, x]:
+                out[y, x, :3] = palette["outline"]
+    return out
+
+
 def draw_frame(material: dict, mask: int, variant: int) -> np.ndarray:
     r = rng(material["key"], mask, variant)
     solid = neighbourhood(mask)
@@ -428,6 +542,8 @@ def draw_frame(material: dict, mask: int, variant: int) -> np.ndarray:
     rgba = shade(solid, tex, PALETTES[material["palette"]], wall)
     if material.get("grass"):
         rgba = grass_over(rgba, solid, PALETTES[material["grass"]], r)
+    if material.get("ore"):
+        rgba = ore_over(rgba, solid, PALETTES[material["ore"]], variant)
     return rgba
 
 
@@ -585,6 +701,62 @@ def backdrops() -> dict[str, Image.Image]:
     }
 
 
+# --- Props --------------------------------------------------------------------
+
+TORCH_FRAMES = 3
+
+
+def torch_frame(frame: int) -> np.ndarray:
+    """A wall torch in one cell: a wrapped stick, outlined, lit on its left,
+    and a flame whose shape sways from frame to frame (drawn unlit in Unity:
+    it is the light)."""
+    wood, wood_lit, wood_dark, rim = hexes("6b4226", "8f5c34", "4a2c18", "24140a")
+    wrap = hexes("9a9aa6")[0]
+    outer, mid, core, tip = hexes("d8521a", "ff9a2e", "ffe07a", "fff6d0")
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        if 0 <= x < TILE and 0 <= y < TILE:
+            a[y, x, :3] = colour
+            a[y, x, 3] = 255
+
+    for y in range(8, 15):
+        put(6, y, rim)
+        put(9, y, rim)
+        put(7, y, wood_lit)
+        put(8, y, wood if y < 13 else wood_dark)
+    put(7, 15, rim)
+    put(8, 15, rim)
+    for x in (6, 7, 8, 9):
+        put(x, 9, wrap if x in (7, 8) else rim)
+    sway = [0, -1, 1][frame % 3]
+    height = [6, 7, 5][frame % 3]
+    for k in range(height):
+        y = 7 - k
+        half = 2 if k < 2 else (1 if k < height - 1 else 0)
+        cx = 7 + (sway if k >= height // 2 else 0)
+        for x in range(cx - half, cx + 2 + half):
+            put(x, y, outer)
+        if half >= 1:
+            for x in range(cx - half + 1, cx + 1 + half):
+                put(x, y, mid)
+        if k < height - 2:
+            put(cx, y, core)
+            put(cx + 1, y, core if k > 0 else mid)
+    if frame == 1:
+        put(7 + sway, 8 - height, tip)
+    return a
+
+
+def torch_sheet() -> tuple[Image.Image, list]:
+    sheet = np.zeros((TILE, TORCH_FRAMES * TILE, 4), dtype=np.uint8)
+    sprites = []
+    for f in range(TORCH_FRAMES):
+        sheet[:, f * TILE : (f + 1) * TILE] = torch_frame(f)
+        sprites.append((f"tv2_torch_{f}", f, 0))
+    return Image.fromarray(sheet, "RGBA"), sprites
+
+
 # --- Sheets and manifest ------------------------------------------------------
 
 
@@ -663,6 +835,7 @@ def manifest() -> dict:
             {"key": b["key"], "onto": b["onto"], "from": b["from"], "sheet": "blend_" + b["key"] + ".png", "masks": BLEND_MASKS}
             for b in BLENDS
         ],
+        "props": [{"key": "torch", "sheet": "torch.png", "frames": TORCH_FRAMES}],
         "backdrops": [
             {"key": "backdrop_sky", "scroll": 0.0, "order": -1000},
             {"key": "backdrop_far", "scroll": 0.1, "order": -990},
@@ -695,6 +868,10 @@ def generate(out: str) -> dict[str, Image.Image]:
         path = os.path.join(out, "blend_" + blend["key"] + ".png")
         write(path, image, sheet_meta(path, image, sprites))
         images["blend_" + blend["key"]] = image
+    image, sprites = torch_sheet()
+    path = os.path.join(out, "torch.png")
+    write(path, image, sheet_meta(path, image, sprites))
+    images["torch"] = image
     for name, image in backdrops().items():
         path = os.path.join(out, name + ".png")
         write(path, image, backdrop_meta(path))
@@ -720,11 +897,66 @@ def read_map(path: str) -> tuple[list[str], list[str]]:
     return grids[0], grids[1]
 
 
-TERRAIN_CHARS = {"G": "grass", "D": "dirt", "S": "stone", "/": "grass:up_right", "\\": "grass:up_left"}
+TERRAIN_CHARS = {
+    "G": "grass",
+    "D": "dirt",
+    "S": "stone",
+    "A": "sand",
+    "C": "clay",
+    "O": "copper_ore",
+    "/": "grass:up_right",
+    "\\": "grass:up_left",
+    "(": "sand:up_right",
+    ")": "sand:up_left",
+}
+TORCH_CHAR = "T"  # a torch on the wall at this cell; air for the terrain
 WALL_CHARS = {"d": "dirt_wall", "s": "stone_wall"}
 
 
-def preview(images: dict[str, Image.Image], path: str):
+def sky_reach(terrain: list[str]) -> list[int]:
+    """For each column, the first row (from the top) that is solid: open sky
+    reaches down to it."""
+    h = len(terrain)
+    out = []
+    for x in range(max(len(row) for row in terrain)):
+        row = next((y for y in range(h) if x < len(terrain[y]) and terrain[y][x] in TERRAIN_CHARS), h)
+        out.append(row)
+    return out
+
+
+# The lighting standard (docs/art/tiles-v2.md), shared with TilesV2Sample.cs.
+AMBIENT = 0.08  # the light everywhere, deep underground included
+SKY_FALLOFF = 5.0  # tiles the daylight reaches into the ground past open sky
+TORCH_RADIUS = 8.0  # tiles
+TORCH_COLOUR = (1.0, 0.72, 0.42)
+TORCH_INTENSITY = 1.4
+
+
+def light_preview(canvas: Image.Image, terrain: list[str], torches) -> Image.Image:
+    """An approximation of the Unity lighting for the preview: daylight down
+    to each column's sky reach, fading over SKY_FALLOFF tiles, a dim ambient,
+    and warm torch light falling off with distance."""
+    w, h = canvas.size
+    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32) / TILE
+    reach = np.array(sky_reach(terrain), dtype=np.float32)
+    col = np.clip(xs.astype(int), 0, len(reach) - 1)
+    # distance below the skyline, softened sideways by the neighbouring columns
+    depth = np.full_like(xs, 99.0)
+    for dx in range(-3, 4):
+        r = reach[np.clip(col + dx, 0, len(reach) - 1)]
+        side = np.maximum(np.abs(xs - (col + dx + 0.5)) - 0.5, 0)
+        depth = np.minimum(depth, np.hypot(np.maximum(ys - r, 0), side * (dx != 0)))
+    sky = np.clip(1 - depth / SKY_FALLOFF, 0, 1)
+    light = np.stack([np.full_like(xs, AMBIENT)] * 3, -1) + sky[..., None] * (1 - AMBIENT)
+    for tx, ty in torches:
+        d = np.hypot(xs - tx - 0.5, ys - ty - 0.4) / TORCH_RADIUS
+        k = np.clip(1 - d, 0, 1) ** 1.2 * TORCH_INTENSITY
+        light += k[..., None] * np.array(TORCH_COLOUR, dtype=np.float32)
+    rgb = np.asarray(canvas.convert("RGB"), dtype=np.float32) * np.clip(light, 0, 1.25)
+    return Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
+
+
+def preview(images: dict[str, Image.Image], path: str, lit: bool = True):
     terrain, walls = read_map(SAMPLE_MAP)
     h, w = len(terrain), max(len(row) for row in terrain)
     group = {m["key"]: m["group"] for m in MATERIALS}
@@ -769,24 +1001,30 @@ def preview(images: dict[str, Image.Image], path: str):
 
     place(walls, WALL_CHARS, "wall")
     place(terrain, TERRAIN_CHARS, "terrain")
-    blend = BLENDS[0]
-    blend_img = images["blend_" + blend["key"]]
-    brows = (len(BLEND_MASKS) + COLUMNS - 1) // COLUMNS
-    for y in range(h):
-        for x in range(w):
-            if at(terrain, TERRAIN_CHARS, x, y) != blend["onto"]:
-                continue
-            sides = 0
-            for bit, side in BLEND_SIDES:
-                _, dx, dy = next(b for b in BITS if b[0] == side)
-                other = at(terrain, TERRAIN_CHARS, x + dx, y + dy)
-                if other is not None and other.split(":")[0] in blend["from"]:
-                    sides |= bit
-            if sides:
-                v = (x * 7 + y * 13) % VARIANTS
-                cx, cy = frame_cell(BLEND_MASKS.index(sides))
-                cy += v * brows
-                canvas.alpha_composite(blend_img.crop((cx * TILE, cy * TILE, (cx + 1) * TILE, (cy + 1) * TILE)), (x * TILE, y * TILE))
+    for blend in BLENDS:
+        blend_img = images["blend_" + blend["key"]]
+        brows = (len(BLEND_MASKS) + COLUMNS - 1) // COLUMNS
+        for y in range(h):
+            for x in range(w):
+                if at(terrain, TERRAIN_CHARS, x, y) != blend["onto"]:
+                    continue
+                sides = 0
+                for bit, side in BLEND_SIDES:
+                    _, dx, dy = next(b for b in BITS if b[0] == side)
+                    other = at(terrain, TERRAIN_CHARS, x + dx, y + dy)
+                    if other is not None and other.split(":")[0] in blend["from"]:
+                        sides |= bit
+                if sides:
+                    v = (x * 7 + y * 13) % VARIANTS
+                    cx, cy = frame_cell(BLEND_MASKS.index(sides))
+                    cy += v * brows
+                    tile = blend_img.crop((cx * TILE, cy * TILE, (cx + 1) * TILE, (cy + 1) * TILE))
+                    canvas.alpha_composite(tile, (x * TILE, y * TILE))
+    torches = [(x, y) for y in range(h) for x in range(len(terrain[y])) if terrain[y][x] == TORCH_CHAR]
+    if lit:
+        canvas = light_preview(canvas, terrain, torches)
+    for x, y in torches:
+        canvas.alpha_composite(images["torch"].crop((0, 0, TILE, TILE)), (x * TILE, y * TILE))
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     canvas.resize((canvas.width * 3, canvas.height * 3), Image.NEAREST).save(path)
 

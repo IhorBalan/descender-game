@@ -203,6 +203,133 @@ namespace Descender.Tests
             }
         }
 
+        [Test]
+        public void DaylightReachesDownToEachColumnsFirstTileAndIntoOpenShafts()
+        {
+            var map = new List<string> { "..T.", "G...", "D.G.", "S.SS" };
+            Assert.That(TilesV2Sample.SkyReach(map), Is.EqualTo(new[] { 1, 4, 2, 3 }), "a torch is not terrain");
+            var outline = TilesV2Sample.SkyOutline(map, 2f, 3f);
+            Assert.That(
+                outline,
+                Is.EqualTo(
+                    new[]
+                    {
+                        new Vector3(-2f, 7f),
+                        new Vector3(-2f, 3f),
+                        new Vector3(0.5f, 3f),
+                        // The open column 1 lets daylight down to the bottom of the map.
+                        new Vector3(1.5f, 0f),
+                        new Vector3(2.5f, 2f),
+                        new Vector3(3.5f, 1f),
+                        new Vector3(6f, 1f),
+                        new Vector3(6f, 7f),
+                    }
+                )
+            );
+        }
+
+        [Test]
+        public void TheSampleSceneLightsTheSkyAndEveryTorchAndLeavesTheBackdropUnlit()
+        {
+            var (terrain, _) = TilesV2Sample.ReadMap(System.IO.File.ReadAllText(TilesV2Sample.MapPath));
+            var torches = 0;
+            foreach (var row in terrain)
+            {
+                torches += row.Split(TilesV2Sample.TorchChar).Length - 1;
+            }
+            Assert.That(torches, Is.GreaterThan(0), "the sample shows torches");
+            var scene = UnityEditor.SceneManagement.EditorSceneManager.OpenScene(
+                TilesV2Sample.ScenePath,
+                UnityEditor.SceneManagement.OpenSceneMode.Additive
+            );
+            try
+            {
+                var flames = new List<TorchFlame>();
+                var lights = new List<UnityEngine.Rendering.Universal.Light2D>();
+                foreach (var root in scene.GetRootGameObjects())
+                {
+                    flames.AddRange(root.GetComponentsInChildren<TorchFlame>());
+                    lights.AddRange(root.GetComponentsInChildren<UnityEngine.Rendering.Universal.Light2D>());
+                    foreach (var layer in root.GetComponentsInChildren<ParallaxLayer>())
+                    {
+                        var material = layer.GetComponent<SpriteRenderer>().sharedMaterial;
+                        Assert.That(material.shader.name, Does.Contain("Unlit"), layer.name);
+                    }
+                }
+                Assert.That(flames.Count, Is.EqualTo(torches));
+                foreach (var flame in flames)
+                {
+                    Assert.That(flame.Glow, Is.Not.Null);
+                    Assert.That(flame.FrameCount, Is.EqualTo(3));
+                }
+                Assert.That(
+                    lights
+                        .FindAll(l => l.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Freeform)
+                        .Count,
+                    Is.EqualTo(1),
+                    "one daylight"
+                );
+                var ambient = lights.Find(l => l.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Global);
+                Assert.That(ambient.intensity, Is.EqualTo(TilesV2Sample.Ambient).Within(1e-4f), "deep rock is dark");
+            }
+            finally
+            {
+                UnityEditor.SceneManagement.EditorSceneManager.CloseScene(scene, true);
+            }
+        }
+
+        [Test]
+        public void ATorchWaversByLessThanATenth()
+        {
+            for (var t = 0f; t < 20f; t += 0.05f)
+            {
+                Assert.That(TorchFlame.Waver(t, 3.3f), Is.InRange(0.92f, 1.08f));
+            }
+            Assert.That(TorchFlame.Waver(1f, 0f), Is.Not.EqualTo(TorchFlame.Waver(1f, 5f)), "torches are out of step");
+        }
+
+        [Test]
+        public void DirtBlendsOverSandAndClayToo()
+        {
+            var terrain = NewTilemap("Terrain");
+            var blend = NewTilemap("Blend");
+            terrain.SetTile(new Vector3Int(0, 0, 0), TileOf("sand"));
+            terrain.SetTile(new Vector3Int(1, 0, 0), TileOf("dirt"));
+            terrain.SetTile(new Vector3Int(2, 0, 0), TileOf("clay"));
+            terrain.SetTile(new Vector3Int(0, 5, 0), TileOf("copper_ore"));
+            terrain.SetTile(new Vector3Int(1, 5, 0), TileOf("stone"));
+            Assert.That(TilesV2Blends.Paint(terrain, blend, manifest), Is.EqualTo(2));
+            Assert.That(
+                blend.GetTile(new Vector3Int(0, 0, 0)),
+                Is.SameAs(AssetDatabase.LoadAssetAtPath<TileBase>(TilesV2Manifest.BlendPath("dirt_on_sand", 2)))
+            );
+            Assert.That(
+                blend.GetTile(new Vector3Int(2, 0, 0)),
+                Is.SameAs(AssetDatabase.LoadAssetAtPath<TileBase>(TilesV2Manifest.BlendPath("dirt_on_clay", 8)))
+            );
+        }
+
+        [Test]
+        public void ThePaletteHoldsEveryMaterialAndSlopeOnce()
+        {
+            var prefab = AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Palette.PalettePath);
+            Assert.That(prefab, Is.Not.Null, "run Descender > Tiles V2 > Build tiles");
+            var map = prefab.GetComponentInChildren<Tilemap>();
+            var layout = TilesV2Palette.Layout(manifest);
+            var expected = manifest.materials.Length;
+            foreach (var material in manifest.materials)
+            {
+                expected += material.slopes ? manifest.slopes.Length : 0;
+            }
+            Assert.That(layout.Count, Is.EqualTo(expected));
+            var seen = new HashSet<Vector3Int>();
+            foreach (var (cell, path) in layout)
+            {
+                Assert.That(seen.Add(cell), Is.True, "two tiles at " + cell);
+                Assert.That(map.GetTile(cell), Is.SameAs(AssetDatabase.LoadAssetAtPath<TileBase>(path)), path);
+            }
+        }
+
         private Tilemap NewTilemap(string name)
         {
             var root = new GameObject("Tiles V2 test grid");

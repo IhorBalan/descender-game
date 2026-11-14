@@ -69,6 +69,9 @@ one outline colour, nothing else.
 | stone | `1c1d26` | `33353f 464955 5b5e6b 717482 8a8d9a a8abb6` |
 | dirt wall | `1e120c` | `2c1b12 362218 40291d 4a3022 553828 60402e` |
 | stone wall | `16171d` | `23242c 2b2d36 343641 3d3f4b 474a56 525562` |
+| sand | `4a3a1c` | `8c7440 a88c4e c2a660 d6bc74 e6cf8a f3e2a8` |
+| clay | `3a1a14` | `6a3024 84402c 9c5236 b4643f c97a4e dc9466` |
+| copper (ore nuggets) | `3a1e10` | `6e3a1c 9a5428 c06e34 de8c44 f0ac62 ffd08a` |
 
 Walls are the same frames at about half the value, with no highlight and a
 soft two-pixel shade where they meet air, so they sit behind the terrain.
@@ -80,11 +83,16 @@ soft two-pixel shade where they meet air, so they sit behind the terrain.
 | dirt | terrain | earth | Grid (full cell); slopes: Sprite |
 | grass | terrain: dirt with turf on every face open to air (deep on top, thin on the sides) | earth | Grid |
 | stone | terrain | earth | Grid |
+| sand | terrain: loose grains, wind ripples; slopes for dunes | earth | Grid; slopes: Sprite |
+| clay | terrain: wavy strata | earth | Grid |
+| copper_ore | terrain: stone with lit nuggets of copper (palette `copper`), never on the outline | earth | Grid |
 | dirt_wall, stone_wall | wall | walls | none |
 
-**Blends**: `dirt_on_stone` lays a ragged band of dirt over each side of a
-stone tile that touches dirt or grass (15 side masks x 3 variants), on the
-Blend tilemap. Descender > Tiles V2 > Paint blends recomputes it from the
+**Blends**: `dirt_on_stone`, `dirt_on_sand` and `dirt_on_clay` lay a ragged
+band of dirt over each side of a stone, sand or clay tile that touches dirt or
+grass (15 side masks x 3 variants), on the Blend tilemap; `sand_on_stone`
+lays sand over stone the same way. One overlay a cell: the first blend in
+`BLENDS` that applies wins. Ore joins stone with no blend. Descender > Tiles V2 > Paint blends recomputes it from the
 Terrain tilemap; run it after painting.
 
 **Tilemaps** under one Grid (cell size 1):
@@ -100,6 +108,22 @@ back to front: sky (scroll 0, pinned to the view), far mountains (0.1), hills
 (0.25), near forest (0.45); a layer's scroll is the share of the camera's
 movement it scrolls by (`ParallaxLayer`). Ridges are lit on their left-facing
 slopes, the same light as the tiles.
+
+## Light
+
+Underground is dark, as in the classic sandbox games; light comes from the
+sky and from what the player places. All on blend style 0 (Multiply).
+
+| Light | Value |
+|---|---|
+| Ambient | one Global light, intensity 0.08, colour `(0.55, 0.62, 0.85)`: deep rock is near black |
+| Daylight | one Freeform light, intensity 0.92 (ambient + daylight = 1 under open sky), shaped as everything above the top middle of each column's first terrain tile (so steps and slopes are diagonals and it goes down open shafts), falloff 5 tiles into the ground |
+| Torch | Point, colour `(1, 0.72, 0.42)`, intensity 1.4, radius 8 tiles (inner 0.5), falloff 0.5, wavering within 8% (`TorchFlame`), switched off past 30 units from the camera |
+| Backdrop | Sprite-Unlit: the far daylit world, untouched by the scene's lights |
+
+The torch is a prop sheet (`torch.png`, 3 flame frames), drawn unlit: its flame
+is the light. On the sample map it is `T`, on a wall cell that is air in the
+terrain. The generator's `--preview` approximates this lighting.
 
 ## In Unity
 

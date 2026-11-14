@@ -11,7 +11,7 @@ namespace Descender.EditorTools.TilesV2
     /// generator's manifest and sheets (docs/art/tiles-v2.md). Each material gets one
     /// <see cref="TerrainTile"/> with a rule per autotile frame (its variants as the rule's
     /// random sprites), each slope its own tile, and each blend one overlay tile per
-    /// side mask. Idempotent: an existing asset is loaded and its rules replaced, so its
+    /// side mask, then refills the Tile Palette (<see cref="TilesV2Palette"/>). Idempotent: an existing asset is loaded and its rules replaced, so its
     /// GUID and every reference to it stay.
     /// </summary>
     public static class TilesV2Builder
@@ -89,6 +89,7 @@ namespace Descender.EditorTools.TilesV2
                 }
             }
             AssetDatabase.SaveAssets();
+            TilesV2Palette.Build(manifest);
             return count;
         }
 

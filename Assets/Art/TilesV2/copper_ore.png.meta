@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 960e81add9255fbcb4825bbdcf25af27
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4096725340856777444
+    second: tv2_copper_ore_f0_v0
+  - first:
+      213: 3051215937350564722
+    second: tv2_copper_ore_f1_v0
+  - first:
+      213: 2636423303273104493
+    second: tv2_copper_ore_f4_v0
+  - first:
+      213: 1520562289379411696
+    second: tv2_copper_ore_f5_v0
+  - first:
+      213: 1589886028017902517
+    second: tv2_copper_ore_f7_v0
+  - first:
+      213: 2467802413758620809
+    second: tv2_copper_ore_f16_v0
+  - first:
+      213: 780844502952209548
+    second: tv2_copper_ore_f17_v0
+  - first:
+      213: 907739193623780324
+    second: tv2_copper_ore_f20_v0
+  - first:
+      213: 2425785735839330352
+    second: tv2_copper_ore_f21_v0
+  - first:
+      213: 3759755497561056001
+    second: tv2_copper_ore_f23_v0
+  - first:
+      213: 3997490022072780371
+    second: tv2_copper_ore_f28_v0
+  - first:
+      213: 1164548089625374269
+    second: tv2_copper_ore_f29_v0
+  - first:
+      213: 2653552640350949300
+    second: tv2_copper_ore_f31_v0
+  - first:
+      213: 1391527168620115281
+    second: tv2_copper_ore_f64_v0
+  - first:
+      213: 1075627892648287821
+    second: tv2_copper_ore_f65_v0
+  - first:
+      213: 125914615363842487
+    second: tv2_copper_ore_f68_v0
+  - first:
+      213: 4075531462966613727
+    second: tv2_copper_ore_f69_v0
+  - first:
+      213: 928376320680248320
+    second: tv2_copper_ore_f71_v0
+  - first:
+      213: 2474879178428472382
+    second: tv2_copper_ore_f80_v0
+  - first:
+      213: 4574538930565903995
+    second: tv2_copper_ore_f81_v0
+  - first:
+      213: 2548366762734860202
+    second: tv2_copper_ore_f84_v0
+  - first:
+      213: 2801639785907237573
+    second: tv2_copper_ore_f85_v0
+  - first:
+      213: 647202267856091127
+    second: tv2_copper_ore_f87_v0
+  - first:
+      213: 1503573162407794447
+    second: tv2_copper_ore_f92_v0
+  - first:
+      213: 3099487616890374963
+    second: tv2_copper_ore_f93_v0
+  - first:
+      213: 1766600239055864881
+    second: tv2_copper_ore_f95_v0
+  - first:
+      213: 3868246864997090028
+    second: tv2_copper_ore_f112_v0
+  - first:
+      213: 1808134413868878534
+    second: tv2_copper_ore_f113_v0
+  - first:
+      213: 480368236990299688
+    second: tv2_copper_ore_f116_v0
+  - first:
+      213: 3404176371867046286
+    second: tv2_copper_ore_f117_v0
+  - first:
+      213: 4218139985840147015
+    second: tv2_copper_ore_f119_v0
+  - first:
+      213: 599040295104881547
+    second: tv2_copper_ore_f124_v0
+  - first:
+      213: 1303080638683337883
+    second: tv2_copper_ore_f125_v0
+  - first:
+      213: 1713176281115979502
+    second: tv2_copper_ore_f127_v0
+  - first:
+      213: 2961188487074852451
+    second: tv2_copper_ore_f193_v0
+  - first:
+      213: 2437343821864428260
+    second: tv2_copper_ore_f197_v0
+  - first:
+      213: 1018459934153694273
+    second: tv2_copper_ore_f199_v0
+  - first:
+      213: 2629996680889517969
+    second: tv2_copper_ore_f209_v0
+  - first:
+      213: 1534147165273420451
+    second: tv2_copper_ore_f213_v0
+  - first:
+      213: 2928078105333050813
+    second: tv2_copper_ore_f215_v0
+  - first:
+      213: 2829347729805281775
+    second: tv2_copper_ore_f221_v0
+  - first:
+      213: 3783450498807942181
+    second: tv2_copper_ore_f223_v0
+  - first:
+      213: 1291879637900466191
+    second: tv2_copper_ore_f241_v0
+  - first:
+      213: 843861575805931703
+    second: tv2_copper_ore_f245_v0
+  - first:
+      213: 1996287157993859859
+    second: tv2_copper_ore_f247_v0
+  - first:
+      213: 4338511165562496755
+    second: tv2_copper_ore_f253_v0
+  - first:
+      213: 1273283602968761917
+    second: tv2_copper_ore_f255_v0
+  - first:
+      213: 4254681875367448532
+    second: tv2_copper_ore_f0_v1
+  - first:
+      213: 328397086099503034
+    second: tv2_copper_ore_f1_v1
+  - first:
+      213: 2497379987536818163
+    second: tv2_copper_ore_f4_v1
+  - first:
+      213: 778783150736243735
+    second: tv2_copper_ore_f5_v1
+  - first:
+      213: 713277593537661637
+    second: tv2_copper_ore_f7_v1
+  - first:
+      213: 1626110220824100158
+    second: tv2_copper_ore_f16_v1
+  - first:
+      213: 688916016565954165
+    second: tv2_copper_ore_f17_v1
+  - first:
+      213: 3807372601498969947
+    second: tv2_copper_ore_f20_v1
+  - first:
+      213: 2605519913238576945
+    second: tv2_copper_ore_f21_v1
+  - first:
+      213: 430833983555320570
+    second: tv2_copper_ore_f23_v1
+  - first:
+      213: 4146395688560483535
+    second: tv2_copper_ore_f28_v1
+  - first:
+      213: 3344970821427283272
+    second: tv2_copper_ore_f29_v1
+  - first:
+      213: 2464953447270590196
+    second: tv2_copper_ore_f31_v1
+  - first:
+      213: 2354729367899874957
+    second: tv2_copper_ore_f64_v1
+  - first:
+      213: 2994420430057320625
+    second: tv2_copper_ore_f65_v1
+  - first:
+      213: 1640397218695810275
+    second: tv2_copper_ore_f68_v1
+  - first:
+      213: 2814737028163598559
+    second: tv2_copper_ore_f69_v1
+  - first:
+      213: 458273075354872129
+    second: tv2_copper_ore_f71_v1
+  - first:
+      213: 1575125861162710945
+    second: tv2_copper_ore_f80_v1
+  - first:
+      213: 1027409755949604368
+    second: tv2_copper_ore_f81_v1
+  - first:
+      213: 853252504666107666
+    second: tv2_copper_ore_f84_v1
+  - first:
+      213: 2684787599926840635
+    second: tv2_copper_ore_f85_v1
+  - first:
+      213: 3871724888915767794
+    second: tv2_copper_ore_f87_v1
+  - first:
+      213: 3286220066326395098
+    second: tv2_copper_ore_f92_v1
+  - first:
+      213: 255769013202857256
+    second: tv2_copper_ore_f93_v1
+  - first:
+      213: 3509588970742409247
+    second: tv2_copper_ore_f95_v1
+  - first:
+      213: 2473926044679324099
+    second: tv2_copper_ore_f112_v1
+  - first:
+      213: 4116291365116507993
+    second: tv2_copper_ore_f113_v1
+  - first:
+      213: 4017009449138120524
+    second: tv2_copper_ore_f116_v1
+  - first:
+      213: 2246730212603948783
+    second: tv2_copper_ore_f117_v1
+  - first:
+      213: 4146142782515989089
+    second: tv2_copper_ore_f119_v1
+  - first:
+      213: 3399987465317507526
+    second: tv2_copper_ore_f124_v1
+  - first:
+      213: 2807373935438291504
+    second: tv2_copper_ore_f125_v1
+  - first:
+      213: 1796244618439892113
+    second: tv2_copper_ore_f127_v1
+  - first:
+      213: 2411764588631680531
+    second: tv2_copper_ore_f193_v1
+  - first:
+      213: 2561110612376920932
+    second: tv2_copper_ore_f197_v1
+  - first:
+      213: 2323511016943726332
+    second: tv2_copper_ore_f199_v1
+  - first:
+      213: 1853396001756804537
+    second: tv2_copper_ore_f209_v1
+  - first:
+      213: 3818216486968685404
+    second: tv2_copper_ore_f213_v1
+  - first:
+      213: 4594649474832392751
+    second: tv2_copper_ore_f215_v1
+  - first:
+      213: 908543724678357644
+    second: tv2_copper_ore_f221_v1
+  - first:
+      213: 1818277905313350344
+    second: tv2_copper_ore_f223_v1
+  - first:
+      213: 4164079406344609055
+    second: tv2_copper_ore_f241_v1
+  - first:
+      213: 4594090100269045985
+    second: tv2_copper_ore_f245_v1
+  - first:
+      213: 389675817267218032
+    second: tv2_copper_ore_f247_v1
+  - first:
+      213: 4591776886651779096
+    second: tv2_copper_ore_f253_v1
+  - first:
+      213: 1830482703929108055
+    second: tv2_copper_ore_f255_v1
+  - first:
+      213: 3726627960894030175
+    second: tv2_copper_ore_f0_v2
+  - first:
+      213: 141576062494480289
+    second: tv2_copper_ore_f1_v2
+  - first:
+      213: 389986732334529905
+    second: tv2_copper_ore_f4_v2
+  - first:
+      213: 1148990821895437701
+    second: tv2_copper_ore_f5_v2
+  - first:
+      213: 2280218665732967945
+    second: tv2_copper_ore_f7_v2
+  - first:
+      213: 2445640568916436155
+    second: tv2_copper_ore_f16_v2
+  - first:
+      213: 758161161046729117
+    second: tv2_copper_ore_f17_v2
+  - first:
+      213: 3647432553264758216
+    second: tv2_copper_ore_f20_v2
+  - first:
+      213: 2663406770639496285
+    second: tv2_copper_ore_f21_v2
+  - first:
+      213: 4082661233738781981
+    second: tv2_copper_ore_f23_v2
+  - first:
+      213: 3953085800423859596
+    second: tv2_copper_ore_f28_v2
+  - first:
+      213: 115475825407483502
+    second: tv2_copper_ore_f29_v2
+  - first:
+      213: 1212466449068802866
+    second: tv2_copper_ore_f31_v2
+  - first:
+      213: 3465138308832005709
+    second: tv2_copper_ore_f64_v2
+  - first:
+      213: 2821805470797370601
+    second: tv2_copper_ore_f65_v2
+  - first:
+      213: 227756383323039413
+    second: tv2_copper_ore_f68_v2
+  - first:
+      213: 561807382866883878
+    second: tv2_copper_ore_f69_v2
+  - first:
+      213: 2195342017732638265
+    second: tv2_copper_ore_f71_v2
+  - first:
+      213: 238875468923407186
+    second: tv2_copper_ore_f80_v2
+  - first:
+      213: 1839469458598840310
+    second: tv2_copper_ore_f81_v2
+  - first:
+      213: 3006089133236855958
+    second: tv2_copper_ore_f84_v2
+  - first:
+      213: 3402635133107183434
+    second: tv2_copper_ore_f85_v2
+  - first:
+      213: 1479793601004350107
+    second: tv2_copper_ore_f87_v2
+  - first:
+      213: 3981890313107435194
+    second: tv2_copper_ore_f92_v2
+  - first:
+      213: 797753375737542684
+    second: tv2_copper_ore_f93_v2
+  - first:
+      213: 2605333456121325905
+    second: tv2_copper_ore_f95_v2
+  - first:
+      213: 4149294317934173839
+    second: tv2_copper_ore_f112_v2
+  - first:
+      213: 4161870459365397060
+    second: tv2_copper_ore_f113_v2
+  - first:
+      213: 4206162803128036765
+    second: tv2_copper_ore_f116_v2
+  - first:
+      213: 4262330966292636950
+    second: tv2_copper_ore_f117_v2
+  - first:
+      213: 3044980261098229878
+    second: tv2_copper_ore_f119_v2
+  - first:
+      213: 136513070367982399
+    second: tv2_copper_ore_f124_v2
+  - first:
+      213: 3448661642821483877
+    second: tv2_copper_ore_f125_v2
+  - first:
+      213: 1820456943123690000
+    second: tv2_copper_ore_f127_v2
+  - first:
+      213: 4047934476644205467
+    second: tv2_copper_ore_f193_v2
+  - first:
+      213: 3479664511003815118
+    second: tv2_copper_ore_f197_v2
+  - first:
+      213: 440906237882664198
+    second: tv2_copper_ore_f199_v2
+  - first:
+      213: 787407763342645438
+    second: tv2_copper_ore_f209_v2
+  - first:
+      213: 3613009072279841732
+    second: tv2_copper_ore_f213_v2
+  - first:
+      213: 2455693477308982424
+    second: tv2_copper_ore_f215_v2
+  - first:
+      213: 81934793868162820
+    second: tv2_copper_ore_f221_v2
+  - first:
+      213: 1582181239320586943
+    second: tv2_copper_ore_f223_v2
+  - first:
+      213: 2398205683157810498
+    second: tv2_copper_ore_f241_v2
+  - first:
+      213: 3951053340031325068
+    second: tv2_copper_ore_f245_v2
+  - first:
+      213: 2102257866783824160
+    second: tv2_copper_ore_f247_v2
+  - first:
+      213: 3003416130288597349
+    second: tv2_copper_ore_f253_v2
+  - first:
+      213: 4161386538291963484
+    second: tv2_copper_ore_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_copper_ore_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4d0f099798f5d899ecace13c11191c0
+      internalID: 4096725340856777444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afc3403491115bdcb8c5680aebaf39ee
+      internalID: 3051215937350564722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c89d480493056069fb9d277383230bc
+      internalID: 2636423303273104493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b24f24cc34ee5284af5f472d3f9157f2
+      internalID: 1520562289379411696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a51e26c9bf0951619f448d47ec73bb43
+      internalID: 1589886028017902517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69e850c5d89357189ecd93e0c48d55ca
+      internalID: 2467802413758620809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3e8bdafa5d65291a580865b9a5d676d
+      internalID: 780844502952209548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 149e3402a9465491b841f2a603772182
+      internalID: 907739193623780324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67f322e6e80b55c8a96d5d8c5e047d78
+      internalID: 2425785735839330352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4b0462deb7b5556baa6d5b7167e7c2d
+      internalID: 3759755497561056001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 959e7b60a8b55318938664af208a7767
+      internalID: 3997490022072780371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b96a3693f08657e28c5d36dedc6195e0
+      internalID: 1164548089625374269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18eb1022bded55738f4c95b0f36f13e8
+      internalID: 2653552640350949300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90cb190483115f92843812005b187ba3
+      internalID: 1391527168620115281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: effd562e11485d02af0ad17c0debe43c
+      internalID: 1075627892648287821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17c9906dcada5566b263d6338de22447
+      internalID: 125914615363842487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e757da2b7e92544aa7ec59e136291028
+      internalID: 4075531462966613727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caa86d9aa3625892a01d4f2361179c8b
+      internalID: 928376320680248320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e90fe890dea568fbdba88a6d9421e31
+      internalID: 2474879178428472382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abb85c3ae0fe5496bcfe0f200144ca1d
+      internalID: 4574538930565903995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76079dee8b57557186c82aa5280e78c2
+      internalID: 2548366762734860202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b52028077824510d97ad129b0e15dde3
+      internalID: 2801639785907237573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6132be026fa554188dfe277178f8bb84
+      internalID: 647202267856091127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0385746c1ed56c994b6f3b4d246d4de
+      internalID: 1503573162407794447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e339abfbded532fa4b0370175af4308
+      internalID: 3099487616890374963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dbb218deb945b59a111463fefec7b41
+      internalID: 1766600239055864881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f8826ddaa975080a4fdc8c217713e9c
+      internalID: 3868246864997090028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b047fe55910c59f19cc6a8cba8100e7b
+      internalID: 1808134413868878534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6cfdb39e6c55b5d85b2f7d7160126b1
+      internalID: 480368236990299688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6cb003dba3558cd848f23ed1da603c7
+      internalID: 3404176371867046286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99056bec23b852e2a6a428161d314137
+      internalID: 4218139985840147015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ca00192e22750bc9732ce763ff35529
+      internalID: 599040295104881547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bc36084c01b54088bc6a116e27152ee
+      internalID: 1303080638683337883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bc63fef6a4a5b42905d36651dd62c90
+      internalID: 1713176281115979502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1093cee549250c59028e62e14c74769
+      internalID: 2961188487074852451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3703484ee269549db6c06464585a50f7
+      internalID: 2437343821864428260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bbb19d774845b9fbeb351588cc7958c
+      internalID: 1018459934153694273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3feb4a1f45745b31a965e6aa63d8ed51
+      internalID: 2629996680889517969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae0d749e25f551cb3a35b5e5760749d
+      internalID: 1534147165273420451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 881e733ee9c95c1f8178bf0a08d384fe
+      internalID: 2928078105333050813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b947bbbdf565e77afc2aaf093795dd4
+      internalID: 2829347729805281775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8382c94f66a25f67ad030fed2a08adc4
+      internalID: 3783450498807942181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e74c74e087c5e6e888a5b5bacd8b2c2
+      internalID: 1291879637900466191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47329c6b95a55ad0806a5d2e457391e0
+      internalID: 843861575805931703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7631cdb48995729ae2e973e0d04b215
+      internalID: 1996287157993859859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 038852b775a95c9493c954bf05b97915
+      internalID: 4338511165562496755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 177890b1158f545d8a7724472a94f217
+      internalID: 1273283602968761917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fcf1bf2aeac571684b11cec68c6748b
+      internalID: 4254681875367448532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de5aa7814be25b4d80109d2ce1d5f0e8
+      internalID: 328397086099503034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4678e961fd43592e8bce638cf4fc4832
+      internalID: 2497379987536818163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 214afc91acd55d3883ee16b61f5af361
+      internalID: 778783150736243735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2de9f2df89e1556ca0b66e0900dccf35
+      internalID: 713277593537661637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8bbb2eae55d54d3a2926acedfda74fc
+      internalID: 1626110220824100158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 211a1ac213fd5d95a8cb72d788895e56
+      internalID: 688916016565954165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 729c975f770f5ccebb53d6efb19b9780
+      internalID: 3807372601498969947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f56f50df38fb535799a2eab07a974e61
+      internalID: 2605519913238576945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ddc98d058415d438b7dce79e555c7bb
+      internalID: 430833983555320570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2cbc5e94d3f5845a36aa4f4566dd80a
+      internalID: 4146395688560483535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ce5d099eb15289b9a2b49a46c5c4ad
+      internalID: 3344970821427283272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1c7a40a558859a7905b923ea3d1bdd7
+      internalID: 2464953447270590196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba40a968f59f59809043e4178f0f2b44
+      internalID: 2354729367899874957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7e5527c4589599ea2527bc850d18434
+      internalID: 2994420430057320625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5816e5d68c315571a7b0eada89c89a03
+      internalID: 1640397218695810275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b10b2ee11b755348ec96f53fd8051e7
+      internalID: 2814737028163598559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 550ef0acc73a5fb0bcb33742ad56307f
+      internalID: 458273075354872129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e832071b1225659806263a3df3c44d5
+      internalID: 1575125861162710945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 901ea976f8b35779bcd50bb94a9c87e7
+      internalID: 1027409755949604368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c21d0d026af459eeb76c2f820aaa310c
+      internalID: 853252504666107666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aa2aa6d50505b6a8d2d8d5acb8f6dfc
+      internalID: 2684787599926840635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5502476e4cca5e619ce4d7aeeeb779fb
+      internalID: 3871724888915767794
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 303634015d47520b94db5619a5b2b8fa
+      internalID: 3286220066326395098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b04140c034353d2b24530e2cf9219c6
+      internalID: 255769013202857256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f641d07ab8c56c4b06a9958cf530319
+      internalID: 3509588970742409247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e276947916e5523ba405470715ad3f45
+      internalID: 2473926044679324099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: edf256476b3f534785e1bbc3fd0a5041
+      internalID: 4116291365116507993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0eeb34bfe2725d068996dc8103e52fd6
+      internalID: 4017009449138120524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a61304dc9f52498f5b59f202cc517f
+      internalID: 2246730212603948783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c33a834e9cc9515181f5ef75c33dcb60
+      internalID: 4146142782515989089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5216fcb7b8a6593f801e4df976b61287
+      internalID: 3399987465317507526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6d85578e6c7561fa246e4d2a9b6e6e5
+      internalID: 2807373935438291504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4449bcd31f6c51fe9956ca04076ecccf
+      internalID: 1796244618439892113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 297d00433e53502787678ca7d2d7696c
+      internalID: 2411764588631680531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b4832c9aca05054ab67b3730f943bd5
+      internalID: 2561110612376920932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0635fcb030cc59a0a6ff01d6f851a07f
+      internalID: 2323511016943726332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbb73b1d7ec45779a3a6a68a04510bc9
+      internalID: 1853396001756804537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa00503e646b566e90b89e6a4f3964c4
+      internalID: 3818216486968685404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c6526d664a45c969293b184fec4f04a
+      internalID: 4594649474832392751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a2a5ef53c575877ab30b1d3c924280b
+      internalID: 908543724678357644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ff7b6f655ca585abe5c1dc6871ca9a3
+      internalID: 1818277905313350344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 950b6b4a30a25c80a12c6d6b821e575f
+      internalID: 4164079406344609055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 903d9a7d86865a18a2c0ca7c4977f849
+      internalID: 4594090100269045985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1ed38820fd95b48ac8573d6421b37cc
+      internalID: 389675817267218032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6596e278ae7f58d3bbd7e33e8fbaea19
+      internalID: 4591776886651779096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35e57cd9dd0854f98fdc88f3165fc985
+      internalID: 1830482703929108055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9634faae5b6e5fb88661b1b13710c730
+      internalID: 3726627960894030175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dce4425caa1d542b8f8fc49c749fe473
+      internalID: 141576062494480289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3c4c7bd38ff56cd98a3bc7fd0d82c52
+      internalID: 389986732334529905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10b819672d8a5e63a6d60b3ee7d88c84
+      internalID: 1148990821895437701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1644736c73bf53afb3077e80de89d1e8
+      internalID: 2280218665732967945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bc2b584a1e8520fa884da339fa97d56
+      internalID: 2445640568916436155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c87a06a920c5725ad0ab262beb7eb8f
+      internalID: 758161161046729117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e010ab2874c55c2aa5ae255a61a4e7f2
+      internalID: 3647432553264758216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c91e929d2e6a5104a7b09e9b654f2758
+      internalID: 2663406770639496285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73d35500a49853cfa4030cd46ee6426b
+      internalID: 4082661233738781981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6528be72541c54b8a4235ccfa53aed45
+      internalID: 3953085800423859596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 108a5f439f445cb8b5b81d10829e0c53
+      internalID: 115475825407483502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c44e7cfa4e795810b6895e3a55908372
+      internalID: 1212466449068802866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd3bd272b67757a29133bd0b16f95b6a
+      internalID: 3465138308832005709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76507124688c573daaa35f7dbd1bd895
+      internalID: 2821805470797370601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 588a61020f5853a190df266098518a0a
+      internalID: 227756383323039413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b0aa1547a0253ee91eb87f84e733e32
+      internalID: 561807382866883878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97330251c75857fd975f041c936a3685
+      internalID: 2195342017732638265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7112b434ce2f57f399a80de2c08049af
+      internalID: 238875468923407186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee0e8418123a56328ec1c42b2a4e212c
+      internalID: 1839469458598840310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62460e7335cd55de93d504788c09c6de
+      internalID: 3006089133236855958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66a7b6802fb75bdfa6e1c6722dd0ca14
+      internalID: 3402635133107183434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68466d5ce7c659cc87fb7500cc6b4d36
+      internalID: 1479793601004350107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87d1f6dbefb7592b8b8c3972d2d553ee
+      internalID: 3981890313107435194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 540b71889cf956c6aaf16acbc611e9c5
+      internalID: 797753375737542684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 992ec4b232615f90b0a6e56cb93558c9
+      internalID: 2605333456121325905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58257adff3052b89dbbdbd81729bb00
+      internalID: 4149294317934173839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b808ff49219d5ca297fb38797b02e784
+      internalID: 4161870459365397060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91831e381ea755fdb002f0ce99c07047
+      internalID: 4206162803128036765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4bc46cd4bda50789541f0e8dd1309f7
+      internalID: 4262330966292636950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20a165105271529c82e9bc2f3a0838c1
+      internalID: 3044980261098229878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa3e72297fd6509e9acb426b6eccf27e
+      internalID: 136513070367982399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78c4265a8d5e507b85e11660f4af4853
+      internalID: 3448661642821483877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7510e119272516bbc628c8b645f8532
+      internalID: 1820456943123690000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ac8a488604f5e9b9179afd220a8e31c
+      internalID: 4047934476644205467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d449f2be41645b58ba486897eefae8e5
+      internalID: 3479664511003815118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80612078877d5149a4ac20e9c8943bdf
+      internalID: 440906237882664198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0098c3d94f01519bad34225aafd3142c
+      internalID: 787407763342645438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35060fecd1585c42820d94e1e7f50a40
+      internalID: 3613009072279841732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4dd912372575826a4b87d8981f2cb43
+      internalID: 2455693477308982424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b936d03fc8a2544c85028e151c8be62e
+      internalID: 81934793868162820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b45863bd475650a591ac0ee377e6946b
+      internalID: 1582181239320586943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 459a4d2f1dbb5bfab6c27d34ef53e4a5
+      internalID: 2398205683157810498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4d9e20f3d195d6bacbca9b113b3128a
+      internalID: 3951053340031325068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 185ddd360f0a577dbe9b279297657c2c
+      internalID: 2102257866783824160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dc81a42dcfa500f98226de40256201b
+      internalID: 3003416130288597349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_copper_ore_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1ba2fef1bc5581fa3c7cc2e0a157d99
+      internalID: 4161386538291963484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_copper_ore_f0_v0: 4096725340856777444
+      tv2_copper_ore_f1_v0: 3051215937350564722
+      tv2_copper_ore_f4_v0: 2636423303273104493
+      tv2_copper_ore_f5_v0: 1520562289379411696
+      tv2_copper_ore_f7_v0: 1589886028017902517
+      tv2_copper_ore_f16_v0: 2467802413758620809
+      tv2_copper_ore_f17_v0: 780844502952209548
+      tv2_copper_ore_f20_v0: 907739193623780324
+      tv2_copper_ore_f21_v0: 2425785735839330352
+      tv2_copper_ore_f23_v0: 3759755497561056001
+      tv2_copper_ore_f28_v0: 3997490022072780371
+      tv2_copper_ore_f29_v0: 1164548089625374269
+      tv2_copper_ore_f31_v0: 2653552640350949300
+      tv2_copper_ore_f64_v0: 1391527168620115281
+      tv2_copper_ore_f65_v0: 1075627892648287821
+      tv2_copper_ore_f68_v0: 125914615363842487
+      tv2_copper_ore_f69_v0: 4075531462966613727
+      tv2_copper_ore_f71_v0: 928376320680248320
+      tv2_copper_ore_f80_v0: 2474879178428472382
+      tv2_copper_ore_f81_v0: 4574538930565903995
+      tv2_copper_ore_f84_v0: 2548366762734860202
+      tv2_copper_ore_f85_v0: 2801639785907237573
+      tv2_copper_ore_f87_v0: 647202267856091127
+      tv2_copper_ore_f92_v0: 1503573162407794447
+      tv2_copper_ore_f93_v0: 3099487616890374963
+      tv2_copper_ore_f95_v0: 1766600239055864881
+      tv2_copper_ore_f112_v0: 3868246864997090028
+      tv2_copper_ore_f113_v0: 1808134413868878534
+      tv2_copper_ore_f116_v0: 480368236990299688
+      tv2_copper_ore_f117_v0: 3404176371867046286
+      tv2_copper_ore_f119_v0: 4218139985840147015
+      tv2_copper_ore_f124_v0: 599040295104881547
+      tv2_copper_ore_f125_v0: 1303080638683337883
+      tv2_copper_ore_f127_v0: 1713176281115979502
+      tv2_copper_ore_f193_v0: 2961188487074852451
+      tv2_copper_ore_f197_v0: 2437343821864428260
+      tv2_copper_ore_f199_v0: 1018459934153694273
+      tv2_copper_ore_f209_v0: 2629996680889517969
+      tv2_copper_ore_f213_v0: 1534147165273420451
+      tv2_copper_ore_f215_v0: 2928078105333050813
+      tv2_copper_ore_f221_v0: 2829347729805281775
+      tv2_copper_ore_f223_v0: 3783450498807942181
+      tv2_copper_ore_f241_v0: 1291879637900466191
+      tv2_copper_ore_f245_v0: 843861575805931703
+      tv2_copper_ore_f247_v0: 1996287157993859859
+      tv2_copper_ore_f253_v0: 4338511165562496755
+      tv2_copper_ore_f255_v0: 1273283602968761917
+      tv2_copper_ore_f0_v1: 4254681875367448532
+      tv2_copper_ore_f1_v1: 328397086099503034
+      tv2_copper_ore_f4_v1: 2497379987536818163
+      tv2_copper_ore_f5_v1: 778783150736243735
+      tv2_copper_ore_f7_v1: 713277593537661637
+      tv2_copper_ore_f16_v1: 1626110220824100158
+      tv2_copper_ore_f17_v1: 688916016565954165
+      tv2_copper_ore_f20_v1: 3807372601498969947
+      tv2_copper_ore_f21_v1: 2605519913238576945
+      tv2_copper_ore_f23_v1: 430833983555320570
+      tv2_copper_ore_f28_v1: 4146395688560483535
+      tv2_copper_ore_f29_v1: 3344970821427283272
+      tv2_copper_ore_f31_v1: 2464953447270590196
+      tv2_copper_ore_f64_v1: 2354729367899874957
+      tv2_copper_ore_f65_v1: 2994420430057320625
+      tv2_copper_ore_f68_v1: 1640397218695810275
+      tv2_copper_ore_f69_v1: 2814737028163598559
+      tv2_copper_ore_f71_v1: 458273075354872129
+      tv2_copper_ore_f80_v1: 1575125861162710945
+      tv2_copper_ore_f81_v1: 1027409755949604368
+      tv2_copper_ore_f84_v1: 853252504666107666
+      tv2_copper_ore_f85_v1: 2684787599926840635
+      tv2_copper_ore_f87_v1: 3871724888915767794
+      tv2_copper_ore_f92_v1: 3286220066326395098
+      tv2_copper_ore_f93_v1: 255769013202857256
+      tv2_copper_ore_f95_v1: 3509588970742409247
+      tv2_copper_ore_f112_v1: 2473926044679324099
+      tv2_copper_ore_f113_v1: 4116291365116507993
+      tv2_copper_ore_f116_v1: 4017009449138120524
+      tv2_copper_ore_f117_v1: 2246730212603948783
+      tv2_copper_ore_f119_v1: 4146142782515989089
+      tv2_copper_ore_f124_v1: 3399987465317507526
+      tv2_copper_ore_f125_v1: 2807373935438291504
+      tv2_copper_ore_f127_v1: 1796244618439892113
+      tv2_copper_ore_f193_v1: 2411764588631680531
+      tv2_copper_ore_f197_v1: 2561110612376920932
+      tv2_copper_ore_f199_v1: 2323511016943726332
+      tv2_copper_ore_f209_v1: 1853396001756804537
+      tv2_copper_ore_f213_v1: 3818216486968685404
+      tv2_copper_ore_f215_v1: 4594649474832392751
+      tv2_copper_ore_f221_v1: 908543724678357644
+      tv2_copper_ore_f223_v1: 1818277905313350344
+      tv2_copper_ore_f241_v1: 4164079406344609055
+      tv2_copper_ore_f245_v1: 4594090100269045985
+      tv2_copper_ore_f247_v1: 389675817267218032
+      tv2_copper_ore_f253_v1: 4591776886651779096
+      tv2_copper_ore_f255_v1: 1830482703929108055
+      tv2_copper_ore_f0_v2: 3726627960894030175
+      tv2_copper_ore_f1_v2: 141576062494480289
+      tv2_copper_ore_f4_v2: 389986732334529905
+      tv2_copper_ore_f5_v2: 1148990821895437701
+      tv2_copper_ore_f7_v2: 2280218665732967945
+      tv2_copper_ore_f16_v2: 2445640568916436155
+      tv2_copper_ore_f17_v2: 758161161046729117
+      tv2_copper_ore_f20_v2: 3647432553264758216
+      tv2_copper_ore_f21_v2: 2663406770639496285
+      tv2_copper_ore_f23_v2: 4082661233738781981
+      tv2_copper_ore_f28_v2: 3953085800423859596
+      tv2_copper_ore_f29_v2: 115475825407483502
+      tv2_copper_ore_f31_v2: 1212466449068802866
+      tv2_copper_ore_f64_v2: 3465138308832005709
+      tv2_copper_ore_f65_v2: 2821805470797370601
+      tv2_copper_ore_f68_v2: 227756383323039413
+      tv2_copper_ore_f69_v2: 561807382866883878
+      tv2_copper_ore_f71_v2: 2195342017732638265
+      tv2_copper_ore_f80_v2: 238875468923407186
+      tv2_copper_ore_f81_v2: 1839469458598840310
+      tv2_copper_ore_f84_v2: 3006089133236855958
+      tv2_copper_ore_f85_v2: 3402635133107183434
+      tv2_copper_ore_f87_v2: 1479793601004350107
+      tv2_copper_ore_f92_v2: 3981890313107435194
+      tv2_copper_ore_f93_v2: 797753375737542684
+      tv2_copper_ore_f95_v2: 2605333456121325905
+      tv2_copper_ore_f112_v2: 4149294317934173839
+      tv2_copper_ore_f113_v2: 4161870459365397060
+      tv2_copper_ore_f116_v2: 4206162803128036765
+      tv2_copper_ore_f117_v2: 4262330966292636950
+      tv2_copper_ore_f119_v2: 3044980261098229878
+      tv2_copper_ore_f124_v2: 136513070367982399
+      tv2_copper_ore_f125_v2: 3448661642821483877
+      tv2_copper_ore_f127_v2: 1820456943123690000
+      tv2_copper_ore_f193_v2: 4047934476644205467
+      tv2_copper_ore_f197_v2: 3479664511003815118
+      tv2_copper_ore_f199_v2: 440906237882664198
+      tv2_copper_ore_f209_v2: 787407763342645438
+      tv2_copper_ore_f213_v2: 3613009072279841732
+      tv2_copper_ore_f215_v2: 2455693477308982424
+      tv2_copper_ore_f221_v2: 81934793868162820
+      tv2_copper_ore_f223_v2: 1582181239320586943
+      tv2_copper_ore_f241_v2: 2398205683157810498
+      tv2_copper_ore_f245_v2: 3951053340031325068
+      tv2_copper_ore_f247_v2: 2102257866783824160
+      tv2_copper_ore_f253_v2: 3003416130288597349
+      tv2_copper_ore_f255_v2: 4161386538291963484
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

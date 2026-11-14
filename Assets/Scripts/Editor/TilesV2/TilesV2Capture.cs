@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Descender.EditorTools.TilesV2
 {
@@ -46,18 +47,39 @@ namespace Descender.EditorTools.TilesV2
         {
             Directory.CreateDirectory(folder);
             EditorSceneManager.OpenScene(TilesV2Sample.ScenePath);
+            BuildLightMeshes();
+            // A shader still compiling in the background draws as nothing in the first frame
+            // that needs it; compile in line so every capture shows every layer.
+            var async = ShaderUtil.allowAsyncCompilation;
+            ShaderUtil.allowAsyncCompilation = false;
+            try
+            {
+                CaptureViews(folder);
+            }
+            finally
+            {
+                ShaderUtil.allowAsyncCompilation = async;
+            }
+            // Put the backdrop back where the scene's camera has it.
+            PlaceLayers(TilesV2Sample.SurfaceView);
+        }
+
+        private static void CaptureViews(string folder)
+        {
             var (terrain, _) = TilesV2Sample.ReadMap(File.ReadAllText(TilesV2Sample.MapPath));
             var width = terrain[0].Length;
+            // The first render after the scene opens draws the unlit backdrop wrong (seen
+            // upside down in batch mode); render once and throw it away.
+            Render(TilesV2Sample.SurfaceView, 320, 180, null);
             Render(TilesV2Sample.SurfaceView, 320, 180, Path.Combine(folder, "surface.png"));
             Render(TilesV2Sample.CaveView, 320, 180, Path.Combine(folder, "cave.png"));
+            Render(TilesV2Sample.DesertView, 320, 180, Path.Combine(folder, "desert.png"));
             Render(
                 new Vector2(width / 2f, terrain.Count / 2f),
                 width * 16,
                 terrain.Count * 16,
                 Path.Combine(folder, "map.png")
             );
-            // Put the backdrop back where the scene's camera has it.
-            PlaceLayers(TilesV2Sample.SurfaceView);
         }
 
         private static void Render(Vector2 at, int width, int height, string file)
@@ -97,7 +119,10 @@ namespace Descender.EditorTools.TilesV2
                 image.ReadPixels(new Rect(0, 0, width, height), 0, 0);
                 image.Apply();
                 RenderTexture.active = previous;
-                File.WriteAllBytes(file, image.EncodeToPNG());
+                if (file != null)
+                {
+                    File.WriteAllBytes(file, image.EncodeToPNG());
+                }
                 UnityEngine.Object.DestroyImmediate(image);
             }
             finally
@@ -110,6 +135,28 @@ namespace Descender.EditorTools.TilesV2
                 {
                     main.enabled = true;
                 }
+            }
+        }
+
+        /// <summary>
+        /// A batch-mode editor never ticks, so the Light2D components never run the
+        /// LateUpdate that builds their meshes and only the global light would show: run it
+        /// once for each light, as the first editor frame would.
+        /// </summary>
+        private static void BuildLightMeshes()
+        {
+            var update = typeof(Light2D).GetMethod(
+                "LateUpdate",
+                System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic
+            );
+            if (update == null)
+            {
+                Debug.LogWarning("Tiles V2: Light2D has no LateUpdate to build its mesh; lights may not show.");
+                return;
+            }
+            foreach (var light in UnityEngine.Object.FindObjectsByType<Light2D>(FindObjectsInactive.Exclude))
+            {
+                update.Invoke(light, null);
             }
         }
 
