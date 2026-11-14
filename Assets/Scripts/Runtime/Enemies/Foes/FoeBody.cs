@@ -1,4 +1,5 @@
 using System;
+using Descender.Economy;
 using Descender.Fx;
 using UnityEngine;
 
@@ -43,12 +44,37 @@ namespace Descender.Enemies
         public FoeBody Copy() => (FoeBody)MemberwiseClone();
     }
 
-    /// <summary>What a kind of foe is made of: a name, a body and behaviours. Each foe built from it gets its own copies.</summary>
+    /// <summary>
+    /// What a foe leaves when it dies, as the old profiles had it: what its
+    /// <see cref="LootTable"/> rolls, and then either a power-up or a mote of healing.
+    /// </summary>
+    [Serializable]
+    public sealed class FoeDrops
+    {
+        [Tooltip("How often it leaves a mote of healing.")]
+        [Range(0f, 1f)]
+        public float moteChance = 0.35f;
+
+        [Tooltip("How often it leaves its power-up instead.")]
+        [Range(0f, 1f)]
+        public float powerChance = 0.1f;
+        public PowerKind power = PowerKind.Blade;
+        public LootTable loot = new LootTable();
+    }
+
+    /// <summary>
+    /// What a kind of foe is made of: a name, a body, behaviours and, for one that
+    /// leaves something, its drops. Each foe built from it gets its own copies of the
+    /// body and the behaviours.
+    /// </summary>
     public sealed class FoeRecipe
     {
         public string name = "";
         public FoeBody body = new FoeBody();
         public FoeBehaviour[] behaviours = new FoeBehaviour[0];
+
+        /// <summary>What it leaves when it dies; null for nothing, as in the lab.</summary>
+        public FoeDrops drops;
 
         public FoeRecipe() { }
 

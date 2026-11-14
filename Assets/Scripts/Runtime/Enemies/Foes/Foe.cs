@@ -1,7 +1,10 @@
 using System;
 using System.Collections.Generic;
 using Descender.Combat;
+using Descender.Economy;
 using Descender.Fx;
+using Descender.Pickups;
+using Descender.Player;
 using UnityEngine;
 
 namespace Descender.Enemies
@@ -52,6 +55,15 @@ namespace Descender.Enemies
         public string PlacementId { get; set; } = "";
         public bool IsDead { get; private set; }
         public event Action<IEnemy> Died;
+
+        /// <summary>What it leaves when it dies; null for nothing.</summary>
+        public FoeDrops Drops { get; set; }
+
+        /// <summary>
+        /// Its object is removed when it dies, so the placement that made it can make
+        /// another. Off, the dead foe stays, switched off, for whoever keeps it.
+        /// </summary>
+        public bool GoesWhenDead { get; set; }
 
         public FoeBody Body => build;
         public int Health => health;
@@ -139,6 +151,7 @@ namespace Descender.Enemies
             var parts = recipe.body.Copy();
             parts.size = size * Ppu;
             foe.Configure(parts, recipe.behaviours);
+            foe.Drops = recipe.drops;
             var drawn = Shape.Make(go.transform, "Shape", parts.shape, Vector2.zero, size, parts.color, "", order);
             foe.Show(drawn, recipe.name, order);
             return foe;
@@ -317,8 +330,38 @@ namespace Descender.Enemies
             Audio.Sfx.Play("enemy_die");
             Feedback.HitStop(Walker.DeathHitStop);
             Feedback.Spark(transform.position, build.color);
+            Kills.Record(PlacementId);
             Died?.Invoke(this);
+            Leave();
+            if (GoesWhenDead)
+            {
+                Destroy(gameObject);
+                return;
+            }
             gameObject.SetActive(false);
+        }
+
+        /// <summary>The drops, as the old enemies left them: the loot, then a power-up or else, by chance, a mote.</summary>
+        private void Leave()
+        {
+            if (Drops == null)
+            {
+                return;
+            }
+            Vector2 centre = transform.position;
+            Loot.Drop(centre, Drops.loot);
+            if (UnityEngine.Random.value < Drops.powerChance)
+            {
+                // At its feet: its box is off by now, so from its size.
+                var feet = new Vector2(centre.x, centre.y - build.size.y / 2f / Ppu);
+                PowerUp.Spawn((Power)(int)Drops.power, feet);
+                return;
+            }
+            // A Cold Coin worn makes the dying give up more motes.
+            if (UnityEngine.Random.value < Drops.moteChance + Inventory.Bonus("mote_chance"))
+            {
+                HealMote.Spawn(centre);
+            }
         }
 
         /// <summary>What it looks like now: 1 held by a hit, 2 warning of an attack, 0 otherwise; and 4 more facing right.</summary>

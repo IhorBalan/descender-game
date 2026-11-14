@@ -765,7 +765,6 @@ namespace Descender.Lab
             start.actions = find => List(Do.Fight(find("fight").GetComponent<Enemies.Encounter>()));
         }
 
-        /// <summary>How wide the gauntlet is: three rooms end to end.</summary>
         /// <summary>
         /// What the old walkers did, as parts, each behind a low wall: a pouncer that leaps
         /// from a few steps off, a lunger that runs in and leaps short and low, a hurler on
@@ -785,6 +784,7 @@ namespace Descender.Lab
             Foe(station, 49f, FloorTop, 1.5f, 2f, Enemies.FoeRecipes.Slammer()).id = "slammer";
         }
 
+        /// <summary>How wide the gauntlet is: three rooms end to end.</summary>
         public const float GauntletWidth = 3f * RoomWidth;
 
         /// <summary>
