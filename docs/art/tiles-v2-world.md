@@ -6,7 +6,7 @@ the Tiles V2 standard (`docs/art/tiles-v2.md`) and lives beside the sample map:
 
 | | |
 |---|---|
-| Map | `Assets/Art/TilesV2/world_map.txt`, 208 x 624 tiles: 5 screens wide and 28 tall at the camera's 40 x 22.5 tiles, 130 000 cells (for scale, the whole world of Animal Well is 640 x 360 tiles of the same screen) |
+| Map | `Assets/Art/TilesV2/world_map.txt`, 600 x 700 tiles: 15 screens wide and 31 tall at the camera's 40 x 22.5 tiles, 420 000 cells (for scale, the whole world of Animal Well is 640 x 360 tiles of the same screen, 230 000) |
 | Written by | `python tools/tiles_v2/make_world_map.py --check` (edit that, not the map) |
 | Checked by | `tools/tiles_v2/tv2_reach.py`: the world is played through in a model of the hero before it is written |
 | Scene | `Assets/Scenes/Sandbox/TilesV2Descent.unity` (never in the build's scene list) |
@@ -22,16 +22,16 @@ ability pickup, as the playground does.
 ```
  rows
    0  PARADISE      islands of cloud; the temple and the gate at the end of everything
-  62  EARTH         the surface (the start), the old mine, the hall of the Gate
- 150  1 LIMBO       <- west    ash galleries        Light Dash
- 206  2 LUST        east ->    the tempest's shafts Wall Grip
- 254  3 GLUTTONY    <- west    mud, rain, slime
- 298  4 GREED       east ->    vaults and gold      Holy Light
- 350  5 WRATH       <- west    the marsh of Styx
- 398  6 HERESY      east ->    the city of Dis      Glide
- 454  7 VIOLENCE    <- west    blood, wood, sand    Smite
- 506  8 FRAUD       east ->    ditches and bridges
- 554  9 TREACHERY   <- west    the frozen lake      Wings
+  80  EARTH         the surface (the start), the old mine, the hall of the Gate
+ 180  1 LIMBO       <- west    ash galleries        Light Dash
+ 242  2 LUST        east ->    the tempest's shafts Wall Grip
+ 298  3 GLUTTONY    <- west    mud, rain, slime
+ 352  4 GREED       east ->    vaults and gold      Holy Light
+ 410  5 WRATH       <- west    the marsh of Styx
+ 466  6 HERESY      east ->    the city of Dis      Glide
+ 526  7 VIOLENCE    <- west    blood, wood, sand    Smite
+ 584  8 FRAUD       east ->    ditches and bridges
+ 640  9 TREACHERY   <- west    the frozen lake      Wings
         |
         +-- the Pit: a shaft down the west edge from the Earth to the ninth circle
 ```
@@ -121,28 +121,38 @@ Off the road, each circle has what the critical path does not need:
   are six rows apart: for the Wings, on the way back up.
 - **Perches** in the big halls, and relics under water.
 
-Nineteen relics are scattered this way; the playground counts them. The map also holds 26 places to rest, 8 veils of light, 12 seals and slabs, 222 lamps and about 1100 cells of ledge.
+The search finds room for some thirty low roads and a dozen attics. In all 56 relics are scattered this way; the playground counts them. The map also holds 46 places to rest, 45 veils of light, 31 seals and slabs, 685 lamps and about 2000 cells of ledge.
 
 ## How the map is made
 
 `make_world_map.py` writes the map in three layers, the way Dead Cells
 assembles a level (a fixed frame, hand-made pieces, noise only in the small):
 
-1. **The frame** is written by hand: the rows of each region, the Pit, where
-   each way down is.
-2. **Each circle is a short script** of pieces laid end to end from where the
-   last one stopped: `walk`, `hall`, `pool`, `siphon`, `chasm`, `shaft` (ledges
-   to climb), `smooth` (a shaft for Wall Grip), `gate`, `slab`, `shrine`, `rest`,
-   and the side roads `low_road` and `attic`. A piece is a few numbers; the
-   script reads like the walk it describes.
-3. **Noise** shapes only the roofs, the edges between regions and the veins of
+1. **The frame** is written by hand: the rows of each region, the floor each
+   circle's road starts and ends on (`FLOORS`), the Pit, where each way down is.
+2. **Each circle is a short script** of set pieces laid end to end from where
+   the last one stopped: `hall`, `pool`, `siphon`, `chasm`, `shaft` (ledges to
+   climb), `smooth` (a shaft for Wall Grip), `gate`, `slab`, `shrine`, `rest`.
+   A set piece is a few numbers; the script reads like the walk it describes.
+3. **Between the set pieces the road rambles** (`ramble`): a stretch laid out
+   of the pieces the region is made of (`KITS`: Gluttony is low tunnels and
+   pools, Lust climbs and drops, Greed is vaults, Fraud ditch after ditch), by a
+   fixed dice, using only the gates of the abilities the hero has by then, and
+   steered so the floor stays a few rows round the line to the next set piece.
+   A circle's road is some 530 columns long: thirteen screens.
+4. **The side roads are searched for** (`side_roads`), after every road is
+   laid: low roads under the plain stretches (never under a gate, a shrine or
+   a shaft, so none is a way round one) and attics over the tunnels, each
+   checked whole before anything is dug and tried somewhere else if it would
+   cut into anything.
+5. **Noise** shapes only the roofs, the edges between regions and the veins of
    ore. Two spaces that were not meant to meet stop the script (`Clash`), so a
    mistake in the layout cannot quietly open a short cut.
 
 A map marks what of the game stands where, for the scene to build:
 
 ```
-@region limbo 150            a region starts at this row
+@region limbo 180            a region starts at this row
 @mark checkpoint 179 159     the game's checkpoint
 @mark ability 111 175 LightDash
 @mark barrier 104 173 4      a light barrier: column, top row, height

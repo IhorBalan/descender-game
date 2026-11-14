@@ -30,6 +30,9 @@ namespace Descender.World.TilesV2
         public const int ParticleOrder = 60;
         public const int LedgeOrder = -98;
 
+        /// <summary>A map of this many cells or more says how long it took to build.</summary>
+        public const int BigMap = 100000;
+
         /// <summary>Rows either side of the edge between two regions over which the light in the air of one turns into the other's.</summary>
         public const int RegionBlend = 6;
 
@@ -191,6 +194,7 @@ namespace Descender.World.TilesV2
                 Debug.LogWarning($"{name}: a Tiles V2 world needs a map and the tile set.", this);
                 return;
             }
+            var clock = System.Diagnostics.Stopwatch.StartNew();
             Map = TilesV2Map.Parse(map.text);
             built = new GameObject(BuiltName).transform;
             built.SetParent(transform, false);
@@ -237,6 +241,11 @@ namespace Descender.World.TilesV2
             {
                 TilesV2Particles.Build(this, field, built);
                 TilesV2Zones.Build(this, field, built);
+            }
+            if (Map.Width * Map.Height >= BigMap)
+            {
+                // A world takes a moment to build: say how long, where a player's log keeps it.
+                Debug.Log($"Tiles V2: built {Map.Width} x {Map.Height} tiles in {clock.ElapsedMilliseconds} ms.");
             }
             Built?.Invoke();
         }

@@ -208,7 +208,7 @@ A map of several regions also says where each starts and what of the game's
 stands where:
 
 ```
-@region limbo 150             the region `limbo` (the tile set's key) starts at row 150
+@region limbo 180             the region `limbo` (the tile set's key) starts at row 150
 @mark checkpoint 179 159      something of the game's in a cell: kind, column, row, and what the kind needs
 @mark ability 111 175 LightDash
 @mark barrier 104 173 4       a veil of light: its top cell, its height

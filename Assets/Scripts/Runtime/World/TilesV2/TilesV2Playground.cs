@@ -166,7 +166,7 @@ namespace Descender.World.TilesV2
             Wander();
             if (noteLeft > 0f)
             {
-                noteLeft -= Time.unscaledDeltaTime;
+                noteLeft -= Mathf.Min(Time.unscaledDeltaTime, LongestFrame);
             }
             if (lantern != null && lantern.enabled && world.Light != null)
             {
@@ -386,6 +386,9 @@ namespace Descender.World.TilesV2
 
         private const float TitleTime = 4f;
 
+        // A frame that took longer than this (the one the world was built in) counts as this much of a title's time on screen.
+        private const float LongestFrame = 0.1f;
+
         private void OnDestroy()
         {
             chart?.Release();
@@ -396,7 +399,7 @@ namespace Descender.World.TilesV2
         {
             if (titleLeft > 0f)
             {
-                titleLeft -= Time.unscaledDeltaTime;
+                titleLeft -= Mathf.Min(Time.unscaledDeltaTime, LongestFrame);
             }
             if (world == null || world.Map == null || hero == null)
             {
