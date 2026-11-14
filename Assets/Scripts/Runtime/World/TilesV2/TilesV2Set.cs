@@ -73,6 +73,14 @@ namespace Descender.World.TilesV2
         public float sunset = 19.5f;
         public DayKey[] day = new DayKey[0];
 
+        [Header("View")]
+        [Tooltip(
+            "The camera's view in art pixels: its reference resolution, and the size the sky and the backdrops are drawn for."
+        )]
+        public int viewWidth = 640;
+
+        public int viewHeight = 360;
+
         [Header("Backdrop")]
         public int skyBands = 7;
         public int skyOrder = -1010;
@@ -84,6 +92,12 @@ namespace Descender.World.TilesV2
 
         private Dictionary<char, Glyph> glyphs;
         private Dictionary<int, TileBase> shadeByMask;
+
+        /// <summary>The camera's view in art pixels.</summary>
+        public Vector2Int ViewPixels => new Vector2Int(viewWidth, viewHeight);
+
+        /// <summary>The camera's view in units: 16 art pixels a unit.</summary>
+        public Vector2 View => new Vector2(viewWidth, viewHeight) / 16f;
 
         /// <summary>The legend's entry for a map character; false for air and anything unknown.</summary>
         public bool TryGlyph(char character, out Glyph glyph)

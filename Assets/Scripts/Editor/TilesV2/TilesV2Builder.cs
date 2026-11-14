@@ -350,6 +350,8 @@ namespace Descender.EditorTools.TilesV2
             }
             set.day = keys.ToArray();
 
+            set.viewWidth = manifest.view.width;
+            set.viewHeight = manifest.view.height;
             set.skyBands = manifest.sky.bands;
             set.skyOrder = manifest.sky.order;
             set.cloudDrift = manifest.sky.cloudDrift;

@@ -25,6 +25,7 @@ namespace Descender.EditorTools.TilesV2
 
         public int tile;
         public int ppu;
+        public ViewSection view = new ViewSection();
         public int variants;
         public int[] frames = Array.Empty<int>();
         public string[] slopes = Array.Empty<string>();
@@ -40,6 +41,14 @@ namespace Descender.EditorTools.TilesV2
         public DaySection day = new DaySection();
         public SkySection sky = new SkySection();
         public BackdropEntry[] backdrops = Array.Empty<BackdropEntry>();
+
+        /// <summary>The camera's view in art pixels.</summary>
+        [Serializable]
+        public sealed class ViewSection
+        {
+            public int width;
+            public int height;
+        }
 
         /// <summary>One material: its sheet, terrain or wall, its join group and the light it gives.</summary>
         [Serializable]

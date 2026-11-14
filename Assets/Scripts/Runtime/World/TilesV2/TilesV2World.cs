@@ -86,6 +86,25 @@ namespace Descender.World.TilesV2
             }
         }
 
+        /// <summary>
+        /// The middle of a view of the tile set's size nearest `centre` that shows nothing past
+        /// the map's edges (the map's own middle on an axis the map is too small for).
+        /// </summary>
+        public Vector2 Framed(Vector2 centre)
+        {
+            var area = Area;
+            var half = set != null ? set.View / 2f : Vector2.zero;
+            centre.x =
+                area.width > half.x * 2f
+                    ? Mathf.Clamp(centre.x, area.xMin + half.x, area.xMax - half.x)
+                    : area.center.x;
+            centre.y =
+                area.height > half.y * 2f
+                    ? Mathf.Clamp(centre.y, area.yMin + half.y, area.yMax - half.y)
+                    : area.center.y;
+            return centre;
+        }
+
         /// <summary>Raised once everything is built.</summary>
         public event System.Action Built;
 

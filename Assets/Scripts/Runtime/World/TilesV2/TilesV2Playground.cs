@@ -67,6 +67,7 @@ namespace Descender.World.TilesV2
         private void Start()
         {
             SettingsApplier.Apply(SettingsData.Current);
+            FitWindow();
             Story.StoryFlags.Reset();
             Economy.Inventory.Reset();
             Economy.Skills.Reset();
@@ -234,12 +235,69 @@ namespace Descender.World.TilesV2
             place = (index % places.Count + places.Count) % places.Count;
             if (world.TryView(places[place], out var point))
             {
-                hero.PlaceAt(point);
+                hero.PlaceAt(StandingNear(point));
                 if (view != null)
                 {
                     view.Snap();
                 }
                 Say(places[place]);
+            }
+        }
+
+        // The nearest spot to a point where he can stand: two free cells with ground under them.
+        private Vector2 StandingNear(Vector2 point)
+        {
+            var terrain = world.Terrain;
+            var centre = terrain.WorldToCell(point);
+            for (var reach = 0; reach <= 16; reach++)
+            {
+                for (var dy = -reach; dy <= reach; dy++)
+                {
+                    for (var dx = -reach; dx <= reach; dx++)
+                    {
+                        if (Mathf.Max(Mathf.Abs(dx), Mathf.Abs(dy)) != reach)
+                        {
+                            continue;
+                        }
+                        var cell = centre + new Vector3Int(dx, dy, 0);
+                        var free = !terrain.HasTile(cell) && !terrain.HasTile(cell + Vector3Int.up);
+                        if (free && terrain.HasTile(cell + Vector3Int.down))
+                        {
+                            return (Vector2)terrain.CellToWorld(cell) + new Vector2(0.5f, 0f);
+                        }
+                    }
+                }
+            }
+            return point;
+        }
+
+        // The settings size the window in steps of the game's own 320 x 180. The playground's view
+        // is another size, so a step that is no whole multiple of it would leave bars round the
+        // picture: take the nearest whole multiple that fits the screen.
+        private void FitWindow()
+        {
+            var settings = SettingsData.Current;
+            if (
+                Application.isEditor
+                || Application.isBatchMode
+                || settings == null
+                || settings.fullscreen
+                || world == null
+            )
+            {
+                return;
+            }
+            var pixels = world.Set.ViewPixels;
+            var (wide, tall) = settings.WindowSizeFor(settings.scale);
+            var times = Mathf.Max(1, Mathf.CeilToInt(tall / (float)pixels.y));
+            var usable = Screen.mainWindowDisplayInfo.workArea;
+            while (times > 1 && (pixels.x * times > usable.width || pixels.y * times > usable.height))
+            {
+                times--;
+            }
+            if (pixels.x * times != wide || pixels.y * times != tall)
+            {
+                Screen.SetResolution(pixels.x * times, pixels.y * times, FullScreenMode.Windowed);
             }
         }
 
@@ -295,8 +353,8 @@ namespace Descender.World.TilesV2
             return null;
         }
 
-        // Photographs the hero at the start, then the map's named places at noon and the first
-        // of them at sunset and at night, and quits.
+        // Photographs the hero at the start, then the map's named places at the day's start and
+        // its pictures (a place at an hour), and quits.
         private IEnumerator Shoot(string folder)
         {
             shooting = true;
@@ -314,12 +372,11 @@ namespace Descender.World.TilesV2
             var shots = new List<(string place, float hour, string file)>();
             foreach (var name in places)
             {
-                shots.Add((name, 12f, name));
+                shots.Add((name, world.Set.dayStart, name));
             }
-            if (places.Count > 0)
+            foreach (var shot in world.Map.Shots)
             {
-                shots.Add((places[0], 18.75f, places[0] + "_sunset"));
-                shots.Add((places[0], 23f, places[0] + "_night"));
+                shots.Add((shot.View, shot.Hour, shot.Name));
             }
             foreach (var (name, hour, file) in shots)
             {
@@ -328,6 +385,7 @@ namespace Descender.World.TilesV2
                     continue;
                 }
                 world.Day.Hour = hour;
+                point = world.Framed(point);
                 var eye = Camera.main;
                 if (eye != null)
                 {

@@ -170,6 +170,9 @@ def lit_by(image: Image.Image, light: np.ndarray) -> Image.Image:
 
 
 def tile_across(canvas: Image.Image, layer: Image.Image, top: int, rows: range | None = None):
+    if top < 0:
+        # A picture taller than the room over it: only its lower part shows.
+        layer, top = layer.crop((0, -top, layer.width, layer.height)), 0
     for x0 in range(0, canvas.width, layer.width):
         if rows is None:
             canvas.alpha_composite(layer, (x0, top))
@@ -245,17 +248,16 @@ def render(art, hour: float | None = None, lit: bool = True) -> tuple[Image.Imag
 
 
 def preview(art, path: str, hour: float | None = None, view: str | None = None, scale: int = 3, lit: bool = True):
-    """Writes the sample map (or the 320 x 180 view of one of its named places) to a PNG."""
+    """Writes the sample map (or the camera's view of one of its named places) to a PNG."""
     canvas, layout = render(art, hour, lit)
     if view:
         if view in layout.views:
             cx, cy = layout.views[view]
         else:
             cx, cy = (float(v) for v in view.split(","))
-        left = int(round(cx * TILE - 160))
-        top = int(round(cy * TILE - 90))
-        left = max(0, min(canvas.width - 320, left))
-        top = max(0, min(canvas.height - 180, top))
-        canvas = canvas.crop((left, top, left + 320, top + 180))
+        wide, tall = VIEW
+        left = max(0, min(canvas.width - wide, int(round(cx * TILE - wide / 2))))
+        top = max(0, min(canvas.height - tall, int(round(cy * TILE - tall / 2))))
+        canvas = canvas.crop((left, top, left + wide, top + tall))
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
     canvas.resize((canvas.width * scale, canvas.height * scale), Image.NEAREST).save(path)

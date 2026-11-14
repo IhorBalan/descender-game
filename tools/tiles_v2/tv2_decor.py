@@ -42,7 +42,7 @@ DECOR = [
         "anchor": "floor",
         "on": ["sand"],
         "where": "sky",
-        "chance": 0.07,
+        "chance": 0.11,
         "variants": 2,
         "tall": [2, 3],
         "first": "cactus_base",

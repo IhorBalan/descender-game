@@ -17,7 +17,7 @@ namespace Descender.EditorTools.TilesV2
     /// Descender > Tiles V2 > Build sample scenes: makes the two Tiles V2 scenes under
     /// Assets/Scenes/Sandbox from the sample map (Assets/Art/TilesV2/sample_map.txt).
     /// Neither is in the build's scene list. TilesV2Sample.unity is the map alone with a
-    /// camera at 320 x 180, for a look in the editor and for the captures.
+    /// camera of the tile set's view, for a look in the editor and for the captures.
     /// TilesV2Playground.unity is the same map made playable on its own: the game's camera,
     /// its input and sounds, and the hero's prefab, run by <see cref="TilesV2Playground"/>.
     /// A scene holds only a <see cref="TilesV2World"/> pointing at the map and the tile
@@ -55,7 +55,7 @@ namespace Descender.EditorTools.TilesV2
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var world = MakeWorld(false);
             var at = world.TryView(FirstView, out var view) ? view : world.Area.center;
-            MakeCamera(at, false);
+            MakeCamera(world.Framed(at), false, world.Set);
             Save(scene, ScenePath);
             return scene;
         }
@@ -65,7 +65,7 @@ namespace Descender.EditorTools.TilesV2
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var world = MakeWorld(true);
-            var camera = MakeCamera(world.Spawn + new Vector2(0f, 2f), true);
+            var camera = MakeCamera(world.Framed(world.Spawn), true, world.Set);
 
             var systems = new GameObject("Systems");
             var router = systems.AddComponent<InputRouter>();
@@ -103,20 +103,21 @@ namespace Descender.EditorTools.TilesV2
             return world;
         }
 
-        private static Camera MakeCamera(Vector2 at, bool game)
+        // A pixel-perfect camera of the tile set's view; `game` adds what the playground's needs.
+        private static Camera MakeCamera(Vector2 at, bool game, TilesV2Set set)
         {
             var holder = new GameObject("Main Camera") { tag = "MainCamera" };
             holder.transform.position = new Vector3(at.x, at.y, -10f);
             var camera = holder.AddComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 180f / 16f / 2f; // 180 px tall at 16 px a unit
+            camera.orthographicSize = set.View.y / 2f;
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.02f, 0.02f, 0.04f);
             camera.GetUniversalAdditionalCameraData();
             var pixelPerfect = holder.AddComponent<PixelPerfectCamera>();
             pixelPerfect.assetsPPU = 16;
-            pixelPerfect.refResolutionX = 320;
-            pixelPerfect.refResolutionY = 180;
+            pixelPerfect.refResolutionX = set.viewWidth;
+            pixelPerfect.refResolutionY = set.viewHeight;
             pixelPerfect.cropFrame = PixelPerfectCamera.CropFrame.Windowbox;
             pixelPerfect.gridSnapping = PixelPerfectCamera.GridSnapping.UpscaleRenderTexture;
             if (game)

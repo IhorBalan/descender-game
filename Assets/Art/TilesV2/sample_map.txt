@@ -2,17 +2,23 @@
 # First grid, what stands in a cell: G grass, D dirt, S stone, A sand, C clay, O copper ore,
 # slopes / \ (grass) ( ) (sand) { } (dirt) [ ] (stone), W water, L lava, T a wall torch,
 # P the hero's start, . air. Second grid, the wall behind it: d dirt wall, s stone wall.
-# Row 0 is the top. @surface is the row the cave backdrop starts at; @view names a place.
+# Row 0 is the top. @surface is the row the cave backdrop starts at; @view names a place
+# (the middle of the camera's view of it); @shot names a picture: a place at an hour.
 @surface 20
-@view surface 14 12.5
-@view pond 31 14.5
-@view tunnel 50 18.5
-@view hall 54 33.5
-@view ore 17 35
-@view cavern 103 38.5
-@view dunes 112 11.5
-@view trickle 107 22.5
-@view lava 60 52.5
+@view surface 20 11.5
+@view pond 33 15
+@view tunnel 54 19
+@view hall 54 33
+@view ore 20 37
+@view cavern 103 37
+@view dunes 108 13
+@view trickle 107 24
+@view lava 62 51
+@shot surface_sunset surface 18.75
+@shot surface_night surface 23
+@shot pond_morning pond 6.9
+@shot dunes_sunset dunes 18.6
+@shot tunnel_dusk tunnel 19.6
 ................................................................................................................................
 ................................................................................................................................
 ................................................................................................................................
@@ -50,8 +56,8 @@ SSSSSSSSOSSOOOOOOOOOSSOO.OSSS.S.................T.........T....................S
 SSSSSSSOSOO.OSSO.S...S..............T...............................T................................................SSSSSSSSSSS
 SSSSSSOS......................................................................T......................................SSSSSSSSSSS
 SSSSSSOO......T.........T.......................................................................................T......SSSSSSSSS
-SSSSSSS.........................S...........S.SS..........SS.............S.....S.SSS..................................SSSSSSSSSS
-SSSSSSS....................S..SSSSSSSSSS...SSSSS.S.SOSSSSSSSSS.SSS..S.S.SSS.SSSSSSSS...................................SSSSSSSSS
+SSSSSSS.........................S...........S.SS..........SS.............S.....S.SSS...............................T..SSSSSSSSSS
+SSSSSSS....................S..SSSSSSSSSS...SSSSS.S.SOSSSSSSSSS.SSS..S.S.SSS.SSSSSSSS...................T...............SSSSSSSSS
 SSSSSSSS.S.........D.OO.S.SSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSO.T................................SSSSSSSSSS
 SSSSSSSSSS.DDDS.SDDOOOOSSSSSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOS....................................SSSSSSSSS
 SSSSSSSSSDDSSSSSSSSSSOSSSSSSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOSOS.....SSSWWWWWWWWWWWWWWWWWWWWWWWWWSSSSSSSSSSS

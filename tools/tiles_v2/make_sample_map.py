@@ -57,19 +57,21 @@ LAVA_FROM = 56  # lava fills the bottom cavern from this row down
 ISLANDS = [(27, 31), (38, 46), (56, 64), (72, 76), (84, 97)]  # stone standing in the lava, to its brim: columns
 TORCHES = [
     (50, 19), (58, 23), (68, 23), (36, 34), (48, 33), (58, 33), (68, 34), (78, 35), (14, 36), (24, 36),
-    (105, 22), (113, 22), (95, 33), (112, 36), (85, 39), (41, 44), (30, 52), (62, 49), (94, 52),
+    (105, 22), (113, 22), (95, 33), (112, 36), (85, 39), (103, 38), (115, 37), (41, 44), (30, 52), (62, 49),
+    (94, 52),
 ]  # fmt: skip
 SPAWN = (5, 16)
+# Named places, as (column, row) of the middle of the camera's view of them (40 x 22.5 tiles).
 VIEWS = {
-    "surface": (14, 12.5),
-    "pond": (31, 14.5),
-    "tunnel": (50, 18.5),
-    "hall": (54, 33.5),
-    "ore": (17, 35),
-    "cavern": (103, 38.5),
-    "dunes": (112, 11.5),
-    "trickle": (107, 22.5),
-    "lava": (60, 52.5),
+    "surface": (20, 11.5),
+    "pond": (33, 15),
+    "tunnel": (54, 19),
+    "hall": (54, 33),
+    "ore": (20, 37),
+    "cavern": (103, 37),
+    "dunes": (108, 13),
+    "trickle": (107, 24),
+    "lava": (62, 51),
 }
 
 
@@ -224,11 +226,21 @@ def blot(ground: np.ndarray, r, char: str, into: str, x: int, row: int, size: in
         row += r.choice([-1, 0, 0, 1])
 
 
+# Pictures worth taking of the map: (name, the place it shows, the hour of the day).
+SHOTS = [
+    ("surface_sunset", "surface", 18.75),
+    ("surface_night", "surface", 23.0),
+    ("pond_morning", "pond", 6.9),
+    ("dunes_sunset", "dunes", 18.6),
+    ("tunnel_dusk", "tunnel", 19.6),
+]
+
 HEADER = """# Tiles V2 sample map, written by tools/tiles_v2/make_sample_map.py (edit that, not this).
 # First grid, what stands in a cell: G grass, D dirt, S stone, A sand, C clay, O copper ore,
 # slopes / \\ (grass) ( ) (sand) { } (dirt) [ ] (stone), W water, L lava, T a wall torch,
 # P the hero's start, . air. Second grid, the wall behind it: d dirt wall, s stone wall.
-# Row 0 is the top. @surface is the row the cave backdrop starts at; @view names a place.
+# Row 0 is the top. @surface is the row the cave backdrop starts at; @view names a place
+# (the middle of the camera's view of it); @shot names a picture: a place at an hour.
 """
 
 
@@ -236,6 +248,7 @@ def main():
     terrain, walls = build()
     lines = [HEADER.rstrip("\n"), f"@surface {SURFACE_LINE}"]
     lines += [f"@view {name} {x:g} {row:g}" for name, (x, row) in VIEWS.items()]
+    lines += [f"@shot {name} {view} {hour:g}" for name, view, hour in SHOTS]
     text = "\n".join(lines + terrain + [""] + walls) + "\n"
     with open(SAMPLE_MAP, "w", encoding="utf-8", newline="\n") as handle:
         handle.write(text)

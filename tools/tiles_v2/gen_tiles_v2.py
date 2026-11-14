@@ -125,6 +125,7 @@ def manifest() -> dict:
     return {
         "tile": TILE,
         "ppu": PPU,
+        "view": {"width": VIEW[0], "height": VIEW[1]},
         "variants": VARIANTS,
         "bits": {"N": N, "NE": NE, "E": E, "SE": SE, "S": S, "SW": SW, "W": W, "NW": NW},
         "frames": FRAMES,
@@ -283,7 +284,7 @@ def main(argv=None):
     parser.add_argument("--out", default=OUT, help="where to write (default: Assets/Art/TilesV2)")
     parser.add_argument("--preview", help="also write the sample map laid out to this PNG")
     parser.add_argument("--hour", type=float, help="the preview's hour of the day, 0 to 24 (default: the day's start)")
-    parser.add_argument("--view", help="the preview shows only the 320 x 180 view of a place: a @view name of the map, or column,row")
+    parser.add_argument("--view", help="the preview shows only the camera's view of a place: a @view name of the map, or column,row")
     parser.add_argument("--scale", type=int, default=3, help="the preview's scale (default 3)")
     parser.add_argument("--unlit", action="store_true", help="the preview without the tile light")
     args = parser.parse_args(argv)

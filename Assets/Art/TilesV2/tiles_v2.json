@@ -1,6 +1,10 @@
 {
   "tile": 16,
   "ppu": 16,
+  "view": {
+    "width": 640,
+    "height": 360
+  },
   "variants": 3,
   "bits": {
     "N": 1,
@@ -511,7 +515,7 @@
           "sand"
         ],
         "where": "sky",
-        "chance": 0.07,
+        "chance": 0.11,
         "variants": 2,
         "min": 2,
         "max": 3,

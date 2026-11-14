@@ -13,7 +13,7 @@ from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 
-BACKDROP_W, BACKDROP_H = 320, 180
+BACKDROP_W, BACKDROP_H = VIEW  # a backdrop picture is the size of the view and repeats sideways
 SKY_BANDS = 7
 BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 
@@ -74,18 +74,21 @@ def sky_image(width: int, height: int, top, low) -> Image.Image:
 
 def backdrop_clouds() -> Image.Image:
     """Flat puffs, lit on top, a shade on the underside; the row repeats sideways."""
-    im = Image.new("RGBA", (BACKDROP_W, 96), (0, 0, 0, 0))
+    im = Image.new("RGBA", (BACKDROP_W, 160), (0, 0, 0, 0))
     px = im.load()
     r = rng("clouds")
     white, under = hexes("f2f7fb")[0], hexes("c9dcea")[0]
-    for _ in range(6):
-        cx, cy, w = r.randrange(BACKDROP_W), r.randint(18, 70), r.randint(26, 54)
-        puffs = [(cx + r.randint(-w // 2, w // 2), cy + r.randint(-3, 3), r.randint(5, 10)) for _ in range(5)]
-        for y in range(cy - 14, cy + 10):
+    # A few big banks and some small puffs between them.
+    for big in (True, True, True, False, False, False, False, True, False):
+        cx, cy = r.randrange(BACKDROP_W), r.randint(34, 124)
+        w = r.randint(64, 110) if big else r.randint(26, 48)
+        size = (9, 17) if big else (5, 9)
+        puffs = [(cx + r.randint(-w // 2, w // 2), cy + r.randint(-4, 4), r.randint(*size)) for _ in range(7 if big else 4)]
+        for y in range(cy - 26, cy + 18):
             for x in range(cx - w, cx + w):
                 inside = any((x - px0) ** 2 + ((y - py0) * 1.6) ** 2 <= rr * rr for px0, py0, rr in puffs)
                 if inside and 0 <= y < im.height:
-                    px[x % BACKDROP_W, y] = (under if y > cy + 2 else white) + (255,)
+                    px[x % BACKDROP_W, y] = (under if y > cy + (4 if big else 2) else white) + (255,)
     return im
 
 
@@ -95,11 +98,11 @@ def backdrop_stars() -> Image.Image:
     px = im.load()
     r = rng("stars")
     tints = hexes("ffffff", "cfe0ff", "fff0c8")
-    for _ in range(150):
-        x, y = r.randrange(BACKDROP_W), r.randrange(BACKDROP_H - 40)
+    for _ in range(520):
+        x, y = r.randrange(BACKDROP_W), r.randrange(BACKDROP_H - 60)
         px[x, y] = r.choice(tints) + (r.choice([110, 160, 220]),)
-    for _ in range(9):
-        x, y = r.randrange(2, BACKDROP_W - 2), r.randrange(2, BACKDROP_H - 60)
+    for _ in range(30):
+        x, y = r.randrange(2, BACKDROP_W - 2), r.randrange(2, BACKDROP_H - 90)
         px[x, y] = tints[0] + (255,)
         for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
             px[x + dx, y + dy] = tints[1] + (130,)
@@ -125,14 +128,16 @@ def disc(size: int, radius: float, colours, shadow=None) -> Image.Image:
 
 
 def backdrop_sun() -> Image.Image:
-    return disc(16, 6.6, hexes("f6c453", "ffe08a", "fff7d6"))
+    return disc(32, 13.2, hexes("f6c453", "ffd76e", "ffe9a0", "fff7d6"))
 
 
 def backdrop_moon() -> Image.Image:
-    im = disc(16, 5.6, hexes("c9d2e4", "e9edf5", "f6f8fc"), shadow=hexes("9aa6c2")[0])
+    im = disc(32, 11.2, hexes("c9d2e4", "e9edf5", "f6f8fc"), shadow=hexes("9aa6c2")[0])
     px = im.load()
-    for x, y in ((5, 6), (6, 10), (4, 8)):
-        px[x, y] = hexes("b4bfd6")[0] + (255,)
+    crater = hexes("b4bfd6")[0] + (255,)
+    for x, y in ((10, 12), (12, 20), (8, 16)):
+        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
+            px[x + dx, y + dy] = crater
     return im
 
 
@@ -236,13 +241,13 @@ def backdrops() -> dict[str, Image.Image]:
         "backdrop_moon": backdrop_moon(),
         "backdrop_clouds": backdrop_clouds(),
         "backdrop_far": backdrop_ridge(
-            "far", hexes("7fa3c4")[0], hexes("a3c2dc")[0], 70, [(1, 16), (2, 9), (5, 4), (11, 2)], 1
+            "far", hexes("7fa3c4")[0], hexes("a3c2dc")[0], 118, [(1, 30), (2, 20), (3, 12), (7, 6), (13, 3), (23, 2)], 1
         ),
         "backdrop_mid": backdrop_ridge(
-            "mid", hexes("4f8a7c")[0], hexes("69a48f")[0], 46, [(1, 8), (3, 6), (7, 2)], 2, trees=(4, 8)
+            "mid", hexes("4f8a7c")[0], hexes("69a48f")[0], 72, [(1, 12), (3, 10), (5, 6), (11, 3)], 2, trees=(4, 8)
         ),
         "backdrop_near": backdrop_ridge(
-            "near", hexes("2f5e4c")[0], hexes("427a60")[0], 26, [(2, 6), (5, 3)], 3, trees=(6, 12)
+            "near", hexes("2f5e4c")[0], hexes("427a60")[0], 40, [(2, 8), (5, 5), (9, 3)], 3, trees=(6, 12)
         ),
         "backdrop_cave": backdrop_cave(),
         "backdrop_cave_top": backdrop_cave_top(),

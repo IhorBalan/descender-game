@@ -12,17 +12,14 @@ namespace Descender.EditorTools.TilesV2
 {
     /// <summary>
     /// Renders the Tiles V2 sample to PNGs at one art pixel a screen pixel: each of the
-    /// map's named places (`@view`) at the game's 320 x 180, the first of them again at
-    /// sunset and at night, and the whole map. From the command line (no window; not with
-    /// -nographics, it renders):
+    /// map's named places (`@view`) as the camera frames it at the day's start, each of its
+    /// pictures (`@shot`: a place at an hour), and the whole map. From the command line (no
+    /// window; not with -nographics, it renders):
     /// <code>Unity -batchmode -projectPath . -executeMethod Descender.EditorTools.TilesV2.TilesV2Capture.BuildAndCapture -tilesV2Out &lt;folder&gt;</code>
     /// which runs the generator's output through the builders first.
     /// </summary>
     public static class TilesV2Capture
     {
-        /// <summary>The hours the first place is shown at besides the day's start: sunset and night.</summary>
-        public static readonly (float hour, string suffix)[] ExtraHours = { (18.75f, "_sunset"), (23f, "_night") };
-
         // How long the particles are run before a capture, in seconds: the air is full by then.
         private const float ParticleTime = 8f;
 
@@ -94,30 +91,25 @@ namespace Descender.EditorTools.TilesV2
 
         private static void CaptureViews(TilesV2World world, string folder)
         {
-            var game = TilesV2Backdrops.View;
+            var game = world.Set.View;
             var start = world.Day.Hour;
-            var first = true;
+            // The first render after the scene opens draws the unlit backdrop wrong (seen upside
+            // down in batch mode); render once and throw it away.
+            Render(world, world.Framed(world.Area.center), game, null);
             foreach (var pair in world.Map.Views)
             {
                 world.TryView(pair.Key, out var at);
-                if (first)
-                {
-                    // The first render after the scene opens draws the unlit backdrop wrong (seen
-                    // upside down in batch mode); render once and throw it away.
-                    Render(world, at, game, null);
-                }
-                Render(world, at, game, Path.Combine(folder, pair.Key + ".png"));
-                if (first)
-                {
-                    foreach (var (hour, suffix) in ExtraHours)
-                    {
-                        world.Day.Hour = hour;
-                        Render(world, at, game, Path.Combine(folder, pair.Key + suffix + ".png"));
-                    }
-                    world.Day.Hour = start;
-                }
-                first = false;
+                Render(world, world.Framed(at), game, Path.Combine(folder, pair.Key + ".png"));
             }
+            foreach (var shot in world.Map.Shots)
+            {
+                if (world.TryView(shot.View, out var at))
+                {
+                    world.Day.Hour = shot.Hour;
+                    Render(world, world.Framed(at), game, Path.Combine(folder, shot.Name + ".png"));
+                }
+            }
+            world.Day.Hour = start;
             var area = world.Area;
             Render(world, area.center, area.size, Path.Combine(folder, "map.png"));
         }
@@ -190,7 +182,7 @@ namespace Descender.EditorTools.TilesV2
         private static List<(SpriteRenderer, Vector2)> PlaceBackdrop(TilesV2World world, Vector2 at, Vector2 size)
         {
             var restore = new List<(SpriteRenderer, Vector2)>();
-            var more = size - TilesV2Backdrops.View;
+            var more = size - world.Set.View;
             if (world.Sky != null)
             {
                 world.Sky.Follow(at, size);

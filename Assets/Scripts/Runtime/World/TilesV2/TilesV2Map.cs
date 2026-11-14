@@ -18,6 +18,7 @@ namespace Descender.World.TilesV2
         private readonly List<string> terrain;
         private readonly List<string> walls;
         private readonly Dictionary<string, Vector2> views = new Dictionary<string, Vector2>();
+        private readonly List<Shot> shots = new List<Shot>();
 
         private TilesV2Map(List<string> terrainRows, List<string> wallRows)
         {
@@ -39,6 +40,9 @@ namespace Descender.World.TilesV2
 
         /// <summary>The map's named places (`@view name column row`), as (column, row) from the top left.</summary>
         public IReadOnlyDictionary<string, Vector2> Views => views;
+
+        /// <summary>The map's pictures (`@shot name view hour`): one of its named places at an hour of the day.</summary>
+        public IReadOnlyList<Shot> Shots => shots;
 
         /// <summary>What stands in a cell; air outside the map.</summary>
         public char TerrainAt(int column, int row) => At(terrain, column, row);
@@ -98,8 +102,27 @@ namespace Descender.World.TilesV2
                 {
                     map.views[parts[1]] = new Vector2(column, row);
                 }
+                else if (parts.Length == 4 && parts[0] == "shot" && TryNumber(parts[3], out var hour))
+                {
+                    map.shots.Add(new Shot(parts[1], parts[2], hour));
+                }
             }
             return map;
+        }
+
+        /// <summary>A picture worth taking of the map: one of its named places at an hour of the day.</summary>
+        public readonly struct Shot
+        {
+            public readonly string Name;
+            public readonly string View;
+            public readonly float Hour;
+
+            public Shot(string name, string view, float hour)
+            {
+                Name = name;
+                View = view;
+                Hour = hour;
+            }
         }
 
         private static bool TryNumber(string text, out float value) =>

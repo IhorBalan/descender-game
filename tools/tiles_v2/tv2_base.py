@@ -23,6 +23,10 @@ SAMPLE_MAP = os.path.join(OUT, "sample_map.txt")
 
 TILE = 16
 PPU = 16
+# The camera's view in art pixels: 40 x 22.5 tiles, twice as far back as the game's
+# own 320 x 180, so more of the world shows. The sky and the backdrops are drawn
+# for it and the Unity cameras take it as their reference resolution.
+VIEW = (640, 360)
 VARIANTS = 3
 COLUMNS = 8
 

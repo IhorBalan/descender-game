@@ -554,18 +554,19 @@ namespace Descender.Tests
         [Test]
         public void TheSkyIsBandsThatMeetInADither()
         {
+            const int tall = 180;
             for (var x = 0; x < 8; x++)
             {
-                Assert.That(Sky.Band(x, 0, Sky.Height, 7), Is.EqualTo(0));
-                Assert.That(Sky.Band(x, Sky.Height - 1, Sky.Height, 7), Is.EqualTo(6));
+                Assert.That(Sky.Band(x, 0, tall, 7), Is.EqualTo(0));
+                Assert.That(Sky.Band(x, tall - 1, tall, 7), Is.EqualTo(6));
             }
             var mixed = new HashSet<int>();
             // Half way between the first two bands a row shows both.
-            var row = (Sky.Height - 1) / 12;
+            var row = (tall - 1) / 12;
             for (var x = 0; x < 8; x++)
             {
-                mixed.Add(Sky.Band(x, row, Sky.Height, 7));
-                mixed.Add(Sky.Band(x, row + 1, Sky.Height, 7));
+                mixed.Add(Sky.Band(x, row, tall, 7));
+                mixed.Add(Sky.Band(x, row + 1, tall, 7));
             }
             Assert.That(mixed, Is.EquivalentTo(new[] { 0, 1 }));
         }
@@ -573,7 +574,13 @@ namespace Descender.Tests
         [Test]
         public void AMapIsTwoGridsAndItsProperties()
         {
-            var map = TilesV2Map.Parse("# a comment\n@surface 2\n@view cave 1.5 2\nG.\nDT\nSS\n\n..\ndd\nss\n");
+            var map = TilesV2Map.Parse(
+                "# a comment\n@surface 2\n@view cave 1.5 2\n@shot dusk cave 18.5\nG.\nDT\nSS\n\n..\ndd\nss\n"
+            );
+            Assert.That(map.Shots.Count, Is.EqualTo(1));
+            Assert.That(map.Shots[0].Name, Is.EqualTo("dusk"));
+            Assert.That(map.Shots[0].View, Is.EqualTo("cave"));
+            Assert.That(map.Shots[0].Hour, Is.EqualTo(18.5f));
             Assert.That(map.Width, Is.EqualTo(2));
             Assert.That(map.Height, Is.EqualTo(3));
             Assert.That(map.Surface, Is.EqualTo(2));
@@ -617,6 +624,15 @@ namespace Descender.Tests
             Assert.That(torches, Is.GreaterThan(5), "the sample shows torches");
             Assert.That(liquid, Is.GreaterThan(20), "and water and lava");
             Assert.That(map.Views.Count, Is.GreaterThan(4), "and names its places");
+            Assert.That(map.Shots.Count, Is.GreaterThan(1), "and its pictures");
+            foreach (var shot in map.Shots)
+            {
+                Assert.That(
+                    map.Views.ContainsKey(shot.View),
+                    Is.True,
+                    shot.Name + " shows a place the map does not name"
+                );
+            }
 
             var scene = EditorSceneManager.OpenScene(TilesV2Sample.ScenePath, OpenSceneMode.Additive);
             try
@@ -682,6 +698,9 @@ namespace Descender.Tests
                 Assert.That(world.Day.Hour, Is.EqualTo(set.dayStart).Within(1e-4f));
                 Assert.That(world.Sky, Is.Not.Null);
                 Assert.That(world.Sky.Palette.Length, Is.EqualTo(set.skyBands), "the sky is painted");
+                Assert.That(world.Sky.Pixels, Is.EqualTo(set.ViewPixels), "at the size of the camera's view");
+                Assert.That(world.Framed(Vector2.zero), Is.EqualTo(set.View / 2f), "a view is kept inside the map");
+                Assert.That(world.Framed(world.Area.center), Is.EqualTo(world.Area.center));
 
                 var layers = world.GetComponentsInChildren<ParallaxLayer>();
                 Assert.That(layers.Length, Is.GreaterThanOrEqualTo(5));
@@ -756,7 +775,16 @@ namespace Descender.Tests
                 Assert.That(router, Is.Not.Null);
                 Assert.That(router.Actions, Is.Not.Null, "the game's input actions");
                 Assert.That(camera.GetComponent<CameraRig.GameCamera>(), Is.Not.Null, "the game's camera follows him");
-                Assert.That(camera.GetComponent<PixelPerfectCamera>().refResolutionX, Is.EqualTo(320));
+                Assert.That(set.viewWidth, Is.EqualTo(manifest.view.width));
+                Assert.That(set.viewHeight, Is.EqualTo(manifest.view.height));
+                var pixelPerfect = camera.GetComponent<PixelPerfectCamera>();
+                Assert.That(
+                    pixelPerfect.refResolutionX,
+                    Is.EqualTo(set.viewWidth),
+                    "the camera shows the standard's view"
+                );
+                Assert.That(pixelPerfect.refResolutionY, Is.EqualTo(set.viewHeight));
+                Assert.That(camera.orthographicSize, Is.EqualTo(set.View.y / 2f).Within(1e-4f));
             }
             finally
             {

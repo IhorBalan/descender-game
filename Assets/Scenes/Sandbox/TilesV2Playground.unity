@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &604803938
+--- !u!1 &82267132
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,56 +127,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 604803940}
-  - component: {fileID: 604803939}
-  m_Layer: 0
-  m_Name: Playground
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &604803939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604803938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc7be2298ea57454ea5fdda172ea4209, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.TilesV2Playground
-  world: {fileID: 1750612410}
-  hero: {fileID: 1334789873}
-  view: {fileID: 1574263862}
---- !u!4 &604803940
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 604803938}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1118082298
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1118082301}
-  - component: {fileID: 1118082300}
-  - component: {fileID: 1118082299}
+  - component: {fileID: 82267135}
+  - component: {fileID: 82267134}
+  - component: {fileID: 82267133}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -184,13 +137,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1118082299
+--- !u!114 &82267133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118082298}
+  m_GameObject: {fileID: 82267132}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ea021d34530d5b33a42023c7168210b1, type: 3}
@@ -198,26 +151,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: Descender.Runtime::Descender.Audio.Sfx
   library: {fileID: 11400000, guid: 68124977b84f52b69bfadcae8c1cddd8, type: 2}
   output: {fileID: 0}
---- !u!114 &1118082300
+--- !u!114 &82267134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118082298}
+  m_GameObject: {fileID: 82267132}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3723edcb522e578e93e647c457af6c51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Descender.Runtime::Descender.Input.InputRouter
   actions: {fileID: -944628639613478452, guid: 54859e12335958f3b2d622d862786bfc, type: 3}
---- !u!4 &1118082301
+--- !u!4 &82267135
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118082298}
+  m_GameObject: {fileID: 82267132}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -226,7 +179,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &1334789872
+--- !u!1001 &1029947209
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -283,10 +236,10 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 80fb5de8d62a5114bf3b3ebd212ead93, type: 3}
---- !u!114 &1334789873 stripped
+--- !u!114 &1029947210 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 330757043252729879, guid: 80fb5de8d62a5114bf3b3ebd212ead93, type: 3}
-  m_PrefabInstance: {fileID: 1334789872}
+  m_PrefabInstance: {fileID: 1029947209}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
@@ -294,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 013d348c314b560ca9b1c31f25e9bf62, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1574263861
+--- !u!1 &1525462257
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -302,12 +255,108 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1574263867}
-  - component: {fileID: 1574263866}
-  - component: {fileID: 1574263865}
-  - component: {fileID: 1574263864}
-  - component: {fileID: 1574263863}
-  - component: {fileID: 1574263862}
+  - component: {fileID: 1525462259}
+  - component: {fileID: 1525462258}
+  m_Layer: 0
+  m_Name: TilesV2 World
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1525462258
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525462257}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a21c137da0dff54409e715f4b179e598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.TilesV2World
+  map: {fileID: 4900000, guid: afeba6de4a6fc0644a523a25997e0fec, type: 3}
+  set: {fileID: 11400000, guid: b307e25618d1abd41b193e2876be4590, type: 2}
+  hour: 10
+  dayRuns: 1
+  ambientLight: 1
+--- !u!4 &1525462259
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1525462257}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1827663575
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1827663577}
+  - component: {fileID: 1827663576}
+  m_Layer: 0
+  m_Name: Playground
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1827663576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827663575}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc7be2298ea57454ea5fdda172ea4209, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.TilesV2Playground
+  world: {fileID: 1525462258}
+  hero: {fileID: 1029947210}
+  view: {fileID: 2052441350}
+--- !u!4 &1827663577
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827663575}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2052441349
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2052441355}
+  - component: {fileID: 2052441354}
+  - component: {fileID: 2052441353}
+  - component: {fileID: 2052441352}
+  - component: {fileID: 2052441351}
+  - component: {fileID: 2052441350}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -315,13 +364,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1574263862
+--- !u!114 &2052441350
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574263861}
+  m_GameObject: {fileID: 2052441349}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c515f736a0fb57538da1a9dd8e3c7c9a, type: 3}
@@ -336,21 +385,21 @@ MonoBehaviour:
   dropBeforeFollowPixels: 8
   framing: {x: 0, y: 0}
   snapToPixelGrid: 1
---- !u!81 &1574263863
+--- !u!81 &2052441351
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574263861}
+  m_GameObject: {fileID: 2052441349}
   m_Enabled: 1
---- !u!114 &1574263864
+--- !u!114 &2052441352
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574263861}
+  m_GameObject: {fileID: 2052441349}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
@@ -358,8 +407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Unity.RenderPipelines.Universal.2D.Runtime::UnityEngine.Rendering.Universal.PixelPerfectCamera
   m_ComponentVersion: 1
   m_AssetsPPU: 16
-  m_RefResolutionX: 320
-  m_RefResolutionY: 180
+  m_RefResolutionX: 640
+  m_RefResolutionY: 360
   m_CropFrame: 3
   m_GridSnapping: 2
   m_FilterMode: 0
@@ -368,13 +417,13 @@ MonoBehaviour:
   m_CropFrameX: 0
   m_CropFrameY: 0
   m_StretchFill: 0
---- !u!114 &1574263865
+--- !u!114 &2052441353
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574263861}
+  m_GameObject: {fileID: 2052441349}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -412,13 +461,13 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!20 &1574263866
+--- !u!20 &2052441354
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574263861}
+  m_GameObject: {fileID: 2052441349}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -447,7 +496,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5.625
+  orthographic size: 11.25
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -463,65 +512,16 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!4 &1574263867
+--- !u!4 &2052441355
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1574263861}
+  m_GameObject: {fileID: 2052441349}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 49, z: -10}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1750612409
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1750612411}
-  - component: {fileID: 1750612410}
-  m_Layer: 0
-  m_Name: TilesV2 World
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1750612410
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750612409}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a21c137da0dff54409e715f4b179e598, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.TilesV2World
-  map: {fileID: 4900000, guid: afeba6de4a6fc0644a523a25997e0fec, type: 3}
-  set: {fileID: 11400000, guid: b307e25618d1abd41b193e2876be4590, type: 2}
-  hour: 10
-  dayRuns: 1
-  ambientLight: 1
---- !u!4 &1750612411
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1750612409}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 20, y: 47, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -531,8 +531,8 @@ Transform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1750612411}
-  - {fileID: 1574263867}
-  - {fileID: 1118082301}
-  - {fileID: 1334789872}
-  - {fileID: 604803940}
+  - {fileID: 1525462259}
+  - {fileID: 2052441355}
+  - {fileID: 82267135}
+  - {fileID: 1029947209}
+  - {fileID: 1827663577}

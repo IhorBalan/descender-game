@@ -13,9 +13,6 @@ namespace Descender.World.TilesV2
     /// </summary>
     public static class TilesV2Backdrops
     {
-        /// <summary>The game's view in units: 320 x 180 pixels at 16 a unit.</summary>
-        public static readonly Vector2 View = new Vector2(20f, 11.25f);
-
         // How far past the map's sides and foot the cave rock is shown.
         private const float Margin = 24f;
 
@@ -27,6 +24,7 @@ namespace Descender.World.TilesV2
         {
             var set = world.Set;
             var map = world.Map;
+            var view = set.View;
             var root = new GameObject("Backdrop").transform;
             root.SetParent(parent, false);
             Vector2 origin = world.transform.position;
@@ -66,7 +64,7 @@ namespace Descender.World.TilesV2
                     {
                         // Along the top of the view, wherever the view is.
                         var layer = MakeLayer(root, entry, material, new Vector2(size.x * 3f, size.y));
-                        var foot = viewAnchor.y + View.y / 2f - size.y - 0.5f;
+                        var foot = viewAnchor.y + view.y / 2f - size.y - 0.5f;
                         layer
                             .GetComponent<ParallaxLayer>()
                             .Configure(
@@ -96,7 +94,7 @@ namespace Descender.World.TilesV2
                     }
                     case TilesV2Set.BackdropKind.CaveTop:
                     {
-                        var layer = MakeLayer(root, entry, material, new Vector2(View.x + size.x * 3f, size.y));
+                        var layer = MakeLayer(root, entry, material, new Vector2(view.x + size.x * 3f, size.y));
                         Place(
                             layer,
                             new Vector2(entry.scroll, 1f),
@@ -109,7 +107,7 @@ namespace Descender.World.TilesV2
                     }
                     case TilesV2Set.BackdropKind.Cave:
                     {
-                        var cover = View + size * 3f;
+                        var cover = view + size * 3f;
                         var layer = MakeLayer(root, entry, material, cover);
                         layer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
                         Place(
@@ -126,7 +124,7 @@ namespace Descender.World.TilesV2
                 }
             }
             var sky = skyHolder.AddComponent<Sky>();
-            sky.Configure(gradient, stars, sun, moon, tinted.ToArray(), set.skyBands);
+            sky.Configure(gradient, stars, sun, moon, tinted.ToArray(), set.skyBands, set.ViewPixels);
             return sky;
         }
 

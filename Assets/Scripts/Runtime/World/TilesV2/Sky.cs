@@ -4,18 +4,15 @@ namespace Descender.World.TilesV2
 {
     /// <summary>
     /// The Tiles V2 sky, pinned to the view (docs/art/tiles-v2.md): two colours that change
-    /// with the hour, drawn as dithered bands on a texture of the game's 320 x 180 pixels
-    /// (painted here, so the bands stay pixel art whatever the colours), the stars that
-    /// come out at night, the sun or the moon on its arc across the view, and the tint of
-    /// the far backdrop layers (ridges, clouds). DayNight tells it the hour's values;
-    /// tools/tiles_v2/tv2_backdrop.py paints the same bands for the preview.
+    /// with the hour, drawn as dithered bands on a texture the size of the camera's view in
+    /// art pixels (painted here, so the bands stay pixel art whatever the colours), the
+    /// stars that come out at night, the sun or the moon on its arc across the view, and
+    /// the tint of the far backdrop layers (ridges, clouds). DayNight tells it the hour's
+    /// values; tools/tiles_v2/tv2_backdrop.py paints the same bands for the preview.
     /// </summary>
     [ExecuteAlways]
     public sealed class Sky : MonoBehaviour
     {
-        public const int Width = 320;
-        public const int Height = 180;
-
         private const float PixelsPerUnit = 16f;
 
         // How far across and up the view the sun and the moon travel, as shares of the view.
@@ -43,6 +40,12 @@ namespace Descender.World.TilesV2
         [SerializeField, Min(2)]
         private int bands = 7;
 
+        [SerializeField, Min(8), Tooltip("The sky's size in art pixels: the camera's view.")]
+        private int width = 640;
+
+        [SerializeField, Min(8)]
+        private int height = 360;
+
         private Texture2D texture;
         private Sprite sprite;
         private byte[] bandOf;
@@ -52,39 +55,33 @@ namespace Descender.World.TilesV2
         /// <summary>The colours of the sky's bands as last painted, top first; empty before the first.</summary>
         public Color32[] Palette => palette ?? System.Array.Empty<Color32>();
 
+        /// <summary>The sky's size in art pixels.</summary>
+        public Vector2Int Pixels => new Vector2Int(width, height);
+
         private void LateUpdate()
         {
             var view = Camera.main;
             if (view != null && view.orthographic)
             {
-                var height = view.orthographicSize * 2f;
-                Follow(view.transform.position, new Vector2(height * view.aspect, height));
+                var tall = view.orthographicSize * 2f;
+                Follow(view.transform.position, new Vector2(tall * view.aspect, tall));
             }
         }
 
         private void OnDisable()
         {
-            if (sprite != null)
-            {
-                DestroyImmediate(sprite);
-            }
-            if (texture != null)
-            {
-                DestroyImmediate(texture);
-            }
-            sprite = null;
-            texture = null;
-            palette = null;
+            Release();
         }
 
-        /// <summary>Sets the sky up (the world builder's one entry point).</summary>
+        /// <summary>Sets the sky up (the world builder's one entry point); `pixels` is the camera's view.</summary>
         public void Configure(
             SpriteRenderer gradientPicture,
             SpriteRenderer starsPicture,
             SpriteRenderer sunPicture,
             SpriteRenderer moonPicture,
             SpriteRenderer[] tintedLayers,
-            int bandCount
+            int bandCount,
+            Vector2Int pixelSize
         )
         {
             gradient = gradientPicture;
@@ -93,8 +90,9 @@ namespace Descender.World.TilesV2
             moon = moonPicture;
             tinted = tintedLayers ?? new SpriteRenderer[0];
             bands = Mathf.Max(bandCount, 2);
-            palette = null;
-            bandOf = null;
+            width = Mathf.Max(pixelSize.x, 8);
+            height = Mathf.Max(pixelSize.y, 8);
+            Release();
         }
 
         /// <summary>
@@ -125,7 +123,7 @@ namespace Descender.World.TilesV2
                     layer.color = new Color(day.tint.r, day.tint.g, day.tint.b, 1f);
                 }
             }
-            var size = new Vector2(Width, Height) / PixelsPerUnit;
+            var size = new Vector2(width, height) / PixelsPerUnit;
             var at = new Vector3(
                 (along - 0.5f) * ArcWidth * size.x,
                 (ArcBase + ArcHeight * Mathf.Sin(Mathf.PI * along)) * size.y,
@@ -135,11 +133,11 @@ namespace Descender.World.TilesV2
             Put(moon, !sunUp, at);
         }
 
-        /// <summary>Centres the sky on a view and grows it to cover one larger than the game's.</summary>
+        /// <summary>Centres the sky on a view and grows it to cover one larger than its own.</summary>
         public void Follow(Vector2 centre, Vector2 viewSize)
         {
             transform.position = new Vector3(centre.x, centre.y, transform.position.z);
-            var scale = Mathf.Max(1f, viewSize.x * PixelsPerUnit / Width, viewSize.y * PixelsPerUnit / Height);
+            var scale = Mathf.Max(1f, viewSize.x * PixelsPerUnit / width, viewSize.y * PixelsPerUnit / height);
             transform.localScale = new Vector3(scale, scale, 1f);
             // The sun and the moon keep their size in a view the sky is stretched over.
             var body = new Vector3(1f / scale, 1f / scale, 1f);
@@ -197,7 +195,7 @@ namespace Descender.World.TilesV2
             palette = colours;
             if (texture == null)
             {
-                texture = new Texture2D(Width, Height, TextureFormat.RGBA32, false)
+                texture = new Texture2D(width, height, TextureFormat.RGBA32, false)
                 {
                     name = "Sky",
                     filterMode = FilterMode.Point,
@@ -206,7 +204,7 @@ namespace Descender.World.TilesV2
                 };
                 sprite = Sprite.Create(
                     texture,
-                    new Rect(0, 0, Width, Height),
+                    new Rect(0, 0, width, height),
                     new Vector2(0.5f, 0.5f),
                     PixelsPerUnit,
                     0,
@@ -214,18 +212,14 @@ namespace Descender.World.TilesV2
                 );
                 sprite.name = "Sky";
                 sprite.hideFlags = HideFlags.HideAndDontSave;
-                pixels = new Color32[Width * Height];
-                bandOf = null;
-            }
-            if (bandOf == null || bandOf.Length != pixels.Length)
-            {
-                bandOf = new byte[Width * Height];
-                for (var y = 0; y < Height; y++)
+                pixels = new Color32[width * height];
+                bandOf = new byte[width * height];
+                for (var y = 0; y < height; y++)
                 {
-                    for (var x = 0; x < Width; x++)
+                    for (var x = 0; x < width; x++)
                     {
                         // Texture rows run bottom first.
-                        bandOf[y * Width + x] = (byte)Band(x, Height - 1 - y, Height, bands);
+                        bandOf[y * width + x] = (byte)Band(x, height - 1 - y, height, bands);
                     }
                 }
             }
@@ -236,6 +230,23 @@ namespace Descender.World.TilesV2
             texture.SetPixels32(pixels);
             texture.Apply(false);
             gradient.sprite = sprite;
+        }
+
+        private void Release()
+        {
+            if (sprite != null)
+            {
+                DestroyImmediate(sprite);
+            }
+            if (texture != null)
+            {
+                DestroyImmediate(texture);
+            }
+            sprite = null;
+            texture = null;
+            palette = null;
+            bandOf = null;
+            pixels = null;
         }
     }
 }

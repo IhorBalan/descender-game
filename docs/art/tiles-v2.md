@@ -20,9 +20,11 @@ Change the code and this page together.
 
 Pictures of the sample world are in `docs/screenshots/tiles-v2/`: its named
 places (`surface`, `pond`, `tunnel`, `hall`, `ore`, `cavern`, `dunes`,
-`trickle`, `lava`), the surface again at sunset and at night, the whole map
-(`map.png`), and a frame from the Windows playground with the hero in it
-(`playground.png`).
+`trickle`, `lava`) as the camera frames them, its pictures at other hours
+(`surface_sunset`, `surface_night`, `pond_morning`, `dunes_sunset`,
+`tunnel_dusk`), the whole map (`map.png`), and a frame from the Windows
+playground with the hero in it (`playground.png`). Five of them at 1920 x
+1080, for showing the map, are in `docs/screenshots/tiles-v2/presentation/`.
 
 ## Grid and scale
 
@@ -30,7 +32,7 @@ places (`surface`, `pond`, `tunnel`, `hall`, `ore`, `cavern`, `dunes`,
 |---|---|
 | Tile | 16 x 16 px |
 | Pixels per unit | 16: one tile is one Unity unit and one collision cell |
-| Camera | Pixel Perfect Camera, 320 x 180 (20 x 11.25 tiles), scaled by whole numbers |
+| Camera | Pixel Perfect Camera, 640 x 360 (40 x 22.5 tiles), scaled by whole numbers: twice as far back as the game's own 320 x 180, so the world shows and not only the hero. `VIEW` in `tv2_base.py`; the sky and the backdrops are drawn for it and the scenes' cameras take it from the tile set |
 | Filter | Point, no compression, no mipmaps |
 | Density | One art pixel is one game pixel everywhere: tiles, walls, decor, backdrops, particles. Nothing is scaled, rotated or drawn at another density. |
 
@@ -139,7 +141,8 @@ A map is text (`TilesV2Map`), so a scene holds none of it:
 ```
 # a comment
 @surface 20
-@view hall 54 33.5
+@view hall 54 33
+@shot hall_night hall 23
 ................
 ..../GGG\.......      the first grid: what stands in each cell
 GGGGDDDDDGGWWGGG
@@ -152,8 +155,11 @@ dddddddddddddddd
 ```
 
 Row 0 is the top. `@surface` is the row the cave rock starts at (under every
-dip of the surface); `@view name column row` names a place, for the captures
-and the playground. The characters are the legend in the manifest:
+dip of the surface); `@view name column row` names a place by the middle of
+the camera's view of it, for the captures and the playground (a view that
+would show past the map's edge is moved inside it); `@shot name view hour`
+names a picture worth taking: a place at an hour of the day. The characters
+are the legend in the manifest:
 
 | Character | Layer | Stands for |
 |---|---|---|
@@ -212,7 +218,7 @@ in the order they are tried:
 | bush (2) | floor | grass | sky | 0.05 | 1 |
 | grass_tall (2) | floor | grass | sky | 0.20 | 1 |
 | tuft (3) | floor | grass | sky | 0.38 | 1 |
-| cactus (2) | floor | sand | sky | 0.07 | 2 to 3: base, middle with an arm, top |
+| cactus (2) | floor | sand | sky | 0.11 | 2 to 3: base, middle with an arm, top |
 | dry_bush (2) | floor | sand | sky | 0.08 | 1 |
 | bones | floor | sand | anywhere | 0.02 | 1 |
 | mushroom (3) | floor | dirt, clay, stone | cave | 0.06 | 1 |
@@ -254,9 +260,9 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 
 | Layer | Scroll across, up | Notes |
 |---|---|---|
-| sky, stars, sun, moon | pinned to the view | `Sky`: seven bands between the hour's two colours, meeting in an ordered 4 x 4 dither, painted on a 320 x 180 texture; the sun and the moon cross the view on an arc |
+| sky, stars, sun, moon | pinned to the view | `Sky`: seven bands between the hour's two colours, meeting in an ordered 4 x 4 dither, painted on a texture the size of the camera's view; the sun and the moon cross the view on an arc |
 | clouds | 0.04, 0 | along the top of the view; drift 0.25 units a second |
-| far, mid, near ridges | 0.1 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line; lit on their left-facing slopes |
+| far, mid, near ridges | 0.1 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line; lit on their left-facing slopes; a picture is as wide as the view, so no peak shows twice |
 | cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, shown only under the surface line (a sprite mask over the ground); it takes the tile light, so it is black until something lights the cave |
 | cave rock's top | 0.55, 1 | a ragged strip along the surface line |
 
@@ -358,9 +364,9 @@ physics for a particle system to take gravity from).
 - **Descender > Tiles V2 > Paint by rule** lays blends, shade, decor and
   glints on a map painted by hand.
 - **Descender > Tiles V2 > Capture sample** renders every named place of the
-  map, the first of them again at sunset and at night, and the whole map, to
-  `Logs/TilesV2/`; `TilesV2Capture.BuildAndCapture` does it all from the
-  command line.
+  map at the day's start, every picture of it (`@shot`) and the whole map, at
+  one art pixel a pixel, to `Logs/TilesV2/`; `TilesV2Capture.BuildAndCapture`
+  does it all from the command line.
 
 ### The playground
 
@@ -384,8 +390,8 @@ list never hears of it).
 | Esc | quits |
 
 Started with `-tilesV2Shots <folder>` the player photographs the hero at the
-start and every named place instead, and quits: that is how a build is
-checked. It asks the camera for the frames itself, so `-batchmode` works and
+start, every named place and every picture of the map instead, and quits:
+that is how a build is checked. It asks the camera for the frames itself, so `-batchmode` works and
 no window opens.
 
 ## Tools
