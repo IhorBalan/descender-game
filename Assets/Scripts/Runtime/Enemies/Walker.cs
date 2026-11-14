@@ -50,6 +50,11 @@ namespace Descender.Enemies
         // Pounce
         public const float PounceMin = 36f;
         public const float PounceMax = 96f;
+
+        /// <summary>How far above and below its feet the hero's may be for a pounce, and above for a lunge.</summary>
+        public const float PounceAbove = 48f;
+        public const float PounceBelow = 8f;
+        public const float LungeAbove = 24f;
         public const float PounceWindup = 0.4f;
         public static readonly Vector2 PounceVelocity = new Vector2(150f, 190f);
         public const float PounceTimeMax = 1f;
@@ -425,13 +430,13 @@ namespace Descender.Enemies
             {
                 case WalkerBehaviour.Pounce:
                     // A hero a few tiles away, level or a little above.
-                    return dx >= PounceMin && dx <= PounceMax && offset.y < 48f && offset.y >= -8f;
+                    return dx >= PounceMin && dx <= PounceMax && offset.y < PounceAbove && offset.y >= -PounceBelow;
                 case WalkerBehaviour.Hurl:
                     return dx > HurlRetreat && dx <= HurlRange && Mathf.Abs(offset.y) <= HurlHeightTolerance;
                 case WalkerBehaviour.Slam:
                     return dx > profile.attackRange && dx <= SlamMax && Mathf.Abs(offset.y) <= AttackHeightTolerance;
                 case WalkerBehaviour.Lunge:
-                    return dx >= LungeMin && dx <= LungeMax && offset.y < 24f && offset.y >= -8f;
+                    return dx >= LungeMin && dx <= LungeMax && offset.y < LungeAbove && offset.y >= -PounceBelow;
                 default:
                     return false;
             }

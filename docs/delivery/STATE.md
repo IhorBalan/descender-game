@@ -133,8 +133,12 @@ one of the four old classes, and they are deleted.
   kill is remembered in `Kills`, and the foe leaves what a `WalkerProfile`
   leaves (`FoeDrops`). No kind is registered yet, so the regions do not
   change.
-- T-0041: the walker placements spawn foes (each `WalkerProfile` and
-  `WalkerBehaviour` maps to a recipe); `Walker` goes.
+- T-0041: the walker placements make foes: `FoeKinds.FromWalker` turns a
+  `WalkerProfile` and the placement's habit into a recipe, and `FoeWorld`
+  uses it wherever the catalog's prefab is a `Walker`
+  (`FoeWorld.RemakesWalkers` turns that off). They stand as shapes in the
+  profile's dust colour. `Walker` itself stays until T-0043: the old boss
+  still calls imps from its prefab.
 - T-0042: `Flyer` and `Hanger` the same way.
 - T-0043: the Warden from `Pattern` and `BossPhase`; `Boss` goes.
 
@@ -287,8 +291,8 @@ hygiene as each production region lands.
 | T-0037 | A boss pattern as the template | done | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | #202 |
 | T-0038 | The gauntlet: one run through every mechanic | done | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | #203 |
 | T-0039 | The walker's habits as parts: pounce, lunge, hurl, quake | done | 39 | T-0038 | 0 | Rebuild the old enemies | #204 |
-| T-0040 | A foe in the world: placement, kills, drops | in review | 40 | T-0039 | 0 | Rebuild the old enemies | |
-| T-0041 | Walker placements spawn foes; Walker goes | todo | 41 | T-0040 | 1 | Rebuild the old enemies | |
+| T-0040 | A foe in the world: placement, kills, drops | done | 40 | T-0039 | 0 | Rebuild the old enemies | #205 |
+| T-0041 | Walker placements make foes | in review | 41 | T-0040 | 1 | Rebuild the old enemies | |
 | T-0042 | Flyer and Hanger from parts | todo | 42 | T-0041 | 1 | Rebuild the old enemies | |
 | T-0043 | The Warden from the boss pattern; Boss goes | todo | 43 | T-0042 | 1 | Rebuild the old enemies | |
 
@@ -475,8 +479,8 @@ What a task must pass before it merges, and how a thread runs it.
 
 | Check | Where it runs | Needs Unity | Command |
 | --- | --- | --- | --- |
-| EditMode tests (312 on `main` after T-0029) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
-| PlayMode tests (153 after T-0040; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
+| EditMode tests (316 on `main` after T-0041) | pre-push hook, developer machine | yes | `sh tools/hooks/pre-push` (or `Unity -batchmode -nographics -projectPath . -runTests -testPlatform EditMode -testResults Logs/pre-push-EditMode.xml -logFile Logs/pre-push-EditMode.log`) |
+| PlayMode tests (154 after T-0041; `ParadiseRunTests` runs the whole region at one physics step per frame, about 20 s real for the 20-minute run, logging its progress every two game minutes) | pre-push hook, developer machine | yes, with a graphics device (no `-nographics`) | the hook runs both in one editor launch; alone, the EditMode command with `-testPlatform PlayMode` |
 | C# format | GitHub Actions `Tests / C# format` on every PR and push to `main` | no | `csharpier check Assets` (CSharpier 1.0.3, needs the .NET SDK) |
 | Claude review | GitHub Actions `Claude Code Review / review` on every non-draft PR | no | governed by `REVIEW.md` |
 | Python tools | GitHub Actions `Tests / Python tools` on every PR and push to `main` | no | `python3 -I tools/unity/check_tools.py` (every `tools/` module imports and names no Godot path) and `python3 -I tools/unity/build_prefabs.py && git diff --exit-code --stat` (the committed prefabs and assets are the script's own output) |
@@ -598,6 +602,14 @@ barriers, the cliff descent.
   is jumped. To check: each warning is long enough to react to, the leap
   can be stepped under or back from, and the wave reads as something to
   jump.
+- **T-0041, the walkers in the regions.** Play Paradise (or any region):
+  every imp, brute, hound, hoarder, slug, burned and angel guard now stands
+  as a shape in its dust colour with its name and health above it, and plays
+  by the lab's rules: a warning before each swing, pounce, lunge, throw and
+  wave, a push from every cut, armour on the brute and the slug. To check:
+  the regions are still passable and fair with them, their drops still come,
+  and whether shapes are acceptable there until the art returns. To compare
+  with the old ones, `FoeWorld.RemakesWalkers = false` brings them back.
 - **T-0037, the boss template.** `lab boss` (the room gives the wings, Holy
   Light and Smite). Behind shut doors, one armoured foe with twelve health
   in three phases, changing at two thirds and one third: it swings and
