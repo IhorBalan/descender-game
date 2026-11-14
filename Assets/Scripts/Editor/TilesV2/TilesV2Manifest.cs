@@ -33,6 +33,9 @@ namespace Descender.EditorTools.TilesV2
         public BlendEntry[] blends = Array.Empty<BlendEntry>();
         public LegendEntry[] legend = Array.Empty<LegendEntry>();
         public PropEntry[] props = Array.Empty<PropEntry>();
+        public LedgeSection ledges = new LedgeSection();
+        public ThingSection things = new ThingSection();
+        public RegionEntry[] regions = Array.Empty<RegionEntry>();
         public LiquidEntry[] liquids = Array.Empty<LiquidEntry>();
         public DecorSection decor = new DecorSection();
         public ShadeSection shade = new ShadeSection();
@@ -85,13 +88,59 @@ namespace Descender.EditorTools.TilesV2
             public string slope;
         }
 
-        /// <summary>One prop: a sheet of frames.</summary>
+        /// <summary>One prop that gives light: a sheet of frames, the light it gives its tile, whether embers rise from it.</summary>
         [Serializable]
         public sealed class PropEntry
         {
             public string key;
             public string sheet;
             public int frames;
+            public float[] colour = Array.Empty<float>();
+            public float intensity;
+            public bool embers;
+        }
+
+        /// <summary>The ledges: one sheet, a row for each, its pieces side by side.</summary>
+        [Serializable]
+        public sealed class LedgeSection
+        {
+            public string sheet;
+            public int thick;
+            public string[] keys = Array.Empty<string>();
+            public string[] pieces = Array.Empty<string>();
+        }
+
+        /// <summary>The sprites the game's own things on a map are drawn with (a barrier, a seal, a relic).</summary>
+        [Serializable]
+        public sealed class ThingSection
+        {
+            public string sheet;
+            public string[] names = Array.Empty<string>();
+        }
+
+        /// <summary>One region of a world: its name, the light in its air, the rock behind its caves, what drifts in it.</summary>
+        [Serializable]
+        public sealed class RegionEntry
+        {
+            public string key;
+            public string name;
+            public string subtitle;
+            public float[] ambient = Array.Empty<float>();
+            public string cave;
+            public string caveTop;
+            public AirEntry air = new AirEntry();
+        }
+
+        /// <summary>What drifts in a region's air: how many a second, their colour, their speed across and up, their life.</summary>
+        [Serializable]
+        public sealed class AirEntry
+        {
+            public float rate;
+            public float[] colour = Array.Empty<float>();
+            public float[] across = Array.Empty<float>();
+            public float[] up = Array.Empty<float>();
+            public float life;
+            public bool lit;
         }
 
         /// <summary>One liquid: its sheet of surface and body frames and what it does.</summary>
@@ -200,6 +249,8 @@ namespace Descender.EditorTools.TilesV2
             public int bands;
             public int order;
             public float cloudDrift;
+            public float caveScroll;
+            public int caveOrder;
         }
 
         /// <summary>One layer of the backdrop, back to front.</summary>
@@ -251,5 +302,12 @@ namespace Descender.EditorTools.TilesV2
         public static string GlintSprite(int variant, int frame) => $"tv2_glint_v{variant}_{frame}";
 
         public static string PropSprite(string key, int frame) => $"tv2_{key}_{frame}";
+
+        public static string LedgePath(string key, string piece) =>
+            TileFolder + "/Ledges/" + key + "_" + piece + ".asset";
+
+        public static string LedgeSprite(string key, string piece) => $"tv2_ledge_{key}_{piece}";
+
+        public static string ThingSprite(string name) => $"tv2_thing_{name}";
     }
 }

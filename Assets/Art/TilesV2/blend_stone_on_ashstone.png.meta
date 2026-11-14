@@ -1,0 +1,1319 @@
+fileFormatVersion: 2
+guid: 6c5e881137b358e593a2fb7d1a4d2d43
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4213743578054276251
+    second: tv2_stone_on_ashstone_s1_v0
+  - first:
+      213: 2521486059339643962
+    second: tv2_stone_on_ashstone_s2_v0
+  - first:
+      213: 2972820087982107026
+    second: tv2_stone_on_ashstone_s3_v0
+  - first:
+      213: 3561815138703855473
+    second: tv2_stone_on_ashstone_s4_v0
+  - first:
+      213: 421053773677032858
+    second: tv2_stone_on_ashstone_s5_v0
+  - first:
+      213: 1092658423504981400
+    second: tv2_stone_on_ashstone_s6_v0
+  - first:
+      213: 2261746732557200778
+    second: tv2_stone_on_ashstone_s7_v0
+  - first:
+      213: 3399957389473894793
+    second: tv2_stone_on_ashstone_s8_v0
+  - first:
+      213: 1740930883209372677
+    second: tv2_stone_on_ashstone_s9_v0
+  - first:
+      213: 1698592947116179800
+    second: tv2_stone_on_ashstone_s10_v0
+  - first:
+      213: 3778627211776854153
+    second: tv2_stone_on_ashstone_s11_v0
+  - first:
+      213: 3672361219763172902
+    second: tv2_stone_on_ashstone_s12_v0
+  - first:
+      213: 749539214942857605
+    second: tv2_stone_on_ashstone_s13_v0
+  - first:
+      213: 4364207154912194402
+    second: tv2_stone_on_ashstone_s14_v0
+  - first:
+      213: 3652062714964203476
+    second: tv2_stone_on_ashstone_s15_v0
+  - first:
+      213: 426003024557166982
+    second: tv2_stone_on_ashstone_s1_v1
+  - first:
+      213: 3353770564386529387
+    second: tv2_stone_on_ashstone_s2_v1
+  - first:
+      213: 1404140336752417757
+    second: tv2_stone_on_ashstone_s3_v1
+  - first:
+      213: 4577046134509278083
+    second: tv2_stone_on_ashstone_s4_v1
+  - first:
+      213: 3488639604749578405
+    second: tv2_stone_on_ashstone_s5_v1
+  - first:
+      213: 971991474537885104
+    second: tv2_stone_on_ashstone_s6_v1
+  - first:
+      213: 3595055140695862385
+    second: tv2_stone_on_ashstone_s7_v1
+  - first:
+      213: 3155935393300233400
+    second: tv2_stone_on_ashstone_s8_v1
+  - first:
+      213: 1116790241684488059
+    second: tv2_stone_on_ashstone_s9_v1
+  - first:
+      213: 799723563494417415
+    second: tv2_stone_on_ashstone_s10_v1
+  - first:
+      213: 3747207421302463322
+    second: tv2_stone_on_ashstone_s11_v1
+  - first:
+      213: 2528057191126260183
+    second: tv2_stone_on_ashstone_s12_v1
+  - first:
+      213: 3628634517337186144
+    second: tv2_stone_on_ashstone_s13_v1
+  - first:
+      213: 1695795886304711689
+    second: tv2_stone_on_ashstone_s14_v1
+  - first:
+      213: 375504478598517317
+    second: tv2_stone_on_ashstone_s15_v1
+  - first:
+      213: 1636500063224036184
+    second: tv2_stone_on_ashstone_s1_v2
+  - first:
+      213: 3647472688971400006
+    second: tv2_stone_on_ashstone_s2_v2
+  - first:
+      213: 1534258066587889513
+    second: tv2_stone_on_ashstone_s3_v2
+  - first:
+      213: 2999688073457417262
+    second: tv2_stone_on_ashstone_s4_v2
+  - first:
+      213: 666361174330642546
+    second: tv2_stone_on_ashstone_s5_v2
+  - first:
+      213: 1838470684681109223
+    second: tv2_stone_on_ashstone_s6_v2
+  - first:
+      213: 468810248724749319
+    second: tv2_stone_on_ashstone_s7_v2
+  - first:
+      213: 2420439676494896829
+    second: tv2_stone_on_ashstone_s8_v2
+  - first:
+      213: 1209108701933599541
+    second: tv2_stone_on_ashstone_s9_v2
+  - first:
+      213: 926680009686176725
+    second: tv2_stone_on_ashstone_s10_v2
+  - first:
+      213: 1937305837982797438
+    second: tv2_stone_on_ashstone_s11_v2
+  - first:
+      213: 4423554179632567384
+    second: tv2_stone_on_ashstone_s12_v2
+  - first:
+      213: 4270909680469375834
+    second: tv2_stone_on_ashstone_s13_v2
+  - first:
+      213: 2810438590493503055
+    second: tv2_stone_on_ashstone_s14_v2
+  - first:
+      213: 4334081580581717216
+    second: tv2_stone_on_ashstone_s15_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df67f5367c8d536aab881bba10e85662
+      internalID: 4213743578054276251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s2_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47a291870ce05ca7bd02c11a8ce099be
+      internalID: 2521486059339643962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s3_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e112ea9650c759f1bda4d6a3534c1e43
+      internalID: 2972820087982107026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d64fa255f4865db2b34365985f1c94b4
+      internalID: 3561815138703855473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a49892c20bfe5d53887d27dd74797e95
+      internalID: 421053773677032858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s6_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49e59db6b9ac537085861a1c5c58ba85
+      internalID: 1092658423504981400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79bfe5be4a02580191138fbcd0de6004
+      internalID: 2261746732557200778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s8_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f555cf83e3a05bd7b6d0e149aaf2df0a
+      internalID: 3399957389473894793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s9_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cafdf4c2ba858d5855b81ef47cfd798
+      internalID: 1740930883209372677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s10_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdd3e7bd544e50d59f31ea70a0570706
+      internalID: 1698592947116179800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s11_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 243eed8a3e14581384aa922767ba85ec
+      internalID: 3778627211776854153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s12_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e18253e476c45074a8058c917a5b11d0
+      internalID: 3672361219763172902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s13_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 221e9fba587054c69d254db6a1b0f3ef
+      internalID: 749539214942857605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s14_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9d1151827352259b4bcc89407999b0
+      internalID: 4364207154912194402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s15_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 385cb9ea9ba8521c9247dce576e6ce69
+      internalID: 3652062714964203476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4c1df75103b5a9884de3a6b10115dcf
+      internalID: 426003024557166982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s2_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b259163bdbc50b3b41337ab7f4b85d4
+      internalID: 3353770564386529387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s3_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acd4d9c8749f51aa878d3dfe7a0c7222
+      internalID: 1404140336752417757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fb840c8e2de50118fa78b0bb6e3a10e
+      internalID: 4577046134509278083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e78f46ca57925a9fb5bf8b21fb9a2c86
+      internalID: 3488639604749578405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s6_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b471eb447afd538387c792c1ece3f54d
+      internalID: 971991474537885104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57945eae06f85582b870b8fd5fdb2dda
+      internalID: 3595055140695862385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s8_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78ac0c0a2ab9562c9ad849c3acec1b32
+      internalID: 3155935393300233400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s9_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d614a75410f5477a0b9a4a51557904e
+      internalID: 1116790241684488059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s10_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aad1e37bef7b55df962fba36a3ad0abe
+      internalID: 799723563494417415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s11_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e4a7fe6006a5b5c8eb99a511d1e92c0
+      internalID: 3747207421302463322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s12_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a381b8cce3a5f1787ce21e24218f99d
+      internalID: 2528057191126260183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s13_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c6e621afe2b5d99b45bf63bd35b0c32
+      internalID: 3628634517337186144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s14_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01b4b6ee6e945ea9af2e5e337fb3bcdf
+      internalID: 1695795886304711689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s15_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 829fad44fbfc5da781cbeea57fafe19d
+      internalID: 375504478598517317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc82a1f1de9e58b58f50c5b0700fc940
+      internalID: 1636500063224036184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s2_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 082cd17a13485667ba44d999f6a35241
+      internalID: 3647472688971400006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s3_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14a41fb223a05a278f6923fb7b4c6531
+      internalID: 1534258066587889513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45e08fb27e5e534ba7eadb636a564267
+      internalID: 2999688073457417262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38d07a867a42547eaa0405fe26091d30
+      internalID: 666361174330642546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s6_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dab6ff93f4335ff886d814a70fa57709
+      internalID: 1838470684681109223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae25433297725d9dadabefc39e9c17d3
+      internalID: 468810248724749319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s8_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbf7918aee8b5783915fbc9765a90087
+      internalID: 2420439676494896829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s9_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5f41269004b5e5c8e36b724dffaa882
+      internalID: 1209108701933599541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s10_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be9a5e44877459b29b9d38402d9df817
+      internalID: 926680009686176725
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s11_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e297cb63d8f5be5a3609b6d1a886a4d
+      internalID: 1937305837982797438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s12_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2a778847fa959aab3e3ecae31799f99
+      internalID: 4423554179632567384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s13_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 238b8e645fc15953905eab2dee87895c
+      internalID: 4270909680469375834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s14_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9442af8dc4285c67af1cd8b648233c3a
+      internalID: 2810438590493503055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_stone_on_ashstone_s15_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0be49b256f45ed5bfbbd6b595aa1020
+      internalID: 4334081580581717216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_stone_on_ashstone_s1_v0: 4213743578054276251
+      tv2_stone_on_ashstone_s2_v0: 2521486059339643962
+      tv2_stone_on_ashstone_s3_v0: 2972820087982107026
+      tv2_stone_on_ashstone_s4_v0: 3561815138703855473
+      tv2_stone_on_ashstone_s5_v0: 421053773677032858
+      tv2_stone_on_ashstone_s6_v0: 1092658423504981400
+      tv2_stone_on_ashstone_s7_v0: 2261746732557200778
+      tv2_stone_on_ashstone_s8_v0: 3399957389473894793
+      tv2_stone_on_ashstone_s9_v0: 1740930883209372677
+      tv2_stone_on_ashstone_s10_v0: 1698592947116179800
+      tv2_stone_on_ashstone_s11_v0: 3778627211776854153
+      tv2_stone_on_ashstone_s12_v0: 3672361219763172902
+      tv2_stone_on_ashstone_s13_v0: 749539214942857605
+      tv2_stone_on_ashstone_s14_v0: 4364207154912194402
+      tv2_stone_on_ashstone_s15_v0: 3652062714964203476
+      tv2_stone_on_ashstone_s1_v1: 426003024557166982
+      tv2_stone_on_ashstone_s2_v1: 3353770564386529387
+      tv2_stone_on_ashstone_s3_v1: 1404140336752417757
+      tv2_stone_on_ashstone_s4_v1: 4577046134509278083
+      tv2_stone_on_ashstone_s5_v1: 3488639604749578405
+      tv2_stone_on_ashstone_s6_v1: 971991474537885104
+      tv2_stone_on_ashstone_s7_v1: 3595055140695862385
+      tv2_stone_on_ashstone_s8_v1: 3155935393300233400
+      tv2_stone_on_ashstone_s9_v1: 1116790241684488059
+      tv2_stone_on_ashstone_s10_v1: 799723563494417415
+      tv2_stone_on_ashstone_s11_v1: 3747207421302463322
+      tv2_stone_on_ashstone_s12_v1: 2528057191126260183
+      tv2_stone_on_ashstone_s13_v1: 3628634517337186144
+      tv2_stone_on_ashstone_s14_v1: 1695795886304711689
+      tv2_stone_on_ashstone_s15_v1: 375504478598517317
+      tv2_stone_on_ashstone_s1_v2: 1636500063224036184
+      tv2_stone_on_ashstone_s2_v2: 3647472688971400006
+      tv2_stone_on_ashstone_s3_v2: 1534258066587889513
+      tv2_stone_on_ashstone_s4_v2: 2999688073457417262
+      tv2_stone_on_ashstone_s5_v2: 666361174330642546
+      tv2_stone_on_ashstone_s6_v2: 1838470684681109223
+      tv2_stone_on_ashstone_s7_v2: 468810248724749319
+      tv2_stone_on_ashstone_s8_v2: 2420439676494896829
+      tv2_stone_on_ashstone_s9_v2: 1209108701933599541
+      tv2_stone_on_ashstone_s10_v2: 926680009686176725
+      tv2_stone_on_ashstone_s11_v2: 1937305837982797438
+      tv2_stone_on_ashstone_s12_v2: 4423554179632567384
+      tv2_stone_on_ashstone_s13_v2: 4270909680469375834
+      tv2_stone_on_ashstone_s14_v2: 2810438590493503055
+      tv2_stone_on_ashstone_s15_v2: 4334081580581717216
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

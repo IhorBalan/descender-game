@@ -23,6 +23,9 @@ namespace Descender.EditorTools.TilesV2
         // How long the particles are run before a capture, in seconds: the air is full by then.
         private const float ParticleTime = 8f;
 
+        // The longest side of a picture the capture asks a texture for, in pixels.
+        private const float WidestPicture = 8192f;
+
         [MenuItem("Descender/Tiles V2/Capture sample")]
         public static void CaptureMenu()
         {
@@ -58,18 +61,56 @@ namespace Descender.EditorTools.TilesV2
             }
         }
 
-        public static void Capture(string folder)
+        /// <summary>
+        /// Batch entry for the world: builds the tiles, the world scene where it is missing,
+        /// captures its named places and the whole of it, and quits.
+        /// </summary>
+        public static void BuildAndCaptureWorld()
+        {
+            try
+            {
+                TilesV2Builder.Build();
+                if (!File.Exists(TilesV2Sample.DescentPath))
+                {
+                    TilesV2Sample.BuildDescent();
+                }
+                Capture(OutFolder(), TilesV2Sample.DescentPath);
+                EditorApplication.Exit(0);
+            }
+            catch (Exception error)
+            {
+                Debug.LogException(error);
+                EditorApplication.Exit(1);
+            }
+        }
+
+        public static void Capture(string folder) => Capture(folder, TilesV2Sample.ScenePath);
+
+        /// <summary>Captures the Tiles V2 world of a scene: its named places, its pictures and the whole map.</summary>
+        public static void Capture(string folder, string scenePath)
         {
             Directory.CreateDirectory(folder);
-            EditorSceneManager.OpenScene(TilesV2Sample.ScenePath);
+            EditorSceneManager.OpenScene(scenePath);
             var world = UnityEngine.Object.FindAnyObjectByType<TilesV2World>();
             if (world == null)
             {
-                throw new InvalidOperationException(
-                    $"Tiles V2: {TilesV2Sample.ScenePath} has no world; build the scenes."
-                );
+                throw new InvalidOperationException($"Tiles V2: {scenePath} has no world; build the scenes.");
             }
             world.Build();
+            if (world.Map.Marks.Count > 0)
+            {
+                // The game's things the map marks stand in a capture as they do in play.
+                TilesV2Things.Build(
+                    world,
+                    AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
+                    AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+                );
+            }
+            var hero = UnityEngine.Object.FindAnyObjectByType<Descender.Player.PlayerController>();
+            if (hero != null)
+            {
+                hero.gameObject.SetActive(false);
+            }
             foreach (var system in world.GetComponentsInChildren<ParticleSystem>())
             {
                 system.Simulate(ParticleTime, true, true);
@@ -111,14 +152,30 @@ namespace Descender.EditorTools.TilesV2
             }
             world.Day.Hour = start;
             var area = world.Area;
-            Render(world, area.center, area.size, Path.Combine(folder, "map.png"));
+            // The whole map, at as many pixels a tile as a texture can hold.
+            var most = Mathf.Max(area.width, area.height);
+            var pixels =
+                most * 16f <= WidestPicture ? 16f
+                : most * 8f <= WidestPicture ? 8f
+                : 4f;
+            Render(world, area.center, area.size, Path.Combine(folder, "map.png"), pixels);
         }
 
         // Renders a view of `size` units centred on `at`, at 16 pixels a unit, to a PNG (to nothing when `file` is null).
-        private static void Render(TilesV2World world, Vector2 at, Vector2 size, string file)
+        private static void Render(TilesV2World world, Vector2 at, Vector2 size, string file, float pixels = 16f)
         {
-            var width = Mathf.RoundToInt(size.x * 16f);
-            var height = Mathf.RoundToInt(size.y * 16f);
+            var width = Mathf.RoundToInt(size.x * pixels);
+            var height = Mathf.RoundToInt(size.y * pixels);
+            var air = world.GetComponentInChildren<TilesV2Air>();
+            if (air != null && pixels >= 16f)
+            {
+                // The air of the region this view is in, as full as it gets.
+                air.Follow(at);
+                foreach (var system in air.GetComponentsInChildren<ParticleSystem>())
+                {
+                    system.Simulate(ParticleTime, true, true);
+                }
+            }
             var main = Camera.main;
             var holder = new GameObject("Tiles V2 capture") { hideFlags = HideFlags.HideAndDontSave };
             var camera = holder.AddComponent<Camera>();

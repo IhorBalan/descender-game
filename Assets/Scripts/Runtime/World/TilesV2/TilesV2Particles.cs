@@ -50,12 +50,17 @@ namespace Descender.World.TilesV2
                 foreach (Transform torch in world.Torches)
                 {
                     TorchDust(torch, set.litMaterial);
-                    TorchEmbers(torch, set.unlitMaterial);
-                    count += 2;
+                    count++;
+                    if (!torch.TryGetComponent<TorchFlame>(out var flame) || flame.Embers)
+                    {
+                        TorchEmbers(torch, set.unlitMaterial);
+                        count++;
+                    }
                 }
             }
             var root = new GameObject("Particles").transform;
             root.SetParent(parent, false);
+            count += TilesV2Air.Build(world, root);
             for (var y = 0; y < field.Height; y++)
             {
                 for (var x = 0; x < field.Width; x++)
@@ -227,7 +232,7 @@ namespace Descender.World.TilesV2
         }
 
         // A system of single-pixel particles in world space, stopped so it can be set up.
-        private static ParticleSystem Make(Transform parent, string name, Vector3 at, Material material, int most)
+        public static ParticleSystem Make(Transform parent, string name, Vector3 at, Material material, int most)
         {
             var holder = new GameObject(name);
             holder.transform.SetParent(parent, false);
@@ -263,7 +268,7 @@ namespace Descender.World.TilesV2
         }
 
         // Colour over a particle's life: from one colour to another, fading out at the end (and in over `fadeIn` of it).
-        private static void Fade(ParticleSystem system, Color from, Color to, float fadeIn)
+        public static void Fade(ParticleSystem system, Color from, Color to, float fadeIn)
         {
             var life = system.colorOverLifetime;
             life.enabled = true;

@@ -1,0 +1,4091 @@
+fileFormatVersion: 2
+guid: 6d748cbff00753cdaf11bd1901748803
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4122492242201355056
+    second: tv2_swamp_rock_f0_v0
+  - first:
+      213: 1749685109324064890
+    second: tv2_swamp_rock_f1_v0
+  - first:
+      213: 4101670219594165366
+    second: tv2_swamp_rock_f4_v0
+  - first:
+      213: 38563878461824613
+    second: tv2_swamp_rock_f5_v0
+  - first:
+      213: 3745657881934970942
+    second: tv2_swamp_rock_f7_v0
+  - first:
+      213: 3563873540402552765
+    second: tv2_swamp_rock_f16_v0
+  - first:
+      213: 1254964720831084199
+    second: tv2_swamp_rock_f17_v0
+  - first:
+      213: 260049449674345619
+    second: tv2_swamp_rock_f20_v0
+  - first:
+      213: 3296112219385652269
+    second: tv2_swamp_rock_f21_v0
+  - first:
+      213: 3920044165655937813
+    second: tv2_swamp_rock_f23_v0
+  - first:
+      213: 588606858276601374
+    second: tv2_swamp_rock_f28_v0
+  - first:
+      213: 3700054127327090951
+    second: tv2_swamp_rock_f29_v0
+  - first:
+      213: 1473601002513544960
+    second: tv2_swamp_rock_f31_v0
+  - first:
+      213: 2069234658282841209
+    second: tv2_swamp_rock_f64_v0
+  - first:
+      213: 4528632560597259185
+    second: tv2_swamp_rock_f65_v0
+  - first:
+      213: 3335977087652431834
+    second: tv2_swamp_rock_f68_v0
+  - first:
+      213: 1236374652407065419
+    second: tv2_swamp_rock_f69_v0
+  - first:
+      213: 1930083200478306336
+    second: tv2_swamp_rock_f71_v0
+  - first:
+      213: 4589503065718180534
+    second: tv2_swamp_rock_f80_v0
+  - first:
+      213: 2796685759603800825
+    second: tv2_swamp_rock_f81_v0
+  - first:
+      213: 3576303219202376002
+    second: tv2_swamp_rock_f84_v0
+  - first:
+      213: 1921969840297276229
+    second: tv2_swamp_rock_f85_v0
+  - first:
+      213: 1235686202729922047
+    second: tv2_swamp_rock_f87_v0
+  - first:
+      213: 1355200526495049839
+    second: tv2_swamp_rock_f92_v0
+  - first:
+      213: 3096672851436972211
+    second: tv2_swamp_rock_f93_v0
+  - first:
+      213: 4451759612114564736
+    second: tv2_swamp_rock_f95_v0
+  - first:
+      213: 3845664491572901367
+    second: tv2_swamp_rock_f112_v0
+  - first:
+      213: 539193241558707840
+    second: tv2_swamp_rock_f113_v0
+  - first:
+      213: 403643586912630622
+    second: tv2_swamp_rock_f116_v0
+  - first:
+      213: 3279126552793565746
+    second: tv2_swamp_rock_f117_v0
+  - first:
+      213: 218730455320460553
+    second: tv2_swamp_rock_f119_v0
+  - first:
+      213: 2227326455370250591
+    second: tv2_swamp_rock_f124_v0
+  - first:
+      213: 2141598460576728878
+    second: tv2_swamp_rock_f125_v0
+  - first:
+      213: 250649008393279941
+    second: tv2_swamp_rock_f127_v0
+  - first:
+      213: 88376020472535667
+    second: tv2_swamp_rock_f193_v0
+  - first:
+      213: 3699483655277840278
+    second: tv2_swamp_rock_f197_v0
+  - first:
+      213: 2569728344274256130
+    second: tv2_swamp_rock_f199_v0
+  - first:
+      213: 3649810865456575283
+    second: tv2_swamp_rock_f209_v0
+  - first:
+      213: 326709433105458591
+    second: tv2_swamp_rock_f213_v0
+  - first:
+      213: 1569196544465732001
+    second: tv2_swamp_rock_f215_v0
+  - first:
+      213: 2769991725461746812
+    second: tv2_swamp_rock_f221_v0
+  - first:
+      213: 2062762449332973442
+    second: tv2_swamp_rock_f223_v0
+  - first:
+      213: 4579562034652987916
+    second: tv2_swamp_rock_f241_v0
+  - first:
+      213: 588385161540311374
+    second: tv2_swamp_rock_f245_v0
+  - first:
+      213: 1355640123846473065
+    second: tv2_swamp_rock_f247_v0
+  - first:
+      213: 1179279485699679270
+    second: tv2_swamp_rock_f253_v0
+  - first:
+      213: 2557982186334337498
+    second: tv2_swamp_rock_f255_v0
+  - first:
+      213: 3222639421549457255
+    second: tv2_swamp_rock_f0_v1
+  - first:
+      213: 2011187795450384021
+    second: tv2_swamp_rock_f1_v1
+  - first:
+      213: 1032054410787079042
+    second: tv2_swamp_rock_f4_v1
+  - first:
+      213: 360617839426862918
+    second: tv2_swamp_rock_f5_v1
+  - first:
+      213: 733232512423920153
+    second: tv2_swamp_rock_f7_v1
+  - first:
+      213: 1124061932566759210
+    second: tv2_swamp_rock_f16_v1
+  - first:
+      213: 162640818610461711
+    second: tv2_swamp_rock_f17_v1
+  - first:
+      213: 20848847896651438
+    second: tv2_swamp_rock_f20_v1
+  - first:
+      213: 228855780564328654
+    second: tv2_swamp_rock_f21_v1
+  - first:
+      213: 2670453526862962678
+    second: tv2_swamp_rock_f23_v1
+  - first:
+      213: 2340247242508576626
+    second: tv2_swamp_rock_f28_v1
+  - first:
+      213: 4569754830574366461
+    second: tv2_swamp_rock_f29_v1
+  - first:
+      213: 4546448795064190112
+    second: tv2_swamp_rock_f31_v1
+  - first:
+      213: 1253026672814092122
+    second: tv2_swamp_rock_f64_v1
+  - first:
+      213: 3037805314208193949
+    second: tv2_swamp_rock_f65_v1
+  - first:
+      213: 1799924435071301875
+    second: tv2_swamp_rock_f68_v1
+  - first:
+      213: 3037757335356619588
+    second: tv2_swamp_rock_f69_v1
+  - first:
+      213: 2743789475386311681
+    second: tv2_swamp_rock_f71_v1
+  - first:
+      213: 1636138730046832547
+    second: tv2_swamp_rock_f80_v1
+  - first:
+      213: 711206075223714358
+    second: tv2_swamp_rock_f81_v1
+  - first:
+      213: 373425369069288935
+    second: tv2_swamp_rock_f84_v1
+  - first:
+      213: 2070621388572049167
+    second: tv2_swamp_rock_f85_v1
+  - first:
+      213: 1733814002155209257
+    second: tv2_swamp_rock_f87_v1
+  - first:
+      213: 1394245898517688677
+    second: tv2_swamp_rock_f92_v1
+  - first:
+      213: 4539134539668986388
+    second: tv2_swamp_rock_f93_v1
+  - first:
+      213: 3864849091068653103
+    second: tv2_swamp_rock_f95_v1
+  - first:
+      213: 1789043631366022500
+    second: tv2_swamp_rock_f112_v1
+  - first:
+      213: 1242387917819425506
+    second: tv2_swamp_rock_f113_v1
+  - first:
+      213: 2853636106895531583
+    second: tv2_swamp_rock_f116_v1
+  - first:
+      213: 1270443248925833228
+    second: tv2_swamp_rock_f117_v1
+  - first:
+      213: 3040193596325530943
+    second: tv2_swamp_rock_f119_v1
+  - first:
+      213: 3744403394270572520
+    second: tv2_swamp_rock_f124_v1
+  - first:
+      213: 419252234292259830
+    second: tv2_swamp_rock_f125_v1
+  - first:
+      213: 2019799724918460822
+    second: tv2_swamp_rock_f127_v1
+  - first:
+      213: 62705410904979877
+    second: tv2_swamp_rock_f193_v1
+  - first:
+      213: 2858154664594049095
+    second: tv2_swamp_rock_f197_v1
+  - first:
+      213: 1357957153976554206
+    second: tv2_swamp_rock_f199_v1
+  - first:
+      213: 3026509475259679049
+    second: tv2_swamp_rock_f209_v1
+  - first:
+      213: 1577889600569003827
+    second: tv2_swamp_rock_f213_v1
+  - first:
+      213: 2509931403401142607
+    second: tv2_swamp_rock_f215_v1
+  - first:
+      213: 3402387316405152893
+    second: tv2_swamp_rock_f221_v1
+  - first:
+      213: 470043802682248916
+    second: tv2_swamp_rock_f223_v1
+  - first:
+      213: 3112522942190079079
+    second: tv2_swamp_rock_f241_v1
+  - first:
+      213: 2708024303032464587
+    second: tv2_swamp_rock_f245_v1
+  - first:
+      213: 3676337107133283049
+    second: tv2_swamp_rock_f247_v1
+  - first:
+      213: 49986994616567512
+    second: tv2_swamp_rock_f253_v1
+  - first:
+      213: 828446364179575290
+    second: tv2_swamp_rock_f255_v1
+  - first:
+      213: 3107754280240733738
+    second: tv2_swamp_rock_f0_v2
+  - first:
+      213: 3891630324237862470
+    second: tv2_swamp_rock_f1_v2
+  - first:
+      213: 381691583984728576
+    second: tv2_swamp_rock_f4_v2
+  - first:
+      213: 4491077549663199834
+    second: tv2_swamp_rock_f5_v2
+  - first:
+      213: 3191763758525673611
+    second: tv2_swamp_rock_f7_v2
+  - first:
+      213: 2583362392922838364
+    second: tv2_swamp_rock_f16_v2
+  - first:
+      213: 4501256254342727081
+    second: tv2_swamp_rock_f17_v2
+  - first:
+      213: 4023663547423370709
+    second: tv2_swamp_rock_f20_v2
+  - first:
+      213: 3999195473793086326
+    second: tv2_swamp_rock_f21_v2
+  - first:
+      213: 1153712082387249701
+    second: tv2_swamp_rock_f23_v2
+  - first:
+      213: 3175494681516728629
+    second: tv2_swamp_rock_f28_v2
+  - first:
+      213: 1669530731714199594
+    second: tv2_swamp_rock_f29_v2
+  - first:
+      213: 3903850671790412230
+    second: tv2_swamp_rock_f31_v2
+  - first:
+      213: 4199120538137941169
+    second: tv2_swamp_rock_f64_v2
+  - first:
+      213: 3222519947529231949
+    second: tv2_swamp_rock_f65_v2
+  - first:
+      213: 1638189468778605529
+    second: tv2_swamp_rock_f68_v2
+  - first:
+      213: 2703460280625173163
+    second: tv2_swamp_rock_f69_v2
+  - first:
+      213: 3213294196244769000
+    second: tv2_swamp_rock_f71_v2
+  - first:
+      213: 2504964414913333968
+    second: tv2_swamp_rock_f80_v2
+  - first:
+      213: 3953285596139208100
+    second: tv2_swamp_rock_f81_v2
+  - first:
+      213: 2545250653835452928
+    second: tv2_swamp_rock_f84_v2
+  - first:
+      213: 2419517123151906862
+    second: tv2_swamp_rock_f85_v2
+  - first:
+      213: 98607946157188863
+    second: tv2_swamp_rock_f87_v2
+  - first:
+      213: 2810612932765288452
+    second: tv2_swamp_rock_f92_v2
+  - first:
+      213: 2322010908996872279
+    second: tv2_swamp_rock_f93_v2
+  - first:
+      213: 3003567216999221479
+    second: tv2_swamp_rock_f95_v2
+  - first:
+      213: 384330145324739411
+    second: tv2_swamp_rock_f112_v2
+  - first:
+      213: 3230004891832138089
+    second: tv2_swamp_rock_f113_v2
+  - first:
+      213: 2215436085752184688
+    second: tv2_swamp_rock_f116_v2
+  - first:
+      213: 2091849470740795456
+    second: tv2_swamp_rock_f117_v2
+  - first:
+      213: 3947640171177446278
+    second: tv2_swamp_rock_f119_v2
+  - first:
+      213: 1660798697928226849
+    second: tv2_swamp_rock_f124_v2
+  - first:
+      213: 3170340504244257108
+    second: tv2_swamp_rock_f125_v2
+  - first:
+      213: 4537053916868492629
+    second: tv2_swamp_rock_f127_v2
+  - first:
+      213: 840873084578522898
+    second: tv2_swamp_rock_f193_v2
+  - first:
+      213: 1569842126916642690
+    second: tv2_swamp_rock_f197_v2
+  - first:
+      213: 2313726394384490771
+    second: tv2_swamp_rock_f199_v2
+  - first:
+      213: 2503206022740338675
+    second: tv2_swamp_rock_f209_v2
+  - first:
+      213: 1856733843405284368
+    second: tv2_swamp_rock_f213_v2
+  - first:
+      213: 1794510740768382669
+    second: tv2_swamp_rock_f215_v2
+  - first:
+      213: 239182429905078817
+    second: tv2_swamp_rock_f221_v2
+  - first:
+      213: 4497572988886442950
+    second: tv2_swamp_rock_f223_v2
+  - first:
+      213: 2957069037345329918
+    second: tv2_swamp_rock_f241_v2
+  - first:
+      213: 3345310282897956233
+    second: tv2_swamp_rock_f245_v2
+  - first:
+      213: 1157036537444725033
+    second: tv2_swamp_rock_f247_v2
+  - first:
+      213: 2518354529860841559
+    second: tv2_swamp_rock_f253_v2
+  - first:
+      213: 4119515829241845644
+    second: tv2_swamp_rock_f255_v2
+  - first:
+      213: 3752634704231986287
+    second: tv2_swamp_rock_up_right_v0
+  - first:
+      213: 3961833124850905221
+    second: tv2_swamp_rock_up_right_v1
+  - first:
+      213: 4316554480147712562
+    second: tv2_swamp_rock_up_right_v2
+  - first:
+      213: 2373624546926522008
+    second: tv2_swamp_rock_up_left_v0
+  - first:
+      213: 1338356796515187978
+    second: tv2_swamp_rock_up_left_v1
+  - first:
+      213: 2348299610869732368
+    second: tv2_swamp_rock_up_left_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b1ef0c3556452e88f98f803902aba1c
+      internalID: 4122492242201355056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32e5d3e0bcad5ce7b828db84b0ea7507
+      internalID: 1749685109324064890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0b8ead6f1de552e928a49330b18351c
+      internalID: 4101670219594165366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10dd540e08a75fa290a07cd4f1dbd47c
+      internalID: 38563878461824613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b7001e2eea7507e8372109a9f8d1bf7
+      internalID: 3745657881934970942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46c5892dbc1c52458355d364640f2924
+      internalID: 3563873540402552765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac73561716575c6ebec0e84872993d82
+      internalID: 1254964720831084199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 719015a716355aa3b845973461589ef1
+      internalID: 260049449674345619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de9fba9f2cdd544f8fe5616051819a0a
+      internalID: 3296112219385652269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aee1c34c0c5b577e923789c4ccbdeb2f
+      internalID: 3920044165655937813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b558acbb79945e11b9f5913e98e57210
+      internalID: 588606858276601374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21be6888f5285cadaa35d2b46a65da0f
+      internalID: 3700054127327090951
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bed0ab8e37c58e693aac79a70f2abbe
+      internalID: 1473601002513544960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6abd75648035bb0847325b10e2356d3
+      internalID: 2069234658282841209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 638a7c0e89505b0a94312841c60b4db8
+      internalID: 4528632560597259185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0c864af377e52d9a8bf76958ff7a6cc
+      internalID: 3335977087652431834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d96aff3ae4c6560ab839f4005e11f713
+      internalID: 1236374652407065419
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58af9c7812f25d6c9a948a4977ac1937
+      internalID: 1930083200478306336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87365ace61b5abfb513839a111b791c
+      internalID: 4589503065718180534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e10532a59efd5cf89c4d83f59611b6e5
+      internalID: 2796685759603800825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd0a201adf4d58928b2a91fba9004894
+      internalID: 3576303219202376002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aac68c5c59fb54ca99052c4f69679306
+      internalID: 1921969840297276229
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4074cd5f3e3450d2a3da54ca7cfd0bd3
+      internalID: 1235686202729922047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a832cd1e4a845a6880ec29f15c1b54d9
+      internalID: 1355200526495049839
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e787f4133165507d97bc38dc3f60ac7f
+      internalID: 3096672851436972211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ab6c671dd1a5fd7b746306a48da9674
+      internalID: 4451759612114564736
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f82c6d973528523f8f6497c760a0f47d
+      internalID: 3845664491572901367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9044e8f6dd0b5361978a2d8f866f59e5
+      internalID: 539193241558707840
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 848dca57e2b15cd6af33ed73b27b9010
+      internalID: 403643586912630622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05da12e1d11457258ee2f4efdd50eab7
+      internalID: 3279126552793565746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6948e7efd2605adbbceca8c62ef86493
+      internalID: 218730455320460553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bdc4fa40f0f5701b17790ce712bf149
+      internalID: 2227326455370250591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb11df8370fc59688aca73876275f54d
+      internalID: 2141598460576728878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccc34a15973b5b56b6c234c23cc99e78
+      internalID: 250649008393279941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e58cd0047a2257e1948df0f3faa589ac
+      internalID: 88376020472535667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7374554f47f9526788383929290a9884
+      internalID: 3699483655277840278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c6f9a2e14395b88b6155ad946aeff68
+      internalID: 2569728344274256130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38f63bbb86d95000b315c18c8c0243e2
+      internalID: 3649810865456575283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 288d376a095c5628a6c274975b9a4b67
+      internalID: 326709433105458591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45403dbf1e2c541e94434297e5ca1a42
+      internalID: 1569196544465732001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43b7d617b4b65f8a9e2c815cca1ad600
+      internalID: 2769991725461746812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 531ea660d1065cebb25204d183e81f06
+      internalID: 2062762449332973442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65cf7be966a758fda3efab5c792fb1ae
+      internalID: 4579562034652987916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48150a484e6a5229937ffbe94fc2e5e2
+      internalID: 588385161540311374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04c5383c99c55cf1a6e74ad431e82dfa
+      internalID: 1355640123846473065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67900cb0f1585a8da634033edc0c49ad
+      internalID: 1179279485699679270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b1405f52129588f98fb96e0b53db665
+      internalID: 2557982186334337498
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9673b2593e185db796f1ca5aedc84e42
+      internalID: 3222639421549457255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e9a946c9e1351638287db7d1bf59cd4
+      internalID: 2011187795450384021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dea3cff86c5543a87e5345e0d08f471
+      internalID: 1032054410787079042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1391943fe0df5b3ebefa17a46a6fe128
+      internalID: 360617839426862918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd9ec3914f025b76a207d97d784c6042
+      internalID: 733232512423920153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7db9c6e7a0f1588ab8835cd37be04bd9
+      internalID: 1124061932566759210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1458c3a7a33c521c861e1cd8e866e4c3
+      internalID: 162640818610461711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 559b2aa6ba675a7bbe671a7e8ef189c4
+      internalID: 20848847896651438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b870f9e9474458959a164e602170a8df
+      internalID: 228855780564328654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b8e8e4f6bd059dda613ae21eb8fd1c3
+      internalID: 2670453526862962678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31238c9c63165dbe8f6494b32d36bc97
+      internalID: 2340247242508576626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 433c353388055a19a5818311e815a62e
+      internalID: 4569754830574366461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 023af4de6a8550c7af2e531685025727
+      internalID: 4546448795064190112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 651d4c88bf2b55d4b42138b51a37f86b
+      internalID: 1253026672814092122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbe85c60ac1156adb02d929a368d1224
+      internalID: 3037805314208193949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22d3558c071154d289dc654fd0faed17
+      internalID: 1799924435071301875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 544a49d466e052759d9c7ceea91f9b8d
+      internalID: 3037757335356619588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b8248676598515f94f3f275b7b7cdad
+      internalID: 2743789475386311681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09aa020ab7c157f8babcf8da6a0ac795
+      internalID: 1636138730046832547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfc611798c8c542ab25bf987ae798448
+      internalID: 711206075223714358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cee388292e7c5f60a9f9fa6e8ba3776e
+      internalID: 373425369069288935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31094f8916205fb8b37e89aacc2511ad
+      internalID: 2070621388572049167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37d6daba891254c28204a4b09f8f814a
+      internalID: 1733814002155209257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a92cc3aca485e319a6c5a8a0d5b37d9
+      internalID: 1394245898517688677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29a6d9c95b35572c8bb7f3377f54969a
+      internalID: 4539134539668986388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fac4fd6d84db5d738677fabe126e7991
+      internalID: 3864849091068653103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b6c6be561505da2a28255da9e54873c
+      internalID: 1789043631366022500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c46d49542bb85b9088fb207c7953d5bc
+      internalID: 1242387917819425506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afe213364dd65674bdab2843f9d6c8bc
+      internalID: 2853636106895531583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bea2ed4086c5f61bb891023964e5309
+      internalID: 1270443248925833228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad552cc67c725d2684b00ac3988a6fa2
+      internalID: 3040193596325530943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6aed9a1e3705f9dbb02b43289f2ed53
+      internalID: 3744403394270572520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bad6ebda2765ce8852f9f86492233b9
+      internalID: 419252234292259830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e549191502005860a51b274680ac4914
+      internalID: 2019799724918460822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8164985313758f88f0db2aaea2c8d80
+      internalID: 62705410904979877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d704120d96e533884d7c0ceeea4ec24
+      internalID: 2858154664594049095
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b731cb108ebb53a1bc0045bdbe8d4f65
+      internalID: 1357957153976554206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4078cf5854505dd9a88ac1e6f2b89936
+      internalID: 3026509475259679049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cd128ae510e50aa9ba311ea2fb3d8a0
+      internalID: 1577889600569003827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5243afe00d325888ae9370d9a389b9b9
+      internalID: 2509931403401142607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79fa0720b4095c99a2fd066db8206ae9
+      internalID: 3402387316405152893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 854703b167e9585cb4b4eddd01b1d855
+      internalID: 470043802682248916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdd03cac5b7d583f97617c483b95edcd
+      internalID: 3112522942190079079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b7f29432b257b780b4436bf3057b1f
+      internalID: 2708024303032464587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a7a3dcd840e561b9701aeb4205012e3
+      internalID: 3676337107133283049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0d5d600340c5478881f57bb1b9c485c
+      internalID: 49986994616567512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8daf28846f157848f32d7d742184f13
+      internalID: 828446364179575290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8826835870ed5a879dcc8560bb8baaf2
+      internalID: 3107754280240733738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59cee43ecab85595bf18a757d83782ac
+      internalID: 3891630324237862470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1acb6b547555950b2646c38a982d993
+      internalID: 381691583984728576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df2f49e9b8905585a6977456f974f318
+      internalID: 4491077549663199834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34c1b032f2885353ab8dd163316a466d
+      internalID: 3191763758525673611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1562244af1e3513994ef2201d4e5fff5
+      internalID: 2583362392922838364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dfa478b0c975ce7939d7f091c82ffe4
+      internalID: 4501256254342727081
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: beea6d358d5255c1b005d58b5e063dc6
+      internalID: 4023663547423370709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee47a294778157139d763d4b546edbef
+      internalID: 3999195473793086326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8db69de3a4b552939c4fe3d7506aad73
+      internalID: 1153712082387249701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab249b56315e579d8781666f9d0761d6
+      internalID: 3175494681516728629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24da6b00219f5ba3b7626eb47e70280f
+      internalID: 1669530731714199594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 722ac618c61a565182df95085e71accc
+      internalID: 3903850671790412230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f73326b0d38a58eb8a46955ca6a9e534
+      internalID: 4199120538137941169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e964bc2b3585ac6afb6428bf36f6728
+      internalID: 3222519947529231949
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0156700a1165e66bb4782a09debdd79
+      internalID: 1638189468778605529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4028d260752e53b285f87523490e3ed5
+      internalID: 2703460280625173163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04c301c4705a501bb09a117c99901413
+      internalID: 3213294196244769000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47a86cf8848958f38263853a49ee7ac8
+      internalID: 2504964414913333968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e78aaff52895fc3a64862ebfdb4c1a0
+      internalID: 3953285596139208100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90428cd6e0df50068e1005a94a42abbb
+      internalID: 2545250653835452928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 609e16f821f1540b8f5699f3fdf05943
+      internalID: 2419517123151906862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2439bd4ce105a2d9be6411279b8533d
+      internalID: 98607946157188863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c7a996879aa5d909ee612ef9d165e70
+      internalID: 2810612932765288452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a273e3c21024512ca4f1bf608f91d881
+      internalID: 2322010908996872279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcae7e9093095a06a2eae99b443ec92f
+      internalID: 3003567216999221479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 132d618cbf48509a8a5a34426a8a5863
+      internalID: 384330145324739411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cab541a885cd57d887003481f106888c
+      internalID: 3230004891832138089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de065a5e44a8575883db274885d236d1
+      internalID: 2215436085752184688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b02800968ae5bd7b8d32483f42250d7
+      internalID: 2091849470740795456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce2515801a1652b7ae311cd0124974d1
+      internalID: 3947640171177446278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33fee547c0f65fa0a247fd64dc9cb657
+      internalID: 1660798697928226849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a37ffc09f8c95997a0b00986abf2685b
+      internalID: 3170340504244257108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ecfeeca43dc515491128124f344120c
+      internalID: 4537053916868492629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b229b00351a85b1f87ff6bb003e9581f
+      internalID: 840873084578522898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feab7aa9cd285ce2afe4ec518307055c
+      internalID: 1569842126916642690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96febd3494a85ff49289869fd30200b9
+      internalID: 2313726394384490771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ab2863da3ee503ebf553e60ae53955c
+      internalID: 2503206022740338675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29543c29445f557bba46011d7f38f6d7
+      internalID: 1856733843405284368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 946fad69c47951f4bf0f2cb48a610284
+      internalID: 1794510740768382669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c296f4227e051478c05b4aa842c0634
+      internalID: 239182429905078817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da5c80cd2b9a54e393b90653184bcb81
+      internalID: 4497572988886442950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 004879080c9652b3b7c6d7ea389b5599
+      internalID: 2957069037345329918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdc4a5ddb564579d99a71d48ccb36e10
+      internalID: 3345310282897956233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 461b000958ab5ee690e678200f2372b8
+      internalID: 1157036537444725033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60c3e0fbdea0503287c19cca2b85853f
+      internalID: 2518354529860841559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f49938a337576b9e3360909c041ca3
+      internalID: 4119515829241845644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c9949fdc8275aa59fa0d8710f2e5be3
+      internalID: 3752634704231986287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f31338ef4fbc5c88a6d65601e59339f3
+      internalID: 3961833124850905221
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38bdb10c851751858f47059428819087
+      internalID: 4316554480147712562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d336fb0ae4e5e4fba599ef5c33c00da
+      internalID: 2373624546926522008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f97448fcdf541f888f83d07cf39712
+      internalID: 1338356796515187978
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_swamp_rock_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 545470a0073c5049a3d1085a14708d4c
+      internalID: 2348299610869732368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_swamp_rock_f0_v0: 4122492242201355056
+      tv2_swamp_rock_f1_v0: 1749685109324064890
+      tv2_swamp_rock_f4_v0: 4101670219594165366
+      tv2_swamp_rock_f5_v0: 38563878461824613
+      tv2_swamp_rock_f7_v0: 3745657881934970942
+      tv2_swamp_rock_f16_v0: 3563873540402552765
+      tv2_swamp_rock_f17_v0: 1254964720831084199
+      tv2_swamp_rock_f20_v0: 260049449674345619
+      tv2_swamp_rock_f21_v0: 3296112219385652269
+      tv2_swamp_rock_f23_v0: 3920044165655937813
+      tv2_swamp_rock_f28_v0: 588606858276601374
+      tv2_swamp_rock_f29_v0: 3700054127327090951
+      tv2_swamp_rock_f31_v0: 1473601002513544960
+      tv2_swamp_rock_f64_v0: 2069234658282841209
+      tv2_swamp_rock_f65_v0: 4528632560597259185
+      tv2_swamp_rock_f68_v0: 3335977087652431834
+      tv2_swamp_rock_f69_v0: 1236374652407065419
+      tv2_swamp_rock_f71_v0: 1930083200478306336
+      tv2_swamp_rock_f80_v0: 4589503065718180534
+      tv2_swamp_rock_f81_v0: 2796685759603800825
+      tv2_swamp_rock_f84_v0: 3576303219202376002
+      tv2_swamp_rock_f85_v0: 1921969840297276229
+      tv2_swamp_rock_f87_v0: 1235686202729922047
+      tv2_swamp_rock_f92_v0: 1355200526495049839
+      tv2_swamp_rock_f93_v0: 3096672851436972211
+      tv2_swamp_rock_f95_v0: 4451759612114564736
+      tv2_swamp_rock_f112_v0: 3845664491572901367
+      tv2_swamp_rock_f113_v0: 539193241558707840
+      tv2_swamp_rock_f116_v0: 403643586912630622
+      tv2_swamp_rock_f117_v0: 3279126552793565746
+      tv2_swamp_rock_f119_v0: 218730455320460553
+      tv2_swamp_rock_f124_v0: 2227326455370250591
+      tv2_swamp_rock_f125_v0: 2141598460576728878
+      tv2_swamp_rock_f127_v0: 250649008393279941
+      tv2_swamp_rock_f193_v0: 88376020472535667
+      tv2_swamp_rock_f197_v0: 3699483655277840278
+      tv2_swamp_rock_f199_v0: 2569728344274256130
+      tv2_swamp_rock_f209_v0: 3649810865456575283
+      tv2_swamp_rock_f213_v0: 326709433105458591
+      tv2_swamp_rock_f215_v0: 1569196544465732001
+      tv2_swamp_rock_f221_v0: 2769991725461746812
+      tv2_swamp_rock_f223_v0: 2062762449332973442
+      tv2_swamp_rock_f241_v0: 4579562034652987916
+      tv2_swamp_rock_f245_v0: 588385161540311374
+      tv2_swamp_rock_f247_v0: 1355640123846473065
+      tv2_swamp_rock_f253_v0: 1179279485699679270
+      tv2_swamp_rock_f255_v0: 2557982186334337498
+      tv2_swamp_rock_f0_v1: 3222639421549457255
+      tv2_swamp_rock_f1_v1: 2011187795450384021
+      tv2_swamp_rock_f4_v1: 1032054410787079042
+      tv2_swamp_rock_f5_v1: 360617839426862918
+      tv2_swamp_rock_f7_v1: 733232512423920153
+      tv2_swamp_rock_f16_v1: 1124061932566759210
+      tv2_swamp_rock_f17_v1: 162640818610461711
+      tv2_swamp_rock_f20_v1: 20848847896651438
+      tv2_swamp_rock_f21_v1: 228855780564328654
+      tv2_swamp_rock_f23_v1: 2670453526862962678
+      tv2_swamp_rock_f28_v1: 2340247242508576626
+      tv2_swamp_rock_f29_v1: 4569754830574366461
+      tv2_swamp_rock_f31_v1: 4546448795064190112
+      tv2_swamp_rock_f64_v1: 1253026672814092122
+      tv2_swamp_rock_f65_v1: 3037805314208193949
+      tv2_swamp_rock_f68_v1: 1799924435071301875
+      tv2_swamp_rock_f69_v1: 3037757335356619588
+      tv2_swamp_rock_f71_v1: 2743789475386311681
+      tv2_swamp_rock_f80_v1: 1636138730046832547
+      tv2_swamp_rock_f81_v1: 711206075223714358
+      tv2_swamp_rock_f84_v1: 373425369069288935
+      tv2_swamp_rock_f85_v1: 2070621388572049167
+      tv2_swamp_rock_f87_v1: 1733814002155209257
+      tv2_swamp_rock_f92_v1: 1394245898517688677
+      tv2_swamp_rock_f93_v1: 4539134539668986388
+      tv2_swamp_rock_f95_v1: 3864849091068653103
+      tv2_swamp_rock_f112_v1: 1789043631366022500
+      tv2_swamp_rock_f113_v1: 1242387917819425506
+      tv2_swamp_rock_f116_v1: 2853636106895531583
+      tv2_swamp_rock_f117_v1: 1270443248925833228
+      tv2_swamp_rock_f119_v1: 3040193596325530943
+      tv2_swamp_rock_f124_v1: 3744403394270572520
+      tv2_swamp_rock_f125_v1: 419252234292259830
+      tv2_swamp_rock_f127_v1: 2019799724918460822
+      tv2_swamp_rock_f193_v1: 62705410904979877
+      tv2_swamp_rock_f197_v1: 2858154664594049095
+      tv2_swamp_rock_f199_v1: 1357957153976554206
+      tv2_swamp_rock_f209_v1: 3026509475259679049
+      tv2_swamp_rock_f213_v1: 1577889600569003827
+      tv2_swamp_rock_f215_v1: 2509931403401142607
+      tv2_swamp_rock_f221_v1: 3402387316405152893
+      tv2_swamp_rock_f223_v1: 470043802682248916
+      tv2_swamp_rock_f241_v1: 3112522942190079079
+      tv2_swamp_rock_f245_v1: 2708024303032464587
+      tv2_swamp_rock_f247_v1: 3676337107133283049
+      tv2_swamp_rock_f253_v1: 49986994616567512
+      tv2_swamp_rock_f255_v1: 828446364179575290
+      tv2_swamp_rock_f0_v2: 3107754280240733738
+      tv2_swamp_rock_f1_v2: 3891630324237862470
+      tv2_swamp_rock_f4_v2: 381691583984728576
+      tv2_swamp_rock_f5_v2: 4491077549663199834
+      tv2_swamp_rock_f7_v2: 3191763758525673611
+      tv2_swamp_rock_f16_v2: 2583362392922838364
+      tv2_swamp_rock_f17_v2: 4501256254342727081
+      tv2_swamp_rock_f20_v2: 4023663547423370709
+      tv2_swamp_rock_f21_v2: 3999195473793086326
+      tv2_swamp_rock_f23_v2: 1153712082387249701
+      tv2_swamp_rock_f28_v2: 3175494681516728629
+      tv2_swamp_rock_f29_v2: 1669530731714199594
+      tv2_swamp_rock_f31_v2: 3903850671790412230
+      tv2_swamp_rock_f64_v2: 4199120538137941169
+      tv2_swamp_rock_f65_v2: 3222519947529231949
+      tv2_swamp_rock_f68_v2: 1638189468778605529
+      tv2_swamp_rock_f69_v2: 2703460280625173163
+      tv2_swamp_rock_f71_v2: 3213294196244769000
+      tv2_swamp_rock_f80_v2: 2504964414913333968
+      tv2_swamp_rock_f81_v2: 3953285596139208100
+      tv2_swamp_rock_f84_v2: 2545250653835452928
+      tv2_swamp_rock_f85_v2: 2419517123151906862
+      tv2_swamp_rock_f87_v2: 98607946157188863
+      tv2_swamp_rock_f92_v2: 2810612932765288452
+      tv2_swamp_rock_f93_v2: 2322010908996872279
+      tv2_swamp_rock_f95_v2: 3003567216999221479
+      tv2_swamp_rock_f112_v2: 384330145324739411
+      tv2_swamp_rock_f113_v2: 3230004891832138089
+      tv2_swamp_rock_f116_v2: 2215436085752184688
+      tv2_swamp_rock_f117_v2: 2091849470740795456
+      tv2_swamp_rock_f119_v2: 3947640171177446278
+      tv2_swamp_rock_f124_v2: 1660798697928226849
+      tv2_swamp_rock_f125_v2: 3170340504244257108
+      tv2_swamp_rock_f127_v2: 4537053916868492629
+      tv2_swamp_rock_f193_v2: 840873084578522898
+      tv2_swamp_rock_f197_v2: 1569842126916642690
+      tv2_swamp_rock_f199_v2: 2313726394384490771
+      tv2_swamp_rock_f209_v2: 2503206022740338675
+      tv2_swamp_rock_f213_v2: 1856733843405284368
+      tv2_swamp_rock_f215_v2: 1794510740768382669
+      tv2_swamp_rock_f221_v2: 239182429905078817
+      tv2_swamp_rock_f223_v2: 4497572988886442950
+      tv2_swamp_rock_f241_v2: 2957069037345329918
+      tv2_swamp_rock_f245_v2: 3345310282897956233
+      tv2_swamp_rock_f247_v2: 1157036537444725033
+      tv2_swamp_rock_f253_v2: 2518354529860841559
+      tv2_swamp_rock_f255_v2: 4119515829241845644
+      tv2_swamp_rock_up_right_v0: 3752634704231986287
+      tv2_swamp_rock_up_right_v1: 3961833124850905221
+      tv2_swamp_rock_up_right_v2: 4316554480147712562
+      tv2_swamp_rock_up_left_v0: 2373624546926522008
+      tv2_swamp_rock_up_left_v1: 1338356796515187978
+      tv2_swamp_rock_up_left_v2: 2348299610869732368
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

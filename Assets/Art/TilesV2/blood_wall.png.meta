@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 1b9232f80a475f57ace9a76a420085fc
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1153553892904165101
+    second: tv2_blood_wall_f0_v0
+  - first:
+      213: 303809947070046324
+    second: tv2_blood_wall_f1_v0
+  - first:
+      213: 2634445687055927191
+    second: tv2_blood_wall_f4_v0
+  - first:
+      213: 2974080240302452898
+    second: tv2_blood_wall_f5_v0
+  - first:
+      213: 3454416366106782540
+    second: tv2_blood_wall_f7_v0
+  - first:
+      213: 2985407235118220744
+    second: tv2_blood_wall_f16_v0
+  - first:
+      213: 40857064552888318
+    second: tv2_blood_wall_f17_v0
+  - first:
+      213: 3715413445732255459
+    second: tv2_blood_wall_f20_v0
+  - first:
+      213: 1444300660471113655
+    second: tv2_blood_wall_f21_v0
+  - first:
+      213: 3464867940072109154
+    second: tv2_blood_wall_f23_v0
+  - first:
+      213: 4467962426240285445
+    second: tv2_blood_wall_f28_v0
+  - first:
+      213: 216346170246372593
+    second: tv2_blood_wall_f29_v0
+  - first:
+      213: 744908308688454773
+    second: tv2_blood_wall_f31_v0
+  - first:
+      213: 1537774748785800163
+    second: tv2_blood_wall_f64_v0
+  - first:
+      213: 3513679923542809054
+    second: tv2_blood_wall_f65_v0
+  - first:
+      213: 4494201287468551067
+    second: tv2_blood_wall_f68_v0
+  - first:
+      213: 973437780088612827
+    second: tv2_blood_wall_f69_v0
+  - first:
+      213: 4484515599087948224
+    second: tv2_blood_wall_f71_v0
+  - first:
+      213: 1740788072447085269
+    second: tv2_blood_wall_f80_v0
+  - first:
+      213: 3549282869947237306
+    second: tv2_blood_wall_f81_v0
+  - first:
+      213: 2957067765018787968
+    second: tv2_blood_wall_f84_v0
+  - first:
+      213: 3473726825029604775
+    second: tv2_blood_wall_f85_v0
+  - first:
+      213: 3630872206825226946
+    second: tv2_blood_wall_f87_v0
+  - first:
+      213: 2295736224687515378
+    second: tv2_blood_wall_f92_v0
+  - first:
+      213: 82197997755853312
+    second: tv2_blood_wall_f93_v0
+  - first:
+      213: 1280608466588069813
+    second: tv2_blood_wall_f95_v0
+  - first:
+      213: 2253412650435089720
+    second: tv2_blood_wall_f112_v0
+  - first:
+      213: 698156326158953311
+    second: tv2_blood_wall_f113_v0
+  - first:
+      213: 1539449560790997386
+    second: tv2_blood_wall_f116_v0
+  - first:
+      213: 987382611292067990
+    second: tv2_blood_wall_f117_v0
+  - first:
+      213: 2233883558072777433
+    second: tv2_blood_wall_f119_v0
+  - first:
+      213: 542102951616756399
+    second: tv2_blood_wall_f124_v0
+  - first:
+      213: 3444664297980474408
+    second: tv2_blood_wall_f125_v0
+  - first:
+      213: 4529099453954321721
+    second: tv2_blood_wall_f127_v0
+  - first:
+      213: 2168701373916403174
+    second: tv2_blood_wall_f193_v0
+  - first:
+      213: 3791008466268031355
+    second: tv2_blood_wall_f197_v0
+  - first:
+      213: 3510171729616246697
+    second: tv2_blood_wall_f199_v0
+  - first:
+      213: 3576022496018039883
+    second: tv2_blood_wall_f209_v0
+  - first:
+      213: 3230518291887373030
+    second: tv2_blood_wall_f213_v0
+  - first:
+      213: 3486548343896912583
+    second: tv2_blood_wall_f215_v0
+  - first:
+      213: 3397031402545508018
+    second: tv2_blood_wall_f221_v0
+  - first:
+      213: 4304358358461735822
+    second: tv2_blood_wall_f223_v0
+  - first:
+      213: 2651313150137216506
+    second: tv2_blood_wall_f241_v0
+  - first:
+      213: 3871328082346264729
+    second: tv2_blood_wall_f245_v0
+  - first:
+      213: 983127753646218901
+    second: tv2_blood_wall_f247_v0
+  - first:
+      213: 2645325182752575235
+    second: tv2_blood_wall_f253_v0
+  - first:
+      213: 4218727668000642112
+    second: tv2_blood_wall_f255_v0
+  - first:
+      213: 3153101332455119462
+    second: tv2_blood_wall_f0_v1
+  - first:
+      213: 441630227798446811
+    second: tv2_blood_wall_f1_v1
+  - first:
+      213: 2184567073366684958
+    second: tv2_blood_wall_f4_v1
+  - first:
+      213: 3209057445703000633
+    second: tv2_blood_wall_f5_v1
+  - first:
+      213: 3139635432061690700
+    second: tv2_blood_wall_f7_v1
+  - first:
+      213: 3937425756061065523
+    second: tv2_blood_wall_f16_v1
+  - first:
+      213: 3337611444700283673
+    second: tv2_blood_wall_f17_v1
+  - first:
+      213: 419364212530277985
+    second: tv2_blood_wall_f20_v1
+  - first:
+      213: 1881914769502573374
+    second: tv2_blood_wall_f21_v1
+  - first:
+      213: 3548793143027886830
+    second: tv2_blood_wall_f23_v1
+  - first:
+      213: 1150482594024866384
+    second: tv2_blood_wall_f28_v1
+  - first:
+      213: 178756914783290151
+    second: tv2_blood_wall_f29_v1
+  - first:
+      213: 2682348576747296143
+    second: tv2_blood_wall_f31_v1
+  - first:
+      213: 2542328431076942986
+    second: tv2_blood_wall_f64_v1
+  - first:
+      213: 1845343204274534465
+    second: tv2_blood_wall_f65_v1
+  - first:
+      213: 4545191906594009674
+    second: tv2_blood_wall_f68_v1
+  - first:
+      213: 2939844420813325226
+    second: tv2_blood_wall_f69_v1
+  - first:
+      213: 84344763855192927
+    second: tv2_blood_wall_f71_v1
+  - first:
+      213: 4401653360290491353
+    second: tv2_blood_wall_f80_v1
+  - first:
+      213: 1526718064352171625
+    second: tv2_blood_wall_f81_v1
+  - first:
+      213: 2019702220298482056
+    second: tv2_blood_wall_f84_v1
+  - first:
+      213: 843292217666613798
+    second: tv2_blood_wall_f85_v1
+  - first:
+      213: 2514725415374945183
+    second: tv2_blood_wall_f87_v1
+  - first:
+      213: 301465221154148276
+    second: tv2_blood_wall_f92_v1
+  - first:
+      213: 1390440440087410648
+    second: tv2_blood_wall_f93_v1
+  - first:
+      213: 3940214196245958727
+    second: tv2_blood_wall_f95_v1
+  - first:
+      213: 785616970825221901
+    second: tv2_blood_wall_f112_v1
+  - first:
+      213: 2683060486789508624
+    second: tv2_blood_wall_f113_v1
+  - first:
+      213: 2760344933960713578
+    second: tv2_blood_wall_f116_v1
+  - first:
+      213: 133289844634612006
+    second: tv2_blood_wall_f117_v1
+  - first:
+      213: 1930480853772682673
+    second: tv2_blood_wall_f119_v1
+  - first:
+      213: 603506899831564099
+    second: tv2_blood_wall_f124_v1
+  - first:
+      213: 4489379015976633614
+    second: tv2_blood_wall_f125_v1
+  - first:
+      213: 1819478604300772268
+    second: tv2_blood_wall_f127_v1
+  - first:
+      213: 3063642111053660906
+    second: tv2_blood_wall_f193_v1
+  - first:
+      213: 111216110368578063
+    second: tv2_blood_wall_f197_v1
+  - first:
+      213: 1990974542776752469
+    second: tv2_blood_wall_f199_v1
+  - first:
+      213: 1713640460773315699
+    second: tv2_blood_wall_f209_v1
+  - first:
+      213: 3672727610716052918
+    second: tv2_blood_wall_f213_v1
+  - first:
+      213: 3163711995496163010
+    second: tv2_blood_wall_f215_v1
+  - first:
+      213: 1931282813421985756
+    second: tv2_blood_wall_f221_v1
+  - first:
+      213: 311071317397141744
+    second: tv2_blood_wall_f223_v1
+  - first:
+      213: 3009465752813598291
+    second: tv2_blood_wall_f241_v1
+  - first:
+      213: 4531827146881793098
+    second: tv2_blood_wall_f245_v1
+  - first:
+      213: 3589723593789407164
+    second: tv2_blood_wall_f247_v1
+  - first:
+      213: 2028173546008121390
+    second: tv2_blood_wall_f253_v1
+  - first:
+      213: 1672663430701572107
+    second: tv2_blood_wall_f255_v1
+  - first:
+      213: 2070464536110355134
+    second: tv2_blood_wall_f0_v2
+  - first:
+      213: 1258423232171702249
+    second: tv2_blood_wall_f1_v2
+  - first:
+      213: 2573010370520536167
+    second: tv2_blood_wall_f4_v2
+  - first:
+      213: 1637121713256373733
+    second: tv2_blood_wall_f5_v2
+  - first:
+      213: 1546254545114326456
+    second: tv2_blood_wall_f7_v2
+  - first:
+      213: 1865894751350892500
+    second: tv2_blood_wall_f16_v2
+  - first:
+      213: 4427854243239372111
+    second: tv2_blood_wall_f17_v2
+  - first:
+      213: 2059638117200949635
+    second: tv2_blood_wall_f20_v2
+  - first:
+      213: 3260088241745286495
+    second: tv2_blood_wall_f21_v2
+  - first:
+      213: 2305788075569364965
+    second: tv2_blood_wall_f23_v2
+  - first:
+      213: 1304208114788645594
+    second: tv2_blood_wall_f28_v2
+  - first:
+      213: 2974279754212241273
+    second: tv2_blood_wall_f29_v2
+  - first:
+      213: 3397365576292433721
+    second: tv2_blood_wall_f31_v2
+  - first:
+      213: 3458853890604862308
+    second: tv2_blood_wall_f64_v2
+  - first:
+      213: 2188317474537667534
+    second: tv2_blood_wall_f65_v2
+  - first:
+      213: 2787239574292489848
+    second: tv2_blood_wall_f68_v2
+  - first:
+      213: 2897223989141972718
+    second: tv2_blood_wall_f69_v2
+  - first:
+      213: 3116074390187457392
+    second: tv2_blood_wall_f71_v2
+  - first:
+      213: 1566655775353259249
+    second: tv2_blood_wall_f80_v2
+  - first:
+      213: 2014366023322185551
+    second: tv2_blood_wall_f81_v2
+  - first:
+      213: 3700746027505920613
+    second: tv2_blood_wall_f84_v2
+  - first:
+      213: 4139077100671861815
+    second: tv2_blood_wall_f85_v2
+  - first:
+      213: 401249583476909077
+    second: tv2_blood_wall_f87_v2
+  - first:
+      213: 1036718231664698623
+    second: tv2_blood_wall_f92_v2
+  - first:
+      213: 7767526319048626
+    second: tv2_blood_wall_f93_v2
+  - first:
+      213: 2321829287919508926
+    second: tv2_blood_wall_f95_v2
+  - first:
+      213: 1581174950219985717
+    second: tv2_blood_wall_f112_v2
+  - first:
+      213: 3296339685675844217
+    second: tv2_blood_wall_f113_v2
+  - first:
+      213: 782179030900762204
+    second: tv2_blood_wall_f116_v2
+  - first:
+      213: 1972295349044517441
+    second: tv2_blood_wall_f117_v2
+  - first:
+      213: 3966507541727428727
+    second: tv2_blood_wall_f119_v2
+  - first:
+      213: 152049175923260662
+    second: tv2_blood_wall_f124_v2
+  - first:
+      213: 2653476273633707185
+    second: tv2_blood_wall_f125_v2
+  - first:
+      213: 3051711445361114473
+    second: tv2_blood_wall_f127_v2
+  - first:
+      213: 1596631652376461562
+    second: tv2_blood_wall_f193_v2
+  - first:
+      213: 1568525182976287619
+    second: tv2_blood_wall_f197_v2
+  - first:
+      213: 4289982625637232092
+    second: tv2_blood_wall_f199_v2
+  - first:
+      213: 2639395537624439387
+    second: tv2_blood_wall_f209_v2
+  - first:
+      213: 1979856462173282666
+    second: tv2_blood_wall_f213_v2
+  - first:
+      213: 3813039287493084623
+    second: tv2_blood_wall_f215_v2
+  - first:
+      213: 2784498340219461364
+    second: tv2_blood_wall_f221_v2
+  - first:
+      213: 1665516189422603144
+    second: tv2_blood_wall_f223_v2
+  - first:
+      213: 4562710912566630239
+    second: tv2_blood_wall_f241_v2
+  - first:
+      213: 475318437358070336
+    second: tv2_blood_wall_f245_v2
+  - first:
+      213: 3097976436873768812
+    second: tv2_blood_wall_f247_v2
+  - first:
+      213: 4456451387833923027
+    second: tv2_blood_wall_f253_v2
+  - first:
+      213: 2055499312978969626
+    second: tv2_blood_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_blood_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34a7c76b10ca5d74bd774415b875d5fa
+      internalID: 1153553892904165101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36bc30ff7ec250d6b1823cf5923985ac
+      internalID: 303809947070046324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee2d47b262a56d18cac788acac49bd7
+      internalID: 2634445687055927191
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab829290440254548f827496ee4dfa68
+      internalID: 2974080240302452898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd9749298cd053ed8f8d7bed857e3ba2
+      internalID: 3454416366106782540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a936df95baa35d54ac233c4523853a11
+      internalID: 2985407235118220744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bd376441f0755c6bc2b4cbdeb681f84
+      internalID: 40857064552888318
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d99e62111fdd5a84bd39435cc79a1b01
+      internalID: 3715413445732255459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8f8fdaf369f5fb4a230f6c2470fe8f0
+      internalID: 1444300660471113655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cfe2fedb2c95f2c82e543ea9daca79d
+      internalID: 3464867940072109154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a3ea4f6ed0c5ad1982cbbcd405e98b4
+      internalID: 4467962426240285445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd69740f3cce565eba1221cb9c4656c6
+      internalID: 216346170246372593
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73666e9f0046530b96376fa0539c0162
+      internalID: 744908308688454773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e3336cc2005ad78b1fd90d1a0ffb34
+      internalID: 1537774748785800163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5946374de095d2a994ddde56ce7f60c
+      internalID: 3513679923542809054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0d782cb2a885400883537c73fc49919
+      internalID: 4494201287468551067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7078841f835593095b509b9c76d1978
+      internalID: 973437780088612827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78a1c6eccb065150a049131fcda61c47
+      internalID: 4484515599087948224
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26d9139fec945ae7bf199bb83fe50bca
+      internalID: 1740788072447085269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94f3a4eb02735f6a996a0c04e577f2a6
+      internalID: 3549282869947237306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab79d5c110cf559ca71985fa1ab0707a
+      internalID: 2957067765018787968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f5bd797527a526dad04479ae73baa39
+      internalID: 3473726825029604775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3623ecb633ed5c7fb9e260061da29788
+      internalID: 3630872206825226946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56cc66daf2f8542ead4aea905def7f76
+      internalID: 2295736224687515378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f35a9a843c254dabdcfa6a0b516e05f
+      internalID: 82197997755853312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27de664a086e59399887e6d622048ef4
+      internalID: 1280608466588069813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbcee6fccebb512b85d6a5f3f9bca564
+      internalID: 2253412650435089720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a286be4cbc9055fbbbe4433876de5ec7
+      internalID: 698156326158953311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d6e560cb24a5afc86ea8b37b0e93499
+      internalID: 1539449560790997386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7990ca9ecb55aa9b8867cf4c272f7da
+      internalID: 987382611292067990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99ab3437a81f555facad866f7d0637bf
+      internalID: 2233883558072777433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c288bc5aad85bd097a6e91efa3851cf
+      internalID: 542102951616756399
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89df307c44a45862a3d1ce3d6f2ff3c8
+      internalID: 3444664297980474408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a2e5017ed0857a09b2c2d497a742e85
+      internalID: 4529099453954321721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d014037c3db3510e9692f8a230e8e22d
+      internalID: 2168701373916403174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb86c833eb9c5624af1977c1d23eeb51
+      internalID: 3791008466268031355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 033d2c51b8455b2d9a2cd64638865c3b
+      internalID: 3510171729616246697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e701f83fdd759e18541f13498e75f83
+      internalID: 3576022496018039883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5058f1518a252a4839d916ab0f0036d
+      internalID: 3230518291887373030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8ae87a8d57a5c0888c6dbdb71578e02
+      internalID: 3486548343896912583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05d7b1653b085d3d9bd1c008d6e2b6c8
+      internalID: 3397031402545508018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c4b3c57e9015a71addaf01cad388b19
+      internalID: 4304358358461735822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc5319069d6352d6bd09cab2ee0bd731
+      internalID: 2651313150137216506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 039a7dbf9f7653c9b2e88459d05c797b
+      internalID: 3871328082346264729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 660f320b0ebc519cb4cb4a1bb7bb92af
+      internalID: 983127753646218901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d132a960fd457e58e9ecc0f12bad728
+      internalID: 2645325182752575235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69867aeb188c525b90cbeea0abc299eb
+      internalID: 4218727668000642112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 451cb4300ceb5017937ae7f3cd866178
+      internalID: 3153101332455119462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccde39e3462c5f0f93dd7b2aad9f31e2
+      internalID: 441630227798446811
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df9014aca1a558d9ac508deceb2d605a
+      internalID: 2184567073366684958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c66396b7dea85b74b15c2e0c774e2690
+      internalID: 3209057445703000633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86257610094f5768bf45180c66e63f5a
+      internalID: 3139635432061690700
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f58af3e287be5a84a986466037d7ca32
+      internalID: 3937425756061065523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea126039f89153a1bfdb1ce4f6ac23ec
+      internalID: 3337611444700283673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23ada202c9b95609a3e7483e9317c43d
+      internalID: 419364212530277985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf3f7ef9004558278b832fc011c4a10e
+      internalID: 1881914769502573374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a6dc155c3456f48f605b2863f6326b
+      internalID: 3548793143027886830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59c6f37675e85b7b840ff68c8f998537
+      internalID: 1150482594024866384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a64005838c45ea49af27d1dddcc55e9
+      internalID: 178756914783290151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d60dd7e1aeab5e54bd461732f841d410
+      internalID: 2682348576747296143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 383ca9f32e74582387a4fef72b5bd836
+      internalID: 2542328431076942986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d67f73bf95a85851bd0c43d260beaa9c
+      internalID: 1845343204274534465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b441e254e5155415b1feeb9ec119ea8a
+      internalID: 4545191906594009674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a98c4bbd0aed5a02855d6fc7fbd37191
+      internalID: 2939844420813325226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8640786157d5a90b8827a03d3bbffc5
+      internalID: 84344763855192927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2961e20a784f57c9990d8b95d26a4ac3
+      internalID: 4401653360290491353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251dc952f29b5f369372ffbb76673f5d
+      internalID: 1526718064352171625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00446fba26245adf81fbe0899e075dea
+      internalID: 2019702220298482056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: addfb514e3355cd7a1e3f04592c9886a
+      internalID: 843292217666613798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc868803b71b54dfbad3b92dd0fdea49
+      internalID: 2514725415374945183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07ccaa7dd4b159fa916470d17695e445
+      internalID: 301465221154148276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87369b7746d5524a8880da8570bcdc58
+      internalID: 1390440440087410648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91a8d4dc5f525de08488bc75a03da4a3
+      internalID: 3940214196245958727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccfeecf19f9551849006b476fe15ee72
+      internalID: 785616970825221901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8d2e61d732c582d8ee62647ba4e0e10
+      internalID: 2683060486789508624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b9c54afba245459a7002c992c0d04d3
+      internalID: 2760344933960713578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72c2724bb7b0599a98953287167ab5c7
+      internalID: 133289844634612006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54b7aab8ac8057339dd17d9707956c44
+      internalID: 1930480853772682673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e259488c41ff5fa98e51da9a14cd826b
+      internalID: 603506899831564099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43e1f9485c7531fa0a2b3ca47304fc0
+      internalID: 4489379015976633614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 166d256177c955cdb57799f077d0c4e7
+      internalID: 1819478604300772268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e69b47c68a8255ffa23d17462214910b
+      internalID: 3063642111053660906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d255b24a8d2558eacf69d4d1a63549c
+      internalID: 111216110368578063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26329728240b51b39d6d96e0e4236996
+      internalID: 1990974542776752469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87ccb882cbef5d2289d8202555849b82
+      internalID: 1713640460773315699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 153fdce4eade56ddb1bcf170ae561f69
+      internalID: 3672727610716052918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f817ee78dfe57c6bb52cceb4e30d641
+      internalID: 3163711995496163010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21ee10acb5b15c3b875f54a1d2876be0
+      internalID: 1931282813421985756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5234a712606510bb0b063b235f95fa7
+      internalID: 311071317397141744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d40fd9f0141f52b9a98fa0325b93f9eb
+      internalID: 3009465752813598291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f89b6b016d7e5e2d8f454605b65ff471
+      internalID: 4531827146881793098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0d8aa22da4a56c1ae9a31020a20b708
+      internalID: 3589723593789407164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c05d129f18cb5617a2d3252ddab45650
+      internalID: 2028173546008121390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a72c981273b6582f902a06fc86502605
+      internalID: 1672663430701572107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85b53e27b1545a10b66820c107b818d1
+      internalID: 2070464536110355134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed24dadf080956e889e699fcdb7d09a0
+      internalID: 1258423232171702249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fc5482e057657ca86bcb2f26f27a10e
+      internalID: 2573010370520536167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ea7a68343c15e128d6559893f00f853
+      internalID: 1637121713256373733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aae7fc8703de5be8b78f7502c7861abd
+      internalID: 1546254545114326456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90207f486b3a5ae7b577e1d7108c3178
+      internalID: 1865894751350892500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54def97f9e9356529fc660f4c552d047
+      internalID: 4427854243239372111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8e08e5bd58655778ddd007615350ec0
+      internalID: 2059638117200949635
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cb8cf835c685c64b20e9b87a71d44da
+      internalID: 3260088241745286495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 498b469d4bd65e36829df4da11d0ea2d
+      internalID: 2305788075569364965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ab953cddcd05e81b27145db838e81fe
+      internalID: 1304208114788645594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 608bfe2a7dda5278879ab3980ac528fc
+      internalID: 2974279754212241273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8bf9d63f54555c1a0e141800d1a268d
+      internalID: 3397365576292433721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e188668c110b5a1692a1423646fcba59
+      internalID: 3458853890604862308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e91f19836b25fb695b56ab40d89a52c
+      internalID: 2188317474537667534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c295af52f58a5b6f9e3419c6719d0f99
+      internalID: 2787239574292489848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13395ee07a0a55058a4086541ea04345
+      internalID: 2897223989141972718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a754745a5e725683882a77290688e4a9
+      internalID: 3116074390187457392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e353ac301a55306b58410cfbdf5a5a4
+      internalID: 1566655775353259249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 935378bbd5ba5a529b613ef0b9e430d5
+      internalID: 2014366023322185551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea6157c07cc15bd8995a2dad20ee96f6
+      internalID: 3700746027505920613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0b5271b8d28509eaf3e3b4661334b1f
+      internalID: 4139077100671861815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf1f596af8825011865a308751b1e9d6
+      internalID: 401249583476909077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3abf3e91cf2052c5a7968b1a046ba507
+      internalID: 1036718231664698623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01606e2d6789500bacadcf4546ecc63e
+      internalID: 7767526319048626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a65e949762e576aa284d11aac1053fa
+      internalID: 2321829287919508926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41e60b1f07b555f1b7f0d29cc46f3ab6
+      internalID: 1581174950219985717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e64e7a051f65b5ebbdce43ded05bcdc
+      internalID: 3296339685675844217
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f79c83b1ba3e570f8568eee346f14c55
+      internalID: 782179030900762204
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 355ab40e787f5b14a33cfb29080aabb0
+      internalID: 1972295349044517441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83b1c86544a15d6eabcbbf6fba312728
+      internalID: 3966507541727428727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52a672cf54945064ad88a280c7a5535b
+      internalID: 152049175923260662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 423679476f6c5393bb061a2c312148e5
+      internalID: 2653476273633707185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3c849b3cf6f5c9da66c3a6034c5553e
+      internalID: 3051711445361114473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 978d114ff3c45aeeb84ca98436d29818
+      internalID: 1596631652376461562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f5658758a15b67a49ed771761f8f29
+      internalID: 1568525182976287619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4413a60e57d651e0a987691836ddc244
+      internalID: 4289982625637232092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 798494f0f67954299160646e182bd261
+      internalID: 2639395537624439387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22234ef99fa354a4b690d2b790cd4218
+      internalID: 1979856462173282666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e4ca98b7f15760ab5e1e134a8c4ef6
+      internalID: 3813039287493084623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68d2bbcf42675c19862022ff4162576b
+      internalID: 2784498340219461364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 970537e16d21505a8dd4a0610e9b79be
+      internalID: 1665516189422603144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c47dc95b794d539197e4d99c8b8b19fd
+      internalID: 4562710912566630239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91193c5400e35a749b2378860780dac2
+      internalID: 475318437358070336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9daeb8dcf7365a5ea98bc7353d99027c
+      internalID: 3097976436873768812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4bf8c7cde335b68a9a889716d1ae3b3
+      internalID: 4456451387833923027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_blood_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cdb6c686bb652249e5d18bad4e65204
+      internalID: 2055499312978969626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_blood_wall_f0_v0: 1153553892904165101
+      tv2_blood_wall_f1_v0: 303809947070046324
+      tv2_blood_wall_f4_v0: 2634445687055927191
+      tv2_blood_wall_f5_v0: 2974080240302452898
+      tv2_blood_wall_f7_v0: 3454416366106782540
+      tv2_blood_wall_f16_v0: 2985407235118220744
+      tv2_blood_wall_f17_v0: 40857064552888318
+      tv2_blood_wall_f20_v0: 3715413445732255459
+      tv2_blood_wall_f21_v0: 1444300660471113655
+      tv2_blood_wall_f23_v0: 3464867940072109154
+      tv2_blood_wall_f28_v0: 4467962426240285445
+      tv2_blood_wall_f29_v0: 216346170246372593
+      tv2_blood_wall_f31_v0: 744908308688454773
+      tv2_blood_wall_f64_v0: 1537774748785800163
+      tv2_blood_wall_f65_v0: 3513679923542809054
+      tv2_blood_wall_f68_v0: 4494201287468551067
+      tv2_blood_wall_f69_v0: 973437780088612827
+      tv2_blood_wall_f71_v0: 4484515599087948224
+      tv2_blood_wall_f80_v0: 1740788072447085269
+      tv2_blood_wall_f81_v0: 3549282869947237306
+      tv2_blood_wall_f84_v0: 2957067765018787968
+      tv2_blood_wall_f85_v0: 3473726825029604775
+      tv2_blood_wall_f87_v0: 3630872206825226946
+      tv2_blood_wall_f92_v0: 2295736224687515378
+      tv2_blood_wall_f93_v0: 82197997755853312
+      tv2_blood_wall_f95_v0: 1280608466588069813
+      tv2_blood_wall_f112_v0: 2253412650435089720
+      tv2_blood_wall_f113_v0: 698156326158953311
+      tv2_blood_wall_f116_v0: 1539449560790997386
+      tv2_blood_wall_f117_v0: 987382611292067990
+      tv2_blood_wall_f119_v0: 2233883558072777433
+      tv2_blood_wall_f124_v0: 542102951616756399
+      tv2_blood_wall_f125_v0: 3444664297980474408
+      tv2_blood_wall_f127_v0: 4529099453954321721
+      tv2_blood_wall_f193_v0: 2168701373916403174
+      tv2_blood_wall_f197_v0: 3791008466268031355
+      tv2_blood_wall_f199_v0: 3510171729616246697
+      tv2_blood_wall_f209_v0: 3576022496018039883
+      tv2_blood_wall_f213_v0: 3230518291887373030
+      tv2_blood_wall_f215_v0: 3486548343896912583
+      tv2_blood_wall_f221_v0: 3397031402545508018
+      tv2_blood_wall_f223_v0: 4304358358461735822
+      tv2_blood_wall_f241_v0: 2651313150137216506
+      tv2_blood_wall_f245_v0: 3871328082346264729
+      tv2_blood_wall_f247_v0: 983127753646218901
+      tv2_blood_wall_f253_v0: 2645325182752575235
+      tv2_blood_wall_f255_v0: 4218727668000642112
+      tv2_blood_wall_f0_v1: 3153101332455119462
+      tv2_blood_wall_f1_v1: 441630227798446811
+      tv2_blood_wall_f4_v1: 2184567073366684958
+      tv2_blood_wall_f5_v1: 3209057445703000633
+      tv2_blood_wall_f7_v1: 3139635432061690700
+      tv2_blood_wall_f16_v1: 3937425756061065523
+      tv2_blood_wall_f17_v1: 3337611444700283673
+      tv2_blood_wall_f20_v1: 419364212530277985
+      tv2_blood_wall_f21_v1: 1881914769502573374
+      tv2_blood_wall_f23_v1: 3548793143027886830
+      tv2_blood_wall_f28_v1: 1150482594024866384
+      tv2_blood_wall_f29_v1: 178756914783290151
+      tv2_blood_wall_f31_v1: 2682348576747296143
+      tv2_blood_wall_f64_v1: 2542328431076942986
+      tv2_blood_wall_f65_v1: 1845343204274534465
+      tv2_blood_wall_f68_v1: 4545191906594009674
+      tv2_blood_wall_f69_v1: 2939844420813325226
+      tv2_blood_wall_f71_v1: 84344763855192927
+      tv2_blood_wall_f80_v1: 4401653360290491353
+      tv2_blood_wall_f81_v1: 1526718064352171625
+      tv2_blood_wall_f84_v1: 2019702220298482056
+      tv2_blood_wall_f85_v1: 843292217666613798
+      tv2_blood_wall_f87_v1: 2514725415374945183
+      tv2_blood_wall_f92_v1: 301465221154148276
+      tv2_blood_wall_f93_v1: 1390440440087410648
+      tv2_blood_wall_f95_v1: 3940214196245958727
+      tv2_blood_wall_f112_v1: 785616970825221901
+      tv2_blood_wall_f113_v1: 2683060486789508624
+      tv2_blood_wall_f116_v1: 2760344933960713578
+      tv2_blood_wall_f117_v1: 133289844634612006
+      tv2_blood_wall_f119_v1: 1930480853772682673
+      tv2_blood_wall_f124_v1: 603506899831564099
+      tv2_blood_wall_f125_v1: 4489379015976633614
+      tv2_blood_wall_f127_v1: 1819478604300772268
+      tv2_blood_wall_f193_v1: 3063642111053660906
+      tv2_blood_wall_f197_v1: 111216110368578063
+      tv2_blood_wall_f199_v1: 1990974542776752469
+      tv2_blood_wall_f209_v1: 1713640460773315699
+      tv2_blood_wall_f213_v1: 3672727610716052918
+      tv2_blood_wall_f215_v1: 3163711995496163010
+      tv2_blood_wall_f221_v1: 1931282813421985756
+      tv2_blood_wall_f223_v1: 311071317397141744
+      tv2_blood_wall_f241_v1: 3009465752813598291
+      tv2_blood_wall_f245_v1: 4531827146881793098
+      tv2_blood_wall_f247_v1: 3589723593789407164
+      tv2_blood_wall_f253_v1: 2028173546008121390
+      tv2_blood_wall_f255_v1: 1672663430701572107
+      tv2_blood_wall_f0_v2: 2070464536110355134
+      tv2_blood_wall_f1_v2: 1258423232171702249
+      tv2_blood_wall_f4_v2: 2573010370520536167
+      tv2_blood_wall_f5_v2: 1637121713256373733
+      tv2_blood_wall_f7_v2: 1546254545114326456
+      tv2_blood_wall_f16_v2: 1865894751350892500
+      tv2_blood_wall_f17_v2: 4427854243239372111
+      tv2_blood_wall_f20_v2: 2059638117200949635
+      tv2_blood_wall_f21_v2: 3260088241745286495
+      tv2_blood_wall_f23_v2: 2305788075569364965
+      tv2_blood_wall_f28_v2: 1304208114788645594
+      tv2_blood_wall_f29_v2: 2974279754212241273
+      tv2_blood_wall_f31_v2: 3397365576292433721
+      tv2_blood_wall_f64_v2: 3458853890604862308
+      tv2_blood_wall_f65_v2: 2188317474537667534
+      tv2_blood_wall_f68_v2: 2787239574292489848
+      tv2_blood_wall_f69_v2: 2897223989141972718
+      tv2_blood_wall_f71_v2: 3116074390187457392
+      tv2_blood_wall_f80_v2: 1566655775353259249
+      tv2_blood_wall_f81_v2: 2014366023322185551
+      tv2_blood_wall_f84_v2: 3700746027505920613
+      tv2_blood_wall_f85_v2: 4139077100671861815
+      tv2_blood_wall_f87_v2: 401249583476909077
+      tv2_blood_wall_f92_v2: 1036718231664698623
+      tv2_blood_wall_f93_v2: 7767526319048626
+      tv2_blood_wall_f95_v2: 2321829287919508926
+      tv2_blood_wall_f112_v2: 1581174950219985717
+      tv2_blood_wall_f113_v2: 3296339685675844217
+      tv2_blood_wall_f116_v2: 782179030900762204
+      tv2_blood_wall_f117_v2: 1972295349044517441
+      tv2_blood_wall_f119_v2: 3966507541727428727
+      tv2_blood_wall_f124_v2: 152049175923260662
+      tv2_blood_wall_f125_v2: 2653476273633707185
+      tv2_blood_wall_f127_v2: 3051711445361114473
+      tv2_blood_wall_f193_v2: 1596631652376461562
+      tv2_blood_wall_f197_v2: 1568525182976287619
+      tv2_blood_wall_f199_v2: 4289982625637232092
+      tv2_blood_wall_f209_v2: 2639395537624439387
+      tv2_blood_wall_f213_v2: 1979856462173282666
+      tv2_blood_wall_f215_v2: 3813039287493084623
+      tv2_blood_wall_f221_v2: 2784498340219461364
+      tv2_blood_wall_f223_v2: 1665516189422603144
+      tv2_blood_wall_f241_v2: 4562710912566630239
+      tv2_blood_wall_f245_v2: 475318437358070336
+      tv2_blood_wall_f247_v2: 3097976436873768812
+      tv2_blood_wall_f253_v2: 4456451387833923027
+      tv2_blood_wall_f255_v2: 2055499312978969626
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

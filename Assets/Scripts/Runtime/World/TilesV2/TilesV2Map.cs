@@ -9,7 +9,9 @@ namespace Descender.World.TilesV2
     /// a grid of what stands in each cell (ground, a liquid, a torch, the hero's start), a
     /// blank line, and a grid of the wall behind each cell; row 0 is the top and `#` starts
     /// a comment. The characters are the tile set's legend. Column and row count from the
-    /// top left; the cell of (column, row) has y up with the bottom row at 0.
+    /// top left; the cell of (column, row) has y up with the bottom row at 0. A world of
+    /// several regions says where each starts (`@region key row`) and what of the game's
+    /// stands where (`@mark kind column row ...`: a checkpoint, an ability, a gate).
     /// </summary>
     public sealed class TilesV2Map
     {
@@ -19,6 +21,8 @@ namespace Descender.World.TilesV2
         private readonly List<string> walls;
         private readonly Dictionary<string, Vector2> views = new Dictionary<string, Vector2>();
         private readonly List<Shot> shots = new List<Shot>();
+        private readonly List<Region> regions = new List<Region>();
+        private readonly List<Mark> marks = new List<Mark>();
 
         private TilesV2Map(List<string> terrainRows, List<string> wallRows)
         {
@@ -43,6 +47,29 @@ namespace Descender.World.TilesV2
 
         /// <summary>The map's pictures (`@shot name view hour`): one of its named places at an hour of the day.</summary>
         public IReadOnlyList<Shot> Shots => shots;
+
+        /// <summary>The map's regions (`@region key row`), top to bottom; none for a map that is all one.</summary>
+        public IReadOnlyList<Region> Regions => regions;
+
+        /// <summary>The game's things the map places (`@mark kind column row ...`).</summary>
+        public IReadOnlyList<Mark> Marks => marks;
+
+        /// <summary>The number of the region a row is in, in <see cref="Regions"/>; -1 for a map with none.</summary>
+        public int RegionAt(int row)
+        {
+            var found = -1;
+            for (var i = 0; i < regions.Count; i++)
+            {
+                if (row >= regions[i].Top || i == 0)
+                {
+                    found = i;
+                }
+            }
+            return found;
+        }
+
+        /// <summary>The row after a region's last: the next region's first, or the map's height.</summary>
+        public int RegionEnd(int index) => index + 1 < regions.Count ? regions[index + 1].Top : Height;
 
         /// <summary>What stands in a cell; air outside the map.</summary>
         public char TerrainAt(int column, int row) => At(terrain, column, row);
@@ -106,7 +133,23 @@ namespace Descender.World.TilesV2
                 {
                     map.shots.Add(new Shot(parts[1], parts[2], hour));
                 }
+                else if (parts.Length == 3 && parts[0] == "region" && int.TryParse(parts[2], out var top))
+                {
+                    map.regions.Add(new Region(parts[1], top));
+                }
+                else if (
+                    parts.Length >= 4
+                    && parts[0] == "mark"
+                    && int.TryParse(parts[2], out var markColumn)
+                    && int.TryParse(parts[3], out var markRow)
+                )
+                {
+                    var rest = new string[parts.Length - 4];
+                    System.Array.Copy(parts, 4, rest, 0, rest.Length);
+                    map.marks.Add(new Mark(parts[1], markColumn, markRow, rest));
+                }
             }
+            map.regions.Sort((a, b) => a.Top.CompareTo(b.Top));
             return map;
         }
 
@@ -123,6 +166,43 @@ namespace Descender.World.TilesV2
                 View = view;
                 Hour = hour;
             }
+        }
+
+        /// <summary>A region of the map: its key in the tile set and its first row.</summary>
+        public readonly struct Region
+        {
+            public readonly string Key;
+            public readonly int Top;
+
+            public Region(string key, int top)
+            {
+                Key = key;
+                Top = top;
+            }
+        }
+
+        /// <summary>Something of the game's that stands in a cell: its kind, the cell, and what else the kind needs.</summary>
+        public readonly struct Mark
+        {
+            public readonly string Kind;
+            public readonly int Column;
+            public readonly int Row;
+            public readonly string[] Rest;
+
+            public Mark(string kind, int column, int row, string[] rest)
+            {
+                Kind = kind;
+                Column = column;
+                Row = row;
+                Rest = rest;
+            }
+
+            /// <summary>One of the words after the cell; "" when there are fewer.</summary>
+            public string Word(int index) => index < Rest.Length ? Rest[index] : "";
+
+            /// <summary>One of the words after the cell as a whole number; `fallback` when it is not one.</summary>
+            public int Number(int index, int fallback) =>
+                index < Rest.Length && int.TryParse(Rest[index], out var value) ? value : fallback;
         }
 
         private static bool TryNumber(string text, out float value) =>

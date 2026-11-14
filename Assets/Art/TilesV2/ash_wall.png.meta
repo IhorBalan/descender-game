@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 44cd6928ddd150d4b8178de463b7a582
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3393298589136419231
+    second: tv2_ash_wall_f0_v0
+  - first:
+      213: 3551367276257345898
+    second: tv2_ash_wall_f1_v0
+  - first:
+      213: 1856804888962534407
+    second: tv2_ash_wall_f4_v0
+  - first:
+      213: 3917786823669614080
+    second: tv2_ash_wall_f5_v0
+  - first:
+      213: 3288562975645344665
+    second: tv2_ash_wall_f7_v0
+  - first:
+      213: 4486499814387165179
+    second: tv2_ash_wall_f16_v0
+  - first:
+      213: 140140299746764957
+    second: tv2_ash_wall_f17_v0
+  - first:
+      213: 3074522279193865207
+    second: tv2_ash_wall_f20_v0
+  - first:
+      213: 545965005266110094
+    second: tv2_ash_wall_f21_v0
+  - first:
+      213: 1178949606270949682
+    second: tv2_ash_wall_f23_v0
+  - first:
+      213: 3395563270231922633
+    second: tv2_ash_wall_f28_v0
+  - first:
+      213: 2471785983589289170
+    second: tv2_ash_wall_f29_v0
+  - first:
+      213: 3612727859083252296
+    second: tv2_ash_wall_f31_v0
+  - first:
+      213: 2937471553093929758
+    second: tv2_ash_wall_f64_v0
+  - first:
+      213: 392904030791594648
+    second: tv2_ash_wall_f65_v0
+  - first:
+      213: 2625767578363569582
+    second: tv2_ash_wall_f68_v0
+  - first:
+      213: 1176135985846589838
+    second: tv2_ash_wall_f69_v0
+  - first:
+      213: 3713154377529195150
+    second: tv2_ash_wall_f71_v0
+  - first:
+      213: 2332815131488213340
+    second: tv2_ash_wall_f80_v0
+  - first:
+      213: 4213251550299931264
+    second: tv2_ash_wall_f81_v0
+  - first:
+      213: 913197408113105909
+    second: tv2_ash_wall_f84_v0
+  - first:
+      213: 3090696016326354842
+    second: tv2_ash_wall_f85_v0
+  - first:
+      213: 2193546415246966815
+    second: tv2_ash_wall_f87_v0
+  - first:
+      213: 2380152038026149366
+    second: tv2_ash_wall_f92_v0
+  - first:
+      213: 2001110616665080592
+    second: tv2_ash_wall_f93_v0
+  - first:
+      213: 2026431452550804712
+    second: tv2_ash_wall_f95_v0
+  - first:
+      213: 751367427619778633
+    second: tv2_ash_wall_f112_v0
+  - first:
+      213: 1166097317599917293
+    second: tv2_ash_wall_f113_v0
+  - first:
+      213: 2596046852150693136
+    second: tv2_ash_wall_f116_v0
+  - first:
+      213: 256423247143405492
+    second: tv2_ash_wall_f117_v0
+  - first:
+      213: 3590755714820937433
+    second: tv2_ash_wall_f119_v0
+  - first:
+      213: 2153985485041506625
+    second: tv2_ash_wall_f124_v0
+  - first:
+      213: 1624492620633466079
+    second: tv2_ash_wall_f125_v0
+  - first:
+      213: 2959569415096167407
+    second: tv2_ash_wall_f127_v0
+  - first:
+      213: 2684806828972883851
+    second: tv2_ash_wall_f193_v0
+  - first:
+      213: 1498048592525008442
+    second: tv2_ash_wall_f197_v0
+  - first:
+      213: 614132473398770202
+    second: tv2_ash_wall_f199_v0
+  - first:
+      213: 2656111000544307704
+    second: tv2_ash_wall_f209_v0
+  - first:
+      213: 3373015356181500922
+    second: tv2_ash_wall_f213_v0
+  - first:
+      213: 3785442703194990500
+    second: tv2_ash_wall_f215_v0
+  - first:
+      213: 4447664909953900594
+    second: tv2_ash_wall_f221_v0
+  - first:
+      213: 811069140437974009
+    second: tv2_ash_wall_f223_v0
+  - first:
+      213: 600385394687822480
+    second: tv2_ash_wall_f241_v0
+  - first:
+      213: 1517181087872613457
+    second: tv2_ash_wall_f245_v0
+  - first:
+      213: 1570672197858068581
+    second: tv2_ash_wall_f247_v0
+  - first:
+      213: 455800124820406392
+    second: tv2_ash_wall_f253_v0
+  - first:
+      213: 2746711344077594167
+    second: tv2_ash_wall_f255_v0
+  - first:
+      213: 1198216078408757350
+    second: tv2_ash_wall_f0_v1
+  - first:
+      213: 1659025545062929800
+    second: tv2_ash_wall_f1_v1
+  - first:
+      213: 1274094567031152433
+    second: tv2_ash_wall_f4_v1
+  - first:
+      213: 552663566706145216
+    second: tv2_ash_wall_f5_v1
+  - first:
+      213: 260813189119779247
+    second: tv2_ash_wall_f7_v1
+  - first:
+      213: 3597331835623618324
+    second: tv2_ash_wall_f16_v1
+  - first:
+      213: 397817899394399607
+    second: tv2_ash_wall_f17_v1
+  - first:
+      213: 3547985981148295806
+    second: tv2_ash_wall_f20_v1
+  - first:
+      213: 1887119950693963925
+    second: tv2_ash_wall_f21_v1
+  - first:
+      213: 1587488733974985508
+    second: tv2_ash_wall_f23_v1
+  - first:
+      213: 3248231551349412927
+    second: tv2_ash_wall_f28_v1
+  - first:
+      213: 3150015328456923882
+    second: tv2_ash_wall_f29_v1
+  - first:
+      213: 2849514435153811281
+    second: tv2_ash_wall_f31_v1
+  - first:
+      213: 4429722875791873295
+    second: tv2_ash_wall_f64_v1
+  - first:
+      213: 268462869120071292
+    second: tv2_ash_wall_f65_v1
+  - first:
+      213: 4142387943818706885
+    second: tv2_ash_wall_f68_v1
+  - first:
+      213: 2311520933245490080
+    second: tv2_ash_wall_f69_v1
+  - first:
+      213: 3720858928546964120
+    second: tv2_ash_wall_f71_v1
+  - first:
+      213: 3626978161660045586
+    second: tv2_ash_wall_f80_v1
+  - first:
+      213: 1502875706094116241
+    second: tv2_ash_wall_f81_v1
+  - first:
+      213: 1512130509800407669
+    second: tv2_ash_wall_f84_v1
+  - first:
+      213: 2430375089090976953
+    second: tv2_ash_wall_f85_v1
+  - first:
+      213: 1469981496014030279
+    second: tv2_ash_wall_f87_v1
+  - first:
+      213: 3776094923782609964
+    second: tv2_ash_wall_f92_v1
+  - first:
+      213: 1394902647342270819
+    second: tv2_ash_wall_f93_v1
+  - first:
+      213: 2840647116896195542
+    second: tv2_ash_wall_f95_v1
+  - first:
+      213: 1421474440776551135
+    second: tv2_ash_wall_f112_v1
+  - first:
+      213: 894362027850985335
+    second: tv2_ash_wall_f113_v1
+  - first:
+      213: 3647556733185218407
+    second: tv2_ash_wall_f116_v1
+  - first:
+      213: 3819939417691880040
+    second: tv2_ash_wall_f117_v1
+  - first:
+      213: 1589791428291617166
+    second: tv2_ash_wall_f119_v1
+  - first:
+      213: 528030462869780891
+    second: tv2_ash_wall_f124_v1
+  - first:
+      213: 655423569453324462
+    second: tv2_ash_wall_f125_v1
+  - first:
+      213: 383020552628222437
+    second: tv2_ash_wall_f127_v1
+  - first:
+      213: 4292695713335373762
+    second: tv2_ash_wall_f193_v1
+  - first:
+      213: 1723587667858694280
+    second: tv2_ash_wall_f197_v1
+  - first:
+      213: 4015881919773022256
+    second: tv2_ash_wall_f199_v1
+  - first:
+      213: 2603468174610594852
+    second: tv2_ash_wall_f209_v1
+  - first:
+      213: 4323356734554670680
+    second: tv2_ash_wall_f213_v1
+  - first:
+      213: 2140378126228071094
+    second: tv2_ash_wall_f215_v1
+  - first:
+      213: 1722240614924966899
+    second: tv2_ash_wall_f221_v1
+  - first:
+      213: 4132394014680479066
+    second: tv2_ash_wall_f223_v1
+  - first:
+      213: 3172754110491723037
+    second: tv2_ash_wall_f241_v1
+  - first:
+      213: 1579604811774109879
+    second: tv2_ash_wall_f245_v1
+  - first:
+      213: 3552214321213572444
+    second: tv2_ash_wall_f247_v1
+  - first:
+      213: 1421043722522943969
+    second: tv2_ash_wall_f253_v1
+  - first:
+      213: 4522205733418124884
+    second: tv2_ash_wall_f255_v1
+  - first:
+      213: 1587960438285232128
+    second: tv2_ash_wall_f0_v2
+  - first:
+      213: 2876480334100412615
+    second: tv2_ash_wall_f1_v2
+  - first:
+      213: 3106322489099694055
+    second: tv2_ash_wall_f4_v2
+  - first:
+      213: 674079774831076037
+    second: tv2_ash_wall_f5_v2
+  - first:
+      213: 2477107327785562369
+    second: tv2_ash_wall_f7_v2
+  - first:
+      213: 1098855219073171693
+    second: tv2_ash_wall_f16_v2
+  - first:
+      213: 3802236455746154188
+    second: tv2_ash_wall_f17_v2
+  - first:
+      213: 2552882545905940212
+    second: tv2_ash_wall_f20_v2
+  - first:
+      213: 3080104578669400452
+    second: tv2_ash_wall_f21_v2
+  - first:
+      213: 1752227683898649440
+    second: tv2_ash_wall_f23_v2
+  - first:
+      213: 576495174314389799
+    second: tv2_ash_wall_f28_v2
+  - first:
+      213: 2059622408856665071
+    second: tv2_ash_wall_f29_v2
+  - first:
+      213: 4089159896324006702
+    second: tv2_ash_wall_f31_v2
+  - first:
+      213: 221904599900192486
+    second: tv2_ash_wall_f64_v2
+  - first:
+      213: 1528024196728080967
+    second: tv2_ash_wall_f65_v2
+  - first:
+      213: 3967986693350929680
+    second: tv2_ash_wall_f68_v2
+  - first:
+      213: 1386866758966723826
+    second: tv2_ash_wall_f69_v2
+  - first:
+      213: 553638220146471054
+    second: tv2_ash_wall_f71_v2
+  - first:
+      213: 4471816007933226837
+    second: tv2_ash_wall_f80_v2
+  - first:
+      213: 2179883685006497570
+    second: tv2_ash_wall_f81_v2
+  - first:
+      213: 2617513197602755898
+    second: tv2_ash_wall_f84_v2
+  - first:
+      213: 2720549038938329511
+    second: tv2_ash_wall_f85_v2
+  - first:
+      213: 3119371559225253986
+    second: tv2_ash_wall_f87_v2
+  - first:
+      213: 3267614242123900181
+    second: tv2_ash_wall_f92_v2
+  - first:
+      213: 285425770693703389
+    second: tv2_ash_wall_f93_v2
+  - first:
+      213: 3160498463974122462
+    second: tv2_ash_wall_f95_v2
+  - first:
+      213: 2431179914977171401
+    second: tv2_ash_wall_f112_v2
+  - first:
+      213: 1848566682058157352
+    second: tv2_ash_wall_f113_v2
+  - first:
+      213: 595517243693894350
+    second: tv2_ash_wall_f116_v2
+  - first:
+      213: 1474654071716607473
+    second: tv2_ash_wall_f117_v2
+  - first:
+      213: 2437498603924706716
+    second: tv2_ash_wall_f119_v2
+  - first:
+      213: 2547229689110509483
+    second: tv2_ash_wall_f124_v2
+  - first:
+      213: 595723185367733481
+    second: tv2_ash_wall_f125_v2
+  - first:
+      213: 3359265369841603368
+    second: tv2_ash_wall_f127_v2
+  - first:
+      213: 1877468345615493844
+    second: tv2_ash_wall_f193_v2
+  - first:
+      213: 3891020796008944181
+    second: tv2_ash_wall_f197_v2
+  - first:
+      213: 3347881715830455716
+    second: tv2_ash_wall_f199_v2
+  - first:
+      213: 2867725867382305615
+    second: tv2_ash_wall_f209_v2
+  - first:
+      213: 2693253986730097727
+    second: tv2_ash_wall_f213_v2
+  - first:
+      213: 2877301338612195946
+    second: tv2_ash_wall_f215_v2
+  - first:
+      213: 3839982006713249973
+    second: tv2_ash_wall_f221_v2
+  - first:
+      213: 1182391403686614659
+    second: tv2_ash_wall_f223_v2
+  - first:
+      213: 3747363408928115431
+    second: tv2_ash_wall_f241_v2
+  - first:
+      213: 2870983215389797677
+    second: tv2_ash_wall_f245_v2
+  - first:
+      213: 3303755376550304544
+    second: tv2_ash_wall_f247_v2
+  - first:
+      213: 3839399740211820786
+    second: tv2_ash_wall_f253_v2
+  - first:
+      213: 3890777197079415776
+    second: tv2_ash_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_ash_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 877c1b9d50815aee8c7b67768a20477f
+      internalID: 3393298589136419231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a721ac39b6df5bc1ace99f141cd2bc95
+      internalID: 3551367276257345898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a0f1cab9eca539da60ca523ea6351d1
+      internalID: 1856804888962534407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28fcec23a9d65ca391490df5a07906a4
+      internalID: 3917786823669614080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6333ff0db00d5d25affc75b9cf79e837
+      internalID: 3288562975645344665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24e7e9f8820f55cabcf2ec56a7607c2d
+      internalID: 4486499814387165179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a2f01ee84be5278b54b295bf5edd40e
+      internalID: 140140299746764957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d553c13cb70759ae9ec30b6d95773509
+      internalID: 3074522279193865207
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc9d60a81da9537c9c35882b9b926a6e
+      internalID: 545965005266110094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d930218e0d3583281a5470c45b1fae2
+      internalID: 1178949606270949682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f34f2b52b97154b1b7c917dfc38a6630
+      internalID: 3395563270231922633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e815705e42ee5ae68c4c57bdff53b611
+      internalID: 2471785983589289170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d091bdffbc3d52369149b916b69f26e2
+      internalID: 3612727859083252296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18c97231e08c57d68cb210ea080a68b3
+      internalID: 2937471553093929758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78e387c58a41593885bfd8742556b320
+      internalID: 392904030791594648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 557398160e3d5d6e800bf6cea06b2def
+      internalID: 2625767578363569582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 328f5b3a8a1759488c54dc03644a0583
+      internalID: 1176135985846589838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2192cf7bdfd65c8f96735dd6621327d9
+      internalID: 3713154377529195150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 152da8d88e855c159d00dfdf68c7746d
+      internalID: 2332815131488213340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f1d9193d4ed58beae8dbd160064a8ba
+      internalID: 4213251550299931264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55dd709e567b5c95b544037078f72035
+      internalID: 913197408113105909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 019e4deab2e4547abcfe3a1e9cf8bf1f
+      internalID: 3090696016326354842
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f3e82fb2b93563db230bbbe1e1d85c4
+      internalID: 2193546415246966815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e33c3db546b5080905bc0004cc3c403
+      internalID: 2380152038026149366
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 064ef6442daf55a4bc5908f97c71319f
+      internalID: 2001110616665080592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8beeaee52cd65ff09ab4f0d2023ebf95
+      internalID: 2026431452550804712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24d2171357895b179763e0dda490dbf3
+      internalID: 751367427619778633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d568a661e485851a027bf0ed248fe50
+      internalID: 1166097317599917293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84194f7f0589546cb7e329deb3087138
+      internalID: 2596046852150693136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0b554434d505672a2e342bc4aabebd8
+      internalID: 256423247143405492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b81eb247a8195606a378c084775a611a
+      internalID: 3590755714820937433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb616fc481595648b83f4a0672b947db
+      internalID: 2153985485041506625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af33335269105f5b949becacf5d6bb2d
+      internalID: 1624492620633466079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 103449b6c65c5dc38e2e2e553a3b6930
+      internalID: 2959569415096167407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9554b52e901c5fa6b88c9c1f965fa657
+      internalID: 2684806828972883851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 696503e536845391a03853660a729302
+      internalID: 1498048592525008442
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03b2a112f13e575f95977cbc1afaa52f
+      internalID: 614132473398770202
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78c4c49800fd5fb49a620d6630eeab01
+      internalID: 2656111000544307704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7155f143fcd5850901bd0151c3b67e2
+      internalID: 3373015356181500922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 006e38d191d95bcdbbfa196f4840053d
+      internalID: 3785442703194990500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcf6eb556b855e73a83cf5f44704e6fd
+      internalID: 4447664909953900594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53c94dcddcba5d5db22f6068301bde38
+      internalID: 811069140437974009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87efd6db80f158d3920726d88acdd61a
+      internalID: 600385394687822480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b79ef03d78d52bdb6414364073516ed
+      internalID: 1517181087872613457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4f392b4f7e356ca95847f619156bbd3
+      internalID: 1570672197858068581
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5737dd32e7953df880b8f820ecda1f1
+      internalID: 455800124820406392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91f62a6689a55160ade3ec8a145cf901
+      internalID: 2746711344077594167
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58dd7ea1743a5909a67f1c355c1e2c78
+      internalID: 1198216078408757350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ed4a30367695e258df6d17e2973da21
+      internalID: 1659025545062929800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e948959575a5c089978e471105dc293
+      internalID: 1274094567031152433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 424519bb3c27546b9ef7038b6f038faa
+      internalID: 552663566706145216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d62617088f7d5851900fdcea540ab1d3
+      internalID: 260813189119779247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5908eaed165e58aea257e1091df24f7e
+      internalID: 3597331835623618324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af220ef72412531e90b8ae3028b07697
+      internalID: 397817899394399607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0adc2265bc5551ca94ff8d8ddc610e21
+      internalID: 3547985981148295806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91b34835ecd659dda3f88f2f4bc1e98a
+      internalID: 1887119950693963925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf9eec7687675b1a9d3ffefc1dc7cf0e
+      internalID: 1587488733974985508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b259ce586c1451779659b0a93dc34168
+      internalID: 3248231551349412927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76bfdd37c5205fd5b9efd45a04fa61ed
+      internalID: 3150015328456923882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138c1fd8565455cabdc24bfc2138e150
+      internalID: 2849514435153811281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa594b7fa77b503497c7fd00c9845337
+      internalID: 4429722875791873295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a66fe2783d55b15a7181227501bf701
+      internalID: 268462869120071292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72ae371db6b25a52a2fc35f5b3e6a2b1
+      internalID: 4142387943818706885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cac02c9afdd581ca4609beeb2985009
+      internalID: 2311520933245490080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d33efd083b0255f0b95260e93c1b283e
+      internalID: 3720858928546964120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42c192231a30506e9df5ec032248729e
+      internalID: 3626978161660045586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 262a06a34dd3586995a96ecfdf71f629
+      internalID: 1502875706094116241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46828551e2fa5de097b4880040aa6515
+      internalID: 1512130509800407669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8664e2fe54975f1295b663c49fa66af3
+      internalID: 2430375089090976953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a120bd6aa9a56158ce0034d45603ee3
+      internalID: 1469981496014030279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a19f2742c70453cc8165abe9bb916c0c
+      internalID: 3776094923782609964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a66bfba943c505a8d351b2ccf95d8ae
+      internalID: 1394902647342270819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 477d2401c9045f9590da8a92f5a0782f
+      internalID: 2840647116896195542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2e481403ff05bf6ac49c32228befc1e
+      internalID: 1421474440776551135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85a256b5f1795c31b3ddf457571eb29a
+      internalID: 894362027850985335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 043a0bb2916b54aa8346951a065629df
+      internalID: 3647556733185218407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93cb74d0af495e1a846a615c358693d6
+      internalID: 3819939417691880040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78dea029e538572cae273e01b718c69b
+      internalID: 1589791428291617166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c12b70e5128c52cfbec41d648f84ba69
+      internalID: 528030462869780891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4352efaec7005f9f9b30ab0914e2a725
+      internalID: 655423569453324462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba5949adb4b55a36a191e00ee12b781a
+      internalID: 383020552628222437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcfb588b45f35497844ecff7ed0c8428
+      internalID: 4292695713335373762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 494396d1fce851c38d11484dcac5bd17
+      internalID: 1723587667858694280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bce0968bbc575941b0acfc500afa4236
+      internalID: 4015881919773022256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05e29bbd69c254c3b2c23f86eba1c30a
+      internalID: 2603468174610594852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 078a2fca915d58c7a4ac91c915cdf6f7
+      internalID: 4323356734554670680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a4b54f8de3590fb72875d239fab326
+      internalID: 2140378126228071094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b711356d8b759ae94db8a3013eea2d4
+      internalID: 1722240614924966899
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2861eb20e3f5073a457813b2c8b47bc
+      internalID: 4132394014680479066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69aa6e8b355254a2a96003a34b99f297
+      internalID: 3172754110491723037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 123d1edccf545b78bb1e1b6730c1d9dc
+      internalID: 1579604811774109879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 399ac6da35f05674862a6a3f9f2390b6
+      internalID: 3552214321213572444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76b5c97bed65584ba554c2185fffc155
+      internalID: 1421043722522943969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06bf070a59575e92b36071544ec9bb6e
+      internalID: 4522205733418124884
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 809710c46ce05e81bf8f98afe4a2cc70
+      internalID: 1587960438285232128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d1097db9bde58c3a5f5a5c7d59dbf15
+      internalID: 2876480334100412615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e6f81f0a3995cd7978197fa2269a3fa
+      internalID: 3106322489099694055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c696e6a88369565bb99a8a88f95e22a2
+      internalID: 674079774831076037
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 375477b97a4e54e985d5cebd8d1399dc
+      internalID: 2477107327785562369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24b5e72efb5457919fd1004ae1ba5788
+      internalID: 1098855219073171693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a977a175383259dbbd07c454f2f75296
+      internalID: 3802236455746154188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a28ff967aaa25efca61da1c3cf11a776
+      internalID: 2552882545905940212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d5904106fd35827852b444111623b47
+      internalID: 3080104578669400452
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 907c8f83c07752bebc7676613ab4e0ce
+      internalID: 1752227683898649440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaca6e9a6b125b559a3944adacc890d6
+      internalID: 576495174314389799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71612a10dbf55ecbaac5ea5b9ff47aa9
+      internalID: 2059622408856665071
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffb08c2eb4af5ace95b3d18a89891ae0
+      internalID: 4089159896324006702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b285fd637a345955b6a0b1695c28f56a
+      internalID: 221904599900192486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bb80fd44d5755dca5c8da4e09ac7a40
+      internalID: 1528024196728080967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 084da44061345ad3a1d41b2b3eb675b6
+      internalID: 3967986693350929680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 308d224413b1590aac66a5c0c68f5cab
+      internalID: 1386866758966723826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 656bf0e1f8a850b091fd3d4717086412
+      internalID: 553638220146471054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8395e5affa025aee8e3c9c0098748c98
+      internalID: 4471816007933226837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52ca7810ca055a039f4d896e11728649
+      internalID: 2179883685006497570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f4b789ffbf5b51bb58ec307a252c69
+      internalID: 2617513197602755898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90c07611dc2e53d3847806f0c5457402
+      internalID: 2720549038938329511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f76dcdb6d075123a9778bffa9239df2
+      internalID: 3119371559225253986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21abe0bac8ff5f149aeb9b58ec911272
+      internalID: 3267614242123900181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7914c0cdf1455d4cac263cc242e15bb9
+      internalID: 285425770693703389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a8370cfd59592aae73f2d4e08d53ac
+      internalID: 3160498463974122462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca948c2df2375335a52c47e78b57fd00
+      internalID: 2431179914977171401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a5c143703f5a6faa1ae555cf1fdf4a
+      internalID: 1848566682058157352
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7851bbdd010c567a9b83c4ae9b7df724
+      internalID: 595517243693894350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9020ee7f7f905746b89b1e4b5f8e9cde
+      internalID: 1474654071716607473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33504cb9ab5451b7b0f35e5042538049
+      internalID: 2437498603924706716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a3977b24b555ecba6404cfe28badb6c
+      internalID: 2547229689110509483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6d0cd4bb24a5b999895edcc19e4e0f5
+      internalID: 595723185367733481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d773518b09d85ac2b0ba5a1ace826bc9
+      internalID: 3359265369841603368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d012d4867e285018943971cbc9f59a58
+      internalID: 1877468345615493844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4a209877946545586bdc5f1106c5751
+      internalID: 3891020796008944181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33a30add3abe59558b9179f130d0278b
+      internalID: 3347881715830455716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b74f7faf45d53919ee569f96a85f4c0
+      internalID: 2867725867382305615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c4ecaa3bdea53bd8612023759ff8bc9
+      internalID: 2693253986730097727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 466edf61a8695f8fb1367683f60c2a43
+      internalID: 2877301338612195946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57cfb82ea97a5ea78d05b6c9bddc0852
+      internalID: 3839982006713249973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 044c3a79402e55b4ab3356ee65cb29b2
+      internalID: 1182391403686614659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 248cd12b14d85d21ac34832c34d0e72a
+      internalID: 3747363408928115431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b93473138ec5c08b35bc791805aac47
+      internalID: 2870983215389797677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 486068eb01b05316adece431d27018bd
+      internalID: 3303755376550304544
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92e71024c3c05c72a081c536d301ed8f
+      internalID: 3839399740211820786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ash_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdc20255de185d69866aa63554b0c2dc
+      internalID: 3890777197079415776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_ash_wall_f0_v0: 3393298589136419231
+      tv2_ash_wall_f1_v0: 3551367276257345898
+      tv2_ash_wall_f4_v0: 1856804888962534407
+      tv2_ash_wall_f5_v0: 3917786823669614080
+      tv2_ash_wall_f7_v0: 3288562975645344665
+      tv2_ash_wall_f16_v0: 4486499814387165179
+      tv2_ash_wall_f17_v0: 140140299746764957
+      tv2_ash_wall_f20_v0: 3074522279193865207
+      tv2_ash_wall_f21_v0: 545965005266110094
+      tv2_ash_wall_f23_v0: 1178949606270949682
+      tv2_ash_wall_f28_v0: 3395563270231922633
+      tv2_ash_wall_f29_v0: 2471785983589289170
+      tv2_ash_wall_f31_v0: 3612727859083252296
+      tv2_ash_wall_f64_v0: 2937471553093929758
+      tv2_ash_wall_f65_v0: 392904030791594648
+      tv2_ash_wall_f68_v0: 2625767578363569582
+      tv2_ash_wall_f69_v0: 1176135985846589838
+      tv2_ash_wall_f71_v0: 3713154377529195150
+      tv2_ash_wall_f80_v0: 2332815131488213340
+      tv2_ash_wall_f81_v0: 4213251550299931264
+      tv2_ash_wall_f84_v0: 913197408113105909
+      tv2_ash_wall_f85_v0: 3090696016326354842
+      tv2_ash_wall_f87_v0: 2193546415246966815
+      tv2_ash_wall_f92_v0: 2380152038026149366
+      tv2_ash_wall_f93_v0: 2001110616665080592
+      tv2_ash_wall_f95_v0: 2026431452550804712
+      tv2_ash_wall_f112_v0: 751367427619778633
+      tv2_ash_wall_f113_v0: 1166097317599917293
+      tv2_ash_wall_f116_v0: 2596046852150693136
+      tv2_ash_wall_f117_v0: 256423247143405492
+      tv2_ash_wall_f119_v0: 3590755714820937433
+      tv2_ash_wall_f124_v0: 2153985485041506625
+      tv2_ash_wall_f125_v0: 1624492620633466079
+      tv2_ash_wall_f127_v0: 2959569415096167407
+      tv2_ash_wall_f193_v0: 2684806828972883851
+      tv2_ash_wall_f197_v0: 1498048592525008442
+      tv2_ash_wall_f199_v0: 614132473398770202
+      tv2_ash_wall_f209_v0: 2656111000544307704
+      tv2_ash_wall_f213_v0: 3373015356181500922
+      tv2_ash_wall_f215_v0: 3785442703194990500
+      tv2_ash_wall_f221_v0: 4447664909953900594
+      tv2_ash_wall_f223_v0: 811069140437974009
+      tv2_ash_wall_f241_v0: 600385394687822480
+      tv2_ash_wall_f245_v0: 1517181087872613457
+      tv2_ash_wall_f247_v0: 1570672197858068581
+      tv2_ash_wall_f253_v0: 455800124820406392
+      tv2_ash_wall_f255_v0: 2746711344077594167
+      tv2_ash_wall_f0_v1: 1198216078408757350
+      tv2_ash_wall_f1_v1: 1659025545062929800
+      tv2_ash_wall_f4_v1: 1274094567031152433
+      tv2_ash_wall_f5_v1: 552663566706145216
+      tv2_ash_wall_f7_v1: 260813189119779247
+      tv2_ash_wall_f16_v1: 3597331835623618324
+      tv2_ash_wall_f17_v1: 397817899394399607
+      tv2_ash_wall_f20_v1: 3547985981148295806
+      tv2_ash_wall_f21_v1: 1887119950693963925
+      tv2_ash_wall_f23_v1: 1587488733974985508
+      tv2_ash_wall_f28_v1: 3248231551349412927
+      tv2_ash_wall_f29_v1: 3150015328456923882
+      tv2_ash_wall_f31_v1: 2849514435153811281
+      tv2_ash_wall_f64_v1: 4429722875791873295
+      tv2_ash_wall_f65_v1: 268462869120071292
+      tv2_ash_wall_f68_v1: 4142387943818706885
+      tv2_ash_wall_f69_v1: 2311520933245490080
+      tv2_ash_wall_f71_v1: 3720858928546964120
+      tv2_ash_wall_f80_v1: 3626978161660045586
+      tv2_ash_wall_f81_v1: 1502875706094116241
+      tv2_ash_wall_f84_v1: 1512130509800407669
+      tv2_ash_wall_f85_v1: 2430375089090976953
+      tv2_ash_wall_f87_v1: 1469981496014030279
+      tv2_ash_wall_f92_v1: 3776094923782609964
+      tv2_ash_wall_f93_v1: 1394902647342270819
+      tv2_ash_wall_f95_v1: 2840647116896195542
+      tv2_ash_wall_f112_v1: 1421474440776551135
+      tv2_ash_wall_f113_v1: 894362027850985335
+      tv2_ash_wall_f116_v1: 3647556733185218407
+      tv2_ash_wall_f117_v1: 3819939417691880040
+      tv2_ash_wall_f119_v1: 1589791428291617166
+      tv2_ash_wall_f124_v1: 528030462869780891
+      tv2_ash_wall_f125_v1: 655423569453324462
+      tv2_ash_wall_f127_v1: 383020552628222437
+      tv2_ash_wall_f193_v1: 4292695713335373762
+      tv2_ash_wall_f197_v1: 1723587667858694280
+      tv2_ash_wall_f199_v1: 4015881919773022256
+      tv2_ash_wall_f209_v1: 2603468174610594852
+      tv2_ash_wall_f213_v1: 4323356734554670680
+      tv2_ash_wall_f215_v1: 2140378126228071094
+      tv2_ash_wall_f221_v1: 1722240614924966899
+      tv2_ash_wall_f223_v1: 4132394014680479066
+      tv2_ash_wall_f241_v1: 3172754110491723037
+      tv2_ash_wall_f245_v1: 1579604811774109879
+      tv2_ash_wall_f247_v1: 3552214321213572444
+      tv2_ash_wall_f253_v1: 1421043722522943969
+      tv2_ash_wall_f255_v1: 4522205733418124884
+      tv2_ash_wall_f0_v2: 1587960438285232128
+      tv2_ash_wall_f1_v2: 2876480334100412615
+      tv2_ash_wall_f4_v2: 3106322489099694055
+      tv2_ash_wall_f5_v2: 674079774831076037
+      tv2_ash_wall_f7_v2: 2477107327785562369
+      tv2_ash_wall_f16_v2: 1098855219073171693
+      tv2_ash_wall_f17_v2: 3802236455746154188
+      tv2_ash_wall_f20_v2: 2552882545905940212
+      tv2_ash_wall_f21_v2: 3080104578669400452
+      tv2_ash_wall_f23_v2: 1752227683898649440
+      tv2_ash_wall_f28_v2: 576495174314389799
+      tv2_ash_wall_f29_v2: 2059622408856665071
+      tv2_ash_wall_f31_v2: 4089159896324006702
+      tv2_ash_wall_f64_v2: 221904599900192486
+      tv2_ash_wall_f65_v2: 1528024196728080967
+      tv2_ash_wall_f68_v2: 3967986693350929680
+      tv2_ash_wall_f69_v2: 1386866758966723826
+      tv2_ash_wall_f71_v2: 553638220146471054
+      tv2_ash_wall_f80_v2: 4471816007933226837
+      tv2_ash_wall_f81_v2: 2179883685006497570
+      tv2_ash_wall_f84_v2: 2617513197602755898
+      tv2_ash_wall_f85_v2: 2720549038938329511
+      tv2_ash_wall_f87_v2: 3119371559225253986
+      tv2_ash_wall_f92_v2: 3267614242123900181
+      tv2_ash_wall_f93_v2: 285425770693703389
+      tv2_ash_wall_f95_v2: 3160498463974122462
+      tv2_ash_wall_f112_v2: 2431179914977171401
+      tv2_ash_wall_f113_v2: 1848566682058157352
+      tv2_ash_wall_f116_v2: 595517243693894350
+      tv2_ash_wall_f117_v2: 1474654071716607473
+      tv2_ash_wall_f119_v2: 2437498603924706716
+      tv2_ash_wall_f124_v2: 2547229689110509483
+      tv2_ash_wall_f125_v2: 595723185367733481
+      tv2_ash_wall_f127_v2: 3359265369841603368
+      tv2_ash_wall_f193_v2: 1877468345615493844
+      tv2_ash_wall_f197_v2: 3891020796008944181
+      tv2_ash_wall_f199_v2: 3347881715830455716
+      tv2_ash_wall_f209_v2: 2867725867382305615
+      tv2_ash_wall_f213_v2: 2693253986730097727
+      tv2_ash_wall_f215_v2: 2877301338612195946
+      tv2_ash_wall_f221_v2: 3839982006713249973
+      tv2_ash_wall_f223_v2: 1182391403686614659
+      tv2_ash_wall_f241_v2: 3747363408928115431
+      tv2_ash_wall_f245_v2: 2870983215389797677
+      tv2_ash_wall_f247_v2: 3303755376550304544
+      tv2_ash_wall_f253_v2: 3839399740211820786
+      tv2_ash_wall_f255_v2: 3890777197079415776
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,4091 @@
+fileFormatVersion: 2
+guid: 8d6f98d78ec35a92bfc8cb66805e6822
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3592962976578408174
+    second: tv2_rose_rock_f0_v0
+  - first:
+      213: 902342371909699376
+    second: tv2_rose_rock_f1_v0
+  - first:
+      213: 491345313314963886
+    second: tv2_rose_rock_f4_v0
+  - first:
+      213: 918374507596994697
+    second: tv2_rose_rock_f5_v0
+  - first:
+      213: 1462215748114224431
+    second: tv2_rose_rock_f7_v0
+  - first:
+      213: 71143714208246502
+    second: tv2_rose_rock_f16_v0
+  - first:
+      213: 3312918515775934881
+    second: tv2_rose_rock_f17_v0
+  - first:
+      213: 283481550913629015
+    second: tv2_rose_rock_f20_v0
+  - first:
+      213: 3789268139627082599
+    second: tv2_rose_rock_f21_v0
+  - first:
+      213: 1445501574768649516
+    second: tv2_rose_rock_f23_v0
+  - first:
+      213: 4400714479801939067
+    second: tv2_rose_rock_f28_v0
+  - first:
+      213: 1540859354551171590
+    second: tv2_rose_rock_f29_v0
+  - first:
+      213: 4611423108016544505
+    second: tv2_rose_rock_f31_v0
+  - first:
+      213: 3601434560863661569
+    second: tv2_rose_rock_f64_v0
+  - first:
+      213: 4185375437178201820
+    second: tv2_rose_rock_f65_v0
+  - first:
+      213: 3687440025365167477
+    second: tv2_rose_rock_f68_v0
+  - first:
+      213: 4386530025361435183
+    second: tv2_rose_rock_f69_v0
+  - first:
+      213: 3197778501853988278
+    second: tv2_rose_rock_f71_v0
+  - first:
+      213: 2011455254621367011
+    second: tv2_rose_rock_f80_v0
+  - first:
+      213: 1771865429664612861
+    second: tv2_rose_rock_f81_v0
+  - first:
+      213: 3657043023693955916
+    second: tv2_rose_rock_f84_v0
+  - first:
+      213: 3686165514758420490
+    second: tv2_rose_rock_f85_v0
+  - first:
+      213: 666413570467770300
+    second: tv2_rose_rock_f87_v0
+  - first:
+      213: 2256520194220969505
+    second: tv2_rose_rock_f92_v0
+  - first:
+      213: 2253517606369652370
+    second: tv2_rose_rock_f93_v0
+  - first:
+      213: 3192003649095928162
+    second: tv2_rose_rock_f95_v0
+  - first:
+      213: 1623669376297094668
+    second: tv2_rose_rock_f112_v0
+  - first:
+      213: 1304912135944372887
+    second: tv2_rose_rock_f113_v0
+  - first:
+      213: 2747917694675240435
+    second: tv2_rose_rock_f116_v0
+  - first:
+      213: 4029965566678999841
+    second: tv2_rose_rock_f117_v0
+  - first:
+      213: 1182733645307744052
+    second: tv2_rose_rock_f119_v0
+  - first:
+      213: 3739607698408670459
+    second: tv2_rose_rock_f124_v0
+  - first:
+      213: 2411387809636295835
+    second: tv2_rose_rock_f125_v0
+  - first:
+      213: 1613130056818209313
+    second: tv2_rose_rock_f127_v0
+  - first:
+      213: 4169048650700789769
+    second: tv2_rose_rock_f193_v0
+  - first:
+      213: 2756882701162355930
+    second: tv2_rose_rock_f197_v0
+  - first:
+      213: 3089069079597529382
+    second: tv2_rose_rock_f199_v0
+  - first:
+      213: 1516726030702294515
+    second: tv2_rose_rock_f209_v0
+  - first:
+      213: 4091560243083079506
+    second: tv2_rose_rock_f213_v0
+  - first:
+      213: 1385408986862880490
+    second: tv2_rose_rock_f215_v0
+  - first:
+      213: 3396592883321585685
+    second: tv2_rose_rock_f221_v0
+  - first:
+      213: 3183192083984188210
+    second: tv2_rose_rock_f223_v0
+  - first:
+      213: 1519042784072444496
+    second: tv2_rose_rock_f241_v0
+  - first:
+      213: 4323042697546869739
+    second: tv2_rose_rock_f245_v0
+  - first:
+      213: 2934724242503896983
+    second: tv2_rose_rock_f247_v0
+  - first:
+      213: 1847913981086609147
+    second: tv2_rose_rock_f253_v0
+  - first:
+      213: 3781346177588920034
+    second: tv2_rose_rock_f255_v0
+  - first:
+      213: 1201183433760947741
+    second: tv2_rose_rock_f0_v1
+  - first:
+      213: 4077086436581242338
+    second: tv2_rose_rock_f1_v1
+  - first:
+      213: 1303657979290585223
+    second: tv2_rose_rock_f4_v1
+  - first:
+      213: 4107652522775071750
+    second: tv2_rose_rock_f5_v1
+  - first:
+      213: 3092596948348756040
+    second: tv2_rose_rock_f7_v1
+  - first:
+      213: 4332887413608835932
+    second: tv2_rose_rock_f16_v1
+  - first:
+      213: 451739678273921924
+    second: tv2_rose_rock_f17_v1
+  - first:
+      213: 2821113285140985238
+    second: tv2_rose_rock_f20_v1
+  - first:
+      213: 4501451635685591015
+    second: tv2_rose_rock_f21_v1
+  - first:
+      213: 463684774606519461
+    second: tv2_rose_rock_f23_v1
+  - first:
+      213: 2267557653210594038
+    second: tv2_rose_rock_f28_v1
+  - first:
+      213: 2691376870232524262
+    second: tv2_rose_rock_f29_v1
+  - first:
+      213: 47345341058195291
+    second: tv2_rose_rock_f31_v1
+  - first:
+      213: 935337746417857785
+    second: tv2_rose_rock_f64_v1
+  - first:
+      213: 3114667733926947713
+    second: tv2_rose_rock_f65_v1
+  - first:
+      213: 2413332537352205940
+    second: tv2_rose_rock_f68_v1
+  - first:
+      213: 1081623557012168460
+    second: tv2_rose_rock_f69_v1
+  - first:
+      213: 2341086439695108305
+    second: tv2_rose_rock_f71_v1
+  - first:
+      213: 1279907881919616402
+    second: tv2_rose_rock_f80_v1
+  - first:
+      213: 3099990040379546350
+    second: tv2_rose_rock_f81_v1
+  - first:
+      213: 2682945250527239427
+    second: tv2_rose_rock_f84_v1
+  - first:
+      213: 3318324202905745903
+    second: tv2_rose_rock_f85_v1
+  - first:
+      213: 2470404897333358526
+    second: tv2_rose_rock_f87_v1
+  - first:
+      213: 3917130043183730879
+    second: tv2_rose_rock_f92_v1
+  - first:
+      213: 2341309930853680540
+    second: tv2_rose_rock_f93_v1
+  - first:
+      213: 4015169837044964750
+    second: tv2_rose_rock_f95_v1
+  - first:
+      213: 2495329917279751064
+    second: tv2_rose_rock_f112_v1
+  - first:
+      213: 3460362841325801309
+    second: tv2_rose_rock_f113_v1
+  - first:
+      213: 484608284228223446
+    second: tv2_rose_rock_f116_v1
+  - first:
+      213: 3733152334801333211
+    second: tv2_rose_rock_f117_v1
+  - first:
+      213: 675172340868582065
+    second: tv2_rose_rock_f119_v1
+  - first:
+      213: 1724398032872724538
+    second: tv2_rose_rock_f124_v1
+  - first:
+      213: 1979717946196112156
+    second: tv2_rose_rock_f125_v1
+  - first:
+      213: 826172081759834199
+    second: tv2_rose_rock_f127_v1
+  - first:
+      213: 3548393820480980727
+    second: tv2_rose_rock_f193_v1
+  - first:
+      213: 2769880777485378958
+    second: tv2_rose_rock_f197_v1
+  - first:
+      213: 2865421558492546256
+    second: tv2_rose_rock_f199_v1
+  - first:
+      213: 2734380712104631797
+    second: tv2_rose_rock_f209_v1
+  - first:
+      213: 4515429423605159720
+    second: tv2_rose_rock_f213_v1
+  - first:
+      213: 2042163343570092212
+    second: tv2_rose_rock_f215_v1
+  - first:
+      213: 314731540924439862
+    second: tv2_rose_rock_f221_v1
+  - first:
+      213: 1312921907542203640
+    second: tv2_rose_rock_f223_v1
+  - first:
+      213: 4431871409714814984
+    second: tv2_rose_rock_f241_v1
+  - first:
+      213: 1389966514321733604
+    second: tv2_rose_rock_f245_v1
+  - first:
+      213: 1256019605455669350
+    second: tv2_rose_rock_f247_v1
+  - first:
+      213: 657072086166328919
+    second: tv2_rose_rock_f253_v1
+  - first:
+      213: 1761828317231799815
+    second: tv2_rose_rock_f255_v1
+  - first:
+      213: 4284146089086697848
+    second: tv2_rose_rock_f0_v2
+  - first:
+      213: 4382055145248747582
+    second: tv2_rose_rock_f1_v2
+  - first:
+      213: 4512591842595180198
+    second: tv2_rose_rock_f4_v2
+  - first:
+      213: 3161296468648965953
+    second: tv2_rose_rock_f5_v2
+  - first:
+      213: 1291474144444558015
+    second: tv2_rose_rock_f7_v2
+  - first:
+      213: 932162248053177478
+    second: tv2_rose_rock_f16_v2
+  - first:
+      213: 688388259490211226
+    second: tv2_rose_rock_f17_v2
+  - first:
+      213: 2396855806040080199
+    second: tv2_rose_rock_f20_v2
+  - first:
+      213: 3501950306939750813
+    second: tv2_rose_rock_f21_v2
+  - first:
+      213: 29303160512825607
+    second: tv2_rose_rock_f23_v2
+  - first:
+      213: 683514361903171106
+    second: tv2_rose_rock_f28_v2
+  - first:
+      213: 1739733063442940988
+    second: tv2_rose_rock_f29_v2
+  - first:
+      213: 4391614867406279832
+    second: tv2_rose_rock_f31_v2
+  - first:
+      213: 4432964888285902117
+    second: tv2_rose_rock_f64_v2
+  - first:
+      213: 2611479098234785621
+    second: tv2_rose_rock_f65_v2
+  - first:
+      213: 1437057208142992525
+    second: tv2_rose_rock_f68_v2
+  - first:
+      213: 1034254596301617158
+    second: tv2_rose_rock_f69_v2
+  - first:
+      213: 3602704882163245183
+    second: tv2_rose_rock_f71_v2
+  - first:
+      213: 4282972677183157925
+    second: tv2_rose_rock_f80_v2
+  - first:
+      213: 3264543691268256667
+    second: tv2_rose_rock_f81_v2
+  - first:
+      213: 4424049305707750856
+    second: tv2_rose_rock_f84_v2
+  - first:
+      213: 904519344519120226
+    second: tv2_rose_rock_f85_v2
+  - first:
+      213: 3369184936008541309
+    second: tv2_rose_rock_f87_v2
+  - first:
+      213: 592907693457816906
+    second: tv2_rose_rock_f92_v2
+  - first:
+      213: 1042087294535102914
+    second: tv2_rose_rock_f93_v2
+  - first:
+      213: 2332639609500372222
+    second: tv2_rose_rock_f95_v2
+  - first:
+      213: 4387892109603786381
+    second: tv2_rose_rock_f112_v2
+  - first:
+      213: 1349068430874782467
+    second: tv2_rose_rock_f113_v2
+  - first:
+      213: 1324048384808235064
+    second: tv2_rose_rock_f116_v2
+  - first:
+      213: 1067642699157286657
+    second: tv2_rose_rock_f117_v2
+  - first:
+      213: 449237038303029882
+    second: tv2_rose_rock_f119_v2
+  - first:
+      213: 4157875324210297489
+    second: tv2_rose_rock_f124_v2
+  - first:
+      213: 4323150697573408853
+    second: tv2_rose_rock_f125_v2
+  - first:
+      213: 3607272828647980771
+    second: tv2_rose_rock_f127_v2
+  - first:
+      213: 1121574869085163641
+    second: tv2_rose_rock_f193_v2
+  - first:
+      213: 1412488612271082143
+    second: tv2_rose_rock_f197_v2
+  - first:
+      213: 3656252309876321433
+    second: tv2_rose_rock_f199_v2
+  - first:
+      213: 2126337611474405454
+    second: tv2_rose_rock_f209_v2
+  - first:
+      213: 3707023510805714940
+    second: tv2_rose_rock_f213_v2
+  - first:
+      213: 285697648041943271
+    second: tv2_rose_rock_f215_v2
+  - first:
+      213: 2133466134032762453
+    second: tv2_rose_rock_f221_v2
+  - first:
+      213: 3399020804971031114
+    second: tv2_rose_rock_f223_v2
+  - first:
+      213: 3848481442812485417
+    second: tv2_rose_rock_f241_v2
+  - first:
+      213: 543304409400483958
+    second: tv2_rose_rock_f245_v2
+  - first:
+      213: 2545524278497079394
+    second: tv2_rose_rock_f247_v2
+  - first:
+      213: 1837720044233509301
+    second: tv2_rose_rock_f253_v2
+  - first:
+      213: 2557826314446250525
+    second: tv2_rose_rock_f255_v2
+  - first:
+      213: 2417274476326763510
+    second: tv2_rose_rock_up_right_v0
+  - first:
+      213: 3340197731821287422
+    second: tv2_rose_rock_up_right_v1
+  - first:
+      213: 2619816357557982948
+    second: tv2_rose_rock_up_right_v2
+  - first:
+      213: 2033561397485053937
+    second: tv2_rose_rock_up_left_v0
+  - first:
+      213: 456642130046565353
+    second: tv2_rose_rock_up_left_v1
+  - first:
+      213: 3925806454355484481
+    second: tv2_rose_rock_up_left_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_rose_rock_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37decf8b66e15842a5d79d8107ba4a6f
+      internalID: 3592962976578408174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55a98147f0705865b7355d178b6abd15
+      internalID: 902342371909699376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65daed89f7785b63a713356b38e7b217
+      internalID: 491345313314963886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a9a45cb52c55a288f421817a29b4f93
+      internalID: 918374507596994697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ef143eeb5ea572dae683c6f72ea9ae0
+      internalID: 1462215748114224431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5af0f54376425d78a726467dad56932b
+      internalID: 71143714208246502
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21b006b694a35690b9cc776cf29e70d0
+      internalID: 3312918515775934881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48f08faf7d325b72bb38a6f7220f02ba
+      internalID: 283481550913629015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8c6331fbb3a54c7a5bc7b40019592c9
+      internalID: 3789268139627082599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 097d4c6acfe05182a36f921b8ef13322
+      internalID: 1445501574768649516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a68031745e8553b5aabfc657fdd53c9e
+      internalID: 4400714479801939067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0d789c870cc5eed86458e18e8628051
+      internalID: 1540859354551171590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c291cece6015dd39b388bc3593fad2a
+      internalID: 4611423108016544505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24aa762db3e15924af3e12b1e0cca3ad
+      internalID: 3601434560863661569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdd0207c91b951ae8a3db7141c471310
+      internalID: 4185375437178201820
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ed173559cb35580b7f12331cdf1d20c
+      internalID: 3687440025365167477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e370796fe44d57fdb44ca3947b25a1e5
+      internalID: 4386530025361435183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fba4e0d88fca5381bb4a0825d1f1d289
+      internalID: 3197778501853988278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2ebddbd019e5bf3bec19f06ef9b60c8
+      internalID: 2011455254621367011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2a2bb033e605fb59aa4a74be24fae2b
+      internalID: 1771865429664612861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2397247a0b97502eb8bcaa641c3b18d2
+      internalID: 3657043023693955916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e82c604979c45e6394ee0d2bf105ef30
+      internalID: 3686165514758420490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d9e16027c215d358d4f1d80362efc57
+      internalID: 666413570467770300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81b793e1a7b65878892abf1761e508de
+      internalID: 2256520194220969505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d69cf4a6c2552a58f89e0534d41739a
+      internalID: 2253517606369652370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 541b9b9d520b56738071f7f31f870bde
+      internalID: 3192003649095928162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c828a0c22f8c5107bfbbea59073299ad
+      internalID: 1623669376297094668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9391dd5ac512555eb8c4e6f7db7b1c1c
+      internalID: 1304912135944372887
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 710d0c1d9a945e68bbffd371a43b9c1f
+      internalID: 2747917694675240435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 651afe56922656c79b9bdfb235db5595
+      internalID: 4029965566678999841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b84a20e5de454d1866e6b8d3ac26ff9
+      internalID: 1182733645307744052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7c7bd215e8159e89b0bdd395e950c33
+      internalID: 3739607698408670459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 361f292fab295e40a6cdff8d9e855e9f
+      internalID: 2411387809636295835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7b772346a4151edbcbf2be3a2769cca
+      internalID: 1613130056818209313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 503a3bad5c4a51218471314b7150f0fc
+      internalID: 4169048650700789769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b2fc661e86350a98a8acfadd957166a
+      internalID: 2756882701162355930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efa7ad907a2b58f8972df517c8fbb70d
+      internalID: 3089069079597529382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fda8794374c5cfdb3eee043483e0a2d
+      internalID: 1516726030702294515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea57adfeadcc5ec7aeeb6ba1183c0e89
+      internalID: 4091560243083079506
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f3328b2f99f5c1dbcb90e500b5e24e4
+      internalID: 1385408986862880490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26064233b8d25202adf1c3c8fb8274fc
+      internalID: 3396592883321585685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41f673608b4c55639d77871682256b38
+      internalID: 3183192083984188210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6dd254cba167517a803212c5be010d37
+      internalID: 1519042784072444496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 000d7eef1a345448bad2654038ab53f4
+      internalID: 4323042697546869739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab07c95b289551aa8c22640755f73780
+      internalID: 2934724242503896983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e75275f29cf5be1b354904b1e7a9bc0
+      internalID: 1847913981086609147
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f941f8060615c9bb671c74e9400aa92
+      internalID: 3781346177588920034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db5360c69d4757888dfa940654a05487
+      internalID: 1201183433760947741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8938353e3d8f570b8a653950caa70301
+      internalID: 4077086436581242338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64568e231c295f1fa7d03f9797fda5a5
+      internalID: 1303657979290585223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1425230903bb5e8694f33979fe496466
+      internalID: 4107652522775071750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8916ceaf98858938a7d909f6fe487a6
+      internalID: 3092596948348756040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee793a390d1b5789a9e405a7f498dfb1
+      internalID: 4332887413608835932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a333ee99fa65013a26ede8f2ea7664e
+      internalID: 451739678273921924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c052f98b3f9f58a5a0e269b996b19c24
+      internalID: 2821113285140985238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e981a33791953a682a9e7cf06c01a24
+      internalID: 4501451635685591015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2a97769abdc507d824151908b2bff2d
+      internalID: 463684774606519461
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b33c0267a2c35520a19a7b4619e9bcab
+      internalID: 2267557653210594038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e3cea6290d9564b981190fc1ca769b9
+      internalID: 2691376870232524262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f266ee6cebc2581097388353ff04975d
+      internalID: 47345341058195291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 255b397527305468855f693db8ac76e4
+      internalID: 935337746417857785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7500a9ed927a55848f178d2a0508f415
+      internalID: 3114667733926947713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed0bfa5247fd557081377e827687c1da
+      internalID: 2413332537352205940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4853cd9cc0b530ca60eabde5c3e2261
+      internalID: 1081623557012168460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f38719baa08a55e694c065a8803f0fe4
+      internalID: 2341086439695108305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47a209c81a725a7089471a4d9c9af8ee
+      internalID: 1279907881919616402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d55b6e64f6355ee9a18fff6e32d77749
+      internalID: 3099990040379546350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6a9eb4f7db85e00ba5c32c07550061a
+      internalID: 2682945250527239427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1649bafbd13573888bee8f998a1e79f
+      internalID: 3318324202905745903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db36d8ba5c935322ae21fb2f170dbd0d
+      internalID: 2470404897333358526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64c87060a8365a70bfc57e2187644242
+      internalID: 3917130043183730879
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5be65b8b6ee52d8ad22289c047f47ed
+      internalID: 2341309930853680540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a12e31dcde6e5ca2b700b8d00aadda8a
+      internalID: 4015169837044964750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dbe0554a6a5554b8ca0b176aa1a0d35
+      internalID: 2495329917279751064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ee0534d506b535a96f44cb527545546
+      internalID: 3460362841325801309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d30681ecf24c5542b1630c831814e219
+      internalID: 484608284228223446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c0b8805fd985ac6800098a3de9e7d84
+      internalID: 3733152334801333211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bddd28cf1b85cb8a950b98c57e22616
+      internalID: 675172340868582065
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26f7edc909145a61a6f7f5e1f16642db
+      internalID: 1724398032872724538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bbad4a5a9735e968205972b543773ff
+      internalID: 1979717946196112156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c106d02f51f5f599a5f94dcda5e43cf
+      internalID: 826172081759834199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14ab1a98676b5d778878ebfd329c5dc7
+      internalID: 3548393820480980727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68739630fd035dcf818678b6e357e70c
+      internalID: 2769880777485378958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e39e6a5e9d5b27b436ded1d06d4781
+      internalID: 2865421558492546256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c5ae869b2255d65a0cd8afdf10d18e5
+      internalID: 2734380712104631797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08d4d122ae715af4bb28b64bc1b12fbc
+      internalID: 4515429423605159720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1220e30b3ebc505f9a0c402bb4f3a0a4
+      internalID: 2042163343570092212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da4babaf256f5cda87655f9e389f07a4
+      internalID: 314731540924439862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 351eb91141ab5dbe9928d0329378af0d
+      internalID: 1312921907542203640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57d4201299235164b2a330e521b62028
+      internalID: 4431871409714814984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a6bf694f8045020be4f4503b3827794
+      internalID: 1389966514321733604
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f722a37f5fcf58408d0cab2741a85ce5
+      internalID: 1256019605455669350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd56b719b4bc55108184e89dc5149dd0
+      internalID: 657072086166328919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71241887a62c529c9bbc583cffc00621
+      internalID: 1761828317231799815
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31453fc3928b5dc7bc0ac8c8a2acd84e
+      internalID: 4284146089086697848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c49976ee145fcea0bb90b21b262231
+      internalID: 4382055145248747582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85d5ae49b3c85f8284dd85078faf1f1a
+      internalID: 4512591842595180198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e869371b9def5081a005d4fd37ab7337
+      internalID: 3161296468648965953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27ec4d1388935159afa38bdb1f3cc1db
+      internalID: 1291474144444558015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16ce76a0d1f25850b89943682994e4fe
+      internalID: 932162248053177478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1cfdd3659fb95b78927030c008e33682
+      internalID: 688388259490211226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 337b88d192f959c18b246e53f6d9c9ba
+      internalID: 2396855806040080199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18a696f14fa6573e9eb45ce108288a5b
+      internalID: 3501950306939750813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0eb8748871758c58d1e7edf60b606bd
+      internalID: 29303160512825607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bf9b38e206050c2a471a867fedbe536
+      internalID: 683514361903171106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 945f6b80f5425add8788470e49da1654
+      internalID: 1739733063442940988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f3ecfd4c45658a887e9ffb192a0be4b
+      internalID: 4391614867406279832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41799d9a59d652e799dddade620f71ea
+      internalID: 4432964888285902117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe91c41b238a50e7ae1d1c4909fcb745
+      internalID: 2611479098234785621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b418e17c09451efb650dd332913c030
+      internalID: 1437057208142992525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac3f43cd16d52d29049a184f35b05f0
+      internalID: 1034254596301617158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 563fb8a97ee556a48a19744743bced1f
+      internalID: 3602704882163245183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 465376e830dd5d46be712d35fab1c2a6
+      internalID: 4282972677183157925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8703c0d9ce135ac1b6f9a24004bf64cf
+      internalID: 3264543691268256667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4769c9d8b8e45a449ac66903ea29ea32
+      internalID: 4424049305707750856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ee68cbc8ed859cb8cf617f65544c2d7
+      internalID: 904519344519120226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d381beac963f5f949ff18cd2db9cb65c
+      internalID: 3369184936008541309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd51b8dc07fa53d4b228427d351df761
+      internalID: 592907693457816906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa2e2302c8675e6593bab4c9917c9865
+      internalID: 1042087294535102914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e73cd43b2e531b99d0ac229ce04157
+      internalID: 2332639609500372222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5754b9167fca551abe1a8d9a19a6218b
+      internalID: 4387892109603786381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdf7456c73cd54788fd5991702e097cd
+      internalID: 1349068430874782467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf1754bc59255b4abea31c39d5a0cac4
+      internalID: 1324048384808235064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25ecd83306d754f59e781fd0b4c764b9
+      internalID: 1067642699157286657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3780320ac8c555ca543921c025b6137
+      internalID: 449237038303029882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ca1f07fa7045dc4adc00e59b6bd07d0
+      internalID: 4157875324210297489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5170d38abe7058f2a3c69de37fa7a29a
+      internalID: 4323150697573408853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8871e64b2c86508f804f56a12f3f64aa
+      internalID: 3607272828647980771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e582f45f9ec955358bbe94c7799b74f8
+      internalID: 1121574869085163641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 243d98cb44de5ce1800d2d594214d122
+      internalID: 1412488612271082143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0fa22d1a2055856baf78ca718bb381e
+      internalID: 3656252309876321433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6843007cb95a5342a50b2e94a4ae14aa
+      internalID: 2126337611474405454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 869359d96a2155cea9827b8f1ee3753c
+      internalID: 3707023510805714940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52f06cb91e5950dc9140fdd759f8be85
+      internalID: 285697648041943271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1b967eedbd55925bb2683fbb350dec5
+      internalID: 2133466134032762453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d381d6c9d4252a4a494de81fe451f82
+      internalID: 3399020804971031114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 641236707dd351ca8a295cf999423af3
+      internalID: 3848481442812485417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cc3b2b36b725cb69dee5c781a0f97f1
+      internalID: 543304409400483958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a51d2520f1c50e5a46400094afc9419
+      internalID: 2545524278497079394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18a6869f96775696a3f3e037d22781e6
+      internalID: 1837720044233509301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa5b577b1dc95855aaf75f261cbd5437
+      internalID: 2557826314446250525
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0d08b05ff705c05b68deab25a64a9cc
+      internalID: 2417274476326763510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71e1af83c15355fcbf1d29171216cf93
+      internalID: 3340197731821287422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0fbeb1d615856fc9d2b33442da1939c
+      internalID: 2619816357557982948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 845460d3ee315b4dbb8e76a13c50a798
+      internalID: 2033561397485053937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: efd227918f005331b36a7bc6865d74dc
+      internalID: 456642130046565353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b056e67dc3258aca2a0a2efc2064cdf
+      internalID: 3925806454355484481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_rose_rock_f0_v0: 3592962976578408174
+      tv2_rose_rock_f1_v0: 902342371909699376
+      tv2_rose_rock_f4_v0: 491345313314963886
+      tv2_rose_rock_f5_v0: 918374507596994697
+      tv2_rose_rock_f7_v0: 1462215748114224431
+      tv2_rose_rock_f16_v0: 71143714208246502
+      tv2_rose_rock_f17_v0: 3312918515775934881
+      tv2_rose_rock_f20_v0: 283481550913629015
+      tv2_rose_rock_f21_v0: 3789268139627082599
+      tv2_rose_rock_f23_v0: 1445501574768649516
+      tv2_rose_rock_f28_v0: 4400714479801939067
+      tv2_rose_rock_f29_v0: 1540859354551171590
+      tv2_rose_rock_f31_v0: 4611423108016544505
+      tv2_rose_rock_f64_v0: 3601434560863661569
+      tv2_rose_rock_f65_v0: 4185375437178201820
+      tv2_rose_rock_f68_v0: 3687440025365167477
+      tv2_rose_rock_f69_v0: 4386530025361435183
+      tv2_rose_rock_f71_v0: 3197778501853988278
+      tv2_rose_rock_f80_v0: 2011455254621367011
+      tv2_rose_rock_f81_v0: 1771865429664612861
+      tv2_rose_rock_f84_v0: 3657043023693955916
+      tv2_rose_rock_f85_v0: 3686165514758420490
+      tv2_rose_rock_f87_v0: 666413570467770300
+      tv2_rose_rock_f92_v0: 2256520194220969505
+      tv2_rose_rock_f93_v0: 2253517606369652370
+      tv2_rose_rock_f95_v0: 3192003649095928162
+      tv2_rose_rock_f112_v0: 1623669376297094668
+      tv2_rose_rock_f113_v0: 1304912135944372887
+      tv2_rose_rock_f116_v0: 2747917694675240435
+      tv2_rose_rock_f117_v0: 4029965566678999841
+      tv2_rose_rock_f119_v0: 1182733645307744052
+      tv2_rose_rock_f124_v0: 3739607698408670459
+      tv2_rose_rock_f125_v0: 2411387809636295835
+      tv2_rose_rock_f127_v0: 1613130056818209313
+      tv2_rose_rock_f193_v0: 4169048650700789769
+      tv2_rose_rock_f197_v0: 2756882701162355930
+      tv2_rose_rock_f199_v0: 3089069079597529382
+      tv2_rose_rock_f209_v0: 1516726030702294515
+      tv2_rose_rock_f213_v0: 4091560243083079506
+      tv2_rose_rock_f215_v0: 1385408986862880490
+      tv2_rose_rock_f221_v0: 3396592883321585685
+      tv2_rose_rock_f223_v0: 3183192083984188210
+      tv2_rose_rock_f241_v0: 1519042784072444496
+      tv2_rose_rock_f245_v0: 4323042697546869739
+      tv2_rose_rock_f247_v0: 2934724242503896983
+      tv2_rose_rock_f253_v0: 1847913981086609147
+      tv2_rose_rock_f255_v0: 3781346177588920034
+      tv2_rose_rock_f0_v1: 1201183433760947741
+      tv2_rose_rock_f1_v1: 4077086436581242338
+      tv2_rose_rock_f4_v1: 1303657979290585223
+      tv2_rose_rock_f5_v1: 4107652522775071750
+      tv2_rose_rock_f7_v1: 3092596948348756040
+      tv2_rose_rock_f16_v1: 4332887413608835932
+      tv2_rose_rock_f17_v1: 451739678273921924
+      tv2_rose_rock_f20_v1: 2821113285140985238
+      tv2_rose_rock_f21_v1: 4501451635685591015
+      tv2_rose_rock_f23_v1: 463684774606519461
+      tv2_rose_rock_f28_v1: 2267557653210594038
+      tv2_rose_rock_f29_v1: 2691376870232524262
+      tv2_rose_rock_f31_v1: 47345341058195291
+      tv2_rose_rock_f64_v1: 935337746417857785
+      tv2_rose_rock_f65_v1: 3114667733926947713
+      tv2_rose_rock_f68_v1: 2413332537352205940
+      tv2_rose_rock_f69_v1: 1081623557012168460
+      tv2_rose_rock_f71_v1: 2341086439695108305
+      tv2_rose_rock_f80_v1: 1279907881919616402
+      tv2_rose_rock_f81_v1: 3099990040379546350
+      tv2_rose_rock_f84_v1: 2682945250527239427
+      tv2_rose_rock_f85_v1: 3318324202905745903
+      tv2_rose_rock_f87_v1: 2470404897333358526
+      tv2_rose_rock_f92_v1: 3917130043183730879
+      tv2_rose_rock_f93_v1: 2341309930853680540
+      tv2_rose_rock_f95_v1: 4015169837044964750
+      tv2_rose_rock_f112_v1: 2495329917279751064
+      tv2_rose_rock_f113_v1: 3460362841325801309
+      tv2_rose_rock_f116_v1: 484608284228223446
+      tv2_rose_rock_f117_v1: 3733152334801333211
+      tv2_rose_rock_f119_v1: 675172340868582065
+      tv2_rose_rock_f124_v1: 1724398032872724538
+      tv2_rose_rock_f125_v1: 1979717946196112156
+      tv2_rose_rock_f127_v1: 826172081759834199
+      tv2_rose_rock_f193_v1: 3548393820480980727
+      tv2_rose_rock_f197_v1: 2769880777485378958
+      tv2_rose_rock_f199_v1: 2865421558492546256
+      tv2_rose_rock_f209_v1: 2734380712104631797
+      tv2_rose_rock_f213_v1: 4515429423605159720
+      tv2_rose_rock_f215_v1: 2042163343570092212
+      tv2_rose_rock_f221_v1: 314731540924439862
+      tv2_rose_rock_f223_v1: 1312921907542203640
+      tv2_rose_rock_f241_v1: 4431871409714814984
+      tv2_rose_rock_f245_v1: 1389966514321733604
+      tv2_rose_rock_f247_v1: 1256019605455669350
+      tv2_rose_rock_f253_v1: 657072086166328919
+      tv2_rose_rock_f255_v1: 1761828317231799815
+      tv2_rose_rock_f0_v2: 4284146089086697848
+      tv2_rose_rock_f1_v2: 4382055145248747582
+      tv2_rose_rock_f4_v2: 4512591842595180198
+      tv2_rose_rock_f5_v2: 3161296468648965953
+      tv2_rose_rock_f7_v2: 1291474144444558015
+      tv2_rose_rock_f16_v2: 932162248053177478
+      tv2_rose_rock_f17_v2: 688388259490211226
+      tv2_rose_rock_f20_v2: 2396855806040080199
+      tv2_rose_rock_f21_v2: 3501950306939750813
+      tv2_rose_rock_f23_v2: 29303160512825607
+      tv2_rose_rock_f28_v2: 683514361903171106
+      tv2_rose_rock_f29_v2: 1739733063442940988
+      tv2_rose_rock_f31_v2: 4391614867406279832
+      tv2_rose_rock_f64_v2: 4432964888285902117
+      tv2_rose_rock_f65_v2: 2611479098234785621
+      tv2_rose_rock_f68_v2: 1437057208142992525
+      tv2_rose_rock_f69_v2: 1034254596301617158
+      tv2_rose_rock_f71_v2: 3602704882163245183
+      tv2_rose_rock_f80_v2: 4282972677183157925
+      tv2_rose_rock_f81_v2: 3264543691268256667
+      tv2_rose_rock_f84_v2: 4424049305707750856
+      tv2_rose_rock_f85_v2: 904519344519120226
+      tv2_rose_rock_f87_v2: 3369184936008541309
+      tv2_rose_rock_f92_v2: 592907693457816906
+      tv2_rose_rock_f93_v2: 1042087294535102914
+      tv2_rose_rock_f95_v2: 2332639609500372222
+      tv2_rose_rock_f112_v2: 4387892109603786381
+      tv2_rose_rock_f113_v2: 1349068430874782467
+      tv2_rose_rock_f116_v2: 1324048384808235064
+      tv2_rose_rock_f117_v2: 1067642699157286657
+      tv2_rose_rock_f119_v2: 449237038303029882
+      tv2_rose_rock_f124_v2: 4157875324210297489
+      tv2_rose_rock_f125_v2: 4323150697573408853
+      tv2_rose_rock_f127_v2: 3607272828647980771
+      tv2_rose_rock_f193_v2: 1121574869085163641
+      tv2_rose_rock_f197_v2: 1412488612271082143
+      tv2_rose_rock_f199_v2: 3656252309876321433
+      tv2_rose_rock_f209_v2: 2126337611474405454
+      tv2_rose_rock_f213_v2: 3707023510805714940
+      tv2_rose_rock_f215_v2: 285697648041943271
+      tv2_rose_rock_f221_v2: 2133466134032762453
+      tv2_rose_rock_f223_v2: 3399020804971031114
+      tv2_rose_rock_f241_v2: 3848481442812485417
+      tv2_rose_rock_f245_v2: 543304409400483958
+      tv2_rose_rock_f247_v2: 2545524278497079394
+      tv2_rose_rock_f253_v2: 1837720044233509301
+      tv2_rose_rock_f255_v2: 2557826314446250525
+      tv2_rose_rock_up_right_v0: 2417274476326763510
+      tv2_rose_rock_up_right_v1: 3340197731821287422
+      tv2_rose_rock_up_right_v2: 2619816357557982948
+      tv2_rose_rock_up_left_v0: 2033561397485053937
+      tv2_rose_rock_up_left_v1: 456642130046565353
+      tv2_rose_rock_up_left_v2: 3925806454355484481
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

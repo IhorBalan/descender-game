@@ -34,9 +34,14 @@ namespace Descender.World.TilesV2
         [SerializeField, Min(1f)]
         private float activeDistance = 30f;
 
+        [SerializeField, Tooltip("Embers rise from it: a flame, not a lamp or a crystal.")]
+        private bool embers = true;
+
         private const float CheckEvery = 0.25f;
 
         private SpriteRenderer flame;
+        private ParticleSystem[] motes;
+        private bool near = true;
         private float offset;
         private float nextCheck;
 
@@ -45,6 +50,13 @@ namespace Descender.World.TilesV2
 
         /// <summary>The light the torch gives its tile, for the tile light to spread.</summary>
         public Color Emission => colour * tileIntensity;
+
+        /// <summary>Whether embers rise from it.</summary>
+        public bool Embers
+        {
+            get => embers;
+            set => embers = value;
+        }
 
         public void Configure(
             Sprite[] flameFrames,
@@ -92,10 +104,21 @@ namespace Descender.World.TilesV2
             {
                 nextCheck = t + CheckEvery;
                 var view = Camera.main;
-                glow.enabled =
+                var isNear =
                     view == null
                     || ((Vector2)(view.transform.position - transform.position)).sqrMagnitude
                         < activeDistance * activeDistance;
+                glow.enabled = isNear;
+                if (isNear != near)
+                {
+                    // Its dust and embers rest with it: a world has hundreds of lamps.
+                    near = isNear;
+                    motes ??= GetComponentsInChildren<ParticleSystem>(true);
+                    foreach (var system in motes)
+                    {
+                        system.gameObject.SetActive(isNear);
+                    }
+                }
             }
             glow.intensity = intensity * Waver(t, offset);
         }

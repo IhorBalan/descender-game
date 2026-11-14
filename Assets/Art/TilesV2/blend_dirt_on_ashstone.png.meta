@@ -1,0 +1,1319 @@
+fileFormatVersion: 2
+guid: 96b0c7daae685473bb27df85e66e3b09
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4308557835600539413
+    second: tv2_dirt_on_ashstone_s1_v0
+  - first:
+      213: 2206341672088336990
+    second: tv2_dirt_on_ashstone_s2_v0
+  - first:
+      213: 500519716410140765
+    second: tv2_dirt_on_ashstone_s3_v0
+  - first:
+      213: 4556490533743940349
+    second: tv2_dirt_on_ashstone_s4_v0
+  - first:
+      213: 4391236541147961087
+    second: tv2_dirt_on_ashstone_s5_v0
+  - first:
+      213: 631127972751596947
+    second: tv2_dirt_on_ashstone_s6_v0
+  - first:
+      213: 2960718419915722931
+    second: tv2_dirt_on_ashstone_s7_v0
+  - first:
+      213: 4062348132304654297
+    second: tv2_dirt_on_ashstone_s8_v0
+  - first:
+      213: 477440391599357589
+    second: tv2_dirt_on_ashstone_s9_v0
+  - first:
+      213: 1316734915868108846
+    second: tv2_dirt_on_ashstone_s10_v0
+  - first:
+      213: 8151727531949240
+    second: tv2_dirt_on_ashstone_s11_v0
+  - first:
+      213: 2049415908538686043
+    second: tv2_dirt_on_ashstone_s12_v0
+  - first:
+      213: 1650901759208742339
+    second: tv2_dirt_on_ashstone_s13_v0
+  - first:
+      213: 2578235654036164619
+    second: tv2_dirt_on_ashstone_s14_v0
+  - first:
+      213: 3439529804768357741
+    second: tv2_dirt_on_ashstone_s15_v0
+  - first:
+      213: 2089619327925330929
+    second: tv2_dirt_on_ashstone_s1_v1
+  - first:
+      213: 2398214819364821947
+    second: tv2_dirt_on_ashstone_s2_v1
+  - first:
+      213: 2198524111090662983
+    second: tv2_dirt_on_ashstone_s3_v1
+  - first:
+      213: 3341730866087442278
+    second: tv2_dirt_on_ashstone_s4_v1
+  - first:
+      213: 381324111107628210
+    second: tv2_dirt_on_ashstone_s5_v1
+  - first:
+      213: 2268964456159671707
+    second: tv2_dirt_on_ashstone_s6_v1
+  - first:
+      213: 4338925938366475471
+    second: tv2_dirt_on_ashstone_s7_v1
+  - first:
+      213: 1299411125055077243
+    second: tv2_dirt_on_ashstone_s8_v1
+  - first:
+      213: 2273214555548772388
+    second: tv2_dirt_on_ashstone_s9_v1
+  - first:
+      213: 3281371905546010903
+    second: tv2_dirt_on_ashstone_s10_v1
+  - first:
+      213: 3594342974572999912
+    second: tv2_dirt_on_ashstone_s11_v1
+  - first:
+      213: 1754736020700301431
+    second: tv2_dirt_on_ashstone_s12_v1
+  - first:
+      213: 418679009781164028
+    second: tv2_dirt_on_ashstone_s13_v1
+  - first:
+      213: 1196231817444200051
+    second: tv2_dirt_on_ashstone_s14_v1
+  - first:
+      213: 847852706516922213
+    second: tv2_dirt_on_ashstone_s15_v1
+  - first:
+      213: 1331452495547752844
+    second: tv2_dirt_on_ashstone_s1_v2
+  - first:
+      213: 976979868251792692
+    second: tv2_dirt_on_ashstone_s2_v2
+  - first:
+      213: 120298496385374938
+    second: tv2_dirt_on_ashstone_s3_v2
+  - first:
+      213: 2952319321007305955
+    second: tv2_dirt_on_ashstone_s4_v2
+  - first:
+      213: 2475798223044908369
+    second: tv2_dirt_on_ashstone_s5_v2
+  - first:
+      213: 1959117631864539948
+    second: tv2_dirt_on_ashstone_s6_v2
+  - first:
+      213: 3613627810283322487
+    second: tv2_dirt_on_ashstone_s7_v2
+  - first:
+      213: 3475680635665535587
+    second: tv2_dirt_on_ashstone_s8_v2
+  - first:
+      213: 3924459361221239122
+    second: tv2_dirt_on_ashstone_s9_v2
+  - first:
+      213: 2367950231593926443
+    second: tv2_dirt_on_ashstone_s10_v2
+  - first:
+      213: 2752328879591975341
+    second: tv2_dirt_on_ashstone_s11_v2
+  - first:
+      213: 2204898013270148450
+    second: tv2_dirt_on_ashstone_s12_v2
+  - first:
+      213: 3616573979908179994
+    second: tv2_dirt_on_ashstone_s13_v2
+  - first:
+      213: 1199244720861694292
+    second: tv2_dirt_on_ashstone_s14_v2
+  - first:
+      213: 2387372082290763410
+    second: tv2_dirt_on_ashstone_s15_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33a195cab05755239ca25f1f0af82569
+      internalID: 4308557835600539413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s2_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07cf6642c7785acd97f22a95e51c2da8
+      internalID: 2206341672088336990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s3_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbb396eb7fad5f2584702842658481dc
+      internalID: 500519716410140765
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65f7e15e539b57d7b7f4bf9af6a9b78d
+      internalID: 4556490533743940349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2da482ec605540b8f8cb922ea761994
+      internalID: 4391236541147961087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s6_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19bcae9d019253888d94e33f2814ebe8
+      internalID: 631127972751596947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd08058b4d085cd68c886481c72ba8e0
+      internalID: 2960718419915722931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s8_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8a9fc9b5cf0505f8956598bf89c44e2
+      internalID: 4062348132304654297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s9_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b334850de865443926ee820d4792364
+      internalID: 477440391599357589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s10_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67929455ac155a1eaa3d7308f255f06b
+      internalID: 1316734915868108846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s11_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 420dfa368c6859669b8160aad36a95b2
+      internalID: 8151727531949240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s12_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfb6fe55a1885a00bf3c6c59869cfc52
+      internalID: 2049415908538686043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s13_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3278e06637c951b8b88f8567ca095770
+      internalID: 1650901759208742339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s14_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 491881c7ecb15da5b71158b6e02596c1
+      internalID: 2578235654036164619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s15_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1c7b481f0dd520e9f2667460fd01849
+      internalID: 3439529804768357741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ddc9cc8cb5a584b8e26ba79fd72532b
+      internalID: 2089619327925330929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s2_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbdb4b65d6365f73b069adb1dc7fe72b
+      internalID: 2398214819364821947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s3_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 821418d971015c20a1e7d954270c086c
+      internalID: 2198524111090662983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cb9fc8ff9935103bdd377f191e44f49
+      internalID: 3341730866087442278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 162132bf2ebf5e09a0ccf9f686a86b6e
+      internalID: 381324111107628210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s6_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8520b5bdb5e65b658ec2b9f5405f27e7
+      internalID: 2268964456159671707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cebff941c91b5d519fd73ed1cf4c510f
+      internalID: 4338925938366475471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s8_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 998ac8f684bf5000a921a5ee6632b87c
+      internalID: 1299411125055077243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s9_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48e0bdba8f6b537ea77f6f9adfc90124
+      internalID: 2273214555548772388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s10_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dab70f85fea5539bac000c124794f52
+      internalID: 3281371905546010903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s11_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ee2196640d255f782d34e85c7f8c4e9
+      internalID: 3594342974572999912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s12_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30aa5746c1745f5e831623e800e95043
+      internalID: 1754736020700301431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s13_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8951bb3da485828b9610385f87f1968
+      internalID: 418679009781164028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s14_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbf6b14d7f6650f4b5eff732a1693176
+      internalID: 1196231817444200051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s15_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64bc4aa189645d71aadbb2f69390fe3b
+      internalID: 847852706516922213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daee475fcaa956c3b5975ebfbf79871b
+      internalID: 1331452495547752844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s2_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28ab57e76e415bd3a9c979461ed9a662
+      internalID: 976979868251792692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s3_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 971584ad717f5d92be8aeb3a296c4109
+      internalID: 120298496385374938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9fe84302209d54e88086ae2f54669642
+      internalID: 2952319321007305955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baff3e020f8f5aa0936962b2cc56abcf
+      internalID: 2475798223044908369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s6_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1204ca1a506852f387f376885ea0fd14
+      internalID: 1959117631864539948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d0ed56e5f9558fd9d327320348e7afa
+      internalID: 3613627810283322487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s8_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb2fcf5ed5651579ba7e224cae6e45b
+      internalID: 3475680635665535587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s9_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 825e2b61af555737b7749bca790c9c2e
+      internalID: 3924459361221239122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s10_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3889950840f8597eaa3930cb9f2f6c1f
+      internalID: 2367950231593926443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s11_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9f3d6a61ed2567f858994a2b3b8b8b3
+      internalID: 2752328879591975341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s12_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2356b2d6dbe15b27a0f61c2311829a11
+      internalID: 2204898013270148450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s13_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: acbd490ec34a5a52a0fe998d390b1104
+      internalID: 3616573979908179994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s14_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e0ab0a8cba512ebccc886f3fad07a9
+      internalID: 1199244720861694292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dirt_on_ashstone_s15_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 867a362d70c154aea8061c0dee81b2a4
+      internalID: 2387372082290763410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_dirt_on_ashstone_s1_v0: 4308557835600539413
+      tv2_dirt_on_ashstone_s2_v0: 2206341672088336990
+      tv2_dirt_on_ashstone_s3_v0: 500519716410140765
+      tv2_dirt_on_ashstone_s4_v0: 4556490533743940349
+      tv2_dirt_on_ashstone_s5_v0: 4391236541147961087
+      tv2_dirt_on_ashstone_s6_v0: 631127972751596947
+      tv2_dirt_on_ashstone_s7_v0: 2960718419915722931
+      tv2_dirt_on_ashstone_s8_v0: 4062348132304654297
+      tv2_dirt_on_ashstone_s9_v0: 477440391599357589
+      tv2_dirt_on_ashstone_s10_v0: 1316734915868108846
+      tv2_dirt_on_ashstone_s11_v0: 8151727531949240
+      tv2_dirt_on_ashstone_s12_v0: 2049415908538686043
+      tv2_dirt_on_ashstone_s13_v0: 1650901759208742339
+      tv2_dirt_on_ashstone_s14_v0: 2578235654036164619
+      tv2_dirt_on_ashstone_s15_v0: 3439529804768357741
+      tv2_dirt_on_ashstone_s1_v1: 2089619327925330929
+      tv2_dirt_on_ashstone_s2_v1: 2398214819364821947
+      tv2_dirt_on_ashstone_s3_v1: 2198524111090662983
+      tv2_dirt_on_ashstone_s4_v1: 3341730866087442278
+      tv2_dirt_on_ashstone_s5_v1: 381324111107628210
+      tv2_dirt_on_ashstone_s6_v1: 2268964456159671707
+      tv2_dirt_on_ashstone_s7_v1: 4338925938366475471
+      tv2_dirt_on_ashstone_s8_v1: 1299411125055077243
+      tv2_dirt_on_ashstone_s9_v1: 2273214555548772388
+      tv2_dirt_on_ashstone_s10_v1: 3281371905546010903
+      tv2_dirt_on_ashstone_s11_v1: 3594342974572999912
+      tv2_dirt_on_ashstone_s12_v1: 1754736020700301431
+      tv2_dirt_on_ashstone_s13_v1: 418679009781164028
+      tv2_dirt_on_ashstone_s14_v1: 1196231817444200051
+      tv2_dirt_on_ashstone_s15_v1: 847852706516922213
+      tv2_dirt_on_ashstone_s1_v2: 1331452495547752844
+      tv2_dirt_on_ashstone_s2_v2: 976979868251792692
+      tv2_dirt_on_ashstone_s3_v2: 120298496385374938
+      tv2_dirt_on_ashstone_s4_v2: 2952319321007305955
+      tv2_dirt_on_ashstone_s5_v2: 2475798223044908369
+      tv2_dirt_on_ashstone_s6_v2: 1959117631864539948
+      tv2_dirt_on_ashstone_s7_v2: 3613627810283322487
+      tv2_dirt_on_ashstone_s8_v2: 3475680635665535587
+      tv2_dirt_on_ashstone_s9_v2: 3924459361221239122
+      tv2_dirt_on_ashstone_s10_v2: 2367950231593926443
+      tv2_dirt_on_ashstone_s11_v2: 2752328879591975341
+      tv2_dirt_on_ashstone_s12_v2: 2204898013270148450
+      tv2_dirt_on_ashstone_s13_v2: 3616573979908179994
+      tv2_dirt_on_ashstone_s14_v2: 1199244720861694292
+      tv2_dirt_on_ashstone_s15_v2: 2387372082290763410
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

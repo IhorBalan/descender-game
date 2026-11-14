@@ -7,9 +7,9 @@ namespace Descender.World.TilesV2
     /// Makes a Tiles V2 world's backdrop from the tile set's layers (docs/art/tiles-v2.md),
     /// back to front: the sky with its stars, sun and moon, pinned to the view; the
     /// clouds, drifting along the top of the view; the ridges, standing on the map's
-    /// surface line and scrolling sideways; and under the surface line the cave rock, which
-    /// takes the tile light, scrolls both ways and is cut to the ground by a sprite mask,
-    /// with a ragged strip along its top.
+    /// surface line and scrolling sideways; and under the surface line the rock behind the
+    /// caves, each region's own, which takes the tile light, scrolls both ways and is cut
+    /// to its region's rows by a sprite mask, with a ragged strip along its top.
     /// </summary>
     public static class TilesV2Backdrops
     {
@@ -18,6 +18,9 @@ namespace Descender.World.TilesV2
 
         // The ridges' feet stand this far over the surface line; the terrain hides them.
         private const float RidgeFoot = 2f;
+
+        /// <summary>The region a map that names none is all made of.</summary>
+        public const string EarthKey = "earth";
 
         /// <summary>Builds the backdrop under `parent`; returns the sky.</summary>
         public static Sky Build(TilesV2World world, Transform parent)
@@ -92,37 +95,9 @@ namespace Descender.World.TilesV2
                         tinted.Add(layer);
                         break;
                     }
-                    case TilesV2Set.BackdropKind.CaveTop:
-                    {
-                        var layer = MakeLayer(root, entry, material, new Vector2(view.x + size.x * 3f, size.y));
-                        Place(
-                            layer,
-                            new Vector2(entry.scroll, 1f),
-                            new Vector2(viewAnchor.x, surface),
-                            viewAnchor,
-                            size.x,
-                            0f
-                        );
-                        break;
-                    }
-                    case TilesV2Set.BackdropKind.Cave:
-                    {
-                        var cover = view + size * 3f;
-                        var layer = MakeLayer(root, entry, material, cover);
-                        layer.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
-                        Place(
-                            layer,
-                            new Vector2(entry.scroll, entry.scroll),
-                            new Vector2(viewAnchor.x, surface - cover.y),
-                            viewAnchor,
-                            size.x,
-                            size.y
-                        );
-                        MakeMask(root, entry.sprite, origin, map, surface);
-                        break;
-                    }
                 }
             }
+            Caves(world, root, viewAnchor);
             var sky = skyHolder.AddComponent<Sky>();
             sky.Configure(gradient, stars, sun, moon, tinted.ToArray(), set.skyBands, set.ViewPixels);
             return sky;
@@ -148,15 +123,96 @@ namespace Descender.World.TilesV2
             return picture;
         }
 
+        // The rock behind the caves, a region at a time: each region's own picture, cut to the
+        // region's rows by a mask that works on that picture alone, with a ragged strip along
+        // its top, so one region's rock runs into the next one's. A map that names no regions
+        // is all the Earth's.
+        private static void Caves(TilesV2World world, Transform root, Vector2 viewAnchor)
+        {
+            var set = world.Set;
+            var map = world.Map;
+            var view = set.View;
+            Vector2 origin = world.transform.position;
+            var count = Mathf.Max(map.Regions.Count, 1);
+            for (var i = 0; i < count; i++)
+            {
+                var region = set.RegionOf(map.Regions.Count > 0 ? map.Regions[i].Key : EarthKey);
+                if (region == null || region.cave == null)
+                {
+                    continue;
+                }
+                var first = Mathf.Max(map.Regions.Count > 0 ? map.Regions[i].Top : 0, map.Surface);
+                var end = map.Regions.Count > 0 ? map.RegionEnd(i) : map.Height;
+                if (first >= end)
+                {
+                    continue;
+                }
+                var order = set.caveOrder + 3 * i;
+                var top = origin.y + map.Height - first;
+                var foot = origin.y + map.Height - end - (i == count - 1 ? Margin : 0f);
+                var size = (Vector2)region.cave.bounds.size;
+                var cover = view + size * 3f;
+                var material = set.litMaterial;
+                var rock = MakeLayer(root, "cave " + region.key, region.cave, order, material, cover);
+                rock.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                Place(
+                    rock,
+                    new Vector2(set.caveScroll, set.caveScroll),
+                    new Vector2(viewAnchor.x, viewAnchor.y - cover.y),
+                    viewAnchor,
+                    size.x,
+                    size.y
+                );
+                var holder = new GameObject("Cave Mask " + region.key);
+                holder.transform.SetParent(root, false);
+                var mask = holder.AddComponent<SpriteMask>();
+                mask.sprite = region.cave;
+                mask.alphaCutoff = 0.1f;
+                mask.isCustomRangeActive = true;
+                mask.backSortingOrder = order - 1;
+                mask.frontSortingOrder = order;
+                // The sprite's pivot is its bottom middle.
+                holder.transform.position = new Vector3(origin.x + map.Width / 2f, foot, 0f);
+                holder.transform.localScale = new Vector3(
+                    (map.Width + 2f * Margin) / size.x,
+                    (top - foot) / size.y,
+                    1f
+                );
+                if (region.caveTop == null)
+                {
+                    continue;
+                }
+                var strip = (Vector2)region.caveTop.bounds.size;
+                var ragged = MakeLayer(
+                    root,
+                    "cave top " + region.key,
+                    region.caveTop,
+                    order + 1,
+                    material,
+                    new Vector2(view.x + strip.x * 3f, strip.y)
+                );
+                Place(ragged, new Vector2(set.caveScroll, 1f), new Vector2(viewAnchor.x, top), viewAnchor, strip.x, 0f);
+            }
+        }
+
         // A layer drawn tiled over `size` units, with the ParallaxLayer that moves it.
         private static SpriteRenderer MakeLayer(
             Transform parent,
             TilesV2Set.Backdrop entry,
             Material material,
             Vector2 size
+        ) => MakeLayer(parent, entry.key, entry.sprite, entry.order, material, size);
+
+        private static SpriteRenderer MakeLayer(
+            Transform parent,
+            string name,
+            Sprite sprite,
+            int order,
+            Material material,
+            Vector2 size
         )
         {
-            var picture = MakePicture(parent, entry.key, entry.sprite, entry.order, material);
+            var picture = MakePicture(parent, name, sprite, order, material);
             picture.drawMode = SpriteDrawMode.Tiled;
             picture.tileMode = SpriteTileMode.Continuous;
             picture.size = size;
@@ -176,22 +232,6 @@ namespace Descender.World.TilesV2
             layer
                 .GetComponent<ParallaxLayer>()
                 .Configure(scroll, anchor, viewAnchor, new Vector2(repeatAcross, repeatUp), 0f);
-        }
-
-        // The cave rock shows only under the surface line: a mask over the ground, a little past the map.
-        private static void MakeMask(Transform parent, Sprite sprite, Vector2 origin, TilesV2Map map, float surface)
-        {
-            var holder = new GameObject("Cave Mask");
-            holder.transform.SetParent(parent, false);
-            var mask = holder.AddComponent<SpriteMask>();
-            mask.sprite = sprite;
-            mask.alphaCutoff = 0.1f;
-            var width = map.Width + 2f * Margin;
-            var height = surface - origin.y + Margin;
-            var size = (Vector2)sprite.bounds.size;
-            // The sprite's pivot is its bottom middle.
-            holder.transform.position = new Vector3(origin.x + map.Width / 2f, origin.y - Margin, 0f);
-            holder.transform.localScale = new Vector3(width / size.x, height / size.y, 1f);
         }
     }
 }

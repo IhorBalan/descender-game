@@ -158,7 +158,38 @@ def texture_clay(seed) -> np.ndarray:
     return t
 
 
+def texture_cloud(seed) -> np.ndarray:
+    """A cloud's inside: bright, with a few soft rounder shadows and lit puffs."""
+    r = rng("cloud", seed)
+    t = np.full((TILE, TILE), 4, dtype=np.int16)
+    blob(t, r, 3, 3, (2.0, 3.2))
+    blob(t, r, 2, 1, (1.2, 1.8))
+    for _ in range(3):
+        x, y = r.randrange(TILE), r.randrange(TILE)
+        t[y, x] = 4
+        t[y, (x + 1) % TILE] = 4
+    return t
+
+
+def texture_ice(seed) -> np.ndarray:
+    """Ice: a clear field with slanting glints and a few fine dark cracks."""
+    r = rng("ice", seed)
+    t = np.full((TILE, TILE), 3, dtype=np.int16)
+    for _ in range(3):
+        x, y, n = r.randrange(TILE), r.randrange(TILE), r.randint(3, 6)
+        for k in range(n):
+            t[(y + k) % TILE, (x - k) % TILE] = 4
+    for _ in range(2):
+        x, y, n = r.randrange(TILE), r.randrange(TILE), r.randint(3, 5)
+        for k in range(n):
+            t[(y + k) % TILE, (x + k // 2) % TILE] = 2
+    blob(t, r, 2, 1, (1.2, 2.0))
+    return t
+
+
 TEXTURES = {
+    "cloud": texture_cloud,
+    "ice": texture_ice,
     "dirt": texture_dirt,
     "stone": texture_stone,
     "bricks": texture_bricks,
@@ -479,12 +510,232 @@ def torch_frame(frame: int) -> np.ndarray:
     return a
 
 
-def torch_sheet() -> tuple[Image.Image, list]:
-    sheet = np.zeros((TILE, TORCH_FRAMES * TILE, 4), dtype=np.uint8)
+def brazier_frame(frame: int) -> np.ndarray:
+    """A fire bowl on a stand, a bigger flame than a torch's that sways."""
+    iron, iron_lit, rim = hexes("3a3a44", "5c5c68", "16161c")
+    outer, mid, core = hexes("d8521a", "ff9a2e", "ffe07a")
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        if 0 <= x < TILE and 0 <= y < TILE:
+            a[y, x, :3] = colour
+            a[y, x, 3] = 255
+
+    for y in range(11, 16):
+        put(7, y, iron_lit)
+        put(8, y, iron)
+    for x in range(5, 11):
+        put(x, 15, rim)
+    for x in range(3, 13):
+        put(x, 9, rim if x in (3, 12) else iron_lit)
+        put(x, 10, rim if x in (3, 4, 11, 12) else iron)
+    sway = [0, 1, -1][frame % 3]
+    height = [7, 8, 6][frame % 3]
+    for k in range(height):
+        y = 8 - k
+        half = 3 if k < 2 else 2 if k < height - 2 else 1 if k < height - 1 else 0
+        cx = 7 + (sway if k >= height // 2 else 0)
+        for x in range(cx - half, cx + 2 + half):
+            put(x, y, outer)
+        for x in range(cx - half + 1, cx + 1 + half):
+            put(x, y, mid)
+        if k < height - 3:
+            put(cx, y, core)
+            put(cx + 1, y, core)
+    return a
+
+
+def crystal_frame(frame: int) -> np.ndarray:
+    """A cluster of shards growing from the floor, with a glint that moves over it."""
+    dark, mid, lit, white, rim = hexes("2f6f9e", "58a8d8", "9adcf6", "f2fdff", "163a5a")
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+    for cx, top, half in ((7, 3, 2), (4, 8, 1), (11, 6, 1)):
+        for y in range(top, TILE):
+            width = min(half, (y - top) // 2 + (0 if half > 1 else 0))
+            for x in range(cx - width, cx + width + 1):
+                colour = lit if x < cx else dark if x > cx else mid
+                a[y, x, :3] = colour
+                a[y, x, 3] = 255
+    solid = a[..., 3] > 0
+    edge = np.zeros_like(solid)
+    for dx, dy in ((1, 0), (-1, 0), (0, -1)):
+        edge |= shift(solid, dx, dy, False)
+    edge &= ~solid
+    a[edge, :3] = rim
+    a[edge, 3] = 255
+    for x, y in [((7, 5), (4, 10), (11, 8))[frame % 3]]:
+        a[y, x, :3] = white
+        a[y + 1, x, :3] = white
+    return a
+
+
+def lantern_frame(frame: int) -> np.ndarray:
+    """A gilded lamp on a short post, its glass a little brighter every other frame."""
+    gold, gold_lit, rim = hexes("b8860e", "f2c93c", "4a3206")
+    glass = hexes("fff0b0", "fffbe6", "ffe890")[frame % 3]
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        a[y, x, :3] = colour
+        a[y, x, 3] = 255
+
+    for y in range(10, 16):
+        put(7, y, gold_lit)
+        put(8, y, gold)
+    for x in range(5, 11):
+        put(x, 15, rim)
+        put(x, 9, gold if x > 7 else gold_lit)
+        put(x, 3, gold if x > 7 else gold_lit)
+    for y in range(4, 9):
+        put(5, y, rim)
+        put(10, y, rim)
+        for x in range(6, 10):
+            put(x, y, glass)
+    put(7, 2, gold_lit)
+    put(8, 2, gold)
+    put(7, 1, rim)
+    put(8, 1, rim)
+    return a
+
+
+LEDGE_COLOURS = {
+    # top (lit), board, underside, bracket, rim
+    "plank": hexes("c6915e", "93603d", "5e3a26", "452a1c", "2a1810"),
+    "grate": hexes("8a8a98", "5c5c68", "3a3a44", "2a2a32", "15151b"),
+    "gilt": hexes("fff3a8", "f2c93c", "b88314", "e8e6ec", "4a3206"),
+    "rime": hexes("f0fcff", "b0dff2", "6fadd0", "4f8fb8", "1c4a6a"),
+}
+
+
+def ledge_piece(style: str, piece: str) -> np.ndarray:
+    """One cell of a ledge: a board at the top of the cell, with a bracket under each end
+    it has. A grate is bars with gaps; the others are whole boards."""
+    top, board, under, bracket, rim = LEDGE_COLOURS[style]
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        a[y, x, :3] = colour
+        a[y, x, 3] = 255
+
+    ends_left, ends_right = piece in ("single", "left"), piece in ("single", "right")
+    for x in range(TILE):
+        if style == "grate" and x % 4 == 3 and not (ends_left and x < 2) and not (ends_right and x > 13):
+            put(x, 0, rim)
+            put(x, 3, rim)
+            continue
+        put(x, 0, top)
+        put(x, 1, board if (x * 7 + 3) % 11 else top)
+        put(x, 2, board)
+        put(x, 3, under)
+        put(x, 4, rim)
+    if style == "plank":
+        for x in (5, 11):
+            put(x, 1, under)
+            put(x, 2, under)
+    for end, x0, step in ((ends_left, 0, 1), (ends_right, TILE - 1, -1)):
+        if not end:
+            continue
+        for y in range(0, 5):
+            put(x0, y, rim)
+        for k in range(4):
+            put(x0 + step * (1 + k // 2), 5 + k, bracket)
+            put(x0 + step * (2 + k // 2), 5 + k, rim)
+    return a
+
+
+def ledge_sheet() -> tuple[Image.Image, list]:
+    """Every ledge: a row for each, its four pieces side by side."""
+    sheet = np.zeros((len(LEDGES) * TILE, len(LEDGE_PIECES) * TILE, 4), dtype=np.uint8)
     sprites = []
-    for f in range(TORCH_FRAMES):
-        sheet[:, f * TILE : (f + 1) * TILE] = torch_frame(f)
-        sprites.append((f"tv2_torch_{f}", f, 0))
+    for row, style in enumerate(LEDGES):
+        for column, piece in enumerate(LEDGE_PIECES):
+            sheet[row * TILE : (row + 1) * TILE, column * TILE : (column + 1) * TILE] = ledge_piece(style, piece)
+            sprites.append((f"tv2_ledge_{style}_{piece}", column, row))
     return Image.fromarray(sheet, "RGBA"), sprites
 
 
+# The things of the game a map marks (`@mark`), each a tile-sized sprite the world's
+# objects are drawn with: a light barrier's veil, the seal a bolt breaks, the slab a
+# slam breaks, a relic.
+THINGS = ["barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1"]
+
+
+def thing(name: str) -> np.ndarray:
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+    r = rng("thing", name)
+    if name.startswith("barrier"):
+        # A veil of light: bright threads that shift between the two frames; tiles up and down.
+        phase = int(name[-1])
+        for x in range(TILE):
+            strength = (0.55, 0.9, 0.4, 1.0, 0.6, 0.85, 0.45, 0.95)[(x + 3 * phase) % 8]
+            for y in range(TILE):
+                wave = 0.75 + 0.25 * np.sin((y + phase * 4 + x * 3) * np.pi / 4)
+                a[y, x] = (255, 244, 190, int(200 * strength * wave) if 2 <= x <= 13 else 0)
+        a[:, 1] = (255, 255, 235, 235)
+        a[:, 14] = (255, 255, 235, 235)
+    elif name == "seal_bolt":
+        # A slab of night with a pale rune on it: light is what it gives way to.
+        dark, mid, rim, rune = hexes("14101f", "241c38", "0a0812", "b9a6ff")
+        a[:, :, :3] = mid
+        a[:, :, 3] = 255
+        for _ in range(26):
+            a[r.randrange(TILE), r.randrange(TILE), :3] = dark
+        a[:, 0, :3] = rim
+        a[:, 15, :3] = rim
+        for x, y in ((7, 3), (8, 3), (6, 4), (9, 4), (6, 5), (9, 5), (7, 6), (8, 6), (7, 7), (8, 7), (7, 9), (8, 9), (6, 11), (7, 11), (8, 11), (9, 11)):
+            a[y, x, :3] = rune
+    elif name == "seal_slam":
+        # A stone slab cracked through: a blow from above is what it gives way to.
+        ramp = PALETTES["stone"]["ramp"]
+        a[:, :, :3] = ramp[3]
+        a[:, :, 3] = 255
+        a[0, :, :3] = ramp[5]
+        a[15, :, :3] = ramp[1]
+        for _ in range(18):
+            a[r.randrange(TILE), r.randrange(TILE), :3] = ramp[2]
+        x = 7
+        for y in range(TILE):
+            a[y, x, :3] = PALETTES["stone"]["outline"]
+            if y % 3 == 1:
+                a[y, x + r.choice([-1, 1]), :3] = ramp[1]
+            x = max(3, min(12, x + r.choice([-1, 0, 0, 1])))
+    else:
+        # A relic: a small gold star that turns its glint.
+        gold, lit, white, rim = hexes("f2c93c", "fde06a", "ffffff", "8a5e0c")
+        for x, y in ((7, 3), (8, 3), (7, 12), (8, 12), (3, 7), (3, 8), (12, 7), (12, 8)):
+            a[y, x] = (*rim, 255)
+        for y in range(4, 12):
+            for x in range(4, 12):
+                if abs(x - 7.5) + abs(y - 7.5) <= 4.5:
+                    a[y, x] = (*(lit if x + y < 15 else gold), 255)
+        glint = (6, 6) if name.endswith("0") else (9, 6)
+        a[glint[1], glint[0]] = (*white, 255)
+        a[glint[1] + 1, glint[0]] = (*white, 255)
+    return a
+
+
+def things_sheet() -> tuple[Image.Image, list]:
+    sheet = np.zeros((TILE, len(THINGS) * TILE, 4), dtype=np.uint8)
+    sprites = []
+    for i, name in enumerate(THINGS):
+        sheet[:, i * TILE : (i + 1) * TILE] = thing(name)
+        sprites.append((f"tv2_thing_{name}", i, 0))
+    return Image.fromarray(sheet, "RGBA"), sprites
+
+
+PROP_FRAMES = {"torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame}
+
+
+def prop_sheet(prop: dict) -> tuple[Image.Image, list]:
+    """A light prop's sheet: its frames side by side."""
+    key, count = prop["key"], prop["frames"]
+    sheet = np.zeros((TILE, count * TILE, 4), dtype=np.uint8)
+    sprites = []
+    for f in range(count):
+        sheet[:, f * TILE : (f + 1) * TILE] = PROP_FRAMES[key](f)
+        sprites.append((f"tv2_{key}_{f}", f, 0))
+    return Image.fromarray(sheet, "RGBA"), sprites
+
+
+def torch_sheet() -> tuple[Image.Image, list]:
+    return prop_sheet(next(p for p in PROPS if p["key"] == "torch"))

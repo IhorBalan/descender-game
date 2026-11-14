@@ -39,6 +39,12 @@ namespace Descender.World.TilesV2
         [SerializeField, Range(0f, 1f), Tooltip("The share a solid tile passes on.")]
         private float solidKeeps = 0.56f;
 
+        [SerializeField, Tooltip("The faint light that hangs in the air of each row of cells: a region's own.")]
+        private Color[] airLight = System.Array.Empty<Color>();
+
+        [SerializeField, Tooltip("The cell row the first of them is for.")]
+        private int airLightFrom;
+
         private Texture2D texture;
         private Sprite sprite;
         private Color[] sky = System.Array.Empty<Color>();
@@ -96,6 +102,16 @@ namespace Descender.World.TilesV2
             solidKeeps = solid;
         }
 
+        /// <summary>
+        /// Sets the light that hangs in the air row by row (a region's own; black for none):
+        /// `rows[i]` is for the cells of row `from + i`. Every cell of air in a row gives it.
+        /// </summary>
+        public void SetAirLight(Color[] rows, int from)
+        {
+            airLight = rows ?? System.Array.Empty<Color>();
+            airLightFrom = from;
+        }
+
         /// <summary>The light at a cell from the last Refresh; black outside the map.</summary>
         public Color At(Vector3Int cell)
         {
@@ -143,6 +159,14 @@ namespace Descender.World.TilesV2
                 {
                     keep[i] = liquid.Keeps;
                     emits[i] = liquid.Emits;
+                }
+                else if (ground == null && airLight.Length > 0)
+                {
+                    var row = field.Bounds.yMin + i / field.Width - airLightFrom;
+                    if (row >= 0 && row < airLight.Length)
+                    {
+                        emits[i] = airLight[row];
+                    }
                 }
             }
             if (torches != null)

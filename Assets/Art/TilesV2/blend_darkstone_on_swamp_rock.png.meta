@@ -1,0 +1,1319 @@
+fileFormatVersion: 2
+guid: e8aaf3ad9063567fb04518ab1298a11d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1644181486005775076
+    second: tv2_darkstone_on_swamp_rock_s1_v0
+  - first:
+      213: 3905902289067183724
+    second: tv2_darkstone_on_swamp_rock_s2_v0
+  - first:
+      213: 2841302656578983986
+    second: tv2_darkstone_on_swamp_rock_s3_v0
+  - first:
+      213: 693625972701398548
+    second: tv2_darkstone_on_swamp_rock_s4_v0
+  - first:
+      213: 3755574853175037689
+    second: tv2_darkstone_on_swamp_rock_s5_v0
+  - first:
+      213: 1762323965079089177
+    second: tv2_darkstone_on_swamp_rock_s6_v0
+  - first:
+      213: 4296522273286936886
+    second: tv2_darkstone_on_swamp_rock_s7_v0
+  - first:
+      213: 3923883616565696041
+    second: tv2_darkstone_on_swamp_rock_s8_v0
+  - first:
+      213: 1334438278090362580
+    second: tv2_darkstone_on_swamp_rock_s9_v0
+  - first:
+      213: 1056521183265622656
+    second: tv2_darkstone_on_swamp_rock_s10_v0
+  - first:
+      213: 3732986250998313195
+    second: tv2_darkstone_on_swamp_rock_s11_v0
+  - first:
+      213: 4390667799151011707
+    second: tv2_darkstone_on_swamp_rock_s12_v0
+  - first:
+      213: 4203304117646942950
+    second: tv2_darkstone_on_swamp_rock_s13_v0
+  - first:
+      213: 3845552614181138787
+    second: tv2_darkstone_on_swamp_rock_s14_v0
+  - first:
+      213: 4433691533289159087
+    second: tv2_darkstone_on_swamp_rock_s15_v0
+  - first:
+      213: 3619170131130193294
+    second: tv2_darkstone_on_swamp_rock_s1_v1
+  - first:
+      213: 457176134395735860
+    second: tv2_darkstone_on_swamp_rock_s2_v1
+  - first:
+      213: 2222985457683705048
+    second: tv2_darkstone_on_swamp_rock_s3_v1
+  - first:
+      213: 1793411254006057327
+    second: tv2_darkstone_on_swamp_rock_s4_v1
+  - first:
+      213: 3971547738875430107
+    second: tv2_darkstone_on_swamp_rock_s5_v1
+  - first:
+      213: 65839771966032761
+    second: tv2_darkstone_on_swamp_rock_s6_v1
+  - first:
+      213: 3430682450462077762
+    second: tv2_darkstone_on_swamp_rock_s7_v1
+  - first:
+      213: 2603256097545844798
+    second: tv2_darkstone_on_swamp_rock_s8_v1
+  - first:
+      213: 1288915755707421426
+    second: tv2_darkstone_on_swamp_rock_s9_v1
+  - first:
+      213: 2109572520956126398
+    second: tv2_darkstone_on_swamp_rock_s10_v1
+  - first:
+      213: 4451569494959694529
+    second: tv2_darkstone_on_swamp_rock_s11_v1
+  - first:
+      213: 2578280085244770505
+    second: tv2_darkstone_on_swamp_rock_s12_v1
+  - first:
+      213: 3892814991181506678
+    second: tv2_darkstone_on_swamp_rock_s13_v1
+  - first:
+      213: 2502890563749534250
+    second: tv2_darkstone_on_swamp_rock_s14_v1
+  - first:
+      213: 887737540059366307
+    second: tv2_darkstone_on_swamp_rock_s15_v1
+  - first:
+      213: 512182134076383629
+    second: tv2_darkstone_on_swamp_rock_s1_v2
+  - first:
+      213: 326055582933109388
+    second: tv2_darkstone_on_swamp_rock_s2_v2
+  - first:
+      213: 328625278650103072
+    second: tv2_darkstone_on_swamp_rock_s3_v2
+  - first:
+      213: 160331135509384608
+    second: tv2_darkstone_on_swamp_rock_s4_v2
+  - first:
+      213: 3336221234261587322
+    second: tv2_darkstone_on_swamp_rock_s5_v2
+  - first:
+      213: 1178995049489656812
+    second: tv2_darkstone_on_swamp_rock_s6_v2
+  - first:
+      213: 3308758617962747420
+    second: tv2_darkstone_on_swamp_rock_s7_v2
+  - first:
+      213: 2158402437053412466
+    second: tv2_darkstone_on_swamp_rock_s8_v2
+  - first:
+      213: 3043582960522111111
+    second: tv2_darkstone_on_swamp_rock_s9_v2
+  - first:
+      213: 1923446673063483334
+    second: tv2_darkstone_on_swamp_rock_s10_v2
+  - first:
+      213: 1224470845724082350
+    second: tv2_darkstone_on_swamp_rock_s11_v2
+  - first:
+      213: 1921807413503473018
+    second: tv2_darkstone_on_swamp_rock_s12_v2
+  - first:
+      213: 904491490797515361
+    second: tv2_darkstone_on_swamp_rock_s13_v2
+  - first:
+      213: 3294969847293628903
+    second: tv2_darkstone_on_swamp_rock_s14_v2
+  - first:
+      213: 855303947519464923
+    second: tv2_darkstone_on_swamp_rock_s15_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9370508bc3a5b2ab9ca6d33daffd872
+      internalID: 1644181486005775076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s2_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aa7e103b08652ebbeaf87ee01adeb6c
+      internalID: 3905902289067183724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s3_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c67aa942b6fe571cb125f5405ecf3416
+      internalID: 2841302656578983986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb49a40d7b99593cae9377008c4b009d
+      internalID: 693625972701398548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 488b744360d25495be0b6e732104c0ba
+      internalID: 3755574853175037689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s6_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0e747beffd65f48839f317765d0acbf
+      internalID: 1762323965079089177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9efb5a19323c5c7a94fad1b87006c5b2
+      internalID: 4296522273286936886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s8_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6858a23f186c53fd89c92a8f3b8ac52a
+      internalID: 3923883616565696041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s9_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96898770b7b455419b6f226cad911a7e
+      internalID: 1334438278090362580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s10_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63be1ec0d74a5ad0bb388c4e0a384860
+      internalID: 1056521183265622656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s11_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04824fda9203580888c7557e4373e987
+      internalID: 3732986250998313195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s12_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae2b33fcebf553bba6cb4def9174e12e
+      internalID: 4390667799151011707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s13_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66c70d91b0e55bcf8e8f15c0ca056f54
+      internalID: 4203304117646942950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s14_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c1ab87bbd035d97ae16e7dbf3bbb147
+      internalID: 3845552614181138787
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s15_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c28eb7b483345192b20bfe157f02d393
+      internalID: 4433691533289159087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d160238e48705f52b9e310b88b2e4ba2
+      internalID: 3619170131130193294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s2_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 576d7357e6c15f5695cea99931076c8a
+      internalID: 457176134395735860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s3_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9adf9353df451bab2b720b7a9da4289
+      internalID: 2222985457683705048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0d32b8658a859a3b1e939161d463e10
+      internalID: 1793411254006057327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 050ec98345865c938a9b9c6b1fc68ed2
+      internalID: 3971547738875430107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s6_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5eeee3a5d2553bca6902c61674124ac
+      internalID: 65839771966032761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf7cfcff8a535e52860daf2c9a2b4fd2
+      internalID: 3430682450462077762
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s8_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80fb38ba06e85648b986b7b7b9f40ca9
+      internalID: 2603256097545844798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s9_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 052f6124a083557285be8b739bc7e4f3
+      internalID: 1288915755707421426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s10_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e77bd392de4580d8faaef3eb7f5c5be
+      internalID: 2109572520956126398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s11_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ec62ca0047751e88e4bc3b34aaea102
+      internalID: 4451569494959694529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s12_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea7daca4bcc25423a1cf5a81431b670b
+      internalID: 2578280085244770505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s13_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5edc3f0024b253f7b433d5e306868977
+      internalID: 3892814991181506678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s14_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 818afd8ef2e7527ba237cf89dd1a1ad6
+      internalID: 2502890563749534250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s15_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bff84e8ea8de51d1a4893e90623c6944
+      internalID: 887737540059366307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e28df7351405d68a16e9e9136d8ba27
+      internalID: 512182134076383629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s2_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df3fe3bc5f6450468e53f4e3cdb135cc
+      internalID: 326055582933109388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s3_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfa2888a47c85c6bbd1d11ad46e5bc20
+      internalID: 328625278650103072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c52ac2d87195c64968810758d2cb1ca
+      internalID: 160331135509384608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5019a639afa58728efa365a3a2339eb
+      internalID: 3336221234261587322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s6_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5524cac0757d5343bd24df67df14132d
+      internalID: 1178995049489656812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee21ec1178fd5f3b9ad2b2c9cc2cfa85
+      internalID: 3308758617962747420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s8_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c86fb1fc5e6570e9adad41d7fc57698
+      internalID: 2158402437053412466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s9_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de398baa9037526eae2488f31e26426e
+      internalID: 3043582960522111111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s10_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f31b75ac396596a9b8f9b2ad7503a79
+      internalID: 1923446673063483334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s11_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ce21f2c691a55a2a3500cb9d545b816
+      internalID: 1224470845724082350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s12_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f2984428fc5063b895984bb00ef4a4
+      internalID: 1921807413503473018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s13_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0312f13bda25c9fb9806c21977137d3
+      internalID: 904491490797515361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s14_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9f1c1bc94c95d578d742bd5c7b05d60
+      internalID: 3294969847293628903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_darkstone_on_swamp_rock_s15_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02c9ad5387d755d4aad7ba302d5e1c18
+      internalID: 855303947519464923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_darkstone_on_swamp_rock_s1_v0: 1644181486005775076
+      tv2_darkstone_on_swamp_rock_s2_v0: 3905902289067183724
+      tv2_darkstone_on_swamp_rock_s3_v0: 2841302656578983986
+      tv2_darkstone_on_swamp_rock_s4_v0: 693625972701398548
+      tv2_darkstone_on_swamp_rock_s5_v0: 3755574853175037689
+      tv2_darkstone_on_swamp_rock_s6_v0: 1762323965079089177
+      tv2_darkstone_on_swamp_rock_s7_v0: 4296522273286936886
+      tv2_darkstone_on_swamp_rock_s8_v0: 3923883616565696041
+      tv2_darkstone_on_swamp_rock_s9_v0: 1334438278090362580
+      tv2_darkstone_on_swamp_rock_s10_v0: 1056521183265622656
+      tv2_darkstone_on_swamp_rock_s11_v0: 3732986250998313195
+      tv2_darkstone_on_swamp_rock_s12_v0: 4390667799151011707
+      tv2_darkstone_on_swamp_rock_s13_v0: 4203304117646942950
+      tv2_darkstone_on_swamp_rock_s14_v0: 3845552614181138787
+      tv2_darkstone_on_swamp_rock_s15_v0: 4433691533289159087
+      tv2_darkstone_on_swamp_rock_s1_v1: 3619170131130193294
+      tv2_darkstone_on_swamp_rock_s2_v1: 457176134395735860
+      tv2_darkstone_on_swamp_rock_s3_v1: 2222985457683705048
+      tv2_darkstone_on_swamp_rock_s4_v1: 1793411254006057327
+      tv2_darkstone_on_swamp_rock_s5_v1: 3971547738875430107
+      tv2_darkstone_on_swamp_rock_s6_v1: 65839771966032761
+      tv2_darkstone_on_swamp_rock_s7_v1: 3430682450462077762
+      tv2_darkstone_on_swamp_rock_s8_v1: 2603256097545844798
+      tv2_darkstone_on_swamp_rock_s9_v1: 1288915755707421426
+      tv2_darkstone_on_swamp_rock_s10_v1: 2109572520956126398
+      tv2_darkstone_on_swamp_rock_s11_v1: 4451569494959694529
+      tv2_darkstone_on_swamp_rock_s12_v1: 2578280085244770505
+      tv2_darkstone_on_swamp_rock_s13_v1: 3892814991181506678
+      tv2_darkstone_on_swamp_rock_s14_v1: 2502890563749534250
+      tv2_darkstone_on_swamp_rock_s15_v1: 887737540059366307
+      tv2_darkstone_on_swamp_rock_s1_v2: 512182134076383629
+      tv2_darkstone_on_swamp_rock_s2_v2: 326055582933109388
+      tv2_darkstone_on_swamp_rock_s3_v2: 328625278650103072
+      tv2_darkstone_on_swamp_rock_s4_v2: 160331135509384608
+      tv2_darkstone_on_swamp_rock_s5_v2: 3336221234261587322
+      tv2_darkstone_on_swamp_rock_s6_v2: 1178995049489656812
+      tv2_darkstone_on_swamp_rock_s7_v2: 3308758617962747420
+      tv2_darkstone_on_swamp_rock_s8_v2: 2158402437053412466
+      tv2_darkstone_on_swamp_rock_s9_v2: 3043582960522111111
+      tv2_darkstone_on_swamp_rock_s10_v2: 1923446673063483334
+      tv2_darkstone_on_swamp_rock_s11_v2: 1224470845724082350
+      tv2_darkstone_on_swamp_rock_s12_v2: 1921807413503473018
+      tv2_darkstone_on_swamp_rock_s13_v2: 904491490797515361
+      tv2_darkstone_on_swamp_rock_s14_v2: 3294969847293628903
+      tv2_darkstone_on_swamp_rock_s15_v2: 855303947519464923
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

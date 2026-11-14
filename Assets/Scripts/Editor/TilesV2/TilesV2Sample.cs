@@ -29,6 +29,12 @@ namespace Descender.EditorTools.TilesV2
         public const string PlaygroundPath = "Assets/Scenes/Sandbox/TilesV2Playground.unity";
         public const string MapPath = TilesV2Manifest.Folder + "/sample_map.txt";
 
+        /// <summary>The world: Paradise, the Earth and the nine circles on one map, played as a journey.</summary>
+        public const string DescentPath = "Assets/Scenes/Sandbox/TilesV2Descent.unity";
+        public const string WorldMapPath = TilesV2Manifest.Folder + "/world_map.txt";
+        public const string CheckpointPath = "Assets/Prefabs/Pickups/Checkpoint.prefab";
+        public const string AbilityPath = "Assets/Prefabs/Pickups/AbilityPickup.prefab";
+
         /// <summary>The map's place the sample scene's camera looks at.</summary>
         public const string FirstView = "surface";
 
@@ -45,15 +51,18 @@ namespace Descender.EditorTools.TilesV2
             }
             TilesV2Builder.Build();
             BuildPlayground();
+            BuildDescent();
             Build();
-            Debug.Log($"Tiles V2: built {ScenePath} and {PlaygroundPath} from {MapPath}.");
+            Debug.Log(
+                $"Tiles V2: built {ScenePath} and {PlaygroundPath} from {MapPath}, {DescentPath} from {WorldMapPath}."
+            );
         }
 
         /// <summary>Builds and saves the sample scene; returns it, open, its world built.</summary>
         public static Scene Build()
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            var world = MakeWorld(false);
+            var world = MakeWorld(MapPath, false);
             var at = world.TryView(FirstView, out var view) ? view : world.Area.center;
             MakeCamera(world.Framed(at), false, world.Set);
             Save(scene, ScenePath);
@@ -61,10 +70,19 @@ namespace Descender.EditorTools.TilesV2
         }
 
         /// <summary>Builds and saves the playground scene; returns it, open, its world built.</summary>
-        public static Scene BuildPlayground()
+        public static Scene BuildPlayground() => BuildPlayable(MapPath, PlaygroundPath, false);
+
+        /// <summary>
+        /// Builds and saves the world scene: the playground's parts on the world map, as a
+        /// journey (the hero starts with nothing; the game's checkpoint and ability pickup
+        /// stand where the map marks them). Returns it, open, its world built.
+        /// </summary>
+        public static Scene BuildDescent() => BuildPlayable(WorldMapPath, DescentPath, true);
+
+        private static Scene BuildPlayable(string mapPath, string scenePath, bool journey)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
-            var world = MakeWorld(true);
+            var world = MakeWorld(mapPath, true);
             var camera = MakeCamera(world.Framed(world.Spawn), true, world.Set);
 
             var systems = new GameObject("Systems");
@@ -85,12 +103,16 @@ namespace Descender.EditorTools.TilesV2
 
             var playground = new GameObject("Playground").AddComponent<TilesV2Playground>();
             playground.Configure(world, hero.GetComponent<PlayerController>(), camera.GetComponent<GameCamera>());
-            Save(scene, PlaygroundPath);
+            if (journey)
+            {
+                playground.ConfigureJourney(Load<GameObject>(CheckpointPath), Load<GameObject>(AbilityPath));
+            }
+            Save(scene, scenePath);
             return scene;
         }
 
-        // The world of the sample map, built so its start and its places can be read.
-        private static TilesV2World MakeWorld(bool dayRuns)
+        // The world of a map, built so its start and its places can be read.
+        private static TilesV2World MakeWorld(string mapPath, bool dayRuns)
         {
             var set = TilesV2Builder.LoadSet();
             if (set == null)
@@ -98,7 +120,7 @@ namespace Descender.EditorTools.TilesV2
                 throw new FileNotFoundException("Tiles V2: build the tiles first.", TilesV2Manifest.SetPath);
             }
             var world = new GameObject("TilesV2 World").AddComponent<TilesV2World>();
-            world.Configure(Load<TextAsset>(MapPath), set, set.dayStart, dayRuns, true);
+            world.Configure(Load<TextAsset>(mapPath), set, set.dayStart, dayRuns, true);
             world.Build();
             return world;
         }

@@ -19,6 +19,12 @@ namespace Descender.World.TilesV2
     /// day, a jump between the map's named places, a way back to the start and out. Started
     /// with `-tilesV2Shots &lt;folder&gt;` it photographs the named places instead and quits,
     /// which is how the Windows test build is checked.
+    ///
+    /// As a journey (the world scene, Assets/Scenes/Sandbox/TilesV2Descent.unity) the hero
+    /// starts with nothing and the map's marks are stood in the world (TilesV2Things): he
+    /// finds his abilities in their shrines, rests at checkpoints and comes back at the last
+    /// one when he dies; each region says its name as he walks into it, and M opens the
+    /// chart of what he has seen.
     /// </summary>
     public sealed class TilesV2Playground : MonoBehaviour
     {
@@ -48,6 +54,26 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private GameCamera view;
 
+        [SerializeField, Tooltip("The hero starts with no ability and finds them in the world; else he has them all.")]
+        private bool journey;
+
+        [SerializeField, Tooltip("The game's checkpoint, stood where the map marks one.")]
+        private GameObject checkpointPrefab;
+
+        [SerializeField, Tooltip("The game's ability pickup, stood where the map marks one.")]
+        private GameObject abilityPrefab;
+
+        private TilesV2Things things;
+        private TilesV2Chart chart;
+        private bool chartShown;
+        private bool everything;
+        private TilesV2Set.Region region;
+        private string title = "";
+        private string subtitle = "";
+        private float titleLeft;
+        private GUIStyle titleStyle;
+        private GUIStyle subtitleStyle;
+
         private readonly List<string> places = new List<string>();
         private int place = -1;
         private bool helpShown = true;
@@ -63,6 +89,17 @@ namespace Descender.World.TilesV2
 
         public TilesV2World World => world;
         public PlayerController Hero => hero;
+
+        /// <summary>The game's things the map marks, once the scene has started; null for a map with none.</summary>
+        public TilesV2Things Things => things;
+
+        /// <summary>The chart of what the hero has seen; null for a map that is all one region.</summary>
+        public TilesV2Chart Chart => chart;
+
+        public bool IsJourney => journey;
+
+        /// <summary>The region's name on the screen, while it shows.</summary>
+        public string Title => titleLeft > 0f ? title : "";
 
         private void Start()
         {
@@ -85,7 +122,20 @@ namespace Descender.World.TilesV2
                 world.Build();
             }
             Fence();
-            hero.SetAbilities((Ability[])System.Enum.GetValues(typeof(Ability)));
+            everything = !journey;
+            hero.SetAbilities(journey ? new Ability[0] : (Ability[])System.Enum.GetValues(typeof(Ability)));
+            if (world.Map != null && world.Map.Marks.Count > 0)
+            {
+                things = TilesV2Things.Build(world, checkpointPrefab, abilityPrefab);
+                things.RelicFound += () => Say($"a relic: {things.RelicsFound} of {things.Relics}");
+                things.Ended += () => Announce("The Gate of Paradise", "the descent is done");
+            }
+            if (world.Map != null && world.Map.Regions.Count > 0)
+            {
+                chart = new TilesV2Chart(world);
+            }
+            hero.Died += () => StartCoroutine(Revive());
+            hero.AbilityUnlocked += ability => Announce(Spaced(ability.ToString()), AbilityHint(ability));
             hero.PlaceAt(world.Spawn);
             hero.SetRespawnPoint(world.Spawn);
             hero.DeathY = world.Area.yMin - 6f;
@@ -113,6 +163,7 @@ namespace Descender.World.TilesV2
 
         private void Update()
         {
+            Wander();
             if (noteLeft > 0f)
             {
                 noteLeft -= Time.unscaledDeltaTime;
@@ -136,6 +187,21 @@ namespace Descender.World.TilesV2
             {
                 helpShown = !helpShown;
             }
+            if (keys.mKey.wasPressedThisFrame && chart != null)
+            {
+                chartShown = !chartShown;
+            }
+            if (keys.f3Key.wasPressedThisFrame)
+            {
+                everything = !everything;
+                hero.SetAbilities(everything ? (Ability[])System.Enum.GetValues(typeof(Ability)) : new Ability[0]);
+                Say(everything ? "every ability" : "no ability");
+            }
+            if (keys.f4Key.wasPressedThisFrame && chart != null)
+            {
+                chart.RevealAll();
+                Say("the whole chart");
+            }
             if (keys.f2Key.wasPressedThisFrame)
             {
                 lantern.enabled = !lantern.enabled;
@@ -143,8 +209,16 @@ namespace Descender.World.TilesV2
             }
             if (InputRouter.Instance != null && InputRouter.Instance.RestartPressed)
             {
-                hero.Respawn(world.Spawn);
-                Say("back at the start");
+                if (journey)
+                {
+                    hero.Respawn();
+                    Say("back at the last rest");
+                }
+                else
+                {
+                    hero.Respawn(world.Spawn);
+                    Say("back at the start");
+                }
             }
             if (keys.pageDownKey.wasPressedThisFrame)
             {
@@ -203,18 +277,198 @@ namespace Descender.World.TilesV2
                         + "move A D / arrows   jump Space   dash Shift   sword J\n"
                         + "1 morning  2 noon  3 sunset  4 night   hold T: the day runs fast   P: stop the day\n"
                         + "PgDn / PgUp: next / last place   R: back to the start   F2: lantern   F1: hide this   Esc: quit"
+                        + (
+                            chart != null
+                                ? "\nM: the chart   F3: every ability / none   F4: the whole chart   cast L   heal H"
+                                : ""
+                        )
                     : clock;
+                if (things != null && things.Relics > 0)
+                {
+                    shown += $"   relics {things.RelicsFound}/{things.Relics}";
+                }
                 if (noted)
                 {
                     shown += "\n" + note;
                 }
             }
             var text = shown;
-            var area = new Rect(6f, 4f, Screen.width / scale - 12f, 90f);
+            var area = new Rect(6f, 4f, Screen.width / scale - 12f, 110f);
             GUI.color = new Color(0f, 0f, 0f, 0.7f);
             GUI.Label(new Rect(area.x + 1f, area.y + 1f, area.width, area.height), text, style);
             GUI.color = Color.white;
             GUI.Label(area, text, style);
+            DrawTitle(scale);
+            DrawChart(scale);
+        }
+
+        // The region's name (or an ability's) across the middle of the screen, fading out.
+        private void DrawTitle(float scale)
+        {
+            if (titleLeft <= 0f)
+            {
+                return;
+            }
+            if (titleStyle == null)
+            {
+                titleStyle = new GUIStyle(GUI.skin.label)
+                {
+                    fontSize = 26,
+                    alignment = TextAnchor.MiddleCenter,
+                    fontStyle = FontStyle.Bold,
+                };
+                titleStyle.normal.textColor = Color.white;
+                subtitleStyle = new GUIStyle(titleStyle) { fontSize = 13, fontStyle = FontStyle.Normal };
+            }
+            var alpha = Mathf.Clamp01(titleLeft / 0.8f) * Mathf.Clamp01((TitleTime - titleLeft) / 0.4f);
+            var wide = Screen.width / scale;
+            var top = Screen.height / scale * 0.22f;
+            foreach (
+                var (text, look, y, tall) in new[]
+                {
+                    (title, titleStyle, top, 34f),
+                    (subtitle, subtitleStyle, top + 32f, 20f),
+                }
+            )
+            {
+                GUI.color = new Color(0f, 0f, 0f, 0.75f * alpha);
+                GUI.Label(new Rect(1f, y + 1f, wide, tall), text, look);
+                GUI.color = new Color(1f, 0.96f, 0.84f, alpha);
+                GUI.Label(new Rect(0f, y, wide, tall), text, look);
+            }
+            GUI.color = Color.white;
+        }
+
+        // The chart over the middle of the screen, as large as fits, with the hero on it.
+        private void DrawChart(float scale)
+        {
+            if (!chartShown || chart == null)
+            {
+                return;
+            }
+            chart.Show();
+            var screen = new Vector2(Screen.width, Screen.height) / scale;
+            var picture = chart.Picture;
+            var size = Mathf.Min(screen.x * 0.9f / picture.width, screen.y * 0.94f / picture.height);
+            var area = new Rect(
+                (screen.x - picture.width * size) / 2f,
+                (screen.y - picture.height * size) / 2f,
+                picture.width * size,
+                picture.height * size
+            );
+            GUI.color = new Color(0f, 0f, 0f, 0.6f);
+            GUI.DrawTexture(new Rect(0f, 0f, screen.x, screen.y), Texture2D.whiteTexture);
+            GUI.color = Color.white;
+            GUI.DrawTexture(area, picture);
+            if (Time.unscaledTime % 0.6f < 0.4f)
+            {
+                Vector2 at = hero.transform.position - world.transform.position;
+                var dot = new Rect(
+                    area.x + at.x * size - 2f,
+                    area.yMax - (at.y + 1f) * size - 2f,
+                    Mathf.Max(size, 4f),
+                    Mathf.Max(size * 2f, 4f)
+                );
+                GUI.DrawTexture(dot, Texture2D.whiteTexture);
+            }
+        }
+
+        /// <summary>
+        /// Sets the scene up as a journey: the hero starts with nothing, and the game's
+        /// checkpoint and ability pickup stand where the map marks them.
+        /// </summary>
+        public void ConfigureJourney(GameObject checkpoint, GameObject ability)
+        {
+            journey = true;
+            checkpointPrefab = checkpoint;
+            abilityPrefab = ability;
+        }
+
+        private const float TitleTime = 4f;
+
+        private void OnDestroy()
+        {
+            chart?.Release();
+        }
+
+        // What walking does: the chart fills in, and a new region says its name.
+        private void Wander()
+        {
+            if (titleLeft > 0f)
+            {
+                titleLeft -= Time.unscaledDeltaTime;
+            }
+            if (world == null || world.Map == null || hero == null)
+            {
+                return;
+            }
+            Vector2 at = hero.transform.position - world.transform.position;
+            if (chart != null)
+            {
+                chart.Reveal(new Vector2Int(Mathf.FloorToInt(at.x), Mathf.FloorToInt(at.y + 1f)));
+            }
+            var now = world.RegionAt((Vector2)hero.transform.position + Vector2.up);
+            if (now != region)
+            {
+                region = now;
+                if (now != null && !shooting)
+                {
+                    Announce(now.name, now.subtitle);
+                }
+            }
+        }
+
+        private void Announce(string big, string small)
+        {
+            title = big;
+            subtitle = small;
+            titleLeft = TitleTime;
+        }
+
+        // The hero comes back at his last rest, a moment after he dies.
+        private IEnumerator Revive()
+        {
+            yield return new WaitForSeconds(1.4f);
+            if (hero != null && !hero.IsAlive)
+            {
+                hero.Respawn();
+            }
+        }
+
+        // `LightDash` as it is said: "Light Dash".
+        private static string Spaced(string name)
+        {
+            var text = new System.Text.StringBuilder();
+            foreach (var letter in name)
+            {
+                if (char.IsUpper(letter) && text.Length > 0)
+                {
+                    text.Append(' ');
+                }
+                text.Append(letter);
+            }
+            return text.ToString();
+        }
+
+        private static string AbilityHint(Ability ability)
+        {
+            switch (ability)
+            {
+                case Ability.LightDash:
+                    return "dash (Shift) through a veil of light";
+                case Ability.WallGrip:
+                    return "hold towards a wall to cling; jump to leap from it";
+                case Ability.HolyLight:
+                    return "cast (L) a bolt: it breaks the seals of night";
+                case Ability.Glide:
+                    return "hold jump while falling to glide";
+                case Ability.Smite:
+                    return "down and sword (J) in the air: the blow breaks cracked slabs";
+                case Ability.Wings:
+                    return "jump again in the air";
+                default:
+                    return "";
+            }
         }
 
         /// <summary>Sets the scene's parts (the scene builder's one entry point).</summary>

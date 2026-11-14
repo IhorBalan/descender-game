@@ -50,8 +50,8 @@ DECOR = [
         "last": "cactus_top",
     },
     {"key": "dry_bush", "anchor": "floor", "on": ["sand"], "where": "sky", "chance": 0.08, "variants": 2},
-    {"key": "bones", "anchor": "floor", "on": ["sand"], "where": "any", "chance": 0.02, "variants": 1},
-    {"key": "mushroom", "anchor": "floor", "on": ["dirt", "clay", "stone"], "where": "cave", "chance": 0.06, "variants": 3},
+    {"key": "bones", "anchor": "floor", "on": ["sand", "mud", "dis_brick", "ember_sand", "bloodstone", "frost_rock", "ashstone"], "where": "any", "chance": 0.02, "variants": 1},
+    {"key": "mushroom", "anchor": "floor", "on": ["dirt", "clay", "stone", "mud"], "where": "cave", "chance": 0.06, "variants": 3},
     {"key": "stalagmite", "anchor": "floor", "on": ["stone", "copper_ore"], "where": "cave", "chance": 0.10, "variants": 3},
     {"key": "pebble", "anchor": "floor", "on": ["stone", "dirt", "clay", "copper_ore"], "where": "cave", "chance": 0.12, "variants": 3},
     {
@@ -66,9 +66,52 @@ DECOR = [
         "middle": "vine_mid",
         "last": "vine_tip",
     },
-    {"key": "root", "anchor": "ceiling", "on": ["dirt"], "where": "cave", "chance": 0.22, "variants": 2},
+    {"key": "root", "anchor": "ceiling", "on": ["dirt", "mud"], "where": "cave", "chance": 0.22, "variants": 2},
     {"key": "stalactite", "anchor": "ceiling", "on": ["stone", "copper_ore"], "where": "cave", "chance": 0.18, "variants": 3},
 ]
+
+
+def _rule(key, anchor, on, chance, variants, **more):
+    return dict({"key": key, "anchor": anchor, "on": on, "where": "any", "chance": chance, "variants": variants}, **more)
+
+
+# What the world's biomes are dressed with (tv2_base.py lists their grounds). A rock's
+# spikes and pebbles are the caves' own, drawn in that rock's colours: SPIKED.
+SPIKED = {
+    "ash": ("ashstone", ["ashstone"], 0.08, 0.20, 0.10),
+    "rose": ("rose_rock", ["rose_rock"], 0.10, 0.15, 0.08),
+    "dark": ("darkstone", ["darkstone", "gold_ore"], 0.08, 0.18, 0.12),
+    "swamp": ("swamp_rock", ["swamp_rock"], 0.0, 0.10, 0.08),
+    "blood": ("bloodstone", ["bloodstone"], 0.08, 0.22, 0.0),
+    "slate": ("slate", ["slate"], 0.10, 0.16, 0.12),
+    "frost": ("frost_rock", ["frost_rock"], 0.0, 0.0, 0.08),
+}
+DECOR += [
+    _rule("cloud_puff", "floor", ["cloud"], 0.30, 3),
+    _rule("lily", "floor", ["cloud"], 0.08, 2),
+    _rule("grave", "floor", ["ashstone"], 0.05, 3),
+    _rule("dead_grass", "floor", ["ashstone"], 0.25, 3),
+    _rule("thorn_rose", "floor", ["rose_rock"], 0.12, 2),
+    _rule("rose_vine", "ceiling", ["rose_rock"], 0.35, 2, tall=[1, 3], first="rose_vine_mid", middle="rose_vine_mid", last="rose_vine_tip"),
+    _rule("reed", "floor", ["mud", "swamp_rock"], 0.18, 3),
+    _rule("drip", "ceiling", ["mud"], 0.30, 3),
+    _rule("coins", "floor", ["darkstone", "gold_ore"], 0.10, 3),
+    _rule("dead_tree", "floor", ["swamp_rock", "bloodstone"], 0.06, 2, tall=[2, 4], first="dead_tree_base", middle="dead_tree_mid", last="dead_tree_top"),
+    _rule("moss", "ceiling", ["swamp_rock"], 0.45, 2, tall=[1, 2], first="moss_mid", middle="moss_mid", last="moss_tip"),
+    _rule("tomb", "floor", ["dis_brick"], 0.05, 2),
+    _rule("chain", "ceiling", ["dis_brick", "slate"], 0.09, 2, tall=[1, 4], first="chain_mid", middle="chain_mid", last="chain_tip"),
+    _rule("thorn", "floor", ["bloodstone", "ember_sand"], 0.10, 2),
+    _rule("ice_spike", "floor", ["ice", "frost_rock"], 0.10, 3),
+    _rule("snow", "floor", ["ice", "frost_rock"], 0.25, 3),
+    _rule("icicle", "ceiling", ["ice", "frost_rock"], 0.38, 3),
+]
+for _name, (_palette, _on, _floor, _ceiling, _pebble) in SPIKED.items():
+    if _floor:
+        DECOR.append(_rule("stalagmite_" + _name, "floor", _on, _floor, 3))
+    if _pebble:
+        DECOR.append(_rule("pebble_" + _name, "floor", _on, _pebble, 3))
+    if _ceiling:
+        DECOR.append(_rule("stalactite_" + _name, "ceiling", _on, _ceiling, 3))
 FLOOR_SALT, CEILING_SALT = 101, 211
 
 
@@ -333,9 +376,9 @@ def mushroom(variant: int) -> np.ndarray:
     return pad.a
 
 
-def pebble(variant: int) -> np.ndarray:
+def pebble(variant: int, rock: dict = STONE) -> np.ndarray:
     pad = Pad()
-    ramp = STONE["ramp"]
+    ramp = rock["ramp"]
     plan = [[(5, 5, 3)], [(2, 3, 2), (8, 5, 3)], [(4, 4, 2), (11, 2, 1)]][variant % 3]
     for x0, width, height in plan:
         for h in range(-1, height):
@@ -347,14 +390,14 @@ def pebble(variant: int) -> np.ndarray:
                 if x == x0 and h < height - 1:
                     colour = ramp[4]
                 pad.up(x, h, colour)
-    pad.outline(STONE["outline"])
+    pad.outline(rock["outline"])
     return pad.a
 
 
-def spike(pad: Pad, put, cx: float, base: float, height: int, r):
+def spike(pad: Pad, put, cx: float, base: float, height: int, r, rock: dict = STONE):
     """A stone spike of a height, widest at its root; `put` draws a pixel a
     distance from the root."""
-    ramp = STONE["ramp"]
+    ramp = rock["ramp"]
     for k in range(-BLEED, height):
         t = max(k, 0) / height
         half = max(base * (1 - t) ** 0.85 / 2, 0.5)
@@ -367,25 +410,25 @@ def spike(pad: Pad, put, cx: float, base: float, height: int, r):
     put(int(cx), height - 1, ramp[5])
 
 
-def stalagmite(variant: int) -> np.ndarray:
+def stalagmite(variant: int, rock: dict = STONE) -> np.ndarray:
     r = rng("stalagmite", variant)
     pad = Pad()
     height, base = [(5, 5), (8, 6), (12, 7)][variant % 3]
-    spike(pad, pad.up, 7.5 + r.choice([-1, 0, 1]), base, height, r)
+    spike(pad, pad.up, 7.5 + r.choice([-1, 0, 1]), base, height, r, rock)
     if variant % 3:
-        spike(pad, pad.up, 12.5 if variant % 3 == 1 else 3.5, 3, height // 2, r)
-    pad.outline(STONE["outline"])
+        spike(pad, pad.up, 12.5 if variant % 3 == 1 else 3.5, 3, height // 2, r, rock)
+    pad.outline(rock["outline"])
     return pad.a
 
 
-def stalactite(variant: int) -> np.ndarray:
+def stalactite(variant: int, rock: dict = STONE) -> np.ndarray:
     r = rng("stalactite", variant)
     pad = Pad()
     height, base = [(5, 5), (9, 6), (13, 7)][variant % 3]
-    spike(pad, pad.down, 7.5 + r.choice([-1, 0, 1]), base, height, r)
+    spike(pad, pad.down, 7.5 + r.choice([-1, 0, 1]), base, height, r, rock)
     if variant % 3:
-        spike(pad, pad.down, 3.5 if variant % 3 == 1 else 12.5, 3, height // 2, r)
-    pad.outline(STONE["outline"])
+        spike(pad, pad.down, 3.5 if variant % 3 == 1 else 12.5, 3, height // 2, r, rock)
+    pad.outline(rock["outline"])
     return pad.a
 
 
@@ -450,7 +493,335 @@ def vine_tip(variant: int) -> np.ndarray:
     return pad.a
 
 
+# --- The biomes: Paradise and the circles ---------------------------------------
+
+
+def cloud_puff(variant: int) -> np.ndarray:
+    """A soft lump of cloud standing on a cloud."""
+    pad = Pad()
+    white, soft, shade_ = col("ffffff"), col("eef3fb"), col("cfdaf0")
+    plan = [[(7, 5, 4)], [(4, 3, 3), (11, 4, 3)], [(3, 2, 2), (8, 4, 4), (13, 2, 2)]][variant % 3]
+    for cx, half, height in plan:
+        for h in range(-BLEED, height):
+            width = half if h < height - 1 else max(half - 2, 1)
+            for x in range(cx - width, cx + width + 1):
+                pad.up(x, h, white if h >= height - 2 and x <= cx else shade_ if x > cx + width - 2 else soft)
+    return pad.a
+
+
+def lily(variant: int) -> np.ndarray:
+    """A white flower with a gold heart, the gardens' own."""
+    pad = Pad()
+    stem, petal, heart = col("7fbf75"), col("ffffff"), col("ffd24a")
+    for cx, height in [[(7, 7)], [(4, 5), (11, 8)]][variant % 2]:
+        for h in range(-BLEED, height):
+            pad.up(cx, h, stem)
+        for dx, dy in ((-1, 0), (1, 0), (0, 1), (-1, 1), (1, 1), (0, 2)):
+            pad.up(cx + dx, height + dy, petal)
+        pad.up(cx, height + 1, heart)
+        pad.up(cx + 1, height // 2, stem)
+    return pad.a
+
+
+def grave(variant: int) -> np.ndarray:
+    """A leaning headstone, a cross or a broken slab."""
+    pad = Pad()
+    ramp, rim = PALETTES["ashstone"]["ramp"], PALETTES["ashstone"]["outline"]
+    kind = variant % 3
+    if kind == 1:
+        for h in range(-BLEED, 10):
+            pad.up(7, h, ramp[4])
+            pad.up(8, h, ramp[2])
+        for x in range(4, 12):
+            pad.up(x, 6, ramp[4] if x < 8 else ramp[3])
+            pad.up(x, 7, ramp[5] if x < 8 else ramp[3])
+    else:
+        top = 9 if kind == 0 else 5
+        for h in range(-BLEED, top):
+            for x in range(4, 12):
+                if h >= top - 2 and x in (4, 11) and kind == 0:
+                    continue
+                if kind == 2 and h == top - 1 and x % 3 == 0:
+                    continue
+                pad.up(x, h, ramp[4] if x == 4 else ramp[2] if x == 11 else ramp[3])
+        if kind == 0:
+            for x in range(6, 10):
+                pad.up(x, 9, ramp[4])
+            for h in range(3, 7):
+                pad.up(7, h, ramp[1])
+            pad.up(6, 5, ramp[1])
+            pad.up(8, 5, ramp[1])
+    pad.outline(rim)
+    return pad.a
+
+
+def dead_grass(variant: int) -> np.ndarray:
+    """Pale dry blades."""
+    r = rng("dead_grass", variant)
+    pad = Pad()
+    pale = hexes("5e5c68", "7e7c8e", "9896a6", "b5b3c0")
+    x = r.randint(2, 4)
+    while x < TILE - 2:
+        height = r.randint(2, 5)
+        for h in range(-BLEED, height):
+            pad.up(x + (r.choice([-1, 1]) if h == height - 1 and height > 3 else 0), h, pale[min(h + 1, 3) if h >= 0 else 0])
+        x += r.choice([2, 2, 3, 4])
+    return pad.a
+
+
+def bramble(variant: int, stems, dots, name: str) -> np.ndarray:
+    """A low tangle of stems with a few dots (thorns, roses) on it."""
+    r = rng(name, variant)
+    pad = Pad()
+    dark, mid = stems
+    for start in ((3, 9, 13) if variant % 2 else (5, 11)):
+        x, height = start, r.randint(5, 9)
+        for h in range(-BLEED, height):
+            pad.up(x, h, dark if h < 2 else mid)
+            if h > 1 and r.random() < 0.5:
+                side = r.choice([-1, 1])
+                pad.up(x + side, h, dark)
+                if r.random() < 0.6:
+                    pad.up(x + 2 * side, h + 1, dots[r.randrange(len(dots))])
+            if h > 0 and r.random() < 0.4:
+                x = max(2, min(TILE - 3, x + r.choice([-1, 1])))
+        pad.up(x, height, dots[0])
+    return pad.a
+
+
+def thorn_rose(variant: int) -> np.ndarray:
+    return bramble(variant, hexes("3a1632", "5a2a4e"), hexes("ff7ab8", "ffc0dc", "d8408a"), "thorn_rose")
+
+
+def thorn(variant: int) -> np.ndarray:
+    return bramble(variant, hexes("1a0c0a", "33181a"), hexes("5a2a22", "7a3a2a"), "thorn")
+
+
+def hanging(variant: int, tip: bool, stems, dots, name: str) -> np.ndarray:
+    """A strand that hangs through a cell (or ends in it), with dots along it."""
+    r = rng(name, variant, tip)
+    pad = Pad()
+    dark, mid = stems
+    for start in (5, 10) if variant % 2 else (7,):
+        x = start
+        length = r.randint(7, 12) if tip else DECOR_H - CEILING
+        for d in range(-BLEED, length):
+            pad.down(x, d, mid if d % 3 else dark)
+            if dots and r.random() < 0.28:
+                side = r.choice([-1, 1])
+                pad.down(x + side, d, dots[r.randrange(len(dots))])
+            if d >= 0 and d % 4 == 3:
+                x = max(3, min(TILE - 4, x + r.choice([-1, 0, 1])))
+        if tip and dots:
+            pad.down(x, length, dots[0])
+    return pad.a
+
+
+def rose_vine_mid(variant: int) -> np.ndarray:
+    return hanging(variant, False, hexes("3a1632", "6a2a56"), hexes("ff7ab8", "ffc0dc"), "rose_vine")
+
+
+def rose_vine_tip(variant: int) -> np.ndarray:
+    return hanging(variant, True, hexes("3a1632", "6a2a56"), hexes("ff7ab8", "ffc0dc"), "rose_vine")
+
+
+def moss_mid(variant: int) -> np.ndarray:
+    return hanging(variant, False, hexes("1f4a40", "2f6e5c"), hexes("58a088"), "moss")
+
+
+def moss_tip(variant: int) -> np.ndarray:
+    return hanging(variant, True, hexes("1f4a40", "2f6e5c"), hexes("58a088"), "moss")
+
+
+def chain_links(variant: int, tip: bool) -> np.ndarray:
+    """An iron chain: links one over the other, ending in a hook or a weight."""
+    pad = Pad()
+    iron, lit, rim = col("4a4a56"), col("8a8a98"), col("15151b")
+    x = 7 if variant % 2 == 0 else 8
+    length = 10 if tip else DECOR_H - CEILING
+    for d in range(-BLEED, length):
+        if d % 4 in (0, 1):
+            pad.down(x, d, lit)
+            pad.down(x + 1, d, iron)
+        else:
+            pad.down(x - 1, d, lit)
+            pad.down(x + 2, d, iron)
+    if tip:
+        if variant % 2 == 0:
+            for dx, dd in ((0, 10), (0, 11), (1, 12), (2, 12), (3, 11), (3, 10)):
+                pad.down(x + dx - 1, dd, lit if dx == 0 else iron)
+        else:
+            for dd in range(10, 14):
+                for dx in range(-1, 3):
+                    pad.down(x + dx, dd, lit if dx == -1 else iron)
+    pad.outline(rim)
+    return pad.a
+
+
+def chain_mid(variant: int) -> np.ndarray:
+    return chain_links(variant, False)
+
+
+def chain_tip(variant: int) -> np.ndarray:
+    return chain_links(variant, True)
+
+
+def reed(variant: int) -> np.ndarray:
+    """Marsh reeds: thin stalks with dark heads."""
+    r = rng("reed", variant)
+    pad = Pad()
+    stalk, pale, head = col("56733a"), col("8aa058"), col("4a3020")
+    for x in [(4, 9, 12), (6, 11), (3, 7, 10, 13)][variant % 3]:
+        height = r.randint(8, 15)
+        for h in range(-BLEED, height):
+            pad.up(x, h, pale if h > height * 0.6 else stalk)
+        if r.random() < 0.7:
+            for h in range(height - 4, height - 1):
+                pad.up(x, h, head)
+                pad.up(x + 1, h, head)
+    return pad.a
+
+
+def drip(variant: int) -> np.ndarray:
+    """Slime hanging from a ceiling in drops."""
+    r = rng("drip", variant)
+    pad = Pad()
+    dark, mid, lit = col("4a6a1c"), col("74a030"), col("b8e070")
+    for x in [(5, 11), (7,), (3, 8, 12)][variant % 3]:
+        length = r.randint(4, 11)
+        for d in range(-BLEED, length):
+            pad.down(x, d, mid)
+            if d < 2 or d >= length - 2:
+                pad.down(x + 1, d, dark)
+        pad.down(x, length - 1, lit)
+        pad.down(x, length, mid)
+    return pad.a
+
+
+def coins(variant: int) -> np.ndarray:
+    """A heap of gold with a glint on it."""
+    r = rng("coins", variant)
+    pad = Pad()
+    ramp = PALETTES["gold"]["ramp"]
+    half, height = [(5, 4), (3, 3), (6, 6)][variant % 3]
+    cx = 7 + r.choice([-1, 0, 1])
+    for h in range(-1, height):
+        width = int(round(half * (1 - max(h, 0) / (height + 0.5))))
+        for x in range(cx - width, cx + width + 1):
+            pad.up(x, h, ramp[4] if (x + h) % 3 == 0 else ramp[2] if x > cx + width - 2 else ramp[3])
+    pad.up(cx - 1, height - 1, ramp[5])
+    pad.up(cx + half - 2, 1, ramp[5])
+    pad.outline(PALETTES["gold"]["outline"])
+    return pad.a
+
+
+WOOD = hexes("140c0a", "2a1814", "40261e", "5a382a")
+
+
+def dead_tree_part(variant: int, part: str) -> np.ndarray:
+    """A bare black tree, a cell at a time: its foot, its trunk, its crown of branches."""
+    r = rng("dead_tree", variant, part)
+    pad = Pad()
+    cx = 7
+    top = DECOR_H if part != "top" else 9
+    for h in range(-BLEED, top - BLEED):
+        wide = 2 if part == "base" and h < 3 else 1
+        for x in range(cx - wide + 1, cx + wide + 1):
+            pad.up(x, h, WOOD[2] if x <= cx else WOOD[1])
+        if part == "base" and h < 1:
+            pad.up(cx - 2, h, WOOD[1])
+            pad.up(cx + 3, h, WOOD[0])
+    for side in (-1, 1):
+        if part == "base" or r.random() < 0.25:
+            continue
+        at = r.randint(2, 7)
+        x, h = cx + (0 if side < 0 else 1), at
+        for k in range(r.randint(3, 6)):
+            x += side
+            h += 1 if k % 2 == 0 or part == "top" else 0
+            pad.up(x, h, WOOD[3] if side < 0 else WOOD[1])
+            if k == 2 and r.random() < 0.6:
+                pad.up(x, h + 1, WOOD[1])
+                pad.up(x - side, h + 2, WOOD[0])
+    if part == "top":
+        for k in range(4):
+            pad.up(cx + (k % 2), top - BLEED + k, WOOD[2 if k < 2 else 1])
+    return pad.a
+
+
+def dead_tree_base(variant: int) -> np.ndarray:
+    return dead_tree_part(variant, "base")
+
+
+def dead_tree_mid(variant: int) -> np.ndarray:
+    return dead_tree_part(variant, "mid")
+
+
+def dead_tree_top(variant: int) -> np.ndarray:
+    return dead_tree_part(variant, "top")
+
+
+def tomb(variant: int) -> np.ndarray:
+    """An open stone tomb with fire inside it."""
+    pad = Pad()
+    ramp, rim = PALETTES["dis_brick"]["ramp"], PALETTES["dis_brick"]["outline"]
+    fire = hexes("d8521a", "ff9a2e", "ffe07a")
+    for h in range(-BLEED, 6):
+        for x in range(2, 14):
+            pad.up(x, h, ramp[4] if x == 2 else ramp[1] if x == 13 else ramp[5] if h == 5 else ramp[3] if h == 4 else ramp[2])
+    for x in range(4, 12):
+        pad.up(x, 5, fire[1] if (x + variant) % 3 else fire[2])
+        pad.up(x, 4, fire[0])
+    for x in ((5, 9) if variant % 2 else (6, 10)):
+        pad.up(x, 6, fire[1])
+        pad.up(x, 7, fire[0])
+    pad.outline(rim)
+    return pad.a
+
+
+def snow(variant: int) -> np.ndarray:
+    """A drift of snow lying on the ground."""
+    pad = Pad()
+    white, soft, shade_ = col("ffffff"), col("d8ecf8"), col("a8c8e0")
+    plan = [[(0, 16, 2)], [(1, 9, 3), (9, 7, 2)], [(3, 11, 3)]][variant % 3]
+    for x0, width, height in plan:
+        for x in range(x0, x0 + width):
+            edge = min(x - x0, x0 + width - 1 - x)
+            top = min(height, 1 + edge)
+            for h in range(-1, top):
+                pad.up(x, h, white if h == top - 1 else shade_ if h <= 0 else soft)
+    return pad.a
+
+
+def _spiked(kind: str, rock: str):
+    drawer = {"stalagmite": stalagmite, "stalactite": stalactite, "pebble": pebble}[kind]
+    return lambda variant: drawer(variant, PALETTES[rock])
+
+
 DRAWERS = {
+    "cloud_puff": cloud_puff,
+    "lily": lily,
+    "grave": grave,
+    "dead_grass": dead_grass,
+    "thorn_rose": thorn_rose,
+    "thorn": thorn,
+    "rose_vine_mid": rose_vine_mid,
+    "rose_vine_tip": rose_vine_tip,
+    "moss_mid": moss_mid,
+    "moss_tip": moss_tip,
+    "chain_mid": chain_mid,
+    "chain_tip": chain_tip,
+    "reed": reed,
+    "drip": drip,
+    "coins": coins,
+    "dead_tree_base": dead_tree_base,
+    "dead_tree_mid": dead_tree_mid,
+    "dead_tree_top": dead_tree_top,
+    "tomb": tomb,
+    "snow": snow,
+    "ice_spike": _spiked("stalagmite", "ice"),
+    "icicle": _spiked("stalactite", "ice"),
+    **{kind + "_" + name: _spiked(kind, SPIKED[name][0]) for name in SPIKED for kind in ("stalagmite", "stalactite", "pebble")},
     "tuft": tuft,
     "grass_tall": grass_tall,
     "flower": flower,

@@ -123,6 +123,128 @@ BLENDS = [
 
 SLOPES = ["up_right", "up_left"]  # rising to the right / to the left; solid below the diagonal
 
+# --- The world's biomes: Paradise, and the nine circles under the Earth ------------
+# Each adds its ground, its wall and what it is dressed with to the lists above.
+# (key, outline, ramp of six) for the palettes; the materials follow.
+_BIOME_PALETTES = [
+    ("cloud", "8fa3c8", "b9c8e6 cfdaf0 e0e8f6 eef3fb f8fbff ffffff"),
+    ("marble", "5b5a66", "8c8a96 a6a4ae bfbdc6 d5d3da e8e6ec f7f6fa"),
+    ("marble_wall", "5b5a66", "9a98a6 a8a6b2 b6b4be c4c2ca d0ced6 dcdae2"),
+    ("ashstone", "22212b", "3d3b4a 514f60 676577 7e7c8e 9896a6 b5b3c0"),
+    ("ash_wall", "17161d", "25242e 2d2c38 363542 3f3e4c 494857 545362"),
+    ("rose_rock", "2b1226", "4a1f43 662b5c 833a74 a04c8c bd66a6 d98ac2"),
+    ("rose_wall", "1c0c19", "2c1328 371934 431f40 4f264c 5c2d59 693566"),
+    ("mud", "1c1a0c", "33301a 454222 595530 6e6a3e 86824f a19c66"),
+    ("mud_wall", "121108", "1f1d10 272515 302d1a 393620 433f26 4d492d"),
+    ("darkstone", "1a130c", "30241a 433225 574231 6c543f 836950 9c8164"),
+    ("dark_wall", "100b07", "1c150f 241b14 2d2219 36291f 403125 4a392c"),
+    ("gold", "4a3206", "8a5e0c b88314 dca922 f2c93c fde06a fff3a8"),
+    ("swamp_rock", "0f1c1c", "1d3333 284545 355959 446e6c 578682 6fa19a"),
+    ("swamp_wall", "091212", "101f1f 152828 1b3131 213b3a 284544 30504e"),
+    ("dis_brick", "220d0b", "3f1a16 58251e 733228 8f4233 ab5642 c66f55"),
+    ("brick_wall", "150807", "25100d 301511 3c1a15 48201a 55271f 622e25"),
+    ("bloodstone", "1f0707", "3a0f10 521618 6c1f21 88292b a53739 c14b4c"),
+    ("blood_wall", "140404", "220809 2d0b0d 380f11 441316 50171a 5d1c1f"),
+    ("ember_sand", "3a1608", "7a3a16 9a4e1e b86428 d27e36 e69a4c f4b96a"),
+    ("slate", "12161c", "242c38 323c4a 424e5e 546274 6a788c 8492a6"),
+    ("slate_wall", "0b0e12", "161b23 1c222c 232a36 2a3240 323b4a 3a4455"),
+    ("ice", "1c4a6a", "4f8fb8 6fadd0 8fc8e4 b0dff2 d0f0fb f0fcff"),
+    ("frost_rock", "0e1a2c", "1c2e48 273d5c 344e72 44628a 5a7aa4 7696be"),
+    ("ice_wall", "0c2334", "163a54 1c4762 235470 2a617e 326f8d 3a7d9c"),
+]
+for _key, _outline, _ramp in _BIOME_PALETTES:
+    PALETTES[_key] = {"outline": hexes(_outline)[0], "ramp": hexes(*_ramp.split())}
+
+
+def _ground(key, texture, slopes, group="earth", **more):
+    return dict({"key": key, "kind": "terrain", "texture": texture, "palette": key, "group": group, "slopes": slopes}, **more)
+
+
+def _wall(key, texture):
+    return {"key": key, "kind": "wall", "texture": texture, "palette": key, "group": "walls", "slopes": False}
+
+
+MATERIALS += [
+    # A cloud is bright all through: it gives a soft light of its own, so its underside is not a shadow.
+    _ground("cloud", "cloud", True, group="sky", emits=(0.5, 0.55, 0.65)),
+    _ground("marble", "bricks", False),
+    _wall("marble_wall", "bricks"),
+    _ground("ashstone", "stone", True),
+    _wall("ash_wall", "rubble"),
+    _ground("rose_rock", "stone", True),
+    _wall("rose_wall", "rubble"),
+    _ground("mud", "clay", True),
+    _wall("mud_wall", "dirt"),
+    _ground("darkstone", "stone", True),
+    {"key": "gold_ore", "kind": "terrain", "texture": "stone", "palette": "darkstone", "ore": "gold", "group": "earth", "slopes": False, "emits": (0.36, 0.28, 0.08)},
+    _wall("dark_wall", "rubble"),
+    _ground("swamp_rock", "stone", True),
+    _wall("swamp_wall", "dirt"),
+    _ground("dis_brick", "bricks", False),
+    _wall("brick_wall", "bricks"),
+    _ground("bloodstone", "stone", True),
+    _ground("ember_sand", "sand", True),
+    _wall("blood_wall", "rubble"),
+    _ground("slate", "rubble", True),
+    _wall("slate_wall", "bricks"),
+    _ground("ice", "ice", True, emits=(0.10, 0.16, 0.22)),
+    _ground("frost_rock", "stone", True),
+    _wall("ice_wall", "rubble"),
+]
+
+
+def _blend(upper, lower):
+    material = next(m for m in MATERIALS if m["key"] == upper)
+    return {"key": f"{upper}_on_{lower}", "onto": lower, "from": [upper], "texture": material["texture"], "palette": material["palette"]}
+
+
+# Where one biome's ground lies on the next one's, and a biome's two grounds on each other.
+BLENDS += [
+    _blend("dirt", "ashstone"),
+    _blend("stone", "ashstone"),
+    _blend("ashstone", "rose_rock"),
+    _blend("rose_rock", "mud"),
+    _blend("mud", "darkstone"),
+    _blend("darkstone", "swamp_rock"),
+    _blend("swamp_rock", "dis_brick"),
+    _blend("dis_brick", "bloodstone"),
+    _blend("ember_sand", "bloodstone"),
+    _blend("bloodstone", "slate"),
+    _blend("slate", "frost_rock"),
+    _blend("ice", "frost_rock"),
+    _blend("dirt", "marble"),
+]
+
+# The world's regions, top to bottom: what each is called, the faint light that hangs
+# in its air (the tile light's units; none where the sky or torches do the work), the
+# colours of the rock behind its caves (none for open sky) and what drifts in its air:
+# (how many a second, colour, alpha, speed across from/to, speed up from/to, seconds
+# a mote lives, whether it takes the tile light).
+REGIONS = [
+    {"key": "paradise", "name": "Paradise", "subtitle": "Celestial Gardens", "ambient": (0.0, 0.0, 0.0), "cave": None,
+     "air": (5, "fff2c0", 0.8, (-0.4, 0.4), (-0.7, -0.2), 9.0, False)},
+    {"key": "earth", "name": "Ruined Earth", "subtitle": "The Hub", "ambient": (0.0, 0.0, 0.0),
+     "cave": "0a0b10 111219 171920 1e2029 262933", "air": None},
+    {"key": "limbo", "name": "1. Limbo", "subtitle": "The Forgotten", "ambient": (0.20, 0.21, 0.28),
+     "cave": "0c0c12 14141d 1b1b27 232331 2c2c3c", "air": (7, "c8c8de", 0.5, (-0.3, 0.3), (-0.1, 0.1), 10.0, True)},
+    {"key": "lust", "name": "2. Lust", "subtitle": "The Desire", "ambient": (0.26, 0.13, 0.24),
+     "cave": "120812 1c0d1c 251226 2f1830 3a1f3c", "air": (26, "f0a0d8", 0.6, (5.0, 9.0), (-0.6, 0.6), 4.0, False)},
+    {"key": "gluttony", "name": "3. Gluttony", "subtitle": "The Devourers", "ambient": (0.17, 0.19, 0.10),
+     "cave": "0b0b06 12120a 19190e 212113 2a2a19", "air": (40, "9fb0c0", 0.5, (-1.0, -0.6), (-13.0, -10.0), 2.4, False)},
+    {"key": "greed", "name": "4. Greed", "subtitle": "The Hoarders", "ambient": (0.24, 0.19, 0.09),
+     "cave": "0c0906 140f0a 1c150e 251c13 2e2418", "air": (6, "ffd860", 0.9, (-0.2, 0.2), (-0.3, 0.1), 7.0, False)},
+    {"key": "wrath", "name": "5. Wrath", "subtitle": "The Raging", "ambient": (0.10, 0.19, 0.18),
+     "cave": "060c0c 0a1414 0e1b1b 132323 182c2c", "air": (7, "a0c8b8", 0.4, (-0.4, 0.4), (0.0, 0.2), 9.0, True)},
+    {"key": "heresy", "name": "6. Heresy", "subtitle": "The Burned", "ambient": (0.27, 0.12, 0.07),
+     "cave": "100605 1a0a08 230e0b 2d130f 381813", "air": (16, "ff9a3a", 0.9, (-0.5, 0.5), (0.8, 2.2), 4.0, False)},
+    {"key": "violence", "name": "7. Violence", "subtitle": "The Wounded", "ambient": (0.25, 0.08, 0.08),
+     "cave": "0e0304 170506 200709 2a0a0c 340d10", "air": (14, "b08080", 0.6, (-0.8, 0.2), (-1.4, -0.6), 7.0, True)},
+    {"key": "fraud", "name": "8. Fraud", "subtitle": "The Deceivers", "ambient": (0.14, 0.17, 0.22),
+     "cave": "06080b 0b0e13 10141b 161b24 1c222d", "air": (5, "8090a8", 0.5, (-0.2, 0.2), (-0.4, -0.1), 9.0, True)},
+    {"key": "treachery", "name": "9. Treachery", "subtitle": "The Frozen", "ambient": (0.16, 0.24, 0.32),
+     "cave": "050c14 0a1420 0f1c2c 152538 1b2e45", "air": (30, "e8f6ff", 0.9, (-1.2, 0.4), (-2.2, -1.0), 8.0, False)},
+]
+
 
 # --- Helpers ------------------------------------------------------------------
 
@@ -204,21 +326,84 @@ LEGEND = [
     ("P", "mark", "spawn", ""),
     ("d", "wall", "dirt_wall", ""),
     ("s", "wall", "stone_wall", ""),
+    # The biomes of the world.
+    ("Q", "terrain", "cloud", ""),
+    ("1", "terrain", "cloud", "up_right"),
+    ("2", "terrain", "cloud", "up_left"),
+    ("M", "terrain", "marble", ""),
+    ("H", "terrain", "ashstone", ""),
+    ("3", "terrain", "ashstone", "up_right"),
+    ("4", "terrain", "ashstone", "up_left"),
+    ("R", "terrain", "rose_rock", ""),
+    ("5", "terrain", "rose_rock", "up_right"),
+    ("6", "terrain", "rose_rock", "up_left"),
+    ("U", "terrain", "mud", ""),
+    ("7", "terrain", "mud", "up_right"),
+    ("8", "terrain", "mud", "up_left"),
+    ("N", "terrain", "darkstone", ""),
+    ("9", "terrain", "darkstone", "up_right"),
+    ("0", "terrain", "darkstone", "up_left"),
+    ("$", "terrain", "gold_ore", ""),
+    ("Y", "terrain", "swamp_rock", ""),
+    ("<", "terrain", "swamp_rock", "up_right"),
+    (">", "terrain", "swamp_rock", "up_left"),
+    ("B", "terrain", "dis_brick", ""),
+    ("V", "terrain", "bloodstone", ""),
+    (":", "terrain", "bloodstone", "up_right"),
+    (";", "terrain", "bloodstone", "up_left"),
+    ("E", "terrain", "ember_sand", ""),
+    ("F", "terrain", "slate", ""),
+    ("+", "terrain", "slate", "up_right"),
+    ("-", "terrain", "slate", "up_left"),
+    ("I", "terrain", "ice", ""),
+    ("Z", "terrain", "frost_rock", ""),
+    ("=", "terrain", "frost_rock", "up_right"),
+    ("_", "terrain", "frost_rock", "up_left"),
+    ("~", "liquid", "styx", ""),
+    ("!", "liquid", "blood", ""),
+    ("%", "liquid", "tar", ""),
+    ("&", "liquid", "slime", ""),
+    ("*", "prop", "brazier", ""),
+    ("^", "prop", "crystal", ""),
+    ("J", "prop", "lantern", ""),
+    # Ledges: thin one-way platforms, jumped up through and dropped down through.
+    ('"', "ledge", "plank", ""),
+    ("'", "ledge", "grate", ""),
+    (",", "ledge", "gilt", ""),
+    ("?", "ledge", "rime", ""),
+    ("m", "wall", "marble_wall", ""),
+    ("h", "wall", "ash_wall", ""),
+    ("r", "wall", "rose_wall", ""),
+    ("u", "wall", "mud_wall", ""),
+    ("n", "wall", "dark_wall", ""),
+    ("y", "wall", "swamp_wall", ""),
+    ("b", "wall", "brick_wall", ""),
+    ("v", "wall", "blood_wall", ""),
+    ("f", "wall", "slate_wall", ""),
+    ("i", "wall", "ice_wall", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}
 LIQUID_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "liquid"}
+PROP_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "prop"}
+LEDGE_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "ledge"}
+# A ledge's sheet has four pieces: by whether the same ledge goes on to its left and right.
+LEDGES = ["plank", "grate", "gilt", "rime"]
+LEDGE_PIECES = ["single", "left", "middle", "right"]
+LEDGE_THICK = 5  # px of a ledge that carry: the strip at the top of its cell
 TORCH_CHAR = "T"  # a torch on the wall at this cell; air for the terrain
 SPAWN_CHAR = "P"  # where the hero starts in the playground; air
 
 
 def read_map(path: str):
     """The map at `path`: (terrain rows, wall rows, properties). A property line
-    `@view cave 31 20` is properties["view"]["cave"] = [31, 20]; any other
-    `@key value` is properties[key] = value."""
+    `@view cave 31 20` is properties["view"]["cave"] = [31, 20]; `@region key row`
+    and `@mark kind column row ...` add (key, row) and (kind, column, row, the
+    rest) to properties["region"] and properties["mark"]; any other `@key value`
+    is properties[key] = value."""
     with open(path, encoding="utf-8") as handle:
         lines = handle.read().replace("\r", "").split("\n")
-    properties: dict = {"view": {}}
+    properties: dict = {"view": {}, "region": [], "mark": []}
     grids: list[list[str]] = [[]]
     for line in lines:
         if line.startswith("#"):
@@ -227,6 +412,10 @@ def read_map(path: str):
             parts = line[1:].split()
             if parts and parts[0] == "view" and len(parts) == 4:
                 properties["view"][parts[1]] = [float(parts[2]), float(parts[3])]
+            elif parts and parts[0] == "region" and len(parts) == 3:
+                properties["region"].append((parts[1], int(parts[2])))
+            elif parts and parts[0] == "mark" and len(parts) >= 4:
+                properties["mark"].append((parts[1], int(parts[2]), int(parts[3]), parts[4:]))
             elif len(parts) >= 2:
                 properties[parts[0]] = " ".join(parts[1:])
             continue
@@ -266,6 +455,37 @@ def variant_of(x: int, y: int, count: int) -> int:
     return (h & 0x7FFFFFFF) % count
 
 
+REGION_BLEND = 6  # rows either side of a region's edge over which its air's light turns into the next one's
+
+
+def region_bands(regions: list, height: int) -> list[tuple[dict, int, int]]:
+    """A map's regions as (region, first row, row after its last), top to bottom. A map
+    that names none is all Earth."""
+    by_key = {r["key"]: r for r in REGIONS}
+    named = sorted(regions, key=lambda entry: entry[1]) or [("earth", 0)]
+    tops = [top for _, top in named] + [height]
+    return [(by_key[key], max(top, 0), min(tops[i + 1], height)) for i, (key, top) in enumerate(named)]
+
+
+def ambient_rows(regions: list, height: int) -> list[tuple[float, float, float]]:
+    """The light that hangs in the air of each row: its region's, turning into the
+    next region's over REGION_BLEND rows either side of the edge between them."""
+    bands = region_bands(regions, height)
+    out = []
+    for row in range(height):
+        index = next((i for i, (_, top, end) in enumerate(bands) if top <= row < end), 0)
+        region, top, end = bands[index]
+        colour = region["ambient"]
+        if index > 0 and row - top < REGION_BLEND:
+            t = 0.5 + (row - top + 0.5) / (2 * REGION_BLEND)
+            colour = tuple(a + (b - a) * t for a, b in zip(bands[index - 1][0]["ambient"], colour))
+        elif index < len(bands) - 1 and end - row <= REGION_BLEND:
+            t = 0.5 - (end - row - 0.5) / (2 * REGION_BLEND)
+            colour = tuple(a + (b - a) * t for a, b in zip(colour, bands[index + 1][0]["ambient"]))
+        out.append(tuple(colour))
+    return out
+
+
 # --- Light ----------------------------------------------------------------------
 # The lighting standard (docs/art/tiles-v2.md), the numbers TileLight.cs and the
 # preview share; the Unity builder copies them from the manifest into the tile set.
@@ -281,6 +501,16 @@ LIGHT = {
     "torch_glow_radius": 3.0,  # tiles
     "wall_tint": (0.68, 0.70, 0.80),  # what the wall layer is multiplied by: a wall is further back than the ground
 }
+
+
+# The things that give light where they stand, each a sheet of frames: the light a prop
+# gives its tile is its colour times its intensity; `embers` rise from a flame.
+PROPS = [
+    {"key": "torch", "frames": 3, "colour": LIGHT["torch_colour"], "intensity": LIGHT["torch_intensity"], "embers": True},
+    {"key": "brazier", "frames": 3, "colour": (1.0, 0.60, 0.32), "intensity": 2.0, "embers": True},
+    {"key": "crystal", "frames": 3, "colour": (0.55, 0.82, 1.0), "intensity": 1.3, "embers": False},
+    {"key": "lantern", "frames": 3, "colour": (1.0, 0.93, 0.72), "intensity": 1.2, "embers": False},
+]
 
 
 # --- The day ----------------------------------------------------------------------

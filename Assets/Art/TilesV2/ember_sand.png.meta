@@ -1,0 +1,4091 @@
+fileFormatVersion: 2
+guid: 91144dff95f552aea7225fa679dce3df
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 224011206327903446
+    second: tv2_ember_sand_f0_v0
+  - first:
+      213: 3199330512045771423
+    second: tv2_ember_sand_f1_v0
+  - first:
+      213: 2321751728487696707
+    second: tv2_ember_sand_f4_v0
+  - first:
+      213: 2099171465328176706
+    second: tv2_ember_sand_f5_v0
+  - first:
+      213: 4564539617176557192
+    second: tv2_ember_sand_f7_v0
+  - first:
+      213: 3281247232082548827
+    second: tv2_ember_sand_f16_v0
+  - first:
+      213: 4437815456274584962
+    second: tv2_ember_sand_f17_v0
+  - first:
+      213: 4022518209075165342
+    second: tv2_ember_sand_f20_v0
+  - first:
+      213: 3430031347509762441
+    second: tv2_ember_sand_f21_v0
+  - first:
+      213: 2440424495531279511
+    second: tv2_ember_sand_f23_v0
+  - first:
+      213: 1140926127369618831
+    second: tv2_ember_sand_f28_v0
+  - first:
+      213: 2184830493911825481
+    second: tv2_ember_sand_f29_v0
+  - first:
+      213: 2523655893051030005
+    second: tv2_ember_sand_f31_v0
+  - first:
+      213: 4069117259118118663
+    second: tv2_ember_sand_f64_v0
+  - first:
+      213: 3739709326673746933
+    second: tv2_ember_sand_f65_v0
+  - first:
+      213: 4255416640201568936
+    second: tv2_ember_sand_f68_v0
+  - first:
+      213: 1814294575638745306
+    second: tv2_ember_sand_f69_v0
+  - first:
+      213: 358592114224155837
+    second: tv2_ember_sand_f71_v0
+  - first:
+      213: 2671946806637977732
+    second: tv2_ember_sand_f80_v0
+  - first:
+      213: 4102227494587319292
+    second: tv2_ember_sand_f81_v0
+  - first:
+      213: 3615472412807760285
+    second: tv2_ember_sand_f84_v0
+  - first:
+      213: 3049284396134013189
+    second: tv2_ember_sand_f85_v0
+  - first:
+      213: 1011723013343510595
+    second: tv2_ember_sand_f87_v0
+  - first:
+      213: 4450682352075515168
+    second: tv2_ember_sand_f92_v0
+  - first:
+      213: 4399400298099100536
+    second: tv2_ember_sand_f93_v0
+  - first:
+      213: 4326495026089627297
+    second: tv2_ember_sand_f95_v0
+  - first:
+      213: 3629529527581821276
+    second: tv2_ember_sand_f112_v0
+  - first:
+      213: 3975272486995095074
+    second: tv2_ember_sand_f113_v0
+  - first:
+      213: 3701641624489629458
+    second: tv2_ember_sand_f116_v0
+  - first:
+      213: 3856944225513987570
+    second: tv2_ember_sand_f117_v0
+  - first:
+      213: 558278109101539501
+    second: tv2_ember_sand_f119_v0
+  - first:
+      213: 3097697864008908154
+    second: tv2_ember_sand_f124_v0
+  - first:
+      213: 2751692730235476201
+    second: tv2_ember_sand_f125_v0
+  - first:
+      213: 55199889043959587
+    second: tv2_ember_sand_f127_v0
+  - first:
+      213: 2159760043765113046
+    second: tv2_ember_sand_f193_v0
+  - first:
+      213: 3002961559069680856
+    second: tv2_ember_sand_f197_v0
+  - first:
+      213: 3147632933776974340
+    second: tv2_ember_sand_f199_v0
+  - first:
+      213: 386857993243016495
+    second: tv2_ember_sand_f209_v0
+  - first:
+      213: 3375881475933645706
+    second: tv2_ember_sand_f213_v0
+  - first:
+      213: 1730920744731817532
+    second: tv2_ember_sand_f215_v0
+  - first:
+      213: 670224981968622426
+    second: tv2_ember_sand_f221_v0
+  - first:
+      213: 2450227334223167799
+    second: tv2_ember_sand_f223_v0
+  - first:
+      213: 939529280313923998
+    second: tv2_ember_sand_f241_v0
+  - first:
+      213: 3376894693983092179
+    second: tv2_ember_sand_f245_v0
+  - first:
+      213: 2641609984387739068
+    second: tv2_ember_sand_f247_v0
+  - first:
+      213: 148912454349962701
+    second: tv2_ember_sand_f253_v0
+  - first:
+      213: 2567920821304598519
+    second: tv2_ember_sand_f255_v0
+  - first:
+      213: 479124791106187595
+    second: tv2_ember_sand_f0_v1
+  - first:
+      213: 1974196880699933507
+    second: tv2_ember_sand_f1_v1
+  - first:
+      213: 399200067667797396
+    second: tv2_ember_sand_f4_v1
+  - first:
+      213: 1162703620244572403
+    second: tv2_ember_sand_f5_v1
+  - first:
+      213: 2880135714462162981
+    second: tv2_ember_sand_f7_v1
+  - first:
+      213: 3446450661518697682
+    second: tv2_ember_sand_f16_v1
+  - first:
+      213: 562002410690458496
+    second: tv2_ember_sand_f17_v1
+  - first:
+      213: 1718391898415418222
+    second: tv2_ember_sand_f20_v1
+  - first:
+      213: 4418212354731369347
+    second: tv2_ember_sand_f21_v1
+  - first:
+      213: 2082420917424121808
+    second: tv2_ember_sand_f23_v1
+  - first:
+      213: 2011231861516531885
+    second: tv2_ember_sand_f28_v1
+  - first:
+      213: 3964778017322065257
+    second: tv2_ember_sand_f29_v1
+  - first:
+      213: 3712385243865631303
+    second: tv2_ember_sand_f31_v1
+  - first:
+      213: 2420720049279532332
+    second: tv2_ember_sand_f64_v1
+  - first:
+      213: 2276063827590154108
+    second: tv2_ember_sand_f65_v1
+  - first:
+      213: 4077033049952277982
+    second: tv2_ember_sand_f68_v1
+  - first:
+      213: 1084481235512062078
+    second: tv2_ember_sand_f69_v1
+  - first:
+      213: 272327799263723361
+    second: tv2_ember_sand_f71_v1
+  - first:
+      213: 3272786200509784170
+    second: tv2_ember_sand_f80_v1
+  - first:
+      213: 1729949707667649935
+    second: tv2_ember_sand_f81_v1
+  - first:
+      213: 2076986143722412560
+    second: tv2_ember_sand_f84_v1
+  - first:
+      213: 3759702753599383653
+    second: tv2_ember_sand_f85_v1
+  - first:
+      213: 3281540642414213583
+    second: tv2_ember_sand_f87_v1
+  - first:
+      213: 661466743912491695
+    second: tv2_ember_sand_f92_v1
+  - first:
+      213: 3674326163036427660
+    second: tv2_ember_sand_f93_v1
+  - first:
+      213: 1538433693280265101
+    second: tv2_ember_sand_f95_v1
+  - first:
+      213: 3544897372330626253
+    second: tv2_ember_sand_f112_v1
+  - first:
+      213: 2206758289749465561
+    second: tv2_ember_sand_f113_v1
+  - first:
+      213: 4530707899153128145
+    second: tv2_ember_sand_f116_v1
+  - first:
+      213: 2345639383031806556
+    second: tv2_ember_sand_f117_v1
+  - first:
+      213: 4496487661851021505
+    second: tv2_ember_sand_f119_v1
+  - first:
+      213: 21533099569833671
+    second: tv2_ember_sand_f124_v1
+  - first:
+      213: 3513206281313630756
+    second: tv2_ember_sand_f125_v1
+  - first:
+      213: 4105761002724399677
+    second: tv2_ember_sand_f127_v1
+  - first:
+      213: 3552341146172798084
+    second: tv2_ember_sand_f193_v1
+  - first:
+      213: 143756128134372393
+    second: tv2_ember_sand_f197_v1
+  - first:
+      213: 4209849929618146514
+    second: tv2_ember_sand_f199_v1
+  - first:
+      213: 4179573723183369870
+    second: tv2_ember_sand_f209_v1
+  - first:
+      213: 2610938088538519270
+    second: tv2_ember_sand_f213_v1
+  - first:
+      213: 680901838359228780
+    second: tv2_ember_sand_f215_v1
+  - first:
+      213: 1571130179083864098
+    second: tv2_ember_sand_f221_v1
+  - first:
+      213: 871235615008650589
+    second: tv2_ember_sand_f223_v1
+  - first:
+      213: 3081971852866925753
+    second: tv2_ember_sand_f241_v1
+  - first:
+      213: 1047270446841806435
+    second: tv2_ember_sand_f245_v1
+  - first:
+      213: 83947527027115706
+    second: tv2_ember_sand_f247_v1
+  - first:
+      213: 2428254982528039786
+    second: tv2_ember_sand_f253_v1
+  - first:
+      213: 2020864538082742753
+    second: tv2_ember_sand_f255_v1
+  - first:
+      213: 4124330963059419948
+    second: tv2_ember_sand_f0_v2
+  - first:
+      213: 829611449925844511
+    second: tv2_ember_sand_f1_v2
+  - first:
+      213: 1176219498112735266
+    second: tv2_ember_sand_f4_v2
+  - first:
+      213: 125948062080293623
+    second: tv2_ember_sand_f5_v2
+  - first:
+      213: 2285106159525828008
+    second: tv2_ember_sand_f7_v2
+  - first:
+      213: 2592290864204155187
+    second: tv2_ember_sand_f16_v2
+  - first:
+      213: 3057111637391208376
+    second: tv2_ember_sand_f17_v2
+  - first:
+      213: 4422934801074354664
+    second: tv2_ember_sand_f20_v2
+  - first:
+      213: 1176832836168001228
+    second: tv2_ember_sand_f21_v2
+  - first:
+      213: 3279673128190167451
+    second: tv2_ember_sand_f23_v2
+  - first:
+      213: 3307950206719529923
+    second: tv2_ember_sand_f28_v2
+  - first:
+      213: 2713904882417245715
+    second: tv2_ember_sand_f29_v2
+  - first:
+      213: 767402063205922773
+    second: tv2_ember_sand_f31_v2
+  - first:
+      213: 715378767714916942
+    second: tv2_ember_sand_f64_v2
+  - first:
+      213: 3197337350626033116
+    second: tv2_ember_sand_f65_v2
+  - first:
+      213: 3819467939759700025
+    second: tv2_ember_sand_f68_v2
+  - first:
+      213: 1218610802237465331
+    second: tv2_ember_sand_f69_v2
+  - first:
+      213: 757954863572512562
+    second: tv2_ember_sand_f71_v2
+  - first:
+      213: 1733384845338957068
+    second: tv2_ember_sand_f80_v2
+  - first:
+      213: 2449705523219138312
+    second: tv2_ember_sand_f81_v2
+  - first:
+      213: 4258892536948903341
+    second: tv2_ember_sand_f84_v2
+  - first:
+      213: 3037215168167178401
+    second: tv2_ember_sand_f85_v2
+  - first:
+      213: 1685008006687817746
+    second: tv2_ember_sand_f87_v2
+  - first:
+      213: 852354267819936253
+    second: tv2_ember_sand_f92_v2
+  - first:
+      213: 1149288325211216077
+    second: tv2_ember_sand_f93_v2
+  - first:
+      213: 3885740333336582896
+    second: tv2_ember_sand_f95_v2
+  - first:
+      213: 3789400770470376281
+    second: tv2_ember_sand_f112_v2
+  - first:
+      213: 4298784374103595997
+    second: tv2_ember_sand_f113_v2
+  - first:
+      213: 583789246024375106
+    second: tv2_ember_sand_f116_v2
+  - first:
+      213: 3456456168719248414
+    second: tv2_ember_sand_f117_v2
+  - first:
+      213: 4596464014037694456
+    second: tv2_ember_sand_f119_v2
+  - first:
+      213: 647444767524868775
+    second: tv2_ember_sand_f124_v2
+  - first:
+      213: 547574773234831846
+    second: tv2_ember_sand_f125_v2
+  - first:
+      213: 1762006484951532772
+    second: tv2_ember_sand_f127_v2
+  - first:
+      213: 781297782379180460
+    second: tv2_ember_sand_f193_v2
+  - first:
+      213: 2881270845182088904
+    second: tv2_ember_sand_f197_v2
+  - first:
+      213: 4478609104420759480
+    second: tv2_ember_sand_f199_v2
+  - first:
+      213: 3400205041483719688
+    second: tv2_ember_sand_f209_v2
+  - first:
+      213: 3278759258015086599
+    second: tv2_ember_sand_f213_v2
+  - first:
+      213: 4547710206705108215
+    second: tv2_ember_sand_f215_v2
+  - first:
+      213: 4067380339031257669
+    second: tv2_ember_sand_f221_v2
+  - first:
+      213: 1338991347826036564
+    second: tv2_ember_sand_f223_v2
+  - first:
+      213: 3055947382146190962
+    second: tv2_ember_sand_f241_v2
+  - first:
+      213: 753873012176892652
+    second: tv2_ember_sand_f245_v2
+  - first:
+      213: 2822598479409014706
+    second: tv2_ember_sand_f247_v2
+  - first:
+      213: 3417605827401903614
+    second: tv2_ember_sand_f253_v2
+  - first:
+      213: 629379489825320557
+    second: tv2_ember_sand_f255_v2
+  - first:
+      213: 2605041040733164279
+    second: tv2_ember_sand_up_right_v0
+  - first:
+      213: 2818588141895224875
+    second: tv2_ember_sand_up_right_v1
+  - first:
+      213: 108174804994991950
+    second: tv2_ember_sand_up_right_v2
+  - first:
+      213: 5672160144506618
+    second: tv2_ember_sand_up_left_v0
+  - first:
+      213: 36592247974503375
+    second: tv2_ember_sand_up_left_v1
+  - first:
+      213: 635174524342380731
+    second: tv2_ember_sand_up_left_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_ember_sand_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ee38c97b655e899a21496b88f82374
+      internalID: 224011206327903446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d724889ae4c5686a25ee0083f363a80
+      internalID: 3199330512045771423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da0826698f6d5d9a9c0fe74b8c551893
+      internalID: 2321751728487696707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f85497f9268b59be9d0a819e7179f210
+      internalID: 2099171465328176706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdfd6ac5cbf557d6abb8bf862a493149
+      internalID: 4564539617176557192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20902a486d765c50a8fa1e2d8a6d4bc3
+      internalID: 3281247232082548827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62488cea81ff5c3ead7f297057dd9bdd
+      internalID: 4437815456274584962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99f772b6f9a153d4837c1ace0513ddfe
+      internalID: 4022518209075165342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40e16f76db1b53c2a002bebb68725f4b
+      internalID: 3430031347509762441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f085ea3444545cf7970fd4da47d18271
+      internalID: 2440424495531279511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee925db3dbda5f8e8bdc17fdd8fe24d3
+      internalID: 1140926127369618831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 95aa9e3aa8ff5d778b5fa7f444251164
+      internalID: 2184830493911825481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ac687b50f05dd78c29ba16097c9b93
+      internalID: 2523655893051030005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efa4dc773c68502f81b53a0bff58e1f4
+      internalID: 4069117259118118663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d823ffb8da0351e59b094bb6f869d745
+      internalID: 3739709326673746933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad3815e7f4ef57f99d78ba8cb2cc4137
+      internalID: 4255416640201568936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef3d1172a6515608b2fef6300fd533e7
+      internalID: 1814294575638745306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e72e69620ad2526ea306b5a7887712d2
+      internalID: 358592114224155837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6091ef3657f57bcb9c3edae67e9c548
+      internalID: 2671946806637977732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d09e15926a758c2b81fbc713c6e9d28
+      internalID: 4102227494587319292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 415b986549045a428a2cfe64eecd41b9
+      internalID: 3615472412807760285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc783b2b0920581097eb5d97c72be1d2
+      internalID: 3049284396134013189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4eeb03ff06b6521ca47c8071135d770a
+      internalID: 1011723013343510595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b364ef02574505d9e1bb4fd99986f41
+      internalID: 4450682352075515168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad5f95c5c6be51e484e4c80e7e3c013b
+      internalID: 4399400298099100536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7476793b4bf55df85bf9c537859908a
+      internalID: 4326495026089627297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4277707465da55e590765f8949da7497
+      internalID: 3629529527581821276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbbb6711746855f58b8cb6824c963dd9
+      internalID: 3975272486995095074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 776a86056e4b5cfe9daada1c165344bb
+      internalID: 3701641624489629458
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ed33738a77d57e19fc1dd61bf9ceb7e
+      internalID: 3856944225513987570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbb2746fcee051a884bb0af99bca82ad
+      internalID: 558278109101539501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2848e323a9d85a3fb70b77923ae26d84
+      internalID: 3097697864008908154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 813d36e365295fd0a7882376687292aa
+      internalID: 2751692730235476201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b24fdcfbc71f5d43b52f3ac063c3756c
+      internalID: 55199889043959587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5052ac48e16b5596a8b6a5a008f26275
+      internalID: 2159760043765113046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cfdd43efed95393959f62b8cf58b06f
+      internalID: 3002961559069680856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55079133c49858a1b74f46de2eb52dd7
+      internalID: 3147632933776974340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5cdd8d66a41d5776a89873b5167d8340
+      internalID: 386857993243016495
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7180eeed0a335a52b4e81a04564b1536
+      internalID: 3375881475933645706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84653fd9c0305336864ca0f48b0e8091
+      internalID: 1730920744731817532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c646f385a3e45bbdaac913b5528f64c2
+      internalID: 670224981968622426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe6aa4f601655c8c9cefecd7e2c11f85
+      internalID: 2450227334223167799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7f11a003ef55faebb287860412c6686
+      internalID: 939529280313923998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fcc73af62585f4c97f391173448434e
+      internalID: 3376894693983092179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3cab06db32e5c2eaa166ae8ac035f91
+      internalID: 2641609984387739068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23cc793a659c57a4b96d9865d4c91987
+      internalID: 148912454349962701
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeae3b1941595908bd9b6893ac3368e7
+      internalID: 2567920821304598519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9db4089db7c15f9c8778ff8bb9b63abb
+      internalID: 479124791106187595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4dbd1826a3c5444a71a89fffdde31ae
+      internalID: 1974196880699933507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9b95ffd48a5f8c90a4dccf71e971a0
+      internalID: 399200067667797396
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a35315b0839f5a668ddf7dabaae3e4c8
+      internalID: 1162703620244572403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e448914eff955e48d7634137a317eae
+      internalID: 2880135714462162981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1947de51ba651e88ded21b7ae06695c
+      internalID: 3446450661518697682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e81cbc3845c155aa9db85406643b30a0
+      internalID: 562002410690458496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da243d889dd544f94ceb09cd15ad073
+      internalID: 1718391898415418222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: add9199fba1258638edc24adb5f83cf3
+      internalID: 4418212354731369347
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca21b4e3e8e3535284eeecd32a3c3de7
+      internalID: 2082420917424121808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dd00508bfa055a4966495d455e96d99
+      internalID: 2011231861516531885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 853cc6a78d835c879137bc4dff2b18ce
+      internalID: 3964778017322065257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1b83a70632556cbaddf33346301a466
+      internalID: 3712385243865631303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1761f0fbd0eb54a9858c12a7a145c3af
+      internalID: 2420720049279532332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50fe980531bc5b4fad9c2a0bef5f3671
+      internalID: 2276063827590154108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfd7e81cc5b05083bc162d05569a2b20
+      internalID: 4077033049952277982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 442f91e707f6538ea47fba8e5c547bf5
+      internalID: 1084481235512062078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ad6c53d11c5310a4763e1f2cf0029b
+      internalID: 272327799263723361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7673275c822e5404b85e635904df530e
+      internalID: 3272786200509784170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3ba49a399e056e9ba82d46a2a543d4a
+      internalID: 1729949707667649935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb608bfbed3b572cb72e344014ee7386
+      internalID: 2076986143722412560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae863b3577cf506ab6803eb95f42a4c7
+      internalID: 3759702753599383653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 167bd7db7e57535a91282dfa5f6dc81a
+      internalID: 3281540642414213583
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85c373de236e574da24943094d5e913e
+      internalID: 661466743912491695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9cd3e26a5075f90b55131b8148eae7d
+      internalID: 3674326163036427660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37f7a33254c451e3b4da84c2159c03b1
+      internalID: 1538433693280265101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bad42827e1d53d1bd40a6b002e74040
+      internalID: 3544897372330626253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 339bcdb341eb5469b44111ce1e5d21b1
+      internalID: 2206758289749465561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31b4e6114f7b5ef494c7a27aa0b5586d
+      internalID: 4530707899153128145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a02a160e2a8f5db38a24f27f1b3cb21d
+      internalID: 2345639383031806556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 182b2939071d506eb02aea78a18759ea
+      internalID: 4496487661851021505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8139bdac1eb65c0896724a46f8ead2ef
+      internalID: 21533099569833671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1519403931f0575b8341e43613395657
+      internalID: 3513206281313630756
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2a87800ee5f5e088bc8bb8a0805bca4
+      internalID: 4105761002724399677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd10541d1bb95f7782f3b23664f39d16
+      internalID: 3552341146172798084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0f00ab7ff7e57bbb9b3a531d691e7bd
+      internalID: 143756128134372393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4718cde115de5733941890dd2a892224
+      internalID: 4209849929618146514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45a2a870e859518f9ff251923a763da8
+      internalID: 4179573723183369870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97c1caaf4489550f90852e496d986f6d
+      internalID: 2610938088538519270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e75810784de5eaebd158d87e64db961
+      internalID: 680901838359228780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69d6529ef2795b79b5e2eb70f891650b
+      internalID: 1571130179083864098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc829c8b6020571ab2c56df9d44de20c
+      internalID: 871235615008650589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6f4750d2c035e31b0bc4176d38bd36a
+      internalID: 3081971852866925753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa3d70d726d65849a07bf1fd9a33ac07
+      internalID: 1047270446841806435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f9d0ca78f8c5ebeb0a37eccdec56b3a
+      internalID: 83947527027115706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86e009975bf25c939e0b01d28d291569
+      internalID: 2428254982528039786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd5c6e0033af5b13adc73b86560401d1
+      internalID: 2020864538082742753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 811189b313f25e8a8edb3ca36821825f
+      internalID: 4124330963059419948
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab48a621606e526bac480a4761591811
+      internalID: 829611449925844511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b057c499fed54869fcb7cfbb5942ba0
+      internalID: 1176219498112735266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73e61421933e5c3cb1996edf2e7ec167
+      internalID: 125948062080293623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f0ba76c4a7b5d96a9b11fa6e0967f96
+      internalID: 2285106159525828008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd3644a3eedd52818bd27aef0ba4c344
+      internalID: 2592290864204155187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7950940e7b5259e1bf432911504816e6
+      internalID: 3057111637391208376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09ef26922932593d866ba7e4d4944902
+      internalID: 4422934801074354664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea7cf648e1ce53bea629f6ec1b7e1f13
+      internalID: 1176832836168001228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc971a283a725d23abe9bb2cd2d883a5
+      internalID: 3279673128190167451
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e95ce7f33f8c5b508e59b01fc7d7c57e
+      internalID: 3307950206719529923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a4cc10700b7586393c68d04432c7615
+      internalID: 2713904882417245715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87a5f7cec047568b81b6804b055b2eaf
+      internalID: 767402063205922773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 687c1ec3b7f850389a40256f344b1772
+      internalID: 715378767714916942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c74c5038c4d58dabc9e73367d6849eb
+      internalID: 3197337350626033116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b283508a3355d72b289086cc098ead8
+      internalID: 3819467939759700025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a1b124724665cc3ba20accda4bec71b
+      internalID: 1218610802237465331
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca2724e46d1651a6b9f06fe55676dac3
+      internalID: 757954863572512562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 745d29d95fe35d5db7ce63bde77769b2
+      internalID: 1733384845338957068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f8daa1732cb57e8938126b3fd83ad11
+      internalID: 2449705523219138312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 661f2657943a5c82865d2c199a181f10
+      internalID: 4258892536948903341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77f26f68b8b753b0885228c0b530a500
+      internalID: 3037215168167178401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00a40cf7b3e15e09b776718e9b95e6cc
+      internalID: 1685008006687817746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0451bea0ef865edc9bc48a31dae595f2
+      internalID: 852354267819936253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2f24ea0a9c1540184549f9c153ce96d
+      internalID: 1149288325211216077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 849c4a7f9c465d54a08c634f5eb32dbc
+      internalID: 3885740333336582896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3800fd436fa75e4e8794ab1147d4a08f
+      internalID: 3789400770470376281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d14760a7b0e45d8ba68d28028f3c36a3
+      internalID: 4298784374103595997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89879ddb2757563d8d49252ce2bacc74
+      internalID: 583789246024375106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f401971b0155f53bb6170b87a9dec91
+      internalID: 3456456168719248414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7dbc241fcf7510dad6e6d916526fdd9
+      internalID: 4596464014037694456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7cedbfaeb5f57d485b2aabd6f6b657c
+      internalID: 647444767524868775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a69e80e93d9c5295bd4c1064dcfb4418
+      internalID: 547574773234831846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3d609be7fef5346bc584e9c1d9a8c19
+      internalID: 1762006484951532772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 476cde7202785307be31e62e579b5591
+      internalID: 781297782379180460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa4869e3f2a0548c8a05529118baaf78
+      internalID: 2881270845182088904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce4b756d554458289029cfb93e21054e
+      internalID: 4478609104420759480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5c99688cfab5bc3836e58952dc296ee
+      internalID: 3400205041483719688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da34be59a2625d65bcdf9c735695a22c
+      internalID: 3278759258015086599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54cbbd93d790513e859bf00a7aea2570
+      internalID: 4547710206705108215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f93575e9c556f98a703ffb06bd0d75
+      internalID: 4067380339031257669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e80be100581050f897ee91a128b92f70
+      internalID: 1338991347826036564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba7be60d78145349ab2177f30c3ec7e6
+      internalID: 3055947382146190962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a00ced9d97fa55f8872c1bea2a134c45
+      internalID: 753873012176892652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4fbf214f7d577f97d5914a19706c49
+      internalID: 2822598479409014706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a434211ef1875d5eb172cc1df41a7566
+      internalID: 3417605827401903614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7c04ec74a5052bbb1cbf415737afdd3
+      internalID: 629379489825320557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57fa769454a7580292b18d065b8c4930
+      internalID: 2605041040733164279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94bbaefbb460592dabe25e9ea8ea199e
+      internalID: 2818588141895224875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8610a0ad16f450fe9e0fcbc37a728b8e
+      internalID: 108174804994991950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9a8f1e13bf759d091db6e8f0f3b545d
+      internalID: 5672160144506618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e79b859f17895b1aa1a194f4deb31f44
+      internalID: 36592247974503375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ember_sand_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2da86e6b27ae5cbf94acd58abf508279
+      internalID: 635174524342380731
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_ember_sand_f0_v0: 224011206327903446
+      tv2_ember_sand_f1_v0: 3199330512045771423
+      tv2_ember_sand_f4_v0: 2321751728487696707
+      tv2_ember_sand_f5_v0: 2099171465328176706
+      tv2_ember_sand_f7_v0: 4564539617176557192
+      tv2_ember_sand_f16_v0: 3281247232082548827
+      tv2_ember_sand_f17_v0: 4437815456274584962
+      tv2_ember_sand_f20_v0: 4022518209075165342
+      tv2_ember_sand_f21_v0: 3430031347509762441
+      tv2_ember_sand_f23_v0: 2440424495531279511
+      tv2_ember_sand_f28_v0: 1140926127369618831
+      tv2_ember_sand_f29_v0: 2184830493911825481
+      tv2_ember_sand_f31_v0: 2523655893051030005
+      tv2_ember_sand_f64_v0: 4069117259118118663
+      tv2_ember_sand_f65_v0: 3739709326673746933
+      tv2_ember_sand_f68_v0: 4255416640201568936
+      tv2_ember_sand_f69_v0: 1814294575638745306
+      tv2_ember_sand_f71_v0: 358592114224155837
+      tv2_ember_sand_f80_v0: 2671946806637977732
+      tv2_ember_sand_f81_v0: 4102227494587319292
+      tv2_ember_sand_f84_v0: 3615472412807760285
+      tv2_ember_sand_f85_v0: 3049284396134013189
+      tv2_ember_sand_f87_v0: 1011723013343510595
+      tv2_ember_sand_f92_v0: 4450682352075515168
+      tv2_ember_sand_f93_v0: 4399400298099100536
+      tv2_ember_sand_f95_v0: 4326495026089627297
+      tv2_ember_sand_f112_v0: 3629529527581821276
+      tv2_ember_sand_f113_v0: 3975272486995095074
+      tv2_ember_sand_f116_v0: 3701641624489629458
+      tv2_ember_sand_f117_v0: 3856944225513987570
+      tv2_ember_sand_f119_v0: 558278109101539501
+      tv2_ember_sand_f124_v0: 3097697864008908154
+      tv2_ember_sand_f125_v0: 2751692730235476201
+      tv2_ember_sand_f127_v0: 55199889043959587
+      tv2_ember_sand_f193_v0: 2159760043765113046
+      tv2_ember_sand_f197_v0: 3002961559069680856
+      tv2_ember_sand_f199_v0: 3147632933776974340
+      tv2_ember_sand_f209_v0: 386857993243016495
+      tv2_ember_sand_f213_v0: 3375881475933645706
+      tv2_ember_sand_f215_v0: 1730920744731817532
+      tv2_ember_sand_f221_v0: 670224981968622426
+      tv2_ember_sand_f223_v0: 2450227334223167799
+      tv2_ember_sand_f241_v0: 939529280313923998
+      tv2_ember_sand_f245_v0: 3376894693983092179
+      tv2_ember_sand_f247_v0: 2641609984387739068
+      tv2_ember_sand_f253_v0: 148912454349962701
+      tv2_ember_sand_f255_v0: 2567920821304598519
+      tv2_ember_sand_f0_v1: 479124791106187595
+      tv2_ember_sand_f1_v1: 1974196880699933507
+      tv2_ember_sand_f4_v1: 399200067667797396
+      tv2_ember_sand_f5_v1: 1162703620244572403
+      tv2_ember_sand_f7_v1: 2880135714462162981
+      tv2_ember_sand_f16_v1: 3446450661518697682
+      tv2_ember_sand_f17_v1: 562002410690458496
+      tv2_ember_sand_f20_v1: 1718391898415418222
+      tv2_ember_sand_f21_v1: 4418212354731369347
+      tv2_ember_sand_f23_v1: 2082420917424121808
+      tv2_ember_sand_f28_v1: 2011231861516531885
+      tv2_ember_sand_f29_v1: 3964778017322065257
+      tv2_ember_sand_f31_v1: 3712385243865631303
+      tv2_ember_sand_f64_v1: 2420720049279532332
+      tv2_ember_sand_f65_v1: 2276063827590154108
+      tv2_ember_sand_f68_v1: 4077033049952277982
+      tv2_ember_sand_f69_v1: 1084481235512062078
+      tv2_ember_sand_f71_v1: 272327799263723361
+      tv2_ember_sand_f80_v1: 3272786200509784170
+      tv2_ember_sand_f81_v1: 1729949707667649935
+      tv2_ember_sand_f84_v1: 2076986143722412560
+      tv2_ember_sand_f85_v1: 3759702753599383653
+      tv2_ember_sand_f87_v1: 3281540642414213583
+      tv2_ember_sand_f92_v1: 661466743912491695
+      tv2_ember_sand_f93_v1: 3674326163036427660
+      tv2_ember_sand_f95_v1: 1538433693280265101
+      tv2_ember_sand_f112_v1: 3544897372330626253
+      tv2_ember_sand_f113_v1: 2206758289749465561
+      tv2_ember_sand_f116_v1: 4530707899153128145
+      tv2_ember_sand_f117_v1: 2345639383031806556
+      tv2_ember_sand_f119_v1: 4496487661851021505
+      tv2_ember_sand_f124_v1: 21533099569833671
+      tv2_ember_sand_f125_v1: 3513206281313630756
+      tv2_ember_sand_f127_v1: 4105761002724399677
+      tv2_ember_sand_f193_v1: 3552341146172798084
+      tv2_ember_sand_f197_v1: 143756128134372393
+      tv2_ember_sand_f199_v1: 4209849929618146514
+      tv2_ember_sand_f209_v1: 4179573723183369870
+      tv2_ember_sand_f213_v1: 2610938088538519270
+      tv2_ember_sand_f215_v1: 680901838359228780
+      tv2_ember_sand_f221_v1: 1571130179083864098
+      tv2_ember_sand_f223_v1: 871235615008650589
+      tv2_ember_sand_f241_v1: 3081971852866925753
+      tv2_ember_sand_f245_v1: 1047270446841806435
+      tv2_ember_sand_f247_v1: 83947527027115706
+      tv2_ember_sand_f253_v1: 2428254982528039786
+      tv2_ember_sand_f255_v1: 2020864538082742753
+      tv2_ember_sand_f0_v2: 4124330963059419948
+      tv2_ember_sand_f1_v2: 829611449925844511
+      tv2_ember_sand_f4_v2: 1176219498112735266
+      tv2_ember_sand_f5_v2: 125948062080293623
+      tv2_ember_sand_f7_v2: 2285106159525828008
+      tv2_ember_sand_f16_v2: 2592290864204155187
+      tv2_ember_sand_f17_v2: 3057111637391208376
+      tv2_ember_sand_f20_v2: 4422934801074354664
+      tv2_ember_sand_f21_v2: 1176832836168001228
+      tv2_ember_sand_f23_v2: 3279673128190167451
+      tv2_ember_sand_f28_v2: 3307950206719529923
+      tv2_ember_sand_f29_v2: 2713904882417245715
+      tv2_ember_sand_f31_v2: 767402063205922773
+      tv2_ember_sand_f64_v2: 715378767714916942
+      tv2_ember_sand_f65_v2: 3197337350626033116
+      tv2_ember_sand_f68_v2: 3819467939759700025
+      tv2_ember_sand_f69_v2: 1218610802237465331
+      tv2_ember_sand_f71_v2: 757954863572512562
+      tv2_ember_sand_f80_v2: 1733384845338957068
+      tv2_ember_sand_f81_v2: 2449705523219138312
+      tv2_ember_sand_f84_v2: 4258892536948903341
+      tv2_ember_sand_f85_v2: 3037215168167178401
+      tv2_ember_sand_f87_v2: 1685008006687817746
+      tv2_ember_sand_f92_v2: 852354267819936253
+      tv2_ember_sand_f93_v2: 1149288325211216077
+      tv2_ember_sand_f95_v2: 3885740333336582896
+      tv2_ember_sand_f112_v2: 3789400770470376281
+      tv2_ember_sand_f113_v2: 4298784374103595997
+      tv2_ember_sand_f116_v2: 583789246024375106
+      tv2_ember_sand_f117_v2: 3456456168719248414
+      tv2_ember_sand_f119_v2: 4596464014037694456
+      tv2_ember_sand_f124_v2: 647444767524868775
+      tv2_ember_sand_f125_v2: 547574773234831846
+      tv2_ember_sand_f127_v2: 1762006484951532772
+      tv2_ember_sand_f193_v2: 781297782379180460
+      tv2_ember_sand_f197_v2: 2881270845182088904
+      tv2_ember_sand_f199_v2: 4478609104420759480
+      tv2_ember_sand_f209_v2: 3400205041483719688
+      tv2_ember_sand_f213_v2: 3278759258015086599
+      tv2_ember_sand_f215_v2: 4547710206705108215
+      tv2_ember_sand_f221_v2: 4067380339031257669
+      tv2_ember_sand_f223_v2: 1338991347826036564
+      tv2_ember_sand_f241_v2: 3055947382146190962
+      tv2_ember_sand_f245_v2: 753873012176892652
+      tv2_ember_sand_f247_v2: 2822598479409014706
+      tv2_ember_sand_f253_v2: 3417605827401903614
+      tv2_ember_sand_f255_v2: 629379489825320557
+      tv2_ember_sand_up_right_v0: 2605041040733164279
+      tv2_ember_sand_up_right_v1: 2818588141895224875
+      tv2_ember_sand_up_right_v2: 108174804994991950
+      tv2_ember_sand_up_left_v0: 5672160144506618
+      tv2_ember_sand_up_left_v1: 36592247974503375
+      tv2_ember_sand_up_left_v2: 635174524342380731
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

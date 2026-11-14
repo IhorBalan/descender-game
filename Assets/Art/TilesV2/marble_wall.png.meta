@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: de631e935faa537288005cc05a33ebb1
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1762713701165505850
+    second: tv2_marble_wall_f0_v0
+  - first:
+      213: 947739889999281181
+    second: tv2_marble_wall_f1_v0
+  - first:
+      213: 2795709181737269290
+    second: tv2_marble_wall_f4_v0
+  - first:
+      213: 2015919609937325657
+    second: tv2_marble_wall_f5_v0
+  - first:
+      213: 4355720974765444565
+    second: tv2_marble_wall_f7_v0
+  - first:
+      213: 3342569226165125420
+    second: tv2_marble_wall_f16_v0
+  - first:
+      213: 3586622167186858346
+    second: tv2_marble_wall_f17_v0
+  - first:
+      213: 3746936640108973200
+    second: tv2_marble_wall_f20_v0
+  - first:
+      213: 3652539131097252768
+    second: tv2_marble_wall_f21_v0
+  - first:
+      213: 2326087896803395623
+    second: tv2_marble_wall_f23_v0
+  - first:
+      213: 4490438011139630867
+    second: tv2_marble_wall_f28_v0
+  - first:
+      213: 3746640727623866346
+    second: tv2_marble_wall_f29_v0
+  - first:
+      213: 2679990494412465522
+    second: tv2_marble_wall_f31_v0
+  - first:
+      213: 1025675080847439034
+    second: tv2_marble_wall_f64_v0
+  - first:
+      213: 2608532555265814454
+    second: tv2_marble_wall_f65_v0
+  - first:
+      213: 473111800213794012
+    second: tv2_marble_wall_f68_v0
+  - first:
+      213: 2586050930094732104
+    second: tv2_marble_wall_f69_v0
+  - first:
+      213: 764241325503878154
+    second: tv2_marble_wall_f71_v0
+  - first:
+      213: 1517393864292911059
+    second: tv2_marble_wall_f80_v0
+  - first:
+      213: 3037409465881539973
+    second: tv2_marble_wall_f81_v0
+  - first:
+      213: 2609627755603543251
+    second: tv2_marble_wall_f84_v0
+  - first:
+      213: 1700503138326416305
+    second: tv2_marble_wall_f85_v0
+  - first:
+      213: 2583328206799442055
+    second: tv2_marble_wall_f87_v0
+  - first:
+      213: 20964612032868219
+    second: tv2_marble_wall_f92_v0
+  - first:
+      213: 3041727948784886400
+    second: tv2_marble_wall_f93_v0
+  - first:
+      213: 1712089832214358133
+    second: tv2_marble_wall_f95_v0
+  - first:
+      213: 2911464160815234982
+    second: tv2_marble_wall_f112_v0
+  - first:
+      213: 4184144180445532900
+    second: tv2_marble_wall_f113_v0
+  - first:
+      213: 1417771563927953509
+    second: tv2_marble_wall_f116_v0
+  - first:
+      213: 3732174155153161300
+    second: tv2_marble_wall_f117_v0
+  - first:
+      213: 840028221254092631
+    second: tv2_marble_wall_f119_v0
+  - first:
+      213: 661730323887643370
+    second: tv2_marble_wall_f124_v0
+  - first:
+      213: 3975382995453930737
+    second: tv2_marble_wall_f125_v0
+  - first:
+      213: 1712719263517364371
+    second: tv2_marble_wall_f127_v0
+  - first:
+      213: 3862895602001872293
+    second: tv2_marble_wall_f193_v0
+  - first:
+      213: 3329572884601406094
+    second: tv2_marble_wall_f197_v0
+  - first:
+      213: 2246907339138618097
+    second: tv2_marble_wall_f199_v0
+  - first:
+      213: 2774982117854193074
+    second: tv2_marble_wall_f209_v0
+  - first:
+      213: 149680068680765023
+    second: tv2_marble_wall_f213_v0
+  - first:
+      213: 2500576138094403846
+    second: tv2_marble_wall_f215_v0
+  - first:
+      213: 613509944173634254
+    second: tv2_marble_wall_f221_v0
+  - first:
+      213: 2268876672692675409
+    second: tv2_marble_wall_f223_v0
+  - first:
+      213: 1719454064147308540
+    second: tv2_marble_wall_f241_v0
+  - first:
+      213: 3975367986473687591
+    second: tv2_marble_wall_f245_v0
+  - first:
+      213: 4603766472857443415
+    second: tv2_marble_wall_f247_v0
+  - first:
+      213: 505621367498041489
+    second: tv2_marble_wall_f253_v0
+  - first:
+      213: 1385129900869867186
+    second: tv2_marble_wall_f255_v0
+  - first:
+      213: 1364721962269813728
+    second: tv2_marble_wall_f0_v1
+  - first:
+      213: 884668425267989900
+    second: tv2_marble_wall_f1_v1
+  - first:
+      213: 1678081019399039802
+    second: tv2_marble_wall_f4_v1
+  - first:
+      213: 2962406257093416520
+    second: tv2_marble_wall_f5_v1
+  - first:
+      213: 3327146831494036568
+    second: tv2_marble_wall_f7_v1
+  - first:
+      213: 4386785508311280116
+    second: tv2_marble_wall_f16_v1
+  - first:
+      213: 49157892528029062
+    second: tv2_marble_wall_f17_v1
+  - first:
+      213: 7553337818903646
+    second: tv2_marble_wall_f20_v1
+  - first:
+      213: 3101078943435092099
+    second: tv2_marble_wall_f21_v1
+  - first:
+      213: 1453768549085499825
+    second: tv2_marble_wall_f23_v1
+  - first:
+      213: 564846134458588717
+    second: tv2_marble_wall_f28_v1
+  - first:
+      213: 4071555490727941898
+    second: tv2_marble_wall_f29_v1
+  - first:
+      213: 4394145518405111370
+    second: tv2_marble_wall_f31_v1
+  - first:
+      213: 1789902858454611827
+    second: tv2_marble_wall_f64_v1
+  - first:
+      213: 632495119962942692
+    second: tv2_marble_wall_f65_v1
+  - first:
+      213: 2632902520115628454
+    second: tv2_marble_wall_f68_v1
+  - first:
+      213: 1395315713265886861
+    second: tv2_marble_wall_f69_v1
+  - first:
+      213: 3692480334006682059
+    second: tv2_marble_wall_f71_v1
+  - first:
+      213: 2261147211115633253
+    second: tv2_marble_wall_f80_v1
+  - first:
+      213: 4333448176652720605
+    second: tv2_marble_wall_f81_v1
+  - first:
+      213: 144883411476596964
+    second: tv2_marble_wall_f84_v1
+  - first:
+      213: 983761225433990632
+    second: tv2_marble_wall_f85_v1
+  - first:
+      213: 2561230973904898401
+    second: tv2_marble_wall_f87_v1
+  - first:
+      213: 187564705980481905
+    second: tv2_marble_wall_f92_v1
+  - first:
+      213: 1012580502490675578
+    second: tv2_marble_wall_f93_v1
+  - first:
+      213: 3022142855625183656
+    second: tv2_marble_wall_f95_v1
+  - first:
+      213: 4264395548726398315
+    second: tv2_marble_wall_f112_v1
+  - first:
+      213: 2262463488724535647
+    second: tv2_marble_wall_f113_v1
+  - first:
+      213: 255008611278183497
+    second: tv2_marble_wall_f116_v1
+  - first:
+      213: 1202036230025756124
+    second: tv2_marble_wall_f117_v1
+  - first:
+      213: 3705832076099194056
+    second: tv2_marble_wall_f119_v1
+  - first:
+      213: 1302176460421561379
+    second: tv2_marble_wall_f124_v1
+  - first:
+      213: 3695341092170681774
+    second: tv2_marble_wall_f125_v1
+  - first:
+      213: 2011031332771646883
+    second: tv2_marble_wall_f127_v1
+  - first:
+      213: 451472166486377565
+    second: tv2_marble_wall_f193_v1
+  - first:
+      213: 4402736947135777880
+    second: tv2_marble_wall_f197_v1
+  - first:
+      213: 4308614947394784215
+    second: tv2_marble_wall_f199_v1
+  - first:
+      213: 1845658804599802254
+    second: tv2_marble_wall_f209_v1
+  - first:
+      213: 2752554084363995859
+    second: tv2_marble_wall_f213_v1
+  - first:
+      213: 3115477742810839314
+    second: tv2_marble_wall_f215_v1
+  - first:
+      213: 4139990265196265164
+    second: tv2_marble_wall_f221_v1
+  - first:
+      213: 2398572597500822439
+    second: tv2_marble_wall_f223_v1
+  - first:
+      213: 1755007605111096974
+    second: tv2_marble_wall_f241_v1
+  - first:
+      213: 1705967221974459349
+    second: tv2_marble_wall_f245_v1
+  - first:
+      213: 3549777255638779777
+    second: tv2_marble_wall_f247_v1
+  - first:
+      213: 3118566977766258841
+    second: tv2_marble_wall_f253_v1
+  - first:
+      213: 3238859212281897270
+    second: tv2_marble_wall_f255_v1
+  - first:
+      213: 1079365745337401027
+    second: tv2_marble_wall_f0_v2
+  - first:
+      213: 1753082205433782800
+    second: tv2_marble_wall_f1_v2
+  - first:
+      213: 1337818847171244639
+    second: tv2_marble_wall_f4_v2
+  - first:
+      213: 2622443871690928048
+    second: tv2_marble_wall_f5_v2
+  - first:
+      213: 1965278173984746250
+    second: tv2_marble_wall_f7_v2
+  - first:
+      213: 1437727153323125043
+    second: tv2_marble_wall_f16_v2
+  - first:
+      213: 4103287475107927566
+    second: tv2_marble_wall_f17_v2
+  - first:
+      213: 2034766652784115464
+    second: tv2_marble_wall_f20_v2
+  - first:
+      213: 3492442043188445211
+    second: tv2_marble_wall_f21_v2
+  - first:
+      213: 1502416070612596013
+    second: tv2_marble_wall_f23_v2
+  - first:
+      213: 3050646518757290874
+    second: tv2_marble_wall_f28_v2
+  - first:
+      213: 2703083398497766812
+    second: tv2_marble_wall_f29_v2
+  - first:
+      213: 1952706714969648784
+    second: tv2_marble_wall_f31_v2
+  - first:
+      213: 1698489894901970479
+    second: tv2_marble_wall_f64_v2
+  - first:
+      213: 1593410270940760763
+    second: tv2_marble_wall_f65_v2
+  - first:
+      213: 4552634555130543344
+    second: tv2_marble_wall_f68_v2
+  - first:
+      213: 3738929350185340394
+    second: tv2_marble_wall_f69_v2
+  - first:
+      213: 676275966244205184
+    second: tv2_marble_wall_f71_v2
+  - first:
+      213: 1371567564363897470
+    second: tv2_marble_wall_f80_v2
+  - first:
+      213: 727746688203423680
+    second: tv2_marble_wall_f81_v2
+  - first:
+      213: 1651445337253183159
+    second: tv2_marble_wall_f84_v2
+  - first:
+      213: 1641752386150651093
+    second: tv2_marble_wall_f85_v2
+  - first:
+      213: 3781264138468442718
+    second: tv2_marble_wall_f87_v2
+  - first:
+      213: 3531279655097943743
+    second: tv2_marble_wall_f92_v2
+  - first:
+      213: 3700132210396646605
+    second: tv2_marble_wall_f93_v2
+  - first:
+      213: 2653493013350206015
+    second: tv2_marble_wall_f95_v2
+  - first:
+      213: 2569629307699520658
+    second: tv2_marble_wall_f112_v2
+  - first:
+      213: 674126042808860009
+    second: tv2_marble_wall_f113_v2
+  - first:
+      213: 585410474614194329
+    second: tv2_marble_wall_f116_v2
+  - first:
+      213: 2827763618719487225
+    second: tv2_marble_wall_f117_v2
+  - first:
+      213: 1669887531631097354
+    second: tv2_marble_wall_f119_v2
+  - first:
+      213: 1193063078289547926
+    second: tv2_marble_wall_f124_v2
+  - first:
+      213: 2176496416244872565
+    second: tv2_marble_wall_f125_v2
+  - first:
+      213: 2828249214052359370
+    second: tv2_marble_wall_f127_v2
+  - first:
+      213: 1162774113283268745
+    second: tv2_marble_wall_f193_v2
+  - first:
+      213: 4288232299199838634
+    second: tv2_marble_wall_f197_v2
+  - first:
+      213: 2025793634850798939
+    second: tv2_marble_wall_f199_v2
+  - first:
+      213: 1531869835956850249
+    second: tv2_marble_wall_f209_v2
+  - first:
+      213: 2771362860765286877
+    second: tv2_marble_wall_f213_v2
+  - first:
+      213: 2989720852737430571
+    second: tv2_marble_wall_f215_v2
+  - first:
+      213: 2397717164345584659
+    second: tv2_marble_wall_f221_v2
+  - first:
+      213: 4604361303765667254
+    second: tv2_marble_wall_f223_v2
+  - first:
+      213: 2559750499642795029
+    second: tv2_marble_wall_f241_v2
+  - first:
+      213: 606654385149210448
+    second: tv2_marble_wall_f245_v2
+  - first:
+      213: 1191316183203097475
+    second: tv2_marble_wall_f247_v2
+  - first:
+      213: 2569739729183825012
+    second: tv2_marble_wall_f253_v2
+  - first:
+      213: 4121138045724547097
+    second: tv2_marble_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_marble_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a91ca77fce585d19a99e471f7f0cd3c0
+      internalID: 1762713701165505850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c54b4b29ff245ece8e553df455c40266
+      internalID: 947739889999281181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc1404a5c6f159f28b3cee0e2dd65691
+      internalID: 2795709181737269290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff313617d5575b73a81f37c004788162
+      internalID: 2015919609937325657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 747572c5fecf5af39459b521e68ff416
+      internalID: 4355720974765444565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22fbbc0d258254d7bbbf60c4858f62a4
+      internalID: 3342569226165125420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee4a40fb11ef5c5cb1438d4bf10ca37e
+      internalID: 3586622167186858346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec0b9e0aef9659e983e4a6918bd74ca5
+      internalID: 3746936640108973200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3a98583f10d5563b62fc56290b8bf49
+      internalID: 3652539131097252768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2bc7a9a9e0e850d8a0c020e2c9333791
+      internalID: 2326087896803395623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d7c12a51e68503a97f868504a1e7c59
+      internalID: 4490438011139630867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebeb306d87a6536baecd25794d73299e
+      internalID: 3746640727623866346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 177ca7afeb4657a4809639f3d7cfb80c
+      internalID: 2679990494412465522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5109dec08f6059eea5503f3afdab904d
+      internalID: 1025675080847439034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd01e147c3205cc4a2d8c7047c467df4
+      internalID: 2608532555265814454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd30b41056a45f7ca102810605f52598
+      internalID: 473111800213794012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19a3a0f51bda51a9972e555bdb4d7e20
+      internalID: 2586050930094732104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dee5d7c1ead45c35bc61e2877cee9ec4
+      internalID: 764241325503878154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55b25f67a03e5bf3855ebd7464f188f5
+      internalID: 1517393864292911059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2be3b956afd8554ba81b3b67b99e7076
+      internalID: 3037409465881539973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7508ffaf7b2d5b12be277fc7fb34e5f3
+      internalID: 2609627755603543251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a27d10204815411bc5e4ed94b7e8a3e
+      internalID: 1700503138326416305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5db6650b35d459aea1f89051083c3140
+      internalID: 2583328206799442055
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0322c4704e957bca461883acf6a05a7
+      internalID: 20964612032868219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8435ab77c77c5d249eae062d06f3c0fb
+      internalID: 3041727948784886400
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 604fdbb39e8f5190b8f1107078001d26
+      internalID: 1712089832214358133
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 889548f2db11507f8d2848c2e47f7657
+      internalID: 2911464160815234982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10074013fa0d507aa227190622d4553e
+      internalID: 4184144180445532900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a5dc103c93e5f73a35cd7d51a9ad233
+      internalID: 1417771563927953509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44c9daf4a5a05a8eb49330b86f2eed7a
+      internalID: 3732174155153161300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15a233d2df04587e8a89822e3adc0cdf
+      internalID: 840028221254092631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9e1fcac4635127ba9c9b2c1e8cbd81
+      internalID: 661730323887643370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c837cef49da583c99ca0b6f61a19722
+      internalID: 3975382995453930737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d84e695d1f95430b8752416a8d38f61
+      internalID: 1712719263517364371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c46647b6e58c5daba3075f353614fa9e
+      internalID: 3862895602001872293
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f0d37beee2e528a929865567754c3fe
+      internalID: 3329572884601406094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14a1728b1abd5deda264c0b702d3e2e0
+      internalID: 2246907339138618097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57e92e6d0e9f5972be0457c13be00028
+      internalID: 2774982117854193074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fcd0dc536835241badcc9759ba2d21e
+      internalID: 149680068680765023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8313a4093a2f54e79d150af3cea3e840
+      internalID: 2500576138094403846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3cc949de78e5243a33ba82a348e2286
+      internalID: 613509944173634254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 209ade1ae3ad5f7198fb3a3082799e2f
+      internalID: 2268876672692675409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b106a5c778e539f87a14b52b45e8753
+      internalID: 1719454064147308540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1870c2fe32e54b89e7dab0d817aff64
+      internalID: 3975367986473687591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98449f3b37ef50f0b98cb06fad5ffb05
+      internalID: 4603766472857443415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0797700a48ad5d2ebe919c852458cbab
+      internalID: 505621367498041489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd9ae1ef39b358e1a7a5d485fdf3f473
+      internalID: 1385129900869867186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8ed8d9ba4dc5f80964e8a18fa06f38b
+      internalID: 1364721962269813728
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d5a2229de6450558b1b49ed512784e6
+      internalID: 884668425267989900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c0440fc36b45cccb453dd32b043cfbc
+      internalID: 1678081019399039802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19b644c6eac559379bb3e75559d221c3
+      internalID: 2962406257093416520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d415925802c5f199bbe2900871ec3fa
+      internalID: 3327146831494036568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2412ad2678f52c2aa92657bb20097b0
+      internalID: 4386785508311280116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e62aadf9f9c5309a882ee55d81e86c6
+      internalID: 49157892528029062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb4fa3c54d0e5c8b9ec895d3b6d0977f
+      internalID: 7553337818903646
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f3dedaffb175b5c836cb487c9611579
+      internalID: 3101078943435092099
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46b8c3b7cdd15303a3223f4fd6228da4
+      internalID: 1453768549085499825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 577084f6feb558d1bf9dc479f0d9fb64
+      internalID: 564846134458588717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98abe1b2d90650268b88321df38e1a9e
+      internalID: 4071555490727941898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b06abbe5560056cba1eb0e3b6b04225f
+      internalID: 4394145518405111370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4438e492b03155dba8358a5b81e6bec7
+      internalID: 1789902858454611827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d88d3b36a38c53878c8f2e43fd82a093
+      internalID: 632495119962942692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ca4dcabd80b5583a19debbc0f5a084d
+      internalID: 2632902520115628454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74a0cbe594c95b2d90c9a15c1046d824
+      internalID: 1395315713265886861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 548bfb616b3a54b8b3e3c7edcaef3553
+      internalID: 3692480334006682059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21e5baef0ea35f8784e90dcaba791c57
+      internalID: 2261147211115633253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdc0b9ef539d5caaa8d63e4339821a86
+      internalID: 4333448176652720605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c7616171bb75cfe973b97441f4a36bc
+      internalID: 144883411476596964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a4f40595f81561eb9a88dcb65e9b059
+      internalID: 983761225433990632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fa28052819755f18f23b53a521ed109
+      internalID: 2561230973904898401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 978e69e906895c7ba36ed212610f9125
+      internalID: 187564705980481905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b27d1f14764e52eaa8b62c60d82ea816
+      internalID: 1012580502490675578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f09cf3a399975409ac79f7862f7f9d06
+      internalID: 3022142855625183656
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b1369f070e65dedbc2f16e53df465c1
+      internalID: 4264395548726398315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 259c3a265fda5448a2233fe2c9517fd1
+      internalID: 2262463488724535647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4398f267fa7459c1a00287ea674423db
+      internalID: 255008611278183497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b20f2fe2d4dc5c90a9c713fe82c5a963
+      internalID: 1202036230025756124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 889a642bf2da5eadae82f479337d0bc2
+      internalID: 3705832076099194056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e009a06989c150619c320e8e234f4000
+      internalID: 1302176460421561379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48def71b2c4b52909477a246ce47f452
+      internalID: 3695341092170681774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d5665c9034d5653b617cac3b9aba0ff
+      internalID: 2011031332771646883
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87d6cb1db12e58fbae8017681ae126a7
+      internalID: 451472166486377565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e8cf5192ac7551eb89be9c2cd199be3
+      internalID: 4402736947135777880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8eddd38ce5fb5a1282781faa8fdb0e1e
+      internalID: 4308614947394784215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e56ecd73bb958198e388b25e027eed6
+      internalID: 1845658804599802254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 91d16331c0b8515a9c525e633a12de5b
+      internalID: 2752554084363995859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39ebdecaba5f50e89f03aede62c488db
+      internalID: 3115477742810839314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4fe948badbc552ea66d1d0771675f55
+      internalID: 4139990265196265164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc3abad1cada5611b5b832e3b9053418
+      internalID: 2398572597500822439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17a5b73a7af75c57ac32263cec4e7139
+      internalID: 1755007605111096974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afe572ae9f6e5d3daff933eac33c72f4
+      internalID: 1705967221974459349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c34375a874e95d399f948ab0f834096c
+      internalID: 3549777255638779777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 427c8efde4755188863ae70e5776f92b
+      internalID: 3118566977766258841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d73d98b51aae53afbdc33c814d5409fa
+      internalID: 3238859212281897270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bab5ee0b52256f6b45ba4001d5c19b8
+      internalID: 1079365745337401027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 558e8fafd6ce54bea03cc45e7f34304f
+      internalID: 1753082205433782800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ee1c175e870516fa3972bee535c8395
+      internalID: 1337818847171244639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad3fc40e3b55024bf917c00a6749b9d
+      internalID: 2622443871690928048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bf90e0c55a854bf9126d9a1c1d3ba20
+      internalID: 1965278173984746250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c19ba390c47750c5b294ab3b980d8a7f
+      internalID: 1437727153323125043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cd1f7eeff02591c89c735950561ff9e
+      internalID: 4103287475107927566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 14d02b9664695e48b805565ee527f3d2
+      internalID: 2034766652784115464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58d0a4653aff583bbde38a2ef13ad107
+      internalID: 3492442043188445211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b06685e1c6f570ab36f1a05b90b8116
+      internalID: 1502416070612596013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcc4cbeeb4755ff7b0ac3eeee693bce6
+      internalID: 3050646518757290874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6118a8c0468f543f804819ae5b84731c
+      internalID: 2703083398497766812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b33259c29ca355f7a6de14881415e592
+      internalID: 1952706714969648784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f870c67afd1753c0b61073680a39ac7a
+      internalID: 1698489894901970479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b91bf0818f05e9d90d5ea5b7632fd26
+      internalID: 1593410270940760763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b859cf2d68aa5e68a462819bcab4482d
+      internalID: 4552634555130543344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d468d7802bc5c90b9af3889290aee82
+      internalID: 3738929350185340394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23ea9a83bdb457328a093bf9fa5f436c
+      internalID: 676275966244205184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e75c70b7bb465bbdbf62f94ac075af5e
+      internalID: 1371567564363897470
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d76fe139f9eb51728d4fecd3f12cda8b
+      internalID: 727746688203423680
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a9bc6ddc57d5d4a80cafb1c44b822d4
+      internalID: 1651445337253183159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c016457b46ff52cdb37c1377d8c6aff8
+      internalID: 1641752386150651093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98074da2d7125c9fb51afcaa5f2245b3
+      internalID: 3781264138468442718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d7cae9d0995571cafbf03d7e0070969
+      internalID: 3531279655097943743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b017e4bfbf965c8fa4d264325e2ed105
+      internalID: 3700132210396646605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 156edff168fb5c2787ffbd7fa03c9893
+      internalID: 2653493013350206015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b214e0e4d4556119415da5bf0c462c4
+      internalID: 2569629307699520658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e121164519a3581b89b192968a90f653
+      internalID: 674126042808860009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 230df09aab5b58f5813fc70b090c3722
+      internalID: 585410474614194329
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5b96f8fd03358da8e7339143f087f5d
+      internalID: 2827763618719487225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 923e7ce8c6ba5732910f1adbb3698eec
+      internalID: 1669887531631097354
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 004c8773a32f53e6a38330ab4cabe207
+      internalID: 1193063078289547926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce0f848e8f55519786a5f8a5bac30189
+      internalID: 2176496416244872565
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36397577e53951c3b3819df2ab688c45
+      internalID: 2828249214052359370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22af2e84a0cc5d82a3bbc8fef382c7a7
+      internalID: 1162774113283268745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69b0fbba7e115f54ab824531d4d20e26
+      internalID: 4288232299199838634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccaaf27edbdc5f199fc8e7803831a61f
+      internalID: 2025793634850798939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24f525a7ac155cd49bb2b42d48978152
+      internalID: 1531869835956850249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e15219db80355d9be1c282a73b97cae
+      internalID: 2771362860765286877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e9aa75f2612569ca1f651291013e98e
+      internalID: 2989720852737430571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4b21a60f5b75acd893fa29c63c1b5ca
+      internalID: 2397717164345584659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eadc409d8f2b5b3bb0a2c00615a21d47
+      internalID: 4604361303765667254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9e8f8c6be9d53bb8799019f720d0fc4
+      internalID: 2559750499642795029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a0670a1232f5df78f11d854bca178db
+      internalID: 606654385149210448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 697c1f78e56159fd97cd63913533a21a
+      internalID: 1191316183203097475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d07588d57bd53179c531b12c0335913
+      internalID: 2569739729183825012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_marble_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c691507aafef50dca36fc4a6737ed70e
+      internalID: 4121138045724547097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_marble_wall_f0_v0: 1762713701165505850
+      tv2_marble_wall_f1_v0: 947739889999281181
+      tv2_marble_wall_f4_v0: 2795709181737269290
+      tv2_marble_wall_f5_v0: 2015919609937325657
+      tv2_marble_wall_f7_v0: 4355720974765444565
+      tv2_marble_wall_f16_v0: 3342569226165125420
+      tv2_marble_wall_f17_v0: 3586622167186858346
+      tv2_marble_wall_f20_v0: 3746936640108973200
+      tv2_marble_wall_f21_v0: 3652539131097252768
+      tv2_marble_wall_f23_v0: 2326087896803395623
+      tv2_marble_wall_f28_v0: 4490438011139630867
+      tv2_marble_wall_f29_v0: 3746640727623866346
+      tv2_marble_wall_f31_v0: 2679990494412465522
+      tv2_marble_wall_f64_v0: 1025675080847439034
+      tv2_marble_wall_f65_v0: 2608532555265814454
+      tv2_marble_wall_f68_v0: 473111800213794012
+      tv2_marble_wall_f69_v0: 2586050930094732104
+      tv2_marble_wall_f71_v0: 764241325503878154
+      tv2_marble_wall_f80_v0: 1517393864292911059
+      tv2_marble_wall_f81_v0: 3037409465881539973
+      tv2_marble_wall_f84_v0: 2609627755603543251
+      tv2_marble_wall_f85_v0: 1700503138326416305
+      tv2_marble_wall_f87_v0: 2583328206799442055
+      tv2_marble_wall_f92_v0: 20964612032868219
+      tv2_marble_wall_f93_v0: 3041727948784886400
+      tv2_marble_wall_f95_v0: 1712089832214358133
+      tv2_marble_wall_f112_v0: 2911464160815234982
+      tv2_marble_wall_f113_v0: 4184144180445532900
+      tv2_marble_wall_f116_v0: 1417771563927953509
+      tv2_marble_wall_f117_v0: 3732174155153161300
+      tv2_marble_wall_f119_v0: 840028221254092631
+      tv2_marble_wall_f124_v0: 661730323887643370
+      tv2_marble_wall_f125_v0: 3975382995453930737
+      tv2_marble_wall_f127_v0: 1712719263517364371
+      tv2_marble_wall_f193_v0: 3862895602001872293
+      tv2_marble_wall_f197_v0: 3329572884601406094
+      tv2_marble_wall_f199_v0: 2246907339138618097
+      tv2_marble_wall_f209_v0: 2774982117854193074
+      tv2_marble_wall_f213_v0: 149680068680765023
+      tv2_marble_wall_f215_v0: 2500576138094403846
+      tv2_marble_wall_f221_v0: 613509944173634254
+      tv2_marble_wall_f223_v0: 2268876672692675409
+      tv2_marble_wall_f241_v0: 1719454064147308540
+      tv2_marble_wall_f245_v0: 3975367986473687591
+      tv2_marble_wall_f247_v0: 4603766472857443415
+      tv2_marble_wall_f253_v0: 505621367498041489
+      tv2_marble_wall_f255_v0: 1385129900869867186
+      tv2_marble_wall_f0_v1: 1364721962269813728
+      tv2_marble_wall_f1_v1: 884668425267989900
+      tv2_marble_wall_f4_v1: 1678081019399039802
+      tv2_marble_wall_f5_v1: 2962406257093416520
+      tv2_marble_wall_f7_v1: 3327146831494036568
+      tv2_marble_wall_f16_v1: 4386785508311280116
+      tv2_marble_wall_f17_v1: 49157892528029062
+      tv2_marble_wall_f20_v1: 7553337818903646
+      tv2_marble_wall_f21_v1: 3101078943435092099
+      tv2_marble_wall_f23_v1: 1453768549085499825
+      tv2_marble_wall_f28_v1: 564846134458588717
+      tv2_marble_wall_f29_v1: 4071555490727941898
+      tv2_marble_wall_f31_v1: 4394145518405111370
+      tv2_marble_wall_f64_v1: 1789902858454611827
+      tv2_marble_wall_f65_v1: 632495119962942692
+      tv2_marble_wall_f68_v1: 2632902520115628454
+      tv2_marble_wall_f69_v1: 1395315713265886861
+      tv2_marble_wall_f71_v1: 3692480334006682059
+      tv2_marble_wall_f80_v1: 2261147211115633253
+      tv2_marble_wall_f81_v1: 4333448176652720605
+      tv2_marble_wall_f84_v1: 144883411476596964
+      tv2_marble_wall_f85_v1: 983761225433990632
+      tv2_marble_wall_f87_v1: 2561230973904898401
+      tv2_marble_wall_f92_v1: 187564705980481905
+      tv2_marble_wall_f93_v1: 1012580502490675578
+      tv2_marble_wall_f95_v1: 3022142855625183656
+      tv2_marble_wall_f112_v1: 4264395548726398315
+      tv2_marble_wall_f113_v1: 2262463488724535647
+      tv2_marble_wall_f116_v1: 255008611278183497
+      tv2_marble_wall_f117_v1: 1202036230025756124
+      tv2_marble_wall_f119_v1: 3705832076099194056
+      tv2_marble_wall_f124_v1: 1302176460421561379
+      tv2_marble_wall_f125_v1: 3695341092170681774
+      tv2_marble_wall_f127_v1: 2011031332771646883
+      tv2_marble_wall_f193_v1: 451472166486377565
+      tv2_marble_wall_f197_v1: 4402736947135777880
+      tv2_marble_wall_f199_v1: 4308614947394784215
+      tv2_marble_wall_f209_v1: 1845658804599802254
+      tv2_marble_wall_f213_v1: 2752554084363995859
+      tv2_marble_wall_f215_v1: 3115477742810839314
+      tv2_marble_wall_f221_v1: 4139990265196265164
+      tv2_marble_wall_f223_v1: 2398572597500822439
+      tv2_marble_wall_f241_v1: 1755007605111096974
+      tv2_marble_wall_f245_v1: 1705967221974459349
+      tv2_marble_wall_f247_v1: 3549777255638779777
+      tv2_marble_wall_f253_v1: 3118566977766258841
+      tv2_marble_wall_f255_v1: 3238859212281897270
+      tv2_marble_wall_f0_v2: 1079365745337401027
+      tv2_marble_wall_f1_v2: 1753082205433782800
+      tv2_marble_wall_f4_v2: 1337818847171244639
+      tv2_marble_wall_f5_v2: 2622443871690928048
+      tv2_marble_wall_f7_v2: 1965278173984746250
+      tv2_marble_wall_f16_v2: 1437727153323125043
+      tv2_marble_wall_f17_v2: 4103287475107927566
+      tv2_marble_wall_f20_v2: 2034766652784115464
+      tv2_marble_wall_f21_v2: 3492442043188445211
+      tv2_marble_wall_f23_v2: 1502416070612596013
+      tv2_marble_wall_f28_v2: 3050646518757290874
+      tv2_marble_wall_f29_v2: 2703083398497766812
+      tv2_marble_wall_f31_v2: 1952706714969648784
+      tv2_marble_wall_f64_v2: 1698489894901970479
+      tv2_marble_wall_f65_v2: 1593410270940760763
+      tv2_marble_wall_f68_v2: 4552634555130543344
+      tv2_marble_wall_f69_v2: 3738929350185340394
+      tv2_marble_wall_f71_v2: 676275966244205184
+      tv2_marble_wall_f80_v2: 1371567564363897470
+      tv2_marble_wall_f81_v2: 727746688203423680
+      tv2_marble_wall_f84_v2: 1651445337253183159
+      tv2_marble_wall_f85_v2: 1641752386150651093
+      tv2_marble_wall_f87_v2: 3781264138468442718
+      tv2_marble_wall_f92_v2: 3531279655097943743
+      tv2_marble_wall_f93_v2: 3700132210396646605
+      tv2_marble_wall_f95_v2: 2653493013350206015
+      tv2_marble_wall_f112_v2: 2569629307699520658
+      tv2_marble_wall_f113_v2: 674126042808860009
+      tv2_marble_wall_f116_v2: 585410474614194329
+      tv2_marble_wall_f117_v2: 2827763618719487225
+      tv2_marble_wall_f119_v2: 1669887531631097354
+      tv2_marble_wall_f124_v2: 1193063078289547926
+      tv2_marble_wall_f125_v2: 2176496416244872565
+      tv2_marble_wall_f127_v2: 2828249214052359370
+      tv2_marble_wall_f193_v2: 1162774113283268745
+      tv2_marble_wall_f197_v2: 4288232299199838634
+      tv2_marble_wall_f199_v2: 2025793634850798939
+      tv2_marble_wall_f209_v2: 1531869835956850249
+      tv2_marble_wall_f213_v2: 2771362860765286877
+      tv2_marble_wall_f215_v2: 2989720852737430571
+      tv2_marble_wall_f221_v2: 2397717164345584659
+      tv2_marble_wall_f223_v2: 4604361303765667254
+      tv2_marble_wall_f241_v2: 2559750499642795029
+      tv2_marble_wall_f245_v2: 606654385149210448
+      tv2_marble_wall_f247_v2: 1191316183203097475
+      tv2_marble_wall_f253_v2: 2569739729183825012
+      tv2_marble_wall_f255_v2: 4121138045724547097
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

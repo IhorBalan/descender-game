@@ -42,6 +42,24 @@ namespace Descender.World.TilesV2
 
         [Header("Props and liquids")]
         public Sprite[] torchFrames = new Sprite[0];
+
+        [Tooltip("The props that give light where they stand: the torch and the others.")]
+        public Prop[] props = new Prop[0];
+
+        [Tooltip("The ledges: thin platforms the hero jumps up through and drops down through.")]
+        public Ledge[] ledges = new Ledge[0];
+
+        [Tooltip("The sprites the game's own things on a map are drawn with, by name.")]
+        public Sprite[] things = new Sprite[0];
+
+        [Header("Regions")]
+        public Region[] regions = new Region[0];
+
+        [Tooltip("The share of the camera's movement the rock behind the caves scrolls by.")]
+        public float caveScroll = 0.55f;
+
+        [Tooltip("The sorting order of the first region's cave rock; each region after it is three further on.")]
+        public int caveOrder = -960;
         public Liquid[] liquids = new Liquid[0];
 
         [Header("Light (1 is full daylight)")]
@@ -128,6 +146,58 @@ namespace Descender.World.TilesV2
                 }
             }
             return shadeByMask.TryGetValue(mask, out var tile) ? tile : null;
+        }
+
+        /// <summary>The prop of a key; null when there is none.</summary>
+        public Prop PropOf(string key)
+        {
+            foreach (var prop in props)
+            {
+                if (prop.key == key)
+                {
+                    return prop;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>The ledge of a key; null when there is none.</summary>
+        public Ledge LedgeOf(string key)
+        {
+            foreach (var ledge in ledges)
+            {
+                if (ledge.key == key)
+                {
+                    return ledge;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>The region of a key; null when there is none.</summary>
+        public Region RegionOf(string key)
+        {
+            foreach (var region in regions)
+            {
+                if (region.key == key)
+                {
+                    return region;
+                }
+            }
+            return null;
+        }
+
+        /// <summary>One of the things' sprites, by its name in the manifest (`barrier_0`); null when there is none.</summary>
+        public Sprite Thing(string name)
+        {
+            foreach (var sprite in things)
+            {
+                if (sprite != null && sprite.name == "tv2_thing_" + name)
+                {
+                    return sprite;
+                }
+            }
+            return null;
         }
 
         /// <summary>The liquid of a key; null when there is none.</summary>
@@ -281,6 +351,76 @@ namespace Descender.World.TilesV2
             public TileBase[] last = new TileBase[0];
         }
 
+        /// <summary>A prop that gives light where it stands.</summary>
+        [Serializable]
+        public sealed class Prop
+        {
+            public string key = "";
+            public Sprite[] frames = new Sprite[0];
+
+            [Tooltip("The light it gives its tile is this colour times the intensity.")]
+            public Color colour = Color.white;
+            public float intensity = 1f;
+
+            [Tooltip("Embers rise from it: a flame.")]
+            public bool embers;
+        }
+
+        /// <summary>A ledge: its four pieces, by whether the same ledge goes on to the left and the right.</summary>
+        [Serializable]
+        public sealed class Ledge
+        {
+            public string key = "";
+            public TileBase single;
+            public TileBase left;
+            public TileBase middle;
+            public TileBase right;
+
+            /// <summary>The piece for a cell whose neighbours to the left and right are, or are not, the same ledge.</summary>
+            public TileBase Piece(bool goesLeft, bool goesRight)
+            {
+                if (goesLeft && goesRight)
+                {
+                    return middle;
+                }
+                return goesLeft ? right
+                    : goesRight ? left
+                    : single;
+            }
+        }
+
+        /// <summary>A region of a world: what it is called and what makes its air its own.</summary>
+        [Serializable]
+        public sealed class Region
+        {
+            public string key = "";
+            public string name = "";
+            public string subtitle = "";
+
+            [Tooltip("The faint light that hangs in its air, in the tile light's units.")]
+            public Color ambient = Color.black;
+
+            [Tooltip("The rock behind its caves, and the ragged strip along its top; none for open sky.")]
+            public Sprite cave;
+            public Sprite caveTop;
+
+            [Tooltip("What drifts in its air: how many a second (0 for nothing).")]
+            public float airRate;
+            public Color airColour = Color.white;
+
+            [Tooltip("Units a second across, from and to.")]
+            public Vector2 airAcross;
+
+            [Tooltip("Units a second up, from and to.")]
+            public Vector2 airUp;
+
+            [Tooltip("Seconds a mote lives.")]
+            public float airLife = 5f;
+
+            [Tooltip("Whether the motes take the tile light.")]
+            public bool airLit;
+        }
+
         /// <summary>A liquid and how it is drawn and felt.</summary>
         [Serializable]
         public sealed class Liquid
@@ -358,6 +498,7 @@ namespace Descender.World.TilesV2
             Liquid,
             Prop,
             Mark,
+            Ledge,
         }
 
         public enum Anchor

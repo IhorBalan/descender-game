@@ -1,0 +1,4091 @@
+fileFormatVersion: 2
+guid: 0cdedaf12cf25c87aa5f7ee951144c65
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 3554389279186575428
+    second: tv2_bloodstone_f0_v0
+  - first:
+      213: 103912402218880193
+    second: tv2_bloodstone_f1_v0
+  - first:
+      213: 1151956025911872958
+    second: tv2_bloodstone_f4_v0
+  - first:
+      213: 3394500802476599122
+    second: tv2_bloodstone_f5_v0
+  - first:
+      213: 3200692168686050418
+    second: tv2_bloodstone_f7_v0
+  - first:
+      213: 2528445681031734653
+    second: tv2_bloodstone_f16_v0
+  - first:
+      213: 1295475180778871521
+    second: tv2_bloodstone_f17_v0
+  - first:
+      213: 4570239811969256621
+    second: tv2_bloodstone_f20_v0
+  - first:
+      213: 41576292830284741
+    second: tv2_bloodstone_f21_v0
+  - first:
+      213: 781003381431216062
+    second: tv2_bloodstone_f23_v0
+  - first:
+      213: 4184088415840706869
+    second: tv2_bloodstone_f28_v0
+  - first:
+      213: 2548718661792430115
+    second: tv2_bloodstone_f29_v0
+  - first:
+      213: 3893577762318846784
+    second: tv2_bloodstone_f31_v0
+  - first:
+      213: 4267639102173442953
+    second: tv2_bloodstone_f64_v0
+  - first:
+      213: 3735270704665151691
+    second: tv2_bloodstone_f65_v0
+  - first:
+      213: 2869685318594649092
+    second: tv2_bloodstone_f68_v0
+  - first:
+      213: 4187788534780352697
+    second: tv2_bloodstone_f69_v0
+  - first:
+      213: 3979671147688913618
+    second: tv2_bloodstone_f71_v0
+  - first:
+      213: 2223768041229835445
+    second: tv2_bloodstone_f80_v0
+  - first:
+      213: 3029156261833194843
+    second: tv2_bloodstone_f81_v0
+  - first:
+      213: 2593663500939978624
+    second: tv2_bloodstone_f84_v0
+  - first:
+      213: 3679729442962597586
+    second: tv2_bloodstone_f85_v0
+  - first:
+      213: 2881149896848686584
+    second: tv2_bloodstone_f87_v0
+  - first:
+      213: 268733750499840091
+    second: tv2_bloodstone_f92_v0
+  - first:
+      213: 894649820744545605
+    second: tv2_bloodstone_f93_v0
+  - first:
+      213: 3669887803291266653
+    second: tv2_bloodstone_f95_v0
+  - first:
+      213: 1481112764608784547
+    second: tv2_bloodstone_f112_v0
+  - first:
+      213: 712353574219148437
+    second: tv2_bloodstone_f113_v0
+  - first:
+      213: 2626689271554965370
+    second: tv2_bloodstone_f116_v0
+  - first:
+      213: 2586147464451881111
+    second: tv2_bloodstone_f117_v0
+  - first:
+      213: 1935107660569385523
+    second: tv2_bloodstone_f119_v0
+  - first:
+      213: 4458691924227130552
+    second: tv2_bloodstone_f124_v0
+  - first:
+      213: 293913080307065374
+    second: tv2_bloodstone_f125_v0
+  - first:
+      213: 3825587216760702663
+    second: tv2_bloodstone_f127_v0
+  - first:
+      213: 3812257235841702421
+    second: tv2_bloodstone_f193_v0
+  - first:
+      213: 1575994511834711687
+    second: tv2_bloodstone_f197_v0
+  - first:
+      213: 3534379524264045260
+    second: tv2_bloodstone_f199_v0
+  - first:
+      213: 1373566700856040047
+    second: tv2_bloodstone_f209_v0
+  - first:
+      213: 1553700162854991758
+    second: tv2_bloodstone_f213_v0
+  - first:
+      213: 2448273502888735998
+    second: tv2_bloodstone_f215_v0
+  - first:
+      213: 243586492584526817
+    second: tv2_bloodstone_f221_v0
+  - first:
+      213: 3967726310618277763
+    second: tv2_bloodstone_f223_v0
+  - first:
+      213: 2392434709008247960
+    second: tv2_bloodstone_f241_v0
+  - first:
+      213: 2769561585551010303
+    second: tv2_bloodstone_f245_v0
+  - first:
+      213: 2206820480473030873
+    second: tv2_bloodstone_f247_v0
+  - first:
+      213: 3846290858773664734
+    second: tv2_bloodstone_f253_v0
+  - first:
+      213: 1789096915178047901
+    second: tv2_bloodstone_f255_v0
+  - first:
+      213: 3773197426240693308
+    second: tv2_bloodstone_f0_v1
+  - first:
+      213: 676209033864900752
+    second: tv2_bloodstone_f1_v1
+  - first:
+      213: 4578162554363033668
+    second: tv2_bloodstone_f4_v1
+  - first:
+      213: 3054380817400472104
+    second: tv2_bloodstone_f5_v1
+  - first:
+      213: 1450518096029064009
+    second: tv2_bloodstone_f7_v1
+  - first:
+      213: 672538618276305124
+    second: tv2_bloodstone_f16_v1
+  - first:
+      213: 3833936030304272567
+    second: tv2_bloodstone_f17_v1
+  - first:
+      213: 1570024511164242755
+    second: tv2_bloodstone_f20_v1
+  - first:
+      213: 3943894696184395049
+    second: tv2_bloodstone_f21_v1
+  - first:
+      213: 2439018831667355179
+    second: tv2_bloodstone_f23_v1
+  - first:
+      213: 1757868191317013964
+    second: tv2_bloodstone_f28_v1
+  - first:
+      213: 1738131435342195448
+    second: tv2_bloodstone_f29_v1
+  - first:
+      213: 1801757158536004022
+    second: tv2_bloodstone_f31_v1
+  - first:
+      213: 1632941805993774613
+    second: tv2_bloodstone_f64_v1
+  - first:
+      213: 1983499000648568199
+    second: tv2_bloodstone_f65_v1
+  - first:
+      213: 1456636635932885877
+    second: tv2_bloodstone_f68_v1
+  - first:
+      213: 1080295922561769634
+    second: tv2_bloodstone_f69_v1
+  - first:
+      213: 886022862257683979
+    second: tv2_bloodstone_f71_v1
+  - first:
+      213: 1191183369809942886
+    second: tv2_bloodstone_f80_v1
+  - first:
+      213: 2120921583355432708
+    second: tv2_bloodstone_f81_v1
+  - first:
+      213: 3156592853787366783
+    second: tv2_bloodstone_f84_v1
+  - first:
+      213: 1367408125497095488
+    second: tv2_bloodstone_f85_v1
+  - first:
+      213: 3435948084665291941
+    second: tv2_bloodstone_f87_v1
+  - first:
+      213: 393132130538541198
+    second: tv2_bloodstone_f92_v1
+  - first:
+      213: 4539857650022493292
+    second: tv2_bloodstone_f93_v1
+  - first:
+      213: 781328269193355613
+    second: tv2_bloodstone_f95_v1
+  - first:
+      213: 4066099207811159819
+    second: tv2_bloodstone_f112_v1
+  - first:
+      213: 3090114536898271875
+    second: tv2_bloodstone_f113_v1
+  - first:
+      213: 1521441401289825361
+    second: tv2_bloodstone_f116_v1
+  - first:
+      213: 3985595872882510696
+    second: tv2_bloodstone_f117_v1
+  - first:
+      213: 1567916769307654806
+    second: tv2_bloodstone_f119_v1
+  - first:
+      213: 3781115832715867896
+    second: tv2_bloodstone_f124_v1
+  - first:
+      213: 4223482239756368841
+    second: tv2_bloodstone_f125_v1
+  - first:
+      213: 3816608891163345299
+    second: tv2_bloodstone_f127_v1
+  - first:
+      213: 4098917858092215539
+    second: tv2_bloodstone_f193_v1
+  - first:
+      213: 4454716065806620367
+    second: tv2_bloodstone_f197_v1
+  - first:
+      213: 1889525129068284365
+    second: tv2_bloodstone_f199_v1
+  - first:
+      213: 3008656954507747947
+    second: tv2_bloodstone_f209_v1
+  - first:
+      213: 435451126525731056
+    second: tv2_bloodstone_f213_v1
+  - first:
+      213: 1285137818799993160
+    second: tv2_bloodstone_f215_v1
+  - first:
+      213: 1902854991137253084
+    second: tv2_bloodstone_f221_v1
+  - first:
+      213: 1786566617940494358
+    second: tv2_bloodstone_f223_v1
+  - first:
+      213: 1020050072065917111
+    second: tv2_bloodstone_f241_v1
+  - first:
+      213: 492152368923154641
+    second: tv2_bloodstone_f245_v1
+  - first:
+      213: 376434550593959364
+    second: tv2_bloodstone_f247_v1
+  - first:
+      213: 1922084500334890140
+    second: tv2_bloodstone_f253_v1
+  - first:
+      213: 1439062508112935039
+    second: tv2_bloodstone_f255_v1
+  - first:
+      213: 1360102826403463770
+    second: tv2_bloodstone_f0_v2
+  - first:
+      213: 1124376030158365704
+    second: tv2_bloodstone_f1_v2
+  - first:
+      213: 286640679377387310
+    second: tv2_bloodstone_f4_v2
+  - first:
+      213: 1840719064696825858
+    second: tv2_bloodstone_f5_v2
+  - first:
+      213: 2833515179205465300
+    second: tv2_bloodstone_f7_v2
+  - first:
+      213: 888085791574968222
+    second: tv2_bloodstone_f16_v2
+  - first:
+      213: 2402557792065788758
+    second: tv2_bloodstone_f17_v2
+  - first:
+      213: 4554463360379127614
+    second: tv2_bloodstone_f20_v2
+  - first:
+      213: 3684069151823034722
+    second: tv2_bloodstone_f21_v2
+  - first:
+      213: 4163972920433149857
+    second: tv2_bloodstone_f23_v2
+  - first:
+      213: 2464504734766633856
+    second: tv2_bloodstone_f28_v2
+  - first:
+      213: 4512101153734989490
+    second: tv2_bloodstone_f29_v2
+  - first:
+      213: 2589886272887741087
+    second: tv2_bloodstone_f31_v2
+  - first:
+      213: 777143470096555993
+    second: tv2_bloodstone_f64_v2
+  - first:
+      213: 1841339530041881072
+    second: tv2_bloodstone_f65_v2
+  - first:
+      213: 553746045620645254
+    second: tv2_bloodstone_f68_v2
+  - first:
+      213: 92347354706797848
+    second: tv2_bloodstone_f69_v2
+  - first:
+      213: 3882914099597616703
+    second: tv2_bloodstone_f71_v2
+  - first:
+      213: 2352352087889432409
+    second: tv2_bloodstone_f80_v2
+  - first:
+      213: 1160451395160838962
+    second: tv2_bloodstone_f81_v2
+  - first:
+      213: 361201787944614275
+    second: tv2_bloodstone_f84_v2
+  - first:
+      213: 3980521658591407350
+    second: tv2_bloodstone_f85_v2
+  - first:
+      213: 2131073928760877717
+    second: tv2_bloodstone_f87_v2
+  - first:
+      213: 3409888433723003972
+    second: tv2_bloodstone_f92_v2
+  - first:
+      213: 3926022903555342601
+    second: tv2_bloodstone_f93_v2
+  - first:
+      213: 649438913471008321
+    second: tv2_bloodstone_f95_v2
+  - first:
+      213: 211355821825457600
+    second: tv2_bloodstone_f112_v2
+  - first:
+      213: 2499519690159655645
+    second: tv2_bloodstone_f113_v2
+  - first:
+      213: 122977219564466232
+    second: tv2_bloodstone_f116_v2
+  - first:
+      213: 4301991999895400048
+    second: tv2_bloodstone_f117_v2
+  - first:
+      213: 1044990549645874234
+    second: tv2_bloodstone_f119_v2
+  - first:
+      213: 4071665795202523562
+    second: tv2_bloodstone_f124_v2
+  - first:
+      213: 1240577572733769669
+    second: tv2_bloodstone_f125_v2
+  - first:
+      213: 1790138193922966788
+    second: tv2_bloodstone_f127_v2
+  - first:
+      213: 2624422200139887230
+    second: tv2_bloodstone_f193_v2
+  - first:
+      213: 318878906698840247
+    second: tv2_bloodstone_f197_v2
+  - first:
+      213: 3881927305901214214
+    second: tv2_bloodstone_f199_v2
+  - first:
+      213: 2065759183181107361
+    second: tv2_bloodstone_f209_v2
+  - first:
+      213: 2636380086324909139
+    second: tv2_bloodstone_f213_v2
+  - first:
+      213: 1989809214254683189
+    second: tv2_bloodstone_f215_v2
+  - first:
+      213: 1428275483360956557
+    second: tv2_bloodstone_f221_v2
+  - first:
+      213: 187274102044734654
+    second: tv2_bloodstone_f223_v2
+  - first:
+      213: 1477509646695274174
+    second: tv2_bloodstone_f241_v2
+  - first:
+      213: 2652034557134344827
+    second: tv2_bloodstone_f245_v2
+  - first:
+      213: 281223187461287122
+    second: tv2_bloodstone_f247_v2
+  - first:
+      213: 2635622384179477407
+    second: tv2_bloodstone_f253_v2
+  - first:
+      213: 149385580940622757
+    second: tv2_bloodstone_f255_v2
+  - first:
+      213: 1172030854727370242
+    second: tv2_bloodstone_up_right_v0
+  - first:
+      213: 3655207739550463082
+    second: tv2_bloodstone_up_right_v1
+  - first:
+      213: 255359530041362845
+    second: tv2_bloodstone_up_right_v2
+  - first:
+      213: 1262425345476780950
+    second: tv2_bloodstone_up_left_v0
+  - first:
+      213: 3224311128143873239
+    second: tv2_bloodstone_up_left_v1
+  - first:
+      213: 4573147384736663410
+    second: tv2_bloodstone_up_left_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_bloodstone_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0450fdb166458e1a113cd99e3a0597d
+      internalID: 3554389279186575428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f420ffb077dc5c75bf338b8eec0411b7
+      internalID: 103912402218880193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83456ec5c8cd5289846decde5b9edae3
+      internalID: 1151956025911872958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0bb0a1fcaea5a99bf9bd1284808c8d9
+      internalID: 3394500802476599122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e9ff03a056c511ba59455a58fa16fe8
+      internalID: 3200692168686050418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e86436d514745637a50a9eaf00361ab0
+      internalID: 2528445681031734653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7c5e695fbe653229b81a6f1537081fc
+      internalID: 1295475180778871521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad4b34e413a850708654106d1a111b17
+      internalID: 4570239811969256621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 473c5b74b7715a7ab26129a3cde87ca2
+      internalID: 41576292830284741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 184abf5f96105b28b1451e48713087b6
+      internalID: 781003381431216062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 718989973fe45eddb333cb68b5ce76a3
+      internalID: 4184088415840706869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0aefd74f42975cbebeb5736a4ae4f8fe
+      internalID: 2548718661792430115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2cdf0f7e48e5b25ab503c229f4f518c
+      internalID: 3893577762318846784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f7a24f3269c5306ba093ad15cce9e10
+      internalID: 4267639102173442953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 681b845d554e534793e4352f6b6b643a
+      internalID: 3735270704665151691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 792c83c2465954c3aed610ab9cfc1437
+      internalID: 2869685318594649092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29aaecef69d95c1eb01db3e93b1fd377
+      internalID: 4187788534780352697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59d1ba6fed5151b0b45081111644ef7b
+      internalID: 3979671147688913618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18702572e4fd57989646024c139fbfde
+      internalID: 2223768041229835445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3bfd2e296df51d7ac540542ccc6b15c
+      internalID: 3029156261833194843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f913a3fa5c6959a38f1944f38b7d8a70
+      internalID: 2593663500939978624
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c739c1a46be75a4c813311ebd4e17fd0
+      internalID: 3679729442962597586
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55a0fb43f0b45ab29cd9fd0c681b1d5b
+      internalID: 2881149896848686584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf65d52631895fc6978c4e0bfe320679
+      internalID: 268733750499840091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b990fec2e805ba6a9fdd4cf840e6855
+      internalID: 894649820744545605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac0d678a02b15da19758041efdf24d93
+      internalID: 3669887803291266653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02e3bd19d29a549dafff60747574ad2a
+      internalID: 1481112764608784547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 814b303e15855179b60cb357315fe957
+      internalID: 712353574219148437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b68ec69579505f56a6ab045c47aca1e3
+      internalID: 2626689271554965370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97b4728a52d95db280715704289ec32f
+      internalID: 2586147464451881111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f95db34afd4a51b6bba12048a2735f4a
+      internalID: 1935107660569385523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40a71f6c1f9051eda7e6c8974337181d
+      internalID: 4458691924227130552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 012d381550c2593896fe99ad2229a370
+      internalID: 293913080307065374
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d1a235de2215040856a952d2b50537f
+      internalID: 3825587216760702663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a05a150c6e85737be9b40fe3ebcdab8
+      internalID: 3812257235841702421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aefcd66598de5d20b4de5f826dee9ee3
+      internalID: 1575994511834711687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b90e0f40a8a52e4812204b8e140cf54
+      internalID: 3534379524264045260
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7276f7f2b6b4517f8c9f2d5355c212e4
+      internalID: 1373566700856040047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d968851ae01355a3864905ac1adf76f7
+      internalID: 1553700162854991758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67a64e66130a5c1fb2d855c0f2c60287
+      internalID: 2448273502888735998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cca9d19de9bc5cae8f44bc295c7bf393
+      internalID: 243586492584526817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837d9fa46f9e50b0ac8d6bec27fcf8f6
+      internalID: 3967726310618277763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc6f86776a0d5785876f5d5e0fdca3fb
+      internalID: 2392434709008247960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dc707e90081565f826d372b1059d0c6
+      internalID: 2769561585551010303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22a06fae21a8535d81f6d8b03b392dee
+      internalID: 2206820480473030873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d23615ebe295412b976c3eb8d0a17ff
+      internalID: 3846290858773664734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d08b910181eb5db7843c47b6cf9b11ee
+      internalID: 1789096915178047901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fdc347657a9594dad5a42f8c93280bc
+      internalID: 3773197426240693308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce350ca339cb5d7d83d775c211497a9c
+      internalID: 676209033864900752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6691fa9e3ff553e591eca0d441e51c29
+      internalID: 4578162554363033668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b1025bf16265eba809139225d722ed9
+      internalID: 3054380817400472104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 570c7735e84958889ff07ae7291b414c
+      internalID: 1450518096029064009
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 014a5596a9b4512a9c086fccda2af0c4
+      internalID: 672538618276305124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cad85f17f5b556faac2f0c2212a8bee8
+      internalID: 3833936030304272567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 902e31e7d1ed59bf891c85240b7b8fc4
+      internalID: 1570024511164242755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f86a0c81cddb5ab0a499efc3dc4b1678
+      internalID: 3943894696184395049
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 610f090fe2b15c3bbd6460d87baa8cc2
+      internalID: 2439018831667355179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 094451d07f445ccca08d687f8793739f
+      internalID: 1757868191317013964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dad14c4587551b7a5e73255f1e45c3d
+      internalID: 1738131435342195448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3be667335b5552718ce23eb14bc9164d
+      internalID: 1801757158536004022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e91422a3e99050358e4f9fef76873209
+      internalID: 1632941805993774613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ca68db686d85113b4e6ac7880443216
+      internalID: 1983499000648568199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c13a65956bb95736b0f4bf2161cf3b92
+      internalID: 1456636635932885877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9981be7778852f4ac64b743e82b69f1
+      internalID: 1080295922561769634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03e1f80b524c5af9834beef9a56f1b55
+      internalID: 886022862257683979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a15f494f79d15dff949f01f9a68cbae0
+      internalID: 1191183369809942886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d23cb4cde8a59c99de1a441c54b0b8f
+      internalID: 2120921583355432708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d1d7ac9031451759e111599f1d1c5fe
+      internalID: 3156592853787366783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4afdbc71151594a9c180076fde4de4e
+      internalID: 1367408125497095488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaba021436995df5ba9c54eb3e2ac115
+      internalID: 3435948084665291941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 830ecaf01e9755d3b44e26cb329750e7
+      internalID: 393132130538541198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ae6a83fb46751d39d5831eb256e6092
+      internalID: 4539857650022493292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 186dac2cfbb75d8da3f4e3a5aab58858
+      internalID: 781328269193355613
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d35cfd5cca35ea99ca582e8681d1f07
+      internalID: 4066099207811159819
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8a58e5690c657859fbb055a34443f79
+      internalID: 3090114536898271875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17830f5a23695d499516f984458105c1
+      internalID: 1521441401289825361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8005bd327bfb5f10ba85e7c0d251b0d5
+      internalID: 3985595872882510696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a03abccba9537e8d00a211bfcc31a9
+      internalID: 1567916769307654806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8634da08dd425ec99d267a8f922d29f4
+      internalID: 3781115832715867896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5857cda9cbbe5afaac8f982b7563cab9
+      internalID: 4223482239756368841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cf7903183755db794bc30fc3b0c9e38
+      internalID: 3816608891163345299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19aa83f030415d87bb4254fcb89c00c8
+      internalID: 4098917858092215539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01aaa9cc469351bb927ca88514b32cbb
+      internalID: 4454716065806620367
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 780edafe62d254c9b337d15857d42781
+      internalID: 1889525129068284365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0220709cab9758bebf86a5634e86cbb3
+      internalID: 3008656954507747947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c7512afcc4c5651aef76ee1ef599287
+      internalID: 435451126525731056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de64fd07b8925caabb06986c6e522fb5
+      internalID: 1285137818799993160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 043c0af869605ffe8958c03c4517aa15
+      internalID: 1902854991137253084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d32a9104805250179f002243f6aee677
+      internalID: 1786566617940494358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35912e4e2c9d5bc184a5dcdb65df8938
+      internalID: 1020050072065917111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01f0b5c9f82c58b2b12676d3056aeb3c
+      internalID: 492152368923154641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3fe2c2f48a354548caa38460e2e07e9
+      internalID: 376434550593959364
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c624658f56bb5f068e85566407e0cfd1
+      internalID: 1922084500334890140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9959a1c7a9bc58b1b35304767aeb8aa0
+      internalID: 1439062508112935039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90de11a7bb995e328ce7b5e421423b35
+      internalID: 1360102826403463770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceacc0655cd1589ea92f1548e229ab3c
+      internalID: 1124376030158365704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6748be91d315499a14c5d7c183d1f74
+      internalID: 286640679377387310
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7402137ac7c55e19bc4ad2d763382b39
+      internalID: 1840719064696825858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb0c5266514c5bf6be31a595d60763fb
+      internalID: 2833515179205465300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b411d3b0612d507eb5471b2e8395ecfc
+      internalID: 888085791574968222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1642f31a790e5f3d923ed58b24973ef6
+      internalID: 2402557792065788758
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db48bc993eb355d1881bf4f11da79ca6
+      internalID: 4554463360379127614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54d86ab5014555b88ec79f551de87370
+      internalID: 3684069151823034722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6058cab0daac58bbbccfcbb31d089b8e
+      internalID: 4163972920433149857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fbe159c3498e5cb18625fc6fce279d04
+      internalID: 2464504734766633856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dec2778780b65ac8b38e41c39cb8ae1f
+      internalID: 4512101153734989490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af3e67e63e4d59f6a2bb9b363240a7ff
+      internalID: 2589886272887741087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f81338918797560abc0747488620ff96
+      internalID: 777143470096555993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ce74a3277795af59b2146f2ee34e8ec
+      internalID: 1841339530041881072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 533ccfc50a0456b199f0616e9c106e49
+      internalID: 553746045620645254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f1851bc4cfc5bf5a40dbb4309b93e86
+      internalID: 92347354706797848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 084881159c6b5ed4a528c6c6080d8307
+      internalID: 3882914099597616703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2af3bad5cc152558194a8d6e1746ede
+      internalID: 2352352087889432409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1d14ea902875fed9370eb9c52e9fa43
+      internalID: 1160451395160838962
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d3446f852b15cb290dc5bf94c32c236
+      internalID: 361201787944614275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7b9ac4c248f5b15959426e193d84005
+      internalID: 3980521658591407350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 745aba3736a35c1097fa0f01615358b1
+      internalID: 2131073928760877717
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ad65df3c263527eb95539f4999d99e6
+      internalID: 3409888433723003972
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b04323d5e9ee5bdc9e8b45dcbc655e76
+      internalID: 3926022903555342601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f512b2060b3054279e29274188c4da0b
+      internalID: 649438913471008321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6d09c1203d056c59e7842aa59a41734
+      internalID: 211355821825457600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a4f93316eb95f5bb05029f9aa10516c
+      internalID: 2499519690159655645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2441dffac3c5519d9820b7b2f62f6306
+      internalID: 122977219564466232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f212ce81dbf1574f990df923da58a1ed
+      internalID: 4301991999895400048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da499b9c99c5efa8d858eba43f178da
+      internalID: 1044990549645874234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ca1828d3f35cb3a68c9104de3d5219
+      internalID: 4071665795202523562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56fcfd10cee15c3f84e9caf6be184af1
+      internalID: 1240577572733769669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64e3865523745600b8c4fb7852c769e0
+      internalID: 1790138193922966788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43fb675a8288552389528e246d7ead1c
+      internalID: 2624422200139887230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dad1e7527abb5318953e31636fc38e98
+      internalID: 318878906698840247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd7a02ae75e0564ea64f0ec192ecd4ee
+      internalID: 3881927305901214214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83778d463b1b56748d13d7316cfdfb05
+      internalID: 2065759183181107361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f0ca22e73055b8d9656de3fce994ff0
+      internalID: 2636380086324909139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0240f601f5be51d58e12f4867e6a8039
+      internalID: 1989809214254683189
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc9a1f3bc6f75fadaf7213a0599eb8ad
+      internalID: 1428275483360956557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e20879e054685c44878909fe6788ef8d
+      internalID: 187274102044734654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 600bea93e897552f8e4d6572ae5f474f
+      internalID: 1477509646695274174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a24c871f4065dbd85e995995ca86050
+      internalID: 2652034557134344827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84dae7483ab655d4a17137ecb8a60033
+      internalID: 281223187461287122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634136d888965f1aac76eb0ef3a6f80e
+      internalID: 2635622384179477407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90ec20e67d6d5e609c8156ba7c614004
+      internalID: 149385580940622757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fa75de43d625b93ac07a5af25561b81
+      internalID: 1172030854727370242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0225acb8db8658e8bc4a05f0ff43d259
+      internalID: 3655207739550463082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 160495e6ae59520bb95b13ae98c73ddc
+      internalID: 255359530041362845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1d570e1866f5169bb3320b9cc69f3ec
+      internalID: 1262425345476780950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c75fe6c161b57f1bfc04ae3e9ff27b1
+      internalID: 3224311128143873239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_bloodstone_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfca0927d4915589b389ba69e99870e2
+      internalID: 4573147384736663410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_bloodstone_f0_v0: 3554389279186575428
+      tv2_bloodstone_f1_v0: 103912402218880193
+      tv2_bloodstone_f4_v0: 1151956025911872958
+      tv2_bloodstone_f5_v0: 3394500802476599122
+      tv2_bloodstone_f7_v0: 3200692168686050418
+      tv2_bloodstone_f16_v0: 2528445681031734653
+      tv2_bloodstone_f17_v0: 1295475180778871521
+      tv2_bloodstone_f20_v0: 4570239811969256621
+      tv2_bloodstone_f21_v0: 41576292830284741
+      tv2_bloodstone_f23_v0: 781003381431216062
+      tv2_bloodstone_f28_v0: 4184088415840706869
+      tv2_bloodstone_f29_v0: 2548718661792430115
+      tv2_bloodstone_f31_v0: 3893577762318846784
+      tv2_bloodstone_f64_v0: 4267639102173442953
+      tv2_bloodstone_f65_v0: 3735270704665151691
+      tv2_bloodstone_f68_v0: 2869685318594649092
+      tv2_bloodstone_f69_v0: 4187788534780352697
+      tv2_bloodstone_f71_v0: 3979671147688913618
+      tv2_bloodstone_f80_v0: 2223768041229835445
+      tv2_bloodstone_f81_v0: 3029156261833194843
+      tv2_bloodstone_f84_v0: 2593663500939978624
+      tv2_bloodstone_f85_v0: 3679729442962597586
+      tv2_bloodstone_f87_v0: 2881149896848686584
+      tv2_bloodstone_f92_v0: 268733750499840091
+      tv2_bloodstone_f93_v0: 894649820744545605
+      tv2_bloodstone_f95_v0: 3669887803291266653
+      tv2_bloodstone_f112_v0: 1481112764608784547
+      tv2_bloodstone_f113_v0: 712353574219148437
+      tv2_bloodstone_f116_v0: 2626689271554965370
+      tv2_bloodstone_f117_v0: 2586147464451881111
+      tv2_bloodstone_f119_v0: 1935107660569385523
+      tv2_bloodstone_f124_v0: 4458691924227130552
+      tv2_bloodstone_f125_v0: 293913080307065374
+      tv2_bloodstone_f127_v0: 3825587216760702663
+      tv2_bloodstone_f193_v0: 3812257235841702421
+      tv2_bloodstone_f197_v0: 1575994511834711687
+      tv2_bloodstone_f199_v0: 3534379524264045260
+      tv2_bloodstone_f209_v0: 1373566700856040047
+      tv2_bloodstone_f213_v0: 1553700162854991758
+      tv2_bloodstone_f215_v0: 2448273502888735998
+      tv2_bloodstone_f221_v0: 243586492584526817
+      tv2_bloodstone_f223_v0: 3967726310618277763
+      tv2_bloodstone_f241_v0: 2392434709008247960
+      tv2_bloodstone_f245_v0: 2769561585551010303
+      tv2_bloodstone_f247_v0: 2206820480473030873
+      tv2_bloodstone_f253_v0: 3846290858773664734
+      tv2_bloodstone_f255_v0: 1789096915178047901
+      tv2_bloodstone_f0_v1: 3773197426240693308
+      tv2_bloodstone_f1_v1: 676209033864900752
+      tv2_bloodstone_f4_v1: 4578162554363033668
+      tv2_bloodstone_f5_v1: 3054380817400472104
+      tv2_bloodstone_f7_v1: 1450518096029064009
+      tv2_bloodstone_f16_v1: 672538618276305124
+      tv2_bloodstone_f17_v1: 3833936030304272567
+      tv2_bloodstone_f20_v1: 1570024511164242755
+      tv2_bloodstone_f21_v1: 3943894696184395049
+      tv2_bloodstone_f23_v1: 2439018831667355179
+      tv2_bloodstone_f28_v1: 1757868191317013964
+      tv2_bloodstone_f29_v1: 1738131435342195448
+      tv2_bloodstone_f31_v1: 1801757158536004022
+      tv2_bloodstone_f64_v1: 1632941805993774613
+      tv2_bloodstone_f65_v1: 1983499000648568199
+      tv2_bloodstone_f68_v1: 1456636635932885877
+      tv2_bloodstone_f69_v1: 1080295922561769634
+      tv2_bloodstone_f71_v1: 886022862257683979
+      tv2_bloodstone_f80_v1: 1191183369809942886
+      tv2_bloodstone_f81_v1: 2120921583355432708
+      tv2_bloodstone_f84_v1: 3156592853787366783
+      tv2_bloodstone_f85_v1: 1367408125497095488
+      tv2_bloodstone_f87_v1: 3435948084665291941
+      tv2_bloodstone_f92_v1: 393132130538541198
+      tv2_bloodstone_f93_v1: 4539857650022493292
+      tv2_bloodstone_f95_v1: 781328269193355613
+      tv2_bloodstone_f112_v1: 4066099207811159819
+      tv2_bloodstone_f113_v1: 3090114536898271875
+      tv2_bloodstone_f116_v1: 1521441401289825361
+      tv2_bloodstone_f117_v1: 3985595872882510696
+      tv2_bloodstone_f119_v1: 1567916769307654806
+      tv2_bloodstone_f124_v1: 3781115832715867896
+      tv2_bloodstone_f125_v1: 4223482239756368841
+      tv2_bloodstone_f127_v1: 3816608891163345299
+      tv2_bloodstone_f193_v1: 4098917858092215539
+      tv2_bloodstone_f197_v1: 4454716065806620367
+      tv2_bloodstone_f199_v1: 1889525129068284365
+      tv2_bloodstone_f209_v1: 3008656954507747947
+      tv2_bloodstone_f213_v1: 435451126525731056
+      tv2_bloodstone_f215_v1: 1285137818799993160
+      tv2_bloodstone_f221_v1: 1902854991137253084
+      tv2_bloodstone_f223_v1: 1786566617940494358
+      tv2_bloodstone_f241_v1: 1020050072065917111
+      tv2_bloodstone_f245_v1: 492152368923154641
+      tv2_bloodstone_f247_v1: 376434550593959364
+      tv2_bloodstone_f253_v1: 1922084500334890140
+      tv2_bloodstone_f255_v1: 1439062508112935039
+      tv2_bloodstone_f0_v2: 1360102826403463770
+      tv2_bloodstone_f1_v2: 1124376030158365704
+      tv2_bloodstone_f4_v2: 286640679377387310
+      tv2_bloodstone_f5_v2: 1840719064696825858
+      tv2_bloodstone_f7_v2: 2833515179205465300
+      tv2_bloodstone_f16_v2: 888085791574968222
+      tv2_bloodstone_f17_v2: 2402557792065788758
+      tv2_bloodstone_f20_v2: 4554463360379127614
+      tv2_bloodstone_f21_v2: 3684069151823034722
+      tv2_bloodstone_f23_v2: 4163972920433149857
+      tv2_bloodstone_f28_v2: 2464504734766633856
+      tv2_bloodstone_f29_v2: 4512101153734989490
+      tv2_bloodstone_f31_v2: 2589886272887741087
+      tv2_bloodstone_f64_v2: 777143470096555993
+      tv2_bloodstone_f65_v2: 1841339530041881072
+      tv2_bloodstone_f68_v2: 553746045620645254
+      tv2_bloodstone_f69_v2: 92347354706797848
+      tv2_bloodstone_f71_v2: 3882914099597616703
+      tv2_bloodstone_f80_v2: 2352352087889432409
+      tv2_bloodstone_f81_v2: 1160451395160838962
+      tv2_bloodstone_f84_v2: 361201787944614275
+      tv2_bloodstone_f85_v2: 3980521658591407350
+      tv2_bloodstone_f87_v2: 2131073928760877717
+      tv2_bloodstone_f92_v2: 3409888433723003972
+      tv2_bloodstone_f93_v2: 3926022903555342601
+      tv2_bloodstone_f95_v2: 649438913471008321
+      tv2_bloodstone_f112_v2: 211355821825457600
+      tv2_bloodstone_f113_v2: 2499519690159655645
+      tv2_bloodstone_f116_v2: 122977219564466232
+      tv2_bloodstone_f117_v2: 4301991999895400048
+      tv2_bloodstone_f119_v2: 1044990549645874234
+      tv2_bloodstone_f124_v2: 4071665795202523562
+      tv2_bloodstone_f125_v2: 1240577572733769669
+      tv2_bloodstone_f127_v2: 1790138193922966788
+      tv2_bloodstone_f193_v2: 2624422200139887230
+      tv2_bloodstone_f197_v2: 318878906698840247
+      tv2_bloodstone_f199_v2: 3881927305901214214
+      tv2_bloodstone_f209_v2: 2065759183181107361
+      tv2_bloodstone_f213_v2: 2636380086324909139
+      tv2_bloodstone_f215_v2: 1989809214254683189
+      tv2_bloodstone_f221_v2: 1428275483360956557
+      tv2_bloodstone_f223_v2: 187274102044734654
+      tv2_bloodstone_f241_v2: 1477509646695274174
+      tv2_bloodstone_f245_v2: 2652034557134344827
+      tv2_bloodstone_f247_v2: 281223187461287122
+      tv2_bloodstone_f253_v2: 2635622384179477407
+      tv2_bloodstone_f255_v2: 149385580940622757
+      tv2_bloodstone_up_right_v0: 1172030854727370242
+      tv2_bloodstone_up_right_v1: 3655207739550463082
+      tv2_bloodstone_up_right_v2: 255359530041362845
+      tv2_bloodstone_up_left_v0: 1262425345476780950
+      tv2_bloodstone_up_left_v1: 3224311128143873239
+      tv2_bloodstone_up_left_v2: 4573147384736663410
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

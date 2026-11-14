@@ -495,7 +495,10 @@ namespace Descender.Tests
             foreach (var entry in manifest.legend)
             {
                 Assert.That(set.TryGlyph(entry.character[0], out var glyph), Is.True, entry.character);
-                var tiled = glyph.layer != TilesV2Set.Layer.Prop && glyph.layer != TilesV2Set.Layer.Mark;
+                var tiled =
+                    glyph.layer == TilesV2Set.Layer.Terrain
+                    || glyph.layer == TilesV2Set.Layer.Wall
+                    || glyph.layer == TilesV2Set.Layer.Liquid;
                 Assert.That(glyph.tile != null, Is.EqualTo(tiled), entry.character);
             }
             Assert.That(set.TryGlyph(TilesV2Map.Air, out _), Is.False);

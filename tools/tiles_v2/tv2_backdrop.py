@@ -28,9 +28,11 @@ BACKDROPS = [
     {"key": "backdrop_far", "kind": "ridge", "scroll": 0.1, "order": -990, "lit": False},
     {"key": "backdrop_mid", "kind": "ridge", "scroll": 0.25, "order": -980, "lit": False},
     {"key": "backdrop_near", "kind": "ridge", "scroll": 0.45, "order": -970, "lit": False},
-    {"key": "backdrop_cave", "kind": "cave", "scroll": 0.55, "order": -960, "lit": True},
-    {"key": "backdrop_cave_top", "kind": "cave_top", "scroll": 0.55, "order": -959, "lit": True},
 ]
+# The rock behind the caves is a region's own (REGIONS in tv2_base.py): each region that
+# has one gets `backdrop_cave_<region>` and its ragged top, `backdrop_cave_top_<region>`.
+CAVE_SCROLL = 0.55
+CAVE_ORDER = -960
 SKY_ORDER = -1010
 CLOUD_DRIFT = 0.25  # units a second the clouds move to the right
 
@@ -170,7 +172,6 @@ def backdrop_ridge(name: str, colour, light, base: int, waves, seed, trees=None)
 
 CAVE_SIZE = 128
 CAVE_TOP_H = 32
-CAVE_RAMP = hexes("0a0b10", "111219", "171920", "1e2029", "262933")
 
 
 def cave_rock(width: int, height: int, seed: str, cells: int) -> np.ndarray:
@@ -208,19 +209,21 @@ def cave_rock(width: int, height: int, seed: str, cells: int) -> np.ndarray:
     return t
 
 
-def backdrop_cave() -> Image.Image:
-    """The rock behind the caves: dark, so a wall in front of it still reads; tiles both ways."""
-    t = cave_rock(CAVE_SIZE, CAVE_SIZE, "body", 26)
+def backdrop_cave(region: dict) -> Image.Image:
+    """The rock behind a region's caves: dark, so a wall in front of it still reads; tiles both ways."""
+    CAVE_RAMP = hexes(*region["cave"].split())
+    t = cave_rock(CAVE_SIZE, CAVE_SIZE, "body " + region["key"], 26)
     rgba = np.zeros((CAVE_SIZE, CAVE_SIZE, 4), dtype=np.uint8)
     rgba[..., :3] = np.array(CAVE_RAMP, dtype=np.uint8)[t]
     rgba[..., 3] = 255
     return Image.fromarray(rgba, "RGBA")
 
 
-def backdrop_cave_top() -> Image.Image:
+def backdrop_cave_top(region: dict) -> Image.Image:
     """The top of the cave rock, where it meets the sky backdrop in an opening: a
     ragged edge; repeats sideways."""
-    t = cave_rock(CAVE_SIZE, CAVE_TOP_H, "top", 9)
+    CAVE_RAMP = hexes(*region["cave"].split())
+    t = cave_rock(CAVE_SIZE, CAVE_TOP_H, "top " + region["key"], 9)
     xs = np.arange(CAVE_SIZE)
     edge = 9 + periodic(xs, [(2, 3.5), (5, 2.0), (11, 1.2)], "cave top", CAVE_SIZE)
     rgba = np.zeros((CAVE_TOP_H, CAVE_SIZE, 4), dtype=np.uint8)
@@ -235,7 +238,13 @@ def backdrop_cave_top() -> Image.Image:
 
 
 def backdrops() -> dict[str, Image.Image]:
+    caves = {}
+    for region in REGIONS:
+        if region["cave"]:
+            caves["backdrop_cave_" + region["key"]] = backdrop_cave(region)
+            caves["backdrop_cave_top_" + region["key"]] = backdrop_cave_top(region)
     return {
+        **caves,
         "backdrop_stars": backdrop_stars(),
         "backdrop_sun": backdrop_sun(),
         "backdrop_moon": backdrop_moon(),
@@ -249,6 +258,4 @@ def backdrops() -> dict[str, Image.Image]:
         "backdrop_near": backdrop_ridge(
             "near", hexes("2f5e4c")[0], hexes("427a60")[0], 40, [(2, 8), (5, 5), (9, 3)], 3, trees=(6, 12)
         ),
-        "backdrop_cave": backdrop_cave(),
-        "backdrop_cave_top": backdrop_cave_top(),
     }

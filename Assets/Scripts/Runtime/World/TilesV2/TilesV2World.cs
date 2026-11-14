@@ -10,7 +10,7 @@ namespace Descender.World.TilesV2
     /// way RegionTiles builds a region: nothing is painted into the scene, so a scene with a
     /// whole world in it stays a few lines. Under a child called Built it makes the Grid
     /// and its tilemaps (walls, shade, decor, terrain with its collider, blends, glints,
-    /// liquids), the torches, the tile light and the ambient, the sky and the backdrops,
+    /// liquids, ledges), the lamps, the tile light and the ambient, the sky and the backdrops,
     /// the clock, the particles, and the areas of the liquids (water to swim in, lava that
     /// hurts). It builds when the game starts and, in the editor, as a preview that is
     /// never saved; Build on the context menu builds it again after a change to the map.
@@ -28,6 +28,10 @@ namespace Descender.World.TilesV2
         public const int TorchOrder = -60;
         public const int GlowOrder = -40;
         public const int ParticleOrder = 60;
+        public const int LedgeOrder = -98;
+
+        /// <summary>Rows either side of the edge between two regions over which the light in the air of one turns into the other's.</summary>
+        public const int RegionBlend = 6;
 
         public const string TorchKey = "torch";
         public const string SpawnKey = "spawn";
@@ -49,7 +53,8 @@ namespace Descender.World.TilesV2
 
         private Transform built;
         private readonly List<Tilemap> liquidMaps = new List<Tilemap>();
-        private readonly List<Vector2> torchPoints = new List<Vector2>();
+        private readonly List<(Vector2 at, TilesV2Set.Prop prop)> propPoints =
+            new List<(Vector2 at, TilesV2Set.Prop prop)>();
 
         public TilesV2Set Set => set;
         public bool IsBuilt => built != null;
@@ -63,6 +68,9 @@ namespace Descender.World.TilesV2
         public Tilemap Shade { get; private set; }
         public Tilemap Blend { get; private set; }
         public Tilemap Glow { get; private set; }
+
+        /// <summary>The ledges: one-way platforms, on the game's Ledge layer.</summary>
+        public Tilemap Ledges { get; private set; }
         public IReadOnlyList<Tilemap> Liquids => liquidMaps;
         public TileLightMap Light { get; private set; }
         public DayNight Day { get; private set; }
@@ -198,6 +206,7 @@ namespace Descender.World.TilesV2
             Shade = MakeTilemap("Shade", ShadeOrder, set.litMaterial, false);
             Decor = MakeTilemap("Decor", DecorOrder, set.litMaterial, false);
             Terrain = MakeTilemap("Terrain", TerrainOrder, set.litMaterial, true);
+            Ledges = MakeLedges();
             Blend = MakeTilemap("Blend", BlendOrder, set.litMaterial, false);
             Glow = MakeTilemap("Glow", GlowOrder, set.unlitMaterial, false);
             var liquidOf = new Dictionary<string, Tilemap>();
@@ -247,7 +256,7 @@ namespace Descender.World.TilesV2
                 Remove(stale.gameObject);
             }
             liquidMaps.Clear();
-            torchPoints.Clear();
+            propPoints.Clear();
             Map = null;
             Terrain = null;
             Walls = null;
@@ -255,6 +264,7 @@ namespace Descender.World.TilesV2
             Shade = null;
             Blend = null;
             Glow = null;
+            Ledges = null;
             Light = null;
             Day = null;
             Sky = null;
@@ -306,9 +316,23 @@ namespace Descender.World.TilesV2
                             break;
                         case TilesV2Set.Layer.Prop:
                             taken.Add(cell);
-                            if (glyph.key == TorchKey)
+                            var prop = set.PropOf(glyph.key);
+                            if (prop != null && prop.frames.Length > 0)
                             {
-                                torchPoints.Add(new Vector2(cell.x + 0.5f, cell.y + 0.5f));
+                                propPoints.Add((new Vector2(cell.x + 0.5f, cell.y + 0.5f), prop));
+                            }
+                            break;
+                        case TilesV2Set.Layer.Ledge:
+                            taken.Add(cell);
+                            var ledge = set.LedgeOf(glyph.key);
+                            if (ledge != null)
+                            {
+                                var character = Map.TerrainAt(column, row);
+                                var piece = ledge.Piece(
+                                    Map.TerrainAt(column - 1, row) == character,
+                                    Map.TerrainAt(column + 1, row) == character
+                                );
+                                Add(cells, tiles, Ledges, cell, piece);
                             }
                             break;
                         case TilesV2Set.Layer.Mark:
@@ -376,22 +400,44 @@ namespace Descender.World.TilesV2
             return tilemap;
         }
 
-        // A torch at every torch cell of the map: its flame, unlit, the light it gives its tile and a small flickering glow.
+        // The ledges' tilemap: on the Ledge layer with a one-way effector, as RegionTiles makes the
+        // game's own, so the hero jumps up through a ledge and drops through it with down and jump.
+        private Tilemap MakeLedges()
+        {
+            var tilemap = MakeTilemap("Ledges", LedgeOrder, set.litMaterial, false);
+            var holder = tilemap.gameObject;
+            holder.layer = LayerMask.NameToLayer("Ledge");
+            var body = holder.AddComponent<Rigidbody2D>();
+            body.bodyType = RigidbodyType2D.Static;
+            var tiles = holder.AddComponent<TilemapCollider2D>();
+            tiles.compositeOperation = Collider2D.CompositeOperation.Merge;
+            var composite = holder.AddComponent<CompositeCollider2D>();
+            composite.geometryType = CompositeCollider2D.GeometryType.Polygons;
+            composite.generationType = CompositeCollider2D.GenerationType.Synchronous;
+            composite.usedByEffector = true;
+            var effector = holder.AddComponent<PlatformEffector2D>();
+            // The hero drops through by turning the Player and Ledge layer pair off, which an
+            // effector's own mask would override.
+            effector.useColliderMask = false;
+            effector.useOneWay = true;
+            effector.surfaceArc = 170f;
+            effector.useSideFriction = false;
+            return tilemap;
+        }
+
+        // A lamp at every prop cell of the map (a torch, a brazier, a crystal, a lantern): its
+        // frames, unlit, the light it gives its tile and a small flickering glow.
         private Transform MakeTorches()
         {
             var holder = new GameObject("Torches").transform;
             holder.SetParent(built, false);
-            if (set.torchFrames.Length == 0)
+            foreach (var (point, prop) in propPoints)
             {
-                return holder;
-            }
-            foreach (var point in torchPoints)
-            {
-                var torch = new GameObject("Torch");
+                var torch = new GameObject(prop.key);
                 torch.transform.SetParent(holder, false);
                 torch.transform.localPosition = point;
                 var flame = torch.AddComponent<SpriteRenderer>();
-                flame.sprite = set.torchFrames[0];
+                flame.sprite = prop.frames[0];
                 flame.sortingOrder = TorchOrder;
                 if (set.unlitMaterial != null)
                 {
@@ -402,17 +448,65 @@ namespace Descender.World.TilesV2
                 glow.transform.localPosition = new Vector3(0f, 0.1f, 0f);
                 glow.lightType = Light2D.LightType.Point;
                 glow.blendStyleIndex = 0;
-                glow.color = set.torchColour;
+                glow.color = prop.colour;
                 glow.intensity = set.torchGlow;
                 glow.pointLightInnerRadius = 0f;
                 glow.pointLightOuterRadius = set.torchGlowRadius;
                 glow.falloffIntensity = 0.5f;
                 glow.shadowsEnabled = false;
-                torch
-                    .AddComponent<TorchFlame>()
-                    .Configure(set.torchFrames, glow, set.torchGlow, set.torchColour, set.torchIntensity);
+                var lamp = torch.AddComponent<TorchFlame>();
+                lamp.Configure(prop.frames, glow, set.torchGlow, prop.colour, prop.intensity);
+                lamp.Embers = prop.embers;
             }
             return holder;
+        }
+
+        /// <summary>
+        /// The light that hangs in the air of each row of cells, the bottom row first: each
+        /// region's own, turning into the next one's over <see cref="RegionBlend"/> rows either
+        /// side of the edge between them. Black for a map that names no regions.
+        /// </summary>
+        public Color[] AirLight()
+        {
+            var rows = new Color[Map.Height];
+            var regions = Map.Regions;
+            for (var row = 0; row < Map.Height && regions.Count > 0; row++)
+            {
+                var index = Map.RegionAt(row);
+                var top = regions[index].Top;
+                var end = Map.RegionEnd(index);
+                var colour = Ambient(index);
+                if (index > 0 && row - top < RegionBlend)
+                {
+                    var t = 0.5f + (row - top + 0.5f) / (2f * RegionBlend);
+                    colour = Color.LerpUnclamped(Ambient(index - 1), colour, t);
+                }
+                else if (index < regions.Count - 1 && end - row <= RegionBlend)
+                {
+                    var t = 0.5f - (end - row - 0.5f) / (2f * RegionBlend);
+                    colour = Color.LerpUnclamped(colour, Ambient(index + 1), t);
+                }
+                colour.a = 1f;
+                rows[Map.Height - 1 - row] = colour;
+            }
+            return rows;
+        }
+
+        /// <summary>The region a point of the world is in; null outside a map that names its regions.</summary>
+        public TilesV2Set.Region RegionAt(Vector2 point)
+        {
+            if (Map == null || Map.Regions.Count == 0)
+            {
+                return null;
+            }
+            var row = Mathf.FloorToInt(Map.Height - (point.y - transform.position.y));
+            return set.RegionOf(Map.Regions[Map.RegionAt(row)].Key);
+        }
+
+        private Color Ambient(int region)
+        {
+            var entry = set.RegionOf(Map.Regions[region].Key);
+            return entry != null ? entry.ambient : Color.black;
         }
 
         // A faint, cool ambient everywhere (unless the scene has its own) and the tile light.
@@ -437,6 +531,7 @@ namespace Descender.World.TilesV2
             shown.shadowsEnabled = false;
             Light = holder.AddComponent<TileLightMap>();
             Light.Configure(Terrain, Walls, liquidMaps, Torches, set.airKeeps, set.solidKeeps);
+            Light.SetAirLight(AirLight(), 0);
             Light.Refresh();
         }
     }

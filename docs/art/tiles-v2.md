@@ -112,6 +112,29 @@ its own (petals, cactus green, mushroom caps); liquids have their own
 | copper_ore | terrain: stone with lit nuggets of copper (palette `copper`), never on the outline; gives a little light and glints | earth | Grid |
 | dirt_wall, stone_wall | wall | walls | none |
 
+The world's regions (`docs/art/tiles-v2-world.md`) add a ground and a wall
+each, drawn with the same frames from their own palettes:
+
+| Region | Ground | Wall | Notes |
+|---|---|---|---|
+| Paradise | cloud (its own join group, `sky`; gives a soft light, so its underside is no shadow), marble (bricks, no slopes) | marble_wall | |
+| Limbo | ashstone | ash_wall | |
+| Lust | rose_rock | rose_wall | |
+| Gluttony | mud | mud_wall | |
+| Greed | darkstone, gold_ore (gives light, glints) | dark_wall | |
+| Wrath | swamp_rock | swamp_wall | |
+| Heresy | dis_brick (bricks, no slopes) | brick_wall | |
+| Violence | bloodstone, ember_sand | blood_wall | |
+| Fraud | slate | slate_wall | |
+| Treachery | frost_rock, ice (gives a cold light) | ice_wall | |
+
+A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
+its own tilemap on the game's Ledge layer with a one-way `PlatformEffector2D`,
+so the hero jumps up through it and drops through it with down and jump (as he
+does through the game's own ledges). Four kinds (`plank`, `grate`, `gilt`,
+`rime`), each of four pieces picked by whether the ledge goes on to the left
+and right. A ledge passes light and carries no decor.
+
 A world is these tilemaps under one Grid (cell size 1) and the things round
 them, all on the Default sorting layer, back to front:
 
@@ -121,17 +144,18 @@ them, all on the Default sorting layer, back to front:
 | Stars, sun and moon | -1008, -1006 | pinned to the view | none |
 | Clouds | -1004 | drift along the top of the view | none |
 | Ridges | -990, -980, -970 | far mountains, hills, near forest | none |
-| Cave rock | -960, -959 | the rock behind the caves, under the surface line, and its ragged top | tile light |
+| Cave rock | -960 and up, 3 a region | the rock behind the caves, each region's own under the surface line, and the ragged strip along its top | tile light |
 | Walls | -300 | wall tiles, tinted back | tile light |
 | Shade | -290 | the shade of the ground on the walls | tile light |
 | Decor | -110 | what stands on or hangs from the ground | tile light |
 | Terrain | -100 | ground tiles; TilemapCollider2D merged by a CompositeCollider2D, layer World | tile light |
+| Ledges | -98 | the one-way ledges, layer Ledge | tile light |
+| Gates | -97 | a world's light barriers, seals and slabs (`TilesV2Things`) | seals: tile light; a veil of light: none |
 | Blend | -95 | blend overlays | tile light |
-| Torches | -60 | the flames | none: they are the light |
+| Torches | -60 | the lamps: torches, braziers, crystals, lanterns | none: they are the light |
 | Glow | -40 | glints of ore | none |
 | (the hero) | 0 | | |
-| Liquid water | 20 | water, in front of the hero | tile light |
-| Liquid lava | 21 | lava | none: it is the light |
+| Liquids | 20 to 25 | each liquid on its own tilemap, in front of the hero | water, the Styx, tar, slime: tile light; lava and blood: none, they are the light |
 | Particles | 60 | dust, embers, sand, sparks | dust and sand take the tile light |
 
 ## The map
@@ -173,6 +197,29 @@ are the legend in the manifest:
 | `P` | mark | the hero's start |
 | `d` `s` | wall (second grid) | dirt wall, stone wall |
 | `.` | | air |
+| `Q` `M` `H` `R` `U` `N` `$` `Y` `B` `V` `E` `F` `I` `Z` | terrain | the regions' grounds: cloud, marble, ashstone, rose rock, mud, darkstone, gold ore, swamp rock, the brick of Dis, bloodstone, ember sand, slate, ice, frost rock |
+| `1 2` `3 4` `5 6` `7 8` `9 0` `< >` `: ;` `+ -` `= _` | terrain | their slopes, up to the right and up to the left: cloud, ashstone, rose rock, mud, darkstone, swamp rock, bloodstone, slate, frost rock |
+| `~` `!` `%` `&` | liquid | the Styx, blood, tar, slime |
+| `*` `^` `J` | prop | a brazier, a crystal, a lantern |
+| `"` `'` `,` `?` | ledge | a ledge of planks, an iron grate, gilt, rime |
+| `m` `h` `r` `u` `n` `y` `b` `v` `f` `i` | wall (second grid) | the regions' walls |
+
+A map of several regions also says where each starts and what of the game's
+stands where:
+
+```
+@region limbo 150             the region `limbo` (the tile set's key) starts at row 150
+@mark checkpoint 179 159      something of the game's in a cell: kind, column, row, and what the kind needs
+@mark ability 111 175 LightDash
+@mark barrier 104 173 4       a veil of light: its top cell, its height
+@mark seal 120 322 bolt 1 4   a seal a bolt breaks (or `slam`: a slab a Smite breaks): its top left cell, width, height
+@mark relic 136 162
+```
+
+`TilesV2World` lays the tiles; `TilesV2Things.Build` stands the marks in the
+world from the game's own parts (its checkpoint and ability pickup prefabs, a
+collider on the LightBarrier layer, a `Breakable`), which a scene's runner
+does at the start of play.
 
 The sample map, `Assets/Art/TilesV2/sample_map.txt` (128 x 64), is written by
 `tools/tiles_v2/make_sample_map.py`: a meadow with a hill and a pond, the
@@ -246,6 +293,13 @@ travels), every cell under it the body frames; 8 frames each.
 |---|---|---|---|---|---|
 | water | see-through (alpha 0.59), takes the tile light, in front of the hero | 7 | 0.74, 0.86, 0.93: the deep is blue | none | swims (the game's `Triggers.Water`) |
 | lava | opaque, unlit | 4 | 0.86, 0.80, 0.72 | 1.5, 0.8, 0.3 | is hurt (the game's `HazardArea`) |
+| styx | see-through, dark teal, takes the tile light | 5 | 0.60, 0.80, 0.76 | none | swims |
+| blood | opaque, unlit | 4 | 0.84, 0.60, 0.60 | 0.8, 0.14, 0.12 | is hurt |
+| tar | opaque, takes the tile light | 3 | 0.50, 0.50, 0.55 | none | is hurt |
+| slime | see-through, green | 4 | 0.70, 0.88, 0.60 | 0.05, 0.12, 0.03 | swims |
+
+A liquid is drawn `clear` (see-through, glints that come and go) or `thick`
+(opaque, a crust and spots that swell): `LIQUIDS` in `tv2_liquid.py`.
 
 An area is made over every stretch of a liquid: a run of columns whose liquid
 spans the same rows, so its top is the true surface above it.
@@ -263,8 +317,8 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 | sky, stars, sun, moon | pinned to the view | `Sky`: seven bands between the hour's two colours, meeting in an ordered 4 x 4 dither, painted on a texture the size of the camera's view; the sun and the moon cross the view on an arc |
 | clouds | 0.04, 0 | along the top of the view; drift 0.25 units a second |
 | far, mid, near ridges | 0.1 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line; lit on their left-facing slopes; a picture is as wide as the view, so no peak shows twice |
-| cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, shown only under the surface line (a sprite mask over the ground); it takes the tile light, so it is black until something lights the cave |
-| cave rock's top | 0.55, 1 | a ragged strip along the surface line |
+| cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, each region's own colours (`REGIONS`), shown only in that region's rows under the surface line: a sprite mask over the region, with a custom range so it cuts that region's picture and no other. It takes the tile light, so it is black until something lights the cave. A map that names no regions is all the Earth's |
+| cave rock's top | 0.55, 1 | a ragged strip along the top of each region's rock, so one region's rock runs into the next one's |
 
 A cell shows the cave rock when it has no wall and lies under the surface
 line: leave the walls out of a cavern to open it onto the rock.
@@ -279,7 +333,13 @@ runs the same sums for the preview. 1 is full daylight.
 1. **Sky.** Every column is lit from the top down to its first cell that
    shades the sky: a ground tile, a wall or a liquid. So a walled shaft and a
    pond's depths are lit only by the light that spreads into them.
-2. **Sources.** A torch puts `(1, 0.72, 0.42) x 1.6` on its tile, lava `(1.5,
+2. **Sources.** The air of a region has a faint light of its own
+   (`REGIONS`: none on the Earth and in Paradise, where the sky and the lamps
+   do the work; a colour for each circle), given by every cell of air in the
+   region's rows and turning into the next region's over 6 rows either side of
+   the edge between them (`TilesV2World.AirLight`). The lamps are four props
+   (`PROPS`): a torch `(1, 0.72, 0.42) x 1.6`, a brazier `(1, 0.60, 0.32) x 2`,
+   a crystal `(0.55, 0.82, 1) x 1.3`, a lantern `(1, 0.93, 0.72) x 1.2`. A torch puts `(1, 0.72, 0.42) x 1.6` on its tile, lava `(1.5,
    0.8, 0.3)` on each of its tiles, copper ore `(0.30, 0.17, 0.07)`.
 3. **Spread.** Each tile ends with the brightest of its own light and of each
    of its eight neighbours' light times the share that neighbour's medium
@@ -337,7 +397,8 @@ physics for a particle system to take gravity from).
 
 | Particles | Where | Light |
 |---|---|---|
-| Dust | drifts in a circle of 4.5 tiles round every torch, up to 14 motes | takes the tile light: it shows only where there is light |
+| Dust | drifts in a circle of 4.5 tiles round every lamp, up to 14 motes | takes the tile light: it shows only where there is light |
+| A region's air | motes born all over the view, riding with the camera; only the region the camera is in gives (`TilesV2Air`): gold motes in Paradise, a wind of petals in Lust, rain in Gluttony, embers in Heresy, snow in Treachery | as `REGIONS` says for each |
 | Embers | rise from every flame | none |
 | Sand | trickles from under 45% of the sand tiles that hang over two or more empty cells (a hash of the cell picks them), and lands on what is below | takes the tile light |
 | Sparks | jump from every run of the surface of a liquid that glows | none |
@@ -400,13 +461,19 @@ no window opens.
 |---|---|
 | `gen_tiles_v2.py` | the entry: writes every sheet, its `.meta` and the manifest; `--preview out.png` lays the sample map out the way Unity shows it (`--hour 19`, `--view hall`, `--scale 4`, `--unlit`) |
 | `tv2_base.py` | the shared vocabulary: palettes, materials, blends, the map's legend, the hash, the numbers of the light and of the day |
-| `tv2_terrain.py` | textures, the 47 frames, slopes, blends, the torch |
+| `tv2_terrain.py` | textures, the 47 frames, slopes, blends, the lamps, the ledges, the things a map marks |
 | `tv2_decor.py` | decor sprites and rules, the scatter, the shade tiles, the glints |
-| `tv2_liquid.py` | water and lava |
+| `tv2_liquid.py` | the liquids |
 | `tv2_backdrop.py` | the sky's bands, clouds, stars, sun, moon, ridges, the cave rock |
 | `tv2_light.py` | the tile light's sums |
 | `tv2_preview.py` | the preview |
 | `make_sample_map.py` | writes the sample map |
+| `make_world_map.py` | writes the world (`docs/art/tiles-v2-world.md`); `--check` plays it through first |
+| `tv2_reach.py` | the model of the hero the world is checked with |
+
+`gen_tiles_v2.py --map Assets/Art/TilesV2/world_map.txt --preview out.png
+--scale 0.25` lays the whole world out at 4 px a tile; `--view limbo` shows the
+camera's view of one of its places.
 
 A new file under `Assets/` gets its `.meta` with a GUID derived from its path;
 an existing `.meta` is never touched. When a sheet's sprites change, delete
@@ -424,6 +491,10 @@ from names, so every reference stays.
   order they are tried in.
 - **A liquid**: an entry in `LIQUIDS` and a frame function in `DRAW`, and a
   character in `LEGEND`.
+- **A region**: its palettes, ground and wall, an entry in `REGIONS` (name,
+  the light in its air, the colours of its cave rock, what drifts in its air),
+  decor rules for its ground, and a theme in `make_world_map.py`.
 - Then run the generator with `--preview`, look, and build the tiles in
   Unity. `TilesV2Tests` and `TilesV2LightTests` hold the standard to its
-  rules; `TilesV2PlaygroundTests` walks the hero through the sample world.
+  rules; `TilesV2PlaygroundTests` walks the hero through the sample world;
+  `TilesV2WorldTests` and `TilesV2DescentTests` hold the world.

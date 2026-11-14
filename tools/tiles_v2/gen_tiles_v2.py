@@ -41,7 +41,7 @@ import tv2_decor
 import tv2_liquid
 import tv2_preview
 import tv2_terrain
-from tv2_terrain import BLEND_MASKS, TORCH_FRAMES, draw_blend, draw_frame, draw_slope, torch_sheet
+from tv2_terrain import BLEND_MASKS, THINGS, draw_blend, draw_frame, draw_slope, ledge_sheet, prop_sheet, things_sheet
 
 # --- Sheets and manifest ------------------------------------------------------
 
@@ -110,6 +110,13 @@ def slope_shapes(material: dict) -> dict:
     return shapes
 
 
+def ledge_shapes() -> dict:
+    """The collider of each ledge sprite: the strip at the top of its cell that carries."""
+    half = TILE // 2
+    strip = [(-half, half - LEDGE_THICK), (half, half - LEDGE_THICK), (half, half), (-half, half)]
+    return {f"tv2_ledge_{style}_{piece}": strip for style in LEDGES for piece in LEDGE_PIECES}
+
+
 def rect_meta(path: str, entries: list) -> str:
     """The .meta of a sheet whose sprites are (name, x, y from the bottom, width, height, pivot)."""
     return unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, sprites=entries)
@@ -146,7 +153,42 @@ def manifest() -> dict:
             for b in BLENDS
         ],
         "legend": [{"character": c, "layer": layer, "key": key, "slope": slope} for c, layer, key, slope in LEGEND],
-        "props": [{"key": "torch", "sheet": "torch.png", "frames": TORCH_FRAMES}],
+        "ledges": {"sheet": "ledge.png", "thick": LEDGE_THICK, "keys": LEDGES, "pieces": LEDGE_PIECES},
+        "things": {"sheet": "things.png", "names": THINGS},
+        "props": [
+            {
+                "key": p["key"],
+                "sheet": p["key"] + ".png",
+                "frames": p["frames"],
+                "colour": list(p["colour"]),
+                "intensity": p["intensity"],
+                "embers": p["embers"],
+            }
+            for p in PROPS
+        ],
+        "regions": [
+            {
+                "key": r["key"],
+                "name": r["name"],
+                "subtitle": r["subtitle"],
+                "ambient": list(r["ambient"]),
+                "cave": "backdrop_cave_" + r["key"] if r["cave"] else "",
+                "caveTop": "backdrop_cave_top_" + r["key"] if r["cave"] else "",
+                "air": (
+                    {
+                        "rate": r["air"][0],
+                        "colour": [round(v / 255, 4) for v in hexes(r["air"][1])[0]] + [r["air"][2]],
+                        "across": list(r["air"][3]),
+                        "up": list(r["air"][4]),
+                        "life": r["air"][5],
+                        "lit": r["air"][6],
+                    }
+                    if r["air"]
+                    else {"rate": 0, "colour": [1, 1, 1, 0], "across": [0, 0], "up": [0, 0], "life": 1, "lit": False}
+                ),
+            }
+            for r in REGIONS
+        ],
         "liquids": [
             {
                 "key": q["key"],
@@ -218,7 +260,7 @@ def manifest() -> dict:
                 for k in DAY_KEYS
             ],
         },
-        "sky": {"bands": tv2_backdrop.SKY_BANDS, "order": tv2_backdrop.SKY_ORDER, "cloudDrift": tv2_backdrop.CLOUD_DRIFT},
+        "sky": {"bands": tv2_backdrop.SKY_BANDS, "order": tv2_backdrop.SKY_ORDER, "cloudDrift": tv2_backdrop.CLOUD_DRIFT, "caveScroll": tv2_backdrop.CAVE_SCROLL, "caveOrder": tv2_backdrop.CAVE_ORDER},
         "backdrops": tv2_backdrop.BACKDROPS,
     }
 
@@ -253,11 +295,13 @@ def generate(out: str):
         path = os.path.join(out, "blend_" + blend["key"] + ".png")
         write(path, image, sheet_meta(path, image, cells))
         images["blend_" + blend["key"]] = image
-    sheets = [("torch", torch_sheet()), ("shade", tv2_decor.shade_sheet()), ("glint", tv2_decor.glint_sheet())]
+    sheets = [(p["key"], prop_sheet(p)) for p in PROPS]
+    sheets += [("shade", tv2_decor.shade_sheet()), ("glint", tv2_decor.glint_sheet())]
     sheets += [(q["key"], tv2_liquid.liquid_sheet(q)) for q in tv2_liquid.LIQUIDS]
+    sheets += [("ledge", ledge_sheet()), ("things", things_sheet())]
     for key, (image, cells) in sheets:
         path = os.path.join(out, key + ".png")
-        write(path, image, sheet_meta(path, image, cells))
+        write(path, image, sheet_meta(path, image, cells, ledge_shapes() if key == "ledge" else None))
         images[key] = image
         keep(image, cells)
     image, entries = tv2_decor.decor_sheet()
@@ -285,12 +329,14 @@ def main(argv=None):
     parser.add_argument("--preview", help="also write the sample map laid out to this PNG")
     parser.add_argument("--hour", type=float, help="the preview's hour of the day, 0 to 24 (default: the day's start)")
     parser.add_argument("--view", help="the preview shows only the camera's view of a place: a @view name of the map, or column,row")
-    parser.add_argument("--scale", type=int, default=3, help="the preview's scale (default 3)")
+    parser.add_argument("--scale", type=float, default=3, help="the preview's scale (default 3; below 1 for a big map, 0.25 is 4 px a tile)")
+    parser.add_argument("--map", default=SAMPLE_MAP, help="the map the preview lays out (default: the sample map)")
     parser.add_argument("--unlit", action="store_true", help="the preview without the tile light")
     args = parser.parse_args(argv)
     art = generate(args.out)
     if args.preview:
-        tv2_preview.preview(art, args.preview, args.hour, args.view, args.scale, not args.unlit)
+        scale = int(args.scale) if args.scale >= 1 else args.scale
+        tv2_preview.preview(art, args.preview, args.hour, args.view, scale, not args.unlit, args.map)
     print(f"Tiles V2: {len(MATERIALS)} materials x {len(FRAMES)} frames x {VARIANTS} variants -> {args.out}")
 
 

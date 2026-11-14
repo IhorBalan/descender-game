@@ -40,8 +40,10 @@ namespace Descender.EditorTools.TilesV2
             EnsureFolder(TilesV2Manifest.TileFolder + "/Blends");
             EnsureFolder(TilesV2Manifest.TileFolder + "/Decor");
             EnsureFolder(TilesV2Manifest.TileFolder + "/Shade");
+            EnsureFolder(TilesV2Manifest.TileFolder + "/Ledges");
             var count = BuildTerrain(manifest) + BuildBlends(manifest);
             count += BuildDecor(manifest) + BuildShade(manifest) + BuildLiquids(manifest) + BuildGlint(manifest);
+            count += BuildLedges(manifest);
             BuildSet(manifest);
             AssetDatabase.SaveAssets();
             TilesV2Palette.Build(manifest);
@@ -207,6 +209,26 @@ namespace Descender.EditorTools.TilesV2
             return 1;
         }
 
+        // A ledge piece is one sprite whose collider is the sprite's own shape: the strip at its top.
+        private static int BuildLedges(TilesV2Manifest manifest)
+        {
+            var sprites = SpritesOf(TilesV2Manifest.SheetPath(manifest.ledges.sheet));
+            var count = 0;
+            foreach (var key in manifest.ledges.keys)
+            {
+                foreach (var piece in manifest.ledges.pieces)
+                {
+                    var tile = LoadOrCreate<Tile>(TilesV2Manifest.LedgePath(key, piece));
+                    tile.sprite = Find(sprites, TilesV2Manifest.LedgeSprite(key, piece));
+                    tile.color = Color.white;
+                    tile.colliderType = Tile.ColliderType.Sprite;
+                    EditorUtility.SetDirty(tile);
+                    count++;
+                }
+            }
+            return count;
+        }
+
         // Fills the tile set from the manifest and the tiles just built.
         private static void BuildSet(TilesV2Manifest manifest)
         {
@@ -218,7 +240,10 @@ namespace Descender.EditorTools.TilesV2
             foreach (var entry in manifest.legend)
             {
                 var layer = Parse<TilesV2Set.Layer>(entry.layer);
-                var tiled = layer != TilesV2Set.Layer.Prop && layer != TilesV2Set.Layer.Mark;
+                var tiled =
+                    layer == TilesV2Set.Layer.Terrain
+                    || layer == TilesV2Set.Layer.Wall
+                    || layer == TilesV2Set.Layer.Liquid;
                 var path = string.IsNullOrEmpty(entry.slope)
                     ? TilesV2Manifest.TilePath(entry.key)
                     : TilesV2Manifest.SlopePath(entry.key, entry.slope);
@@ -287,19 +312,85 @@ namespace Descender.EditorTools.TilesV2
             set.glintOn = (string[])manifest.glint.on.Clone();
 
             set.torchFrames = new Sprite[0];
+            var props = new List<TilesV2Set.Prop>();
             foreach (var prop in manifest.props)
             {
-                if (prop.key != TilesV2World.TorchKey)
-                {
-                    continue;
-                }
                 var sprites = SpritesOf(TilesV2Manifest.SheetPath(prop.sheet));
-                set.torchFrames = new Sprite[prop.frames];
+                var frames = new Sprite[prop.frames];
                 for (var f = 0; f < prop.frames; f++)
                 {
-                    set.torchFrames[f] = Find(sprites, TilesV2Manifest.PropSprite(prop.key, f));
+                    frames[f] = Find(sprites, TilesV2Manifest.PropSprite(prop.key, f));
+                }
+                props.Add(
+                    new TilesV2Set.Prop
+                    {
+                        key = prop.key,
+                        frames = frames,
+                        colour = TilesV2Manifest.ColourOf(prop.colour),
+                        intensity = prop.intensity,
+                        embers = prop.embers,
+                    }
+                );
+                if (prop.key == TilesV2World.TorchKey)
+                {
+                    set.torchFrames = frames;
                 }
             }
+            set.props = props.ToArray();
+            var ledges = new List<TilesV2Set.Ledge>();
+            foreach (var key in manifest.ledges.keys)
+            {
+                ledges.Add(
+                    new TilesV2Set.Ledge
+                    {
+                        key = key,
+                        single = Load<TileBase>(TilesV2Manifest.LedgePath(key, "single")),
+                        left = Load<TileBase>(TilesV2Manifest.LedgePath(key, "left")),
+                        middle = Load<TileBase>(TilesV2Manifest.LedgePath(key, "middle")),
+                        right = Load<TileBase>(TilesV2Manifest.LedgePath(key, "right")),
+                    }
+                );
+            }
+            set.ledges = ledges.ToArray();
+            var thingSprites = SpritesOf(TilesV2Manifest.SheetPath(manifest.things.sheet));
+            var things = new List<Sprite>();
+            foreach (var name in manifest.things.names)
+            {
+                things.Add(Find(thingSprites, TilesV2Manifest.ThingSprite(name)));
+            }
+            set.things = things.ToArray();
+            var regions = new List<TilesV2Set.Region>();
+            foreach (var entry in manifest.regions)
+            {
+                var air = entry.air;
+                regions.Add(
+                    new TilesV2Set.Region
+                    {
+                        key = entry.key,
+                        name = entry.name,
+                        subtitle = entry.subtitle,
+                        ambient = TilesV2Manifest.ColourOf(entry.ambient),
+                        cave = string.IsNullOrEmpty(entry.cave)
+                            ? null
+                            : Load<Sprite>(TilesV2Manifest.SheetPath(entry.cave + ".png")),
+                        caveTop = string.IsNullOrEmpty(entry.caveTop)
+                            ? null
+                            : Load<Sprite>(TilesV2Manifest.SheetPath(entry.caveTop + ".png")),
+                        airRate = air.rate,
+                        airColour =
+                            air.colour.Length >= 4
+                                ? new Color(air.colour[0], air.colour[1], air.colour[2], air.colour[3])
+                                : Color.white,
+                        airAcross = air.across.Length >= 2 ? new Vector2(air.across[0], air.across[1]) : Vector2.zero,
+                        airUp = air.up.Length >= 2 ? new Vector2(air.up[0], air.up[1]) : Vector2.zero,
+                        airLife = air.life,
+                        airLit = air.lit,
+                    }
+                );
+            }
+            set.regions = regions.ToArray();
+            set.caveScroll = manifest.sky.caveScroll;
+            set.caveOrder = manifest.sky.caveOrder;
 
             var liquids = new List<TilesV2Set.Liquid>();
             foreach (var entry in manifest.liquids)

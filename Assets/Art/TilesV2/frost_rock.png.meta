@@ -1,0 +1,4091 @@
+fileFormatVersion: 2
+guid: 137763974ed7534880ec0767c0b51fff
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 652565150168142497
+    second: tv2_frost_rock_f0_v0
+  - first:
+      213: 2988665168838244858
+    second: tv2_frost_rock_f1_v0
+  - first:
+      213: 679352115620915662
+    second: tv2_frost_rock_f4_v0
+  - first:
+      213: 1381920723197053435
+    second: tv2_frost_rock_f5_v0
+  - first:
+      213: 2004823451566545154
+    second: tv2_frost_rock_f7_v0
+  - first:
+      213: 2013005434392160492
+    second: tv2_frost_rock_f16_v0
+  - first:
+      213: 4559061753828187748
+    second: tv2_frost_rock_f17_v0
+  - first:
+      213: 644051467936296648
+    second: tv2_frost_rock_f20_v0
+  - first:
+      213: 1811568301779744371
+    second: tv2_frost_rock_f21_v0
+  - first:
+      213: 906772748715261902
+    second: tv2_frost_rock_f23_v0
+  - first:
+      213: 1086139704815441566
+    second: tv2_frost_rock_f28_v0
+  - first:
+      213: 2147722433889135738
+    second: tv2_frost_rock_f29_v0
+  - first:
+      213: 347007142622482320
+    second: tv2_frost_rock_f31_v0
+  - first:
+      213: 1368559362667508098
+    second: tv2_frost_rock_f64_v0
+  - first:
+      213: 4233904613897738774
+    second: tv2_frost_rock_f65_v0
+  - first:
+      213: 4153633397661511259
+    second: tv2_frost_rock_f68_v0
+  - first:
+      213: 2920125127597042243
+    second: tv2_frost_rock_f69_v0
+  - first:
+      213: 3020579510664415791
+    second: tv2_frost_rock_f71_v0
+  - first:
+      213: 4253984723659035244
+    second: tv2_frost_rock_f80_v0
+  - first:
+      213: 51510635502765714
+    second: tv2_frost_rock_f81_v0
+  - first:
+      213: 3865318428004532425
+    second: tv2_frost_rock_f84_v0
+  - first:
+      213: 663592086289552321
+    second: tv2_frost_rock_f85_v0
+  - first:
+      213: 4263982324374891193
+    second: tv2_frost_rock_f87_v0
+  - first:
+      213: 2534730847174154144
+    second: tv2_frost_rock_f92_v0
+  - first:
+      213: 3696592510399177730
+    second: tv2_frost_rock_f93_v0
+  - first:
+      213: 37912735579044735
+    second: tv2_frost_rock_f95_v0
+  - first:
+      213: 1709138376698255852
+    second: tv2_frost_rock_f112_v0
+  - first:
+      213: 2629491039055919448
+    second: tv2_frost_rock_f113_v0
+  - first:
+      213: 3235092001598453821
+    second: tv2_frost_rock_f116_v0
+  - first:
+      213: 3058262948004919188
+    second: tv2_frost_rock_f117_v0
+  - first:
+      213: 739324012112029564
+    second: tv2_frost_rock_f119_v0
+  - first:
+      213: 4045735072300900875
+    second: tv2_frost_rock_f124_v0
+  - first:
+      213: 2318443721851239018
+    second: tv2_frost_rock_f125_v0
+  - first:
+      213: 907408668726054724
+    second: tv2_frost_rock_f127_v0
+  - first:
+      213: 4287850739182257417
+    second: tv2_frost_rock_f193_v0
+  - first:
+      213: 4121037598960041421
+    second: tv2_frost_rock_f197_v0
+  - first:
+      213: 2706507469939781956
+    second: tv2_frost_rock_f199_v0
+  - first:
+      213: 3781080914830576685
+    second: tv2_frost_rock_f209_v0
+  - first:
+      213: 183935233250347333
+    second: tv2_frost_rock_f213_v0
+  - first:
+      213: 2402792474718401276
+    second: tv2_frost_rock_f215_v0
+  - first:
+      213: 2191021943258428236
+    second: tv2_frost_rock_f221_v0
+  - first:
+      213: 3404783187279097517
+    second: tv2_frost_rock_f223_v0
+  - first:
+      213: 1946342705029052052
+    second: tv2_frost_rock_f241_v0
+  - first:
+      213: 4376742206573533623
+    second: tv2_frost_rock_f245_v0
+  - first:
+      213: 2472219457124463100
+    second: tv2_frost_rock_f247_v0
+  - first:
+      213: 99397589676270447
+    second: tv2_frost_rock_f253_v0
+  - first:
+      213: 4605364776708308834
+    second: tv2_frost_rock_f255_v0
+  - first:
+      213: 136900694412363102
+    second: tv2_frost_rock_f0_v1
+  - first:
+      213: 136105159141799895
+    second: tv2_frost_rock_f1_v1
+  - first:
+      213: 1632797142703941222
+    second: tv2_frost_rock_f4_v1
+  - first:
+      213: 2830726507342602507
+    second: tv2_frost_rock_f5_v1
+  - first:
+      213: 4541345180695559268
+    second: tv2_frost_rock_f7_v1
+  - first:
+      213: 4145940561515592679
+    second: tv2_frost_rock_f16_v1
+  - first:
+      213: 1448281593443285770
+    second: tv2_frost_rock_f17_v1
+  - first:
+      213: 1289054133781039209
+    second: tv2_frost_rock_f20_v1
+  - first:
+      213: 3459573015858184287
+    second: tv2_frost_rock_f21_v1
+  - first:
+      213: 527240270055496128
+    second: tv2_frost_rock_f23_v1
+  - first:
+      213: 809069391211610773
+    second: tv2_frost_rock_f28_v1
+  - first:
+      213: 3409551232212963913
+    second: tv2_frost_rock_f29_v1
+  - first:
+      213: 161461216102054637
+    second: tv2_frost_rock_f31_v1
+  - first:
+      213: 967611678835394987
+    second: tv2_frost_rock_f64_v1
+  - first:
+      213: 3198729603729866203
+    second: tv2_frost_rock_f65_v1
+  - first:
+      213: 961893380051510552
+    second: tv2_frost_rock_f68_v1
+  - first:
+      213: 4349779037867046651
+    second: tv2_frost_rock_f69_v1
+  - first:
+      213: 1566794384854717892
+    second: tv2_frost_rock_f71_v1
+  - first:
+      213: 372115776515818753
+    second: tv2_frost_rock_f80_v1
+  - first:
+      213: 3103060600697150283
+    second: tv2_frost_rock_f81_v1
+  - first:
+      213: 1963946842535374928
+    second: tv2_frost_rock_f84_v1
+  - first:
+      213: 3220009559162675653
+    second: tv2_frost_rock_f85_v1
+  - first:
+      213: 1888776976488080589
+    second: tv2_frost_rock_f87_v1
+  - first:
+      213: 1672688860332232654
+    second: tv2_frost_rock_f92_v1
+  - first:
+      213: 1665424927368068044
+    second: tv2_frost_rock_f93_v1
+  - first:
+      213: 4274696406388543513
+    second: tv2_frost_rock_f95_v1
+  - first:
+      213: 93146098223424279
+    second: tv2_frost_rock_f112_v1
+  - first:
+      213: 537317195344296981
+    second: tv2_frost_rock_f113_v1
+  - first:
+      213: 639196979337920734
+    second: tv2_frost_rock_f116_v1
+  - first:
+      213: 3072313216483023710
+    second: tv2_frost_rock_f117_v1
+  - first:
+      213: 124743496136151249
+    second: tv2_frost_rock_f119_v1
+  - first:
+      213: 4379656650619551759
+    second: tv2_frost_rock_f124_v1
+  - first:
+      213: 4044309520981190272
+    second: tv2_frost_rock_f125_v1
+  - first:
+      213: 2129148805467238441
+    second: tv2_frost_rock_f127_v1
+  - first:
+      213: 1990388309562846444
+    second: tv2_frost_rock_f193_v1
+  - first:
+      213: 1921977600206750908
+    second: tv2_frost_rock_f197_v1
+  - first:
+      213: 2489295037068676168
+    second: tv2_frost_rock_f199_v1
+  - first:
+      213: 571927790622916697
+    second: tv2_frost_rock_f209_v1
+  - first:
+      213: 40591713062349003
+    second: tv2_frost_rock_f213_v1
+  - first:
+      213: 1985396106298335058
+    second: tv2_frost_rock_f215_v1
+  - first:
+      213: 985100820734722688
+    second: tv2_frost_rock_f221_v1
+  - first:
+      213: 4311794645453069738
+    second: tv2_frost_rock_f223_v1
+  - first:
+      213: 2043286425705987537
+    second: tv2_frost_rock_f241_v1
+  - first:
+      213: 850017835622234342
+    second: tv2_frost_rock_f245_v1
+  - first:
+      213: 1264082028346853742
+    second: tv2_frost_rock_f247_v1
+  - first:
+      213: 3336175331080728797
+    second: tv2_frost_rock_f253_v1
+  - first:
+      213: 2144476878817571670
+    second: tv2_frost_rock_f255_v1
+  - first:
+      213: 1801781019329024493
+    second: tv2_frost_rock_f0_v2
+  - first:
+      213: 4611079275211711089
+    second: tv2_frost_rock_f1_v2
+  - first:
+      213: 3388934136887082192
+    second: tv2_frost_rock_f4_v2
+  - first:
+      213: 3387761130771998325
+    second: tv2_frost_rock_f5_v2
+  - first:
+      213: 3881207794399636829
+    second: tv2_frost_rock_f7_v2
+  - first:
+      213: 2895983315285939963
+    second: tv2_frost_rock_f16_v2
+  - first:
+      213: 3178637941322906809
+    second: tv2_frost_rock_f17_v2
+  - first:
+      213: 475848775654970754
+    second: tv2_frost_rock_f20_v2
+  - first:
+      213: 1924393316985049805
+    second: tv2_frost_rock_f21_v2
+  - first:
+      213: 227040104632341230
+    second: tv2_frost_rock_f23_v2
+  - first:
+      213: 4469252752365073983
+    second: tv2_frost_rock_f28_v2
+  - first:
+      213: 1166278782002563335
+    second: tv2_frost_rock_f29_v2
+  - first:
+      213: 105840483471909315
+    second: tv2_frost_rock_f31_v2
+  - first:
+      213: 1339260324259905160
+    second: tv2_frost_rock_f64_v2
+  - first:
+      213: 2515213100954970353
+    second: tv2_frost_rock_f65_v2
+  - first:
+      213: 3089380730536924668
+    second: tv2_frost_rock_f68_v2
+  - first:
+      213: 267578944178415157
+    second: tv2_frost_rock_f69_v2
+  - first:
+      213: 2389921851772275617
+    second: tv2_frost_rock_f71_v2
+  - first:
+      213: 3128701208299605317
+    second: tv2_frost_rock_f80_v2
+  - first:
+      213: 514985094484037216
+    second: tv2_frost_rock_f81_v2
+  - first:
+      213: 1647417115592441967
+    second: tv2_frost_rock_f84_v2
+  - first:
+      213: 1860649877002396022
+    second: tv2_frost_rock_f85_v2
+  - first:
+      213: 2261939050179969706
+    second: tv2_frost_rock_f87_v2
+  - first:
+      213: 597920126644465522
+    second: tv2_frost_rock_f92_v2
+  - first:
+      213: 1514591851402288178
+    second: tv2_frost_rock_f93_v2
+  - first:
+      213: 3504341712869944881
+    second: tv2_frost_rock_f95_v2
+  - first:
+      213: 54677556309249154
+    second: tv2_frost_rock_f112_v2
+  - first:
+      213: 359320608737258164
+    second: tv2_frost_rock_f113_v2
+  - first:
+      213: 1025480845932051263
+    second: tv2_frost_rock_f116_v2
+  - first:
+      213: 3134536291133548591
+    second: tv2_frost_rock_f117_v2
+  - first:
+      213: 4383631850695541913
+    second: tv2_frost_rock_f119_v2
+  - first:
+      213: 593220400491516465
+    second: tv2_frost_rock_f124_v2
+  - first:
+      213: 3852397998507479954
+    second: tv2_frost_rock_f125_v2
+  - first:
+      213: 3328205229932827996
+    second: tv2_frost_rock_f127_v2
+  - first:
+      213: 2653159614413157843
+    second: tv2_frost_rock_f193_v2
+  - first:
+      213: 721938886818247615
+    second: tv2_frost_rock_f197_v2
+  - first:
+      213: 2758056610559074449
+    second: tv2_frost_rock_f199_v2
+  - first:
+      213: 2973141780789762196
+    second: tv2_frost_rock_f209_v2
+  - first:
+      213: 1600921731944216614
+    second: tv2_frost_rock_f213_v2
+  - first:
+      213: 3924009503143302335
+    second: tv2_frost_rock_f215_v2
+  - first:
+      213: 1249331101959116209
+    second: tv2_frost_rock_f221_v2
+  - first:
+      213: 96371961554863362
+    second: tv2_frost_rock_f223_v2
+  - first:
+      213: 911758982250241290
+    second: tv2_frost_rock_f241_v2
+  - first:
+      213: 1934343168384146519
+    second: tv2_frost_rock_f245_v2
+  - first:
+      213: 3344923149551341516
+    second: tv2_frost_rock_f247_v2
+  - first:
+      213: 2807853604631612086
+    second: tv2_frost_rock_f253_v2
+  - first:
+      213: 953686965933019294
+    second: tv2_frost_rock_f255_v2
+  - first:
+      213: 3088596304618269807
+    second: tv2_frost_rock_up_right_v0
+  - first:
+      213: 1105555435231659301
+    second: tv2_frost_rock_up_right_v1
+  - first:
+      213: 1230536266951069577
+    second: tv2_frost_rock_up_right_v2
+  - first:
+      213: 1289271785489962492
+    second: tv2_frost_rock_up_left_v0
+  - first:
+      213: 4036167797046395002
+    second: tv2_frost_rock_up_left_v1
+  - first:
+      213: 1157099200416574564
+    second: tv2_frost_rock_up_left_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_frost_rock_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9a4d197356c5b6290470f424870f87a
+      internalID: 652565150168142497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bb5376eebb75e9a8c180b6d81512336
+      internalID: 2988665168838244858
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a73900f6ff1c530e8b2741a04c937026
+      internalID: 679352115620915662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b4154f838325da5a9d90673b739615a
+      internalID: 1381920723197053435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2026aa524e175d44b72165fe7392f1c2
+      internalID: 2004823451566545154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 37c180dab644527db5acbc1ace551cdd
+      internalID: 2013005434392160492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc488364534b577ea3ef72b4f9dbf2a9
+      internalID: 4559061753828187748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69baa1ba53fe51f38eaff1245ab93e8c
+      internalID: 644051467936296648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4d33138bed45905b60f14033101f566
+      internalID: 1811568301779744371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99365f8b4cc8569aa0e991c6ecdcca90
+      internalID: 906772748715261902
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 108550c522805980b6ed8b319dac8246
+      internalID: 1086139704815441566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e652bf776a258bd82e52a6ccb7ba7f1
+      internalID: 2147722433889135738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4b3a1a1ec6f59f5bb1914c82ff3dc83
+      internalID: 347007142622482320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 843d4227125a596190dbe820d462077d
+      internalID: 1368559362667508098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce051427cd5c5255b48e0ec26b39a40b
+      internalID: 4233904613897738774
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba7eb21b27bf5976ae6297488b9a2bab
+      internalID: 4153633397661511259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62c070c576ff5dd0af33a1d55962da83
+      internalID: 2920125127597042243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b9af5ba9c57587fb6d22ccc02ea13e0
+      internalID: 3020579510664415791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eed4c15ada035648b652f3283efe1072
+      internalID: 4253984723659035244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 177e9531fe425227baf0943923132a78
+      internalID: 51510635502765714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 996bf8877de4523e84d9c128c6e3c5ec
+      internalID: 3865318428004532425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cac0b4ca6245aed8e49efb9abacc036
+      internalID: 663592086289552321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c3b79ea067257aea8edd4e519849da8
+      internalID: 4263982324374891193
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b3f8530783756f5a5d531453b6bab6b
+      internalID: 2534730847174154144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eec7914069305487ac22b6a179bbcec9
+      internalID: 3696592510399177730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d91fdd63558c55c694fa2dc282aeafb3
+      internalID: 37912735579044735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b66d05cbd75537c8a8f4d54542318c2
+      internalID: 1709138376698255852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12f01574c5b65860a60784330813f6ed
+      internalID: 2629491039055919448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8252135e98b258789e483cd9b2e674c7
+      internalID: 3235092001598453821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3427beee72b05a43adc54600d67188ee
+      internalID: 3058262948004919188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ef9a873956159b68a4a3bbd5427a46a
+      internalID: 739324012112029564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0053c0a293b15f74acfeff16ec8ba43f
+      internalID: 4045735072300900875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be576d9de0505e099d409239963b2928
+      internalID: 2318443721851239018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6106b90eebb85390ac44d95f08fbe7ab
+      internalID: 907408668726054724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2acb7f087e3350f98a8fb54478418f63
+      internalID: 4287850739182257417
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8a8e68ba9c6514a9b3860b29e4be75d
+      internalID: 4121037598960041421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74d525f52a7e5a8697293c50bdd45b79
+      internalID: 2706507469939781956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63127a5fefe59578b1a8ee4f459e6dd
+      internalID: 3781080914830576685
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dadbf086da8356e8b4eb26706d724fd5
+      internalID: 183935233250347333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d52e8fb01ff515593b1850972201e0e
+      internalID: 2402792474718401276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f609285bd9305193b68e8e9a0058a6b1
+      internalID: 2191021943258428236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64f354e7c8b353a3b8d882237d3626f5
+      internalID: 3404783187279097517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1a029b078475635a0cc299095fe7eef
+      internalID: 1946342705029052052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bd2db947bd05f9c8401e4ab25567abd
+      internalID: 4376742206573533623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb50826cd8935d55ac25d9cb73529108
+      internalID: 2472219457124463100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30a51af8945552bd9e03f50fe32339d8
+      internalID: 99397589676270447
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0252ce895a65a12baeafd9fe4a6edb6
+      internalID: 4605364776708308834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c074c93cd8e5e689114d823b9c2180c
+      internalID: 136900694412363102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6f76eecfe53586eb3b63e06e9fdde6f
+      internalID: 136105159141799895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 865423ac4eca5981888b4c3dc1ace965
+      internalID: 1632797142703941222
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9c2bb4dfd6e5d4ebcef0ac15b8ec201
+      internalID: 2830726507342602507
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f38966c8ef75ad08f89056d2a5f97dc
+      internalID: 4541345180695559268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 766d6dccc3b751288e0e1120cf347b5e
+      internalID: 4145940561515592679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9859ab2fb6455e68a7eadc50f4cbff9
+      internalID: 1448281593443285770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4ecdb27e8065873b68a64950e4493df
+      internalID: 1289054133781039209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf38619e0c455307ad9c7192ce401981
+      internalID: 3459573015858184287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eaf1850e5f8054d58ad1e26e5ead8805
+      internalID: 527240270055496128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33f5b77b05ba5c1d85fd9f670e1932e1
+      internalID: 809069391211610773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d983d3254c351878b9eee362ed67623
+      internalID: 3409551232212963913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ffd472e97ff50268a3e6dedfef30971
+      internalID: 161461216102054637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5de40549b2155b57be6e1e2b0fdbcd94
+      internalID: 967611678835394987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a140513facf5f2bb1820f0332d69432
+      internalID: 3198729603729866203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a88287c521535a31acf87aa0bdfdf1a9
+      internalID: 961893380051510552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23dca1f78035575c94094cbfbf622bb4
+      internalID: 4349779037867046651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c69fb3f0d5dc58c79c84f21ac879f467
+      internalID: 1566794384854717892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88004e3558f2530ba7485071d8c07f41
+      internalID: 372115776515818753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3c62fe183c654588a61e030f986272c
+      internalID: 3103060600697150283
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 268ed6ed569458a2b5714ddfec3140bb
+      internalID: 1963946842535374928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aa0a972017b5953971ab15c9a07963d
+      internalID: 3220009559162675653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b202cee8e0d758e0bbf958ded683858a
+      internalID: 1888776976488080589
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 831de2451ae55857b618f97442226c44
+      internalID: 1672688860332232654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86bfbc3428645225a59127fa0a6651a7
+      internalID: 1665424927368068044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36e4e1262dca56e18489536acfa66ac2
+      internalID: 4274696406388543513
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 248852355ec35de490dfacab512839d3
+      internalID: 93146098223424279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b2ec0a5b98a5f3b9da61f5c198ca6e3
+      internalID: 537317195344296981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7ba9ffb5ed65fe9ad377e6c0a690587
+      internalID: 639196979337920734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19c895ad333355e8bdecb8daf767f698
+      internalID: 3072313216483023710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb9481c2b1035709850ee9f01dd01989
+      internalID: 124743496136151249
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 903622b43a575af79382b9c44f5d0846
+      internalID: 4379656650619551759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d460a6a155f5b83a1bfc19ab98e4894
+      internalID: 4044309520981190272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e841b80212ec52da91a5a47c9d4bafc3
+      internalID: 2129148805467238441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db7b009f67415a1b8d9ce93a932aafbe
+      internalID: 1990388309562846444
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d1a47c1fb1f57a889e60430816653b4
+      internalID: 1921977600206750908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7519f8d5fb25497a401ded2359363f4
+      internalID: 2489295037068676168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c2fe70937da55c1ae130aa354295f39
+      internalID: 571927790622916697
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a5703173ffc51a2b15fef2315876462
+      internalID: 40591713062349003
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64ef607bb2365ee1bf4394975c6b12d8
+      internalID: 1985396106298335058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59f4b59ac3b3511a842d9790c8af9550
+      internalID: 985100820734722688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5924a3c766056adb5ad56333ec7a07a
+      internalID: 4311794645453069738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f85cccf2542519484ca26ab1c566387
+      internalID: 2043286425705987537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1290a0fa8fff58efb288b6def37fd0b3
+      internalID: 850017835622234342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9c2b4c550f953ca8026fd097f1a4f92
+      internalID: 1264082028346853742
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5d384e906615e3ca31166229925a9b7
+      internalID: 3336175331080728797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 095e0b7e890753fb88d2888721ca6680
+      internalID: 2144476878817571670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e330b7a0119f5816a5158c70d3e22b94
+      internalID: 1801781019329024493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 006566bbce9f575286366117ec3da47a
+      internalID: 4611079275211711089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7413eb6efa515afe805fabb4ae1fb3e5
+      internalID: 3388934136887082192
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 817bf709d0e4531ebb73bcc12c6b3b17
+      internalID: 3387761130771998325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0584984ffadc5f0687445473a40fea3e
+      internalID: 3881207794399636829
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbd3b8b2d3f75a1dabc7db4ffa36f91a
+      internalID: 2895983315285939963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b15461e616c58ca93d9efdc6f1a218c
+      internalID: 3178637941322906809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67087ed2c318505f9725ec5ecb994eb1
+      internalID: 475848775654970754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b22a095cbf3a5cba95781586ed5eab1a
+      internalID: 1924393316985049805
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1884522f9ad454d1a69308ec24a4b3c6
+      internalID: 227040104632341230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59c204d5888e5aef9a7093d0a530f901
+      internalID: 4469252752365073983
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bc3f52f16bf5f89bc6ce24710e16235
+      internalID: 1166278782002563335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9153e1fe2fd55f02bca13ab1d67b08ad
+      internalID: 105840483471909315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bddf7c5bd6d5849916acf66e0dfa6a2
+      internalID: 1339260324259905160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b0c3d8fa24959d29259d660d07b0a26
+      internalID: 2515213100954970353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 413d8954cbd452fd938555f18e9ed7a0
+      internalID: 3089380730536924668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d42fcab2ca9564e9cb4d3077963a463
+      internalID: 267578944178415157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaffd7f38e865dd1a55fdb257d02fc60
+      internalID: 2389921851772275617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3be121995f095efb97a84df7963ed0b9
+      internalID: 3128701208299605317
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13864885783c5be198e453b429ec0c95
+      internalID: 514985094484037216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7256dded4c955161bb85ea506facecf5
+      internalID: 1647417115592441967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 148ce97ecd705bb4b7ddcaad9e087d64
+      internalID: 1860649877002396022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e9a431c9e935045bdfcc58169d967f6
+      internalID: 2261939050179969706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6a8d948067a5eaab83bad728b155cba
+      internalID: 597920126644465522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c13e684de4a557a5b13620505c5cbc86
+      internalID: 1514591851402288178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9f2a63100935caf96dc6438a242c455
+      internalID: 3504341712869944881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fa65fd72ca55c4699396da2cb0cb3ec
+      internalID: 54677556309249154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cdbc3d941195edc9d95630cb3d7acce
+      internalID: 359320608737258164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8790fc7005754e59ad646a6469fff99
+      internalID: 1025480845932051263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10584d5c8095523e9598329808f86ca1
+      internalID: 3134536291133548591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32fdad0627dd5ea7845b5858109341bb
+      internalID: 4383631850695541913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a37fc2c6181851999df52aea91a6e77c
+      internalID: 593220400491516465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e44fcb97110f5f20a7856213457ca973
+      internalID: 3852397998507479954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a90179fe2b10581289305f7cf8750e4f
+      internalID: 3328205229932827996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f832cd6f86b57fd8c948cd64af5afc7
+      internalID: 2653159614413157843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5544f6d86f42550eab7ff30ffddbaa3e
+      internalID: 721938886818247615
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9e6b6f362c15b47bcaeeb3b2950e208
+      internalID: 2758056610559074449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff1237f1ae4f55b39821fb6745e0a8ed
+      internalID: 2973141780789762196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4ed0df2138d5a3d897c313fe4ec5073
+      internalID: 1600921731944216614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f187383e37e5506b83f16b90e66d0c44
+      internalID: 3924009503143302335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be01ccaa99a159e0a9526ddc2c67d8fe
+      internalID: 1249331101959116209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea91fdd097225395974e01c440738857
+      internalID: 96371961554863362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fff545c681525fd5a35da11ae190b384
+      internalID: 911758982250241290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0131d93a10f5229b9c1d3929ed6ce3a
+      internalID: 1934343168384146519
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87d327ee5ee55747b38aaeb18ca0afe8
+      internalID: 3344923149551341516
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e7df20cd791555b913c8154db553fca
+      internalID: 2807853604631612086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c254a00cdad855619831661cec8d904e
+      internalID: 953686965933019294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfc69b72f39a5bf89d3e227d9e0771b8
+      internalID: 3088596304618269807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d8ae57d91d95801a564ab7da6b94290
+      internalID: 1105555435231659301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2c50beca69f5b2799a2a9a797c346fd
+      internalID: 1230536266951069577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 392d354224b75343bd942662c356dc81
+      internalID: 1289271785489962492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c294b07a9e05569bd9cae0f2b18d744
+      internalID: 4036167797046395002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_frost_rock_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: efea92516e8e53098f04574efa08c8cd
+      internalID: 1157099200416574564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_frost_rock_f0_v0: 652565150168142497
+      tv2_frost_rock_f1_v0: 2988665168838244858
+      tv2_frost_rock_f4_v0: 679352115620915662
+      tv2_frost_rock_f5_v0: 1381920723197053435
+      tv2_frost_rock_f7_v0: 2004823451566545154
+      tv2_frost_rock_f16_v0: 2013005434392160492
+      tv2_frost_rock_f17_v0: 4559061753828187748
+      tv2_frost_rock_f20_v0: 644051467936296648
+      tv2_frost_rock_f21_v0: 1811568301779744371
+      tv2_frost_rock_f23_v0: 906772748715261902
+      tv2_frost_rock_f28_v0: 1086139704815441566
+      tv2_frost_rock_f29_v0: 2147722433889135738
+      tv2_frost_rock_f31_v0: 347007142622482320
+      tv2_frost_rock_f64_v0: 1368559362667508098
+      tv2_frost_rock_f65_v0: 4233904613897738774
+      tv2_frost_rock_f68_v0: 4153633397661511259
+      tv2_frost_rock_f69_v0: 2920125127597042243
+      tv2_frost_rock_f71_v0: 3020579510664415791
+      tv2_frost_rock_f80_v0: 4253984723659035244
+      tv2_frost_rock_f81_v0: 51510635502765714
+      tv2_frost_rock_f84_v0: 3865318428004532425
+      tv2_frost_rock_f85_v0: 663592086289552321
+      tv2_frost_rock_f87_v0: 4263982324374891193
+      tv2_frost_rock_f92_v0: 2534730847174154144
+      tv2_frost_rock_f93_v0: 3696592510399177730
+      tv2_frost_rock_f95_v0: 37912735579044735
+      tv2_frost_rock_f112_v0: 1709138376698255852
+      tv2_frost_rock_f113_v0: 2629491039055919448
+      tv2_frost_rock_f116_v0: 3235092001598453821
+      tv2_frost_rock_f117_v0: 3058262948004919188
+      tv2_frost_rock_f119_v0: 739324012112029564
+      tv2_frost_rock_f124_v0: 4045735072300900875
+      tv2_frost_rock_f125_v0: 2318443721851239018
+      tv2_frost_rock_f127_v0: 907408668726054724
+      tv2_frost_rock_f193_v0: 4287850739182257417
+      tv2_frost_rock_f197_v0: 4121037598960041421
+      tv2_frost_rock_f199_v0: 2706507469939781956
+      tv2_frost_rock_f209_v0: 3781080914830576685
+      tv2_frost_rock_f213_v0: 183935233250347333
+      tv2_frost_rock_f215_v0: 2402792474718401276
+      tv2_frost_rock_f221_v0: 2191021943258428236
+      tv2_frost_rock_f223_v0: 3404783187279097517
+      tv2_frost_rock_f241_v0: 1946342705029052052
+      tv2_frost_rock_f245_v0: 4376742206573533623
+      tv2_frost_rock_f247_v0: 2472219457124463100
+      tv2_frost_rock_f253_v0: 99397589676270447
+      tv2_frost_rock_f255_v0: 4605364776708308834
+      tv2_frost_rock_f0_v1: 136900694412363102
+      tv2_frost_rock_f1_v1: 136105159141799895
+      tv2_frost_rock_f4_v1: 1632797142703941222
+      tv2_frost_rock_f5_v1: 2830726507342602507
+      tv2_frost_rock_f7_v1: 4541345180695559268
+      tv2_frost_rock_f16_v1: 4145940561515592679
+      tv2_frost_rock_f17_v1: 1448281593443285770
+      tv2_frost_rock_f20_v1: 1289054133781039209
+      tv2_frost_rock_f21_v1: 3459573015858184287
+      tv2_frost_rock_f23_v1: 527240270055496128
+      tv2_frost_rock_f28_v1: 809069391211610773
+      tv2_frost_rock_f29_v1: 3409551232212963913
+      tv2_frost_rock_f31_v1: 161461216102054637
+      tv2_frost_rock_f64_v1: 967611678835394987
+      tv2_frost_rock_f65_v1: 3198729603729866203
+      tv2_frost_rock_f68_v1: 961893380051510552
+      tv2_frost_rock_f69_v1: 4349779037867046651
+      tv2_frost_rock_f71_v1: 1566794384854717892
+      tv2_frost_rock_f80_v1: 372115776515818753
+      tv2_frost_rock_f81_v1: 3103060600697150283
+      tv2_frost_rock_f84_v1: 1963946842535374928
+      tv2_frost_rock_f85_v1: 3220009559162675653
+      tv2_frost_rock_f87_v1: 1888776976488080589
+      tv2_frost_rock_f92_v1: 1672688860332232654
+      tv2_frost_rock_f93_v1: 1665424927368068044
+      tv2_frost_rock_f95_v1: 4274696406388543513
+      tv2_frost_rock_f112_v1: 93146098223424279
+      tv2_frost_rock_f113_v1: 537317195344296981
+      tv2_frost_rock_f116_v1: 639196979337920734
+      tv2_frost_rock_f117_v1: 3072313216483023710
+      tv2_frost_rock_f119_v1: 124743496136151249
+      tv2_frost_rock_f124_v1: 4379656650619551759
+      tv2_frost_rock_f125_v1: 4044309520981190272
+      tv2_frost_rock_f127_v1: 2129148805467238441
+      tv2_frost_rock_f193_v1: 1990388309562846444
+      tv2_frost_rock_f197_v1: 1921977600206750908
+      tv2_frost_rock_f199_v1: 2489295037068676168
+      tv2_frost_rock_f209_v1: 571927790622916697
+      tv2_frost_rock_f213_v1: 40591713062349003
+      tv2_frost_rock_f215_v1: 1985396106298335058
+      tv2_frost_rock_f221_v1: 985100820734722688
+      tv2_frost_rock_f223_v1: 4311794645453069738
+      tv2_frost_rock_f241_v1: 2043286425705987537
+      tv2_frost_rock_f245_v1: 850017835622234342
+      tv2_frost_rock_f247_v1: 1264082028346853742
+      tv2_frost_rock_f253_v1: 3336175331080728797
+      tv2_frost_rock_f255_v1: 2144476878817571670
+      tv2_frost_rock_f0_v2: 1801781019329024493
+      tv2_frost_rock_f1_v2: 4611079275211711089
+      tv2_frost_rock_f4_v2: 3388934136887082192
+      tv2_frost_rock_f5_v2: 3387761130771998325
+      tv2_frost_rock_f7_v2: 3881207794399636829
+      tv2_frost_rock_f16_v2: 2895983315285939963
+      tv2_frost_rock_f17_v2: 3178637941322906809
+      tv2_frost_rock_f20_v2: 475848775654970754
+      tv2_frost_rock_f21_v2: 1924393316985049805
+      tv2_frost_rock_f23_v2: 227040104632341230
+      tv2_frost_rock_f28_v2: 4469252752365073983
+      tv2_frost_rock_f29_v2: 1166278782002563335
+      tv2_frost_rock_f31_v2: 105840483471909315
+      tv2_frost_rock_f64_v2: 1339260324259905160
+      tv2_frost_rock_f65_v2: 2515213100954970353
+      tv2_frost_rock_f68_v2: 3089380730536924668
+      tv2_frost_rock_f69_v2: 267578944178415157
+      tv2_frost_rock_f71_v2: 2389921851772275617
+      tv2_frost_rock_f80_v2: 3128701208299605317
+      tv2_frost_rock_f81_v2: 514985094484037216
+      tv2_frost_rock_f84_v2: 1647417115592441967
+      tv2_frost_rock_f85_v2: 1860649877002396022
+      tv2_frost_rock_f87_v2: 2261939050179969706
+      tv2_frost_rock_f92_v2: 597920126644465522
+      tv2_frost_rock_f93_v2: 1514591851402288178
+      tv2_frost_rock_f95_v2: 3504341712869944881
+      tv2_frost_rock_f112_v2: 54677556309249154
+      tv2_frost_rock_f113_v2: 359320608737258164
+      tv2_frost_rock_f116_v2: 1025480845932051263
+      tv2_frost_rock_f117_v2: 3134536291133548591
+      tv2_frost_rock_f119_v2: 4383631850695541913
+      tv2_frost_rock_f124_v2: 593220400491516465
+      tv2_frost_rock_f125_v2: 3852397998507479954
+      tv2_frost_rock_f127_v2: 3328205229932827996
+      tv2_frost_rock_f193_v2: 2653159614413157843
+      tv2_frost_rock_f197_v2: 721938886818247615
+      tv2_frost_rock_f199_v2: 2758056610559074449
+      tv2_frost_rock_f209_v2: 2973141780789762196
+      tv2_frost_rock_f213_v2: 1600921731944216614
+      tv2_frost_rock_f215_v2: 3924009503143302335
+      tv2_frost_rock_f221_v2: 1249331101959116209
+      tv2_frost_rock_f223_v2: 96371961554863362
+      tv2_frost_rock_f241_v2: 911758982250241290
+      tv2_frost_rock_f245_v2: 1934343168384146519
+      tv2_frost_rock_f247_v2: 3344923149551341516
+      tv2_frost_rock_f253_v2: 2807853604631612086
+      tv2_frost_rock_f255_v2: 953686965933019294
+      tv2_frost_rock_up_right_v0: 3088596304618269807
+      tv2_frost_rock_up_right_v1: 1105555435231659301
+      tv2_frost_rock_up_right_v2: 1230536266951069577
+      tv2_frost_rock_up_left_v0: 1289271785489962492
+      tv2_frost_rock_up_left_v1: 4036167797046395002
+      tv2_frost_rock_up_left_v2: 1157099200416574564
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
