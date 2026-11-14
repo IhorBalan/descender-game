@@ -391,13 +391,15 @@ namespace Descender.Tests
                     problems.Add($"{at} has an unknown type");
                     continue;
                 }
+                // An enemy is a foe made from the profile the catalog names for its character.
                 if (
                     catalog != null
                     && PlacementTypesWithPrefab.Contains(placement.Type)
                     && catalog.Resolve(placement.Type, placement.Character, placement.Dialogue.Length > 0) == null
+                    && (placement.Type != "enemy" || catalog.FoeFor(placement.Character) == null)
                 )
                 {
-                    problems.Add($"{at} finds no prefab for \"{placement.Character}\" in {catalog.name}");
+                    problems.Add($"{at} finds nothing for \"{placement.Character}\" in {catalog.name}");
                 }
             }
         }

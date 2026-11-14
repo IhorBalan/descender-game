@@ -23,33 +23,56 @@ MonoBehaviour:
     prefab: {fileID: 149806386811513189, guid: bb6ce37aaad8520eab90e16117e9cc91, type: 3}
   - key: item
     prefab: {fileID: 876771760626991188, guid: 8c53a1583f205a4ea35d1c6a6b5a7a30, type: 3}
-  - key: boss
-    prefab: {fileID: 718419819127098976, guid: 8ad17f0107b357dc86cca80c83063d38, type: 3}
-  - key: enemy:imp
-    prefab: {fileID: 395415109089595403, guid: 05e5823570e752d78a9d8ce5f2222f50, type: 3}
-  - key: enemy:angel_guard
-    prefab: {fileID: 1985162360562242442, guid: 6e673ea18dca57bf931bf3e94d26d095, type: 3}
-  - key: enemy:brute
-    prefab: {fileID: 3851345891433482899, guid: 2ee07e3d054d566996904a497eb7dc08, type: 3}
-  - key: enemy:slug
-    prefab: {fileID: 1252461531121549342, guid: 044be0b0dd4a5b85a785f5eaa90f2752, type: 3}
-  - key: enemy:hoarder
-    prefab: {fileID: 3793668915629806002, guid: 74340e00d12c585a8c35d6a7f00ebc49, type: 3}
-  - key: enemy:burned
-    prefab: {fileID: 1713890818505389540, guid: acca27ae951b518e9f82be5f3a316e21, type: 3}
-  - key: enemy:hound
-    prefab: {fileID: 4176040470245168312, guid: 45aafdbe760a5ba89a0ef3e3ec777ccf, type: 3}
-  - key: enemy:watcher
-    prefab: {fileID: 4542775641470936940, guid: 21eaaf383c3e56658caccf0138e06dd8, type: 3}
-  - key: enemy:shade
-    prefab: {fileID: 4536130698621410675, guid: 08a7631745a3536fabd901c7d030b8a1, type: 3}
-  - key: enemy:siren
-    prefab: {fileID: 2103042955597665404, guid: 9249ba572f365aa99ca588120a9abdeb, type: 3}
-  - key: enemy:hanged
-    prefab: {fileID: 139642117640675769, guid: 9aaa081da75b50279e41d0722916cd20, type: 3}
   - key: relic
     prefab: {fileID: 530843531021314034, guid: 64a7ae1338d90404aad29881f46270bd, type: 3}
   - key: trigger
     prefab: {fileID: 2306388803157214886, guid: 529b5ccb78707aa42acef48f4a5f09d1, type: 3}
   - key: npc
     prefab: {fileID: 8016265632998975682, guid: 1e9da6bd948161b4ba2829329aff5b6a, type: 3}
+  foes:
+  - character: imp
+    profile: {fileID: 11400000, guid: 7fc1b72074a45c5f9efe965d8100600a, type: 2}
+  - character: angel_guard
+    profile: {fileID: 11400000, guid: 1aea28fbcedf59e981d1820fa43bdd71, type: 2}
+  - character: brute
+    profile: {fileID: 11400000, guid: 81b1ccb54c785a5394d90cad9472129d, type: 2}
+  - character: slug
+    profile: {fileID: 11400000, guid: 3f54a2b9aa0659a5beca076e5b91f907, type: 2}
+  - character: hoarder
+    profile: {fileID: 11400000, guid: 64cc91f534695d20902f0aab563f6755, type: 2}
+  - character: burned
+    profile: {fileID: 11400000, guid: 7a101ef9313d5f5a822049d3b95df449, type: 2}
+  - character: hound
+    profile: {fileID: 11400000, guid: 54b1c3b8f98c556794fbf90a8f375d24, type: 2}
+  - character: watcher
+    profile: {fileID: 11400000, guid: c3eec7809fcf58b091d32ed4df3a7825, type: 2}
+  - character: shade
+    profile: {fileID: 11400000, guid: b0fb307a98d45cbba1347e6696fbdfa5, type: 2}
+  - character: siren
+    profile: {fileID: 11400000, guid: 09011f8779d3595ea6a980bbb14654cc, type: 2}
+  - character: hanged
+    profile: {fileID: 11400000, guid: 70981c3eaa685cc88c9944c4d041da2f, type: 2}
+  - character: cursed_bishop
+    profile: {fileID: 11400000, guid: bd61a5587bfa5ad9aaaf3fa0a4351252, type: 2}
+  - character: final_boss_the_betrayer
+    profile: {fileID: 11400000, guid: c82e7aacb9c05d638a3f9a6e1af35ac7, type: 2}
+  - character: gardener
+    profile: {fileID: 11400000, guid: c82b4321f6f450678629972af81622b0, type: 2}
+  - character: golden_vault
+    profile: {fileID: 11400000, guid: 594328f93d2057368369144c15562011, type: 2}
+  - character: limbo_lord
+    profile: {fileID: 11400000, guid: 5ea855cfdb385f6a85049705e25c9f31, type: 2}
+  - character: palace_of_velvet
+    profile: {fileID: 11400000, guid: d735abd24d3559cba011dfb4dcc66472, type: 2}
+  - character: seraph_warden
+    profile: {fileID: 11400000, guid: 5c30fe13b47554b4948d5cb682cfb560, type: 2}
+  - character: the_bloated_one
+    profile: {fileID: 11400000, guid: 38a87c0066e45fa798d87faf00719c5b, type: 2}
+  - character: the_false_king
+    profile: {fileID: 11400000, guid: 49992e4d41385e039c52f4f46bd3cbb1, type: 2}
+  - character: the_fury
+    profile: {fileID: 11400000, guid: 63c78d51646d57e4ba037b1967d79905, type: 2}
+  - character: the_penitent
+    profile: {fileID: 11400000, guid: 82d1597d4c8658b1a606d6687a85a251, type: 2}
+  - character: the_red_arena
+    profile: {fileID: 11400000, guid: 2bc25269e8e85607bd987a75fe3e7461, type: 2}

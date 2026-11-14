@@ -62,17 +62,17 @@ namespace Descender.Tests.EditMode
         [Test]
         public void WalkerBehavioursParseFromTheMapNames()
         {
-            Assert.That(Walker.Parse("chase"), Is.EqualTo(WalkerBehaviour.Chase));
-            Assert.That(Walker.Parse("Pounce"), Is.EqualTo(WalkerBehaviour.Pounce));
-            Assert.That(Walker.Parse(""), Is.EqualTo(WalkerBehaviour.None));
-            Assert.That(Walker.Parse("nonsense"), Is.EqualTo(WalkerBehaviour.None));
+            Assert.That(FoeNumbers.Walker.Parse("chase"), Is.EqualTo(WalkerBehaviour.Chase));
+            Assert.That(FoeNumbers.Walker.Parse("Pounce"), Is.EqualTo(WalkerBehaviour.Pounce));
+            Assert.That(FoeNumbers.Walker.Parse(""), Is.EqualTo(WalkerBehaviour.None));
+            Assert.That(FoeNumbers.Walker.Parse("nonsense"), Is.EqualTo(WalkerBehaviour.None));
         }
 
         [Test]
         public void BossIdsComeFromTheirLabels()
         {
-            Assert.That(Boss.IdFor("Seraph Warden"), Is.EqualTo("seraph_warden"));
-            Assert.That(Boss.IdFor("The Bloated One"), Is.EqualTo("the_bloated_one"));
+            Assert.That(BossIds.IdFor("Seraph Warden"), Is.EqualTo("seraph_warden"));
+            Assert.That(BossIds.IdFor("The Bloated One"), Is.EqualTo("the_bloated_one"));
             Assert.That(Checkpoint.RestedFlag(3), Is.EqualTo("rested:3"));
         }
 

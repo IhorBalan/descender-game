@@ -66,23 +66,19 @@ namespace Descender.Tests.PlayMode
             return wall;
         }
 
-        private Enemies.Walker Imp(float x)
+        /// <summary>An imp as the regions make one: a walker's profile as a foe, feet on the floor, facing left.</summary>
+        private Enemies.Foe Imp(float x)
         {
             var profile = ScriptableObject.CreateInstance<Enemies.WalkerProfile>();
             profile.body = new Vector2(18f, 24f);
             profile.speed = 32f;
             profile.health = 1;
-            var imp = new GameObject("Imp") { layer = LayerMask.NameToLayer("Enemy") };
-            imp.transform.position = new Vector3(x, 0f, 0f);
-            imp.AddComponent<BoxCollider2D>();
-            imp.SetActive(false);
-            var walker = imp.AddComponent<Enemies.Walker>();
-            typeof(Enemies.Walker)
-                .GetField("profile", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .SetValue(walker, profile);
-            imp.SetActive(true);
-            extras.Add(imp);
-            return walker;
+            var recipe = Enemies.FoeKinds.FromWalker("imp", profile, "", false);
+            var size = profile.body / PlayerTuning.PixelsPerUnit;
+            var imp = Enemies.Foe.Make(recipe, null, new Vector2(x, size.y / 2f), size);
+            imp.Face(-1);
+            extras.Add(imp.gameObject);
+            return imp;
         }
 
         private static IEnumerator Steps(int count)
@@ -137,14 +133,14 @@ namespace Descender.Tests.PlayMode
             Wall(4f);
             var imp = Imp(2f);
             yield return Steps(5);
-            Assert.That(imp.Direction, Is.EqualTo(-1), "an unflipped placement walks left");
+            Assert.That(imp.Facing, Is.EqualTo(-1), "a placement facing left walks left");
             var start = imp.transform.position.x;
             yield return Steps(30);
             Assert.That(imp.transform.position.x, Is.LessThan(start), "it should have walked");
             // Turn it round and let it reach the wall.
             Wall(-2f);
             yield return Steps(240);
-            Assert.That(imp.Direction, Is.EqualTo(1), "it should have turned at the wall");
+            Assert.That(imp.Facing, Is.EqualTo(1), "it should have turned at the wall");
             Assert.That(imp.transform.position.x, Is.GreaterThan(-2f));
         }
 

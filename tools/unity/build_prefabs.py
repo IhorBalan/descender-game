@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
-"""Writes the hero, enemy and pickup prefabs, and the small data assets they
-reference (the hit-flash material, the SFX library, the hero tuning), as Unity
+"""Writes the hero and pickup prefabs, and the small data assets they reference
+(the hit-flash material, the SFX library, the hero tuning, the hanged thing's
+profile, the placement catalog that names a profile for every enemy), as Unity
 YAML, so a cloud session without an editor can keep them in step with the code.
 
 Safe to run again: every file is rewritten from what is in the repo, with
@@ -34,11 +35,12 @@ PLAYER_TUNING = "Assets/Data/PlayerTuning.asset"
 
 SCRIPTS = "Assets/Scripts/Runtime"
 
-# Which behaviour each enemy character gets, and its visual sorting order.
+# The enemy characters a placement can name, by the profile each is made from
+# (Assets/Data/Enemies/<character>.asset); the bosses are the profiles under
+# Assets/Data/Bosses.
 WALKERS = ["imp", "angel_guard", "brute", "slug", "hoarder", "burned", "hound"]
 FLYERS = ["watcher", "shade", "siren"]
 HANGERS = ["hanged"]
-BOSS_BODIES = ["angel_guard", "brute", "imp", "hero"]
 
 
 def guid(path: str) -> str:
@@ -279,7 +281,6 @@ def animated_body(
 
 
 LAYER_PLAYER = 9
-LAYER_ENEMY = 10
 LAYER_HAZARD = 13
 LAYER_PICKUP = 14
 
@@ -310,75 +311,16 @@ def build_player() -> str:
     return prefab.write()
 
 
-def enemy_box(character: str) -> tuple[float, float]:
-    """The body of a walker from its profile asset, or a size by the strips for the rest."""
-    profile = os.path.join(ASSETS, "Data", "Enemies", f"{character}.asset")
-    if os.path.exists(profile):
-        with open(profile) as handle:
-            match = re.search(r"body: \{x: ([\d.]+), y: ([\d.]+)\}", handle.read())
-        if match:
-            return float(match.group(1)), float(match.group(2))
-    return 16.0, 16.0
-
-
-def build_enemy(character: str) -> str:
-    prefab = Prefab(f"Assets/Prefabs/Enemies/{character}.prefab")
-    profile_ref = f"{{fileID: 11400000, guid: {guid(f'Assets/Data/Enemies/{character}.asset')}, type: 2}}"
-    if character in FLYERS:
-        components = [
-            (
-                "Flyer",
-                script("Enemies/Flyer"),
-                f"  profile: {profile_ref}\n  sprite: {{sprite}}\n  contactDamage: 1\n"
-                "  bodySize: {x: 16, y: 16}\n  dive: 0\n",
-            )
-        ]
-        body = (16.0, 16.0)
-    elif character in HANGERS:
-        components = [("Hanger", script("Enemies/Hanger"), "  sprite: {sprite}\n  maxHealth: 3\n")]
-        body = (16.0, 44.0)
-    else:
-        components = [
-            (
-                "Walker",
-                script("Enemies/Walker"),
-                f"  profile: {profile_ref}\n  sprite: {{sprite}}\n  contactDamage: 1\n  behaviour: 0\n"
-                "  barks: \n  passive: 0\n",
-            )
-        ]
-        body = enemy_box(character)
-    animated_body(prefab, character, LAYER_ENEMY, character, 5, body, components)
-    return prefab.write()
-
-
-def build_boss() -> str:
-    prefab = Prefab("Assets/Prefabs/Enemies/Boss.prefab")
-    wardrobe = "  wardrobe:\n"
-    for character in BOSS_BODIES:
-        wardrobe += f"  - character: {character}\n    strips:\n" + strips_yaml(character, indent=4)
-    imp_ref = f"{{fileID: {file_id('Assets/Prefabs/Enemies/imp.prefab', 'mb:imp:Walker')}, guid: {guid('Assets/Prefabs/Enemies/imp.prefab')}, type: 3}}"
-    profiles = "  profiles:\n"
-    for filename in sorted(os.listdir(os.path.join(ASSETS, "Data", "Bosses"))):
-        if filename.endswith(".asset"):
-            profiles += f"  - {{fileID: 11400000, guid: {guid(f'Assets/Data/Bosses/{filename}')}, type: 2}}\n"
-    animated_body(
-        prefab,
-        "Boss",
-        LAYER_ENEMY,
-        "angel_guard",
-        6,
-        (32.0, 80.0),
-        [
-            (
-                "Boss",
-                script("Enemies/Boss"),
-                "  profile: {fileID: 0}\n  sprite: {sprite}\n" + wardrobe + profiles + f"  impPrefab: {imp_ref}\n"
-                "  arena:\n    serializedVersion: 2\n    x: -8\n    y: -4\n    width: 16\n    height: 8\n",
-            )
-        ],
-        strips=strips_yaml("angel_guard"),
+def build_hanger_profile(character: str) -> str:
+    """The hanged thing's profile: its health; the rest of its numbers are constants."""
+    return write_text(
+        f"Assets/Data/Enemies/{character}.asset",
+        HEADER
+        + "--- !u!114 &11400000\nMonoBehaviour:\n  m_ObjectHideFlags: 0\n  m_CorrespondingSourceObject: {fileID: 0}\n"
+        "  m_PrefabInstance: {fileID: 0}\n  m_PrefabAsset: {fileID: 0}\n  m_GameObject: {fileID: 0}\n  m_Enabled: 1\n"
+        f"  m_EditorHideFlags: 0\n  m_Script: {script('Enemies/HangerProfile')}\n  m_Name: {character}\n"
+        "  m_EditorClassIdentifier: \n  health: 3\n",
     )
-    return prefab.write()
 
 
 def simple_pickup(relative: str, name: str, layer: int, key: str, script_text: str, fields: str, sprite: str | None, order: int = 5, box=None) -> str:
@@ -551,19 +493,18 @@ def build_placement_catalog() -> str:
         ("upgrade", "Assets/Prefabs/Pickups/Upgrade.prefab", "Upgrade"),
         ("power", "Assets/Prefabs/Pickups/PowerUp.prefab", "PowerUp"),
         ("item", "Assets/Prefabs/Pickups/LootDrop.prefab", "LootDrop"),
-        ("boss", "Assets/Prefabs/Enemies/Boss.prefab", "Boss"),
     ]
-    for character in WALKERS + FLYERS + HANGERS:
-        rows.append((f"enemy:{character}", f"Assets/Prefabs/Enemies/{character}.prefab", character))
     existing_path = os.path.join(ROOT, PLACEMENTS)
     kept = ""
     if os.path.exists(existing_path):
         # Keep the entries made by hand or by the editor for prefabs this script does not write (NPCs, triggers).
         with open(existing_path) as handle:
             text = handle.read()
+        # The enemies are foes made from their profiles (FoeWorld), so no prefab stands for one.
         own = {key for key, _, _ in rows}
         for match in re.finditer(r"  - key: (\S+)\n    prefab: (\{[^}]*\})\n", text):
-            if match.group(1) not in own:
+            key = match.group(1)
+            if key not in own and key != "boss" and not key.startswith("enemy:"):
                 kept += match.group(0)
     entries = ""
     for key, prefab, root in rows:
@@ -574,8 +515,20 @@ def build_placement_catalog() -> str:
         + "--- !u!114 &11400000\nMonoBehaviour:\n  m_ObjectHideFlags: 0\n  m_CorrespondingSourceObject: {fileID: 0}\n"
         "  m_PrefabInstance: {fileID: 0}\n  m_PrefabAsset: {fileID: 0}\n  m_GameObject: {fileID: 0}\n  m_Enabled: 1\n"
         f"  m_EditorHideFlags: 0\n  m_Script: {script('World/PlacementCatalog')}\n  m_Name: Placements\n"
-        f"  m_EditorClassIdentifier: \n  entries:\n{entries}{kept}",
+        f"  m_EditorClassIdentifier: \n  entries:\n{entries}{kept}  foes:\n{foes_yaml()}",
     )
+
+
+def foes_yaml() -> str:
+    """The catalog's foes: every enemy character and boss id with the profile it is made from."""
+    profiles = [(character, f"Assets/Data/Enemies/{character}.asset") for character in WALKERS + FLYERS + HANGERS]
+    for filename in sorted(os.listdir(os.path.join(ASSETS, "Data", "Bosses"))):
+        if filename.endswith(".asset"):
+            profiles.append((filename[: -len(".asset")], f"Assets/Data/Bosses/{filename}"))
+    text = ""
+    for character, path in profiles:
+        text += f"  - character: {character}\n    profile: {{fileID: 11400000, guid: {guid(path)}, type: 2}}\n"
+    return text
 
 
 def build_player_tuning() -> str:
@@ -593,8 +546,7 @@ def build_player_tuning() -> str:
 
 def main() -> int:
     written = [build_material(), build_sfx_library(), build_player_tuning(), build_player()]
-    written += [build_enemy(character) for character in WALKERS + FLYERS + HANGERS]
-    written.append(build_boss())
+    written += [build_hanger_profile(character) for character in HANGERS]
     written += build_pickups()
     written.append(build_placement_catalog())
     metas = unity_meta.write_metas()

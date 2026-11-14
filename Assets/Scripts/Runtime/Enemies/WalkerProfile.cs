@@ -12,9 +12,9 @@ namespace Descender.Enemies
 
     /// <summary>
     /// The numbers of one ground enemy body: its size, pace, health, swing and drops.
-    /// One asset per body under Assets/Data/Enemies, set on the body's prefab variant,
-    /// so a body is tuned in the Inspector; the committed assets carry the
-    /// prototype's numbers.
+    /// One asset per body under Assets/Data/Enemies, named as the placements name the
+    /// body, which the placement catalog gives for that character, so a body is tuned
+    /// in the Inspector; the committed assets carry the prototype's numbers.
     /// </summary>
     [CreateAssetMenu(menuName = "Descender/Walker Profile", fileName = "walker")]
     public sealed class WalkerProfile : ScriptableObject

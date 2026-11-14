@@ -24,7 +24,7 @@ Assets/
   Scripts/
     Runtime/         Descender.Runtime.asmdef; one folder per area:
       Player/        PlayerController, PlayerTuning, abilities
-      Enemies/       Walker, Flyer, Boss, their *Profile ScriptableObjects
+      Enemies/       the *Profile ScriptableObjects, Foes/ (Foe and its parts)
       World/         RegionLook, WorldProp, WorldRoom, WorldDoor, BackdropLayer, region streaming
       Story/         StoryFlags, DialogueData, Quests
       Economy/       Items, Inventory, Shops, Skills, LootTable
@@ -35,7 +35,7 @@ Assets/
     Editor/          Descender.Editor.asmdef; menu items, importers, inspectors
   Tests/EditMode/    Descender.Tests.EditMode.asmdef (data, logic, importer tests)
   Tests/PlayMode/    Descender.Tests.PlayMode.asmdef (scene smoke tests)
-  Prefabs/           Player, Enemies/, Props/<region>/, UI/
+  Prefabs/           Player, Pickups/, Props/<region>/, UI/
   Data/              Enemies/*.asset, Bosses/*.asset, Regions/*.asset, dialogue/*.json
   Art/               Sprites/<character>/, Props/<region>/, Tiles/, Regions/, UI/, Fonts/
   Audio/             music/, sfx/

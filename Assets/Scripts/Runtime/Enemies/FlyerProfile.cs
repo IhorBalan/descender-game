@@ -7,6 +7,9 @@ namespace Descender.Enemies
     [CreateAssetMenu(menuName = "Descender/Flyer Profile", fileName = "flyer")]
     public sealed class FlyerProfile : ScriptableObject
     {
+        [Tooltip("Collision size, in level pixels, with the origin at the middle.")]
+        public Vector2 size = new Vector2(16, 16);
+
         [Tooltip("Hits to kill.")]
         public int health = 2;
 

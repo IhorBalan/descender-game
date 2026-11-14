@@ -141,7 +141,7 @@ namespace Descender.Tests
                 catalog.Set("save", save);
                 Assert.That(catalog.Resolve("enemy", "imp"), Is.SameAs(imp));
                 Assert.That(catalog.Resolve("enemy", "brute"), Is.SameAs(any));
-                Assert.That(catalog.Resolve("enemy", Enemies.BossIds.All[0]), Is.SameAs(boss));
+                Assert.That(catalog.Resolve("enemy", Enemies.BossIds.All[0]), Is.SameAs(any), "a boss is any enemy");
                 Assert.That(catalog.Resolve("save", ""), Is.SameAs(save));
                 Assert.That(catalog.Resolve("npc", "pell"), Is.Null);
                 catalog.Set("save", any);

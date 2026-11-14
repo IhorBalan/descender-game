@@ -9,18 +9,22 @@ namespace Descender.EditorTools.World
     /// the prefabs under Assets/Prefabs by their names, so a WorldPlacement finds what
     /// to spawn: Pickups/Checkpoint for "save", Pickups/AbilityPickup for "ability",
     /// Pickups/Upgrade, Pickups/PowerUp, Pickups/LootDrop for "item", Story/Relic for
-    /// "relic" (an item with dialogue), Story/StoryTrigger for "trigger", Enemies/&lt;body&gt;
-    /// for "enemy:&lt;body&gt;", Enemies/Boss for "boss", Npcs/&lt;name&gt; for "npc:&lt;name&gt;" and
-    /// Npcs/Npc for "npc". It makes the story prefabs first when they are missing
-    /// (see <see cref="StoryPrefabs"/>), and copies every key except "save" into the
-    /// garden's catalog (Assets/Data/Placements Paradise.asset, which keeps its marble
-    /// shrine) when that exists. Safe to run again: a missing prefab leaves its entry alone.
+    /// "relic" (an item with dialogue), Story/StoryTrigger for "trigger", Npcs/&lt;name&gt;
+    /// for "npc:&lt;name&gt;" and Npcs/Npc for "npc"; and the profile each enemy is made from
+    /// by its character, from the profiles under Assets/Data/Enemies and
+    /// Assets/Data/Bosses by their names. It makes the story prefabs first when they are
+    /// missing (see <see cref="StoryPrefabs"/>), and copies every key except "save", and
+    /// every profile, into the garden's catalog (Assets/Data/Placements Paradise.asset,
+    /// which keeps its marble shrine) when that exists. Safe to run again: a missing
+    /// prefab leaves its entry alone.
     /// </summary>
     public static class PlacementCatalogSetup
     {
         public const string CatalogPath = "Assets/Data/Placements.asset";
         public const string ParadiseCatalogPath = Paradise.ParadiseGarden.CatalogPath;
         public const string PrefabsFolder = "Assets/Prefabs";
+        public const string EnemiesFolder = "Assets/Data/Enemies";
+        public const string BossesFolder = "Assets/Data/Bosses";
 
         private static readonly (string key, string path)[] Fixed =
         {
@@ -31,7 +35,6 @@ namespace Descender.EditorTools.World
             ("item", "Pickups/LootDrop"),
             ("relic", "Story/Relic"),
             ("trigger", "Story/StoryTrigger"),
-            ("boss", "Enemies/Boss"),
             ("npc", "Npcs/Npc"),
         };
 
@@ -51,12 +54,12 @@ namespace Descender.EditorTools.World
             {
                 count += Assign(catalog, key, $"{PrefabsFolder}/{path}.prefab") ? 1 : 0;
             }
-            count += AssignFolder(catalog, "enemy", $"{PrefabsFolder}/Enemies", "Boss");
             count += AssignFolder(catalog, "npc", $"{PrefabsFolder}/Npcs", "Npc");
+            var foes = AssignFoes(catalog, EnemiesFolder) + AssignFoes(catalog, BossesFolder);
             EditorUtility.SetDirty(catalog);
             var shared = CopyToParadise(catalog);
             AssetDatabase.SaveAssets();
-            Debug.Log($"Descender: placement catalog has {count} prefabs; {shared} shared with the garden's catalog.");
+            Debug.Log($"Descender: the placement catalog has {count} prefabs, {foes} foes; {shared} shared.");
         }
 
         /// <summary>
@@ -78,6 +81,15 @@ namespace Descender.EditorTools.World
                     continue;
                 }
                 paradise.Set(entry.key, entry.prefab);
+                count++;
+            }
+            foreach (var foe in source.Foes)
+            {
+                if (foe.profile == null)
+                {
+                    continue;
+                }
+                paradise.SetFoe(foe.character, foe.profile);
                 count++;
             }
             EditorUtility.SetDirty(paradise);
@@ -105,6 +117,27 @@ namespace Descender.EditorTools.World
                     continue;
                 }
                 count += Assign(catalog, $"{type}:{stem}", path) ? 1 : 0;
+            }
+            return count;
+        }
+
+        /// <summary>Every profile in a folder, under its asset's name. Returns how many.</summary>
+        private static int AssignFoes(Descender.World.PlacementCatalog catalog, string folder)
+        {
+            if (!AssetDatabase.IsValidFolder(folder))
+            {
+                return 0;
+            }
+            var count = 0;
+            foreach (var guid in AssetDatabase.FindAssets("t:ScriptableObject", new[] { folder }))
+            {
+                var profile = AssetDatabase.LoadAssetAtPath<ScriptableObject>(AssetDatabase.GUIDToAssetPath(guid));
+                if (profile == null)
+                {
+                    continue;
+                }
+                catalog.SetFoe(profile.name, profile);
+                count++;
             }
             return count;
         }

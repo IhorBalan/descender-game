@@ -21,5 +21,13 @@ namespace Descender.Enemies
 
         /// <summary>The story flag set when a boss dies; a dead boss stays dead in the save.</summary>
         public static string FlagFor(string id) => $"boss:{id}";
+
+        /// <summary>The profile id for a boss's name as the map tool labels it ("Seraph Warden" -> "seraph_warden").</summary>
+        public static string IdFor(string label)
+        {
+            var id = (label ?? "").ToLowerInvariant().Trim();
+            id = id.Replace(":", "").Replace(",", "").Replace("'", "").Replace(".", "");
+            return id.Replace(' ', '_');
+        }
     }
 }

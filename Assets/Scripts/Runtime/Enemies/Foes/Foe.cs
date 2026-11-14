@@ -334,7 +334,7 @@ namespace Descender.Enemies
             box.enabled = false;
             body.linearVelocity = Vector2.zero;
             Audio.Sfx.Play("enemy_die");
-            Feedback.HitStop(Walker.DeathHitStop);
+            Feedback.HitStop(FoeNumbers.Walker.DeathHitStop);
             Feedback.Spark(transform.position, build.color);
             Kills.Record(PlacementId);
             Died?.Invoke(this);
