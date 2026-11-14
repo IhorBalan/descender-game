@@ -82,6 +82,7 @@ namespace Descender.Enemies
         public string PlacementId { get; set; } = "";
         public bool IsDead => dead;
         public int Health => health;
+        public int MaxHealth => maxHealth;
         public Vector2 Home => home;
         public bool IsHanging => state == State.Hang;
         public bool IsDropping => state == State.Drop;
