@@ -292,8 +292,9 @@ namespace Descender.Tests.PlayMode
             Kills.Clear();
             Assert.That(placement.Spawned == null, Is.True, "it stays dead when the kills are forgotten");
             Assert.That(placement.IsDeadBoss, Is.True);
+            // A new game has no flags and loads its regions afresh, so the placement spawns anew.
             Story.StoryFlags.Reset();
-            Kills.Clear();
+            placement.Spawn();
             Assert.That(placement.Spawned != null, Is.True, "until its flag is gone, as in a new game");
             Object.Destroy(catalog);
             Object.Destroy(profile);
