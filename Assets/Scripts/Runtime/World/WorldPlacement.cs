@@ -140,6 +140,16 @@ namespace Descender.World
         /// <summary>The profile the catalog gives for an enemy of this character; null for anything else.</summary>
         public ScriptableObject Foe => type == "enemy" && catalog != null ? catalog.FoeFor(character) : null;
 
+        /// <summary>
+        /// Whether this is a boss that has been killed: its flag is in the save, so it
+        /// stays dead after a respawn and in every later game from that save, where an
+        /// ordinary enemy's death is forgotten at the next checkpoint.
+        /// </summary>
+        public bool IsDeadBoss =>
+            type == "enemy"
+            && System.Array.IndexOf(Enemies.BossIds.All, character) >= 0
+            && Story.StoryFlags.Has(Enemies.BossIds.FlagFor(character));
+
         /// <summary>Whether this is where the story speaks: a trigger, a talking NPC or a relic.</summary>
         public bool IsStory => Story.StoryMode.IsStory(type, dialogue.Length > 0, !string.IsNullOrEmpty(shop));
 
@@ -164,6 +174,10 @@ namespace Descender.World
                 return false;
             }
             if (!string.IsNullOrEmpty(requires) && !Story.StoryFlags.Has(requires))
+            {
+                return false;
+            }
+            if (IsDeadBoss)
             {
                 return false;
             }
