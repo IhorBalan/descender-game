@@ -4,10 +4,11 @@ using UnityEngine.Rendering.Universal;
 namespace Descender.World.TilesV2
 {
     /// <summary>
-    /// A Tiles V2 wall torch: cycles its flame frames and wavers its light a little, each
-    /// torch out of step with the others. The light is set up in the editor (so a scene
-    /// renders lit without entering play) and is switched off when the torch is far from
-    /// the camera, checked a few times a second.
+    /// A Tiles V2 wall torch: cycles its flame frames and wavers its glow a little, each
+    /// torch out of step with the others. Its colour and intensity seed the tile light
+    /// (TileLightMap), which carries it through the caves; the glow is a small flicker on
+    /// top, set up in the editor (so a scene renders lit without entering play) and
+    /// switched off when the torch is far from the camera, checked a few times a second.
     /// </summary>
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class TorchFlame : MonoBehaviour
@@ -22,7 +23,13 @@ namespace Descender.World.TilesV2
         private float frameSeconds = 0.12f;
 
         [SerializeField, Min(0f)]
-        private float intensity = 1.4f;
+        private float intensity = 0.35f;
+
+        [SerializeField]
+        private Color colour = new Color(1f, 0.72f, 0.42f);
+
+        [SerializeField, Min(0f)]
+        private float tileIntensity = 1.6f;
 
         [SerializeField, Min(1f)]
         private float activeDistance = 30f;
@@ -36,11 +43,22 @@ namespace Descender.World.TilesV2
         public Light2D Glow => glow;
         public int FrameCount => frames.Length;
 
-        public void Configure(Sprite[] flameFrames, Light2D light, float lightIntensity)
+        /// <summary>The light the torch gives its tile, for the tile light to spread.</summary>
+        public Color Emission => colour * tileIntensity;
+
+        public void Configure(
+            Sprite[] flameFrames,
+            Light2D light,
+            float glowIntensity,
+            Color lightColour,
+            float lightIntensity
+        )
         {
             frames = flameFrames;
             glow = light;
-            intensity = lightIntensity;
+            intensity = glowIntensity;
+            colour = lightColour;
+            tileIntensity = lightIntensity;
         }
 
         /// <summary>The light's share of its intensity at time t: within 8% of 1, smooth, never periodic to the eye.</summary>

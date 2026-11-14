@@ -203,29 +203,65 @@ namespace Descender.Tests
             }
         }
 
-        [Test]
-        public void DaylightReachesDownToEachColumnsFirstTileAndIntoOpenShafts()
+        // A grid for the tile light tests from rows drawn top first: # solid, w wall, . air.
+        private static (bool[] solid, bool[] wall, int width, int height) Grid(params string[] rows)
         {
-            var map = new List<string> { "..T.", "G...", "D.G.", "S.SS" };
-            Assert.That(TilesV2Sample.SkyReach(map), Is.EqualTo(new[] { 1, 4, 2, 3 }), "a torch is not terrain");
-            var outline = TilesV2Sample.SkyOutline(map, 2f, 3f);
-            Assert.That(
-                outline,
-                Is.EqualTo(
-                    new[]
-                    {
-                        new Vector3(-2f, 7f),
-                        new Vector3(-2f, 3f),
-                        new Vector3(0.5f, 3f),
-                        // The open column 1 lets daylight down to the bottom of the map.
-                        new Vector3(1.5f, 0f),
-                        new Vector3(2.5f, 2f),
-                        new Vector3(3.5f, 1f),
-                        new Vector3(6f, 1f),
-                        new Vector3(6f, 7f),
-                    }
-                )
-            );
+            var width = rows[0].Length;
+            var height = rows.Length;
+            var solid = new bool[width * height];
+            var wall = new bool[width * height];
+            for (var r = 0; r < height; r++)
+            {
+                for (var x = 0; x < width; x++)
+                {
+                    var i = (height - 1 - r) * width + x;
+                    solid[i] = rows[r][x] == '#';
+                    wall[i] = rows[r][x] == 'w';
+                }
+            }
+            return (solid, wall, width, height);
+        }
+
+        private static readonly TileLight.Decay TestDecay = new TileLight.Decay(0.9f, 0.5f);
+
+        [Test]
+        public void DaylightFillsEachColumnDownToItsFirstTileOrWall()
+        {
+            var (solid, wall, width, height) = Grid("...", "#.w", "#..", "###");
+            var seeds = new Color[width * height];
+            TileLight.SeedSky(seeds, solid, wall, width, height, Color.white);
+            // Column 0 stops on its tile, column 1 is open to the floor, column 2 stops on the wall.
+            Assert.That(seeds[3 * width + 0].r, Is.EqualTo(1f));
+            Assert.That(seeds[2 * width + 0].r, Is.EqualTo(0f));
+            Assert.That(seeds[1 * width + 1].r, Is.EqualTo(1f));
+            Assert.That(seeds[2 * width + 2].r, Is.EqualTo(0f));
+            Assert.That(seeds[1 * width + 2].r, Is.EqualTo(0f), "light under a wall is spread, not sky");
+        }
+
+        [Test]
+        public void LightLosesAShareAtEveryTileItEntersMostInRock()
+        {
+            var (solid, wall, width, height) = Grid(".....", "#####");
+            var seeds = new Color[width * height];
+            seeds[1 * width + 0] = Color.white;
+            var light = TileLight.Spread(seeds, solid, width, height, TestDecay);
+            Assert.That(light[1 * width + 4].r, Is.EqualTo(Mathf.Pow(0.9f, 4f)).Within(1e-5f), "four tiles of air");
+            Assert.That(light[0 * width + 0].r, Is.EqualTo(0.5f).Within(1e-5f), "one tile into rock");
+            Assert.That(light[0 * width + 4].r, Is.EqualTo(Mathf.Pow(0.9f, 4f) * 0.5f).Within(1e-5f));
+        }
+
+        [Test]
+        public void LightFollowsATunnelAroundTheRock()
+        {
+            var (solid, wall, width, height) = Grid(".####", ".####", ".....");
+            var seeds = new Color[width * height];
+            seeds[2 * width + 0] = new Color(1f, 0.5f, 0.25f);
+            var light = TileLight.Spread(seeds, solid, width, height, TestDecay);
+            // Down two and along four: six tiles of air, keeping its colour.
+            var end = light[0 * width + 4];
+            Assert.That(end.r, Is.EqualTo(Mathf.Pow(0.9f, 6f)).Within(1e-5f));
+            Assert.That(end.b / end.r, Is.EqualTo(0.25f).Within(1e-4f));
+            Assert.That(light[2 * width + 4].r, Is.LessThan(end.r), "through the rock is darker than round it");
         }
 
         [Test]
@@ -263,12 +299,31 @@ namespace Descender.Tests
                     Assert.That(flame.FrameCount, Is.EqualTo(3));
                 }
                 Assert.That(
-                    lights
-                        .FindAll(l => l.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Freeform)
-                        .Count,
+                    lights.FindAll(l => l.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Sprite).Count,
                     Is.EqualTo(1),
-                    "one daylight"
+                    "one tile light"
                 );
+                TileLightMap map = null;
+                foreach (var root in scene.GetRootGameObjects())
+                {
+                    map ??= root.GetComponentInChildren<TileLightMap>();
+                }
+                Assert.That(map, Is.Not.Null);
+                map.Refresh();
+                var bounds = map.Bounds;
+                Color At(int column, int row) =>
+                    map.Light[(terrain.Count - 1 - row - bounds.yMin) * bounds.size.x + column - bounds.xMin];
+                var surface = terrain.FindIndex(row => row[0] != '.');
+                Assert.That(At(0, surface - 1).r, Is.EqualTo(1f).Within(1e-4f), "the open sky is daylit");
+                Assert.That(At(0, terrain.Count - 1).r, Is.LessThan(0.01f), "the rock at the bottom is dark");
+                foreach (var flame in flames)
+                {
+                    var p = flame.transform.position;
+                    var lit = map.Light[
+                        (Mathf.FloorToInt(p.y) - bounds.yMin) * bounds.size.x + Mathf.FloorToInt(p.x) - bounds.xMin
+                    ];
+                    Assert.That(lit.r, Is.GreaterThanOrEqualTo(flame.Emission.r - 1e-4f), flame.name);
+                }
                 var ambient = lights.Find(l => l.lightType == UnityEngine.Rendering.Universal.Light2D.LightType.Global);
                 Assert.That(ambient.intensity, Is.EqualTo(TilesV2Sample.Ambient).Within(1e-4f), "deep rock is dark");
             }

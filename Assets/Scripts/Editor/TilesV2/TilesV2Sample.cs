@@ -15,7 +15,7 @@ namespace Descender.EditorTools.TilesV2
     /// (Assets/Art/TilesV2/sample_map.txt) out with the Tiles V2 tiles in its own scene,
     /// Assets/Scenes/Sandbox/TilesV2Sample.unity, which is not in the build: a Grid with
     /// Walls, Terrain and Blend tilemaps, the parallax backdrop, a pixel-perfect camera at
-    /// 320 x 180, a dim ambient, daylight over the open sky and the wall torches. The scene is rebuilt from the map each time.
+    /// 320 x 180, a faint ambient, the tile light (TileLightMap) and the wall torches. The scene is rebuilt from the map each time.
     /// </summary>
     public static class TilesV2Sample
     {
@@ -38,12 +38,14 @@ namespace Descender.EditorTools.TilesV2
         /// <summary>The map character for a wall torch (air for the terrain).</summary>
         public const char TorchChar = 'T';
 
-        // The lighting standard (docs/art/tiles-v2.md), the generator's AMBIENT, SKY_FALLOFF
+        // The lighting standard (docs/art/tiles-v2.md), the generator's AMBIENT, *_KEEPS
         // and TORCH_* constants.
-        public const float Ambient = 0.08f;
-        public const float SkyFalloff = 5f;
-        public const float TorchRadius = 8f;
-        public const float TorchIntensity = 1.4f;
+        public const float Ambient = 0.04f;
+        public const float AirKeeps = 0.9f;
+        public const float SolidKeeps = 0.7f;
+        public const float TorchIntensity = 1.6f;
+        public const float TorchGlow = 0.35f;
+        public const float TorchGlowRadius = 3f;
         public static readonly Color AmbientColour = new Color(0.55f, 0.62f, 0.85f);
         public static readonly Color TorchColour = new Color(1f, 0.72f, 0.42f);
 
@@ -102,8 +104,8 @@ namespace Descender.EditorTools.TilesV2
             TilesV2Blends.Paint(terrain, blend, manifest);
 
             MakeCamera(SurfaceView);
-            MakeLights(terrainRows);
-            MakeTorches(terrainRows);
+            var torches = MakeTorches(terrainRows);
+            MakeLights(terrain, walls, torches);
             MakeBackdrop(manifest, SurfaceView, terrainRows.Count);
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
@@ -213,59 +215,11 @@ namespace Descender.EditorTools.TilesV2
         }
 
         /// <summary>
-        /// For each column, the first map row (from the top) holding terrain: open sky
-        /// reaches down to it (the map's height where a column is open all the way).
+        /// A faint, cool ambient everywhere, and the tile light: daylight down from the
+        /// open sky and the torches' light, spread tile by tile and dying fast in rock, so
+        /// deep ground is dark until a torch lights it.
         /// </summary>
-        public static int[] SkyReach(List<string> terrain)
-        {
-            var width = 0;
-            foreach (var row in terrain)
-            {
-                width = Mathf.Max(width, row.Length);
-            }
-            var reach = new int[width];
-            for (var x = 0; x < width; x++)
-            {
-                reach[x] = terrain.Count;
-                for (var y = 0; y < terrain.Count; y++)
-                {
-                    if (x < terrain[y].Length && TerrainTiles.ContainsKey(terrain[y][x]))
-                    {
-                        reach[x] = y;
-                        break;
-                    }
-                }
-            }
-            return reach;
-        }
-
-        /// <summary>
-        /// The daylight's outline in world units: everything above the terrain's skyline,
-        /// through the top middle of each column's first tile (so a step or a slope is a
-        /// diagonal, not a notch the falloff cannot fill), down open shafts, carried a margin
-        /// past both ends of the map.
-        /// </summary>
-        public static Vector3[] SkyOutline(List<string> terrain, float margin = 24f, float above = 24f)
-        {
-            var reach = SkyReach(terrain);
-            var rows = terrain.Count;
-            var top = rows + above;
-            var points = new List<Vector3> { new Vector3(-margin, top), new Vector3(-margin, rows - reach[0]) };
-            for (var x = 0; x < reach.Length; x++)
-            {
-                points.Add(new Vector3(x + 0.5f, rows - reach[x]));
-            }
-            points.Add(new Vector3(reach.Length + margin, rows - reach[reach.Length - 1]));
-            points.Add(new Vector3(reach.Length + margin, top));
-            return points.ToArray();
-        }
-
-        /// <summary>
-        /// A dim, cool ambient everywhere, and the daylight as a freeform light over the
-        /// open sky that fades a few tiles into the ground: deep rock is dark until a
-        /// torch lights it.
-        /// </summary>
-        private static void MakeLights(List<string> terrain)
+        private static void MakeLights(Tilemap terrain, Tilemap walls, Transform torches)
         {
             var ambient = new GameObject("Ambient").AddComponent<Light2D>();
             ambient.lightType = Light2D.LightType.Global;
@@ -273,19 +227,20 @@ namespace Descender.EditorTools.TilesV2
             ambient.color = AmbientColour;
             ambient.intensity = Ambient;
 
-            var sky = new GameObject("Daylight").AddComponent<Light2D>();
-            sky.lightType = Light2D.LightType.Freeform;
-            sky.blendStyleIndex = 0;
-            sky.color = Color.white;
-            sky.intensity = 1f - Ambient;
-            sky.SetShapePath(SkyOutline(terrain));
-            sky.shapeLightFalloffSize = SkyFalloff;
-            sky.falloffIntensity = 0.5f;
-            sky.shadowsEnabled = false;
+            var holder = new GameObject("Tile Light");
+            var light = holder.AddComponent<Light2D>();
+            light.lightType = Light2D.LightType.Sprite;
+            light.blendStyleIndex = 0;
+            light.color = Color.white;
+            light.intensity = 1f;
+            light.shadowsEnabled = false;
+            var map = holder.AddComponent<TileLightMap>();
+            map.Configure(terrain, walls, torches, Color.white, AirKeeps, SolidKeeps);
+            map.Refresh();
         }
 
-        /// <summary>A torch on the wall at every T of the map: its flame, unlit, and a warm point light.</summary>
-        private static void MakeTorches(List<string> terrain)
+        /// <summary>A torch on the wall at every T of the map: its flame, unlit, its tile light and a small flickering glow.</summary>
+        private static Transform MakeTorches(List<string> terrain)
         {
             var path = TilesV2Manifest.Folder + "/torch.png";
             var frames = new List<Sprite>();
@@ -328,14 +283,17 @@ namespace Descender.EditorTools.TilesV2
                     glow.lightType = Light2D.LightType.Point;
                     glow.blendStyleIndex = 0;
                     glow.color = TorchColour;
-                    glow.intensity = TorchIntensity;
-                    glow.pointLightInnerRadius = 0.5f;
-                    glow.pointLightOuterRadius = TorchRadius;
+                    glow.intensity = TorchGlow;
+                    glow.pointLightInnerRadius = 0f;
+                    glow.pointLightOuterRadius = TorchGlowRadius;
                     glow.falloffIntensity = 0.5f;
                     glow.shadowsEnabled = false;
-                    holder.AddComponent<TorchFlame>().Configure(frames.ToArray(), glow, TorchIntensity);
+                    holder
+                        .AddComponent<TorchFlame>()
+                        .Configure(frames.ToArray(), glow, TorchGlow, TorchColour, TorchIntensity);
                 }
             }
+            return parent;
         }
 
         /// <summary>

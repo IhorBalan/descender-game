@@ -111,19 +111,38 @@ slopes, the same light as the tiles.
 
 ## Light
 
-Underground is dark, as in the classic sandbox games; light comes from the
-sky and from what the player places. All on blend style 0 (Multiply).
+Underground is dark, as in the classic sandbox games: light is worked out per
+tile and spreads from the sky and from torches, dying fast in solid ground.
+`TileLight` does the sums, `TileLightMap` shows them, the generator's
+`--preview` runs the same sums.
+
+1. **Sky.** Every column is lit with daylight (1) from the top down to its first
+   solid tile or wall. A wall shades the sky, so a walled shaft is lit only by
+   the light that spreads into it.
+2. **Torches.** A torch puts `(1, 0.72, 0.42) x 1.6` on its tile.
+3. **Spread.** Each tile ends with the brightest of its own light and of its
+   neighbours' light times the share it keeps: **0.9** for air (walls behind it
+   included), **0.7** for a solid tile. That is 3 sweeps of the map in all four
+   directions, so light follows tunnels round two corners. The surface stays bright
+   about 3 tiles down, and a torch reaches about 20 tiles of open cave.
+4. **Show.** The result is one Sprite Light2D (blend style 0, Multiply) whose
+   texture has one texel per tile (RGBA half), filtered bilinearly between the
+   tile centres. It covers the map's tiles plus 2 rows of sky.
 
 | Light | Value |
 |---|---|
-| Ambient | one Global light, intensity 0.08, colour `(0.55, 0.62, 0.85)`: deep rock is near black |
-| Daylight | one Freeform light, intensity 0.92 (ambient + daylight = 1 under open sky), shaped as everything above the top middle of each column's first terrain tile (so steps and slopes are diagonals and it goes down open shafts), falloff 5 tiles into the ground |
-| Torch | Point, colour `(1, 0.72, 0.42)`, intensity 1.4, radius 8 tiles (inner 0.5), falloff 0.5, wavering within 8% (`TorchFlame`), switched off past 30 units from the camera |
+| Ambient | one Global light, intensity 0.04, colour `(0.55, 0.62, 0.85)`: deep rock is near black |
+| Tile light | the Sprite light above, intensity 1 |
+| Torch glow | Point, the torch colour, intensity 0.35, radius 3 tiles. It wavers within 8% (`TorchFlame`) and switches off past 30 units from the camera: the flicker on top of the steady tile light |
 | Backdrop | Sprite-Unlit: the far daylit world, untouched by the scene's lights |
+
+The light is worked out in `OnEnable`, in the editor too. A game that changes
+tiles or torches calls `TileLightMap.Refresh()` afterwards. On a 64 x 30 map this
+costs well under a millisecond, and its cost grows with the map's area.
 
 The torch is a prop sheet (`torch.png`, 3 flame frames), drawn unlit: its flame
 is the light. On the sample map it is `T`, on a wall cell that is air in the
-terrain. The generator's `--preview` approximates this lighting.
+terrain.
 
 ## In Unity
 

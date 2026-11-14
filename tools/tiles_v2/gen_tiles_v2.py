@@ -913,46 +913,59 @@ TORCH_CHAR = "T"  # a torch on the wall at this cell; air for the terrain
 WALL_CHARS = {"d": "dirt_wall", "s": "stone_wall"}
 
 
-def sky_reach(terrain: list[str]) -> list[int]:
-    """For each column, the first row (from the top) that is solid: open sky
-    reaches down to it."""
-    h = len(terrain)
-    out = []
-    for x in range(max(len(row) for row in terrain)):
-        row = next((y for y in range(h) if x < len(terrain[y]) and terrain[y][x] in TERRAIN_CHARS), h)
-        out.append(row)
-    return out
-
-
-# The lighting standard (docs/art/tiles-v2.md), shared with TilesV2Sample.cs.
-AMBIENT = 0.08  # the light everywhere, deep underground included
-SKY_FALLOFF = 5.0  # tiles the daylight reaches into the ground past open sky
-TORCH_RADIUS = 8.0  # tiles
+# The lighting standard (docs/art/tiles-v2.md), shared with TilesV2Sample.cs and
+# TileLight.cs: light per tile, from the open sky and the torches, spread tile by tile.
+AMBIENT = 0.04  # the light everywhere, deep underground included
+AIR_KEEPS = 0.9  # the share of light a tile of air (or air before a wall) passes on
+SOLID_KEEPS = 0.7  # the share a solid tile passes on: light dies a few tiles into rock
+LIGHT_PASSES = 3  # sweeps of the map: enough for light to turn a corner twice
 TORCH_COLOUR = (1.0, 0.72, 0.42)
-TORCH_INTENSITY = 1.4
+TORCH_INTENSITY = 1.6  # the light a torch gives its tile
+TORCH_GLOW = 0.35  # the small flickering point light on top of it
+TORCH_GLOW_RADIUS = 3.0  # tiles
 
 
-def light_preview(canvas: Image.Image, terrain: list[str], torches) -> Image.Image:
-    """An approximation of the Unity lighting for the preview: daylight down
-    to each column's sky reach, fading over SKY_FALLOFF tiles, a dim ambient,
-    and warm torch light falling off with distance."""
-    w, h = canvas.size
-    ys, xs = np.mgrid[0:h, 0:w].astype(np.float32) / TILE
-    reach = np.array(sky_reach(terrain), dtype=np.float32)
-    col = np.clip(xs.astype(int), 0, len(reach) - 1)
-    # distance below the skyline, softened sideways by the neighbouring columns
-    depth = np.full_like(xs, 99.0)
-    for dx in range(-3, 4):
-        r = reach[np.clip(col + dx, 0, len(reach) - 1)]
-        side = np.maximum(np.abs(xs - (col + dx + 0.5)) - 0.5, 0)
-        depth = np.minimum(depth, np.hypot(np.maximum(ys - r, 0), side * (dx != 0)))
-    sky = np.clip(1 - depth / SKY_FALLOFF, 0, 1)
-    light = np.stack([np.full_like(xs, AMBIENT)] * 3, -1) + sky[..., None] * (1 - AMBIENT)
+def tile_light(solid: np.ndarray, wall: np.ndarray, torches) -> np.ndarray:
+    """The light per tile, rows top first, as TileLight.cs works it out: daylight
+    down each column to its first solid tile or wall, each torch's light on its
+    tile, then the brightest of each tile's own light and its neighbours' light
+    times the share it keeps."""
+    h, w = solid.shape
+    light = np.zeros((h, w, 3), dtype=np.float32)
+    for x in range(w):
+        for y in range(h):
+            if solid[y, x] or wall[y, x]:
+                break
+            light[y, x] = 1.0
     for tx, ty in torches:
-        d = np.hypot(xs - tx - 0.5, ys - ty - 0.4) / TORCH_RADIUS
-        k = np.clip(1 - d, 0, 1) ** 1.2 * TORCH_INTENSITY
-        light += k[..., None] * np.array(TORCH_COLOUR, dtype=np.float32)
-    rgb = np.asarray(canvas.convert("RGB"), dtype=np.float32) * np.clip(light, 0, 1.25)
+        light[ty, tx] = np.maximum(light[ty, tx], np.array(TORCH_COLOUR) * TORCH_INTENSITY)
+    keep = np.where(solid, SOLID_KEEPS, AIR_KEEPS).astype(np.float32)[..., None]
+    for _ in range(LIGHT_PASSES):
+        for x in range(1, w):
+            light[:, x] = np.maximum(light[:, x], light[:, x - 1] * keep[:, x])
+        for x in range(w - 2, -1, -1):
+            light[:, x] = np.maximum(light[:, x], light[:, x + 1] * keep[:, x])
+        for y in range(1, h):
+            light[y] = np.maximum(light[y], light[y - 1] * keep[y])
+        for y in range(h - 2, -1, -1):
+            light[y] = np.maximum(light[y], light[y + 1] * keep[y])
+    return light
+
+
+def light_preview(canvas: Image.Image, terrain: list[str], walls: list[str], torches) -> Image.Image:
+    """The Unity lighting for the preview: the tile light, filtered smooth between
+    tile centres, on a faint ambient."""
+    h, w = len(terrain), canvas.width // TILE
+
+    def grid(rows, chars):
+        return np.array([[x < len(r) and r[x] in chars for x in range(w)] for r in rows[:h]], dtype=bool)
+
+    light = tile_light(grid(terrain, TERRAIN_CHARS), grid(walls, WALL_CHARS), torches)
+    smooth = np.stack(
+        [np.asarray(Image.fromarray(light[..., c], "F").resize(canvas.size, Image.BILINEAR)) for c in range(3)], -1
+    )
+    smooth += AMBIENT
+    rgb = np.asarray(canvas.convert("RGB"), dtype=np.float32) * np.clip(smooth, 0, 1.6)
     return Image.fromarray(np.clip(rgb, 0, 255).astype(np.uint8), "RGB").convert("RGBA")
 
 
@@ -1022,7 +1035,7 @@ def preview(images: dict[str, Image.Image], path: str, lit: bool = True):
                     canvas.alpha_composite(tile, (x * TILE, y * TILE))
     torches = [(x, y) for y in range(h) for x in range(len(terrain[y])) if terrain[y][x] == TORCH_CHAR]
     if lit:
-        canvas = light_preview(canvas, terrain, torches)
+        canvas = light_preview(canvas, terrain, walls, torches)
     for x, y in torches:
         canvas.alpha_composite(images["torch"].crop((0, 0, TILE, TILE)), (x * TILE, y * TILE))
     os.makedirs(os.path.dirname(os.path.abspath(path)), exist_ok=True)
