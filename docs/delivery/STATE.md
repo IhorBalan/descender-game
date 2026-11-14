@@ -113,8 +113,8 @@ be re-made from the same parts one at a time.
 
 All six tasks are merged (2026-11-12, #197 to #202). What is left of the
 milestone is Ihor's playtest of the lab rooms `foes`, `chase`, `air`,
-`guard`, `arena` and `boss`. T-0038 adds one run through everything, the
-`gauntlet`, so the mechanics can be felt together.
+`guard`, `arena` and `boss`. T-0038 (#203, merged 2026-11-14) adds one run
+through everything, the `gauntlet`, so the mechanics can be felt together.
 
 ### After G4
 
@@ -263,7 +263,7 @@ hygiene as each production region lands.
 | T-0035 | Shielded and summon | done | 35 | T-0033 | 0 | Re-plan the roadmap around mechanics | #200 |
 | T-0036 | Spawners and encounter rooms | done | 36 | T-0033 | 0 | Re-plan the roadmap around mechanics | #201 |
 | T-0037 | A boss pattern as the template | done | 37 | T-0036 | 0 | Re-plan the roadmap around mechanics | #202 |
-| T-0038 | The gauntlet: one run through every mechanic | in review | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | |
+| T-0038 | The gauntlet: one run through every mechanic | done | 38 | T-0037 | 0 | Re-plan the roadmap around mechanics | #203 |
 
 Full task text: project files, `planning/m1-tasks.md` (revision 3, T-0011
 added 2026-11-08), `planning/godot-removal-tasks.md` (revision 2, MG),
