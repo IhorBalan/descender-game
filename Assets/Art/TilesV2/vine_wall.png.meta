@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 02fab5f1a26e5688b7be731f543b77fd
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1292013231635215545
+    second: tv2_vine_wall_f0_v0
+  - first:
+      213: 2988273162417130831
+    second: tv2_vine_wall_f1_v0
+  - first:
+      213: 65832399767760418
+    second: tv2_vine_wall_f4_v0
+  - first:
+      213: 2725773097185769393
+    second: tv2_vine_wall_f5_v0
+  - first:
+      213: 1881408376723203672
+    second: tv2_vine_wall_f7_v0
+  - first:
+      213: 3702856854111848916
+    second: tv2_vine_wall_f16_v0
+  - first:
+      213: 1754830971942979890
+    second: tv2_vine_wall_f17_v0
+  - first:
+      213: 3290184395405423930
+    second: tv2_vine_wall_f20_v0
+  - first:
+      213: 2442038610616990776
+    second: tv2_vine_wall_f21_v0
+  - first:
+      213: 4398020538020982362
+    second: tv2_vine_wall_f23_v0
+  - first:
+      213: 3499971165200951517
+    second: tv2_vine_wall_f28_v0
+  - first:
+      213: 760620007967945614
+    second: tv2_vine_wall_f29_v0
+  - first:
+      213: 538990471944402767
+    second: tv2_vine_wall_f31_v0
+  - first:
+      213: 1938539677695560382
+    second: tv2_vine_wall_f64_v0
+  - first:
+      213: 42767047646151862
+    second: tv2_vine_wall_f65_v0
+  - first:
+      213: 94587332983231693
+    second: tv2_vine_wall_f68_v0
+  - first:
+      213: 2025231633943496947
+    second: tv2_vine_wall_f69_v0
+  - first:
+      213: 1602354184697424340
+    second: tv2_vine_wall_f71_v0
+  - first:
+      213: 4494928987458586255
+    second: tv2_vine_wall_f80_v0
+  - first:
+      213: 4282085343237782892
+    second: tv2_vine_wall_f81_v0
+  - first:
+      213: 3222252567396228888
+    second: tv2_vine_wall_f84_v0
+  - first:
+      213: 349105543855209190
+    second: tv2_vine_wall_f85_v0
+  - first:
+      213: 289277015266908490
+    second: tv2_vine_wall_f87_v0
+  - first:
+      213: 1776510311376223521
+    second: tv2_vine_wall_f92_v0
+  - first:
+      213: 2149458060862631945
+    second: tv2_vine_wall_f93_v0
+  - first:
+      213: 241500768496628184
+    second: tv2_vine_wall_f95_v0
+  - first:
+      213: 3777185355807417785
+    second: tv2_vine_wall_f112_v0
+  - first:
+      213: 3069735447069853966
+    second: tv2_vine_wall_f113_v0
+  - first:
+      213: 3144535547003153005
+    second: tv2_vine_wall_f116_v0
+  - first:
+      213: 2345271584299327072
+    second: tv2_vine_wall_f117_v0
+  - first:
+      213: 942311961272056445
+    second: tv2_vine_wall_f119_v0
+  - first:
+      213: 2059519424958888981
+    second: tv2_vine_wall_f124_v0
+  - first:
+      213: 1689047574756588409
+    second: tv2_vine_wall_f125_v0
+  - first:
+      213: 909034820746351729
+    second: tv2_vine_wall_f127_v0
+  - first:
+      213: 2010743316469029015
+    second: tv2_vine_wall_f193_v0
+  - first:
+      213: 1475742324355203132
+    second: tv2_vine_wall_f197_v0
+  - first:
+      213: 929373917624335795
+    second: tv2_vine_wall_f199_v0
+  - first:
+      213: 2833234845161313386
+    second: tv2_vine_wall_f209_v0
+  - first:
+      213: 2763863891737769747
+    second: tv2_vine_wall_f213_v0
+  - first:
+      213: 483229253335153008
+    second: tv2_vine_wall_f215_v0
+  - first:
+      213: 3904754323845554643
+    second: tv2_vine_wall_f221_v0
+  - first:
+      213: 3099812202218609127
+    second: tv2_vine_wall_f223_v0
+  - first:
+      213: 4243156366808362942
+    second: tv2_vine_wall_f241_v0
+  - first:
+      213: 112955416355176772
+    second: tv2_vine_wall_f245_v0
+  - first:
+      213: 2792315801537394211
+    second: tv2_vine_wall_f247_v0
+  - first:
+      213: 911221006342954370
+    second: tv2_vine_wall_f253_v0
+  - first:
+      213: 4489964869971402627
+    second: tv2_vine_wall_f255_v0
+  - first:
+      213: 4358876370023498552
+    second: tv2_vine_wall_f0_v1
+  - first:
+      213: 4420027545443381278
+    second: tv2_vine_wall_f1_v1
+  - first:
+      213: 2878755645742269564
+    second: tv2_vine_wall_f4_v1
+  - first:
+      213: 2858767405957800454
+    second: tv2_vine_wall_f5_v1
+  - first:
+      213: 2209233099771339456
+    second: tv2_vine_wall_f7_v1
+  - first:
+      213: 3805911086296701058
+    second: tv2_vine_wall_f16_v1
+  - first:
+      213: 1135735931888453231
+    second: tv2_vine_wall_f17_v1
+  - first:
+      213: 2779888391718719407
+    second: tv2_vine_wall_f20_v1
+  - first:
+      213: 78023733129543476
+    second: tv2_vine_wall_f21_v1
+  - first:
+      213: 2609056548365086307
+    second: tv2_vine_wall_f23_v1
+  - first:
+      213: 4392130986165876333
+    second: tv2_vine_wall_f28_v1
+  - first:
+      213: 4261390122710298992
+    second: tv2_vine_wall_f29_v1
+  - first:
+      213: 4444085328548577403
+    second: tv2_vine_wall_f31_v1
+  - first:
+      213: 2551959856645200648
+    second: tv2_vine_wall_f64_v1
+  - first:
+      213: 2772766465528831529
+    second: tv2_vine_wall_f65_v1
+  - first:
+      213: 360351315024082938
+    second: tv2_vine_wall_f68_v1
+  - first:
+      213: 3140125575667353395
+    second: tv2_vine_wall_f69_v1
+  - first:
+      213: 2554156540299528696
+    second: tv2_vine_wall_f71_v1
+  - first:
+      213: 1809356299861371328
+    second: tv2_vine_wall_f80_v1
+  - first:
+      213: 766623554038633326
+    second: tv2_vine_wall_f81_v1
+  - first:
+      213: 2223934591458878230
+    second: tv2_vine_wall_f84_v1
+  - first:
+      213: 2901923079838459541
+    second: tv2_vine_wall_f85_v1
+  - first:
+      213: 4453570807015481407
+    second: tv2_vine_wall_f87_v1
+  - first:
+      213: 1570431372241017057
+    second: tv2_vine_wall_f92_v1
+  - first:
+      213: 38337160188578340
+    second: tv2_vine_wall_f93_v1
+  - first:
+      213: 4076162821501554987
+    second: tv2_vine_wall_f95_v1
+  - first:
+      213: 4538903765415553813
+    second: tv2_vine_wall_f112_v1
+  - first:
+      213: 988825646738806862
+    second: tv2_vine_wall_f113_v1
+  - first:
+      213: 3139460869479359007
+    second: tv2_vine_wall_f116_v1
+  - first:
+      213: 3513133237198453677
+    second: tv2_vine_wall_f117_v1
+  - first:
+      213: 156221711740894822
+    second: tv2_vine_wall_f119_v1
+  - first:
+      213: 595768634614982903
+    second: tv2_vine_wall_f124_v1
+  - first:
+      213: 2343377218502955385
+    second: tv2_vine_wall_f125_v1
+  - first:
+      213: 3542361077363732120
+    second: tv2_vine_wall_f127_v1
+  - first:
+      213: 4243507111047111851
+    second: tv2_vine_wall_f193_v1
+  - first:
+      213: 4335467595664130727
+    second: tv2_vine_wall_f197_v1
+  - first:
+      213: 159732033448023040
+    second: tv2_vine_wall_f199_v1
+  - first:
+      213: 969945521039631894
+    second: tv2_vine_wall_f209_v1
+  - first:
+      213: 1447162984503665558
+    second: tv2_vine_wall_f213_v1
+  - first:
+      213: 2189285845716815386
+    second: tv2_vine_wall_f215_v1
+  - first:
+      213: 2115901027336832619
+    second: tv2_vine_wall_f221_v1
+  - first:
+      213: 4325057184218634041
+    second: tv2_vine_wall_f223_v1
+  - first:
+      213: 2720435901917169985
+    second: tv2_vine_wall_f241_v1
+  - first:
+      213: 3735249125094552477
+    second: tv2_vine_wall_f245_v1
+  - first:
+      213: 4099292428116305063
+    second: tv2_vine_wall_f247_v1
+  - first:
+      213: 1027425677131334966
+    second: tv2_vine_wall_f253_v1
+  - first:
+      213: 3045318220731493554
+    second: tv2_vine_wall_f255_v1
+  - first:
+      213: 1937865855656033550
+    second: tv2_vine_wall_f0_v2
+  - first:
+      213: 1236583489349530999
+    second: tv2_vine_wall_f1_v2
+  - first:
+      213: 2171574311026616238
+    second: tv2_vine_wall_f4_v2
+  - first:
+      213: 2253937498952659212
+    second: tv2_vine_wall_f5_v2
+  - first:
+      213: 2708585124334611210
+    second: tv2_vine_wall_f7_v2
+  - first:
+      213: 2783193220712802929
+    second: tv2_vine_wall_f16_v2
+  - first:
+      213: 2384723265974385505
+    second: tv2_vine_wall_f17_v2
+  - first:
+      213: 3495432606581514485
+    second: tv2_vine_wall_f20_v2
+  - first:
+      213: 1808570368717618789
+    second: tv2_vine_wall_f21_v2
+  - first:
+      213: 3359915147533162882
+    second: tv2_vine_wall_f23_v2
+  - first:
+      213: 2372637285731443341
+    second: tv2_vine_wall_f28_v2
+  - first:
+      213: 1693912301262940484
+    second: tv2_vine_wall_f29_v2
+  - first:
+      213: 687662585942100552
+    second: tv2_vine_wall_f31_v2
+  - first:
+      213: 2080825821249460618
+    second: tv2_vine_wall_f64_v2
+  - first:
+      213: 1160494428813561878
+    second: tv2_vine_wall_f65_v2
+  - first:
+      213: 128335265225179671
+    second: tv2_vine_wall_f68_v2
+  - first:
+      213: 2609633512817935501
+    second: tv2_vine_wall_f69_v2
+  - first:
+      213: 2520975612476391205
+    second: tv2_vine_wall_f71_v2
+  - first:
+      213: 3387884983237246295
+    second: tv2_vine_wall_f80_v2
+  - first:
+      213: 2378529435310239800
+    second: tv2_vine_wall_f81_v2
+  - first:
+      213: 178103841826987435
+    second: tv2_vine_wall_f84_v2
+  - first:
+      213: 4115586876502871306
+    second: tv2_vine_wall_f85_v2
+  - first:
+      213: 3159631843178926505
+    second: tv2_vine_wall_f87_v2
+  - first:
+      213: 2535958539935536299
+    second: tv2_vine_wall_f92_v2
+  - first:
+      213: 1503318122785277521
+    second: tv2_vine_wall_f93_v2
+  - first:
+      213: 3679941636720575139
+    second: tv2_vine_wall_f95_v2
+  - first:
+      213: 1622093342063556865
+    second: tv2_vine_wall_f112_v2
+  - first:
+      213: 3033035164594474657
+    second: tv2_vine_wall_f113_v2
+  - first:
+      213: 260793177612781923
+    second: tv2_vine_wall_f116_v2
+  - first:
+      213: 4218317521130597857
+    second: tv2_vine_wall_f117_v2
+  - first:
+      213: 3027173383566717984
+    second: tv2_vine_wall_f119_v2
+  - first:
+      213: 1321642943829767024
+    second: tv2_vine_wall_f124_v2
+  - first:
+      213: 559890937769113370
+    second: tv2_vine_wall_f125_v2
+  - first:
+      213: 487626139797814268
+    second: tv2_vine_wall_f127_v2
+  - first:
+      213: 4099114904923754961
+    second: tv2_vine_wall_f193_v2
+  - first:
+      213: 3732832696731334411
+    second: tv2_vine_wall_f197_v2
+  - first:
+      213: 3818817733887399969
+    second: tv2_vine_wall_f199_v2
+  - first:
+      213: 4246516347807333695
+    second: tv2_vine_wall_f209_v2
+  - first:
+      213: 3050885658224850940
+    second: tv2_vine_wall_f213_v2
+  - first:
+      213: 3400141828401725668
+    second: tv2_vine_wall_f215_v2
+  - first:
+      213: 2311142902835406688
+    second: tv2_vine_wall_f221_v2
+  - first:
+      213: 1326324574281964827
+    second: tv2_vine_wall_f223_v2
+  - first:
+      213: 3028406716822886908
+    second: tv2_vine_wall_f241_v2
+  - first:
+      213: 2953582452762691740
+    second: tv2_vine_wall_f245_v2
+  - first:
+      213: 3871940785504281780
+    second: tv2_vine_wall_f247_v2
+  - first:
+      213: 684057059818483454
+    second: tv2_vine_wall_f253_v2
+  - first:
+      213: 1711435092083788919
+    second: tv2_vine_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_vine_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47341852274d54ff8087dd5c92de29df
+      internalID: 1292013231635215545
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 19ec39e8e07451d1a181d6fae2095679
+      internalID: 2988273162417130831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53fd8bd25da45ee8aa3c98b71295eef1
+      internalID: 65832399767760418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ecd40c2d39c5a41b9a49eebfdec0830
+      internalID: 2725773097185769393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 337b8fc2d8bf5ef4ac526ce52842c7ed
+      internalID: 1881408376723203672
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e989f1ef2b3253e79394bf32ad75348a
+      internalID: 3702856854111848916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf49fa2882365189ba44d8b30947375d
+      internalID: 1754830971942979890
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77b56926ae4c5564b8ddb829da618b02
+      internalID: 3290184395405423930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 231f2b49657856179a5582cf7e32e4c9
+      internalID: 2442038610616990776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6866a28af72754aa9084c92c569ebd8f
+      internalID: 4398020538020982362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aed627107215535a794e8d8536373c6
+      internalID: 3499971165200951517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f0d4400213f545aace99986edd95e03
+      internalID: 760620007967945614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 560d82b45e2a56dfae5a634172fd13e7
+      internalID: 538990471944402767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 271c02ded7435efcbf33539a93fca44c
+      internalID: 1938539677695560382
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41e377ab70e5be9bc121088f8c2bc42
+      internalID: 42767047646151862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeeeb5d827fe50a7b1d5d73b95eaa49e
+      internalID: 94587332983231693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d7007813b0157b5b00f5257bfd36a79
+      internalID: 2025231633943496947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44031a0e79965028ba01c7b833fd1cdb
+      internalID: 1602354184697424340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d83c3f3a8b1f5213826cf4c488b9eaa3
+      internalID: 4494928987458586255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 181ea744237e5a0c98280213b2e34226
+      internalID: 4282085343237782892
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74a3be5f1345e4b94b133190efaaa84
+      internalID: 3222252567396228888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35694d6dfa6650478cbdd63b15f389f4
+      internalID: 349105543855209190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b5201979aa15b298832e60ce71ec323
+      internalID: 289277015266908490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae78d21d92ed5182a1d62a12134679f7
+      internalID: 1776510311376223521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57c843f117ae5ac78b6df5a79216faae
+      internalID: 2149458060862631945
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a41ce2c417085224a0f8537a7ce1761a
+      internalID: 241500768496628184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ff4b878b36564c970e33c7d7fa7ac5
+      internalID: 3777185355807417785
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a8d9f13942d5b4d977cf48f45e93080
+      internalID: 3069735447069853966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6da1bb6c98c57649940224d3accf436
+      internalID: 3144535547003153005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92fd2faae24a5459bdbe90b9121cf9ba
+      internalID: 2345271584299327072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fa1a084c85855f0bc24a3bc4a88c674
+      internalID: 942311961272056445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e730bc8e9c165808a8e13a184ba8d404
+      internalID: 2059519424958888981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc1f4bd947625e4aa1bc5deec7e9fbb2
+      internalID: 1689047574756588409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b356c47d8b525ba0a7d420c33fd30acb
+      internalID: 909034820746351729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f06b3d51ea6e56f2b3fd0c15fb6ca92d
+      internalID: 2010743316469029015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9fac151d1a85392823a35acb63667d3
+      internalID: 1475742324355203132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7b19d58493f5a1b95ed64f16620293c
+      internalID: 929373917624335795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f10191fa0c9f5dc68125a24c37e214b2
+      internalID: 2833234845161313386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1044139f013f57aa910f02f29853b246
+      internalID: 2763863891737769747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fa2824dec205302b55c9079ae6b4bad
+      internalID: 483229253335153008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecceb30adce0556a97e746f835f3aa19
+      internalID: 3904754323845554643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc1d2805e4cf57d7be451e83e73c22d3
+      internalID: 3099812202218609127
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7393cc9b93215719af6fd79e7b704b46
+      internalID: 4243156366808362942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e86d4db62a95c3db02cf1a12c9d8a4b
+      internalID: 112955416355176772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6262252239ab57779e2b6b4559397cde
+      internalID: 2792315801537394211
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d518391fd3865126b871ba1da554164c
+      internalID: 911221006342954370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66306e5443c850398b2c766ff42b257d
+      internalID: 4489964869971402627
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9d413eb14b95e0593d7e247b1977d99
+      internalID: 4358876370023498552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72c0069b957e5d52b28337ef96145f34
+      internalID: 4420027545443381278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e33be47b8b135e60bf7baf6eaab710b0
+      internalID: 2878755645742269564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2dcb86d7a14f58dc8c0ea4868cb37f17
+      internalID: 2858767405957800454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cecee3729cb05249bdb455cb4edee7e7
+      internalID: 2209233099771339456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dac0a8f4b867543c82796d919d67947d
+      internalID: 3805911086296701058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 895c44363a6052138201c4cb0edcb5c8
+      internalID: 1135735931888453231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffc6948b66d356f6bb5e4b476f0056e4
+      internalID: 2779888391718719407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b1f720b8ea752db8210e482578c55f8
+      internalID: 78023733129543476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ea2cc09af7158fbbbff26c1328869d9
+      internalID: 2609056548365086307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ecd214bd99d5c248efb541acda3d221
+      internalID: 4392130986165876333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 959ea0e1afea505c857df5561f286a29
+      internalID: 4261390122710298992
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b91b100958b5ac1a28541f435c6ca94
+      internalID: 4444085328548577403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 635ce17a62505822945faf27f2f0f8d9
+      internalID: 2551959856645200648
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b16c4acc1852e1b84d3460b93b7c8c
+      internalID: 2772766465528831529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a85f2b74f49552aa42061f1cdb0adf6
+      internalID: 360351315024082938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2eee1aa938b56898e0776d1b31da79d
+      internalID: 3140125575667353395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a44d2f14db9c55cdb7135e7a600a11ac
+      internalID: 2554156540299528696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d4e13ce47f35c55a2e76fed12a3e7d4
+      internalID: 1809356299861371328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47038714ef3b5f6db8beaec4622d46cd
+      internalID: 766623554038633326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10dedfe3a1875e7f9204e8009646cafe
+      internalID: 2223934591458878230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34418ef9dd2751319d95fc780e28415f
+      internalID: 2901923079838459541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53ab0b48dcaa55ceab40d6779e4bdc4f
+      internalID: 4453570807015481407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f27e37ba64235314b667e07004576c22
+      internalID: 1570431372241017057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f6f0e27dbb9f54778014beb548ebcee7
+      internalID: 38337160188578340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d20fc6f0df42576e84bd1f3d4cb738bc
+      internalID: 4076162821501554987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8df3c183e4895c4ab85e68e59b98327c
+      internalID: 4538903765415553813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d5f59a0e2405abd82f5ad1237ea03af
+      internalID: 988825646738806862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 758ddc53d9a15378b40282181ca6a527
+      internalID: 3139460869479359007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10461a3ecbcf5e8383655ab438ad9437
+      internalID: 3513133237198453677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 644acd3de0da579e918facd272498060
+      internalID: 156221711740894822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed9f9f8d32525ce288a910251a5a644b
+      internalID: 595768634614982903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc3810507fea5a639df0d05145f68dc6
+      internalID: 2343377218502955385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 774ba7225da3505381135298778555e2
+      internalID: 3542361077363732120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 581313015c2d53adb55f3e104c4d19bd
+      internalID: 4243507111047111851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38fab2d148875e219e8d6007fcf00fbb
+      internalID: 4335467595664130727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fae054e11caf50e9862273018c1d9bdb
+      internalID: 159732033448023040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf4a9fc02c1651b8a8b7162f35bdc7a5
+      internalID: 969945521039631894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6388c4c8747f52b1af26cf57e080d33f
+      internalID: 1447162984503665558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb102ab867e9571aae7d0ad3b780c262
+      internalID: 2189285845716815386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce5a53032de95559b0ce546db2e9c14a
+      internalID: 2115901027336832619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e382ce6e3cb45d50aa3492785d333754
+      internalID: 4325057184218634041
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b18c298a42405fdf9af963181d22c36a
+      internalID: 2720435901917169985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 563d3598170659289632fbcf5a585e86
+      internalID: 3735249125094552477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92afe00c07f452bbb033d7ac1ffd30c1
+      internalID: 4099292428116305063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ebd0a92fe705b52b9065f5bbf9a14a3
+      internalID: 1027425677131334966
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 854821d753405b7a9b94c05aa59c5597
+      internalID: 3045318220731493554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c18721871835dfb85d6377c75ff4cec
+      internalID: 1937865855656033550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: db89e3c4a6bc52bf8cecf73ffe47df50
+      internalID: 1236583489349530999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a921550864da5614895defaf251fec60
+      internalID: 2171574311026616238
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60bfb1837e2356db81ff8660d3a60d65
+      internalID: 2253937498952659212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 427e734d73255549b3091d5da66ab5a0
+      internalID: 2708585124334611210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9818e8274325bd292fe059662af1ddb
+      internalID: 2783193220712802929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0f0eecbd7e65dedbf1f8bce0a849ecb
+      internalID: 2384723265974385505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03646545aa725fd09a2f5b896576bca1
+      internalID: 3495432606581514485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd00a48ada945d80a44eeefdedbd29a8
+      internalID: 1808570368717618789
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3d0295372775a00806c23aea0f98ffd
+      internalID: 3359915147533162882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e763a6bfe0295cdb85d97e51032141c7
+      internalID: 2372637285731443341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d90c06a96252513991a2af3446688e2a
+      internalID: 1693912301262940484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 680390f8a3a4509595b2ac7106738d02
+      internalID: 687662585942100552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5614c197cc6559dae3360913fac787a
+      internalID: 2080825821249460618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f458418fb2f5e268ade0360ad3e2634
+      internalID: 1160494428813561878
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c6694c32e67506e9331ada306c45a02
+      internalID: 128335265225179671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07bc6e61139254b281ea368c892b2f21
+      internalID: 2609633512817935501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d4f1b3a76b55b2c8bb4a241e0b3bbe3
+      internalID: 2520975612476391205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44536c0a11085cbbab242f24f7f2159a
+      internalID: 3387884983237246295
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e55f6a7a9c405253aba3343b0a9bcb21
+      internalID: 2378529435310239800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a2fbbe0e6d4515ca3dd1a8936fa1d64
+      internalID: 178103841826987435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddd11189d9725eb19914c92b6948e0f1
+      internalID: 4115586876502871306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eed2c3d373125ff3acdc72089d54027b
+      internalID: 3159631843178926505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a09ff1484ce350419bdd94c23821a4ad
+      internalID: 2535958539935536299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97f67dd306fe5104b82beaa66fada06a
+      internalID: 1503318122785277521
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b34ed709e6665133bc859b617e5586b5
+      internalID: 3679941636720575139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04eaadbda61d53cda1523f5ee7562fe6
+      internalID: 1622093342063556865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0acc228519fe513699746a714522067c
+      internalID: 3033035164594474657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0dc6f5f069745377a09d11fec4548645
+      internalID: 260793177612781923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60bda9cd44ae5ac4b33d29d87c4e180d
+      internalID: 4218317521130597857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8111352419265eca9a0f2929a40f29e4
+      internalID: 3027173383566717984
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0415e1ee8dd539897722269eb63e918
+      internalID: 1321642943829767024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d24ea0b773257929481b522644cad89
+      internalID: 559890937769113370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b520e1c4cfff54cf8260a77bc6a570a7
+      internalID: 487626139797814268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0ad97d2d69f509aa487aaa6fdc5a2fe
+      internalID: 4099114904923754961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1b8052ca058505c8c4e5f4eeadf4e33
+      internalID: 3732832696731334411
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa282de9c8fb5652b622079f86a567bc
+      internalID: 3818817733887399969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2353612adf705e15af1ff80dba36abc0
+      internalID: 4246516347807333695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dacbe80d69f65f989e04db5f39ac6c94
+      internalID: 3050885658224850940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af6a1325bbfd5391bb50030194366ca2
+      internalID: 3400141828401725668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a363eae848595cd3a507c1c3e812a289
+      internalID: 2311142902835406688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5739be94d0905d40ad47c2d218cf9f3b
+      internalID: 1326324574281964827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88d4c1d18c6153bca6fa32d475497230
+      internalID: 3028406716822886908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8acfc7036475e0dad9dcf6d5fc9e208
+      internalID: 2953582452762691740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5bdeb9e0de515bc0952eefc9a5cadf61
+      internalID: 3871940785504281780
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20c116e221ba58159f839e08c30410f4
+      internalID: 684057059818483454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_vine_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea950fc544fd5468b6b0deb603f0ba49
+      internalID: 1711435092083788919
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_vine_wall_f0_v0: 1292013231635215545
+      tv2_vine_wall_f1_v0: 2988273162417130831
+      tv2_vine_wall_f4_v0: 65832399767760418
+      tv2_vine_wall_f5_v0: 2725773097185769393
+      tv2_vine_wall_f7_v0: 1881408376723203672
+      tv2_vine_wall_f16_v0: 3702856854111848916
+      tv2_vine_wall_f17_v0: 1754830971942979890
+      tv2_vine_wall_f20_v0: 3290184395405423930
+      tv2_vine_wall_f21_v0: 2442038610616990776
+      tv2_vine_wall_f23_v0: 4398020538020982362
+      tv2_vine_wall_f28_v0: 3499971165200951517
+      tv2_vine_wall_f29_v0: 760620007967945614
+      tv2_vine_wall_f31_v0: 538990471944402767
+      tv2_vine_wall_f64_v0: 1938539677695560382
+      tv2_vine_wall_f65_v0: 42767047646151862
+      tv2_vine_wall_f68_v0: 94587332983231693
+      tv2_vine_wall_f69_v0: 2025231633943496947
+      tv2_vine_wall_f71_v0: 1602354184697424340
+      tv2_vine_wall_f80_v0: 4494928987458586255
+      tv2_vine_wall_f81_v0: 4282085343237782892
+      tv2_vine_wall_f84_v0: 3222252567396228888
+      tv2_vine_wall_f85_v0: 349105543855209190
+      tv2_vine_wall_f87_v0: 289277015266908490
+      tv2_vine_wall_f92_v0: 1776510311376223521
+      tv2_vine_wall_f93_v0: 2149458060862631945
+      tv2_vine_wall_f95_v0: 241500768496628184
+      tv2_vine_wall_f112_v0: 3777185355807417785
+      tv2_vine_wall_f113_v0: 3069735447069853966
+      tv2_vine_wall_f116_v0: 3144535547003153005
+      tv2_vine_wall_f117_v0: 2345271584299327072
+      tv2_vine_wall_f119_v0: 942311961272056445
+      tv2_vine_wall_f124_v0: 2059519424958888981
+      tv2_vine_wall_f125_v0: 1689047574756588409
+      tv2_vine_wall_f127_v0: 909034820746351729
+      tv2_vine_wall_f193_v0: 2010743316469029015
+      tv2_vine_wall_f197_v0: 1475742324355203132
+      tv2_vine_wall_f199_v0: 929373917624335795
+      tv2_vine_wall_f209_v0: 2833234845161313386
+      tv2_vine_wall_f213_v0: 2763863891737769747
+      tv2_vine_wall_f215_v0: 483229253335153008
+      tv2_vine_wall_f221_v0: 3904754323845554643
+      tv2_vine_wall_f223_v0: 3099812202218609127
+      tv2_vine_wall_f241_v0: 4243156366808362942
+      tv2_vine_wall_f245_v0: 112955416355176772
+      tv2_vine_wall_f247_v0: 2792315801537394211
+      tv2_vine_wall_f253_v0: 911221006342954370
+      tv2_vine_wall_f255_v0: 4489964869971402627
+      tv2_vine_wall_f0_v1: 4358876370023498552
+      tv2_vine_wall_f1_v1: 4420027545443381278
+      tv2_vine_wall_f4_v1: 2878755645742269564
+      tv2_vine_wall_f5_v1: 2858767405957800454
+      tv2_vine_wall_f7_v1: 2209233099771339456
+      tv2_vine_wall_f16_v1: 3805911086296701058
+      tv2_vine_wall_f17_v1: 1135735931888453231
+      tv2_vine_wall_f20_v1: 2779888391718719407
+      tv2_vine_wall_f21_v1: 78023733129543476
+      tv2_vine_wall_f23_v1: 2609056548365086307
+      tv2_vine_wall_f28_v1: 4392130986165876333
+      tv2_vine_wall_f29_v1: 4261390122710298992
+      tv2_vine_wall_f31_v1: 4444085328548577403
+      tv2_vine_wall_f64_v1: 2551959856645200648
+      tv2_vine_wall_f65_v1: 2772766465528831529
+      tv2_vine_wall_f68_v1: 360351315024082938
+      tv2_vine_wall_f69_v1: 3140125575667353395
+      tv2_vine_wall_f71_v1: 2554156540299528696
+      tv2_vine_wall_f80_v1: 1809356299861371328
+      tv2_vine_wall_f81_v1: 766623554038633326
+      tv2_vine_wall_f84_v1: 2223934591458878230
+      tv2_vine_wall_f85_v1: 2901923079838459541
+      tv2_vine_wall_f87_v1: 4453570807015481407
+      tv2_vine_wall_f92_v1: 1570431372241017057
+      tv2_vine_wall_f93_v1: 38337160188578340
+      tv2_vine_wall_f95_v1: 4076162821501554987
+      tv2_vine_wall_f112_v1: 4538903765415553813
+      tv2_vine_wall_f113_v1: 988825646738806862
+      tv2_vine_wall_f116_v1: 3139460869479359007
+      tv2_vine_wall_f117_v1: 3513133237198453677
+      tv2_vine_wall_f119_v1: 156221711740894822
+      tv2_vine_wall_f124_v1: 595768634614982903
+      tv2_vine_wall_f125_v1: 2343377218502955385
+      tv2_vine_wall_f127_v1: 3542361077363732120
+      tv2_vine_wall_f193_v1: 4243507111047111851
+      tv2_vine_wall_f197_v1: 4335467595664130727
+      tv2_vine_wall_f199_v1: 159732033448023040
+      tv2_vine_wall_f209_v1: 969945521039631894
+      tv2_vine_wall_f213_v1: 1447162984503665558
+      tv2_vine_wall_f215_v1: 2189285845716815386
+      tv2_vine_wall_f221_v1: 2115901027336832619
+      tv2_vine_wall_f223_v1: 4325057184218634041
+      tv2_vine_wall_f241_v1: 2720435901917169985
+      tv2_vine_wall_f245_v1: 3735249125094552477
+      tv2_vine_wall_f247_v1: 4099292428116305063
+      tv2_vine_wall_f253_v1: 1027425677131334966
+      tv2_vine_wall_f255_v1: 3045318220731493554
+      tv2_vine_wall_f0_v2: 1937865855656033550
+      tv2_vine_wall_f1_v2: 1236583489349530999
+      tv2_vine_wall_f4_v2: 2171574311026616238
+      tv2_vine_wall_f5_v2: 2253937498952659212
+      tv2_vine_wall_f7_v2: 2708585124334611210
+      tv2_vine_wall_f16_v2: 2783193220712802929
+      tv2_vine_wall_f17_v2: 2384723265974385505
+      tv2_vine_wall_f20_v2: 3495432606581514485
+      tv2_vine_wall_f21_v2: 1808570368717618789
+      tv2_vine_wall_f23_v2: 3359915147533162882
+      tv2_vine_wall_f28_v2: 2372637285731443341
+      tv2_vine_wall_f29_v2: 1693912301262940484
+      tv2_vine_wall_f31_v2: 687662585942100552
+      tv2_vine_wall_f64_v2: 2080825821249460618
+      tv2_vine_wall_f65_v2: 1160494428813561878
+      tv2_vine_wall_f68_v2: 128335265225179671
+      tv2_vine_wall_f69_v2: 2609633512817935501
+      tv2_vine_wall_f71_v2: 2520975612476391205
+      tv2_vine_wall_f80_v2: 3387884983237246295
+      tv2_vine_wall_f81_v2: 2378529435310239800
+      tv2_vine_wall_f84_v2: 178103841826987435
+      tv2_vine_wall_f85_v2: 4115586876502871306
+      tv2_vine_wall_f87_v2: 3159631843178926505
+      tv2_vine_wall_f92_v2: 2535958539935536299
+      tv2_vine_wall_f93_v2: 1503318122785277521
+      tv2_vine_wall_f95_v2: 3679941636720575139
+      tv2_vine_wall_f112_v2: 1622093342063556865
+      tv2_vine_wall_f113_v2: 3033035164594474657
+      tv2_vine_wall_f116_v2: 260793177612781923
+      tv2_vine_wall_f117_v2: 4218317521130597857
+      tv2_vine_wall_f119_v2: 3027173383566717984
+      tv2_vine_wall_f124_v2: 1321642943829767024
+      tv2_vine_wall_f125_v2: 559890937769113370
+      tv2_vine_wall_f127_v2: 487626139797814268
+      tv2_vine_wall_f193_v2: 4099114904923754961
+      tv2_vine_wall_f197_v2: 3732832696731334411
+      tv2_vine_wall_f199_v2: 3818817733887399969
+      tv2_vine_wall_f209_v2: 4246516347807333695
+      tv2_vine_wall_f213_v2: 3050885658224850940
+      tv2_vine_wall_f215_v2: 3400141828401725668
+      tv2_vine_wall_f221_v2: 2311142902835406688
+      tv2_vine_wall_f223_v2: 1326324574281964827
+      tv2_vine_wall_f241_v2: 3028406716822886908
+      tv2_vine_wall_f245_v2: 2953582452762691740
+      tv2_vine_wall_f247_v2: 3871940785504281780
+      tv2_vine_wall_f253_v2: 684057059818483454
+      tv2_vine_wall_f255_v2: 1711435092083788919
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

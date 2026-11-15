@@ -467,6 +467,78 @@ MonoBehaviour:
     layer: 0
     key: column_stone
     tile: {fileID: 11400000, guid: e7cf3db46ac04c846b5dd34c61cd8307, type: 2}
+  - character: "\xC0"
+    layer: 0
+    key: moss
+    tile: {fileID: 11400000, guid: ec966fcd1d0663240953d9f88cae3840, type: 2}
+  - character: "\xC1"
+    layer: 0
+    key: moss
+    tile: {fileID: 11400000, guid: d1d4df429ff45e742b29b2d24fd29d39, type: 2}
+  - character: "\xC3"
+    layer: 0
+    key: moss
+    tile: {fileID: 11400000, guid: 80d3530a1c4d34e48a59277d7df8a827, type: 2}
+  - character: "\xC4"
+    layer: 0
+    key: vine
+    tile: {fileID: 11400000, guid: b844d0ad6b5125446a8710b4ecf67f12, type: 2}
+  - character: "\xC6"
+    layer: 0
+    key: vine
+    tile: {fileID: 11400000, guid: b82669c03e9f9cf4097d24583ff1a019, type: 2}
+  - character: "\xC7"
+    layer: 0
+    key: vine
+    tile: {fileID: 11400000, guid: 53d435885ab15c84ba833cc6e9b4a7dc, type: 2}
+  - character: "\xC8"
+    layer: 0
+    key: gold_meadow
+    tile: {fileID: 11400000, guid: 06ace2df9d35dfb4b95e94ce993d287e, type: 2}
+  - character: "\xCB"
+    layer: 0
+    key: gold_meadow
+    tile: {fileID: 11400000, guid: f487622a02137bc42aaf6aba7123bb5e, type: 2}
+  - character: "\xCC"
+    layer: 0
+    key: gold_meadow
+    tile: {fileID: 11400000, guid: 7c710683038dd94488f24ba52dadce86, type: 2}
+  - character: "\xCD"
+    layer: 0
+    key: pearl
+    tile: {fileID: 11400000, guid: 81d15f0c752648a41aa5b055f290535a, type: 2}
+  - character: "\xD0"
+    layer: 0
+    key: silver
+    tile: {fileID: 11400000, guid: 89691f202231ad241b9b3373311e4785, type: 2}
+  - character: "\xD2"
+    layer: 0
+    key: silver
+    tile: {fileID: 11400000, guid: 39b044c4bd1dc5e42b740b3b288d37dd, type: 2}
+  - character: "\xD3"
+    layer: 0
+    key: silver
+    tile: {fileID: 11400000, guid: d6e5a0695bd4ef84fa5688ec161f3f75, type: 2}
+  - character: "\xD5"
+    layer: 1
+    key: canopy_wall
+    tile: {fileID: 11400000, guid: f6c605fea611df74fa8347104b85de79, type: 2}
+  - character: "\xD9"
+    layer: 1
+    key: vine_wall
+    tile: {fileID: 11400000, guid: 409eea30d1d6ece4b86b71cd6d030024, type: 2}
+  - character: "\xDA"
+    layer: 1
+    key: pearl_wall
+    tile: {fileID: 11400000, guid: 0e4223772b98bdc499903d5818a4ded3, type: 2}
+  - character: "\xDB"
+    layer: 1
+    key: silver_wall
+    tile: {fileID: 11400000, guid: dd962dbb6a747674182ea6b06fd757fe, type: 2}
+  - character: "\xDD"
+    layer: 3
+    key: glowfruit
+    tile: {fileID: 0}
   blends:
   - key: dirt_on_stone
     onto: stone
@@ -2027,6 +2099,14 @@ MonoBehaviour:
     - {fileID: 2877629947081457450, guid: dfc07299b32656028cb59248628948e1, type: 3}
     colour: {r: 0.35, g: 1, b: 0.85, a: 1}
     intensity: 1
+    embers: 0
+  - key: glowfruit
+    frames:
+    - {fileID: 1835755573625781665, guid: 513971d2b74a51a5a58b5278b7ba902c, type: 3}
+    - {fileID: 3178161916843782017, guid: 513971d2b74a51a5a58b5278b7ba902c, type: 3}
+    - {fileID: 2568632362979954367, guid: 513971d2b74a51a5a58b5278b7ba902c, type: 3}
+    colour: {r: 0.45, g: 0.95, b: 1, a: 1}
+    intensity: 1.25
     embers: 0
   ledges:
   - key: plank
@@ -5134,6 +5214,546 @@ MonoBehaviour:
     scroll: 1
     order: -93
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_leaf_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9f364774cfe75003889679dff1b494c6, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_leaf_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 29ed8d56e8c7513989380d4bc89dea13, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_leaf_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: b9f85c486de75e029bfac09b4042b5d6, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_leaf_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 71809cedee185e4fb8c8a3f8e0eb547c, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_green_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 04552791ec1451da9a0d95e663cf4223, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_green_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7e2656c73a0351eab8acb4a1deabdcf4, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_green_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 283d294703ca5575b7f27f9f0c9db029, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_teal_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: b7439367cde6554d958966ffedee1b93, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_teal_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4e881cdb2ca25e8a9bf5b050fe751094, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_teal_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 95f3fc6e62b850908d708998f5316c5c, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_pale_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 118bbe3bcd58568485416fffa5c4da25, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_pale_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: e61049dbcf4252a0a028e650072a7bb8, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_pale_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: ba14b81cebb75817a8e58f8c58c3bc45, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_frost_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: cc39fbfbdeac5ba79dc2e478103c7a86, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_frost_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: d233baa38f8f5c049f8cc5b43f14d1f3, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ivy_frost_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0b00237610d1547e85bd84cf753ea5b5, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: d5416344385d54ceafb1a1ee7fd20dfb, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_0_f1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9fc76e536a0e5baa82c859317a1cf4d5, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_0_f2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 259ace07ced55921a1c9bfb88cc0391b, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_0_f3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 18c45561adec58538d8b8ec608359fe9, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: fc0894cdeb5a5f3ba78de4eeb905dfe4, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_1_f1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 759b23f198cc5d9bbf5d5420ead6a619, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_1_f2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 95a71812d86c5990a432697505e1f589, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_1_f3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 23a3a3cc160d580d9f6b63f7611d66dd, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: a364db3f84ee5852af079228050fa334, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_2_f1
+    kind: 8
+    sprite: {fileID: 21300000, guid: dc578b90c2985c1c8bafe2e8b5f3d6c9, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_2_f2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 14d9bf7dd2d95627b4f4f7aaed23a709, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_teal_tree_2_f3
+    kind: 8
+    sprite: {fileID: 21300000, guid: e99262101c0a5aa6860ffdbbe8ba18c7, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_vine_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: eaffd40afdc05e67bfcdc85d57567613, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_vine_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: d8c3ec3573fd5708bdf24c074f8ff784, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_vine_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: a959f123a1f7533b87d591bae18e7b4d, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_wheat_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: ace056dff7d85c14bf171d695d23e0a9, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_bough_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9e026a3c62295462bd5452ebd628ac0c, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_wheat_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 5457b3d1b79c5a3fb8ae136221f088bd, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_bough_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: c09fb8e90e2e5bc5b68b59716de4f896, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_sundial
+    kind: 8
+    sprite: {fileID: 21300000, guid: 20b62edc1bb2597ca445a2f67bee7fee, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_wheel
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9a55546e50395c9c8ce6c92270b05ff8, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_pipe_h_6
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9c4cc26444c057c39da98e762ada12e7, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_pipe_v_6
+    kind: 8
+    sprite: {fileID: 21300000, guid: 028ec0a6cd9a5bdcbd9ae7ef487a78ee, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_pipe_h_12
+    kind: 8
+    sprite: {fileID: 21300000, guid: 8f88c1855c0258d69550f4e10bb0dfb8, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_pipe_v_12
+    kind: 8
+    sprite: {fileID: 21300000, guid: 29532b73b7015fa7b0ce6d213f905db6, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gear
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4e324df624895f4581d2624ad18f4b7a, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gear_f1
+    kind: 8
+    sprite: {fileID: 21300000, guid: b5d863ab6d5c5f26a5f03c06297edb6f, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gear_f2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 622fdae395275056a873d84e811a201f, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_making_door
+    kind: 8
+    sprite: {fileID: 21300000, guid: b53ff824732f5d30b7555dc615210fe3, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_low_gate
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0d189e0c00135b699416fd09ccad6222, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_crag_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 52a6dca2fe1c53239937027475f30419, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_crag_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 64277a2bc3865c8a8ce8e5fff995ae6e, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_crag_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 2c207861b43f5a53900601dce5919447, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_pillar_10x2
+    kind: 8
+    sprite: {fileID: 21300000, guid: a4f21522435b5286948d6b6fdf4bc01c, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_pillar_10x1
+    kind: 8
+    sprite: {fileID: 21300000, guid: dcd48c4af6fa58aea13d462139e25319, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_mereth
+    kind: 8
+    sprite: {fileID: 21300000, guid: 478a7494028a543082b5ec68d03cfbdf, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ithuriel
+    kind: 8
+    sprite: {fileID: 21300000, guid: c44351c9a7915a55890a9f6a93f62814, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gathered
+    kind: 8
+    sprite: {fileID: 21300000, guid: e4d221772117532aafcaa088f4d0d415, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
     scrollUp: 1
     rise: 0
     drift: 0

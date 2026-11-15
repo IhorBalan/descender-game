@@ -70,11 +70,10 @@ namespace Descender.EditorTools.TilesV2
             try
             {
                 TilesV2Builder.Build();
-                if (!File.Exists(TilesV2Sample.DescentPath))
-                {
-                    TilesV2Sample.BuildDescent();
-                }
-                Capture(OutFolder(), TilesV2Sample.DescentPath);
+                // The world's scene, or another of the standard's (`-tilesV2Scene`: the Paradise level's).
+                var scene = Argument("-tilesV2Scene") ?? TilesV2Sample.DescentPath;
+                TilesV2Sample.Ensure(scene);
+                Capture(OutFolder(), scene);
                 EditorApplication.Exit(0);
             }
             catch (Exception error)
@@ -116,10 +115,7 @@ namespace Descender.EditorTools.TilesV2
             try
             {
                 TilesV2Builder.Build();
-                if (!File.Exists(TilesV2Sample.DescentPath))
-                {
-                    TilesV2Sample.BuildDescent();
-                }
+                TilesV2Sample.Ensure(Argument("-tilesV2Scene") ?? TilesV2Sample.DescentPath);
                 if (!File.Exists(TilesV2Sample.ScenePath))
                 {
                     TilesV2Sample.Build();

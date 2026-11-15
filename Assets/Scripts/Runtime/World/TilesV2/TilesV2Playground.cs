@@ -153,7 +153,11 @@ namespace Descender.World.TilesV2
                     chart?.Unhide(secret.Hidden);
                     Say($"a wall that was not one: {things.SecretsFound} of {things.Secrets}");
                 };
-                things.Ended += () => Announce("The Gate of Paradise", "the descent is done");
+                things.Ended += () =>
+                    Announce(
+                        things.EndTitle.Length > 0 ? things.EndTitle : "The Gate of Paradise",
+                        things.EndTitle.Length > 0 ? things.EndWords : "the descent is done"
+                    );
                 things.BeaconLit += _ =>
                     Announce(
                         things.BeaconsLit >= things.Beacons ? "The last light wakes" : "A light wakes",
@@ -822,11 +826,42 @@ namespace Descender.World.TilesV2
             if (now != region)
             {
                 region = now;
-                if (now != null && !shooting)
+                if (now != null && !shooting && (things == null || things.Zones.Count == 0))
                 {
                     Announce(now.name, now.subtitle);
                 }
             }
+            // A level of named parts says each one's name as the hero comes into it.
+            if (things != null && things.Zones.Count > 0)
+            {
+                var into = ZoneAt((Vector2)hero.transform.position + Vector2.up);
+                if (into.Length > 0 && into != zone)
+                {
+                    zone = into;
+                    if (!shooting)
+                    {
+                        Announce(into, region != null ? region.name : "");
+                    }
+                }
+            }
+        }
+
+        /// <summary>The name of the part of the level the hero is in, or was last in; empty before he has been in any.</summary>
+        public string Zone => zone;
+
+        private string zone = "";
+
+        // The name of the part that holds a place (a level marks each of its rooms with its part's name); empty for none.
+        private string ZoneAt(Vector2 place)
+        {
+            foreach (var (area, name) in things.Zones)
+            {
+                if (area.Contains(place))
+                {
+                    return name;
+                }
+            }
+            return "";
         }
 
         private void Announce(string big, string small)

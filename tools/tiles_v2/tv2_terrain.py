@@ -1031,8 +1031,9 @@ def mine_lamp_frame(frame: int) -> np.ndarray:
 
 
 from tv2_earth import campfire_frame, glowshroom_frame  # noqa: E402  (the Earth's props)
+from tv2_eden import glowfruit_frame  # noqa: E402  (the Paradise level's)
 
-PROP_FRAMES = {"campfire": campfire_frame, "glowshroom": glowshroom_frame, "torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
+PROP_FRAMES = {"glowfruit": glowfruit_frame, "campfire": campfire_frame, "glowshroom": glowshroom_frame, "torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
 
 
 def prop_sheet(prop: dict) -> tuple[Image.Image, list]:

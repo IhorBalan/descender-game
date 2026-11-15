@@ -14,6 +14,9 @@ namespace Descender.World.TilesV2
     /// </summary>
     public static class TilesV2Backdrops
     {
+        /// <summary>The rows of sky over the surface line the heaven layers' numbers are set for (the world's).</summary>
+        public const float TallestSetSky = 168f;
+
         // How far past the map's sides and foot the cave rock is shown.
         private const float Margin = 24f;
 
@@ -103,11 +106,16 @@ namespace Descender.World.TilesV2
                     {
                         // Over a world: a band that stands a way over the surface line and keeps the
                         // camera company on its way up by the share it does not scroll.
+                        // The layers are set for a sky as high as the world's. Under a higher one (a level
+                        // that is all sky) each is passed by the camera more slowly, by the share the
+                        // world's sky is of this one, so over the whole height it is passed as it is over
+                        // the world's: the far country is behind every room.
+                        var share = Mathf.Min(1f, TallestSetSky / Mathf.Max(map.Surface, 1f));
                         var layer = MakeLayer(root, entry, material, new Vector2(size.x * 3f, size.y));
                         layer
                             .GetComponent<ParallaxLayer>()
                             .Configure(
-                                new Vector2(entry.scroll, entry.scrollUp),
+                                new Vector2(entry.scroll, entry.scrollUp * share),
                                 new Vector2(viewAnchor.x, surface + entry.rise),
                                 viewAnchor,
                                 new Vector2(size.x, 0f),

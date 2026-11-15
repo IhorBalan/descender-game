@@ -50,6 +50,12 @@ namespace Descender.World.TilesV2
         public const string FrameSuffix = "_f";
 
         /// <summary>
+        /// A part of a level with a name of its own, said when the hero comes into it:
+        /// `@mark zone column row width height number name ...`.
+        /// </summary>
+        public const string Zone = "zone";
+
+        /// <summary>
         /// A stretch where the view draws back (the game's camera zone): `@mark vista column
         /// row width height zoom holdX holdY lookRight lookUp`, the zoom in hundredths, the
         /// looks in tiles.
@@ -121,6 +127,18 @@ namespace Descender.World.TilesV2
 
         /// <summary>The hero walked into the gate at the world's end.</summary>
         public event Action Ended;
+
+        /// <summary>The named parts of the level: where each is, in the world's units, and its name.</summary>
+        public IReadOnlyList<(Rect area, string name)> Zones => zones;
+
+        /// <summary>
+        /// What the end of the journey is called and what is said under it, when the map says
+        /// (`@mark end column row title ... | words ...`); empty when it does not.
+        /// </summary>
+        public string EndTitle { get; private set; } = "";
+        public string EndWords { get; private set; } = "";
+
+        private readonly List<(Rect area, string name)> zones = new List<(Rect area, string name)>();
 
         /// <summary>How many relics a region of the map holds, and how many of them are found.</summary>
         public void RelicsIn(int region, out int found, out int held)
@@ -409,6 +427,13 @@ namespace Descender.World.TilesV2
                         things.Flags++;
                         break;
                     }
+                    case Zone:
+                    {
+                        var size = new Vector2(Mathf.Max(mark.Number(0, 1), 1), Mathf.Max(mark.Number(1, 1), 1));
+                        var name = string.Join(" ", mark.Rest, 3, Mathf.Max(mark.Rest.Length - 3, 0));
+                        things.zones.Add((new Rect(corner.x, corner.y - size.y, size.x, size.y), name));
+                        continue;
+                    }
                     case Vista:
                     {
                         // The game's own camera zone, over the stretch the mark names.
@@ -456,6 +481,12 @@ namespace Descender.World.TilesV2
                         holder.transform.position = foot;
                         var relic = holder.AddComponent<TilesV2Relic>();
                         var last = mark.Kind == End;
+                        if (last && mark.Rest.Length > 0)
+                        {
+                            var said = string.Join(" ", mark.Rest).Split('|');
+                            things.EndTitle = said[0].Trim();
+                            things.EndWords = said.Length > 1 ? said[1].Trim() : "";
+                        }
                         relic.Configure(set.Thing("relic_0"), set.Thing("relic_1"), set.unlitMaterial, last);
                         thing.Made = holder;
                         if (last)

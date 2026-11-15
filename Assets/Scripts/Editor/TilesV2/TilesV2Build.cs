@@ -29,6 +29,18 @@ namespace Descender.EditorTools.TilesV2
         [MenuItem("Descender/Tiles V2/Build Windows world")]
         public static void World() => Build(TilesV2Sample.DescentPath, WorldOutputPath);
 
+        /// <summary>
+        /// The Paradise level as a Windows player:
+        /// <c>Unity -batchmode -quit -projectPath . -buildTarget win64 -executeMethod Descender.EditorTools.TilesV2.TilesV2Build.Paradise</c>
+        /// </summary>
+        public const string ParadiseOutputPath = "Build/TilesV2Paradise64/DescenderParadise.exe";
+
+        public static void Paradise()
+        {
+            TilesV2Sample.Ensure(TilesV2Sample.ParadisePath);
+            Build(TilesV2Sample.ParadisePath, ParadiseOutputPath);
+        }
+
         private static void Build(string scene, string output)
         {
             var options = new BuildPlayerOptions

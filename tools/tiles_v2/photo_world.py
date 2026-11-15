@@ -6,6 +6,7 @@ so it can be looked over zoomed in: every torch, ledge and blade of grass.
     python tools/tiles_v2/photo_world.py --hour 21          # at night
     python tools/tiles_v2/photo_world.py --pixels 8         # half the size (16 is every art pixel)
     python tools/tiles_v2/photo_world.py --sample           # the sample map
+    python tools/tiles_v2/photo_world.py --paradise         # the Paradise level (to Logs/TilesV2/photo_paradise)
     python tools/tiles_v2/photo_world.py --out D:/pictures  # somewhere else than Logs/TilesV2/photo
     python tools/tiles_v2/photo_world.py --no-labels        # without the labelled pictures
 
@@ -43,6 +44,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 WORLD_SCENE = "Assets/Scenes/Sandbox/TilesV2Descent.unity"
+PARADISE_SCENE = "Assets/Scenes/Sandbox/TilesV2Paradise.unity"
 SAMPLE_SCENE = "Assets/Scenes/Sandbox/TilesV2Sample.unity"
 METHOD = "Descender.EditorTools.TilesV2.TilesV2Capture.PhotoWorld"
 LOG = os.path.join("Logs", "tiles-v2-photo.log")
@@ -297,14 +299,17 @@ def main(argv=None):
     parser.add_argument("--pixels", type=int, default=16, choices=range(1, 17), metavar="1..16", help="pixels a tile (default 16: every art pixel)")
     parser.add_argument("--hour", type=float, help="the hour of the day, 0 to 24 (default: the scene's own, the day's start)")
     parser.add_argument("--sample", action="store_true", help="the sample map instead of the world")
+    parser.add_argument("--paradise", action="store_true", help="the Paradise level instead of the world (to Logs/TilesV2/photo_paradise unless --out says)")
     parser.add_argument("--no-labels", action="store_true", help="leave out the pictures with the map's marks named on them")
     args = parser.parse_args(argv)
+    if args.paradise and args.out == parser.get_default("out"):
+        args.out = os.path.join(ROOT, "Logs", "TilesV2", "photo_paradise")
     out = os.path.abspath(args.out)
     pieces = os.path.join(out, "pieces")
     shutil.rmtree(pieces, ignore_errors=True)
     os.makedirs(pieces, exist_ok=True)
     started = time.time()
-    photograph(pieces, SAMPLE_SCENE if args.sample else WORLD_SCENE, args.pixels, args.hour)
+    photograph(pieces, SAMPLE_SCENE if args.sample else PARADISE_SCENE if args.paradise else WORLD_SCENE, args.pixels, args.hour)
     print("Joining the pieces...")
     written, size = join(pieces, out, not args.no_labels)
     shutil.rmtree(pieces, ignore_errors=True)
