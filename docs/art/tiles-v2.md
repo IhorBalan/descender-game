@@ -283,7 +283,8 @@ A mark may also be `secret` (a wall the sword breaks, with a room behind it),
 `platform` (one that gives way or comes and goes), `wind`, `flag` (a pennant
 that flies; a number after its cell moves it by so many pixels, for a rod in
 the middle of a cell), `vista` (a stretch where the view draws back: the
-game's camera zone), `upgrade` (a heart
+game's camera zone), `zone` (a part of a level with a name of its own, said
+when the hero comes into it), `upgrade` (a heart
 or a draught of the game's), `sign` (a post, a tablet, a shade or a soul that
 says a line), `dark` (a stretch whose air gives no light), `beacon` (a light
 the hero lights by walking up to it), `sanctum` (a door that opens when enough
@@ -501,6 +502,20 @@ of the cell), built with the world; the clock tells it the hour (`DayNight.Appli
 The lights of the far villages (`backdrop_earth_windows`, a layer of heaven placed exactly
 as the hills are but not tinted) come on with the night as the glows do.
 
+## The Paradise level's materials
+
+The Paradise level (`tiles-v2-paradise.md`) adds the ground of its zones and
+the walls behind its roofed rooms, each a palette on a texture the standard
+has: `moss` (the orchard's loam under moss that glows), `vine` (living wood
+under moss), `gold_meadow` (tilled earth under wheat), all three with slopes;
+`pearl` (the Making-house's stone, the `ashlar` texture); `silver` (the cliffs
+by the Low Gate, with slopes); and the walls `canopy_wall`, `vine_wall`,
+`pearl_wall`, `silver_wall`, which shut out the sky as any wall does. Their
+legend characters are Latin-1 capitals (`À` to `Û`); `Ý` is the `glowfruit`
+lamp, a fruit that gives a cyan light, hung in the air where a tree would bear
+it. A map's `end` mark may say what the end is called and what is said under
+it (`@mark end column row title ... | words ...`).
+
 ## Light
 
 Underground is dark, as in the classic sandbox games: light is worked out per
@@ -654,6 +669,10 @@ no window opens.
 | `tv2_backdrop.py` | the sky's bands, clouds, stars, sun, moon, ridges, the cave rock |
 | `tv2_earth.py` | the Earth's pictures (trees, buildings, the mine's timber and track), its ridges, its cave rock and old workings |
 | `tv2_earth_map.py` | where the Earth's pictures stand, its meadows, the mine's boards (called by `make_world_map.build`) |
+| `tv2_eden.py` | the Paradise level's pictures: great leaves, ivy, teal trees, vine trunks, wheat, the Sundial, the Wheel, pipes and gears, the Making-house's door, the Low Gate, the story's people; and the `glowfruit` lamp |
+| `tv2_paradise_plan.py` | the Paradise level's wireframe as data: rooms, links, what stands in a cell |
+| `make_paradise_map.py` | builds the Paradise level's map from the plan and plays it through in the model (`tiles-v2-paradise.md`) |
+| `tv2_paradise_dress.py` | what the Paradise level's rooms stand full of, zone by zone |
 | `tv2_heaven.py` | Paradise's pictures: its trees, the towers and roofs of its castles, its halls, gates, bridges, the round temple and the host (stood by `make_world_map.paradise`) |
 | `tv2_light.py` | the tile light's sums |
 | `tv2_preview.py` | the preview |

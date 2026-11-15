@@ -199,8 +199,9 @@ namespace Descender.Tests
                 Assert.That(ledge.Piece(true, true), Is.SameAs(ledge.middle));
                 Assert.That(ledge.Piece(true, false), Is.SameAs(ledge.right));
             }
-            // A torch, a brazier, a crystal, a lantern, and the Earth's miner's lamp, campfire and glowing mushrooms.
-            Assert.That(set.props.Length, Is.EqualTo(7));
+            // A torch, a brazier, a crystal, a lantern, the Earth's miner's lamp, campfire and glowing mushrooms,
+            // and the Paradise level's fruit that gives light.
+            Assert.That(set.props.Length, Is.EqualTo(8));
             foreach (var prop in set.props)
             {
                 Assert.That(prop.frames, Is.Not.Empty.And.None.Null, prop.key);

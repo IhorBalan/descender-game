@@ -1,0 +1,4091 @@
+fileFormatVersion: 2
+guid: 397902cf28b4507b95150fe9be7396e8
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4394180366271950625
+    second: tv2_gold_meadow_f0_v0
+  - first:
+      213: 216623957916380856
+    second: tv2_gold_meadow_f1_v0
+  - first:
+      213: 545870237878948920
+    second: tv2_gold_meadow_f4_v0
+  - first:
+      213: 4020163029425725286
+    second: tv2_gold_meadow_f5_v0
+  - first:
+      213: 62926677081656434
+    second: tv2_gold_meadow_f7_v0
+  - first:
+      213: 2461968341365209194
+    second: tv2_gold_meadow_f16_v0
+  - first:
+      213: 2029377603317910203
+    second: tv2_gold_meadow_f17_v0
+  - first:
+      213: 2169335656081644608
+    second: tv2_gold_meadow_f20_v0
+  - first:
+      213: 1572586216882025137
+    second: tv2_gold_meadow_f21_v0
+  - first:
+      213: 1501807062466104998
+    second: tv2_gold_meadow_f23_v0
+  - first:
+      213: 3962684679958936754
+    second: tv2_gold_meadow_f28_v0
+  - first:
+      213: 20244519999861478
+    second: tv2_gold_meadow_f29_v0
+  - first:
+      213: 294315242224558916
+    second: tv2_gold_meadow_f31_v0
+  - first:
+      213: 2681394680518780835
+    second: tv2_gold_meadow_f64_v0
+  - first:
+      213: 1839382475639396187
+    second: tv2_gold_meadow_f65_v0
+  - first:
+      213: 4299102053596767557
+    second: tv2_gold_meadow_f68_v0
+  - first:
+      213: 4594823937020667655
+    second: tv2_gold_meadow_f69_v0
+  - first:
+      213: 2374368735331660306
+    second: tv2_gold_meadow_f71_v0
+  - first:
+      213: 3521832960127335807
+    second: tv2_gold_meadow_f80_v0
+  - first:
+      213: 3738278092689348160
+    second: tv2_gold_meadow_f81_v0
+  - first:
+      213: 1728307846997560116
+    second: tv2_gold_meadow_f84_v0
+  - first:
+      213: 693650535750655088
+    second: tv2_gold_meadow_f85_v0
+  - first:
+      213: 3159760121670494798
+    second: tv2_gold_meadow_f87_v0
+  - first:
+      213: 1212893465220544279
+    second: tv2_gold_meadow_f92_v0
+  - first:
+      213: 1886577297500814136
+    second: tv2_gold_meadow_f93_v0
+  - first:
+      213: 2053495899701327171
+    second: tv2_gold_meadow_f95_v0
+  - first:
+      213: 898780715948431898
+    second: tv2_gold_meadow_f112_v0
+  - first:
+      213: 3108708056808706307
+    second: tv2_gold_meadow_f113_v0
+  - first:
+      213: 4474378344037466876
+    second: tv2_gold_meadow_f116_v0
+  - first:
+      213: 2050251420712753834
+    second: tv2_gold_meadow_f117_v0
+  - first:
+      213: 2374117768324172857
+    second: tv2_gold_meadow_f119_v0
+  - first:
+      213: 1099207639797004181
+    second: tv2_gold_meadow_f124_v0
+  - first:
+      213: 534590098463250220
+    second: tv2_gold_meadow_f125_v0
+  - first:
+      213: 43101828229607107
+    second: tv2_gold_meadow_f127_v0
+  - first:
+      213: 1466038892362990186
+    second: tv2_gold_meadow_f193_v0
+  - first:
+      213: 676317714233827860
+    second: tv2_gold_meadow_f197_v0
+  - first:
+      213: 4464815550308248312
+    second: tv2_gold_meadow_f199_v0
+  - first:
+      213: 3239217077004654988
+    second: tv2_gold_meadow_f209_v0
+  - first:
+      213: 3139485947426704783
+    second: tv2_gold_meadow_f213_v0
+  - first:
+      213: 3128660282571575439
+    second: tv2_gold_meadow_f215_v0
+  - first:
+      213: 3762326445509341230
+    second: tv2_gold_meadow_f221_v0
+  - first:
+      213: 1540903483054366614
+    second: tv2_gold_meadow_f223_v0
+  - first:
+      213: 4080267060215423218
+    second: tv2_gold_meadow_f241_v0
+  - first:
+      213: 949860924146133775
+    second: tv2_gold_meadow_f245_v0
+  - first:
+      213: 2602252073144729776
+    second: tv2_gold_meadow_f247_v0
+  - first:
+      213: 3544038412390412042
+    second: tv2_gold_meadow_f253_v0
+  - first:
+      213: 3122539589946629698
+    second: tv2_gold_meadow_f255_v0
+  - first:
+      213: 799347297885228389
+    second: tv2_gold_meadow_f0_v1
+  - first:
+      213: 1519041488564431997
+    second: tv2_gold_meadow_f1_v1
+  - first:
+      213: 3115280870677659854
+    second: tv2_gold_meadow_f4_v1
+  - first:
+      213: 3011934837134294716
+    second: tv2_gold_meadow_f5_v1
+  - first:
+      213: 21115824289868802
+    second: tv2_gold_meadow_f7_v1
+  - first:
+      213: 1215548659357456302
+    second: tv2_gold_meadow_f16_v1
+  - first:
+      213: 639153014578611020
+    second: tv2_gold_meadow_f17_v1
+  - first:
+      213: 3125233888737096214
+    second: tv2_gold_meadow_f20_v1
+  - first:
+      213: 4021856181590988421
+    second: tv2_gold_meadow_f21_v1
+  - first:
+      213: 4603565671094026599
+    second: tv2_gold_meadow_f23_v1
+  - first:
+      213: 2391743863772246975
+    second: tv2_gold_meadow_f28_v1
+  - first:
+      213: 3578744713413379512
+    second: tv2_gold_meadow_f29_v1
+  - first:
+      213: 1981813953539381161
+    second: tv2_gold_meadow_f31_v1
+  - first:
+      213: 935654686436406062
+    second: tv2_gold_meadow_f64_v1
+  - first:
+      213: 2876667850584928200
+    second: tv2_gold_meadow_f65_v1
+  - first:
+      213: 2236137334070367173
+    second: tv2_gold_meadow_f68_v1
+  - first:
+      213: 3832073701662594208
+    second: tv2_gold_meadow_f69_v1
+  - first:
+      213: 2924128151100394397
+    second: tv2_gold_meadow_f71_v1
+  - first:
+      213: 957035921293310213
+    second: tv2_gold_meadow_f80_v1
+  - first:
+      213: 1738647720387316219
+    second: tv2_gold_meadow_f81_v1
+  - first:
+      213: 4509930791467997571
+    second: tv2_gold_meadow_f84_v1
+  - first:
+      213: 3626998042683258465
+    second: tv2_gold_meadow_f85_v1
+  - first:
+      213: 4418709297225746027
+    second: tv2_gold_meadow_f87_v1
+  - first:
+      213: 634634309465495848
+    second: tv2_gold_meadow_f92_v1
+  - first:
+      213: 3594391053429004536
+    second: tv2_gold_meadow_f93_v1
+  - first:
+      213: 1593658908085119289
+    second: tv2_gold_meadow_f95_v1
+  - first:
+      213: 3916236748594829214
+    second: tv2_gold_meadow_f112_v1
+  - first:
+      213: 3369302702338853278
+    second: tv2_gold_meadow_f113_v1
+  - first:
+      213: 2461016620752613214
+    second: tv2_gold_meadow_f116_v1
+  - first:
+      213: 3518506471249775682
+    second: tv2_gold_meadow_f117_v1
+  - first:
+      213: 2246302376870347395
+    second: tv2_gold_meadow_f119_v1
+  - first:
+      213: 1747411206333176791
+    second: tv2_gold_meadow_f124_v1
+  - first:
+      213: 81030340715704241
+    second: tv2_gold_meadow_f125_v1
+  - first:
+      213: 1135631173166015212
+    second: tv2_gold_meadow_f127_v1
+  - first:
+      213: 2667011016079584886
+    second: tv2_gold_meadow_f193_v1
+  - first:
+      213: 3467077802806407255
+    second: tv2_gold_meadow_f197_v1
+  - first:
+      213: 1444459444169584920
+    second: tv2_gold_meadow_f199_v1
+  - first:
+      213: 2858433461196248716
+    second: tv2_gold_meadow_f209_v1
+  - first:
+      213: 186534731002563723
+    second: tv2_gold_meadow_f213_v1
+  - first:
+      213: 2182603774932846015
+    second: tv2_gold_meadow_f215_v1
+  - first:
+      213: 4096008035921577489
+    second: tv2_gold_meadow_f221_v1
+  - first:
+      213: 4472106858261875282
+    second: tv2_gold_meadow_f223_v1
+  - first:
+      213: 17914333640444446
+    second: tv2_gold_meadow_f241_v1
+  - first:
+      213: 4429851290934244422
+    second: tv2_gold_meadow_f245_v1
+  - first:
+      213: 1136642589812092554
+    second: tv2_gold_meadow_f247_v1
+  - first:
+      213: 1517100776403322844
+    second: tv2_gold_meadow_f253_v1
+  - first:
+      213: 1306552761984355482
+    second: tv2_gold_meadow_f255_v1
+  - first:
+      213: 2918534841339361484
+    second: tv2_gold_meadow_f0_v2
+  - first:
+      213: 2803459889624373986
+    second: tv2_gold_meadow_f1_v2
+  - first:
+      213: 3824608479124324850
+    second: tv2_gold_meadow_f4_v2
+  - first:
+      213: 3351369903757237617
+    second: tv2_gold_meadow_f5_v2
+  - first:
+      213: 605963270002341489
+    second: tv2_gold_meadow_f7_v2
+  - first:
+      213: 322988967321067609
+    second: tv2_gold_meadow_f16_v2
+  - first:
+      213: 3811617571097768232
+    second: tv2_gold_meadow_f17_v2
+  - first:
+      213: 2446096078246940570
+    second: tv2_gold_meadow_f20_v2
+  - first:
+      213: 399034923380962723
+    second: tv2_gold_meadow_f21_v2
+  - first:
+      213: 4110738630811758135
+    second: tv2_gold_meadow_f23_v2
+  - first:
+      213: 2225485038182904492
+    second: tv2_gold_meadow_f28_v2
+  - first:
+      213: 1541717634635059566
+    second: tv2_gold_meadow_f29_v2
+  - first:
+      213: 4470070291406000866
+    second: tv2_gold_meadow_f31_v2
+  - first:
+      213: 2751412450326091601
+    second: tv2_gold_meadow_f64_v2
+  - first:
+      213: 2574783485194677339
+    second: tv2_gold_meadow_f65_v2
+  - first:
+      213: 1503106323560647441
+    second: tv2_gold_meadow_f68_v2
+  - first:
+      213: 2553500712937476389
+    second: tv2_gold_meadow_f69_v2
+  - first:
+      213: 554407640883063853
+    second: tv2_gold_meadow_f71_v2
+  - first:
+      213: 261110812703700579
+    second: tv2_gold_meadow_f80_v2
+  - first:
+      213: 451218104075669888
+    second: tv2_gold_meadow_f81_v2
+  - first:
+      213: 1140159556196051874
+    second: tv2_gold_meadow_f84_v2
+  - first:
+      213: 865296383563528900
+    second: tv2_gold_meadow_f85_v2
+  - first:
+      213: 3736850975793267440
+    second: tv2_gold_meadow_f87_v2
+  - first:
+      213: 2527914548687667706
+    second: tv2_gold_meadow_f92_v2
+  - first:
+      213: 3181801340384611726
+    second: tv2_gold_meadow_f93_v2
+  - first:
+      213: 1523934722149622475
+    second: tv2_gold_meadow_f95_v2
+  - first:
+      213: 918413725489607713
+    second: tv2_gold_meadow_f112_v2
+  - first:
+      213: 3160471915648789454
+    second: tv2_gold_meadow_f113_v2
+  - first:
+      213: 1878491750021098608
+    second: tv2_gold_meadow_f116_v2
+  - first:
+      213: 2198068366778295369
+    second: tv2_gold_meadow_f117_v2
+  - first:
+      213: 3375260422094606832
+    second: tv2_gold_meadow_f119_v2
+  - first:
+      213: 1982625593572390822
+    second: tv2_gold_meadow_f124_v2
+  - first:
+      213: 2630649544878949043
+    second: tv2_gold_meadow_f125_v2
+  - first:
+      213: 1044602415097220553
+    second: tv2_gold_meadow_f127_v2
+  - first:
+      213: 121426108836214312
+    second: tv2_gold_meadow_f193_v2
+  - first:
+      213: 487958931906463538
+    second: tv2_gold_meadow_f197_v2
+  - first:
+      213: 3028538746818082750
+    second: tv2_gold_meadow_f199_v2
+  - first:
+      213: 1830725504694953110
+    second: tv2_gold_meadow_f209_v2
+  - first:
+      213: 614063083295373415
+    second: tv2_gold_meadow_f213_v2
+  - first:
+      213: 4028332965405331100
+    second: tv2_gold_meadow_f215_v2
+  - first:
+      213: 3378264648727333346
+    second: tv2_gold_meadow_f221_v2
+  - first:
+      213: 4349220487052779111
+    second: tv2_gold_meadow_f223_v2
+  - first:
+      213: 4542847843052378117
+    second: tv2_gold_meadow_f241_v2
+  - first:
+      213: 1962670290991409036
+    second: tv2_gold_meadow_f245_v2
+  - first:
+      213: 1033556658731439066
+    second: tv2_gold_meadow_f247_v2
+  - first:
+      213: 3587924768424846929
+    second: tv2_gold_meadow_f253_v2
+  - first:
+      213: 511754333532182020
+    second: tv2_gold_meadow_f255_v2
+  - first:
+      213: 1744868337595123223
+    second: tv2_gold_meadow_up_right_v0
+  - first:
+      213: 2537851738239586798
+    second: tv2_gold_meadow_up_right_v1
+  - first:
+      213: 4255616153031217551
+    second: tv2_gold_meadow_up_right_v2
+  - first:
+      213: 3934429549677388078
+    second: tv2_gold_meadow_up_left_v0
+  - first:
+      213: 1581569410186300395
+    second: tv2_gold_meadow_up_left_v1
+  - first:
+      213: 3722496143452983154
+    second: tv2_gold_meadow_up_left_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 949d1d1ca2d65b3bb0cb470f7467ce6d
+      internalID: 4394180366271950625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6017ed450975bfea41d580f18eb44fa
+      internalID: 216623957916380856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e5dc067d69f59f380b147151a6ce40f
+      internalID: 545870237878948920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ccfc43904785224a89f1588dce6fbe7
+      internalID: 4020163029425725286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8cc1de037b1d5e5bb105a97d50e33311
+      internalID: 62926677081656434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6b9f437f0eb5a3bb598939593015860
+      internalID: 2461968341365209194
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e0941b5c5a75f9f9b5090e655b00cf7
+      internalID: 2029377603317910203
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 956a532fec215fe7a741f4a250a20759
+      internalID: 2169335656081644608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03f3b7c4149b5cc29e61f56807e4fcfe
+      internalID: 1572586216882025137
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bee44aa16825597f99db5137629cb73d
+      internalID: 1501807062466104998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17af5c4053f455949d8e670bbb7a2070
+      internalID: 3962684679958936754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e95141ae3cc857d39653271d0244c92b
+      internalID: 20244519999861478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8871e20fd7c559f18918f7bc88989485
+      internalID: 294315242224558916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8da784bd93d05589b602ecbd2f6e8493
+      internalID: 2681394680518780835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6408f5ca2fc351abb080d3be560056d2
+      internalID: 1839382475639396187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2c489bc044a56cdbac1b5ed83034f7a
+      internalID: 4299102053596767557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 037ecda7df715aeaace6d1e2b08079ba
+      internalID: 4594823937020667655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b2c3b488bb453e09bb8fed70d9b23ad
+      internalID: 2374368735331660306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 491dda2a7945511bb53d138777247887
+      internalID: 3521832960127335807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8277276c55bf5dc3a67faa27fa35349b
+      internalID: 3738278092689348160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c68117259b565780a9f592349f23c5f3
+      internalID: 1728307846997560116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a4c34e407f85265b6e7f897bf10f52a
+      internalID: 693650535750655088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a031b1252e1950c1ae0faf8018eefabd
+      internalID: 3159760121670494798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be300c01922850d7957b2355eb0bc4ad
+      internalID: 1212893465220544279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59f363b71f895f15ad9924d9353c8564
+      internalID: 1886577297500814136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afce2c1dd22359aca8370005221204e9
+      internalID: 2053495899701327171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e50e9b7a9905fe682a75a1479bcf362
+      internalID: 898780715948431898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7f3b23f937c5b7bb0e6e8a72fa97fdf
+      internalID: 3108708056808706307
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3bfc6d5118f5a549eb4680a4b35ae0b
+      internalID: 4474378344037466876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bf1e0837c00536990733bf857d178ba
+      internalID: 2050251420712753834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5299524cd8759569a8c75d9a06a5c4f
+      internalID: 2374117768324172857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba42a0e0cf5d53f5bf4f9f03f3a3313e
+      internalID: 1099207639797004181
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9d18fa39a0658aba18c7dfb173e923f
+      internalID: 534590098463250220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1557443d8be5571a8eee0ddf9eab52b6
+      internalID: 43101828229607107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e46fed748bd75eabaf6281fe0adb66a1
+      internalID: 1466038892362990186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5db967eaf2f35005ac6abeb3cbc5b27b
+      internalID: 676317714233827860
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d32ac95698705eae9cec6902945b2665
+      internalID: 4464815550308248312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a479b6156ae35528b204776a75056449
+      internalID: 3239217077004654988
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65e7937f132a51bd896dfb98b4e38e18
+      internalID: 3139485947426704783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaddaa9b203657f0b374429c8b78cc5f
+      internalID: 3128660282571575439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0aa9030c5715d599582685b1b71182f
+      internalID: 3762326445509341230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7f9ab77df065a7296da075430efb0c7
+      internalID: 1540903483054366614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67d4d06a951a50b1b89cb663bac9221c
+      internalID: 4080267060215423218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4948121000715413b92b6cb7bfe36a58
+      internalID: 949860924146133775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b397e893673b5d22b9e9034b67a7ac0a
+      internalID: 2602252073144729776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 656be2e4e40552e0a6283ac11e5cff1a
+      internalID: 3544038412390412042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4780f365bfe576495756671c0286116
+      internalID: 3122539589946629698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 919200eb22fa5702934bb3f60bbdfab1
+      internalID: 799347297885228389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f66c35b62015f87b20ae9c2bdb35b07
+      internalID: 1519041488564431997
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3a37023379d5d299a58d31c159cb074
+      internalID: 3115280870677659854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cba396cc93d652d28d1de9d576a6b322
+      internalID: 3011934837134294716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6c75c2b128851a6b62374281d638393
+      internalID: 21115824289868802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 665a19c51b095e28828f53e52b632aff
+      internalID: 1215548659357456302
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 004f88aa0d485ff18e01f61b5180d15b
+      internalID: 639153014578611020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57455f7bd9165eff8a7a62daed0a95f2
+      internalID: 3125233888737096214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c80972d35dd528cbeedb25ceab55fe6
+      internalID: 4021856181590988421
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f71810ae14d45b2e9dcdd41e8ee7cc6c
+      internalID: 4603565671094026599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf579b8a3d8050eaa01656cfb5f6af40
+      internalID: 2391743863772246975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b651c9bbe585832b286b1560f0f7b8e
+      internalID: 3578744713413379512
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdace2c3a55155e988272b51be37c836
+      internalID: 1981813953539381161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b2956a64a28594abfd01c6fe4506fd3
+      internalID: 935654686436406062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6eb0a0ac8e75d949a4e386980a9ed8e
+      internalID: 2876667850584928200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ac60ca19083548fb0db2c029c2366dd
+      internalID: 2236137334070367173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76792d77d07e54c2a06279b278bbb33e
+      internalID: 3832073701662594208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef2d7cfb69485223823bd5a19a34dd42
+      internalID: 2924128151100394397
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6f1761946fd5d49bbb3a696ace56f65
+      internalID: 957035921293310213
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce666481af6a51e1a159fc4485cc89dc
+      internalID: 1738647720387316219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e81eda9d0b754f69cd7e23e45839ff5
+      internalID: 4509930791467997571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 260b784d325c5c9391fb78eec48bd10f
+      internalID: 3626998042683258465
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12d9709cc46a5c5b996f0ae24e4fa68a
+      internalID: 4418709297225746027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9bb025917a154b4a9f02f3c46abced6
+      internalID: 634634309465495848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8424c5cfd40556e8ae986fed8cdb2575
+      internalID: 3594391053429004536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15eee4ec8dc45dd38446420b05b2b5de
+      internalID: 1593658908085119289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2736a049c995a678787e01f8a6e1d88
+      internalID: 3916236748594829214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 610a5da4a4a7564ab27c565a3f0311f0
+      internalID: 3369302702338853278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82664d7d6845530b2e7597db683bd63
+      internalID: 2461016620752613214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a982dd5e6d755fe9b0990913a426b134
+      internalID: 3518506471249775682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b73626f07375f2f89de05774b5af430
+      internalID: 2246302376870347395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c441a30f4ff7540f877466782bbdc90d
+      internalID: 1747411206333176791
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 339bb46fd82c5e83a1ccc97a75f02d0a
+      internalID: 81030340715704241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c185ecc962295c4cbf4abcc29b8c2d96
+      internalID: 1135631173166015212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff383b9e38fd50f0b522b5f0ce575921
+      internalID: 2667011016079584886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b445e2baedc521fa12f5ca65ec6cbfb
+      internalID: 3467077802806407255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74825254916054e3aaa27c2113155cf5
+      internalID: 1444459444169584920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aafb3ec121f85da1b3605c7a9ca3e85a
+      internalID: 2858433461196248716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02d5c0630c7e5a7dbc6eca3fa9f4f7c4
+      internalID: 186534731002563723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa0c65177410591ebd3caa67d492192e
+      internalID: 2182603774932846015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f0b1035a1d0557b90a1b932b6d7a047
+      internalID: 4096008035921577489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f583dce3b375ec3bfecb6026ccac24f
+      internalID: 4472106858261875282
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad90d2fa0a5b527ebc682a24ae81596d
+      internalID: 17914333640444446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a01bf1c440e05a02a71eb950e9628d18
+      internalID: 4429851290934244422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb2621cd53b95f38af473ae5fca3adca
+      internalID: 1136642589812092554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b79750c626150c8a5402e04e838fd06
+      internalID: 1517100776403322844
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: daaa234b422b540c908a09c5435e3d20
+      internalID: 1306552761984355482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f0ddae02339516990c19308e2414312
+      internalID: 2918534841339361484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e446f067cae5755b4c5f0d15836aee8
+      internalID: 2803459889624373986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1005c5e5aafc5d6d84cd6fb6b02751b5
+      internalID: 3824608479124324850
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3c4af615da3533a81e93a0169b22f37
+      internalID: 3351369903757237617
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67ae9db768295de58abe0964d73f2c36
+      internalID: 605963270002341489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 863ca2465cc85ef9b8aa96b748ae83a9
+      internalID: 322988967321067609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 086005154fc656e6930f7b7dc55b41fa
+      internalID: 3811617571097768232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d260ebdc3955023bae1d67497b03125
+      internalID: 2446096078246940570
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 651eca3cd0c85d78813c3820a2fbc11c
+      internalID: 399034923380962723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 227b0fc2b54a58269f7db847403b5b5f
+      internalID: 4110738630811758135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f86b0d95e9765c64b3b60c1e9095bca8
+      internalID: 2225485038182904492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41faa377a80853089936e817e2046cad
+      internalID: 1541717634635059566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e20e854319945762b36bdd120bd19175
+      internalID: 4470070291406000866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bae9ebae4f856f9b49009c9d36eab23
+      internalID: 2751412450326091601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baf4274647c7588a9e2c14f5c2772f10
+      internalID: 2574783485194677339
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c414ecd3c2f5ffc830ab373018aaa2b
+      internalID: 1503106323560647441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d341f88f870b5eec8005db6170c5e956
+      internalID: 2553500712937476389
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ff9cca06b185e7b886157368300cb01
+      internalID: 554407640883063853
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c22f9ad436565129a2da17be4d1872c8
+      internalID: 261110812703700579
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dffa039c5fa5f449d9b8c880b916277
+      internalID: 451218104075669888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2c7656ddfc45919a684aad708fe63c5
+      internalID: 1140159556196051874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c74ad2c3eee651d1a2bec8dbcc4e498b
+      internalID: 865296383563528900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeccb8160e83570fad6ad18b86a79969
+      internalID: 3736850975793267440
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4fef60873a295a1892ea02e4adc8f57c
+      internalID: 2527914548687667706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e54e4f9b686500c8bab0be7fa84a978
+      internalID: 3181801340384611726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 615b3ca2939c5cd38fe5368b77ce49ba
+      internalID: 1523934722149622475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 93380bf9707f5b599da8b07b3ee59b49
+      internalID: 918413725489607713
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ac06b0a87db5601a88a2a3c52f8e901
+      internalID: 3160471915648789454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab32e09846ca51fc867f3056cb72bb59
+      internalID: 1878491750021098608
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a1c2d3408fe5f0684895fa78810a6e5
+      internalID: 2198068366778295369
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 384ddac5e5d55cb48441954ef2ad936f
+      internalID: 3375260422094606832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3080eecdf0fc5b3780821dcba98e8e51
+      internalID: 1982625593572390822
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e07375ba3c895995a2692cfb52201f9c
+      internalID: 2630649544878949043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9a92d245e565e9e8088e7a53414c98e
+      internalID: 1044602415097220553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73354d4e78b55478937e8eab6eca5577
+      internalID: 121426108836214312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 034bd886304e5b95b759d8a35423fe71
+      internalID: 487958931906463538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e705bce6cc2539facbf3d027c90a651
+      internalID: 3028538746818082750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efef971ddd485ab5be616d1f39590535
+      internalID: 1830725504694953110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44778bed0e805ce7b94c877e195982c6
+      internalID: 614063083295373415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd5d31aade5f50618ffafac195f1b38b
+      internalID: 4028332965405331100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b04054a24dbb599d8974cc2d242100a5
+      internalID: 3378264648727333346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f2cf71327b258d58f7882fe3c098523
+      internalID: 4349220487052779111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06e71b63f60a59a89837c5feed237137
+      internalID: 4542847843052378117
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e93561c1e8ae5ceca2909286ee604c8a
+      internalID: 1962670290991409036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: febf3548434953ab85d2ce8643b7fd34
+      internalID: 1033556658731439066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1da5eeb3d956587a9f2a9777a666a958
+      internalID: 3587924768424846929
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d1d57a1091652f9a66d8b3faf8fa9d2
+      internalID: 511754333532182020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 566bb06e2b0356e9bd787158504578b7
+      internalID: 1744868337595123223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265fbbe2626454ab82337cdc2be0148e
+      internalID: 2537851738239586798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f9097c618505dad8e93378c87f02809
+      internalID: 4255616153031217551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 133f51e368925de981068257b161a932
+      internalID: 3934429549677388078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03ec8268778c55aca93f13fbe4409171
+      internalID: 1581569410186300395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_meadow_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9034f5f0c08b58ab9b48ba98e65b676e
+      internalID: 3722496143452983154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_gold_meadow_f0_v0: 4394180366271950625
+      tv2_gold_meadow_f1_v0: 216623957916380856
+      tv2_gold_meadow_f4_v0: 545870237878948920
+      tv2_gold_meadow_f5_v0: 4020163029425725286
+      tv2_gold_meadow_f7_v0: 62926677081656434
+      tv2_gold_meadow_f16_v0: 2461968341365209194
+      tv2_gold_meadow_f17_v0: 2029377603317910203
+      tv2_gold_meadow_f20_v0: 2169335656081644608
+      tv2_gold_meadow_f21_v0: 1572586216882025137
+      tv2_gold_meadow_f23_v0: 1501807062466104998
+      tv2_gold_meadow_f28_v0: 3962684679958936754
+      tv2_gold_meadow_f29_v0: 20244519999861478
+      tv2_gold_meadow_f31_v0: 294315242224558916
+      tv2_gold_meadow_f64_v0: 2681394680518780835
+      tv2_gold_meadow_f65_v0: 1839382475639396187
+      tv2_gold_meadow_f68_v0: 4299102053596767557
+      tv2_gold_meadow_f69_v0: 4594823937020667655
+      tv2_gold_meadow_f71_v0: 2374368735331660306
+      tv2_gold_meadow_f80_v0: 3521832960127335807
+      tv2_gold_meadow_f81_v0: 3738278092689348160
+      tv2_gold_meadow_f84_v0: 1728307846997560116
+      tv2_gold_meadow_f85_v0: 693650535750655088
+      tv2_gold_meadow_f87_v0: 3159760121670494798
+      tv2_gold_meadow_f92_v0: 1212893465220544279
+      tv2_gold_meadow_f93_v0: 1886577297500814136
+      tv2_gold_meadow_f95_v0: 2053495899701327171
+      tv2_gold_meadow_f112_v0: 898780715948431898
+      tv2_gold_meadow_f113_v0: 3108708056808706307
+      tv2_gold_meadow_f116_v0: 4474378344037466876
+      tv2_gold_meadow_f117_v0: 2050251420712753834
+      tv2_gold_meadow_f119_v0: 2374117768324172857
+      tv2_gold_meadow_f124_v0: 1099207639797004181
+      tv2_gold_meadow_f125_v0: 534590098463250220
+      tv2_gold_meadow_f127_v0: 43101828229607107
+      tv2_gold_meadow_f193_v0: 1466038892362990186
+      tv2_gold_meadow_f197_v0: 676317714233827860
+      tv2_gold_meadow_f199_v0: 4464815550308248312
+      tv2_gold_meadow_f209_v0: 3239217077004654988
+      tv2_gold_meadow_f213_v0: 3139485947426704783
+      tv2_gold_meadow_f215_v0: 3128660282571575439
+      tv2_gold_meadow_f221_v0: 3762326445509341230
+      tv2_gold_meadow_f223_v0: 1540903483054366614
+      tv2_gold_meadow_f241_v0: 4080267060215423218
+      tv2_gold_meadow_f245_v0: 949860924146133775
+      tv2_gold_meadow_f247_v0: 2602252073144729776
+      tv2_gold_meadow_f253_v0: 3544038412390412042
+      tv2_gold_meadow_f255_v0: 3122539589946629698
+      tv2_gold_meadow_f0_v1: 799347297885228389
+      tv2_gold_meadow_f1_v1: 1519041488564431997
+      tv2_gold_meadow_f4_v1: 3115280870677659854
+      tv2_gold_meadow_f5_v1: 3011934837134294716
+      tv2_gold_meadow_f7_v1: 21115824289868802
+      tv2_gold_meadow_f16_v1: 1215548659357456302
+      tv2_gold_meadow_f17_v1: 639153014578611020
+      tv2_gold_meadow_f20_v1: 3125233888737096214
+      tv2_gold_meadow_f21_v1: 4021856181590988421
+      tv2_gold_meadow_f23_v1: 4603565671094026599
+      tv2_gold_meadow_f28_v1: 2391743863772246975
+      tv2_gold_meadow_f29_v1: 3578744713413379512
+      tv2_gold_meadow_f31_v1: 1981813953539381161
+      tv2_gold_meadow_f64_v1: 935654686436406062
+      tv2_gold_meadow_f65_v1: 2876667850584928200
+      tv2_gold_meadow_f68_v1: 2236137334070367173
+      tv2_gold_meadow_f69_v1: 3832073701662594208
+      tv2_gold_meadow_f71_v1: 2924128151100394397
+      tv2_gold_meadow_f80_v1: 957035921293310213
+      tv2_gold_meadow_f81_v1: 1738647720387316219
+      tv2_gold_meadow_f84_v1: 4509930791467997571
+      tv2_gold_meadow_f85_v1: 3626998042683258465
+      tv2_gold_meadow_f87_v1: 4418709297225746027
+      tv2_gold_meadow_f92_v1: 634634309465495848
+      tv2_gold_meadow_f93_v1: 3594391053429004536
+      tv2_gold_meadow_f95_v1: 1593658908085119289
+      tv2_gold_meadow_f112_v1: 3916236748594829214
+      tv2_gold_meadow_f113_v1: 3369302702338853278
+      tv2_gold_meadow_f116_v1: 2461016620752613214
+      tv2_gold_meadow_f117_v1: 3518506471249775682
+      tv2_gold_meadow_f119_v1: 2246302376870347395
+      tv2_gold_meadow_f124_v1: 1747411206333176791
+      tv2_gold_meadow_f125_v1: 81030340715704241
+      tv2_gold_meadow_f127_v1: 1135631173166015212
+      tv2_gold_meadow_f193_v1: 2667011016079584886
+      tv2_gold_meadow_f197_v1: 3467077802806407255
+      tv2_gold_meadow_f199_v1: 1444459444169584920
+      tv2_gold_meadow_f209_v1: 2858433461196248716
+      tv2_gold_meadow_f213_v1: 186534731002563723
+      tv2_gold_meadow_f215_v1: 2182603774932846015
+      tv2_gold_meadow_f221_v1: 4096008035921577489
+      tv2_gold_meadow_f223_v1: 4472106858261875282
+      tv2_gold_meadow_f241_v1: 17914333640444446
+      tv2_gold_meadow_f245_v1: 4429851290934244422
+      tv2_gold_meadow_f247_v1: 1136642589812092554
+      tv2_gold_meadow_f253_v1: 1517100776403322844
+      tv2_gold_meadow_f255_v1: 1306552761984355482
+      tv2_gold_meadow_f0_v2: 2918534841339361484
+      tv2_gold_meadow_f1_v2: 2803459889624373986
+      tv2_gold_meadow_f4_v2: 3824608479124324850
+      tv2_gold_meadow_f5_v2: 3351369903757237617
+      tv2_gold_meadow_f7_v2: 605963270002341489
+      tv2_gold_meadow_f16_v2: 322988967321067609
+      tv2_gold_meadow_f17_v2: 3811617571097768232
+      tv2_gold_meadow_f20_v2: 2446096078246940570
+      tv2_gold_meadow_f21_v2: 399034923380962723
+      tv2_gold_meadow_f23_v2: 4110738630811758135
+      tv2_gold_meadow_f28_v2: 2225485038182904492
+      tv2_gold_meadow_f29_v2: 1541717634635059566
+      tv2_gold_meadow_f31_v2: 4470070291406000866
+      tv2_gold_meadow_f64_v2: 2751412450326091601
+      tv2_gold_meadow_f65_v2: 2574783485194677339
+      tv2_gold_meadow_f68_v2: 1503106323560647441
+      tv2_gold_meadow_f69_v2: 2553500712937476389
+      tv2_gold_meadow_f71_v2: 554407640883063853
+      tv2_gold_meadow_f80_v2: 261110812703700579
+      tv2_gold_meadow_f81_v2: 451218104075669888
+      tv2_gold_meadow_f84_v2: 1140159556196051874
+      tv2_gold_meadow_f85_v2: 865296383563528900
+      tv2_gold_meadow_f87_v2: 3736850975793267440
+      tv2_gold_meadow_f92_v2: 2527914548687667706
+      tv2_gold_meadow_f93_v2: 3181801340384611726
+      tv2_gold_meadow_f95_v2: 1523934722149622475
+      tv2_gold_meadow_f112_v2: 918413725489607713
+      tv2_gold_meadow_f113_v2: 3160471915648789454
+      tv2_gold_meadow_f116_v2: 1878491750021098608
+      tv2_gold_meadow_f117_v2: 2198068366778295369
+      tv2_gold_meadow_f119_v2: 3375260422094606832
+      tv2_gold_meadow_f124_v2: 1982625593572390822
+      tv2_gold_meadow_f125_v2: 2630649544878949043
+      tv2_gold_meadow_f127_v2: 1044602415097220553
+      tv2_gold_meadow_f193_v2: 121426108836214312
+      tv2_gold_meadow_f197_v2: 487958931906463538
+      tv2_gold_meadow_f199_v2: 3028538746818082750
+      tv2_gold_meadow_f209_v2: 1830725504694953110
+      tv2_gold_meadow_f213_v2: 614063083295373415
+      tv2_gold_meadow_f215_v2: 4028332965405331100
+      tv2_gold_meadow_f221_v2: 3378264648727333346
+      tv2_gold_meadow_f223_v2: 4349220487052779111
+      tv2_gold_meadow_f241_v2: 4542847843052378117
+      tv2_gold_meadow_f245_v2: 1962670290991409036
+      tv2_gold_meadow_f247_v2: 1033556658731439066
+      tv2_gold_meadow_f253_v2: 3587924768424846929
+      tv2_gold_meadow_f255_v2: 511754333532182020
+      tv2_gold_meadow_up_right_v0: 1744868337595123223
+      tv2_gold_meadow_up_right_v1: 2537851738239586798
+      tv2_gold_meadow_up_right_v2: 4255616153031217551
+      tv2_gold_meadow_up_left_v0: 3934429549677388078
+      tv2_gold_meadow_up_left_v1: 1581569410186300395
+      tv2_gold_meadow_up_left_v2: 3722496143452983154
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

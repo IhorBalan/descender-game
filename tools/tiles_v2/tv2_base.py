@@ -404,6 +404,36 @@ def reach(solid: np.ndarray, dx: int, dy: int, cap: int = 8) -> np.ndarray:
 # first grid holds what stands in a cell (ground, a liquid, a torch, the hero's
 # start), the second the wall behind it.
 
+# --- The Paradise level's own (make_paradise_map.py): the ground of its zones and the walls behind
+# its roofed rooms. The orchard's loam under moss that glows, the living wood of the great vines,
+# the tilled gold of the fields, the Making-house's pearl, the silver of the cliffs by the Low Gate.
+for _key, _outline, _ramp in [
+    ("loam", "0c1c20", "16303a 1e4450 2a5a66 38707a 4a8a92 62a6aa"),
+    ("glow_moss", "0a2a2a", "0e4a48 13685f 1c8a7a 2cb09a 5cd8c0 a4f4e2"),
+    ("vinewood", "14200c", "26401a 345624 446e2e 58883a 70a44a 8cc060"),
+    ("vine_moss", "1a3a10", "2a5c14 3c7c1a 55a022 78c430 a6e44a d6f97c"),
+    ("tilth", "3a2410", "5e3c1c 7a5226 96692f ae8038 c6984a dcb264"),
+    ("wheat", "5a4208", "8a6a10 b08a18 d0a824 e8c63c f6de68 fff3a4"),
+    ("pearl", "5a5866", "a39ea8 b8b3bc cbc7cf dcd9df ebe9ed f8f7f9"),
+    ("silver", "1c2a44", "3e5478 546c92 6c86aa 88a2c2 a8c0da cfe0f0"),
+    ("canopy_wall", "06181c", "0a2a30 0e363c 124448 185458 20666a 2a7a7c"),
+    ("vine_wall", "0e180a", "1a2c12 223a18 2a481e 345826 3e682e 4a7a38"),
+    ("pearl_wall", "4a4854", "76727e 827e8a 8e8a96 9a96a2 a6a2ae b2aeba"),
+    ("silver_wall", "121c30", "22304a 2a3a58 334666 3c5274 465e82 526c92"),
+]:
+    PALETTES[_key] = {"outline": hexes(_outline)[0], "ramp": hexes(*_ramp.split())}
+MATERIALS += [
+    {"key": "moss", "kind": "terrain", "texture": "dirt", "palette": "loam", "grass": "glow_moss", "group": "earth", "slopes": True},
+    {"key": "vine", "kind": "terrain", "texture": "clay", "palette": "vinewood", "grass": "vine_moss", "group": "earth", "slopes": True},
+    {"key": "gold_meadow", "kind": "terrain", "texture": "dirt", "palette": "tilth", "grass": "wheat", "group": "earth", "slopes": True},
+    _ground("pearl", "ashlar", False),
+    _ground("silver", "stone", True),
+    _wall("canopy_wall", "leaves"),
+    _wall("vine_wall", "clay"),
+    _wall("pearl_wall", "ashlar"),
+    _wall("silver_wall", "stone"),
+]
+
 LEGEND = [
     # character, layer, key, slope
     ("G", "terrain", "grass", ""),
@@ -527,6 +557,26 @@ LEGEND = [
     # A trodden path (packed earth, no turf), and the drums of the old columns by the start.
     ("ü", "terrain", "path", ""),
     ("Ü", "terrain", "column_stone", ""),
+]
+LEGEND += [
+    ("À", "terrain", "moss", ""),
+    ("Á", "terrain", "moss", "up_right"),
+    ("Ã", "terrain", "moss", "up_left"),
+    ("Ä", "terrain", "vine", ""),
+    ("Æ", "terrain", "vine", "up_right"),
+    ("Ç", "terrain", "vine", "up_left"),
+    ("È", "terrain", "gold_meadow", ""),
+    ("Ë", "terrain", "gold_meadow", "up_right"),
+    ("Ì", "terrain", "gold_meadow", "up_left"),
+    ("Í", "terrain", "pearl", ""),
+    ("Ð", "terrain", "silver", ""),
+    ("Ò", "terrain", "silver", "up_right"),
+    ("Ó", "terrain", "silver", "up_left"),
+    ("Õ", "wall", "canopy_wall", ""),
+    ("Ù", "wall", "vine_wall", ""),
+    ("Ú", "wall", "pearl_wall", ""),
+    ("Û", "wall", "silver_wall", ""),
+    ("Ý", "prop", "glowfruit", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}
@@ -664,6 +714,8 @@ PROPS = [
     # A fire by the start, and mushrooms that give a cold light in the damp of the Earth's caves.
     {"key": "campfire", "frames": 3, "colour": (1.0, 0.62, 0.30), "intensity": 1.8, "embers": True},
     {"key": "glowshroom", "frames": 3, "colour": (0.35, 1.0, 0.85), "intensity": 1.0, "embers": False},
+    # The Paradise level's: a fruit of its orchard that gives light, hung in a tree or under a bough.
+    {"key": "glowfruit", "frames": 3, "colour": (0.45, 0.95, 1.0), "intensity": 1.25, "embers": False},
 ]
 
 

@@ -32,6 +32,10 @@ namespace Descender.EditorTools.TilesV2
         /// <summary>The world: Paradise, the Earth and the nine circles on one map, played as a journey.</summary>
         public const string DescentPath = "Assets/Scenes/Sandbox/TilesV2Descent.unity";
         public const string WorldMapPath = TilesV2Manifest.Folder + "/world_map.txt";
+
+        /// <summary>The Paradise level: seven zones from the Waking Hollow to the Low Gate, played from its start with nothing.</summary>
+        public const string ParadisePath = "Assets/Scenes/Sandbox/TilesV2Paradise.unity";
+        public const string ParadiseMapPath = TilesV2Manifest.Folder + "/paradise_map.txt";
         public const string CheckpointPath = "Assets/Prefabs/Pickups/Checkpoint.prefab";
         public const string AbilityPath = "Assets/Prefabs/Pickups/AbilityPickup.prefab";
         public const string UpgradePath = "Assets/Prefabs/Pickups/Upgrade.prefab";
@@ -53,9 +57,10 @@ namespace Descender.EditorTools.TilesV2
             TilesV2Builder.Build();
             BuildPlayground();
             BuildDescent();
+            BuildParadise();
             Build();
             Debug.Log(
-                $"Tiles V2: built {ScenePath} and {PlaygroundPath} from {MapPath}, {DescentPath} from {WorldMapPath}."
+                $"Tiles V2: built {ScenePath} and {PlaygroundPath} from {MapPath}, {DescentPath} from {WorldMapPath}, {ParadisePath} from {ParadiseMapPath}."
             );
         }
 
@@ -79,6 +84,26 @@ namespace Descender.EditorTools.TilesV2
         /// stand where the map marks them). Returns it, open, its world built.
         /// </summary>
         public static Scene BuildDescent() => BuildPlayable(WorldMapPath, DescentPath, true);
+
+        /// <summary>Builds and saves the Paradise level's scene: a journey of its own, on its own map.</summary>
+        public static Scene BuildParadise() => BuildPlayable(ParadiseMapPath, ParadisePath, true);
+
+        /// <summary>Builds a scene of the standard's that is not there yet (the world's, the Paradise level's).</summary>
+        public static void Ensure(string scenePath)
+        {
+            if (System.IO.File.Exists(scenePath))
+            {
+                return;
+            }
+            if (scenePath == ParadisePath)
+            {
+                BuildParadise();
+            }
+            else if (scenePath == DescentPath)
+            {
+                BuildDescent();
+            }
+        }
 
         private static Scene BuildPlayable(string mapPath, string scenePath, bool journey)
         {

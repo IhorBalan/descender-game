@@ -845,6 +845,132 @@
         0.0
       ],
       "open": false
+    },
+    {
+      "key": "moss",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "moss.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "vine",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "vine.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "gold_meadow",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "gold_meadow.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "pearl",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "pearl.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "silver",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "silver.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "canopy_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "canopy_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "vine_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "vine_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "pearl_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "pearl_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "silver_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "silver_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
     }
   ],
   "blends": [
@@ -1955,6 +2081,114 @@
       "layer": "terrain",
       "key": "column_stone",
       "slope": ""
+    },
+    {
+      "character": "\u00c0",
+      "layer": "terrain",
+      "key": "moss",
+      "slope": ""
+    },
+    {
+      "character": "\u00c1",
+      "layer": "terrain",
+      "key": "moss",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00c3",
+      "layer": "terrain",
+      "key": "moss",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00c4",
+      "layer": "terrain",
+      "key": "vine",
+      "slope": ""
+    },
+    {
+      "character": "\u00c6",
+      "layer": "terrain",
+      "key": "vine",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00c7",
+      "layer": "terrain",
+      "key": "vine",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00c8",
+      "layer": "terrain",
+      "key": "gold_meadow",
+      "slope": ""
+    },
+    {
+      "character": "\u00cb",
+      "layer": "terrain",
+      "key": "gold_meadow",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00cc",
+      "layer": "terrain",
+      "key": "gold_meadow",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00cd",
+      "layer": "terrain",
+      "key": "pearl",
+      "slope": ""
+    },
+    {
+      "character": "\u00d0",
+      "layer": "terrain",
+      "key": "silver",
+      "slope": ""
+    },
+    {
+      "character": "\u00d2",
+      "layer": "terrain",
+      "key": "silver",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00d3",
+      "layer": "terrain",
+      "key": "silver",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00d5",
+      "layer": "wall",
+      "key": "canopy_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00d9",
+      "layer": "wall",
+      "key": "vine_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00da",
+      "layer": "wall",
+      "key": "pearl_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00db",
+      "layer": "wall",
+      "key": "silver_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00dd",
+      "layer": "prop",
+      "key": "glowfruit",
+      "slope": ""
     }
   ],
   "ledges": {
@@ -2089,6 +2323,18 @@
         0.85
       ],
       "intensity": 1.0,
+      "embers": false
+    },
+    {
+      "key": "glowfruit",
+      "sheet": "glowfruit.png",
+      "frames": 3,
+      "colour": [
+        0.45,
+        0.95,
+        1.0
+      ],
+      "intensity": 1.25,
       "embers": false
     }
   ],
@@ -6821,6 +7067,600 @@
       "drift": 0.0,
       "order": -93,
       "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "eden_leaf_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_leaf_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_leaf_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_leaf_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_green_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_green_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_green_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_teal_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_teal_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_teal_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_pale_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_pale_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_pale_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_frost_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_frost_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ivy_frost_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_0_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_0_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_0_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_1_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_1_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_1_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_2_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_2_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_teal_tree_2_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_vine_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_vine_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_vine_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_wheat_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_bough_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_wheat_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_bough_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_sundial",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_wheel",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_pipe_h_6",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_pipe_v_6",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_pipe_h_12",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_pipe_v_12",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_gear",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_gear_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_gear_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_making_door",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_low_gate",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_crag_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_crag_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_crag_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_pillar_10x2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_pillar_10x1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_mereth",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_ithuriel",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "eden_gathered",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
       "tinted": false
     }
   ]
