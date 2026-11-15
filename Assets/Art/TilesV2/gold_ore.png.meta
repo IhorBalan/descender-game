@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: c9776fa70ed25636a54b38cbc8ae1e06
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2630526070351208250
+    second: tv2_gold_ore_f0_v0
+  - first:
+      213: 3797227324504009149
+    second: tv2_gold_ore_f1_v0
+  - first:
+      213: 2212168236773364871
+    second: tv2_gold_ore_f4_v0
+  - first:
+      213: 4025598354573501044
+    second: tv2_gold_ore_f5_v0
+  - first:
+      213: 763429757536142537
+    second: tv2_gold_ore_f7_v0
+  - first:
+      213: 1307699831050632288
+    second: tv2_gold_ore_f16_v0
+  - first:
+      213: 3605933794333341603
+    second: tv2_gold_ore_f17_v0
+  - first:
+      213: 147804399734576051
+    second: tv2_gold_ore_f20_v0
+  - first:
+      213: 513435821414562971
+    second: tv2_gold_ore_f21_v0
+  - first:
+      213: 2543379723435214384
+    second: tv2_gold_ore_f23_v0
+  - first:
+      213: 1982326656210636979
+    second: tv2_gold_ore_f28_v0
+  - first:
+      213: 4584954592126824422
+    second: tv2_gold_ore_f29_v0
+  - first:
+      213: 982296932065540021
+    second: tv2_gold_ore_f31_v0
+  - first:
+      213: 1950779752113716407
+    second: tv2_gold_ore_f64_v0
+  - first:
+      213: 1248692953286637578
+    second: tv2_gold_ore_f65_v0
+  - first:
+      213: 3685258256589040036
+    second: tv2_gold_ore_f68_v0
+  - first:
+      213: 2079372568479088360
+    second: tv2_gold_ore_f69_v0
+  - first:
+      213: 1545203305706505153
+    second: tv2_gold_ore_f71_v0
+  - first:
+      213: 4036459436633249826
+    second: tv2_gold_ore_f80_v0
+  - first:
+      213: 3027581925496822298
+    second: tv2_gold_ore_f81_v0
+  - first:
+      213: 3805666704367515532
+    second: tv2_gold_ore_f84_v0
+  - first:
+      213: 3235166012651603686
+    second: tv2_gold_ore_f85_v0
+  - first:
+      213: 3129348403511711494
+    second: tv2_gold_ore_f87_v0
+  - first:
+      213: 537890527028125474
+    second: tv2_gold_ore_f92_v0
+  - first:
+      213: 1734546096399067090
+    second: tv2_gold_ore_f93_v0
+  - first:
+      213: 2966619267756533488
+    second: tv2_gold_ore_f95_v0
+  - first:
+      213: 4351259679400612255
+    second: tv2_gold_ore_f112_v0
+  - first:
+      213: 1969154282652586901
+    second: tv2_gold_ore_f113_v0
+  - first:
+      213: 2504988971038365605
+    second: tv2_gold_ore_f116_v0
+  - first:
+      213: 1263119410714963681
+    second: tv2_gold_ore_f117_v0
+  - first:
+      213: 1657726436839128528
+    second: tv2_gold_ore_f119_v0
+  - first:
+      213: 3189547854427133350
+    second: tv2_gold_ore_f124_v0
+  - first:
+      213: 2302229324274521060
+    second: tv2_gold_ore_f125_v0
+  - first:
+      213: 513846160410246813
+    second: tv2_gold_ore_f127_v0
+  - first:
+      213: 2695524903461106678
+    second: tv2_gold_ore_f193_v0
+  - first:
+      213: 1730731723135998443
+    second: tv2_gold_ore_f197_v0
+  - first:
+      213: 3523627913196503861
+    second: tv2_gold_ore_f199_v0
+  - first:
+      213: 405129437246176033
+    second: tv2_gold_ore_f209_v0
+  - first:
+      213: 4450125428702680652
+    second: tv2_gold_ore_f213_v0
+  - first:
+      213: 3026071652250457149
+    second: tv2_gold_ore_f215_v0
+  - first:
+      213: 3563440686361772046
+    second: tv2_gold_ore_f221_v0
+  - first:
+      213: 478428173186774960
+    second: tv2_gold_ore_f223_v0
+  - first:
+      213: 2617752633177728517
+    second: tv2_gold_ore_f241_v0
+  - first:
+      213: 1896686337434389599
+    second: tv2_gold_ore_f245_v0
+  - first:
+      213: 1458858380268616275
+    second: tv2_gold_ore_f247_v0
+  - first:
+      213: 552092361246309640
+    second: tv2_gold_ore_f253_v0
+  - first:
+      213: 3262983203438179771
+    second: tv2_gold_ore_f255_v0
+  - first:
+      213: 831225142846231218
+    second: tv2_gold_ore_f0_v1
+  - first:
+      213: 4022233701875999696
+    second: tv2_gold_ore_f1_v1
+  - first:
+      213: 4165629718875851358
+    second: tv2_gold_ore_f4_v1
+  - first:
+      213: 3371915831768749505
+    second: tv2_gold_ore_f5_v1
+  - first:
+      213: 578559169007324538
+    second: tv2_gold_ore_f7_v1
+  - first:
+      213: 4222285019091329434
+    second: tv2_gold_ore_f16_v1
+  - first:
+      213: 266365720612037388
+    second: tv2_gold_ore_f17_v1
+  - first:
+      213: 382296688345706244
+    second: tv2_gold_ore_f20_v1
+  - first:
+      213: 1578314201944889975
+    second: tv2_gold_ore_f21_v1
+  - first:
+      213: 2008337655591147237
+    second: tv2_gold_ore_f23_v1
+  - first:
+      213: 58054908348826933
+    second: tv2_gold_ore_f28_v1
+  - first:
+      213: 4542134933527832272
+    second: tv2_gold_ore_f29_v1
+  - first:
+      213: 3004761908373242407
+    second: tv2_gold_ore_f31_v1
+  - first:
+      213: 3072402739730688881
+    second: tv2_gold_ore_f64_v1
+  - first:
+      213: 3565933247497262161
+    second: tv2_gold_ore_f65_v1
+  - first:
+      213: 3741325201706538433
+    second: tv2_gold_ore_f68_v1
+  - first:
+      213: 1480669197662869667
+    second: tv2_gold_ore_f69_v1
+  - first:
+      213: 3939072450605577263
+    second: tv2_gold_ore_f71_v1
+  - first:
+      213: 1308917789512688670
+    second: tv2_gold_ore_f80_v1
+  - first:
+      213: 248359167497555474
+    second: tv2_gold_ore_f81_v1
+  - first:
+      213: 77183429292994773
+    second: tv2_gold_ore_f84_v1
+  - first:
+      213: 995498102974877056
+    second: tv2_gold_ore_f85_v1
+  - first:
+      213: 4120160511239352340
+    second: tv2_gold_ore_f87_v1
+  - first:
+      213: 3144817043828590103
+    second: tv2_gold_ore_f92_v1
+  - first:
+      213: 3027203297280519939
+    second: tv2_gold_ore_f93_v1
+  - first:
+      213: 1573621561830539770
+    second: tv2_gold_ore_f95_v1
+  - first:
+      213: 3528149562694601610
+    second: tv2_gold_ore_f112_v1
+  - first:
+      213: 1826634743693260801
+    second: tv2_gold_ore_f113_v1
+  - first:
+      213: 1607309554333279324
+    second: tv2_gold_ore_f116_v1
+  - first:
+      213: 1349681396949779970
+    second: tv2_gold_ore_f117_v1
+  - first:
+      213: 2584538945753616172
+    second: tv2_gold_ore_f119_v1
+  - first:
+      213: 1755211508324710068
+    second: tv2_gold_ore_f124_v1
+  - first:
+      213: 2770350361367179542
+    second: tv2_gold_ore_f125_v1
+  - first:
+      213: 781802878856026252
+    second: tv2_gold_ore_f127_v1
+  - first:
+      213: 4484015154032561578
+    second: tv2_gold_ore_f193_v1
+  - first:
+      213: 3119378136496813285
+    second: tv2_gold_ore_f197_v1
+  - first:
+      213: 3262222945514001496
+    second: tv2_gold_ore_f199_v1
+  - first:
+      213: 1895965733433159466
+    second: tv2_gold_ore_f209_v1
+  - first:
+      213: 1626273978131060226
+    second: tv2_gold_ore_f213_v1
+  - first:
+      213: 799265492594244807
+    second: tv2_gold_ore_f215_v1
+  - first:
+      213: 2009102487567611642
+    second: tv2_gold_ore_f221_v1
+  - first:
+      213: 864707278703303696
+    second: tv2_gold_ore_f223_v1
+  - first:
+      213: 4416298195475869139
+    second: tv2_gold_ore_f241_v1
+  - first:
+      213: 4263803490990922563
+    second: tv2_gold_ore_f245_v1
+  - first:
+      213: 3357623407468556013
+    second: tv2_gold_ore_f247_v1
+  - first:
+      213: 2008587119804829101
+    second: tv2_gold_ore_f253_v1
+  - first:
+      213: 424338042626153515
+    second: tv2_gold_ore_f255_v1
+  - first:
+      213: 1836831011373647314
+    second: tv2_gold_ore_f0_v2
+  - first:
+      213: 2049256465319250215
+    second: tv2_gold_ore_f1_v2
+  - first:
+      213: 4542527005897309092
+    second: tv2_gold_ore_f4_v2
+  - first:
+      213: 4097625631210600970
+    second: tv2_gold_ore_f5_v2
+  - first:
+      213: 1766473274137268954
+    second: tv2_gold_ore_f7_v2
+  - first:
+      213: 1888426428528987795
+    second: tv2_gold_ore_f16_v2
+  - first:
+      213: 1910723550011637859
+    second: tv2_gold_ore_f17_v2
+  - first:
+      213: 3182441889713582175
+    second: tv2_gold_ore_f20_v2
+  - first:
+      213: 2017486693346650210
+    second: tv2_gold_ore_f21_v2
+  - first:
+      213: 3217171714767453682
+    second: tv2_gold_ore_f23_v2
+  - first:
+      213: 701831951543657814
+    second: tv2_gold_ore_f28_v2
+  - first:
+      213: 931997072417027522
+    second: tv2_gold_ore_f29_v2
+  - first:
+      213: 3437380000715155671
+    second: tv2_gold_ore_f31_v2
+  - first:
+      213: 4014238989360910039
+    second: tv2_gold_ore_f64_v2
+  - first:
+      213: 3226720984076114483
+    second: tv2_gold_ore_f65_v2
+  - first:
+      213: 3708182657754572007
+    second: tv2_gold_ore_f68_v2
+  - first:
+      213: 325718736058816880
+    second: tv2_gold_ore_f69_v2
+  - first:
+      213: 1041415164691761180
+    second: tv2_gold_ore_f71_v2
+  - first:
+      213: 3108998577916875434
+    second: tv2_gold_ore_f80_v2
+  - first:
+      213: 3873144053324029755
+    second: tv2_gold_ore_f81_v2
+  - first:
+      213: 1533363813784005733
+    second: tv2_gold_ore_f84_v2
+  - first:
+      213: 306697167160683161
+    second: tv2_gold_ore_f85_v2
+  - first:
+      213: 1158094780545174852
+    second: tv2_gold_ore_f87_v2
+  - first:
+      213: 3904226073378955999
+    second: tv2_gold_ore_f92_v2
+  - first:
+      213: 1832125164403563916
+    second: tv2_gold_ore_f93_v2
+  - first:
+      213: 359081220903837843
+    second: tv2_gold_ore_f95_v2
+  - first:
+      213: 307198722747159712
+    second: tv2_gold_ore_f112_v2
+  - first:
+      213: 4175587862051062918
+    second: tv2_gold_ore_f113_v2
+  - first:
+      213: 236867494270305766
+    second: tv2_gold_ore_f116_v2
+  - first:
+      213: 2530132435721635456
+    second: tv2_gold_ore_f117_v2
+  - first:
+      213: 3056973661946852668
+    second: tv2_gold_ore_f119_v2
+  - first:
+      213: 2932069981423372241
+    second: tv2_gold_ore_f124_v2
+  - first:
+      213: 490156241555493687
+    second: tv2_gold_ore_f125_v2
+  - first:
+      213: 1200767445758873708
+    second: tv2_gold_ore_f127_v2
+  - first:
+      213: 1107326905381874693
+    second: tv2_gold_ore_f193_v2
+  - first:
+      213: 4501032990695103908
+    second: tv2_gold_ore_f197_v2
+  - first:
+      213: 2274490240046230044
+    second: tv2_gold_ore_f199_v2
+  - first:
+      213: 398611882147343531
+    second: tv2_gold_ore_f209_v2
+  - first:
+      213: 2626748061164831159
+    second: tv2_gold_ore_f213_v2
+  - first:
+      213: 1520338289021031814
+    second: tv2_gold_ore_f215_v2
+  - first:
+      213: 3790762262623696303
+    second: tv2_gold_ore_f221_v2
+  - first:
+      213: 1015957637556561711
+    second: tv2_gold_ore_f223_v2
+  - first:
+      213: 3648409462433672793
+    second: tv2_gold_ore_f241_v2
+  - first:
+      213: 2979750908206666138
+    second: tv2_gold_ore_f245_v2
+  - first:
+      213: 2147280238966658097
+    second: tv2_gold_ore_f247_v2
+  - first:
+      213: 4174002388953439781
+    second: tv2_gold_ore_f253_v2
+  - first:
+      213: 2426466179183387294
+    second: tv2_gold_ore_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_gold_ore_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 660e58001e43562eb4571cc44a5d631c
+      internalID: 2630526070351208250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0645c6aa9f175e61a3d5d3ec8684038e
+      internalID: 3797227324504009149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29c14f2003ac557686960ee70cc7ae2c
+      internalID: 2212168236773364871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1000594c8ef8505b9ffcb505c1357e68
+      internalID: 4025598354573501044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bade51852285ba2b0888710bc78def4
+      internalID: 763429757536142537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 881a91f4bb1d51d3af6b0fb08f6b98bf
+      internalID: 1307699831050632288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdb721799f8655a9984b96f8bc13e203
+      internalID: 3605933794333341603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9de2239a951257ffaac5310bc3839c42
+      internalID: 147804399734576051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b44d66b2dfd58e4b989426f9f225123
+      internalID: 513435821414562971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6c3a03b6a3558ab876f0dfa9a3378f0
+      internalID: 2543379723435214384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d6857bcc50c5e168bd2eda24d3a60c7
+      internalID: 1982326656210636979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7afe36561d85501fa48d70863586eab5
+      internalID: 4584954592126824422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 731d374dacfd55cabeb9a9ae6e2421f3
+      internalID: 982296932065540021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17a417009934543ebb764a88d4c43619
+      internalID: 1950779752113716407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf6232c704ff5e64964664c29adff561
+      internalID: 1248692953286637578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f708c968e05d41bd6996c5ebe22401
+      internalID: 3685258256589040036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6adc5949e6b75c799345be6b7086a201
+      internalID: 2079372568479088360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b82a2445bfa65ae282756bc1b67cb4fa
+      internalID: 1545203305706505153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0530a60973615fe1a63e21ae544be0e2
+      internalID: 4036459436633249826
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfc50dfe0c5d5fed845d0162b2e442bf
+      internalID: 3027581925496822298
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5f16860ee445f93b929fc9570e2f928
+      internalID: 3805666704367515532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a728cc130260562a9b318f1ab7881444
+      internalID: 3235166012651603686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e77921b4caf5be8bddd8d83c0623456
+      internalID: 3129348403511711494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6254781276a65dd88cdfc0b10a649ef2
+      internalID: 537890527028125474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b863c70fe8c45f36bf2129a49778ed64
+      internalID: 1734546096399067090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 107559ca72f4568aa383c0ce6d1db52b
+      internalID: 2966619267756533488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12904302af80581d9bb3f8333bbbcd37
+      internalID: 4351259679400612255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6143b7694d305f0c82941bebd33b0ba1
+      internalID: 1969154282652586901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 06494a43aa8f55288954b64b86f85962
+      internalID: 2504988971038365605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ef50cb8550b506890a0f03a17ad7a22
+      internalID: 1263119410714963681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e244e8fe33895708a9d40432a2e62586
+      internalID: 1657726436839128528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 678d623d751e5d22b341652553490a37
+      internalID: 3189547854427133350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4bfc9b772a15da586ae0c15440b562e
+      internalID: 2302229324274521060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 249e27026ada5e2fa5590c4c82533843
+      internalID: 513846160410246813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9e044269af75bb6bdce3f59d87a8f83
+      internalID: 2695524903461106678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5e67088983754e09e9495f212c6270e
+      internalID: 1730731723135998443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e8a2f554d3958d4bb30ae09cf111e50
+      internalID: 3523627913196503861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecaf08bc32965cbdb61eb90a915042c1
+      internalID: 405129437246176033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25e929e82f535a418e4f4322df31d051
+      internalID: 4450125428702680652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40f0903d462650b7a951cce595a5dba4
+      internalID: 3026071652250457149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7edbc89719c656f9b4c09f4a04e6f7e5
+      internalID: 3563440686361772046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f21d328594d157b180d62aff353bafc9
+      internalID: 478428173186774960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 880cd5f43b3058d4b8dc93c731aef774
+      internalID: 2617752633177728517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 751001b428905efaa1d21bfefa597b0e
+      internalID: 1896686337434389599
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dab5be203f95556b03a204e59be8b83
+      internalID: 1458858380268616275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c47da2196515e12b9d25f134bf8f266
+      internalID: 552092361246309640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b99d73c70c508bac3d4505b6a2a16a
+      internalID: 3262983203438179771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b59d5df9141558f099a29f7dd9dab514
+      internalID: 831225142846231218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1a1b883e14151088411596fa9963fb2
+      internalID: 4022233701875999696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a479e7ccf319576da5c284a007f005b2
+      internalID: 4165629718875851358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6610b827509452d5ad5c4bf3b145a568
+      internalID: 3371915831768749505
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 468807174e735f85a88d1a79cdbe56e1
+      internalID: 578559169007324538
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a910753f02725fddb6f67c31a517bf97
+      internalID: 4222285019091329434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 277cc15e8cf65872b77c82e248d95a99
+      internalID: 266365720612037388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 546df1749603593595125e1f7a49e3d4
+      internalID: 382296688345706244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d18d67ab6b155ccd85f00738923a2601
+      internalID: 1578314201944889975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbe8987a0b125490af5e608be06b9273
+      internalID: 2008337655591147237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0bbda936c905086ba7e77255b1501a0
+      internalID: 58054908348826933
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e65a22b677c5aab96f1f73e00e3e350
+      internalID: 4542134933527832272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0359b765599459d79157ae80122d63a1
+      internalID: 3004761908373242407
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dc09df7719a5f65ba50f3d088c38005
+      internalID: 3072402739730688881
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21b136b73f2d5e2cb43a936942de12a7
+      internalID: 3565933247497262161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7472dec1c6225b95bbc44939aa17eadf
+      internalID: 3741325201706538433
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30b5901611d7540f94810e833be79af8
+      internalID: 1480669197662869667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bbce404885f55178d64d0a895ea4a61
+      internalID: 3939072450605577263
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3453ce0dc615d4eafe9c3f73e4ae8f7
+      internalID: 1308917789512688670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb34cd62e9d5494bf8513a6b9d8d95e
+      internalID: 248359167497555474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 539cf310965358f4b9c61364ef2c7a20
+      internalID: 77183429292994773
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e87689ef793f5faca149ce30f236d0a7
+      internalID: 995498102974877056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6a748a1cf6054c58b10ecc779c438a9
+      internalID: 4120160511239352340
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dfb385a49c451f88b1e14074152b3bf
+      internalID: 3144817043828590103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb079014074e50a08c7bba50320e2d62
+      internalID: 3027203297280519939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a0f24cbbd805b52a0f037922f37b279
+      internalID: 1573621561830539770
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f81fe486ff585b319213713e2d38d9a5
+      internalID: 3528149562694601610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4295ba4afd635f6698ed5b6fac536530
+      internalID: 1826634743693260801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b3b0d20f94d53fa86448dcfcc9496c6
+      internalID: 1607309554333279324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d6d96563ad851e290d93e4ca2dfbcca
+      internalID: 1349681396949779970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e338e5960ab5f20858eb0a1b934f4f6
+      internalID: 2584538945753616172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 026ac1a19463594abd4941a82e6bbf1d
+      internalID: 1755211508324710068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9aa17ccb7b75ef3a06847aa79fd35f4
+      internalID: 2770350361367179542
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26791c5b7e095d1aa1cbec957763a640
+      internalID: 781802878856026252
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb6de49335305d3e8d3542ee3ac31759
+      internalID: 4484015154032561578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a08fe64db635c01b7bb7568a0336dbf
+      internalID: 3119378136496813285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ba1405420ea5f1e8482101f11dbb67b
+      internalID: 3262222945514001496
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 389445e4025c54bb9843a5cadfba8644
+      internalID: 1895965733433159466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0c2aabce9a25c8587f772ead6d0c8ea
+      internalID: 1626273978131060226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f12216ac7545f01b454720ca9bbf008
+      internalID: 799265492594244807
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c5aef2253755fcd9e36ac50553f5511
+      internalID: 2009102487567611642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00d19dbcdcef5ab3a80f688b669c65ad
+      internalID: 864707278703303696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aef531865851591b8c9b2dcc993b35ac
+      internalID: 4416298195475869139
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7ae3b681e5b5c79b5965f8dae418f18
+      internalID: 4263803490990922563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f1d3aa6b219582e80916f572694ee5b
+      internalID: 3357623407468556013
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 265f44438eb15a0895d8010a68a110c2
+      internalID: 2008587119804829101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58c3a6a7e21e5ef780b3149d9f41eecd
+      internalID: 424338042626153515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 92a28cd663885e929ea9a982e2534a43
+      internalID: 1836831011373647314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 087e016b116f527ea6bb68e5a6c87bf5
+      internalID: 2049256465319250215
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d241553d1da5554ab28dfc617abfb681
+      internalID: 4542527005897309092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f32bb697e41f5e94be966e5d35881920
+      internalID: 4097625631210600970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9cd6aebdcde95aec816b928dbe3e1dd2
+      internalID: 1766473274137268954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a334dbf74c5c57f2b2f2903e82efdecb
+      internalID: 1888426428528987795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69e55a10742f51c4b2d58b5ad367e61a
+      internalID: 1910723550011637859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a6ae01c28cc51a4b82a85ae2c24a75b
+      internalID: 3182441889713582175
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7bf2d4cc3f175389a2afa4b5a3c2152c
+      internalID: 2017486693346650210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fda37b648e7652c78cd28a2535dad862
+      internalID: 3217171714767453682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c563d2b5d0b455009d4eb1a167ed47d7
+      internalID: 701831951543657814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aeda8a5f35bf5feaa09a1b3348d6c13c
+      internalID: 931997072417027522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b074f5595ae5f9395454febde4cbc8f
+      internalID: 3437380000715155671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8678f2937dcc5cbc85a7582c00f759b3
+      internalID: 4014238989360910039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fee7d7ca6be054bba66ce541339f528f
+      internalID: 3226720984076114483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdab72bc9fc6564d9b9952a4484071c0
+      internalID: 3708182657754572007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 859b93f3830559b49257fd11d38e2512
+      internalID: 325718736058816880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baad3d4d584850968cd0e0af4986d516
+      internalID: 1041415164691761180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59b0d165602e58768d1b5a38328e843f
+      internalID: 3108998577916875434
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c327f2bf2c35952930558d421d7d4a6
+      internalID: 3873144053324029755
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc0b4959d18e5e60bd3ab95ee2a99130
+      internalID: 1533363813784005733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c665407ecc485eeaa6506b0bef067512
+      internalID: 306697167160683161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82956ca771c65515a95a560defd76e3e
+      internalID: 1158094780545174852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3820265c2ef5ef6805b8c0e5ad46441
+      internalID: 3904226073378955999
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9aab1eabaf52529f8befb398e49e91c4
+      internalID: 1832125164403563916
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44b04985d95856b2a5c1237e28dcb5de
+      internalID: 359081220903837843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 876afb5ae4145898a77125c872fb3e7d
+      internalID: 307198722747159712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a4889516eb584abde5fe900f37a2e7
+      internalID: 4175587862051062918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 787d4e62df285869a6e68b2c5ec7a996
+      internalID: 236867494270305766
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb83a0226a1e5b79baf764d02d21b46b
+      internalID: 2530132435721635456
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f88151c0054566baf455c910740ab5d
+      internalID: 3056973661946852668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 092e6f43c4145c41a5f953b9867a3d86
+      internalID: 2932069981423372241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f57cf03e8c253a19a1242488d07f528
+      internalID: 490156241555493687
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f40568e943b1587293f90338ca244856
+      internalID: 1200767445758873708
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e101a9eedf77515cbc6b454f38b28408
+      internalID: 1107326905381874693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e488b073e2ad5b83834befa0f085b82f
+      internalID: 4501032990695103908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4676e8fb136e5298ba56acb5249fa217
+      internalID: 2274490240046230044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e33ae9f08675432a8bfb275e1797866
+      internalID: 398611882147343531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cfe4507bbf2507aafa5867f098ac273
+      internalID: 2626748061164831159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0296cb8c8c105b789f45bd034066f544
+      internalID: 1520338289021031814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be3e45a1d9765c35bd895dfe2bf883ff
+      internalID: 3790762262623696303
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13fbe8114f9e5ea4b5121ed413619dc1
+      internalID: 1015957637556561711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30d7ac86c3345b07a014610fd1c70751
+      internalID: 3648409462433672793
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb9ae261bd5a56a2b622e3dc1acb7cfe
+      internalID: 2979750908206666138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdd5bde0e12e51d48ff4fdff5165ed40
+      internalID: 2147280238966658097
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3138403351875ec4a4342ade7f7a5c50
+      internalID: 4174002388953439781
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_ore_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5477123504bc5a8c802996fd8da48c88
+      internalID: 2426466179183387294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_gold_ore_f0_v0: 2630526070351208250
+      tv2_gold_ore_f1_v0: 3797227324504009149
+      tv2_gold_ore_f4_v0: 2212168236773364871
+      tv2_gold_ore_f5_v0: 4025598354573501044
+      tv2_gold_ore_f7_v0: 763429757536142537
+      tv2_gold_ore_f16_v0: 1307699831050632288
+      tv2_gold_ore_f17_v0: 3605933794333341603
+      tv2_gold_ore_f20_v0: 147804399734576051
+      tv2_gold_ore_f21_v0: 513435821414562971
+      tv2_gold_ore_f23_v0: 2543379723435214384
+      tv2_gold_ore_f28_v0: 1982326656210636979
+      tv2_gold_ore_f29_v0: 4584954592126824422
+      tv2_gold_ore_f31_v0: 982296932065540021
+      tv2_gold_ore_f64_v0: 1950779752113716407
+      tv2_gold_ore_f65_v0: 1248692953286637578
+      tv2_gold_ore_f68_v0: 3685258256589040036
+      tv2_gold_ore_f69_v0: 2079372568479088360
+      tv2_gold_ore_f71_v0: 1545203305706505153
+      tv2_gold_ore_f80_v0: 4036459436633249826
+      tv2_gold_ore_f81_v0: 3027581925496822298
+      tv2_gold_ore_f84_v0: 3805666704367515532
+      tv2_gold_ore_f85_v0: 3235166012651603686
+      tv2_gold_ore_f87_v0: 3129348403511711494
+      tv2_gold_ore_f92_v0: 537890527028125474
+      tv2_gold_ore_f93_v0: 1734546096399067090
+      tv2_gold_ore_f95_v0: 2966619267756533488
+      tv2_gold_ore_f112_v0: 4351259679400612255
+      tv2_gold_ore_f113_v0: 1969154282652586901
+      tv2_gold_ore_f116_v0: 2504988971038365605
+      tv2_gold_ore_f117_v0: 1263119410714963681
+      tv2_gold_ore_f119_v0: 1657726436839128528
+      tv2_gold_ore_f124_v0: 3189547854427133350
+      tv2_gold_ore_f125_v0: 2302229324274521060
+      tv2_gold_ore_f127_v0: 513846160410246813
+      tv2_gold_ore_f193_v0: 2695524903461106678
+      tv2_gold_ore_f197_v0: 1730731723135998443
+      tv2_gold_ore_f199_v0: 3523627913196503861
+      tv2_gold_ore_f209_v0: 405129437246176033
+      tv2_gold_ore_f213_v0: 4450125428702680652
+      tv2_gold_ore_f215_v0: 3026071652250457149
+      tv2_gold_ore_f221_v0: 3563440686361772046
+      tv2_gold_ore_f223_v0: 478428173186774960
+      tv2_gold_ore_f241_v0: 2617752633177728517
+      tv2_gold_ore_f245_v0: 1896686337434389599
+      tv2_gold_ore_f247_v0: 1458858380268616275
+      tv2_gold_ore_f253_v0: 552092361246309640
+      tv2_gold_ore_f255_v0: 3262983203438179771
+      tv2_gold_ore_f0_v1: 831225142846231218
+      tv2_gold_ore_f1_v1: 4022233701875999696
+      tv2_gold_ore_f4_v1: 4165629718875851358
+      tv2_gold_ore_f5_v1: 3371915831768749505
+      tv2_gold_ore_f7_v1: 578559169007324538
+      tv2_gold_ore_f16_v1: 4222285019091329434
+      tv2_gold_ore_f17_v1: 266365720612037388
+      tv2_gold_ore_f20_v1: 382296688345706244
+      tv2_gold_ore_f21_v1: 1578314201944889975
+      tv2_gold_ore_f23_v1: 2008337655591147237
+      tv2_gold_ore_f28_v1: 58054908348826933
+      tv2_gold_ore_f29_v1: 4542134933527832272
+      tv2_gold_ore_f31_v1: 3004761908373242407
+      tv2_gold_ore_f64_v1: 3072402739730688881
+      tv2_gold_ore_f65_v1: 3565933247497262161
+      tv2_gold_ore_f68_v1: 3741325201706538433
+      tv2_gold_ore_f69_v1: 1480669197662869667
+      tv2_gold_ore_f71_v1: 3939072450605577263
+      tv2_gold_ore_f80_v1: 1308917789512688670
+      tv2_gold_ore_f81_v1: 248359167497555474
+      tv2_gold_ore_f84_v1: 77183429292994773
+      tv2_gold_ore_f85_v1: 995498102974877056
+      tv2_gold_ore_f87_v1: 4120160511239352340
+      tv2_gold_ore_f92_v1: 3144817043828590103
+      tv2_gold_ore_f93_v1: 3027203297280519939
+      tv2_gold_ore_f95_v1: 1573621561830539770
+      tv2_gold_ore_f112_v1: 3528149562694601610
+      tv2_gold_ore_f113_v1: 1826634743693260801
+      tv2_gold_ore_f116_v1: 1607309554333279324
+      tv2_gold_ore_f117_v1: 1349681396949779970
+      tv2_gold_ore_f119_v1: 2584538945753616172
+      tv2_gold_ore_f124_v1: 1755211508324710068
+      tv2_gold_ore_f125_v1: 2770350361367179542
+      tv2_gold_ore_f127_v1: 781802878856026252
+      tv2_gold_ore_f193_v1: 4484015154032561578
+      tv2_gold_ore_f197_v1: 3119378136496813285
+      tv2_gold_ore_f199_v1: 3262222945514001496
+      tv2_gold_ore_f209_v1: 1895965733433159466
+      tv2_gold_ore_f213_v1: 1626273978131060226
+      tv2_gold_ore_f215_v1: 799265492594244807
+      tv2_gold_ore_f221_v1: 2009102487567611642
+      tv2_gold_ore_f223_v1: 864707278703303696
+      tv2_gold_ore_f241_v1: 4416298195475869139
+      tv2_gold_ore_f245_v1: 4263803490990922563
+      tv2_gold_ore_f247_v1: 3357623407468556013
+      tv2_gold_ore_f253_v1: 2008587119804829101
+      tv2_gold_ore_f255_v1: 424338042626153515
+      tv2_gold_ore_f0_v2: 1836831011373647314
+      tv2_gold_ore_f1_v2: 2049256465319250215
+      tv2_gold_ore_f4_v2: 4542527005897309092
+      tv2_gold_ore_f5_v2: 4097625631210600970
+      tv2_gold_ore_f7_v2: 1766473274137268954
+      tv2_gold_ore_f16_v2: 1888426428528987795
+      tv2_gold_ore_f17_v2: 1910723550011637859
+      tv2_gold_ore_f20_v2: 3182441889713582175
+      tv2_gold_ore_f21_v2: 2017486693346650210
+      tv2_gold_ore_f23_v2: 3217171714767453682
+      tv2_gold_ore_f28_v2: 701831951543657814
+      tv2_gold_ore_f29_v2: 931997072417027522
+      tv2_gold_ore_f31_v2: 3437380000715155671
+      tv2_gold_ore_f64_v2: 4014238989360910039
+      tv2_gold_ore_f65_v2: 3226720984076114483
+      tv2_gold_ore_f68_v2: 3708182657754572007
+      tv2_gold_ore_f69_v2: 325718736058816880
+      tv2_gold_ore_f71_v2: 1041415164691761180
+      tv2_gold_ore_f80_v2: 3108998577916875434
+      tv2_gold_ore_f81_v2: 3873144053324029755
+      tv2_gold_ore_f84_v2: 1533363813784005733
+      tv2_gold_ore_f85_v2: 306697167160683161
+      tv2_gold_ore_f87_v2: 1158094780545174852
+      tv2_gold_ore_f92_v2: 3904226073378955999
+      tv2_gold_ore_f93_v2: 1832125164403563916
+      tv2_gold_ore_f95_v2: 359081220903837843
+      tv2_gold_ore_f112_v2: 307198722747159712
+      tv2_gold_ore_f113_v2: 4175587862051062918
+      tv2_gold_ore_f116_v2: 236867494270305766
+      tv2_gold_ore_f117_v2: 2530132435721635456
+      tv2_gold_ore_f119_v2: 3056973661946852668
+      tv2_gold_ore_f124_v2: 2932069981423372241
+      tv2_gold_ore_f125_v2: 490156241555493687
+      tv2_gold_ore_f127_v2: 1200767445758873708
+      tv2_gold_ore_f193_v2: 1107326905381874693
+      tv2_gold_ore_f197_v2: 4501032990695103908
+      tv2_gold_ore_f199_v2: 2274490240046230044
+      tv2_gold_ore_f209_v2: 398611882147343531
+      tv2_gold_ore_f213_v2: 2626748061164831159
+      tv2_gold_ore_f215_v2: 1520338289021031814
+      tv2_gold_ore_f221_v2: 3790762262623696303
+      tv2_gold_ore_f223_v2: 1015957637556561711
+      tv2_gold_ore_f241_v2: 3648409462433672793
+      tv2_gold_ore_f245_v2: 2979750908206666138
+      tv2_gold_ore_f247_v2: 2147280238966658097
+      tv2_gold_ore_f253_v2: 4174002388953439781
+      tv2_gold_ore_f255_v2: 2426466179183387294
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

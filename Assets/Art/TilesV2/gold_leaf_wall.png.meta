@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 970bb3d037595db0b8518fbf20848c8d
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2607937612602381311
+    second: tv2_gold_leaf_wall_f0_v0
+  - first:
+      213: 2042184509718193185
+    second: tv2_gold_leaf_wall_f1_v0
+  - first:
+      213: 1428039192055387231
+    second: tv2_gold_leaf_wall_f4_v0
+  - first:
+      213: 2226084074457276277
+    second: tv2_gold_leaf_wall_f5_v0
+  - first:
+      213: 1896903393099285463
+    second: tv2_gold_leaf_wall_f7_v0
+  - first:
+      213: 3493821326105460869
+    second: tv2_gold_leaf_wall_f16_v0
+  - first:
+      213: 2057497281376914109
+    second: tv2_gold_leaf_wall_f17_v0
+  - first:
+      213: 2400655821722098
+    second: tv2_gold_leaf_wall_f20_v0
+  - first:
+      213: 539601409913578702
+    second: tv2_gold_leaf_wall_f21_v0
+  - first:
+      213: 979292466034685907
+    second: tv2_gold_leaf_wall_f23_v0
+  - first:
+      213: 4416962668630942917
+    second: tv2_gold_leaf_wall_f28_v0
+  - first:
+      213: 3694906080406930817
+    second: tv2_gold_leaf_wall_f29_v0
+  - first:
+      213: 2730065896295097709
+    second: tv2_gold_leaf_wall_f31_v0
+  - first:
+      213: 1531594670543116818
+    second: tv2_gold_leaf_wall_f64_v0
+  - first:
+      213: 29482794506309775
+    second: tv2_gold_leaf_wall_f65_v0
+  - first:
+      213: 1497619599131160205
+    second: tv2_gold_leaf_wall_f68_v0
+  - first:
+      213: 3521780674726514423
+    second: tv2_gold_leaf_wall_f69_v0
+  - first:
+      213: 3444806272098138711
+    second: tv2_gold_leaf_wall_f71_v0
+  - first:
+      213: 1261305322052745011
+    second: tv2_gold_leaf_wall_f80_v0
+  - first:
+      213: 2258858175511181531
+    second: tv2_gold_leaf_wall_f81_v0
+  - first:
+      213: 3010948236252463008
+    second: tv2_gold_leaf_wall_f84_v0
+  - first:
+      213: 3965436366700787155
+    second: tv2_gold_leaf_wall_f85_v0
+  - first:
+      213: 3600006064044448739
+    second: tv2_gold_leaf_wall_f87_v0
+  - first:
+      213: 3083490426651084896
+    second: tv2_gold_leaf_wall_f92_v0
+  - first:
+      213: 4271206409290359637
+    second: tv2_gold_leaf_wall_f93_v0
+  - first:
+      213: 2044437452199171489
+    second: tv2_gold_leaf_wall_f95_v0
+  - first:
+      213: 2955956908173289876
+    second: tv2_gold_leaf_wall_f112_v0
+  - first:
+      213: 2207077682138363300
+    second: tv2_gold_leaf_wall_f113_v0
+  - first:
+      213: 131040938030877408
+    second: tv2_gold_leaf_wall_f116_v0
+  - first:
+      213: 1585925629013863683
+    second: tv2_gold_leaf_wall_f117_v0
+  - first:
+      213: 4506511509466339957
+    second: tv2_gold_leaf_wall_f119_v0
+  - first:
+      213: 2278934677209517779
+    second: tv2_gold_leaf_wall_f124_v0
+  - first:
+      213: 3094808776103051322
+    second: tv2_gold_leaf_wall_f125_v0
+  - first:
+      213: 1241008639354865706
+    second: tv2_gold_leaf_wall_f127_v0
+  - first:
+      213: 86033666292899668
+    second: tv2_gold_leaf_wall_f193_v0
+  - first:
+      213: 3289408105243473368
+    second: tv2_gold_leaf_wall_f197_v0
+  - first:
+      213: 2316185645738866262
+    second: tv2_gold_leaf_wall_f199_v0
+  - first:
+      213: 4151460200039679047
+    second: tv2_gold_leaf_wall_f209_v0
+  - first:
+      213: 2863640370487661814
+    second: tv2_gold_leaf_wall_f213_v0
+  - first:
+      213: 2692951766228432234
+    second: tv2_gold_leaf_wall_f215_v0
+  - first:
+      213: 459574966221998552
+    second: tv2_gold_leaf_wall_f221_v0
+  - first:
+      213: 4319024242102850501
+    second: tv2_gold_leaf_wall_f223_v0
+  - first:
+      213: 2757458342043639105
+    second: tv2_gold_leaf_wall_f241_v0
+  - first:
+      213: 4160510300990011761
+    second: tv2_gold_leaf_wall_f245_v0
+  - first:
+      213: 752427761772429476
+    second: tv2_gold_leaf_wall_f247_v0
+  - first:
+      213: 265968081916365321
+    second: tv2_gold_leaf_wall_f253_v0
+  - first:
+      213: 3589996726396661788
+    second: tv2_gold_leaf_wall_f255_v0
+  - first:
+      213: 274335051007549262
+    second: tv2_gold_leaf_wall_f0_v1
+  - first:
+      213: 3133083784569053256
+    second: tv2_gold_leaf_wall_f1_v1
+  - first:
+      213: 3195379119889926869
+    second: tv2_gold_leaf_wall_f4_v1
+  - first:
+      213: 4072163474796932462
+    second: tv2_gold_leaf_wall_f5_v1
+  - first:
+      213: 3957227382762574004
+    second: tv2_gold_leaf_wall_f7_v1
+  - first:
+      213: 1234386865507644981
+    second: tv2_gold_leaf_wall_f16_v1
+  - first:
+      213: 1688058925873288936
+    second: tv2_gold_leaf_wall_f17_v1
+  - first:
+      213: 4460443554013312757
+    second: tv2_gold_leaf_wall_f20_v1
+  - first:
+      213: 1033513514914201595
+    second: tv2_gold_leaf_wall_f21_v1
+  - first:
+      213: 2269003444569169623
+    second: tv2_gold_leaf_wall_f23_v1
+  - first:
+      213: 1314012274999675893
+    second: tv2_gold_leaf_wall_f28_v1
+  - first:
+      213: 4059870930311881471
+    second: tv2_gold_leaf_wall_f29_v1
+  - first:
+      213: 1782462357743061868
+    second: tv2_gold_leaf_wall_f31_v1
+  - first:
+      213: 4486139351701072108
+    second: tv2_gold_leaf_wall_f64_v1
+  - first:
+      213: 722203308596913928
+    second: tv2_gold_leaf_wall_f65_v1
+  - first:
+      213: 4265439448127506967
+    second: tv2_gold_leaf_wall_f68_v1
+  - first:
+      213: 3975018779061495950
+    second: tv2_gold_leaf_wall_f69_v1
+  - first:
+      213: 4517214714454899510
+    second: tv2_gold_leaf_wall_f71_v1
+  - first:
+      213: 1633320383843513821
+    second: tv2_gold_leaf_wall_f80_v1
+  - first:
+      213: 3123108837373177349
+    second: tv2_gold_leaf_wall_f81_v1
+  - first:
+      213: 1518071774435429665
+    second: tv2_gold_leaf_wall_f84_v1
+  - first:
+      213: 485222900330695720
+    second: tv2_gold_leaf_wall_f85_v1
+  - first:
+      213: 2844587289607159114
+    second: tv2_gold_leaf_wall_f87_v1
+  - first:
+      213: 233624877358244786
+    second: tv2_gold_leaf_wall_f92_v1
+  - first:
+      213: 1514149514763318938
+    second: tv2_gold_leaf_wall_f93_v1
+  - first:
+      213: 2198713367518740654
+    second: tv2_gold_leaf_wall_f95_v1
+  - first:
+      213: 3361953724325647171
+    second: tv2_gold_leaf_wall_f112_v1
+  - first:
+      213: 1119588105581231216
+    second: tv2_gold_leaf_wall_f113_v1
+  - first:
+      213: 1260897411946497132
+    second: tv2_gold_leaf_wall_f116_v1
+  - first:
+      213: 2834528759819763276
+    second: tv2_gold_leaf_wall_f117_v1
+  - first:
+      213: 2595163924404730420
+    second: tv2_gold_leaf_wall_f119_v1
+  - first:
+      213: 3299452151212720760
+    second: tv2_gold_leaf_wall_f124_v1
+  - first:
+      213: 3641902341887580709
+    second: tv2_gold_leaf_wall_f125_v1
+  - first:
+      213: 760204046273452246
+    second: tv2_gold_leaf_wall_f127_v1
+  - first:
+      213: 394794470557227119
+    second: tv2_gold_leaf_wall_f193_v1
+  - first:
+      213: 3094538280034223508
+    second: tv2_gold_leaf_wall_f197_v1
+  - first:
+      213: 4095293636645854284
+    second: tv2_gold_leaf_wall_f199_v1
+  - first:
+      213: 1704552112930667821
+    second: tv2_gold_leaf_wall_f209_v1
+  - first:
+      213: 4034144019475218334
+    second: tv2_gold_leaf_wall_f213_v1
+  - first:
+      213: 1476570790917977596
+    second: tv2_gold_leaf_wall_f215_v1
+  - first:
+      213: 3316398318117411157
+    second: tv2_gold_leaf_wall_f221_v1
+  - first:
+      213: 875042571150089265
+    second: tv2_gold_leaf_wall_f223_v1
+  - first:
+      213: 1514407356720408743
+    second: tv2_gold_leaf_wall_f241_v1
+  - first:
+      213: 3290128882145090008
+    second: tv2_gold_leaf_wall_f245_v1
+  - first:
+      213: 840819163569387906
+    second: tv2_gold_leaf_wall_f247_v1
+  - first:
+      213: 2186269049845284195
+    second: tv2_gold_leaf_wall_f253_v1
+  - first:
+      213: 2712402099422964932
+    second: tv2_gold_leaf_wall_f255_v1
+  - first:
+      213: 2722896243180235148
+    second: tv2_gold_leaf_wall_f0_v2
+  - first:
+      213: 595504237734651158
+    second: tv2_gold_leaf_wall_f1_v2
+  - first:
+      213: 4300213537494592228
+    second: tv2_gold_leaf_wall_f4_v2
+  - first:
+      213: 4011310307094472746
+    second: tv2_gold_leaf_wall_f5_v2
+  - first:
+      213: 2032834476630149108
+    second: tv2_gold_leaf_wall_f7_v2
+  - first:
+      213: 1629938878498835734
+    second: tv2_gold_leaf_wall_f16_v2
+  - first:
+      213: 3810450334727648267
+    second: tv2_gold_leaf_wall_f17_v2
+  - first:
+      213: 3323808898516294523
+    second: tv2_gold_leaf_wall_f20_v2
+  - first:
+      213: 3970653509504026246
+    second: tv2_gold_leaf_wall_f21_v2
+  - first:
+      213: 1806480355503765123
+    second: tv2_gold_leaf_wall_f23_v2
+  - first:
+      213: 1305364161452430622
+    second: tv2_gold_leaf_wall_f28_v2
+  - first:
+      213: 1555972378325506711
+    second: tv2_gold_leaf_wall_f29_v2
+  - first:
+      213: 1614249270118894348
+    second: tv2_gold_leaf_wall_f31_v2
+  - first:
+      213: 3263701011984588872
+    second: tv2_gold_leaf_wall_f64_v2
+  - first:
+      213: 1836721058335012560
+    second: tv2_gold_leaf_wall_f65_v2
+  - first:
+      213: 1204369878756796344
+    second: tv2_gold_leaf_wall_f68_v2
+  - first:
+      213: 3201711437589331795
+    second: tv2_gold_leaf_wall_f69_v2
+  - first:
+      213: 3732993700557157715
+    second: tv2_gold_leaf_wall_f71_v2
+  - first:
+      213: 1349393072930505208
+    second: tv2_gold_leaf_wall_f80_v2
+  - first:
+      213: 2414249383799719522
+    second: tv2_gold_leaf_wall_f81_v2
+  - first:
+      213: 4598221254857597088
+    second: tv2_gold_leaf_wall_f84_v2
+  - first:
+      213: 3535305113351825102
+    second: tv2_gold_leaf_wall_f85_v2
+  - first:
+      213: 3652793060194943422
+    second: tv2_gold_leaf_wall_f87_v2
+  - first:
+      213: 2843015164769293219
+    second: tv2_gold_leaf_wall_f92_v2
+  - first:
+      213: 1893848820196647861
+    second: tv2_gold_leaf_wall_f93_v2
+  - first:
+      213: 3791658192319871653
+    second: tv2_gold_leaf_wall_f95_v2
+  - first:
+      213: 4566264641536700059
+    second: tv2_gold_leaf_wall_f112_v2
+  - first:
+      213: 3111031038930807699
+    second: tv2_gold_leaf_wall_f113_v2
+  - first:
+      213: 1825079799673268625
+    second: tv2_gold_leaf_wall_f116_v2
+  - first:
+      213: 26977024703312917
+    second: tv2_gold_leaf_wall_f117_v2
+  - first:
+      213: 4346759742042907143
+    second: tv2_gold_leaf_wall_f119_v2
+  - first:
+      213: 3749649116976213205
+    second: tv2_gold_leaf_wall_f124_v2
+  - first:
+      213: 2905646666803282854
+    second: tv2_gold_leaf_wall_f125_v2
+  - first:
+      213: 909202187404837165
+    second: tv2_gold_leaf_wall_f127_v2
+  - first:
+      213: 1223219207838182778
+    second: tv2_gold_leaf_wall_f193_v2
+  - first:
+      213: 3181886083881043420
+    second: tv2_gold_leaf_wall_f197_v2
+  - first:
+      213: 840120022331806574
+    second: tv2_gold_leaf_wall_f199_v2
+  - first:
+      213: 3747833108720898632
+    second: tv2_gold_leaf_wall_f209_v2
+  - first:
+      213: 795752190287230361
+    second: tv2_gold_leaf_wall_f213_v2
+  - first:
+      213: 4196794988443836644
+    second: tv2_gold_leaf_wall_f215_v2
+  - first:
+      213: 3891658392159875925
+    second: tv2_gold_leaf_wall_f221_v2
+  - first:
+      213: 2910183925659613497
+    second: tv2_gold_leaf_wall_f223_v2
+  - first:
+      213: 3136305590901742131
+    second: tv2_gold_leaf_wall_f241_v2
+  - first:
+      213: 4070378264129672457
+    second: tv2_gold_leaf_wall_f245_v2
+  - first:
+      213: 615070391129421173
+    second: tv2_gold_leaf_wall_f247_v2
+  - first:
+      213: 172422920755364980
+    second: tv2_gold_leaf_wall_f253_v2
+  - first:
+      213: 122732996122053410
+    second: tv2_gold_leaf_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 416482b694755276afcef1c62f0f7380
+      internalID: 2607937612602381311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41fbe35c1813504ab074e24df07ed691
+      internalID: 2042184509718193185
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2ac271614ae53478b4e78f8f942a827
+      internalID: 1428039192055387231
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87263ad2c0cb53b3a71202d048a1ab04
+      internalID: 2226084074457276277
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 304d63afae1c544f8cf251cfd8c3a842
+      internalID: 1896903393099285463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bfdbe4879e358b8a4611fc88b066fb4
+      internalID: 3493821326105460869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea7da90ad69f5c16ad9a2bdfc3b707e9
+      internalID: 2057497281376914109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20f7bb8fa7e9513fb4894b26431399b4
+      internalID: 2400655821722098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251f69c8c0165fd2bff83c9ff581bfd0
+      internalID: 539601409913578702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7409ab7a67a157ad8d78d37117d770b1
+      internalID: 979292466034685907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b4b77b253e15e8b84801c72ed626199
+      internalID: 4416962668630942917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 011e4eb6c3015f4a84df5704381f3f51
+      internalID: 3694906080406930817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f206caa965652f9a63696f95c58723b
+      internalID: 2730065896295097709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 537dafcf950d577ea57778e59cec2be9
+      internalID: 1531594670543116818
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75e8a9d5108f5a50aaeca4144716dae7
+      internalID: 29482794506309775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b7e95d8800952779cf30d8aa6d70afd
+      internalID: 1497619599131160205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0cb52b24d0252e2b07ce13d7c61cbaa
+      internalID: 3521780674726514423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 556610e493b75e59b85639a54b047627
+      internalID: 3444806272098138711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 077f7914b15a55f2b1ee10449351c893
+      internalID: 1261305322052745011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc6911926dda5cc0926c563cf4590ed5
+      internalID: 2258858175511181531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138e235310c7572da08117b1789242c4
+      internalID: 3010948236252463008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a50a0fc0d9dd50339a5765d592b0f7da
+      internalID: 3965436366700787155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73f09b514ebd5990ac884872810a7086
+      internalID: 3600006064044448739
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c01b8e2b5dc5a469b31356b36411345
+      internalID: 3083490426651084896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88cd2908a0b45182a793adcc780bf334
+      internalID: 4271206409290359637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f37c5946eabe5c96b03b93ae7e7b5be7
+      internalID: 2044437452199171489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4ec57f6280a52d68949777337ed40d4
+      internalID: 2955956908173289876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 60815bddb5535c63918190abb54715db
+      internalID: 2207077682138363300
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dadba8a5848d55999300bdc4e5c72ad0
+      internalID: 131040938030877408
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04bcecc008065898a60c3552abbb4756
+      internalID: 1585925629013863683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a18d855b871952dfa101d0e88f409293
+      internalID: 4506511509466339957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4401e2710c15b41b74a91eabc82684b
+      internalID: 2278934677209517779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 501a350cc6515bafaa02708797bff7b6
+      internalID: 3094808776103051322
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aec6a02ac52c55f6a2a9a48ddce8237f
+      internalID: 1241008639354865706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: baf75840499e518c9593ca6e42e1e47a
+      internalID: 86033666292899668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45e6e32fd50e5e30a7f3d3b0fe0dd110
+      internalID: 3289408105243473368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9a92c05de00501da0edd539def928e0
+      internalID: 2316185645738866262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b7676fa84655aa94bb510106404a44
+      internalID: 4151460200039679047
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 747f6a507b0056e99b21b3fa170e5f90
+      internalID: 2863640370487661814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4faf89524a9b5ea3abd80f05624effd8
+      internalID: 2692951766228432234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dcf436e1cdc5736a7f0a7f1b640a6a8
+      internalID: 459574966221998552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e416d39dd0485501a1d74d35eaab980a
+      internalID: 4319024242102850501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8d9ee6ecc0a523b9ff619417864c52a
+      internalID: 2757458342043639105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d536ac585a3253568c4364a09306671d
+      internalID: 4160510300990011761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 316605e8813e5ea3842f5019e26f477a
+      internalID: 752427761772429476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41eded82f7125b37b6078a88b41ad114
+      internalID: 265968081916365321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc1570558f415360bd74e40063d8fa14
+      internalID: 3589996726396661788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d544f8b7299c5eff982566388b7e7903
+      internalID: 274335051007549262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97e01d7dfa885e129a8fa1140d617856
+      internalID: 3133083784569053256
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f124a4616d5b929722da6317f45c40
+      internalID: 3195379119889926869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 246fd696916d592a9674a6cf8e6241a7
+      internalID: 4072163474796932462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 381b836be2cc5e4ca3f41b30554a2a14
+      internalID: 3957227382762574004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5078cc10eead5349912482d9966416c0
+      internalID: 1234386865507644981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3084cbcf23f8581e8a486683eb7055e4
+      internalID: 1688058925873288936
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3420360dcd785edebbd7e55f01634cb8
+      internalID: 4460443554013312757
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d293ea6d577852b184f8d2b8f1b7c0e6
+      internalID: 1033513514914201595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33fc62f734f55da99f8e809e5a98a313
+      internalID: 2269003444569169623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: adf241e96642510f975106a0f1d6c800
+      internalID: 1314012274999675893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8492b72da56a53f3ba6602b3b62b396e
+      internalID: 4059870930311881471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eeada2ab80115e0895770b2335034a3f
+      internalID: 1782462357743061868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf0dbe61ba5c516ab221f901058f7f24
+      internalID: 4486139351701072108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e00c729a2eab58d79db1323ff64a5eb0
+      internalID: 722203308596913928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcaa8ca61d7e564192b9baf531d7043a
+      internalID: 4265439448127506967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af98ce5088b752ceba0c3dd91f689c65
+      internalID: 3975018779061495950
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e18d3ad814595a3ba42809c7d199a154
+      internalID: 4517214714454899510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40e06f8cd6d751de9026988171c48689
+      internalID: 1633320383843513821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 708d8e9ca9eb5963b9f9c8c6f11942bc
+      internalID: 3123108837373177349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a15c9a7576485e0cbe5dfc659409cedf
+      internalID: 1518071774435429665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb4e119c46ce593b80d4894ace2e50f6
+      internalID: 485222900330695720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a3e7af7d9735be0b04a03489394cd58
+      internalID: 2844587289607159114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd315ce9315350a6a0230a2bf2b179cd
+      internalID: 233624877358244786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba3209de0726580386191f48082bcc26
+      internalID: 1514149514763318938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1f5925bfbfd58c7aacd69ee3301a084
+      internalID: 2198713367518740654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1354e50a5335aecafb654402a80695a
+      internalID: 3361953724325647171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b6c750b6f79d5cd58f840c0ef57f11ed
+      internalID: 1119588105581231216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e9342617a765c8bb144420f31434b1d
+      internalID: 1260897411946497132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64c39ef937c750f8a600affe24378b8b
+      internalID: 2834528759819763276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 496d358b054c5b5bab4adb5641ac0ddf
+      internalID: 2595163924404730420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8c50dad05bd5225ac6bfa261a9f992a
+      internalID: 3299452151212720760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a54a0c136eb3534b988c1bf15ce07a53
+      internalID: 3641902341887580709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90d63fafc2bb5285a8009cf1e39f85e5
+      internalID: 760204046273452246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c5c3dbdb69255b0933c536df738e37e
+      internalID: 394794470557227119
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85d658247a8f516484f663a193589dfa
+      internalID: 3094538280034223508
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d30be6ff1cad5663aaa2f36ed39dec6c
+      internalID: 4095293636645854284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 478cfdb70a9d544a84cc6a80427a8bb5
+      internalID: 1704552112930667821
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 152e6e77018a5664849565844fe0f532
+      internalID: 4034144019475218334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75c7317813af58bcbd57f1b98d6309bb
+      internalID: 1476570790917977596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251eef76a93e563eb9805158f599092d
+      internalID: 3316398318117411157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 240581ed12235f80a0c7282e05cd84f9
+      internalID: 875042571150089265
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab2f340064be5c88a065578871be2e70
+      internalID: 1514407356720408743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5cebff4fe055c7d86910e79e2d9b0bc
+      internalID: 3290128882145090008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0571c4d1d8e155a4a152868f850d07f5
+      internalID: 840819163569387906
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41db4f0785345b2eac9c6f7e4dff330c
+      internalID: 2186269049845284195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bd6ffa218fe5e2fb60f5798c0f90297
+      internalID: 2712402099422964932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e16b740d6a085841bdbe950cf100a1f8
+      internalID: 2722896243180235148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9811970bee9c5096916a4ec783ec0885
+      internalID: 595504237734651158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b6a88b7f9a45987ba7fe8ae5831fc2c
+      internalID: 4300213537494592228
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca01c3815a645f54974544b8a8798990
+      internalID: 4011310307094472746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ac72d5005475b81a6ddcd4e0d4c6d8b
+      internalID: 2032834476630149108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a95b2b279d57a8ab6988c6d117e313
+      internalID: 1629938878498835734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bcea5c8d21150b78e65539b970e0b72
+      internalID: 3810450334727648267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13ec4cf40ae251fa9082dd10cb58f595
+      internalID: 3323808898516294523
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c92708049b55ac39260c532cad8c7ef
+      internalID: 3970653509504026246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 513be5cf30145b708071b18374fad6bb
+      internalID: 1806480355503765123
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 49c935295e415f988519997cdd25921a
+      internalID: 1305364161452430622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b5808c987275220b74b1ac0495ecff0
+      internalID: 1555972378325506711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f801efc4af2b5b07bc46b449a67cd203
+      internalID: 1614249270118894348
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98d27a8d6ad95c058d6357f5be3e596a
+      internalID: 3263701011984588872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7433e732a3c57d7828021d41a3ea1e9
+      internalID: 1836721058335012560
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fca146ee8a9d55e696d16e18216a844b
+      internalID: 1204369878756796344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39d860de7817507db0ffbe4a7a9ad524
+      internalID: 3201711437589331795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d4bec1523d95f819ca3b3e8c7bc829c
+      internalID: 3732993700557157715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e9361c8d59405b38994f707238fc07d0
+      internalID: 1349393072930505208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1c42c889a345b9aaddabeb16c275e8b
+      internalID: 2414249383799719522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0da30d763dca5e6fafa43ef91f197f08
+      internalID: 4598221254857597088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e93bacc85b5b1998704e9a51126f15
+      internalID: 3535305113351825102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 930a34d807fb5a00987f04cb4f5d2718
+      internalID: 3652793060194943422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8e732affd2c55bfbfd00f0ed55ae55e
+      internalID: 2843015164769293219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1f086db47cf5532cbd88c95dfbe28f24
+      internalID: 1893848820196647861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c5b3e4355b65da4874c7ef6c11ee8e0
+      internalID: 3791658192319871653
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2837ab9221e1517fbc6d151f1dfafdf3
+      internalID: 4566264641536700059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52477eee15125201b91028a01ccc4e3c
+      internalID: 3111031038930807699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d7cdf43bb605affb10c91065cdf5145
+      internalID: 1825079799673268625
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de9bb9ff3a145ea0be5517017e96ad33
+      internalID: 26977024703312917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 514009a374e95ed4bac7f68dcb06ac63
+      internalID: 4346759742042907143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 59167629481a5cdba0bcf29059d4fdd6
+      internalID: 3749649116976213205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: caca94de5a4a5d90be9f678cddce98b6
+      internalID: 2905646666803282854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ed1593748b554fcab360f7a3765ebac
+      internalID: 909202187404837165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 34e7057261a55daa943ff28bd01f349f
+      internalID: 1223219207838182778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef4e3f7389ef5d2a833ac2e98e3842ac
+      internalID: 3181886083881043420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eba5b018aa995071abecdac869a9febd
+      internalID: 840120022331806574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 187481b647d65db19c9461d7feadd3c6
+      internalID: 3747833108720898632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 376e342f7d9f550fa0485a9b28e3a002
+      internalID: 795752190287230361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a31216ed61425a719c0a154990a1c141
+      internalID: 4196794988443836644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9591a4c41217582dbc78e233397e0761
+      internalID: 3891658392159875925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 279637389a5552a69d9f69603314f292
+      internalID: 2910183925659613497
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7d2b69fd7eb57b68c486d39783f66b4
+      internalID: 3136305590901742131
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 952b2a43175e5f71ac0645715997ab37
+      internalID: 4070378264129672457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9de4c3bf64b759d68ee7a038cfe6e45e
+      internalID: 615070391129421173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65007122b58b55eeb361a7c52040b7d7
+      internalID: 172422920755364980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_gold_leaf_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0948cd27647b5a149b8521632bda9c34
+      internalID: 122732996122053410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_gold_leaf_wall_f0_v0: 2607937612602381311
+      tv2_gold_leaf_wall_f1_v0: 2042184509718193185
+      tv2_gold_leaf_wall_f4_v0: 1428039192055387231
+      tv2_gold_leaf_wall_f5_v0: 2226084074457276277
+      tv2_gold_leaf_wall_f7_v0: 1896903393099285463
+      tv2_gold_leaf_wall_f16_v0: 3493821326105460869
+      tv2_gold_leaf_wall_f17_v0: 2057497281376914109
+      tv2_gold_leaf_wall_f20_v0: 2400655821722098
+      tv2_gold_leaf_wall_f21_v0: 539601409913578702
+      tv2_gold_leaf_wall_f23_v0: 979292466034685907
+      tv2_gold_leaf_wall_f28_v0: 4416962668630942917
+      tv2_gold_leaf_wall_f29_v0: 3694906080406930817
+      tv2_gold_leaf_wall_f31_v0: 2730065896295097709
+      tv2_gold_leaf_wall_f64_v0: 1531594670543116818
+      tv2_gold_leaf_wall_f65_v0: 29482794506309775
+      tv2_gold_leaf_wall_f68_v0: 1497619599131160205
+      tv2_gold_leaf_wall_f69_v0: 3521780674726514423
+      tv2_gold_leaf_wall_f71_v0: 3444806272098138711
+      tv2_gold_leaf_wall_f80_v0: 1261305322052745011
+      tv2_gold_leaf_wall_f81_v0: 2258858175511181531
+      tv2_gold_leaf_wall_f84_v0: 3010948236252463008
+      tv2_gold_leaf_wall_f85_v0: 3965436366700787155
+      tv2_gold_leaf_wall_f87_v0: 3600006064044448739
+      tv2_gold_leaf_wall_f92_v0: 3083490426651084896
+      tv2_gold_leaf_wall_f93_v0: 4271206409290359637
+      tv2_gold_leaf_wall_f95_v0: 2044437452199171489
+      tv2_gold_leaf_wall_f112_v0: 2955956908173289876
+      tv2_gold_leaf_wall_f113_v0: 2207077682138363300
+      tv2_gold_leaf_wall_f116_v0: 131040938030877408
+      tv2_gold_leaf_wall_f117_v0: 1585925629013863683
+      tv2_gold_leaf_wall_f119_v0: 4506511509466339957
+      tv2_gold_leaf_wall_f124_v0: 2278934677209517779
+      tv2_gold_leaf_wall_f125_v0: 3094808776103051322
+      tv2_gold_leaf_wall_f127_v0: 1241008639354865706
+      tv2_gold_leaf_wall_f193_v0: 86033666292899668
+      tv2_gold_leaf_wall_f197_v0: 3289408105243473368
+      tv2_gold_leaf_wall_f199_v0: 2316185645738866262
+      tv2_gold_leaf_wall_f209_v0: 4151460200039679047
+      tv2_gold_leaf_wall_f213_v0: 2863640370487661814
+      tv2_gold_leaf_wall_f215_v0: 2692951766228432234
+      tv2_gold_leaf_wall_f221_v0: 459574966221998552
+      tv2_gold_leaf_wall_f223_v0: 4319024242102850501
+      tv2_gold_leaf_wall_f241_v0: 2757458342043639105
+      tv2_gold_leaf_wall_f245_v0: 4160510300990011761
+      tv2_gold_leaf_wall_f247_v0: 752427761772429476
+      tv2_gold_leaf_wall_f253_v0: 265968081916365321
+      tv2_gold_leaf_wall_f255_v0: 3589996726396661788
+      tv2_gold_leaf_wall_f0_v1: 274335051007549262
+      tv2_gold_leaf_wall_f1_v1: 3133083784569053256
+      tv2_gold_leaf_wall_f4_v1: 3195379119889926869
+      tv2_gold_leaf_wall_f5_v1: 4072163474796932462
+      tv2_gold_leaf_wall_f7_v1: 3957227382762574004
+      tv2_gold_leaf_wall_f16_v1: 1234386865507644981
+      tv2_gold_leaf_wall_f17_v1: 1688058925873288936
+      tv2_gold_leaf_wall_f20_v1: 4460443554013312757
+      tv2_gold_leaf_wall_f21_v1: 1033513514914201595
+      tv2_gold_leaf_wall_f23_v1: 2269003444569169623
+      tv2_gold_leaf_wall_f28_v1: 1314012274999675893
+      tv2_gold_leaf_wall_f29_v1: 4059870930311881471
+      tv2_gold_leaf_wall_f31_v1: 1782462357743061868
+      tv2_gold_leaf_wall_f64_v1: 4486139351701072108
+      tv2_gold_leaf_wall_f65_v1: 722203308596913928
+      tv2_gold_leaf_wall_f68_v1: 4265439448127506967
+      tv2_gold_leaf_wall_f69_v1: 3975018779061495950
+      tv2_gold_leaf_wall_f71_v1: 4517214714454899510
+      tv2_gold_leaf_wall_f80_v1: 1633320383843513821
+      tv2_gold_leaf_wall_f81_v1: 3123108837373177349
+      tv2_gold_leaf_wall_f84_v1: 1518071774435429665
+      tv2_gold_leaf_wall_f85_v1: 485222900330695720
+      tv2_gold_leaf_wall_f87_v1: 2844587289607159114
+      tv2_gold_leaf_wall_f92_v1: 233624877358244786
+      tv2_gold_leaf_wall_f93_v1: 1514149514763318938
+      tv2_gold_leaf_wall_f95_v1: 2198713367518740654
+      tv2_gold_leaf_wall_f112_v1: 3361953724325647171
+      tv2_gold_leaf_wall_f113_v1: 1119588105581231216
+      tv2_gold_leaf_wall_f116_v1: 1260897411946497132
+      tv2_gold_leaf_wall_f117_v1: 2834528759819763276
+      tv2_gold_leaf_wall_f119_v1: 2595163924404730420
+      tv2_gold_leaf_wall_f124_v1: 3299452151212720760
+      tv2_gold_leaf_wall_f125_v1: 3641902341887580709
+      tv2_gold_leaf_wall_f127_v1: 760204046273452246
+      tv2_gold_leaf_wall_f193_v1: 394794470557227119
+      tv2_gold_leaf_wall_f197_v1: 3094538280034223508
+      tv2_gold_leaf_wall_f199_v1: 4095293636645854284
+      tv2_gold_leaf_wall_f209_v1: 1704552112930667821
+      tv2_gold_leaf_wall_f213_v1: 4034144019475218334
+      tv2_gold_leaf_wall_f215_v1: 1476570790917977596
+      tv2_gold_leaf_wall_f221_v1: 3316398318117411157
+      tv2_gold_leaf_wall_f223_v1: 875042571150089265
+      tv2_gold_leaf_wall_f241_v1: 1514407356720408743
+      tv2_gold_leaf_wall_f245_v1: 3290128882145090008
+      tv2_gold_leaf_wall_f247_v1: 840819163569387906
+      tv2_gold_leaf_wall_f253_v1: 2186269049845284195
+      tv2_gold_leaf_wall_f255_v1: 2712402099422964932
+      tv2_gold_leaf_wall_f0_v2: 2722896243180235148
+      tv2_gold_leaf_wall_f1_v2: 595504237734651158
+      tv2_gold_leaf_wall_f4_v2: 4300213537494592228
+      tv2_gold_leaf_wall_f5_v2: 4011310307094472746
+      tv2_gold_leaf_wall_f7_v2: 2032834476630149108
+      tv2_gold_leaf_wall_f16_v2: 1629938878498835734
+      tv2_gold_leaf_wall_f17_v2: 3810450334727648267
+      tv2_gold_leaf_wall_f20_v2: 3323808898516294523
+      tv2_gold_leaf_wall_f21_v2: 3970653509504026246
+      tv2_gold_leaf_wall_f23_v2: 1806480355503765123
+      tv2_gold_leaf_wall_f28_v2: 1305364161452430622
+      tv2_gold_leaf_wall_f29_v2: 1555972378325506711
+      tv2_gold_leaf_wall_f31_v2: 1614249270118894348
+      tv2_gold_leaf_wall_f64_v2: 3263701011984588872
+      tv2_gold_leaf_wall_f65_v2: 1836721058335012560
+      tv2_gold_leaf_wall_f68_v2: 1204369878756796344
+      tv2_gold_leaf_wall_f69_v2: 3201711437589331795
+      tv2_gold_leaf_wall_f71_v2: 3732993700557157715
+      tv2_gold_leaf_wall_f80_v2: 1349393072930505208
+      tv2_gold_leaf_wall_f81_v2: 2414249383799719522
+      tv2_gold_leaf_wall_f84_v2: 4598221254857597088
+      tv2_gold_leaf_wall_f85_v2: 3535305113351825102
+      tv2_gold_leaf_wall_f87_v2: 3652793060194943422
+      tv2_gold_leaf_wall_f92_v2: 2843015164769293219
+      tv2_gold_leaf_wall_f93_v2: 1893848820196647861
+      tv2_gold_leaf_wall_f95_v2: 3791658192319871653
+      tv2_gold_leaf_wall_f112_v2: 4566264641536700059
+      tv2_gold_leaf_wall_f113_v2: 3111031038930807699
+      tv2_gold_leaf_wall_f116_v2: 1825079799673268625
+      tv2_gold_leaf_wall_f117_v2: 26977024703312917
+      tv2_gold_leaf_wall_f119_v2: 4346759742042907143
+      tv2_gold_leaf_wall_f124_v2: 3749649116976213205
+      tv2_gold_leaf_wall_f125_v2: 2905646666803282854
+      tv2_gold_leaf_wall_f127_v2: 909202187404837165
+      tv2_gold_leaf_wall_f193_v2: 1223219207838182778
+      tv2_gold_leaf_wall_f197_v2: 3181886083881043420
+      tv2_gold_leaf_wall_f199_v2: 840120022331806574
+      tv2_gold_leaf_wall_f209_v2: 3747833108720898632
+      tv2_gold_leaf_wall_f213_v2: 795752190287230361
+      tv2_gold_leaf_wall_f215_v2: 4196794988443836644
+      tv2_gold_leaf_wall_f221_v2: 3891658392159875925
+      tv2_gold_leaf_wall_f223_v2: 2910183925659613497
+      tv2_gold_leaf_wall_f241_v2: 3136305590901742131
+      tv2_gold_leaf_wall_f245_v2: 4070378264129672457
+      tv2_gold_leaf_wall_f247_v2: 615070391129421173
+      tv2_gold_leaf_wall_f253_v2: 172422920755364980
+      tv2_gold_leaf_wall_f255_v2: 122732996122053410
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

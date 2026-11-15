@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48e3552d75da264dab0819f6f3e02df, type: 3}
+  m_Name: slime
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.LiquidTile
+  liquidKey: slime
+  surface:
+  - {fileID: 821661223539955741, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 2593371456856631862, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 62034234610381535, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 1057155878832759468, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 4475504527195612082, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 3926167153420436738, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 2205137270334115277, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 2705625283112487728, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  body:
+  - {fileID: 4577515336717546827, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 4275132498225812227, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 3725140306741389444, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 4340205021947512277, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 2306165314873576127, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 789956641396199732, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 2054635343953792365, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  - {fileID: 1832467849320604000, guid: d52d7050f2f2547f88ec69bf2eec3555, type: 3}
+  framesPerSecond: 4
+  keeps: {r: 0.7, g: 0.88, b: 0.6, a: 1}
+  emits: {r: 0.05, g: 0.12, b: 0.03, a: 1}

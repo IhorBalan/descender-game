@@ -1,0 +1,6827 @@
+{
+  "tile": 16,
+  "ppu": 16,
+  "view": {
+    "width": 640,
+    "height": 360
+  },
+  "variants": 3,
+  "bits": {
+    "N": 1,
+    "NE": 2,
+    "E": 4,
+    "SE": 8,
+    "S": 16,
+    "SW": 32,
+    "W": 64,
+    "NW": 128
+  },
+  "frames": [
+    0,
+    1,
+    4,
+    5,
+    7,
+    16,
+    17,
+    20,
+    21,
+    23,
+    28,
+    29,
+    31,
+    64,
+    65,
+    68,
+    69,
+    71,
+    80,
+    81,
+    84,
+    85,
+    87,
+    92,
+    93,
+    95,
+    112,
+    113,
+    116,
+    117,
+    119,
+    124,
+    125,
+    127,
+    193,
+    197,
+    199,
+    209,
+    213,
+    215,
+    221,
+    223,
+    241,
+    245,
+    247,
+    253,
+    255
+  ],
+  "slopes": [
+    "up_right",
+    "up_left"
+  ],
+  "steep": [
+    "steep_right_low",
+    "steep_right_high",
+    "steep_left_low",
+    "steep_left_high"
+  ],
+  "materials": [
+    {
+      "key": "dirt",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "dirt.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "grass",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "grass.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "stone",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "stone.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "dirt_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "dirt_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "stone_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "stone_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "sand",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "sand.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "clay",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "clay.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "copper_ore",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "copper_ore.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.3,
+        0.17,
+        0.07
+      ],
+      "open": false
+    },
+    {
+      "key": "cloud",
+      "kind": "terrain",
+      "group": "sky",
+      "sheet": "cloud.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.5,
+        0.55,
+        0.65
+      ],
+      "open": false
+    },
+    {
+      "key": "marble",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "marble.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "marble_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "marble_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "ashstone",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "ashstone.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "ash_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "ash_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "rose_rock",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "rose_rock.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "rose_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "rose_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "mud",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "mud.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "mud_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "mud_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "darkstone",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "darkstone.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "gold_ore",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "gold_ore.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.36,
+        0.28,
+        0.08
+      ],
+      "open": false
+    },
+    {
+      "key": "dark_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "dark_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "swamp_rock",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "swamp_rock.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "swamp_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "swamp_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "dis_brick",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "dis_brick.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "brick_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "brick_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "bloodstone",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "bloodstone.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "ember_sand",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "ember_sand.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "blood_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "blood_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "slate",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "slate.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "slate_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "slate_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "ice",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "ice.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.1,
+        0.16,
+        0.22
+      ],
+      "open": false
+    },
+    {
+      "key": "frost_rock",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "frost_rock.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "ice_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "ice_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "wood_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "wood_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "leaf_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "leaf_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "birch_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "birch_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "blossom_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "blossom_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "gold_leaf_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "gold_leaf_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "pillar_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "pillar_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "glass_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "glass_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "rose_glass_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "rose_glass_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "gilt_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "gilt_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "banner_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "banner_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "azure_tile",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "azure_tile.png",
+      "slopes": true,
+      "steep": true,
+      "emits": [
+        0.22,
+        0.34,
+        0.6
+      ],
+      "open": false
+    },
+    {
+      "key": "azure_shade",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "azure_shade.png",
+      "slopes": true,
+      "steep": true,
+      "emits": [
+        0.13,
+        0.21,
+        0.4
+      ],
+      "open": false
+    },
+    {
+      "key": "tower_lit_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "tower_lit_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "tower_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "tower_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "tower_shade_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "tower_shade_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "azure_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "azure_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "shadow_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "shadow_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "mist_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "mist_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "gold_brick",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "gold_brick.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.42,
+        0.33,
+        0.1
+      ],
+      "open": false
+    },
+    {
+      "key": "meadow",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "meadow.png",
+      "slopes": true,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "path",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "path.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "column_stone",
+      "kind": "terrain",
+      "group": "column",
+      "sheet": "column_stone.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "timber_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "timber_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    }
+  ],
+  "blends": [
+    {
+      "key": "dirt_on_stone",
+      "onto": "stone",
+      "from": [
+        "dirt",
+        "grass"
+      ],
+      "sheet": "blend_dirt_on_stone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "dirt_on_sand",
+      "onto": "sand",
+      "from": [
+        "dirt",
+        "grass"
+      ],
+      "sheet": "blend_dirt_on_sand.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "dirt_on_clay",
+      "onto": "clay",
+      "from": [
+        "dirt",
+        "grass"
+      ],
+      "sheet": "blend_dirt_on_clay.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "sand_on_stone",
+      "onto": "stone",
+      "from": [
+        "sand"
+      ],
+      "sheet": "blend_sand_on_stone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "dirt_on_ashstone",
+      "onto": "ashstone",
+      "from": [
+        "dirt"
+      ],
+      "sheet": "blend_dirt_on_ashstone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "stone_on_ashstone",
+      "onto": "ashstone",
+      "from": [
+        "stone"
+      ],
+      "sheet": "blend_stone_on_ashstone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "ashstone_on_rose_rock",
+      "onto": "rose_rock",
+      "from": [
+        "ashstone"
+      ],
+      "sheet": "blend_ashstone_on_rose_rock.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "rose_rock_on_mud",
+      "onto": "mud",
+      "from": [
+        "rose_rock"
+      ],
+      "sheet": "blend_rose_rock_on_mud.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "mud_on_darkstone",
+      "onto": "darkstone",
+      "from": [
+        "mud"
+      ],
+      "sheet": "blend_mud_on_darkstone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "darkstone_on_swamp_rock",
+      "onto": "swamp_rock",
+      "from": [
+        "darkstone"
+      ],
+      "sheet": "blend_darkstone_on_swamp_rock.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "swamp_rock_on_dis_brick",
+      "onto": "dis_brick",
+      "from": [
+        "swamp_rock"
+      ],
+      "sheet": "blend_swamp_rock_on_dis_brick.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "dis_brick_on_bloodstone",
+      "onto": "bloodstone",
+      "from": [
+        "dis_brick"
+      ],
+      "sheet": "blend_dis_brick_on_bloodstone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "ember_sand_on_bloodstone",
+      "onto": "bloodstone",
+      "from": [
+        "ember_sand"
+      ],
+      "sheet": "blend_ember_sand_on_bloodstone.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "bloodstone_on_slate",
+      "onto": "slate",
+      "from": [
+        "bloodstone"
+      ],
+      "sheet": "blend_bloodstone_on_slate.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "slate_on_frost_rock",
+      "onto": "frost_rock",
+      "from": [
+        "slate"
+      ],
+      "sheet": "blend_slate_on_frost_rock.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "ice_on_frost_rock",
+      "onto": "frost_rock",
+      "from": [
+        "ice"
+      ],
+      "sheet": "blend_ice_on_frost_rock.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    },
+    {
+      "key": "dirt_on_marble",
+      "onto": "marble",
+      "from": [
+        "dirt"
+      ],
+      "sheet": "blend_dirt_on_marble.png",
+      "masks": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15
+      ]
+    }
+  ],
+  "legend": [
+    {
+      "character": "G",
+      "layer": "terrain",
+      "key": "grass",
+      "slope": ""
+    },
+    {
+      "character": "D",
+      "layer": "terrain",
+      "key": "dirt",
+      "slope": ""
+    },
+    {
+      "character": "S",
+      "layer": "terrain",
+      "key": "stone",
+      "slope": ""
+    },
+    {
+      "character": "A",
+      "layer": "terrain",
+      "key": "sand",
+      "slope": ""
+    },
+    {
+      "character": "C",
+      "layer": "terrain",
+      "key": "clay",
+      "slope": ""
+    },
+    {
+      "character": "O",
+      "layer": "terrain",
+      "key": "copper_ore",
+      "slope": ""
+    },
+    {
+      "character": "/",
+      "layer": "terrain",
+      "key": "grass",
+      "slope": "up_right"
+    },
+    {
+      "character": "\\",
+      "layer": "terrain",
+      "key": "grass",
+      "slope": "up_left"
+    },
+    {
+      "character": "(",
+      "layer": "terrain",
+      "key": "sand",
+      "slope": "up_right"
+    },
+    {
+      "character": ")",
+      "layer": "terrain",
+      "key": "sand",
+      "slope": "up_left"
+    },
+    {
+      "character": "{",
+      "layer": "terrain",
+      "key": "dirt",
+      "slope": "up_right"
+    },
+    {
+      "character": "}",
+      "layer": "terrain",
+      "key": "dirt",
+      "slope": "up_left"
+    },
+    {
+      "character": "[",
+      "layer": "terrain",
+      "key": "stone",
+      "slope": "up_right"
+    },
+    {
+      "character": "]",
+      "layer": "terrain",
+      "key": "stone",
+      "slope": "up_left"
+    },
+    {
+      "character": "W",
+      "layer": "liquid",
+      "key": "water",
+      "slope": ""
+    },
+    {
+      "character": "L",
+      "layer": "liquid",
+      "key": "lava",
+      "slope": ""
+    },
+    {
+      "character": "T",
+      "layer": "prop",
+      "key": "torch",
+      "slope": ""
+    },
+    {
+      "character": "P",
+      "layer": "mark",
+      "key": "spawn",
+      "slope": ""
+    },
+    {
+      "character": "d",
+      "layer": "wall",
+      "key": "dirt_wall",
+      "slope": ""
+    },
+    {
+      "character": "s",
+      "layer": "wall",
+      "key": "stone_wall",
+      "slope": ""
+    },
+    {
+      "character": "Q",
+      "layer": "terrain",
+      "key": "cloud",
+      "slope": ""
+    },
+    {
+      "character": "1",
+      "layer": "terrain",
+      "key": "cloud",
+      "slope": "up_right"
+    },
+    {
+      "character": "2",
+      "layer": "terrain",
+      "key": "cloud",
+      "slope": "up_left"
+    },
+    {
+      "character": "M",
+      "layer": "terrain",
+      "key": "marble",
+      "slope": ""
+    },
+    {
+      "character": "H",
+      "layer": "terrain",
+      "key": "ashstone",
+      "slope": ""
+    },
+    {
+      "character": "3",
+      "layer": "terrain",
+      "key": "ashstone",
+      "slope": "up_right"
+    },
+    {
+      "character": "4",
+      "layer": "terrain",
+      "key": "ashstone",
+      "slope": "up_left"
+    },
+    {
+      "character": "R",
+      "layer": "terrain",
+      "key": "rose_rock",
+      "slope": ""
+    },
+    {
+      "character": "5",
+      "layer": "terrain",
+      "key": "rose_rock",
+      "slope": "up_right"
+    },
+    {
+      "character": "6",
+      "layer": "terrain",
+      "key": "rose_rock",
+      "slope": "up_left"
+    },
+    {
+      "character": "U",
+      "layer": "terrain",
+      "key": "mud",
+      "slope": ""
+    },
+    {
+      "character": "7",
+      "layer": "terrain",
+      "key": "mud",
+      "slope": "up_right"
+    },
+    {
+      "character": "8",
+      "layer": "terrain",
+      "key": "mud",
+      "slope": "up_left"
+    },
+    {
+      "character": "N",
+      "layer": "terrain",
+      "key": "darkstone",
+      "slope": ""
+    },
+    {
+      "character": "9",
+      "layer": "terrain",
+      "key": "darkstone",
+      "slope": "up_right"
+    },
+    {
+      "character": "0",
+      "layer": "terrain",
+      "key": "darkstone",
+      "slope": "up_left"
+    },
+    {
+      "character": "$",
+      "layer": "terrain",
+      "key": "gold_ore",
+      "slope": ""
+    },
+    {
+      "character": "Y",
+      "layer": "terrain",
+      "key": "swamp_rock",
+      "slope": ""
+    },
+    {
+      "character": "<",
+      "layer": "terrain",
+      "key": "swamp_rock",
+      "slope": "up_right"
+    },
+    {
+      "character": ">",
+      "layer": "terrain",
+      "key": "swamp_rock",
+      "slope": "up_left"
+    },
+    {
+      "character": "B",
+      "layer": "terrain",
+      "key": "dis_brick",
+      "slope": ""
+    },
+    {
+      "character": "V",
+      "layer": "terrain",
+      "key": "bloodstone",
+      "slope": ""
+    },
+    {
+      "character": ":",
+      "layer": "terrain",
+      "key": "bloodstone",
+      "slope": "up_right"
+    },
+    {
+      "character": ";",
+      "layer": "terrain",
+      "key": "bloodstone",
+      "slope": "up_left"
+    },
+    {
+      "character": "E",
+      "layer": "terrain",
+      "key": "ember_sand",
+      "slope": ""
+    },
+    {
+      "character": "F",
+      "layer": "terrain",
+      "key": "slate",
+      "slope": ""
+    },
+    {
+      "character": "+",
+      "layer": "terrain",
+      "key": "slate",
+      "slope": "up_right"
+    },
+    {
+      "character": "-",
+      "layer": "terrain",
+      "key": "slate",
+      "slope": "up_left"
+    },
+    {
+      "character": "I",
+      "layer": "terrain",
+      "key": "ice",
+      "slope": ""
+    },
+    {
+      "character": "Z",
+      "layer": "terrain",
+      "key": "frost_rock",
+      "slope": ""
+    },
+    {
+      "character": "=",
+      "layer": "terrain",
+      "key": "frost_rock",
+      "slope": "up_right"
+    },
+    {
+      "character": "_",
+      "layer": "terrain",
+      "key": "frost_rock",
+      "slope": "up_left"
+    },
+    {
+      "character": "~",
+      "layer": "liquid",
+      "key": "styx",
+      "slope": ""
+    },
+    {
+      "character": "!",
+      "layer": "liquid",
+      "key": "blood",
+      "slope": ""
+    },
+    {
+      "character": "%",
+      "layer": "liquid",
+      "key": "tar",
+      "slope": ""
+    },
+    {
+      "character": "&",
+      "layer": "liquid",
+      "key": "slime",
+      "slope": ""
+    },
+    {
+      "character": "*",
+      "layer": "prop",
+      "key": "brazier",
+      "slope": ""
+    },
+    {
+      "character": "^",
+      "layer": "prop",
+      "key": "crystal",
+      "slope": ""
+    },
+    {
+      "character": "J",
+      "layer": "prop",
+      "key": "lantern",
+      "slope": ""
+    },
+    {
+      "character": "\"",
+      "layer": "ledge",
+      "key": "plank",
+      "slope": ""
+    },
+    {
+      "character": "'",
+      "layer": "ledge",
+      "key": "grate",
+      "slope": ""
+    },
+    {
+      "character": ",",
+      "layer": "ledge",
+      "key": "gilt",
+      "slope": ""
+    },
+    {
+      "character": "?",
+      "layer": "ledge",
+      "key": "rime",
+      "slope": ""
+    },
+    {
+      "character": "m",
+      "layer": "wall",
+      "key": "marble_wall",
+      "slope": ""
+    },
+    {
+      "character": "h",
+      "layer": "wall",
+      "key": "ash_wall",
+      "slope": ""
+    },
+    {
+      "character": "r",
+      "layer": "wall",
+      "key": "rose_wall",
+      "slope": ""
+    },
+    {
+      "character": "u",
+      "layer": "wall",
+      "key": "mud_wall",
+      "slope": ""
+    },
+    {
+      "character": "n",
+      "layer": "wall",
+      "key": "dark_wall",
+      "slope": ""
+    },
+    {
+      "character": "y",
+      "layer": "wall",
+      "key": "swamp_wall",
+      "slope": ""
+    },
+    {
+      "character": "b",
+      "layer": "wall",
+      "key": "brick_wall",
+      "slope": ""
+    },
+    {
+      "character": "v",
+      "layer": "wall",
+      "key": "blood_wall",
+      "slope": ""
+    },
+    {
+      "character": "f",
+      "layer": "wall",
+      "key": "slate_wall",
+      "slope": ""
+    },
+    {
+      "character": "i",
+      "layer": "wall",
+      "key": "ice_wall",
+      "slope": ""
+    },
+    {
+      "character": "w",
+      "layer": "wall",
+      "key": "wood_wall",
+      "slope": ""
+    },
+    {
+      "character": "l",
+      "layer": "wall",
+      "key": "leaf_wall",
+      "slope": ""
+    },
+    {
+      "character": "t",
+      "layer": "wall",
+      "key": "birch_wall",
+      "slope": ""
+    },
+    {
+      "character": "p",
+      "layer": "wall",
+      "key": "blossom_wall",
+      "slope": ""
+    },
+    {
+      "character": "g",
+      "layer": "wall",
+      "key": "gold_leaf_wall",
+      "slope": ""
+    },
+    {
+      "character": "c",
+      "layer": "wall",
+      "key": "mist_wall",
+      "slope": ""
+    },
+    {
+      "character": "x",
+      "layer": "wall",
+      "key": "pillar_wall",
+      "slope": ""
+    },
+    {
+      "character": "o",
+      "layer": "wall",
+      "key": "glass_wall",
+      "slope": ""
+    },
+    {
+      "character": "q",
+      "layer": "wall",
+      "key": "rose_glass_wall",
+      "slope": ""
+    },
+    {
+      "character": "X",
+      "layer": "wall",
+      "key": "gilt_wall",
+      "slope": ""
+    },
+    {
+      "character": "z",
+      "layer": "wall",
+      "key": "shadow_wall",
+      "slope": ""
+    },
+    {
+      "character": "a",
+      "layer": "terrain",
+      "key": "marble",
+      "slope": "up_right"
+    },
+    {
+      "character": "e",
+      "layer": "terrain",
+      "key": "marble",
+      "slope": "up_left"
+    },
+    {
+      "character": "j",
+      "layer": "terrain",
+      "key": "gold_brick",
+      "slope": "up_right"
+    },
+    {
+      "character": "k",
+      "layer": "terrain",
+      "key": "gold_brick",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00c9",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": ""
+    },
+    {
+      "character": "\u00e9",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00e8",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00e7",
+      "layer": "wall",
+      "key": "banner_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00ca",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "steep_right_low"
+    },
+    {
+      "character": "\u00ea",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "steep_right_high"
+    },
+    {
+      "character": "\u00ce",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": ""
+    },
+    {
+      "character": "\u00ee",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00cf",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": "steep_left_low"
+    },
+    {
+      "character": "\u00ef",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": "steep_left_high"
+    },
+    {
+      "character": "\u00c2",
+      "layer": "wall",
+      "key": "tower_lit_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00e2",
+      "layer": "wall",
+      "key": "tower_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00e3",
+      "layer": "wall",
+      "key": "tower_shade_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00d4",
+      "layer": "wall",
+      "key": "azure_wall",
+      "slope": ""
+    },
+    {
+      "character": "K",
+      "layer": "terrain",
+      "key": "gold_brick",
+      "slope": ""
+    },
+    {
+      "character": "|",
+      "layer": "liquid",
+      "key": "falls",
+      "slope": ""
+    },
+    {
+      "character": "\u00d1",
+      "layer": "terrain",
+      "key": "meadow",
+      "slope": ""
+    },
+    {
+      "character": "\u00f1",
+      "layer": "terrain",
+      "key": "meadow",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00d6",
+      "layer": "terrain",
+      "key": "meadow",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00d8",
+      "layer": "wall",
+      "key": "timber_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00f6",
+      "layer": "prop",
+      "key": "mine_lamp",
+      "slope": ""
+    },
+    {
+      "character": "\u00c5",
+      "layer": "prop",
+      "key": "campfire",
+      "slope": ""
+    },
+    {
+      "character": "\u00e5",
+      "layer": "prop",
+      "key": "glowshroom",
+      "slope": ""
+    },
+    {
+      "character": "\u00fc",
+      "layer": "terrain",
+      "key": "path",
+      "slope": ""
+    },
+    {
+      "character": "\u00dc",
+      "layer": "terrain",
+      "key": "column_stone",
+      "slope": ""
+    }
+  ],
+  "ledges": {
+    "sheet": "ledge.png",
+    "thick": 5,
+    "keys": [
+      "plank",
+      "grate",
+      "gilt",
+      "rime"
+    ],
+    "pieces": [
+      "single",
+      "left",
+      "middle",
+      "right"
+    ]
+  },
+  "things": {
+    "sheet": "things.png",
+    "names": [
+      "barrier_0",
+      "barrier_1",
+      "seal_bolt",
+      "seal_slam",
+      "relic_0",
+      "relic_1",
+      "crack",
+      "crumble",
+      "blink",
+      "wind",
+      "post",
+      "tablet",
+      "shade",
+      "soul",
+      "beacon_0",
+      "beacon_1",
+      "beacon_2",
+      "sanctum",
+      "flag_a_0",
+      "flag_a_1",
+      "flag_a_2",
+      "flag_a_3",
+      "flag_b_0",
+      "flag_b_1",
+      "flag_b_2",
+      "flag_b_3",
+      "bird_0",
+      "bird_1"
+    ]
+  },
+  "props": [
+    {
+      "key": "torch",
+      "sheet": "torch.png",
+      "frames": 3,
+      "colour": [
+        1.0,
+        0.72,
+        0.42
+      ],
+      "intensity": 1.6,
+      "embers": true
+    },
+    {
+      "key": "brazier",
+      "sheet": "brazier.png",
+      "frames": 3,
+      "colour": [
+        1.0,
+        0.6,
+        0.32
+      ],
+      "intensity": 2.0,
+      "embers": true
+    },
+    {
+      "key": "crystal",
+      "sheet": "crystal.png",
+      "frames": 3,
+      "colour": [
+        0.55,
+        0.82,
+        1.0
+      ],
+      "intensity": 1.3,
+      "embers": false
+    },
+    {
+      "key": "lantern",
+      "sheet": "lantern.png",
+      "frames": 3,
+      "colour": [
+        1.0,
+        0.93,
+        0.72
+      ],
+      "intensity": 1.2,
+      "embers": false
+    },
+    {
+      "key": "mine_lamp",
+      "sheet": "mine_lamp.png",
+      "frames": 3,
+      "colour": [
+        1.0,
+        0.78,
+        0.48
+      ],
+      "intensity": 1.5,
+      "embers": false
+    },
+    {
+      "key": "campfire",
+      "sheet": "campfire.png",
+      "frames": 3,
+      "colour": [
+        1.0,
+        0.62,
+        0.3
+      ],
+      "intensity": 1.8,
+      "embers": true
+    },
+    {
+      "key": "glowshroom",
+      "sheet": "glowshroom.png",
+      "frames": 3,
+      "colour": [
+        0.35,
+        1.0,
+        0.85
+      ],
+      "intensity": 1.0,
+      "embers": false
+    }
+  ],
+  "regions": [
+    {
+      "key": "paradise",
+      "name": "Paradise",
+      "subtitle": "Celestial Gardens",
+      "ambient": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cave": "",
+      "caveTop": "",
+      "far": "",
+      "air": {
+        "rate": 5,
+        "colour": [
+          1.0,
+          0.949,
+          0.7529,
+          0.8
+        ],
+        "across": [
+          -0.4,
+          0.4
+        ],
+        "up": [
+          -0.7,
+          -0.2
+        ],
+        "life": 9.0,
+        "lit": false
+      }
+    },
+    {
+      "key": "earth",
+      "name": "Ruined Earth",
+      "subtitle": "The Hub",
+      "ambient": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "cave": "backdrop_cave_earth",
+      "caveTop": "backdrop_cave_top_earth",
+      "far": "backdrop_far_earth",
+      "air": {
+        "rate": 4,
+        "colour": [
+          0.9569,
+          0.9412,
+          0.7843,
+          0.7
+        ],
+        "across": [
+          -0.5,
+          0.3
+        ],
+        "up": [
+          -0.15,
+          0.25
+        ],
+        "life": 9.0,
+        "lit": true
+      }
+    },
+    {
+      "key": "limbo",
+      "name": "1. Limbo",
+      "subtitle": "The Forgotten",
+      "ambient": [
+        0.2,
+        0.21,
+        0.28
+      ],
+      "cave": "backdrop_cave_limbo",
+      "caveTop": "backdrop_cave_top_limbo",
+      "far": "backdrop_far_limbo",
+      "air": {
+        "rate": 7,
+        "colour": [
+          0.7843,
+          0.7843,
+          0.8706,
+          0.5
+        ],
+        "across": [
+          -0.3,
+          0.3
+        ],
+        "up": [
+          -0.1,
+          0.1
+        ],
+        "life": 10.0,
+        "lit": true
+      }
+    },
+    {
+      "key": "lust",
+      "name": "2. Lust",
+      "subtitle": "The Desire",
+      "ambient": [
+        0.26,
+        0.13,
+        0.24
+      ],
+      "cave": "backdrop_cave_lust",
+      "caveTop": "backdrop_cave_top_lust",
+      "far": "backdrop_far_lust",
+      "air": {
+        "rate": 26,
+        "colour": [
+          0.9412,
+          0.6275,
+          0.8471,
+          0.6
+        ],
+        "across": [
+          5.0,
+          9.0
+        ],
+        "up": [
+          -0.6,
+          0.6
+        ],
+        "life": 4.0,
+        "lit": false
+      }
+    },
+    {
+      "key": "gluttony",
+      "name": "3. Gluttony",
+      "subtitle": "The Devourers",
+      "ambient": [
+        0.17,
+        0.19,
+        0.1
+      ],
+      "cave": "backdrop_cave_gluttony",
+      "caveTop": "backdrop_cave_top_gluttony",
+      "far": "backdrop_far_gluttony",
+      "air": {
+        "rate": 40,
+        "colour": [
+          0.6235,
+          0.6902,
+          0.7529,
+          0.5
+        ],
+        "across": [
+          -1.0,
+          -0.6
+        ],
+        "up": [
+          -13.0,
+          -10.0
+        ],
+        "life": 2.4,
+        "lit": false
+      }
+    },
+    {
+      "key": "greed",
+      "name": "4. Greed",
+      "subtitle": "The Hoarders",
+      "ambient": [
+        0.24,
+        0.19,
+        0.09
+      ],
+      "cave": "backdrop_cave_greed",
+      "caveTop": "backdrop_cave_top_greed",
+      "far": "backdrop_far_greed",
+      "air": {
+        "rate": 6,
+        "colour": [
+          1.0,
+          0.8471,
+          0.3765,
+          0.9
+        ],
+        "across": [
+          -0.2,
+          0.2
+        ],
+        "up": [
+          -0.3,
+          0.1
+        ],
+        "life": 7.0,
+        "lit": false
+      }
+    },
+    {
+      "key": "wrath",
+      "name": "5. Wrath",
+      "subtitle": "The Raging",
+      "ambient": [
+        0.1,
+        0.19,
+        0.18
+      ],
+      "cave": "backdrop_cave_wrath",
+      "caveTop": "backdrop_cave_top_wrath",
+      "far": "backdrop_far_wrath",
+      "air": {
+        "rate": 7,
+        "colour": [
+          0.6275,
+          0.7843,
+          0.7216,
+          0.4
+        ],
+        "across": [
+          -0.4,
+          0.4
+        ],
+        "up": [
+          0.0,
+          0.2
+        ],
+        "life": 9.0,
+        "lit": true
+      }
+    },
+    {
+      "key": "heresy",
+      "name": "6. Heresy",
+      "subtitle": "The Burned",
+      "ambient": [
+        0.27,
+        0.12,
+        0.07
+      ],
+      "cave": "backdrop_cave_heresy",
+      "caveTop": "backdrop_cave_top_heresy",
+      "far": "backdrop_far_heresy",
+      "air": {
+        "rate": 16,
+        "colour": [
+          1.0,
+          0.6039,
+          0.2275,
+          0.9
+        ],
+        "across": [
+          -0.5,
+          0.5
+        ],
+        "up": [
+          0.8,
+          2.2
+        ],
+        "life": 4.0,
+        "lit": false
+      }
+    },
+    {
+      "key": "violence",
+      "name": "7. Violence",
+      "subtitle": "The Wounded",
+      "ambient": [
+        0.25,
+        0.08,
+        0.08
+      ],
+      "cave": "backdrop_cave_violence",
+      "caveTop": "backdrop_cave_top_violence",
+      "far": "backdrop_far_violence",
+      "air": {
+        "rate": 14,
+        "colour": [
+          0.6902,
+          0.502,
+          0.502,
+          0.6
+        ],
+        "across": [
+          -0.8,
+          0.2
+        ],
+        "up": [
+          -1.4,
+          -0.6
+        ],
+        "life": 7.0,
+        "lit": true
+      }
+    },
+    {
+      "key": "fraud",
+      "name": "8. Fraud",
+      "subtitle": "The Deceivers",
+      "ambient": [
+        0.14,
+        0.17,
+        0.22
+      ],
+      "cave": "backdrop_cave_fraud",
+      "caveTop": "backdrop_cave_top_fraud",
+      "far": "backdrop_far_fraud",
+      "air": {
+        "rate": 5,
+        "colour": [
+          0.502,
+          0.5647,
+          0.6588,
+          0.5
+        ],
+        "across": [
+          -0.2,
+          0.2
+        ],
+        "up": [
+          -0.4,
+          -0.1
+        ],
+        "life": 9.0,
+        "lit": true
+      }
+    },
+    {
+      "key": "treachery",
+      "name": "9. Treachery",
+      "subtitle": "The Frozen",
+      "ambient": [
+        0.16,
+        0.24,
+        0.32
+      ],
+      "cave": "backdrop_cave_treachery",
+      "caveTop": "backdrop_cave_top_treachery",
+      "far": "backdrop_far_treachery",
+      "air": {
+        "rate": 30,
+        "colour": [
+          0.9098,
+          0.9647,
+          1.0,
+          0.9
+        ],
+        "across": [
+          -1.2,
+          0.4
+        ],
+        "up": [
+          -2.2,
+          -1.0
+        ],
+        "life": 8.0,
+        "lit": false
+      }
+    }
+  ],
+  "liquids": [
+    {
+      "key": "water",
+      "sheet": "water.png",
+      "frames": 8,
+      "fps": 7,
+      "lit": true,
+      "keeps": [
+        0.74,
+        0.86,
+        0.93
+      ],
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "swim": true,
+      "hazard": 0,
+      "order": 20
+    },
+    {
+      "key": "lava",
+      "sheet": "lava.png",
+      "frames": 8,
+      "fps": 4,
+      "lit": false,
+      "keeps": [
+        0.86,
+        0.8,
+        0.72
+      ],
+      "emits": [
+        1.5,
+        0.8,
+        0.3
+      ],
+      "swim": false,
+      "hazard": 1,
+      "order": 21
+    },
+    {
+      "key": "styx",
+      "sheet": "styx.png",
+      "frames": 8,
+      "fps": 5,
+      "lit": true,
+      "keeps": [
+        0.6,
+        0.8,
+        0.76
+      ],
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "swim": true,
+      "hazard": 0,
+      "order": 22
+    },
+    {
+      "key": "blood",
+      "sheet": "blood.png",
+      "frames": 8,
+      "fps": 4,
+      "lit": false,
+      "keeps": [
+        0.84,
+        0.6,
+        0.6
+      ],
+      "emits": [
+        0.8,
+        0.14,
+        0.12
+      ],
+      "swim": false,
+      "hazard": 1,
+      "order": 23
+    },
+    {
+      "key": "tar",
+      "sheet": "tar.png",
+      "frames": 8,
+      "fps": 3,
+      "lit": true,
+      "keeps": [
+        0.5,
+        0.5,
+        0.55
+      ],
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "swim": false,
+      "hazard": 1,
+      "order": 24
+    },
+    {
+      "key": "slime",
+      "sheet": "slime.png",
+      "frames": 8,
+      "fps": 4,
+      "lit": true,
+      "keeps": [
+        0.7,
+        0.88,
+        0.6
+      ],
+      "emits": [
+        0.05,
+        0.12,
+        0.03
+      ],
+      "swim": true,
+      "hazard": 0,
+      "order": 25
+    },
+    {
+      "key": "falls",
+      "sheet": "falls.png",
+      "frames": 8,
+      "fps": 12,
+      "lit": false,
+      "keeps": [
+        0.9,
+        0.94,
+        0.98
+      ],
+      "emits": [
+        0.1,
+        0.13,
+        0.17
+      ],
+      "swim": false,
+      "hazard": 0,
+      "order": 26
+    }
+  ],
+  "decor": {
+    "sheet": "decor.png",
+    "floorSalt": 101,
+    "ceilingSalt": 211,
+    "rules": [
+      {
+        "key": "flower",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.1,
+        "variants": 4,
+        "min": 1,
+        "max": 1,
+        "first": "flower",
+        "middle": "flower",
+        "last": "flower"
+      },
+      {
+        "key": "bush",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.05,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "bush",
+        "middle": "bush",
+        "last": "bush"
+      },
+      {
+        "key": "grass_tall",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.2,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "grass_tall",
+        "middle": "grass_tall",
+        "last": "grass_tall"
+      },
+      {
+        "key": "tuft",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.38,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "tuft",
+        "middle": "tuft",
+        "last": "tuft"
+      },
+      {
+        "key": "cactus",
+        "anchor": "floor",
+        "on": [
+          "sand"
+        ],
+        "where": "sky",
+        "chance": 0.11,
+        "variants": 2,
+        "min": 2,
+        "max": 3,
+        "first": "cactus_base",
+        "middle": "cactus_mid",
+        "last": "cactus_top"
+      },
+      {
+        "key": "dry_bush",
+        "anchor": "floor",
+        "on": [
+          "sand"
+        ],
+        "where": "sky",
+        "chance": 0.08,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "dry_bush",
+        "middle": "dry_bush",
+        "last": "dry_bush"
+      },
+      {
+        "key": "bones",
+        "anchor": "floor",
+        "on": [
+          "sand",
+          "mud",
+          "dis_brick",
+          "ember_sand",
+          "bloodstone",
+          "frost_rock",
+          "ashstone"
+        ],
+        "where": "any",
+        "chance": 0.02,
+        "variants": 1,
+        "min": 1,
+        "max": 1,
+        "first": "bones",
+        "middle": "bones",
+        "last": "bones"
+      },
+      {
+        "key": "mushroom",
+        "anchor": "floor",
+        "on": [
+          "dirt",
+          "clay",
+          "stone",
+          "mud"
+        ],
+        "where": "cave",
+        "chance": 0.06,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "mushroom",
+        "middle": "mushroom",
+        "last": "mushroom"
+      },
+      {
+        "key": "stalagmite",
+        "anchor": "floor",
+        "on": [
+          "stone",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite",
+        "middle": "stalagmite",
+        "last": "stalagmite"
+      },
+      {
+        "key": "pebble",
+        "anchor": "floor",
+        "on": [
+          "stone",
+          "dirt",
+          "clay",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.12,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble",
+        "middle": "pebble",
+        "last": "pebble"
+      },
+      {
+        "key": "vine",
+        "anchor": "ceiling",
+        "on": [
+          "grass"
+        ],
+        "where": "any",
+        "chance": 0.55,
+        "variants": 2,
+        "min": 1,
+        "max": 3,
+        "first": "vine_mid",
+        "middle": "vine_mid",
+        "last": "vine_tip"
+      },
+      {
+        "key": "root",
+        "anchor": "ceiling",
+        "on": [
+          "dirt",
+          "mud"
+        ],
+        "where": "cave",
+        "chance": 0.22,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "root",
+        "middle": "root",
+        "last": "root"
+      },
+      {
+        "key": "stalactite",
+        "anchor": "ceiling",
+        "on": [
+          "stone",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.18,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite",
+        "middle": "stalactite",
+        "last": "stalactite"
+      },
+      {
+        "key": "cloud_puff",
+        "anchor": "floor",
+        "on": [
+          "cloud"
+        ],
+        "where": "any",
+        "chance": 0.3,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "cloud_puff",
+        "middle": "cloud_puff",
+        "last": "cloud_puff"
+      },
+      {
+        "key": "lily",
+        "anchor": "floor",
+        "on": [
+          "cloud"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "lily",
+        "middle": "lily",
+        "last": "lily"
+      },
+      {
+        "key": "grave",
+        "anchor": "floor",
+        "on": [
+          "ashstone"
+        ],
+        "where": "any",
+        "chance": 0.05,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "grave",
+        "middle": "grave",
+        "last": "grave"
+      },
+      {
+        "key": "dead_grass",
+        "anchor": "floor",
+        "on": [
+          "ashstone"
+        ],
+        "where": "any",
+        "chance": 0.25,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "dead_grass",
+        "middle": "dead_grass",
+        "last": "dead_grass"
+      },
+      {
+        "key": "thorn_rose",
+        "anchor": "floor",
+        "on": [
+          "rose_rock"
+        ],
+        "where": "any",
+        "chance": 0.12,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "thorn_rose",
+        "middle": "thorn_rose",
+        "last": "thorn_rose"
+      },
+      {
+        "key": "rose_vine",
+        "anchor": "ceiling",
+        "on": [
+          "rose_rock"
+        ],
+        "where": "any",
+        "chance": 0.35,
+        "variants": 2,
+        "min": 1,
+        "max": 3,
+        "first": "rose_vine_mid",
+        "middle": "rose_vine_mid",
+        "last": "rose_vine_tip"
+      },
+      {
+        "key": "reed",
+        "anchor": "floor",
+        "on": [
+          "mud",
+          "swamp_rock"
+        ],
+        "where": "any",
+        "chance": 0.18,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "reed",
+        "middle": "reed",
+        "last": "reed"
+      },
+      {
+        "key": "drip",
+        "anchor": "ceiling",
+        "on": [
+          "mud"
+        ],
+        "where": "any",
+        "chance": 0.3,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "drip",
+        "middle": "drip",
+        "last": "drip"
+      },
+      {
+        "key": "coins",
+        "anchor": "floor",
+        "on": [
+          "darkstone",
+          "gold_ore"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "coins",
+        "middle": "coins",
+        "last": "coins"
+      },
+      {
+        "key": "dead_tree",
+        "anchor": "floor",
+        "on": [
+          "swamp_rock",
+          "bloodstone"
+        ],
+        "where": "any",
+        "chance": 0.06,
+        "variants": 2,
+        "min": 2,
+        "max": 4,
+        "first": "dead_tree_base",
+        "middle": "dead_tree_mid",
+        "last": "dead_tree_top"
+      },
+      {
+        "key": "moss",
+        "anchor": "ceiling",
+        "on": [
+          "swamp_rock"
+        ],
+        "where": "any",
+        "chance": 0.45,
+        "variants": 2,
+        "min": 1,
+        "max": 2,
+        "first": "moss_mid",
+        "middle": "moss_mid",
+        "last": "moss_tip"
+      },
+      {
+        "key": "tomb",
+        "anchor": "floor",
+        "on": [
+          "dis_brick"
+        ],
+        "where": "any",
+        "chance": 0.05,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "tomb",
+        "middle": "tomb",
+        "last": "tomb"
+      },
+      {
+        "key": "chain",
+        "anchor": "ceiling",
+        "on": [
+          "dis_brick",
+          "slate"
+        ],
+        "where": "any",
+        "chance": 0.09,
+        "variants": 2,
+        "min": 1,
+        "max": 4,
+        "first": "chain_mid",
+        "middle": "chain_mid",
+        "last": "chain_tip"
+      },
+      {
+        "key": "thorn",
+        "anchor": "floor",
+        "on": [
+          "bloodstone",
+          "ember_sand"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "thorn",
+        "middle": "thorn",
+        "last": "thorn"
+      },
+      {
+        "key": "ice_spike",
+        "anchor": "floor",
+        "on": [
+          "ice",
+          "frost_rock"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "ice_spike",
+        "middle": "ice_spike",
+        "last": "ice_spike"
+      },
+      {
+        "key": "snow",
+        "anchor": "floor",
+        "on": [
+          "ice",
+          "frost_rock"
+        ],
+        "where": "any",
+        "chance": 0.25,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "snow",
+        "middle": "snow",
+        "last": "snow"
+      },
+      {
+        "key": "icicle",
+        "anchor": "ceiling",
+        "on": [
+          "ice",
+          "frost_rock"
+        ],
+        "where": "any",
+        "chance": 0.38,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "icicle",
+        "middle": "icicle",
+        "last": "icicle"
+      },
+      {
+        "key": "stalagmite_ash",
+        "anchor": "floor",
+        "on": [
+          "ashstone"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite_ash",
+        "middle": "stalagmite_ash",
+        "last": "stalagmite_ash"
+      },
+      {
+        "key": "pebble_ash",
+        "anchor": "floor",
+        "on": [
+          "ashstone"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble_ash",
+        "middle": "pebble_ash",
+        "last": "pebble_ash"
+      },
+      {
+        "key": "stalactite_ash",
+        "anchor": "ceiling",
+        "on": [
+          "ashstone"
+        ],
+        "where": "any",
+        "chance": 0.2,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite_ash",
+        "middle": "stalactite_ash",
+        "last": "stalactite_ash"
+      },
+      {
+        "key": "stalagmite_rose",
+        "anchor": "floor",
+        "on": [
+          "rose_rock"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite_rose",
+        "middle": "stalagmite_rose",
+        "last": "stalagmite_rose"
+      },
+      {
+        "key": "pebble_rose",
+        "anchor": "floor",
+        "on": [
+          "rose_rock"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble_rose",
+        "middle": "pebble_rose",
+        "last": "pebble_rose"
+      },
+      {
+        "key": "stalactite_rose",
+        "anchor": "ceiling",
+        "on": [
+          "rose_rock"
+        ],
+        "where": "any",
+        "chance": 0.15,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite_rose",
+        "middle": "stalactite_rose",
+        "last": "stalactite_rose"
+      },
+      {
+        "key": "stalagmite_dark",
+        "anchor": "floor",
+        "on": [
+          "darkstone",
+          "gold_ore"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite_dark",
+        "middle": "stalagmite_dark",
+        "last": "stalagmite_dark"
+      },
+      {
+        "key": "pebble_dark",
+        "anchor": "floor",
+        "on": [
+          "darkstone",
+          "gold_ore"
+        ],
+        "where": "any",
+        "chance": 0.12,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble_dark",
+        "middle": "pebble_dark",
+        "last": "pebble_dark"
+      },
+      {
+        "key": "stalactite_dark",
+        "anchor": "ceiling",
+        "on": [
+          "darkstone",
+          "gold_ore"
+        ],
+        "where": "any",
+        "chance": 0.18,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite_dark",
+        "middle": "stalactite_dark",
+        "last": "stalactite_dark"
+      },
+      {
+        "key": "pebble_swamp",
+        "anchor": "floor",
+        "on": [
+          "swamp_rock"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble_swamp",
+        "middle": "pebble_swamp",
+        "last": "pebble_swamp"
+      },
+      {
+        "key": "stalactite_swamp",
+        "anchor": "ceiling",
+        "on": [
+          "swamp_rock"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite_swamp",
+        "middle": "stalactite_swamp",
+        "last": "stalactite_swamp"
+      },
+      {
+        "key": "stalagmite_blood",
+        "anchor": "floor",
+        "on": [
+          "bloodstone"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite_blood",
+        "middle": "stalagmite_blood",
+        "last": "stalagmite_blood"
+      },
+      {
+        "key": "stalactite_blood",
+        "anchor": "ceiling",
+        "on": [
+          "bloodstone"
+        ],
+        "where": "any",
+        "chance": 0.22,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite_blood",
+        "middle": "stalactite_blood",
+        "last": "stalactite_blood"
+      },
+      {
+        "key": "stalagmite_slate",
+        "anchor": "floor",
+        "on": [
+          "slate"
+        ],
+        "where": "any",
+        "chance": 0.1,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalagmite_slate",
+        "middle": "stalagmite_slate",
+        "last": "stalagmite_slate"
+      },
+      {
+        "key": "pebble_slate",
+        "anchor": "floor",
+        "on": [
+          "slate"
+        ],
+        "where": "any",
+        "chance": 0.12,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble_slate",
+        "middle": "pebble_slate",
+        "last": "pebble_slate"
+      },
+      {
+        "key": "stalactite_slate",
+        "anchor": "ceiling",
+        "on": [
+          "slate"
+        ],
+        "where": "any",
+        "chance": 0.16,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "stalactite_slate",
+        "middle": "stalactite_slate",
+        "last": "stalactite_slate"
+      },
+      {
+        "key": "pebble_frost",
+        "anchor": "floor",
+        "on": [
+          "frost_rock"
+        ],
+        "where": "any",
+        "chance": 0.08,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "pebble_frost",
+        "middle": "pebble_frost",
+        "last": "pebble_frost"
+      },
+      {
+        "key": "wildflower",
+        "anchor": "floor",
+        "on": [
+          "meadow"
+        ],
+        "where": "sky",
+        "chance": 0.34,
+        "variants": 4,
+        "min": 1,
+        "max": 1,
+        "first": "wildflower",
+        "middle": "wildflower",
+        "last": "wildflower"
+      },
+      {
+        "key": "meadow_tall",
+        "anchor": "floor",
+        "on": [
+          "meadow"
+        ],
+        "where": "sky",
+        "chance": 0.22,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "grass_tall",
+        "middle": "grass_tall",
+        "last": "grass_tall"
+      },
+      {
+        "key": "meadow_tuft",
+        "anchor": "floor",
+        "on": [
+          "meadow"
+        ],
+        "where": "sky",
+        "chance": 0.3,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "tuft",
+        "middle": "tuft",
+        "last": "tuft"
+      },
+      {
+        "key": "fern",
+        "anchor": "floor",
+        "on": [
+          "grass"
+        ],
+        "where": "sky",
+        "chance": 0.06,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "fern",
+        "middle": "fern",
+        "last": "fern"
+      },
+      {
+        "key": "field_stone",
+        "anchor": "floor",
+        "on": [
+          "grass",
+          "meadow"
+        ],
+        "where": "sky",
+        "chance": 0.04,
+        "variants": 3,
+        "min": 1,
+        "max": 1,
+        "first": "field_stone",
+        "middle": "field_stone",
+        "last": "field_stone"
+      },
+      {
+        "key": "cobweb",
+        "anchor": "ceiling",
+        "on": [
+          "stone",
+          "dirt",
+          "copper_ore"
+        ],
+        "where": "cave",
+        "chance": 0.05,
+        "variants": 2,
+        "min": 1,
+        "max": 1,
+        "first": "cobweb",
+        "middle": "cobweb",
+        "last": "cobweb"
+      }
+    ]
+  },
+  "shade": {
+    "sheet": "shade.png",
+    "masks": [
+      1,
+      2,
+      4,
+      5,
+      8,
+      9,
+      10,
+      16,
+      17,
+      18,
+      20,
+      21,
+      32,
+      33,
+      34,
+      36,
+      37,
+      40,
+      41,
+      42,
+      64,
+      65,
+      66,
+      68,
+      69,
+      72,
+      73,
+      74,
+      80,
+      81,
+      82,
+      84,
+      85,
+      128,
+      130,
+      132,
+      136,
+      138,
+      144,
+      146,
+      148,
+      160,
+      162,
+      164,
+      168,
+      170
+    ]
+  },
+  "glint": {
+    "sheet": "glint.png",
+    "on": [
+      "copper_ore",
+      "gold_ore"
+    ],
+    "fps": 10,
+    "loop": [
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      0,
+      1,
+      0,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      -1,
+      2,
+      3,
+      2,
+      -1,
+      -1,
+      -1,
+      -1
+    ]
+  },
+  "light": {
+    "ambient": 0.04,
+    "ambientColour": [
+      0.55,
+      0.62,
+      0.85
+    ],
+    "airKeeps": 0.91,
+    "solidKeeps": 0.56,
+    "torchColour": [
+      1.0,
+      0.72,
+      0.42
+    ],
+    "torchIntensity": 1.6,
+    "torchGlow": 0.35,
+    "torchGlowRadius": 3.0,
+    "wallTint": [
+      0.68,
+      0.7,
+      0.8
+    ]
+  },
+  "day": {
+    "length": 480.0,
+    "start": 10.0,
+    "sunrise": 5.5,
+    "sunset": 19.5,
+    "keys": [
+      {
+        "hour": 0.0,
+        "light": [
+          0.3,
+          0.36,
+          0.6
+        ],
+        "top": [
+          0.0157,
+          0.0235,
+          0.0588
+        ],
+        "low": [
+          0.0627,
+          0.102,
+          0.2118
+        ],
+        "tint": [
+          0.2,
+          0.25,
+          0.44
+        ],
+        "stars": 1.0
+      },
+      {
+        "hour": 4.5,
+        "light": [
+          0.3,
+          0.36,
+          0.6
+        ],
+        "top": [
+          0.0157,
+          0.0235,
+          0.0588
+        ],
+        "low": [
+          0.0627,
+          0.102,
+          0.2118
+        ],
+        "tint": [
+          0.2,
+          0.25,
+          0.44
+        ],
+        "stars": 1.0
+      },
+      {
+        "hour": 5.75,
+        "light": [
+          0.42,
+          0.36,
+          0.44
+        ],
+        "top": [
+          0.102,
+          0.1333,
+          0.3137
+        ],
+        "low": [
+          0.7882,
+          0.4392,
+          0.3529
+        ],
+        "tint": [
+          0.5,
+          0.42,
+          0.52
+        ],
+        "stars": 0.5
+      },
+      {
+        "hour": 6.75,
+        "light": [
+          0.86,
+          0.66,
+          0.52
+        ],
+        "top": [
+          0.1804,
+          0.2902,
+          0.5882
+        ],
+        "low": [
+          0.949,
+          0.6588,
+          0.4235
+        ],
+        "tint": [
+          0.95,
+          0.74,
+          0.64
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 8.5,
+        "light": [
+          1.0,
+          0.96,
+          0.9
+        ],
+        "top": [
+          0.2196,
+          0.4078,
+          0.7373
+        ],
+        "low": [
+          0.7137,
+          0.8627,
+          0.9412
+        ],
+        "tint": [
+          1.0,
+          0.97,
+          0.93
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 12.0,
+        "light": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "top": [
+          0.2314,
+          0.4353,
+          0.7529
+        ],
+        "low": [
+          0.6627,
+          0.8392,
+          0.9373
+        ],
+        "tint": [
+          1.0,
+          1.0,
+          1.0
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 16.5,
+        "light": [
+          1.0,
+          0.97,
+          0.9
+        ],
+        "top": [
+          0.2275,
+          0.4118,
+          0.7137
+        ],
+        "low": [
+          0.7255,
+          0.8471,
+          0.9176
+        ],
+        "tint": [
+          1.0,
+          0.96,
+          0.9
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 18.5,
+        "light": [
+          0.95,
+          0.64,
+          0.44
+        ],
+        "top": [
+          0.1725,
+          0.1843,
+          0.4706
+        ],
+        "low": [
+          0.9412,
+          0.549,
+          0.3059
+        ],
+        "tint": [
+          0.96,
+          0.66,
+          0.52
+        ],
+        "stars": 0.0
+      },
+      {
+        "hour": 19.75,
+        "light": [
+          0.44,
+          0.34,
+          0.46
+        ],
+        "top": [
+          0.0784,
+          0.0784,
+          0.251
+        ],
+        "low": [
+          0.4784,
+          0.2471,
+          0.3608
+        ],
+        "tint": [
+          0.48,
+          0.38,
+          0.52
+        ],
+        "stars": 0.5
+      },
+      {
+        "hour": 21.0,
+        "light": [
+          0.3,
+          0.36,
+          0.6
+        ],
+        "top": [
+          0.0157,
+          0.0235,
+          0.0588
+        ],
+        "low": [
+          0.0627,
+          0.102,
+          0.2118
+        ],
+        "tint": [
+          0.2,
+          0.25,
+          0.44
+        ],
+        "stars": 1.0
+      }
+    ]
+  },
+  "sky": {
+    "bands": 7,
+    "order": -1010,
+    "cloudDrift": 0.25,
+    "caveScroll": 0.55,
+    "caveOrder": -960,
+    "farScroll": 0.78
+  },
+  "backdrops": [
+    {
+      "key": "backdrop_stars",
+      "kind": "stars",
+      "scroll": 0.0,
+      "order": -1008,
+      "lit": false
+    },
+    {
+      "key": "backdrop_sun",
+      "kind": "sun",
+      "scroll": 0.0,
+      "order": -1006,
+      "lit": false
+    },
+    {
+      "key": "backdrop_moon",
+      "kind": "moon",
+      "scroll": 0.0,
+      "order": -1006,
+      "lit": false
+    },
+    {
+      "key": "backdrop_clouds",
+      "kind": "clouds",
+      "scroll": 0.04,
+      "order": -1004,
+      "lit": false
+    },
+    {
+      "key": "backdrop_far",
+      "kind": "ridge",
+      "scroll": 0.1,
+      "order": -990,
+      "lit": false
+    },
+    {
+      "key": "backdrop_mid",
+      "kind": "ridge",
+      "scroll": 0.25,
+      "order": -980,
+      "lit": false
+    },
+    {
+      "key": "backdrop_near",
+      "kind": "ridge",
+      "scroll": 0.45,
+      "order": -970,
+      "lit": false
+    },
+    {
+      "key": "backdrop_heaven_clouds",
+      "kind": "heaven",
+      "scroll": 0.05,
+      "scrollUp": 0.66,
+      "rise": 31,
+      "drift": 0.0,
+      "order": -1003,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_heaven_city",
+      "kind": "heaven",
+      "scroll": 0.1,
+      "scrollUp": 0.7,
+      "rise": 32,
+      "drift": 0.0,
+      "order": -1001,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_heaven_far",
+      "kind": "heaven",
+      "scroll": 0.06,
+      "scrollUp": 0.25,
+      "rise": 6,
+      "drift": 0.0,
+      "order": -1000,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_heaven_near",
+      "kind": "heaven",
+      "scroll": 0.16,
+      "scrollUp": 0.4,
+      "rise": 10,
+      "drift": 0.0,
+      "order": -996,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_cirrus",
+      "kind": "heaven",
+      "scroll": 0.35,
+      "scrollUp": 1.0,
+      "rise": 138,
+      "drift": 0.2,
+      "order": -968,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_cloudmid",
+      "kind": "heaven",
+      "scroll": 0.6,
+      "scrollUp": 1.0,
+      "rise": 77,
+      "drift": 0.08,
+      "order": -967,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_cloudsea",
+      "kind": "heaven",
+      "scroll": 0.5,
+      "scrollUp": 1.0,
+      "rise": 26,
+      "drift": 0.12,
+      "order": -966,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_rays",
+      "kind": "heaven",
+      "scroll": 0.3,
+      "scrollUp": 0.6,
+      "rise": 8,
+      "drift": 0.0,
+      "order": -964,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "backdrop_cloudfront",
+      "kind": "heaven",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 24,
+      "drift": 0.4,
+      "order": 30,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_rainbow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -962,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "backdrop_glory",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -963,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "backdrop_earth_hills",
+      "kind": "ridge",
+      "scroll": 0.17,
+      "order": -985,
+      "lit": false
+    },
+    {
+      "key": "backdrop_earth_windows",
+      "kind": "heaven",
+      "scroll": 0.17,
+      "scrollUp": 1.0,
+      "rise": 2,
+      "drift": 0.0,
+      "order": -984,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_oak_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_oak_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_oak_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_oak_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_pine_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_pine_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_pine_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_apple_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_apple_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_dead_tree_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_dead_tree_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_shrub_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_shrub_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_shrub_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_willow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_cottage_ruin",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_cottage",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_cottage_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_chapel",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_well",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_windmill",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_fence_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_fence_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_fence_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_cart",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_haystack_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_haystack_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_scarecrow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_grave_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_grave_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_grave_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_grave_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_gateway",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_gate_arch",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_pithead",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_winch_hut",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_colonnade",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_0_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_0_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_1_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_1_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_2_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reeds_2_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_lilies_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 29,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_lilies_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 29,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_jetty",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_4",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_5",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_6",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_7",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_8",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_9",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_10",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_11",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_post_12",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_rail_mid",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_rail_end",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_rail_start",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_minecart_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_minecart_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_crates_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_crates_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_crates_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_birch_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_birch_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_giant_oak",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_log",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_stump_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_stump_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_toadstools",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_washing",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_garden",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_bench",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_barrel",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_kennel",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_sails_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_sails_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_sails_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_sails_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_rubble_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_rubble_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_puddle",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_cage",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_roots_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_roots_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_roots_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_nugget_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_nugget_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_reflection",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 28,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_shine",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 28,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_depth",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 27,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_gate_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_rays",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_0_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_0_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_1_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_1_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_2_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_2_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_3_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_front_3_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 40,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_crypt",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_iron_fence_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_crow_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_sheep_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_iron_fence_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_crow_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_sheep_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_cat",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "earth_bird_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -960,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_bird_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -960,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "earth_boat",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 29,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_0_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_0_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_0_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_1_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_1_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_1_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_2_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_2_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_2_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_3_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_3_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_blossom_3_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_0_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_0_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_0_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_1_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_1_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_1_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_2_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_2_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_2_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_3_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_3_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gold_3_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -287,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x24_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x24_s2_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x13_s3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x13_s3_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x16_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x16_s1_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x19_s4",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x19_s4_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_s4",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_s4_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x9_hung",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x9_hung_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x25_s1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x25_s1_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x11",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x11_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_s3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_s3_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x9",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x9_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x14_s2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x14_s2_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x20_s3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -97,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_8x20_s3_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -96,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x31_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x31_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x22_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_6x22_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x27_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x27_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x24_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x24_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x19_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x19_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x21_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x21_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_back",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -289,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_tower_4x15_back_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -288,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_roof_29",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_roof_29_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -98,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_roof_21",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_roof_21_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -98,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_roof_14",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_roof_14_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -98,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pillar_18x2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pillar_8x2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pillar_12x1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_hall_west",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_hall_east",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_rays_west",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -281,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_rays_east",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -281,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_banner",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_banner_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_banner_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_banner_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_high_seat",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_high_seat_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_gate",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_rotunda",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_rotunda_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -282,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_angel_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_angel_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_bridge_6",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_bridge_7",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_bridge_8",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_bridge_9",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_parapet_27",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_parapet_33",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_portal_9x9",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_portal_4x6",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_span",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_puff_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_puff_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_puff_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_puff_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_puff_4",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -99,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_room_lower",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_room_upper",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_room_keep",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -284,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_room_keep_glow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_flowers_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_flowers_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_flowers_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_flowers_3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_hedge_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_hedge_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_hedge_2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_bench",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_urn",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_fountain",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_fountain_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_fountain_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -286,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_swan_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_lilies_0",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 27,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_swan_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -283,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_lilies_1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": 27,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pennant",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -94,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pennant_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -94,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pennant_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -94,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pennant_f3",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -94,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pennant_f4",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -94,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_pennant_f5",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -94,
+      "lit": true,
+      "tinted": false
+    },
+    {
+      "key": "heaven_glint",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -93,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_glint_f1",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -93,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "heaven_glint_f2",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -93,
+      "lit": false,
+      "tinted": false
+    }
+  ]
+}

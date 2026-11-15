@@ -1,0 +1,1319 @@
+fileFormatVersion: 2
+guid: baeb5bf2a4cb529ba3cb98d5f75eda13
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1753359416329047569
+    second: tv2_ice_on_frost_rock_s1_v0
+  - first:
+      213: 3319086246323985861
+    second: tv2_ice_on_frost_rock_s2_v0
+  - first:
+      213: 3614432837900224931
+    second: tv2_ice_on_frost_rock_s3_v0
+  - first:
+      213: 4036148628398952823
+    second: tv2_ice_on_frost_rock_s4_v0
+  - first:
+      213: 116186672256613469
+    second: tv2_ice_on_frost_rock_s5_v0
+  - first:
+      213: 1593743657908811974
+    second: tv2_ice_on_frost_rock_s6_v0
+  - first:
+      213: 3173548995753412857
+    second: tv2_ice_on_frost_rock_s7_v0
+  - first:
+      213: 4255113308505230855
+    second: tv2_ice_on_frost_rock_s8_v0
+  - first:
+      213: 3560946562647790504
+    second: tv2_ice_on_frost_rock_s9_v0
+  - first:
+      213: 212977640706540898
+    second: tv2_ice_on_frost_rock_s10_v0
+  - first:
+      213: 491210775987507639
+    second: tv2_ice_on_frost_rock_s11_v0
+  - first:
+      213: 1703997706003033048
+    second: tv2_ice_on_frost_rock_s12_v0
+  - first:
+      213: 83893584475237661
+    second: tv2_ice_on_frost_rock_s13_v0
+  - first:
+      213: 1951010338738038994
+    second: tv2_ice_on_frost_rock_s14_v0
+  - first:
+      213: 3183261280324245469
+    second: tv2_ice_on_frost_rock_s15_v0
+  - first:
+      213: 2776820680594931667
+    second: tv2_ice_on_frost_rock_s1_v1
+  - first:
+      213: 451503820650565494
+    second: tv2_ice_on_frost_rock_s2_v1
+  - first:
+      213: 2666899033434975711
+    second: tv2_ice_on_frost_rock_s3_v1
+  - first:
+      213: 354400020050601475
+    second: tv2_ice_on_frost_rock_s4_v1
+  - first:
+      213: 2949403209952085848
+    second: tv2_ice_on_frost_rock_s5_v1
+  - first:
+      213: 1977284444918774577
+    second: tv2_ice_on_frost_rock_s6_v1
+  - first:
+      213: 3013459664138571539
+    second: tv2_ice_on_frost_rock_s7_v1
+  - first:
+      213: 3297615464421475638
+    second: tv2_ice_on_frost_rock_s8_v1
+  - first:
+      213: 1815045464509144080
+    second: tv2_ice_on_frost_rock_s9_v1
+  - first:
+      213: 2021883716892917504
+    second: tv2_ice_on_frost_rock_s10_v1
+  - first:
+      213: 1950197029815181483
+    second: tv2_ice_on_frost_rock_s11_v1
+  - first:
+      213: 1576309557829753678
+    second: tv2_ice_on_frost_rock_s12_v1
+  - first:
+      213: 1075483917953188995
+    second: tv2_ice_on_frost_rock_s13_v1
+  - first:
+      213: 4175256471829032111
+    second: tv2_ice_on_frost_rock_s14_v1
+  - first:
+      213: 368819888368049484
+    second: tv2_ice_on_frost_rock_s15_v1
+  - first:
+      213: 4123982407754643046
+    second: tv2_ice_on_frost_rock_s1_v2
+  - first:
+      213: 2921669024570330861
+    second: tv2_ice_on_frost_rock_s2_v2
+  - first:
+      213: 2623457294263927721
+    second: tv2_ice_on_frost_rock_s3_v2
+  - first:
+      213: 4556622760936492390
+    second: tv2_ice_on_frost_rock_s4_v2
+  - first:
+      213: 4462636234075113651
+    second: tv2_ice_on_frost_rock_s5_v2
+  - first:
+      213: 3252994848709333605
+    second: tv2_ice_on_frost_rock_s6_v2
+  - first:
+      213: 1603702164502354621
+    second: tv2_ice_on_frost_rock_s7_v2
+  - first:
+      213: 1844949739645958113
+    second: tv2_ice_on_frost_rock_s8_v2
+  - first:
+      213: 994953446511479530
+    second: tv2_ice_on_frost_rock_s9_v2
+  - first:
+      213: 4467818379776525199
+    second: tv2_ice_on_frost_rock_s10_v2
+  - first:
+      213: 4563344396242388528
+    second: tv2_ice_on_frost_rock_s11_v2
+  - first:
+      213: 1254054464777345761
+    second: tv2_ice_on_frost_rock_s12_v2
+  - first:
+      213: 4016570038301774817
+    second: tv2_ice_on_frost_rock_s13_v2
+  - first:
+      213: 281831086915658738
+    second: tv2_ice_on_frost_rock_s14_v2
+  - first:
+      213: 4100633274839480503
+    second: tv2_ice_on_frost_rock_s15_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31d7443ba8605ce893567f656d1aed28
+      internalID: 1753359416329047569
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s2_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2fe6c737be65165adec04bc1466db3e
+      internalID: 3319086246323985861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s3_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc5a6903e23858e2978a75268d6f7ee1
+      internalID: 3614432837900224931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a94c70ae7cde51a2849dcc6cdce97f29
+      internalID: 4036148628398952823
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9434f7e621f059f6be70c9011bc29818
+      internalID: 116186672256613469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s6_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf840f978ada55de9c31552756b12784
+      internalID: 1593743657908811974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e1809cf610c59ef83c4c1b4409000b9
+      internalID: 3173548995753412857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s8_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcaffda052585f6e9499d8436acd0b62
+      internalID: 4255113308505230855
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s9_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd43dc95091753828c9a0f43a8e94943
+      internalID: 3560946562647790504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s10_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4904a1c67445c33be00abd7085c3281
+      internalID: 212977640706540898
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s11_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d85457eba015492a08b25a3dc81ff68
+      internalID: 491210775987507639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s12_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c86b2a813e3a55fbbae85f96fbc69342
+      internalID: 1703997706003033048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s13_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5643e1d69ae95383ad24de0c90e56000
+      internalID: 83893584475237661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s14_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb3e9dc3a29f5f22b68e723a64779dc3
+      internalID: 1951010338738038994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s15_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd64036b6dec5ce5b5a28398173290ab
+      internalID: 3183261280324245469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0385733351956afbfc4e8e0d308de71
+      internalID: 2776820680594931667
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s2_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa0b4692be5c5003a846373ab9a474fb
+      internalID: 451503820650565494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s3_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb9ca985622450e8ad835af689ece935
+      internalID: 2666899033434975711
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac35549586205f70b1b326c7629cc5aa
+      internalID: 354400020050601475
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b146a2b9b95a5f8ebead71bee698fb
+      internalID: 2949403209952085848
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s6_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae8deeec660b54e69e1885900ef62bb9
+      internalID: 1977284444918774577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88e087ef4bf65bdb9352d540e3762101
+      internalID: 3013459664138571539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s8_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 102dd007e6ce5754a18e1340b1871c93
+      internalID: 3297615464421475638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s9_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4486bfad583a5de19544ae011a202258
+      internalID: 1815045464509144080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s10_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65ba1f781afa5f11b586be0c1580fdca
+      internalID: 2021883716892917504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s11_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 201edaba46a85836862e6e9205a8297b
+      internalID: 1950197029815181483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s12_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 541952c492f95f789f5f1ab6c1773837
+      internalID: 1576309557829753678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s13_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b23ddb1b07851e7a22c5bd60a061a8a
+      internalID: 1075483917953188995
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s14_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e109fd730c253cda2f1374cd5e6b2b8
+      internalID: 4175256471829032111
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s15_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69fbf2ce662351a3898cfde454e8777a
+      internalID: 368819888368049484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43293c53af2f565ba7db3cd681432f99
+      internalID: 4123982407754643046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s2_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f484c5164e7953fbbf581574f10dbe02
+      internalID: 2921669024570330861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s3_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6c195c1c4f6054c59796cd9adc7d8e77
+      internalID: 2623457294263927721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08145c6841c75f2e92b33719ae68275d
+      internalID: 4556622760936492390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70bcfb3b02d3595f92c0d9a4c9aca0ba
+      internalID: 4462636234075113651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s6_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc0b33d7d7ce5ee988e3587fa43c34a5
+      internalID: 3252994848709333605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87ef13f0e336519086cd87eabb4e2dbe
+      internalID: 1603702164502354621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s8_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17a7381aa4515cf39fcb2bbd307cc770
+      internalID: 1844949739645958113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s9_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5862b65f993f5c07a55140e4bdfe4dfd
+      internalID: 994953446511479530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s10_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f134337d2d059fd9ab3fd23dba236c3
+      internalID: 4467818379776525199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s11_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8089b80fee5191a04df538c5fcab47
+      internalID: 4563344396242388528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s12_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 350e50b63fea5400bf74ed0ff1718029
+      internalID: 1254054464777345761
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s13_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d370e9fdb73e509082df42d1e9c3bf0e
+      internalID: 4016570038301774817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s14_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 08b2c84a574059a5a160d9075cbc8ea1
+      internalID: 281831086915658738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_ice_on_frost_rock_s15_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eecaed22b65152ffb8f6750dc3697421
+      internalID: 4100633274839480503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_ice_on_frost_rock_s1_v0: 1753359416329047569
+      tv2_ice_on_frost_rock_s2_v0: 3319086246323985861
+      tv2_ice_on_frost_rock_s3_v0: 3614432837900224931
+      tv2_ice_on_frost_rock_s4_v0: 4036148628398952823
+      tv2_ice_on_frost_rock_s5_v0: 116186672256613469
+      tv2_ice_on_frost_rock_s6_v0: 1593743657908811974
+      tv2_ice_on_frost_rock_s7_v0: 3173548995753412857
+      tv2_ice_on_frost_rock_s8_v0: 4255113308505230855
+      tv2_ice_on_frost_rock_s9_v0: 3560946562647790504
+      tv2_ice_on_frost_rock_s10_v0: 212977640706540898
+      tv2_ice_on_frost_rock_s11_v0: 491210775987507639
+      tv2_ice_on_frost_rock_s12_v0: 1703997706003033048
+      tv2_ice_on_frost_rock_s13_v0: 83893584475237661
+      tv2_ice_on_frost_rock_s14_v0: 1951010338738038994
+      tv2_ice_on_frost_rock_s15_v0: 3183261280324245469
+      tv2_ice_on_frost_rock_s1_v1: 2776820680594931667
+      tv2_ice_on_frost_rock_s2_v1: 451503820650565494
+      tv2_ice_on_frost_rock_s3_v1: 2666899033434975711
+      tv2_ice_on_frost_rock_s4_v1: 354400020050601475
+      tv2_ice_on_frost_rock_s5_v1: 2949403209952085848
+      tv2_ice_on_frost_rock_s6_v1: 1977284444918774577
+      tv2_ice_on_frost_rock_s7_v1: 3013459664138571539
+      tv2_ice_on_frost_rock_s8_v1: 3297615464421475638
+      tv2_ice_on_frost_rock_s9_v1: 1815045464509144080
+      tv2_ice_on_frost_rock_s10_v1: 2021883716892917504
+      tv2_ice_on_frost_rock_s11_v1: 1950197029815181483
+      tv2_ice_on_frost_rock_s12_v1: 1576309557829753678
+      tv2_ice_on_frost_rock_s13_v1: 1075483917953188995
+      tv2_ice_on_frost_rock_s14_v1: 4175256471829032111
+      tv2_ice_on_frost_rock_s15_v1: 368819888368049484
+      tv2_ice_on_frost_rock_s1_v2: 4123982407754643046
+      tv2_ice_on_frost_rock_s2_v2: 2921669024570330861
+      tv2_ice_on_frost_rock_s3_v2: 2623457294263927721
+      tv2_ice_on_frost_rock_s4_v2: 4556622760936492390
+      tv2_ice_on_frost_rock_s5_v2: 4462636234075113651
+      tv2_ice_on_frost_rock_s6_v2: 3252994848709333605
+      tv2_ice_on_frost_rock_s7_v2: 1603702164502354621
+      tv2_ice_on_frost_rock_s8_v2: 1844949739645958113
+      tv2_ice_on_frost_rock_s9_v2: 994953446511479530
+      tv2_ice_on_frost_rock_s10_v2: 4467818379776525199
+      tv2_ice_on_frost_rock_s11_v2: 4563344396242388528
+      tv2_ice_on_frost_rock_s12_v2: 1254054464777345761
+      tv2_ice_on_frost_rock_s13_v2: 4016570038301774817
+      tv2_ice_on_frost_rock_s14_v2: 281831086915658738
+      tv2_ice_on_frost_rock_s15_v2: 4100633274839480503
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

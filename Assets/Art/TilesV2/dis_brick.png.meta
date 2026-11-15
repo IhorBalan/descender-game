@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 3b3f11dd715252ad9012c5cd1afedb94
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 2246205934913673439
+    second: tv2_dis_brick_f0_v0
+  - first:
+      213: 2069079174578679258
+    second: tv2_dis_brick_f1_v0
+  - first:
+      213: 3614544145022335092
+    second: tv2_dis_brick_f4_v0
+  - first:
+      213: 3838203476053969722
+    second: tv2_dis_brick_f5_v0
+  - first:
+      213: 1569590367503264554
+    second: tv2_dis_brick_f7_v0
+  - first:
+      213: 2033890061978654116
+    second: tv2_dis_brick_f16_v0
+  - first:
+      213: 2076154608456433482
+    second: tv2_dis_brick_f17_v0
+  - first:
+      213: 54004791591213268
+    second: tv2_dis_brick_f20_v0
+  - first:
+      213: 231671939481326644
+    second: tv2_dis_brick_f21_v0
+  - first:
+      213: 2856566774215727083
+    second: tv2_dis_brick_f23_v0
+  - first:
+      213: 4060779408250900415
+    second: tv2_dis_brick_f28_v0
+  - first:
+      213: 3694461464386824115
+    second: tv2_dis_brick_f29_v0
+  - first:
+      213: 1930518254733969675
+    second: tv2_dis_brick_f31_v0
+  - first:
+      213: 261572700688040643
+    second: tv2_dis_brick_f64_v0
+  - first:
+      213: 842195335171281847
+    second: tv2_dis_brick_f65_v0
+  - first:
+      213: 4323974459469149621
+    second: tv2_dis_brick_f68_v0
+  - first:
+      213: 3960416047264730578
+    second: tv2_dis_brick_f69_v0
+  - first:
+      213: 267409395815160719
+    second: tv2_dis_brick_f71_v0
+  - first:
+      213: 1157772494616665591
+    second: tv2_dis_brick_f80_v0
+  - first:
+      213: 3191096991582984023
+    second: tv2_dis_brick_f81_v0
+  - first:
+      213: 4554461392368350098
+    second: tv2_dis_brick_f84_v0
+  - first:
+      213: 2188590775068790647
+    second: tv2_dis_brick_f85_v0
+  - first:
+      213: 1777557745585912413
+    second: tv2_dis_brick_f87_v0
+  - first:
+      213: 4316217151388496531
+    second: tv2_dis_brick_f92_v0
+  - first:
+      213: 1510804089492445379
+    second: tv2_dis_brick_f93_v0
+  - first:
+      213: 2642702224197791104
+    second: tv2_dis_brick_f95_v0
+  - first:
+      213: 4353191998942047652
+    second: tv2_dis_brick_f112_v0
+  - first:
+      213: 3853578014162525159
+    second: tv2_dis_brick_f113_v0
+  - first:
+      213: 412575590264423786
+    second: tv2_dis_brick_f116_v0
+  - first:
+      213: 563424612802525543
+    second: tv2_dis_brick_f117_v0
+  - first:
+      213: 3804810840193347526
+    second: tv2_dis_brick_f119_v0
+  - first:
+      213: 1768935410858502940
+    second: tv2_dis_brick_f124_v0
+  - first:
+      213: 1290502501815021503
+    second: tv2_dis_brick_f125_v0
+  - first:
+      213: 4578649123986763064
+    second: tv2_dis_brick_f127_v0
+  - first:
+      213: 1387419765999080517
+    second: tv2_dis_brick_f193_v0
+  - first:
+      213: 3509211195092768021
+    second: tv2_dis_brick_f197_v0
+  - first:
+      213: 2354102265563207763
+    second: tv2_dis_brick_f199_v0
+  - first:
+      213: 1178302890736025327
+    second: tv2_dis_brick_f209_v0
+  - first:
+      213: 46613866597706384
+    second: tv2_dis_brick_f213_v0
+  - first:
+      213: 898816857233566301
+    second: tv2_dis_brick_f215_v0
+  - first:
+      213: 4177204578470172876
+    second: tv2_dis_brick_f221_v0
+  - first:
+      213: 1265093950035841486
+    second: tv2_dis_brick_f223_v0
+  - first:
+      213: 2132034379445840810
+    second: tv2_dis_brick_f241_v0
+  - first:
+      213: 739504662549201835
+    second: tv2_dis_brick_f245_v0
+  - first:
+      213: 709688707791971804
+    second: tv2_dis_brick_f247_v0
+  - first:
+      213: 3917606965448637272
+    second: tv2_dis_brick_f253_v0
+  - first:
+      213: 2726202364479575669
+    second: tv2_dis_brick_f255_v0
+  - first:
+      213: 2243863816922774135
+    second: tv2_dis_brick_f0_v1
+  - first:
+      213: 826082787239306478
+    second: tv2_dis_brick_f1_v1
+  - first:
+      213: 3544969209879697090
+    second: tv2_dis_brick_f4_v1
+  - first:
+      213: 2632007647456703748
+    second: tv2_dis_brick_f5_v1
+  - first:
+      213: 4262585443253219537
+    second: tv2_dis_brick_f7_v1
+  - first:
+      213: 4002289423555321038
+    second: tv2_dis_brick_f16_v1
+  - first:
+      213: 2150024204500947726
+    second: tv2_dis_brick_f17_v1
+  - first:
+      213: 856337040698277754
+    second: tv2_dis_brick_f20_v1
+  - first:
+      213: 1682900730230188093
+    second: tv2_dis_brick_f21_v1
+  - first:
+      213: 2531101984112379814
+    second: tv2_dis_brick_f23_v1
+  - first:
+      213: 3162331547356683076
+    second: tv2_dis_brick_f28_v1
+  - first:
+      213: 3820477303032162709
+    second: tv2_dis_brick_f29_v1
+  - first:
+      213: 836644971174063969
+    second: tv2_dis_brick_f31_v1
+  - first:
+      213: 3484962292617451018
+    second: tv2_dis_brick_f64_v1
+  - first:
+      213: 3115715046739444695
+    second: tv2_dis_brick_f65_v1
+  - first:
+      213: 4131791336084586607
+    second: tv2_dis_brick_f68_v1
+  - first:
+      213: 3198198858048937775
+    second: tv2_dis_brick_f69_v1
+  - first:
+      213: 3911806681164359216
+    second: tv2_dis_brick_f71_v1
+  - first:
+      213: 1832334298483388201
+    second: tv2_dis_brick_f80_v1
+  - first:
+      213: 1193831775225664484
+    second: tv2_dis_brick_f81_v1
+  - first:
+      213: 877653307736041698
+    second: tv2_dis_brick_f84_v1
+  - first:
+      213: 3190337826203379007
+    second: tv2_dis_brick_f85_v1
+  - first:
+      213: 2887611559236387704
+    second: tv2_dis_brick_f87_v1
+  - first:
+      213: 2798600379957492253
+    second: tv2_dis_brick_f92_v1
+  - first:
+      213: 2639741282585730834
+    second: tv2_dis_brick_f93_v1
+  - first:
+      213: 3947294292133308601
+    second: tv2_dis_brick_f95_v1
+  - first:
+      213: 2836686788935458539
+    second: tv2_dis_brick_f112_v1
+  - first:
+      213: 1569896411999064290
+    second: tv2_dis_brick_f113_v1
+  - first:
+      213: 1840686124613664970
+    second: tv2_dis_brick_f116_v1
+  - first:
+      213: 2677075113153413116
+    second: tv2_dis_brick_f117_v1
+  - first:
+      213: 3099397703835408141
+    second: tv2_dis_brick_f119_v1
+  - first:
+      213: 2062481257841120239
+    second: tv2_dis_brick_f124_v1
+  - first:
+      213: 4459307333380709027
+    second: tv2_dis_brick_f125_v1
+  - first:
+      213: 3160838123703186033
+    second: tv2_dis_brick_f127_v1
+  - first:
+      213: 1155040593459035337
+    second: tv2_dis_brick_f193_v1
+  - first:
+      213: 3731591076718765971
+    second: tv2_dis_brick_f197_v1
+  - first:
+      213: 1104037527095236187
+    second: tv2_dis_brick_f199_v1
+  - first:
+      213: 683468257155908851
+    second: tv2_dis_brick_f209_v1
+  - first:
+      213: 709379720512355281
+    second: tv2_dis_brick_f213_v1
+  - first:
+      213: 2272667250146101287
+    second: tv2_dis_brick_f215_v1
+  - first:
+      213: 3320794812153064208
+    second: tv2_dis_brick_f221_v1
+  - first:
+      213: 3212429360496769882
+    second: tv2_dis_brick_f223_v1
+  - first:
+      213: 3626127509951234981
+    second: tv2_dis_brick_f241_v1
+  - first:
+      213: 2481920699048745694
+    second: tv2_dis_brick_f245_v1
+  - first:
+      213: 2895871131016415172
+    second: tv2_dis_brick_f247_v1
+  - first:
+      213: 2400823703149254179
+    second: tv2_dis_brick_f253_v1
+  - first:
+      213: 3920611020790790174
+    second: tv2_dis_brick_f255_v1
+  - first:
+      213: 4213307643770936022
+    second: tv2_dis_brick_f0_v2
+  - first:
+      213: 2151299314380900665
+    second: tv2_dis_brick_f1_v2
+  - first:
+      213: 4218700510925422305
+    second: tv2_dis_brick_f4_v2
+  - first:
+      213: 1499833749748121707
+    second: tv2_dis_brick_f5_v2
+  - first:
+      213: 2461808170179738926
+    second: tv2_dis_brick_f7_v2
+  - first:
+      213: 832777386575795336
+    second: tv2_dis_brick_f16_v2
+  - first:
+      213: 1714234233341615550
+    second: tv2_dis_brick_f17_v2
+  - first:
+      213: 2892194090558909692
+    second: tv2_dis_brick_f20_v2
+  - first:
+      213: 1126734372701537679
+    second: tv2_dis_brick_f21_v2
+  - first:
+      213: 518838820516799274
+    second: tv2_dis_brick_f23_v2
+  - first:
+      213: 3594585502496487720
+    second: tv2_dis_brick_f28_v2
+  - first:
+      213: 2572364333692881285
+    second: tv2_dis_brick_f29_v2
+  - first:
+      213: 1294631652577561195
+    second: tv2_dis_brick_f31_v2
+  - first:
+      213: 3850027587893942345
+    second: tv2_dis_brick_f64_v2
+  - first:
+      213: 4553881168300721373
+    second: tv2_dis_brick_f65_v2
+  - first:
+      213: 1720933688627915908
+    second: tv2_dis_brick_f68_v2
+  - first:
+      213: 318289853740824658
+    second: tv2_dis_brick_f69_v2
+  - first:
+      213: 1632499353818331963
+    second: tv2_dis_brick_f71_v2
+  - first:
+      213: 2143153188889318605
+    second: tv2_dis_brick_f80_v2
+  - first:
+      213: 1792762951897508148
+    second: tv2_dis_brick_f81_v2
+  - first:
+      213: 1258742393077748867
+    second: tv2_dis_brick_f84_v2
+  - first:
+      213: 2384416209476354886
+    second: tv2_dis_brick_f85_v2
+  - first:
+      213: 1542396475896823629
+    second: tv2_dis_brick_f87_v2
+  - first:
+      213: 1315003783765198504
+    second: tv2_dis_brick_f92_v2
+  - first:
+      213: 2867306290436914548
+    second: tv2_dis_brick_f93_v2
+  - first:
+      213: 2455273979580417368
+    second: tv2_dis_brick_f95_v2
+  - first:
+      213: 2805098167999674050
+    second: tv2_dis_brick_f112_v2
+  - first:
+      213: 3515459582274281584
+    second: tv2_dis_brick_f113_v2
+  - first:
+      213: 2214272182170335241
+    second: tv2_dis_brick_f116_v2
+  - first:
+      213: 782436414446445048
+    second: tv2_dis_brick_f117_v2
+  - first:
+      213: 1485930116264415101
+    second: tv2_dis_brick_f119_v2
+  - first:
+      213: 3165362673902202837
+    second: tv2_dis_brick_f124_v2
+  - first:
+      213: 3653452425697683264
+    second: tv2_dis_brick_f125_v2
+  - first:
+      213: 510615423235560986
+    second: tv2_dis_brick_f127_v2
+  - first:
+      213: 4077348678695841296
+    second: tv2_dis_brick_f193_v2
+  - first:
+      213: 64674788465055481
+    second: tv2_dis_brick_f197_v2
+  - first:
+      213: 4183602460868204350
+    second: tv2_dis_brick_f199_v2
+  - first:
+      213: 665602559961851141
+    second: tv2_dis_brick_f209_v2
+  - first:
+      213: 35411276931542466
+    second: tv2_dis_brick_f213_v2
+  - first:
+      213: 4600200772940097771
+    second: tv2_dis_brick_f215_v2
+  - first:
+      213: 1830876723974521245
+    second: tv2_dis_brick_f221_v2
+  - first:
+      213: 1098336389833594159
+    second: tv2_dis_brick_f223_v2
+  - first:
+      213: 3301497947089094642
+    second: tv2_dis_brick_f241_v2
+  - first:
+      213: 168237354373598402
+    second: tv2_dis_brick_f245_v2
+  - first:
+      213: 1964267667572294333
+    second: tv2_dis_brick_f247_v2
+  - first:
+      213: 3076898314375791650
+    second: tv2_dis_brick_f253_v2
+  - first:
+      213: 3958513969962986747
+    second: tv2_dis_brick_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_dis_brick_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6877b03e52415d9a89047e852436eb8d
+      internalID: 2246205934913673439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb62160cf635bf3886cf814c7edd1ac
+      internalID: 2069079174578679258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a61a7a411ac5ac88ecd170053703c39
+      internalID: 3614544145022335092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aca5d3acdcf05f7c8da5419f1526eea0
+      internalID: 3838203476053969722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1723995fb4d458b0826dfa356cfe5fee
+      internalID: 1569590367503264554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4c3cfcfa9ef5cc3adabf0be52f6b485
+      internalID: 2033890061978654116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76403123364650969bf566e7b1883cf9
+      internalID: 2076154608456433482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78143ad8258653c0afe92b9c7376fdd3
+      internalID: 54004791591213268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 781ec25b507d5b34b163a3f2b59c8a15
+      internalID: 231671939481326644
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c32e2d331475499893afbaf0cd33332
+      internalID: 2856566774215727083
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3769728bd40e5c869a5b4f62caa0041a
+      internalID: 4060779408250900415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d785539f02d55576b8b5d50b38ffd2eb
+      internalID: 3694461464386824115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e5451b5e1195035a58bc357a458c589
+      internalID: 1930518254733969675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e59ffe5bd1395deb961ac0a35a221e5f
+      internalID: 261572700688040643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41d4c9521d4658859aaa056715dfcd68
+      internalID: 842195335171281847
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0af5554d807e5d13ad1886814ca6df24
+      internalID: 4323974459469149621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d1c91594a6985be88ef26a1b17568dfd
+      internalID: 3960416047264730578
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 494de169524f523897f23627d76a04a3
+      internalID: 267409395815160719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d24f0133f0f562ea67e60b6c34eaf5c
+      internalID: 1157772494616665591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b3aaad9aeae5264bd41d4260c9a5c6c
+      internalID: 3191096991582984023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85387ffb95b85896a5f2e86b3904a155
+      internalID: 4554461392368350098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b1835cf341e5a8faa24c73e516851fc
+      internalID: 2188590775068790647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 646a61c5804c52bd9e5bfae3cda12c30
+      internalID: 1777557745585912413
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2c8fdac8ea151e99c9e44ada9ffc1e1
+      internalID: 4316217151388496531
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c7cb3efab71051a7b60334c2e11f2045
+      internalID: 1510804089492445379
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd9103dc0e1754f1b9feb93730bfb332
+      internalID: 2642702224197791104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 55923e05aa3558739af8916af2f08453
+      internalID: 4353191998942047652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9d35f1fb59ec5edea00a46941fc4a020
+      internalID: 3853578014162525159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb262d9abcac529eafb0806ffd26db7f
+      internalID: 412575590264423786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bce4855cabf50fca166be52738e467f
+      internalID: 563424612802525543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7acd829dd9495c56bb3c67cf0727a72d
+      internalID: 3804810840193347526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c13c16aec20f5f10a7ce1fdacb28ae6d
+      internalID: 1768935410858502940
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a98e6ba9e105c9e85c4d45e5475286d
+      internalID: 1290502501815021503
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15fb836d4bd65c2a91998308d34ba1ee
+      internalID: 4578649123986763064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d87f3923dcf95f61ad1dd99c2291b840
+      internalID: 1387419765999080517
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f600ae51b615504bfcf19e837231b61
+      internalID: 3509211195092768021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 251c2123e5d452cc98b23d041ac15a46
+      internalID: 2354102265563207763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d152d0377965bcd8e2de45357e16c67
+      internalID: 1178302890736025327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0caad663f280594d95e56f37f5273e4b
+      internalID: 46613866597706384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 138e282c29a75a368ed6bd0987bfabc6
+      internalID: 898816857233566301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cb40be1b428c53429805ebe234d797d1
+      internalID: 4177204578470172876
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af8b9aa0bfe25ad19c27533ec9f372b5
+      internalID: 1265093950035841486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 744d1b876a0b508f93cf052cccfd4e2c
+      internalID: 2132034379445840810
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bee93287320508a811682ed7a4c5985
+      internalID: 739504662549201835
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aa5b329806a52739ed0334f0d3d83e8
+      internalID: 709688707791971804
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd101777b4925aac8fdb34ffba34bcc1
+      internalID: 3917606965448637272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df2ed246cb585e5fbc2b4263da6904d4
+      internalID: 2726202364479575669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcfe24227eb2581f87bb50e8fc67678f
+      internalID: 2243863816922774135
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2039077135fa5210968922e7e9551bb8
+      internalID: 826082787239306478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25369a3b98a3557b87f95892515b4c39
+      internalID: 3544969209879697090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75d69e45527959d1888e3b4e454db793
+      internalID: 2632007647456703748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba108cae41e35b7aaf29519239a62659
+      internalID: 4262585443253219537
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 472132db80a85308ba413d16b126d907
+      internalID: 4002289423555321038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a5d7a9b3f41151639dd685e5ee5cb29f
+      internalID: 2150024204500947726
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69cbde47c02c506dbc6535d059ef5b19
+      internalID: 856337040698277754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2326fca5a1e5d3eb33176f1ac0bd69c
+      internalID: 1682900730230188093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4f3163ce3514578185030120689e2057
+      internalID: 2531101984112379814
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52e5f3046ff15254972f9d61bf8e0180
+      internalID: 3162331547356683076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5c32a59c86695305a2dfb40bc309673d
+      internalID: 3820477303032162709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fab034dd5fb45605905a6a89cc37825a
+      internalID: 836644971174063969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5b11af34cd05f499997100a2648f5a6
+      internalID: 3484962292617451018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f5ede415e3855697b83f85b037c5f3af
+      internalID: 3115715046739444695
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 163ca84ce4d75d58bb61e619c3672143
+      internalID: 4131791336084586607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 741315662f6e5cbca4d5486e13a6a9a3
+      internalID: 3198198858048937775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aa37d7bf8625499b2c8a077b9a11bc9
+      internalID: 3911806681164359216
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3b60fd60091558c900f855ebc517e1f
+      internalID: 1832334298483388201
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b11b2f2f4bfe5324b709159b726dbda2
+      internalID: 1193831775225664484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16f3355be19458619409226ecb9ae08b
+      internalID: 877653307736041698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd71078170b75cba824073b8ec66c3b9
+      internalID: 3190337826203379007
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47f6ec6c1cae5a2a92f2fa585c6529d2
+      internalID: 2887611559236387704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b36505728825fd5ac72eac3c0447014
+      internalID: 2798600379957492253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76afd1e5a42159bdb676bd09247fabb2
+      internalID: 2639741282585730834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7543a826070550aab2d2cf14037db5a6
+      internalID: 3947294292133308601
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b31cc22f70e51468651d734b15860af
+      internalID: 2836686788935458539
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 626d0763993353dba79b39d0acfd160f
+      internalID: 1569896411999064290
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 188b1602b084561d95fc23af2b900f82
+      internalID: 1840686124613664970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 628b31372a1c5404b5d65b737e7c75b4
+      internalID: 2677075113153413116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 417993d20a3c50358c3d7beea65a240b
+      internalID: 3099397703835408141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d74630f4984b54b69bda85068fe8a799
+      internalID: 2062481257841120239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3b324131791858949d9512fffa91e98e
+      internalID: 4459307333380709027
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa1efa7a0bb45815993d16b4d1a42eef
+      internalID: 3160838123703186033
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ef0176f8c7e1596b888d7012bd7da7c8
+      internalID: 1155040593459035337
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 643feeabd1ba55fe9629a7e5d93663f4
+      internalID: 3731591076718765971
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3731b18c72b5d0aa1a05c3f9b8dc133
+      internalID: 1104037527095236187
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a9c11c3cf9e5ceb85ff9a3a7fa5a67b
+      internalID: 683468257155908851
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c96ae43b4559dd92e20e2c68f4c44d
+      internalID: 709379720512355281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dabb9d82add250319894401a9b226224
+      internalID: 2272667250146101287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c75a714e45e5c689897926f0b0cb1b5
+      internalID: 3320794812153064208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54a20c059c055574b89055401e448ace
+      internalID: 3212429360496769882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24114d6d7cb7592ebb14b2b5404e2ea4
+      internalID: 3626127509951234981
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3bde7e51114a53bdbfcfd740a63481ca
+      internalID: 2481920699048745694
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 47f91dac50a5520d8874429be8f7d58f
+      internalID: 2895871131016415172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e94df9970efb55f98ef29754e8265979
+      internalID: 2400823703149254179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3331537075db5ceb90f499cafd3199b5
+      internalID: 3920611020790790174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb5681d0c6cd5b75b96c34b7809b4542
+      internalID: 4213307643770936022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da7fed64307653068168ca5f1b8a37bf
+      internalID: 2151299314380900665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1c9dc87334855acac4281a63a58b284
+      internalID: 4218700510925422305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68d5db90165e5f4a865a9d3658ac0abb
+      internalID: 1499833749748121707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 728d51be4526505ba8dcba7200120e19
+      internalID: 2461808170179738926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36a2c2b6f08350a08495e2c547a7291a
+      internalID: 832777386575795336
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b1cd83bbad75d5dbbdda76faf018204
+      internalID: 1714234233341615550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad62531d910c5ebb98a7e84fd2cbde92
+      internalID: 2892194090558909692
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59b9afcadf053e5849f188e68053e1d
+      internalID: 1126734372701537679
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 592a041bc77859adb2fef1913ab5930b
+      internalID: 518838820516799274
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11a0b05be8445818913de332a5efd199
+      internalID: 3594585502496487720
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d78e12bc7b02501cbddf796ce4341337
+      internalID: 2572364333692881285
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9866d29d608d57beacd140ec84aaed9f
+      internalID: 1294631652577561195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 535cd21a66e65b1b9cb58d1ddec1c4d1
+      internalID: 3850027587893942345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 945a5721871850ca85416665cea9042d
+      internalID: 4553881168300721373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f07e1b5134c554c917aa62522bfadd4
+      internalID: 1720933688627915908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf55a147620854d6b8607bf86f39ec05
+      internalID: 318289853740824658
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10f69fa66c5f5ff2a52b80aada0fe3bb
+      internalID: 1632499353818331963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83b3a7f6550857e6ad4ec9de31a22583
+      internalID: 2143153188889318605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfae414a6203579cadb7c4a775a34a62
+      internalID: 1792762951897508148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e51fbdac5af05ab5a5fcb7d3f93ef46a
+      internalID: 1258742393077748867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d489f39b3b9b569e9a9ac86e0e9e774d
+      internalID: 2384416209476354886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df5c040c11705202814143538155bc32
+      internalID: 1542396475896823629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e530c55e3ed35bf99ccaac164a4ce99b
+      internalID: 1315003783765198504
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af4419c2dbc857cda5fe5cd33c009b88
+      internalID: 2867306290436914548
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abde824a0cf85c63a2357ea9ef3df13e
+      internalID: 2455273979580417368
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca44a360c0c35c0197948495ed77bd55
+      internalID: 2805098167999674050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: efea5ff04a4454d89abbd80e2e3f3b78
+      internalID: 3515459582274281584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46847f4cdfee5b42bb7966bdcf85b616
+      internalID: 2214272182170335241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7dce8fd439565a6bacf1e42a7ad8dde5
+      internalID: 782436414446445048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 836d7db2561b53eda624622a04a551b3
+      internalID: 1485930116264415101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 113075d7bec253a7b6bda12a7ca79dc3
+      internalID: 3165362673902202837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d884dd00b0a5a4cb845f00bf7c4f762
+      internalID: 3653452425697683264
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82e0c742c0a1598aad75a1443d0a88e7
+      internalID: 510615423235560986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10c523c83bed5f98bb729a8762c8bf36
+      internalID: 4077348678695841296
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 182d46f932015959aa02779c42cacad3
+      internalID: 64674788465055481
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 931f798298e852e89cfb97fb917c241a
+      internalID: 4183602460868204350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e0cb18d4ead85e6d94d5a6f4eb976203
+      internalID: 665602559961851141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0e1d11a831e5d1ea5ec920c1c624401
+      internalID: 35411276931542466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c044b29782d05251b6888d26e809f722
+      internalID: 4600200772940097771
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66549cc6ac595c5f9415db93b6e260ee
+      internalID: 1830876723974521245
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dd45b67af6d565abc1d9d82afdc6020
+      internalID: 1098336389833594159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 566a5dd1019f55a0bc2f2dec6ceb634f
+      internalID: 3301497947089094642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 623479ef26ca511dbaefd5e0883dcbff
+      internalID: 168237354373598402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e97b5f055eb75b6c9841cb5049f12742
+      internalID: 1964267667572294333
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 522a549ea8135593a5f48c87ec1a5824
+      internalID: 3076898314375791650
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68159a0cad1550e2b8bae8d0d6e9d332
+      internalID: 3958513969962986747
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_dis_brick_f0_v0: 2246205934913673439
+      tv2_dis_brick_f1_v0: 2069079174578679258
+      tv2_dis_brick_f4_v0: 3614544145022335092
+      tv2_dis_brick_f5_v0: 3838203476053969722
+      tv2_dis_brick_f7_v0: 1569590367503264554
+      tv2_dis_brick_f16_v0: 2033890061978654116
+      tv2_dis_brick_f17_v0: 2076154608456433482
+      tv2_dis_brick_f20_v0: 54004791591213268
+      tv2_dis_brick_f21_v0: 231671939481326644
+      tv2_dis_brick_f23_v0: 2856566774215727083
+      tv2_dis_brick_f28_v0: 4060779408250900415
+      tv2_dis_brick_f29_v0: 3694461464386824115
+      tv2_dis_brick_f31_v0: 1930518254733969675
+      tv2_dis_brick_f64_v0: 261572700688040643
+      tv2_dis_brick_f65_v0: 842195335171281847
+      tv2_dis_brick_f68_v0: 4323974459469149621
+      tv2_dis_brick_f69_v0: 3960416047264730578
+      tv2_dis_brick_f71_v0: 267409395815160719
+      tv2_dis_brick_f80_v0: 1157772494616665591
+      tv2_dis_brick_f81_v0: 3191096991582984023
+      tv2_dis_brick_f84_v0: 4554461392368350098
+      tv2_dis_brick_f85_v0: 2188590775068790647
+      tv2_dis_brick_f87_v0: 1777557745585912413
+      tv2_dis_brick_f92_v0: 4316217151388496531
+      tv2_dis_brick_f93_v0: 1510804089492445379
+      tv2_dis_brick_f95_v0: 2642702224197791104
+      tv2_dis_brick_f112_v0: 4353191998942047652
+      tv2_dis_brick_f113_v0: 3853578014162525159
+      tv2_dis_brick_f116_v0: 412575590264423786
+      tv2_dis_brick_f117_v0: 563424612802525543
+      tv2_dis_brick_f119_v0: 3804810840193347526
+      tv2_dis_brick_f124_v0: 1768935410858502940
+      tv2_dis_brick_f125_v0: 1290502501815021503
+      tv2_dis_brick_f127_v0: 4578649123986763064
+      tv2_dis_brick_f193_v0: 1387419765999080517
+      tv2_dis_brick_f197_v0: 3509211195092768021
+      tv2_dis_brick_f199_v0: 2354102265563207763
+      tv2_dis_brick_f209_v0: 1178302890736025327
+      tv2_dis_brick_f213_v0: 46613866597706384
+      tv2_dis_brick_f215_v0: 898816857233566301
+      tv2_dis_brick_f221_v0: 4177204578470172876
+      tv2_dis_brick_f223_v0: 1265093950035841486
+      tv2_dis_brick_f241_v0: 2132034379445840810
+      tv2_dis_brick_f245_v0: 739504662549201835
+      tv2_dis_brick_f247_v0: 709688707791971804
+      tv2_dis_brick_f253_v0: 3917606965448637272
+      tv2_dis_brick_f255_v0: 2726202364479575669
+      tv2_dis_brick_f0_v1: 2243863816922774135
+      tv2_dis_brick_f1_v1: 826082787239306478
+      tv2_dis_brick_f4_v1: 3544969209879697090
+      tv2_dis_brick_f5_v1: 2632007647456703748
+      tv2_dis_brick_f7_v1: 4262585443253219537
+      tv2_dis_brick_f16_v1: 4002289423555321038
+      tv2_dis_brick_f17_v1: 2150024204500947726
+      tv2_dis_brick_f20_v1: 856337040698277754
+      tv2_dis_brick_f21_v1: 1682900730230188093
+      tv2_dis_brick_f23_v1: 2531101984112379814
+      tv2_dis_brick_f28_v1: 3162331547356683076
+      tv2_dis_brick_f29_v1: 3820477303032162709
+      tv2_dis_brick_f31_v1: 836644971174063969
+      tv2_dis_brick_f64_v1: 3484962292617451018
+      tv2_dis_brick_f65_v1: 3115715046739444695
+      tv2_dis_brick_f68_v1: 4131791336084586607
+      tv2_dis_brick_f69_v1: 3198198858048937775
+      tv2_dis_brick_f71_v1: 3911806681164359216
+      tv2_dis_brick_f80_v1: 1832334298483388201
+      tv2_dis_brick_f81_v1: 1193831775225664484
+      tv2_dis_brick_f84_v1: 877653307736041698
+      tv2_dis_brick_f85_v1: 3190337826203379007
+      tv2_dis_brick_f87_v1: 2887611559236387704
+      tv2_dis_brick_f92_v1: 2798600379957492253
+      tv2_dis_brick_f93_v1: 2639741282585730834
+      tv2_dis_brick_f95_v1: 3947294292133308601
+      tv2_dis_brick_f112_v1: 2836686788935458539
+      tv2_dis_brick_f113_v1: 1569896411999064290
+      tv2_dis_brick_f116_v1: 1840686124613664970
+      tv2_dis_brick_f117_v1: 2677075113153413116
+      tv2_dis_brick_f119_v1: 3099397703835408141
+      tv2_dis_brick_f124_v1: 2062481257841120239
+      tv2_dis_brick_f125_v1: 4459307333380709027
+      tv2_dis_brick_f127_v1: 3160838123703186033
+      tv2_dis_brick_f193_v1: 1155040593459035337
+      tv2_dis_brick_f197_v1: 3731591076718765971
+      tv2_dis_brick_f199_v1: 1104037527095236187
+      tv2_dis_brick_f209_v1: 683468257155908851
+      tv2_dis_brick_f213_v1: 709379720512355281
+      tv2_dis_brick_f215_v1: 2272667250146101287
+      tv2_dis_brick_f221_v1: 3320794812153064208
+      tv2_dis_brick_f223_v1: 3212429360496769882
+      tv2_dis_brick_f241_v1: 3626127509951234981
+      tv2_dis_brick_f245_v1: 2481920699048745694
+      tv2_dis_brick_f247_v1: 2895871131016415172
+      tv2_dis_brick_f253_v1: 2400823703149254179
+      tv2_dis_brick_f255_v1: 3920611020790790174
+      tv2_dis_brick_f0_v2: 4213307643770936022
+      tv2_dis_brick_f1_v2: 2151299314380900665
+      tv2_dis_brick_f4_v2: 4218700510925422305
+      tv2_dis_brick_f5_v2: 1499833749748121707
+      tv2_dis_brick_f7_v2: 2461808170179738926
+      tv2_dis_brick_f16_v2: 832777386575795336
+      tv2_dis_brick_f17_v2: 1714234233341615550
+      tv2_dis_brick_f20_v2: 2892194090558909692
+      tv2_dis_brick_f21_v2: 1126734372701537679
+      tv2_dis_brick_f23_v2: 518838820516799274
+      tv2_dis_brick_f28_v2: 3594585502496487720
+      tv2_dis_brick_f29_v2: 2572364333692881285
+      tv2_dis_brick_f31_v2: 1294631652577561195
+      tv2_dis_brick_f64_v2: 3850027587893942345
+      tv2_dis_brick_f65_v2: 4553881168300721373
+      tv2_dis_brick_f68_v2: 1720933688627915908
+      tv2_dis_brick_f69_v2: 318289853740824658
+      tv2_dis_brick_f71_v2: 1632499353818331963
+      tv2_dis_brick_f80_v2: 2143153188889318605
+      tv2_dis_brick_f81_v2: 1792762951897508148
+      tv2_dis_brick_f84_v2: 1258742393077748867
+      tv2_dis_brick_f85_v2: 2384416209476354886
+      tv2_dis_brick_f87_v2: 1542396475896823629
+      tv2_dis_brick_f92_v2: 1315003783765198504
+      tv2_dis_brick_f93_v2: 2867306290436914548
+      tv2_dis_brick_f95_v2: 2455273979580417368
+      tv2_dis_brick_f112_v2: 2805098167999674050
+      tv2_dis_brick_f113_v2: 3515459582274281584
+      tv2_dis_brick_f116_v2: 2214272182170335241
+      tv2_dis_brick_f117_v2: 782436414446445048
+      tv2_dis_brick_f119_v2: 1485930116264415101
+      tv2_dis_brick_f124_v2: 3165362673902202837
+      tv2_dis_brick_f125_v2: 3653452425697683264
+      tv2_dis_brick_f127_v2: 510615423235560986
+      tv2_dis_brick_f193_v2: 4077348678695841296
+      tv2_dis_brick_f197_v2: 64674788465055481
+      tv2_dis_brick_f199_v2: 4183602460868204350
+      tv2_dis_brick_f209_v2: 665602559961851141
+      tv2_dis_brick_f213_v2: 35411276931542466
+      tv2_dis_brick_f215_v2: 4600200772940097771
+      tv2_dis_brick_f221_v2: 1830876723974521245
+      tv2_dis_brick_f223_v2: 1098336389833594159
+      tv2_dis_brick_f241_v2: 3301497947089094642
+      tv2_dis_brick_f245_v2: 168237354373598402
+      tv2_dis_brick_f247_v2: 1964267667572294333
+      tv2_dis_brick_f253_v2: 3076898314375791650
+      tv2_dis_brick_f255_v2: 3958513969962986747
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

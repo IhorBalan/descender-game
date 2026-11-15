@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: e917c97d3fbb5c03ba32c9b9f5e7ec61
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4148501232109845233
+    second: tv2_tower_lit_wall_f0_v0
+  - first:
+      213: 3684918235126626723
+    second: tv2_tower_lit_wall_f1_v0
+  - first:
+      213: 4434273446024447994
+    second: tv2_tower_lit_wall_f4_v0
+  - first:
+      213: 2511105517865226799
+    second: tv2_tower_lit_wall_f5_v0
+  - first:
+      213: 433385590266788383
+    second: tv2_tower_lit_wall_f7_v0
+  - first:
+      213: 786398985203970750
+    second: tv2_tower_lit_wall_f16_v0
+  - first:
+      213: 1766750252803225677
+    second: tv2_tower_lit_wall_f17_v0
+  - first:
+      213: 2323585150999948870
+    second: tv2_tower_lit_wall_f20_v0
+  - first:
+      213: 2682421367545192961
+    second: tv2_tower_lit_wall_f21_v0
+  - first:
+      213: 764136698515545410
+    second: tv2_tower_lit_wall_f23_v0
+  - first:
+      213: 1341828811608543305
+    second: tv2_tower_lit_wall_f28_v0
+  - first:
+      213: 3879401369542133384
+    second: tv2_tower_lit_wall_f29_v0
+  - first:
+      213: 464520299551264937
+    second: tv2_tower_lit_wall_f31_v0
+  - first:
+      213: 4251356154198756669
+    second: tv2_tower_lit_wall_f64_v0
+  - first:
+      213: 2458097638110193492
+    second: tv2_tower_lit_wall_f65_v0
+  - first:
+      213: 2042191129070303779
+    second: tv2_tower_lit_wall_f68_v0
+  - first:
+      213: 1560138001355049918
+    second: tv2_tower_lit_wall_f69_v0
+  - first:
+      213: 1222605037556316051
+    second: tv2_tower_lit_wall_f71_v0
+  - first:
+      213: 4561880574401935961
+    second: tv2_tower_lit_wall_f80_v0
+  - first:
+      213: 3136371112805682199
+    second: tv2_tower_lit_wall_f81_v0
+  - first:
+      213: 3649592932572751326
+    second: tv2_tower_lit_wall_f84_v0
+  - first:
+      213: 3445957202225791759
+    second: tv2_tower_lit_wall_f85_v0
+  - first:
+      213: 434853189855976891
+    second: tv2_tower_lit_wall_f87_v0
+  - first:
+      213: 1954381800080941590
+    second: tv2_tower_lit_wall_f92_v0
+  - first:
+      213: 3718147689081452549
+    second: tv2_tower_lit_wall_f93_v0
+  - first:
+      213: 1296148941056500631
+    second: tv2_tower_lit_wall_f95_v0
+  - first:
+      213: 2143482297466414721
+    second: tv2_tower_lit_wall_f112_v0
+  - first:
+      213: 2103226291501431767
+    second: tv2_tower_lit_wall_f113_v0
+  - first:
+      213: 1227162774457691994
+    second: tv2_tower_lit_wall_f116_v0
+  - first:
+      213: 4001214811943209314
+    second: tv2_tower_lit_wall_f117_v0
+  - first:
+      213: 929791450347205772
+    second: tv2_tower_lit_wall_f119_v0
+  - first:
+      213: 3196175803341346064
+    second: tv2_tower_lit_wall_f124_v0
+  - first:
+      213: 3993664054810774313
+    second: tv2_tower_lit_wall_f125_v0
+  - first:
+      213: 2711660415945485776
+    second: tv2_tower_lit_wall_f127_v0
+  - first:
+      213: 1299945597477558985
+    second: tv2_tower_lit_wall_f193_v0
+  - first:
+      213: 4090096655988637122
+    second: tv2_tower_lit_wall_f197_v0
+  - first:
+      213: 2382380760389720652
+    second: tv2_tower_lit_wall_f199_v0
+  - first:
+      213: 654778029288713046
+    second: tv2_tower_lit_wall_f209_v0
+  - first:
+      213: 2782729856138272864
+    second: tv2_tower_lit_wall_f213_v0
+  - first:
+      213: 903383637163532460
+    second: tv2_tower_lit_wall_f215_v0
+  - first:
+      213: 149042773258546800
+    second: tv2_tower_lit_wall_f221_v0
+  - first:
+      213: 1243652122834611946
+    second: tv2_tower_lit_wall_f223_v0
+  - first:
+      213: 99999739012878914
+    second: tv2_tower_lit_wall_f241_v0
+  - first:
+      213: 2797194058544547326
+    second: tv2_tower_lit_wall_f245_v0
+  - first:
+      213: 4355743839478242253
+    second: tv2_tower_lit_wall_f247_v0
+  - first:
+      213: 2564424586569780795
+    second: tv2_tower_lit_wall_f253_v0
+  - first:
+      213: 2408156813534092960
+    second: tv2_tower_lit_wall_f255_v0
+  - first:
+      213: 2149241392923388745
+    second: tv2_tower_lit_wall_f0_v1
+  - first:
+      213: 411964709773251956
+    second: tv2_tower_lit_wall_f1_v1
+  - first:
+      213: 260089850863365487
+    second: tv2_tower_lit_wall_f4_v1
+  - first:
+      213: 2724225835960936190
+    second: tv2_tower_lit_wall_f5_v1
+  - first:
+      213: 2923148144244215453
+    second: tv2_tower_lit_wall_f7_v1
+  - first:
+      213: 2570825051230466592
+    second: tv2_tower_lit_wall_f16_v1
+  - first:
+      213: 3940118465435169243
+    second: tv2_tower_lit_wall_f17_v1
+  - first:
+      213: 1838390800961578375
+    second: tv2_tower_lit_wall_f20_v1
+  - first:
+      213: 3418132026704323394
+    second: tv2_tower_lit_wall_f21_v1
+  - first:
+      213: 466281857443847313
+    second: tv2_tower_lit_wall_f23_v1
+  - first:
+      213: 1226906881560452234
+    second: tv2_tower_lit_wall_f28_v1
+  - first:
+      213: 1195028189183738904
+    second: tv2_tower_lit_wall_f29_v1
+  - first:
+      213: 4326589286693414092
+    second: tv2_tower_lit_wall_f31_v1
+  - first:
+      213: 556385153717716938
+    second: tv2_tower_lit_wall_f64_v1
+  - first:
+      213: 1477512009860755955
+    second: tv2_tower_lit_wall_f65_v1
+  - first:
+      213: 2822567255463555376
+    second: tv2_tower_lit_wall_f68_v1
+  - first:
+      213: 1206528036878028893
+    second: tv2_tower_lit_wall_f69_v1
+  - first:
+      213: 3948381583325745059
+    second: tv2_tower_lit_wall_f71_v1
+  - first:
+      213: 3626865395364071836
+    second: tv2_tower_lit_wall_f80_v1
+  - first:
+      213: 4444758334902408732
+    second: tv2_tower_lit_wall_f81_v1
+  - first:
+      213: 4282533911588192432
+    second: tv2_tower_lit_wall_f84_v1
+  - first:
+      213: 2581658726604021535
+    second: tv2_tower_lit_wall_f85_v1
+  - first:
+      213: 1041875630606270183
+    second: tv2_tower_lit_wall_f87_v1
+  - first:
+      213: 4582295661103035474
+    second: tv2_tower_lit_wall_f92_v1
+  - first:
+      213: 3305476744564662080
+    second: tv2_tower_lit_wall_f93_v1
+  - first:
+      213: 1680250515589030871
+    second: tv2_tower_lit_wall_f95_v1
+  - first:
+      213: 2082409530856870297
+    second: tv2_tower_lit_wall_f112_v1
+  - first:
+      213: 4577815594257440338
+    second: tv2_tower_lit_wall_f113_v1
+  - first:
+      213: 1943645527227582535
+    second: tv2_tower_lit_wall_f116_v1
+  - first:
+      213: 652737087683366554
+    second: tv2_tower_lit_wall_f117_v1
+  - first:
+      213: 1083934214295391622
+    second: tv2_tower_lit_wall_f119_v1
+  - first:
+      213: 1548679867057273689
+    second: tv2_tower_lit_wall_f124_v1
+  - first:
+      213: 2489655406417881670
+    second: tv2_tower_lit_wall_f125_v1
+  - first:
+      213: 1901266893503327025
+    second: tv2_tower_lit_wall_f127_v1
+  - first:
+      213: 3633133206241863500
+    second: tv2_tower_lit_wall_f193_v1
+  - first:
+      213: 1582494718728405927
+    second: tv2_tower_lit_wall_f197_v1
+  - first:
+      213: 1915193387995036955
+    second: tv2_tower_lit_wall_f199_v1
+  - first:
+      213: 3622297924614996580
+    second: tv2_tower_lit_wall_f209_v1
+  - first:
+      213: 4345349482341518171
+    second: tv2_tower_lit_wall_f213_v1
+  - first:
+      213: 1608067494861870908
+    second: tv2_tower_lit_wall_f215_v1
+  - first:
+      213: 1417161689345169484
+    second: tv2_tower_lit_wall_f221_v1
+  - first:
+      213: 1863692591979248684
+    second: tv2_tower_lit_wall_f223_v1
+  - first:
+      213: 2090925330372280808
+    second: tv2_tower_lit_wall_f241_v1
+  - first:
+      213: 1073378178852022587
+    second: tv2_tower_lit_wall_f245_v1
+  - first:
+      213: 1522229079025534345
+    second: tv2_tower_lit_wall_f247_v1
+  - first:
+      213: 372554544876922942
+    second: tv2_tower_lit_wall_f253_v1
+  - first:
+      213: 674976412680770630
+    second: tv2_tower_lit_wall_f255_v1
+  - first:
+      213: 3652017392768220558
+    second: tv2_tower_lit_wall_f0_v2
+  - first:
+      213: 3305747034578097478
+    second: tv2_tower_lit_wall_f1_v2
+  - first:
+      213: 193183845168263619
+    second: tv2_tower_lit_wall_f4_v2
+  - first:
+      213: 3686915597386364684
+    second: tv2_tower_lit_wall_f5_v2
+  - first:
+      213: 221655010023671439
+    second: tv2_tower_lit_wall_f7_v2
+  - first:
+      213: 3764750689788324460
+    second: tv2_tower_lit_wall_f16_v2
+  - first:
+      213: 2004191654789664596
+    second: tv2_tower_lit_wall_f17_v2
+  - first:
+      213: 2832146789324980907
+    second: tv2_tower_lit_wall_f20_v2
+  - first:
+      213: 4121159184546086102
+    second: tv2_tower_lit_wall_f21_v2
+  - first:
+      213: 745554079810130550
+    second: tv2_tower_lit_wall_f23_v2
+  - first:
+      213: 1133510642472440719
+    second: tv2_tower_lit_wall_f28_v2
+  - first:
+      213: 3876650390941933827
+    second: tv2_tower_lit_wall_f29_v2
+  - first:
+      213: 3343809284579043907
+    second: tv2_tower_lit_wall_f31_v2
+  - first:
+      213: 1813000025424121920
+    second: tv2_tower_lit_wall_f64_v2
+  - first:
+      213: 2563729451677327394
+    second: tv2_tower_lit_wall_f65_v2
+  - first:
+      213: 468414163056593148
+    second: tv2_tower_lit_wall_f68_v2
+  - first:
+      213: 1252364338420576291
+    second: tv2_tower_lit_wall_f69_v2
+  - first:
+      213: 3724128249978807724
+    second: tv2_tower_lit_wall_f71_v2
+  - first:
+      213: 1432410778679728754
+    second: tv2_tower_lit_wall_f80_v2
+  - first:
+      213: 1424314313815205220
+    second: tv2_tower_lit_wall_f81_v2
+  - first:
+      213: 2994067692550736866
+    second: tv2_tower_lit_wall_f84_v2
+  - first:
+      213: 2375522333319102268
+    second: tv2_tower_lit_wall_f85_v2
+  - first:
+      213: 2910688899721125439
+    second: tv2_tower_lit_wall_f87_v2
+  - first:
+      213: 3900813948799210477
+    second: tv2_tower_lit_wall_f92_v2
+  - first:
+      213: 3688403179603551067
+    second: tv2_tower_lit_wall_f93_v2
+  - first:
+      213: 350965226009039398
+    second: tv2_tower_lit_wall_f95_v2
+  - first:
+      213: 920690715058234759
+    second: tv2_tower_lit_wall_f112_v2
+  - first:
+      213: 1554511086140081427
+    second: tv2_tower_lit_wall_f113_v2
+  - first:
+      213: 4393442969106250044
+    second: tv2_tower_lit_wall_f116_v2
+  - first:
+      213: 2022329919480696023
+    second: tv2_tower_lit_wall_f117_v2
+  - first:
+      213: 953393604349614939
+    second: tv2_tower_lit_wall_f119_v2
+  - first:
+      213: 3233330986681168709
+    second: tv2_tower_lit_wall_f124_v2
+  - first:
+      213: 3289192641676074591
+    second: tv2_tower_lit_wall_f125_v2
+  - first:
+      213: 1255887440876643872
+    second: tv2_tower_lit_wall_f127_v2
+  - first:
+      213: 2085939868855073464
+    second: tv2_tower_lit_wall_f193_v2
+  - first:
+      213: 1100460790956668863
+    second: tv2_tower_lit_wall_f197_v2
+  - first:
+      213: 2470903304731119564
+    second: tv2_tower_lit_wall_f199_v2
+  - first:
+      213: 1227705403194642362
+    second: tv2_tower_lit_wall_f209_v2
+  - first:
+      213: 4515330461971293861
+    second: tv2_tower_lit_wall_f213_v2
+  - first:
+      213: 735790316166121740
+    second: tv2_tower_lit_wall_f215_v2
+  - first:
+      213: 1871555734215507534
+    second: tv2_tower_lit_wall_f221_v2
+  - first:
+      213: 823032704890978514
+    second: tv2_tower_lit_wall_f223_v2
+  - first:
+      213: 2343782108760314365
+    second: tv2_tower_lit_wall_f241_v2
+  - first:
+      213: 2407397214917997559
+    second: tv2_tower_lit_wall_f245_v2
+  - first:
+      213: 1299195340733853403
+    second: tv2_tower_lit_wall_f247_v2
+  - first:
+      213: 4269184060431940967
+    second: tv2_tower_lit_wall_f253_v2
+  - first:
+      213: 2139232865934053946
+    second: tv2_tower_lit_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1161e1f212385f12a3a9d430739f3efa
+      internalID: 4148501232109845233
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c930e4f903e0514d98d35b1194676795
+      internalID: 3684918235126626723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69812249917e574e867304cdedae49fd
+      internalID: 4434273446024447994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f55631ecad6e5d588c4d4ea449f9a6f2
+      internalID: 2511105517865226799
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 24a786926f0c57a4a60c659be8632c4b
+      internalID: 433385590266788383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f597a0880a1f589498ab36612d6dd401
+      internalID: 786398985203970750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 987a4c3c3f1a59bda94129965a0124cd
+      internalID: 1766750252803225677
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0313cd1f345a52248ff7532ff57de965
+      internalID: 2323585150999948870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2109b98407225f8d8db1c2efbb694dff
+      internalID: 2682421367545192961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e54e36b02d65c25a5995c73e4fce288
+      internalID: 764136698515545410
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c750f0fb9f3b570a84457b8406eaedd6
+      internalID: 1341828811608543305
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88f7a1665aa3569db151ed067a2fe02c
+      internalID: 3879401369542133384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b7433a2bc0c5cfab7f76ebda4e77cbc
+      internalID: 464520299551264937
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d02b42270215fa38f1cb2ee36002cbc
+      internalID: 4251356154198756669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f72bf82ccf115436bed384d80f744414
+      internalID: 2458097638110193492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc4346114cf0532fa2028a1c74053215
+      internalID: 2042191129070303779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ba32fef668d5f04a145bf3a6ac78187
+      internalID: 1560138001355049918
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 822a8af0e89c56428123b01e0671fc18
+      internalID: 1222605037556316051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd2f8189bb055c28a3fc8849dfe7615c
+      internalID: 4561880574401935961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 439d11375c995cd0abd8b72be254c75f
+      internalID: 3136371112805682199
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26fd270e7f6858519f44e416e2867d33
+      internalID: 3649592932572751326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 363cec2599a55a89a869f27025e9825f
+      internalID: 3445957202225791759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c146b3d452b65b12bb68bfb63a9db827
+      internalID: 434853189855976891
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d15f27e6ef4f5dbf93bb133d023b5e32
+      internalID: 1954381800080941590
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a59575ea56c2592db0a22d8a929d905b
+      internalID: 3718147689081452549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd955c58a9f35fc5a38b6c98b58c3c7e
+      internalID: 1296148941056500631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5414aa2e107a5315be86ab011a8e7af9
+      internalID: 2143482297466414721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b4ee7d5122d501cab4eb5673aa8c432
+      internalID: 2103226291501431767
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5d432c44e40a51ad881b9e3042be0154
+      internalID: 1227162774457691994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f23fb6c3c5e565f8b61142b347ee3eb
+      internalID: 4001214811943209314
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0f5c4a34f5e5ce2b6907ecd4982f623
+      internalID: 929791450347205772
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 164e7a8b2fe25dac974848e2d6eb3115
+      internalID: 3196175803341346064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a365ba34f3fa5fa68218beddedf30cc1
+      internalID: 3993664054810774313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9309c62972b750a9a1a190925d70ee67
+      internalID: 2711660415945485776
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f2083e5c182f5d1c8d7d16e9a83b83a9
+      internalID: 1299945597477558985
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec27646751dc5a5183d116a8d04695da
+      internalID: 4090096655988637122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af5ec576384c57129eb609650113df1e
+      internalID: 2382380760389720652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b438fe3901c75767a1618aa42a6520a4
+      internalID: 654778029288713046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 847148cc85915a74a05ebca447810e4b
+      internalID: 2782729856138272864
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c90cc65980e5529a8aac26c9b0e3280a
+      internalID: 903383637163532460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 854b42fe633354f3b522153f1fe875fe
+      internalID: 149042773258546800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: deb934ae990750feac3f01ae07c3ecfb
+      internalID: 1243652122834611946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 386b5c4a77de51d6897eaf1d1f23af6c
+      internalID: 99999739012878914
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a78c0e9e03b5ddf8d71160156daa620
+      internalID: 2797194058544547326
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1532bf4f70575d078e44e3e90287022c
+      internalID: 4355743839478242253
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d1de220a5b358bb88d87f9ea08a095f
+      internalID: 2564424586569780795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80229200fb4358efa42432c94d4f736c
+      internalID: 2408156813534092960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f0c1ca3c8af507f99f04d3f1bb92b6f
+      internalID: 2149241392923388745
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1614f66cc94757dc8583510124c196fe
+      internalID: 411964709773251956
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd1600f7c9795ab88582f26367ecf7f3
+      internalID: 260089850863365487
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d59345b6ea0750a6ad40194d062b111f
+      internalID: 2724225835960936190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1daab0c6106554c0b2acef1f4cd0901b
+      internalID: 2923148144244215453
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3da4758fbd1d58069df80a0e75317c63
+      internalID: 2570825051230466592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c5b23b6d4275a97ae0fa7f0e47f573e
+      internalID: 3940118465435169243
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69ef542847165a649eecfb467977442a
+      internalID: 1838390800961578375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 112e0a0d1f4152a384d59b4659577f47
+      internalID: 3418132026704323394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c7eb427962d53dcbbe40cf2952e5173
+      internalID: 466281857443847313
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 371c13894717579bb9d2785416baf8d1
+      internalID: 1226906881560452234
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9fc1672eea1534d8dd2c4ba30a7e73a
+      internalID: 1195028189183738904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3be082f828935a42b62787ede40be2e2
+      internalID: 4326589286693414092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3eae6e0e3a3457af8fd563df8575b3a3
+      internalID: 556385153717716938
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea855c46e50f594ba1e0143f68d60a50
+      internalID: 1477512009860755955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bfb70d35a30548181a1d97c10471755
+      internalID: 2822567255463555376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b498e36767e50858664fef8029b1279
+      internalID: 1206528036878028893
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 530367919f755a85bb953da01fdef965
+      internalID: 3948381583325745059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13c8b2fff6f85e47a2916a886d1ff201
+      internalID: 3626865395364071836
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e3575c38d315c768390a8ffc02371ff
+      internalID: 4444758334902408732
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d7bc99456705578a9e9d3ca5e88e4e9
+      internalID: 4282533911588192432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5caec031bc2a561790ff9395117d2326
+      internalID: 2581658726604021535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94b02ac1050457259b1406fcba830d15
+      internalID: 1041875630606270183
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a1bc40a93675d42be8019a0a4c39c25
+      internalID: 4582295661103035474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 180a5b42845e5f6e96faf779af3a08f7
+      internalID: 3305476744564662080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63d4e68848e0578282a9ccc3d4e83ac9
+      internalID: 1680250515589030871
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5221fe873d25eba9814e4d295db4bba
+      internalID: 2082409530856870297
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe1685e38ace513e9b5903fb26f0338c
+      internalID: 4577815594257440338
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d473d376ad775077957bfea7ed2b48c9
+      internalID: 1943645527227582535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 738b6bf6dc115d2c97cc035cd710abbd
+      internalID: 652737087683366554
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fd3793759105c45b7653c83448b33ce
+      internalID: 1083934214295391622
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74684ac1c5e0589699cf03eb442543a5
+      internalID: 1548679867057273689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7bca0c7cbc4595aa5364e273f20fed9
+      internalID: 2489655406417881670
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 890aadcf82d3578bb10277cdeccbbb6d
+      internalID: 1901266893503327025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba1f450243735a6c8520c3249fbb154f
+      internalID: 3633133206241863500
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a935eebfbc5558a8ac4c1bad7b67059
+      internalID: 1582494718728405927
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52bfaa729d495bdb95d4461f44eb9eef
+      internalID: 1915193387995036955
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c38535f31e7c57aeae47f60dffedc534
+      internalID: 3622297924614996580
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bfcebaf7b44530281cf5ccae26f8f89
+      internalID: 4345349482341518171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ffaeccbfc32d5f4faff6e20e4bb8eb6a
+      internalID: 1608067494861870908
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d63e23585955986a9cff8ed7f5d53ff
+      internalID: 1417161689345169484
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6d53c2167bd5905b39d1c42cbddafc1
+      internalID: 1863692591979248684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1afe4948933e5733a254c6a9f353501a
+      internalID: 2090925330372280808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e4f32362650d545780284694fff6a40d
+      internalID: 1073378178852022587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a47e7a8aad2f55668fcbf2e8cb437371
+      internalID: 1522229079025534345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b5db4bd1bbe5ed099ad8f5bad4b6acf
+      internalID: 372554544876922942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc1f3d22483a51dd8d79ebb6dd03fee5
+      internalID: 674976412680770630
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ff671530a7f51d689a13793cf9782fa
+      internalID: 3652017392768220558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e8eecb9a3755678a5ad7fe121bd6f33
+      internalID: 3305747034578097478
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 85db0a1362345a058bf1af2992126019
+      internalID: 193183845168263619
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cd8dbd2873b854de844ee6fcbf2d32fa
+      internalID: 3686915597386364684
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9324f85fdcac579e92109bd1f283db57
+      internalID: 221655010023671439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3593efcc565253ff9cb56705c5d4475f
+      internalID: 3764750689788324460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 39609ce7ddf6598f9470c8305ccf6475
+      internalID: 2004191654789664596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88b810129f6356e191ca3682a2b9c5d7
+      internalID: 2832146789324980907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb5a95633f765febbc54d14f2ecb330e
+      internalID: 4121159184546086102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9debefbad705993bd1c364eb1490c68
+      internalID: 745554079810130550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b15e09771bcb54828c3c872522274bd3
+      internalID: 1133510642472440719
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f13be1f8c46f534f94552625efc5f8a5
+      internalID: 3876650390941933827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31c39922e4c9564db3e7876f6dcdcb4b
+      internalID: 3343809284579043907
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 955d8c97300651f1b0ab9343afc715d4
+      internalID: 1813000025424121920
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ba15d903f7d1542eb677f6aa603aeb11
+      internalID: 2563729451677327394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64b8b06dff3b50d482f8c9bf66ac7195
+      internalID: 468414163056593148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ac9b66fbbc3f591eabd4ab30826266ba
+      internalID: 1252364338420576291
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e23404fc91d9514ba4907a73ebf3f542
+      internalID: 3724128249978807724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2328b6f9b83d5dc7b5c766820ab35651
+      internalID: 1432410778679728754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a8e1ded6f2b5d72862ca9ba8409a2de
+      internalID: 1424314313815205220
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a9a91902a1f5cefa4e5136fcdc81e59
+      internalID: 2994067692550736866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c6e76393369153a2ba72d6e87d42415a
+      internalID: 2375522333319102268
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be26528107205b70af205e5259f14e27
+      internalID: 2910688899721125439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8777b6c8965b5e83982d987d3ac71721
+      internalID: 3900813948799210477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9f9db4d5e69569fa06f3e4c44181c1a
+      internalID: 3688403179603551067
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d797a1519c9751da909ae10d6fc46213
+      internalID: 350965226009039398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fad5d812a0f85fa49dd88fef5febfa50
+      internalID: 920690715058234759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 920f1d0d7a2c528a8836700eb85fe92a
+      internalID: 1554511086140081427
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7369fb53b94254eca119a2e0935805a7
+      internalID: 4393442969106250044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7070eba3b2935e039e3a9e34856910d0
+      internalID: 2022329919480696023
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c21edc596a055d3c9f4fe7bfa4138d40
+      internalID: 953393604349614939
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8655334d1c4f5b4d94daaeb2f73b14e4
+      internalID: 3233330986681168709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 658619a0091c5526b57796dbd1287b6e
+      internalID: 3289192641676074591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75fff5bb5367525ebf9b38939a274ea0
+      internalID: 1255887440876643872
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d5313e156525bb6828fdedc462d510c
+      internalID: 2085939868855073464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7a7b554887154cdaa26be0cd4931200
+      internalID: 1100460790956668863
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c48be607d7c5e2682ea19e690065ba5
+      internalID: 2470903304731119564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3e6f6982d735c278f93269c7ef8eac2
+      internalID: 1227705403194642362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9faae921f78c559d84380bbd392dd0be
+      internalID: 4515330461971293861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a30b44d0818952a7a3a2b2836ee6df44
+      internalID: 735790316166121740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b35d927ded65948beb411e9a2c49195
+      internalID: 1871555734215507534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aafeb3731c335f1bb703ab669a9f1dd7
+      internalID: 823032704890978514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da24933b1e035579bb070ada4368bf39
+      internalID: 2343782108760314365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36817e7fffaf5805b38c6a8d70c84fb2
+      internalID: 2407397214917997559
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d226ebedee0a592093a4a2dd3ac6ada3
+      internalID: 1299195340733853403
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 36f299fb9be35768b628718a08e93421
+      internalID: 4269184060431940967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_tower_lit_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88c9cddd0b525855a038480fa92a5798
+      internalID: 2139232865934053946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_tower_lit_wall_f0_v0: 4148501232109845233
+      tv2_tower_lit_wall_f1_v0: 3684918235126626723
+      tv2_tower_lit_wall_f4_v0: 4434273446024447994
+      tv2_tower_lit_wall_f5_v0: 2511105517865226799
+      tv2_tower_lit_wall_f7_v0: 433385590266788383
+      tv2_tower_lit_wall_f16_v0: 786398985203970750
+      tv2_tower_lit_wall_f17_v0: 1766750252803225677
+      tv2_tower_lit_wall_f20_v0: 2323585150999948870
+      tv2_tower_lit_wall_f21_v0: 2682421367545192961
+      tv2_tower_lit_wall_f23_v0: 764136698515545410
+      tv2_tower_lit_wall_f28_v0: 1341828811608543305
+      tv2_tower_lit_wall_f29_v0: 3879401369542133384
+      tv2_tower_lit_wall_f31_v0: 464520299551264937
+      tv2_tower_lit_wall_f64_v0: 4251356154198756669
+      tv2_tower_lit_wall_f65_v0: 2458097638110193492
+      tv2_tower_lit_wall_f68_v0: 2042191129070303779
+      tv2_tower_lit_wall_f69_v0: 1560138001355049918
+      tv2_tower_lit_wall_f71_v0: 1222605037556316051
+      tv2_tower_lit_wall_f80_v0: 4561880574401935961
+      tv2_tower_lit_wall_f81_v0: 3136371112805682199
+      tv2_tower_lit_wall_f84_v0: 3649592932572751326
+      tv2_tower_lit_wall_f85_v0: 3445957202225791759
+      tv2_tower_lit_wall_f87_v0: 434853189855976891
+      tv2_tower_lit_wall_f92_v0: 1954381800080941590
+      tv2_tower_lit_wall_f93_v0: 3718147689081452549
+      tv2_tower_lit_wall_f95_v0: 1296148941056500631
+      tv2_tower_lit_wall_f112_v0: 2143482297466414721
+      tv2_tower_lit_wall_f113_v0: 2103226291501431767
+      tv2_tower_lit_wall_f116_v0: 1227162774457691994
+      tv2_tower_lit_wall_f117_v0: 4001214811943209314
+      tv2_tower_lit_wall_f119_v0: 929791450347205772
+      tv2_tower_lit_wall_f124_v0: 3196175803341346064
+      tv2_tower_lit_wall_f125_v0: 3993664054810774313
+      tv2_tower_lit_wall_f127_v0: 2711660415945485776
+      tv2_tower_lit_wall_f193_v0: 1299945597477558985
+      tv2_tower_lit_wall_f197_v0: 4090096655988637122
+      tv2_tower_lit_wall_f199_v0: 2382380760389720652
+      tv2_tower_lit_wall_f209_v0: 654778029288713046
+      tv2_tower_lit_wall_f213_v0: 2782729856138272864
+      tv2_tower_lit_wall_f215_v0: 903383637163532460
+      tv2_tower_lit_wall_f221_v0: 149042773258546800
+      tv2_tower_lit_wall_f223_v0: 1243652122834611946
+      tv2_tower_lit_wall_f241_v0: 99999739012878914
+      tv2_tower_lit_wall_f245_v0: 2797194058544547326
+      tv2_tower_lit_wall_f247_v0: 4355743839478242253
+      tv2_tower_lit_wall_f253_v0: 2564424586569780795
+      tv2_tower_lit_wall_f255_v0: 2408156813534092960
+      tv2_tower_lit_wall_f0_v1: 2149241392923388745
+      tv2_tower_lit_wall_f1_v1: 411964709773251956
+      tv2_tower_lit_wall_f4_v1: 260089850863365487
+      tv2_tower_lit_wall_f5_v1: 2724225835960936190
+      tv2_tower_lit_wall_f7_v1: 2923148144244215453
+      tv2_tower_lit_wall_f16_v1: 2570825051230466592
+      tv2_tower_lit_wall_f17_v1: 3940118465435169243
+      tv2_tower_lit_wall_f20_v1: 1838390800961578375
+      tv2_tower_lit_wall_f21_v1: 3418132026704323394
+      tv2_tower_lit_wall_f23_v1: 466281857443847313
+      tv2_tower_lit_wall_f28_v1: 1226906881560452234
+      tv2_tower_lit_wall_f29_v1: 1195028189183738904
+      tv2_tower_lit_wall_f31_v1: 4326589286693414092
+      tv2_tower_lit_wall_f64_v1: 556385153717716938
+      tv2_tower_lit_wall_f65_v1: 1477512009860755955
+      tv2_tower_lit_wall_f68_v1: 2822567255463555376
+      tv2_tower_lit_wall_f69_v1: 1206528036878028893
+      tv2_tower_lit_wall_f71_v1: 3948381583325745059
+      tv2_tower_lit_wall_f80_v1: 3626865395364071836
+      tv2_tower_lit_wall_f81_v1: 4444758334902408732
+      tv2_tower_lit_wall_f84_v1: 4282533911588192432
+      tv2_tower_lit_wall_f85_v1: 2581658726604021535
+      tv2_tower_lit_wall_f87_v1: 1041875630606270183
+      tv2_tower_lit_wall_f92_v1: 4582295661103035474
+      tv2_tower_lit_wall_f93_v1: 3305476744564662080
+      tv2_tower_lit_wall_f95_v1: 1680250515589030871
+      tv2_tower_lit_wall_f112_v1: 2082409530856870297
+      tv2_tower_lit_wall_f113_v1: 4577815594257440338
+      tv2_tower_lit_wall_f116_v1: 1943645527227582535
+      tv2_tower_lit_wall_f117_v1: 652737087683366554
+      tv2_tower_lit_wall_f119_v1: 1083934214295391622
+      tv2_tower_lit_wall_f124_v1: 1548679867057273689
+      tv2_tower_lit_wall_f125_v1: 2489655406417881670
+      tv2_tower_lit_wall_f127_v1: 1901266893503327025
+      tv2_tower_lit_wall_f193_v1: 3633133206241863500
+      tv2_tower_lit_wall_f197_v1: 1582494718728405927
+      tv2_tower_lit_wall_f199_v1: 1915193387995036955
+      tv2_tower_lit_wall_f209_v1: 3622297924614996580
+      tv2_tower_lit_wall_f213_v1: 4345349482341518171
+      tv2_tower_lit_wall_f215_v1: 1608067494861870908
+      tv2_tower_lit_wall_f221_v1: 1417161689345169484
+      tv2_tower_lit_wall_f223_v1: 1863692591979248684
+      tv2_tower_lit_wall_f241_v1: 2090925330372280808
+      tv2_tower_lit_wall_f245_v1: 1073378178852022587
+      tv2_tower_lit_wall_f247_v1: 1522229079025534345
+      tv2_tower_lit_wall_f253_v1: 372554544876922942
+      tv2_tower_lit_wall_f255_v1: 674976412680770630
+      tv2_tower_lit_wall_f0_v2: 3652017392768220558
+      tv2_tower_lit_wall_f1_v2: 3305747034578097478
+      tv2_tower_lit_wall_f4_v2: 193183845168263619
+      tv2_tower_lit_wall_f5_v2: 3686915597386364684
+      tv2_tower_lit_wall_f7_v2: 221655010023671439
+      tv2_tower_lit_wall_f16_v2: 3764750689788324460
+      tv2_tower_lit_wall_f17_v2: 2004191654789664596
+      tv2_tower_lit_wall_f20_v2: 2832146789324980907
+      tv2_tower_lit_wall_f21_v2: 4121159184546086102
+      tv2_tower_lit_wall_f23_v2: 745554079810130550
+      tv2_tower_lit_wall_f28_v2: 1133510642472440719
+      tv2_tower_lit_wall_f29_v2: 3876650390941933827
+      tv2_tower_lit_wall_f31_v2: 3343809284579043907
+      tv2_tower_lit_wall_f64_v2: 1813000025424121920
+      tv2_tower_lit_wall_f65_v2: 2563729451677327394
+      tv2_tower_lit_wall_f68_v2: 468414163056593148
+      tv2_tower_lit_wall_f69_v2: 1252364338420576291
+      tv2_tower_lit_wall_f71_v2: 3724128249978807724
+      tv2_tower_lit_wall_f80_v2: 1432410778679728754
+      tv2_tower_lit_wall_f81_v2: 1424314313815205220
+      tv2_tower_lit_wall_f84_v2: 2994067692550736866
+      tv2_tower_lit_wall_f85_v2: 2375522333319102268
+      tv2_tower_lit_wall_f87_v2: 2910688899721125439
+      tv2_tower_lit_wall_f92_v2: 3900813948799210477
+      tv2_tower_lit_wall_f93_v2: 3688403179603551067
+      tv2_tower_lit_wall_f95_v2: 350965226009039398
+      tv2_tower_lit_wall_f112_v2: 920690715058234759
+      tv2_tower_lit_wall_f113_v2: 1554511086140081427
+      tv2_tower_lit_wall_f116_v2: 4393442969106250044
+      tv2_tower_lit_wall_f117_v2: 2022329919480696023
+      tv2_tower_lit_wall_f119_v2: 953393604349614939
+      tv2_tower_lit_wall_f124_v2: 3233330986681168709
+      tv2_tower_lit_wall_f125_v2: 3289192641676074591
+      tv2_tower_lit_wall_f127_v2: 1255887440876643872
+      tv2_tower_lit_wall_f193_v2: 2085939868855073464
+      tv2_tower_lit_wall_f197_v2: 1100460790956668863
+      tv2_tower_lit_wall_f199_v2: 2470903304731119564
+      tv2_tower_lit_wall_f209_v2: 1227705403194642362
+      tv2_tower_lit_wall_f213_v2: 4515330461971293861
+      tv2_tower_lit_wall_f215_v2: 735790316166121740
+      tv2_tower_lit_wall_f221_v2: 1871555734215507534
+      tv2_tower_lit_wall_f223_v2: 823032704890978514
+      tv2_tower_lit_wall_f241_v2: 2343782108760314365
+      tv2_tower_lit_wall_f245_v2: 2407397214917997559
+      tv2_tower_lit_wall_f247_v2: 1299195340733853403
+      tv2_tower_lit_wall_f253_v2: 4269184060431940967
+      tv2_tower_lit_wall_f255_v2: 2139232865934053946
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

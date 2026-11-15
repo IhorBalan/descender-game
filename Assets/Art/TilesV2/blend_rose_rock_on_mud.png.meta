@@ -1,0 +1,1319 @@
+fileFormatVersion: 2
+guid: 8ca4a8f84f4f588591ac128847322890
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 4580148070597855250
+    second: tv2_rose_rock_on_mud_s1_v0
+  - first:
+      213: 1330370077506941856
+    second: tv2_rose_rock_on_mud_s2_v0
+  - first:
+      213: 2666709695759513592
+    second: tv2_rose_rock_on_mud_s3_v0
+  - first:
+      213: 2556732203013574398
+    second: tv2_rose_rock_on_mud_s4_v0
+  - first:
+      213: 3902783302218746418
+    second: tv2_rose_rock_on_mud_s5_v0
+  - first:
+      213: 3162425659138670734
+    second: tv2_rose_rock_on_mud_s6_v0
+  - first:
+      213: 149074115260383332
+    second: tv2_rose_rock_on_mud_s7_v0
+  - first:
+      213: 1583446996819772894
+    second: tv2_rose_rock_on_mud_s8_v0
+  - first:
+      213: 4428263797208666721
+    second: tv2_rose_rock_on_mud_s9_v0
+  - first:
+      213: 3404769807590033301
+    second: tv2_rose_rock_on_mud_s10_v0
+  - first:
+      213: 2197259964247537665
+    second: tv2_rose_rock_on_mud_s11_v0
+  - first:
+      213: 3051427401007203418
+    second: tv2_rose_rock_on_mud_s12_v0
+  - first:
+      213: 3268532664717811631
+    second: tv2_rose_rock_on_mud_s13_v0
+  - first:
+      213: 2762949922951737262
+    second: tv2_rose_rock_on_mud_s14_v0
+  - first:
+      213: 1909610955771433259
+    second: tv2_rose_rock_on_mud_s15_v0
+  - first:
+      213: 4122379372438356195
+    second: tv2_rose_rock_on_mud_s1_v1
+  - first:
+      213: 2349650688900258226
+    second: tv2_rose_rock_on_mud_s2_v1
+  - first:
+      213: 599619633524205288
+    second: tv2_rose_rock_on_mud_s3_v1
+  - first:
+      213: 360675670298793401
+    second: tv2_rose_rock_on_mud_s4_v1
+  - first:
+      213: 341831650899116867
+    second: tv2_rose_rock_on_mud_s5_v1
+  - first:
+      213: 278168211957572730
+    second: tv2_rose_rock_on_mud_s6_v1
+  - first:
+      213: 463947847793759573
+    second: tv2_rose_rock_on_mud_s7_v1
+  - first:
+      213: 1684969680371345587
+    second: tv2_rose_rock_on_mud_s8_v1
+  - first:
+      213: 4378216924309790113
+    second: tv2_rose_rock_on_mud_s9_v1
+  - first:
+      213: 3152497433784607362
+    second: tv2_rose_rock_on_mud_s10_v1
+  - first:
+      213: 1205734624502228179
+    second: tv2_rose_rock_on_mud_s11_v1
+  - first:
+      213: 115474920088487385
+    second: tv2_rose_rock_on_mud_s12_v1
+  - first:
+      213: 133675636855432073
+    second: tv2_rose_rock_on_mud_s13_v1
+  - first:
+      213: 2248303680103276230
+    second: tv2_rose_rock_on_mud_s14_v1
+  - first:
+      213: 3948455795381557365
+    second: tv2_rose_rock_on_mud_s15_v1
+  - first:
+      213: 615671616011107921
+    second: tv2_rose_rock_on_mud_s1_v2
+  - first:
+      213: 1757821605412766867
+    second: tv2_rose_rock_on_mud_s2_v2
+  - first:
+      213: 689268269072387798
+    second: tv2_rose_rock_on_mud_s3_v2
+  - first:
+      213: 1150128479340820905
+    second: tv2_rose_rock_on_mud_s4_v2
+  - first:
+      213: 190229703730170136
+    second: tv2_rose_rock_on_mud_s5_v2
+  - first:
+      213: 1121344650647817246
+    second: tv2_rose_rock_on_mud_s6_v2
+  - first:
+      213: 3181792331079607118
+    second: tv2_rose_rock_on_mud_s7_v2
+  - first:
+      213: 3717147830533967404
+    second: tv2_rose_rock_on_mud_s8_v2
+  - first:
+      213: 3470797632132767064
+    second: tv2_rose_rock_on_mud_s9_v2
+  - first:
+      213: 1861025493295001223
+    second: tv2_rose_rock_on_mud_s10_v2
+  - first:
+      213: 3284431431936507564
+    second: tv2_rose_rock_on_mud_s11_v2
+  - first:
+      213: 3364479653851490932
+    second: tv2_rose_rock_on_mud_s12_v2
+  - first:
+      213: 192267026106092718
+    second: tv2_rose_rock_on_mud_s13_v2
+  - first:
+      213: 1229796479904574873
+    second: tv2_rose_rock_on_mud_s14_v2
+  - first:
+      213: 657017402030190056
+    second: tv2_rose_rock_on_mud_s15_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77a47ba3f770536d8db0c6256caba0cf
+      internalID: 4580148070597855250
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s2_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b4f7c08192f536595c67f4f8897c486
+      internalID: 1330370077506941856
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s3_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 712fda6f9b6c5f748d7ffab529cbcfdb
+      internalID: 2666709695759513592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf6efe747dae5167a89a8878c1b7d60e
+      internalID: 2556732203013574398
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8783ab194db5641b29f2e4a64e0a021
+      internalID: 3902783302218746418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s6_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a87fb0452575885b17b239a9b38ca68
+      internalID: 3162425659138670734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1103075fb0d457168503819c024b63ed
+      internalID: 149074115260383332
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s8_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57f30fe2c7445339b7b31d3416050e0f
+      internalID: 1583446996819772894
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s9_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d924481a6ea589a98540aaffeb324ae
+      internalID: 4428263797208666721
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s10_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 927bfaba20105830abfed0422cc19f15
+      internalID: 3404769807590033301
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s11_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e0f48ae12e05082bfeb73ed4196e237
+      internalID: 2197259964247537665
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s12_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0ce3017746d5f6a878ec66bfd87a31d
+      internalID: 3051427401007203418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s13_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bddc7fd00c1f58e9b9627ffedee60509
+      internalID: 3268532664717811631
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s14_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf7446befa2c57e3a6b5214174e7ccda
+      internalID: 2762949922951737262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s15_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a17d9699c10e5e0aab40683101dfcd02
+      internalID: 1909610955771433259
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d07889e3899e557a965e6d4ec094ce88
+      internalID: 4122379372438356195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s2_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea90b073855e5c13b803fae778700eee
+      internalID: 2349650688900258226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s3_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63aeb9aa8f4517282e98125eeed6468
+      internalID: 599619633524205288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c832eb3a1875f95acd551940442aba5
+      internalID: 360675670298793401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 160ffdad763d5f8693e4eb40eb3f0c11
+      internalID: 341831650899116867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s6_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2686bfce3db75165b65aafb656ae66ff
+      internalID: 278168211957572730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ca3b01add9f53a4a85eb0eceaf48525
+      internalID: 463947847793759573
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s8_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7e1c2197d45567c99125f5ce3335c96
+      internalID: 1684969680371345587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s9_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c281ec7d40c5c0ba49f63a33b62d779
+      internalID: 4378216924309790113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s10_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64da79ac0d8155dfb7bd0bd7f703d239
+      internalID: 3152497433784607362
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s11_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f91422e9fa4e523c9b7091a5a4bb0c3e
+      internalID: 1205734624502228179
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s12_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b7ddbeea437c5ba8a5dc30d2591ba1f2
+      internalID: 115474920088487385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s13_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 606267ab303d59d59ecf1d61f804e691
+      internalID: 133675636855432073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s14_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3b8de2b8d9558d3b935940d312f486c
+      internalID: 2248303680103276230
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s15_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 145d3113c1d55721bfc9cfe6aa0c426c
+      internalID: 3948455795381557365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c958a3fdef1b5ac49d072f78ea311c64
+      internalID: 615671616011107921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s2_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7774c76416845127888a9dfa3ec91635
+      internalID: 1757821605412766867
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s3_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3795e96b50345f189c42f8891d47b296
+      internalID: 689268269072387798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5e02351620ae5e7ea87f5a8ad67387e1
+      internalID: 1150128479340820905
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 58d7bdd844a356e8af2edafa0a19ee78
+      internalID: 190229703730170136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s6_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce41fdff46f454f99f1fdb9be294ca1a
+      internalID: 1121344650647817246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00c424567b055eb48e3ffeb857c6fd29
+      internalID: 3181792331079607118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s8_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a37505818865f5b84b7b583a2a9867d
+      internalID: 3717147830533967404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s9_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e397c98a80357e68bf122c810f60191
+      internalID: 3470797632132767064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s10_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ea21a9e4d27e5b1cbfc687ce83a77f23
+      internalID: 1861025493295001223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s11_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1bcdb7a4c54e54afb663e90a7fb2fde1
+      internalID: 3284431431936507564
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s12_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77c3475e4d255c48bdfdba4e714c5b10
+      internalID: 3364479653851490932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s13_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f2b8feb343a5ffa8478f3ece556d615
+      internalID: 192267026106092718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s14_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccf7e81f858353b8b9bac010d7e79835
+      internalID: 1229796479904574873
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_rock_on_mud_s15_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96e1ab574e8a592188e06e26eb78efee
+      internalID: 657017402030190056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_rose_rock_on_mud_s1_v0: 4580148070597855250
+      tv2_rose_rock_on_mud_s2_v0: 1330370077506941856
+      tv2_rose_rock_on_mud_s3_v0: 2666709695759513592
+      tv2_rose_rock_on_mud_s4_v0: 2556732203013574398
+      tv2_rose_rock_on_mud_s5_v0: 3902783302218746418
+      tv2_rose_rock_on_mud_s6_v0: 3162425659138670734
+      tv2_rose_rock_on_mud_s7_v0: 149074115260383332
+      tv2_rose_rock_on_mud_s8_v0: 1583446996819772894
+      tv2_rose_rock_on_mud_s9_v0: 4428263797208666721
+      tv2_rose_rock_on_mud_s10_v0: 3404769807590033301
+      tv2_rose_rock_on_mud_s11_v0: 2197259964247537665
+      tv2_rose_rock_on_mud_s12_v0: 3051427401007203418
+      tv2_rose_rock_on_mud_s13_v0: 3268532664717811631
+      tv2_rose_rock_on_mud_s14_v0: 2762949922951737262
+      tv2_rose_rock_on_mud_s15_v0: 1909610955771433259
+      tv2_rose_rock_on_mud_s1_v1: 4122379372438356195
+      tv2_rose_rock_on_mud_s2_v1: 2349650688900258226
+      tv2_rose_rock_on_mud_s3_v1: 599619633524205288
+      tv2_rose_rock_on_mud_s4_v1: 360675670298793401
+      tv2_rose_rock_on_mud_s5_v1: 341831650899116867
+      tv2_rose_rock_on_mud_s6_v1: 278168211957572730
+      tv2_rose_rock_on_mud_s7_v1: 463947847793759573
+      tv2_rose_rock_on_mud_s8_v1: 1684969680371345587
+      tv2_rose_rock_on_mud_s9_v1: 4378216924309790113
+      tv2_rose_rock_on_mud_s10_v1: 3152497433784607362
+      tv2_rose_rock_on_mud_s11_v1: 1205734624502228179
+      tv2_rose_rock_on_mud_s12_v1: 115474920088487385
+      tv2_rose_rock_on_mud_s13_v1: 133675636855432073
+      tv2_rose_rock_on_mud_s14_v1: 2248303680103276230
+      tv2_rose_rock_on_mud_s15_v1: 3948455795381557365
+      tv2_rose_rock_on_mud_s1_v2: 615671616011107921
+      tv2_rose_rock_on_mud_s2_v2: 1757821605412766867
+      tv2_rose_rock_on_mud_s3_v2: 689268269072387798
+      tv2_rose_rock_on_mud_s4_v2: 1150128479340820905
+      tv2_rose_rock_on_mud_s5_v2: 190229703730170136
+      tv2_rose_rock_on_mud_s6_v2: 1121344650647817246
+      tv2_rose_rock_on_mud_s7_v2: 3181792331079607118
+      tv2_rose_rock_on_mud_s8_v2: 3717147830533967404
+      tv2_rose_rock_on_mud_s9_v2: 3470797632132767064
+      tv2_rose_rock_on_mud_s10_v2: 1861025493295001223
+      tv2_rose_rock_on_mud_s11_v2: 3284431431936507564
+      tv2_rose_rock_on_mud_s12_v2: 3364479653851490932
+      tv2_rose_rock_on_mud_s13_v2: 192267026106092718
+      tv2_rose_rock_on_mud_s14_v2: 1229796479904574873
+      tv2_rose_rock_on_mud_s15_v2: 657017402030190056
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

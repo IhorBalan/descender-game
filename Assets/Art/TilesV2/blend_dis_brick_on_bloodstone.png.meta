@@ -1,0 +1,1319 @@
+fileFormatVersion: 2
+guid: 71b6bfe913e353f194bc51fea29ccd37
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1498477758921724724
+    second: tv2_dis_brick_on_bloodstone_s1_v0
+  - first:
+      213: 3558974706971558748
+    second: tv2_dis_brick_on_bloodstone_s2_v0
+  - first:
+      213: 3675676338297089943
+    second: tv2_dis_brick_on_bloodstone_s3_v0
+  - first:
+      213: 3468951069060611134
+    second: tv2_dis_brick_on_bloodstone_s4_v0
+  - first:
+      213: 3278141376104511509
+    second: tv2_dis_brick_on_bloodstone_s5_v0
+  - first:
+      213: 3320286377933479801
+    second: tv2_dis_brick_on_bloodstone_s6_v0
+  - first:
+      213: 2316895986028684740
+    second: tv2_dis_brick_on_bloodstone_s7_v0
+  - first:
+      213: 3142146250321687857
+    second: tv2_dis_brick_on_bloodstone_s8_v0
+  - first:
+      213: 1393957699774944321
+    second: tv2_dis_brick_on_bloodstone_s9_v0
+  - first:
+      213: 4557693511169932592
+    second: tv2_dis_brick_on_bloodstone_s10_v0
+  - first:
+      213: 2127767638053887870
+    second: tv2_dis_brick_on_bloodstone_s11_v0
+  - first:
+      213: 110770480500413611
+    second: tv2_dis_brick_on_bloodstone_s12_v0
+  - first:
+      213: 1200144280779455865
+    second: tv2_dis_brick_on_bloodstone_s13_v0
+  - first:
+      213: 2883672210416050279
+    second: tv2_dis_brick_on_bloodstone_s14_v0
+  - first:
+      213: 3732184374118128205
+    second: tv2_dis_brick_on_bloodstone_s15_v0
+  - first:
+      213: 1084610485134184740
+    second: tv2_dis_brick_on_bloodstone_s1_v1
+  - first:
+      213: 3037105574568090000
+    second: tv2_dis_brick_on_bloodstone_s2_v1
+  - first:
+      213: 4356938715024804394
+    second: tv2_dis_brick_on_bloodstone_s3_v1
+  - first:
+      213: 905264051522373391
+    second: tv2_dis_brick_on_bloodstone_s4_v1
+  - first:
+      213: 4399785029329531743
+    second: tv2_dis_brick_on_bloodstone_s5_v1
+  - first:
+      213: 4245907697088196753
+    second: tv2_dis_brick_on_bloodstone_s6_v1
+  - first:
+      213: 4162211769917653896
+    second: tv2_dis_brick_on_bloodstone_s7_v1
+  - first:
+      213: 3143507925837150643
+    second: tv2_dis_brick_on_bloodstone_s8_v1
+  - first:
+      213: 3128282341399141712
+    second: tv2_dis_brick_on_bloodstone_s9_v1
+  - first:
+      213: 1410791192791127551
+    second: tv2_dis_brick_on_bloodstone_s10_v1
+  - first:
+      213: 2668634725961847944
+    second: tv2_dis_brick_on_bloodstone_s11_v1
+  - first:
+      213: 3434000552276098466
+    second: tv2_dis_brick_on_bloodstone_s12_v1
+  - first:
+      213: 1732140418908909546
+    second: tv2_dis_brick_on_bloodstone_s13_v1
+  - first:
+      213: 4254632228190707021
+    second: tv2_dis_brick_on_bloodstone_s14_v1
+  - first:
+      213: 3303312529013549292
+    second: tv2_dis_brick_on_bloodstone_s15_v1
+  - first:
+      213: 4210946197058882393
+    second: tv2_dis_brick_on_bloodstone_s1_v2
+  - first:
+      213: 1446005646142611424
+    second: tv2_dis_brick_on_bloodstone_s2_v2
+  - first:
+      213: 3831180974513919116
+    second: tv2_dis_brick_on_bloodstone_s3_v2
+  - first:
+      213: 2257323376583425345
+    second: tv2_dis_brick_on_bloodstone_s4_v2
+  - first:
+      213: 4417917801740988930
+    second: tv2_dis_brick_on_bloodstone_s5_v2
+  - first:
+      213: 189043638312366114
+    second: tv2_dis_brick_on_bloodstone_s6_v2
+  - first:
+      213: 2124059779662255642
+    second: tv2_dis_brick_on_bloodstone_s7_v2
+  - first:
+      213: 2371266960580109696
+    second: tv2_dis_brick_on_bloodstone_s8_v2
+  - first:
+      213: 1985101754811544509
+    second: tv2_dis_brick_on_bloodstone_s9_v2
+  - first:
+      213: 3347783847038962177
+    second: tv2_dis_brick_on_bloodstone_s10_v2
+  - first:
+      213: 2720856884110688445
+    second: tv2_dis_brick_on_bloodstone_s11_v2
+  - first:
+      213: 2604121489001747986
+    second: tv2_dis_brick_on_bloodstone_s12_v2
+  - first:
+      213: 3111800674657478910
+    second: tv2_dis_brick_on_bloodstone_s13_v2
+  - first:
+      213: 3843337751646010977
+    second: tv2_dis_brick_on_bloodstone_s14_v2
+  - first:
+      213: 333514525316123690
+    second: tv2_dis_brick_on_bloodstone_s15_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5beede5a3a595a149a9a059f3770f458
+      internalID: 1498477758921724724
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s2_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 852679a88b8a54ff8e079dbd927ff7d2
+      internalID: 3558974706971558748
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s3_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a37a1877d0db5eb78424f92fb60cddee
+      internalID: 3675676338297089943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd4522fd9ef455878d0a2da1583e2a15
+      internalID: 3468951069060611134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 010976bf79405aecb87185346b7ed0b0
+      internalID: 3278141376104511509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s6_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b09fb97a2ac521dbf5d20d21790ff35
+      internalID: 3320286377933479801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b57e45547835294bc404b739e6878ef
+      internalID: 2316895986028684740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s8_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0020b0459daf59698f7b9709ec6869c5
+      internalID: 3142146250321687857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s9_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 65ea32a6d7ad5723bafd0c6b0d7f0cd2
+      internalID: 1393957699774944321
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s10_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2de5cbf2cba5ab389502c804c31d147
+      internalID: 4557693511169932592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s11_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a53dfef05dd5bfca5627b5282fd84d6
+      internalID: 2127767638053887870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s12_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13ad780283345d14a93ecc455882b3b0
+      internalID: 110770480500413611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s13_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a769f20359d05b06bab02ae374c732b0
+      internalID: 1200144280779455865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s14_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dced40f1e215fe2901ccaa95968d224
+      internalID: 2883672210416050279
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s15_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ccf6dee722d5861a1efd3a72bc12f9e
+      internalID: 3732184374118128205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10d38c85e4205ef1b903c8648cfafca1
+      internalID: 1084610485134184740
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s2_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0223ab5c1f65601b3d3bc3bd312cb54
+      internalID: 3037105574568090000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s3_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccc7ef85fb3b55d7af9b941fa936af93
+      internalID: 4356938715024804394
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a96cd47ba47f57d1abcd03c8f9948654
+      internalID: 905264051522373391
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1182f358f0f457dcb67fe11f760667c7
+      internalID: 4399785029329531743
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s6_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d105376fa9c151fd882ebef4c5059381
+      internalID: 4245907697088196753
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df2fa2e8286c51d58005ecb71bda454f
+      internalID: 4162211769917653896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s8_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcd91e2615a653728cb9e2d736642241
+      internalID: 3143507925837150643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s9_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4d799df372156dbb278ae997bd25c9d
+      internalID: 3128282341399141712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s10_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4d98ef9a0c75fd88cc11e839ea8a054
+      internalID: 1410791192791127551
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s11_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48fa69d9ec2b5d679afa9e44e774b027
+      internalID: 2668634725961847944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s12_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6834650338e85fa09fadd6492197cb89
+      internalID: 3434000552276098466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s13_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8a0e200ca1e15c85bffd8ce6a838d33c
+      internalID: 1732140418908909546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s14_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 157e662c97995aa9aa61d9feb13d0f97
+      internalID: 4254632228190707021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s15_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf98b4a5c85e51dcb8519bc22637567c
+      internalID: 3303312529013549292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97056d1f79275834af970d694922c52b
+      internalID: 4210946197058882393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s2_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2fc1c09ccc085104b39291d4569c8847
+      internalID: 1446005646142611424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s3_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e5d7431032775160a3acc1f267e27020
+      internalID: 3831180974513919116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a12fa210d58652f3a04600a67cb56e7e
+      internalID: 2257323376583425345
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e83af412d4453adb5aea55b548c80eb
+      internalID: 4417917801740988930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s6_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1271270f4ba58be90a18fa67d03c690
+      internalID: 189043638312366114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64dd39665d515db7be6068e29b95bcbf
+      internalID: 2124059779662255642
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s8_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b802583489951a68b590b212b97df8a
+      internalID: 2371266960580109696
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s9_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5539c0a147175a12b7b16747d9c6ca26
+      internalID: 1985101754811544509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s10_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53de6ac8b9bb56a78fe8ec519f4d6581
+      internalID: 3347783847038962177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s11_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23b4ef6cc165502d83b1d77d45b10aac
+      internalID: 2720856884110688445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s12_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41738e0e4dfb5fbf86dc1f3a789e13d8
+      internalID: 2604121489001747986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s13_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e53220915f0553f93a67c8686361fae
+      internalID: 3111800674657478910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s14_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e53fe784225b52c28e14291d6924bc3d
+      internalID: 3843337751646010977
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_dis_brick_on_bloodstone_s15_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c7d6639d2f05d41bb98abd8566a5026
+      internalID: 333514525316123690
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_dis_brick_on_bloodstone_s1_v0: 1498477758921724724
+      tv2_dis_brick_on_bloodstone_s2_v0: 3558974706971558748
+      tv2_dis_brick_on_bloodstone_s3_v0: 3675676338297089943
+      tv2_dis_brick_on_bloodstone_s4_v0: 3468951069060611134
+      tv2_dis_brick_on_bloodstone_s5_v0: 3278141376104511509
+      tv2_dis_brick_on_bloodstone_s6_v0: 3320286377933479801
+      tv2_dis_brick_on_bloodstone_s7_v0: 2316895986028684740
+      tv2_dis_brick_on_bloodstone_s8_v0: 3142146250321687857
+      tv2_dis_brick_on_bloodstone_s9_v0: 1393957699774944321
+      tv2_dis_brick_on_bloodstone_s10_v0: 4557693511169932592
+      tv2_dis_brick_on_bloodstone_s11_v0: 2127767638053887870
+      tv2_dis_brick_on_bloodstone_s12_v0: 110770480500413611
+      tv2_dis_brick_on_bloodstone_s13_v0: 1200144280779455865
+      tv2_dis_brick_on_bloodstone_s14_v0: 2883672210416050279
+      tv2_dis_brick_on_bloodstone_s15_v0: 3732184374118128205
+      tv2_dis_brick_on_bloodstone_s1_v1: 1084610485134184740
+      tv2_dis_brick_on_bloodstone_s2_v1: 3037105574568090000
+      tv2_dis_brick_on_bloodstone_s3_v1: 4356938715024804394
+      tv2_dis_brick_on_bloodstone_s4_v1: 905264051522373391
+      tv2_dis_brick_on_bloodstone_s5_v1: 4399785029329531743
+      tv2_dis_brick_on_bloodstone_s6_v1: 4245907697088196753
+      tv2_dis_brick_on_bloodstone_s7_v1: 4162211769917653896
+      tv2_dis_brick_on_bloodstone_s8_v1: 3143507925837150643
+      tv2_dis_brick_on_bloodstone_s9_v1: 3128282341399141712
+      tv2_dis_brick_on_bloodstone_s10_v1: 1410791192791127551
+      tv2_dis_brick_on_bloodstone_s11_v1: 2668634725961847944
+      tv2_dis_brick_on_bloodstone_s12_v1: 3434000552276098466
+      tv2_dis_brick_on_bloodstone_s13_v1: 1732140418908909546
+      tv2_dis_brick_on_bloodstone_s14_v1: 4254632228190707021
+      tv2_dis_brick_on_bloodstone_s15_v1: 3303312529013549292
+      tv2_dis_brick_on_bloodstone_s1_v2: 4210946197058882393
+      tv2_dis_brick_on_bloodstone_s2_v2: 1446005646142611424
+      tv2_dis_brick_on_bloodstone_s3_v2: 3831180974513919116
+      tv2_dis_brick_on_bloodstone_s4_v2: 2257323376583425345
+      tv2_dis_brick_on_bloodstone_s5_v2: 4417917801740988930
+      tv2_dis_brick_on_bloodstone_s6_v2: 189043638312366114
+      tv2_dis_brick_on_bloodstone_s7_v2: 2124059779662255642
+      tv2_dis_brick_on_bloodstone_s8_v2: 2371266960580109696
+      tv2_dis_brick_on_bloodstone_s9_v2: 1985101754811544509
+      tv2_dis_brick_on_bloodstone_s10_v2: 3347783847038962177
+      tv2_dis_brick_on_bloodstone_s11_v2: 2720856884110688445
+      tv2_dis_brick_on_bloodstone_s12_v2: 2604121489001747986
+      tv2_dis_brick_on_bloodstone_s13_v2: 3111800674657478910
+      tv2_dis_brick_on_bloodstone_s14_v2: 3843337751646010977
+      tv2_dis_brick_on_bloodstone_s15_v2: 333514525316123690
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

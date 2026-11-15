@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7cb6190a89910f84a8d7e1a3eecd8b70, type: 3}
+  m_Name: dirt_on_clay_s14
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.TerrainTile
+  m_DefaultSprite: {fileID: 3416788764239229458, guid: 3cf55966593b569b95ae9cca533cadff, type: 3}
+  m_DefaultGameObject: {fileID: 0}
+  m_DefaultColliderType: 0
+  m_TilingRules:
+  - m_Id: 0
+    m_Sprites:
+    - {fileID: 3416788764239229458, guid: 3cf55966593b569b95ae9cca533cadff, type: 3}
+    - {fileID: 2735876860792184819, guid: 3cf55966593b569b95ae9cca533cadff, type: 3}
+    - {fileID: 3101568583824895130, guid: 3cf55966593b569b95ae9cca533cadff, type: 3}
+    m_GameObject: {fileID: 0}
+    m_MinAnimationSpeed: 1
+    m_MaxAnimationSpeed: 1
+    m_PerlinScale: 0.5
+    m_Output: 1
+    m_ColliderType: 0
+    m_RandomTransform: 0
+    m_Scroll: {x: 0.5, y: 0.5}
+    m_Neighbors: 
+    m_NeighborPositions: []
+    m_RuleTransform: 0
+  materialKey: dirt_on_clay_s14
+  joinGroup: 
+  baseKey: dirt_on_clay_s14
+  slope: 0
+  emits: {r: 0, g: 0, b: 0, a: 1}
+  open: 0

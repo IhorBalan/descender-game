@@ -1,0 +1,3911 @@
+fileFormatVersion: 2
+guid: 3673a92a25385f9b833f41a731fbecde
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1696879726157729639
+    second: tv2_rose_glass_wall_f0_v0
+  - first:
+      213: 2428904424209851645
+    second: tv2_rose_glass_wall_f1_v0
+  - first:
+      213: 4319848565631553146
+    second: tv2_rose_glass_wall_f4_v0
+  - first:
+      213: 2554459211960947703
+    second: tv2_rose_glass_wall_f5_v0
+  - first:
+      213: 1712291994996488463
+    second: tv2_rose_glass_wall_f7_v0
+  - first:
+      213: 1250604815991639693
+    second: tv2_rose_glass_wall_f16_v0
+  - first:
+      213: 182082784134279527
+    second: tv2_rose_glass_wall_f17_v0
+  - first:
+      213: 4019702272803061063
+    second: tv2_rose_glass_wall_f20_v0
+  - first:
+      213: 3212991420998288921
+    second: tv2_rose_glass_wall_f21_v0
+  - first:
+      213: 1773483849422882271
+    second: tv2_rose_glass_wall_f23_v0
+  - first:
+      213: 380864074329121727
+    second: tv2_rose_glass_wall_f28_v0
+  - first:
+      213: 841105034780335827
+    second: tv2_rose_glass_wall_f29_v0
+  - first:
+      213: 3868566678967741681
+    second: tv2_rose_glass_wall_f31_v0
+  - first:
+      213: 2596766537152951582
+    second: tv2_rose_glass_wall_f64_v0
+  - first:
+      213: 3542118932562335866
+    second: tv2_rose_glass_wall_f65_v0
+  - first:
+      213: 402984672603385942
+    second: tv2_rose_glass_wall_f68_v0
+  - first:
+      213: 3369089587030689688
+    second: tv2_rose_glass_wall_f69_v0
+  - first:
+      213: 773409852492510654
+    second: tv2_rose_glass_wall_f71_v0
+  - first:
+      213: 3949284631644871869
+    second: tv2_rose_glass_wall_f80_v0
+  - first:
+      213: 2282508648131203164
+    second: tv2_rose_glass_wall_f81_v0
+  - first:
+      213: 907880645457594651
+    second: tv2_rose_glass_wall_f84_v0
+  - first:
+      213: 1414340292133661643
+    second: tv2_rose_glass_wall_f85_v0
+  - first:
+      213: 593866934769956954
+    second: tv2_rose_glass_wall_f87_v0
+  - first:
+      213: 4400941873245607226
+    second: tv2_rose_glass_wall_f92_v0
+  - first:
+      213: 1819686846928533817
+    second: tv2_rose_glass_wall_f93_v0
+  - first:
+      213: 2865844991903473286
+    second: tv2_rose_glass_wall_f95_v0
+  - first:
+      213: 2335112045269703921
+    second: tv2_rose_glass_wall_f112_v0
+  - first:
+      213: 28895676182391606
+    second: tv2_rose_glass_wall_f113_v0
+  - first:
+      213: 4198111272939931380
+    second: tv2_rose_glass_wall_f116_v0
+  - first:
+      213: 4485698633362329075
+    second: tv2_rose_glass_wall_f117_v0
+  - first:
+      213: 4001764771469923288
+    second: tv2_rose_glass_wall_f119_v0
+  - first:
+      213: 1330254308806651200
+    second: tv2_rose_glass_wall_f124_v0
+  - first:
+      213: 467914140970264267
+    second: tv2_rose_glass_wall_f125_v0
+  - first:
+      213: 331831440141608404
+    second: tv2_rose_glass_wall_f127_v0
+  - first:
+      213: 775433065768918637
+    second: tv2_rose_glass_wall_f193_v0
+  - first:
+      213: 558706060733900689
+    second: tv2_rose_glass_wall_f197_v0
+  - first:
+      213: 1606126111408873074
+    second: tv2_rose_glass_wall_f199_v0
+  - first:
+      213: 1739901117349860612
+    second: tv2_rose_glass_wall_f209_v0
+  - first:
+      213: 2447824287044441153
+    second: tv2_rose_glass_wall_f213_v0
+  - first:
+      213: 3627821572679192567
+    second: tv2_rose_glass_wall_f215_v0
+  - first:
+      213: 4404719011758439874
+    second: tv2_rose_glass_wall_f221_v0
+  - first:
+      213: 4601060806456750299
+    second: tv2_rose_glass_wall_f223_v0
+  - first:
+      213: 421249351620719089
+    second: tv2_rose_glass_wall_f241_v0
+  - first:
+      213: 1344213288753110846
+    second: tv2_rose_glass_wall_f245_v0
+  - first:
+      213: 1349175925015368443
+    second: tv2_rose_glass_wall_f247_v0
+  - first:
+      213: 2343961325145695059
+    second: tv2_rose_glass_wall_f253_v0
+  - first:
+      213: 2942806779763057801
+    second: tv2_rose_glass_wall_f255_v0
+  - first:
+      213: 3609931569462728591
+    second: tv2_rose_glass_wall_f0_v1
+  - first:
+      213: 2824321921937065852
+    second: tv2_rose_glass_wall_f1_v1
+  - first:
+      213: 1505488340150727146
+    second: tv2_rose_glass_wall_f4_v1
+  - first:
+      213: 4430010276352447422
+    second: tv2_rose_glass_wall_f5_v1
+  - first:
+      213: 1238374897248697091
+    second: tv2_rose_glass_wall_f7_v1
+  - first:
+      213: 4320174654187659969
+    second: tv2_rose_glass_wall_f16_v1
+  - first:
+      213: 1073432234546400798
+    second: tv2_rose_glass_wall_f17_v1
+  - first:
+      213: 4544553741540004269
+    second: tv2_rose_glass_wall_f20_v1
+  - first:
+      213: 184562014573605568
+    second: tv2_rose_glass_wall_f21_v1
+  - first:
+      213: 4276262680122591437
+    second: tv2_rose_glass_wall_f23_v1
+  - first:
+      213: 1047099024811236699
+    second: tv2_rose_glass_wall_f28_v1
+  - first:
+      213: 2261955140926727149
+    second: tv2_rose_glass_wall_f29_v1
+  - first:
+      213: 830832710746743327
+    second: tv2_rose_glass_wall_f31_v1
+  - first:
+      213: 1363777877327492454
+    second: tv2_rose_glass_wall_f64_v1
+  - first:
+      213: 2228284721989246895
+    second: tv2_rose_glass_wall_f65_v1
+  - first:
+      213: 3374322503607507439
+    second: tv2_rose_glass_wall_f68_v1
+  - first:
+      213: 3406107287229272682
+    second: tv2_rose_glass_wall_f69_v1
+  - first:
+      213: 4350536407054393330
+    second: tv2_rose_glass_wall_f71_v1
+  - first:
+      213: 4364297221722038474
+    second: tv2_rose_glass_wall_f80_v1
+  - first:
+      213: 1626261469493425923
+    second: tv2_rose_glass_wall_f81_v1
+  - first:
+      213: 225785207940356121
+    second: tv2_rose_glass_wall_f84_v1
+  - first:
+      213: 3646314762984569034
+    second: tv2_rose_glass_wall_f85_v1
+  - first:
+      213: 1067948461672664371
+    second: tv2_rose_glass_wall_f87_v1
+  - first:
+      213: 2746763509060060834
+    second: tv2_rose_glass_wall_f92_v1
+  - first:
+      213: 221693865455676641
+    second: tv2_rose_glass_wall_f93_v1
+  - first:
+      213: 137354189432824163
+    second: tv2_rose_glass_wall_f95_v1
+  - first:
+      213: 4008909013698755744
+    second: tv2_rose_glass_wall_f112_v1
+  - first:
+      213: 1947188680588817415
+    second: tv2_rose_glass_wall_f113_v1
+  - first:
+      213: 3018934636714781852
+    second: tv2_rose_glass_wall_f116_v1
+  - first:
+      213: 1241669583022012501
+    second: tv2_rose_glass_wall_f117_v1
+  - first:
+      213: 2464950720338404146
+    second: tv2_rose_glass_wall_f119_v1
+  - first:
+      213: 4329790050085578975
+    second: tv2_rose_glass_wall_f124_v1
+  - first:
+      213: 2732117881773290482
+    second: tv2_rose_glass_wall_f125_v1
+  - first:
+      213: 2814879679510848358
+    second: tv2_rose_glass_wall_f127_v1
+  - first:
+      213: 3224666151934652184
+    second: tv2_rose_glass_wall_f193_v1
+  - first:
+      213: 1991484378713068120
+    second: tv2_rose_glass_wall_f197_v1
+  - first:
+      213: 2976077248100325536
+    second: tv2_rose_glass_wall_f199_v1
+  - first:
+      213: 920023928980862351
+    second: tv2_rose_glass_wall_f209_v1
+  - first:
+      213: 3791737538730133584
+    second: tv2_rose_glass_wall_f213_v1
+  - first:
+      213: 4473082041549547838
+    second: tv2_rose_glass_wall_f215_v1
+  - first:
+      213: 2285172266108213248
+    second: tv2_rose_glass_wall_f221_v1
+  - first:
+      213: 2064377325996124702
+    second: tv2_rose_glass_wall_f223_v1
+  - first:
+      213: 1279891583027944661
+    second: tv2_rose_glass_wall_f241_v1
+  - first:
+      213: 921576329165854737
+    second: tv2_rose_glass_wall_f245_v1
+  - first:
+      213: 3583615867010713319
+    second: tv2_rose_glass_wall_f247_v1
+  - first:
+      213: 417891982221312751
+    second: tv2_rose_glass_wall_f253_v1
+  - first:
+      213: 4408618759954539324
+    second: tv2_rose_glass_wall_f255_v1
+  - first:
+      213: 3562200617050609549
+    second: tv2_rose_glass_wall_f0_v2
+  - first:
+      213: 345098254273298764
+    second: tv2_rose_glass_wall_f1_v2
+  - first:
+      213: 660994496356534015
+    second: tv2_rose_glass_wall_f4_v2
+  - first:
+      213: 1681611536361394547
+    second: tv2_rose_glass_wall_f5_v2
+  - first:
+      213: 251119715570109526
+    second: tv2_rose_glass_wall_f7_v2
+  - first:
+      213: 2597252998453282409
+    second: tv2_rose_glass_wall_f16_v2
+  - first:
+      213: 3861863921926675101
+    second: tv2_rose_glass_wall_f17_v2
+  - first:
+      213: 3789967721504592011
+    second: tv2_rose_glass_wall_f20_v2
+  - first:
+      213: 4230040040046472445
+    second: tv2_rose_glass_wall_f21_v2
+  - first:
+      213: 4240779562645103760
+    second: tv2_rose_glass_wall_f23_v2
+  - first:
+      213: 779792011111310311
+    second: tv2_rose_glass_wall_f28_v2
+  - first:
+      213: 2271277170189610913
+    second: tv2_rose_glass_wall_f29_v2
+  - first:
+      213: 2234672013039602845
+    second: tv2_rose_glass_wall_f31_v2
+  - first:
+      213: 272376836217973895
+    second: tv2_rose_glass_wall_f64_v2
+  - first:
+      213: 3374914115055541510
+    second: tv2_rose_glass_wall_f65_v2
+  - first:
+      213: 93399973186811467
+    second: tv2_rose_glass_wall_f68_v2
+  - first:
+      213: 997008946431781960
+    second: tv2_rose_glass_wall_f69_v2
+  - first:
+      213: 80153704131085530
+    second: tv2_rose_glass_wall_f71_v2
+  - first:
+      213: 270047220037884831
+    second: tv2_rose_glass_wall_f80_v2
+  - first:
+      213: 2690321957949266159
+    second: tv2_rose_glass_wall_f81_v2
+  - first:
+      213: 2391551673649373161
+    second: tv2_rose_glass_wall_f84_v2
+  - first:
+      213: 2340915591527098292
+    second: tv2_rose_glass_wall_f85_v2
+  - first:
+      213: 1507928689274219254
+    second: tv2_rose_glass_wall_f87_v2
+  - first:
+      213: 2217284302915634968
+    second: tv2_rose_glass_wall_f92_v2
+  - first:
+      213: 4412016834360052436
+    second: tv2_rose_glass_wall_f93_v2
+  - first:
+      213: 1389953856825679763
+    second: tv2_rose_glass_wall_f95_v2
+  - first:
+      213: 2926146699117144174
+    second: tv2_rose_glass_wall_f112_v2
+  - first:
+      213: 1003661358149569723
+    second: tv2_rose_glass_wall_f113_v2
+  - first:
+      213: 3604218833553670924
+    second: tv2_rose_glass_wall_f116_v2
+  - first:
+      213: 2464045033228426467
+    second: tv2_rose_glass_wall_f117_v2
+  - first:
+      213: 653308989566985963
+    second: tv2_rose_glass_wall_f119_v2
+  - first:
+      213: 2365408288233692712
+    second: tv2_rose_glass_wall_f124_v2
+  - first:
+      213: 403732385039597423
+    second: tv2_rose_glass_wall_f125_v2
+  - first:
+      213: 91242043616616994
+    second: tv2_rose_glass_wall_f127_v2
+  - first:
+      213: 1183703286043076710
+    second: tv2_rose_glass_wall_f193_v2
+  - first:
+      213: 425633585238304420
+    second: tv2_rose_glass_wall_f197_v2
+  - first:
+      213: 1468337904919352350
+    second: tv2_rose_glass_wall_f199_v2
+  - first:
+      213: 4519520363057359483
+    second: tv2_rose_glass_wall_f209_v2
+  - first:
+      213: 2938410932600823474
+    second: tv2_rose_glass_wall_f213_v2
+  - first:
+      213: 2605824809437234709
+    second: tv2_rose_glass_wall_f215_v2
+  - first:
+      213: 2207773534026741464
+    second: tv2_rose_glass_wall_f221_v2
+  - first:
+      213: 1533842918681416688
+    second: tv2_rose_glass_wall_f223_v2
+  - first:
+      213: 587984389142571582
+    second: tv2_rose_glass_wall_f241_v2
+  - first:
+      213: 2595776560563668974
+    second: tv2_rose_glass_wall_f245_v2
+  - first:
+      213: 2631246487169410885
+    second: tv2_rose_glass_wall_f247_v2
+  - first:
+      213: 3616056183553925438
+    second: tv2_rose_glass_wall_f253_v2
+  - first:
+      213: 2778512179582084529
+    second: tv2_rose_glass_wall_f255_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cf7afe7aa595890ade4439b7afa0226
+      internalID: 1696879726157729639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 421b1a5b6ade55f5a5ec5d35f501b906
+      internalID: 2428904424209851645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1a503a79b8d5ae8b0db9acd3baddaff
+      internalID: 4319848565631553146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68925762aa905c409a8170ac2a18c991
+      internalID: 2554459211960947703
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3cffa1b277c05baa8eeb7c62afd194c7
+      internalID: 1712291994996488463
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ea5b9cf79025691aaf569fda424c5f0
+      internalID: 1250604815991639693
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b72917f5305955f294f41c85393b62f1
+      internalID: 182082784134279527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ed48d420f8b5006af7ac7fb43e25b72
+      internalID: 4019702272803061063
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31589c5faec5581e9085c64984e809e7
+      internalID: 3212991420998288921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e8d7ffc32f0358c08a8da484bc185b57
+      internalID: 1773483849422882271
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae1d58b2a8685795bbbb80834d18d0dd
+      internalID: 380864074329121727
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3943d731320f5aa081fd9ef9e91db02e
+      internalID: 841105034780335827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 254730d55798582f9e951473adf3cac3
+      internalID: 3868566678967741681
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce60e39b20555bc6a4adf328a75c654d
+      internalID: 2596766537152951582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7861e082b3f754d7bb9117c2d59058e8
+      internalID: 3542118932562335866
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d204bfdd9a0451dab7bd831db941f461
+      internalID: 402984672603385942
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e2559e395635b368d743d30653abe48
+      internalID: 3369089587030689688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b75cf638d47850c6bf8427d2443125df
+      internalID: 773409852492510654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f985ff291fee5e2f83db2d3f15cc0c5b
+      internalID: 3949284631644871869
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48930a3e05845764bcabd3192e23b7cc
+      internalID: 2282508648131203164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02d8f66576b85fa5818082f3cff056a5
+      internalID: 907880645457594651
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 472ea152b29c5c41a4422ca2944f5b57
+      internalID: 1414340292133661643
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23197e584c5c5e13975060fe963b7c39
+      internalID: 593866934769956954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b52935e31e7a5bd898271459930dc2f7
+      internalID: 4400941873245607226
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ef147ca36195efa8771b2521475d931
+      internalID: 1819686846928533817
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 226090096d03539aada533354fcb002a
+      internalID: 2865844991903473286
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a61d737613a15ca38dd0ba3b84a34eb9
+      internalID: 2335112045269703921
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62467446a62257f48a902ceb526740b5
+      internalID: 28895676182391606
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66fbcd220f2151d899a135a7911eeb1a
+      internalID: 4198111272939931380
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b65d275fa995b779325f92f54e354fc
+      internalID: 4485698633362329075
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ff601fc3e4c590fa9b4b9f05ded2116
+      internalID: 4001764771469923288
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07ae7458792c50819250a641e5f4d61a
+      internalID: 1330254308806651200
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4fc711919955645a538566f9800508b
+      internalID: 467914140970264267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80e7f13891bc518793d8dc3e6cce2fb2
+      internalID: 331831440141608404
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8f43813e5d45456a2ee42eee740878f
+      internalID: 775433065768918637
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56de0d2340fd5933b42860ec8f6da65c
+      internalID: 558706060733900689
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17511a706b8e5e3fb11a3a4fe31a352b
+      internalID: 1606126111408873074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4099a9ccc9f95cf0ad10a4ae162f434b
+      internalID: 1739901117349860612
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cea58f01f585222b722e954d17c8651
+      internalID: 2447824287044441153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 113f42409cb65ecd9200fc0aa4d868ad
+      internalID: 3627821572679192567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c561a15a4a354169e84d1ad70f63b4e
+      internalID: 4404719011758439874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 40aba4a7357155dcbe1980ec1f1045e5
+      internalID: 4601060806456750299
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88db2dfb228654c5a5db6de810b5760d
+      internalID: 421249351620719089
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f7e8026046175061a54bab2e10c71dcb
+      internalID: 1344213288753110846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52d643689d335f6083a7b2b7302dc42c
+      internalID: 1349175925015368443
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c29c9597582d5d20b5969762e8eac23f
+      internalID: 2343961325145695059
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c97a42f0b55f505f9e9f9efd88e77f37
+      internalID: 2942806779763057801
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e6d09867a6a5a0fa69567a1f5079f5c
+      internalID: 3609931569462728591
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fce620a4cddb5f3f8dd9cd28c1af42e6
+      internalID: 2824321921937065852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0d33bd016fe5e03b5d3ba62bf77a276
+      internalID: 1505488340150727146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a72a77ab9cdb572ca6766dde9f7a09fa
+      internalID: 4430010276352447422
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22b70075d2be595b814ccb289370e2cd
+      internalID: 1238374897248697091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6c267531b185692beed789c061aad6f
+      internalID: 4320174654187659969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89533b60cb495fa4994a546b3565374a
+      internalID: 1073432234546400798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ad83ec0fbf95fd1ab3d9e127bc3e8d2
+      internalID: 4544553741540004269
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 610253bafc065d5e9d0b1f7410cc1c14
+      internalID: 184562014573605568
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb0e58e6ddbb5465b73288ee5b72ff7f
+      internalID: 4276262680122591437
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 140a4592c547524a9e2586482a7679f6
+      internalID: 1047099024811236699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f759502a5fd05f60b32517e61940238c
+      internalID: 2261955140926727149
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b178f2aa187e57ae9aaa9414239fc0e2
+      internalID: 830832710746743327
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64e65d3bcdb057feb06840882a7818c6
+      internalID: 1363777877327492454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79d0feb4a98f5d85adf4f0fd688bd806
+      internalID: 2228284721989246895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a87bc595e4cf5b629fceb466cce94583
+      internalID: 3374322503607507439
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26b66971df6e579b8ce0d4bb5d70ed00
+      internalID: 3406107287229272682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d3a8dfda71b15ce7b6be30e5a00c6380
+      internalID: 4350536407054393330
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5478f082d9b95dd6a20117f423004266
+      internalID: 4364297221722038474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2b56bea95f45114934b3c8992d4c685
+      internalID: 1626261469493425923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4ff93eedefe5e27b50606ef91fe8014
+      internalID: 225785207940356121
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54fea06525f45524aee30a1fd9b8394e
+      internalID: 3646314762984569034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d62c0f22bf0259f186f16cf4b87236eb
+      internalID: 1067948461672664371
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7369f48038e554ffb419e5a86389d087
+      internalID: 2746763509060060834
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10995541e44151cb992ea4b24d0cd171
+      internalID: 221693865455676641
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bbf2469d4ec35a598114ee449def3ca6
+      internalID: 137354189432824163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9488f2ca1d755d8691e0eff653e24152
+      internalID: 4008909013698755744
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 691d798f045c575082577d3839f2b5c8
+      internalID: 1947188680588817415
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 986fafa69b3f540c936f04fa32778140
+      internalID: 3018934636714781852
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b959a0f122a65256b963ced8f9c39deb
+      internalID: 1241669583022012501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2b30f05f17355c8e9ed7c78a791af7df
+      internalID: 2464950720338404146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcd50e303ef95564981cc763d6783a68
+      internalID: 4329790050085578975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99c6adbd5a7e5488b70244ef06def3d9
+      internalID: 2732117881773290482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c0040f4c75d5f5a8d1e9738d0cfb0b2
+      internalID: 2814879679510848358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc5415c718d95a8683f54f2e4c65ba3c
+      internalID: 3224666151934652184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da11133a7f1356ec9802ae71a374f174
+      internalID: 1991484378713068120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1dc27ac099156ccbe149b48472fd2f4
+      internalID: 2976077248100325536
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e9b100684985e35a56be11a3b117f05
+      internalID: 920023928980862351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 86a33b5387c2526290fec86161122997
+      internalID: 3791737538730133584
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7cdfbbb4ee095e39aeb18d9a6c568223
+      internalID: 4473082041549547838
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1585dfc72af45a2fa0d8bd5844a821c7
+      internalID: 2285172266108213248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3b500c671c256b4b05abdfc32facd4f
+      internalID: 2064377325996124702
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eab9b0ff20e65587840bcf99eae2b80b
+      internalID: 1279891583027944661
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 258ba9f9c5b656dc88d4bc8e2378d0aa
+      internalID: 921576329165854737
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77401757ca3156c7b42b019b37b6e224
+      internalID: 3583615867010713319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5924fab982035e928492c2e43992bbc0
+      internalID: 417891982221312751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af1e3beb99625b92bb87f1e9b0af1fa7
+      internalID: 4408618759954539324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05a90e00380f519587dba43e409322e8
+      internalID: 3562200617050609549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 634f1ba30ed4549f933c785bbe0e38f3
+      internalID: 345098254273298764
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f245fdedd9555dcc84d4ac4968db80a2
+      internalID: 660994496356534015
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35418f5827cc534da3845de9044be09b
+      internalID: 1681611536361394547
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96d41e74f82c52e09fdb0958d775c895
+      internalID: 251119715570109526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f7f1cd5340357b58ef7956481565046
+      internalID: 2597252998453282409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31121ac7271d5620a85e51f34c6ccef3
+      internalID: 3861863921926675101
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30eced0d16ba5f72aa4d93d329a9abe5
+      internalID: 3789967721504592011
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf855f7c612b56b89a111b24b1e4359b
+      internalID: 4230040040046472445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f691c8d811c7552bac305458bbdc10c4
+      internalID: 4240779562645103760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b77f2072b93e5a0a8add45f17c267a1a
+      internalID: 779792011111310311
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 243da6253dd65dd5aa40f8f3beaa7998
+      internalID: 2271277170189610913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 129c4009b23950b4a1328d2f1defe7ee
+      internalID: 2234672013039602845
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 608ed1cc43cc50abb1cee8e2a4b77f72
+      internalID: 272376836217973895
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7542a7ee8b05788bbeeb07d2290a243
+      internalID: 3374914115055541510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 440f523c59ba52ad944b31dfa7dfbf94
+      internalID: 93399973186811467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abbce39faa125df289c7856de853ab66
+      internalID: 997008946431781960
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 692bece28bdc52abbe005c01c16a8e1e
+      internalID: 80153704131085530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfbae2fca048587e956301c12b5ac8eb
+      internalID: 270047220037884831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e70682ae16e5c199ee893463d38086e
+      internalID: 2690321957949266159
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0df1471363b5671b0ca5c86714d2cdb
+      internalID: 2391551673649373161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 21d90a941cc25ecaa7a0763088788bd6
+      internalID: 2340915591527098292
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 16fa816646b056458fc26f9526cf0d3f
+      internalID: 1507928689274219254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f89df67913be58b99fcbe33d8d23fe1d
+      internalID: 2217284302915634968
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 552095b4417e5628a396ce79dbd0eb94
+      internalID: 4412016834360052436
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 67502ba222b95d69a730ec08740cdab9
+      internalID: 1389953856825679763
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a14f709e5db515ebbea0bc0637fbe66
+      internalID: 2926146699117144174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df9efba5b55056d79a239a921df1c13c
+      internalID: 1003661358149569723
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02dc4be8c2ef5177bfc539c6bd41e586
+      internalID: 3604218833553670924
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bab654ff04d05307987a04edcbd8ffe7
+      internalID: 2464045033228426467
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d3e44024e725c67b6ae15c1525b9c6c
+      internalID: 653308989566985963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fa4379dcdf9f5ad1bb5dafc6b64e9b8f
+      internalID: 2365408288233692712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f116f303c5fa5d92a051ca39cffacfb0
+      internalID: 403732385039597423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73fd8ce2e6c559e6b949390232dd76fc
+      internalID: 91242043616616994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdc0452ceac5535fb370e12713c54c9d
+      internalID: 1183703286043076710
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8d5b89ffde5f6eb7a7b4b3086bf2c2
+      internalID: 425633585238304420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 72112de2c54250b49d87b196f4fa7123
+      internalID: 1468337904919352350
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc7cdb6410cd5e53bbd986ab5d4bfd2b
+      internalID: 4519520363057359483
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 975d02b7bc2d5781869676e93bc3e536
+      internalID: 2938410932600823474
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c2ddea3472851d3b4ac94e6d1e11fb1
+      internalID: 2605824809437234709
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 196de9f1284b550ba1a42781c73d93d4
+      internalID: 2207773534026741464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cecf9f3e476a5c6cb30230857565ac37
+      internalID: 1533842918681416688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e697b4a43bea588b92d984f151b7afb3
+      internalID: 587984389142571582
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d496cff9ff41545489aa50e7303c9678
+      internalID: 2595776560563668974
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2973940715e55df2a09b2a12c096fe91
+      internalID: 2631246487169410885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50b302fd1716512f9bc89604274ef849
+      internalID: 3616056183553925438
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_rose_glass_wall_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9fb6b7bd84a52f68db7e8a7b1934042
+      internalID: 2778512179582084529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_rose_glass_wall_f0_v0: 1696879726157729639
+      tv2_rose_glass_wall_f1_v0: 2428904424209851645
+      tv2_rose_glass_wall_f4_v0: 4319848565631553146
+      tv2_rose_glass_wall_f5_v0: 2554459211960947703
+      tv2_rose_glass_wall_f7_v0: 1712291994996488463
+      tv2_rose_glass_wall_f16_v0: 1250604815991639693
+      tv2_rose_glass_wall_f17_v0: 182082784134279527
+      tv2_rose_glass_wall_f20_v0: 4019702272803061063
+      tv2_rose_glass_wall_f21_v0: 3212991420998288921
+      tv2_rose_glass_wall_f23_v0: 1773483849422882271
+      tv2_rose_glass_wall_f28_v0: 380864074329121727
+      tv2_rose_glass_wall_f29_v0: 841105034780335827
+      tv2_rose_glass_wall_f31_v0: 3868566678967741681
+      tv2_rose_glass_wall_f64_v0: 2596766537152951582
+      tv2_rose_glass_wall_f65_v0: 3542118932562335866
+      tv2_rose_glass_wall_f68_v0: 402984672603385942
+      tv2_rose_glass_wall_f69_v0: 3369089587030689688
+      tv2_rose_glass_wall_f71_v0: 773409852492510654
+      tv2_rose_glass_wall_f80_v0: 3949284631644871869
+      tv2_rose_glass_wall_f81_v0: 2282508648131203164
+      tv2_rose_glass_wall_f84_v0: 907880645457594651
+      tv2_rose_glass_wall_f85_v0: 1414340292133661643
+      tv2_rose_glass_wall_f87_v0: 593866934769956954
+      tv2_rose_glass_wall_f92_v0: 4400941873245607226
+      tv2_rose_glass_wall_f93_v0: 1819686846928533817
+      tv2_rose_glass_wall_f95_v0: 2865844991903473286
+      tv2_rose_glass_wall_f112_v0: 2335112045269703921
+      tv2_rose_glass_wall_f113_v0: 28895676182391606
+      tv2_rose_glass_wall_f116_v0: 4198111272939931380
+      tv2_rose_glass_wall_f117_v0: 4485698633362329075
+      tv2_rose_glass_wall_f119_v0: 4001764771469923288
+      tv2_rose_glass_wall_f124_v0: 1330254308806651200
+      tv2_rose_glass_wall_f125_v0: 467914140970264267
+      tv2_rose_glass_wall_f127_v0: 331831440141608404
+      tv2_rose_glass_wall_f193_v0: 775433065768918637
+      tv2_rose_glass_wall_f197_v0: 558706060733900689
+      tv2_rose_glass_wall_f199_v0: 1606126111408873074
+      tv2_rose_glass_wall_f209_v0: 1739901117349860612
+      tv2_rose_glass_wall_f213_v0: 2447824287044441153
+      tv2_rose_glass_wall_f215_v0: 3627821572679192567
+      tv2_rose_glass_wall_f221_v0: 4404719011758439874
+      tv2_rose_glass_wall_f223_v0: 4601060806456750299
+      tv2_rose_glass_wall_f241_v0: 421249351620719089
+      tv2_rose_glass_wall_f245_v0: 1344213288753110846
+      tv2_rose_glass_wall_f247_v0: 1349175925015368443
+      tv2_rose_glass_wall_f253_v0: 2343961325145695059
+      tv2_rose_glass_wall_f255_v0: 2942806779763057801
+      tv2_rose_glass_wall_f0_v1: 3609931569462728591
+      tv2_rose_glass_wall_f1_v1: 2824321921937065852
+      tv2_rose_glass_wall_f4_v1: 1505488340150727146
+      tv2_rose_glass_wall_f5_v1: 4430010276352447422
+      tv2_rose_glass_wall_f7_v1: 1238374897248697091
+      tv2_rose_glass_wall_f16_v1: 4320174654187659969
+      tv2_rose_glass_wall_f17_v1: 1073432234546400798
+      tv2_rose_glass_wall_f20_v1: 4544553741540004269
+      tv2_rose_glass_wall_f21_v1: 184562014573605568
+      tv2_rose_glass_wall_f23_v1: 4276262680122591437
+      tv2_rose_glass_wall_f28_v1: 1047099024811236699
+      tv2_rose_glass_wall_f29_v1: 2261955140926727149
+      tv2_rose_glass_wall_f31_v1: 830832710746743327
+      tv2_rose_glass_wall_f64_v1: 1363777877327492454
+      tv2_rose_glass_wall_f65_v1: 2228284721989246895
+      tv2_rose_glass_wall_f68_v1: 3374322503607507439
+      tv2_rose_glass_wall_f69_v1: 3406107287229272682
+      tv2_rose_glass_wall_f71_v1: 4350536407054393330
+      tv2_rose_glass_wall_f80_v1: 4364297221722038474
+      tv2_rose_glass_wall_f81_v1: 1626261469493425923
+      tv2_rose_glass_wall_f84_v1: 225785207940356121
+      tv2_rose_glass_wall_f85_v1: 3646314762984569034
+      tv2_rose_glass_wall_f87_v1: 1067948461672664371
+      tv2_rose_glass_wall_f92_v1: 2746763509060060834
+      tv2_rose_glass_wall_f93_v1: 221693865455676641
+      tv2_rose_glass_wall_f95_v1: 137354189432824163
+      tv2_rose_glass_wall_f112_v1: 4008909013698755744
+      tv2_rose_glass_wall_f113_v1: 1947188680588817415
+      tv2_rose_glass_wall_f116_v1: 3018934636714781852
+      tv2_rose_glass_wall_f117_v1: 1241669583022012501
+      tv2_rose_glass_wall_f119_v1: 2464950720338404146
+      tv2_rose_glass_wall_f124_v1: 4329790050085578975
+      tv2_rose_glass_wall_f125_v1: 2732117881773290482
+      tv2_rose_glass_wall_f127_v1: 2814879679510848358
+      tv2_rose_glass_wall_f193_v1: 3224666151934652184
+      tv2_rose_glass_wall_f197_v1: 1991484378713068120
+      tv2_rose_glass_wall_f199_v1: 2976077248100325536
+      tv2_rose_glass_wall_f209_v1: 920023928980862351
+      tv2_rose_glass_wall_f213_v1: 3791737538730133584
+      tv2_rose_glass_wall_f215_v1: 4473082041549547838
+      tv2_rose_glass_wall_f221_v1: 2285172266108213248
+      tv2_rose_glass_wall_f223_v1: 2064377325996124702
+      tv2_rose_glass_wall_f241_v1: 1279891583027944661
+      tv2_rose_glass_wall_f245_v1: 921576329165854737
+      tv2_rose_glass_wall_f247_v1: 3583615867010713319
+      tv2_rose_glass_wall_f253_v1: 417891982221312751
+      tv2_rose_glass_wall_f255_v1: 4408618759954539324
+      tv2_rose_glass_wall_f0_v2: 3562200617050609549
+      tv2_rose_glass_wall_f1_v2: 345098254273298764
+      tv2_rose_glass_wall_f4_v2: 660994496356534015
+      tv2_rose_glass_wall_f5_v2: 1681611536361394547
+      tv2_rose_glass_wall_f7_v2: 251119715570109526
+      tv2_rose_glass_wall_f16_v2: 2597252998453282409
+      tv2_rose_glass_wall_f17_v2: 3861863921926675101
+      tv2_rose_glass_wall_f20_v2: 3789967721504592011
+      tv2_rose_glass_wall_f21_v2: 4230040040046472445
+      tv2_rose_glass_wall_f23_v2: 4240779562645103760
+      tv2_rose_glass_wall_f28_v2: 779792011111310311
+      tv2_rose_glass_wall_f29_v2: 2271277170189610913
+      tv2_rose_glass_wall_f31_v2: 2234672013039602845
+      tv2_rose_glass_wall_f64_v2: 272376836217973895
+      tv2_rose_glass_wall_f65_v2: 3374914115055541510
+      tv2_rose_glass_wall_f68_v2: 93399973186811467
+      tv2_rose_glass_wall_f69_v2: 997008946431781960
+      tv2_rose_glass_wall_f71_v2: 80153704131085530
+      tv2_rose_glass_wall_f80_v2: 270047220037884831
+      tv2_rose_glass_wall_f81_v2: 2690321957949266159
+      tv2_rose_glass_wall_f84_v2: 2391551673649373161
+      tv2_rose_glass_wall_f85_v2: 2340915591527098292
+      tv2_rose_glass_wall_f87_v2: 1507928689274219254
+      tv2_rose_glass_wall_f92_v2: 2217284302915634968
+      tv2_rose_glass_wall_f93_v2: 4412016834360052436
+      tv2_rose_glass_wall_f95_v2: 1389953856825679763
+      tv2_rose_glass_wall_f112_v2: 2926146699117144174
+      tv2_rose_glass_wall_f113_v2: 1003661358149569723
+      tv2_rose_glass_wall_f116_v2: 3604218833553670924
+      tv2_rose_glass_wall_f117_v2: 2464045033228426467
+      tv2_rose_glass_wall_f119_v2: 653308989566985963
+      tv2_rose_glass_wall_f124_v2: 2365408288233692712
+      tv2_rose_glass_wall_f125_v2: 403732385039597423
+      tv2_rose_glass_wall_f127_v2: 91242043616616994
+      tv2_rose_glass_wall_f193_v2: 1183703286043076710
+      tv2_rose_glass_wall_f197_v2: 425633585238304420
+      tv2_rose_glass_wall_f199_v2: 1468337904919352350
+      tv2_rose_glass_wall_f209_v2: 4519520363057359483
+      tv2_rose_glass_wall_f213_v2: 2938410932600823474
+      tv2_rose_glass_wall_f215_v2: 2605824809437234709
+      tv2_rose_glass_wall_f221_v2: 2207773534026741464
+      tv2_rose_glass_wall_f223_v2: 1533842918681416688
+      tv2_rose_glass_wall_f241_v2: 587984389142571582
+      tv2_rose_glass_wall_f245_v2: 2595776560563668974
+      tv2_rose_glass_wall_f247_v2: 2631246487169410885
+      tv2_rose_glass_wall_f253_v2: 3616056183553925438
+      tv2_rose_glass_wall_f255_v2: 2778512179582084529
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,150 @@
+# Tiles V2 sample map, written by tools/tiles_v2/make_sample_map.py (edit that, not this).
+# First grid, what stands in a cell: G grass, D dirt, S stone, A sand, C clay, O copper ore,
+# slopes / \ (grass) ( ) (sand) { } (dirt) [ ] (stone), W water, L lava, T a wall torch,
+# P the hero's start, . air. Second grid, the wall behind it: d dirt wall, s stone wall.
+# Row 0 is the top. @surface is the row the cave backdrop starts at; @view names a place
+# (the middle of the camera's view of it); @shot names a picture: a place at an hour.
+@surface 20
+@view surface 20 11.5
+@view pond 33 15
+@view tunnel 54 19
+@view hall 54 33
+@view ore 20 37
+@view cavern 103 37
+@view dunes 108 13
+@view trickle 107 24
+@view lava 62 51
+@shot surface_sunset surface 18.75
+@shot surface_night surface 23
+@shot pond_morning pond 6.9
+@shot dunes_sunset dunes 18.6
+@shot tunnel_dusk tunnel 19.6
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+.................................................................................................................(AAAAAAAA).....
+.................................................................................................(AAAAAAA)......(AAAAAAAAAA)....
+........../GGGGGGGGG\................................................./GGGGGGGGGG\..............(AAAAAAAAA)....(AAAAAAAAAAAAAAAA
+.....P../GGDDDDDDDDDGG\................../GGG\...GGGGGGGGG\........./GGDDDDDDDDDDG\............(AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+GGGGGGGGGDDDDDDDDDDDDDGGGGGWWWWWWWWWGGGGGGDDDG\...DDDDDDDDGGGG...GGGGDDDDDDDDDDDDDGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+DDDDDDDDDDDDDDDDDDDDDDDDDDDWWWWWWWWWDDDDDDDDDDG\...DDDDDDDDDDD...DDDDDDDDDDDDDDDDDDDDDDDDDDDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+DDDDDDDDDDDDDDDDDDDDDDDDDDDDDWWWWWCCDDDDDDDDDDDG}.T.DDDDDDDDDC...DDDDDDDDDDDDDDDDDDDDDDDDDDDAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+DDDDDCCCDDDDDDDDDDDDDDDDDDDDDDCDCCCDDDDDDDCDDDDDD}...DDDDDDDDC...DDDDDDDDDDDDDDDDDDDDDDDDDDDAAAAAAAAAAA.AA.AAAAAAAAAAAAAAAAASSSS
+DCDDCDDCCDDDDDDDDDDDDDDDDDDDDDDDDCCCDDDDDCCCDDDDDD}...DDDDDDDC...DDDDDDDDDDDDDDDDDDDDDDDDDDDAAAASSSS...............AAAAAAASSSSSS
+DCCCDDDCDDDDDDDDDDDDDDDSDSDDDDDDDDDCCDDDDCCCDCCCDDD}...............DS.SS.DDDDDDDDDDDDDDDDDDDSSSSSS.......T.......T..AAAASSSSSSSS
+DDDCCCCDDDDDDDDDDDDDDDSSSDDDDDDDDDDDDCDDDDCCDDCCCCCD}.....T.........T........DDDDDDDDDDDDDDDSSSSS...................SSSSSSSSSSSS
+DDDCCDDDDDSDSDDDDDDDDDSSSDDCDDDDDDDDDDCDCCDDDDCCCCD.D........................CDDDDDDDDDDDDDDSSSSSS.................SSSSSSSSSSSSS
+DDCCSDDSSSDSSDDDDDDDDDDDDDDCCDDSSSSDDCDDDCDDDCCCSDDD........................CCCDDDDDDDDDDDDDSSSSSSSS...SSS..S.SSS.SSSSSSSSSSSSSS
+DDSSSDOSDDSDDDDDDDDDDDDCCCCCCDDSDSDDCCCCDDDDCSCSDDD.D.......................CSSSSSSSDDDDDDDDSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSOOOSSSSSSDDDDDDSSSSSSSSSDSSDSDDDCDDDDDCCSSDDDDD....DD.DDDDDDDSSSS....SSSSSSSSSSSSSDDDDSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSOSOOSSSSSSSSSSSSSSSSSSSSSSSSDDDDDDDDDDDCCDDDDSSSSSSSSSSDDDDSSSSSSSS...SSSSSSSSSSSSSSDDDSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSOOS
+SSSSSSOOSOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSDDDDDDSSSSSSSSSSSSSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSS.SSSS......SSSSSSSSSSSSSSSSSSSSSSOSS
+SSSSSSSSOOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOOSSSSSSSSSSS..SSSSSSSSSSSSSSSS...SOSOSSSSSSSSS.SSS...........S.SSSSSSSSSSSSSSSSSSSSSOS
+SSSSSSSSSSSOSOSSOOSSOOSSSSSSSSSSSSSSSSSSSSS.SSS............SSS.SSSSSSSSS...SOOOOSSSSSSSS.................SSSSSSSSSSSSSSSSSSSSSOS
+SSSSSSSSSSSSOSOSSOOOSOOSOOOSSSSS.........................................SSSS.SSSSSSSS.......................S.S.SSSSSSSSSSSOOSS
+SSSSSSSSOSSOOOOOOOOOSSOO.OSSS.S.................T.........T....................SSSSSS..........T..................SSSSSSSSOOOSSS
+SSSSSSSOSOO.OSSO.S...S..............T...............................T................................................SSSSSSSSSSS
+SSSSSSOS......................................................................T......................................SSSSSSSSSSS
+SSSSSSOO......T.........T.......................................................................................T......SSSSSSSSS
+SSSSSSS.........................S...........S.SS..........SS.............S.....S.SSS...............................T..SSSSSSSSSS
+SSSSSSS....................S..SSSSSSSSSS...SSSSS.S.SOSSSSSSSSS.SSS..S.S.SSS.SSSSSSSS...................T...............SSSSSSSSS
+SSSSSSSS.S.........D.OO.S.SSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSO.T................................SSSSSSSSSS
+SSSSSSSSSS.DDDS.SDDOOOOSSSSSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOS....................................SSSSSSSSS
+SSSSSSSSSDDSSSSSSSSSSOSSSSSSSSSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOSOS.....SSSWWWWWWWWWWWWWWWWWWWWWWWWWSSSSSSSSSSS
+OSSSSSSSSDDSSSSSSSSSSSOOSSSSSSSSSSSSSSSS...SSSSSSSSSSSSSSDSSSSSSSSSSSSSSSSSSSSSSSSS......SSSWWWWWWWWWWWWWWWWWWWWWWWWDDSSSSSSSSSS
+OOOSSSSSSSDDSSSSSSSSSSSOOSOSSSSSSSSSSSSS...SSSSSSSSSSSSSSDSSSSSSSSSSSSSSSSSSSSSSSSSSS....SSSWWWWDDWSSSSWWWWWWWWWWWSDSSDDSSSSSSSS
+OOSSSSSSDDDSSSSSSSSSSSSOSSSOOSSSSSSSSSSS.T.SSSSSSSSSSSSSSDDDSDDDSSSSSSSSSSDDDSSSSSSSSS...SSSWWWSSSSSSSSSSWWSWWDWSSSSSSSDSSSSSSSS
+OSSSSSSSDSSSSSSSSSSSSSOOSSSOSSSSSSSSSSSS...SSSSSSSSSSSSSSSSDDDSDDSSSSSSSSSDDSSSSSSSSSS...SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSDSSSSSSSSSSSSSOOSSSSOSSSSSSSSSSS...SSSSSSSSSSSSSS.SS.DDSSSS.S.SSSSDSDSSSSSSSSS...SSSOOSSSSSSSSSSOSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSDSSSSSSSSSSSSSSOSSSSOOSOSSSSSSS...S..SSSSSSSSS...............S.S.SDSSS.SSSS.S...OOOOSSSSSSSSSSOSSSSSSSSSSSSSDDDDSSSSSSS
+SSSSSSSSDDDSSSSSSSSSSSSSSOSSSOOO.................S...........................................S.S.SSSSSOSSSSSSSSSSSSSSDDDSSSSSSSS
+SSSSSSSSSDDSSSSSSSSSSSSSSSO...................................T..................................S.SSOOOSSSSSSSSSSSSSSSDDSSSSSSS
+SSSSSSSSSOSSSSSSSSSSSSSSSS..........................................................................SOSSDDSSSSSSSSSSSSDDDDDSSSSS
+SSSSSSSOOSSSSSSSSSSSSSSSS...........................................................................OSSDSSDDSDDSSSSSSDDSSDSSSSSS
+SSSSSSOOOOSSSSSSSSSSSSSSS.....T...............................................................T.....OSSSDDDDDDDDSSSSSSSSSSSSSSSS
+SSSSSSSSOOSOOSSSSSSSSSSSS...........................................................................OSSSDDDDDDSSDDDSSSSSSSSSSSSS
+SSSSSSSSOOOSSSSSSSSSSSSSSSS.......................................................................SSDDDSDDSDDSSDSDDDSSSSSSSSSSSS
+SSSSSSSSOOOSSSSSSSSSSSSSSSSSSSSS......SSSSSSSSS.........SSSSSSSSS.......SSSSS.......SSSSSSSSSSSSSSSDDDDSSDDSSSSSSSDSSSSSSSSSSSSS
+SSSSSSSSOOSSSSSSSSSSSSSSSSSSSSSSLLLLLLSSSSSSSSSLLLLLLLLLSSSSSSSSSLLLLLLLSSSSSLLLLLLLSSSSSSSSSSSSSSSSDDDSDDDDSDSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSLLLLLLSSSSSSSSSLLLLLLLLLSSSSSSSSSLLLLLLLSSSSSLLLLLLLSSSSSSSSSSSSSSSSSDDSDDSDDDDSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSLLLLLLSSSSSSSSSLLLLLLLLLSSSSSSSSSLLLLLLLSSSSSLLLLLLLSSSSSSSSSSSSSSSSSSSSDSSSDDSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSDDDSSSSSSSSSSSSSSSSSSSSSSSSSDSDSSSSSSOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSDDSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSDSSSSSSSSSSSSSSSSSSSSSSSSSSSDDDSSSSSSOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSDSDSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOSDDDSSSSSOSSSSSSSSSSSSSSSSSSSSSSSSSSSDDDDSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOSSDDSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSDSSSSSSSSSSSSSSSSSSSSSSSSS
+SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSOSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS
+
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+................................................................................................................................
+..................................................................................................................dddddddd......
+..................................................................................................ddddddd........dddddddddd.....
+...........ddddddddd...................................................dddddddddd................ddddddddd......dddddddddddddddd
+.........ddddddddddddd....................dddddddddddddddd...........ddddddddddddd..............dddddddddddddddddddddddddddddddd
+ddddddddddddddddddddddddddd.........dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+ddddddddddddddddddddddddddddd.....dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssss
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddsssssdddddddddddddddddddddssssss
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddsssssssssssssssssssssssdddddssssssss
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssssssssssssssssssssssssssssssss
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssssssssssssssssssssssssssssssss
+ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddssssssssssssssssssssssssssssssssssss
+dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddsssssssddddddddssssssssssssssssssssssssssssssssssss
+sssssssssssssssddddddsssssssssdddddddddddddddddddddddsssdddddddddddsssssssssssssssssssddddddssss.sssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssddddddddddddddddddssssssssssddddssssssssssssssssssssssssd...............ssssssssssssssssssssssss
+sssssssssssssssssssssssssssssssssssssssssddddddssssssssssssssssssssssssssssssssssssssss...................ssssssssssssssssssssss
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss............................sssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss...............................sssssssssssss
+sssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss..................................sssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss....................................ssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss.....................................sssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss......................................ssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss......................................ssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss......................................ssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss......................................ssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss......................................ssssssss
+sssssssssssssssssssssssssssssssssssssss.....ssssssssssssssssssssssssssssssssssssss.....................................sssssssss
+sssssssssssssssssssssssssssssssssssssss.....ssssssssssssssssssssssssssssssssssssss....................................ssssssssss
+sssssssssssssssssssssssssssssssssssssss.....sssssssssssssssssssssssssssssssssssssss..................................sssssssssss
+sssssssssssssssssssssssssssssssssssssss.....ssssssssssssssssssssssssssssssssssssssss.............sssss.............sssssssssssss
+sssssssssssssssssssssssssssssssssssssss.....sssssssssssssss.......sssssssssssssssssss..........sssssssss.........sssssssssssssss
+ssssssssssssssssssssssssssssssssssss.........sssssss.....................sssssss...........sssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssss.................................................................sssssssssssssssssssssssssssssssss
+sssssssssssssssssssssssssss.......................................................................ssssssssssssssssssssssssssssss
+sssssssssssssssssssssssss...........................................................................ssssssssssssssssssssssssssss
+ssssssssssssssssssssssss.............................................................................sssssssssssssssssssssssssss
+sssssssssssssssssssssss...............................................................................ssssssssssssssssssssssssss
+sssssssssssssssssssssss...............................................................................ssssssssssssssssssssssssss
+ssssssssssssssssssssssss.............................................................................sssssssssssssssssssssssssss
+sssssssssssssssssssssssss...........................................................................ssssssssssssssssssssssssssss
+sssssssssssssssssssssssssss.......................................................................ssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssss.....................s.....................s.....................sssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssss.........ssssssssssssss.......ssssssssssssss.........sssssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss
+ssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss

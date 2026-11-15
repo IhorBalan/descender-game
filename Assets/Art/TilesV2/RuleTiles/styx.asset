@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48e3552d75da264dab0819f6f3e02df, type: 3}
+  m_Name: styx
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.LiquidTile
+  liquidKey: styx
+  surface:
+  - {fileID: 2597814215992454242, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 605746092745625931, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 1340472044306456942, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 4395544696266596248, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 3534025162446737786, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 4215174822683639936, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 1529186917638792657, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 2417245967449025339, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  body:
+  - {fileID: 1494141983158555696, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 2453058852365340367, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 1352534950098700136, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 1340923761205840932, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 2151511543657089180, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 1207526796247155247, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 4575717764784279999, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  - {fileID: 2357574090129048813, guid: 770215f14ca952f1b60f0d5c7b3651bd, type: 3}
+  framesPerSecond: 5
+  keeps: {r: 0.6, g: 0.8, b: 0.76, a: 1}
+  emits: {r: 0, g: 0, b: 0, a: 1}
