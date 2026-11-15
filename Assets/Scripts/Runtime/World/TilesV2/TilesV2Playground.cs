@@ -160,7 +160,8 @@ namespace Descender.World.TilesV2
                         $"{things.BeaconsLit} of {things.Beacons}"
                     );
                 things.SanctumOpened += _ => Say("the door of the Temple is open");
-                Pickups.Checkpoint.AnyRested += checkpoint => rested.Add(checkpoint.Index);
+                // The checkpoints' events are the game's and outlive this scene: taken off again in OnDestroy.
+                Pickups.Checkpoint.AnyRested += NoteRest;
                 Pickups.Checkpoint.AnyCampRequested += OpenTravel;
             }
             if (world.Map != null && world.Map.Regions.Count > 0)
@@ -790,6 +791,15 @@ namespace Descender.World.TilesV2
         private void OnDestroy()
         {
             chart?.Release();
+            // Static events: left on, they would call into this playground after it is gone.
+            Pickups.Checkpoint.AnyRested -= NoteRest;
+            Pickups.Checkpoint.AnyCampRequested -= OpenTravel;
+        }
+
+        // A checkpoint rested at is one the hero may travel to.
+        private void NoteRest(Pickups.Checkpoint checkpoint)
+        {
+            rested.Add(checkpoint.Index);
         }
 
         // What walking does: the chart fills in, and a new region says its name.
