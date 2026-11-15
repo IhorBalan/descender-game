@@ -316,9 +316,10 @@ namespace Descender.World.TilesV2
                     }
                     case Flag:
                     {
+                        // A rod in the middle of a cell (a great roof's) has its pennant moved to it: so many pixels.
                         var holder = new GameObject("Flag");
                         holder.transform.SetParent(things.transform, false);
-                        holder.transform.position = foot;
+                        holder.transform.position = foot + new Vector2(mark.Number(0, 0) * TilesV2Particles.Pixel, 0f);
                         var atRod = new Sprite[4];
                         var tail = new Sprite[4];
                         for (var i = 0; i < 4; i++)

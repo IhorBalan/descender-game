@@ -593,8 +593,8 @@ namespace Descender.Tests
                     }
                 }
             }
-            // (The Earth's trees are pictures now, TilesV2EarthTests; these are Paradise's.)
-            Assert.That(crowns, Is.GreaterThan(50), "trees and columns stand in the open");
+            // (Trees are pictures now, the Earth's and Paradise's; these are the glass and the gilt of Paradise's halls.)
+            Assert.That(crowns, Is.GreaterThan(50), "the windows of Paradise stand in the open");
             // A dark stretch: the air of its region gives it nothing, so with the stretches marked
             // some of the world is darker than without, and none of it brighter.
             var dark = world.Dark();
@@ -824,6 +824,81 @@ namespace Descender.Tests
                 Object.DestroyImmediate(things.gameObject);
                 Pickups.Checkpoint.Reset();
             }
+        }
+
+        [Test]
+        public void TheTreesAndCastlesOfParadiseArePicturesStoodInTheAir()
+        {
+            // Paradise is drawn as the Earth is: its trees, the towers and roofs of its castles, its halls and
+            // what stands about them are pictures the map stands, lit by the tile light.
+            var trees = 0;
+            var towers = 0;
+            var behind = 0;
+            var roofs = 0;
+            var rooms = 0;
+            var seen = new HashSet<string>();
+            foreach (var mark in map.Marks)
+            {
+                var key = mark.Word(0);
+                if (mark.Kind != TilesV2Things.Stood || !key.StartsWith("heaven_"))
+                {
+                    continue;
+                }
+                seen.Add(key);
+                var entry = System.Array.Find(set.backdrops, backdrop => backdrop.key == key);
+                Assert.That(entry, Is.Not.Null, "the tile set has no " + key);
+                Assert.That(entry.sprite, Is.Not.Null, key);
+                Assert.That(entry.lit, Is.True, key + " takes the tile light");
+                Assert.That(mark.Row, Is.LessThan(map.Surface), key + " stands under the Earth");
+                Assert.That(Solid(mark.Column, mark.Row), Is.False, key + " is marked in the ground");
+                trees += key.StartsWith(TilesV2Petals.BlossomTree) || key.StartsWith(TilesV2Petals.GoldTree) ? 1 : 0;
+                roofs += key.StartsWith("heaven_roof") ? 1 : 0;
+                rooms += key.StartsWith("heaven_room") || key.StartsWith("heaven_hall") ? 1 : 0;
+                if (!key.StartsWith("heaven_tower"))
+                {
+                    continue;
+                }
+                if (key.Contains("_back"))
+                {
+                    behind++;
+                    Assert.That(entry.order, Is.LessThan(TilesV2World.FoliageOrder), key + " stands behind");
+                    continue;
+                }
+                towers++;
+                // A near tower is before the map's tiles, and its roof is stood on: under the picture's roof
+                // are the map's own roof tiles, three rows over the top of its shaft.
+                Assert.That(entry.order, Is.GreaterThan(TilesV2World.TerrainOrder), key);
+                var tall = int.Parse(key.Substring("heaven_tower_".Length).Split('_')[0].Split('x')[1]);
+                Assert.That(Solid(mark.Column, mark.Row - tall - 2), Is.True, key + " has no roof to stand on");
+            }
+            Assert.That(trees, Is.GreaterThan(9), "the trees of Paradise");
+            Assert.That(towers, Is.GreaterThan(11), "the near towers of its castles");
+            Assert.That(behind, Is.GreaterThan(6), "the towers further back");
+            Assert.That(roofs, Is.EqualTo(3), "the great roofs: the citadel's, the keep's, the pavilion's");
+            Assert.That(rooms, Is.EqualTo(5), "the citadel's hall either side, the House's two halls, its keep");
+            foreach (var key in new[] { "heaven_high_seat", "heaven_rotunda", "heaven_angel_0", "heaven_span" })
+            {
+                Assert.That(seen.Contains(key), Is.True, key + " stands nowhere");
+            }
+            // Every picture of Paradise the tile set has is stood somewhere: none is drawn for nothing.
+            foreach (var backdrop in set.backdrops)
+            {
+                if (backdrop.key.StartsWith("heaven_"))
+                {
+                    Assert.That(
+                        seen.Contains(backdrop.key),
+                        Is.True,
+                        backdrop.key + " is in the set and not on the map"
+                    );
+                }
+            }
+            // A pennant on a great roof's rod, which is in the middle of a cell, is moved to the rod.
+            var moved = 0;
+            foreach (var mark in map.Marks)
+            {
+                moved += mark.Kind == TilesV2Things.Flag && mark.Number(0, 0) != 0 ? 1 : 0;
+            }
+            Assert.That(moved, Is.EqualTo(2), "the citadel's roof and the keep's");
         }
 
         [Test]

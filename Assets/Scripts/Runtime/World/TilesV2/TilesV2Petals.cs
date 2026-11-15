@@ -14,6 +14,14 @@ namespace Descender.World.TilesV2
         public const string Blossom = "blossom_wall";
         public const string GoldLeaf = "gold_leaf_wall";
 
+        /// <summary>The trees stood as pictures that shed: what their keys begin with.</summary>
+        public const string BlossomTree = "heaven_blossom";
+        public const string GoldTree = "heaven_gold";
+
+        // Of a tree's picture, the part that is crown: from this much of its height up, and this much of its width.
+        private const float CrownFrom = 0.45f;
+        private const float CrownWide = 0.8f;
+
         // Petals a second from the crowns in view, and how far from the view's middle a crown still sheds.
         private const float Rate = 9f;
         private static readonly Vector2 Near = new Vector2(24f, 15f);
@@ -34,23 +42,23 @@ namespace Descender.World.TilesV2
         /// <summary>Finds the world's crowns and makes the system; null for a world with none.</summary>
         public static TilesV2Petals Build(TilesV2World world, Transform parent)
         {
-            if (world.Foliage == null)
-            {
-                return null;
-            }
             var found = new List<Vector3>();
             var gold = new List<bool>();
-            world.Foliage.CompressBounds();
-            foreach (var cell in world.Foliage.cellBounds.allPositionsWithin)
+            if (world.Foliage != null)
             {
-                var tile = world.Foliage.GetTile<TerrainTile>(cell);
-                if (tile == null || (tile.MaterialKey != Blossom && tile.MaterialKey != GoldLeaf))
+                world.Foliage.CompressBounds();
+                foreach (var cell in world.Foliage.cellBounds.allPositionsWithin)
                 {
-                    continue;
+                    var tile = world.Foliage.GetTile<TerrainTile>(cell);
+                    if (tile == null || (tile.MaterialKey != Blossom && tile.MaterialKey != GoldLeaf))
+                    {
+                        continue;
+                    }
+                    found.Add(world.Foliage.GetCellCenterWorld(cell));
+                    gold.Add(tile.MaterialKey == GoldLeaf);
                 }
-                found.Add(world.Foliage.GetCellCenterWorld(cell));
-                gold.Add(tile.MaterialKey == GoldLeaf);
             }
+            TreesOf(world, found, gold);
             if (found.Count == 0)
             {
                 return null;
@@ -85,6 +93,44 @@ namespace Descender.World.TilesV2
             TilesV2Particles.Fade(petals.system, Color.white, Color.white, 0.12f);
             petals.system.Play();
             return petals;
+        }
+
+        // The crowns of the trees a map stands as pictures: a place for every cell of each one's crown.
+        private static void TreesOf(TilesV2World world, List<Vector3> found, List<bool> gold)
+        {
+            if (world.Map == null || world.Set == null)
+            {
+                return;
+            }
+            Vector2 origin = world.transform.position;
+            foreach (var mark in world.Map.Marks)
+            {
+                var key = mark.Word(0);
+                var golden = key.StartsWith(GoldTree);
+                if (mark.Kind != TilesV2Things.Stood || (!golden && !key.StartsWith(BlossomTree)))
+                {
+                    continue;
+                }
+                var entry = System.Array.Find(world.Set.backdrops, backdrop => backdrop.key == key);
+                if (entry == null || entry.sprite == null)
+                {
+                    continue;
+                }
+                // The picture stands on the foot of its cell, its floor line at its pivot.
+                var cell = world.Map.CellOf(mark.Column, mark.Row);
+                var foot = origin + new Vector2(cell.x + 0.5f, cell.y);
+                var bounds = entry.sprite.bounds;
+                var low = bounds.min.y + bounds.size.y * CrownFrom;
+                var half = bounds.size.x * CrownWide / 2f;
+                for (var y = low + 0.5f; y < bounds.max.y - 0.5f; y += 1f)
+                {
+                    for (var x = bounds.center.x - half + 0.5f; x < bounds.center.x + half; x += 1f)
+                    {
+                        found.Add(new Vector3(foot.x + x, foot.y + y, 0f));
+                        gold.Add(golden);
+                    }
+                }
+            }
         }
 
         /// <summary>Sheds from the crowns near a view for a time; returns how many petals it let go.</summary>

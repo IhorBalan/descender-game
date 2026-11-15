@@ -13,6 +13,7 @@ from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_earth
+import tv2_heaven
 
 BACKDROP_W, BACKDROP_H = VIEW  # a backdrop picture is the size of the view and repeats sideways
 SKY_BANDS = 7
@@ -56,6 +57,8 @@ BACKDROPS = [
 # The Earth's (tv2_earth.py): a ridge of hills between the mountains and the woods, and the
 # pictures its surface and its mine are dressed with.
 BACKDROPS += tv2_earth.NEW_RIDGES + tv2_earth.ENTRIES
+# Paradise's (tv2_heaven.py): its trees, the towers and roofs of its castles, its halls.
+BACKDROPS += tv2_heaven.ENTRIES
 # The rock behind the caves is a region's own (REGIONS in tv2_base.py): each region that
 # has one gets `backdrop_cave_<region>` and its ragged top, `backdrop_cave_top_<region>`.
 CAVE_SCROLL = 0.55
@@ -694,6 +697,7 @@ def backdrops() -> dict[str, Image.Image]:
             caves["backdrop_cave_top_" + region["key"]] = backdrop_cave_top(region)
             caves["backdrop_far_" + region["key"]] = tv2_earth.far_mine(region) if FAR[region["key"]] == "mine" else backdrop_far(region)
     earth = tv2_earth.pictures()
+    earth.update(tv2_heaven.pictures())
     earth.update({key: paint() for key, _, _, paint in tv2_earth.RIDGES})
     return {
         **caves,

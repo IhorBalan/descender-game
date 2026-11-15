@@ -38,6 +38,7 @@ from PIL import Image
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_backdrop
 import tv2_earth
+import tv2_heaven
 import tv2_decor
 import tv2_liquid
 import tv2_preview
@@ -324,7 +325,8 @@ def generate(out: str):
         sprites[name] = image.crop((x, image.height - y - h, x + w, image.height - y))
     for name, image in tv2_backdrop.backdrops().items():
         path = os.path.join(out, name + ".png")
-        write(path, image, backdrop_meta(path, tv2_earth.pivot_of(name) if name in tv2_earth.SINK_OF else (0.5, 0.0)))
+        stood = tv2_earth if name in tv2_earth.SINK_OF else tv2_heaven if name in tv2_heaven.SINK_OF else None
+        write(path, image, backdrop_meta(path, stood.pivot_of(name) if stood else (0.5, 0.0)))
         images[name] = image
     path = os.path.join(out, "tiles_v2.json")
     with open(path, "w", newline="\n") as handle:

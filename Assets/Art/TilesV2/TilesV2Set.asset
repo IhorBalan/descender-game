@@ -3104,3 +3104,513 @@ MonoBehaviour:
     rise: 0
     drift: 0
     tinted: 0
+  - key: heaven_blossom_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 38d49626c1f457c980eacdd42a761d62, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_blossom_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 528e173a9e395608bb84c5000d455f9c, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_blossom_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7a295ccf3c0756a08ca90a8718f17fe3, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_blossom_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: ecb73ba497095cd299222b0e2c1147f6, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_gold_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: b83ff906a29a5ea6903c612e2cb7c0c7, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_gold_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: e85f42a7790f58acb839e6048e847ac7, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_gold_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 73e082927a5f520ca54dc726f2af3e5d, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_gold_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7e52e8bad2a155ee9c104adc74dcb0f2, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_8x24
+    kind: 8
+    sprite: {fileID: 21300000, guid: 5c907bd52f785575b245a71e84ef422e, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_6x13
+    kind: 8
+    sprite: {fileID: 21300000, guid: 6dfffa4c2aac5846be6ceef4b6e3046c, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_6x16
+    kind: 8
+    sprite: {fileID: 21300000, guid: 02a1937f4deb532cb4be9e29d5cedf8d, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_8x19
+    kind: 8
+    sprite: {fileID: 21300000, guid: 297b4e26e41c5dd78a4cf65d97f0ffd6, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x15
+    kind: 8
+    sprite: {fileID: 21300000, guid: 2ffcc4f177205bd1aaf97b46a8d2886f, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x9_hung
+    kind: 8
+    sprite: {fileID: 21300000, guid: ea2319b21b5a595f8c9deafd38c4b740, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_8x25
+    kind: 8
+    sprite: {fileID: 21300000, guid: b8ddba07c9c5503d8ea92d4d7dfb55e6, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_6x11
+    kind: 8
+    sprite: {fileID: 21300000, guid: 8eb3b88d60395e91bcd043358581c413, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x9
+    kind: 8
+    sprite: {fileID: 21300000, guid: bd24a7ffc9af5529a0f780edb5c59040, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_6x14
+    kind: 8
+    sprite: {fileID: 21300000, guid: b3d9da66339f59559f87e0702a763d63, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_8x20
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9449b5eaadb45c2bbe8d787e15892a07, type: 3}
+    scroll: 1
+    order: -97
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x31_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: 379f234074d65ec1b7fd7a6dd07a07e8, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_6x22_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: 824fd4976ce257699459d4a95b58f787, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x27_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: e6733254409e5effa9dead894d2344b4, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x24_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: 02b7de5a36c659429b6fba015225f506, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x19_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0a737ac2bd3154e3b9d3271f10d6cbc9, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x21_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: b70f84452b0f56c79fdd2ae37497f4a7, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_tower_4x15_back
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9672cac51cc3592ea04e3b2a667db038, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_roof_29
+    kind: 8
+    sprite: {fileID: 21300000, guid: 876ea34e0dbc5b7087e9b935499f7ee3, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_roof_21
+    kind: 8
+    sprite: {fileID: 21300000, guid: 48bcf6fc1cc459a798567cbd69c688cd, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_roof_14
+    kind: 8
+    sprite: {fileID: 21300000, guid: 06a8687ca8905697945294890b05f416, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_pillar_18x2
+    kind: 8
+    sprite: {fileID: 21300000, guid: b31cf2f054965602882f280f7beec176, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_pillar_8x2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 25f99575cf5f5d38baac3ae99fda2c14, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_pillar_12x1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 571cff64b0f959b78a03472e8a893c89, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_hall_west
+    kind: 8
+    sprite: {fileID: 21300000, guid: c7a4790a4ea65622b50fb72674bccb73, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_hall_east
+    kind: 8
+    sprite: {fileID: 21300000, guid: 2b8b0d6e5f385385ade05b8ca3d2de10, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_high_seat
+    kind: 8
+    sprite: {fileID: 21300000, guid: 17eb10d2c95159e78e8cfad91d8a456d, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_gate
+    kind: 8
+    sprite: {fileID: 21300000, guid: 42659da7fd995b218fdc56b2041a25b5, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_rotunda
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0c6873f065ea5167b4c4a4e16ea1e61e, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_angel_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 5132c7a66c87516f837985137ba070fa, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_angel_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 27548c22d8915e78b324594328624ff0, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_bridge_6
+    kind: 8
+    sprite: {fileID: 21300000, guid: bdc812be138055acb16c1ed07993ebce, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_bridge_7
+    kind: 8
+    sprite: {fileID: 21300000, guid: affc3b20d1575f349ce017630f707a9a, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_bridge_8
+    kind: 8
+    sprite: {fileID: 21300000, guid: c8f39ba1edbb523090f06206e169d620, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_bridge_9
+    kind: 8
+    sprite: {fileID: 21300000, guid: 58021be5af035503828968fa5a356b96, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_parapet_27
+    kind: 8
+    sprite: {fileID: 21300000, guid: cc806eb5231f5244b52560c5a51c0979, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_parapet_33
+    kind: 8
+    sprite: {fileID: 21300000, guid: 84c6da6be8f95569a8bf757336a144e8, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_portal_9x9
+    kind: 8
+    sprite: {fileID: 21300000, guid: 921b2a2010cf5f78bf03216f39d898c2, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_portal_4x6
+    kind: 8
+    sprite: {fileID: 21300000, guid: ddb4f31f32bb57cfbb2e7d47e8206ac4, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_span
+    kind: 8
+    sprite: {fileID: 21300000, guid: 5213e5ddaaeb5c0896a80321530da903, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_room_lower
+    kind: 8
+    sprite: {fileID: 21300000, guid: dcdbfffe11805264be117fc868cdc1b7, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_room_upper
+    kind: 8
+    sprite: {fileID: 21300000, guid: e530f35a28565841829bbd0d31331a3c, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: heaven_room_keep
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9453fb99dd055635b1a7173e4079ad5b, type: 3}
+    scroll: 1
+    order: -284
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0

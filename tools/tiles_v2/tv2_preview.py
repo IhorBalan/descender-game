@@ -21,6 +21,7 @@ from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_backdrop
 import tv2_decor
 import tv2_earth
+import tv2_heaven
 import tv2_light
 import tv2_liquid
 from tv2_terrain import BLEND_MASKS, BLEND_SIDES
@@ -303,15 +304,18 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
     # ground (track), on the water (lilies), or unlit (a lamp in a window).
     stood = {b["key"]: b for b in tv2_backdrop.BACKDROPS if b["kind"] == "picture"}
     later: dict[str, list] = {"track": [], "water": [], "glow": []}
-    for kind, x, row, rest in layout.marked:
+    # In the order the scene sorts them by, and among equals as the map names them.
+    for kind, x, row, rest in sorted(layout.marked, key=lambda m: stood[m[3][0]]["order"] if m[0] == "picture" and m[3] and m[3][0] in stood else 0):
         if kind != "picture" or not rest or rest[0] not in stood or rest[0] not in images:
             continue
         entry, image = stood[rest[0]], images[rest[0]]
         px, py = window.at(x, row)
-        at = (px + TILE // 2 - image.width // 2, py + TILE - image.height + tv2_earth.SINK_OF.get(rest[0], 0))
+        at = (px + TILE // 2 - image.width // 2, py + TILE - image.height + tv2_earth.SINK_OF.get(rest[0], tv2_heaven.SINK_OF.get(rest[0], 0)))
         if at[0] > width or at[1] > height or at[0] + image.width < 0 or at[1] + image.height < 0:
             continue
-        if not entry["lit"]:
+        if not entry["lit"] and entry["order"] < -300:
+            paste_clipped(canvas, image, at)  # a picture of light in the sky (a rainbow, a glory): behind all that is built
+        elif not entry["lit"]:
             later["glow"].append((image, at))
         elif entry["order"] > 20:
             later["water"].append((image, at))

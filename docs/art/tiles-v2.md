@@ -163,7 +163,9 @@ of blue with slopes and steep slopes, which give a little light of their own,
 so a great roof has no dark heart; `azure_shade` is the same roof's side away
 from the sun, and `azure_wall` a roof further back, on the wall behind. A round
 tower's stone comes in three lights, all open walls: `tower_lit_wall` toward
-the sun, `tower_wall` its face, `tower_shade_wall` away from it. Every plain
+the sun, `tower_wall` its face, `tower_shade_wall` away from it (the world's
+own towers are pictures now, "Paradise's pictures"; these are for a map that
+builds a tower out of tiles). Every plain
 letter and digit is a legend character already, so these are Latin-1 letters.
 
 A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
@@ -273,7 +275,8 @@ stands where:
 
 A mark may also be `secret` (a wall the sword breaks, with a room behind it),
 `platform` (one that gives way or comes and goes), `wind`, `flag` (a pennant
-that flies), `upgrade` (a heart
+that flies; a number after its cell moves it by so many pixels, for a rod in
+the middle of a cell), `upgrade` (a heart
 or a draught of the game's), `sign` (a post, a tablet, a shade or a soul that
 says a line), `dark` (a stretch whose air gives no light), `beacon` (a light
 the hero lights by walking up to it), `sanctum` (a door that opens when enough
@@ -394,7 +397,7 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 | what stands far off | 0.78, 0.78 | a 640 x 360 picture for each region (`FAR`: columns, spires, fangs, heaps, bare trees, towers with lit windows, a viaduct, shards), a little lighter than the rock, over it and cut to the region as it is; nearer than the rock, so it moves more |
 | cave rock's top | 0.55, 1 | a ragged strip along the top of each region's rock, so one region's rock runs into the next one's |
 | heaven (`heaven`; only over a map with regions) | each its own | nine layers, each standing `rise` tiles over the surface line for a camera on that line and keeping the camera company on its way up by the share `scrollUp` leaves (what is far follows it). Far to near: a country of cloud (0.05 across, 0.66 up; a picture 80 tiles high) and castles far off on banks of cloud (0.1, 0.7; 84 tiles high), both set so that a view on the Earth's surface is under their feet and a view anywhere in Paradise is in them, islands far off (0.06, 0.25) and nearer (0.16, 0.4), thin cloud high up and two seas of cloud (fixed in height; they drift), shafts of light (0.3, 0.6), and wisps of cloud fixed in the world that drift in front of the hero. All but the light take the hour's tint; the two tall pictures thin out toward the Earth |
-| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow, a glory of rings and rays; the Earth's trees, buildings and the timber of its mine (below) |
+| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow, a glory of rings and rays; the Earth's trees, buildings and the timber of its mine, and Paradise's trees, towers, roofs and halls (both below) |
 
 A cell shows the cave rock when it has no wall and lies under the surface
 line: leave the walls out of a cavern to open it onto the rock.
@@ -421,6 +424,34 @@ the light from the top left; ramps that shift hue (shadows cool, the lit side wa
 crown is a few rounded bundles shaded as balls, each with a dark rim where it lies over
 the one behind and a gap or two where the branches show, never one ball on a stick; the
 props of the background darker and less saturated than the ground the hero walks on.
+
+## Paradise's pictures
+
+Paradise is dressed the same way (`tv2_heaven.py`, which paints with the Earth's
+canvas and brushes): every tree, tower, roof, column, gate, bridge and wall of a
+room there is a picture stood by the map, 51 of them, lit by the tile light. The
+light is from the top left: a tower is round, so its stone goes from lit on its
+left through its face to shade on its right (`round_shift`); stone is laid in
+courses, each block its own shade, the joint dark and the block's top lit
+(`ashlar`); a roof is rows of round-footed tiles with a side out of the sun
+(`shingles`); what stands further back is paler, bluer and plainer. Each kind
+has its own order, so where two overlap which is in front is never left to
+chance:
+
+| Order | Pictures |
+|---|---|
+| -289 | towers further back (`heaven_tower_WxT_back`): in front of the walls, behind everything else of a castle |
+| -287 | trees: 4 in blossom, 4 with leaves of gold (`heaven_blossom_N`, `heaven_gold_N`), their roots a tile under their floor line |
+| -284 | the wall at the back of a room, over the walls and the open walls the map lays there (which still let the light in where their glass is): either side of the citadel's hall (`heaven_hall_west`, `_east`: a tile of wall, two bays of the arcade and its end), the wall behind the high seat (`heaven_high_seat`, 25 x 41 tiles, its floor line two tiles up, on the steps of gold), the House's two halls and its keep (`heaven_room_lower`, `_upper`, `_keep`; an opening in a picture is a window the sky shows through) |
+| -283 | what stands before a wall or the sky: columns (`heaven_pillar_RxW`), the gatehouses' gate, the gates that stand free (`heaven_portal_AxR`), the bridges between towers (`heaven_bridge_N`), battlements (`heaven_parapet_N`), the Garden's bridge (`heaven_span`, marked on its deck: ten tiles of it hang under the mark), the round temple, the host in marble |
+| -99 | a great roof's tiles, windows, crest and rod (`heaven_roof_N`), over the map's own plain roof tiles; its floor line is its point, and it is marked in the cell of air over that |
+| -97 | near towers (`heaven_tower_WxT`, `_hung` for one hung on a wall): before the roofs and the walls they stand at. A tower W tiles across (an even number) and T tiles to the foot of its head stands in the cell left of its middle line; its drawn roof lies exactly over the map's steep roof tiles (`make_world_map.cone`), which are what is stood on |
+
+A picture's size is in its name, and the map asks for the size it builds
+(`make_world_map.turret`, `pillar`, `skybridge`, `battlement`): a size the set
+has not is an error when the map is made, and a picture the set has that the map
+stands nowhere fails a test. `TilesV2Petals` takes the crowns of the trees from
+the marks (the upper part of each tree's sprite), since they are no longer tiles.
 
 ## Light
 
@@ -508,7 +539,7 @@ physics for a particle system to take gravity from).
 | Sand | trickles from under 45% of the sand tiles that hang over two or more empty cells (a hash of the cell picks them), and lands on what is below | takes the tile light |
 | Sparks | jump from every run of the surface of a liquid that glows | none |
 | Spray and mist | where falling water ends: drops leap up and out, a mist hangs over them and drifts up | none |
-| Petals | fall from the crowns of blossom and of gold leaf near the view: one system for a whole world, fed by hand (`TilesV2Petals`) | takes the tile light |
+| Petals | fall from the crowns of blossom and of gold leaf near the view, whether a crown is tiles or a tree stood as a picture: one system for a whole world, fed by hand (`TilesV2Petals`) | takes the tile light |
 
 ## In Unity
 
@@ -574,6 +605,7 @@ no window opens.
 | `tv2_backdrop.py` | the sky's bands, clouds, stars, sun, moon, ridges, the cave rock |
 | `tv2_earth.py` | the Earth's pictures (trees, buildings, the mine's timber and track), its ridges, its cave rock and old workings |
 | `tv2_earth_map.py` | where the Earth's pictures stand, its meadows, the mine's boards (called by `make_world_map.build`) |
+| `tv2_heaven.py` | Paradise's pictures: its trees, the towers and roofs of its castles, its halls, gates, bridges, the round temple and the host (stood by `make_world_map.paradise`) |
 | `tv2_light.py` | the tile light's sums |
 | `tv2_preview.py` | the preview |
 | `make_sample_map.py` | writes the sample map |
