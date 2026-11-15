@@ -12,9 +12,11 @@ namespace Descender.World.TilesV2
     /// Stands the game's own things where a Tiles V2 map marks them (`@mark kind column row
     /// ...`, docs/art/tiles-v2-world.md): a checkpoint and an ability from their prefabs, a
     /// barrier of light only a Light Dash passes, a seal a bolt of Holy Light breaks, a
-    /// slab a Smite breaks, a relic to find, and the gate at the world's end. The gates
-    /// are made of the game's parts (the LightBarrier layer, a <see cref="Breakable"/>), so
-    /// the hero's abilities work on them as they do in the game.
+    /// slab a Smite breaks, a wall that is not one (the sword breaks it, and a room is
+    /// behind it), a platform that gives way or comes and goes, a wind, a relic to find,
+    /// and the gate at the world's end. They are made of the game's parts (the LightBarrier
+    /// layer, a <see cref="Breakable"/>, a <see cref="Crumble"/>, a <see cref="Blinker"/>, a
+    /// <see cref="ForceZone"/>), so the hero meets them as he does in the game.
     /// </summary>
     public sealed class TilesV2Things : MonoBehaviour
     {
@@ -24,22 +26,55 @@ namespace Descender.World.TilesV2
         public const string Seal = "seal";
         public const string Relic = "relic";
         public const string End = "end";
+        public const string Secret = "secret";
+        public const string Platform = "platform";
+        public const string Wind = "wind";
+
+        /// <summary>The word after a checkpoint's cell that says it stands in an antechamber of the Pit.</summary>
+        public const string PitWord = "pit";
         public const int GateOrder = TilesV2World.TerrainOrder + 3;
 
-        private readonly List<TilesV2Relic> relics = new List<TilesV2Relic>();
+        private readonly List<Thing> all = new List<Thing>();
+
+        /// <summary>Everything made, in the map's order.</summary>
+        public IReadOnlyList<Thing> All => all;
 
         /// <summary>How many relics the map holds, and how many the hero has found.</summary>
-        public int Relics => relics.Count;
+        public int Relics { get; private set; }
         public int RelicsFound { get; private set; }
         public int Checkpoints { get; private set; }
         public int Abilities { get; private set; }
+
+        /// <summary>The gates on the road: veils of light, seals and slabs.</summary>
         public int Gates { get; private set; }
+        public int Secrets { get; private set; }
+        public int SecretsFound { get; private set; }
+        public int Platforms { get; private set; }
+        public int Winds { get; private set; }
 
         /// <summary>The hero found a relic.</summary>
-        public event Action RelicFound;
+        public event Action<Thing> RelicFound;
+
+        /// <summary>The hero broke a wall that was not one.</summary>
+        public event Action<Thing> SecretFound;
 
         /// <summary>The hero walked into the gate at the world's end.</summary>
         public event Action Ended;
+
+        /// <summary>How many relics a region of the map holds, and how many of them are found.</summary>
+        public void RelicsIn(int region, out int found, out int held)
+        {
+            found = 0;
+            held = 0;
+            foreach (var thing in all)
+            {
+                if (thing.Kind == Relic && thing.Region == region)
+                {
+                    held++;
+                    found += thing.IsGone ? 1 : 0;
+                }
+            }
+        }
 
         /// <summary>
         /// Makes everything the world's map marks, under a new object in the world. The
@@ -59,12 +94,21 @@ namespace Descender.World.TilesV2
                 var cell = map.CellOf(mark.Column, mark.Row);
                 var foot = origin + new Vector2(cell.x + 0.5f, cell.y);
                 var corner = origin + new Vector2(cell.x, cell.y + 1f);
+                var thing = new Thing
+                {
+                    Kind = mark.Kind,
+                    Cell = new Vector2Int(cell.x, cell.y),
+                    Region = map.Regions.Count > 0 ? map.RegionAt(mark.Row) : -1,
+                    Word = mark.Word(0),
+                };
                 switch (mark.Kind)
                 {
                     case Checkpoint when checkpointPrefab != null:
                     {
-                        var made = Instantiate(checkpointPrefab, foot, Quaternion.identity, things.transform);
-                        if (made.TryGetComponent<Checkpoint>(out var checkpoint))
+                        thing.Made = Instantiate(checkpointPrefab, foot, Quaternion.identity, things.transform);
+                        thing.Number = things.Checkpoints;
+                        thing.InPit = mark.Word(0) == PitWord;
+                        if (thing.Made.TryGetComponent<Checkpoint>(out var checkpoint))
                         {
                             checkpoint.Index = things.Checkpoints;
                         }
@@ -76,24 +120,70 @@ namespace Descender.World.TilesV2
                         if (!Enum.TryParse<Ability>(mark.Word(0), out var ability))
                         {
                             Debug.LogWarning($"Tiles V2: the map marks an ability '{mark.Word(0)}' the game has not.");
-                            break;
+                            continue;
                         }
-                        var made = Instantiate(abilityPrefab, foot, Quaternion.identity, things.transform);
-                        made.GetComponent<AbilityPickup>().Ability = ability;
+                        thing.Made = Instantiate(abilityPrefab, foot, Quaternion.identity, things.transform);
+                        thing.Made.GetComponent<AbilityPickup>().Ability = ability;
                         things.Abilities++;
                         break;
                     }
                     case Barrier:
-                        things.MakeBarrier(set, corner, Mathf.Max(mark.Number(0, 1), 1));
+                        thing.Word = "";
+                        thing.Made = things.MakeBarrier(set, corner, Mathf.Max(mark.Number(0, 1), 1));
+                        things.Gates++;
                         break;
                     case Seal:
-                        things.MakeSeal(
+                        thing.Made = things.MakeSeal(
                             set,
                             corner,
                             mark.Word(0) == "slam",
                             Mathf.Max(mark.Number(1, 1), 1),
                             Mathf.Max(mark.Number(2, 1), 1)
                         );
+                        things.Gates++;
+                        break;
+                    case Secret:
+                    {
+                        var wide = Mathf.Max(mark.Number(0, 1), 1);
+                        var tall = Mathf.Max(mark.Number(1, 1), 1);
+                        // The room behind it, as the map has it (rows from the top), in cells.
+                        var x0 = Mathf.Min(mark.Number(2, mark.Column), mark.Column);
+                        var x1 = Mathf.Max(mark.Number(4, mark.Column), mark.Column + wide - 1);
+                        var top = Mathf.Min(mark.Number(3, mark.Row), mark.Row);
+                        var low = Mathf.Max(mark.Number(5, mark.Row), mark.Row + tall - 1);
+                        thing.Hidden = new RectInt(x0, map.Height - 1 - low, x1 - x0 + 1, low - top + 1);
+                        var wall = things.MakeSecret(set, corner, wide, tall, GroundSprite(set, mark.Word(6)));
+                        thing.Made = wall.gameObject;
+                        var found = thing;
+                        wall.Broke += _ =>
+                        {
+                            things.SecretsFound++;
+                            things.SecretFound?.Invoke(found);
+                        };
+                        things.Secrets++;
+                        break;
+                    }
+                    case Platform:
+                        thing.Word = mark.Word(1);
+                        thing.Made = things.MakePlatform(
+                            set,
+                            origin + new Vector2(cell.x, cell.y),
+                            Mathf.Max(mark.Number(0, 1), 1),
+                            mark.Word(1) == "blink",
+                            Fraction(mark.Word(2))
+                        );
+                        things.Platforms++;
+                        break;
+                    case Wind:
+                        thing.Made = things.MakeWind(
+                            set,
+                            corner,
+                            new Vector2(Mathf.Max(mark.Number(0, 1), 1), Mathf.Max(mark.Number(1, 1), 1)),
+                            new Vector2(mark.Number(2, 0), mark.Number(3, 0)),
+                            Fraction(mark.Word(4)),
+                            Fraction(mark.Word(5))
+                        );
+                        things.Winds++;
                         break;
                     case Relic:
                     case End:
@@ -104,28 +194,34 @@ namespace Descender.World.TilesV2
                         var relic = holder.AddComponent<TilesV2Relic>();
                         var last = mark.Kind == End;
                         relic.Configure(set.Thing("relic_0"), set.Thing("relic_1"), set.unlitMaterial, last);
+                        thing.Made = holder;
                         if (last)
                         {
                             relic.Found += () => things.Ended?.Invoke();
                         }
                         else
                         {
-                            things.relics.Add(relic);
+                            var found = thing;
+                            things.Relics++;
                             relic.Found += () =>
                             {
+                                found.Taken = true;
                                 things.RelicsFound++;
-                                things.RelicFound?.Invoke();
+                                things.RelicFound?.Invoke(found);
                             };
                         }
                         break;
                     }
+                    default:
+                        continue;
                 }
+                things.all.Add(thing);
             }
             return things;
         }
 
         // A veil of light a tile wide and `tall` tiles high, down from a corner: solid to all but a Light Dash.
-        private void MakeBarrier(TilesV2Set set, Vector2 corner, int tall)
+        private GameObject MakeBarrier(TilesV2Set set, Vector2 corner, int tall)
         {
             var holder = new GameObject("Light Barrier") { layer = Layers.LightBarrier };
             holder.transform.SetParent(transform, false);
@@ -136,15 +232,148 @@ namespace Descender.World.TilesV2
             box.offset = new Vector2(0.5f, -tall / 2f);
             var shown = Picture(holder, set.Thing("barrier_0"), set.unlitMaterial, new Vector2(1f, tall));
             holder.AddComponent<TilesV2Veil>().Configure(shown, set.Thing("barrier_0"), set.Thing("barrier_1"));
-            Gates++;
+            return holder;
         }
 
         // A block `wide` by `tall` tiles down from a corner that one strike of the right kind breaks: a
         // bolt of Holy Light, or (a slab in a floor) a Smite. Solid on the World layer; a child on the
         // Enemy layer, a little larger, is what the hero's strikes find.
-        private void MakeSeal(TilesV2Set set, Vector2 corner, bool slab, int wide, int tall)
+        private GameObject MakeSeal(TilesV2Set set, Vector2 corner, bool slab, int wide, int tall)
         {
-            var holder = new GameObject(slab ? "Slab" : "Seal") { layer = Layers.World };
+            var holder = Block(slab ? "Slab" : "Seal", corner, wide, tall);
+            Picture(holder, set.Thing(slab ? "seal_slam" : "seal_bolt"), set.litMaterial, new Vector2(wide, tall));
+            holder.AddComponent<Breakable>().Configure(1, slab ? StruckBy.Slam : StruckBy.Bolt, null);
+            return holder;
+        }
+
+        // A wall that is not one: it is drawn as the rock round it (with a few cracks to tell it
+        // by), and two cuts of the sword break it.
+        private Breakable MakeSecret(TilesV2Set set, Vector2 corner, int wide, int tall, Sprite rock)
+        {
+            var holder = Block("Secret Wall", corner, wide, tall);
+            for (var y = 0; y < tall; y++)
+            {
+                for (var x = 0; x < wide; x++)
+                {
+                    var at = new Vector3(x + 0.5f, -y - 0.5f, 0f);
+                    Cell(
+                        holder,
+                        rock != null ? rock : set.Thing("seal_slam"),
+                        set.litMaterial,
+                        at,
+                        TilesV2World.TerrainOrder
+                    );
+                    Cell(holder, set.Thing("crack"), set.litMaterial, at, TilesV2World.TerrainOrder + 1);
+                }
+            }
+            var wall = holder.AddComponent<Breakable>();
+            wall.Configure(2, StruckBy.Any, null);
+            return wall;
+        }
+
+        // A platform `wide` tiles long with its foot at a corner: it gives way under the hero and
+        // comes back (the game's Crumble), or comes and goes by the clock (its Blinker).
+        private GameObject MakePlatform(TilesV2Set set, Vector2 foot, int wide, bool blinks, float ahead)
+        {
+            var holder = new GameObject(blinks ? "Blinker" : "Crumble") { layer = Layers.World };
+            holder.transform.SetParent(transform, false);
+            holder.transform.position = foot;
+            var box = holder.AddComponent<BoxCollider2D>();
+            box.size = new Vector2(wide, 12f / 16f);
+            box.offset = new Vector2(wide / 2f, 1f - 6f / 16f);
+            for (var x = 0; x < wide; x++)
+            {
+                Cell(
+                    holder,
+                    set.Thing(blinks ? "blink" : "crumble"),
+                    set.litMaterial,
+                    new Vector3(x + 0.5f, 0.5f, 0f),
+                    GateOrder
+                );
+            }
+            if (blinks)
+            {
+                holder.AddComponent<Blinker>().Configure(1.7f, 1.3f, 0.4f, ahead);
+            }
+            else
+            {
+                holder.AddComponent<Crumble>().Configure(0.6f, 2.5f);
+            }
+            return holder;
+        }
+
+        // A wind over `size` tiles down and right from a corner, in level pixels a second; gusting
+        // when `blows` is over zero. Streaks drift in it so it is seen.
+        private GameObject MakeWind(
+            TilesV2Set set,
+            Vector2 corner,
+            Vector2 size,
+            Vector2 wind,
+            float blows,
+            float rests
+        )
+        {
+            var holder = new GameObject("Wind");
+            holder.transform.SetParent(transform, false);
+            holder.transform.position = corner + new Vector2(size.x / 2f, -size.y / 2f);
+            var zone = holder.AddComponent<ForceZone>();
+            zone.Configure(size, wind, 600f);
+            if (blows > 0f)
+            {
+                zone.Gust(blows, rests);
+            }
+            var most = Mathf.Clamp(Mathf.RoundToInt(size.x * size.y / 6f), 6, 60);
+            var streaks = TilesV2Particles.Make(holder.transform, "Streaks", Vector3.zero, set.unlitMaterial, most);
+            var main = streaks.main;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(0.9f, 1.8f);
+            main.startSpeed = 0f;
+            main.startColor = new Color(0.92f, 0.95f, 1f, 0.45f);
+            main.prewarm = true;
+            var emission = streaks.emission;
+            emission.rateOverTime = most / 1.4f;
+            var shape = streaks.shape;
+            shape.shapeType = ParticleSystemShapeType.Box;
+            shape.scale = new Vector3(size.x, size.y, 0.1f);
+            var drift = streaks.velocityOverLifetime;
+            drift.enabled = true;
+            drift.space = ParticleSystemSimulationSpace.World;
+            drift.x = wind.x / 16f;
+            drift.y = wind.y / 16f;
+            drift.z = 0f;
+            TilesV2Particles.Fade(streaks, Color.white, Color.white, 0.3f);
+            streaks.Play();
+            return holder;
+        }
+
+        // The sprite a ground's tile shows in the middle of rock: its rule with all eight neighbours.
+        private static Sprite GroundSprite(TilesV2Set set, string character)
+        {
+            if (string.IsNullOrEmpty(character) || !set.TryGlyph(character[0], out var glyph))
+            {
+                return null;
+            }
+            if (!(glyph.tile is RuleTile ground))
+            {
+                return null;
+            }
+            foreach (var rule in ground.m_TilingRules)
+            {
+                if (
+                    rule.m_Neighbors.Count == 8
+                    && rule.m_Neighbors.TrueForAll(n => n == RuleTile.TilingRuleOutput.Neighbor.This)
+                )
+                {
+                    return rule.m_Sprites.Length > 0 ? rule.m_Sprites[0] : null;
+                }
+            }
+            return ground.m_DefaultSprite;
+        }
+
+        // A solid block `wide` by `tall` tiles down from a corner, with the larger box on the Enemy
+        // layer that the hero's strikes find.
+        private GameObject Block(string name, Vector2 corner, int wide, int tall)
+        {
+            var holder = new GameObject(name) { layer = Layers.World };
             holder.transform.SetParent(transform, false);
             holder.transform.position = corner;
             holder.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
@@ -153,15 +382,28 @@ namespace Descender.World.TilesV2
             var box = holder.AddComponent<BoxCollider2D>();
             box.size = size;
             box.offset = offset;
-            Picture(holder, set.Thing(slab ? "seal_slam" : "seal_bolt"), set.litMaterial, size);
             var struck = new GameObject("Struck") { layer = Layers.Enemy };
             struck.transform.SetParent(holder.transform, false);
             var reach = struck.AddComponent<BoxCollider2D>();
             reach.isTrigger = true;
             reach.size = size + new Vector2(0.5f, 0.75f);
             reach.offset = offset + new Vector2(0f, 0.125f);
-            holder.AddComponent<Breakable>().Configure(1, slab ? StruckBy.Slam : StruckBy.Bolt, null);
-            Gates++;
+            return holder;
+        }
+
+        // One tile-sized sprite in a holder.
+        private static void Cell(GameObject holder, Sprite sprite, Material material, Vector3 at, int order)
+        {
+            var child = new GameObject("Cell");
+            child.transform.SetParent(holder.transform, false);
+            child.transform.localPosition = at;
+            var shown = child.AddComponent<SpriteRenderer>();
+            shown.sprite = sprite;
+            shown.sortingOrder = order;
+            if (material != null)
+            {
+                shown.sharedMaterial = material;
+            }
         }
 
         // A sprite drawn tiled over `size` tiles down and right from the holder.
@@ -181,6 +423,47 @@ namespace Descender.World.TilesV2
                 shown.sharedMaterial = material;
             }
             return shown;
+        }
+
+        private static float Fraction(string word) =>
+            float.TryParse(
+                word,
+                System.Globalization.NumberStyles.Float,
+                System.Globalization.CultureInfo.InvariantCulture,
+                out var value
+            )
+                ? value
+                : 0f;
+
+        /// <summary>One thing a map marks, as it stands in the world.</summary>
+        public sealed class Thing
+        {
+            public string Kind;
+
+            /// <summary>The cell the map marks (y up, as the world's grid has it).</summary>
+            public Vector2Int Cell;
+
+            /// <summary>The number of its region among the map's; -1 on a map with none.</summary>
+            public int Region;
+
+            /// <summary>What the kind says first after its cell: an ability's name, what breaks a seal.</summary>
+            public string Word;
+            public GameObject Made;
+
+            /// <summary>A checkpoint's number among the checkpoints.</summary>
+            public int Number;
+
+            /// <summary>A checkpoint in an antechamber of the Pit.</summary>
+            public bool InPit;
+
+            /// <summary>The cells a secret wall hides until it is broken.</summary>
+            public RectInt Hidden;
+
+            /// <summary>A relic the hero has taken.</summary>
+            public bool Taken;
+
+            /// <summary>Taken, broken or picked up: no longer there.</summary>
+            public bool IsGone => Taken || Made == null || !Made.activeSelf;
         }
     }
 }

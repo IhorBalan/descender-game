@@ -60,6 +60,9 @@ namespace Descender.World.TilesV2
 
         [Tooltip("The sorting order of the first region's cave rock; each region after it is three further on.")]
         public int caveOrder = -960;
+
+        [Tooltip("The share of the camera's movement what stands far off scrolls by: nearer than the rock.")]
+        public float farScroll = 0.78f;
         public Liquid[] liquids = new Liquid[0];
 
         [Header("Light (1 is full daylight)")]
@@ -403,6 +406,9 @@ namespace Descender.World.TilesV2
             [Tooltip("The rock behind its caves, and the ragged strip along its top; none for open sky.")]
             public Sprite cave;
             public Sprite caveTop;
+
+            [Tooltip("What stands far off in its caves, between the rock and the walls; none for none.")]
+            public Sprite far;
 
             [Tooltip("What drifts in its air: how many a second (0 for nothing).")]
             public float airRate;

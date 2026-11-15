@@ -144,7 +144,7 @@ them, all on the Default sorting layer, back to front:
 | Stars, sun and moon | -1008, -1006 | pinned to the view | none |
 | Clouds | -1004 | drift along the top of the view | none |
 | Ridges | -990, -980, -970 | far mountains, hills, near forest | none |
-| Cave rock | -960 and up, 3 a region | the rock behind the caves, each region's own under the surface line, and the ragged strip along its top | tile light |
+| Cave rock | -960 and up, 4 a region | the rock behind the caves, each region's own under the surface line; what stands far off in it; the ragged strip along its top | tile light |
 | Walls | -300 | wall tiles, tinted back | tile light |
 | Shade | -290 | the shade of the ground on the walls | tile light |
 | Decor | -110 | what stands on or hangs from the ground | tile light |
@@ -208,7 +208,7 @@ A map of several regions also says where each starts and what of the game's
 stands where:
 
 ```
-@region limbo 180             the region `limbo` (the tile set's key) starts at row 150
+@region limbo 172             the region `limbo` (the tile set's key) starts at row 150
 @mark checkpoint 179 159      something of the game's in a cell: kind, column, row, and what the kind needs
 @mark ability 111 175 LightDash
 @mark barrier 104 173 4       a veil of light: its top cell, its height
@@ -216,10 +216,13 @@ stands where:
 @mark relic 136 162
 ```
 
-`TilesV2World` lays the tiles; `TilesV2Things.Build` stands the marks in the
-world from the game's own parts (its checkpoint and ability pickup prefabs, a
-collider on the LightBarrier layer, a `Breakable`), which a scene's runner
-does at the start of play.
+A mark may also be `secret` (a wall the sword breaks, with a room behind it),
+`platform` (one that gives way or comes and goes) or `wind`: the world's
+document lists them all. `TilesV2World` lays the tiles; `TilesV2Things.Build`
+stands the marks in the world from the game's own parts (its checkpoint and
+ability pickup prefabs, a collider on the LightBarrier layer, a `Breakable`,
+a `Crumble`, a `Blinker`, a `ForceZone`), which a scene's runner does at the
+start of play.
 
 The sample map, `Assets/Art/TilesV2/sample_map.txt` (128 x 64), is written by
 `tools/tiles_v2/make_sample_map.py`: a meadow with a hill and a pond, the
@@ -318,6 +321,7 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 | clouds | 0.04, 0 | along the top of the view; drift 0.25 units a second |
 | far, mid, near ridges | 0.1 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line; lit on their left-facing slopes; a picture is as wide as the view, so no peak shows twice |
 | cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, each region's own colours (`REGIONS`), shown only in that region's rows under the surface line: a sprite mask over the region, with a custom range so it cuts that region's picture and no other. It takes the tile light, so it is black until something lights the cave. A map that names no regions is all the Earth's |
+| what stands far off | 0.78, 0.78 | a 640 x 360 picture for each region (`FAR`: columns, spires, fangs, heaps, bare trees, towers with lit windows, a viaduct, shards), a little lighter than the rock, over it and cut to the region as it is; nearer than the rock, so it moves more |
 | cave rock's top | 0.55, 1 | a ragged strip along the top of each region's rock, so one region's rock runs into the next one's |
 
 A cell shows the cave rock when it has no wall and lies under the surface

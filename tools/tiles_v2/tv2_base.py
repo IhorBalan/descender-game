@@ -246,6 +246,23 @@ REGIONS = [
 ]
 
 
+# What stands far off behind each region's caves, between the rock and the walls: the
+# kind of shape (tv2_backdrop.py draws each) for every region that has rock behind it.
+FAR = {
+    "earth": "spires",
+    "limbo": "columns",
+    "lust": "spires",
+    "gluttony": "teeth",
+    "greed": "heaps",
+    "wrath": "trees",
+    "heresy": "towers",
+    "violence": "trees",
+    "fraud": "arches",
+    "treachery": "shards",
+}
+FAR_SCROLL = 0.78  # the share of the camera's movement the far shapes scroll by: nearer than the rock
+
+
 # --- Helpers ------------------------------------------------------------------
 
 

@@ -657,7 +657,7 @@ def ledge_sheet() -> tuple[Image.Image, list]:
 # The things of the game a map marks (`@mark`), each a tile-sized sprite the world's
 # objects are drawn with: a light barrier's veil, the seal a bolt breaks, the slab a
 # slam breaks, a relic.
-THINGS = ["barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1"]
+THINGS = ["barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1", "crack", "crumble", "blink", "wind"]
 
 
 def thing(name: str) -> np.ndarray:
@@ -699,6 +699,36 @@ def thing(name: str) -> np.ndarray:
             if y % 3 == 1:
                 a[y, x + r.choice([-1, 1]), :3] = ramp[1]
             x = max(3, min(12, x + r.choice([-1, 0, 0, 1])))
+    elif name == "crack":
+        # What tells a wall that is not one: a few fine cracks, laid over the rock.
+        x = 6
+        for y in range(TILE):
+            a[y, x] = (0, 0, 0, 120)
+            if y % 4 == 2:
+                a[y, x + r.choice([-1, 1])] = (0, 0, 0, 90)
+            x = max(2, min(13, x + r.choice([-1, 0, 0, 1])))
+        for k in range(5):
+            a[9 + k // 2, 9 + k] = (0, 0, 0, 100)
+    elif name in ("crumble", "blink"):
+        # A platform that does not stay: a slab that gives way (cracked stone), or one
+        # that comes and goes (dark, with a pale rune that says so).
+        ramp = PALETTES["stone" if name == "crumble" else "slate"]["ramp"]
+        rim = PALETTES["stone" if name == "crumble" else "slate"]["outline"]
+        for y in range(1, 11):
+            for x in range(TILE):
+                a[y, x] = (*(ramp[5] if y == 1 else ramp[2] if y >= 9 else ramp[3 if (x * 5 + y * 3) % 7 else 4]), 255)
+        a[0, :] = (*rim, 255)
+        a[11, :] = (*rim, 255)
+        if name == "crumble":
+            for x, y in ((4, 2), (5, 3), (5, 4), (6, 5), (6, 6), (7, 7), (11, 3), (10, 4), (10, 5), (11, 6), (12, 8)):
+                a[y, x] = (*rim, 255)
+        else:
+            for x, y in ((7, 3), (8, 3), (6, 4), (9, 4), (6, 5), (9, 5), (7, 6), (8, 6), (7, 7), (8, 7)):
+                a[y, x] = (200, 190, 255, 255)
+    elif name == "wind":
+        # A streak the wind carries: a short pale dash.
+        for x in range(3, 13):
+            a[8, x] = (235, 240, 255, 60 + 16 * min(x - 3, 12 - x))
     else:
         # A relic: a small gold star that turns its glint.
         gold, lit, white, rim = hexes("f2c93c", "fde06a", "ffffff", "8a5e0c")

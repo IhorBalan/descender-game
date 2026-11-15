@@ -116,7 +116,11 @@ namespace Descender.Tests
             foreach (var mark in map.Marks)
             {
                 // A relic may lie under water; nothing stands in the rock.
-                Assert.That(Solid(mark.Column, mark.Row), Is.False, mark.Kind + " stands in the rock");
+                if (mark.Kind != TilesV2Things.Wind)
+                {
+                    // A wind's mark is the corner of the air it blows in, which may be in the roof.
+                    Assert.That(Solid(mark.Column, mark.Row), Is.False, mark.Kind + " stands in the rock");
+                }
                 switch (mark.Kind)
                 {
                     case TilesV2Things.AbilityKind:
@@ -297,13 +301,22 @@ namespace Descender.Tests
         {
             var masks = world.GetComponentsInChildren<SpriteMask>();
             Assert.That(masks.Length, Is.EqualTo(RegionKeys.Length - 1), "every region under the sky");
-            var orders = new HashSet<int>();
+            var ranges = new List<(int back, int front)>();
             foreach (var mask in masks)
             {
                 Assert.That(mask.isCustomRangeActive, Is.True, mask.name + " cuts its own rock only");
-                Assert.That(orders.Add(mask.frontSortingOrder), Is.True, mask.name);
+                foreach (var (back, front) in ranges)
+                {
+                    Assert.That(
+                        mask.backSortingOrder >= front || mask.frontSortingOrder <= back,
+                        Is.True,
+                        mask.name + " cuts another region's rock too"
+                    );
+                }
+                ranges.Add((mask.backSortingOrder, mask.frontSortingOrder));
             }
             var rocks = 0;
+            var far = 0;
             foreach (var layer in world.GetComponentsInChildren<ParallaxLayer>())
             {
                 var picture = layer.GetComponent<SpriteRenderer>();
@@ -311,11 +324,18 @@ namespace Descender.Tests
                 {
                     continue;
                 }
-                rocks++;
-                Assert.That(orders.Contains(picture.sortingOrder), Is.True, layer.name + " has no mask of its own");
+                rocks += layer.name.Contains("far") ? 0 : 1;
+                far += layer.name.Contains("far") ? 1 : 0;
+                var cut = ranges.FindAll(r => picture.sortingOrder > r.back && picture.sortingOrder <= r.front);
+                Assert.That(cut.Count, Is.EqualTo(1), layer.name + " is cut by one mask, its own");
                 Assert.That(picture.sharedMaterial, Is.SameAs(set.litMaterial), layer.name + " takes the tile light");
             }
             Assert.That(rocks, Is.EqualTo(masks.Length));
+            Assert.That(far, Is.EqualTo(masks.Length), "something stands far off in every region under the sky");
+            foreach (var region in set.regions)
+            {
+                Assert.That(region.far == null, Is.EqualTo(region.cave == null), region.key);
+            }
         }
 
         [Test]
@@ -363,6 +383,39 @@ namespace Descender.Tests
                 Assert.That(things.Relics, Is.EqualTo(counts[TilesV2Things.Relic]));
                 Assert.That(things.Relics, Is.GreaterThan(15), "every circle hides something");
                 Assert.That(things.Gates, Is.EqualTo(counts[TilesV2Things.Barrier] + counts[TilesV2Things.Seal]));
+                Assert.That(things.Secrets, Is.EqualTo(counts[TilesV2Things.Secret]));
+                Assert.That(things.Secrets, Is.GreaterThan(10), "walls that are not walls");
+                Assert.That(things.Platforms, Is.EqualTo(counts[TilesV2Things.Platform]));
+                Assert.That(things.Winds, Is.EqualTo(counts[TilesV2Things.Wind]));
+                Assert.That(things.Winds, Is.GreaterThan(2), "the tempest blows");
+                var crumbles = things.GetComponentsInChildren<Crumble>().Length;
+                var blinkers = things.GetComponentsInChildren<Blinker>().Length;
+                Assert.That(crumbles + blinkers, Is.EqualTo(things.Platforms));
+                Assert.That(crumbles, Is.GreaterThan(0), "something gives way underfoot");
+                Assert.That(blinkers, Is.GreaterThan(0), "something comes and goes");
+                Assert.That(things.GetComponentsInChildren<ForceZone>().Length, Is.EqualTo(things.Winds));
+                var pits = 0;
+                foreach (var thing in things.All)
+                {
+                    if (thing.Kind == TilesV2Things.Secret)
+                    {
+                        var wall = thing.Made.GetComponent<Breakable>();
+                        Assert.That(wall.By, Is.EqualTo(StruckBy.Any), "the sword breaks it");
+                        Assert.That(
+                            world.Terrain.HasTile((Vector3Int)thing.Cell),
+                            Is.False,
+                            "the wall is the game's, not a tile"
+                        );
+                        Assert.That(thing.Hidden.width * thing.Hidden.height, Is.GreaterThan(8), "a room is behind it");
+                        Assert.That(
+                            thing.Made.GetComponentInChildren<SpriteRenderer>().sprite,
+                            Is.Not.Null,
+                            "it looks like rock"
+                        );
+                    }
+                    pits += thing.Kind == TilesV2Things.Checkpoint && thing.InPit ? 1 : 0;
+                }
+                Assert.That(pits, Is.GreaterThanOrEqualTo(10), "a place to rest in every antechamber of the Pit");
                 var found = new HashSet<Ability>();
                 foreach (var pickup in things.GetComponentsInChildren<Pickups.AbilityPickup>())
                 {
@@ -373,6 +426,10 @@ namespace Descender.Tests
                 var slams = 0;
                 foreach (var seal in things.GetComponentsInChildren<Breakable>())
                 {
+                    if (seal.By == StruckBy.Any)
+                    {
+                        continue;
+                    }
                     Assert.That(seal.Hits, Is.EqualTo(1));
                     Assert.That(seal.gameObject.layer, Is.EqualTo(Layers.World), "a seal stands in the way");
                     Assert.That(seal.GetComponent<BoxCollider2D>().isTrigger, Is.False);
@@ -426,6 +483,21 @@ namespace Descender.Tests
                 chart.Show();
                 Assert.That(chart.Picture.GetPixel(at.x, at.y).a, Is.EqualTo(1f).Within(0.01f));
                 Assert.That(chart.Picture.GetPixel(at.x + 40, at.y).a, Is.LessThan(1f), "the unseen is veiled");
+                // A room behind a wall that is not one stays rock on the chart until the wall is down.
+                var room = new RectInt(at.x + 2, at.y + 2, 3, 2);
+                var inside = new Vector2Int(at.x + 3, at.y + 2);
+                var open = chart.Picture.GetPixel(inside.x, inside.y);
+                chart.Hide(room);
+                chart.Show();
+                Assert.That(chart.IsHidden(inside), Is.True);
+                Assert.That(
+                    chart.Picture.GetPixel(inside.x, inside.y),
+                    Is.Not.EqualTo(open),
+                    "hidden, it shows as rock"
+                );
+                chart.Unhide(room);
+                chart.Show();
+                Assert.That(chart.Picture.GetPixel(inside.x, inside.y), Is.EqualTo(open));
                 chart.RevealAll();
                 Assert.That(chart.Seen, Is.EqualTo(map.Width * map.Height));
             }

@@ -237,12 +237,117 @@ def backdrop_cave_top(region: dict) -> Image.Image:
     return Image.fromarray(rgba, "RGBA")
 
 
+FAR_W, FAR_H = 640, 360
+
+
+def backdrop_far(region: dict) -> Image.Image:
+    """What stands far off in a region's caves: shapes a little lighter than the rock
+    behind them, standing from the foot of the picture and hanging from its head; it
+    repeats both ways. Columns, spires, fangs, heaps, bare trees, towers with lit
+    windows, a viaduct, shards: FAR in tv2_base.py says which."""
+    kind = FAR[region["key"]]
+    ramp = hexes(*region["cave"].split())
+    lit = tuple(min(255, int(c * 1.55) + 10) for c in ramp[4])
+    mid = tuple(min(255, int(c * 1.3) + 6) for c in ramp[4])
+    dark = tuple(min(255, int(c * 1.08) + 3) for c in ramp[4])
+    a = np.zeros((FAR_H, FAR_W, 4), dtype=np.uint8)
+    r = rng("far", region["key"])
+
+    def put(x, y, colour):
+        if 0 <= y < FAR_H:
+            a[y, x % FAR_W] = (*colour, 255)
+
+    def block(x0, x1, y0, y1):
+        """A shape's body: lit on its left edge, dark on its right."""
+        for x in range(x0, x1):
+            colour = lit if x - x0 < max(1, (x1 - x0) // 5) else dark if x1 - x <= max(1, (x1 - x0) // 4) else mid
+            for y in range(y0, y1):
+                put(x, y, colour)
+
+    def needle(cx, base, tall, half, up=True):
+        """A spike from a base row: standing (up) or hanging."""
+        for i in range(tall):
+            wide = max(0, int(round(half * (1 - i / tall) ** 0.8)))
+            y = base - i if up else base + i
+            for x in range(cx - wide, cx + wide + 1):
+                put(x, y, lit if x < cx - wide * 0.3 else dark if x > cx + wide * 0.4 else mid)
+
+    x = r.randint(0, 30)
+    while x < FAR_W - 20:
+        if kind == "columns":
+            wide, tall = r.randint(12, 20), r.randint(90, 210)
+            block(x, x + wide, FAR_H - tall, FAR_H)
+            if r.random() < 0.6:
+                block(x - 3, x + wide + 3, FAR_H - tall - 6, FAR_H - tall)
+            if r.random() < 0.5:
+                needle(x + wide // 2 + r.randint(20, 40), 0, r.randint(20, 70), r.randint(3, 6), up=False)
+            x += wide + r.randint(34, 80)
+        elif kind in ("spires", "shards"):
+            tall = r.randint(70, 230)
+            needle(x, FAR_H - 1, tall, r.randint(5, 13) if kind == "spires" else r.randint(3, 8))
+            if kind == "shards" and r.random() < 0.6:
+                needle(x + r.randint(8, 16), FAR_H - 1, tall // 2, r.randint(3, 6))
+            needle(x + r.randint(18, 40), 0, r.randint(30, 120), r.randint(4, 9), up=False)
+            x += r.randint(40, 86)
+        elif kind == "teeth":
+            needle(x, 0, r.randint(60, 190), r.randint(7, 15), up=False)
+            needle(x + r.randint(14, 30), FAR_H - 1, r.randint(30, 110), r.randint(8, 16))
+            x += r.randint(36, 70)
+        elif kind == "heaps":
+            wide, tall = r.randint(50, 110), r.randint(30, 80)
+            for dx in range(wide):
+                top = int(tall * np.sin(np.pi * (dx + 0.5) / wide) ** 0.7)
+                for y in range(FAR_H - top, FAR_H):
+                    put(x + dx, y, lit if y - (FAR_H - top) < 2 else mid if dx < wide * 0.6 else dark)
+            if r.random() < 0.7:
+                pillar = x + wide + r.randint(6, 20)
+                block(pillar, pillar + r.randint(8, 14), 0, FAR_H)
+            x += wide + r.randint(40, 80)
+        elif kind == "trees":
+            tall, wide = r.randint(120, 240), r.randint(5, 9)
+            block(x, x + wide, FAR_H - tall, FAR_H)
+            for _ in range(r.randint(3, 6)):
+                at, side, length, slope = r.randint(tall // 3, tall - 8), r.choice([-1, 1]), r.randint(14, 44), r.uniform(0.5, 0.9)
+                for i in range(length):
+                    bx = x + (wide if side > 0 else 0) + side * i
+                    by = FAR_H - at - int(i * slope)
+                    put(bx, by, mid)
+                    put(bx, by + 1, dark)
+            x += r.randint(46, 100)
+        elif kind == "towers":
+            wide, tall = r.randint(28, 48), r.randint(120, 270)
+            block(x, x + wide, FAR_H - tall, FAR_H)
+            for cx in range(x, x + wide, 8):
+                block(cx, cx + 4, FAR_H - tall - 5, FAR_H - tall)
+            for wy in range(FAR_H - tall + 14, FAR_H - 8, 22):
+                for wx in range(x + 6, x + wide - 6, 11):
+                    if r.random() < 0.6:
+                        for dy in range(5):
+                            put(wx, wy + dy, (255, 150, 60) if r.random() < 0.5 else ramp[0])
+                            put(wx + 1, wy + dy, (230, 110, 40) if r.random() < 0.5 else ramp[0])
+            x += wide + r.randint(36, 90)
+        else:  # arches: a viaduct right across
+            break
+    if kind == "arches":
+        deck, span = FAR_H - 150, 80
+        for x in range(FAR_W):
+            along = x % span
+            rise = int(52 * np.sin(np.pi * along / span) ** 0.6) if 8 <= along < span - 8 else 0
+            for y in range(deck, FAR_H):
+                if y < deck + 14 or y - deck - 14 >= rise or along < 8 or along >= span - 8:
+                    put(x, y, lit if y < deck + 2 else dark if along >= span - 11 else mid)
+        for x in range(30, FAR_W, 110):
+            needle(x, 0, r.randint(40, 100), r.randint(4, 8), up=False)
+    return Image.fromarray(a, "RGBA")
+
+
 def backdrops() -> dict[str, Image.Image]:
     caves = {}
     for region in REGIONS:
         if region["cave"]:
             caves["backdrop_cave_" + region["key"]] = backdrop_cave(region)
             caves["backdrop_cave_top_" + region["key"]] = backdrop_cave_top(region)
+            caves["backdrop_far_" + region["key"]] = backdrop_far(region)
     return {
         **caves,
         "backdrop_stars": backdrop_stars(),

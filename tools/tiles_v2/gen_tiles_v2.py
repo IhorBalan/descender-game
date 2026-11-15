@@ -174,6 +174,7 @@ def manifest() -> dict:
                 "ambient": list(r["ambient"]),
                 "cave": "backdrop_cave_" + r["key"] if r["cave"] else "",
                 "caveTop": "backdrop_cave_top_" + r["key"] if r["cave"] else "",
+                "far": "backdrop_far_" + r["key"] if r["cave"] else "",
                 "air": (
                     {
                         "rate": r["air"][0],
@@ -260,7 +261,7 @@ def manifest() -> dict:
                 for k in DAY_KEYS
             ],
         },
-        "sky": {"bands": tv2_backdrop.SKY_BANDS, "order": tv2_backdrop.SKY_ORDER, "cloudDrift": tv2_backdrop.CLOUD_DRIFT, "caveScroll": tv2_backdrop.CAVE_SCROLL, "caveOrder": tv2_backdrop.CAVE_ORDER},
+        "sky": {"bands": tv2_backdrop.SKY_BANDS, "order": tv2_backdrop.SKY_ORDER, "cloudDrift": tv2_backdrop.CLOUD_DRIFT, "caveScroll": tv2_backdrop.CAVE_SCROLL, "caveOrder": tv2_backdrop.CAVE_ORDER, "farScroll": FAR_SCROLL},
         "backdrops": tv2_backdrop.BACKDROPS,
     }
 

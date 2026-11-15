@@ -376,6 +376,9 @@ namespace Descender.EditorTools.TilesV2
                         caveTop = string.IsNullOrEmpty(entry.caveTop)
                             ? null
                             : Load<Sprite>(TilesV2Manifest.SheetPath(entry.caveTop + ".png")),
+                        far = string.IsNullOrEmpty(entry.far)
+                            ? null
+                            : Load<Sprite>(TilesV2Manifest.SheetPath(entry.far + ".png")),
                         airRate = air.rate,
                         airColour =
                             air.colour.Length >= 4
@@ -391,6 +394,7 @@ namespace Descender.EditorTools.TilesV2
             set.regions = regions.ToArray();
             set.caveScroll = manifest.sky.caveScroll;
             set.caveOrder = manifest.sky.caveOrder;
+            set.farScroll = manifest.sky.farScroll;
 
             var liquids = new List<TilesV2Set.Liquid>();
             foreach (var entry in manifest.liquids)

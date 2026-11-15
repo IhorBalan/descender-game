@@ -20,6 +20,18 @@ TextureImporter:
   - first:
       213: 520219188698749537
     second: tv2_thing_relic_1
+  - first:
+      213: 601531466001661730
+    second: tv2_thing_crack
+  - first:
+      213: 432383010485315223
+    second: tv2_thing_crumble
+  - first:
+      213: 4415477407493006930
+    second: tv2_thing_blink
+  - first:
+      213: 1719306169041351344
+    second: tv2_thing_wind
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -239,6 +251,98 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tv2_thing_crack
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41a9799043a65e029469cb6a3efe5b13
+      internalID: 601531466001661730
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_crumble
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b8d26d0d04565a63a886ee1025ecbf24
+      internalID: 432383010485315223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_blink
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a6eb9fb07da458aa9458ef6f4fc1f438
+      internalID: 4415477407493006930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_wind
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 144
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 78eeb84f77f0506c81fbc745b6a3453a
+      internalID: 1719306169041351344
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -257,6 +361,10 @@ TextureImporter:
       tv2_thing_seal_slam: 276677954601336921
       tv2_thing_relic_0: 554093025398641486
       tv2_thing_relic_1: 520219188698749537
+      tv2_thing_crack: 601531466001661730
+      tv2_thing_crumble: 432383010485315223
+      tv2_thing_blink: 4415477407493006930
+      tv2_thing_wind: 1719306169041351344
     spriteCustomMetadata:
       entries: []
   mipmapLimitGroupName: 

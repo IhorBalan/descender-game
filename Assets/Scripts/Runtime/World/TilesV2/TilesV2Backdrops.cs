@@ -19,6 +19,9 @@ namespace Descender.World.TilesV2
         // The ridges' feet stand this far over the surface line; the terrain hides them.
         private const float RidgeFoot = 2f;
 
+        /// <summary>The sorting orders a region's rock takes: the rock, what stands far off, the ragged strip, one to spare.</summary>
+        public const int OrdersARegion = 4;
+
         /// <summary>The region a map that names none is all made of.</summary>
         public const string EarthKey = "earth";
 
@@ -147,7 +150,7 @@ namespace Descender.World.TilesV2
                 {
                     continue;
                 }
-                var order = set.caveOrder + 3 * i;
+                var order = set.caveOrder + OrdersARegion * i;
                 var top = origin.y + map.Height - first;
                 var foot = origin.y + map.Height - end - (i == count - 1 ? Margin : 0f);
                 var size = (Vector2)region.cave.bounds.size;
@@ -170,7 +173,7 @@ namespace Descender.World.TilesV2
                 mask.alphaCutoff = 0.1f;
                 mask.isCustomRangeActive = true;
                 mask.backSortingOrder = order - 1;
-                mask.frontSortingOrder = order;
+                mask.frontSortingOrder = order + 1;
                 // The sprite's pivot is its bottom middle.
                 holder.transform.position = new Vector3(origin.x + map.Width / 2f, foot, 0f);
                 holder.transform.localScale = new Vector3(
@@ -178,6 +181,22 @@ namespace Descender.World.TilesV2
                     (top - foot) / size.y,
                     1f
                 );
+                if (region.far != null)
+                {
+                    // What stands far off: over the rock, cut to the region as the rock is.
+                    var reach = (Vector2)region.far.bounds.size;
+                    var beyond = view + reach * 3f;
+                    var far = MakeLayer(root, "cave far " + region.key, region.far, order + 1, material, beyond);
+                    far.maskInteraction = SpriteMaskInteraction.VisibleInsideMask;
+                    Place(
+                        far,
+                        new Vector2(set.farScroll, set.farScroll),
+                        new Vector2(viewAnchor.x, viewAnchor.y - beyond.y),
+                        viewAnchor,
+                        reach.x,
+                        reach.y
+                    );
+                }
                 if (region.caveTop == null)
                 {
                     continue;
@@ -187,7 +206,7 @@ namespace Descender.World.TilesV2
                     root,
                     "cave top " + region.key,
                     region.caveTop,
-                    order + 1,
+                    order + 2,
                     material,
                     new Vector2(view.x + strip.x * 3f, strip.y)
                 );

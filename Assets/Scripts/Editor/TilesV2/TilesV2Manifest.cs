@@ -128,6 +128,7 @@ namespace Descender.EditorTools.TilesV2
             public float[] ambient = Array.Empty<float>();
             public string cave;
             public string caveTop;
+            public string far;
             public AirEntry air = new AirEntry();
         }
 
@@ -251,6 +252,7 @@ namespace Descender.EditorTools.TilesV2
             public float cloudDrift;
             public float caveScroll;
             public int caveOrder;
+            public float farScroll;
         }
 
         /// <summary>One layer of the backdrop, back to front.</summary>

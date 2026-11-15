@@ -16,8 +16,10 @@ namespace Descender.Tests.PlayMode
     /// and builds the whole world; the hero starts on the Earth with no ability and the
     /// region says its name; a ledge carries him and lets him up through it from below; a veil of
     /// light stops him until he has the Light Dash, which he gets by walking into its
-    /// shrine; and a fall into a liquid that burns costs him a heart and no more. The scene
-    /// is loaded by its path, which only the editor can do, and unloaded again.
+    /// shrine; a wall that is not one comes down under two cuts and its room comes onto the
+    /// chart; the Pit takes him between the antechambers he has rested in; and a platform
+    /// that gives way does, and comes back. The scene is loaded by its path, which only the
+    /// editor can do, and unloaded again.
     /// </summary>
     public class TilesV2DescentTests
     {
@@ -124,6 +126,71 @@ namespace Descender.Tests.PlayMode
             Assert.That(playground.Title, Is.EqualTo("Light Dash"));
             Assert.That(hero.Has(Save.Ability.Wings), Is.False, "and only that");
             Assert.That(hero.IsAlive, Is.True);
+
+            // A wall that is not one: two cuts bring it down, and the room behind it comes onto the chart.
+            var things = playground.Things;
+            TilesV2Things.Thing secret = null;
+            foreach (var thing in things.All)
+            {
+                secret ??= thing.Kind == TilesV2Things.Secret ? thing : null;
+            }
+            Assert.That(secret, Is.Not.Null, "the world has no secret");
+            var wall = secret.Made.GetComponent<Triggers.Breakable>();
+            var room = new Vector2Int(secret.Hidden.xMin + 1, secret.Hidden.yMin + 1);
+            Assert.That(playground.Chart.IsHidden(room), Is.True, "the chart knows the room before the hero does");
+            Assert.That(wall.GetComponent<BoxCollider2D>().enabled, Is.True, "the wall stands");
+            var cut = new Combat.Strike(Combat.StrikeKind.Sword, 1, wall.transform.position);
+            wall.Struck(cut);
+            Assert.That(wall.IsBroken, Is.False, "one cut is not enough");
+            wall.Struck(cut);
+            Assert.That(wall.IsBroken, Is.True);
+            Assert.That(things.SecretsFound, Is.EqualTo(1));
+            Assert.That(playground.Chart.IsHidden(room), Is.False, "broken, the room is on the chart");
+
+            // Rested by the Pit in two circles, the one takes him to the other.
+            var pits = new System.Collections.Generic.List<TilesV2Things.Thing>();
+            foreach (var thing in things.All)
+            {
+                if (thing.Kind == TilesV2Things.Checkpoint && thing.InPit && pits.Count < 2)
+                {
+                    pits.Add(thing);
+                }
+            }
+            Assert.That(pits.Count, Is.EqualTo(2));
+            foreach (var rest in pits)
+            {
+                hero.PlaceAt((Vector2)rest.Made.transform.position + new Vector2(0f, 0.05f));
+                yield return probe.Settle();
+                yield return probe.Step(5);
+                Assert.That(playground.Rested, Does.Contain(rest.Number), "standing on it is resting at it");
+            }
+            playground.TravelTo(pits[0]);
+            yield return probe.Settle();
+            Assert.That(
+                Vector2.Distance(hero.transform.position, pits[0].Made.transform.position),
+                Is.LessThan(3f),
+                "the Pit took him back"
+            );
+            Assert.That(hero.IsGrounded, Is.True);
+
+            // A platform that gives way: it carries him, then it is gone, then it is back.
+            TilesV2Things.Thing slab = null;
+            foreach (var thing in things.All)
+            {
+                slab = thing.Kind == TilesV2Things.Platform && thing.Word == "crumble" ? thing : slab;
+            }
+            Assert.That(slab, Is.Not.Null, "the world has no platform that gives way");
+            var crumble = slab.Made.GetComponent<Triggers.Crumble>();
+            hero.PlaceAt((Vector2)slab.Made.transform.position + new Vector2(1f, 1.05f));
+            yield return probe.Until(() => hero.IsGrounded, 60);
+            Assert.That(hero.IsGrounded, Is.True, "it carries him");
+            Assert.That(hero.transform.position.y, Is.EqualTo(slab.Made.transform.position.y + 1f).Within(0.1f));
+            yield return probe.Until(() => !crumble.IsSolid, 180);
+            Assert.That(crumble.IsSolid, Is.False, "it gave way under him");
+            hero.PlaceAt(world.Spawn);
+            yield return probe.Until(() => crumble.IsSolid, 400);
+            Assert.That(crumble.IsSolid, Is.True, "and came back");
+            Assert.That(things.Winds, Is.GreaterThan(2), "and the winds blow");
         }
 
         // The lowest ledge with open sky over it: a step of the stair that stands on the Earth.

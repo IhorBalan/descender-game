@@ -24,7 +24,10 @@ namespace Descender.World.TilesV2
     /// starts with nothing and the map's marks are stood in the world (TilesV2Things): he
     /// finds his abilities in their shrines, rests at checkpoints and comes back at the last
     /// one when he dies; each region says its name as he walks into it, and M opens the
-    /// chart of what he has seen.
+    /// chart of what he has seen, with the places to rest, the shrines and the gates still
+    /// shut marked on it and the relics found counted region by region. At a place to rest
+    /// in an antechamber of the Pit, Interact opens the list of the other antechambers he
+    /// has rested in, and takes him to one.
     /// </summary>
     public sealed class TilesV2Playground : MonoBehaviour
     {
@@ -66,6 +69,12 @@ namespace Descender.World.TilesV2
         private TilesV2Things things;
         private TilesV2Chart chart;
         private bool chartShown;
+        private readonly HashSet<int> rested = new HashSet<int>();
+        private readonly List<TilesV2Things.Thing> ways = new List<TilesV2Things.Thing>();
+        private bool travelShown;
+        private int travelTo;
+        private string legend = "";
+        private int legendFor = -1;
         private bool everything;
         private TilesV2Set.Region region;
         private string title = "";
@@ -127,12 +136,30 @@ namespace Descender.World.TilesV2
             if (world.Map != null && world.Map.Marks.Count > 0)
             {
                 things = TilesV2Things.Build(world, checkpointPrefab, abilityPrefab);
-                things.RelicFound += () => Say($"a relic: {things.RelicsFound} of {things.Relics}");
+                things.RelicFound += _ => Say($"a relic: {things.RelicsFound} of {things.Relics}");
+                things.SecretFound += secret =>
+                {
+                    chart?.Unhide(secret.Hidden);
+                    Say($"a wall that was not one: {things.SecretsFound} of {things.Secrets}");
+                };
                 things.Ended += () => Announce("The Gate of Paradise", "the descent is done");
+                Pickups.Checkpoint.AnyRested += checkpoint => rested.Add(checkpoint.Index);
+                Pickups.Checkpoint.AnyCampRequested += OpenTravel;
             }
             if (world.Map != null && world.Map.Regions.Count > 0)
             {
                 chart = new TilesV2Chart(world);
+                if (things != null)
+                {
+                    foreach (var thing in things.All)
+                    {
+                        if (thing.Kind == TilesV2Things.Secret)
+                        {
+                            // The room behind a wall that is not one is not on the chart until the wall is down.
+                            chart.Hide(thing.Hidden);
+                        }
+                    }
+                }
             }
             hero.Died += () => StartCoroutine(Revive());
             hero.AbilityUnlocked += ability => Announce(Spaced(ability.ToString()), AbilityHint(ability));
@@ -179,9 +206,22 @@ namespace Descender.World.TilesV2
             {
                 return;
             }
+            if (travelShown)
+            {
+                // The list of antechambers has the keys while it is open.
+                Travel(keys);
+                return;
+            }
             if (keys.escapeKey.wasPressedThisFrame)
             {
-                Application.Quit();
+                if (chartShown)
+                {
+                    chartShown = false;
+                }
+                else
+                {
+                    Application.Quit();
+                }
             }
             if (keys.f1Key.wasPressedThisFrame)
             {
@@ -279,7 +319,7 @@ namespace Descender.World.TilesV2
                         + "PgDn / PgUp: next / last place   R: back to the start   F2: lantern   F1: hide this   Esc: quit"
                         + (
                             chart != null
-                                ? "\nM: the chart   F3: every ability / none   F4: the whole chart   cast L   heal H"
+                                ? "\nM: the chart   E at a rest by the Pit: travel   F3: every ability / none   F4: the whole chart   cast L   heal H"
                                 : ""
                         )
                     : clock;
@@ -300,6 +340,7 @@ namespace Descender.World.TilesV2
             GUI.Label(area, text, style);
             DrawTitle(scale);
             DrawChart(scale);
+            DrawTravel(scale);
         }
 
         // The region's name (or an ability's) across the middle of the screen, fading out.
@@ -360,6 +401,8 @@ namespace Descender.World.TilesV2
             GUI.DrawTexture(new Rect(0f, 0f, screen.x, screen.y), Texture2D.whiteTexture);
             GUI.color = Color.white;
             GUI.DrawTexture(area, picture);
+            DrawMarks(area, size);
+            DrawLegend(area);
             if (Time.unscaledTime % 0.6f < 0.4f)
             {
                 Vector2 at = hero.transform.position - world.transform.position;
@@ -383,6 +426,210 @@ namespace Descender.World.TilesV2
             checkpointPrefab = checkpoint;
             abilityPrefab = ability;
         }
+
+        private static readonly Color RestColour = new Color(1f, 0.92f, 0.5f);
+        private static readonly Color ShrineColour = new Color(0.45f, 1f, 0.95f);
+        private static readonly Color VeilColour = new Color(1f, 1f, 0.8f);
+        private static readonly Color BoltColour = new Color(0.75f, 0.6f, 1f);
+        private static readonly Color SlamColour = new Color(0.65f, 0.72f, 0.85f);
+
+        // On the chart, what the hero has seen of the map's things: a place to rest (bright once he
+        // has rested there, larger by the Pit), a shrine not yet emptied, a gate not yet opened in
+        // the colour of what opens it. A relic is not marked: it is found, not shown.
+        private void DrawMarks(Rect area, float size)
+        {
+            if (things == null)
+            {
+                return;
+            }
+            foreach (var thing in things.All)
+            {
+                if (!chart.HasSeen(thing.Cell) || chart.IsHidden(thing.Cell))
+                {
+                    continue;
+                }
+                var big = 3f;
+                Color colour;
+                switch (thing.Kind)
+                {
+                    case TilesV2Things.Checkpoint:
+                        colour = RestColour * (rested.Contains(thing.Number) ? 1f : 0.55f);
+                        big = thing.InPit ? 5f : 4f;
+                        break;
+                    case TilesV2Things.AbilityKind when !thing.IsGone:
+                        colour = ShrineColour;
+                        big = 5f;
+                        break;
+                    case TilesV2Things.Barrier:
+                        colour = VeilColour;
+                        break;
+                    case TilesV2Things.Seal when !thing.IsGone:
+                        colour = thing.Word == "slam" ? SlamColour : BoltColour;
+                        break;
+                    default:
+                        continue;
+                }
+                colour.a = 1f;
+                GUI.color = colour;
+                var dot = Mathf.Max(big, size * 1.5f);
+                GUI.DrawTexture(
+                    new Rect(
+                        area.x + (thing.Cell.x + 0.5f) * size - dot / 2f,
+                        area.yMax - (thing.Cell.y + 0.5f) * size - dot / 2f,
+                        dot,
+                        dot
+                    ),
+                    Texture2D.whiteTexture
+                );
+            }
+            GUI.color = Color.white;
+        }
+
+        // Beside the chart: the relics found in each region he has been in, and what the marks mean.
+        private void DrawLegend(Rect area)
+        {
+            if (things == null || world.Map.Regions.Count == 0)
+            {
+                return;
+            }
+            if (legendFor != things.RelicsFound + chart.Seen)
+            {
+                legendFor = things.RelicsFound + chart.Seen;
+                var text = new System.Text.StringBuilder("relics\n");
+                for (var i = 0; i < world.Map.Regions.Count; i++)
+                {
+                    things.RelicsIn(i, out var found, out var held);
+                    var region = world.Set.RegionOf(world.Map.Regions[i].Key);
+                    if (held > 0 && region != null)
+                    {
+                        text.Append(region.name).Append("  ").Append(found).Append('/').Append(held).Append('\n');
+                    }
+                }
+                text.Append("\nyellow: a rest\ncyan: a shrine\npale: a veil of light\nviolet: a seal\ngrey: a slab");
+                legend = text.ToString();
+            }
+            var at = new Rect(Mathf.Max(area.x - 132f, 4f), area.y, 128f, area.height);
+            GUI.color = new Color(0f, 0f, 0f, 0.8f);
+            GUI.Label(new Rect(at.x + 1f, at.y + 1f, at.width, at.height), legend, style);
+            GUI.color = Color.white;
+            GUI.Label(at, legend, style);
+        }
+
+        // Interact at a place to rest by the Pit: the list of the others he has rested at.
+        private void OpenTravel(Pickups.Checkpoint from)
+        {
+            if (!journey || things == null || travelShown || shooting)
+            {
+                return;
+            }
+            ways.Clear();
+            var here = -1;
+            foreach (var thing in things.All)
+            {
+                if (thing.Kind != TilesV2Things.Checkpoint || !thing.InPit || !rested.Contains(thing.Number))
+                {
+                    continue;
+                }
+                if (thing.Number == from.Index)
+                {
+                    here = ways.Count;
+                }
+                ways.Add(thing);
+            }
+            if (here < 0)
+            {
+                return;
+            }
+            if (ways.Count < 2)
+            {
+                Say("rest by the Pit in another circle, and this one takes you there");
+                return;
+            }
+            travelTo = here;
+            travelShown = true;
+            chartShown = false;
+            hero.Freeze();
+        }
+
+        // The keys of the list: up and down, Enter or Interact to go, Escape to stay.
+        private void Travel(Keyboard keys)
+        {
+            if (keys.upArrowKey.wasPressedThisFrame || keys.wKey.wasPressedThisFrame)
+            {
+                travelTo = (travelTo + ways.Count - 1) % ways.Count;
+            }
+            if (keys.downArrowKey.wasPressedThisFrame || keys.sKey.wasPressedThisFrame)
+            {
+                travelTo = (travelTo + 1) % ways.Count;
+            }
+            var go = keys.enterKey.wasPressedThisFrame || keys.spaceKey.wasPressedThisFrame;
+            if (!go && !keys.escapeKey.wasPressedThisFrame)
+            {
+                return;
+            }
+            travelShown = false;
+            hero.Unfreeze();
+            if (go)
+            {
+                TravelTo(ways[travelTo]);
+            }
+        }
+
+        /// <summary>Takes the hero to a place to rest in an antechamber of the Pit.</summary>
+        public void TravelTo(TilesV2Things.Thing rest)
+        {
+            if (rest == null || rest.Made == null)
+            {
+                return;
+            }
+            var at = (Vector2)rest.Made.transform.position + new Vector2(1.5f, 0.05f);
+            hero.PlaceAt(at);
+            hero.SetRespawnPoint(rest.Made.transform.position);
+            if (view != null)
+            {
+                view.Snap();
+            }
+            var region = world.RegionAt(at + Vector2.up);
+            Say("by the Pit" + (region != null ? ", " + region.name : ""));
+        }
+
+        // The list of antechambers, in the middle of the screen.
+        private void DrawTravel(float scale)
+        {
+            if (!travelShown)
+            {
+                return;
+            }
+            var screen = new Vector2(Screen.width, Screen.height) / scale;
+            var tall = 30f + ways.Count * 16f;
+            var box = new Rect(screen.x / 2f - 130f, screen.y / 2f - tall / 2f, 260f, tall);
+            GUI.color = new Color(0f, 0f, 0f, 0.85f);
+            GUI.DrawTexture(box, Texture2D.whiteTexture);
+            GUI.color = new Color(1f, 0.96f, 0.84f);
+            GUI.Label(
+                new Rect(box.x + 8f, box.y + 4f, box.width, 18f),
+                "The Pit: go to   (up, down, Enter; Esc to stay)",
+                style
+            );
+            for (var i = 0; i < ways.Count; i++)
+            {
+                var region = world.RegionAt((Vector2)ways[i].Made.transform.position + Vector2.up);
+                var name = (region != null ? region.name : "?") + $"   (row {world.Map.Height - 1 - ways[i].Cell.y})";
+                GUI.color = i == travelTo ? Color.white : new Color(1f, 1f, 1f, 0.55f);
+                GUI.Label(
+                    new Rect(box.x + 14f, box.y + 24f + i * 16f, box.width, 18f),
+                    (i == travelTo ? "> " : "  ") + name,
+                    style
+                );
+            }
+            GUI.color = Color.white;
+        }
+
+        /// <summary>The checkpoints the hero has rested at, by their number.</summary>
+        public IReadOnlyCollection<int> Rested => rested;
+
+        /// <summary>Whether the list of the Pit's antechambers is open.</summary>
+        public bool IsChoosingTravel => travelShown;
 
         private const float TitleTime = 4f;
 

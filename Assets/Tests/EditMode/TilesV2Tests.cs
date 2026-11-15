@@ -719,7 +719,7 @@ namespace Descender.Tests
                         layer.name + ": only the cave rock takes the light"
                     );
                 }
-                Assert.That(masked, Is.EqualTo(1), "the cave rock is cut to the ground");
+                Assert.That(masked, Is.EqualTo(2), "the cave rock and what stands far off in it are cut to the ground");
                 Assert.That(world.GetComponentsInChildren<SpriteMask>().Length, Is.EqualTo(1));
                 Assert.That(
                     world.GetComponentsInChildren<Triggers.Water>().Length,

@@ -1755,6 +1755,10 @@ MonoBehaviour:
   - {fileID: 276677954601336921, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 554093025398641486, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 520219188698749537, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 601531466001661730, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 432383010485315223, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 4415477407493006930, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 1719306169041351344, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   regions:
   - key: paradise
     name: Paradise
@@ -1762,6 +1766,7 @@ MonoBehaviour:
     ambient: {r: 0, g: 0, b: 0, a: 1}
     cave: {fileID: 0}
     caveTop: {fileID: 0}
+    far: {fileID: 0}
     airRate: 5
     airColour: {r: 1, g: 0.949, b: 0.7529, a: 0.8}
     airAcross: {x: -0.4, y: 0.4}
@@ -1774,6 +1779,7 @@ MonoBehaviour:
     ambient: {r: 0, g: 0, b: 0, a: 1}
     cave: {fileID: 21300000, guid: c37b4c3ab7655f8ba95a7fd59212e596, type: 3}
     caveTop: {fileID: 21300000, guid: e2ab188d20da5ea5b2c31f1191b28194, type: 3}
+    far: {fileID: 21300000, guid: d371afa1d0625cc6adbd5cd783004f04, type: 3}
     airRate: 0
     airColour: {r: 1, g: 1, b: 1, a: 0}
     airAcross: {x: 0, y: 0}
@@ -1786,6 +1792,7 @@ MonoBehaviour:
     ambient: {r: 0.2, g: 0.21, b: 0.28, a: 1}
     cave: {fileID: 21300000, guid: e444dd6d7468579b8dea85f487128ad5, type: 3}
     caveTop: {fileID: 21300000, guid: 66238e3584895fb0a8d8f543aa044251, type: 3}
+    far: {fileID: 21300000, guid: fa08c61c55a651a28b19fb03c7b84f87, type: 3}
     airRate: 7
     airColour: {r: 0.7843, g: 0.7843, b: 0.8706, a: 0.5}
     airAcross: {x: -0.3, y: 0.3}
@@ -1798,6 +1805,7 @@ MonoBehaviour:
     ambient: {r: 0.26, g: 0.13, b: 0.24, a: 1}
     cave: {fileID: 21300000, guid: 67b1c324c4345faba152b7109b2180b5, type: 3}
     caveTop: {fileID: 21300000, guid: 1a9ab2ab8f85506cb35c582df58e2498, type: 3}
+    far: {fileID: 21300000, guid: db8f7e41123f535c86c64267de5c2023, type: 3}
     airRate: 26
     airColour: {r: 0.9412, g: 0.6275, b: 0.8471, a: 0.6}
     airAcross: {x: 5, y: 9}
@@ -1810,6 +1818,7 @@ MonoBehaviour:
     ambient: {r: 0.17, g: 0.19, b: 0.1, a: 1}
     cave: {fileID: 21300000, guid: cea9ca58a0215bcc9f18bdcd6e756408, type: 3}
     caveTop: {fileID: 21300000, guid: ab65ba5094bd5066b8e5138b0c868682, type: 3}
+    far: {fileID: 21300000, guid: 9ceb22fbd9015b9dac4abf7d898fc848, type: 3}
     airRate: 40
     airColour: {r: 0.6235, g: 0.6902, b: 0.7529, a: 0.5}
     airAcross: {x: -1, y: -0.6}
@@ -1822,6 +1831,7 @@ MonoBehaviour:
     ambient: {r: 0.24, g: 0.19, b: 0.09, a: 1}
     cave: {fileID: 21300000, guid: aa98a98397905e32bd9252de8285ee57, type: 3}
     caveTop: {fileID: 21300000, guid: 1fe611e38d155b2fa113ff72665fc53c, type: 3}
+    far: {fileID: 21300000, guid: ec12cd2ba67a57038ecbf04f61ad1310, type: 3}
     airRate: 6
     airColour: {r: 1, g: 0.8471, b: 0.3765, a: 0.9}
     airAcross: {x: -0.2, y: 0.2}
@@ -1834,6 +1844,7 @@ MonoBehaviour:
     ambient: {r: 0.1, g: 0.19, b: 0.18, a: 1}
     cave: {fileID: 21300000, guid: eef6d918b4fe586c9ad850a0d89f5160, type: 3}
     caveTop: {fileID: 21300000, guid: 71e50716e6c15350a1fc34e4c8584c44, type: 3}
+    far: {fileID: 21300000, guid: 2174884d7f1e579a866fdf37872dd3ec, type: 3}
     airRate: 7
     airColour: {r: 0.6275, g: 0.7843, b: 0.7216, a: 0.4}
     airAcross: {x: -0.4, y: 0.4}
@@ -1846,6 +1857,7 @@ MonoBehaviour:
     ambient: {r: 0.27, g: 0.12, b: 0.07, a: 1}
     cave: {fileID: 21300000, guid: 8f03bd064e9c51f9aec980fc1e3bc988, type: 3}
     caveTop: {fileID: 21300000, guid: f066d4462a1456abb74794228c29111d, type: 3}
+    far: {fileID: 21300000, guid: e6258dbaa4fb59fa9d14b6bc88e68dbf, type: 3}
     airRate: 16
     airColour: {r: 1, g: 0.6039, b: 0.2275, a: 0.9}
     airAcross: {x: -0.5, y: 0.5}
@@ -1858,6 +1870,7 @@ MonoBehaviour:
     ambient: {r: 0.25, g: 0.08, b: 0.08, a: 1}
     cave: {fileID: 21300000, guid: 11ce3be994505a6093a681a11d633676, type: 3}
     caveTop: {fileID: 21300000, guid: 676fb91594a451fdb5887a441298ecf1, type: 3}
+    far: {fileID: 21300000, guid: 08657d710548536a94893ddedfb2e7dc, type: 3}
     airRate: 14
     airColour: {r: 0.6902, g: 0.502, b: 0.502, a: 0.6}
     airAcross: {x: -0.8, y: 0.2}
@@ -1870,6 +1883,7 @@ MonoBehaviour:
     ambient: {r: 0.14, g: 0.17, b: 0.22, a: 1}
     cave: {fileID: 21300000, guid: fb29dc7469b8564d81483a7889a5aa41, type: 3}
     caveTop: {fileID: 21300000, guid: 29902a085f2f5f518de10e54b8f2e5b5, type: 3}
+    far: {fileID: 21300000, guid: 01c34003e83553edae93e51b77e120e4, type: 3}
     airRate: 5
     airColour: {r: 0.502, g: 0.5647, b: 0.6588, a: 0.5}
     airAcross: {x: -0.2, y: 0.2}
@@ -1882,6 +1896,7 @@ MonoBehaviour:
     ambient: {r: 0.16, g: 0.24, b: 0.32, a: 1}
     cave: {fileID: 21300000, guid: eca7680a0f9e5315bcaf96dbf6e88735, type: 3}
     caveTop: {fileID: 21300000, guid: 9efcee68f7225c1a80ca5e27505eeb95, type: 3}
+    far: {fileID: 21300000, guid: 077ac92e89e053dcb90c07fe05f732db, type: 3}
     airRate: 30
     airColour: {r: 0.9098, g: 0.9647, b: 1, a: 0.9}
     airAcross: {x: -1.2, y: 0.4}
@@ -1890,6 +1905,7 @@ MonoBehaviour:
     airLit: 0
   caveScroll: 0.55
   caveOrder: -960
+  farScroll: 0.78
   liquids:
   - key: water
     tile: {fileID: 11400000, guid: ee2506ef59939374e9908342d864f255, type: 2}

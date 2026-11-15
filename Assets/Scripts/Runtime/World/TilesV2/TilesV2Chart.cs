@@ -20,6 +20,8 @@ namespace Descender.World.TilesV2
         private readonly Color32[] colours;
         private readonly Color32[] pixels;
         private readonly bool[] seen;
+        private readonly bool[] hidden;
+        private readonly Color32[] rocks;
         private bool stale;
         private Vector2Int last = new Vector2Int(int.MinValue, int.MinValue);
 
@@ -31,6 +33,8 @@ namespace Descender.World.TilesV2
             colours = new Color32[count];
             pixels = new Color32[count];
             seen = new bool[count];
+            hidden = new bool[count];
+            rocks = new Color32[map.Height];
             for (var row = 0; row < map.Height; row++)
             {
                 var tint = new Color(0.1f, 0.1f, 0.12f);
@@ -47,6 +51,7 @@ namespace Descender.World.TilesV2
                 var air = open ? Sky : tint * 1.5f + new Color(0.14f, 0.14f, 0.16f);
                 rock.a = 1f;
                 air.a = 1f;
+                rocks[map.Height - 1 - row] = rock;
                 for (var column = 0; column < map.Width; column++)
                 {
                     var colour = air;
@@ -113,7 +118,7 @@ namespace Descender.World.TilesV2
                     if (!seen[i])
                     {
                         seen[i] = true;
-                        pixels[i] = colours[i];
+                        pixels[i] = hidden[i] ? rocks[y] : colours[i];
                         Seen++;
                         stale = true;
                     }
@@ -127,10 +132,44 @@ namespace Descender.World.TilesV2
             for (var i = 0; i < seen.Length; i++)
             {
                 seen[i] = true;
-                pixels[i] = colours[i];
+                pixels[i] = hidden[i] ? rocks[i / map.Width] : colours[i];
             }
             Seen = seen.Length;
             stale = true;
+        }
+
+        /// <summary>
+        /// Keeps a rectangle of cells off the chart, drawn as rock even when the hero has been
+        /// near: a room behind a wall he has not broken. `Show(rect)` puts it on again.
+        /// </summary>
+        public void Hide(RectInt cells) => Veil(cells, true);
+
+        /// <summary>Lets a rectangle hidden by <see cref="Hide"/> show as what it is.</summary>
+        public void Unhide(RectInt cells) => Veil(cells, false);
+
+        /// <summary>Whether a cell is kept off the chart.</summary>
+        public bool IsHidden(Vector2Int cell) =>
+            cell.x >= 0
+            && cell.y >= 0
+            && cell.x < map.Width
+            && cell.y < map.Height
+            && hidden[cell.y * map.Width + cell.x];
+
+        private void Veil(RectInt cells, bool hide)
+        {
+            for (var y = Mathf.Max(cells.yMin, 0); y < Mathf.Min(cells.yMax, map.Height); y++)
+            {
+                for (var x = Mathf.Max(cells.xMin, 0); x < Mathf.Min(cells.xMax, map.Width); x++)
+                {
+                    var i = y * map.Width + x;
+                    hidden[i] = hide;
+                    if (seen[i])
+                    {
+                        pixels[i] = hide ? rocks[y] : colours[i];
+                        stale = true;
+                    }
+                }
+            }
         }
 
         /// <summary>Whether a cell has been seen.</summary>
