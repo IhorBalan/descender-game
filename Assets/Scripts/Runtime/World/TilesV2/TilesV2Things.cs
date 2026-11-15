@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Descender.CameraRig;
 using Descender.Combat;
 using Descender.Pickups;
 using Descender.Save;
@@ -38,8 +39,25 @@ namespace Descender.World.TilesV2
         /// <summary>The door the lights open: `@mark sanctum column row height lights`.</summary>
         public const string Sanctum = "sanctum";
 
-        /// <summary>One of the tile set's pictures, its foot in a cell: `@mark picture column row key`.</summary>
+        /// <summary>
+        /// One of the tile set's pictures, its foot in a cell, moved from the middle of that
+        /// foot by so many pixels right and up: `@mark picture column row key [right up]`.
+        /// </summary>
         public const string Stood = "picture";
+
+        /// <summary>What a picture's companions in the tile set are named after it: its windows' light; its further frames.</summary>
+        public const string GlowSuffix = "_glow";
+        public const string FrameSuffix = "_f";
+
+        /// <summary>
+        /// A stretch where the view draws back (the game's camera zone): `@mark vista column
+        /// row width height zoom holdX holdY lookRight lookUp`, the zoom in hundredths, the
+        /// looks in tiles.
+        /// </summary>
+        public const string Vista = "vista";
+
+        // Seconds a view takes to draw back in a vista, and to come in again on leaving it.
+        private const float VistaBlend = 1.2f;
 
         /// <summary>A pennant flying to the right of a cell: `@mark flag column row`.</summary>
         public const string Flag = "flag";
@@ -80,6 +98,11 @@ namespace Descender.World.TilesV2
         /// <summary>The pennants flying in it.</summary>
         public int Flags { get; private set; }
 
+        /// <summary>The pictures that are several shown in turn, the ones whose windows burn by night, and the vistas.</summary>
+        public int Moving { get; private set; }
+        public int Glowing { get; private set; }
+        public int Vistas { get; private set; }
+
         /// <summary>The doors the lights open, and how many of them are open.</summary>
         public int Sanctums { get; private set; }
         public int SanctumsOpen { get; private set; }
@@ -114,6 +137,34 @@ namespace Descender.World.TilesV2
             }
         }
 
+        /// <summary>A picture and its further frames in the set (`key_f1` ...), in order; itself alone when it has none.</summary>
+        public static Sprite[] FramesOf(Dictionary<string, TilesV2Set.Backdrop> pictures, TilesV2Set.Backdrop first)
+        {
+            var frames = new List<Sprite> { first.sprite };
+            while (pictures.TryGetValue(first.key + FrameSuffix + frames.Count, out var next) && next.sprite != null)
+            {
+                frames.Add(next.sprite);
+            }
+            return frames.ToArray();
+        }
+
+        /// <summary>How many frames a second a moving picture shows: a pennant flies, a tree only stirs.</summary>
+        public static float FramesASecond(string key)
+        {
+            if (key.Contains("pennant") || key.Contains("glint"))
+            {
+                return 9f;
+            }
+            if (key.Contains("fountain"))
+            {
+                return 7f;
+            }
+            return key.Contains("banner") ? 4f : 3f;
+        }
+
+        /// <summary>How long a moving picture is gone between two showings: a glint comes and goes, the rest never rest.</summary>
+        public static float RestOf(string key) => key.Contains("glint") ? 3.5f : 0f;
+
         /// <summary>
         /// Makes everything the world's map marks, under a new object in the world. The
         /// prefabs are the game's checkpoint and ability pickup; a kind whose prefab is
@@ -131,6 +182,11 @@ namespace Descender.World.TilesV2
             var map = world.Map;
             var set = world.Set;
             Vector2 origin = world.transform.position;
+            var pictures = new Dictionary<string, TilesV2Set.Backdrop>();
+            foreach (var backdrop in set.backdrops)
+            {
+                pictures[backdrop.key] = backdrop;
+            }
             foreach (var mark in map.Marks)
             {
                 // The middle of the foot of the mark's cell, and the top left corner of it.
@@ -287,8 +343,7 @@ namespace Descender.World.TilesV2
                     }
                     case Stood:
                     {
-                        var entry = Array.Find(set.backdrops, backdrop => backdrop.key == mark.Word(0));
-                        if (entry == null || entry.sprite == null)
+                        if (!pictures.TryGetValue(mark.Word(0), out var entry) || entry.sprite == null)
                         {
                             Debug.LogWarning(
                                 $"Tiles V2: the map stands a picture '{mark.Word(0)}' the tile set has not."
@@ -298,17 +353,39 @@ namespace Descender.World.TilesV2
                         // The sprite's pivot is its bottom middle: it stands on the foot of the cell.
                         var holder = new GameObject("Picture " + entry.key);
                         holder.transform.SetParent(things.transform, false);
-                        holder.transform.position = foot;
+                        holder.transform.position =
+                            foot + new Vector2(mark.Number(1, 0), mark.Number(2, 0)) * TilesV2Particles.Pixel;
                         var shown = holder.AddComponent<SpriteRenderer>();
                         shown.sprite = entry.sprite;
                         shown.sortingOrder = entry.order;
                         shown.sharedMaterial = entry.lit ? set.litMaterial : set.unlitMaterial;
-                        // A picture of light is not always the same: a rainbow is the sun's and gone by night, and it
-                        // and a glory breathe a little. A tree or a house stood as a picture is what it is.
-                        var rainbow = entry.key.Contains("rainbow");
-                        if (rainbow || entry.key.Contains("glory"))
+                        // A picture of light is not always the same: a rainbow and the light in a hall's air are
+                        // the sun's and gone by night, and they and a glory breathe a little.
+                        var sun = entry.key.Contains("rainbow") || entry.key.Contains("_rays");
+                        if (sun || entry.key.Contains("glory"))
                         {
-                            holder.AddComponent<TilesV2Shimmer>().Configure(world, shown, rainbow, 0.25f);
+                            holder.AddComponent<TilesV2Shimmer>().Configure(world, shown, sun, 0.25f);
+                        }
+                        // A picture with further frames in the set is those shown in turn.
+                        var frames = FramesOf(pictures, entry);
+                        if (frames.Length > 1)
+                        {
+                            holder
+                                .AddComponent<TilesV2Frames>()
+                                .Configure(shown, frames, FramesASecond(entry.key), RestOf(entry.key));
+                            things.Moving++;
+                        }
+                        // One whose windows have a light of their own in the set shows it as the day goes.
+                        if (pictures.TryGetValue(entry.key + GlowSuffix, out var glow) && glow.sprite != null)
+                        {
+                            var lamp = new GameObject("Glow");
+                            lamp.transform.SetParent(holder.transform, false);
+                            var light = lamp.AddComponent<SpriteRenderer>();
+                            light.sprite = glow.sprite;
+                            light.sortingOrder = glow.order;
+                            light.sharedMaterial = set.unlitMaterial;
+                            lamp.AddComponent<TilesV2Shimmer>().Configure(world, light, false, 0.12f, true);
+                            things.Glowing++;
                         }
                         thing.Made = holder;
                         things.Pictures++;
@@ -316,7 +393,7 @@ namespace Descender.World.TilesV2
                     }
                     case Flag:
                     {
-                        // A rod in the middle of a cell (a great roof's) has its pennant moved to it: so many pixels.
+                        // A rod in the middle of a cell has its pennant moved to it: so many pixels.
                         var holder = new GameObject("Flag");
                         holder.transform.SetParent(things.transform, false);
                         holder.transform.position = foot + new Vector2(mark.Number(0, 0) * TilesV2Particles.Pixel, 0f);
@@ -330,6 +407,28 @@ namespace Descender.World.TilesV2
                         holder.AddComponent<TilesV2Flag>().Configure(atRod, tail, set.litMaterial);
                         thing.Made = holder;
                         things.Flags++;
+                        break;
+                    }
+                    case Vista:
+                    {
+                        // The game's own camera zone, over the stretch the mark names.
+                        var size = new Vector2(Mathf.Max(mark.Number(0, 1), 1), Mathf.Max(mark.Number(1, 1), 1));
+                        var holder = new GameObject("Vista");
+                        holder.transform.SetParent(things.transform, false);
+                        holder.transform.position = corner + new Vector2(size.x / 2f, -size.y / 2f);
+                        holder
+                            .AddComponent<CameraZone>()
+                            .Configure(
+                                size,
+                                new Vector2(mark.Number(5, 0), mark.Number(6, 0)),
+                                Mathf.Max(mark.Number(2, 100), 25) / 100f,
+                                mark.Number(3, 0) != 0,
+                                mark.Number(4, 0) != 0,
+                                -1f,
+                                VistaBlend
+                            );
+                        thing.Made = holder;
+                        things.Vistas++;
                         break;
                     }
                     case Sanctum:

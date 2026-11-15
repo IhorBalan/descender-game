@@ -162,7 +162,7 @@ namespace Descender.EditorTools.TilesV2
             var world = Prepare(scenePath);
             if (hour >= 0f)
             {
-                world.Day.Hour = hour;
+                ShowHour(world, hour);
             }
             var map = world.Map;
             var area = world.Area;
@@ -323,6 +323,17 @@ namespace Descender.EditorTools.TilesV2
             return world;
         }
 
+        // Sets the hour, and shows what is not the same at every hour (a rainbow, the light of
+        // windows) as it is at that one: in the editor nothing does it frame by frame.
+        private static void ShowHour(TilesV2World world, float hour)
+        {
+            world.Day.Hour = hour;
+            foreach (var shimmer in world.GetComponentsInChildren<TilesV2Shimmer>(true))
+            {
+                shimmer.Apply(hour);
+            }
+        }
+
         private static void CaptureViews(TilesV2World world, string folder)
         {
             var game = world.Set.View;
@@ -339,11 +350,11 @@ namespace Descender.EditorTools.TilesV2
             {
                 if (world.TryView(shot.View, out var at))
                 {
-                    world.Day.Hour = shot.Hour;
+                    ShowHour(world, shot.Hour);
                     Render(world, world.Framed(at), game, Path.Combine(folder, shot.Name + ".png"));
                 }
             }
-            world.Day.Hour = start;
+            ShowHour(world, start);
             var area = world.Area;
             // The whole map, at as many pixels a tile as a texture can hold.
             var most = Mathf.Max(area.width, area.height);

@@ -2017,11 +2017,19 @@ def island(world: World, x0: int, x1: int, top: int, thick: int, crown: str | No
                 world.t[top + 1][x] = "D"
 
 
-def stand(world: World, key: str, x: int, row: int):
-    """Stands one of Paradise's pictures (tv2_heaven.py) with its floor line at the foot of a cell of air."""
-    assert key in tv2_heaven.PICTURE_KEYS, key
+def stand(world: World, key: str, x: int, row: int, dx: int = 0, dy: int = 0):
+    """Stands one of Paradise's pictures (tv2_heaven.py) with its floor line at the foot of a
+    cell of air, moved from the middle of that foot by so many pixels right and up."""
+    assert key in tv2_heaven.STOOD_KEYS, key
     assert world.t[row][x] not in GROUND, f"{key} would be marked in the ground at ({x}, {row})"
-    world.mark("picture", x, row, key)
+    world.mark("picture", x, row, key, *([dx, dy] if dx or dy else []))
+
+
+def vista(world: World, x: int, top: int, wide: int, tall: int, zoom: float, hold_x: bool = False, look_x: int = 0, look_up: int = 0):
+    """A stretch where the view draws back to show more (the game's camera zone): the columns
+    x .. and rows top .. of it, how much more it shows (2: twice), whether the view is held
+    on the stretch's middle column, and how far it looks aside and up, in tiles."""
+    world.mark("vista", x, top, wide, tall, int(round(zoom * 100)), int(hold_x), 0, look_x, look_up)
 
 
 def heaven_tree(world: World, x: int, ground: int, tall: int, crown: str):
@@ -2142,10 +2150,12 @@ def pitched(world: World, x0: int, x1: int, base: int, char: str = "K") -> int:
 
 
 def pennant(world: World, x0: int, x1: int, top: int):
-    """A pennant on the rod of a great roof over the columns x0 .. x1 whose top row is `top`.
-    Over an odd number of columns the rod is in the middle of a cell, half a tile west of
-    where a pennant is hoisted, so the pennant is moved by as much (in pixels)."""
-    world.mark("flag", (x0 + x1) // 2 + 1, top - 3, *([-8] if (x1 - x0) % 2 == 0 else []))
+    """A pennant on the rod of a great roof over the columns x0 .. x1 whose top row is `top`,
+    and a glint on the rod's tip. Over an even number of columns the rod is on the line
+    between two cells, half a tile east of the middle of the cell the pennant is stood in."""
+    aside = 0 if (x1 - x0) % 2 == 0 else 8
+    stand(world, "heaven_pennant", (x0 + x1) // 2, top - 3, aside, 1)
+    stand(world, "heaven_glint", (x0 + x1) // 2, top - 3, aside, 14)
 
 
 def cupola(world: World, cx: float, base: int, outer: float, inner: float, fill: str | None = "z", char: str = "K") -> int:
@@ -2193,17 +2203,22 @@ def cone(world: World, x0: int, x1: int, base: int) -> int:
     return row + 1
 
 
-def turret(world: World, x0: int, x1: int, foot: int, tall: int, flag: bool = False, hang: bool = False) -> int:
+def turret(world: World, x0: int, x1: int, foot: int, tall: int, flag=False, hang: bool = False, style: int = 0) -> int:
     """A round tower of a castle: a picture (tv2_heaven.tower: dressed marble lit on one side,
     windows with light in them, a head on corbels, a roof of blue tiles), and under the
     picture's roof the map's own roof tiles, so the roof is stood on. An even number of
-    columns; `hang` for one hung on a wall. Returns the roof's top row."""
+    columns; `hang` for one hung on a wall; `style` for what else it has (a balcony, a
+    round window, a climbing rose, a banner). `flag`: a long pennant on its rod, or
+    ("small") a short one. A glint comes and goes on the rod's tip. Returns the roof's top row."""
     top = foot - tall
     middle = (x0 + x1) // 2
-    stand(world, tv2_heaven.tower_key(x1 - x0 + 1, tall, False, hang), middle, foot - 1)
+    stand(world, tv2_heaven.tower_key(x1 - x0 + 1, tall, False, hang, style), middle, foot - 1)
     peak = cone(world, x0, x1, top - 3)
-    if flag:
+    if flag == "small":
         world.mark("flag", middle + 1, peak - 3)
+    elif flag:
+        stand(world, "heaven_pennant", middle, peak - 3, 8, -8)
+    stand(world, "heaven_glint", middle, peak - 3, 8, 8)
     return peak
 
 
@@ -2365,8 +2380,28 @@ def paradise(world: World):
     falling(world, centre - 1, under, surf[POND[0]])
     world.view("earth_falls", centre + 4, surf[POND[0]] - 8)
     # What grows and stands in the Garden.
-    for x, tall, crown in ((hx0 + 19, 8, "p"), (hx0 + 28, 5, "g"), (centre - 26, 7, "p"), (centre - 17, 5, "p"), (centre + 17, 6, "p"), (centre + 39, 8, "p"), (centre + 46, 5, "g")):
+    for x, tall, crown in ((hx0 + 17, 8, "p"), (hx0 + 31, 5, "g"), (centre - 26, 7, "p"), (centre - 17, 5, "p"), (centre + 17, 6, "p"), (centre + 39, 8, "p"), (centre + 46, 5, "g")):
         heaven_tree(world, x, hub, tall, crown)
+    # It is a garden that is kept: a fountain that runs, beds of flowers, clipped green, urns
+    # and benches by the lake, swans on it, and walks of marble by the lake and under the pavilion.
+    stand(world, "heaven_fountain", hx0 + 24, hub - 1, 8)
+    for off, bed in ((-66, 0), (-60, 1), (-29, 3), (37, 2)):
+        stand(world, f"heaven_flowers_{bed}", centre + off, hub - 1)
+    for off, kind in ((-35, 2), (-24, 0), (42, 0), (48, 2)):
+        stand(world, f"heaven_hedge_{kind}", centre + off, hub - 1)
+    for off in (-16, 16):
+        stand(world, "heaven_urn", centre + off, hub - 1)
+    stand(world, "heaven_bench", centre - 19, hub - 1)
+    stand(world, "heaven_bench", centre + 19, hub - 1)
+    stand(world, "heaven_swan_0", centre - 7, hub - 1)
+    stand(world, "heaven_swan_1", centre + 6, hub - 1)
+    for off in (-10, 3, 9):
+        stand(world, f"heaven_lilies_{off % 2}", centre + off, hub)
+    for x in list(range(centre - 16, centre - 12)) + list(range(centre + 13, centre + 17)):
+        world.t[hub][x] = "M"
+        world.square.add((x, hub))
+    # Where the Garden first opens, the view draws back to take in the lake and the island over it.
+    vista(world, centre - 18, hub - 9, 37, 9, 2.0, look_up=13)
     # A gate at the Garden's east end, before the bridge: two columns, a round arch, a rod of
     # gilt on it. At its west end two tall columns, and between them the stair to the Temple.
     x0 = hx1 - 12
@@ -2456,7 +2491,13 @@ def paradise(world: World):
     # behind the high seat one wall from the floor up through the tower.
     stand(world, "heaven_hall_west", centre - 25, f - 1)
     stand(world, "heaven_hall_east", centre + 24, f - 1)
-    stand(world, "heaven_high_seat", centre, f - 3)
+    stand(world, "heaven_high_seat", centre, f - 4)
+    # The light of the windows slants into the hall by day; a banner hangs on every column
+    # and stirs.
+    stand(world, "heaven_rays_west", centre - 25, f - 1)
+    stand(world, "heaven_rays_east", centre + 24, f - 1)
+    for off in piers:
+        stand(world, "heaven_banner", centre + off, f - 13)
     for west, east in ((-33, -27), (-24, -18), (18, 24), (27, 33)):
         arch(world, centre + west, centre + east, f - 21, f - 18)
     for x in list(range(centre - 36, centre - 12)) + list(range(centre + 13, centre + 37)):
@@ -2475,12 +2516,17 @@ def paradise(world: World):
         world.put(centre + off, f - 1, "J")
     # The high seat: two steps of gold cut on the slant, a throne of gilt behind them and
     # the wings over it, and on the steps the end of the journey.
-    golden(world, range(centre - 6, centre + 7), [f - 1])
-    golden(world, range(centre - 4, centre + 5), [f - 2])
-    slant(world, centre - 8, centre + 8, f - 3, f - 1)
-    emblem(world, centre, f - 9, THRONE)
-    emblem(world, centre, f - 18, WINGS)
-    world.mark("end", centre, f - 3)
+    golden(world, range(centre - 9, centre + 10), [f - 1])
+    golden(world, range(centre - 7, centre + 8), [f - 2])
+    golden(world, range(centre - 5, centre + 6), [f - 3])
+    slant(world, centre - 11, centre + 11, f - 4, f - 1)
+    emblem(world, centre, f - 10, THRONE)
+    emblem(world, centre, f - 19, WINGS)
+    world.mark("end", centre, f - 4)
+    for dx, dy in ((0, 128), (-40, 62), (40, 62), (-74, 100), (74, 100)):  # glints on the throne's gold
+        stand(world, "heaven_glint", centre, f - 4, dx, dy)
+    # In the hall the view draws back and holds on the high seat: the whole hall, and the tower over it.
+    vista(world, centre - 13, f - 12, 27, 12, 2.0, hold_x=True, look_up=13)
     # Its one door, in the west wall: shut until the three lights are lit.
     hollow(world, range(centre - 39, centre - 36), range(f - 5, f))
     world.mark("sanctum", centre - 38, f - 5, 5, 3)
@@ -2488,7 +2534,8 @@ def paradise(world: World):
     # the wings over it, banners down the towers.
     for side in (-1, 1):
         for x0 in ((centre - 57, centre - 48) if side < 0 else (centre + 45, centre + 54)):
-            turret(world, x0, x0 + 3, temple, 15, abs(x0 - centre) > 52)
+            outer = abs(x0 - centre) > 52
+            turret(world, x0, x0 + 3, temple, 15, "small" if outer else False, style=4 if outer else 0)
         stand(world, "heaven_gate", centre + side * 51, temple - 1)
     # Towers of every height stand along the wall walk, and battlements between them. Ledges
     # at either end of the house climb to it.
@@ -2497,8 +2544,10 @@ def paradise(world: World):
     battlement(world, centre + 15, centre + 41, eaves - 1)
     for x0, wide, tall in ((-34, 4, 31), (-22, 6, 22), (17, 4, 27), (29, 4, 24)):
         backtower(world, centre + x0, centre + x0 + wide - 1, eaves, tall)
-    for x0, wide, tall, flag in ((-41, 8, 24, True), (-29, 6, 13, False), (22, 6, 16, False), (34, 8, 19, True)):
-        turret(world, centre + x0, centre + x0 + wide - 1, eaves, tall, flag)
+    for x0, wide, tall, flag, style in ((-41, 8, 24, True, 2), (-29, 6, 13, False, 3), (22, 6, 16, False, 1), (34, 8, 19, True, 4)):
+        turret(world, centre + x0, centre + x0 + wide - 1, eaves, tall, flag, style=style)
+    # Coming up to the gate the view draws back and looks up and in, at the castle over it.
+    vista(world, centre - 62, temple - 9, 18, 9, 2.0, look_x=22, look_up=14)
     skybridge(world, centre - 34, centre - 29, eaves - 9)
     skybridge(world, centre + 27, centre + 34, eaves - 11)
     for side in (-1, 1):
@@ -2547,6 +2596,15 @@ def paradise(world: World):
         world.put(ring + off, orchard - 12, "J")
     stand(world, "heaven_angel_0", ring - 21, orchard - 1)
     stand(world, "heaven_angel_1", ring + 21, orchard - 1)
+    for dx, dy in ((0, 30 * 16 - 8), (-70, 26 * 16), (60, 24 * 16), (-110, 20 * 16)):  # glints on the dome
+        stand(world, "heaven_glint", ring, orchard - 1, dx, dy)
+    for off, bed in ((-34, 0), (-29, 2), (-15, 1), (15, 3), (28, 0), (33, 2)):
+        stand(world, f"heaven_flowers_{bed}", ring + off, orchard - 1)
+    for off in (-13, 13):
+        stand(world, "heaven_urn", ring + off, orchard - 1)
+    for off in (-30, 29):
+        stand(world, "heaven_hedge_1", ring + off, orchard - 1)
+    vista(world, ring - 12, orchard - 9, 25, 9, 1.5, look_up=9)
     for x in range(ring - 2, ring + 3):
         world.t[orchard][x] = "K"
     world.mark("beacon", ring, orchard - 1, "West")
@@ -2658,12 +2716,16 @@ def paradise(world: World):
     battlement(world, dome + 10, px1, roof - 1)
     for x0, wide, tall in ((px0 + 8, 4, 19), (px0 + 21, 4, 24), (px1 - 25, 4, 21), (px1 - 12, 4, 15)):
         backtower(world, x0, x0 + wide - 1, roof, tall)
-    for x0, wide, tall, flag in ((px0, 8, 25, True), (px0 + 13, 6, 11, False), (px0 + 26, 4, 15, False), (px1 - 31, 4, 9, False), (px1 - 20, 6, 14, False), (px1 - 7, 8, 20, True)):
-        turret(world, x0, x0 + wide - 1, roof, tall, flag)
+    for x0, wide, tall, flag, style in ((px0, 8, 25, True, 1), (px0 + 13, 6, 11, False, 0), (px0 + 26, 4, 15, False, 3), (px1 - 31, 4, 9, False, 0), (px1 - 20, 6, 14, False, 2), (px1 - 7, 8, 20, True, 3)):
+        turret(world, x0, x0 + wide - 1, roof, tall, flag, style=style)
     skybridge(world, px0 + 7, px0 + 13, roof - 8)
     skybridge(world, px1 - 15, px1 - 7, roof - 10)
     # A gate before the west door: two columns, a banner on each, the wings over them.
     stand(world, "heaven_portal_4x6", px0 - 5, house - 1)
+    stand(world, "heaven_hedge_2", px0 - 10, house - 1)
+    stand(world, "heaven_flowers_1", ix0 + 4, house - 1)
+    stand(world, "heaven_flowers_3", px1 + 8, house - 1)
+    stand(world, "heaven_urn", px1 + 4, house - 1)
     for row in range(roof + 4, house - 3, LADDER):
         for x in range(px1 + 2, px1 + 6):
             world.t[row][x] = ","
@@ -2688,6 +2750,23 @@ def paradise(world: World):
             10 + int(hash01(k, 62) * (hub - 2)),
             2 + int(hash01(k, 64) * 2),
         )
+    billows(world, hub + 40)
+
+
+CLOUDS = ("Q", "1", "2")
+
+
+def billows(world: World, rows: int):
+    """A cloud's tiles end in steps: along the underside of every cloud above the row `rows`,
+    and round its ends, billows of cloud are stood (pictures), every third column and
+    wherever the underside steps, so its edge is ragged and round and not a stair."""
+    for x in range(2, WIDTH - 2):
+        for y in range(1, rows):
+            if world.t[y][x] not in CLOUDS or world.t[y + 1][x] != AIR or world.walls[y + 1][x] != AIR:
+                continue
+            step = world.t[y][x - 1] not in CLOUDS or world.t[y][x + 1] not in CLOUDS or world.t[y + 1][x - 1] in CLOUDS or world.t[y + 1][x + 1] in CLOUDS
+            if step or x % 3 == 0:
+                stand(world, f"heaven_puff_{int(hash01(x, y, 71) * tv2_heaven.PUFFS)}", x, y + 1)
 
 
 def build(log=print) -> World:
@@ -2707,6 +2786,8 @@ def build(log=print) -> World:
         ("paradise_dawn", "paradise_temple", 6.6),
         ("paradise_garden_sunset", "paradise_garden", 18.6),
         ("paradise_garden_night", "paradise_garden", 22.5),
+        ("paradise_spires_night", "paradise_spires", 22.5),
+        ("paradise_gate_dusk", "paradise_temple", 19.4),
         ("paradise_orchard_sunset", "paradise_orchard", 18.3),
     ]
     world.veins()

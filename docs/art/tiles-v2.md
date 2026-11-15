@@ -276,11 +276,14 @@ stands where:
 A mark may also be `secret` (a wall the sword breaks, with a room behind it),
 `platform` (one that gives way or comes and goes), `wind`, `flag` (a pennant
 that flies; a number after its cell moves it by so many pixels, for a rod in
-the middle of a cell), `upgrade` (a heart
+the middle of a cell), `vista` (a stretch where the view draws back: the
+game's camera zone), `upgrade` (a heart
 or a draught of the game's), `sign` (a post, a tablet, a shade or a soul that
 says a line), `dark` (a stretch whose air gives no light), `beacon` (a light
 the hero lights by walking up to it), `sanctum` (a door that opens when enough
-lights burn) or `picture` (one of the tile set's pictures stood in a cell): the
+lights burn) or `picture` (one of the tile set's pictures stood in a cell, and
+after its key, if wanted, how many pixels right and up of the middle of the
+cell's foot): the
 world's document lists them all. `TilesV2World` lays the tiles and takes the dark stretches;
 `TilesV2Things.Build` stands the other marks in the world from the game's own
 parts (its checkpoint, ability and upgrade pickup prefabs, a collider on the
@@ -429,7 +432,8 @@ props of the background darker and less saturated than the ground the hero walks
 
 Paradise is dressed the same way (`tv2_heaven.py`, which paints with the Earth's
 canvas and brushes): every tree, tower, roof, column, gate, bridge and wall of a
-room there is a picture stood by the map, 51 of them, lit by the tile light. The
+room there is a picture stood by the map (75 that a map stands, 137 with their
+companions), lit by the tile light. The
 light is from the top left: a tower is round, so its stone goes from lit on its
 left through its face to shade on its right (`round_shift`); stone is laid in
 courses, each block its own shade, the joint dark and the block's top lit
@@ -441,11 +445,24 @@ chance:
 | Order | Pictures |
 |---|---|
 | -289 | towers further back (`heaven_tower_WxT_back`): in front of the walls, behind everything else of a castle |
-| -287 | trees: 4 in blossom, 4 with leaves of gold (`heaven_blossom_N`, `heaven_gold_N`), their roots a tile under their floor line |
+| -287 | trees: 4 in blossom, 4 with leaves of gold (`heaven_blossom_N`, `heaven_gold_N`), their roots a tile under their floor line, each in four frames of its crown stirring |
+| -286 | what a garden is dressed with: a fountain in three frames of its water, beds of flowers, clipped hedges, a bench, an urn |
 | -284 | the wall at the back of a room, over the walls and the open walls the map lays there (which still let the light in where their glass is): either side of the citadel's hall (`heaven_hall_west`, `_east`: a tile of wall, two bays of the arcade and its end), the wall behind the high seat (`heaven_high_seat`, 25 x 41 tiles, its floor line two tiles up, on the steps of gold), the House's two halls and its keep (`heaven_room_lower`, `_upper`, `_keep`; an opening in a picture is a window the sky shows through) |
-| -283 | what stands before a wall or the sky: columns (`heaven_pillar_RxW`), the gatehouses' gate, the gates that stand free (`heaven_portal_AxR`), the bridges between towers (`heaven_bridge_N`), battlements (`heaven_parapet_N`), the Garden's bridge (`heaven_span`, marked on its deck: ten tiles of it hang under the mark), the round temple, the host in marble |
+| -282, -281 | a banner hung on a column, in four frames of its sway (`heaven_banner`); the light of a hall's windows in its air (`heaven_rays_west`, `_east`: unlit, the sun's) |
+| -283 | what stands before a wall or the sky: swans; columns (`heaven_pillar_RxW`), the gatehouses' gate, the gates that stand free (`heaven_portal_AxR`), the bridges between towers (`heaven_bridge_N`), battlements (`heaven_parapet_N`), the Garden's bridge (`heaven_span`, marked on its deck: ten tiles of it hang under the mark), the round temple, the host in marble |
 | -99 | a great roof's tiles, windows, crest and rod (`heaven_roof_N`), over the map's own plain roof tiles; its floor line is its point, and it is marked in the cell of air over that |
-| -97 | near towers (`heaven_tower_WxT`, `_hung` for one hung on a wall): before the roofs and the walls they stand at. A tower W tiles across (an even number) and T tiles to the foot of its head stands in the cell left of its middle line; its drawn roof lies exactly over the map's steep roof tiles (`make_world_map.cone`), which are what is stood on |
+| -99 | billows of cloud (`heaven_puff_N`), each hung about the top of the cell of air under a cloud's tile, over the cloud's tiles |
+| -94, -93 | a long pennant in six frames of its wave, hoisted at the picture's middle (`heaven_pennant`); a glint on gold in three frames, unlit (`heaven_glint`) |
+| -97 | near towers (`heaven_tower_WxT`, `_hung` for one hung on a wall, `_sN` for its style): before the roofs and the walls they stand at. A tower W tiles across (an even number) and T tiles to the foot of its head stands in the cell left of its middle line; its drawn roof lies exactly over the map's steep roof tiles (`make_world_map.cone`), which are what is stood on |
+
+**Companions.** A picture may have others in the set that go with it, named
+after it, which no map stands: `key_f1`, `key_f2` ... are its further frames,
+and `TilesV2Things` shows them in turn (`TilesV2Frames`: 9 frames a second for
+a pennant and a glint, 7 for a fountain, 4 for a banner, 3 for a tree; a glint
+shows its frames once and is gone for a few seconds); `key_glow` is the light
+of its windows by itself with a halo (`glow`, from the windows the painter
+remembers as it draws them), shown unlit one order over the picture by a
+`TilesV2Shimmer` that is the night's: nothing at noon, whole at night.
 
 A picture's size is in its name, and the map asks for the size it builds
 (`make_world_map.turret`, `pillar`, `skybridge`, `battlement`): a size the set
@@ -539,6 +556,7 @@ physics for a particle system to take gravity from).
 | Sand | trickles from under 45% of the sand tiles that hang over two or more empty cells (a hash of the cell picks them), and lands on what is below | takes the tile light |
 | Sparks | jump from every run of the surface of a liquid that glows | none |
 | Spray and mist | where falling water ends: drops leap up and out, a mist hangs over them and drifts up | none |
+| Glints | a star of four points on gold that comes and goes: a picture of three frames that rests between showings (`heaven_glint`, `TilesV2Frames`) | none |
 | Petals | fall from the crowns of blossom and of gold leaf near the view, whether a crown is tiles or a tree stood as a picture: one system for a whole world, fed by hand (`TilesV2Petals`) | takes the tile light |
 
 ## In Unity

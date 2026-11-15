@@ -73,6 +73,8 @@
 @shot paradise_dawn paradise_temple 6.6
 @shot paradise_garden_sunset paradise_garden 18.6
 @shot paradise_garden_night paradise_garden 22.5
+@shot paradise_spires_night paradise_spires 22.5
+@shot paradise_gate_dusk paradise_temple 19.4
 @shot paradise_orchard_sunset paradise_orchard 18.3
 @shot earth_village_dusk earth_village 19.4
 @shot earth_fields_dawn earth_fields 6.9
@@ -268,44 +270,85 @@
 @mark seal 319 120 bolt 1 4
 @mark seal 264 112 slam 3 2
 @mark sign 330 155 post A stair of light, up through the cloud. It is for the winged.
-@mark picture 247 111 heaven_blossom_0
-@mark picture 256 111 heaven_gold_0
+@mark picture 245 111 heaven_blossom_0
+@mark picture 259 111 heaven_gold_0
 @mark picture 271 111 heaven_blossom_1
 @mark picture 280 111 heaven_blossom_2
 @mark picture 314 111 heaven_blossom_3
 @mark picture 336 111 heaven_blossom_0
 @mark picture 343 111 heaven_gold_1
+@mark picture 252 111 heaven_fountain 8 0
+@mark picture 231 111 heaven_flowers_0
+@mark picture 237 111 heaven_flowers_1
+@mark picture 268 111 heaven_flowers_3
+@mark picture 334 111 heaven_flowers_2
+@mark picture 262 111 heaven_hedge_2
+@mark picture 273 111 heaven_hedge_0
+@mark picture 339 111 heaven_hedge_0
+@mark picture 345 111 heaven_hedge_2
+@mark picture 281 111 heaven_urn
+@mark picture 313 111 heaven_urn
+@mark picture 278 111 heaven_bench
+@mark picture 316 111 heaven_bench
+@mark picture 290 111 heaven_swan_0
+@mark picture 303 111 heaven_swan_1
+@mark picture 287 112 heaven_lilies_0
+@mark picture 300 112 heaven_lilies_1
+@mark picture 306 112 heaven_lilies_1
+@mark vista 279 103 37 9 200 0 0 0 13
 @mark picture 353 111 heaven_portal_9x9
 @mark picture 233 111 heaven_pillar_18x2
 @mark picture 240 111 heaven_pillar_18x2
 @mark picture 319 111 heaven_pillar_8x2
 @mark picture 329 111 heaven_pillar_8x2
 @mark picture 324 95 heaven_roof_14
-@mark flag 325 93
+@mark picture 324 93 heaven_pennant 8 1
+@mark picture 324 93 heaven_glint 8 14
 @mark checkpoint 331 111
 @mark sign 318 111 soul You climbed out of all of it. Three lights sleep here: one in the wind to the west, one in the stone to the east, one in the hollow under your feet. Wake them, and the door above will know you.
 @mark sign 234 111 post West, over the gulfs of wind: the Orchard. Open your hands and fall slowly.
 @mark sign 354 111 post East, over the bridge: the House of Trials.
 @mark picture 297 111 backdrop_rainbow
 @mark picture 297 4 heaven_roof_29
-@mark flag 298 2 -8
+@mark picture 297 2 heaven_pennant 0 1
+@mark picture 297 2 heaven_glint 0 14
 @mark upgrade 297 25 Vial
 @mark picture 297 49 backdrop_glory
 @mark picture 280 28 heaven_tower_4x9_hung
+@mark picture 280 10 heaven_glint 8 8
 @mark picture 313 28 heaven_tower_4x9_hung
+@mark picture 313 10 heaven_glint 8 8
 @mark relic 319 50
 @mark picture 272 62 heaven_hall_west
 @mark picture 321 62 heaven_hall_east
-@mark picture 297 60 heaven_high_seat
-@mark end 297 60
+@mark picture 297 59 heaven_high_seat
+@mark picture 272 62 heaven_rays_west
+@mark picture 321 62 heaven_rays_east
+@mark picture 262 50 heaven_banner
+@mark picture 271 50 heaven_banner
+@mark picture 280 50 heaven_banner
+@mark picture 313 50 heaven_banner
+@mark picture 322 50 heaven_banner
+@mark picture 331 50 heaven_banner
+@mark end 297 59
+@mark picture 297 59 heaven_glint 0 128
+@mark picture 297 59 heaven_glint -40 62
+@mark picture 297 59 heaven_glint 40 62
+@mark picture 297 59 heaven_glint -74 100
+@mark picture 297 59 heaven_glint 74 100
+@mark vista 284 51 27 12 200 1 0 0 13
 @mark sanctum 259 58 5 3
-@mark picture 241 65 heaven_tower_4x15
+@mark picture 241 65 heaven_tower_4x15_s4
 @mark flag 242 41
+@mark picture 241 41 heaven_glint 8 8
 @mark picture 250 65 heaven_tower_4x15
+@mark picture 250 41 heaven_glint 8 8
 @mark picture 246 65 heaven_gate
 @mark picture 343 65 heaven_tower_4x15
-@mark picture 352 65 heaven_tower_4x15
+@mark picture 343 41 heaven_glint 8 8
+@mark picture 352 65 heaven_tower_4x15_s4
 @mark flag 353 41
+@mark picture 352 41 heaven_glint 8 8
 @mark picture 348 65 heaven_gate
 @mark picture 269 37 heaven_parapet_27
 @mark picture 325 37 heaven_parapet_27
@@ -313,12 +356,17 @@
 @mark picture 277 37 heaven_tower_6x22_back
 @mark picture 315 37 heaven_tower_4x27_back
 @mark picture 327 37 heaven_tower_4x24_back
-@mark picture 259 37 heaven_tower_8x24
-@mark flag 260 0
-@mark picture 270 37 heaven_tower_6x13
-@mark picture 321 37 heaven_tower_6x16
-@mark picture 334 37 heaven_tower_8x19
-@mark flag 335 5
+@mark picture 259 37 heaven_tower_8x24_s2
+@mark picture 259 0 heaven_pennant 8 -8
+@mark picture 259 0 heaven_glint 8 8
+@mark picture 270 37 heaven_tower_6x13_s3
+@mark picture 270 13 heaven_glint 8 8
+@mark picture 321 37 heaven_tower_6x16_s1
+@mark picture 321 10 heaven_glint 8 8
+@mark picture 334 37 heaven_tower_8x19_s4
+@mark picture 334 5 heaven_pennant 8 -8
+@mark picture 334 5 heaven_glint 8 8
+@mark vista 235 57 18 9 200 0 0 22 14
 @mark picture 265 34 heaven_bridge_6
 @mark picture 327 33 heaven_bridge_8
 @mark checkpoint 243 65
@@ -337,6 +385,21 @@
 @mark picture 100 95 heaven_rotunda
 @mark picture 79 95 heaven_angel_0
 @mark picture 121 95 heaven_angel_1
+@mark picture 100 95 heaven_glint 0 472
+@mark picture 100 95 heaven_glint -70 416
+@mark picture 100 95 heaven_glint 60 384
+@mark picture 100 95 heaven_glint -110 320
+@mark picture 66 95 heaven_flowers_0
+@mark picture 71 95 heaven_flowers_2
+@mark picture 85 95 heaven_flowers_1
+@mark picture 115 95 heaven_flowers_3
+@mark picture 128 95 heaven_flowers_0
+@mark picture 133 95 heaven_flowers_2
+@mark picture 87 95 heaven_urn
+@mark picture 113 95 heaven_urn
+@mark picture 70 95 heaven_hedge_1
+@mark picture 129 95 heaven_hedge_1
+@mark vista 88 87 25 9 150 0 0 0 9
 @mark beacon 100 95 West
 @mark checkpoint 130 95
 @mark sign 118 95 soul Nothing here is owed. The wind will carry you if you open your hands to it.
@@ -371,7 +434,8 @@
 @mark relic 486 89
 @mark sign 416 103 tablet Every door in this house you have opened before, in a darker place. That is all the trial there is.
 @mark picture 454 46 heaven_roof_21
-@mark flag 455 44 -8
+@mark picture 454 44 heaven_pennant 0 1
+@mark picture 454 44 heaven_glint 0 14
 @mark picture 454 75 heaven_room_keep
 @mark relic 451 75
 @mark picture 428 75 heaven_parapet_33
@@ -380,18 +444,570 @@
 @mark picture 434 75 heaven_tower_4x24_back
 @mark picture 472 75 heaven_tower_4x21_back
 @mark picture 485 75 heaven_tower_4x15_back
-@mark picture 415 75 heaven_tower_8x25
-@mark flag 416 37
+@mark picture 415 75 heaven_tower_8x25_s1
+@mark picture 415 37 heaven_pennant 8 -8
+@mark picture 415 37 heaven_glint 8 8
 @mark picture 427 75 heaven_tower_6x11
-@mark picture 439 75 heaven_tower_4x15
+@mark picture 427 53 heaven_glint 8 8
+@mark picture 439 75 heaven_tower_4x15_s3
+@mark picture 439 51 heaven_glint 8 8
 @mark picture 466 75 heaven_tower_4x9
-@mark picture 478 75 heaven_tower_6x14
-@mark picture 492 75 heaven_tower_8x20
-@mark flag 493 42
+@mark picture 466 57 heaven_glint 8 8
+@mark picture 478 75 heaven_tower_6x14_s2
+@mark picture 478 50 heaven_glint 8 8
+@mark picture 492 75 heaven_tower_8x20_s3
+@mark picture 492 42 heaven_pennant 8 -8
+@mark picture 492 42 heaven_glint 8 8
 @mark picture 422 73 heaven_bridge_7
 @mark picture 485 72 heaven_bridge_9
 @mark picture 407 103 heaven_portal_4x6
+@mark picture 402 103 heaven_hedge_2
+@mark picture 404 103 heaven_flowers_1
+@mark picture 504 103 heaven_flowers_3
+@mark picture 500 103 heaven_urn
 @mark sign 502 154 post A stair of light. Over it, a house with a roof of gold.
+@mark picture 24 76 heaven_puff_3
+@mark picture 25 77 heaven_puff_4
+@mark picture 27 77 heaven_puff_1
+@mark picture 29 77 heaven_puff_4
+@mark picture 30 76 heaven_puff_1
+@mark picture 33 76 heaven_puff_1
+@mark picture 43 54 heaven_puff_1
+@mark picture 44 55 heaven_puff_3
+@mark picture 45 56 heaven_puff_3
+@mark picture 48 56 heaven_puff_4
+@mark picture 49 55 heaven_puff_2
+@mark picture 50 54 heaven_puff_4
+@mark picture 53 71 heaven_puff_2
+@mark picture 54 71 heaven_puff_4
+@mark picture 55 72 heaven_puff_0
+@mark picture 56 72 heaven_puff_3
+@mark picture 57 71 heaven_puff_0
+@mark picture 58 33 heaven_puff_1
+@mark picture 59 34 heaven_puff_3
+@mark picture 59 71 heaven_puff_2
+@mark picture 60 34 heaven_puff_2
+@mark picture 60 98 heaven_puff_0
+@mark picture 61 34 heaven_puff_3
+@mark picture 61 100 heaven_puff_4
+@mark picture 62 35 heaven_puff_0
+@mark picture 62 100 heaven_puff_3
+@mark picture 63 35 heaven_puff_1
+@mark picture 63 101 heaven_puff_1
+@mark picture 64 35 heaven_puff_0
+@mark picture 65 34 heaven_puff_3
+@mark picture 65 101 heaven_puff_3
+@mark picture 66 34 heaven_puff_3
+@mark picture 66 102 heaven_puff_2
+@mark picture 67 34 heaven_puff_4
+@mark picture 67 103 heaven_puff_1
+@mark picture 68 33 heaven_puff_4
+@mark picture 68 103 heaven_puff_1
+@mark picture 69 33 heaven_puff_2
+@mark picture 69 104 heaven_puff_0
+@mark picture 70 33 heaven_puff_2
+@mark picture 71 104 heaven_puff_3
+@mark picture 72 105 heaven_puff_1
+@mark picture 73 105 heaven_puff_0
+@mark picture 74 106 heaven_puff_2
+@mark picture 75 106 heaven_puff_0
+@mark picture 76 59 heaven_puff_0
+@mark picture 77 29 heaven_puff_2
+@mark picture 77 60 heaven_puff_0
+@mark picture 77 106 heaven_puff_0
+@mark picture 78 30 heaven_puff_4
+@mark picture 78 61 heaven_puff_0
+@mark picture 78 107 heaven_puff_1
+@mark picture 79 60 heaven_puff_3
+@mark picture 79 106 heaven_puff_3
+@mark picture 80 60 heaven_puff_4
+@mark picture 81 30 heaven_puff_3
+@mark picture 81 59 heaven_puff_2
+@mark picture 81 106 heaven_puff_4
+@mark picture 82 59 heaven_puff_4
+@mark picture 83 30 heaven_puff_2
+@mark picture 83 60 heaven_puff_2
+@mark picture 84 29 heaven_puff_1
+@mark picture 84 59 heaven_puff_0
+@mark picture 84 106 heaven_puff_1
+@mark picture 85 29 heaven_puff_3
+@mark picture 85 107 heaven_puff_4
+@mark picture 87 107 heaven_puff_1
+@mark picture 88 107 heaven_puff_2
+@mark picture 89 108 heaven_puff_0
+@mark picture 90 108 heaven_puff_4
+@mark picture 92 22 heaven_puff_0
+@mark picture 92 108 heaven_puff_1
+@mark picture 93 23 heaven_puff_0
+@mark picture 93 107 heaven_puff_4
+@mark picture 94 24 heaven_puff_2
+@mark picture 94 108 heaven_puff_4
+@mark picture 95 24 heaven_puff_3
+@mark picture 95 108 heaven_puff_3
+@mark picture 96 23 heaven_puff_4
+@mark picture 96 109 heaven_puff_4
+@mark picture 97 22 heaven_puff_3
+@mark picture 97 108 heaven_puff_1
+@mark picture 99 108 heaven_puff_1
+@mark picture 100 108 heaven_puff_2
+@mark picture 101 109 heaven_puff_0
+@mark picture 102 109 heaven_puff_3
+@mark picture 104 109 heaven_puff_1
+@mark picture 105 108 heaven_puff_1
+@mark picture 108 108 heaven_puff_0
+@mark picture 110 61 heaven_puff_2
+@mark picture 111 62 heaven_puff_0
+@mark picture 111 108 heaven_puff_2
+@mark picture 114 62 heaven_puff_0
+@mark picture 114 108 heaven_puff_0
+@mark picture 115 107 heaven_puff_2
+@mark picture 116 107 heaven_puff_1
+@mark picture 117 62 heaven_puff_2
+@mark picture 117 106 heaven_puff_3
+@mark picture 118 31 heaven_puff_0
+@mark picture 119 31 heaven_puff_1
+@mark picture 119 106 heaven_puff_0
+@mark picture 120 32 heaven_puff_1
+@mark picture 120 62 heaven_puff_2
+@mark picture 120 107 heaven_puff_1
+@mark picture 121 32 heaven_puff_1
+@mark picture 121 62 heaven_puff_0
+@mark picture 121 106 heaven_puff_4
+@mark picture 122 31 heaven_puff_4
+@mark picture 122 63 heaven_puff_0
+@mark picture 122 106 heaven_puff_3
+@mark picture 123 31 heaven_puff_4
+@mark picture 123 63 heaven_puff_0
+@mark picture 123 105 heaven_puff_3
+@mark picture 124 17 heaven_puff_1
+@mark picture 125 18 heaven_puff_3
+@mark picture 126 18 heaven_puff_0
+@mark picture 126 63 heaven_puff_3
+@mark picture 126 105 heaven_puff_1
+@mark picture 127 62 heaven_puff_3
+@mark picture 128 61 heaven_puff_1
+@mark picture 129 18 heaven_puff_4
+@mark picture 129 105 heaven_puff_0
+@mark picture 130 18 heaven_puff_3
+@mark picture 130 104 heaven_puff_4
+@mark picture 131 17 heaven_puff_1
+@mark picture 131 103 heaven_puff_4
+@mark picture 132 17 heaven_puff_0
+@mark picture 132 103 heaven_puff_4
+@mark picture 133 102 heaven_puff_1
+@mark picture 134 41 heaven_puff_4
+@mark picture 135 41 heaven_puff_4
+@mark picture 135 102 heaven_puff_0
+@mark picture 136 101 heaven_puff_4
+@mark picture 137 101 heaven_puff_3
+@mark picture 138 41 heaven_puff_2
+@mark picture 138 100 heaven_puff_1
+@mark picture 139 99 heaven_puff_2
+@mark picture 140 98 heaven_puff_4
+@mark picture 141 41 heaven_puff_4
+@mark picture 143 41 heaven_puff_3
+@mark picture 152 72 heaven_puff_4
+@mark picture 152 104 heaven_puff_1
+@mark picture 153 73 heaven_puff_0
+@mark picture 153 105 heaven_puff_4
+@mark picture 156 73 heaven_puff_0
+@mark picture 156 105 heaven_puff_0
+@mark picture 157 52 heaven_puff_0
+@mark picture 158 73 heaven_puff_1
+@mark picture 159 52 heaven_puff_0
+@mark picture 159 72 heaven_puff_0
+@mark picture 159 105 heaven_puff_4
+@mark picture 160 53 heaven_puff_3
+@mark picture 160 73 heaven_puff_0
+@mark picture 160 105 heaven_puff_2
+@mark picture 161 53 heaven_puff_1
+@mark picture 161 106 heaven_puff_2
+@mark picture 162 52 heaven_puff_4
+@mark picture 162 73 heaven_puff_4
+@mark picture 162 105 heaven_puff_2
+@mark picture 163 51 heaven_puff_0
+@mark picture 163 105 heaven_puff_4
+@mark picture 164 104 heaven_puff_4
+@mark picture 165 104 heaven_puff_3
+@mark picture 166 103 heaven_puff_3
+@mark picture 168 41 heaven_puff_0
+@mark picture 171 41 heaven_puff_0
+@mark picture 172 41 heaven_puff_2
+@mark picture 173 40 heaven_puff_4
+@mark picture 177 82 heaven_puff_4
+@mark picture 178 83 heaven_puff_3
+@mark picture 178 107 heaven_puff_0
+@mark picture 179 84 heaven_puff_4
+@mark picture 179 108 heaven_puff_4
+@mark picture 180 84 heaven_puff_0
+@mark picture 180 109 heaven_puff_0
+@mark picture 181 85 heaven_puff_1
+@mark picture 183 85 heaven_puff_1
+@mark picture 183 109 heaven_puff_4
+@mark picture 184 84 heaven_puff_2
+@mark picture 185 83 heaven_puff_4
+@mark picture 186 83 heaven_puff_1
+@mark picture 186 109 heaven_puff_1
+@mark picture 187 82 heaven_puff_4
+@mark picture 188 56 heaven_puff_1
+@mark picture 189 56 heaven_puff_0
+@mark picture 189 109 heaven_puff_1
+@mark picture 190 108 heaven_puff_2
+@mark picture 191 108 heaven_puff_0
+@mark picture 192 56 heaven_puff_2
+@mark picture 192 107 heaven_puff_0
+@mark picture 193 55 heaven_puff_0
+@mark picture 195 55 heaven_puff_1
+@mark picture 202 55 heaven_puff_0
+@mark picture 203 26 heaven_puff_3
+@mark picture 203 56 heaven_puff_4
+@mark picture 204 27 heaven_puff_4
+@mark picture 204 56 heaven_puff_0
+@mark picture 204 112 heaven_puff_2
+@mark picture 205 27 heaven_puff_4
+@mark picture 205 112 heaven_puff_0
+@mark picture 206 28 heaven_puff_0
+@mark picture 206 56 heaven_puff_0
+@mark picture 206 113 heaven_puff_2
+@mark picture 207 28 heaven_puff_4
+@mark picture 207 55 heaven_puff_2
+@mark picture 207 113 heaven_puff_3
+@mark picture 208 28 heaven_puff_2
+@mark picture 209 27 heaven_puff_1
+@mark picture 210 113 heaven_puff_3
+@mark picture 211 113 heaven_puff_1
+@mark picture 212 112 heaven_puff_2
+@mark picture 213 112 heaven_puff_1
+@mark picture 215 112 heaven_puff_2
+@mark picture 216 111 heaven_puff_3
+@mark picture 217 89 heaven_puff_1
+@mark picture 218 89 heaven_puff_2
+@mark picture 219 90 heaven_puff_1
+@mark picture 220 90 heaven_puff_0
+@mark picture 221 91 heaven_puff_4
+@mark picture 222 91 heaven_puff_0
+@mark picture 225 91 heaven_puff_1
+@mark picture 227 91 heaven_puff_1
+@mark picture 228 90 heaven_puff_0
+@mark picture 228 114 heaven_puff_3
+@mark picture 229 116 heaven_puff_0
+@mark picture 230 90 heaven_puff_0
+@mark picture 230 118 heaven_puff_3
+@mark picture 231 89 heaven_puff_2
+@mark picture 231 119 heaven_puff_0
+@mark picture 232 119 heaven_puff_0
+@mark picture 233 16 heaven_puff_3
+@mark picture 233 120 heaven_puff_3
+@mark picture 234 16 heaven_puff_1
+@mark picture 234 121 heaven_puff_1
+@mark picture 235 17 heaven_puff_3
+@mark picture 235 121 heaven_puff_3
+@mark picture 236 122 heaven_puff_2
+@mark picture 237 17 heaven_puff_4
+@mark picture 237 123 heaven_puff_2
+@mark picture 238 17 heaven_puff_4
+@mark picture 239 16 heaven_puff_4
+@mark picture 239 68 heaven_puff_3
+@mark picture 240 16 heaven_puff_1
+@mark picture 240 70 heaven_puff_0
+@mark picture 240 123 heaven_puff_4
+@mark picture 241 71 heaven_puff_1
+@mark picture 241 124 heaven_puff_4
+@mark picture 242 16 heaven_puff_3
+@mark picture 242 71 heaven_puff_3
+@mark picture 243 72 heaven_puff_2
+@mark picture 243 124 heaven_puff_2
+@mark picture 244 125 heaven_puff_2
+@mark picture 245 125 heaven_puff_0
+@mark picture 246 72 heaven_puff_3
+@mark picture 246 126 heaven_puff_2
+@mark picture 247 73 heaven_puff_3
+@mark picture 248 74 heaven_puff_2
+@mark picture 249 74 heaven_puff_0
+@mark picture 249 126 heaven_puff_1
+@mark picture 250 75 heaven_puff_1
+@mark picture 250 127 heaven_puff_0
+@mark picture 251 75 heaven_puff_0
+@mark picture 251 127 heaven_puff_2
+@mark picture 252 76 heaven_puff_0
+@mark picture 252 128 heaven_puff_1
+@mark picture 253 76 heaven_puff_0
+@mark picture 254 75 heaven_puff_0
+@mark picture 255 75 heaven_puff_0
+@mark picture 255 128 heaven_puff_0
+@mark picture 256 76 heaven_puff_4
+@mark picture 256 129 heaven_puff_1
+@mark picture 258 76 heaven_puff_2
+@mark picture 258 129 heaven_puff_2
+@mark picture 260 76 heaven_puff_3
+@mark picture 261 77 heaven_puff_3
+@mark picture 261 129 heaven_puff_3
+@mark picture 262 129 heaven_puff_0
+@mark picture 263 130 heaven_puff_3
+@mark picture 264 77 heaven_puff_3
+@mark picture 264 130 heaven_puff_3
+@mark picture 266 130 heaven_puff_2
+@mark picture 267 77 heaven_puff_2
+@mark picture 267 131 heaven_puff_1
+@mark picture 268 78 heaven_puff_0
+@mark picture 270 78 heaven_puff_0
+@mark picture 270 131 heaven_puff_1
+@mark picture 271 78 heaven_puff_1
+@mark picture 272 79 heaven_puff_4
+@mark picture 273 79 heaven_puff_2
+@mark picture 273 131 heaven_puff_2
+@mark picture 276 79 heaven_puff_3
+@mark picture 276 131 heaven_puff_0
+@mark picture 277 131 heaven_puff_2
+@mark picture 278 132 heaven_puff_1
+@mark picture 279 79 heaven_puff_2
+@mark picture 279 132 heaven_puff_0
+@mark picture 280 132 heaven_puff_2
+@mark picture 281 131 heaven_puff_4
+@mark picture 282 79 heaven_puff_2
+@mark picture 282 131 heaven_puff_2
+@mark picture 283 79 heaven_puff_0
+@mark picture 283 132 heaven_puff_2
+@mark picture 284 80 heaven_puff_4
+@mark picture 284 132 heaven_puff_0
+@mark picture 285 80 heaven_puff_2
+@mark picture 285 133 heaven_puff_0
+@mark picture 286 132 heaven_puff_1
+@mark picture 288 80 heaven_puff_3
+@mark picture 288 132 heaven_puff_1
+@mark picture 291 80 heaven_puff_1
+@mark picture 291 132 heaven_puff_3
+@mark picture 293 132 heaven_puff_0
+@mark picture 294 80 heaven_puff_3
+@mark picture 294 133 heaven_puff_3
+@mark picture 295 80 heaven_puff_0
+@mark picture 298 79 heaven_puff_4
+@mark picture 298 132 heaven_puff_2
+@mark picture 299 80 heaven_puff_4
+@mark picture 300 80 heaven_puff_4
+@mark picture 300 132 heaven_puff_4
+@mark picture 301 132 heaven_puff_2
+@mark picture 302 131 heaven_puff_1
+@mark picture 303 80 heaven_puff_4
+@mark picture 303 131 heaven_puff_0
+@mark picture 305 80 heaven_puff_1
+@mark picture 306 79 heaven_puff_1
+@mark picture 306 131 heaven_puff_4
+@mark picture 307 79 heaven_puff_1
+@mark picture 308 80 heaven_puff_1
+@mark picture 309 80 heaven_puff_3
+@mark picture 309 131 heaven_puff_0
+@mark picture 312 80 heaven_puff_0
+@mark picture 312 131 heaven_puff_4
+@mark picture 313 79 heaven_puff_2
+@mark picture 315 79 heaven_puff_3
+@mark picture 315 131 heaven_puff_3
+@mark picture 318 79 heaven_puff_1
+@mark picture 318 131 heaven_puff_3
+@mark picture 321 79 heaven_puff_1
+@mark picture 321 131 heaven_puff_0
+@mark picture 324 79 heaven_puff_2
+@mark picture 325 78 heaven_puff_0
+@mark picture 327 78 heaven_puff_3
+@mark picture 328 129 heaven_puff_2
+@mark picture 330 78 heaven_puff_0
+@mark picture 330 129 heaven_puff_4
+@mark picture 331 78 heaven_puff_3
+@mark picture 331 129 heaven_puff_3
+@mark picture 332 77 heaven_puff_0
+@mark picture 332 128 heaven_puff_4
+@mark picture 333 77 heaven_puff_2
+@mark picture 333 128 heaven_puff_2
+@mark picture 334 77 heaven_puff_4
+@mark picture 335 76 heaven_puff_3
+@mark picture 336 76 heaven_puff_2
+@mark picture 336 128 heaven_puff_1
+@mark picture 337 128 heaven_puff_2
+@mark picture 338 127 heaven_puff_3
+@mark picture 339 76 heaven_puff_2
+@mark picture 339 127 heaven_puff_4
+@mark picture 340 76 heaven_puff_3
+@mark picture 340 127 heaven_puff_0
+@mark picture 341 75 heaven_puff_1
+@mark picture 341 126 heaven_puff_1
+@mark picture 342 74 heaven_puff_4
+@mark picture 342 126 heaven_puff_3
+@mark picture 343 126 heaven_puff_3
+@mark picture 344 125 heaven_puff_2
+@mark picture 345 74 heaven_puff_1
+@mark picture 345 125 heaven_puff_1
+@mark picture 346 16 heaven_puff_0
+@mark picture 346 74 heaven_puff_1
+@mark picture 346 124 heaven_puff_4
+@mark picture 347 17 heaven_puff_4
+@mark picture 347 73 heaven_puff_0
+@mark picture 347 124 heaven_puff_1
+@mark picture 348 17 heaven_puff_2
+@mark picture 348 72 heaven_puff_2
+@mark picture 348 123 heaven_puff_0
+@mark picture 349 72 heaven_puff_0
+@mark picture 350 71 heaven_puff_3
+@mark picture 351 17 heaven_puff_0
+@mark picture 351 71 heaven_puff_0
+@mark picture 351 123 heaven_puff_3
+@mark picture 352 70 heaven_puff_4
+@mark picture 352 122 heaven_puff_2
+@mark picture 353 17 heaven_puff_2
+@mark picture 353 70 heaven_puff_1
+@mark picture 353 121 heaven_puff_4
+@mark picture 354 16 heaven_puff_2
+@mark picture 354 69 heaven_puff_3
+@mark picture 354 121 heaven_puff_3
+@mark picture 355 16 heaven_puff_3
+@mark picture 355 68 heaven_puff_4
+@mark picture 355 120 heaven_puff_0
+@mark picture 356 15 heaven_puff_2
+@mark picture 356 119 heaven_puff_3
+@mark picture 357 118 heaven_puff_4
+@mark picture 358 117 heaven_puff_3
+@mark picture 359 116 heaven_puff_4
+@mark picture 360 114 heaven_puff_0
+@mark picture 367 85 heaven_puff_2
+@mark picture 368 86 heaven_puff_1
+@mark picture 369 86 heaven_puff_1
+@mark picture 370 43 heaven_puff_4
+@mark picture 370 86 heaven_puff_3
+@mark picture 371 44 heaven_puff_2
+@mark picture 371 87 heaven_puff_3
+@mark picture 372 44 heaven_puff_4
+@mark picture 372 87 heaven_puff_3
+@mark picture 373 86 heaven_puff_3
+@mark picture 374 85 heaven_puff_3
+@mark picture 375 44 heaven_puff_1
+@mark picture 375 84 heaven_puff_2
+@mark picture 376 43 heaven_puff_2
+@mark picture 376 84 heaven_puff_1
+@mark picture 379 113 heaven_puff_1
+@mark picture 380 115 heaven_puff_3
+@mark picture 381 116 heaven_puff_3
+@mark picture 384 116 heaven_puff_2
+@mark picture 386 116 heaven_puff_1
+@mark picture 387 117 heaven_puff_2
+@mark picture 388 116 heaven_puff_2
+@mark picture 390 116 heaven_puff_2
+@mark picture 391 115 heaven_puff_4
+@mark picture 392 114 heaven_puff_1
+@mark picture 393 57 heaven_puff_1
+@mark picture 396 57 heaven_puff_1
+@mark picture 399 57 heaven_puff_4
+@mark picture 400 58 heaven_puff_1
+@mark picture 400 105 heaven_puff_1
+@mark picture 401 107 heaven_puff_4
+@mark picture 402 58 heaven_puff_4
+@mark picture 402 108 heaven_puff_4
+@mark picture 403 108 heaven_puff_4
+@mark picture 404 109 heaven_puff_0
+@mark picture 405 58 heaven_puff_2
+@mark picture 405 110 heaven_puff_1
+@mark picture 406 57 heaven_puff_4
+@mark picture 406 110 heaven_puff_3
+@mark picture 407 111 heaven_puff_0
+@mark picture 408 112 heaven_puff_3
+@mark picture 409 112 heaven_puff_0
+@mark picture 410 113 heaven_puff_1
+@mark picture 411 113 heaven_puff_1
+@mark picture 412 114 heaven_puff_4
+@mark picture 413 113 heaven_puff_0
+@mark picture 414 114 heaven_puff_2
+@mark picture 417 114 heaven_puff_2
+@mark picture 418 114 heaven_puff_1
+@mark picture 419 115 heaven_puff_0
+@mark picture 420 115 heaven_puff_1
+@mark picture 421 116 heaven_puff_1
+@mark picture 423 116 heaven_puff_4
+@mark picture 426 116 heaven_puff_1
+@mark picture 427 116 heaven_puff_4
+@mark picture 428 117 heaven_puff_3
+@mark picture 429 117 heaven_puff_2
+@mark picture 431 24 heaven_puff_2
+@mark picture 432 24 heaven_puff_0
+@mark picture 432 117 heaven_puff_2
+@mark picture 433 24 heaven_puff_2
+@mark picture 434 25 heaven_puff_4
+@mark picture 435 24 heaven_puff_1
+@mark picture 435 117 heaven_puff_3
+@mark picture 437 24 heaven_puff_1
+@mark picture 438 117 heaven_puff_1
+@mark picture 440 117 heaven_puff_0
+@mark picture 441 118 heaven_puff_4
+@mark picture 442 118 heaven_puff_3
+@mark picture 443 117 heaven_puff_2
+@mark picture 444 117 heaven_puff_0
+@mark picture 445 118 heaven_puff_0
+@mark picture 447 118 heaven_puff_3
+@mark picture 449 118 heaven_puff_4
+@mark picture 450 117 heaven_puff_1
+@mark picture 451 118 heaven_puff_2
+@mark picture 452 118 heaven_puff_1
+@mark picture 453 119 heaven_puff_0
+@mark picture 456 119 heaven_puff_4
+@mark picture 457 118 heaven_puff_1
+@mark picture 458 118 heaven_puff_2
+@mark picture 459 117 heaven_puff_4
+@mark picture 461 117 heaven_puff_2
+@mark picture 462 118 heaven_puff_4
+@mark picture 463 12 heaven_puff_2
+@mark picture 464 13 heaven_puff_4
+@mark picture 465 14 heaven_puff_3
+@mark picture 465 118 heaven_puff_1
+@mark picture 466 118 heaven_puff_2
+@mark picture 467 27 heaven_puff_3
+@mark picture 467 117 heaven_puff_0
+@mark picture 468 14 heaven_puff_2
+@mark picture 468 27 heaven_puff_4
+@mark picture 468 117 heaven_puff_3
+@mark picture 469 28 heaven_puff_2
+@mark picture 469 117 heaven_puff_4
+@mark picture 470 118 heaven_puff_4
+@mark picture 471 14 heaven_puff_3
+@mark picture 471 28 heaven_puff_4
+@mark picture 471 118 heaven_puff_2
+@mark picture 472 117 heaven_puff_4
+@mark picture 473 28 heaven_puff_4
+@mark picture 473 117 heaven_puff_4
+@mark picture 474 14 heaven_puff_2
+@mark picture 474 27 heaven_puff_4
+@mark picture 474 116 heaven_puff_3
+@mark picture 475 13 heaven_puff_0
+@mark picture 475 117 heaven_puff_4
+@mark picture 476 12 heaven_puff_1
+@mark picture 477 27 heaven_puff_1
+@mark picture 477 117 heaven_puff_3
+@mark picture 478 117 heaven_puff_3
+@mark picture 479 116 heaven_puff_1
+@mark picture 480 116 heaven_puff_3
+@mark picture 483 116 heaven_puff_2
+@mark picture 486 116 heaven_puff_4
+@mark picture 487 115 heaven_puff_1
+@mark picture 488 114 heaven_puff_1
+@mark picture 489 114 heaven_puff_1
+@mark picture 492 114 heaven_puff_0
+@mark picture 493 113 heaven_puff_0
+@mark picture 494 113 heaven_puff_3
+@mark picture 495 112 heaven_puff_1
+@mark picture 498 112 heaven_puff_0
+@mark picture 499 112 heaven_puff_2
+@mark picture 500 111 heaven_puff_1
+@mark picture 501 110 heaven_puff_4
+@mark picture 502 110 heaven_puff_3
+@mark picture 503 109 heaven_puff_2
+@mark picture 504 108 heaven_puff_2
+@mark picture 505 34 heaven_puff_1
+@mark picture 505 107 heaven_puff_0
+@mark picture 506 35 heaven_puff_0
+@mark picture 506 106 heaven_puff_0
+@mark picture 507 35 heaven_puff_0
+@mark picture 510 35 heaven_puff_4
+@mark picture 511 36 heaven_puff_0
+@mark picture 513 36 heaven_puff_2
+@mark picture 514 36 heaven_puff_4
+@mark picture 515 35 heaven_puff_4
+@mark picture 516 34 heaven_puff_2
 @mark sign 272 163 post The Gate is east, under the arch. The Pit is west, under the meadow. The stair of light past the pond is not for you yet.
 @mark relic 297 163
 @mark sign 172 155 post The old shaft. It goes down to the mine.
@@ -878,9 +1494,9 @@
 ..................................................................................................................................................................................................................................................................MMM.........................................................................MMM...............................................................QQQQQQ.....................ÊÏ.........ÊÉÎÏ.éÉÉÉÉÉÉÉÉÉÉÉÎÎÎÎÎÎÎÎÎÎî..........êÉÉÎÎï..........................................................
 ............................................................................QQQQQQQQQ.........................................................................................................................................................................................................................................................MMM.........................................................................................êÉÎï......éÉÉÉÎÎÎîMMMMMMMMMMMMMMMMMMMMM...........ÊÉÉÎÎÏ..........................................................
 .............................................................................QQQQ..Q.................................................................................................................................................................................,,,...................................................................,,,MMM.........................................................................................ÊÉÎÏ..............MMMMMMMMMMMMMMMMMMMMM.........éÉÉÉÉÎÎÎÎî........................................................
-..............................................................................Q...............................QQQQQQQQQQQQQQQQQQQ.............................................................................................................................................................................................................MMM........................................................................................êÉÉÎÎï..............MM...............MM..êï........................................................................
-...............................................................................................................QQQQQQQQQQQQQQQQQ....................................................................................................................................................................jKKKKKKKKKk...............................MMM........................................................................................ÊÉÉÎÎÏ..............MM...............MM..ÊÏ........................................................................
-..........................................................................................................................QQQQQ..........................................................................................................................................J........J........J.......KKKKKKKKKKKKK.......J........J........J....MMM......................................................................................éÉÉÉÉÎÎÎÎî............MM...............MM.êÉÎï.......................................................................
+..............................................................................Q...............................QQQQQQQQQQQQQQQQQQQ..................................................................................................................................................................jKKKKKKKKKKKk..............................MMM........................................................................................êÉÉÎÎï..............MM...............MM..êï........................................................................
+...............................................................................................................QQQQQQQQQQQQQQQQQ.................................................................................................................................................................jKKKKKKKKKKKKKKKk............................MMM........................................................................................ÊÉÉÎÎÏ..............MM...............MM..ÊÏ........................................................................
+..........................................................................................................................QQQQQ..........................................................................................................................................J........J........J....KKKKKKKKKKKKKKKKKKK....J........J........J....MMM......................................................................................éÉÉÉÉÎÎÎÎî............MM...............MM.êÉÎï.......................................................................
 ...............................................................................................................................................................................................................................................................MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.........................................................................................................MM...............MM.ÊÉÎÏ.......................................................................
 ..............................................................................................................................................................................................................................................................MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM........................................................................................................MM..........,,,,.MéÉÉÉÎÎÎî.....................................................................
 ..................................................................................................................................................................................................................................................J..........MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM.......................................................................................................MM...............MM............................................................................
@@ -930,7 +1546,7 @@
 ..................................................................................................................................................................................................................J.....................................................................................||...............................................................................................,,,.........QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ.....................................
 ........................................................,,,,................................................................................................................................................QQQQQQQQQQQQQ...............................................................................||.............................................................................................................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ.......................................
 ............................................................................................................................................................................................................QQQQQQQQQQQQ..........................J........................................J............||.............J....................J........J............................................J.....................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ........................................
-..............................................................................................................................................................................................................QQQQQQ................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG...GGGGGGGGGGGGGGGGGGWWWWWWWWWWWWWWWWWWWWWWWWWGGGGGGGGGGGG,,,,,,GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGMMMMMMMMMMMMMMMMMMQMMMMMMMMMMMMM.................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ............,,,,.............................
+..............................................................................................................................................................................................................QQQQQQ................GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGG...GGGGGGGGGGGGGGMMMMWWWWWWWWWWWWWWWWWWWWWWWWWMMMMGGGGGGGG,,,,,,GGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGGMMMMMMMMMMMMMMMMMMQMMMMMMMMMMMMM.................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ............,,,,.............................
 ....................................................................................................................................................................................................................................QDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD...DDDDDDDDDDDDDDDDDDWWWWWWWWWWWWWWWWWWWWWWWWWDDDDDDDDDDDD......DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDQ...................QQQQQQQQQQQQQ...................Q.QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ...............................................
 .....................................................................................................................................................................................................................................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ...QQQQQQQQQQQQQQQQQQWWWWWWWWWWWWWWWWWWWWWWWWWQQQQQQQQQQQQ......QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ....................QQQQQQQQQQQQ...........................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ....................................................
 .....................................................................................................................................................................................................................................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ...QQQQQQQQQQQQQQQQQQMMMMMMMMMMMMMMMMMMMMMMMMMQQQQQQQQQQQQ......QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ.....................QQQQQQQQQQ..............................QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ.....................................................
@@ -1707,12 +2323,11 @@ ZZZIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 .....................................................................................................................................................................................................................................................................xxxxxxxxxxxxxxxxxxxxxxxxmmmmmmmmmmmmmmmmmmmmmmmmmxxxxxxxxxxxxxxxxxxxxxxxx..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mxxxxxXxxxxxxxxXxxxxxxxxmmmmmmmmmmmmmmmmmmmmmmmmmxxxxxxxxXxxxxxxxxXxxxxxm..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mxxxmmXmmxxxxmmXmmxxxxxxmmmmmmmmmmmmmmmmmmmmmmmmmxxxxxxmmXmmxxxxmmXmmxxxm..............................................................................................................................................................................................................
-.....................................................................................................................................................................................................................................................................mxxmmmXmmmxxmmmXmmmxxxxxmmmmmmmmmmmmmmmmmmmmmmmmmxxxxxmmmXmmmxxmmmXmmmxxm..............................................................................................................................................................................................................
-.....................................................................................................................................................................................................................................................................mxxmmmmmmmxxmmmmmmmxxxxxmmmmmmXmmmmmmmmmmmXmmmmmmxxxxxmmmmmmmxxmmmmmmmxxm..............................................................................................................................................................................................................
-.....................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmmommXXmmmmmmmmmXXmmommmmmmmmmmmmmmmmmmmmmmmmmmm..............................................................................................................................................................................................................
-.....................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmooomXXXmmmXmmmXXXmooommmmmmmmmmmmmmmmmmmmmmmmmm..............................................................................................................................................................................................................
-.....................................................................................................................................................................................................................................................................mmmmmmqmmmmmmmmqmmmmmmmmmmooommXXXmXXXmXXXmmooommmmmmmmmmqmmmmmmmmqmmmmmm..............................................................................................................................................................................................................
-.....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmXXXXXXXXXmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
+.....................................................................................................................................................................................................................................................................mxxmmmXmmmxxmmmXmmmxxxxxmmmmmmXmmmmmmmmmmmXmmmmmmxxxxxmmmXmmmxxmmmXmmmxxm..............................................................................................................................................................................................................
+.....................................................................................................................................................................................................................................................................mxxmmmmmmmxxmmmmmmmxxxxxmmmmmmXXmmmmmmmmmXXmmmmmmxxxxxmmmmmmmxxmmmmmmmxxm..............................................................................................................................................................................................................
+.....................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmmommXXXmmmXmmmXXXmmommmmmmmmmmmmmmmmmmmmmmmmmmm..............................................................................................................................................................................................................
+.....................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmooommXXXmXXXmXXXmmooommmmmmmmmmmmmmmmmmmmmmmmmm..............................................................................................................................................................................................................
+.....................................................................................................................................................................................................................................................................mmmmmmqmmmmmmmmqmmmmmmmmmmooommmXXXXXXXXXmmmooommmmmmmmmmqmmmmmmmmqmmmmmm..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmXXXXXmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmmXXXmmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmmmmmmmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
@@ -1721,8 +2336,9 @@ ZZZIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIIII
 .....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmmXXXmmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmmXXXmmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
 .....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmmXXXmmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
+.....................................................................................................................................................................................................................................................................mmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmXXXXXmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
 ..................................................................................................................................................................................................................................................................mmmmmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmXXXXXmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
-..................................................................................................................................................................................................................................................................mmmmmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmXXXXXmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
+..................................................................................................................................................................................................................................................................mmmmmmmmqqqmmmmmmqqqmmmmmmmmmooommmmmmmmmmmmmmmooommmmmmmmmqqqmmmmmmqqqmmmmm..............................................................................................................................................................................................................
 ..................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm.................................................................................................................mmmmmmmmmmmmmmm..............................................................................
 ..................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm.................................................................................................................mmmmmmmmmmmmmmm..............................................................................
 ..................................................................................................................................................................................................................................................................mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm.................................................................................................................mmmmmmmmmmmmmmm..............................................................................

@@ -112,6 +112,21 @@ def texture_bricks(seed) -> np.ndarray:
     return t
 
 
+def texture_ashlar(seed) -> np.ndarray:
+    """Dressed stone, as the castles of Paradise are drawn: two even courses a tile, each
+    block a tile long and its own shade, the courses half a block apart, a block lit along
+    its top, the joint under and after it dark but not black."""
+    r = rng("ashlar", seed)
+    t = np.zeros((TILE, TILE), dtype=np.int16)
+    for course in (0, 1):
+        base = r.choice([3, 4, 4, 4])
+        for row in range(8):
+            for x in range(TILE):
+                xx = (x + (8 if course else 0)) % TILE
+                t[course * 8 + row, x] = base - 2 if row == 7 or xx == TILE - 1 else min(base + 1, 5) if row == 0 else base
+    return t
+
+
 def texture_rubble(seed) -> np.ndarray:
     """Big rough blocks for a stone wall: the stone chunks, fewer and larger."""
     return texture_stone(seed + 11, cells=3)
@@ -279,6 +294,7 @@ TEXTURES = {
     "dirt": texture_dirt,
     "stone": texture_stone,
     "bricks": texture_bricks,
+    "ashlar": texture_ashlar,
     "rubble": texture_rubble,
     "sand": texture_sand,
     "clay": texture_clay,

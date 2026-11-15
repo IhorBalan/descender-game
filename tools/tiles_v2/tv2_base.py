@@ -214,8 +214,8 @@ def _wall(key, texture):
 MATERIALS += [
     # A cloud is bright all through: it gives a soft light of its own, so its underside is not a shadow.
     _ground("cloud", "cloud", True, group="sky", emits=(0.5, 0.55, 0.65)),
-    _ground("marble", "bricks", True),
-    _wall("marble_wall", "bricks"),
+    _ground("marble", "ashlar", True),
+    _wall("marble_wall", "ashlar"),
     _ground("ashstone", "stone", True),
     _wall("ash_wall", "rubble"),
     _ground("rose_rock", "stone", True),
@@ -264,7 +264,7 @@ MATERIALS += [
     # The inside of a cloud: a wall like any other, it shuts out the sky.
     _wall("mist_wall", "cloud"),
     # Gold in blocks, for what Paradise builds its roofs of: it gives a warm light.
-    dict(_ground("gold_brick", "bricks", True, emits=(0.42, 0.33, 0.10)), palette="gold"),
+    dict(_ground("gold_brick", "ashlar", True, emits=(0.42, 0.33, 0.10)), palette="gold"),
     # The Earth's: a meadow is dirt under a warmer turf, where the wild flowers grow
     # (tv2_decor.py); the old mine's walls are boarded with planks in places.
     {"key": "meadow", "kind": "terrain", "texture": "dirt", "palette": "dirt", "grass": "meadow_grass", "group": "earth", "slopes": True},

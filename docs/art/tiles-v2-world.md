@@ -193,8 +193,9 @@ and three ways out of the middle that are gone in any order.
   times the hero's height. Three steps up to a hall 73 tiles long and 22 high
   behind an arcade of white columns and round arches, a blue banner on every
   pier, a lit window, tall and pointed, in every bay, chandeliers on chains of
-  gilt. At its middle, on two steps of gold, a throne of gilt under the wings
-  of the host: the journey ends there. Over the hall a wall walk under
+  gilt. At its middle, on three steps of gold, a throne of gold eight tiles
+  high with a cushion of blue, a candlestick burning at either hand, under the
+  wings of the host in a ring of light: the journey ends there. Over the hall a wall walk under
   battlements; out of its middle a **great tower** under a roof of blue tiles,
   open to the hall below, with a ladder of gilt up it to a gallery under the
   roof where a draught lies (the wall walk goes through the tower by a door in
@@ -293,6 +294,32 @@ and three ways out of the middle that are gone in any order.
   the map's own steep roof tiles), the ledges, the piers of gold that hold a
   gate, the glass that lets the light into a hall. None of the pictures is
   solid and none shades.
+- **Nothing in it is left as blocks.** The marble and the gold the castles are
+  built of are laid as the towers are drawn, in courses of dressed stone (the
+  `ashlar` texture), so a wall of tiles and a tower's picture are one stone.
+  A cloud's tiles end in steps: along the underside of every cloud and round
+  its ends billows of cloud are stood (`billows`, 542 of them), so an island's
+  edge is ragged and round.
+- **No two towers are one tower twice**: besides its size a tower has a style
+  (`turret(..., style=)`): a balcony on brackets with a door onto it, a round
+  window of gold tracery and gilded bands, a climbing rose up its sunny side
+  with flowers under its windows, a banner down its face, or none of these.
+- **The Garden is kept**: a fountain of marble whose water runs, beds of
+  flowers, hedges clipped square, to a ball and to three rounds, urns and
+  benches by the lake, two swans and lilies on it, walks of marble at its
+  shores. The Orchard and the House's porch have their flowers and urns too.
+- **The windows burn by night.** Every window with a light behind it (the
+  towers', the great roofs', the round temple's, the candles by the throne)
+  has that light drawn by itself with a halo; it is shown unlit over the
+  picture as the day goes (`TilesV2Shimmer`, the night's), so at dusk and at
+  night the castles are lit from within. By day the light of the hall's tall
+  windows slants into its air in shafts, and is gone by night. Glints come and
+  go on the gold: the rods of the roofs, the dome, the throne.
+- **The view draws back where there is something to see** (`@mark vista`, the
+  game's own camera zone, the view twice as wide): by the Garden's lake, to
+  take in the island over it; coming up to the citadel's gate, looking up and
+  in at the castle; in the hall, held on the high seat, the whole hall and the
+  tower over it; and at the Orchard's round temple (half as wide again).
 - **Heaven is behind all of it**, and little bare sky shows (`heaven` layers
   of the backdrop, far to near): a country of cloud, towers of it one behind
   another; castles far off on banks of cloud, towers under pointed roofs of
@@ -303,8 +330,11 @@ and three ways out of the middle that are gone in any order.
   gold, rings and rays, stands behind the great tower. All of it takes the
   hour's tint: the seas of cloud are pink at sunset, and the far castles stand
   dark against the stars at night.
-- **The sky moves.** Pennants fly from the tallest towers, a wave running
-  along the cloth (`@mark flag`, `TilesV2Flag`). Petals fall from the trees in
+- **The sky moves.** Long pennants fly from the tallest towers and the great
+  roofs, a wave running along the cloth in six frames (a picture of frames,
+  `TilesV2Frames`), short ones from the gatehouses (`@mark flag`,
+  `TilesV2Flag`). The crowns of the trees stir, each bundle of leaves in its
+  own time; the banners on the hall's columns sway; the fountain runs. Petals fall from the trees in
   blossom and leaves of gold from the golden ones, from whichever crowns are
   near the view (`TilesV2Petals`: the upper part of each tree's picture). Where falling water ends, in the lake, in
   the Hollow's pool and in the Earth's pond, spray leaps and a mist hangs
@@ -471,6 +501,8 @@ A map marks what of the game stands where, for the scene to build
 @mark beacon 273 123 Deep                  a light of Paradise, and its name
 @mark sanctum 259 58 5 3                   the door the lights open: column, top row, height, the lights it asks for
 @mark picture 297 111 backdrop_rainbow     one of the tile set's pictures, its foot in the cell (a rainbow)
+@mark picture 256 9 heaven_pennant 8 -8    the same, moved from the middle of the cell's foot by so many pixels right and up
+@mark vista 279 103 37 9 200 0 0 0 13      a stretch where the view draws back: column, top row, width, height, the zoom in hundredths, whether the view is held on its middle column, on its middle row, how far it looks right and up in tiles
 @mark flag 298 2 -8                        a pennant flying to the right of the cell, moved by so many pixels (none: by none)
 @mark end 297 60
 ```
@@ -585,10 +617,12 @@ and their sources are in the session's research file
 - **The hearts, the draughts and the lights of Paradise are not saved**: the
   world has no save of its own, so they are found and lit again on the next
   run.
-- **Paradise's pictures are one drawing each**: a tower of a size is the same
-  tower wherever it stands (24 towers of 18 kinds), and the hall's banners,
-  being part of its picture, do not move (the pennants on the rods do). Nobody
-  has yet walked the citadel by hand since its towers became pictures: the
-  model plays it, and the tests hold every tower's roof to its tiles.
-- **The birds, the petals and the pennants are not in the pictures the editor
-  takes** nor in the whole-map photo: they are the scene's, and show in play.
+- **Nobody has yet walked Paradise by hand** since its towers became pictures
+  and its views began to draw back: the model plays it, the tests hold every
+  tower's roof to its tiles and every vista to the game's camera zone, but how
+  a vista feels under the hand is not known.
+- **The towers further back are one drawing for a size**, and a billow of
+  cloud is one of five.
+- **The birds, the petals, the glints and what stirs are not in the pictures the
+  editor takes** nor in the whole-map photo (a thing of frames shows its
+  first): they are the scene's, and show in play.

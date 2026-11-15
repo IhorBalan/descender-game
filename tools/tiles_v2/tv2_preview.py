@@ -310,7 +310,10 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
             continue
         entry, image = stood[rest[0]], images[rest[0]]
         px, py = window.at(x, row)
-        at = (px + TILE // 2 - image.width // 2, py + TILE - image.height + tv2_earth.SINK_OF.get(rest[0], tv2_heaven.SINK_OF.get(rest[0], 0)))
+        if "glint" in rest[0]:
+            continue  # a glint comes and goes: the scene's to show
+        aside, up = (int(rest[1]), int(rest[2])) if len(rest) > 2 else (0, 0)
+        at = (px + TILE // 2 - image.width // 2 + aside, py + TILE - image.height + tv2_earth.SINK_OF.get(rest[0], tv2_heaven.SINK_OF.get(rest[0], 0)) - up)
         if at[0] > width or at[1] > height or at[0] + image.width < 0 or at[1] + image.height < 0:
             continue
         if not entry["lit"] and entry["order"] < -300:

@@ -798,7 +798,22 @@ namespace Descender.Tests
                     marked += mark.Kind == TilesV2Things.Flag ? 1 : 0;
                 }
                 Assert.That(things.Flags, Is.EqualTo(marked));
-                Assert.That(things.Flags, Is.GreaterThan(4), "the tallest towers fly pennants");
+                Assert.That(things.Flags, Is.GreaterThan(1), "the gatehouses' towers fly short pennants");
+                // The tallest towers and the great roofs fly long ones: pictures of a wave, shown in turn.
+                var flying = 0;
+                foreach (var frames in things.GetComponentsInChildren<TilesV2Frames>())
+                {
+                    if (!frames.name.Contains("heaven_pennant"))
+                    {
+                        continue;
+                    }
+                    flying++;
+                    Assert.That(frames.Count, Is.EqualTo(6), "a pennant's wave has six frames");
+                    var was = frames.Frame;
+                    frames.Step(1f / TilesV2Things.FramesASecond("heaven_pennant"));
+                    Assert.That(frames.Frame, Is.Not.EqualTo(was), "the wave runs along the pennant");
+                }
+                Assert.That(flying, Is.GreaterThan(4), "the tallest towers fly pennants");
                 var flag = things.GetComponentInChildren<TilesV2Flag>();
                 var before = flag.Frame;
                 flag.Step(1f / TilesV2Flag.FramesASecond);
@@ -848,7 +863,9 @@ namespace Descender.Tests
                 var entry = System.Array.Find(set.backdrops, backdrop => backdrop.key == key);
                 Assert.That(entry, Is.Not.Null, "the tile set has no " + key);
                 Assert.That(entry.sprite, Is.Not.Null, key);
-                Assert.That(entry.lit, Is.True, key + " takes the tile light");
+                // All of it takes the tile light but what is light itself: a glint, the sun in a hall's air.
+                var light = key.Contains("glint") || key.Contains("_rays");
+                Assert.That(entry.lit, Is.EqualTo(!light), key + " and the tile light");
                 Assert.That(mark.Row, Is.LessThan(map.Surface), key + " stands under the Earth");
                 Assert.That(Solid(mark.Column, mark.Row), Is.False, key + " is marked in the ground");
                 trees += key.StartsWith(TilesV2Petals.BlossomTree) || key.StartsWith(TilesV2Petals.GoldTree) ? 1 : 0;
@@ -880,25 +897,149 @@ namespace Descender.Tests
             {
                 Assert.That(seen.Contains(key), Is.True, key + " stands nowhere");
             }
-            // Every picture of Paradise the tile set has is stood somewhere: none is drawn for nothing.
+            // Every picture of Paradise the tile set has is stood somewhere, itself or (a further frame, the
+            // light of its windows) with the picture it goes with: none is drawn for nothing.
             foreach (var backdrop in set.backdrops)
             {
-                if (backdrop.key.StartsWith("heaven_"))
+                if (!backdrop.key.StartsWith("heaven_"))
                 {
-                    Assert.That(
-                        seen.Contains(backdrop.key),
-                        Is.True,
-                        backdrop.key + " is in the set and not on the map"
-                    );
+                    continue;
                 }
+                var key = backdrop.key;
+                if (key.EndsWith(TilesV2Things.GlowSuffix))
+                {
+                    key = key.Substring(0, key.Length - TilesV2Things.GlowSuffix.Length);
+                }
+                var frame = key.LastIndexOf(TilesV2Things.FrameSuffix);
+                if (frame > 0 && int.TryParse(key.Substring(frame + TilesV2Things.FrameSuffix.Length), out _))
+                {
+                    key = key.Substring(0, frame);
+                }
+                Assert.That(seen.Contains(key), Is.True, backdrop.key + " is in the set and not on the map");
             }
-            // A pennant on a great roof's rod, which is in the middle of a cell, is moved to the rod.
-            var moved = 0;
+        }
+
+        [Test]
+        public void ParadiseStirsItsWindowsBurnByNightAndTheViewDrawsBack()
+        {
+            // Billows of cloud hang under every cloud of Paradise, each in the air under a tile of cloud.
+            var billows = 0;
+            var garden = new HashSet<string>();
             foreach (var mark in map.Marks)
             {
-                moved += mark.Kind == TilesV2Things.Flag && mark.Number(0, 0) != 0 ? 1 : 0;
+                var key = mark.Word(0);
+                if (mark.Kind != TilesV2Things.Stood || !key.StartsWith("heaven_"))
+                {
+                    continue;
+                }
+                if (key.StartsWith("heaven_puff"))
+                {
+                    billows++;
+                    var over = map.TerrainAt(mark.Column, mark.Row - 1);
+                    Assert.That(over == 'Q' || over == '1' || over == '2', Is.True, "a billow under no cloud");
+                    continue;
+                }
+                foreach (var kind in new[] { "fountain", "flowers", "hedge", "bench", "urn", "swan" })
+                {
+                    if (key.StartsWith("heaven_" + kind))
+                    {
+                        garden.Add(kind);
+                    }
+                }
             }
-            Assert.That(moved, Is.EqualTo(2), "the citadel's roof and the keep's");
+            Assert.That(billows, Is.GreaterThan(300), "the clouds' edges are steps");
+            Assert.That(
+                garden.Count,
+                Is.EqualTo(6),
+                "the Garden is kept: a fountain, flowers, hedges, a bench, urns, swans"
+            );
+            Pickups.Checkpoint.Reset();
+            var things = TilesV2Things.Build(
+                world,
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+            );
+            try
+            {
+                // What stirs: a tree's crown, a banner, a pennant, a fountain; and a glint, which comes and goes.
+                Assert.That(things.Moving, Is.GreaterThan(40));
+                TilesV2Frames tree = null;
+                TilesV2Frames glint = null;
+                var banners = 0;
+                foreach (var frames in things.GetComponentsInChildren<TilesV2Frames>())
+                {
+                    Assert.That(frames.Count, Is.GreaterThan(1), frames.name);
+                    tree = frames.name.Contains("heaven_blossom") ? frames : tree;
+                    glint = frames.name.Contains("heaven_glint") ? frames : glint;
+                    banners += frames.name.Contains("heaven_banner") ? 1 : 0;
+                }
+                Assert.That(banners, Is.EqualTo(6), "a banner on every column of the hall");
+                Assert.That(tree, Is.Not.Null, "no tree stirs");
+                Assert.That(tree.Count, Is.EqualTo(4));
+                var before = tree.Frame;
+                tree.Step(1f / TilesV2Things.FramesASecond("heaven_blossom_0"));
+                Assert.That(tree.Frame, Is.Not.EqualTo(before), "the crown stirs");
+                Assert.That(tree.Resting, Is.False);
+                Assert.That(glint, Is.Not.Null, "nothing glints");
+                var shown = 0;
+                var gone = 0;
+                for (var i = 0; i < 400; i++)
+                {
+                    glint.Step(0.05f);
+                    shown += glint.Resting ? 0 : 1;
+                    gone += glint.Resting ? 1 : 0;
+                }
+                Assert.That(shown, Is.GreaterThan(3), "a glint never comes");
+                Assert.That(gone, Is.GreaterThan(shown * 3), "a glint is gone most of the time");
+                Assert.That(glint.GetComponent<SpriteRenderer>().enabled, Is.EqualTo(!glint.Resting));
+                // The windows of the castles have a light of their own, shown as the day goes; the light a
+                // hall's windows throw into its air is the sun's.
+                Assert.That(things.Glowing, Is.GreaterThan(25), "the towers, the great roofs, the round temple");
+                TilesV2Shimmer lamp = null;
+                TilesV2Shimmer rays = null;
+                foreach (var shimmer in things.GetComponentsInChildren<TilesV2Shimmer>())
+                {
+                    lamp = shimmer.name == "Glow" ? shimmer : lamp;
+                    rays = shimmer.name.Contains("heaven_rays") ? shimmer : rays;
+                }
+                Assert.That(lamp, Is.Not.Null);
+                Assert.That(rays, Is.Not.Null);
+                lamp.Apply(12f);
+                rays.Apply(12f);
+                Assert.That(lamp.Strength, Is.EqualTo(0f), "a window's own light at noon");
+                Assert.That(rays.Strength, Is.GreaterThan(0.5f), "no light in the hall's air at noon");
+                lamp.Apply(0f);
+                rays.Apply(0f);
+                Assert.That(lamp.Strength, Is.GreaterThan(0.8f), "the windows are dark at midnight");
+                Assert.That(rays.Strength, Is.EqualTo(0f), "sunlight in the hall at midnight");
+                Assert.That(lamp.GetComponent<SpriteRenderer>().sharedMaterial, Is.EqualTo(set.unlitMaterial));
+                // The view draws back where there is something to see: the game's own camera zones.
+                Assert.That(things.Vistas, Is.EqualTo(4), "the Garden, the citadel's gate, its hall, the Orchard");
+                var zones = things.GetComponentsInChildren<Descender.CameraRig.CameraZone>();
+                Assert.That(zones.Length, Is.EqualTo(4));
+                Assert.That(world.TryView("paradise", out var throne), Is.True);
+                var held = 0;
+                foreach (var zone in zones)
+                {
+                    Assert.That(zone.Zoom, Is.GreaterThan(1.2f).And.LessThanOrEqualTo(2f));
+                    Assert.That(zone.Area.yMax, Is.LessThanOrEqualTo(world.Area.yMax));
+                    if (zone.LockX)
+                    {
+                        held++;
+                        Assert.That(
+                            Mathf.Abs(zone.Area.center.x - throne.x),
+                            Is.LessThan(1.5f),
+                            "the hall's view holds on the high seat"
+                        );
+                    }
+                }
+                Assert.That(held, Is.EqualTo(1));
+            }
+            finally
+            {
+                Object.DestroyImmediate(things.gameObject);
+                Pickups.Checkpoint.Reset();
+            }
         }
 
         [Test]
