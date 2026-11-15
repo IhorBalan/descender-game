@@ -1040,3 +1040,111 @@ def glint_sheet() -> tuple[Image.Image, list]:
             sheet[v * TILE : (v + 1) * TILE, f * TILE : (f + 1) * TILE] = glint_frame(v, f)
             sprites.append((glint_sprite(v, f), f, v))
     return Image.fromarray(sheet, "RGBA"), sprites
+
+
+# --- The Earth's own: the meadows in flower, and what lies about in the old mine -----
+# Its rules go last, so the ones above keep their share of every cell they had.
+
+MEADOW = PALETTES["meadow_grass"]
+# Wild flowers: (petal, its shade, heart) for poppies, daisies, cornflowers, buttercups.
+WILDFLOWERS = [("e2402e", "a82a22", "2a1a10"), ("f6f2e6", "c8c4c8", "f2c43a"), ("5a7cf0", "3a52b0", "f6f0c8"), ("f6d23a", "c89a1e", "e8862a")]
+
+
+def wildflower(variant: int) -> np.ndarray:
+    """Three to five flowers of one kind on thin stems among a few blades: a patch of a
+    meadow, never one flower alone."""
+    r = rng("wildflower", variant)
+    pad = Pad()
+    ramp = MEADOW["ramp"]
+    petal, shade, heart = (col(v) for v in WILDFLOWERS[variant % len(WILDFLOWERS)])
+    x = r.randint(1, 3)
+    while x < TILE - 1:
+        height = r.randint(4, 10)
+        for h in range(-BLEED, height):
+            pad.up(x, h, ramp[1] if h < 2 else ramp[2])
+        if r.random() < 0.5:
+            pad.up(x + 1, height // 2, ramp[3])
+        big = variant % 2 == 0 and r.random() < 0.6
+        for dx, dy in ((0, 1), (-1, 0), (1, 0), (0, -1)) + (((-1, 1), (1, 1), (-1, -1), (1, -1)) if big else ()):
+            pad.up(x + dx, height + dy, shade if dy < 0 or dx > 0 else petal)
+        pad.up(x, height, heart)
+        x += r.randint(3, 5)
+    for _ in range(3):
+        blade(pad, r, r.randint(1, TILE - 2), r.randint(2, 4), r.choice([-1, 0, 1]))
+    return pad.a
+
+
+def fern(variant: int) -> np.ndarray:
+    """A fern: fronds that arch out from one root, lit on their upper side."""
+    r = rng("fern", variant)
+    pad = Pad()
+    ramp = GRASS["ramp"]
+    root_x = 7 + variant % 2
+    for side, length, rise in ((-1, 7, 7), (1, 7, 8), (-1, 4, 10), (1, 5, 11), (0, 0, 12)):
+        for i in range(max(length, 1)):
+            t = i / max(length, 1)
+            x = root_x + side * i
+            h = int(round(rise * (1 - t * t))) if side else i
+            if side == 0:
+                for k in range(rise):
+                    pad.up(root_x, k, ramp[2] if k < rise - 2 else ramp[4])
+                break
+            pad.up(x, h, ramp[3] if side < 0 else ramp[2])
+            if i % 2 == 0 and i:
+                pad.up(x, h + 1, ramp[4] if side < 0 else ramp[3])
+                pad.up(x, h - 1, ramp[1])
+    for h in range(-BLEED, 1):
+        pad.up(root_x, h, ramp[1])
+    if r.random() < 0.5:
+        pad.up(root_x - 2, 9, ramp[5])
+    return pad.a
+
+
+def field_stone(variant: int) -> np.ndarray:
+    """A grey stone half sunk in the turf, with grass at its foot."""
+    r = rng("field_stone", variant)
+    pad = Pad()
+    ramp = STONE["ramp"]
+    wide, tall, x0 = [(6, 4, 4), (9, 5, 3), (4, 3, 8)][variant % 3]
+    for h in range(-1, tall):
+        inset = 1 if h == tall - 1 else 0
+        for x in range(x0 + inset, x0 + wide - inset):
+            colour = ramp[4] if x < x0 + 2 or h == tall - 1 else ramp[1] if x >= x0 + wide - 2 else ramp[3]
+            pad.up(x, h, colour)
+    pad.up(x0 + 1, tall - 1, ramp[5])
+    pad.outline(STONE["outline"])
+    for _ in range(3):
+        blade(pad, r, r.randint(x0 - 1, x0 + wide), r.randint(2, 3), 0)
+    return pad.a
+
+
+def cobweb(variant: int) -> np.ndarray:
+    """An old web hung from the roof: a few threads and the rings across them, grey-white
+    and thin, so it is seen only where a lamp is near."""
+    pad = Pad()
+    thread = col("b8b4ac")
+    cx = 4 if variant % 2 == 0 else 11
+    ends = [(-4, 9), (-1, 12), (3, 11), (5, 7)] if variant % 2 == 0 else [(4, 9), (1, 12), (-3, 11), (-5, 7)]
+    for ex, ey in ends:
+        steps = max(abs(ex), ey)
+        for i in range(-BLEED, steps + 1):
+            t = max(i, 0) / steps
+            pad.put(int(round(cx + ex * t)), CEILING + int(round(ey * t)), thread, 150)
+    for ring in (4, 8):
+        for ex, ey in ends:
+            t = ring / max(ey, 1)
+            if t <= 1:
+                pad.put(int(round(cx + ex * t)), CEILING + int(round(ey * t)), thread, 200)
+                pad.put(int(round(cx + ex * t * 0.85)), CEILING + int(round(ey * t)) + 1, thread, 110)
+    return pad.a
+
+
+DRAWERS.update({"wildflower": wildflower, "fern": fern, "field_stone": field_stone, "cobweb": cobweb})
+DECOR += [
+    _rule("wildflower", "floor", ["meadow"], 0.34, 4, where="sky"),
+    _rule("meadow_tall", "floor", ["meadow"], 0.22, 2, where="sky", first="grass_tall", middle="grass_tall", last="grass_tall"),
+    _rule("meadow_tuft", "floor", ["meadow"], 0.30, 3, where="sky", first="tuft", middle="tuft", last="tuft"),
+    _rule("fern", "floor", ["grass"], 0.06, 2, where="sky"),
+    _rule("field_stone", "floor", ["grass", "meadow"], 0.04, 3, where="sky"),
+    _rule("cobweb", "ceiling", ["stone", "dirt", "copper_ore"], 0.05, 2, where="cave"),
+]

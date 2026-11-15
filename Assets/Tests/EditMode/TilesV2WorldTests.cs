@@ -385,8 +385,8 @@ namespace Descender.Tests
             Assert.That(air, Is.Not.Null);
             Assert.That(
                 air.Count,
-                Is.EqualTo(RegionKeys.Length - 1),
-                "every region but the Earth has something in its air"
+                Is.EqualTo(RegionKeys.Length),
+                "every region has something in its air (the Earth's is pollen, seen where there is light)"
             );
             Assert.That(world.TryView("lust", out var tempest), Is.True);
             air.Follow(tempest);
@@ -593,7 +593,8 @@ namespace Descender.Tests
                     }
                 }
             }
-            Assert.That(crowns, Is.GreaterThan(50), "trees stand on the Earth");
+            // (The Earth's trees are pictures now, TilesV2EarthTests; these are Paradise's.)
+            Assert.That(crowns, Is.GreaterThan(50), "trees and columns stand in the open");
             // A dark stretch: the air of its region gives it nothing, so with the stretches marked
             // some of the world is darker than without, and none of it brighter.
             var dark = world.Dark();

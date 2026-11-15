@@ -20,6 +20,7 @@ from PIL import Image
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_backdrop
 import tv2_decor
+import tv2_earth
 import tv2_light
 import tv2_liquid
 from tv2_terrain import BLEND_MASKS, BLEND_SIDES
@@ -271,7 +272,8 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
             ),
         )
         tile_across(canvas, tinted(images["backdrop_clouds"], day["tint"]), 8 - top, left=-left)
-        for key in ("backdrop_far", "backdrop_mid", "backdrop_near"):
+        ridges = sorted((b for b in tv2_backdrop.BACKDROPS if b["kind"] == "ridge"), key=lambda b: b["order"])
+        for key in [b["key"] for b in ridges]:
             tile_across(canvas, tinted(images[key], day["tint"]), line - 2 * TILE - tv2_backdrop.BACKDROP_H - top, left=-left)
         # Nothing of the far world shows under the surface line.
         if line - top < height:
@@ -297,6 +299,28 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
     for x, row, mask in shade_cells(layout, window):
         world.alpha_composite(sprites[tv2_decor.shade_sprite(mask)], window.at(x, row))
     world.alpha_composite(foliage)
+    # The pictures a map stands (the Earth's trees, houses, timber): behind the decor, on the
+    # ground (track), on the water (lilies), or unlit (a lamp in a window).
+    stood = {b["key"]: b for b in tv2_backdrop.BACKDROPS if b["kind"] == "picture"}
+    later: dict[str, list] = {"track": [], "water": [], "glow": []}
+    for kind, x, row, rest in layout.marked:
+        if kind != "picture" or not rest or rest[0] not in stood or rest[0] not in images:
+            continue
+        entry, image = stood[rest[0]], images[rest[0]]
+        px, py = window.at(x, row)
+        at = (px + TILE // 2 - image.width // 2, py + TILE - image.height + tv2_earth.SINK_OF.get(rest[0], 0))
+        if at[0] > width or at[1] > height or at[0] + image.width < 0 or at[1] + image.height < 0:
+            continue
+        if not entry["lit"]:
+            later["glow"].append((image, at))
+        elif entry["order"] > 20:
+            later["water"].append((image, at))
+        elif entry["order"] > -100:
+            later["track"].append((image, at))
+        elif entry["order"] < -300:
+            continue
+        else:
+            paste_clipped(world, image, at)
     open_sky = lighting.open_sky if lighting else np.zeros((layout.height, layout.width), dtype=bool)
     for x, row, name in decor_of(layout, open_sky):
         if window.has(x, row):
@@ -305,6 +329,8 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
                 world.alpha_composite(sprites[name], (px, py - tv2_decor.BLEED))
     lay_tiles(world, layout, window, images, layout.ground, group)
     lay_blends(world, layout, window, images)
+    for image, at in later["track"]:
+        paste_clipped(world, image, at)
     for x, row in window.cells():
         ledge = layout.ledge(x, row)
         if ledge:
@@ -329,6 +355,10 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
             px, py = window.at(x, row)
             glowing.paste(MARK_COLOURS[kind], (px + 5, py + 4, px + 11, py + 16))
 
+    for image, at in later["water"]:
+        paste_clipped(water, image, at)
+    for image, at in later["glow"]:
+        paste_clipped(glowing, image, at)
     if lighting:
         light = lighting.over(window, day["light"])
         world, water = lit_by(world, light), lit_by(water, light)
@@ -336,6 +366,16 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
     canvas.alpha_composite(water)
     canvas.alpha_composite(glowing)
     return canvas
+
+
+def paste_clipped(canvas: Image.Image, image: Image.Image, at):
+    """alpha_composite that lets the picture hang over the canvas's edges."""
+    x, y = at
+    left, top = max(0, -x), max(0, -y)
+    right, bottom = min(image.width, canvas.width - x), min(image.height, canvas.height - y)
+    if right <= left or bottom <= top:
+        return
+    canvas.alpha_composite(image.crop((left, top, right, bottom)), (x + left, y + top))
 
 
 # What stands for the things a map marks (the game's own objects), in a preview.

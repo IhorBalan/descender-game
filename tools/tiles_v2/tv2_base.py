@@ -70,8 +70,9 @@ PALETTES = {
         "ramp": hexes("452a1c", "5e3a26", "7a4c31", "93603d", "ad774c", "c6915e"),
     },
     "grass": {
-        "outline": hexes("173418")[0],
-        "ramp": hexes("1f4a22", "2e6a2c", "3f8a35", "56a83f", "79c24f", "a6dc6a"),
+        # Hue-shifted: the shadows lean blue, the lit turf yellow (the Earth's own look).
+        "outline": hexes("15301a")[0],
+        "ramp": hexes("1b4426", "28652e", "3c8634", "58a53c", "82c04a", "b4da64"),
     },
     "stone": {
         "outline": hexes("1c1d26")[0],
@@ -90,8 +91,9 @@ PALETTES = {
         "ramp": hexes("8c7440", "a88c4e", "c2a660", "d6bc74", "e6cf8a", "f3e2a8"),
     },
     "clay": {
-        "outline": hexes("3a1a14")[0],
-        "ramp": hexes("6a3024", "84402c", "9c5236", "b4643f", "c97a4e", "dc9466"),
+        # Muted, earth and not fire: the old orange read as lava in the dark of the mine.
+        "outline": hexes("2e1712")[0],
+        "ramp": hexes("4e2c22", "62382a", "764634", "8a5640", "9e684e", "b07c60"),
     },
     "copper": {
         "outline": hexes("3a1e10")[0],
@@ -167,6 +169,9 @@ _BIOME_PALETTES = [
     ("gilt_wall", "8a5e0c", "b88314 d09a1c e6b430 f6cc4c ffe27a fff3b0"),
     ("shadow_wall", "3a3a4c", "55546a 5f5e74 69687e 737288 7d7c92 87869c"),
     ("mist_wall", "7f93b8", "a9b9d6 b5c3de c1cde6 cdd7ec d9e1f2 e5ebf7"),
+    # The Earth's: a meadow's turf, warmer and more yellow than the grass; the mine's planks.
+    ("meadow_grass", "1c3214", "2a4a1c 3e6a26 5a8a2e 7ea83a a8c44a d2dc6a"),
+    ("timber_wall", "120c08", "1e150e 251a12 2c1f16 33251a 3a2a1e 423024"),
 ]
 for _key, _outline, _ramp in _BIOME_PALETTES:
     PALETTES[_key] = {"outline": hexes(_outline)[0], "ramp": hexes(*_ramp.split())}
@@ -226,6 +231,10 @@ MATERIALS += [
     _wall("mist_wall", "cloud"),
     # Gold in blocks, for what Paradise builds its roofs of: it gives a warm light.
     dict(_ground("gold_brick", "bricks", True, emits=(0.42, 0.33, 0.10)), palette="gold"),
+    # The Earth's: a meadow is dirt under a warmer turf, where the wild flowers grow
+    # (tv2_decor.py); the old mine's walls are boarded with planks in places.
+    {"key": "meadow", "kind": "terrain", "texture": "dirt", "palette": "dirt", "grass": "meadow_grass", "group": "earth", "slopes": True},
+    _wall("timber_wall", "planks"),
 ]
 
 
@@ -260,7 +269,7 @@ REGIONS = [
     {"key": "paradise", "name": "Paradise", "subtitle": "Celestial Gardens", "ambient": (0.0, 0.0, 0.0), "cave": None,
      "air": (5, "fff2c0", 0.8, (-0.4, 0.4), (-0.7, -0.2), 9.0, False)},
     {"key": "earth", "name": "Ruined Earth", "subtitle": "The Hub", "ambient": (0.0, 0.0, 0.0),
-     "cave": "0a0b10 111219 171920 1e2029 262933", "air": None},
+     "cave": "0d0a09 15110e 1d1814 262019 302820", "air": (4, "f4f0c8", 0.7, (-0.5, 0.3), (-0.15, 0.25), 9.0, True)},
     {"key": "limbo", "name": "1. Limbo", "subtitle": "The Forgotten", "ambient": (0.20, 0.21, 0.28),
      "cave": "0c0c12 14141d 1b1b27 232331 2c2c3c", "air": (7, "c8c8de", 0.5, (-0.3, 0.3), (-0.1, 0.1), 10.0, True)},
     {"key": "lust", "name": "2. Lust", "subtitle": "The Desire", "ambient": (0.26, 0.13, 0.24),
@@ -285,7 +294,7 @@ REGIONS = [
 # What stands far off behind each region's caves, between the rock and the walls: the
 # kind of shape (tv2_backdrop.py draws each) for every region that has rock behind it.
 FAR = {
-    "earth": "spires",
+    "earth": "mine",
     "limbo": "columns",
     "lust": "spires",
     "gluttony": "teeth",
@@ -453,6 +462,12 @@ LEGEND = [
     ("K", "terrain", "gold_brick", ""),
     # Falling water: seen and walked through, neither swum in nor stood on.
     ("|", "liquid", "falls", ""),
+    # The Earth's: a meadow in flower (grass the wild flowers grow thick on) and its slopes,
+    # and the boarded wall of the old mine.
+    ("Ñ", "terrain", "meadow", ""),
+    ("ñ", "terrain", "meadow", "up_right"),
+    ("Ö", "terrain", "meadow", "up_left"),
+    ("Ø", "wall", "timber_wall", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}

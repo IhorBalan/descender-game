@@ -247,7 +247,29 @@ def texture_plain(seed) -> np.ndarray:
     return t
 
 
+def texture_planks(seed) -> np.ndarray:
+    """Boards laid across, four to a tile, each with its own shade, a lit top edge, a dark
+    seam under it, a joint here and there and the odd nail: a mine's boarded wall."""
+    r = rng("planks", seed)
+    t = np.full((TILE, TILE), 3, dtype=np.int16)
+    for board in range(4):
+        y0 = board * 4
+        tone = r.choice([2, 3, 3, 4])
+        joint = r.randrange(TILE)
+        for x in range(TILE):
+            t[y0, x] = min(tone + 1, 4)
+            t[y0 + 1, x] = tone
+            t[y0 + 2, x] = tone if (x * 7 + board * 3 + seed) % 5 else tone - 1
+            t[y0 + 3, x] = 1
+        for y in range(y0, y0 + 3):
+            t[y, joint] = 1
+        if r.random() < 0.5:
+            t[y0 + 1, (joint + 3) % TILE] = 4
+    return t
+
+
 TEXTURES = {
+    "planks": texture_planks,
     "glass": texture_glass,
     "plain": texture_plain,
     "leaves": texture_leaves,
