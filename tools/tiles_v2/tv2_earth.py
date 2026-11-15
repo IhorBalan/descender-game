@@ -473,7 +473,13 @@ def cottage(variant: int) -> Image.Image:
     door_x = x0 + 52
     for y in range(floor - 30, floor):
         for x in range(door_x, door_x + 14):
-            art.put(x, y, DARK if ruin else TIMBER[2 if (x - door_x) % 4 else 1])
+            if ruin:
+                art.put(x, y, DARK)
+            elif x < door_x + 5:
+                # The door stands ajar: the fire inside lights the gap.
+                art.put(x, y, GLOW[1] if x > door_x + 1 else GLOW[2])
+            else:
+                art.put(x, y, TIMBER[2 if (x - door_x) % 4 else 1])
     for x in range(door_x - 2, door_x + 16):
         art.put(x, floor - 31, STONEWORK[5])
         art.put(x, floor - 32, STONEWORK[3])
@@ -505,6 +511,13 @@ def cottage(variant: int) -> Image.Image:
             for x in range(x0 + 104, x1 - 3):
                 if (x - (x0 + 104)) + (y - top) * 0.6 > 6 + 8 * math.sin(y * 0.3):
                     art.put(x, y, DARK if (x + y) % 5 else PLASTER[1])
+        # Inside, through the fallen east end: a table on its side, a chair, a broken pot.
+        art.rect(x0 + 108, floor - 12, x0 + 112, floor - 1, TIMBER[3])
+        art.rect(x0 + 108, floor - 12, x0 + 126, floor - 9, TIMBER[4])
+        art.line(x0 + 112, floor - 9, x0 + 120, floor - 1, TIMBER[2], 2)
+        art.line(x0 + 98, floor - 1, x0 + 102, floor - 10, TIMBER[3], 1)
+        art.line(x0 + 102, floor - 10, x0 + 106, floor - 8, TIMBER[3], 1)
+        art.rect(x0 + 92, floor - 4, x0 + 97, floor - 1, ROOF[2])
         ivy(art, x0, top, x0 + 70, floor, r, 0.55)
         ivy(art, x1 - 30, floor - 30, x1, floor, r, 0.4)
     else:
@@ -638,9 +651,10 @@ def well() -> Image.Image:
     return art.image()
 
 
-def windmill() -> Image.Image:
-    """A windmill on its hill, long still: a tower of stone that narrows upward, a cap of
-    boards, four sails of lattice of which two are broken, a door and a small window."""
+def windmill(sails: bool = True) -> Image.Image:
+    """A windmill on its hill: a tower of stone that narrows upward, a cap of boards, four
+    sails of lattice of which two are broken, a door and a small window. Without `sails` the
+    tower alone: the world's mill turns its own sails (`sails`, TilesV2Life)."""
     r = rng("windmill")
     W, H = 190, 200 + 2 * TILE
     art = Art(W, H)
@@ -673,7 +687,7 @@ def windmill() -> Image.Image:
             art.put(x, y, TIMBER[k] if (x % 4) else TIMBER[1])
     # The sails, from the hub: lattice arms, two of them broken short.
     hub = (cx + 2, cap_y - 6)
-    for k, (angle, length, broken) in enumerate(((-0.95, 82, False), (0.62, 80, True), (2.2, 82, False), (3.76, 46, True))):
+    for k, (angle, length, broken) in enumerate(((-0.95, 82, False), (0.62, 80, True), (2.2, 82, False), (3.76, 46, True)) if sails else ()):
         ex, ey = hub[0] + math.cos(angle) * length, hub[1] + math.sin(angle) * length
         art.line(hub[0], hub[1], ex, ey, TIMBER[2], 3)
         nx, ny = -math.sin(angle), math.cos(angle)
@@ -881,10 +895,9 @@ def gateway() -> Image.Image:
                 if art.has(x, y):
                     k = 5 if ((y // 6) + w_ // 3) % 2 else 4
                     art.put(x, y, dark[k if side < 0 else k - 2])
-    # Under the floor line the opening is open: the way down goes on through it.
-    for y in range(floor, H):
-        for x in range(cx - half, cx + half + 1):
-            art.a[y, x, 3] = 0
+    # Nothing under its floor line: where the ground was dug for the way down the stone
+    # would stand in front of the tunnel as steps; the piers go behind the ground anyway.
+    art.a[floor + 2 :, :, 3] = 0
     # A band of letters over the arch.
     for x in range(cx - 52, cx + 53):
         art.put(x, floor - 136, dark[6])
@@ -1084,9 +1097,10 @@ def colonnade_ruin() -> Image.Image:
 # --- The pond -----------------------------------------------------------------------
 
 
-def reeds(variant: int) -> Image.Image:
+def reeds(variant: int, sway: int = 0) -> Image.Image:
     """A clump of reeds at the water's edge: blades of different heights leaning a little,
-    two or three bulrush heads."""
+    two or three bulrush heads. `sway` bends their tops that many px with the wind (the
+    frames TilesV2Life turns through)."""
     r = rng("reeds", variant)
     W, H = 2 * TILE, 30 + SINK
     art = Art(W, H)
@@ -1096,11 +1110,11 @@ def reeds(variant: int) -> Image.Image:
         tall = r.randint(12, 28)
         lean = r.choice([-1, 0, 0, 1])
         for h in range(-4, tall):
-            dx = int(lean * (h / tall) ** 2 * 3)
+            dx = int(round((lean * 3 + sway) * (max(h, 0) / tall) ** 2))
             art.put(x + dx, floor - h, WILLOW[2] if h < tall * 0.4 else WILLOW[3] if i % 2 else WILLOW[4])
         if i % 3 == 0:
             for h in range(tall - 6, tall - 1):
-                dx = int(lean * (h / tall) ** 2 * 3)
+                dx = int(round((lean * 3 + sway) * (h / tall) ** 2))
                 art.put(x + dx, floor - h, BARK[2])
                 art.put(x + dx + 1, floor - h, BARK[1])
     return art.image()
@@ -1428,6 +1442,13 @@ def ridge_hills(width: int = 1920) -> Image.Image:
         for rx in roofs:
             tower(rx, 12, 7, cap="spire")
     tower(1700, 10, 34)
+    # A band of haze along their foot, between them and the woods: they stand further off.
+    haze = np.array(hexes("a6c6d4")[0], dtype=float)
+    for y in range(BACKDROP_H - 70, BACKDROP_H):
+        t = (y - (BACKDROP_H - 70)) / 70
+        for x in range(width):
+            if a[y, x, 3] and t * 16 > BAYER_4[y % 4][x % 4] + 0.5:
+                a[y, x, :3] = (a[y, x, :3] * 0.5 + haze * 0.5).astype(np.uint8)
     return Image.fromarray(a, "RGBA")
 
 
@@ -1571,13 +1592,722 @@ def far_mine(region: dict) -> Image.Image:
     return Image.fromarray(a, "RGBA")
 
 
+# --- The second round: more trees, a village that is lived in, a mine that was worked,
+# water that shows the sky, and what comes and goes with the hour ------------------------
+
+BIRCH_BARK = ramp_of("2a2a2c 6a6a6c b8b6b0 d6d4cc ecebe4 fafaf6")
+BIRCH_LEAF = ramp_of("1a3416 2c5a22 4a7e2c 6e9e36 98bc46 c4d866 e2ec90")
+GIANT = ramp_of("0e2016 15331f 1d4828 2a6230 427e36 64a03e 98c454")
+MOSS = hexes("4a6a2a", "6a8a34")
+
+
+def birch(variant: int) -> Image.Image:
+    """A birch: a slim white trunk with black marks, leaning a little, an airy crown of
+    small light bundles that lets the sky through."""
+    r = rng("birch", variant)
+    tall = r.randint(110, 140)
+    wide = int(tall * 0.5)
+    W, H = wide + 16, tall + SINK + 4
+    art = Art(W, H)
+    cx, foot = W // 2, H - SINK + 6
+    lean = r.choice([-1, 1]) * r.uniform(0.6, 1.4)
+    for i in range(tall - 18):
+        t = i / tall
+        half = 3.2 - 1.6 * t
+        x0 = cx + lean * t * t * 12
+        for x in range(int(x0 - half), int(x0 + half) + 1):
+            off = (x + 0.5 - x0) / half
+            k = 5 if off < -0.3 else 2 if off > 0.45 else 4
+            if (i * 7 + x * 3) % 13 == 0 or (i % 11 in (0, 1) and off > -0.2):
+                k = 0
+            art.put(x, foot - i, BIRCH_BARK[k])
+    top = foot - tall + 18
+    for k in range(7):
+        a = -math.pi * (0.1 + 0.8 * k / 6)
+        bx = cx + lean * 10 + math.cos(a) * wide * 0.28
+        by = top + 22 + math.sin(a) * tall * 0.16 + r.uniform(-4, 8)
+        art.line(cx + lean * 8, top + 40, bx, by + 4, BIRCH_BARK[1], 1)
+        bundle(art, bx, by, wide * r.uniform(0.13, 0.19), tall * r.uniform(0.09, 0.13), BIRCH_LEAF, r, ("birch", variant, k))
+    art.outline(BIRCH_LEAF[0])
+    return art.image()
+
+
+def giant_oak() -> Image.Image:
+    """The old oak on the hill: a landmark, fifteen tiles high, its trunk four of the hero
+    wide, roots like walls, a crown of many bundles with deep gaps, moss on its north side."""
+    r = rng("giant oak")
+    tall, wide = 240, 230
+    W, H = wide + 20, tall + SINK + 4
+    art = Art(W, H)
+    foot_x, foot_y = W // 2, H - SINK + 8
+    trunk(art, foot_x, foot_y, 120, 30, 16, BARK, r)
+    for side in (-1, 1):
+        for k in range(3):
+            x0 = foot_x + side * (12 + k * 6)
+            art.line(x0, foot_y - 14 + k * 3, x0 + side * (14 + k * 6), foot_y + 2, BARK[2 + (side < 0)], 5 - k)
+    limbs = []
+    for k in range(9):
+        a = -math.pi * (0.08 + 0.84 * k / 8) + r.uniform(-0.1, 0.1)
+        d = r.uniform(0.55, 0.95)
+        bx = W / 2 + math.cos(a) * wide * 0.42 * d
+        by = foot_y - 150 + math.sin(a) * tall * 0.3 * d
+        limbs.append((bx, by))
+        branch(art, foot_x, foot_y - 104, bx, by + 10, 7 if abs(bx - foot_x) > 40 else 9, BARK)
+    for k, (bx, by) in enumerate(sorted(limbs, key=lambda b: -b[1])):
+        bundle(art, bx, by, r.uniform(30, 44), r.uniform(26, 34), GIANT, r, ("giant", k))
+    for k in range(5):
+        bundle(art, W / 2 + r.uniform(-60, 60), foot_y - 200 + r.uniform(-10, 20), r.uniform(28, 38), r.uniform(22, 28), GIANT, r, ("giant top", k))
+    for _ in range(140):
+        x, y = foot_x - r.randint(4, 15), foot_y - r.randint(0, 110)
+        if art.has(x, y):
+            art.put(x, y, MOSS[r.randrange(2)])
+    art.outline(GIANT[0])
+    return art.image()
+
+
+def log() -> Image.Image:
+    """A fallen trunk, three tiles long, its broken end pale, a fungus on it."""
+    W, H = 3 * TILE + 6, 18 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for x in range(2, W - 4):
+        for y in range(floor - 12, floor + 2):
+            k = 4 if y < floor - 9 else 2 if y > floor - 3 else 3
+            if (x * 5 + y) % 9 == 0:
+                k = 1
+            art.put(x, y, BARK[k])
+    for y in range(floor - 12, floor + 2):
+        for x in range(W - 6, W - 2):
+            art.put(x, y, hexes("c8a878", "a88858")[(x + y) % 2])
+    for x in (14, 15, 16, 17):
+        art.put(x, floor - 13, hexes("e8d8a0")[0])
+        art.put(x, floor - 14, hexes("c8b880")[0] if x in (15, 16) else hexes("e8d8a0")[0])
+    for x in range(6, 30, 3):
+        art.put(x, floor - 12, MOSS[x % 2])
+    art.outline(BARK[0])
+    return art.image()
+
+
+def stump(variant: int) -> Image.Image:
+    """A stump with its rings on top, and an axe left in one."""
+    W, H = 26, 16 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for y in range(floor - 10, floor + 3):
+        widen = 1 if y > floor - 2 else 0
+        for x in range(6 - widen, 20 + widen):
+            art.put(x, y, BARK[4 if x < 9 else 2 if x > 17 else 3])
+    for x in range(6, 20):
+        art.put(x, floor - 11, hexes("c8a878")[0])
+        art.put(x, floor - 12, hexes("e0c898")[0] if 8 < x < 18 else hexes("c8a878")[0])
+    art.put(12, floor - 12, hexes("a88858")[0])
+    if variant % 2:
+        art.line(14, floor - 12, 21, floor - 22, TIMBER[3], 2)
+        art.rect(10, floor - 15, 16, floor - 11, IRON[4])
+    art.outline(BARK[0])
+    return art.image()
+
+
+def toadstools() -> Image.Image:
+    """A ring of red toadstools at the foot of a tree."""
+    W, H = 2 * TILE, 12 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for cx, tall, half in ((5, 6, 3), (12, 9, 4), (19, 5, 2), (25, 7, 3)):
+        for h in range(-2, tall):
+            art.put(cx, floor - h, hexes("efe4cc")[0])
+        for k in range(2):
+            for x in range(cx - half, cx + half + 1):
+                art.put(x, floor - tall - k, hexes("d23a2a", "f05a40")[k] if x > cx - half else hexes("f07a5a")[0])
+        art.put(cx - 1, floor - tall - 1, hexes("ffffff")[0])
+    art.outline(hexes("33201a")[0])
+    return art.image()
+
+
+def washing_line() -> Image.Image:
+    """Two posts and a line between them, washing on it: shirts, a sheet, a sock."""
+    W, H = 5 * TILE, 30 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for px in (3, W - 5):
+        art.rect(px, floor - 28, px + 2, floor + 4, TIMBER[3])
+    sag = lambda x: floor - 26 + int(4 * math.sin(math.pi * (x - 4) / (W - 8)))  # noqa: E731
+    for x in range(4, W - 4):
+        art.put(x, sag(x), THATCH[1])
+    for x0, w, h, colour in ((12, 9, 11, "d8d8e0"), (24, 12, 14, "8a4a5a"), (40, 8, 9, "5a7aa8"), (52, 5, 6, "d8c070"), (60, 8, 10, "e0e0e8")):
+        c = hexes(colour)[0]
+        dark = tuple(int(v * 0.75) for v in c)
+        for x in range(x0, x0 + w):
+            top = sag(x) + 1
+            for y in range(top, top + h):
+                art.put(x, y, dark if x > x0 + w - 3 or y > top + h - 3 else c)
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def garden() -> Image.Image:
+    """A kitchen garden: dark beds in rows behind a low wattle fence, cabbages, beans up
+    their canes, a scarecrow's hat on a stick."""
+    r = rng("garden")
+    W, H = 5 * TILE, 22 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for x in range(2, W - 2):
+        for y in range(floor - 3, floor + 3):
+            art.put(x, y, BARK[1] if (x // 6) % 2 else BARK[2])
+    for cx in range(6, W - 20, 7):
+        for dx in range(-3, 4):
+            for dy in range(-3, 1):
+                if dx * dx + dy * dy * 2 <= 9:
+                    art.put(cx + dx, floor - 3 + dy, OAK[5 if dx < 0 and dy < -1 else 4 if dx < 1 else 3])
+    for cx in range(W - 18, W - 4, 4):
+        art.line(cx, floor - 2, cx, floor - 20, TIMBER[4], 1)
+        for y in range(floor - 18, floor - 2, 2):
+            art.put(cx + (1 if (y // 2) % 2 else -1), y, OAK[4 if r.random() < 0.5 else 3])
+    for x in range(1, W - 1):
+        if x % 3 == 0:
+            art.line(x, floor + 2, x, floor - 6, TIMBER[3], 1)
+        art.put(x, floor - 4, TIMBER[2])
+        art.put(x, floor - 2, TIMBER[2])
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def bench() -> Image.Image:
+    W, H = 2 * TILE + 4, 12 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    art.rect(2, floor - 7, W - 2, floor - 5, TIMBER[4])
+    art.rect(2, floor - 5, W - 2, floor - 4, TIMBER[2])
+    for x in (4, W - 6):
+        art.rect(x, floor - 5, x + 2, floor + 3, TIMBER[2])
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def barrel() -> Image.Image:
+    """A water butt: a barrel under the eaves, hooped in iron, the water in it catching the sky."""
+    W, H = TILE + 4, 20 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for y in range(floor - 18, floor + 2):
+        bulge = 1 if floor - 13 < y < floor - 4 else 0
+        for x in range(3 - bulge, W - 3 + bulge):
+            k = 4 if x < 6 else 2 if x > W - 6 else 3
+            art.put(x, y, IRON[3] if y in (floor - 15, floor - 4) else TIMBER[k])
+    for x in range(4, W - 4):
+        art.put(x, floor - 18, hexes("8ab4d8")[0] if x < 10 else hexes("5a84a8")[0])
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def kennel() -> Image.Image:
+    """A dog's kennel, empty, its chain lying out of the door."""
+    W, H = 2 * TILE + 4, 22 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for y in range(floor - 12, floor + 2):
+        for x in range(5, W - 5):
+            art.put(x, y, TIMBER[3 if (x // 4) % 2 else 2])
+    for y in range(floor - 21, floor - 11):
+        t = (y - (floor - 21)) / 10
+        for x in range(int(W / 2 - 3 - 13 * t), int(W / 2 + 3 + 13 * t)):
+            art.put(x, y, ROOF[4 if x < W / 2 else 2])
+    for y in range(floor - 9, floor + 1):
+        for x in range(13, 21):
+            if (x - 17) ** 2 + ((y - (floor - 5)) * 0.8) ** 2 <= 20 or y > floor - 5:
+                art.put(x, y, DARK)
+    for x in range(20, W):
+        art.put(x, floor - 1 + (x % 2), IRON[4])
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def mill_tower() -> Image.Image:
+    """The windmill without its sails, which turn (the sails are their own picture)."""
+    return windmill(sails=False)
+
+
+SAIL_FRAMES = 4  # the sails turn a quarter of a circle in this many frames: four arms look the same every quarter
+
+
+def sails(frame: int) -> Image.Image:
+    """The mill's sails at one step of a turn: four lattice arms on the hub, their cloth
+    torn in the same place on each arm so every quarter turn looks the same."""
+    size = 2 * 84 + 4
+    art = Art(size, size)
+    hub = (size // 2, size // 2)
+    for k in range(4):
+        angle = math.radians(k * 90 + frame * 90 / SAIL_FRAMES - 52)
+        ex, ey = hub[0] + math.cos(angle) * 82, hub[1] + math.sin(angle) * 82
+        art.line(hub[0], hub[1], ex, ey, TIMBER[2], 3)
+        nx, ny = -math.sin(angle), math.cos(angle)
+        for d in range(18, 80, 7):
+            px, py = hub[0] + math.cos(angle) * d, hub[1] + math.sin(angle) * d
+            art.line(px, py, px + nx * 14, py + ny * 14, TIMBER[3], 1)
+        for side in (0.0, 14.0):
+            art.line(hub[0] + math.cos(angle) * 18 + nx * side, hub[1] + math.sin(angle) * 18 + ny * side, ex + nx * side, ey + ny * side, TIMBER[3 if side else 4], 1)
+        # Cloth still on the inner half of the lattice, torn on the outer.
+        for d in range(20, 50):
+            for s in range(1, 14):
+                if (d + s) % 5 == 0:
+                    continue
+                px, py = hub[0] + math.cos(angle) * d + nx * s, hub[1] + math.sin(angle) * d + ny * s
+                if not art.has(px, py):
+                    art.put(px, py, PLASTER[4] if s < 8 else PLASTER[3])
+    for dx in range(-3, 4):
+        for dy in range(-3, 4):
+            if dx * dx + dy * dy <= 9:
+                art.put(hub[0] + dx, hub[1] + dy, IRON[2 if dx + dy > 0 else 4])
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def rubble(variant: int) -> Image.Image:
+    """Where the roof came down: a heap of broken stone and earth, a beam stuck out of it."""
+    r = rng("rubble", variant)
+    W, H = 4 * TILE, 26 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for _ in range(26):
+        cx, rad = r.randint(6, W - 6), r.randint(2, 6)
+        cy = floor - int(16 * math.sin(math.pi * cx / W)) + r.randint(-2, 3)
+        tone = r.choice([2, 3, 3, 4])
+        for dx in range(-rad, rad + 1):
+            for dy in range(-rad, rad + 1):
+                if dx * dx + dy * dy <= rad * rad:
+                    k = tone + 1 if dx + dy < -rad * 0.6 else tone - 1 if dx + dy > rad * 0.5 else tone
+                    art.put(cx + dx, cy + dy, STONEWORK[max(1, min(k, 5))])
+    art.line(W // 2 - 14, floor - 4, W // 2 + 12, floor - 22, TIMBER[3], 4)
+    art.line(W // 2 - 14, floor - 6, W // 2 + 12, floor - 24, TIMBER[4], 1)
+    for x in range(0, W):
+        for y in range(floor + 1, H):
+            art.a[y, x, 3] = 0 if not art.has(x, y) else art.a[y, x, 3]
+    art.outline(STONEWORK[0])
+    return art.image()
+
+
+def puddle() -> Image.Image:
+    """A puddle on the mine's floor where the roof drips: a thin sheet of water, a lit edge."""
+    W, H = 3 * TILE, 4 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for x in range(3, W - 3):
+        art.put(x, floor - 1, hexes("6a8aa8")[0] if x < 14 else hexes("4a6a88")[0])
+        art.put(x, floor, hexes("3a5470")[0])
+    for x in (6, 7, 18, 19, 30):
+        art.put(x, floor - 1, hexes("c8e0f0")[0])
+    return art.image()
+
+
+def cage() -> Image.Image:
+    """The cage of the lift, hung on its rope in the old shaft, its door open."""
+    W, H = 3 * TILE, 3 * TILE
+    art = Art(W, H)
+    art.line(W // 2, 0, W // 2, 8, THATCH[3], 1)
+    art.rect(6, 8, W - 6, 11, IRON[3])
+    art.rect(6, H - 4, W - 6, H - 1, IRON[2])
+    for x in range(6, W - 6, 5):
+        art.line(x, 11, x, H - 4, IRON[4 if x < 20 else 2], 1)
+    art.line(W - 7, 11, W - 7, H - 4, IRON[1], 1)
+    art.outline(IRON[0])
+    return art.image()
+
+
+def roots(variant: int) -> Image.Image:
+    """Roots of a tree over a cave, hanging out of its roof: a few thick ones that fork and
+    thin, hair roots at their ends. The picture hangs: its pivot is the roof line."""
+    r = rng("roots", variant)
+    W, H = 3 * TILE, 3 * TILE + 4
+    art = Art(W, H)
+
+    def grow(x, y, length, width):
+        for i in range(length):
+            art.put(x, y + i, BARK[2] if width > 1 else BARK[1])
+            if width > 1:
+                art.put(x + 1, y + i, BARK[1])
+            if i and i % 5 == 0:
+                x += r.choice([-1, 0, 1])
+            if width > 1 and i > 6 and r.random() < 0.08:
+                grow(x + r.choice([-2, 2]), y + i, length - i, 1)
+
+    for k in range(r.randint(3, 5)):
+        grow(r.randint(4, W - 6), 0, r.randint(20, H - 2), 2 if k < 2 else 1)
+    return art.image()
+
+
+def nugget(variant: int) -> Image.Image:
+    """A lump of native copper as big as a fist, by the road in the mine, its edges green."""
+    r = rng("nugget", variant)
+    W, H = TILE + 6, 12 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for _ in range(7):
+        cx, cy, rad = r.randint(5, W - 6), floor - r.randint(2, 7), r.randint(2, 4)
+        for dx in range(-rad, rad + 1):
+            for dy in range(-rad, rad + 1):
+                if dx * dx + dy * dy <= rad * rad:
+                    k = 5 if dx + dy < -rad * 0.5 else 2 if dx + dy > rad * 0.4 else 3
+                    art.put(cx + dx, cy + dy, COPPER[k])
+    for _ in range(9):
+        x, y = r.randint(2, W - 3), floor - r.randint(0, 10)
+        if art.has(x, y) and not art.has(x + 1, y + 1):
+            art.put(x, y, hexes("4aa888")[0])
+    art.outline(COPPER[0])
+    return art.image()
+
+
+def reflection() -> Image.Image:
+    """The willow and the bank in the pond, upside down and broken by the ripples: a dark
+    green shape under the surface, a few lines of light across it."""
+    base = willow(0)
+    a = np.array(base.transpose(Image.FLIP_TOP_BOTTOM))[SINK:, :]
+    h = min(a.shape[0], 3 * TILE)
+    a = a[:h].copy()
+    water = np.array(hexes("1e4a5a")[0], dtype=float)
+    out = np.zeros_like(a)
+    for y in range(h):
+        if y % 4 == 3:
+            continue
+        sway = int(round(1.5 * math.sin(y * 0.9)))
+        row = np.roll(a[y], sway, axis=0)
+        mask = row[:, 3] > 0
+        mixed = (row[:, :3] * 0.55 + water * 0.45).astype(np.uint8)
+        out[y, mask, :3] = mixed[mask]
+        out[y, mask, 3] = int(200 * (1 - y / h))
+    return Image.fromarray(out, "RGBA")
+
+
+def depth(width_tiles: int, rows: int) -> Image.Image:
+    """The deep of the pond: darker toward its floor, dithered, laid over the water."""
+    W, H = width_tiles * TILE, rows * TILE
+    art = Art(W, H)
+    deep = hexes("0c2a3a")[0]
+    for y in range(4, H):
+        t = (y - 4) / (H - 4)
+        for x in range(W):
+            if t * 16 > BAYER_4[y % 4][x % 4] + 0.5:
+                art.put(x, y, deep, int(40 + 110 * t))
+    return art.image()
+
+
+def gate_glow() -> Image.Image:
+    """The glow in the Gate's arch, drawn unlit over it: it shows at dusk and at night."""
+    base = np.array(gateway())
+    art = Art(base.shape[1], base.shape[0])
+    reds = {hexes("2a0e0a")[0], hexes("4a160c")[0]}
+    for y in range(base.shape[0]):
+        for x in range(base.shape[1]):
+            if tuple(base[y, x, :3]) in reds and base[y, x, 3]:
+                art.put(x, y, hexes("ff7a2a")[0] if tuple(base[y, x, :3]) == hexes("4a160c")[0] else hexes("a83a14")[0], 200)
+    return art.image()
+
+
+def rays() -> Image.Image:
+    """Shafts of low sun through the trees, drawn unlit and faint: seen at dawn and at
+    sunset (TilesV2Life fades them with the hour)."""
+    W, H = 20 * TILE, 12 * TILE
+    art = Art(W, H)
+    warm = hexes("fff0c0")[0]
+    r = rng("rays")
+    for k in range(6):
+        x0 = r.randint(20, W - 60)
+        wide = r.randint(6, 16)
+        for y in range(H):
+            x = x0 + y * 0.45
+            fade = 1 - y / H
+            for dx in range(wide):
+                if (dx + y) % 3:
+                    art.put(int(x + dx), y, warm, int(70 * fade * (1 - abs(dx - wide / 2) / wide)))
+    return art.image()
+
+
+def front(variant: int, sway: int = 0) -> Image.Image:
+    """A dark shape close to the eye, passed in front of: tall grass, a fern, a thistle, the
+    end of a bough. Near black, so it frames the view and never reads as something to stand on."""
+    r = rng("front", variant)
+    W, H = 4 * TILE, 3 * TILE + 2 * TILE
+    art = Art(W, H)
+    floor = H - 2 * TILE
+    ink, rim = hexes("0a120e", "1a2a1e")
+    if variant % 2 == 0:
+        for _ in range(16):
+            x, tall, lean = r.randint(2, W - 3), r.randint(18, 44), r.uniform(-0.5, 0.5)
+            for h in range(-2 * TILE, tall):
+                t = max(h, 0) / tall
+                xx = int(x + lean * t * t * 14 + sway * t * t)
+                art.put(xx, floor - h, ink)
+                if t < 0.7:
+                    art.put(xx + 1, floor - h, ink)
+    else:
+        cx = W // 2
+        for side in (-1, 1):
+            for i in range(30):
+                t = i / 30
+                x, y = cx + side * i, floor - int(36 * (1 - t * t)) + int(round(sway * t * t * 0.5))
+                for k in range(-2, 3):
+                    art.put(x, y + k, ink)
+                if i % 3 == 0:
+                    art.line(x, y, x + side * 3, y + 6, ink, 1)
+        art.rect(cx - 2, floor - 36, cx + 2, H, ink)
+    for y in range(H):
+        for x in range(W - 1):
+            if art.has(x, y) and not art.has(x - 1, y) and y < floor:
+                art.put(x, y, rim)
+    return art.image()
+
+
+def windows() -> Image.Image:
+    """The lights of the far villages and of the castle on the hills, alone, so they can come
+    on at night (the hills themselves are tinted dark then): drawn where ridge_hills put their
+    houses, at the hills' own size."""
+    hills = np.array(ridge_hills())
+    a = np.zeros_like(hills)
+    window = hexes("4c7080")[0]
+    lit = hexes("ffd27a")[0]
+    for y in range(hills.shape[0]):
+        for x in range(hills.shape[1]):
+            if hills[y, x, 3] and tuple(hills[y, x, :3]) == window:
+                a[y, x, :3] = lit
+                a[y, x, 3] = 255
+    r = rng("windows")
+    # A few more, in the roofs of the villages.
+    for church in (150, 1330):
+        for _ in range(5):
+            x = church + r.randint(-26, 50)
+            col = np.nonzero(hills[:, x % hills.shape[1], 3])[0]
+            if len(col):
+                y = col[0] + r.randint(3, 6)
+                a[y, x % hills.shape[1], :3] = lit
+                a[y, x % hills.shape[1], 3] = 255
+    return Image.fromarray(a, "RGBA")
+
+
+# --- The third round: the graveyard, animals, a fire by the start, a boat, lights in the
+# damp, what sways in the wind --------------------------------------------------------------
+
+IRONWORK = ramp_of("0e0e12 1e2026 2e3038 44474f 5e626b 7c8088")
+WOOL = ramp_of("2a2622 9a948a b8b2a6 d2ccc0 e6e0d4 f6f2ea")
+SHROOM = ramp_of("0c2a26 1a6a5e 2aa08a 54d8bc 9cf6e2 e2fff8")
+
+
+def shine() -> Image.Image:
+    """Light on the pond: broken lines of the sky's colour across the water, brighter near
+    its surface, for the willow's shape to lie under."""
+    W, H = 14 * TILE, 3 * TILE
+    art = Art(W, H)
+    r = rng("shine")
+    for y in range(4, H, 3):
+        t = (y - 4) / (H - 4)
+        x = r.randint(0, 20)
+        while x < W - 4:
+            length = r.randint(4, 18)
+            for dx in range(length):
+                art.put(x + dx, y, hexes("cfe8f6")[0], int(170 * (1 - t) ** 1.5))
+            x += length + r.randint(8, 30)
+    return art.image()
+
+
+def crypt() -> Image.Image:
+    """A family's crypt in the graveyard: a little house of stone with a pitched roof, an
+    iron door, a cross on the gable; lichen on it."""
+    r = rng("crypt")
+    W, H = 3 * TILE + 8, 3 * TILE + 10 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    masonry(art, 4, floor - 34, W - 4, floor + 4, STONEWORK, r, course=5)
+    for y in range(floor - 50, floor - 34):
+        t = (y - (floor - 50)) / 16
+        half = 4 + (W / 2 - 2) * t
+        for x in range(int(W / 2 - half), int(W / 2 + half)):
+            art.put(x, y, STONEWORK[5] if x < W / 2 else STONEWORK[2])
+    art.rect(W // 2 - 1, floor - 60, W // 2 + 1, floor - 49, STONEWORK[5])
+    art.rect(W // 2 - 4, floor - 57, W // 2 + 4, floor - 55, STONEWORK[5])
+    for y in range(floor - 24, floor):
+        for x in range(W // 2 - 6, W // 2 + 6):
+            art.put(x, y, IRONWORK[3] if (x + y) % 4 else IRONWORK[1])
+    for _ in range(14):
+        x, y = r.randint(5, W - 6), r.randint(floor - 34, floor)
+        if art.has(x, y):
+            art.put(x, y, hexes("7a8a4a")[0])
+    art.outline(STONEWORK[0])
+    return art.image()
+
+
+def iron_fence(variant: int) -> Image.Image:
+    """Three tiles of the graveyard's iron railing, spear-headed, one bar bent."""
+    W, H = 3 * TILE, 20 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    for x in range(2, W - 1, 4):
+        bend = 2 if variant and x == 18 else 0
+        art.line(x, floor + 3, x + bend, floor - 16, IRONWORK[3], 1)
+        art.put(x + bend, floor - 17, IRONWORK[5])
+        art.put(x + bend - 1, floor - 16, IRONWORK[4])
+        art.put(x + bend + 1, floor - 16, IRONWORK[4])
+    for y in (floor - 13, floor - 3):
+        art.line(0, y, W - 1, y, IRONWORK[2], 1)
+    return art.image()
+
+
+def crow(variant: int) -> Image.Image:
+    """A crow on a headstone or a branch, its beak to one side."""
+    W, H = TILE, TILE
+    art = Art(W, H)
+    body = hexes("14141a", "2a2a36", "4a4a5a")
+    side = 1 if variant % 2 else -1
+    for y in range(8, 14):
+        for x in range(5, 11):
+            if (x - 8) ** 2 + ((y - 11) * 1.4) ** 2 <= 9:
+                art.put(x, y, body[1] if y > 10 else body[2])
+    for y in range(5, 9):
+        for x in range(7 + side, 10 + side):
+            art.put(x, y, body[1])
+    art.put(9 + 2 * side if side > 0 else 6 + side, 6, hexes("8a7a4a")[0])
+    art.put(8 + side, 6, hexes("e0d0a0")[0])
+    art.line(8 - side * 3, 12, 8 - side * 6, 14, body[0], 1)
+    art.put(7, 15, body[0])
+    art.put(9, 15, body[0])
+    return art.image()
+
+
+def sheep(variant: int) -> Image.Image:
+    """A sheep gone wild, grazing: a heap of grey-white wool on thin dark legs, its head down."""
+    W, H = 2 * TILE, 14 + SINK
+    art = Art(W, H)
+    floor = H - SINK
+    side = 1 if variant % 2 else -1
+    cx = W // 2
+    for y in range(floor - 13, floor - 3):
+        for x in range(cx - 9, cx + 9):
+            if ((x - cx) / 9) ** 2 + ((y - (floor - 8)) / 5.2) ** 2 <= 1:
+                k = 5 if x < cx - 3 and y < floor - 9 else 2 if y > floor - 5 else 4 if (x + y) % 3 else 3
+                art.put(x, y, WOOL[k])
+    hx = cx + side * 9
+    for y in range(floor - 9, floor - 3):
+        for x in range(hx - 2, hx + 3):
+            art.put(x, y, WOOL[0] if y > floor - 8 else WOOL[1])
+    for lx in (cx - 5, cx - 2, cx + 3, cx + 6):
+        art.rect(lx, floor - 3, lx + 1, floor + 1, WOOL[0])
+    art.outline(hexes("1e1a16")[0])
+    return art.image()
+
+
+def cat() -> Image.Image:
+    """A cat on the fence post by the cottage, its tail hanging."""
+    W, H = TILE, TILE + 6
+    art = Art(W, H)
+    fur = hexes("2a1e16", "5a3a22", "8a5a32", "b07a46")
+    for y in range(6, 14):
+        for x in range(4, 12):
+            if ((x - 8) / 4) ** 2 + ((y - 10) / 4) ** 2 <= 1:
+                art.put(x, y, fur[2] if x < 8 else fur[1])
+    for y in range(2, 7):
+        for x in range(4, 9):
+            art.put(x, y, fur[3] if x < 6 else fur[2])
+    art.put(4, 1, fur[2])
+    art.put(8, 1, fur[2])
+    art.put(5, 4, hexes("d8e060")[0])
+    art.put(7, 4, hexes("d8e060")[0])
+    for y in range(13, H):
+        art.put(11 + (y // 4) % 2, y, fur[1])
+    art.outline(fur[0])
+    return art.image()
+
+
+BIRD_FRAMES = 2
+
+
+def bird(frame: int) -> Image.Image:
+    """A bird far off, a dark V: wings up, wings down."""
+    art = Art(7, 4)
+    ink = hexes("2a2e3a")[0]
+    if frame % 2 == 0:
+        for x, y in ((0, 0), (1, 1), (2, 2), (3, 3), (4, 2), (5, 1), (6, 0)):
+            art.put(x, y, ink)
+    else:
+        for x, y in ((0, 2), (1, 1), (2, 1), (3, 2), (4, 1), (5, 1), (6, 2)):
+            art.put(x, y, ink)
+    return art.image()
+
+
+def boat() -> Image.Image:
+    """A rowing boat tied up on the mine's pool, half full of water, an oar in it."""
+    W, H = 3 * TILE, 12
+    art = Art(W, H)
+    for y in range(3, 12):
+        inset = (y - 3) // 2
+        for x in range(2 + inset, W - 2 - inset):
+            art.put(x, y, TIMBER[4 if y == 3 else 3 if y < 7 else 2])
+    for x in range(6, W - 6):
+        art.put(x, 5, hexes("3a5470")[0])
+    art.line(10, 0, 30, 6, TIMBER[4], 1)
+    art.outline(TIMBER[0])
+    return art.image()
+
+
+def campfire_frame(frame: int) -> np.ndarray:
+    """A campfire: a ring of stones, crossed logs, a flame that changes its shape each frame."""
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        if 0 <= x < TILE and 0 <= y < TILE:
+            a[y, x, :3] = colour
+            a[y, x, 3] = 255
+
+    stones = hexes("3e3a40", "6a6470", "8e8894")
+    for x in (1, 3, 12, 14):
+        put(x, 15, stones[1])
+        put(x, 14, stones[2] if x < 8 else stones[1])
+    for x in range(2, 14):
+        put(x, 15, stones[0] if x % 3 == 0 else stones[1])
+    for i in range(10):
+        put(3 + i, 13 - i // 4, TIMBER[3])
+        put(12 - i, 13 - i // 4, TIMBER[2])
+    flame = [hexes("ff6a1e")[0], hexes("ffb43a")[0], hexes("fff0a0")[0]]
+    shapes = [
+        [(7, 12, 5), (8, 11, 6), (6, 10, 4), (9, 9, 4), (7, 7, 3)],
+        [(7, 12, 5), (8, 11, 5), (7, 10, 5), (8, 8, 3), (6, 6, 2)],
+        [(8, 12, 5), (7, 11, 6), (8, 9, 4), (7, 8, 3), (9, 6, 2)],
+    ][frame % 3]
+    for x, y, h in shapes:
+        for k in range(h):
+            put(x, y - k, flame[0] if k > h - 2 else flame[1] if k > 1 else flame[2])
+    return a
+
+
+def glowshroom_frame(frame: int) -> np.ndarray:
+    """Mushrooms that give a cold light in the damp: three caps on pale stems, the glow
+    swelling and fading over the frames."""
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+    lift = (0, 1, 2)[frame % 3]
+
+    def put(x, y, colour):
+        if 0 <= x < TILE and 0 <= y < TILE:
+            a[y, x, :3] = colour
+            a[y, x, 3] = 255
+
+    for cx, tall, half in ((4, 5, 2), (9, 8, 3), (13, 4, 1)):
+        for h in range(tall):
+            put(cx, 15 - h, SHROOM[1])
+        for x in range(cx - half, cx + half + 1):
+            put(x, 15 - tall, SHROOM[2 + lift])
+            put(x, 14 - tall, SHROOM[3 + lift] if abs(x - cx) < half else SHROOM[2 + lift])
+        put(cx, 13 - tall, SHROOM[3 + lift])
+    return a
+
+
 # --- What the generator writes --------------------------------------------------------
 
 OAKS, PINES, APPLES, DEADS, SHRUBS = 4, 3, 2, 2, 3
 ORDER_BEHIND = -287  # in front of the walls and their shade, behind the trees of the foliage, the decor and the ground
+ORDER_TREES = -288  # the trees: behind what people built, so a crown never covers a house
+ORDER_FIRS = -289  # the firs: behind the other trees, so where two crowns cross the order is fixed
 ORDER_GLOW = -286  # the lit window over its cottage
 ORDER_TRACK = -99  # rails and carts: in front of the ground they lie on (it is under them), behind the ledges
 ORDER_WATER = 27  # on the water's surface, which is drawn in front of the hero
+ORDER_RAYS = -284  # shafts of low sun: in front of the trees, behind the decor and the ground
+ORDER_FRONT = 40  # what passes close to the eye: in front of everything but the motes in the air
 
 
 def _picture(key: str, order: int = ORDER_BEHIND, lit: bool = True) -> dict:
@@ -1595,22 +2325,22 @@ def _plan() -> list[tuple[str, object, int, bool, int]]:
         plan.append((key, paint, order, lit, sink))
 
     for v in range(OAKS):
-        add(f"earth_oak_{v}", lambda v=v: oak(v, AUTUMN if v == 3 else OAK, turn=0 if v == 3 else 6))
+        add(f"earth_oak_{v}", lambda v=v: oak(v, AUTUMN if v == 3 else OAK, turn=0 if v == 3 else 6), ORDER_TREES)
     for v in range(PINES):
-        add(f"earth_pine_{v}", lambda v=v: pine(v))
+        add(f"earth_pine_{v}", lambda v=v: pine(v), ORDER_FIRS)
     for v in range(APPLES):
-        add(f"earth_apple_{v}", lambda v=v: oak(10 + v, APPLE, tall=96 + 8 * v, fruit=hexes("c8322c", "f07a5a"), turn=2))
+        add(f"earth_apple_{v}", lambda v=v: oak(10 + v, APPLE, tall=96 + 8 * v, fruit=hexes("c8322c", "f07a5a"), turn=2), ORDER_TREES)
     for v in range(DEADS):
-        add(f"earth_dead_tree_{v}", lambda v=v: dead_tree(v))
+        add(f"earth_dead_tree_{v}", lambda v=v: dead_tree(v), ORDER_TREES)
     for v in range(SHRUBS):
         add(f"earth_shrub_{v}", lambda v=v: shrub(v))
-    add("earth_willow", lambda: willow(0))
+    add("earth_willow", lambda: willow(0), ORDER_TREES)
     add("earth_cottage_ruin", lambda: cottage(0), sink=PLINTH)
     add("earth_cottage", lambda: cottage(1), sink=PLINTH)
     add("earth_cottage_glow", cottage_glow, ORDER_GLOW, lit=False, sink=PLINTH)
     add("earth_chapel", chapel, sink=PLINTH)
     add("earth_well", well)
-    add("earth_windmill", windmill, sink=2 * TILE)
+    add("earth_windmill", mill_tower, sink=2 * TILE)
     for v in range(3):
         add(f"earth_fence_{v}", lambda v=v: fence(v))
     add("earth_cart", cart)
@@ -1626,8 +2356,10 @@ def _plan() -> list[tuple[str, object, int, bool, int]]:
     add("earth_colonnade", colonnade_ruin, sink=PLINTH)
     for v in range(3):
         add(f"earth_reeds_{v}", lambda v=v: reeds(v))
+        for f, lean in ((1, 2), (2, 4)):
+            add(f"earth_reeds_{v}_s{f}", lambda v=v, lean=lean: reeds(v, lean))
     for v in range(2):
-        add(f"earth_lilies_{v}", lambda v=v: lilies(v), ORDER_WATER, sink=0)
+        add(f"earth_lilies_{v}", lambda v=v: lilies(v), ORDER_WATER + 2, sink=0)
     add("earth_jetty", jetty)
     for rows in POST_HEIGHTS:
         add(f"earth_post_{rows}", lambda rows=rows: mine_post(rows))
@@ -1638,6 +2370,49 @@ def _plan() -> list[tuple[str, object, int, bool, int]]:
         add(f"earth_minecart_{v}", lambda v=v: mine_cart(v), ORDER_TRACK)
     for v in range(3):
         add(f"earth_crates_{v}", lambda v=v: crates(v))
+    # The second round.
+    for v in range(2):
+        add(f"earth_birch_{v}", lambda v=v: birch(v), ORDER_TREES)
+    add("earth_giant_oak", giant_oak, ORDER_TREES)
+    add("earth_log", log)
+    for v in range(2):
+        add(f"earth_stump_{v}", lambda v=v: stump(v))
+    add("earth_toadstools", toadstools)
+    add("earth_washing", washing_line)
+    add("earth_garden", garden)
+    add("earth_bench", bench)
+    add("earth_barrel", barrel)
+    add("earth_kennel", kennel)
+    for f in range(SAIL_FRAMES):
+        add(f"earth_sails_{f}", lambda f=f: sails(f), ORDER_GLOW, sink=86)
+    for v in range(2):
+        add(f"earth_rubble_{v}", lambda v=v: rubble(v))
+    add("earth_puddle", puddle, ORDER_TRACK)
+    add("earth_cage", cage, sink=0)
+    for v in range(3):
+        add(f"earth_roots_{v}", lambda v=v: roots(v), sink=3 * TILE + 4 - 20)
+    for v in range(2):
+        add(f"earth_nugget_{v}", lambda v=v: nugget(v))
+    add("earth_reflection", reflection, ORDER_WATER + 1, sink=3 * TILE - 13)
+    add("earth_shine", shine, ORDER_WATER + 1, sink=3 * TILE - 16)
+    add("earth_depth", lambda: depth(14, 3), ORDER_WATER, sink=3 * TILE - 16)
+    add("earth_gate_glow", gate_glow, ORDER_GLOW, lit=False, sink=PLINTH)
+    add("earth_rays", rays, ORDER_RAYS, lit=False, sink=0)
+    for v in range(4):
+        add(f"earth_front_{v}", lambda v=v: front(v), ORDER_FRONT, lit=False, sink=2 * TILE)
+        for f, lean in ((1, 2), (2, 4)):
+            add(f"earth_front_{v}_s{f}", lambda v=v, lean=lean: front(v, lean), ORDER_FRONT, lit=False, sink=2 * TILE)
+    # The third round.
+    add("earth_crypt", crypt)
+    for v in range(2):
+        add(f"earth_iron_fence_{v}", lambda v=v: iron_fence(v))
+        # A crow on a headstone: the picture is as tall as the stone, the bird on its top.
+        add(f"earth_crow_{v}", lambda v=v: padded(crow(v), 22), sink=0)
+        add(f"earth_sheep_{v}", lambda v=v: sheep(v))
+    add("earth_cat", lambda: padded(cat(), 14), sink=0)
+    for f in range(BIRD_FRAMES):
+        add(f"earth_bird_{f}", lambda f=f: bird(f), ORDER_FRONT - 1000, lit=False, sink=0)
+    add("earth_boat", boat, ORDER_WATER + 2, sink=10)
     return plan
 
 
@@ -1654,6 +2429,14 @@ def pictures() -> dict[str, Image.Image]:
         for key, paint, *_ in PLAN:
             _DRAWN[key] = paint()
     return dict(_DRAWN)
+
+
+def padded(image: Image.Image, under: int) -> Image.Image:
+    """A picture with `under` px of nothing beneath it: something that sits on the top of
+    what stands in its cell (a crow on a headstone, a cat on a post)."""
+    out = Image.new("RGBA", (image.width, image.height + under), (0, 0, 0, 0))
+    out.paste(image, (0, 0))
+    return out
 
 
 def pivot_of(key: str) -> tuple[float, float]:
@@ -1676,4 +2459,9 @@ RIDGES = [
 ]
 NEW_RIDGES = [
     {"key": "backdrop_earth_hills", "kind": "ridge", "scroll": 0.17, "order": -985, "lit": False},
+    # The lights of the far villages: placed as the hills are (a layer of heaven at their
+    # scroll, standing 2 tiles over the surface line) but not tinted, so they can shine at
+    # night; TilesV2Life shows them only then.
+    {"key": "backdrop_earth_windows", "kind": "heaven", "scroll": 0.17, "scrollUp": 1.0, "rise": 2, "drift": 0.0, "order": -984, "lit": False, "tinted": False},
 ]
+LAYERS = {"backdrop_earth_windows": lambda: windows()}

@@ -699,6 +699,7 @@ def backdrops() -> dict[str, Image.Image]:
     earth = tv2_earth.pictures()
     earth.update(tv2_heaven.pictures())
     earth.update({key: paint() for key, _, _, paint in tv2_earth.RIDGES})
+    earth.update({key: paint() for key, paint in tv2_earth.LAYERS.items()})
     return {
         **caves,
         "backdrop_stars": backdrop_stars(),

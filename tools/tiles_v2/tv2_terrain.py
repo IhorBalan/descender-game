@@ -487,6 +487,28 @@ def ore_over(rgba: np.ndarray, solid: np.ndarray, palette: dict, variant: int) -
     return out
 
 
+def patina_over(rgba: np.ndarray, solid: np.ndarray, variant: int) -> np.ndarray:
+    """Copper's green: a few pixels of patina on the rock beside its nuggets, and the
+    nuggets made bigger by a pixel here and there."""
+    c = slice(TILE, 2 * TILE)
+    mid = solid[c, c]
+    edge = np.zeros((TILE, TILE), dtype=bool)
+    for dx, dy in [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]:
+        edge |= ~shift(solid, dx, dy, True)[c, c]
+    ore = ore_mask(variant) & mid & ~edge
+    green, green_dark = hexes("4aa888", "2e7a62")
+    out = rgba.copy()
+    r = rng("patina", variant)
+    for y in range(1, TILE - 1):
+        for x in range(1, TILE - 1):
+            if ore[y, x] or not mid[y, x] or edge[y, x]:
+                continue
+            beside = ore[y, x - 1] or ore[y, x + 1] or ore[y - 1, x]
+            if beside and r.random() < 0.35:
+                out[y, x, :3] = green if r.random() < 0.6 else green_dark
+    return out
+
+
 def draw_frame(material: dict, mask: int, variant: int) -> np.ndarray:
     r = rng(material["key"], mask, variant)
     solid = neighbourhood(mask)
@@ -500,6 +522,8 @@ def draw_frame(material: dict, mask: int, variant: int) -> np.ndarray:
         rgba = grass_over(rgba, solid, PALETTES[material["grass"]], r)
     if material.get("ore"):
         rgba = ore_over(rgba, solid, PALETTES[material["ore"]], variant)
+    if material.get("ore") == "copper":
+        rgba = patina_over(rgba, solid, variant)
     return rgba
 
 
@@ -978,7 +1002,37 @@ def things_sheet() -> tuple[Image.Image, list]:
     return Image.fromarray(sheet, "RGBA"), sprites
 
 
-PROP_FRAMES = {"torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame}
+def mine_lamp_frame(frame: int) -> np.ndarray:
+    """A miner's lamp hung from a hook at the top of its cell: a hood of iron, a glass with
+    the flame in it a little brighter every other frame, a ring under it."""
+    iron, iron_lit, rim = hexes("3a3d46", "7a7f8a", "16161a")
+    glass = hexes("ffd890", "fff0c0", "ffc870")[frame % 3]
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        a[y, x, :3] = colour
+        a[y, x, 3] = 255
+
+    for y in range(0, 3):
+        put(8, y, iron)
+    for x in range(5, 11):
+        put(x, 3, iron_lit if x < 8 else iron)
+        put(x, 10, iron)
+    put(6, 2, iron_lit)
+    put(9, 2, iron)
+    for y in range(4, 10):
+        put(5, y, rim)
+        put(10, y, rim)
+        for x in range(6, 10):
+            put(x, y, glass)
+    put(7, 11, rim)
+    put(8, 11, rim)
+    return a
+
+
+from tv2_earth import campfire_frame, glowshroom_frame  # noqa: E402  (the Earth's props)
+
+PROP_FRAMES = {"campfire": campfire_frame, "glowshroom": glowshroom_frame, "torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
 
 
 def prop_sheet(prop: dict) -> tuple[Image.Image, list]:

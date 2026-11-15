@@ -104,6 +104,10 @@ namespace Descender.World.TilesV2
                 var along = set.SkyArc(hour, out var sunUp);
                 sky.Show(day, along, sunUp);
             }
+            Applied?.Invoke(hour);
         }
+
+        /// <summary>Called with the hour each time it is shown (TilesV2Life shows the lights of the night by it).</summary>
+        public event System.Action<float> Applied;
     }
 }

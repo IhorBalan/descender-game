@@ -447,6 +447,26 @@ MonoBehaviour:
     layer: 1
     key: timber_wall
     tile: {fileID: 11400000, guid: 1f43d0f3c19ed9048a67eb104911e1ea, type: 2}
+  - character: "\xF6"
+    layer: 3
+    key: mine_lamp
+    tile: {fileID: 0}
+  - character: "\xC5"
+    layer: 3
+    key: campfire
+    tile: {fileID: 0}
+  - character: "\xE5"
+    layer: 3
+    key: glowshroom
+    tile: {fileID: 0}
+  - character: "\xFC"
+    layer: 0
+    key: path
+    tile: {fileID: 11400000, guid: 9955dbd686c120f419f7ae7d0e629a0e, type: 2}
+  - character: "\xDC"
+    layer: 0
+    key: column_stone
+    tile: {fileID: 11400000, guid: e7cf3db46ac04c846b5dd34c61cd8307, type: 2}
   blends:
   - key: dirt_on_stone
     onto: stone
@@ -1984,6 +2004,30 @@ MonoBehaviour:
     colour: {r: 1, g: 0.93, b: 0.72, a: 1}
     intensity: 1.2
     embers: 0
+  - key: mine_lamp
+    frames:
+    - {fileID: 3164225116839472805, guid: 1c7a35f801f353598aa280db7ae5679b, type: 3}
+    - {fileID: 586168004247749673, guid: 1c7a35f801f353598aa280db7ae5679b, type: 3}
+    - {fileID: 4510473373215561503, guid: 1c7a35f801f353598aa280db7ae5679b, type: 3}
+    colour: {r: 1, g: 0.78, b: 0.48, a: 1}
+    intensity: 1.5
+    embers: 0
+  - key: campfire
+    frames:
+    - {fileID: 3860461399894766168, guid: 7d0fb61c49e55b10ae164a1b3d885d84, type: 3}
+    - {fileID: 2957067302166522014, guid: 7d0fb61c49e55b10ae164a1b3d885d84, type: 3}
+    - {fileID: 50190265808073543, guid: 7d0fb61c49e55b10ae164a1b3d885d84, type: 3}
+    colour: {r: 1, g: 0.62, b: 0.3, a: 1}
+    intensity: 1.8
+    embers: 1
+  - key: glowshroom
+    frames:
+    - {fileID: 2103748077888940711, guid: dfc07299b32656028cb59248628948e1, type: 3}
+    - {fileID: 107429595609507061, guid: dfc07299b32656028cb59248628948e1, type: 3}
+    - {fileID: 2877629947081457450, guid: dfc07299b32656028cb59248628948e1, type: 3}
+    colour: {r: 0.35, g: 1, b: 0.85, a: 1}
+    intensity: 1
+    embers: 0
   ledges:
   - key: plank
     single: {fileID: 11400000, guid: 31b86bf4d54dbde48885a18b75795fd0, type: 2}
@@ -2494,11 +2538,21 @@ MonoBehaviour:
     rise: 0
     drift: 0
     tinted: 0
+  - key: backdrop_earth_windows
+    kind: 7
+    sprite: {fileID: 21300000, guid: 3f47288e506b5b6994c002888bbccb10, type: 3}
+    scroll: 0.17
+    order: -984
+    lit: 0
+    scrollUp: 1
+    rise: 2
+    drift: 0
+    tinted: 0
   - key: earth_oak_0
     kind: 8
     sprite: {fileID: 21300000, guid: 8126223dca4e5f9393ad956ad0d591c8, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2508,7 +2562,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: e79283e5be6f581592da9fb87c9acb9c, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2518,7 +2572,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 837339419d395f3da0e531343e61e14b, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2528,7 +2582,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 954c38b40668518f81712d7bd7fb9553, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2538,7 +2592,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 5fa6ea442485583289a538fe2a94a91b, type: 3}
     scroll: 1
-    order: -287
+    order: -289
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2548,7 +2602,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 47f4a7c715ab5acf9c031991d0f384ac, type: 3}
     scroll: 1
-    order: -287
+    order: -289
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2558,7 +2612,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 338c261cef6254b1b1c2831266838e78, type: 3}
     scroll: 1
-    order: -287
+    order: -289
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2568,7 +2622,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 39bbdc101f6d54b59342ecf4d96518f1, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2578,7 +2632,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 6b0a07d422cf52c7828034231d40e564, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2588,7 +2642,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 864c57d13b0d5bf18091537d1ecc857a, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2598,7 +2652,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: c0b9649d8b02598c9c659da7cf1638cd, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2638,7 +2692,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: 18efc508518a5aa5ab4602c1d0a94f5f, type: 3}
     scroll: 1
-    order: -287
+    order: -288
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2874,9 +2928,49 @@ MonoBehaviour:
     rise: 0
     drift: 0
     tinted: 0
+  - key: earth_reeds_0_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: a3d6f49d820a5d048601d328e401c2d7, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_reeds_0_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: cffe460d4e8e516f9470db210e3836d8, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: earth_reeds_1
     kind: 8
     sprite: {fileID: 21300000, guid: fa619ae4f1cf58c7a80b2853bd5aeb38, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_reeds_1_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0497b29abcff55b0b1bcdc56f8cc4e1b, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_reeds_1_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: a448ab6c37e25910bdcf4ea55688cf29, type: 3}
     scroll: 1
     order: -287
     lit: 1
@@ -2894,11 +2988,31 @@ MonoBehaviour:
     rise: 0
     drift: 0
     tinted: 0
+  - key: earth_reeds_2_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 58e35f2fc0115a45807ffcf0d52b3cb0, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_reeds_2_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: a4d745e5b50d5382bd09839d601ad36f, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: earth_lilies_0
     kind: 8
     sprite: {fileID: 21300000, guid: 7a9af124a1e453cabb597a69c6022799, type: 3}
     scroll: 1
-    order: 27
+    order: 29
     lit: 1
     scrollUp: 1
     rise: 0
@@ -2908,7 +3022,7 @@ MonoBehaviour:
     kind: 8
     sprite: {fileID: 21300000, guid: dcb977527c8e5ac58370cd013babe1ed, type: 3}
     scroll: 1
-    order: 27
+    order: 29
     lit: 1
     scrollUp: 1
     rise: 0
@@ -3099,6 +3213,536 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 24f5d8ce808b5c2eb1bfa297baefca81, type: 3}
     scroll: 1
     order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_birch_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: e13f6390858e54dab0c5ff0c53537dcd, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_birch_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 02fecfda23e051278dbaa4b8c167325e, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_giant_oak
+    kind: 8
+    sprite: {fileID: 21300000, guid: 84a494c2ad7650e9b4ac8233de3cf2ea, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_log
+    kind: 8
+    sprite: {fileID: 21300000, guid: b67333002d365150bb63cd16e5ba4ac0, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_stump_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 743b26ab2ec45a2dbdba12ef9c4d06ac, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_stump_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: c858d5067f485f1d87a3f4b4ac93265c, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_toadstools
+    kind: 8
+    sprite: {fileID: 21300000, guid: 1d9e201da9ef5c46a2edd9e7b08851f6, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_washing
+    kind: 8
+    sprite: {fileID: 21300000, guid: a57f2071d41554cda365526e92563369, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_garden
+    kind: 8
+    sprite: {fileID: 21300000, guid: 584902d7c031561b99cdb907f3fac66e, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_bench
+    kind: 8
+    sprite: {fileID: 21300000, guid: 50f382d91e64509099dcead5032c6d2b, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_barrel
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7833c36e817f56728ba74c74f9152e7c, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_kennel
+    kind: 8
+    sprite: {fileID: 21300000, guid: 30a2dc902d4458e893ac312701a59516, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_sails_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 3f878ea8a1f856d5a43c0625e6a20b13, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_sails_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0efc8a5af6ca527fbf60ba8bbd41052d, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_sails_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9505cb75e8c75165b72ef8dd78c2142c, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_sails_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 01264a558a42512eaae9b9ff7f76a968, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_rubble_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 782b5f307ed75ed3b0cef9e742d2e408, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_rubble_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: e8236bcafd4159b49a15f55bd1631407, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_puddle
+    kind: 8
+    sprite: {fileID: 21300000, guid: 44ef9bed680053d89b988b62b4f5ee79, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_cage
+    kind: 8
+    sprite: {fileID: 21300000, guid: d58121dc99d05a7cbf00ff75b5b9a0dc, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_roots_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: eca82f64037852429139f49874ba6cb0, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_roots_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 756f6112036652cda8570d0f90fa8467, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_roots_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 507ee0b6e52c5bdcbc72e23f719cd99b, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_nugget_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 03e88ca13b1150b8acd36a450ffafad6, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_nugget_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 00b3b7b551e3531d8bde738abd15f1cd, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_reflection
+    kind: 8
+    sprite: {fileID: 21300000, guid: ae9e94dcffa35803b222a0a7d774758d, type: 3}
+    scroll: 1
+    order: 28
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_shine
+    kind: 8
+    sprite: {fileID: 21300000, guid: 3c42e3c2f1ad52818e7d3a82abd04c52, type: 3}
+    scroll: 1
+    order: 28
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_depth
+    kind: 8
+    sprite: {fileID: 21300000, guid: d9ae74ddce72597891cc713d34846ad0, type: 3}
+    scroll: 1
+    order: 27
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_gate_glow
+    kind: 8
+    sprite: {fileID: 21300000, guid: f4757396f12f58ed862e6d211258d49e, type: 3}
+    scroll: 1
+    order: -286
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_rays
+    kind: 8
+    sprite: {fileID: 21300000, guid: 3057f2c3ed5453a8b6ca13f39d8c37d5, type: 3}
+    scroll: 1
+    order: -284
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: f03f3f8d49c95967bf9855e9950ab4b5, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_0_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: a01bc322b10e5603a648a322fb714141, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_0_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4b2c1be525dc509fb63e0f0e59305f92, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 391d4e05f0a25fd5b1e850b2919c8a50, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_1_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: a2f1dc8c975853e48e1a7af2a71fc0dd, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_1_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 15b83b383b6b58a5b8f97d06a8616c57, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 8f271ecd1f9c5263a8803eda35a7d43c, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_2_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: abff8270ab45564386b9d66462083ab2, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_2_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 57da48b47e315248b3d6f815ec0f3de6, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 9f42bd539c035e2c9b26fb54f65a1e9b, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_3_s1
+    kind: 8
+    sprite: {fileID: 21300000, guid: eed5e22bde915845bca54c4098fafc19, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_front_3_s2
+    kind: 8
+    sprite: {fileID: 21300000, guid: e179f5f51c345d868f8279d581199886, type: 3}
+    scroll: 1
+    order: 40
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_crypt
+    kind: 8
+    sprite: {fileID: 21300000, guid: b26111e7c71a5bce81d386de0b4b941c, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_iron_fence_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: f049a2b4c78f583da7f710b26ccb03dc, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_crow_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 83b66e1179e15f328cf61a0bd37b8d29, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_sheep_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 94fbfccac27c5ffca363094d72729f31, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_iron_fence_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: d343cd6fb21f5696bed3caf415acb1e3, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_crow_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: e3a0fd24c1885888957282a606a0e6bc, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_sheep_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: a44dcbe9eebf58eb90c28b2ed1ff6171, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_cat
+    kind: 8
+    sprite: {fileID: 21300000, guid: b07b6b1305bd50cd9c32f26c461bedd8, type: 3}
+    scroll: 1
+    order: -287
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_bird_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 54755476fd9a520b94d44e0810dd5ecc, type: 3}
+    scroll: 1
+    order: -960
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_bird_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: e488e339212b525fb87b47e449c5f0d3, type: 3}
+    scroll: 1
+    order: -960
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: earth_boat
+    kind: 8
+    sprite: {fileID: 21300000, guid: 57346c92ca16537286081ba87347c8d3, type: 3}
+    scroll: 1
+    order: 29
     lit: 1
     scrollUp: 1
     rise: 0

@@ -467,7 +467,10 @@ namespace Descender.EditorTools.TilesV2
                         layer.Repeat.y > 0f ? Mathf.Max(more.y, 0f) : 0f
                     );
                 }
-                layer.Place(at);
+                // A picture larger than a view (the whole map) shows what passes close to the eye
+                // where it is marked, as a camera standing there would, not off where a camera at the
+                // middle of the map would put it.
+                layer.Place(layer.Scroll.x > 1f && (more.x > 0.01f || more.y > 0.01f) ? layer.CameraAnchor : at);
                 if (layer.Scroll.y <= 0f && more.y > 0.01f)
                 {
                     // Pinned to the view's height (clouds): keep it by the top of this taller view.
