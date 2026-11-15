@@ -89,14 +89,16 @@ one outline colour, nothing else.
 | Material | Outline | Ramp |
 |---|---|---|
 | dirt | `2a1810` | `452a1c 5e3a26 7a4c31 93603d ad774c c6915e` |
-| grass (on dirt) | `173418` | `1f4a22 2e6a2c 3f8a35 56a83f 79c24f a6dc6a` |
+| grass (on dirt) | `15301a` | `1b4426 28652e 3c8634 58a53c 82c04a b4da64`: hue-shifted, the shadows lean blue and the lit turf yellow |
+| meadow grass (on dirt) | `1c3214` | `2a4a1c 3e6a26 5a8a2e 7ea83a a8c44a d2dc6a`: warmer than the grass |
 | stone | `1c1d26` | `33353f 464955 5b5e6b 717482 8a8d9a a8abb6` |
 | dirt wall | `1e120c` | `2c1b12 362218 40291d 4a3022 553828 60402e` |
 | stone wall | `16171d` | `23242c 2b2d36 343641 3d3f4b 474a56 525562` |
 | sand | `4a3a1c` | `8c7440 a88c4e c2a660 d6bc74 e6cf8a f3e2a8` |
-| clay | `3a1a14` | `6a3024 84402c 9c5236 b4643f c97a4e dc9466` |
+| clay | `2e1712` | `4e2c22 62382a 764634 8a5640 9e684e b07c60`: muted, so it does not read as lava in the dark |
 | copper (ore nuggets) | `3a1e10` | `6e3a1c 9a5428 c06e34 de8c44 f0ac62 ffd08a` |
-| cave rock (backdrop) | | `0a0b10 111219 171920 1e2029 262933` |
+| timber wall (the mine's boards) | `120c08` | `1e150e 251a12 2c1f16 33251a 3a2a1e 423024` |
+| the Earth's cave rock (backdrop) | | `0d0a09 15110e 1d1814 262019 302820`: beds of earth, warmer than the circles' rock |
 
 Walls are the same frames at about half the value, with no highlight and a
 soft two-pixel shade where they meet air, and the whole wall layer is
@@ -116,7 +118,9 @@ its own (petals, cactus green, mushroom caps); liquids have their own
 | sand | terrain: loose grains, wind ripples; slopes for dunes | earth | Grid; slopes: a triangle |
 | clay | terrain: wavy strata | earth | Grid |
 | copper_ore | terrain: stone with lit nuggets of copper (palette `copper`), never on the outline; gives a little light and glints | earth | Grid |
+| meadow | terrain: dirt under a warmer turf, where the wild flowers grow thick; slopes | earth | Grid; slopes: a triangle |
 | dirt_wall, stone_wall | wall | walls | none |
+| timber_wall | wall: boards laid across (the `planks` texture), for the old mine's roofs | walls | none |
 
 The world's regions (`docs/art/tiles-v2-world.md`) add a ground and a wall
 each, drawn with the same frames from their own palettes:
@@ -252,6 +256,8 @@ are the legend in the manifest:
 | `K` | terrain | gold in blocks |
 | `a` `e` `j` `k` | terrain | the slopes of marble and of gold, up to the right and up to the left |
 | `\|` | liquid | falling water |
+| `Ñ` `ñ` `Ö` | terrain | the Earth's meadow in flower, and its slopes up to the right and up to the left |
+| `Ø` | wall (second grid) | the boards of the old mine |
 
 A map of several regions also says where each starts and what of the game's
 stands where:
@@ -332,6 +338,14 @@ in the order they are tried:
 | vine (2) | ceiling | grass | anywhere | 0.55 | 1 to 3 |
 | root (2) | ceiling | dirt | cave | 0.22 | 1 |
 | stalactite (3) | ceiling | stone, copper ore | cave | 0.18 | 1 |
+| wildflower (4) | floor | meadow | sky | 0.34 | 1: three to five poppies, daisies, cornflowers or buttercups, never one alone |
+| grass_tall, tuft | floor | meadow | sky | 0.22, 0.30 | 1 |
+| fern (2) | floor | grass | sky | 0.06 | 1 |
+| field_stone (3) | floor | grass, meadow | sky | 0.04 | 1 |
+| cobweb (2) | ceiling | stone, dirt, copper ore | cave | 0.05 | 1 |
+
+The last five are the Earth's and come at the end of `DECOR`, after the regions' own, so
+every rule before them keeps the share of the cells it had.
 
 "Open to the sky" is the light's own test: nothing over the cell in its column
 shades it.
@@ -375,15 +389,38 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 |---|---|---|
 | sky, stars, sun, moon | pinned to the view | `Sky`: seven bands between the hour's two colours, meeting in an ordered 4 x 4 dither, painted on a texture the size of the camera's view; the sun and the moon cross the view on an arc |
 | clouds | 0.04, 0 | along the top of the view; drift 0.25 units a second |
-| far, mid, near ridges | 0.1 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line; lit on their left-facing slopes; a picture is as wide as the view, so no peak shows twice |
+| ridges: mountains, hills, mid wood, near wood | 0.1 / 0.17 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line (`tv2_earth.py`). Further is paler, bluer and plainer: the mountains (1280 px wide) are the blue of the low sky, snow on the peaks, a band of haze at their foot; the hills (`backdrop_earth_hills`, 1920 px) carry a castle, two villages and a tower, each once; the woods mix round crowns and firs, lit on the left |
 | cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, each region's own colours (`REGIONS`), shown only in that region's rows under the surface line: a sprite mask over the region, with a custom range so it cuts that region's picture and no other. It takes the tile light, so it is black until something lights the cave. A map that names no regions is all the Earth's |
 | what stands far off | 0.78, 0.78 | a 640 x 360 picture for each region (`FAR`: columns, spires, fangs, heaps, bare trees, towers with lit windows, a viaduct, shards), a little lighter than the rock, over it and cut to the region as it is; nearer than the rock, so it moves more |
 | cave rock's top | 0.55, 1 | a ragged strip along the top of each region's rock, so one region's rock runs into the next one's |
 | heaven (`heaven`; only over a map with regions) | each its own | nine layers, each standing `rise` tiles over the surface line for a camera on that line and keeping the camera company on its way up by the share `scrollUp` leaves (what is far follows it). Far to near: a country of cloud (0.05 across, 0.66 up; a picture 80 tiles high) and castles far off on banks of cloud (0.1, 0.7; 84 tiles high), both set so that a view on the Earth's surface is under their feet and a view anywhere in Paradise is in them, islands far off (0.06, 0.25) and nearer (0.16, 0.4), thin cloud high up and two seas of cloud (fixed in height; they drift), shafts of light (0.3, 0.6), and wisps of cloud fixed in the world that drift in front of the hero. All but the light take the hour's tint; the two tall pictures thin out toward the Earth |
-| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow, a glory of rings and rays |
+| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow, a glory of rings and rays; the Earth's trees, buildings and the timber of its mine (below) |
 
 A cell shows the cave rock when it has no wall and lies under the surface
 line: leave the walls out of a cavern to open it onto the rock.
+
+## The Earth's pictures
+
+What the Earth is dressed with is drawn free, not on the tile grid: a picture
+(`tv2_earth.py`) stood in a cell of air by the map (`@mark picture column row key`),
+its foot the bottom middle of the cell. Its sprite's pivot is not its bottom but its
+floor line (`pivot_of`): what is under that line (roots and the foot of a post, 16 px;
+a building's plinth of stone, 2 or 3 tiles) goes on down behind the ground, so nothing
+stands on air, and a building stands on a slope as well as on the level. None of it is
+solid and none of it shades: it is lit by the tile light as the ground is.
+
+| Order | Pictures |
+|---|---|
+| -287 | behind the decor and the ground, in front of the walls and their shade: trees (4 oaks, one in autumn colours, 3 firs, 2 apple trees, 2 dead trees, a willow), 3 thickets, two cottages (a ruin with its roof fallen in, and one still thatched), a chapel without its roof, a well, a windmill, fences, a cart, haystacks, a scarecrow, 4 kinds of grave, the Gate's arch, the pithead and its winch hut, the colonnade by the start, reeds, a jetty; in the mine, sets of timber for tunnels 3 to 12 rows high, crates, sacks, a ladder |
+| -286 | unlit: the lamp in the window of the cottage that is still lived in, seen at dusk and at night |
+| -99 | in front of the ground they lie on: the mine's track and its carts |
+| 27 | on the water, in front of the hero as the water is: lilies |
+
+How they are drawn (the research notes, `earth-art-research.md` in the session's notes):
+the light from the top left; ramps that shift hue (shadows cool, the lit side warm); a
+crown is a few rounded bundles shaded as balls, each with a dark rim where it lies over
+the one behind and a gap or two where the branches show, never one ball on a stick; the
+props of the background darker and less saturated than the ground the hero walks on.
 
 ## Light
 
@@ -466,7 +503,7 @@ physics for a particle system to take gravity from).
 | Particles | Where | Light |
 |---|---|---|
 | Dust | drifts in a circle of 4.5 tiles round every lamp, up to 14 motes | takes the tile light: it shows only where there is light |
-| A region's air | motes born all over the view, riding with the camera; only the region the camera is in gives (`TilesV2Air`): gold motes in Paradise, a wind of petals in Lust, rain in Gluttony, embers in Heresy, snow in Treachery | as `REGIONS` says for each |
+| A region's air | motes born all over the view, riding with the camera; only the region the camera is in gives (`TilesV2Air`): pollen on the Earth (it takes the tile light: seen in the sun and by the lamps), gold motes in Paradise, a wind of petals in Lust, rain in Gluttony, embers in Heresy, snow in Treachery | as `REGIONS` says for each |
 | Embers | rise from every flame | none |
 | Sand | trickles from under 45% of the sand tiles that hang over two or more empty cells (a hash of the cell picks them), and lands on what is below | takes the tile light |
 | Sparks | jump from every run of the surface of a liquid that glows | none |
@@ -535,6 +572,8 @@ no window opens.
 | `tv2_decor.py` | decor sprites and rules, the scatter, the shade tiles, the glints |
 | `tv2_liquid.py` | the liquids |
 | `tv2_backdrop.py` | the sky's bands, clouds, stars, sun, moon, ridges, the cave rock |
+| `tv2_earth.py` | the Earth's pictures (trees, buildings, the mine's timber and track), its ridges, its cave rock and old workings |
+| `tv2_earth_map.py` | where the Earth's pictures stand, its meadows, the mine's boards (called by `make_world_map.build`) |
 | `tv2_light.py` | the tile light's sums |
 | `tv2_preview.py` | the preview |
 | `make_sample_map.py` | writes the sample map |

@@ -293,9 +293,9 @@ namespace Descender.Tests
             var count = TilesV2Painter.Decor(field, set, decor, taken);
             Assert.That(count, Is.GreaterThan(30));
 
-            var meadow = TilesOf("flower", "bush", "grass_tall", "tuft");
+            var meadow = TilesOf("flower", "bush", "grass_tall", "tuft", "fern", "field_stone");
             var floor = TilesOf("mushroom", "stalagmite", "pebble");
-            var roof = TilesOf("stalactite");
+            var roof = TilesOf("stalactite", "cobweb");
             var onGrass = 0;
             for (var x = 0; x < 40; x++)
             {

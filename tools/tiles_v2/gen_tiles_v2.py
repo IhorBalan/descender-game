@@ -37,6 +37,7 @@ from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_backdrop
+import tv2_earth
 import tv2_decor
 import tv2_liquid
 import tv2_preview
@@ -128,9 +129,10 @@ def rect_meta(path: str, entries: list) -> str:
     return unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, sprites=entries)
 
 
-def backdrop_meta(path: str) -> str:
-    # Full Rect, so the sprite can be drawn tiled.
-    text = unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, pivot=(0.5, 0.0))
+def backdrop_meta(path: str, pivot=(0.5, 0.0)) -> str:
+    # Full Rect, so the sprite can be drawn tiled. A picture of the Earth's has its pivot on its
+    # floor line (tv2_earth.pivot_of), the rest the bottom middle.
+    text = unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, pivot=pivot)
     return text.replace("spriteMeshType: 1", "spriteMeshType: 0").replace("wrapU: 1", "wrapU: 0")
 
 
@@ -322,7 +324,7 @@ def generate(out: str):
         sprites[name] = image.crop((x, image.height - y - h, x + w, image.height - y))
     for name, image in tv2_backdrop.backdrops().items():
         path = os.path.join(out, name + ".png")
-        write(path, image, backdrop_meta(path))
+        write(path, image, backdrop_meta(path, tv2_earth.pivot_of(name) if name in tv2_earth.SINK_OF else (0.5, 0.0)))
         images[name] = image
     path = os.path.join(out, "tiles_v2.json")
     with open(path, "w", newline="\n") as handle:

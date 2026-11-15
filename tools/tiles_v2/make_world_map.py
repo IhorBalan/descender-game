@@ -33,6 +33,7 @@ import sys
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_reach
+import tv2_earth_map
 
 WORLD_MAP = os.path.join(OUT, "world_map.txt")
 LIFT = 64  # rows of sky over the world's first layout: room for a Paradise that is a place and not a stair
@@ -1305,23 +1306,8 @@ def surface(world: World, earth_road):
     start, mouth = world.spawn[0], EAST - 70
     _, road, trail, locked = earth_road
 
-    def bare(x: int) -> bool:
-        return POND[0] - 3 <= x <= POND[1] + 3 or abs(x - start) < 6 or mouth - 40 <= x <= mouth + 12 or any(a <= x <= b for a, b in world.clear)
-
-    x = 9
-    while x < WIDTH - 10:
-        if not bare(x):
-            tree(world, x, surf[x], 5 + int(hash01(x, 3) * 6))
-        x += 5 + int(hash01(x, 4) * 10)
-    # What is left of a house: its front wall, a door and a window in it, its top broken.
-    house = start + 16
-    for dx in range(10):
-        for dy in range(1, 7):
-            door = 3 <= dx <= 4 and dy <= 3
-            window = dx == 7 and 3 <= dy <= 4
-            broken = dy >= 5 and hash01(dx, dy, 8) < 0.45
-            if not (door or window or broken):
-                raise_wall(world, "s", house + dx, surf[house + dx] - dy)
+    # The trees, the village, the mill and the graves are pictures now, stood once the world
+    # is laid (tv2_earth_map.py); `tree` above is what Paradise's own trees still use.
     world.mark("sign", start + 3, surf[start + 3] - 1, "post", *"The Gate is east, under the arch. The Pit is west, under the meadow. The stair of light past the pond is not for you yet.".split())
     # Something lies in the pond.
     world.mark("relic", (POND[0] + POND[1]) // 2, surf[POND[0]] + 2)
@@ -1596,7 +1582,7 @@ def earth(world: World) -> Path:
     surface = world.surface
     start = (POND[0] + POND[1]) // 2 - 28
     world.spawn = (start, surface[start] - 1)
-    world.view("earth", start + 2, GROUND_LINE - 8)
+    world.view("earth", start + 2, GROUND_LINE - 4)
     # Ruins by the start: what is left of a colonnade.
     for dx, tall in ((-14, 3), (-13, 1), (-9, 2), (8, 3), (9, 1), (13, 1)):
         x = start + dx
@@ -1618,12 +1604,10 @@ def earth(world: World) -> Path:
     road.hall(16, 9, name="earth_crossroads")
     road.rest()
     # The arch over the mouth, of the City's own brick, on the wall behind: the first sight of what lies under.
-    crown = min(surface[x] for x in range(mouth - 12, mouth + 7)) - 9
+    # Under the sky the arch is a picture (`earth_gateway`, tv2_earth_map.py); its piers go on
+    # down the wall behind, into the ground.
     for x in (mouth + 4, mouth + 5, mouth - 10, mouth - 11):
-        for y in range(crown, surface[x] + 6):
-            world.walls[y][x] = "b"
-    for x in range(mouth - 12, mouth + 7):
-        for y in (crown - 2, crown - 1):
+        for y in range(surface[x], surface[x] + 6):
             world.walls[y][x] = "b"
     world.put(mouth + 3, surface[mouth + 3] - 1, "*")
 
@@ -1652,12 +1636,8 @@ def earth(world: World) -> Path:
     cells = road.hall(21, 13, name="earth_gate")
     road.rest()
     x0 = min(c[0] for c in cells)
-    for x in (x0 + 5, x0 + 6, x0 + 7, x0 + 15, x0 + 16, x0 + 17):
-        for y in range(road.floor - 9, road.floor):
-            world.walls[y][x] = "b"
-    for x in range(x0 + 4, x0 + 19):
-        for y in (road.floor - 11, road.floor - 10):
-            world.walls[y][x] = "b"
+    # The Gate in its hall is a picture (`earth_gate_arch`, stood by tv2_earth_map.py).
+    world.gate_arch = (x0 + 11, road.floor)
     world.put(x0 + 9, road.floor - 1, "*")
     world.put(x0 + 13, road.floor - 1, "*")
     return turn_east(road, FLOORS["limbo"][0] - road.floor, "limbo")
@@ -2841,6 +2821,7 @@ def build(log=print) -> World:
     world.veins()
     world.slopes()
     world.wall_up()
+    tv2_earth_map.dress(world, sys.modules[__name__], log)
     return world
 
 

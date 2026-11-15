@@ -303,10 +303,13 @@ namespace Descender.World.TilesV2
                         shown.sprite = entry.sprite;
                         shown.sortingOrder = entry.order;
                         shown.sharedMaterial = entry.lit ? set.litMaterial : set.unlitMaterial;
-                        // A rainbow is the sun's, and gone by night; every picture of light breathes a little.
-                        holder
-                            .AddComponent<TilesV2Shimmer>()
-                            .Configure(world, shown, entry.key.Contains("rainbow"), 0.25f);
+                        // A picture of light is not always the same: a rainbow is the sun's and gone by night, and it
+                        // and a glory breathe a little. A tree or a house stood as a picture is what it is.
+                        var rainbow = entry.key.Contains("rainbow");
+                        if (rainbow || entry.key.Contains("glory"))
+                        {
+                            holder.AddComponent<TilesV2Shimmer>().Configure(world, shown, rainbow, 0.25f);
+                        }
                         thing.Made = holder;
                         things.Pictures++;
                         break;

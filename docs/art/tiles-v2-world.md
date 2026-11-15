@@ -64,11 +64,10 @@ does. It has no enemies and no bosses yet.
   three stairs of light stand on the Earth's surface from the first minute,
   and from the first minute water falls out of the sky into the pond by the
   start.
-- **The Earth is a country, not a lid.** The surface rolls, with trees on it
-  (trunks and crowns on the wall behind: walked past, not into), the front of a
-  house by the start, ruins, a pond with something at its bottom, and an old
-  shaft that drops into the mine. A signpost by the start says where the road
-  goes.
+- **The Earth is a country, not a lid.** The surface rolls through woods, a
+  village, fields and a graveyard to the Gate, with a pond by the start and an old
+  shaft that drops into the mine (the section below). A signpost by the start says
+  where the road goes.
 - **The Pit and the Well are places.** A chain hangs down the middle of the
   Pit; beside every door into the Pit and the Well the circle's number is cut
   into the wall in lamps, so the hero knows which circle he looks into; a
@@ -86,7 +85,7 @@ moving of its own, so it is told apart by more than colour.
 | Region | Ground, liquid | Its road | Far off, and its great cave | Underfoot and in the air |
 |---|---|---|---|---|
 | Paradise | cloud, marble, gold, garden earth; falling water | a Garden in the middle, a Temple over it, three ways out to three lights | heaven: islands far off, shafts of light, a sea of cloud | gold motes; the day's own light; winds that blow upward |
-| Earth | grass, dirt, stone, copper; water | a surface, a long mine, a gate | stalagmites | daylight above, torches below |
+| Earth | grass, meadow, dirt, stone, clay, copper; water | a surface, a long mine, a gate | the old workings: trestles, ladders, a head frame | daylight above, torches below; pollen |
 | Limbo | ashstone; the Acheron (swum) | wide, quiet galleries; graves | broken columns; a colonnade in the fields | a fog of pale motes |
 | Lust | rose rock | shafts climbed and fallen down | spires | a wind in gusts against the way in; lifts that slow a fall and carry a glide up; petals |
 | Gluttony | mud; slime (swum) | low sagging tunnels, deep pools | fangs of rock: a maw | rain |
@@ -103,6 +102,61 @@ with a blend overlay on every touching tile; the light in the air of one turns
 into the other's over twelve rows; the rock behind the caves changes along a
 ragged strip; and the way down is a shaft the hero travels, so he sees all of
 it. The region says its name when he arrives.
+
+## The Earth
+
+The Earth is the first thing the hero sees, so it is dressed as a place people lived
+in and left: what stands on it is drawn free, as pictures stood in its cells
+(`tv2_earth.py` draws them, `tv2_earth_map.py` says where; `docs/art/tiles-v2.md`, "The
+Earth's pictures"). None of it is in the way: the ground, the ledges and the lamps are
+what they were, and the play-through is the same.
+
+```
+ the Pit  firs   stair  a mixed wood, the old shaft   the village   start   pond  stair  the mill,     the Gate  graves  stair  firs
+ |#|      ^^^^   |||    under its pithead             chapel, well,  ruins   ~~~   |||    fields, a      /^^\     + + +   |||    ^^^
+                                                      two cottages                        cottage, an
+                                                                                          orchard
+```
+
+- **Woods.** Firs at the two ends, by the Pit and past the last stair; a mixed wood of
+  oaks, firs and thickets round the old shaft; fewer trees in the village; an orchard
+  of apple trees by the fields. Four oaks (one in autumn colours), three firs, two
+  apple trees, two dead trees and a willow, each tree a picture 6 to 12 tiles high,
+  its crown a few bundles lit from the top left, standing on level ground and never on
+  a stair of light.
+- **The village** on the hill west of the start: a chapel with no roof, its gable and
+  bell still standing, graves by it; a well; a cottage whose roof fell in at one end;
+  fences. **By the start** the columns of a temple of the old world stand broken
+  behind the marble stubs, a drum fallen in the grass.
+- **The pond**: a willow on its west bank, reeds at both edges, lilies on the water.
+- **East of the pond**: the mill on its rise, sails broken; fields with haystacks, a
+  scarecrow, a cart left where it stopped; a cottage still thatched where someone still
+  lives, a lamp in its window (seen at dusk and at night) and a lantern by its door.
+- **The Gate** on the surface is an arch of dark stone over the mouth of the way down,
+  pointed, a glow at its foot; two dead trees by it, and between it and the last stair
+  the graves of those who went down before.
+- **The meadows flower**: in patches (where a smooth field of noise says so), the turf
+  is `meadow`, warmer than the grass, and wild flowers grow on it in clumps.
+- **Behind the surface** four ridges, each further one paler, bluer and plainer:
+  mountains with snow, hills with a castle, two villages and a tower far off, a wood
+  of round crowns and firs, and the near wood; pollen drifts in the air, seen in the
+  sun and by the lamps.
+- **The old mine** is timbered: a set of timber (a post, a cap, two knee braces)
+  every seven columns or so where a tunnel is 3 to 12 rows high, the roof over it
+  boarded (`timber_wall`) a few columns either side; track along every level stretch of
+  six columns or more between the shaft and the crossroads, its ends stopped with
+  timber, a cart of copper ore on one run in three or so (one tipped over); crates,
+  sacks and a ladder on wider floors; the old shaft has a pithead of timber with its
+  wheel over it and a winch hut by it. The rock behind its caves is beds of earth in
+  long waves, and the old workings stand far off in it: trestles one over another,
+  ladders, a head frame with its wheel. **The Gate** in its hall under the ground is an
+  arch between two piers of dark red stone, a hooded figure in a niche in each, a face
+  for a keystone.
+
+The named places of the Earth are `earth`, `earth_falls`, `earth_shaft`, `earth_mine`,
+`earth_crossroads`, `earth_gate`, `earth_antechamber`, and the new `earth_village`,
+`earth_fields`, `earth_graves`, `earth_wood`, `earth_mouth`; its pictures at other
+hours `earth_sunset`, `earth_village_dusk`, `earth_fields_dawn` and `earth_night`.
 
 ## Paradise
 

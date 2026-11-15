@@ -12,6 +12,7 @@ import numpy as np
 from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
+import tv2_earth
 
 BACKDROP_W, BACKDROP_H = VIEW  # a backdrop picture is the size of the view and repeats sideways
 SKY_BANDS = 7
@@ -52,6 +53,9 @@ BACKDROPS = [
     {"key": "backdrop_rainbow", "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": -962, "lit": False, "tinted": False},
     {"key": "backdrop_glory", "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": -963, "lit": False, "tinted": False},
 ]
+# The Earth's (tv2_earth.py): a ridge of hills between the mountains and the woods, and the
+# pictures its surface and its mine are dressed with.
+BACKDROPS += tv2_earth.NEW_RIDGES + tv2_earth.ENTRIES
 # The rock behind the caves is a region's own (REGIONS in tv2_base.py): each region that
 # has one gets `backdrop_cave_<region>` and its ragged top, `backdrop_cave_top_<region>`.
 CAVE_SCROLL = 0.55
@@ -686,9 +690,11 @@ def backdrops() -> dict[str, Image.Image]:
     caves = {}
     for region in REGIONS:
         if region["cave"]:
-            caves["backdrop_cave_" + region["key"]] = backdrop_cave(region)
+            caves["backdrop_cave_" + region["key"]] = tv2_earth.cave_earth(region) if region["key"] == "earth" else backdrop_cave(region)
             caves["backdrop_cave_top_" + region["key"]] = backdrop_cave_top(region)
-            caves["backdrop_far_" + region["key"]] = backdrop_far(region)
+            caves["backdrop_far_" + region["key"]] = tv2_earth.far_mine(region) if FAR[region["key"]] == "mine" else backdrop_far(region)
+    earth = tv2_earth.pictures()
+    earth.update({key: paint() for key, _, _, paint in tv2_earth.RIDGES})
     return {
         **caves,
         "backdrop_stars": backdrop_stars(),
@@ -741,4 +747,5 @@ def backdrops() -> dict[str, Image.Image]:
         "backdrop_near": backdrop_ridge(
             "near", hexes("2f5e4c")[0], hexes("427a60")[0], 40, [(2, 8), (5, 5), (9, 3)], 3, trees=(6, 12)
         ),
+        **earth,
     }
