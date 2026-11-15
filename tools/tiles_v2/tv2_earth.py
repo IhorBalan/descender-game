@@ -212,10 +212,12 @@ def branch(art: Art, x0, y0, x1, y1, width, ramp):
     art.line(x0 - 0.6, y0 - 0.6, x1 - 0.6, y1 - 0.6, ramp[4], max(width - 1.5, 1))
 
 
-def oak(variant: int, leaves=OAK, tall: int | None = None, fruit=None) -> Image.Image:
+def oak(variant: int, leaves=OAK, tall: int | None = None, fruit=None, turn: int = 6) -> Image.Image:
     """A broad tree of a few bundles on branches that part from the trunk well over the
-    hero's head; asymmetric, with a low bundle on one side."""
-    r = rng("oak", variant, id(leaves) % 7)
+    hero's head; asymmetric, with a low bundle on one side. `turn` is one more number in
+    what its shape is drawn from, so trees in other leaves are other trees: always the
+    same number for the same picture, or the picture would change each time it is drawn."""
+    r = rng("oak", variant, turn)
     tall = tall or r.randint(118, 160)
     wide = int(tall * r.uniform(0.62, 0.78))
     W, H = wide + 16, tall + SINK + 4
@@ -1593,11 +1595,11 @@ def _plan() -> list[tuple[str, object, int, bool, int]]:
         plan.append((key, paint, order, lit, sink))
 
     for v in range(OAKS):
-        add(f"earth_oak_{v}", lambda v=v: oak(v, AUTUMN if v == 3 else OAK))
+        add(f"earth_oak_{v}", lambda v=v: oak(v, AUTUMN if v == 3 else OAK, turn=0 if v == 3 else 6))
     for v in range(PINES):
         add(f"earth_pine_{v}", lambda v=v: pine(v))
     for v in range(APPLES):
-        add(f"earth_apple_{v}", lambda v=v: oak(10 + v, APPLE, tall=96 + 8 * v, fruit=hexes("c8322c", "f07a5a")))
+        add(f"earth_apple_{v}", lambda v=v: oak(10 + v, APPLE, tall=96 + 8 * v, fruit=hexes("c8322c", "f07a5a"), turn=2))
     for v in range(DEADS):
         add(f"earth_dead_tree_{v}", lambda v=v: dead_tree(v))
     for v in range(SHRUBS):
