@@ -143,11 +143,15 @@ Paradise also adds `mist_wall` (the inside of a cloud: a wall like any other),
 and `gold_brick`, gold in blocks, which gives a warm light: a roof of it has
 no dark heart and shows from the Earth at night. Marble and gold have slopes,
 so a roof is a line and not a stair. Three more open walls are for what is set
-on a building: `glass_wall` and `rose_glass_wall`, stained glass (the `glass`
-texture: panes in a lattice of lead; a glass's ramp is hues, not shades, the
-first of them the lead), which lets the light through as a window does, and
-`gilt_wall`, gold worked thin (the `plain` texture), for a rod on a spire, a
-chain, a bell, a star.
+on a building: `glass_wall` and `rose_glass_wall`, glass (the `glass` texture:
+panes in a lattice of lead; a glass's ramp is hues, not shades, the first of
+them the lead; the one cool, the other the warm of a window with a light
+behind it), which lets the light through as a window does; `gilt_wall`, gold
+worked thin (the `plain` texture), for a rod on a roof, a chain, the wings of
+the host; and `banner_wall`, blue cloth. `azure_tile` is a tower's roof: tiles
+of blue with slopes, which give a little light of their own, so a great roof
+has no dark heart. Every plain letter and digit is a legend character already,
+so these two are Latin-1 letters.
 
 A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
 its own tilemap on the game's Ledge layer with a one-way `PlatformEffector2D`,
@@ -164,9 +168,9 @@ them, all on the Default sorting layer, back to front:
 | Sky | -1010 | the sky's bands, painted from the hour's two colours | none |
 | Stars, sun and moon | -1008, -1006 | pinned to the view | none |
 | Clouds | -1004 | drift along the top of the view | none |
-| Heaven, far | -1000, -996 | over a world with regions: islands hanging far off | none |
+| Heaven, far | -1003 to -996 | over a world with regions: a country of cloud, castles far off, islands hanging in the air | none |
 | Ridges | -990, -980, -970 | far mountains, hills, near forest | none |
-| Heaven, near | -966, -964 | a sea of cloud, shafts of light | none |
+| Heaven, near | -968 to -964 | thin cloud high up, two seas of cloud, shafts of light | none |
 | Cave rock | -960 and up, 4 a region | the rock behind the caves, each region's own under the surface line; what stands far off in it; the ragged strip along its top | tile light |
 | Walls | -300 | wall tiles, tinted back | tile light |
 | Shade | -290 | the shade of the ground on the walls | tile light |
@@ -230,7 +234,8 @@ are the legend in the manifest:
 | `m` `h` `r` `u` `n` `y` `b` `v` `f` `i` | wall (second grid) | the regions' walls |
 | `w` `l` | wall (second grid) | a tree's trunk and its crown: open walls |
 | `t` `p` `g` `x` | wall (second grid) | Paradise's open walls: a pale trunk, blossom, leaves of gold, a column |
-| `o` `q` `X` | wall (second grid) | more of them: stained glass, cool and warm; gilt work |
+| `o` `q` `X` `ç` | wall (second grid) | more of them: glass, cool and warm; gilt work; a banner's cloth |
+| `É` `é` `è` | terrain | tiles of blue for a roof, and their slopes |
 | `c` `z` | wall (second grid) | the inside of a cloud; marble in shadow |
 | `K` | terrain | gold in blocks |
 | `a` `e` `j` `k` | terrain | the slopes of marble and of gold, up to the right and up to the left |
@@ -361,8 +366,8 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 | cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, each region's own colours (`REGIONS`), shown only in that region's rows under the surface line: a sprite mask over the region, with a custom range so it cuts that region's picture and no other. It takes the tile light, so it is black until something lights the cave. A map that names no regions is all the Earth's |
 | what stands far off | 0.78, 0.78 | a 640 x 360 picture for each region (`FAR`: columns, spires, fangs, heaps, bare trees, towers with lit windows, a viaduct, shards), a little lighter than the rock, over it and cut to the region as it is; nearer than the rock, so it moves more |
 | cave rock's top | 0.55, 1 | a ragged strip along the top of each region's rock, so one region's rock runs into the next one's |
-| heaven (`heaven`; only over a map with regions) | each its own | five layers, each standing `rise` tiles over the surface line for a camera on that line and keeping the camera company on its way up by the share `scrollUp` leaves (what is far follows it): islands far off (0.06 across, 0.25 up) and nearer (0.16, 0.4), a sea of cloud (0.5, 1; it drifts), shafts of light (0.3, 0.6), and wisps of cloud fixed in the world that drift in front of the hero. All but the light take the hour's tint |
-| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow |
+| heaven (`heaven`; only over a map with regions) | each its own | nine layers, each standing `rise` tiles over the surface line for a camera on that line and keeping the camera company on its way up by the share `scrollUp` leaves (what is far follows it). Far to near: a country of cloud (0.05 across, 0.3 up; a picture 56 tiles high, so it fills the sky of Paradise from the Garden to the citadel's roof), castles far off on banks of cloud (0.1, 0.5; 76 tiles high), islands far off (0.06, 0.25) and nearer (0.16, 0.4), thin cloud high up and two seas of cloud (fixed in height; they drift), shafts of light (0.3, 0.6), and wisps of cloud fixed in the world that drift in front of the hero. All but the light take the hour's tint; the two tall pictures thin out toward the Earth |
+| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow, a glory of rings and rays |
 
 A cell shows the cave rock when it has no wall and lies under the surface
 line: leave the walls out of a cavern to open it onto the rock.

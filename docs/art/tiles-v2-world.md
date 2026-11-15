@@ -133,20 +133,24 @@ and three ways out of the middle that are gone in any order.
   roof of gold. A soul by the well says what the place asks for. A gate with a
   round arch stands before the bridge at its east end; at its west end the
   stair to the Temple climbs between two tall columns.
-- **The Temple** stands on its own island over the Garden: a great church,
-  sixty rows from its steps to the rod on its dome, thirty times the hero's
-  height. Three steps up to a hall 73 tiles long and 22 high behind an arcade
-  of white columns and round arches; stained glass, tall and pointed, in every
-  bay, and a rose of warm glass over the altar; chandeliers on chains of gilt.
-  The middle of the hall is open upward into a **dome** of gold 31 tiles
-  across, a night sky of gilt stars inside it, glass in its drum, a lantern and
-  a spire on its top; a ladder of gilt climbs into it to a gallery under the
-  crown, where a draught lies. A **bell tower** with a spire of gold stands on
-  the roof at either end, and a porch of three columns under a gable of gilt
-  before either end of the house. The journey ends on two steps of gold under
-  the dome. Its one door (`sanctum`) is shut until **three lights** (`beacon`)
-  burn. A light is a bowl of gold: the hero lights it by walking up to it, for
-  good.
+- **The Temple** stands on its own island over the Garden, and it is not a
+  church: it is the **citadel of the host**, a castle the angels themselves
+  live in, sixty rows from its steps to the pennant on its great tower, thirty
+  times the hero's height. Three steps up to a hall 73 tiles long and 22 high
+  behind an arcade of white columns and round arches, a blue banner on every
+  pier, a lit window, tall and pointed, in every bay, chandeliers on chains of
+  gilt. At its middle, on two steps of gold, a throne of gilt under the wings
+  of the host: the journey ends there. Over the hall a wall walk under
+  battlements; out of its middle a **great tower** under a roof of blue tiles,
+  open to the hall below, with a ladder of gilt up it to a gallery under the
+  roof where a draught lies (the wall walk goes through the tower by a door in
+  either side); a turret hung at either corner of its head; four more towers
+  of four heights along the wall walk, each with lit windows, a head under
+  battlements, a steep blue roof and a rod, the tallest with pennants; and a
+  **gatehouse** before either end, two towers and a round arch between them,
+  banners down the towers. Its one door (`sanctum`) is shut until **three
+  lights** (`beacon`) burn. A light is a bowl of gold: the hero lights it by
+  walking up to it, for good.
 - **The three lights** are at the ends of three ways, each asking for what the
   journey gave, so Paradise is the whole game once more, in the sun:
   - **West, the Orchard**: over three gulfs eleven tiles wide, each with a
@@ -155,13 +159,14 @@ and three ways out of the middle that are gone in any order.
     ring, a dome of gold on them, lanterns hung from its crown, and one of
     the host in white marble at either hand, seven times the hero's height.
   - **East, the House of Trials**: over a bridge of marble on round arches
-    to a palace: two halls one over the other behind columns, glass upstairs
-    and open arches down; over them a keep under an onion of gold, a small
-    dome on either wing, a bell tower at either end. A veil of light across
-    its hall (the Light Dash), a chimney with nothing to stand on up to the
-    floor above (the Wall Grip), a seal of night (the Holy Light), and the
-    light past it. The way out is a balcony on its west side. The keep is
-    entered through the roof of the upper hall, and holds a relic.
+    to a second castle: two halls one over the other behind columns, lit
+    windows upstairs and open arches down; over them a wall walk under
+    battlements, a keep under a great roof of blue with the wings of the host
+    on its wall, and six towers of six heights. A veil of light across its
+    hall (the Light Dash), a chimney with nothing to stand on up to the floor
+    above (the Wall Grip), a seal of night (the Holy Light), and the light
+    past it. The way out is a balcony on its west side. The keep is entered
+    through the roof of the upper hall, and holds a relic.
   - **Down, the Hollow**: a grotto inside the Garden's own cloud, under the
     lake. A cracked slab in the grass drops into it (the Smite); a sealed door
     opens into it from the well of the stair (the Holy Light).
@@ -173,27 +178,35 @@ and three ways out of the middle that are gone in any order.
 - **Three ways in.** Besides the stair by the pond, a stair of light stands
   under the Orchard's west end and one under the House's east end, so a hero
   coming up from the Pit or from the Gate is not sent back to the middle.
-- **Up is rewarded.** The Temple's roof is climbed from either end and its
-  dome is crossed on its back (that is also the way round the house); a
-  draught lies under the dome's crown; a heart on a cloud over the Orchard's
-  dome; a relic in the House's keep and one on a cloud half way up the stair
-  to the Temple, where a soul stands.
+- **Up is rewarded.** The citadel's wall walk is climbed from either end and
+  goes through its great tower (that is also the way round the house); a
+  draught lies under the great tower's roof; a heart on a cloud over the
+  Orchard's dome; a relic in the House's keep and one on a cloud half way up
+  the stair to the citadel, where a soul stands.
 - **How it is built** (the rules, from what builders of block worlds say, in
   the session's research notes): the outline first, and never a box: one mass
   clearly the tallest, towers of different heights, everything thinner toward
-  its top, and roofs cut on the slant (marble and gold have slopes: `pitched`,
-  `slant`). Depth in layers, each darker: the wall behind in shadow, bright
+  its top, and roofs cut on the slant or steep (marble, gold and the blue
+  tiles have slopes: `pitched`, `steeple`, `slant`). Depth in layers, each darker: the wall behind in shadow, bright
   columns in front of it (`pillar`, `arch`), the hero in front of those. One
   bay (a column, an arch, a window) repeated along a hall. Detail in few
-  places, with rest between: capitals, cornices, glass, the rod on a spire. A
-  small palette: marble light and dark, gold for what matters, one cool glass
-  and one warm. And size against the hero: a door is more than twice him, a column
+  places, with rest between: capitals, battlements, a lit window, a banner,
+  the rod on a roof. A small palette: marble light and dark, blue for roofs
+  and cloth, gold for what matters, a warm light in the windows. And what a
+  thing is, is said by its parts: towers of many heights, battlements,
+  banners and gates say castle, where a dome, a bell and a rose window said
+  church (`turret`, `battlement`, `banner`, `emblem`). And size against the hero: a door is more than twice him, a column
   eight, the dome thirty.
-- **Heaven is behind all of it** (`heaven` layers of the backdrop): islands
-  hanging far off with threads of falling water, shafts of light, a sea of
-  cloud the islands stand in, and wisps of cloud that pass in front of the hero
-  on the stairs. They take the hour's tint: the sea of cloud is pink at
-  sunset, and the islands stand dark against the stars at night.
+- **Heaven is behind all of it**, and little bare sky shows (`heaven` layers
+  of the backdrop, far to near): a country of cloud, towers of it one behind
+  another; castles far off on banks of cloud, towers under pointed roofs of
+  blue, keeps, walls on arches, threads of falling water; islands hanging in
+  the air; thin cloud high up; a second sea of cloud, the one the citadel's
+  island stands in, over the one the Garden's stands in; shafts of light; and
+  wisps of cloud that pass in front of the hero on the stairs. A glory of pale
+  gold, rings and rays, stands behind the great tower. All of it takes the
+  hour's tint: the seas of cloud are pink at sunset, and the far castles stand
+  dark against the stars at night.
 - **Small clouds** drift in the empty sky (`wisp`: stood on, like any cloud).
 
 The model plays Paradise as it plays the rest: every light, relic, upgrade and

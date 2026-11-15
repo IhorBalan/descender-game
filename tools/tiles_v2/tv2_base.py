@@ -160,9 +160,12 @@ _BIOME_PALETTES = [
     ("blossom_wall", "a84a78", "d86a9a e482ae ee9cc0 f6b4d0 fccce0 ffe6f0"),
     ("gold_leaf_wall", "9a6a10", "c88e1c dca62c ecbc40 f8d05c ffe284 fff3b4"),
     ("pillar_wall", "8c8a9a", "b8b6c4 cccad6 dcdae4 eae8f0 f6f5fa ffffff"),
-    # Stained glass: the first colour is the lead, the rest the panes' hues (cool, and warm for a rose).
+    # Glass: the first colour is the lead, the rest the panes' hues (cool; and warm, a window with a light behind it).
     ("glass_wall", "1c1a3a", "24224a 2f6fd8 49b4f0 8a5ce0 ffd45a fff6d0"),
-    ("rose_glass_wall", "3a1228", "4a1830 e0407a ff7aa8 f0a030 ffe070 fff6d0"),
+    ("rose_glass_wall", "5a3208", "6a3c0c f0a020 ffc840 ffe070 fff0a8 fff8d8"),
+    # The roofs of the castles of Paradise, and the cloth of their banners.
+    ("azure_tile", "14285e", "23469a 2c5bb8 3a72d2 5590e6 7fb0f4 b4d4fb"),
+    ("banner_wall", "1a2f7a", "2648a8 2f5ac4 3b6fdc 5a8cee 86b0f8 c8dcff"),
     # Gold worked thin, for what is hung and set on a building; and marble in deep shadow.
     ("gilt_wall", "8a5e0c", "b88314 d09a1c e6b430 f6cc4c ffe27a fff3b0"),
     ("shadow_wall", "3a3a4c", "55546a 5f5e74 69687e 737288 7d7c92 87869c"),
@@ -220,6 +223,9 @@ MATERIALS += [
     dict(_wall("glass_wall", "glass"), open=True),
     dict(_wall("rose_glass_wall", "glass"), open=True),
     dict(_wall("gilt_wall", "plain"), open=True),
+    dict(_wall("banner_wall", "flutes"), open=True),
+    # Tiles of blue for a tower's roof: they give a little light of their own, so a roof has no dark heart.
+    dict(_ground("azure_tile", "leaves", True, emits=(0.22, 0.34, 0.60))),
     # A recess, a niche, the inside of a dome: marble the sun does not reach.
     _wall("shadow_wall", "bricks"),
     # The inside of a cloud: a wall like any other, it shuts out the sky.
@@ -450,6 +456,11 @@ LEGEND = [
     ("e", "terrain", "marble", "up_left"),
     ("j", "terrain", "gold_brick", "up_right"),
     ("k", "terrain", "gold_brick", "up_left"),
+    # Every plain letter is taken: these are Latin-1.
+    ("\u00c9", "terrain", "azure_tile", ""),
+    ("\u00e9", "terrain", "azure_tile", "up_right"),
+    ("\u00e8", "terrain", "azure_tile", "up_left"),
+    ("\u00e7", "wall", "banner_wall", ""),
     ("K", "terrain", "gold_brick", ""),
     # Falling water: seen and walked through, neither swum in nor stood on.
     ("|", "liquid", "falls", ""),

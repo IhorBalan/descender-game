@@ -537,9 +537,9 @@ def backdrop_heaven_clouds() -> Image.Image:
 
 
 def _building(r, kind: str, wide: int, tall: int) -> np.ndarray:
-    """One building of the far city as a patch of tones: 1 lit, 2 its body, 3 a dark opening, 4 gold."""
+    """One building of the far castles as a patch of tones: 1 lit, 2 its body, 3 a dark opening, 4 a roof."""
     cap = wide // 2 + 6
-    h, w = tall + cap + 8, wide + 4
+    h, w = tall + 84, wide + 4
     t = np.zeros((h, w), dtype=np.uint8)
     x0, x1, foot = 2, 2 + wide, h
     top = foot - tall
@@ -551,44 +551,51 @@ def _building(r, kind: str, wide: int, tall: int) -> np.ndarray:
         for k in range(cap):  # a spire
             half = max((wide / 2) * (1 - k / cap), 0.6)
             t[top - 1 - k, int(round((x0 + x1) / 2 - half)) : int(round((x0 + x1) / 2 + half)) + 1] = 4 if k < cap - 3 else 1
-    elif kind == "dome":
+    elif kind == "keep":
+        # A great block under battlements, a taller tower with a pointed roof out of its middle.
         t[top:foot, x0:x1] = 2
         t[top:foot, x0 : x0 + 2] = 1
-        t[top : top + 2, x0 - 1 : x1 + 1] = 1
+        for x in range(x0, x1, 6):
+            t[top - 4 : top, x : x + 3] = 2
         for x in range(x0 + 5, x1 - 4, 9):
-            t[top + 8 : foot - 6, x : x + 3] = 3
-            t[top + 7, x + 1] = 3
-        rad = wide / 2 - 2
-        for y in range(int(rad) + 1):
-            half = (rad * rad - y * y) ** 0.5
-            t[top - 1 - y, int(round((x0 + x1) / 2 - half)) : int(round((x0 + x1) / 2 + half)) + 1] = 4
-        t[top - int(rad) - 6 : top - int(rad) - 1, (x0 + x1) // 2] = 1
-    elif kind == "colonnade":
-        t[top : top + 4, x0 - 1 : x1 + 1] = 1
-        for x in range(x0, x1 - 1, 7):
-            t[top + 4 : foot, x : x + 3] = 2
-            t[top + 4 : foot, x] = 1
-        for k in range(wide // 4):  # a low gable
-            t[top - 1 - k, x0 + k * 2 : x1 - k * 2] = 2 if k else 4
-    else:  # an obelisk
-        t[top:foot, x0 + wide // 2 - 2 : x0 + wide // 2 + 2] = 2
-        t[top:foot, x0 + wide // 2 - 2] = 1
-        t[top - 4 : top, x0 + wide // 2 - 1 : x0 + wide // 2 + 1] = 4
+            t[top + 10 : foot - 6, x : x + 3] = 3
+            t[top + 9, x + 1] = 3
+        middle, half = (x0 + x1) // 2, wide // 6 + 2
+        t[top - 30 : top, middle - half : middle + half] = 2
+        t[top - 30 : top, middle - half : middle - half + 2] = 1
+        for k in range(half * 2 + 4):
+            reach = max(half * (1 - k / (half * 2 + 4)), 0.6)
+            t[top - 31 - k, int(round(middle - reach)) : int(round(middle + reach)) + 1] = 4
+    elif kind == "wall":
+        # A curtain wall on round arches, battlements along it.
+        t[top : top + 8, x0 - 1 : x1 + 1] = 2
+        t[top, x0 - 1 : x1 + 1] = 1
+        for x in range(x0, x1, 6):
+            t[top - 4 : top, x : x + 3] = 2
+        for x in range(x0, x1 - 1, 12):
+            t[top + 8 : foot, x : x + 4] = 2
+            t[top + 8 : foot, x] = 1
+    else:  # a slender tower
+        t[top:foot, x0 + wide // 2 - 3 : x0 + wide // 2 + 3] = 2
+        t[top:foot, x0 + wide // 2 - 3] = 1
+        for k in range(12):
+            reach = max(3.5 * (1 - k / 12), 0.6)
+            t[top - 1 - k, int(round(x0 + wide / 2 - reach)) : int(round(x0 + wide / 2 + reach)) + 1] = 4
     return t
 
 
 def backdrop_heaven_city() -> Image.Image:
-    """A city far off, on shelves of cloud one over another: domes, spires, colonnades, a
-    thread of water falling from a shelf's edge here and there. Pale: it is a long way off,
-    and paler the higher. Repeats sideways."""
+    """Castles far off, on banks of cloud one over another: towers under pointed roofs of
+    blue, keeps, walls on arches, a thread of water falling from a bank's edge here and
+    there. Pale: they are a long way off. Repeats sideways."""
     width, height = BACKDROP_W, 1216
     canvas = np.zeros((height, width), dtype=np.uint8)
     r = rng("heaven city")
     # Tones per shelf, far to near: cloud lit, body, shade; stone lit, body, dark; gold.
     ramps = [
-        hexes("d3e1f5", "c0d2ee", "b0c5e8", "cfdcf2", "b6c8e8", "9fb4dc", "e3dcc0"),
-        hexes("dfe9f8", "c9d9f1", "b5c9ea", "d9e3f5", "bccdea", "a0b5dc", "ecdfb4"),
-        hexes("ecf2fb", "d4e1f4", "bccfec", "e6ecf8", "c3d1ec", "a2b6dc", "f3e2a8"),
+        hexes("d3e1f5", "c0d2ee", "b0c5e8", "cfdcf2", "b6c8e8", "9fb4dc", "8ea8de"),
+        hexes("dfe9f8", "c9d9f1", "b5c9ea", "d9e3f5", "bccdea", "a0b5dc", "7f9fde"),
+        hexes("ecf2fb", "d4e1f4", "bccfec", "e6ecf8", "c3d1ec", "a2b6dc", "6f93dc"),
     ]
     palette = np.array([(0, 0, 0)] + [c for ramp in ramps for c in ramp] + [hexes("f2f7fd")[0]], dtype=np.uint8)
     water = len(palette) - 1
@@ -598,8 +605,8 @@ def backdrop_heaven_city() -> Image.Image:
         # The buildings first, their feet a little down in the cloud, then the cloud over their feet.
         x = cx - wide // 2 + 34
         while x < cx + wide // 2 - 44:
-            kind = r.choice(["tower", "dome", "colonnade", "tower", "obelisk", "dome"])
-            bw, bt = {"tower": (r.randint(12, 18), r.randint(70, 140)), "dome": (r.randint(44, 70), r.randint(40, 60)), "colonnade": (r.randint(50, 84), r.randint(32, 44)), "obelisk": (8, r.randint(46, 86))}[kind]
+            kind = r.choice(["tower", "keep", "wall", "tower", "slender", "keep", "slender"])
+            bw, bt = {"tower": (r.randint(12, 18), r.randint(70, 140)), "keep": (r.randint(44, 70), r.randint(44, 64)), "wall": (r.randint(50, 84), r.randint(34, 46)), "slender": (10, r.randint(56, 110))}[kind]
             piece = _building(r, kind, bw, bt)
             _stamp(canvas, piece, x, foot - 30 - piece.shape[0], np.array([0, base + 3, base + 4, base + 5, base + 6], dtype=np.uint8))
             x += bw + r.randint(4, 22)

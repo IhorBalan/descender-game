@@ -604,6 +604,32 @@
       "open": true
     },
     {
+      "key": "banner_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "banner_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "azure_tile",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "azure_tile.png",
+      "slopes": true,
+      "emits": [
+        0.22,
+        0.34,
+        0.6
+      ],
+      "open": false
+    },
+    {
       "key": "shadow_wall",
       "kind": "wall",
       "group": "walls",
@@ -1601,6 +1627,30 @@
       "layer": "terrain",
       "key": "gold_brick",
       "slope": "up_left"
+    },
+    {
+      "character": "\u00c9",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": ""
+    },
+    {
+      "character": "\u00e9",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "up_right"
+    },
+    {
+      "character": "\u00e8",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00e7",
+      "layer": "wall",
+      "key": "banner_wall",
+      "slope": ""
     },
     {
       "character": "K",

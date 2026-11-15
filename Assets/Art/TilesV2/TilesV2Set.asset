@@ -367,6 +367,22 @@ MonoBehaviour:
     layer: 0
     key: gold_brick
     tile: {fileID: 11400000, guid: a229e1edbe614fa45836eb7e635bbfc0, type: 2}
+  - character: "\xC9"
+    layer: 0
+    key: azure_tile
+    tile: {fileID: 11400000, guid: 2dc396adf2a1f9843bb585987b4489e2, type: 2}
+  - character: "\xE9"
+    layer: 0
+    key: azure_tile
+    tile: {fileID: 11400000, guid: 62d6456728988a0458a719630a5f9375, type: 2}
+  - character: "\xE8"
+    layer: 0
+    key: azure_tile
+    tile: {fileID: 11400000, guid: 64327918d1099fa43857b28594747b8c, type: 2}
+  - character: "\xE7"
+    layer: 1
+    key: banner_wall
+    tile: {fileID: 11400000, guid: 7cafd5599066e57499ca50e58105af10, type: 2}
   - character: K
     layer: 0
     key: gold_brick
@@ -2182,7 +2198,7 @@ MonoBehaviour:
     order: -1003
     lit: 0
     scrollUp: 0.3
-    rise: 2
+    rise: 14
     drift: 0
     tinted: 1
   - key: backdrop_heaven_city
