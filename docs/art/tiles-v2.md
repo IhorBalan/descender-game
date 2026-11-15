@@ -128,11 +128,19 @@ each, drawn with the same frames from their own palettes:
 | Fraud | slate | slate_wall | |
 | Treachery | frost_rock, ice (gives a cold light) | ice_wall | |
 
-Two more walls stand under the open sky, a tree's trunk and its crown
-(`wood_wall`, `leaf_wall`). They are **open** walls (`open` in `MATERIALS`,
-`TerrainTile.Open`): drawn on the wall layer like any other, but to the light
-and to what grows the cell behind them has no wall, so a tree does not shut
-out the sky and the grass under it is still under the sky.
+Some walls stand under the open sky: a tree's trunk and its crown
+(`wood_wall`, `leaf_wall`), Paradise's own trees (`birch_wall`, `blossom_wall`,
+`gold_leaf_wall`) and a column of bright marble (`pillar_wall`). They are
+**open** walls (`open` in `MATERIALS`, `TerrainTile.Open`): to the light and to
+what grows the cell behind them has no wall, so a tree does not shut out the
+sky and the grass under it is still under the sky; and they are laid on a
+tilemap of their own (`Foliage`), in front of the other walls and not tinted
+back, so blossom is as bright as it is drawn. Crowns are drawn with the
+`leaves` texture (rows of small rounds), a column with `flutes`.
+
+Paradise also adds `mist_wall` (the inside of a cloud: a wall like any other)
+and `gold_brick`, gold in blocks, which gives a warm light: a roof of it has
+no dark heart and shows from the Earth at night.
 
 A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
 its own tilemap on the game's Ledge layer with a one-way `PlatformEffector2D`,
@@ -149,10 +157,13 @@ them, all on the Default sorting layer, back to front:
 | Sky | -1010 | the sky's bands, painted from the hour's two colours | none |
 | Stars, sun and moon | -1008, -1006 | pinned to the view | none |
 | Clouds | -1004 | drift along the top of the view | none |
+| Heaven, far | -1000, -996 | over a world with regions: islands hanging far off | none |
 | Ridges | -990, -980, -970 | far mountains, hills, near forest | none |
+| Heaven, near | -966, -964 | a sea of cloud, shafts of light | none |
 | Cave rock | -960 and up, 4 a region | the rock behind the caves, each region's own under the surface line; what stands far off in it; the ragged strip along its top | tile light |
 | Walls | -300 | wall tiles, tinted back | tile light |
 | Shade | -290 | the shade of the ground on the walls | tile light |
+| Foliage | -285 | the open walls: trees, columns in the open; not tinted | tile light |
 | Decor | -110 | what stands on or hangs from the ground | tile light |
 | Terrain | -100 | ground tiles; TilemapCollider2D merged by a CompositeCollider2D, layer World | tile light |
 | Ledges | -98 | the one-way ledges, layer Ledge | tile light |
@@ -161,7 +172,8 @@ them, all on the Default sorting layer, back to front:
 | Torches | -60 | the lamps: torches, braziers, crystals, lanterns | none: they are the light |
 | Glow | -40 | glints of ore | none |
 | (the hero) | 0 | | |
-| Liquids | 20 to 25 | each liquid on its own tilemap, in front of the hero | water, the Styx, tar, slime: tile light; lava and blood: none, they are the light |
+| Liquids | 20 to 26 | each liquid on its own tilemap, in front of the hero | water, the Styx, tar, slime: tile light; lava, blood and falling water: none |
+| Cloud in front | 30 | wisps of the sea of cloud that pass in front of the hero | none |
 | Particles | 60 | dust, embers, sand, sparks | dust and sand take the tile light |
 
 ## The map
@@ -210,6 +222,10 @@ are the legend in the manifest:
 | `"` `'` `,` `?` | ledge | a ledge of planks, an iron grate, gilt, rime |
 | `m` `h` `r` `u` `n` `y` `b` `v` `f` `i` | wall (second grid) | the regions' walls |
 | `w` `l` | wall (second grid) | a tree's trunk and its crown: open walls |
+| `t` `p` `g` `x` | wall (second grid) | Paradise's open walls: a pale trunk, blossom, leaves of gold, a column |
+| `c` | wall (second grid) | the inside of a cloud |
+| `K` | terrain | gold in blocks |
+| `\|` | liquid | falling water |
 
 A map of several regions also says where each starts and what of the game's
 stands where:
@@ -225,13 +241,16 @@ stands where:
 
 A mark may also be `secret` (a wall the sword breaks, with a room behind it),
 `platform` (one that gives way or comes and goes), `wind`, `upgrade` (a heart
-or a draught of the game's), `sign` (a post, a tablet or a shade that says a
-line) or `dark` (a stretch whose air gives no light): the world's document
-lists them all. `TilesV2World` lays the tiles and takes the dark stretches;
+or a draught of the game's), `sign` (a post, a tablet, a shade or a soul that
+says a line), `dark` (a stretch whose air gives no light), `beacon` (a light
+the hero lights by walking up to it), `sanctum` (a door that opens when enough
+lights burn) or `picture` (one of the tile set's pictures stood in a cell): the
+world's document lists them all. `TilesV2World` lays the tiles and takes the dark stretches;
 `TilesV2Things.Build` stands the other marks in the world from the game's own
 parts (its checkpoint, ability and upgrade pickup prefabs, a collider on the
 LightBarrier layer, a `Breakable`, a `Crumble`, a `Blinker`, a `ForceZone`) and
-from `TilesV2Sign`, which a scene's runner does at the start of play.
+from `TilesV2Sign` and `TilesV2Beacon`, which a scene's runner does at the
+start of play.
 
 The sample map, `Assets/Art/TilesV2/sample_map.txt` (128 x 64), is written by
 `tools/tiles_v2/make_sample_map.py`: a meadow with a hill and a pond, the
@@ -309,6 +328,7 @@ travels), every cell under it the body frames; 8 frames each.
 | blood | opaque, unlit | 4 | 0.84, 0.60, 0.60 | 0.8, 0.14, 0.12 | is hurt |
 | tar | opaque, takes the tile light | 3 | 0.50, 0.50, 0.55 | none | is hurt |
 | slime | see-through, green | 4 | 0.70, 0.88, 0.60 | 0.05, 0.12, 0.03 | swims |
+| falls | see-through, unlit: streaks that run down (`fall`), the same from top to foot | 12 | 0.90, 0.94, 0.98 | 0.10, 0.13, 0.17 | walks through: no area is made for it |
 
 A liquid is drawn `clear` (see-through, glints that come and go) or `thick`
 (opaque, a crust and spots that swell): `LIQUIDS` in `tv2_liquid.py`.
@@ -332,6 +352,8 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 | cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, each region's own colours (`REGIONS`), shown only in that region's rows under the surface line: a sprite mask over the region, with a custom range so it cuts that region's picture and no other. It takes the tile light, so it is black until something lights the cave. A map that names no regions is all the Earth's |
 | what stands far off | 0.78, 0.78 | a 640 x 360 picture for each region (`FAR`: columns, spires, fangs, heaps, bare trees, towers with lit windows, a viaduct, shards), a little lighter than the rock, over it and cut to the region as it is; nearer than the rock, so it moves more |
 | cave rock's top | 0.55, 1 | a ragged strip along the top of each region's rock, so one region's rock runs into the next one's |
+| heaven (`heaven`; only over a map with regions) | each its own | five layers, each standing `rise` tiles over the surface line for a camera on that line and keeping the camera company on its way up by the share `scrollUp` leaves (what is far follows it): islands far off (0.06 across, 0.25 up) and nearer (0.16, 0.4), a sea of cloud (0.5, 1; it drifts), shafts of light (0.3, 0.6), and wisps of cloud fixed in the world that drift in front of the hero. All but the light take the hour's tint |
+| a picture (`picture`) | fixed in the world | stood by a map's mark, its foot in the mark's cell: a rainbow |
 
 A cell shows the cave rock when it has no wall and lies under the surface
 line: leave the walls out of a cavern to open it onto the rock.

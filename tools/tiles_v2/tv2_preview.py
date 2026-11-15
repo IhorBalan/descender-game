@@ -288,11 +288,15 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
         tile_across(world, images["backdrop_cave_" + region["key"]], first * TILE - top, end * TILE - top, left=-left)
         ragged = images["backdrop_cave_top_" + region["key"]]
         tile_across(world, ragged, first * TILE - ragged.height - top, left=-left)
+    # The walls, tinted back; and over them the open ones (a tree), which are not.
     walls = Image.new("RGBA", (width, height), (0, 0, 0, 0))
-    lay_tiles(walls, layout, window, images, layout.wall, group)
+    lay_tiles(walls, layout, window, images, lambda x, row: None if layout.wall(x, row) in OPEN_WALLS else layout.wall(x, row), group)
     world.alpha_composite(tinted(walls, LIGHT["wall_tint"]))
+    foliage = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    lay_tiles(foliage, layout, window, images, lambda x, row: layout.wall(x, row) if layout.wall(x, row) in OPEN_WALLS else None, group)
     for x, row, mask in shade_cells(layout, window):
         world.alpha_composite(sprites[tv2_decor.shade_sprite(mask)], window.at(x, row))
+    world.alpha_composite(foliage)
     open_sky = lighting.open_sky if lighting else np.zeros((layout.height, layout.width), dtype=bool)
     for x, row, name in decor_of(layout, open_sky):
         if window.has(x, row):

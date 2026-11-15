@@ -484,6 +484,20 @@ namespace Descender.World.TilesV2
 
             public int order;
             public bool lit;
+
+            [Tooltip("A layer of heaven: the share of the camera's way up it moves with the world.")]
+            public float scrollUp = 1f;
+
+            [Tooltip(
+                "A layer of heaven: the tiles over the surface line its foot stands at, for a camera on that line."
+            )]
+            public float rise;
+
+            [Tooltip("A layer of heaven: units a second it moves to the right by itself.")]
+            public float drift;
+
+            [Tooltip("A layer of heaven: whether it takes the hour's tint, as the ridges and the clouds do.")]
+            public bool tinted;
         }
 
         /// <summary>The day's values at one moment.</summary>
@@ -529,6 +543,12 @@ namespace Descender.World.TilesV2
             Ridge,
             Cave,
             CaveTop,
+
+            /// <summary>Over a world with regions: islands far off, shafts of light, banks of cloud.</summary>
+            Heaven,
+
+            /// <summary>A picture a map stands somewhere itself (`@mark picture column row key`).</summary>
+            Picture,
         }
     }
 }

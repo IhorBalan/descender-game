@@ -154,6 +154,12 @@ namespace Descender.World.TilesV2
                     Say($"a wall that was not one: {things.SecretsFound} of {things.Secrets}");
                 };
                 things.Ended += () => Announce("The Gate of Paradise", "the descent is done");
+                things.BeaconLit += _ =>
+                    Announce(
+                        things.BeaconsLit >= things.Beacons ? "The last light wakes" : "A light wakes",
+                        $"{things.BeaconsLit} of {things.Beacons}"
+                    );
+                things.SanctumOpened += _ => Say("the door of the Temple is open");
                 Pickups.Checkpoint.AnyRested += checkpoint => rested.Add(checkpoint.Index);
                 Pickups.Checkpoint.AnyCampRequested += OpenTravel;
             }
@@ -544,7 +550,10 @@ namespace Descender.World.TilesV2
             var box = new Rect(screen.x * 0.15f, screen.y - 64f, screen.x * 0.7f, 52f);
             GUI.color = new Color(0f, 0f, 0f, 0.72f);
             GUI.DrawTexture(box, Texture2D.whiteTexture);
-            GUI.color = sign.Kind == TilesV2Sign.Shade ? new Color(0.82f, 0.88f, 1f) : new Color(1f, 0.95f, 0.82f);
+            GUI.color =
+                sign.Kind == TilesV2Sign.Shade ? new Color(0.82f, 0.88f, 1f)
+                : sign.Kind == TilesV2Sign.Soul ? new Color(1f, 0.9f, 0.55f)
+                : new Color(1f, 0.95f, 0.82f);
             GUI.Label(new Rect(box.x + 8f, box.y + 2f, box.width - 16f, box.height - 4f), sign.Text, signStyle);
             GUI.color = Color.white;
         }
@@ -599,6 +608,13 @@ namespace Descender.World.TilesV2
                         break;
                     case TilesV2Things.Seal when !thing.IsGone:
                         colour = thing.Word == "slam" ? SlamColour : BoltColour;
+                        break;
+                    case TilesV2Things.Beacon:
+                        colour = ShrineColour * (thing.Taken ? 1f : 0.55f);
+                        big = 5f;
+                        break;
+                    case TilesV2Things.Sanctum when !thing.IsGone:
+                        colour = ShrineColour;
                         break;
                     default:
                         continue;

@@ -22,6 +22,7 @@ namespace Descender.World.TilesV2
 
         public const int WallsOrder = -300;
         public const int ShadeOrder = -290;
+        public const int FoliageOrder = -285;
         public const int DecorOrder = -110;
         public const int TerrainOrder = -100;
         public const int BlendOrder = -95;
@@ -70,6 +71,12 @@ namespace Descender.World.TilesV2
 
         public Tilemap Terrain { get; private set; }
         public Tilemap Walls { get; private set; }
+
+        /// <summary>
+        /// The walls that stand under the open sky and do not shut it out (a tree's trunk and
+        /// crown): on a tilemap of their own, in front of the other walls and not tinted back.
+        /// </summary>
+        public Tilemap Foliage { get; private set; }
         public Tilemap Decor { get; private set; }
         public Tilemap Shade { get; private set; }
         public Tilemap Blend { get; private set; }
@@ -210,6 +217,7 @@ namespace Descender.World.TilesV2
 
             Walls = MakeTilemap("Walls", WallsOrder, set.litMaterial, false);
             Walls.color = new Color(set.wallTint.r, set.wallTint.g, set.wallTint.b, 1f);
+            Foliage = MakeTilemap("Foliage", FoliageOrder, set.litMaterial, false);
             Shade = MakeTilemap("Shade", ShadeOrder, set.litMaterial, false);
             Decor = MakeTilemap("Decor", DecorOrder, set.litMaterial, false);
             Terrain = MakeTilemap("Terrain", TerrainOrder, set.litMaterial, true);
@@ -272,6 +280,7 @@ namespace Descender.World.TilesV2
             Map = null;
             Terrain = null;
             Walls = null;
+            Foliage = null;
             Decor = null;
             Shade = null;
             Blend = null;
@@ -309,7 +318,8 @@ namespace Descender.World.TilesV2
                     var cell = Map.CellOf(column, row);
                     if (set.TryGlyph(Map.WallAt(column, row), out var behind) && behind.layer == TilesV2Set.Layer.Wall)
                     {
-                        Add(cells, tiles, Walls, cell, behind.tile);
+                        var open = behind.tile is TerrainTile wall && wall.Open;
+                        Add(cells, tiles, open ? Foliage : Walls, cell, behind.tile);
                     }
                     if (!set.TryGlyph(Map.TerrainAt(column, row), out var glyph))
                     {

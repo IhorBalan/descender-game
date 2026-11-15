@@ -16,7 +16,8 @@ It writes, under the folder:
     4k/rowR_colC.png      the same, cut into sheets of 3840 x 2160, for a viewer that will not open the whole
     labelled.png          the whole map with what the map marks named on it: every rest (C1 ...), ability,
                           gate (G1 ...), secret (S1 ...), relic (R1 ...), upgrade (U1 ...), sign (T1 ...),
-                          platform that does not stay (P1 ...), wind (W1 ...) and dark stretch, the regions'
+                          platform that does not stay (P1 ...), wind (W1 ...), light of Paradise (L1 ...),
+                          the door they open (D1) and dark stretch, the regions'
                           names, and columns and rows along its edges
     labelled/NN_key.png   the same, a region at a time
     labels.txt            the list of those names: what each is, its column and row, its region
@@ -177,6 +178,8 @@ LABELS = {
     "platform": ("P", (150, 215, 255)),
     "wind": ("W", (170, 240, 240)),
     "end": ("", (255, 255, 255)),
+    "beacon": ("L", (255, 240, 150)),
+    "sanctum": ("D", (255, 240, 150)),
 }
 DARK = (190, 120, 255)
 
@@ -220,6 +223,10 @@ def named(index: dict) -> list[dict]:
             what = "rest by the Pit (travel)" if words[:1] == ["pit"] else "rest"
         elif kind == "ability":
             what = "ability: " + words[0]
+        elif kind == "beacon":
+            what = "a light of Paradise: " + words[0]
+        elif kind == "sanctum":
+            box, what = (x, row, 1, int(words[0])), f"the door {words[1]} lights open"
         if letter:
             counts[letter] = counts.get(letter, 0) + 1
             name = f"{letter}{counts[letter]}"

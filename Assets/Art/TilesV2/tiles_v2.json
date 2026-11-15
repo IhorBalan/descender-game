@@ -511,6 +511,84 @@
         0.0
       ],
       "open": true
+    },
+    {
+      "key": "birch_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "birch_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "blossom_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "blossom_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "gold_leaf_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "gold_leaf_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "pillar_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "pillar_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "mist_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "mist_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
+      "key": "gold_brick",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "gold_brick.png",
+      "slopes": false,
+      "emits": [
+        0.42,
+        0.33,
+        0.1
+      ],
+      "open": false
     }
   ],
   "blends": [
@@ -1393,6 +1471,48 @@
       "layer": "wall",
       "key": "leaf_wall",
       "slope": ""
+    },
+    {
+      "character": "t",
+      "layer": "wall",
+      "key": "birch_wall",
+      "slope": ""
+    },
+    {
+      "character": "p",
+      "layer": "wall",
+      "key": "blossom_wall",
+      "slope": ""
+    },
+    {
+      "character": "g",
+      "layer": "wall",
+      "key": "gold_leaf_wall",
+      "slope": ""
+    },
+    {
+      "character": "c",
+      "layer": "wall",
+      "key": "mist_wall",
+      "slope": ""
+    },
+    {
+      "character": "x",
+      "layer": "wall",
+      "key": "pillar_wall",
+      "slope": ""
+    },
+    {
+      "character": "K",
+      "layer": "terrain",
+      "key": "gold_brick",
+      "slope": ""
+    },
+    {
+      "character": "|",
+      "layer": "liquid",
+      "key": "falls",
+      "slope": ""
     }
   ],
   "ledges": {
@@ -1426,7 +1546,12 @@
       "wind",
       "post",
       "tablet",
-      "shade"
+      "shade",
+      "soul",
+      "beacon_0",
+      "beacon_1",
+      "beacon_2",
+      "sanctum"
     ]
   },
   "props": [
@@ -1953,6 +2078,26 @@
       "swim": true,
       "hazard": 0,
       "order": 25
+    },
+    {
+      "key": "falls",
+      "sheet": "falls.png",
+      "frames": 8,
+      "fps": 12,
+      "lit": false,
+      "keeps": [
+        0.9,
+        0.94,
+        0.98
+      ],
+      "emits": [
+        0.1,
+        0.13,
+        0.17
+      ],
+      "swim": false,
+      "hazard": 0,
+      "order": 26
     }
   ],
   "decor": {
@@ -3108,6 +3253,72 @@
       "scroll": 0.45,
       "order": -970,
       "lit": false
+    },
+    {
+      "key": "backdrop_heaven_far",
+      "kind": "heaven",
+      "scroll": 0.06,
+      "scrollUp": 0.25,
+      "rise": 6,
+      "drift": 0.0,
+      "order": -1000,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_heaven_near",
+      "kind": "heaven",
+      "scroll": 0.16,
+      "scrollUp": 0.4,
+      "rise": 10,
+      "drift": 0.0,
+      "order": -996,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_cloudsea",
+      "kind": "heaven",
+      "scroll": 0.5,
+      "scrollUp": 1.0,
+      "rise": 26,
+      "drift": 0.12,
+      "order": -966,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_rays",
+      "kind": "heaven",
+      "scroll": 0.3,
+      "scrollUp": 0.6,
+      "rise": 8,
+      "drift": 0.0,
+      "order": -964,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "backdrop_cloudfront",
+      "kind": "heaven",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 24,
+      "drift": 0.4,
+      "order": 30,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_rainbow",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -962,
+      "lit": false,
+      "tinted": false
     }
   ]
 }

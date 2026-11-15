@@ -41,6 +41,10 @@ LIQUIDS = [
      "fps": 3, "lit": True, "keeps": (0.50, 0.50, 0.55), "emits": (0.0, 0.0, 0.0), "swim": False, "hazard": 1, "order": 24},
     {"key": "slime", "style": "clear", "colours": _rgba("4a8c22d2", "74b83cd8", "c4ee8ce6", "8ed050d8"),
      "fps": 4, "lit": True, "keeps": (0.70, 0.88, 0.60), "emits": (0.05, 0.12, 0.03), "swim": True, "hazard": 0, "order": 25},
+    # Falling water (`fall`: body, light, foam, glint): streaks that run down. Nothing swims
+    # in it and it hurts nobody; it is drawn as it is, so a fall shows from far off and at night.
+    {"key": "falls", "style": "fall", "colours": _rgba("6aa8ec84", "9ccaf6b0", "ffffffe6", "d8ecfdcc"),
+     "fps": 12, "lit": False, "keeps": (0.90, 0.94, 0.98), "emits": (0.10, 0.13, 0.17), "swim": False, "hazard": 0, "order": 26},
 ]
 
 
@@ -106,7 +110,26 @@ def thick_frame(liquid: dict, part: str, frame: int) -> np.ndarray:
     return a
 
 
-DRAW = {"clear": clear_frame, "thick": thick_frame}
+def fall_frame(liquid: dict, part: str, frame: int) -> np.ndarray:
+    """Falling water: a see-through sheet with streaks of light and flecks of foam that
+    run down it two pixels a frame, so the loop is seamless; the same from top to foot."""
+    body, light, foam, glint = liquid["colours"]
+    a = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+    a[:, :] = body
+    r = rng(liquid["key"], "streaks")
+    drop = frame * TILE // LIQUID_FRAMES
+    for x in range(TILE):
+        kind = r.choice(("light", "light", "glint", "body", "body", "foam"))
+        start, length = r.randrange(TILE), r.randint(4, 11)
+        if kind == "body":
+            continue
+        colour = {"light": light, "glint": glint, "foam": foam}[kind]
+        for k in range(length if kind != "foam" else 2):
+            a[(start + k + drop) % TILE, x] = colour
+    return a
+
+
+DRAW = {"clear": clear_frame, "thick": thick_frame, "fall": fall_frame}
 
 
 def liquid_sheet(liquid: dict) -> tuple[Image.Image, list]:

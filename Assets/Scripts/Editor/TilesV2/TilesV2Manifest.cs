@@ -265,6 +265,10 @@ namespace Descender.EditorTools.TilesV2
             public float scroll;
             public int order;
             public bool lit;
+            public float scrollUp = 1f;
+            public float rise;
+            public float drift;
+            public bool tinted;
         }
 
         public static TilesV2Manifest Load()

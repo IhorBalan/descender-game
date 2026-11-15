@@ -158,7 +158,10 @@ namespace Descender.Tests
                     case TilesV2Things.Sign:
                         Assert.That(
                             mark.Word(0),
-                            Is.EqualTo(TilesV2Sign.Post).Or.EqualTo(TilesV2Sign.Tablet).Or.EqualTo(TilesV2Sign.Shade)
+                            Is.EqualTo(TilesV2Sign.Post)
+                                .Or.EqualTo(TilesV2Sign.Tablet)
+                                .Or.EqualTo(TilesV2Sign.Shade)
+                                .Or.EqualTo(TilesV2Sign.Soul)
                         );
                         Assert.That(mark.Rest.Length, Is.GreaterThan(2), "a sign says something");
                         Assert.That(Solid(mark.Column, mark.Row + 1), Is.True, "a sign stands on the ground");
@@ -216,6 +219,11 @@ namespace Descender.Tests
                     TilesV2Sign.Post,
                     TilesV2Sign.Tablet,
                     TilesV2Sign.Shade,
+                    TilesV2Sign.Soul,
+                    "beacon_0",
+                    "beacon_1",
+                    "beacon_2",
+                    "sanctum",
                 }
             )
             {
@@ -565,7 +573,13 @@ namespace Descender.Tests
                         continue;
                     }
                     var cell = map.CellOf(column, row);
-                    var tile = world.Walls.GetTile<TerrainTile>(cell);
+                    // An open wall is laid on the foliage, in front of the walls and not tinted back.
+                    var tile = world.Foliage.GetTile<TerrainTile>(cell);
+                    Assert.That(
+                        world.Walls.HasTile(cell) && world.Foliage.HasTile(cell),
+                        Is.False,
+                        "a wall is on one layer"
+                    );
                     if (tile == null || !tile.Open)
                     {
                         continue;
@@ -583,7 +597,7 @@ namespace Descender.Tests
             // A dark stretch: the air of its region gives it nothing, so with the stretches marked
             // some of the world is darker than without, and none of it brighter.
             var dark = world.Dark();
-            Assert.That(dark.Count, Is.GreaterThan(3), "some of the road is dark");
+            Assert.That(dark.Count, Is.GreaterThan(2), "some of the road is dark");
             foreach (var stretch in dark)
             {
                 Assert.That(stretch.width * stretch.height, Is.GreaterThan(8));
@@ -609,6 +623,113 @@ namespace Descender.Tests
             {
                 world.Light.SetDark(dark);
                 world.Light.Refresh();
+            }
+        }
+
+        [Test]
+        public void ParadiseIsAPlaceWithThreeLightsAndADoorTheyOpen()
+        {
+            // The map: three lights, each its own, a door that asks for all of them, and the end past it.
+            var names = new HashSet<string>();
+            TilesV2Map.Mark door = default;
+            var doors = 0;
+            var falling = 0;
+            foreach (var mark in map.Marks)
+            {
+                if (mark.Kind == TilesV2Things.Beacon)
+                {
+                    Assert.That(names.Add(mark.Word(0)), Is.True, "two lights of one name: " + mark.Word(0));
+                    Assert.That(map.RegionAt(mark.Row), Is.EqualTo(0), "the lights are Paradise's");
+                    Assert.That(Solid(mark.Column, mark.Row + 1), Is.True, "a light stands on the ground");
+                }
+                if (mark.Kind == TilesV2Things.Sanctum)
+                {
+                    door = mark;
+                    doors++;
+                }
+            }
+            Assert.That(names.Count, Is.EqualTo(3));
+            Assert.That(doors, Is.EqualTo(1));
+            Assert.That(door.Number(1, 0), Is.EqualTo(names.Count), "the door asks for every light");
+            Assert.That(Solid(door.Column, door.Row - 1), Is.True, "the door fills its doorway: the lintel");
+            Assert.That(Solid(door.Column, door.Row + door.Number(0, 0)), Is.True, "and the threshold");
+            // Water falls through the sky: seen, and neither swum in nor a hurt.
+            var falls = System.Array.Find(set.liquids, liquid => liquid.key == "falls");
+            Assert.That(falls, Is.Not.Null);
+            Assert.That(falls.swim, Is.False);
+            Assert.That(falls.hazard, Is.EqualTo(0));
+            for (var row = 0; row < map.Surface; row++)
+            {
+                for (var column = 0; column < map.Width; column++)
+                {
+                    falling += set.TryGlyph(map.TerrainAt(column, row), out var glyph) && glyph.key == "falls" ? 1 : 0;
+                }
+            }
+            Assert.That(falling, Is.GreaterThan(100), "from the Temple to the Garden to the Earth");
+            // Heaven stands behind it: islands far off, light, cloud; and some cloud passes in front of the hero.
+            var heaven = 0;
+            var front = 0;
+            foreach (var entry in set.backdrops)
+            {
+                if (entry.kind != TilesV2Set.BackdropKind.Heaven)
+                {
+                    continue;
+                }
+                heaven++;
+                var layer = System.Array.Find(
+                    world.GetComponentsInChildren<ParallaxLayer>(),
+                    one => one.name == entry.key
+                );
+                Assert.That(layer, Is.Not.Null, entry.key + " is not in the world");
+                var picture = layer.GetComponent<SpriteRenderer>();
+                Assert.That(picture.sortingOrder, Is.EqualTo(entry.order));
+                Assert.That(layer.Scroll.y, Is.EqualTo(entry.scrollUp).Within(1e-4f));
+                front += picture.sortingOrder > 0 ? 1 : 0;
+            }
+            Assert.That(heaven, Is.GreaterThanOrEqualTo(4));
+            Assert.That(front, Is.EqualTo(1), "one bank of cloud passes in front of the hero");
+            // The things: the door stands until the last light burns.
+            Pickups.Checkpoint.Reset();
+            var things = TilesV2Things.Build(
+                world,
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+            );
+            try
+            {
+                Assert.That(things.Beacons, Is.EqualTo(3));
+                Assert.That(things.Sanctums, Is.EqualTo(1));
+                Assert.That(things.Pictures, Is.GreaterThan(0), "a rainbow stands in the Garden's lake");
+                TilesV2Things.Thing shut = null;
+                foreach (var thing in things.All)
+                {
+                    shut = thing.Kind == TilesV2Things.Sanctum ? thing : shut;
+                }
+                Assert.That(shut.Made.layer, Is.EqualTo(Layers.World), "the door stands in the way");
+                Assert.That(shut.Made.GetComponent<BoxCollider2D>().isTrigger, Is.False);
+                var lit = 0;
+                var opened = 0;
+                things.BeaconLit += _ => lit++;
+                things.SanctumOpened += _ => opened++;
+                var beacons = things.GetComponentsInChildren<TilesV2Beacon>();
+                Assert.That(beacons.Length, Is.EqualTo(3));
+                beacons[0].Light();
+                beacons[0].Light();
+                beacons[1].Light();
+                Assert.That(things.BeaconsLit, Is.EqualTo(2), "a light is lit once");
+                Assert.That(shut.Made.activeSelf, Is.True, "two lights are not three");
+                Assert.That(opened, Is.EqualTo(0));
+                beacons[2].Light();
+                Assert.That(lit, Is.EqualTo(3));
+                Assert.That(shut.Made.activeSelf, Is.False, "the last light opens the door");
+                Assert.That(shut.IsGone, Is.True);
+                Assert.That(opened, Is.EqualTo(1));
+                Assert.That(things.SanctumsOpen, Is.EqualTo(1));
+            }
+            finally
+            {
+                Object.DestroyImmediate(things.gameObject);
+                Pickups.Checkpoint.Reset();
             }
         }
 

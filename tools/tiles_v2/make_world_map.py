@@ -35,13 +35,14 @@ from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
 import tv2_reach
 
 WORLD_MAP = os.path.join(OUT, "world_map.txt")
-WIDTH, HEIGHT = 540, 780
+LIFT = 48  # rows of sky over the world's first layout: room for a Paradise that is a place and not a stair
+WIDTH, HEIGHT = 540, 780 + LIFT
 AIR = "."
-GROUND_LINE = 96  # the row the Earth's surface lies about
-SURFACE_LINE = 104  # the row the rock behind the caves starts at: under every dip of the surface
+GROUND_LINE = 96 + LIFT  # the row the Earth's surface lies about
+SURFACE_LINE = 104 + LIFT  # the row the rock behind the caves starts at: under every dip of the surface
 PIT = (6, 18)  # the Pit's columns: first, one past the last
 PIT_LEDGE = 14  # its ledges run from this column to its east side
-PIT_ROWS = (132, 738)  # its top, its floor
+PIT_ROWS = (132 + LIFT, 738 + LIFT)  # its top, its floor
 POND = (288, 306)  # the columns of the meadow the Earth's pond lies in
 WEST = 61  # the column the ways down at the world's west side start at, going west
 EAST = WIDTH - 24  # the column the ways down at its east side start at, going east
@@ -66,6 +67,7 @@ BANDS = [
     ("fraud", 656),
     ("treachery", 706),
 ]
+BANDS = [(key, top + LIFT if top else 0) for key, top in BANDS]
 # The floor each pass of the road starts on and ends on. A pass runs from one side of the
 # world to the other; Limbo and Heresy, the great circles, are two passes each, one under
 # the other. A west end is a multiple of six, as the Pit's ledges are.
@@ -82,16 +84,17 @@ FLOORS = {
     "fraud": (672, 688),
     "treachery": (722, 744),
 }
-GATE_HALL = 150  # the floor of the hall of the Gate, on the Earth
+FLOORS = {key: (a + LIFT, b + LIFT) for key, (a, b) in FLOORS.items()}
+GATE_HALL = 150 + LIFT  # the floor of the hall of the Gate, on the Earth
 # Parts of a circle that are of another ground than the rest of it, so a circle is
 # several places and not one: (first column, column after the last, first row, row after
 # the last, the ground). Limbo's lower pass runs into the marble of the castle; the
 # wood and the burning sand of Violence; the ice of the lake itself.
 ZONES = {
-    "limbo": [(300, WIDTH, 226, 276, "M")],
+    "limbo": [(300, WIDTH, 226 + LIFT, 276 + LIFT, "M")],
     "gluttony": [(200, 360, 0, HEIGHT, "D")],
     "wrath": [(360, WIDTH, 0, HEIGHT, "U")],
-    "heresy": [(0, 190, 492, 546, "H")],
+    "heresy": [(0, 190, 492 + LIFT, 546 + LIFT, "H")],
     "violence": [(190, 360, 0, HEIGHT, "D"), (0, 190, 0, HEIGHT, "E")],
     "treachery": [(0, 270, 0, HEIGHT, "I")],
 }
@@ -912,7 +915,7 @@ def ramble(road: Path, x_end: int, floor_end: int, have: tuple = (), kit: str | 
         last = piece
         if piece == "walk":
             wide = dice.randint(6, 11)
-            dark = wide >= 8 and left >= 64 and dice.random() < 0.3
+            dark = wide >= 8 and left >= 64 and dice.random() < 0.6
             if dark:
                 # A long stretch with no light of its own in its air and no lamp in it, before it
                 # or just past it: a lamp is seen a long way, so the dark needs room.
@@ -1299,7 +1302,7 @@ def surface(world: World, earth_road):
     _, road, trail, locked = earth_road
 
     def bare(x: int) -> bool:
-        return POND[0] - 3 <= x <= POND[1] + 3 or abs(x - start) < 6 or mouth - 40 <= x <= mouth + 12 or 98 <= x <= 126
+        return POND[0] - 3 <= x <= POND[1] + 3 or abs(x - start) < 6 or mouth - 40 <= x <= mouth + 12 or any(a <= x <= b for a, b in world.clear)
 
     x = 9
     while x < WIDTH - 10:
@@ -1315,7 +1318,7 @@ def surface(world: World, earth_road):
             broken = dy >= 5 and hash01(dx, dy, 8) < 0.45
             if not (door or window or broken):
                 raise_wall(world, "s", house + dx, surf[house + dx] - dy)
-    world.mark("sign", start + 3, surf[start + 3] - 1, "post", *"The Gate is east, under the arch. The Pit is west, under the meadow. The stair to the west is not for you yet.".split())
+    world.mark("sign", start + 3, surf[start + 3] - 1, "post", *"The Gate is east, under the arch. The Pit is west, under the meadow. The stair of light past the pond is not for you yet.".split())
     # Something lies in the pond.
     world.mark("relic", (POND[0] + POND[1]) // 2, surf[POND[0]] + 2)
     # The old shaft: a second way into the mine, straight down from the meadow.
@@ -2025,130 +2028,409 @@ def island(world: World, x0: int, x1: int, top: int, thick: int, crown: str | No
         if crown and deep > 1:
             world.t[top][x] = crown
             world.square.add((x, top))
+            if crown == "G" and deep > 3:
+                world.t[top + 1][x] = "D"
+
+
+def heaven_tree(world: World, x: int, ground: int, tall: int, crown: str):
+    """A tree of Paradise on the wall behind: a pale trunk, a crown of blossom or of gold."""
+    for y in range(ground - tall, ground):
+        raise_wall(world, "t", x, y)
+        if tall >= 7:
+            raise_wall(world, "t", x + 1, y)
+    # A crown of three rounds: a great one, and a lesser one low at either side.
+    wide = 2 + tall // 5
+    top = ground - tall - 2
+    for cx, cy, rx, ry in ((0, 0, wide, wide), (-wide, 2, 2, 2), (wide + (tall >= 7), 2, 2, 2)):
+        for dy in range(-ry - 1, ry + 2):
+            for dx in range(-rx - 1, rx + 2):
+                if (dx / (rx + 0.6)) ** 2 + (dy / (ry + 0.6)) ** 2 <= 1:
+                    raise_wall(world, crown, x + cx + dx, top + cy + dy)
+
+
+def ladder(world: World, x: int, top: int, ground: int, wide: int = 4) -> list[int]:
+    """Ledges of gilt one over another from the row `top` down toward the ground at row
+    `ground`, six rows apart: the Wings' own stair. The lowest is in a plain jump's reach
+    of the ground, so the stair is seen to begin there. Returns their rows."""
+    rows = list(range(top, ground - 3, LADDER))
+    if ground - rows[-1] > LADDER:
+        rows.append(ground - 3)
+    for row in rows:
+        for dx in range(wide):
+            if world.t[row][x + dx] == AIR:
+                world.t[row][x + dx] = ","
+    return rows
+
+
+def falling(world: World, x: int, top: int, bottom: int, wide: int = 2):
+    """Water falling through the air from the row `top` to the row before `bottom`."""
+    for y in range(top, bottom):
+        for dx in range(wide):
+            if world.t[y][x + dx] == AIR:
+                world.t[y][x + dx] = "|"
+
+
+def gable(world: World, cx: int, base: int, half: int, rows: int, run: int):
+    """A roof of gold in steps: from the row `base` up, `rows` rows, each `run` columns
+    narrower at either end. It is gold all through: gold gives light, so a block of it has
+    no dark heart, and the roof is seen from the Earth at night."""
+    for k in range(rows):
+        row, reach = base - k, half - run * k
+        for x in range(cx - reach, cx + reach + 1):
+            world.t[row][x] = "K"
+            world.square.add((x, row))
+
+
+def marble(world: World, columns, rows):
+    for x in columns:
+        for y in rows:
+            world.t[y][x] = "M"
+            world.square.add((x, y))
+
+
+def golden(world: World, columns, rows):
+    """A pier of gold: what a gate of Paradise hangs in. Gold gives light, so it has no dark heart."""
+    for x in columns:
+        for y in rows:
+            world.t[y][x] = "K"
+            world.square.add((x, y))
+
+
+def hollow(world: World, columns, rows, wall: str | None = "m"):
+    """Air inside something built, with the wall behind it."""
+    for x in columns:
+        for y in rows:
+            world.t[y][x] = AIR
+            world.square.add((x, y))
+            if wall:
+                world.walls[y][x] = wall
+
+
+SOULS = {
+    "garden": "You climbed out of all of it. Three lights sleep here: one in the wind to the west, one in the stone to the east, one in the hollow under your feet. Wake them, and the door above will know you.",
+    "orchard": "Nothing here is owed. The wind will carry you if you open your hands to it.",
+    "palace": "Every door in this house you have opened before, in a darker place. That is all the trial there is.",
+    "temple": "The door counts lights, not deeds.",
+    "stair": "Half way. Look down once, and not again.",
+}
+
+
+def say(world: World, kind: str, x: int, y: int, words: str):
+    world.mark("sign", x, y, kind, *words.split())
 
 
 def paradise(world: World):
-    """Islands of cloud over the Earth, climbed from its surface on ledges only the Wings
-    reach: a stair, then east from island to island, each a ladder or a glide from the
-    last, up to the temple and the gate at the end of everything."""
-    surface = world.surface
-    ledge = THEMES["paradise"][2]
+    """Heaven over the Earth, entered by three stairs only the Wings climb. It is not a road
+    but a place with a middle: the Garden, a great island right over the start, with a lake
+    on it; over the Garden the Temple, whose door opens when three lights are lit; and the
+    three lights at the ends of three ways that may be gone in any order, each asking for
+    what the journey gave: west over gulfs of wind to the Orchard (the Glide), east over a
+    bridge to the House of Trials (the Light Dash, the Wall Grip, the Holy Light), and down
+    into the Hollow inside the Garden's own cloud (the Smite or the Holy Light). Water falls
+    from the Temple into the lake, through the Hollow and on down into the Earth's pond."""
+    surf = world.surface
+    centre = (POND[0] + POND[1]) // 2
+    hub = GROUND_LINE - 48  # the Garden's ground
+    temple = hub - 50  # the top of the Temple's island
+    world.clear = []  # the columns of the Earth's surface the stairs stand on: nothing is planted there
 
-    def step(x: int, row: int, wide: int = 4):
-        for i in range(wide):
-            world.t[row][x + i] = ledge
+    # --- The Garden ----------------------------------------------------------------
+    hx0, hx1 = centre - 69, centre + 63
+    island(world, hx0, hx1, hub, 20, "G")
+    # The lake, level with the grass.
+    lake = range(centre - 12, centre + 13)
+    for x in lake:
+        for y in range(hub, hub + 3):
+            world.t[y][x] = "W"
+        for y in (hub + 3, hub + 4):
+            world.t[y][x] = "M"  # a basin of marble
+            world.square.add((x, y))
+    # The Hollow under it: a grotto inside the cloud, with the lake's water coming down through it.
+    floor = hub + 12
+    grotto = range(centre - 35, centre + 20)
+    hollow(world, grotto, range(hub + 5, floor), "c")
+    for x in range(grotto[0] - 1, grotto[-1] + 2):
+        for y in range(hub + 4, floor + 1):
+            world.walls[y][x] = "c"
+    assert all(world.t[y][x] in GROUND for x in range(grotto[0] - 2, grotto[-1] + 8) for y in (floor, floor + 1, floor + 3)), "the Garden's cloud is too thin for the Hollow"
+    for x in range(centre - 7, centre + 7):
+        for y in (floor, floor + 1):
+            world.t[y][x] = "W"
+    falling(world, centre - 1, hub + 5, floor)
+    for x in (grotto[0] + 3, centre - 13, centre + 10, grotto[-1] - 2):
+        world.put(x, floor - 1, "^")
+    world.mark("relic", centre + 3, floor + 1)
+    for x in range(centre - 26, centre - 21):
+        world.t[floor][x] = "K"
+    world.mark("beacon", centre - 24, floor - 1, "Deep")
+    say(world, "tablet", centre + 13, floor - 1, "The lake over this roof is the sky's own cup. What spills from it the Earth drinks.")
+    world.view("paradise_hollow", centre - 8, floor - 5)
+    # Its two doors. From the stair: a seal of night a bolt of Holy Light breaks.
+    door = range(grotto[-1] + 1, grotto[-1] + 6)
+    hollow(world, door, range(floor - 4, floor), "c")
+    seal = door[2]
+    world.mark("seal", seal, floor - 4, "bolt", 1, 4)
+    world.gates.update((seal, y) for y in range(floor - 4, floor))
+    world.links.append(((seal + 1, floor - 1), (seal - 1, floor - 1), NEED["HolyLight"], True))
+    # From the Garden: a cracked slab in the grass, and the drop under it.
+    slab = range(centre - 33, centre - 30)
+    for x in slab:
+        for y in range(hub, hub + 5):
+            world.t[y][x] = AIR
+            world.walls[y][x] = "c"
+        world.gates.update(((x, hub), (x, hub + 1)))
+        world.square.update((x + dx, y) for dx in (-1, 0, 1) for y in range(hub - 1, hub + 6))
+    world.mark("seal", slab[0], hub, "slam", 3, 2)
+    above, below = (slab[0] - 1, hub - 1), (slab[1], floor - 1)
+    world.links.append((above, below, NEED["Smite"], False))
+    world.links.append((below, above, NEED["Smite"] | NEED["WallGrip"], False))
+    # The stair from the Earth comes up through the Garden: a round well in the cloud, the
+    # ledges in it, and the sealed door of the Hollow in its side.
+    well_x = door[-1] + 1
+    for x in range(well_x, well_x + 6):
+        for y in range(hub, hub + 24):
+            if world.t[y][x] in GROUND:
+                world.t[y][x] = AIR
+                world.walls[y][x] = "c"
+        world.square.update((x + dx, y) for dx in (-1, 0, 1) for y in range(hub - 1, hub + 25))
+    ground = min(surf[x] for x in range(well_x - 2, well_x + 8))
+    ladder(world, well_x, hub, ground)
+    for x in range(well_x, well_x + 6):
+        world.t[hub][x] = ","
+    world.clear.append((well_x - 8, well_x + 13))
+    say(world, "post", well_x + 8, surf[well_x + 8] - 1, "A stair of light, up through the cloud. It is for the winged.")
+    world.view("paradise_stair", well_x + 3, hub + 16)
+    # The water of heaven, from the Garden's underside down into the Earth's pond.
+    under = next(y for y in range(hub + 5, hub + 30) if world.t[y][centre] == AIR and y > floor)
+    falling(world, centre - 1, under, surf[POND[0]])
+    world.view("earth_falls", centre + 4, surf[POND[0]] - 8)
+    # What grows and stands in the Garden.
+    for x, tall, crown in ((hx0 + 9, 6, "p"), (hx0 + 19, 8, "p"), (hx0 + 28, 5, "g"), (centre - 22, 7, "p"), (centre - 16, 5, "p"), (centre + 17, 6, "p"), (centre + 39, 8, "p"), (centre + 47, 5, "g"), (centre + 55, 7, "p")):
+        heaven_tree(world, x, hub, tall, crown)
+    for x in (hx0 + 14, centre - 14, centre + 14, centre + 44):
+        world.put(x, hub - 1, "J")
+    world.mark("checkpoint", well_x + 9, hub - 1)
+    world.put(well_x + 10, hub - 1, "J")
+    say(world, "soul", centre + 21, hub - 1, SOULS["garden"])
+    say(world, "post", hx0 + 6, hub - 1, "West, over the gulfs of wind: the Orchard. Open your hands and fall slowly.")
+    say(world, "post", hx1 - 6, hub - 1, "East, over the bridge: the House of Trials.")
+    # A rainbow stands in the lake, round the falling water.
+    world.mark("picture", centre, hub - 1, "backdrop_rainbow")
+    world.view("paradise_garden", centre, hub - 6)
 
-    def colonnade(x0: int, x1: int, top: int, every: int = 6):
-        for x in range(x0, x1 + 1, every):
-            for y in range(top - 7, top):
-                world.walls[y][x] = "m"
-        for x in range(x0 - 1, x1 + 2):
-            world.walls[top - 8][x] = "m"
+    # --- The Temple, over the Garden --------------------------------------------------
+    tx0, tx1 = centre - 51, centre + 45
+    island(world, tx0, tx1, temple, 12, "M")
+    f = temple - 2  # the Temple's floor: two steps over its island
+    marble(world, range(centre - 36, centre + 37), [temple - 1])
+    marble(world, range(centre - 34, centre + 35), [f])
+    hollow(world, range(centre - 29, centre + 30), range(f - 14, f))
+    for side in (-1, 1):
+        marble(world, [centre + side * k for k in (30, 31, 32)], range(f - 14, f))
+    marble(world, range(centre - 34, centre + 35), (f - 16, f - 15))
+    for x in range(centre - 35, centre + 36):
+        world.t[f - 17][x] = "K"
+        world.square.add((x, f - 17))
+    gable(world, centre, f - 18, 33, 10, 3)
+    # Tall windows in the wall behind, round at the top: the sky stands between the piers and
+    # lights the house.
+    for off in (-24, -17, -10, 10, 17, 24):
+        for x in range(centre + off - 1, centre + off + 2):
+            for y in range(f - 11, f - 2):
+                if y > f - 11 or x == centre + off:
+                    world.walls[y][x] = AIR
+    # Its one door, in the west wall: shut until the three lights are lit.
+    hollow(world, range(centre - 32, centre - 29), range(f - 4, f))
+    world.mark("sanctum", centre - 31, f - 4, 4, 3)
+    # Inside: a ring of lanterns on the wall, fires either side, and on a step of gold the end of the journey.
+    for dx, dy in ((0, -3), (2, -2), (3, 0), (2, 2), (0, 3), (-2, 2), (-3, 0), (-2, -2)):
+        world.t[f - 8 + dy][centre + dx] = "J"
+    for x in range(centre - 3, centre + 4):
+        world.t[f - 1][x] = "K"
+        world.square.add((x, f - 1))
+    world.mark("end", centre, f - 2)
+    for x in (centre - 9, centre + 9, centre - 16, centre + 16, centre - 23, centre + 23):
+        world.put(x, f - 1, "J")
+    # Outside: columns before the door and behind the house, a place to rest, one who waits.
+    for x in (centre - 48, centre - 43, centre - 38, centre + 38, centre + 42):
+        for y in range(temple - 12, temple - (1 if abs(x - centre) < 37 else 0)):
+            raise_wall(world, "x", x, y)
+            raise_wall(world, "x", x + 1, y)
+    for x in list(range(centre - 49, centre - 34)) + list(range(centre + 35, centre + 45)):
+        raise_wall(world, "x", x, temple - 13)
+        raise_wall(world, "x", x, temple - 14)
+    world.mark("checkpoint", centre - 45, temple - 1)
+    world.put(centre - 46, temple - 1, "J")
+    say(world, "soul", centre - 40, temple - 1, SOULS["temple"])
+    world.view("paradise", centre, f - 8)
+    world.view("paradise_temple", centre - 33, f - 10)
+    # Up either end of the house to its roof (which is also the way round it), over the gold
+    # to the top, and a last cloud over that.
+    for row in (f - 6, f - 12):
+        for x in list(range(centre + 34, centre + 38)) + list(range(centre - 37, centre - 33)):
+            world.t[row][x] = ","
+    for x in range(centre + 8, centre + 12):
+        world.t[f - 31][x] = ","
+    island(world, centre - 6, centre + 6, f - 35, 3)
+    world.mark("upgrade", centre, f - 36, "Vial")
+    # The water of heaven starts here: out of the Temple's cloud, down into the Garden's lake.
+    under = next(y for y in range(temple + 1, temple + 20) if world.t[y][centre] == AIR)
+    falling(world, centre - 1, under, hub)
+    # The stair of light from the Garden to the Temple, a cloud half way up it, and beside
+    # the house a wind that blows upward for the one who glides.
+    for row in range(temple + 2, hub - 3, LADDER):
+        for x in range(tx0 - 4, tx0):
+            world.t[row][x] = ","
+    island(world, tx0 - 22, tx0 - 8, hub - 24, 3)
+    heaven_tree(world, tx0 - 16, hub - 24, 5, "p")
+    world.mark("relic", tx0 - 12, hub - 25)
+    say(world, "soul", tx0 - 19, hub - 25, SOULS["stair"])
+    world.mark("wind", tx1 + 2, temple - 8, 6, hub - temple + 6, 0, 150, 0, 0)
 
-    # The stair from the Earth.
-    foot = min(surface[x] for x in range(106, 118))
-    step(113, foot - 6)
-    step(108, foot - 12)
-    step(113, foot - 18)
-    step(108, foot - 24)
-    first = foot - 30
-    island(world, 115, 150, first, 7)
-    world.mark("checkpoint", 132, first - 1)
-    world.put(133, first - 1, "J")
-    world.view("paradise_stair", 128, first + 8)
-    # Clouds out west of the stair's head, with something on the far one.
-    island(world, 98, 103, first + 3, 2)
-    island(world, 74, 92, first, 4)
-    world.mark("relic", 82, first - 1)
-    world.put(87, first - 1, "J")
-    # East and up, to the garden.
-    step(153, first - 6)
-    garden = first - 12
-    island(world, 158, 200, garden, 9, "G")
-    for x in range(165, 194):
-        world.t[garden + 1][x] = "D"
-    world.put(162, garden - 1, "J")
-    world.put(196, garden - 1, "J")
-    world.view("paradise_garden", 179, garden - 5)
-    # A high cloud over the garden, with something on it.
-    step(176, garden - 6)
-    step(176, garden - 12)
-    island(world, 181, 196, garden - 18, 3)
-    world.mark("relic", 189, garden - 19)
-    # Over a gap that is glided, to the colonnade.
-    island(world, 210, 244, garden, 7, "M")
-    colonnade(214, 238, garden)
-    world.mark("checkpoint", 226, garden - 1)
-    world.put(227, garden - 1, "J")
-    # Up to the orchard.
-    step(240, garden - 6)
-    orchard = garden - 12
-    island(world, 246, 294, orchard, 9, "G")
-    for x in range(258, 288):
-        world.t[orchard + 1][x] = "D"
-    world.put(254, orchard - 1, "J")
-    world.put(290, orchard - 1, "J")
-    world.view("paradise_orchard", 272, orchard - 5)
-    # Another glide, to a bare cloud, and under it a small one with something on it.
-    island(world, 304, 336, orchard, 7)
-    world.put(320, orchard - 1, "J")
-    island(world, 293, 301, orchard + 7, 3)
-    world.mark("relic", 298, orchard + 6)
-    # Up to the forecourt.
-    step(332, orchard - 6)
-    court = orchard - 12
-    island(world, 338, 372, court, 8, "M")
-    colonnade(342, 366, court)
-    world.mark("checkpoint", 354, court - 1)
-    world.put(355, court - 1, "J")
-    # And up to the temple, and the gate at the end of everything.
-    step(368, court - 6)
-    temple = court - 12
-    island(world, 374, 440, temple, 10, "M")
-    for x in (384, 385, 392, 393, 400, 401, 410, 411, 418, 419, 426, 427):
-        for y in range(temple - 9, temple):
-            world.walls[y][x] = "m"
-    # A lintel of marble two cells thick, and the pediment over it on the wall behind:
-    # a block of stone five deep would be dark at its heart.
-    for row, inset in ((temple - 10, 0), (temple - 11, 0)):
-        for x in range(382 + inset, 430 - inset):
-            world.t[row][x] = "M"
-            world.square.add((x, row))
-    for row, inset in ((temple - 12, 4), (temple - 13, 9), (temple - 14, 14), (temple - 15, 19)):
-        for x in range(382 + inset, 430 - inset):
-            world.walls[row][x] = "m"
-    for x in (388, 396, 414, 422):
-        world.put(x, temple - 1, "J")
-    world.mark("end", 405, temple - 1)
-    world.view("paradise", 405, temple - 6)
-    # A last cloud past the temple, glided to.
-    island(world, 450, 468, temple + 4, 3)
-    world.mark("relic", 459, temple + 3)
-    world.put(463, temple + 3, "J")
-    # Two clouds more over the west, climbed from the first: a high one with something on it.
-    step(120, first - 6)
-    step(126, first - 12)
-    island(world, 132, 148, first - 18, 4)
-    world.mark("upgrade", 141, first - 19, "Heart")
-    world.put(136, first - 19, "J")
-    # Small clouds adrift in the empty sky between the islands and over them.
+    # --- West: the Orchard, over the gulfs of wind -------------------------------------
+    orchard = hub - 16
+    for i, (x0, x1, top) in enumerate(((hx0 - 24, hx0 - 12, hub - 2), (hx0 - 50, hx0 - 36, hub - 6), (hx0 - 76, hx0 - 62, hub - 10))):
+        island(world, x0, x1, top, 3)
+        world.put((x0 + x1) // 2, top - 1, "J")
+        # A wind that blows upward in gusts in the gulf east of it.
+        world.mark("wind", x1 + 1, top - 14, 11, 22, 0, 120, 2.5, 1.5)
+    ox0, ox1 = hx0 - 168, hx0 - 88
+    island(world, ox0, ox1, orchard, 12, "G")
+    for x in range(ox1 + 4, ox1 + 8):
+        world.t[orchard + 3][x] = ","
+    for x, tall in ((ox0 + 6, 6), (ox0 + 15, 8), (ox0 + 26, 5), (ox0 + 54, 7), (ox0 + 63, 5), (ox0 + 73, 8)):
+        heaven_tree(world, x, orchard, tall, "g")
+    # A ring of columns, and in it the light of the West.
+    ring = ox0 + 40
+    for x in (ring - 8, ring - 4, ring + 3, ring + 7):
+        for y in range(orchard - 8, orchard):
+            raise_wall(world, "x", x, y)
+            raise_wall(world, "x", x + 1, y)
+    for x in range(ring - 9, ring + 10):
+        raise_wall(world, "x", x, orchard - 9)
+    for x in range(ring - 2, ring + 3):
+        world.t[orchard][x] = "K"
+    world.mark("beacon", ring, orchard - 1, "West")
+    world.mark("checkpoint", ox1 - 10, orchard - 1)
+    world.put(ox1 - 11, orchard - 1, "J")
+    say(world, "soul", ox1 - 22, orchard - 1, SOULS["orchard"])
+    world.mark("relic", ox0 + 3, orchard - 1)
+    world.view("paradise_orchard", ring, orchard - 6)
+    # A high cloud over the Orchard, with a heart on it.
+    for row in (orchard - 6, orchard - 12):
+        for x in range(ring + 24, ring + 28):
+            world.t[row][x] = ","
+    island(world, ring + 4, ring + 22, orchard - 18, 3)
+    world.mark("upgrade", ring + 13, orchard - 19, "Heart")
+    # The second stair from the Earth: under the Orchard's west end.
+    ground = min(surf[x] for x in range(ox0 - 6, ox0 + 2))
+    ladder(world, ox0 - 4, orchard + 2, ground)
+    world.clear.append((ox0 - 12, ox0 + 6))
+    say(world, "post", ox0 + 3, surf[ox0 + 3] - 1, "A stair of light. Over it, they say, trees with leaves of gold.")
+
+    # --- East: the House of Trials, over the bridge ------------------------------------
+    for x in range(hx1 + 1, hx1 + 19):
+        world.t[hub][x] = ","
+    for x in (hx1 + 6, hx1 + 12):
+        for y in range(hub + 1, hub + 6):
+            raise_wall(world, "x", x, y)
+            raise_wall(world, "x", x + 1, y)
+    island(world, hx1 + 19, hx1 + 32, hub, 4, "M")
+    world.mark("checkpoint", hx1 + 25, hub - 1)
+    world.put(hx1 + 26, hub - 1, "J")
+    say(world, "post", hx1 + 22, hub - 1, "The House of Trials: a door for the swift, a wall for the clinging, a seal for the bright.")
+    house = hub - 8  # the ground the House stands on
+    for x in range(hx1 + 33, hx1 + 36):
+        world.t[hub - 3][x] = ","
+    for x in range(hx1 + 36, hx1 + 39):
+        world.t[hub - 6][x] = ","
+    ix0, ix1 = hx1 + 40, hx1 + 146
+    island(world, ix0, ix1, house, 14, "M")
+    px0, px1 = ix0 + 12, ix0 + 96
+    upper, roof = house - 14, house - 28
+    hollow(world, range(px0 + 2, px1 - 1), range(roof + 2, house))
+    marble(world, (px0, px0 + 1, px1 - 1, px1), range(roof, house))
+    marble(world, range(px0, px1 + 1), (roof, roof + 1))
+    shaft = range(px0 + 54, px0 + 58)
+    marble(world, [x for x in range(px0 + 2, px1 - 1) if x not in shaft], (upper, upper + 1))
+    # Windows: where the wall behind is left out the sky shows, and lights the room.
+    for wx, rows in [(px0 + 8, range(house - 9, house - 4)), (px0 + 30, range(house - 9, house - 4)), (px0 + 68, range(house - 9, house - 4))] + [
+        (px0 + 10, range(upper - 9, upper - 4)),
+        (px0 + 26, range(upper - 9, upper - 4)),
+        (px0 + 64, range(upper - 9, upper - 4)),
+        (px0 + 74, range(upper - 9, upper - 4)),
+    ]:
+        for x in range(wx, wx + 3):
+            for y in rows:
+                world.walls[y][x] = AIR
+    # The doors of the House, on the ground at either end, and a balcony door upstairs to the west.
+    hollow(world, (px0, px0 + 1, px1 - 1, px1), range(house - 4, house), None)
+    hollow(world, (px0, px0 + 1), range(upper - 4, upper), None)
+    for x in range(px0 - 5, px0):
+        world.t[upper][x] = ","
+    # Downstairs: a veil of light across the hall (the Light Dash), then a chimney with nothing
+    # to stand on up to the floor above (the Wall Grip).
+    veil = px0 + 18
+    golden(world, range(veil - 2, veil + 3), range(upper + 2, house - 4))
+    world.mark("barrier", veil, house - 4, 4)
+    world.gates.update((veil, y) for y in range(house - 4, house))
+    world.links.append(((veil - 1, house - 1), (veil + 1, house - 1), NEED["LightDash"], True))
+    for x in (shaft[0] - 2, shaft[0] - 1, shaft[-1] + 1, shaft[-1] + 2):
+        golden(world, [x], range(upper + 2, house - 4))
+    world.links.append(((shaft[1], house - 1), (shaft[0] - 1, upper - 1), NEED["WallGrip"], False))
+    # Upstairs: a seal of night (the Holy Light), and past it the light of the East.
+    night = px0 + 38
+    golden(world, range(night - 2, night + 3), range(roof + 2, upper - 4))
+    world.mark("seal", night, upper - 4, "bolt", 1, 4)
+    world.gates.update((night, y) for y in range(upper - 4, upper))
+    world.links.append(((night + 1, upper - 1), (night - 1, upper - 1), NEED["HolyLight"], True))
+    light = px0 + 18
+    for x in range(light - 2, light + 3):
+        world.t[upper][x] = "K"
+    world.mark("beacon", light, upper - 1, "East")
+    for x in (light - 6, light + 6):
+        world.put(x, upper - 1, "*")
+    world.mark("relic", px1 - 10, upper - 1)
+    for x in (px0 + 6, px0 + 26, px0 + 46, px0 + 66, px0 + 78):
+        world.put(x, house - 1, "J")
+    for x in (px0 + 30, px0 + 46, px0 + 64, px0 + 78):
+        world.put(x, upper - 1, "J")
+    say(world, "tablet", px0 + 4, house - 1, SOULS["palace"])
+    # Over the House: a roof of gold in steps, something on its top, and two towers.
+    dome = (px0 + px1) // 2
+    gable(world, dome, roof - 1, 14, 7, 2)
+    world.mark("relic", dome, roof - 8)
+    for tower in (px0, px1 - 5):
+        for x in range(tower, tower + 6):
+            for y in range(roof - 10, roof):
+                raise_wall(world, "x", x, y)
+        for x in range(tower - 1, tower + 7):
+            world.t[roof - 11][x] = "K"
+        for x in range(tower + 1, tower + 5):
+            world.t[roof - 12][x] = "K"
+    for row in range(roof + 4, house - 3, LADDER):
+        for x in range(px1 + 2, px1 + 6):
+            world.t[row][x] = ","
+    world.view("paradise_palace", dome - 14, house - 12)
+    # The third stair from the Earth: under the House's east end.
+    ground = min(surf[x] for x in range(ix1 - 2, ix1 + 7))
+    ladder(world, ix1 + 1, house + 2, ground)
+    world.clear.append((ix1 - 7, ix1 + 11))
+    say(world, "post", ix1 - 4, surf[ix1 - 4] - 1, "A stair of light. Over it, a house with a roof of gold.")
+
+    # Small clouds adrift in the empty sky, between the islands and over them.
     adrift = 0
-    for k in range(90):
-        if adrift == 18:
+    for k in range(160):
+        if adrift == 26:
             break
         x0 = 10 + int(hash01(k, 61) * (WIDTH - 40))
         adrift += wisp(
             world,
             x0,
             x0 + 5 + int(hash01(k, 63) * 9),
-            9 + int(hash01(k, 62) * (first - 2)),
+            10 + int(hash01(k, 62) * (hub - 2)),
             2 + int(hash01(k, 64) * 2),
         )
-    # Water falls from under three of the islands, into the sky.
-    for x, top in ((179, garden), (270, orchard), (407, temple)):
-        under = next(y for y in range(top, top + 20) if world.t[y][x] == AIR)
-        for y in range(under, under + 14):
-            world.t[y][x] = "W"
 
 
 def build(log=print) -> World:
@@ -2163,7 +2445,13 @@ def build(log=print) -> World:
     sinks(world, log)
     side_roads(world, log)
     pockets(world, log)
-    world.shots += [("earth_sunset", "earth", 18.75), ("paradise_dawn", "paradise", 6.6), ("paradise_garden_night", "paradise_garden", 22.5)]
+    world.shots += [
+        ("earth_sunset", "earth", 18.75),
+        ("paradise_dawn", "paradise_temple", 6.6),
+        ("paradise_garden_sunset", "paradise_garden", 18.6),
+        ("paradise_garden_night", "paradise_garden", 22.5),
+        ("paradise_orchard_sunset", "paradise_orchard", 18.3),
+    ]
     world.veins()
     world.slopes()
     world.wall_up()
@@ -2177,7 +2465,8 @@ HEADER = """# The Tiles V2 world, written by tools/tiles_v2/make_world_map.py (e
 # blank line, the wall grid; the legend is in tiles_v2.json. `@region key row` is
 # where a region starts, `@mark kind column row ...` a thing of the game's that
 # stands in a cell (a checkpoint, an ability, a gate, a secret wall, a platform that does
-# not stay, a wind, an upgrade, a sign, a stretch with no light in its air), `@view` and
+# not stay, a wind, an upgrade, a sign, a stretch with no light in its air, a light of
+# Paradise and the door the lights open), `@view` and
 # `@shot` places and pictures for the captures.
 """
 
@@ -2187,7 +2476,7 @@ def check(world: World, log=print) -> list[str]:
     log("Working out where the hero can go:")
     reach = tv2_reach.Reach(terrain, world.gates, world.links, log)
     shrines = {m[3][0]: (m[1], m[2]) for m in world.marks if m[0] == "ability"}
-    goals = {f"{m[0]} {i}": (m[1], m[2]) for i, m in enumerate(world.marks) if m[0] in ("checkpoint", "relic", "upgrade", "end")}
+    goals = {f"{m[0]} {i}": (m[1], m[2]) for i, m in enumerate(world.marks) if m[0] in ("checkpoint", "relic", "upgrade", "beacon", "end")}
     return tv2_reach.journey(reach, world.spawn, shrines, goals, log)
 
 

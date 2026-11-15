@@ -187,7 +187,36 @@ def texture_ice(seed) -> np.ndarray:
     return t
 
 
+def texture_leaves(seed) -> np.ndarray:
+    """Leaves, or petals: rows of small rounds, every other row half a round along, each lit
+    on its top, dark at its foot and between it and the next, some lighter and some darker."""
+    r = rng("leaves", seed)
+    t = np.full((TILE, TILE), 3, dtype=np.int16)
+    for row in range(4):
+        for col in range(4):
+            tone = r.choice([0, 0, 0, 1, -1])
+            for dy in range(4):
+                for dx in range(4):
+                    x, y = (col * 4 + (2 if row % 2 else 0) + dx) % TILE, row * 4 + dy
+                    if dy == 0:
+                        t[y, x] = 5 if dx in (1, 2) else 2
+                    elif dy == 3:
+                        t[y, x] = 2 if dx in (1, 2) else 3 + tone
+                    else:
+                        t[y, x] = (4 if dy == 1 else 3) + tone
+    return t
+
+
+def texture_flutes(seed) -> np.ndarray:
+    """The shaft of a column: round flutes two to a tile, lit on the left."""
+    t = np.zeros((TILE, TILE), dtype=np.int16)
+    t[:, :] = np.array([1, 3, 4, 5, 5, 4, 3, 2] * 2, dtype=np.int16)[None, :]
+    return t
+
+
 TEXTURES = {
+    "leaves": texture_leaves,
+    "flutes": texture_flutes,
     "cloud": texture_cloud,
     "ice": texture_ice,
     "dirt": texture_dirt,
@@ -657,7 +686,10 @@ def ledge_sheet() -> tuple[Image.Image, list]:
 # The things of the game a map marks (`@mark`), each a tile-sized sprite the world's
 # objects are drawn with: a light barrier's veil, the seal a bolt breaks, the slab a
 # slam breaks, a relic.
-THINGS = ["barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1", "crack", "crumble", "blink", "wind", "post", "tablet", "shade"]
+THINGS = [
+    "barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1", "crack", "crumble", "blink", "wind",
+    "post", "tablet", "shade", "soul", "beacon_0", "beacon_1", "beacon_2", "sanctum",
+]  # fmt: skip
 
 
 def thing(name: str) -> np.ndarray:
@@ -760,6 +792,52 @@ def thing(name: str) -> np.ndarray:
                 a[y, x] = (*(pale if x < 8 else mid), 235 if y < 12 else 235 - (y - 11) * 40)
         a[5, 6] = a[5, 9] = (*eye, 255)
         a[6, 6] = a[6, 9] = (*eye, 255)
+    elif name == "soul":
+        # One of the blessed: a figure of light, a ring over its head.
+        white, gold, warm, eye = (255, 252, 236), (255, 220, 120), (255, 238, 180), (150, 110, 40)
+        for y in range(4, 16):
+            half = 2 if y < 7 else 4 if y < 13 else 4 - (y - 12) // 2
+            for x in range(8 - half, 8 + half):
+                if y >= 14 and (x + y) % 3 == 0:
+                    continue
+                a[y, x] = (*(white if x < 8 else warm), 240 if y < 13 else 240 - (y - 12) * 45)
+        for x in range(5, 11):
+            a[1, x] = (*gold, 255)
+        a[2, 4] = a[2, 11] = (*gold, 255)
+        a[5, 6] = a[5, 9] = (*eye, 255)
+    elif name.startswith("beacon"):
+        # A bowl of gold on a stem: empty, or with a flame of white light in it (two frames).
+        gold, lit, dark = hexes("dca922", "fff3a8", "8a5e0c")
+        for y in range(11, 16):
+            a[y, 7] = (*gold, 255)
+            a[y, 8] = (*dark, 255)
+        for x in range(5, 11):
+            a[15, x] = (*(gold if x < 9 else dark), 255)
+        for x in range(3, 13):
+            a[9, x] = (*lit, 255)
+            a[10, x] = (*(gold if x < 9 else dark), 255)
+        for x in range(4, 12):
+            a[11, x] = (*(gold if x < 8 else dark), 255)
+        frame = int(name[-1])
+        if frame:
+            flame = [(8, 1), (7, 2), (8, 2), (7, 3), (8, 3), (9, 3), (6, 4), (7, 4), (8, 4), (9, 4)] if frame == 1 else [(7, 1), (7, 2), (8, 2), (6, 3), (7, 3), (8, 3), (6, 4), (7, 4), (8, 4), (9, 4)]
+            for y in range(5, 9):
+                for x in range(5, 11):
+                    if abs(x - 7.5) <= 3 - (8 - y) * 0.4:
+                        a[y, x] = (255, 250, 214, 255) if abs(x - 7.5) < 1.6 else (255, 226, 130, 255)
+            for x, y in flame:
+                a[y, x] = (255, 255, 240, 255)
+    elif name == "sanctum":
+        # The door of the temple: bars of gold with light between them; tiles up and down.
+        gold, lit, dark = hexes("dca922", "fff3a8", "8a5e0c")
+        for y in range(TILE):
+            for x in range(TILE):
+                a[y, x] = (255, 244, 200, 70 + 30 * ((x + y) % 4 == 0))
+        for x in (1, 2, 7, 8, 13, 14):
+            a[:, x] = (*(lit if x in (1, 7, 13) else gold), 255)
+        for y in (0, 8):
+            a[y, :] = (*gold, 255)
+            a[y + 1, :] = (*dark, 255)
     elif name == "wind":
         # A streak the wind carries: a short pale dash.
         for x in range(3, 13):

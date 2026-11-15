@@ -41,6 +41,21 @@ TextureImporter:
   - first:
       213: 107832730637364431
     second: tv2_thing_shade
+  - first:
+      213: 990848918130856494
+    second: tv2_thing_soul
+  - first:
+      213: 1965695868820223783
+    second: tv2_thing_beacon_0
+  - first:
+      213: 220485206269948922
+    second: tv2_thing_beacon_1
+  - first:
+      213: 1117358721972427961
+    second: tv2_thing_beacon_2
+  - first:
+      213: 3209183503758669476
+    second: tv2_thing_sanctum
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -421,6 +436,121 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tv2_thing_soul
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 262f1dc60b425586a82cc4ab517045b0
+      internalID: 990848918130856494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_beacon_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f1c700fb4895a2aade1d7cadb68be15
+      internalID: 1965695868820223783
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_beacon_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa0f095adea556eeacc0d125d15e039a
+      internalID: 220485206269948922
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_beacon_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3571d179047753f38577a8466dba73c4
+      internalID: 1117358721972427961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_sanctum
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 29dd559b8cd552a596d5a0f1b31e6654
+      internalID: 3209183503758669476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -446,6 +576,11 @@ TextureImporter:
       tv2_thing_post: 2539011789713391969
       tv2_thing_tablet: 4173789985950267786
       tv2_thing_shade: 107832730637364431
+      tv2_thing_soul: 990848918130856494
+      tv2_thing_beacon_0: 1965695868820223783
+      tv2_thing_beacon_1: 220485206269948922
+      tv2_thing_beacon_2: 1117358721972427961
+      tv2_thing_sanctum: 3209183503758669476
     spriteCustomMetadata:
       entries: []
   mipmapLimitGroupName: 

@@ -154,6 +154,13 @@ _BIOME_PALETTES = [
     # What stands on the wall behind under the open sky: a tree's trunk and crown.
     ("wood_wall", "2a1810", "5a3a24 6b462c 7c5335 8e6240 a07450 b48860"),
     ("leaf_wall", "173418", "356e2e 428438 529a44 66b054 80c66a 9ad880"),
+    # Paradise's own: the pale trunks of its trees, their blossom and their gold leaf (walls
+    # are multiplied back by the wall tint, so these are drawn bright), and the inside of a cloud.
+    ("birch_wall", "8a8a9a", "d6d6de dedee6 e8e8ee f0f0f4 f8f8fb ffffff"),
+    ("blossom_wall", "a84a78", "d86a9a e482ae ee9cc0 f6b4d0 fccce0 ffe6f0"),
+    ("gold_leaf_wall", "9a6a10", "c88e1c dca62c ecbc40 f8d05c ffe284 fff3b4"),
+    ("pillar_wall", "8c8a9a", "b8b6c4 cccad6 dcdae4 eae8f0 f6f5fa ffffff"),
+    ("mist_wall", "7f93b8", "a9b9d6 b5c3de c1cde6 cdd7ec d9e1f2 e5ebf7"),
 ]
 for _key, _outline, _ramp in _BIOME_PALETTES:
     PALETTES[_key] = {"outline": hexes(_outline)[0], "ramp": hexes(*_ramp.split())}
@@ -193,10 +200,20 @@ MATERIALS += [
     _ground("ice", "ice", True, emits=(0.10, 0.16, 0.22)),
     _ground("frost_rock", "stone", True),
     _wall("ice_wall", "rubble"),
-    # These two stand under the open sky and do not shut it out (`open`): the cells behind
-    # which they are drawn are as if they had no wall, for the light and for what grows.
+    # These stand under the open sky and do not shut it out (`open`): the cells behind
+    # which they are drawn are as if they had no wall, for the light and for what grows,
+    # and they are drawn in front of the other walls, not tinted back as those are.
     dict(_wall("wood_wall", "clay"), open=True),
-    dict(_wall("leaf_wall", "dirt"), open=True),
+    dict(_wall("leaf_wall", "leaves"), open=True),
+    dict(_wall("birch_wall", "clay"), open=True),
+    dict(_wall("blossom_wall", "leaves"), open=True),
+    dict(_wall("gold_leaf_wall", "leaves"), open=True),
+    # A column standing in the open, of bright marble: it shuts out no sky either.
+    dict(_wall("pillar_wall", "flutes"), open=True),
+    # The inside of a cloud: a wall like any other, it shuts out the sky.
+    _wall("mist_wall", "cloud"),
+    # Gold in blocks, for what Paradise builds its roofs of: it gives a warm light.
+    dict(_ground("gold_brick", "bricks", False, emits=(0.42, 0.33, 0.10)), palette="gold"),
 ]
 
 
@@ -407,6 +424,14 @@ LEGEND = [
     ("i", "wall", "ice_wall", ""),
     ("w", "wall", "wood_wall", ""),
     ("l", "wall", "leaf_wall", ""),
+    ("t", "wall", "birch_wall", ""),
+    ("p", "wall", "blossom_wall", ""),
+    ("g", "wall", "gold_leaf_wall", ""),
+    ("c", "wall", "mist_wall", ""),
+    ("x", "wall", "pillar_wall", ""),
+    ("K", "terrain", "gold_brick", ""),
+    # Falling water: seen and walked through, neither swum in nor stood on.
+    ("|", "liquid", "falls", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}

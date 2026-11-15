@@ -20,7 +20,9 @@ namespace Descender.Tests.PlayMode
     /// chart; the Pit takes him between the antechambers he has rested in; and a platform
     /// that gives way does, and comes back; a sign says its line to him when he stands by
     /// it; a heart found is one more heart; and the chart, open, holds him still and comes
-    /// closer. The scene is loaded by its path, which only the editor can do, and unloaded again.
+    /// closer; and a light of Paradise burns when he walks up to it, the door of the Temple
+    /// standing until the last one does. The scene is loaded by its path, which only the
+    /// editor can do, and unloaded again.
     /// </summary>
     public class TilesV2DescentTests
     {
@@ -236,6 +238,33 @@ namespace Descender.Tests.PlayMode
             yield return null;
             playground.ShowChart(false);
             Assert.That(hero.Frozen, Is.False, "closed, he walks again");
+
+            // A light of Paradise: walking up to it lights it, and the door waits for the others.
+            TilesV2Things.Thing light = null;
+            TilesV2Things.Thing door = null;
+            foreach (var thing in things.All)
+            {
+                light ??= thing.Kind == TilesV2Things.Beacon ? thing : null;
+                door ??= thing.Kind == TilesV2Things.Sanctum ? thing : null;
+            }
+            Assert.That(light, Is.Not.Null, "Paradise has no light");
+            Assert.That(door, Is.Not.Null, "the Temple has no door");
+            Assert.That(things.BeaconsLit, Is.EqualTo(0));
+            hero.PlaceAt((Vector2)light.Made.transform.position + new Vector2(-1.5f, 0.05f));
+            yield return probe.Settle();
+            input.MoveX = 1f;
+            yield return probe.Until(() => things.BeaconsLit > 0, 120);
+            input.Release();
+            Assert.That(things.BeaconsLit, Is.EqualTo(1), "he stood by the light and it stayed dark");
+            Assert.That(light.Made.GetComponent<TilesV2Beacon>().IsLit, Is.True);
+            Assert.That(playground.Title, Is.EqualTo("A light wakes"));
+            Assert.That(door.Made.activeSelf, Is.True, "one light is not three");
+            foreach (var beacon in things.GetComponentsInChildren<TilesV2Beacon>())
+            {
+                beacon.Light();
+            }
+            Assert.That(things.BeaconsLit, Is.EqualTo(things.Beacons));
+            Assert.That(door.Made.activeSelf, Is.False, "every light burns and the door is still shut");
         }
 
         // The lowest ledge with open sky over it: a step of the stair that stands on the Earth.

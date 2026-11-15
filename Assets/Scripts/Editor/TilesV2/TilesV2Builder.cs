@@ -463,6 +463,10 @@ namespace Descender.EditorTools.TilesV2
                         scroll = entry.scroll,
                         order = entry.order,
                         lit = entry.lit,
+                        scrollUp = entry.scrollUp,
+                        rise = entry.rise,
+                        drift = entry.drift,
+                        tinted = entry.tinted,
                     }
                 );
             }

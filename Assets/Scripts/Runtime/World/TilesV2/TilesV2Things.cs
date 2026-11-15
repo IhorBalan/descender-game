@@ -32,6 +32,15 @@ namespace Descender.World.TilesV2
         public const string Upgrade = "upgrade";
         public const string Sign = "sign";
 
+        /// <summary>A light of Paradise: `@mark beacon column row name`. The hero lights it by walking up to it.</summary>
+        public const string Beacon = "beacon";
+
+        /// <summary>The door the lights open: `@mark sanctum column row height lights`.</summary>
+        public const string Sanctum = "sanctum";
+
+        /// <summary>One of the tile set's pictures, its foot in a cell: `@mark picture column row key`.</summary>
+        public const string Stood = "picture";
+
         /// <summary>The word after a checkpoint's cell that says it stands in an antechamber of the Pit.</summary>
         public const string PitWord = "pit";
         public const int GateOrder = TilesV2World.TerrainOrder + 3;
@@ -57,6 +66,23 @@ namespace Descender.World.TilesV2
         /// <summary>The game's upgrades lying in the world: more hearts, more draughts.</summary>
         public int Upgrades { get; private set; }
         public int Signs { get; private set; }
+
+        /// <summary>The lights of Paradise, and how many of them burn.</summary>
+        public int Beacons { get; private set; }
+        public int BeaconsLit { get; private set; }
+
+        /// <summary>The pictures stood in the world (a rainbow).</summary>
+        public int Pictures { get; private set; }
+
+        /// <summary>The doors the lights open, and how many of them are open.</summary>
+        public int Sanctums { get; private set; }
+        public int SanctumsOpen { get; private set; }
+
+        /// <summary>The hero lit one of the lights.</summary>
+        public event Action<Thing> BeaconLit;
+
+        /// <summary>Enough lights burn for a door: it opened.</summary>
+        public event Action<Thing> SanctumOpened;
 
         /// <summary>The hero found a relic.</summary>
         public event Action<Thing> RelicFound;
@@ -229,6 +255,69 @@ namespace Descender.World.TilesV2
                         things.Signs++;
                         break;
                     }
+                    case Beacon:
+                    {
+                        var holder = new GameObject("Beacon " + mark.Word(0));
+                        holder.transform.SetParent(things.transform, false);
+                        holder.transform.position = foot;
+                        var beacon = holder.AddComponent<TilesV2Beacon>();
+                        beacon.Configure(
+                            set.Thing("beacon_0"),
+                            set.Thing("beacon_1"),
+                            set.Thing("beacon_2"),
+                            set.unlitMaterial
+                        );
+                        thing.Made = holder;
+                        things.Beacons++;
+                        var lit = thing;
+                        beacon.Lit += () =>
+                        {
+                            lit.Taken = true;
+                            things.BeaconsLit++;
+                            things.BeaconLit?.Invoke(lit);
+                            things.OpenSanctums();
+                        };
+                        break;
+                    }
+                    case Stood:
+                    {
+                        var entry = Array.Find(set.backdrops, backdrop => backdrop.key == mark.Word(0));
+                        if (entry == null || entry.sprite == null)
+                        {
+                            Debug.LogWarning(
+                                $"Tiles V2: the map stands a picture '{mark.Word(0)}' the tile set has not."
+                            );
+                            continue;
+                        }
+                        // The sprite's pivot is its bottom middle: it stands on the foot of the cell.
+                        var holder = new GameObject("Picture " + entry.key);
+                        holder.transform.SetParent(things.transform, false);
+                        holder.transform.position = foot;
+                        var shown = holder.AddComponent<SpriteRenderer>();
+                        shown.sprite = entry.sprite;
+                        shown.sortingOrder = entry.order;
+                        shown.sharedMaterial = entry.lit ? set.litMaterial : set.unlitMaterial;
+                        thing.Made = holder;
+                        things.Pictures++;
+                        break;
+                    }
+                    case Sanctum:
+                    {
+                        var tall = Mathf.Max(mark.Number(0, 1), 1);
+                        var holder = new GameObject("Sanctum") { layer = Layers.World };
+                        holder.transform.SetParent(things.transform, false);
+                        holder.transform.position = corner;
+                        holder.AddComponent<Rigidbody2D>().bodyType = RigidbodyType2D.Static;
+                        var box = holder.AddComponent<BoxCollider2D>();
+                        box.size = new Vector2(1f, tall);
+                        box.offset = new Vector2(0.5f, -tall / 2f);
+                        Picture(holder, set.Thing("sanctum"), set.unlitMaterial, new Vector2(1f, tall));
+                        thing.Made = holder;
+                        thing.Number = Mathf.Max(mark.Number(1, 1), 1);
+                        thing.Word = "";
+                        things.Sanctums++;
+                        break;
+                    }
                     case Relic:
                     case End:
                     {
@@ -262,6 +351,22 @@ namespace Descender.World.TilesV2
                 things.all.Add(thing);
             }
             return things;
+        }
+
+        // Opens every door that enough lights burn for (a door's Number is how many it asks).
+        private void OpenSanctums()
+        {
+            foreach (var thing in all)
+            {
+                if (thing.Kind != Sanctum || thing.Taken || BeaconsLit < thing.Number)
+                {
+                    continue;
+                }
+                thing.Taken = true;
+                thing.Made.SetActive(false);
+                SanctumsOpen++;
+                SanctumOpened?.Invoke(thing);
+            }
         }
 
         // A veil of light a tile wide and `tall` tiles high, down from a corner: solid to all but a Light Dash.

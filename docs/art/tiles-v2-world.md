@@ -6,7 +6,7 @@ the Tiles V2 standard (`docs/art/tiles-v2.md`) and lives beside the sample map:
 
 | | |
 |---|---|
-| Map | `Assets/Art/TilesV2/world_map.txt`, 540 x 780 tiles: 13 screens wide and 35 tall at the camera's 40 x 22.5 tiles, 421 000 cells (for scale, the whole world of Animal Well is 640 x 360 tiles of the same screen, 230 000) |
+| Map | `Assets/Art/TilesV2/world_map.txt`, 540 x 828 tiles: 13 screens wide and 37 tall at the camera's 40 x 22.5 tiles, 447 000 cells (for scale, the whole world of Animal Well is 640 x 360 tiles of the same screen, 230 000) |
 | Written by | `python tools/tiles_v2/make_world_map.py --check` (edit that, not the map) |
 | Checked by | `tools/tiles_v2/tv2_reach.py`: the world is played through in a model of the hero before it is written |
 | Scene | `Assets/Scenes/Sandbox/TilesV2Descent.unity` (never in the build's scene list) |
@@ -22,17 +22,17 @@ does. It has no enemies and no bosses yet.
 
 ```
  rows                                                              the road
-   0  PARADISE      islands of cloud; the temple and the gate at the end of everything
-  76  EARTH         the surface (the start), the old mine, the hall of the Gate
- 172  1 LIMBO       <- west, then east ->   two passes: the great first circle   Light Dash
- 276  2 LUST        <- west    the tempest's shafts and spires                   Wall Grip
- 332  3 GLUTTONY    east ->    mud, rain, slime: a short one
- 382  4 GREED       <- west    vaults and gold                                   Holy Light
- 440  5 WRATH       east ->    the marsh of Styx
- 492  6 HERESY      <- west, then east ->   two passes: the city of Dis          Glide
- 600  7 VIOLENCE    <- west    blood, wood, sand                                 Smite
- 656  8 FRAUD       east ->    ditches and bridges: a short one
- 706  9 TREACHERY   <- west    the frozen lake                                   Wings
+   0  PARADISE      the Garden over the start, the Temple over the Garden, three lights
+ 124  EARTH         the surface (the start), the old mine, the hall of the Gate
+ 220  1 LIMBO       <- west, then east ->   two passes: the great first circle   Light Dash
+ 324  2 LUST        <- west    the tempest's shafts and spires                   Wall Grip
+ 380  3 GLUTTONY    east ->    mud, rain, slime: a short one
+ 430  4 GREED       <- west    vaults and gold                                   Holy Light
+ 488  5 WRATH       east ->    the marsh of Styx
+ 540  6 HERESY      <- west, then east ->   two passes: the city of Dis          Glide
+ 648  7 VIOLENCE    <- west    blood, wood, sand                                 Smite
+ 704  8 FRAUD       east ->    ditches and bridges: a short one
+ 754  9 TREACHERY   <- west    the frozen lake                                   Wings
 
    the Pit (west edge) ---- every circle ---- the Well (east edge)
 ```
@@ -56,15 +56,14 @@ does. It has no enemies and no bosses yet.
     breaks it: from the fourth circle on it joins every circle the hero has
     been in, and lets him into the ones he has not, where their own gates still
     stand.
-  - **Sinks**: 19 places where one pass runs level over the next, the floor is
+  - **Sinks**: 20 places where one pass runs level over the next, the floor is
     a slab only a Smite breaks, and a clean shaft drops through the roof of the
     road below. The hidden ways down through the middle of the world, for the
     hero who comes back with the Smite.
-- **Paradise is the last act.** A stair of ledges stands on the Earth's surface
-  from the first minute; with the Wings it leads up through thirteen islands
-  to the temple and the gate that ends the journey. The islands are thick
-  clouds, water falls from under three of them into the sky, and small clouds
-  drift in the empty sky between them (`wisp`: stood on, like any cloud).
+- **Paradise is the last act, and a place of its own** (the section below):
+  three stairs of light stand on the Earth's surface from the first minute,
+  and from the first minute water falls out of the sky into the pond by the
+  start.
 - **The Earth is a country, not a lid.** The surface rolls, with trees on it
   (trunks and crowns on the wall behind: walked past, not into), the front of a
   house by the start, ruins, a pond with something at its bottom, and an old
@@ -86,7 +85,7 @@ moving of its own, so it is told apart by more than colour.
 
 | Region | Ground, liquid | Its road | Far off, and its great cave | Underfoot and in the air |
 |---|---|---|---|---|
-| Paradise | cloud, marble, garden earth | islands in open sky, climbed and glided between | the open sky | gold motes; the day's own light |
+| Paradise | cloud, marble, gold, garden earth; falling water | a Garden in the middle, a Temple over it, three ways out to three lights | heaven: islands far off, shafts of light, a sea of cloud | gold motes; the day's own light; winds that blow upward |
 | Earth | grass, dirt, stone, copper; water | a surface, a long mine, a gate | stalagmites | daylight above, torches below |
 | Limbo | ashstone; the Acheron (swum) | wide, quiet galleries; graves | broken columns; a colonnade in the fields | a fog of pale motes |
 | Lust | rose rock | shafts climbed and fallen down | spires | a wind in gusts against the way in; lifts that slow a fall and carry a glide up; petals |
@@ -105,6 +104,74 @@ into the other's over twelve rows; the rock behind the caves changes along a
 ragged strip; and the way down is a shaft the hero travels, so he sees all of
 it. The region says its name when he arrives.
 
+## Paradise
+
+Paradise is 124 rows of sky, five screens high (`LIFT` rows were added over
+the world for it). It is the one region that is not a road: it has a middle,
+and three ways out of the middle that are gone in any order.
+
+```
+                         a cloud with a draught
+                        ___/ roof of gold \___
+                       |      THE TEMPLE      |   its door opens when three lights burn
+     the Orchard       '----------:-----------'
+   (gold trees, a      a stair    :  water          the House of Trials
+    ring of columns)   of light   :  falls        (a veil, a chimney, a seal;
+   ~~~~~~~~~~~~~~~      and a     :                 a roof of gold, two towers)
+     |  gulfs of wind   wind   ___:___  bridge    ~~~~~~~~~~~~~~~~~~~~~~
+     |  <-------------------  THE GARDEN  ------------------>   |
+     |                        lake, rainbow                     |
+     |                        the Hollow inside the cloud       |
+   stair                      |  :                            stair
+   of light                 stair:  water falls               of light
+ ===========================|====:===pond=======================|=======  the Earth
+```
+
+- **The Garden** is a great island right over the start, some fifty rows up: grass,
+  trees in blossom, a lake with a rainbow standing in it. The stair of light
+  from the Earth comes up through a well in its cloud. A soul by the well says
+  what the place asks for.
+- **The Temple** stands on its own island fifty rows over the Garden: marble,
+  a roof of gold in steps, tall windows with the sky in them, a ring of
+  lanterns over a step of gold where the journey ends. Its one door (`sanctum`)
+  is shut until **three lights** (`beacon`) burn. A light is a bowl of gold:
+  the hero lights it by walking up to it, for good.
+- **The three lights** are at the ends of three ways, each asking for what the
+  journey gave, so Paradise is the whole game once more, in the sun:
+  - **West, the Orchard**: over three gulfs eleven tiles wide, each with a
+    wind in it that blows upward in gusts (the Glide), to an island of trees
+    with leaves of gold and a ring of columns round the light.
+  - **East, the House of Trials**: over a bridge to a house of two floors. A
+    veil of light across its hall (the Light Dash), a chimney with nothing to
+    stand on up to the floor above (the Wall Grip), a seal of night (the Holy
+    Light), and the light past it. The way out is a balcony on its west side.
+  - **Down, the Hollow**: a grotto inside the Garden's own cloud, under the
+    lake. A cracked slab in the grass drops into it (the Smite); a sealed door
+    opens into it from the well of the stair (the Holy Light).
+- **Water falls from heaven to the Earth.** Out of the Temple's cloud, down
+  fifty rows into the Garden's lake; through the Hollow; out of the Garden's
+  cloud and down into the pond beside the start. It is a liquid of its own
+  (`falls`): seen and walked through, neither swum in nor stood on, drawn as it
+  is so it shows at night.
+- **Three ways in.** Besides the stair by the pond, a stair of light stands
+  under the Orchard's west end and one under the House's east end, so a hero
+  coming up from the Pit or from the Gate is not sent back to the middle.
+- **Up is rewarded.** The Temple's roof is climbed from either end (it is also
+  the way round the house), and over its top a last cloud holds a draught; a
+  heart lies on a cloud over the Orchard; a relic on the House's roof and one
+  on a cloud half way up the stair to the Temple, where a soul stands.
+- **Heaven is behind all of it** (`heaven` layers of the backdrop): islands
+  hanging far off with threads of falling water, shafts of light, a sea of
+  cloud the islands stand in, and wisps of cloud that pass in front of the hero
+  on the stairs. They take the hour's tint: the sea of cloud is pink at
+  sunset, and the islands stand dark against the stars at night.
+- **Small clouds** drift in the empty sky (`wisp`: stood on, like any cloud).
+
+The model plays Paradise as it plays the rest: every light, relic, upgrade and
+place to rest is reached, and the hero gets home from all of it. It lets him
+through the Temple's door (the lights are goals of their own), and it knows
+nothing of the winds, so every gulf is crossed without them.
+
 **Zones.** A circle is not one rock from end to end. Limbo's lower pass runs
 into marble in the east (the hall the virtuous raised); the middle of Gluttony
 is plain earth; Wrath's east is mud; the west of Heresy's first pass is the
@@ -116,7 +183,7 @@ teeth on them, its floor steps up and down by a row, a long stretch dips in
 its middle (`walk`, `stroll`), and where it falls from a height into a pool
 that is swum, water falls with it.
 
-**The rock is not empty.** Between the roads there are 209 caves no road leads
+**The rock is not empty.** Between the roads there are 203 caves no road leads
 to (`pockets`): seen from a road through a gap, or not at all. They are the
 world's grain, not places to go.
 
@@ -161,7 +228,7 @@ The rules the layout follows:
   and in every antechamber.
 - **Fewer gates, each one meant.** A stretch of the road asks for an ability
   once, where it changes how the stretch is crossed; the 113 gates of the first
-  layout are 69.
+  layout are 72.
 - **A shrine is known by its sign.** Over each ability the wall carries its
   emblem in lamps (`EMBLEMS`), and a tablet by the plinth says in a line what
   the ability is for (`SHRINE_WORDS`).
@@ -170,7 +237,7 @@ The rules the layout follows:
   are about moving, not about a key (`gauntlet`).
 - **Light tells the roads apart.** The main road is the bright one: a lamp
   every 9 to 14 tiles. A low road has a lamp every 40 to 60 and between them
-  only the faint light of its region's air, in the region's colour. And 8
+  only the faint light of its region's air, in the region's colour. And 5
   stretches of the main road, some 20 tiles long, are **dark** (`dark`): no
   lamp in them, before them or just past them, and no light in their air, so
   the hero walks from light into the dark toward the next light. A lamp is seen
@@ -186,28 +253,29 @@ Off the road, each circle has what the critical path does not need:
   further on. One holds a relic in a room, one is flooded, one is shut by a gate
   to come back for. They sag in the middle and are dim. Under the longest of
   them there is a third level, a **deep road** reached from the low one
-  (8 of them).
+  (7 of them).
 - **Attics**: a ladder of ledges through the roof to a nook with a relic, six
   rows apart for the Wings or three for anyone.
-- **Secrets**: 23 walls that are not walls. One looks like the rock round it
+- **Secrets**: 16 walls that are not walls. One looks like the rock round it
   but for a few fine cracks and the edge the rock draws against it; two cuts of
   the sword bring it down, and there is a room behind. The chart shows that
   room as rock until the wall is broken, even if the hero has stood beside it.
 - **Not every reward is a relic.** Behind the secret walls the rewards go in
   turn: a heart (the game's Kept Light: one more heart), a relic, a draught
   (the game's Vial of the Basin: one more to heal with), a relic, a relic. A
-  heart also lies on a high cloud of Paradise. 6 hearts and 5 draughts in all;
-  the HUD shows the hearts and the draughts he has.
+  heart and a draught also lie on high clouds of Paradise. 5 hearts and 5
+  draughts in all; the HUD shows the hearts and the draughts he has.
 - **Perches** in the halls, the stairs of the great caves, relics under water.
 - **Those who are here.** 10 shades stand in the halls and by the gates and
-  say a line when the hero stands by them (`SHADES`); 16 tablets tell what a
-  place was (`TABLETS`, the shrines, the Well's doors); 24 posts say where a
-  road goes. The line shows along the foot of the screen (`TilesV2Sign`).
+  say a line when the hero stands by them (`SHADES`); 4 souls do in Paradise
+  (`SOULS`); 18 tablets tell what a place was (`TABLETS`, the shrines); 30
+  posts say where a road goes. The line shows along the foot of the screen
+  (`TilesV2Sign`).
 
-The map holds 100 relics, 11 upgrades, 52 places to rest, 17 veils of light,
-52 seals and slabs, 17 platforms that do not stay, 4 winds, 50 signs, 8 dark
-stretches, 862 lamps and about 3800 cells of ledge. About 36 % of it is open
-space.
+The map holds 97 relics, 10 upgrades, 53 places to rest, 20 veils of light,
+52 seals and slabs, 13 platforms that do not stay, 8 winds, 62 signs, 5 dark
+stretches, 3 lights and the door they open, 872 lamps and about 4000 cells of
+ledge. About 39 % of it is open space.
 
 ## How the map is made
 
@@ -238,19 +306,22 @@ A map marks what of the game stands where, for the scene to build
 (`TilesV2Things`):
 
 ```
-@region limbo 172                          a region starts at this row
-@mark checkpoint 397 117                   the game's checkpoint (`pit` after it: in an antechamber of the Pit)
-@mark ability 230 198 LightDash
-@mark barrier 222 196 4                    a light barrier: column, top row, height
-@mark seal 524 146 bolt 1 4                a seal: what breaks it (`bolt`, or `slam` for a slab), width, height
-@mark secret 94 216 1 3 88 215 93 218 H    a wall the sword breaks: its size, the room behind it, the rock it is drawn as
-@mark platform 491 507 2 crumble 0.0       a platform that gives way (or `blink`: comes and goes): its length, how far along its cycle
-@mark wind 478 280 30 12 50 0 2.5 2.5      a wind: the air it blows in, its speed across and up, how long it blows and rests
-@mark relic 267 134
-@mark upgrade 141 47 Heart                 an upgrade of the game's: `Heart` or `Vial`
-@mark sign 409 117 shade Two ways part ... something that says a line: a `post`, a `tablet` or a `shade`, and the line
-@mark dark 352 114 21 14                   a stretch whose air gives no light: column, top row, width, height
-@mark end 405 17
+@region limbo 220                          a region starts at this row
+@mark checkpoint 397 165                   the game's checkpoint (`pit` after it: in an antechamber of the Pit)
+@mark ability 230 246 LightDash
+@mark barrier 222 244 4                    a light barrier: column, top row, height
+@mark seal 524 194 bolt 1 4                a seal: what breaks it (`bolt`, or `slam` for a slab), width, height
+@mark secret 61 302 1 3 55 301 60 304 H    a wall the sword breaks: its size, the room behind it, the rock it is drawn as
+@mark platform 491 555 2 crumble 0.0       a platform that gives way (or `blink`: comes and goes): its length, how far along its cycle
+@mark wind 478 328 30 12 50 0 2.5 2.5      a wind: the air it blows in, its speed across and up, how long it blows and rests
+@mark relic 267 182
+@mark upgrade 297 8 Vial                   an upgrade of the game's: `Heart` or `Vial`
+@mark sign 409 165 shade Two ways part ... something that says a line: a `post`, a `tablet`, a `shade` or a `soul`, and the line
+@mark dark 397 169 21 14                   a stretch whose air gives no light: column, top row, width, height
+@mark beacon 273 107 Deep                  a light of Paradise, and its name
+@mark sanctum 266 40 4 3                   the door the lights open: column, top row, height, the lights it asks for
+@mark picture 297 95 backdrop_rainbow      one of the tile set's pictures, its foot in the cell (a rainbow)
+@mark end 297 42
 ```
 
 ## How it is checked
@@ -264,8 +335,9 @@ A map marks what of the game stands where, for the scene to build
 - It walks from the start with nothing and takes each ability as its shrine
   comes within reach. The world fails if an ability comes out of order, if two
   come at once, if any place he can have reached has no way on to the next
-  shrine (a strand), if a checkpoint, a relic, an upgrade or the end is never
-  reached, or if with every ability there is a place he cannot get home from.
+  shrine (a strand), if a checkpoint, a relic, an upgrade, a light of Paradise
+  or the end is never reached, or if with every ability there is a place he
+  cannot get home from.
 
 What it does not prove: that a gate cannot be passed early by a trick. The
 model is cautious in one direction only; it knows nothing of the winds; and a
@@ -302,9 +374,9 @@ python tools/tiles_v2/photo_world.py --sample     # the sample map
 ```
 
 It takes a minute or two and writes under `Logs/TilesV2/photo/` (or `--out`):
-`world.png`, the whole map in one picture to zoom into (8640 x 12480 px, every
+`world.png`, the whole map in one picture to zoom into (8640 x 13248 px, every
 torch and blade of grass as the game draws them); `regions/`, the same a region
-at a time; and `4k/`, the same cut into 18 sheets of 3840 x 2160 for a viewer
+at a time; and `4k/`, the same cut into 21 sheets of 3840 x 2160 for a viewer
 that will not open the whole. The editor runs hidden and must not have the
 project open; it builds the world as the game does, stands the map's marks in
 it, and photographs it in pieces with the backdrop placed once, so they join
@@ -317,8 +389,8 @@ It also writes the same with **everything the map marks named on it**
 frame stands round the cells of each mark with its name over it: `C1 ...` the
 places to rest, the abilities by name, `G1 ...` the gates, `S1 ...` the secret
 walls, `R1 ...` the relics, `U1 ...` the upgrades, `T1 ...` the signs, `P1 ...`
-the platforms that do not stay, `W1 ...` the winds, a violet outline round each
-dark stretch; a line and a name where each region starts; and the columns and
+the platforms that do not stay, `W1 ...` the winds, `L1 ...` the lights of
+Paradise, `D1` the door they open, a violet outline round each dark stretch; a line and a name where each region starts; and the columns and
 rows along the edges, a tick every 10 and a number every 20. `labels.txt`
 lists every name with what it is, its column, row and region, so "S7 is in the
 wrong place" is a thing that can be said.
@@ -359,5 +431,8 @@ and their sources are in the session's research file
 - **The signs are not the game's dialogue**: a line along the foot of the
   screen, with no portraits and no choices, and the shades do not remember
   being spoken to.
-- **The hearts and draughts are not saved**: the world has no save of its own,
-  so they are found again on the next run.
+- **The hearts, the draughts and the lights of Paradise are not saved**: the
+  world has no save of its own, so they are found and lit again on the next
+  run.
+- **The falling water makes no spray** where it lands, and the rainbow in the
+  Garden's lake is a picture: it does not come and go with the sun.

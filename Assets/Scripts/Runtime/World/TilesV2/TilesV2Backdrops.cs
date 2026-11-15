@@ -9,7 +9,8 @@ namespace Descender.World.TilesV2
     /// clouds, drifting along the top of the view; the ridges, standing on the map's
     /// surface line and scrolling sideways; and under the surface line the rock behind the
     /// caves, each region's own, which takes the tile light, scrolls both ways and is cut
-    /// to its region's rows by a sprite mask, with a ragged strip along its top.
+    /// to its region's rows by a sprite mask, with a ragged strip along its top. A world with
+    /// regions has heaven over it: islands far off, shafts of light, a sea of cloud.
     /// </summary>
     public static class TilesV2Backdrops
     {
@@ -96,6 +97,26 @@ namespace Descender.World.TilesV2
                             0f
                         );
                         tinted.Add(layer);
+                        break;
+                    }
+                    case TilesV2Set.BackdropKind.Heaven when map.Regions.Count > 0:
+                    {
+                        // Over a world: a band that stands a way over the surface line and keeps the
+                        // camera company on its way up by the share it does not scroll.
+                        var layer = MakeLayer(root, entry, material, new Vector2(size.x * 3f, size.y));
+                        layer
+                            .GetComponent<ParallaxLayer>()
+                            .Configure(
+                                new Vector2(entry.scroll, entry.scrollUp),
+                                new Vector2(viewAnchor.x, surface + entry.rise),
+                                viewAnchor,
+                                new Vector2(size.x, 0f),
+                                entry.drift
+                            );
+                        if (entry.tinted)
+                        {
+                            tinted.Add(layer);
+                        }
                         break;
                     }
                 }

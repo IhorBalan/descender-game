@@ -28,6 +28,18 @@ BACKDROPS = [
     {"key": "backdrop_far", "kind": "ridge", "scroll": 0.1, "order": -990, "lit": False},
     {"key": "backdrop_mid", "kind": "ridge", "scroll": 0.25, "order": -980, "lit": False},
     {"key": "backdrop_near", "kind": "ridge", "scroll": 0.45, "order": -970, "lit": False},
+    # Heaven, over a world that has a Paradise: `rise` is how many tiles over the surface line a
+    # layer's foot stands for a camera on that line, `scrollUp` the share of the camera's way up
+    # it moves with the world (under 1 it keeps the camera company, as what is far does),
+    # `drift` the units a second it moves by itself. Islands far off, shafts of light, a sea
+    # of cloud the islands stand in, and wisps of it that pass in front of the hero.
+    {"key": "backdrop_heaven_far", "kind": "heaven", "scroll": 0.06, "scrollUp": 0.25, "rise": 6, "drift": 0.0, "order": -1000, "lit": False, "tinted": True},
+    {"key": "backdrop_heaven_near", "kind": "heaven", "scroll": 0.16, "scrollUp": 0.4, "rise": 10, "drift": 0.0, "order": -996, "lit": False, "tinted": True},
+    {"key": "backdrop_cloudsea", "kind": "heaven", "scroll": 0.5, "scrollUp": 1.0, "rise": 26, "drift": 0.12, "order": -966, "lit": False, "tinted": True},
+    {"key": "backdrop_rays", "kind": "heaven", "scroll": 0.3, "scrollUp": 0.6, "rise": 8, "drift": 0.0, "order": -964, "lit": False, "tinted": False},
+    {"key": "backdrop_cloudfront", "kind": "heaven", "scroll": 1.0, "scrollUp": 1.0, "rise": 24, "drift": 0.4, "order": 30, "lit": False, "tinted": True},
+    # A picture a map stands somewhere itself (`@mark picture column row key`): not laid by kind.
+    {"key": "backdrop_rainbow", "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": -962, "lit": False, "tinted": False},
 ]
 # The rock behind the caves is a region's own (REGIONS in tv2_base.py): each region that
 # has one gets `backdrop_cave_<region>` and its ragged top, `backdrop_cave_top_<region>`.
@@ -341,6 +353,127 @@ def backdrop_far(region: dict) -> Image.Image:
     return Image.fromarray(a, "RGBA")
 
 
+def backdrop_isles(name: str, height: int, count: int, wide, colours, falls: float, built: float) -> Image.Image:
+    """Islands hanging in the sky far off, on nothing: a flat top with a lit rim, a body that
+    narrows to a ragged point, on some a row of columns, from some a thread of falling
+    water. `colours`: rim, top, body, under, water. The row repeats sideways."""
+    im = Image.new("RGBA", (BACKDROP_W, height), (0, 0, 0, 0))
+    px = im.load()
+    r = rng("isles", name)
+    rim, top, body, under, water = colours
+    slot = BACKDROP_W / count
+    for i in range(count):
+        half = r.randint(*wide)
+        cx = int(i * slot + r.uniform(0.2, 0.8) * slot)
+        cy = r.randint(26, height - 150)
+        deep = int(half * r.uniform(0.95, 1.4))
+        jag = [r.uniform(0.75, 1.15) for _ in range(half * 2 + 1)]
+        foot = cy
+        for dx in range(-half, half + 1):
+            t = abs(dx) / (half + 0.5)
+            down = max(1, int(deep * (1 - t**1.4) * jag[dx + half]))
+            x = (cx + dx) % BACKDROP_W
+            for k in range(down):
+                colour = rim if k == 0 else top if k < 3 else under if k > down * 0.62 else body
+                px[x, cy + k] = colour + (255,)
+            if dx == 0:
+                foot = cy + down
+        if r.random() < built and half >= 18:
+            # A row of columns under a lintel, off the middle.
+            first = cx + r.randint(-half // 2, 0)
+            for k in range(5):
+                for y in range(cy - 9, cy):
+                    px[(first + k * 4) % BACKDROP_W, y] = body + (255,)
+            for x in range(first - 1, first + 18):
+                px[x % BACKDROP_W, cy - 10] = top + (255,)
+        if r.random() < falls:
+            x = (cx + r.randint(-half // 3, half // 3)) % BACKDROP_W
+            long = r.randint(50, 120)
+            for k in range(long):
+                y = foot + k - 2
+                if 0 <= y < height:
+                    px[x, y] = water + (max(0, 220 - 200 * k // long),)
+    return im
+
+
+def backdrop_rays() -> Image.Image:
+    """Shafts of light slanting down from the left: bands of pale gold in three strengths,
+    their edges an ordered dither, fading out at the top and the foot. Repeats sideways."""
+    width, height = BACKDROP_W, 1024
+    ys, xs = np.mgrid[0:height, 0:width]
+    along = (xs + ys * 0.42) % width
+    strength = np.zeros((height, width))
+    r = rng("rays")
+    for _ in range(7):
+        centre, half, power = r.uniform(0, width), r.uniform(10, 34), r.uniform(0.5, 1.0)
+        away = np.minimum(np.abs(along - centre), width - np.abs(along - centre))
+        strength = np.maximum(strength, power * np.clip(1 - away / half, 0, 1))
+    fade = np.clip(np.minimum(ys / 220.0, (height - ys) / 300.0), 0, 1)
+    level = strength * fade * 3.0
+    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
+    step = np.floor(level) + ((level - np.floor(level)) > bayer)
+    a = np.zeros((height, width, 4), dtype=np.uint8)
+    a[:, :, :3] = (255, 246, 204)
+    a[:, :, 3] = np.clip(step, 0, 3) * 13
+    return Image.fromarray(a, "RGBA")
+
+
+def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: bool) -> Image.Image:
+    """A bank of cloud that repeats sideways: rows of round heads, back to front (`rows`:
+    how many heads, the line their middles lie on, their sizes, their colours lit and in
+    shade). With `solid_under` it is a sea, filled under the heads and thinning to nothing
+    at its foot in an ordered dither; without, the heads float apart."""
+    im = Image.new("RGBA", (BACKDROP_W, height), (0, 0, 0, 0))
+    px = im.load()
+    r = rng("cloud band", name)
+    for count, line, sizes, lit, shade_ in rows:
+        heads = [(r.randrange(BACKDROP_W), line + r.randint(-10, 10), r.randint(*sizes)) for _ in range(count)]
+        for x in range(BACKDROP_W):
+            crest = None
+            for hx, hy, rad in heads:
+                dx = min(abs(x - hx), BACKDROP_W - abs(x - hx))
+                if dx <= rad:
+                    y = hy - (rad * rad - dx * dx) ** 0.5 * 0.7
+                    crest = y if crest is None else min(crest, y)
+            flat = crest is None
+            if flat:
+                if not solid_under:
+                    continue
+                crest = line + 14  # between two heads the sea lies flat, with no lit rim
+            crest = int(crest)
+            floor = height if solid_under else int(crest + max(sizes) * 0.55)
+            for y in range(max(crest, 0), min(floor, height)):
+                colour = lit if y - crest < 4 and not flat else shade_
+                show = alpha
+                if solid_under:
+                    left = (height - y) / 70.0
+                    if left < 1 and left * 16 <= BAYER[y % 4][x % 4] + 0.5:
+                        continue
+                elif floor - y < 3 and (x + y) % 2:
+                    continue
+                px[x, y] = colour + (show,)
+    return im
+
+
+def backdrop_rainbow() -> Image.Image:
+    """Half a rainbow's ring, standing on its two feet: seven thin bands, see-through, their
+    edges and their feet an ordered dither."""
+    width, height = 416, 208
+    im = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    px = im.load()
+    bands = hexes("ff6b6b", "ffa24d", "ffe066", "8ce08a", "66c8f0", "6f8cf0", "b07ce8")
+    outer, thick = 204.0, 2.6
+    for y in range(height):
+        for x in range(width):
+            d = ((x - width / 2 + 0.5) ** 2 + (height - y) ** 2) ** 0.5
+            k = (outer - d) / thick
+            if 0 <= k < len(bands):
+                fade = min(1.0, (height - y) / 46.0)
+                if fade * 16 > BAYER[y % 4][x % 4] + 0.5:
+                    px[x, y] = bands[int(k)] + (112,)
+    return im
+
+
 def backdrops() -> dict[str, Image.Image]:
     caves = {}
     for region in REGIONS:
@@ -354,6 +487,28 @@ def backdrops() -> dict[str, Image.Image]:
         "backdrop_sun": backdrop_sun(),
         "backdrop_moon": backdrop_moon(),
         "backdrop_clouds": backdrop_clouds(),
+        "backdrop_heaven_far": backdrop_isles(
+            "far", 360, 6, (14, 30), hexes("eef5fd", "d4e3f5", "bcd2ee", "a9c3e6", "f4f9ff"), 0.6, 0.4
+        ),
+        "backdrop_heaven_near": backdrop_isles(
+            "near", 480, 3, (34, 60), hexes("ffffff", "c6e2b4", "a3bbe2", "869fd0", "eaf4ff"), 0.8, 0.7
+        ),
+        "backdrop_rays": backdrop_rays(),
+        "backdrop_rainbow": backdrop_rainbow(),
+        "backdrop_cloudsea": backdrop_cloud_band(
+            "sea",
+            208,
+            [
+                (16, 78, (26, 46), hexes("dbe6f6")[0], hexes("c2d3ee")[0]),
+                (15, 104, (22, 40), hexes("f0f5fc")[0], hexes("d5e1f4")[0]),
+                (14, 132, (18, 34), hexes("ffffff")[0], hexes("e6eefa")[0]),
+            ],
+            255,
+            True,
+        ),
+        "backdrop_cloudfront": backdrop_cloud_band(
+            "front", 192, [(5, 70, (16, 30), hexes("ffffff")[0], hexes("e8effa")[0]), (4, 130, (12, 24), hexes("ffffff")[0], hexes("e8effa")[0])], 120, False
+        ),
         "backdrop_far": backdrop_ridge(
             "far", hexes("7fa3c4")[0], hexes("a3c2dc")[0], 118, [(1, 30), (2, 20), (3, 12), (7, 6), (13, 3), (23, 2)], 1
         ),

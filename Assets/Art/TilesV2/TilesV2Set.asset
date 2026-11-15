@@ -315,6 +315,34 @@ MonoBehaviour:
     layer: 1
     key: leaf_wall
     tile: {fileID: 11400000, guid: 5531a916de0674c4cac27f15f0afe714, type: 2}
+  - character: t
+    layer: 1
+    key: birch_wall
+    tile: {fileID: 11400000, guid: 3acf2ea7b39961544ae2f79dc314a8a6, type: 2}
+  - character: p
+    layer: 1
+    key: blossom_wall
+    tile: {fileID: 11400000, guid: 5d98ba6ab7b86b8499f158a4592b4382, type: 2}
+  - character: g
+    layer: 1
+    key: gold_leaf_wall
+    tile: {fileID: 11400000, guid: a80aa2d499ba5c843beae9032473427e, type: 2}
+  - character: c
+    layer: 1
+    key: mist_wall
+    tile: {fileID: 11400000, guid: 9d8bd7854b034b54da32a398e843c220, type: 2}
+  - character: x
+    layer: 1
+    key: pillar_wall
+    tile: {fileID: 11400000, guid: 1b1e39d37e2c6a144af8dcef1cc76b52, type: 2}
+  - character: K
+    layer: 0
+    key: gold_brick
+    tile: {fileID: 11400000, guid: ea7c51f4e7df00443bff8bd49b8cf9a9, type: 2}
+  - character: '|'
+    layer: 2
+    key: falls
+    tile: {fileID: 11400000, guid: 1f05f1ca624ebc644b65a9a9badf6692, type: 2}
   blends:
   - key: dirt_on_stone
     onto: stone
@@ -1770,6 +1798,11 @@ MonoBehaviour:
   - {fileID: 2539011789713391969, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 4173789985950267786, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 107832730637364431, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 990848918130856494, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 1965695868820223783, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 220485206269948922, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 1117358721972427961, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 3209183503758669476, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   regions:
   - key: paradise
     name: Paradise
@@ -1954,6 +1987,12 @@ MonoBehaviour:
     swim: 1
     hazard: 0
     order: 25
+  - key: falls
+    tile: {fileID: 11400000, guid: 1f05f1ca624ebc644b65a9a9badf6692, type: 2}
+    lit: 0
+    swim: 0
+    hazard: 0
+    order: 26
   ambient: 0.04
   ambientColour: {r: 0.55, g: 0.62, b: 0.85, a: 1}
   airKeeps: 0.91
@@ -2040,39 +2079,127 @@ MonoBehaviour:
     scroll: 0
     order: -1008
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: backdrop_sun
     kind: 1
     sprite: {fileID: 21300000, guid: 719aa180577a56abac23c43cdddd4c01, type: 3}
     scroll: 0
     order: -1006
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: backdrop_moon
     kind: 2
     sprite: {fileID: 21300000, guid: 1a329f991ee65c118bbbd510369dc647, type: 3}
     scroll: 0
     order: -1006
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: backdrop_clouds
     kind: 3
     sprite: {fileID: 21300000, guid: 799a6517a76d55fd9c399073554e4ce7, type: 3}
     scroll: 0.04
     order: -1004
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: backdrop_far
     kind: 4
     sprite: {fileID: 21300000, guid: 8d96f796f0be50f493b180ef16a33751, type: 3}
     scroll: 0.1
     order: -990
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: backdrop_mid
     kind: 4
     sprite: {fileID: 21300000, guid: f1f5fcde2454598c9ed5c197d1c35e52, type: 3}
     scroll: 0.25
     order: -980
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: backdrop_near
     kind: 4
     sprite: {fileID: 21300000, guid: bd97565814f3577298cb5f1e11f075d2, type: 3}
     scroll: 0.45
     order: -970
     lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: backdrop_heaven_far
+    kind: 7
+    sprite: {fileID: 21300000, guid: fb3507434ddf56da86d988a1adf5a6be, type: 3}
+    scroll: 0.06
+    order: -1000
+    lit: 0
+    scrollUp: 0.25
+    rise: 6
+    drift: 0
+    tinted: 1
+  - key: backdrop_heaven_near
+    kind: 7
+    sprite: {fileID: 21300000, guid: a6d8a81546735ff0952a4767de005061, type: 3}
+    scroll: 0.16
+    order: -996
+    lit: 0
+    scrollUp: 0.4
+    rise: 10
+    drift: 0
+    tinted: 1
+  - key: backdrop_cloudsea
+    kind: 7
+    sprite: {fileID: 21300000, guid: 13106332f8ae535da96855a10c493e48, type: 3}
+    scroll: 0.5
+    order: -966
+    lit: 0
+    scrollUp: 1
+    rise: 26
+    drift: 0.12
+    tinted: 1
+  - key: backdrop_rays
+    kind: 7
+    sprite: {fileID: 21300000, guid: 1b5d3c1412d55d41855f0f9001cfd87d, type: 3}
+    scroll: 0.3
+    order: -964
+    lit: 0
+    scrollUp: 0.6
+    rise: 8
+    drift: 0
+    tinted: 0
+  - key: backdrop_cloudfront
+    kind: 7
+    sprite: {fileID: 21300000, guid: 7a2d962c20ae50c8aefd8d9144b30dc6, type: 3}
+    scroll: 1
+    order: 30
+    lit: 0
+    scrollUp: 1
+    rise: 24
+    drift: 0.4
+    tinted: 1
+  - key: backdrop_rainbow
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4983b1c013d859b1a531b385616514fe, type: 3}
+    scroll: 1
+    order: -962
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0

@@ -5,7 +5,8 @@ namespace Descender.World.TilesV2
 {
     /// <summary>
     /// Something in a Tiles V2 world that says a line when the hero stands by it: a
-    /// signpost, a tablet with words cut in it, or a shade, who wavers where it stands.
+    /// signpost, a tablet with words cut in it, a shade, who wavers where it stands, or one
+    /// of the blessed, a soul, who does too.
     /// The scene's runner shows the line of the one being read. Origin at the foot of its cell.
     /// </summary>
     public sealed class TilesV2Sign : MonoBehaviour
@@ -13,6 +14,7 @@ namespace Descender.World.TilesV2
         public const string Post = "post";
         public const string Tablet = "tablet";
         public const string Shade = "shade";
+        public const string Soul = "soul";
 
         /// <summary>How near the hero reads it, in units, across and up.</summary>
         public static readonly Vector2 Reach = new Vector2(2.2f, 2.5f);
@@ -27,7 +29,7 @@ namespace Descender.World.TilesV2
         /// <summary>What it says.</summary>
         public string Text { get; private set; } = "";
 
-        /// <summary>What it is: a post, a tablet or a shade.</summary>
+        /// <summary>What it is: a post, a tablet, a shade or a soul.</summary>
         public string Kind { get; private set; } = Post;
 
         /// <summary>Sets what it is, what it says and what it is drawn with.</summary>
@@ -35,7 +37,7 @@ namespace Descender.World.TilesV2
         {
             Kind = kind;
             Text = text ?? "";
-            wavers = kind == Shade;
+            wavers = kind == Shade || kind == Soul;
             var picture = new GameObject("Picture");
             picture.transform.SetParent(transform, false);
             picture.transform.localPosition = new Vector3(0f, 0.5f, 0f);

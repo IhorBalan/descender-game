@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c48e3552d75da264dab0819f6f3e02df, type: 3}
+  m_Name: falls
+  m_EditorClassIdentifier: Descender.Runtime::Descender.World.TilesV2.LiquidTile
+  liquidKey: falls
+  surface:
+  - {fileID: 2230365876571980512, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 2357382615566190262, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 2229445596983438980, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 3278092817337054647, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 295139878755490348, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 3825285798983489950, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 3583907298824666752, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 2438060861622578988, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  body:
+  - {fileID: 173596630356730996, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 3145969702131962995, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 3299004600801120097, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 4349720629296124568, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 298406669807819593, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 4102554660229821944, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 1766349941940422577, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  - {fileID: 4489536869441002916, guid: 9e42cc54b2fc5d32aa2ecc0bc1571295, type: 3}
+  framesPerSecond: 12
+  keeps: {r: 0.9, g: 0.94, b: 0.98, a: 1}
+  emits: {r: 0.1, g: 0.13, b: 0.17, a: 1}
