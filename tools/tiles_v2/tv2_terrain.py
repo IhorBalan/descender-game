@@ -657,7 +657,7 @@ def ledge_sheet() -> tuple[Image.Image, list]:
 # The things of the game a map marks (`@mark`), each a tile-sized sprite the world's
 # objects are drawn with: a light barrier's veil, the seal a bolt breaks, the slab a
 # slam breaks, a relic.
-THINGS = ["barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1", "crack", "crumble", "blink", "wind"]
+THINGS = ["barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1", "crack", "crumble", "blink", "wind", "post", "tablet", "shade"]
 
 
 def thing(name: str) -> np.ndarray:
@@ -725,6 +725,41 @@ def thing(name: str) -> np.ndarray:
         else:
             for x, y in ((7, 3), (8, 3), (6, 4), (9, 4), (6, 5), (9, 5), (7, 6), (8, 6), (7, 7), (8, 7)):
                 a[y, x] = (200, 190, 255, 255)
+    elif name == "post":
+        # A signpost: a board on a stake.
+        wood, lit, rim, ink = hexes("93603d", "c6915e", "2a1810", "452a1c")
+        for y in range(8, 16):
+            a[y, 7] = (*lit, 255)
+            a[y, 8] = (*wood, 255)
+        for y in range(2, 8):
+            for x in range(2, 14):
+                a[y, x] = (*(rim if y in (2, 7) or x in (2, 13) else lit if y == 3 else wood), 255)
+        for x in (4, 5, 6, 8, 9, 11):
+            a[4, x] = (*ink, 255)
+        for x in (4, 5, 7, 8, 9, 10):
+            a[6, x] = (*ink, 255)
+    elif name == "tablet":
+        # A standing stone with lines cut in it.
+        ramp, rim = PALETTES["stone"]["ramp"], PALETTES["stone"]["outline"]
+        for y in range(2, 16):
+            for x in range(4, 12):
+                if y == 2 and x in (4, 11):
+                    continue
+                a[y, x] = (*(ramp[5] if x == 4 else ramp[2] if x == 11 else ramp[4] if y == 2 else ramp[3]), 255)
+        for y in (5, 7, 9, 11):
+            for x in range(6, 10 if y != 11 else 8):
+                a[y, x] = (*rim, 255)
+    elif name == "shade":
+        # A shade: a pale figure with no feet, two dark eyes.
+        pale, mid, eye = (214, 224, 240), (170, 184, 210), (40, 44, 70)
+        for y in range(2, 16):
+            half = 3 if y < 6 else 4 if y < 12 else 4 - (y - 11) // 2
+            for x in range(8 - half, 8 + half):
+                if y >= 13 and (x + y) % 3 == 0:
+                    continue
+                a[y, x] = (*(pale if x < 8 else mid), 235 if y < 12 else 235 - (y - 11) * 40)
+        a[5, 6] = a[5, 9] = (*eye, 255)
+        a[6, 6] = a[6, 9] = (*eye, 255)
     elif name == "wind":
         # A streak the wind carries: a short pale dash.
         for x in range(3, 13):

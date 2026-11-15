@@ -18,8 +18,9 @@ namespace Descender.Tests.PlayMode
     /// light stops him until he has the Light Dash, which he gets by walking into its
     /// shrine; a wall that is not one comes down under two cuts and its room comes onto the
     /// chart; the Pit takes him between the antechambers he has rested in; and a platform
-    /// that gives way does, and comes back. The scene is loaded by its path, which only the
-    /// editor can do, and unloaded again.
+    /// that gives way does, and comes back; a sign says its line to him when he stands by
+    /// it; a heart found is one more heart; and the chart, open, holds him still and comes
+    /// closer. The scene is loaded by its path, which only the editor can do, and unloaded again.
     /// </summary>
     public class TilesV2DescentTests
     {
@@ -191,6 +192,50 @@ namespace Descender.Tests.PlayMode
             yield return probe.Until(() => crumble.IsSolid, 400);
             Assert.That(crumble.IsSolid, Is.True, "and came back");
             Assert.That(things.Winds, Is.GreaterThan(2), "and the winds blow");
+
+            // A sign: standing by it he reads it, and walking off he does not.
+            TilesV2Things.Thing post = null;
+            TilesV2Things.Thing heart = null;
+            foreach (var thing in things.All)
+            {
+                post ??= thing.Kind == TilesV2Things.Sign ? thing : null;
+                heart ??=
+                    thing.Kind == TilesV2Things.Upgrade && thing.Word == UpgradeKind.Heart.ToString() ? thing : null;
+            }
+            Assert.That(post, Is.Not.Null, "the world has no sign");
+            var sign = post.Made.GetComponent<TilesV2Sign>();
+            hero.PlaceAt((Vector2)post.Made.transform.position + new Vector2(1f, 0.05f));
+            yield return probe.Settle();
+            yield return probe.Step(3);
+            Assert.That(TilesV2Sign.Reading, Is.SameAs(sign), "he stands by the sign and does not read it");
+            Assert.That(sign.Text, Is.Not.Empty);
+
+            // A heart behind a wall that is not one: walking into it is one more heart.
+            Assert.That(heart, Is.Not.Null, "the world has no heart to find");
+            var hearts = hero.MaxHealth;
+            hero.PlaceAt((Vector2)heart.Made.transform.position + new Vector2(0f, 0.05f));
+            yield return probe.Until(() => hero.MaxHealth > hearts, 120);
+            Assert.That(hero.MaxHealth, Is.EqualTo(hearts + 1), "the heart gave nothing");
+            yield return null;
+            Assert.That(TilesV2Sign.Reading, Is.Null, "the sign is behind him");
+            Assert.That(heart.IsGone, Is.True, "and it is taken once");
+
+            // The chart, open: he stands still, and it comes closer no further than it goes.
+            Assert.That(playground.IsChartShown, Is.False);
+            playground.ShowChart(true);
+            Assert.That(playground.IsChartShown, Is.True);
+            Assert.That(hero.Frozen, Is.True, "he walks while he reads the chart");
+            Assert.That(playground.ChartZoom, Is.EqualTo(1), "it opens on the whole of it");
+            for (var i = 0; i < 5; i++)
+            {
+                playground.ZoomChart(true);
+            }
+            Assert.That(playground.ChartZoom, Is.EqualTo(TilesV2Playground.ClosestChart));
+            playground.ZoomChart(false);
+            Assert.That(playground.ChartZoom, Is.EqualTo(TilesV2Playground.ClosestChart / 2));
+            yield return null;
+            playground.ShowChart(false);
+            Assert.That(hero.Frozen, Is.False, "closed, he walks again");
         }
 
         // The lowest ledge with open sky over it: a step of the stair that stands on the Earth.

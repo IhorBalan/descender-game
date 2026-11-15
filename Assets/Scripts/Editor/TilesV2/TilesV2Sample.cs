@@ -34,6 +34,7 @@ namespace Descender.EditorTools.TilesV2
         public const string WorldMapPath = TilesV2Manifest.Folder + "/world_map.txt";
         public const string CheckpointPath = "Assets/Prefabs/Pickups/Checkpoint.prefab";
         public const string AbilityPath = "Assets/Prefabs/Pickups/AbilityPickup.prefab";
+        public const string UpgradePath = "Assets/Prefabs/Pickups/Upgrade.prefab";
 
         /// <summary>The map's place the sample scene's camera looks at.</summary>
         public const string FirstView = "surface";
@@ -105,7 +106,11 @@ namespace Descender.EditorTools.TilesV2
             playground.Configure(world, hero.GetComponent<PlayerController>(), camera.GetComponent<GameCamera>());
             if (journey)
             {
-                playground.ConfigureJourney(Load<GameObject>(CheckpointPath), Load<GameObject>(AbilityPath));
+                playground.ConfigureJourney(
+                    Load<GameObject>(CheckpointPath),
+                    Load<GameObject>(AbilityPath),
+                    Load<GameObject>(UpgradePath)
+                );
             }
             Save(scene, scenePath);
             return scene;

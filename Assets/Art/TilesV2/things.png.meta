@@ -32,6 +32,15 @@ TextureImporter:
   - first:
       213: 1719306169041351344
     second: tv2_thing_wind
+  - first:
+      213: 2539011789713391969
+    second: tv2_thing_post
+  - first:
+      213: 4173789985950267786
+    second: tv2_thing_tablet
+  - first:
+      213: 107832730637364431
+    second: tv2_thing_shade
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -343,6 +352,75 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tv2_thing_post
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e34264aa2ce56a0915faa5c069fcec4
+      internalID: 2539011789713391969
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_tablet
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d9c3251cafb150348d463fbcf8fa1ec2
+      internalID: 4173789985950267786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_shade
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe0487a6e8f154e2a634cef026da2eff
+      internalID: 107832730637364431
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -365,6 +443,9 @@ TextureImporter:
       tv2_thing_crumble: 432383010485315223
       tv2_thing_blink: 4415477407493006930
       tv2_thing_wind: 1719306169041351344
+      tv2_thing_post: 2539011789713391969
+      tv2_thing_tablet: 4173789985950267786
+      tv2_thing_shade: 107832730637364431
     spriteCustomMetadata:
       entries: []
   mipmapLimitGroupName: 

@@ -151,6 +151,9 @@ _BIOME_PALETTES = [
     ("ice", "1c4a6a", "4f8fb8 6fadd0 8fc8e4 b0dff2 d0f0fb f0fcff"),
     ("frost_rock", "0e1a2c", "1c2e48 273d5c 344e72 44628a 5a7aa4 7696be"),
     ("ice_wall", "0c2334", "163a54 1c4762 235470 2a617e 326f8d 3a7d9c"),
+    # What stands on the wall behind under the open sky: a tree's trunk and crown.
+    ("wood_wall", "2a1810", "5a3a24 6b462c 7c5335 8e6240 a07450 b48860"),
+    ("leaf_wall", "173418", "356e2e 428438 529a44 66b054 80c66a 9ad880"),
 ]
 for _key, _outline, _ramp in _BIOME_PALETTES:
     PALETTES[_key] = {"outline": hexes(_outline)[0], "ramp": hexes(*_ramp.split())}
@@ -190,6 +193,10 @@ MATERIALS += [
     _ground("ice", "ice", True, emits=(0.10, 0.16, 0.22)),
     _ground("frost_rock", "stone", True),
     _wall("ice_wall", "rubble"),
+    # These two stand under the open sky and do not shut it out (`open`): the cells behind
+    # which they are drawn are as if they had no wall, for the light and for what grows.
+    dict(_wall("wood_wall", "clay"), open=True),
+    dict(_wall("leaf_wall", "dirt"), open=True),
 ]
 
 
@@ -398,9 +405,13 @@ LEGEND = [
     ("v", "wall", "blood_wall", ""),
     ("f", "wall", "slate_wall", ""),
     ("i", "wall", "ice_wall", ""),
+    ("w", "wall", "wood_wall", ""),
+    ("l", "wall", "leaf_wall", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}
+OPEN_WALLS = {m["key"] for m in MATERIALS if m.get("open")}  # walls that do not shut out the sky
+SHUT_WALL_CHARS = {c: key for c, key in WALL_CHARS.items() if key not in OPEN_WALLS}
 LIQUID_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "liquid"}
 PROP_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "prop"}
 LEDGE_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "ledge"}

@@ -36,6 +36,9 @@ namespace Descender.World.TilesV2
         /// <summary>How many times faster the day runs while its key is held.</summary>
         public const float FastForward = 60f;
 
+        /// <summary>The closest the chart is looked at: this many times the whole of it.</summary>
+        public const int ClosestChart = 8;
+
         private const float LanternIntensity = 0.5f;
         private const int ShotWidth = 1280;
         private const int ShotHeight = 720;
@@ -65,6 +68,14 @@ namespace Descender.World.TilesV2
 
         [SerializeField, Tooltip("The game's ability pickup, stood where the map marks one.")]
         private GameObject abilityPrefab;
+
+        [SerializeField, Tooltip("The game's upgrade pickup (a heart, a draught), stood where the map marks one.")]
+        private GameObject upgradePrefab;
+
+        private int chartZoom = 1;
+        private Vector2 chartAt;
+        private GUIStyle signStyle;
+        private int shownHealth = -1;
 
         private TilesV2Things things;
         private TilesV2Chart chart;
@@ -135,7 +146,7 @@ namespace Descender.World.TilesV2
             hero.SetAbilities(journey ? new Ability[0] : (Ability[])System.Enum.GetValues(typeof(Ability)));
             if (world.Map != null && world.Map.Marks.Count > 0)
             {
-                things = TilesV2Things.Build(world, checkpointPrefab, abilityPrefab);
+                things = TilesV2Things.Build(world, checkpointPrefab, abilityPrefab, upgradePrefab);
                 things.RelicFound += _ => Say($"a relic: {things.RelicsFound} of {things.Relics}");
                 things.SecretFound += secret =>
                 {
@@ -163,6 +174,11 @@ namespace Descender.World.TilesV2
             }
             hero.Died += () => StartCoroutine(Revive());
             hero.AbilityUnlocked += ability => Announce(Spaced(ability.ToString()), AbilityHint(ability));
+            hero.UpgradeCollected += kind =>
+                Announce(
+                    kind == UpgradeKind.Heart ? "Kept Light" : "A Vial of the Basin",
+                    kind == UpgradeKind.Heart ? "one more heart" : "one more draught to heal with (H)"
+                );
             hero.PlaceAt(world.Spawn);
             hero.SetRespawnPoint(world.Spawn);
             hero.DeathY = world.Area.yMin - 6f;
@@ -216,12 +232,40 @@ namespace Descender.World.TilesV2
             {
                 if (chartShown)
                 {
-                    chartShown = false;
+                    ShowChart(false);
                 }
                 else
                 {
                     Application.Quit();
                 }
+            }
+            if (chartShown)
+            {
+                // The chart has the keys while it is open: closer and further, and round it.
+                if (keys.mKey.wasPressedThisFrame)
+                {
+                    ShowChart(false);
+                }
+                if (keys.equalsKey.wasPressedThisFrame || keys.numpadPlusKey.wasPressedThisFrame)
+                {
+                    ZoomChart(true);
+                }
+                if (keys.minusKey.wasPressedThisFrame || keys.numpadMinusKey.wasPressedThisFrame)
+                {
+                    ZoomChart(false);
+                }
+                if (keys.cKey.wasPressedThisFrame)
+                {
+                    chartAt = HeroCell();
+                }
+                var pan = new Vector2(
+                    (keys.rightArrowKey.isPressed || keys.dKey.isPressed ? 1f : 0f)
+                        - (keys.leftArrowKey.isPressed || keys.aKey.isPressed ? 1f : 0f),
+                    (keys.upArrowKey.isPressed || keys.wKey.isPressed ? 1f : 0f)
+                        - (keys.downArrowKey.isPressed || keys.sKey.isPressed ? 1f : 0f)
+                );
+                chartAt += pan * (240f / chartZoom) * Time.unscaledDeltaTime;
+                return;
             }
             if (keys.f1Key.wasPressedThisFrame)
             {
@@ -229,7 +273,7 @@ namespace Descender.World.TilesV2
             }
             if (keys.mKey.wasPressedThisFrame && chart != null)
             {
-                chartShown = !chartShown;
+                ShowChart(true);
             }
             if (keys.f3Key.wasPressedThisFrame)
             {
@@ -305,9 +349,14 @@ namespace Descender.World.TilesV2
             var hour = world != null && world.Day != null ? world.Day.Hour : 0f;
             var minute = (int)(hour * 60f);
             var noted = noteLeft > 0f;
-            if (minute != shownMinute || helpShown != shownHelp || noted != shownNote)
+            var health =
+                hero != null
+                    ? hero.Health * 1000 + hero.MaxHealth * 100 + hero.HealCharges * 10 + hero.MaxHealCharges
+                    : 0;
+            if (minute != shownMinute || helpShown != shownHelp || noted != shownNote || health != shownHealth)
             {
                 // The text is put together when the clock's minute turns, not every frame.
+                shownHealth = health;
                 shownMinute = minute;
                 shownHelp = helpShown;
                 shownNote = noted;
@@ -319,13 +368,18 @@ namespace Descender.World.TilesV2
                         + "PgDn / PgUp: next / last place   R: back to the start   F2: lantern   F1: hide this   Esc: quit"
                         + (
                             chart != null
-                                ? "\nM: the chart   E at a rest by the Pit: travel   F3: every ability / none   F4: the whole chart   cast L   heal H"
+                                ? "\nM: the chart (+ - closer, arrows round, C back)   E at a rest by the Pit: travel   F3: every ability / none   F4: the whole chart   cast L   heal H"
                                 : ""
                         )
                     : clock;
                 if (things != null && things.Relics > 0)
                 {
                     shown += $"   relics {things.RelicsFound}/{things.Relics}";
+                }
+                if (journey && hero != null)
+                {
+                    shown +=
+                        $"   hearts {hero.Health}/{hero.MaxHealth}   draughts {hero.HealCharges}/{hero.MaxHealCharges}";
                 }
                 if (noted)
                 {
@@ -341,6 +395,7 @@ namespace Descender.World.TilesV2
             DrawTitle(scale);
             DrawChart(scale);
             DrawTravel(scale);
+            DrawSign(scale);
         }
 
         // The region's name (or an ability's) across the middle of the screen, fading out.
@@ -380,7 +435,8 @@ namespace Descender.World.TilesV2
             GUI.color = Color.white;
         }
 
-        // The chart over the middle of the screen, as large as fits, with the hero on it.
+        // The chart over the middle of the screen with the hero on it: the whole of it, or closer
+        // (+ and -) and moved round (the arrows; C brings it back to him).
         private void DrawChart(float scale)
         {
             if (!chartShown || chart == null)
@@ -390,41 +446,119 @@ namespace Descender.World.TilesV2
             chart.Show();
             var screen = new Vector2(Screen.width, Screen.height) / scale;
             var picture = chart.Picture;
-            var size = Mathf.Min(screen.x * 0.9f / picture.width, screen.y * 0.94f / picture.height);
+            var fit = Mathf.Min(screen.x * 0.9f / picture.width, screen.y * 0.94f / picture.height);
             var area = new Rect(
-                (screen.x - picture.width * size) / 2f,
-                (screen.y - picture.height * size) / 2f,
-                picture.width * size,
-                picture.height * size
+                (screen.x - picture.width * fit) / 2f,
+                (screen.y - picture.height * fit) / 2f,
+                picture.width * fit,
+                picture.height * fit
             );
+            // The cells that show: all of them, or a part round the place the chart looks at.
+            var seen = new Vector2(picture.width, picture.height) / chartZoom;
+            chartAt = new Vector2(
+                Mathf.Clamp(chartAt.x, seen.x / 2f, picture.width - seen.x / 2f),
+                Mathf.Clamp(chartAt.y, seen.y / 2f, picture.height - seen.y / 2f)
+            );
+            var from = chartZoom == 1 ? Vector2.zero : chartAt - seen / 2f;
+            var size = fit * chartZoom;
             GUI.color = new Color(0f, 0f, 0f, 0.6f);
             GUI.DrawTexture(new Rect(0f, 0f, screen.x, screen.y), Texture2D.whiteTexture);
             GUI.color = Color.white;
-            GUI.DrawTexture(area, picture);
-            DrawMarks(area, size);
+            GUI.DrawTextureWithTexCoords(
+                area,
+                picture,
+                new Rect(from.x / picture.width, from.y / picture.height, 1f / chartZoom, 1f / chartZoom)
+            );
+            DrawMarks(area, size, from);
             DrawLegend(area);
             if (Time.unscaledTime % 0.6f < 0.4f)
             {
-                Vector2 at = hero.transform.position - world.transform.position;
+                var at = HeroCell() - from;
                 var dot = new Rect(
                     area.x + at.x * size - 2f,
                     area.yMax - (at.y + 1f) * size - 2f,
                     Mathf.Max(size, 4f),
                     Mathf.Max(size * 2f, 4f)
                 );
-                GUI.DrawTexture(dot, Texture2D.whiteTexture);
+                if (area.Overlaps(dot))
+                {
+                    GUI.DrawTexture(dot, Texture2D.whiteTexture);
+                }
             }
+        }
+
+        // Where the hero is on the chart, in cells.
+        private Vector2 HeroCell() => hero.transform.position - world.transform.position;
+
+        /// <summary>Whether the chart is open.</summary>
+        public bool IsChartShown => chartShown;
+
+        /// <summary>How many times closer than the whole of it the chart shows: 1, 2, 4 or 8.</summary>
+        public int ChartZoom => chartZoom;
+
+        /// <summary>Brings the chart twice as close, up to <see cref="ClosestChart"/> times, or takes it back.</summary>
+        public void ZoomChart(bool closer)
+        {
+            chartZoom = closer ? Mathf.Min(chartZoom * 2, ClosestChart) : Mathf.Max(chartZoom / 2, 1);
+        }
+
+        /// <summary>Opens the chart on the hero, who stands still while it is open, or closes it.</summary>
+        public void ShowChart(bool open)
+        {
+            if (open == chartShown || chart == null)
+            {
+                return;
+            }
+            chartShown = open;
+            if (open)
+            {
+                chartAt = HeroCell();
+                hero.Freeze();
+            }
+            else
+            {
+                hero.Unfreeze();
+            }
+        }
+
+        // What the sign or the shade the hero stands by says, along the foot of the screen.
+        private void DrawSign(float scale)
+        {
+            var sign = TilesV2Sign.Reading;
+            if (sign == null || chartShown || travelShown || shooting || string.IsNullOrEmpty(sign.Text))
+            {
+                return;
+            }
+            if (signStyle == null)
+            {
+                signStyle = new GUIStyle(GUI.skin.label)
+                {
+                    fontSize = 14,
+                    alignment = TextAnchor.MiddleCenter,
+                    wordWrap = true,
+                    fontStyle = FontStyle.Italic,
+                };
+                signStyle.normal.textColor = Color.white;
+            }
+            var screen = new Vector2(Screen.width, Screen.height) / scale;
+            var box = new Rect(screen.x * 0.15f, screen.y - 64f, screen.x * 0.7f, 52f);
+            GUI.color = new Color(0f, 0f, 0f, 0.72f);
+            GUI.DrawTexture(box, Texture2D.whiteTexture);
+            GUI.color = sign.Kind == TilesV2Sign.Shade ? new Color(0.82f, 0.88f, 1f) : new Color(1f, 0.95f, 0.82f);
+            GUI.Label(new Rect(box.x + 8f, box.y + 2f, box.width - 16f, box.height - 4f), sign.Text, signStyle);
+            GUI.color = Color.white;
         }
 
         /// <summary>
         /// Sets the scene up as a journey: the hero starts with nothing, and the game's
         /// checkpoint and ability pickup stand where the map marks them.
         /// </summary>
-        public void ConfigureJourney(GameObject checkpoint, GameObject ability)
+        public void ConfigureJourney(GameObject checkpoint, GameObject ability, GameObject upgrade = null)
         {
             journey = true;
             checkpointPrefab = checkpoint;
             abilityPrefab = ability;
+            upgradePrefab = upgrade;
         }
 
         private static readonly Color RestColour = new Color(1f, 0.92f, 0.5f);
@@ -436,7 +570,7 @@ namespace Descender.World.TilesV2
         // On the chart, what the hero has seen of the map's things: a place to rest (bright once he
         // has rested there, larger by the Pit), a shrine not yet emptied, a gate not yet opened in
         // the colour of what opens it. A relic is not marked: it is found, not shown.
-        private void DrawMarks(Rect area, float size)
+        private void DrawMarks(Rect area, float size, Vector2 from)
         {
             if (things == null)
             {
@@ -472,15 +606,16 @@ namespace Descender.World.TilesV2
                 colour.a = 1f;
                 GUI.color = colour;
                 var dot = Mathf.Max(big, size * 1.5f);
-                GUI.DrawTexture(
-                    new Rect(
-                        area.x + (thing.Cell.x + 0.5f) * size - dot / 2f,
-                        area.yMax - (thing.Cell.y + 0.5f) * size - dot / 2f,
-                        dot,
-                        dot
-                    ),
-                    Texture2D.whiteTexture
+                var where = new Rect(
+                    area.x + (thing.Cell.x + 0.5f - from.x) * size - dot / 2f,
+                    area.yMax - (thing.Cell.y + 0.5f - from.y) * size - dot / 2f,
+                    dot,
+                    dot
                 );
+                if (area.Contains(where.center))
+                {
+                    GUI.DrawTexture(where, Texture2D.whiteTexture);
+                }
             }
             GUI.color = Color.white;
         }
@@ -546,8 +681,8 @@ namespace Descender.World.TilesV2
                 return;
             }
             travelTo = here;
+            ShowChart(false);
             travelShown = true;
-            chartShown = false;
             hero.Freeze();
         }
 

@@ -54,9 +54,11 @@ def spread(seeds: np.ndarray, keep: np.ndarray, solid: np.ndarray) -> np.ndarray
     return light
 
 
-def sky_seeds(blocks: np.ndarray) -> np.ndarray:
+def sky_seeds(blocks: np.ndarray, surface: int = 0) -> np.ndarray:
     """Daylight down every column to its first tile that shades the sky (a solid
-    tile, a wall, a liquid); rows run top first."""
+    tile, a wall, a liquid); rows run top first. Over the map's surface line
+    (`surface`, a row) the sky is everywhere there is nothing to shade it: an
+    island in the air does not put the land under it in the dark."""
     h, w = blocks.shape
     seeds = np.zeros((h, w, 3), dtype=np.float32)
     for x in range(w):
@@ -64,14 +66,15 @@ def sky_seeds(blocks: np.ndarray) -> np.ndarray:
             if blocks[y, x]:
                 break
             seeds[y, x] = 1.0
+    seeds[:surface][~blocks[:surface]] = 1.0
     return seeds
 
 
-def tile_light(solid: np.ndarray, shades: np.ndarray, keep: np.ndarray, emits: np.ndarray):
+def tile_light(solid: np.ndarray, shades: np.ndarray, keep: np.ndarray, emits: np.ndarray, surface: int = 0):
     """The two halves of the light per tile, rows top first: the sky's (for a white
     daylight) and the sources'. `shades` marks what stops the sky, `keep` is each
     tile's share per channel, `emits` each tile's own light."""
-    sky = spread(sky_seeds(shades), keep, solid)
+    sky = spread(sky_seeds(shades, surface), keep, solid)
     sources = spread(emits, keep, solid)
     return sky, sources
 

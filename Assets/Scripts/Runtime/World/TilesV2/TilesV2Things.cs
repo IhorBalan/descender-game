@@ -29,6 +29,8 @@ namespace Descender.World.TilesV2
         public const string Secret = "secret";
         public const string Platform = "platform";
         public const string Wind = "wind";
+        public const string Upgrade = "upgrade";
+        public const string Sign = "sign";
 
         /// <summary>The word after a checkpoint's cell that says it stands in an antechamber of the Pit.</summary>
         public const string PitWord = "pit";
@@ -51,6 +53,10 @@ namespace Descender.World.TilesV2
         public int SecretsFound { get; private set; }
         public int Platforms { get; private set; }
         public int Winds { get; private set; }
+
+        /// <summary>The game's upgrades lying in the world: more hearts, more draughts.</summary>
+        public int Upgrades { get; private set; }
+        public int Signs { get; private set; }
 
         /// <summary>The hero found a relic.</summary>
         public event Action<Thing> RelicFound;
@@ -81,7 +87,12 @@ namespace Descender.World.TilesV2
         /// prefabs are the game's checkpoint and ability pickup; a kind whose prefab is
         /// missing is left out.
         /// </summary>
-        public static TilesV2Things Build(TilesV2World world, GameObject checkpointPrefab, GameObject abilityPrefab)
+        public static TilesV2Things Build(
+            TilesV2World world,
+            GameObject checkpointPrefab,
+            GameObject abilityPrefab,
+            GameObject upgradePrefab = null
+        )
         {
             var things = new GameObject("Things").AddComponent<TilesV2Things>();
             things.transform.SetParent(world.transform, false);
@@ -185,6 +196,39 @@ namespace Descender.World.TilesV2
                         );
                         things.Winds++;
                         break;
+                    case Upgrade when upgradePrefab != null:
+                    {
+                        if (!Enum.TryParse<Player.UpgradeKind>(mark.Word(0), out var kind))
+                        {
+                            Debug.LogWarning($"Tiles V2: the map marks an upgrade '{mark.Word(0)}' the game has not.");
+                            continue;
+                        }
+                        thing.Made = Instantiate(upgradePrefab, foot, Quaternion.identity, things.transform);
+                        thing
+                            .Made.GetComponent<UpgradePickup>()
+                            .Set(kind, Player.Upgrades.FlagFor(kind, "tilesv2", $"{mark.Column}_{mark.Row}"));
+                        things.Upgrades++;
+                        break;
+                    }
+                    case Sign:
+                    {
+                        var holder = new GameObject("Sign " + mark.Word(0));
+                        holder.transform.SetParent(things.transform, false);
+                        holder.transform.position = foot;
+                        var words = mark.Rest.Length > 1 ? string.Join(" ", mark.Rest, 1, mark.Rest.Length - 1) : "";
+                        var shade = mark.Word(0) == TilesV2Sign.Shade;
+                        holder
+                            .AddComponent<TilesV2Sign>()
+                            .Configure(
+                                mark.Word(0),
+                                words,
+                                set.Thing(mark.Word(0)),
+                                shade ? set.unlitMaterial : set.litMaterial
+                            );
+                        thing.Made = holder;
+                        things.Signs++;
+                        break;
+                    }
                     case Relic:
                     case End:
                     {

@@ -174,6 +174,18 @@ namespace Descender.EditorTools.TilesV2
                 piece = PhotoPiece,
                 hour = world.Day.Hour,
             };
+            foreach (var mark in map.Marks)
+            {
+                index.marks.Add(
+                    new PhotoMark
+                    {
+                        kind = mark.Kind,
+                        column = mark.Column,
+                        row = mark.Row,
+                        words = string.Join(" ", mark.Rest),
+                    }
+                );
+            }
             for (var i = 0; i < map.Regions.Count; i++)
             {
                 var region = world.Set.RegionOf(map.Regions[i].Key);
@@ -190,11 +202,20 @@ namespace Descender.EditorTools.TilesV2
             var async = ShaderUtil.allowAsyncCompilation;
             ShaderUtil.allowAsyncCompilation = false;
             var restore = new List<(SpriteRenderer, Vector2)>();
+            // The sky is painted for a view; stretched over a whole world its bands are a chequer.
+            // A photograph has a plain sky of the hour's colour instead.
+            var day = world.Set.DayAt(world.Day.Hour);
+            photoSky = Color.Lerp(day.top, day.low, 0.45f);
+            var skyShown = world.Sky != null && world.Sky.gameObject.activeSelf;
             try
             {
                 // The first render after the scene opens draws the unlit backdrop wrong; throw one away.
                 Render(world, world.Framed(area.center), world.Set.View, null);
                 restore = PlaceBackdrop(world, area.center, area.size);
+                if (world.Sky != null)
+                {
+                    world.Sky.gameObject.SetActive(false);
+                }
                 for (var row = 0; row * PhotoPiece < map.Height; row++)
                 {
                     for (var column = 0; column * PhotoPiece < map.Width; column++)
@@ -217,6 +238,11 @@ namespace Descender.EditorTools.TilesV2
                 {
                     picture.size = size;
                 }
+                if (world.Sky != null)
+                {
+                    world.Sky.gameObject.SetActive(skyShown);
+                }
+                photoSky = null;
                 ShaderUtil.allowAsyncCompilation = async;
             }
             File.WriteAllText(Path.Combine(folder, PhotoIndexName), JsonUtility.ToJson(index, true));
@@ -237,7 +263,21 @@ namespace Descender.EditorTools.TilesV2
             public float hour;
             public List<string> pieces = new List<string>();
             public List<PhotoRegion> regions = new List<PhotoRegion>();
+            public List<PhotoMark> marks = new List<PhotoMark>();
         }
+
+        /// <summary>One of the map's marks in a photograph: what it is and where.</summary>
+        [Serializable]
+        public sealed class PhotoMark
+        {
+            public string kind;
+            public int column;
+            public int row;
+            public string words;
+        }
+
+        // The colour a photograph's pieces are cleared to, while one is being taken.
+        private static Color? photoSky;
 
         /// <summary>A region in a photograph: its rows.</summary>
         [Serializable]
@@ -266,7 +306,8 @@ namespace Descender.EditorTools.TilesV2
                 TilesV2Things.Build(
                     world,
                     AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
-                    AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+                    AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath),
+                    AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.UpgradePath)
                 );
             }
             var hero = UnityEngine.Object.FindAnyObjectByType<Descender.Player.PlayerController>();
@@ -343,7 +384,7 @@ namespace Descender.EditorTools.TilesV2
             camera.orthographicSize = size.y / 2f;
             camera.transform.position = new Vector3(at.x, at.y, -10f);
             camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = main != null ? main.backgroundColor : Color.black;
+            camera.backgroundColor = photoSky ?? (main != null ? main.backgroundColor : Color.black);
             if (main != null)
             {
                 main.enabled = false;

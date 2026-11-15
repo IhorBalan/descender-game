@@ -128,6 +128,12 @@ each, drawn with the same frames from their own palettes:
 | Fraud | slate | slate_wall | |
 | Treachery | frost_rock, ice (gives a cold light) | ice_wall | |
 
+Two more walls stand under the open sky, a tree's trunk and its crown
+(`wood_wall`, `leaf_wall`). They are **open** walls (`open` in `MATERIALS`,
+`TerrainTile.Open`): drawn on the wall layer like any other, but to the light
+and to what grows the cell behind them has no wall, so a tree does not shut
+out the sky and the grass under it is still under the sky.
+
 A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
 its own tilemap on the game's Ledge layer with a one-way `PlatformEffector2D`,
 so the hero jumps up through it and drops through it with down and jump (as he
@@ -203,6 +209,7 @@ are the legend in the manifest:
 | `*` `^` `J` | prop | a brazier, a crystal, a lantern |
 | `"` `'` `,` `?` | ledge | a ledge of planks, an iron grate, gilt, rime |
 | `m` `h` `r` `u` `n` `y` `b` `v` `f` `i` | wall (second grid) | the regions' walls |
+| `w` `l` | wall (second grid) | a tree's trunk and its crown: open walls |
 
 A map of several regions also says where each starts and what of the game's
 stands where:
@@ -217,12 +224,14 @@ stands where:
 ```
 
 A mark may also be `secret` (a wall the sword breaks, with a room behind it),
-`platform` (one that gives way or comes and goes) or `wind`: the world's
-document lists them all. `TilesV2World` lays the tiles; `TilesV2Things.Build`
-stands the marks in the world from the game's own parts (its checkpoint and
-ability pickup prefabs, a collider on the LightBarrier layer, a `Breakable`,
-a `Crumble`, a `Blinker`, a `ForceZone`), which a scene's runner does at the
-start of play.
+`platform` (one that gives way or comes and goes), `wind`, `upgrade` (a heart
+or a draught of the game's), `sign` (a post, a tablet or a shade that says a
+line) or `dark` (a stretch whose air gives no light): the world's document
+lists them all. `TilesV2World` lays the tiles and takes the dark stretches;
+`TilesV2Things.Build` stands the other marks in the world from the game's own
+parts (its checkpoint, ability and upgrade pickup prefabs, a collider on the
+LightBarrier layer, a `Breakable`, a `Crumble`, a `Blinker`, a `ForceZone`) and
+from `TilesV2Sign`, which a scene's runner does at the start of play.
 
 The sample map, `Assets/Art/TilesV2/sample_map.txt` (128 x 64), is written by
 `tools/tiles_v2/make_sample_map.py`: a meadow with a hill and a pond, the
@@ -336,12 +345,18 @@ runs the same sums for the preview. 1 is full daylight.
 
 1. **Sky.** Every column is lit from the top down to its first cell that
    shades the sky: a ground tile, a wall or a liquid. So a walled shaft and a
-   pond's depths are lit only by the light that spreads into them.
+   pond's depths are lit only by the light that spreads into them. An open
+   wall (a tree) shades nothing. In a map of regions the sky is also
+   everywhere over the surface line that nothing shades
+   (`TileLightMap.SetOpenSky`, `sky_seeds`' `surface`): an island of Paradise
+   does not put the land under it in the dark.
 2. **Sources.** The air of a region has a faint light of its own
    (`REGIONS`: none on the Earth and in Paradise, where the sky and the lamps
    do the work; a colour for each circle), given by every cell of air in the
    region's rows and turning into the next region's over 6 rows either side of
-   the edge between them (`TilesV2World.AirLight`). The lamps are four props
+   the edge between them (`TilesV2World.AirLight`). The air of a stretch a
+   map marks `dark` gives none (`TileLightMap.SetDark`): there the lamps and
+   what spreads in from beside it are all the light there is. The lamps are four props
    (`PROPS`): a torch `(1, 0.72, 0.42) x 1.6`, a brazier `(1, 0.60, 0.32) x 2`,
    a crystal `(0.55, 0.82, 1) x 1.3`, a lantern `(1, 0.93, 0.72) x 1.2`. A torch puts `(1, 0.72, 0.42) x 1.6` on its tile, lava `(1.5,
    0.8, 0.3)` on each of its tiles, copper ore `(0.30, 0.17, 0.07)`.
@@ -474,7 +489,7 @@ no window opens.
 | `make_sample_map.py` | writes the sample map |
 | `make_world_map.py` | writes the world (`docs/art/tiles-v2-world.md`); `--check` plays it through first |
 | `tv2_reach.py` | the model of the hero the world is checked with |
-| `photo_world.py` | photographs a whole map from the Unity editor at every art pixel, for looking it over zoomed in: one picture, one for each region, and 4K sheets |
+| `photo_world.py` | photographs a whole map from the Unity editor at every art pixel, for looking it over zoomed in: one picture, one for each region, and 4K sheets; and the same with every mark of the map named on it, with the list of the names |
 
 `gen_tiles_v2.py --map Assets/Art/TilesV2/world_map.txt --preview out.png
 --scale 0.25` lays the whole world out at 4 px a tile; `--view limbo` shows the

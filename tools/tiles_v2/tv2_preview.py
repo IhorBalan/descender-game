@@ -76,12 +76,16 @@ def light_of(layout: Layout):
     """The tile light's two halves for a map (sky, sources) and the grid of cells open to the sky."""
     solid = layout.grid(TERRAIN_CHARS)
     wet = layout.grid(LIQUID_CHARS)
-    walled = np.array([[c in WALL_CHARS for c in row] for row in layout.walls], dtype=bool)
+    walled = np.array([[c in SHUT_WALL_CHARS for c in row] for row in layout.walls], dtype=bool)
     shades = solid | wet | walled
     keep = np.where(solid[..., None], LIGHT["solid_keeps"], LIGHT["air_keeps"]).astype(np.float32).repeat(3, -1)
     # The air of a region has a faint light of its own.
     emits = np.array(ambient_rows(layout.regions, layout.height), dtype=np.float32)[:, None, :].repeat(layout.width, 1)
     emits[solid | wet] = 0
+    # A stretch the map marks as dark has no light in its air.
+    for kind, x, row, rest in layout.marked:
+        if kind == "dark" and len(rest) >= 2:
+            emits[max(row, 0) : row + int(rest[1]), max(x, 0) : x + int(rest[0])] = 0
     glow = {m["key"]: m["emits"] for m in MATERIALS if "emits" in m}
     liquids = {entry["key"]: entry for entry in tv2_liquid.LIQUIDS}
     props = {p["key"]: np.array(p["colour"]) * p["intensity"] for p in PROPS}
@@ -97,7 +101,9 @@ def light_of(layout: Layout):
                 emits[row, x] = props[PROP_CHARS[c]]
             else:
                 emits[row, x] = glow[TERRAIN_CHARS[c]]
-    sky, sources = tv2_light.tile_light(solid, shades, keep, emits)
+    # A world (a map of regions) has open sky everywhere over its surface line.
+    surface = layout.surface if layout.regions else 0
+    sky, sources = tv2_light.tile_light(solid, shades, keep, emits, surface)
     open_sky = tv2_light.sky_seeds(shades)[..., 0] > 0
     return sky, sources, open_sky
 
@@ -177,7 +183,7 @@ def shade_cells(layout: Layout, window: Window) -> list[tuple[int, int, int | No
     """The shade a map's walls show: (column, row, mask), mask None for the full tile."""
     out = []
     for x, row in window.cells():
-        if layout.wall(x, row) is None:
+        if layout.wall(x, row) is None or layout.wall(x, row) in OPEN_WALLS:
             continue
         around = 0
         for bit, dx, dy in BITS:
@@ -336,6 +342,8 @@ MARK_COLOURS = {
     "barrier": (255, 255, 200, 255),
     "seal": (200, 120, 255, 255),
     "secret": (150, 150, 150, 255),
+    "upgrade": (255, 120, 140, 255),
+    "sign": (200, 170, 120, 255),
     "platform": (190, 170, 140, 255),
     "end": (255, 255, 255, 255),
 }

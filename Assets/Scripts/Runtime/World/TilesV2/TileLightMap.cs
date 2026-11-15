@@ -45,6 +45,20 @@ namespace Descender.World.TilesV2
         [SerializeField, Tooltip("The cell row the first of them is for.")]
         private int airLightFrom;
 
+        [
+            SerializeField,
+            Tooltip("Rectangles of cells whose air has no light of its own: a region's light is left out there.")
+        ]
+        private List<RectInt> dark = new List<RectInt>();
+
+        [
+            SerializeField,
+            Tooltip(
+                "From this row of cells up the sky is everywhere nothing shades it; over every row for the column rule alone."
+            )
+        ]
+        private int openSkyFrom = int.MaxValue;
+
         private Texture2D texture;
         private Sprite sprite;
         private Color[] sky = System.Array.Empty<Color>();
@@ -112,6 +126,22 @@ namespace Descender.World.TilesV2
             airLightFrom = from;
         }
 
+        /// <summary>
+        /// From a row of cells up, lights every cell nothing shades with the sky, whatever
+        /// stands over it: over a world's surface line an island in the air does not put
+        /// the land under it in the dark.
+        /// </summary>
+        public void SetOpenSky(int fromRow)
+        {
+            openSkyFrom = fromRow;
+        }
+
+        /// <summary>Sets the rectangles of cells whose air gives no light of its own: the dark stretches of a map.</summary>
+        public void SetDark(IEnumerable<RectInt> cells)
+        {
+            dark = cells != null ? new List<RectInt>(cells) : new List<RectInt>();
+        }
+
         /// <summary>The light at a cell from the last Refresh; black outside the map.</summary>
         public Color At(Vector3Int cell)
         {
@@ -169,6 +199,28 @@ namespace Descender.World.TilesV2
                     }
                 }
             }
+            foreach (var cells in dark)
+            {
+                for (
+                    var y = Mathf.Max(cells.yMin - field.Bounds.yMin, 0);
+                    y < Mathf.Min(cells.yMax - field.Bounds.yMin, field.Height);
+                    y++
+                )
+                {
+                    for (
+                        var x = Mathf.Max(cells.xMin - field.Bounds.xMin, 0);
+                        x < Mathf.Min(cells.xMax - field.Bounds.xMin, field.Width);
+                        x++
+                    )
+                    {
+                        var i = y * field.Width + x;
+                        if (field.Ground[i] == null && field.Liquid[i] == null)
+                        {
+                            emits[i] = Color.black;
+                        }
+                    }
+                }
+            }
             if (torches != null)
             {
                 foreach (var torch in torches.GetComponentsInChildren<TorchFlame>())
@@ -190,6 +242,20 @@ namespace Descender.World.TilesV2
             }
             var seeds = new Color[count];
             TileLight.SeedSky(seeds, shades, field.Width, field.Height, Color.white, null);
+            for (
+                var y = Mathf.Max(openSkyFrom - field.Bounds.yMin, 0);
+                y < field.Height && openSkyFrom != int.MaxValue;
+                y++
+            )
+            {
+                for (var x = 0; x < field.Width; x++)
+                {
+                    if (!shades[y * field.Width + x])
+                    {
+                        seeds[y * field.Width + x] = Color.white;
+                    }
+                }
+            }
             sky = TileLight.Spread(seeds, keep, solid, field.Width, field.Height);
             sources = TileLight.Spread(emits, keep, solid, field.Width, field.Height);
             light = new Color[count];

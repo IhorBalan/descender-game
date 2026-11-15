@@ -39,6 +39,9 @@ namespace Descender.World.TilesV2
         public const string TorchKey = "torch";
         public const string SpawnKey = "spawn";
 
+        /// <summary>The kind of a mark that is a stretch with no light in its air.</summary>
+        public const string DarkKind = "dark";
+
         [SerializeField, Tooltip("The map: text, see TilesV2Map.")]
         private TextAsset map;
 
@@ -501,6 +504,22 @@ namespace Descender.World.TilesV2
             return rows;
         }
 
+        /// <summary>The stretches the map marks as dark (`@mark dark column row width height`), in cells.</summary>
+        public List<RectInt> Dark()
+        {
+            var cells = new List<RectInt>();
+            foreach (var mark in Map.Marks)
+            {
+                if (mark.Kind == DarkKind)
+                {
+                    var wide = Mathf.Max(mark.Number(0, 1), 1);
+                    var tall = Mathf.Max(mark.Number(1, 1), 1);
+                    cells.Add(new RectInt(mark.Column, Map.Height - mark.Row - tall, wide, tall));
+                }
+            }
+            return cells;
+        }
+
         /// <summary>The region a point of the world is in; null outside a map that names its regions.</summary>
         public TilesV2Set.Region RegionAt(Vector2 point)
         {
@@ -541,6 +560,12 @@ namespace Descender.World.TilesV2
             Light = holder.AddComponent<TileLightMap>();
             Light.Configure(Terrain, Walls, liquidMaps, Torches, set.airKeeps, set.solidKeeps);
             Light.SetAirLight(AirLight(), 0);
+            Light.SetDark(Dark());
+            if (Map.Regions.Count > 0)
+            {
+                // A world has islands in its sky: they do not shade the land under them.
+                Light.SetOpenSky(Map.Height - Map.Surface);
+            }
             Light.Refresh();
         }
     }

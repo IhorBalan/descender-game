@@ -307,6 +307,14 @@ MonoBehaviour:
     layer: 1
     key: ice_wall
     tile: {fileID: 11400000, guid: 0f5dbc6902d987441872119e424345de, type: 2}
+  - character: w
+    layer: 1
+    key: wood_wall
+    tile: {fileID: 11400000, guid: b19ff4de4f933e6488d8712b53423dcc, type: 2}
+  - character: l
+    layer: 1
+    key: leaf_wall
+    tile: {fileID: 11400000, guid: 5531a916de0674c4cac27f15f0afe714, type: 2}
   blends:
   - key: dirt_on_stone
     onto: stone
@@ -1759,6 +1767,9 @@ MonoBehaviour:
   - {fileID: 432383010485315223, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 4415477407493006930, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 1719306169041351344, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 2539011789713391969, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 4173789985950267786, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 107832730637364431, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   regions:
   - key: paradise
     name: Paradise

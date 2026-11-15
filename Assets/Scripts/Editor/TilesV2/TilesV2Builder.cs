@@ -68,6 +68,7 @@ namespace Descender.EditorTools.TilesV2
                     false,
                     TilesV2Manifest.ColourOf(material.emits)
                 );
+                tile.Open = material.open;
                 tile.m_DefaultSprite = Find(sprites, TilesV2Manifest.FrameSprite(material.key, 0, 0));
                 tile.m_DefaultColliderType = collider;
                 var rules = new List<RuleTile.TilingRule>();

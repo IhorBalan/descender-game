@@ -25,6 +25,7 @@ How the world is laid out (docs/art/tiles-v2-world.md says why):
 from __future__ import annotations
 
 import argparse
+import itertools
 import math
 import os
 import random
@@ -82,6 +83,18 @@ FLOORS = {
     "treachery": (722, 744),
 }
 GATE_HALL = 150  # the floor of the hall of the Gate, on the Earth
+# Parts of a circle that are of another ground than the rest of it, so a circle is
+# several places and not one: (first column, column after the last, first row, row after
+# the last, the ground). Limbo's lower pass runs into the marble of the castle; the
+# wood and the burning sand of Violence; the ice of the lake itself.
+ZONES = {
+    "limbo": [(300, WIDTH, 226, 276, "M")],
+    "gluttony": [(200, 360, 0, HEIGHT, "D")],
+    "wrath": [(360, WIDTH, 0, HEIGHT, "U")],
+    "heresy": [(0, 190, 492, 546, "H")],
+    "violence": [(190, 360, 0, HEIGHT, "D"), (0, 190, 0, HEIGHT, "E")],
+    "treachery": [(0, 270, 0, HEIGHT, "I")],
+}
 THEMES = {
     "paradise": ("M", "m", ",", "J", "J", 8, False, True),
     "earth": ("S", "s", '"', "T", "T", 10, True, False),
@@ -97,6 +110,7 @@ THEMES = {
 }
 THEME_KEYS = ("ground", "wall", "ledge", "wall_lamp", "floor_lamp", "gap", "hall_wall", "built")
 GROUND = set(TERRAIN_CHARS)
+LAMPS = {theme[i] for theme in THEMES.values() for i in (3, 4)}
 LIQUID = set(LIQUID_CHARS)
 NEED = tv2_reach.BIT
 
@@ -150,6 +164,7 @@ class World:
         self.surface = [0] * WIDTH
         self.roads: list = []  # every pass of the road: (region, the road, its trail, its locked columns)
         self.well_doors: list = []  # the floor of every door into the Well
+        self.pit_doors: list = []  # the floor of every tunnel into the Pit, and the region it comes from
         self.fill()
 
     # --- The rock ------------------------------------------------------------------
@@ -174,12 +189,16 @@ class World:
             if depth <= 0:
                 return "G"
             return "D" if depth < 6 + int(round(2 * wave(31, x, 7.0))) else "S"
+        edge = x + int(round(5 * wave(77, y, 8.0)))
+        for x0, x1, y0, y1, char in ZONES.get(key, ()):
+            if x0 <= edge < x1 and y0 <= y < y1:
+                return char
         return THEMES[key][0]
 
     def fill(self):
         for x in range(WIDTH):
-            rise = 3.6 * wave(11, x, 26.0) + 1.4 * wave(12, x, 8.0)
-            self.surface[x] = max(GROUND_LINE - 5, min(GROUND_LINE + 4, int(round(GROUND_LINE + rise))))
+            rise = 5.6 * wave(11, x, 30.0) + 2.2 * wave(12, x, 9.0)
+            self.surface[x] = max(GROUND_LINE - 8, min(GROUND_LINE + 4, int(round(GROUND_LINE - 1 + rise))))
         # The pond lies in a level meadow, and the ground steps down to it.
         level = max(self.surface[x] for x in range(*POND))
         for x in range(WIDTH):
@@ -257,11 +276,8 @@ class World:
         plans = {
             "earth": [("O", "S", 200, 9), ("C", "DS", 90, 14)],
             "limbo": [("S", "H", 80, 16)],
-            "gluttony": [("D", "U", 90, 14)],
             "greed": [("$", "N", 480, 8)],
-            "wrath": [("U", "Y", 90, 14)],
-            "violence": [("E", "V", 80, 18)],
-            "treachery": [("I", "Z", 300, 18)],
+            "treachery": [("I", "Z", 60, 14)],
         }
         for index, (key, top) in enumerate(BANDS):
             bottom = BANDS[index + 1][1] if index + 1 < len(BANDS) else HEIGHT
@@ -353,7 +369,7 @@ class Path:
 
     def lamp(self, x: int, floor: int, wall: bool):
         self.since += 1
-        if not self.lamps or self.since < self.theme["gap"]:
+        if not self.lamps or self.since < self.theme["gap"] * getattr(self, "sparse", 1):
             return
         cell = (x, floor - 3) if wall else (x, floor - 1)
         if self.w.t[cell[1]][cell[0]] == AIR:
@@ -371,7 +387,10 @@ class Path:
             floor = self.floor + int(round(dy * (i + 1) / n))
             tall = h
             if rough and not built:
-                tall += int(round(1.2 + 1.2 * wave(self.owner * 7 + 1, x, 5.0)))
+                # A roof that swells and hangs, and a floor that rises a step here and there.
+                tall += max(0, int(round(1.5 + 1.7 * wave(self.owner * 7 + 1, x, 6.0) + 0.9 * wave(self.owner * 7 + 4, x, 2.4))))
+                if dy == 0 and n >= 9 and 2 <= i < n - 2 and wave(self.owner * 7 + 6, x, 4.0) > 0.42:
+                    floor -= 1
             if self.raised[0] > 0:
                 tall += self.raised[1]
                 self.raised = (self.raised[0] - 1, self.raised[1])
@@ -413,6 +432,8 @@ class Path:
             self.root.trail[x] = floor
         if name:
             self.w.view(name, self.x + self.d * (n - 1) / 2 + 0.5, self.floor + dy / 2 - min(h, 14) / 2)
+        if name in SHADES:
+            self.w.mark("sign", cells[3][0], cells[3][1] - 1, "shade", *SHADES[name].split())
         self.x += self.d * n
         self.floor += dy
         return cells
@@ -452,6 +473,8 @@ class Path:
         self.last_roof = roof
         if name:
             world.view(name, self.x + self.d * (n - 1) / 2 + 0.5, self.floor - 9)
+        if name in TABLETS:
+            world.mark("sign", cells[n // 2][0], self.floor - 1, "tablet", *TABLETS[name].split())
         self.x += self.d * n
         return cells
 
@@ -467,13 +490,17 @@ class Path:
         platforms, a tile over the liquid, which give way under the hero or come and go."""
         if stones is None:
             stones = liquid in "L!%" and not bridge
+        # Into a liquid that is swum, sometimes, a fall of it from the roof.
+        fall = n // 2 if liquid not in "L!%" and not bridge and stones is False and n >= 12 and hash01(self.x, self.floor, 71) < 0.55 else -1
         cells = []
         for i in range(n):
             x = self.x + self.d * i
-            stone = stones is True and i % 5 in (3, 4)
-            if isinstance(stones, str) and i % 5 == 3 and i + 1 < n:
+            # "mixed": a stone, a platform that gives way, one that comes and goes, by turns.
+            kind = (True, "crumble", "blink")[(i // 5) % 3] if stones == "mixed" else stones
+            stone = kind is True and i % 5 in (3, 4)
+            if isinstance(kind, str) and i % 5 == 3 and i + 1 < n:
                 left = min(x, x + self.d)
-                self.w.mark("platform", left, self.floor - 1, 2, stones, round(0.35 * (i // 5), 2))
+                self.w.mark("platform", left, self.floor - 1, 2, kind, round(0.35 * (i // 5), 2))
                 self.w.gates.update(((left, self.floor - 1), (left + 1, self.floor - 1)))
             tall = h + int(round(1.2 + 1.2 * wave(self.owner * 7 + 3, x, 5.0)))
             for y in range(self.floor - tall, self.floor + depth):
@@ -486,7 +513,10 @@ class Path:
                     self.w.t[y][x] = self.theme["ledge"] if bridge and y == self.floor else liquid
             for y in (self.floor + depth, self.floor + depth + 1):
                 self.w.solid(x, y)
-            if wall or stone:
+            if i == fall:
+                for y in range(self.floor - tall, self.floor):
+                    self.w.t[y][x] = liquid
+            elif wall or stone:
                 self.lamp(x, self.floor, wall)
             cells.append((x, self.floor))
         self.x += self.d * n
@@ -598,6 +628,8 @@ class Path:
             self.w.mark("seal", x, top, "bolt", 1, 4)
         self.w.gates.update((x, y) for y in range(top, top + 4))
         self.w.links.append(((x - self.d, self.floor - 1), (x + self.d, self.floor - 1), need, True))
+        for side in (-2, 2):
+            self.w.put(x + side, self.floor - 3, self.theme["wall_lamp"])
 
     def slab(self, dy: int):
         """A cracked slab in the floor that only a Smite breaks, and the drop under it."""
@@ -632,12 +664,18 @@ class Path:
             if self.raised[0] > 0:
                 tall += self.raised[1]
                 self.raised = (self.raised[0] - 1, self.raised[1])
-            self.w.column(x, self.floor, tall, self.owner, True)
+            self.w.column(x, self.floor, tall, self.owner, i in (0, 10))
             self.w.square.update((x, y) for y in range(self.floor - 9, self.floor + 2))
             cells.append(x)
         for x in cells[4:7]:
             self.w.solid(x, self.floor - 1, force=True)
         self.w.mark("ability", cells[5], self.floor - 2, ability)
+        # Behind the plinth, on the wall, the sign of the ability, as large as the room.
+        for row, line in enumerate(EMBLEMS[ability]):
+            for column, c in enumerate(line if self.d > 0 or ability != "LightDash" else line[::-1]):
+                if c == "#":
+                    raise_wall(self.w, self.theme["wall"], min(cells) + 2 + column, self.floor - 8 + row)
+        self.w.mark("sign", cells[1], self.floor - 1, "tablet", *SHRINE_WORDS[ability].split())
         for x in (cells[2], cells[8]):
             self.w.put(x, self.floor - 1, "^" if self.theme["floor_lamp"] != "J" else "J")
         self.x += self.d * 11
@@ -685,6 +723,8 @@ class Path:
             self.w.t[top + LADDER][x] = self.theme["ledge"]
         self.w.put(PIT[1] + 1, top - 1, self.theme["floor_lamp"])
         self.w.mark("checkpoint", first - 6, floor - 1, "pit")
+        self.w.mark("sign", first - 10, floor - 1, "post", *"The Pit is over this room. Its ladder is for the winged; rest here, and it will carry you between the rooms you have rested in.".split())
+        self.w.pit_doors.append((top, self.theme["key"]))
         self.w.put(first - 5, floor - 1, "J")
         self.w.put(32, floor - 1, self.theme["floor_lamp"])
         if name:
@@ -745,12 +785,16 @@ def low_road(road: Path, trail: dict, locked: set, x0: int, x1: int, depth: int 
     if any(mark[1] in hatches and trail[mark[1]] == mark[2] + 1 for mark in world.marks):
         raise Clash(f"a hatch of the low road from {x0} would open under something that stands there")
     low = max(trail[x] for x in range(a, b + 4) if x in trail) + depth
-    firm(world, range(a - 1, a + 5), range(trail[a] + 2, low + 9))
-    firm(world, range(b - 1, b + 5), range(trail[b] + 2, low + 9))
-    firm(world, range(a + 4, b), range(low - 10, low + 9))
+    firm(world, range(a - 1, a + 5), range(trail[a] + 2, low + 11))
+    firm(world, range(b - 1, b + 5), range(trail[b] + 2, low + 11))
+    firm(world, range(a + 4, b), range(low - 10, low + 11))
     side = Path(world, a + 4, low, 1, road)
+    side.root = side  # its own trail: what is dug under it is dug under it, not under the road above
     side.span = b - (a + 4)
     side.hatch = a
+    # A side road is dim: a lamp is seen a long way, so it has few of them, and between them
+    # only the light of its region's air. The Earth's air has none, so there the lamps stay nearer.
+    side.sparse = 4.5 if low > dict(BANDS)["limbo"] else 2.4
     hatch(world, side, a, trail[a], low, -1)
     hatch(world, side, b, trail[b], low, 1)
     locked.update(range(a, a + 4))
@@ -783,6 +827,7 @@ def attic(road: Path, trail: dict, locked: set, x: int, wide: int = 9, wings: bo
     firm(world, [a - 1 if east else a + 4], range(top - 1, floor - 10))
     firm(world, [first + step * i for i in range(wide + 1)], range(top - 1, floor - rise + 3))
     nook = Path(world, first, floor - rise, step, road, lamps=False)
+    nook.root = nook
     for column, ceiling in zip(range(a, a + 4), ceilings):
         for y in range(top, ceiling + 1):
             world.open(column, y, nook.owner, True)
@@ -802,15 +847,15 @@ def attic(road: Path, trail: dict, locked: set, x: int, wide: int = 9, wings: bo
 # its halls (from, to), its liquid, and how often each kind of piece comes (`weights`).
 KITS = {
     "earth": dict(h=6, hall=(8, 11), liquid="W", weights=dict(walk=4, hall=3, pool=1, rise=1)),
-    "limbo": dict(h=6, hall=(9, 13), liquid="~", weights=dict(walk=3, hall=5, pool=1, rise=1, gate=1)),
-    "lust": dict(h=6, hall=(11, 15), liquid=None, weights=dict(walk=3, hall=3, rise=3, climb=4, gate=1)),
-    "gluttony": dict(h=4, hall=(7, 9), liquid="&", weights=dict(walk=4, hall=2, pool=5, rise=1, climb=1, gate=1)),
-    "greed": dict(h=6, hall=(10, 13), liquid=None, flat=True, weights=dict(walk=3, hall=5, rise=2, climb=1, gate=2)),
-    "wrath": dict(h=6, hall=(8, 11), liquid="~", weights=dict(walk=2, hall=2, pool=6, siphon=2, climb=1, gate=1)),
-    "heresy": dict(h=5, hall=(8, 11), liquid="L", platforms="crumble", weights=dict(walk=3, hall=4, pool=3, rise=3, chasm=2, gate=1)),
-    "violence": dict(h=6, hall=(10, 14), liquid="!", weights=dict(walk=3, hall=3, pool=3, rise=1, climb=2, slab=2, chasm=1)),
-    "fraud": dict(h=6, hall=(8, 10), liquid="%", platforms="blink", weights=dict(walk=2, hall=1, pool=5, bridge=3, gate=3, climb=2, slab=1, chasm=2)),
-    "treachery": dict(h=6, hall=(11, 15), liquid="W", floor="I", platforms="crumble", weights=dict(walk=3, hall=6, pool=2, gate=1, climb=1, slab=1)),
+    "limbo": dict(h=6, hall=(9, 13), liquid="~", weights=dict(walk=3, hall=5, pool=1, rise=1)),
+    "lust": dict(h=6, hall=(11, 15), liquid=None, weights=dict(walk=3, hall=3, rise=3, climb=4)),
+    "gluttony": dict(h=4, hall=(7, 9), liquid="&", weights=dict(walk=4, hall=2, pool=5, rise=1, climb=1)),
+    "greed": dict(h=6, hall=(10, 13), liquid=None, flat=True, weights=dict(walk=3, hall=5, rise=2, climb=1, gate=1)),
+    "wrath": dict(h=6, hall=(8, 11), liquid="~", weights=dict(walk=2, hall=2, pool=6, siphon=2, climb=1)),
+    "heresy": dict(h=5, hall=(8, 11), liquid="L", platforms="crumble", weights=dict(walk=3, hall=4, pool=3, rise=3, chasm=2, gauntlet=2)),
+    "violence": dict(h=6, hall=(10, 14), liquid="!", weights=dict(walk=3, hall=3, pool=3, rise=1, climb=2, slab=1, chasm=1, gauntlet=2)),
+    "fraud": dict(h=6, hall=(8, 10), liquid="%", platforms="blink", weights=dict(walk=2, hall=1, pool=5, bridge=3, gate=1, climb=2, slab=1, chasm=2, gauntlet=2)),
+    "treachery": dict(h=6, hall=(11, 15), liquid="W", floor="I", platforms="crumble", weights=dict(walk=3, hall=6, pool=2, climb=1)),
 }
 HURTS = "L!%"
 
@@ -860,12 +905,32 @@ def ramble(road: Path, x_end: int, floor_end: int, have: tuple = (), kit: str | 
             "gate": dash or bolt,
             "slab": smite and not closing and drift >= 3,
             "chasm": glide and k["liquid"] is not None and k["liquid"] in HURTS and left >= 64,
+            "gauntlet": k["liquid"] is not None and k["liquid"] in HURTS and left >= 74,
         }
         names = [name for name, weight in k["weights"].items() if fits[name] and name != last for _ in range(weight)]
         piece = dice.choice(names or ["walk"])
         last = piece
         if piece == "walk":
-            road.walk(dice.randint(6, 11), int(max(-2, min(2, round(drift / 2)))), h=k["h"], char=None)
+            wide = dice.randint(6, 11)
+            dark = wide >= 8 and left >= 64 and dice.random() < 0.3
+            if dark:
+                # A long stretch with no light of its own in its air and no lamp in it, before it
+                # or just past it: a lamp is seen a long way, so the dark needs room.
+                wide += 12
+                road.since = -(wide + road.theme["gap"])
+                for x in range(road.x - road.d * 8, road.x, road.d):
+                    for y in range(road.floor - k["h"] - 2, road.floor):
+                        if road.w.t[y][x] in LAMPS:
+                            road.w.t[y][x] = AIR
+            cells = road.walk(wide, int(max(-2, min(2, round(drift / 2)))), h=k["h"], char=None)
+            if dark:
+                x0, x1 = span_of(cells)
+                road.w.mark("dark", x0, road.floor - k["h"] - 6, x1 - x0 + 1, k["h"] + 8)
+        elif piece == "gauntlet":
+            # A long crossing on what does not stay: a stone, a slab that gives way, one that comes and goes.
+            road.walk(3, h=k["h"])
+            road.pool(28, k["liquid"], 3, h=k["h"] + 2, stones="mixed")
+            road.walk(3, h=k["h"])
         elif piece == "hall":
             wide = dice.randint(14, 24)
             tall = dice.randint(*k["hall"])
@@ -919,6 +984,10 @@ def stroll(side: Path, region: str, gate: str | None = None, relic: bool = True,
     if gate and left >= 17:
         side.gate(gate)
         left -= 5
+    dip = 2 if left >= 34 else 0  # a long one sags in the middle, so it is not a box
+    if dip:
+        side.walk(4, dip, rough=False)
+        left -= 8
     liquid = k["liquid"]
     if wet and liquid and left >= 21:
         wide = 13 if liquid in HURTS else min(left - 8, 16)
@@ -938,6 +1007,8 @@ def stroll(side: Path, region: str, gate: str | None = None, relic: bool = True,
         cells = side.walk(left, rough=False)
         if relic:
             side.relic(cells[len(cells) // 2][0], cells[len(cells) // 2][1] - 1)
+    if dip:
+        side.walk(4, -dip, rough=False)
     side.walk(3, rough=False)
 
 
@@ -947,12 +1018,14 @@ def side_roads(world: World, log=print):
     come back for) and attics over its tunnels. The places are searched for, not written
     down: a side road that would cut into anything is tried somewhere else."""
     later = {"limbo": "seal", "lust": "seal", "gluttony": "seal", "earth": "barrier"}
+    # What a wall that is not one hides, by turns: mostly a relic, sometimes more life or another draught.
+    rewards = itertools.cycle(("Heart", "relic", "Vial", "relic", "relic"))
     for region, road, trail, locked in world.roads:
         if region not in KITS or len(trail) < 80:
             continue
         columns = sorted(trail)
         lo, hi = columns[0] + 8, columns[-1] - 12
-        lows = attics = secrets = 0
+        lows = attics = secrets = deeps = 0
         wanted = max(3, (hi - lo) // 58)
         for i in range(wanted):
             centre = lo + (i + 0.5) * (hi - lo) / wanted
@@ -967,10 +1040,18 @@ def side_roads(world: World, log=print):
                     continue
                 lows += 1
                 if i % 2 == 0:
-                    # Past the foot of its west hatch, a wall that is not one.
+                    # Past the foot of its west hatch, a wall that is not one: the best of what is hidden is behind these.
                     try:
-                        secret_room(world, side, side.hatch - 1, side.floor, -1)
+                        secret_room(world, side, side.hatch - 1, side.floor, -1, reward=next(rewards))
                         secrets += 1
+                    except Clash:
+                        pass
+                if side.span >= 40:
+                    # And under a long low road, sometimes, a third way: short, dark, with something in it.
+                    start = side.hatch + 4
+                    try:
+                        low_road(side, side.trail, side.locked, start + 5, start + side.span - 9, depth=13, lay=lambda deep: stroll(deep, region))
+                        deeps += 1
                     except Clash:
                         pass
                 break
@@ -985,15 +1066,15 @@ def side_roads(world: World, log=print):
                 attics += 1
                 if i % 2 == 1:
                     try:
-                        secret_room(world, nook, cells[-1][0] + nook.d, cells[-1][1], nook.d, 5)
+                        secret_room(world, nook, cells[-1][0] + nook.d, cells[-1][1], nook.d, 5, reward=next(rewards))
                         secrets += 1
                     except Clash:
                         pass
                 break
-        log(f"  {region}: {lows} low roads, {attics} attics, {secrets} secrets")
+        log(f"  {region}: {lows} low roads, {deeps} under them, {attics} attics, {secrets} secrets")
 
 
-def secret_room(world: World, parent: Path, wall_x: int, floor: int, d: int, wide: int = 6):
+def secret_room(world: World, parent: Path, wall_x: int, floor: int, d: int, wide: int = 6, reward: str = "relic"):
     """A room behind a wall that looks like any other until it is struck: the wall is three
     cells of a column (`wall_x`), broken by the sword; the room runs on from it. Checked
     whole before anything is dug."""
@@ -1004,6 +1085,7 @@ def secret_room(world: World, parent: Path, wall_x: int, floor: int, d: int, wid
     columns = [wall_x + d * i for i in range(1, wide + 2)]
     firm(world, columns, range(floor - 6, floor + 2))
     room = Path(world, wall_x + d, floor, d, parent, lamps=False)
+    room.root = room
     cells = room.walk(wide, h=4, rough=False, square=True)
     for y in range(floor - 3, floor):
         world.open(wall_x, y, room.owner, True)
@@ -1011,7 +1093,10 @@ def secret_room(world: World, parent: Path, wall_x: int, floor: int, d: int, wid
     world.square.update((wall_x, y) for y in range(floor - 5, floor + 2))
     xs = [c[0] for c in cells]
     world.mark("secret", wall_x, floor - 3, 1, 3, min(xs), floor - 4, max(xs), floor - 1, world.t[floor][wall_x])
-    world.mark("relic", cells[-2][0], floor - 1)
+    if reward == "relic":
+        world.mark("relic", cells[-2][0], floor - 1)
+    else:
+        world.mark("upgrade", cells[-2][0], floor - 1, reward)
     world.put(cells[-1][0], floor - 1, "^")
     world.links.append(((wall_x - d, floor - 1), (wall_x + d, floor - 1), 0, True))
 
@@ -1056,7 +1141,7 @@ def sinks(world: World, log=print):
     passes = [entry for entry in world.roads if entry[0] in KITS and entry[0] != "earth"]
     made = 0
     for upper, lower in zip(passes, passes[1:]):
-        for share in (0.3, 0.52, 0.74):
+        for share in (0.35, 0.68):
             x = int(WEST + 24 + share * (EAST - WEST - 48))
             for shift in (0, 6, -6, 12, -12, 18, -18, 24, -24, 30, -30):
                 try:
@@ -1066,6 +1151,219 @@ def sinks(world: World, log=print):
                 except Clash:
                     continue
     log(f"  {made} sinks between the passes")
+
+
+# --- What is written and drawn on the world: signs, numbers, the signs of the abilities ----
+
+# What a shade says in the first hall of a circle (by the hall's name), what is cut on the
+# tablet in its great cave, and on the one at each shrine.
+SHADES = {
+    "earth_crossroads": "Two ways part here. Down and east, the Gate. West, the old mine, and under its end the head of the Pit.",
+    "earth_gate": "Past this gate there is no sky. What you carry in is what you have.",
+    "limbo_gate": "We are not punished here. We only wait, and have forgotten for what.",
+    "lust": "The wind took us and has not set us down. Keep to the ground while it blows.",
+    "gluttony": "It has rained here since before I came. Mind the pools: they are deeper than they look.",
+    "greed": "All this gold and nothing to buy. The light you seek is in the middle vault.",
+    "heresy": "Every tomb here is lit from within. Do not trust the slabs over the fire: they give way.",
+    "violence_wood": "The trees were people. Go gently; and do not try the river without wings of some kind.",
+    "fraud_ledge": "Nothing here is what it says. The bridges that come and go at least keep time.",
+    "treachery": "Colder than the fire was hot. The ice is thin where it is clear.",
+}
+TABLETS = {
+    "earth_mine": "The miners went down for copper and came up with stories.",
+    "limbo_fields": "Here those who wait raised a hall of columns to remember the sun by.",
+    "lust_spire": "The spires were lovers once, they say, worn thin by the wind.",
+    "gluttony_mire": "The Maw. It is always open and never full.",
+    "greed_vault": "The great vault. Its door has stood open an age: there was never a thief to fear.",
+    "wrath_shore": "The far shore of the Styx. The trees drowned standing.",
+    "heresy_city": "Dis, the city. Its towers burn and are not consumed.",
+    "violence_shore": "The wood of those who harmed themselves. No leaf, no bird.",
+    "fraud_wells": "The old viaduct. Half its arches were never real.",
+    "treachery_lake": "He is fast in the ice to the waist, and has not moved since the ice came.",
+}
+SHRINE_WORDS = {
+    "LightDash": "Be light for a moment, and light will not stop you.",
+    "WallGrip": "What will not let you pass will let you climb.",
+    "HolyLight": "Night is a seal. Light is the hand that breaks it.",
+    "Glide": "Fall slowly, and the far side comes to you.",
+    "Smite": "Come down like judgement on what is cracked.",
+    "Wings": "You came down on foot. You need not go up so.",
+}
+# The sign of each ability, on the wall of its shrine: an arrow, a hand, a star, a kite, a hammer, wings.
+EMBLEMS = {
+    "LightDash": ["..#....", "...##..", "#######", "...##..", "..#...."],
+    "WallGrip": ["#.#.#.#", "#.#.#.#", "#######", ".#####.", "..###.."],
+    "HolyLight": ["...#...", ".#.#.#.", "#######", ".#.#.#.", "...#..."],
+    "Glide": ["...#...", "..###..", ".#####.", "#######", "...#..."],
+    "Smite": ["#######", "#######", "...#...", "...#...", "...#..."],
+    "Wings": ["#.....#", "##...##", "###.###", ".#####.", "..#.#.."],
+}
+DIGITS = {
+    1: [".#.", "##.", ".#.", ".#.", "###"],
+    2: ["###", "..#", "###", "#..", "###"],
+    3: ["###", "..#", "###", "..#", "###"],
+    4: ["#.#", "#.#", "###", "..#", "..#"],
+    5: ["###", "#..", "###", "..#", "###"],
+    6: ["###", "#..", "###", "#.#", "###"],
+    7: ["###", "..#", ".#.", ".#.", ".#."],
+    8: ["###", "#.#", "###", "#.#", "###"],
+    9: ["###", "#.#", "###", "..#", "###"],
+}
+
+
+def circle_of(key: str) -> int:
+    """The number of a circle of Hell by its region's key; 0 for the Earth and the sky."""
+    return max([k for k, _ in BANDS].index(key) - 1, 0)
+
+
+def numeral(world: World, char: str, x: int, y: int, n: int, scale: int = 1):
+    """A circle's number on the wall behind, its top left at a cell."""
+    for row, line in enumerate(DIGITS.get(n, [])):
+        for column, c in enumerate(line):
+            if c == "#":
+                for dy in range(scale):
+                    for dx in range(scale):
+                        raise_wall(world, char, x + column * scale + dx, y + row * scale + dy)
+
+
+def road_of(world: World, region: str):
+    return next(entry for entry in world.roads if entry[0] == region)
+
+
+# --- What fills the rock: caves nobody walks into ------------------------------------
+
+
+def pockets(world: World, log=print):
+    """Caves in the rock that no road leads to, seen in passing: a third of them with a
+    pool of the region's liquid in them, a third with crystals. They are dug last, only
+    where nothing else is, so the rock between the roads is not one black mass."""
+    made = 0
+    for index, (key, top) in enumerate(BANDS):
+        if key == "paradise":
+            continue
+        bottom = BANDS[index + 1][1] if index + 1 < len(BANDS) else HEIGHT - 6
+        top = max(top, SURFACE_LINE + 10)
+        liquid = KITS.get(key, {}).get("liquid") or "W"
+        for k in range((bottom - top) * WIDTH // 230):
+            cx = 26 + int(hash01(index, k, 91) * (WIDTH - 52))
+            cy = top + 5 + int(hash01(index, k, 92) * max(bottom - top - 10, 1))
+            rx, ry = 4 + int(hash01(index, k, 93) * 7), 2 + int(hash01(index, k, 94) * 3)
+            cells = {
+                (x, y)
+                for y in range(cy - ry - 1, cy + ry + 2)
+                for x in range(cx - rx - 1, cx + rx + 2)
+                if ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2 <= 1 + 0.3 * field(600 + index, x, y, 3.0)
+            }
+            if len(cells) < 14:
+                continue
+            try:
+                firm(world, range(cx - rx - 3, cx + rx + 4), range(cy - ry - 3, cy + ry + 4))
+            except Clash:
+                continue
+            owner = world.new_owner()
+            for x, y in sorted(cells):
+                world.open(x, y, owner, False)
+            low = max(y for _, y in cells)
+            kind = int(hash01(index, k, 95) * 3)
+            if kind == 0:
+                for x, y in cells:
+                    if y >= low - 1:
+                        world.t[y][x] = liquid
+            elif kind == 1:
+                floors = sorted((x, y) for x, y in cells if (x, y + 1) not in cells and (x, y - 1) in cells)
+                for x, y in floors[:: max(len(floors) // 2, 1)][:2]:
+                    world.t[y][x] = "^"
+            made += 1
+    log(f"  {made} caves in the rock that no road leads to")
+
+
+# --- What stands on the Earth ----------------------------------------------------------
+
+
+def tree(world: World, x: int, ground: int, tall: int):
+    """A tree on the wall behind: a trunk and a round crown."""
+    for y in range(ground - tall, ground):
+        raise_wall(world, "w", x, y)
+    wide, high = 2 + tall // 4, 2
+    for dy in range(-high - 1, high + 1):
+        for dx in range(-wide - 1, wide + 2):
+            if (dx / (wide + 0.6)) ** 2 + ((dy + 0.5) / (high + 0.6)) ** 2 <= 1:
+                raise_wall(world, "l", x + dx, ground - tall - 1 + dy)
+
+
+def surface(world: World, earth_road):
+    """What stands on the Earth: trees along the meadows, what is left of a house by the
+    start, the old shaft down into the mine, and something lying in the pond."""
+    surf = world.surface
+    start, mouth = world.spawn[0], EAST - 70
+    _, road, trail, locked = earth_road
+
+    def bare(x: int) -> bool:
+        return POND[0] - 3 <= x <= POND[1] + 3 or abs(x - start) < 6 or mouth - 40 <= x <= mouth + 12 or 98 <= x <= 126
+
+    x = 9
+    while x < WIDTH - 10:
+        if not bare(x):
+            tree(world, x, surf[x], 5 + int(hash01(x, 3) * 6))
+        x += 5 + int(hash01(x, 4) * 10)
+    # What is left of a house: its front wall, a door and a window in it, its top broken.
+    house = start + 16
+    for dx in range(10):
+        for dy in range(1, 7):
+            door = 3 <= dx <= 4 and dy <= 3
+            window = dx == 7 and 3 <= dy <= 4
+            broken = dy >= 5 and hash01(dx, dy, 8) < 0.45
+            if not (door or window or broken):
+                raise_wall(world, "s", house + dx, surf[house + dx] - dy)
+    world.mark("sign", start + 3, surf[start + 3] - 1, "post", *"The Gate is east, under the arch. The Pit is west, under the meadow. The stair to the west is not for you yet.".split())
+    # Something lies in the pond.
+    world.mark("relic", (POND[0] + POND[1]) // 2, surf[POND[0]] + 2)
+    # The old shaft: a second way into the mine, straight down from the meadow.
+    for near in (WEST + 110, WEST + 150, WEST + 80, WEST + 190):
+        try:
+            a = level_run(trail, near)
+            if any(c in locked for c in range(a - 1, a + 5)) or any(abs(c - tx) < 4 for c in range(a, a + 4) for tx in (start,)):
+                raise Clash("no room")
+            floor = trail[a]
+            top = max(surf[c] for c in range(a, a + 4))
+            roofs = [next((y for y in range(floor - 1, 0, -1) if world.t[y][c] in GROUND), 0) for c in range(a, a + 4)]
+            if min(roofs) < top + 8:
+                raise Clash("too near the mine")
+            firm(world, [a - 1, a + 4], range(top + 2, min(roofs) + 1))
+            for c, roof in zip(range(a, a + 4), roofs):
+                firm(world, [c], range(top + 2, roof + 1))
+        except Clash:
+            continue
+        shaft = Path(world, a, top, 1, road, lamps=False)
+        world.befriend(shaft.owner, world.owner[floor - 1][a])
+        for c, roof in zip(range(a, a + 4), roofs):
+            for y in range(min(surf[c], top), roof + 1):
+                world.open(c, y, shaft.owner, True)
+            world.t[top][c] = '"'
+            world.square.update((c, y) for y in range(top - 1, floor))
+        for row in range(top + 3, floor - 2, 3):
+            for c in (a, a + 1):
+                world.t[row][c] = '"'
+        locked.update(range(a, a + 4))
+        world.put(a - 1, surf[a - 1] - 1, "T")
+        world.mark("sign", a - 3, surf[a - 3] - 1, "post", *"The old shaft. It goes down to the mine.".split())
+        world.view("earth_shaft", a + 2, top + 6)
+        break
+
+
+def wisp(world: World, x0: int, x1: int, top: int, thick: int) -> bool:
+    """A small cloud adrift between the islands, where the sky is empty: nothing of the
+    road stands within a few cells of it. Whether there was room for it."""
+    if x0 < 4 or x1 >= WIDTH - 4 or top < 8:
+        return False
+    for y in range(top - 7, top + thick + 5):
+        for x in range(x0 - 5, x1 + 6):
+            if world.t[y][x] != AIR or world.walls[y][x] != AIR:
+                return False
+    if any(x0 - 6 <= x <= x1 + 6 and top - 8 <= y <= top + thick + 5 for _, x, y, *_ in world.marks):
+        return False
+    island(world, x0, x1, top, thick)
+    return True
 
 
 def descend_west(road: Path, dy: int, region: str, kind: str = "shaft", lower_char: str | None = None) -> Path:
@@ -1101,6 +1399,7 @@ def well_door(road: Path, far: int, floor: int):
         door.walk(EAST + 6 - far, h=4, rough=False, square=True)
     door.gate("seal")
     road.w.well_doors.append(floor)
+    road.w.mark("sign", far, floor - 1, "post", *"The Well runs past every circle. Night seals this door; a bolt of light opens it.".split())
 
 
 def turn_east(road: Path, dy: int, region: str, kind: str = "shaft", upper_door: bool = True, lower_door: bool = True) -> Path:
@@ -1143,6 +1442,8 @@ def well(world: World):
             world.t[row][x] = world.theme_at(row)["ledge"]
     for row in rows:
         world.put(WELL[0], row - 1, world.theme_at(row)["floor_lamp"])
+        # Each door's circle is written on the far wall.
+        numeral(world, world.theme_at(row)["wall"], WELL[1] - 4, row - 9, circle_of(world.theme_at(row)["key"]), 1)
     world.view("well", (WELL[0] + WELL[1]) / 2 - 12, (top + floor) // 2)
 
 
@@ -1328,6 +1629,7 @@ def earth(world: World) -> Path:
     ramble(mine, way.at(0.3), way.floor(0.35), kit="earth")
     cells = mine.hall(22, 9, 2, name="earth_mine")
     mine.relic(cells[11][0], cells[11][1] - 1)
+    world.mark("sign", cells[6][0], cells[6][1] - 1, "tablet", *TABLETS["earth_mine"].split())
     mine.rest()
     ramble(mine, way.at(0.62), way.floor(0.65), kit="earth")
     mine.walk(3)
@@ -1703,6 +2005,12 @@ def pit(world: World):
             world.t[row][x] = world.theme_at(row)["ledge"]
     for row in range(top + 2 * LADDER, floor, 2 * LADDER):
         world.put(PIT[1] - 1, row - 1, world.theme_at(row)["floor_lamp"])
+    # A chain hangs the whole way down, and each circle's number is on the wall over its tunnel.
+    for y in range(top + 5, floor):
+        if y % 4:
+            raise_wall(world, world.theme_at(y)["wall"], PIT_LEDGE - 2, y)
+    for door, key in world.pit_doors:
+        numeral(world, THEMES[key][1], PIT[0] + 1, door - 16, circle_of(key), 2)
     world.view("pit", 12, (top + floor) // 2)
 
 
@@ -1744,7 +2052,7 @@ def paradise(world: World):
     step(113, foot - 18)
     step(108, foot - 24)
     first = foot - 30
-    island(world, 115, 150, first, 5)
+    island(world, 115, 150, first, 7)
     world.mark("checkpoint", 132, first - 1)
     world.put(133, first - 1, "J")
     world.view("paradise_stair", 128, first + 8)
@@ -1756,7 +2064,7 @@ def paradise(world: World):
     # East and up, to the garden.
     step(153, first - 6)
     garden = first - 12
-    island(world, 158, 200, garden, 7, "G")
+    island(world, 158, 200, garden, 9, "G")
     for x in range(165, 194):
         world.t[garden + 1][x] = "D"
     world.put(162, garden - 1, "J")
@@ -1768,42 +2076,47 @@ def paradise(world: World):
     island(world, 181, 196, garden - 18, 3)
     world.mark("relic", 189, garden - 19)
     # Over a gap that is glided, to the colonnade.
-    island(world, 210, 244, garden, 5, "M")
+    island(world, 210, 244, garden, 7, "M")
     colonnade(214, 238, garden)
     world.mark("checkpoint", 226, garden - 1)
     world.put(227, garden - 1, "J")
     # Up to the orchard.
     step(240, garden - 6)
     orchard = garden - 12
-    island(world, 246, 294, orchard, 7, "G")
+    island(world, 246, 294, orchard, 9, "G")
     for x in range(258, 288):
         world.t[orchard + 1][x] = "D"
     world.put(254, orchard - 1, "J")
     world.put(290, orchard - 1, "J")
     world.view("paradise_orchard", 272, orchard - 5)
     # Another glide, to a bare cloud, and under it a small one with something on it.
-    island(world, 304, 336, orchard, 5)
+    island(world, 304, 336, orchard, 7)
     world.put(320, orchard - 1, "J")
     island(world, 293, 301, orchard + 7, 3)
     world.mark("relic", 298, orchard + 6)
     # Up to the forecourt.
     step(332, orchard - 6)
     court = orchard - 12
-    island(world, 338, 372, court, 6, "M")
+    island(world, 338, 372, court, 8, "M")
     colonnade(342, 366, court)
     world.mark("checkpoint", 354, court - 1)
     world.put(355, court - 1, "J")
     # And up to the temple, and the gate at the end of everything.
     step(368, court - 6)
     temple = court - 12
-    island(world, 374, 440, temple, 8, "M")
+    island(world, 374, 440, temple, 10, "M")
     for x in (384, 385, 392, 393, 400, 401, 410, 411, 418, 419, 426, 427):
         for y in range(temple - 9, temple):
             world.walls[y][x] = "m"
-    for row, inset in ((temple - 10, 0), (temple - 11, 5), (temple - 12, 10), (temple - 13, 15), (temple - 14, 20)):
+    # A lintel of marble two cells thick, and the pediment over it on the wall behind:
+    # a block of stone five deep would be dark at its heart.
+    for row, inset in ((temple - 10, 0), (temple - 11, 0)):
         for x in range(382 + inset, 430 - inset):
             world.t[row][x] = "M"
             world.square.add((x, row))
+    for row, inset in ((temple - 12, 4), (temple - 13, 9), (temple - 14, 14), (temple - 15, 19)):
+        for x in range(382 + inset, 430 - inset):
+            world.walls[row][x] = "m"
     for x in (388, 396, 414, 422):
         world.put(x, temple - 1, "J")
     world.mark("end", 405, temple - 1)
@@ -1812,6 +2125,30 @@ def paradise(world: World):
     island(world, 450, 468, temple + 4, 3)
     world.mark("relic", 459, temple + 3)
     world.put(463, temple + 3, "J")
+    # Two clouds more over the west, climbed from the first: a high one with something on it.
+    step(120, first - 6)
+    step(126, first - 12)
+    island(world, 132, 148, first - 18, 4)
+    world.mark("upgrade", 141, first - 19, "Heart")
+    world.put(136, first - 19, "J")
+    # Small clouds adrift in the empty sky between the islands and over them.
+    adrift = 0
+    for k in range(90):
+        if adrift == 18:
+            break
+        x0 = 10 + int(hash01(k, 61) * (WIDTH - 40))
+        adrift += wisp(
+            world,
+            x0,
+            x0 + 5 + int(hash01(k, 63) * 9),
+            9 + int(hash01(k, 62) * (first - 2)),
+            2 + int(hash01(k, 64) * 2),
+        )
+    # Water falls from under three of the islands, into the sky.
+    for x, top in ((179, garden), (270, orchard), (407, temple)):
+        under = next(y for y in range(top, top + 20) if world.t[y][x] == AIR)
+        for y in range(under, under + 14):
+            world.t[y][x] = "W"
 
 
 def build(log=print) -> World:
@@ -1822,8 +2159,10 @@ def build(log=print) -> World:
     pit(world)
     well(world)
     paradise(world)
+    surface(world, road_of(world, "earth"))
     sinks(world, log)
     side_roads(world, log)
+    pockets(world, log)
     world.shots += [("earth_sunset", "earth", 18.75), ("paradise_dawn", "paradise", 6.6), ("paradise_garden_night", "paradise_garden", 22.5)]
     world.veins()
     world.slopes()
@@ -1838,7 +2177,8 @@ HEADER = """# The Tiles V2 world, written by tools/tiles_v2/make_world_map.py (e
 # blank line, the wall grid; the legend is in tiles_v2.json. `@region key row` is
 # where a region starts, `@mark kind column row ...` a thing of the game's that
 # stands in a cell (a checkpoint, an ability, a gate, a secret wall, a platform that does
-# not stay, a wind), `@view` and `@shot` places and pictures for the captures.
+# not stay, a wind, an upgrade, a sign, a stretch with no light in its air), `@view` and
+# `@shot` places and pictures for the captures.
 """
 
 
@@ -1847,7 +2187,7 @@ def check(world: World, log=print) -> list[str]:
     log("Working out where the hero can go:")
     reach = tv2_reach.Reach(terrain, world.gates, world.links, log)
     shrines = {m[3][0]: (m[1], m[2]) for m in world.marks if m[0] == "ability"}
-    goals = {f"{m[0]} {i}": (m[1], m[2]) for i, m in enumerate(world.marks) if m[0] in ("checkpoint", "relic", "end")}
+    goals = {f"{m[0]} {i}": (m[1], m[2]) for i, m in enumerate(world.marks) if m[0] in ("checkpoint", "relic", "upgrade", "end")}
     return tv2_reach.journey(reach, world.spawn, shrines, goals, log)
 
 

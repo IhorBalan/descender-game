@@ -145,6 +145,7 @@ def manifest() -> dict:
                 "sheet": m["key"] + ".png",
                 "slopes": m["slopes"],
                 "emits": list(m.get("emits", (0.0, 0.0, 0.0))),
+                "open": bool(m.get("open", False)),
             }
             for m in MATERIALS
         ],

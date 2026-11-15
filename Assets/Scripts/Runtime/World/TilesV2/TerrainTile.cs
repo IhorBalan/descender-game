@@ -36,7 +36,20 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private Color emits = Color.black;
 
+        [Tooltip(
+            "A wall that does not shut out the sky: a tree, a far cloud. The cell it is drawn behind is as if it had no wall."
+        )]
+        [SerializeField]
+        private bool open;
+
         public string MaterialKey => materialKey;
+
+        /// <summary>A wall that does not shut out the sky.</summary>
+        public bool Open
+        {
+            get => open;
+            set => open = value;
+        }
         public string JoinGroup => joinGroup;
 
         /// <summary>The material the tile is of: `grass` for the grass tile and for both grass slopes.</summary>

@@ -62,6 +62,7 @@ namespace Descender.EditorTools.TilesV2
             public string group;
             public string sheet;
             public bool slopes;
+            public bool open;
             public float[] emits = Array.Empty<float>();
 
             public bool IsWall => kind == "wall";

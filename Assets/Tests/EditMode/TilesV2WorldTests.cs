@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Descender.Combat;
 using Descender.EditorTools.TilesV2;
+using Descender.Player;
 using Descender.Save;
 using Descender.Triggers;
 using Descender.World.TilesV2;
@@ -116,9 +117,9 @@ namespace Descender.Tests
             foreach (var mark in map.Marks)
             {
                 // A relic may lie under water; nothing stands in the rock.
-                if (mark.Kind != TilesV2Things.Wind)
+                if (mark.Kind != TilesV2Things.Wind && mark.Kind != TilesV2World.DarkKind)
                 {
-                    // A wind's mark is the corner of the air it blows in, which may be in the roof.
+                    // A wind's mark, and a dark stretch's, is the corner of some air, which may be in the roof.
                     Assert.That(Solid(mark.Column, mark.Row), Is.False, mark.Kind + " stands in the rock");
                 }
                 switch (mark.Kind)
@@ -146,6 +147,24 @@ namespace Descender.Tests
                     case TilesV2Things.Seal:
                         Assert.That(mark.Word(0), Is.EqualTo("bolt").Or.EqualTo("slam"));
                         Assert.That(mark.Number(1, 0) * mark.Number(2, 0), Is.GreaterThan(1), "a seal's size");
+                        break;
+                    case TilesV2Things.Upgrade:
+                        Assert.That(
+                            System.Enum.TryParse<UpgradeKind>(mark.Word(0), out _),
+                            Is.True,
+                            "an upgrade of the game's: " + mark.Word(0)
+                        );
+                        break;
+                    case TilesV2Things.Sign:
+                        Assert.That(
+                            mark.Word(0),
+                            Is.EqualTo(TilesV2Sign.Post).Or.EqualTo(TilesV2Sign.Tablet).Or.EqualTo(TilesV2Sign.Shade)
+                        );
+                        Assert.That(mark.Rest.Length, Is.GreaterThan(2), "a sign says something");
+                        Assert.That(Solid(mark.Column, mark.Row + 1), Is.True, "a sign stands on the ground");
+                        break;
+                    case TilesV2World.DarkKind:
+                        Assert.That(mark.Number(0, 0) * mark.Number(1, 0), Is.GreaterThan(8), "a dark stretch's size");
                         break;
                     case TilesV2Things.End:
                         ends++;
@@ -185,7 +204,20 @@ namespace Descender.Tests
             }
             Assert.That(set.PropOf("torch").embers, Is.True);
             Assert.That(set.PropOf("crystal").embers, Is.False);
-            foreach (var name in new[] { "barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1" })
+            foreach (
+                var name in new[]
+                {
+                    "barrier_0",
+                    "barrier_1",
+                    "seal_bolt",
+                    "seal_slam",
+                    "relic_0",
+                    "relic_1",
+                    TilesV2Sign.Post,
+                    TilesV2Sign.Tablet,
+                    TilesV2Sign.Shade,
+                }
+            )
             {
                 Assert.That(set.Thing(name), Is.Not.Null, name);
             }
@@ -374,10 +406,41 @@ namespace Descender.Tests
             var things = TilesV2Things.Build(
                 world,
                 AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
-                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath),
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.UpgradePath)
             );
             try
             {
+                Assert.That(things.Upgrades, Is.EqualTo(counts[TilesV2Things.Upgrade]));
+                Assert.That(things.Upgrades, Is.GreaterThan(5), "not every reward is a relic");
+                var hearts = 0;
+                var vials = 0;
+                var flags = new HashSet<string>();
+                foreach (var pickup in things.GetComponentsInChildren<Pickups.UpgradePickup>())
+                {
+                    hearts += pickup.Kind == UpgradeKind.Heart ? 1 : 0;
+                    vials += pickup.Kind == UpgradeKind.Vial ? 1 : 0;
+                    Assert.That(flags.Add(pickup.Flag), Is.True, "each upgrade is taken once: " + pickup.Flag);
+                }
+                Assert.That(hearts + vials, Is.EqualTo(things.Upgrades));
+                Assert.That(hearts, Is.GreaterThan(1), "hearts to find");
+                Assert.That(vials, Is.GreaterThan(1), "draughts to find");
+                Assert.That(things.Signs, Is.EqualTo(counts[TilesV2Things.Sign]));
+                var signs = things.GetComponentsInChildren<TilesV2Sign>();
+                Assert.That(signs.Length, Is.EqualTo(things.Signs));
+                var shades = 0;
+                foreach (var sign in signs)
+                {
+                    Assert.That(sign.Text, Is.Not.Empty, sign.name);
+                    Assert.That(sign.GetComponentInChildren<SpriteRenderer>().sprite, Is.Not.Null, sign.name);
+                    Vector2 foot = sign.transform.position;
+                    Assert.That(sign.IsRead(foot + new Vector2(1f, 0f)), Is.True, "read from beside it");
+                    Assert.That(sign.IsRead(foot + new Vector2(TilesV2Sign.Reach.x + 1f, 0f)), Is.False);
+                    Assert.That(sign.IsRead(foot + new Vector2(0f, TilesV2Sign.Reach.y + 1f)), Is.False);
+                    shades += sign.Kind == TilesV2Sign.Shade ? 1 : 0;
+                }
+                Assert.That(shades, Is.GreaterThan(3), "the dead speak");
+                Assert.That(signs.Length - shades, Is.GreaterThan(10), "and posts and tablets say where the roads go");
                 Assert.That(things.Checkpoints, Is.EqualTo(counts[TilesV2Things.Checkpoint]));
                 Assert.That(things.Abilities, Is.EqualTo(6));
                 Assert.That(things.Relics, Is.EqualTo(counts[TilesV2Things.Relic]));
@@ -460,6 +523,92 @@ namespace Descender.Tests
             {
                 Object.DestroyImmediate(things.gameObject);
                 Pickups.Checkpoint.Reset();
+            }
+        }
+
+        [Test]
+        public void IslandsAndTreesDoNotShadeTheLandAndTheDarkStretchesGiveNoLight()
+        {
+            // The land under an island of Paradise is in daylight, as the land beside it is.
+            var surface = map.Surface;
+            var under = -1;
+            for (var column = 0; column < map.Width && under < 0; column++)
+            {
+                var island = false;
+                for (var row = 0; row < surface - 20; row++)
+                {
+                    island |= Solid(column, row);
+                }
+                var ground = surface - 20;
+                while (ground < map.Height && map.TerrainAt(column, ground) == TilesV2Map.Air)
+                {
+                    ground++;
+                }
+                if (island && Solid(column, ground) && map.WallAt(column, ground - 1) == TilesV2Map.Air)
+                {
+                    under = column;
+                    var lit = world.Light.At(map.CellOf(column, ground - 1));
+                    Assert.That(lit.maxColorComponent, Is.GreaterThan(0.9f), "an island shades the land at " + column);
+                }
+            }
+            Assert.That(under, Is.GreaterThanOrEqualTo(0), "no island of Paradise stands over the land");
+            // A tree's crown is on the wall behind and does not shut out the sky.
+            var crowns = 0;
+            var field = world.Light.Field;
+            for (var row = 0; row < surface + 10; row++)
+            {
+                for (var column = 0; column < map.Width; column++)
+                {
+                    var behind = map.WallAt(column, row);
+                    if (behind == TilesV2Map.Air || !set.TryGlyph(behind, out _))
+                    {
+                        continue;
+                    }
+                    var cell = map.CellOf(column, row);
+                    var tile = world.Walls.GetTile<TerrainTile>(cell);
+                    if (tile == null || !tile.Open)
+                    {
+                        continue;
+                    }
+                    crowns++;
+                    var index = field.Index(cell.x - field.Bounds.xMin, cell.y - field.Bounds.yMin);
+                    Assert.That(field.Walled[index], Is.False, "an open wall is no wall to the light");
+                    if (map.TerrainAt(column, row) == TilesV2Map.Air)
+                    {
+                        Assert.That(world.Light.At(cell).maxColorComponent, Is.GreaterThan(0.9f), "a tree in the dark");
+                    }
+                }
+            }
+            Assert.That(crowns, Is.GreaterThan(50), "trees stand on the Earth");
+            // A dark stretch: the air of its region gives it nothing, so with the stretches marked
+            // some of the world is darker than without, and none of it brighter.
+            var dark = world.Dark();
+            Assert.That(dark.Count, Is.GreaterThan(3), "some of the road is dark");
+            foreach (var stretch in dark)
+            {
+                Assert.That(stretch.width * stretch.height, Is.GreaterThan(8));
+            }
+            var marked = (Color[])world.Light.Sources.Clone();
+            try
+            {
+                world.Light.SetDark(null);
+                world.Light.Refresh();
+                var plain = world.Light.Sources;
+                Assert.That(plain.Length, Is.EqualTo(marked.Length));
+                var darker = 0;
+                var brighter = 0;
+                for (var i = 0; i < plain.Length; i++)
+                {
+                    darker += marked[i].maxColorComponent < plain[i].maxColorComponent - 0.02f ? 1 : 0;
+                    brighter += marked[i].maxColorComponent > plain[i].maxColorComponent + 1e-4f ? 1 : 0;
+                }
+                Assert.That(brighter, Is.EqualTo(0), "a dark stretch lights nothing");
+                Assert.That(darker, Is.GreaterThan(40 * dark.Count), "the dark stretches are no darker for it");
+            }
+            finally
+            {
+                world.Light.SetDark(dark);
+                world.Light.Refresh();
             }
         }
 

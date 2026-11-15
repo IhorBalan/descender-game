@@ -72,7 +72,8 @@ namespace Descender.World.TilesV2
                     var cell = new Vector3Int(bounds.xMin + x, bounds.yMin + y, 0);
                     var i = y * field.Width + x;
                     field.Ground[i] = terrain != null ? terrain.GetTile(cell) as TerrainTile : null;
-                    field.Walled[i] = walls != null && walls.HasTile(cell);
+                    var wall = walls != null ? walls.GetTile(cell) : null;
+                    field.Walled[i] = wall != null && !(wall is TerrainTile behind && behind.Open);
                     if (liquids == null)
                     {
                         continue;

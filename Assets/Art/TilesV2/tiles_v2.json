@@ -80,7 +80,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "grass",
@@ -92,7 +93,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "stone",
@@ -104,7 +106,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "dirt_wall",
@@ -116,7 +119,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "stone_wall",
@@ -128,7 +132,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "sand",
@@ -140,7 +145,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "clay",
@@ -152,7 +158,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "copper_ore",
@@ -164,7 +171,8 @@
         0.3,
         0.17,
         0.07
-      ]
+      ],
+      "open": false
     },
     {
       "key": "cloud",
@@ -176,7 +184,8 @@
         0.5,
         0.55,
         0.65
-      ]
+      ],
+      "open": false
     },
     {
       "key": "marble",
@@ -188,7 +197,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "marble_wall",
@@ -200,7 +210,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "ashstone",
@@ -212,7 +223,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "ash_wall",
@@ -224,7 +236,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "rose_rock",
@@ -236,7 +249,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "rose_wall",
@@ -248,7 +262,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "mud",
@@ -260,7 +275,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "mud_wall",
@@ -272,7 +288,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "darkstone",
@@ -284,7 +301,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "gold_ore",
@@ -296,7 +314,8 @@
         0.36,
         0.28,
         0.08
-      ]
+      ],
+      "open": false
     },
     {
       "key": "dark_wall",
@@ -308,7 +327,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "swamp_rock",
@@ -320,7 +340,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "swamp_wall",
@@ -332,7 +353,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "dis_brick",
@@ -344,7 +366,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "brick_wall",
@@ -356,7 +379,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "bloodstone",
@@ -368,7 +392,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "ember_sand",
@@ -380,7 +405,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "blood_wall",
@@ -392,7 +418,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "slate",
@@ -404,7 +431,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "slate_wall",
@@ -416,7 +444,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "ice",
@@ -428,7 +457,8 @@
         0.1,
         0.16,
         0.22
-      ]
+      ],
+      "open": false
     },
     {
       "key": "frost_rock",
@@ -440,7 +470,8 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
     },
     {
       "key": "ice_wall",
@@ -452,7 +483,34 @@
         0.0,
         0.0,
         0.0
-      ]
+      ],
+      "open": false
+    },
+    {
+      "key": "wood_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "wood_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "leaf_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "leaf_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
     }
   ],
   "blends": [
@@ -1323,6 +1381,18 @@
       "layer": "wall",
       "key": "ice_wall",
       "slope": ""
+    },
+    {
+      "character": "w",
+      "layer": "wall",
+      "key": "wood_wall",
+      "slope": ""
+    },
+    {
+      "character": "l",
+      "layer": "wall",
+      "key": "leaf_wall",
+      "slope": ""
     }
   ],
   "ledges": {
@@ -1353,7 +1423,10 @@
       "crack",
       "crumble",
       "blink",
-      "wind"
+      "wind",
+      "post",
+      "tablet",
+      "shade"
     ]
   },
   "props": [
