@@ -34,9 +34,12 @@ BACKDROPS = [
     # `drift` the units a second it moves by itself. Islands far off, shafts of light, a sea
     # of cloud the islands stand in, and wisps of it that pass in front of the hero.
     # Furthest: a country of cloud, towers of it one behind another, that fills most of the
-    # sky of Paradise; then a city on shelves of cloud, far off and pale.
-    {"key": "backdrop_heaven_clouds", "kind": "heaven", "scroll": 0.05, "scrollUp": 0.3, "rise": 14, "drift": 0.0, "order": -1003, "lit": False, "tinted": True},
-    {"key": "backdrop_heaven_city", "kind": "heaven", "scroll": 0.1, "scrollUp": 0.5, "rise": 10, "drift": 0.0, "order": -1001, "lit": False, "tinted": True},
+    # sky of Paradise; then castles on banks of cloud, far off and pale. Both are tall
+    # pictures that follow the camera only a little, set so that a view on the Earth's
+    # surface is under their feet (their thinned-out foot is a grey veil against a clear
+    # sky) and a view anywhere in Paradise, the Garden to the top of the citadel, is in them.
+    {"key": "backdrop_heaven_clouds", "kind": "heaven", "scroll": 0.05, "scrollUp": 0.66, "rise": 31, "drift": 0.0, "order": -1003, "lit": False, "tinted": True},
+    {"key": "backdrop_heaven_city", "kind": "heaven", "scroll": 0.1, "scrollUp": 0.7, "rise": 32, "drift": 0.0, "order": -1001, "lit": False, "tinted": True},
     {"key": "backdrop_heaven_far", "kind": "heaven", "scroll": 0.06, "scrollUp": 0.25, "rise": 6, "drift": 0.0, "order": -1000, "lit": False, "tinted": True},
     {"key": "backdrop_heaven_near", "kind": "heaven", "scroll": 0.16, "scrollUp": 0.4, "rise": 10, "drift": 0.0, "order": -996, "lit": False, "tinted": True},
     # A second sea of cloud, the one the Temple's island stands in, and thin cloud high over all.
@@ -517,13 +520,13 @@ def _fade_foot(a: np.ndarray, rows: int):
 def backdrop_heaven_clouds() -> Image.Image:
     """A country of cloud far off: towers of it one behind another, the further the paler,
     with the sky between them. Repeats sideways; thins out toward the Earth."""
-    width, height = BACKDROP_W, 896
+    width, height = BACKDROP_W, 1280
     canvas = np.zeros((height, width), dtype=np.uint8)
     r = rng("heaven clouds")
     palette = np.array([(0, 0, 0)] + list(hexes("b9cfee", "a7c1e8", "9ab5e0", "d0e0f5", "bcd1ef", "abc3e6", "e9f1fb", "d3e2f5", "bfd2ee")), dtype=np.uint8)
     masses = []
     for depth in range(3):
-        for _ in range((7, 6, 5)[depth]):
+        for _ in range((10, 9, 7)[depth]):
             masses.append((depth, r.randrange(width), r.randint(170 + depth * 60, height - 40), r.randint(150, 250) + depth * 40, r.randint(90, 170) + depth * 30))
     for depth, cx, foot, wide, tall in sorted(masses, key=lambda m: (m[0], m[2])):
         tones = _mass(r, wide, tall)
@@ -588,7 +591,7 @@ def backdrop_heaven_city() -> Image.Image:
     """Castles far off, on banks of cloud one over another: towers under pointed roofs of
     blue, keeps, walls on arches, a thread of water falling from a bank's edge here and
     there. Pale: they are a long way off. Repeats sideways."""
-    width, height = BACKDROP_W, 1216
+    width, height = BACKDROP_W, 1344
     canvas = np.zeros((height, width), dtype=np.uint8)
     r = rng("heaven city")
     # Tones per shelf, far to near: cloud lit, body, shade; stone lit, body, dark; gold.
@@ -599,7 +602,7 @@ def backdrop_heaven_city() -> Image.Image:
     ]
     palette = np.array([(0, 0, 0)] + [c for ramp in ramps for c in ramp] + [hexes("f2f7fd")[0]], dtype=np.uint8)
     water = len(palette) - 1
-    shelves = [(k % 3, (k * 250 + r.randint(-60, 60)) % width, 170 + k * 112 + r.randint(-24, 24), r.randint(240, 400)) for k in range(10)]
+    shelves = [(k % 3, (k * 250 + r.randint(-60, 60)) % width, 170 + k * 100 + r.randint(-24, 24), r.randint(240, 400)) for k in range(12)]
     for depth, cx, foot, wide in sorted(shelves, key=lambda s: s[0]):
         base = 1 + depth * 7
         # The buildings first, their feet a little down in the cloud, then the cloud over their feet.

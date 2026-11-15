@@ -2247,8 +2247,8 @@ MonoBehaviour:
     scroll: 0.05
     order: -1003
     lit: 0
-    scrollUp: 0.3
-    rise: 14
+    scrollUp: 0.66
+    rise: 31
     drift: 0
     tinted: 1
   - key: backdrop_heaven_city
@@ -2257,8 +2257,8 @@ MonoBehaviour:
     scroll: 0.1
     order: -1001
     lit: 0
-    scrollUp: 0.5
-    rise: 10
+    scrollUp: 0.7
+    rise: 32
     drift: 0
     tinted: 1
   - key: backdrop_heaven_far
