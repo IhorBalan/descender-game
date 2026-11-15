@@ -2472,6 +2472,8 @@ def paradise(world: World):
         world.t[crown][x] = ","
     world.mark("upgrade", centre, crown - 1, "Vial")
     world.view("paradise_dome", centre, drum - 4)
+    # A glory stands behind the dome: rings and rays of pale gold in the sky.
+    world.mark("picture", centre, drum + 19, "backdrop_glory")
     # Its one door, in the west wall: shut until the three lights are lit.
     hollow(world, range(centre - 39, centre - 36), range(f - 5, f))
     world.mark("sanctum", centre - 38, f - 5, 5, 3)

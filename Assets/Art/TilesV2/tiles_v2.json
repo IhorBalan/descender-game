@@ -3355,6 +3355,28 @@
       "lit": false
     },
     {
+      "key": "backdrop_heaven_clouds",
+      "kind": "heaven",
+      "scroll": 0.05,
+      "scrollUp": 0.3,
+      "rise": 14,
+      "drift": 0.0,
+      "order": -1003,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_heaven_city",
+      "kind": "heaven",
+      "scroll": 0.1,
+      "scrollUp": 0.5,
+      "rise": 10,
+      "drift": 0.0,
+      "order": -1001,
+      "lit": false,
+      "tinted": true
+    },
+    {
       "key": "backdrop_heaven_far",
       "kind": "heaven",
       "scroll": 0.06,
@@ -3373,6 +3395,28 @@
       "rise": 10,
       "drift": 0.0,
       "order": -996,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_cirrus",
+      "kind": "heaven",
+      "scroll": 0.35,
+      "scrollUp": 1.0,
+      "rise": 138,
+      "drift": 0.2,
+      "order": -968,
+      "lit": false,
+      "tinted": true
+    },
+    {
+      "key": "backdrop_cloudmid",
+      "kind": "heaven",
+      "scroll": 0.6,
+      "scrollUp": 1.0,
+      "rise": 77,
+      "drift": 0.08,
+      "order": -967,
       "lit": false,
       "tinted": true
     },
@@ -3417,6 +3461,17 @@
       "rise": 0,
       "drift": 0.0,
       "order": -962,
+      "lit": false,
+      "tinted": false
+    },
+    {
+      "key": "backdrop_glory",
+      "kind": "picture",
+      "scroll": 1.0,
+      "scrollUp": 1.0,
+      "rise": 0,
+      "drift": 0.0,
+      "order": -963,
       "lit": false,
       "tinted": false
     }

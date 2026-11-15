@@ -33,13 +33,21 @@ BACKDROPS = [
     # it moves with the world (under 1 it keeps the camera company, as what is far does),
     # `drift` the units a second it moves by itself. Islands far off, shafts of light, a sea
     # of cloud the islands stand in, and wisps of it that pass in front of the hero.
+    # Furthest: a country of cloud, towers of it one behind another, that fills most of the
+    # sky of Paradise; then a city on shelves of cloud, far off and pale.
+    {"key": "backdrop_heaven_clouds", "kind": "heaven", "scroll": 0.05, "scrollUp": 0.3, "rise": 14, "drift": 0.0, "order": -1003, "lit": False, "tinted": True},
+    {"key": "backdrop_heaven_city", "kind": "heaven", "scroll": 0.1, "scrollUp": 0.5, "rise": 10, "drift": 0.0, "order": -1001, "lit": False, "tinted": True},
     {"key": "backdrop_heaven_far", "kind": "heaven", "scroll": 0.06, "scrollUp": 0.25, "rise": 6, "drift": 0.0, "order": -1000, "lit": False, "tinted": True},
     {"key": "backdrop_heaven_near", "kind": "heaven", "scroll": 0.16, "scrollUp": 0.4, "rise": 10, "drift": 0.0, "order": -996, "lit": False, "tinted": True},
+    # A second sea of cloud, the one the Temple's island stands in, and thin cloud high over all.
+    {"key": "backdrop_cirrus", "kind": "heaven", "scroll": 0.35, "scrollUp": 1.0, "rise": 138, "drift": 0.2, "order": -968, "lit": False, "tinted": True},
+    {"key": "backdrop_cloudmid", "kind": "heaven", "scroll": 0.6, "scrollUp": 1.0, "rise": 77, "drift": 0.08, "order": -967, "lit": False, "tinted": True},
     {"key": "backdrop_cloudsea", "kind": "heaven", "scroll": 0.5, "scrollUp": 1.0, "rise": 26, "drift": 0.12, "order": -966, "lit": False, "tinted": True},
     {"key": "backdrop_rays", "kind": "heaven", "scroll": 0.3, "scrollUp": 0.6, "rise": 8, "drift": 0.0, "order": -964, "lit": False, "tinted": False},
     {"key": "backdrop_cloudfront", "kind": "heaven", "scroll": 1.0, "scrollUp": 1.0, "rise": 24, "drift": 0.4, "order": 30, "lit": False, "tinted": True},
     # A picture a map stands somewhere itself (`@mark picture column row key`): not laid by kind.
     {"key": "backdrop_rainbow", "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": -962, "lit": False, "tinted": False},
+    {"key": "backdrop_glory", "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": -963, "lit": False, "tinted": False},
 ]
 # The rock behind the caves is a region's own (REGIONS in tv2_base.py): each region that
 # has one gets `backdrop_cave_<region>` and its ragged top, `backdrop_cave_top_<region>`.
@@ -455,6 +463,196 @@ def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: b
     return im
 
 
+def _stamp(canvas: np.ndarray, mask: np.ndarray, x0: int, y0: int, colours: np.ndarray):
+    """Lays a patch of colour indices (0 for nothing) on a canvas, wrapping sideways."""
+    h, w = mask.shape
+    top, bottom = max(y0, 0), min(y0 + h, canvas.shape[0])
+    if top >= bottom:
+        return
+    xs = np.arange(x0, x0 + w) % canvas.shape[1]
+    part = mask[top - y0 : bottom - y0]
+    block = canvas[top:bottom][:, xs]
+    block[part > 0] = colours[part[part > 0]]
+    canvas[top:bottom, xs] = block
+
+
+def _mass(r, wide: int, tall: int, flat_top: int = 0) -> np.ndarray:
+    """A heap of cloud as a patch of tones: 1 its lit crown, 2 its body, 3 the shade of
+    its underside. Round heads piled highest in the middle on a level foot; with
+    `flat_top` the heap is cut level that many pixels over its foot, to be built on."""
+    pad = int(wide * 0.22) + 2
+    h, w = tall + pad, wide + 2 * pad
+    ys, xs = np.mgrid[0:h, 0:w]
+    inside = np.zeros((h, w), dtype=bool)
+    middle, foot = w / 2, h - 1
+    for _ in range(max(6, wide // 11)):
+        hx = middle + r.uniform(-wide / 2, wide / 2)
+        room = tall * (1 - (abs(hx - middle) / (wide / 2)) ** 2)
+        rad = r.uniform(wide * 0.07, wide * 0.2)
+        hy = foot - r.uniform(0.1, 1.0) * max(room - rad, rad * 0.4)
+        inside |= (xs - hx) ** 2 + ((ys - hy) * 1.15) ** 2 <= rad * rad
+    inside |= ((xs - middle) / (wide / 2)) ** 2 + ((ys - foot) / (tall * 0.28)) ** 2 <= 1
+    if flat_top:
+        inside[: h - flat_top] = False
+    crest = np.where(inside.any(axis=0), inside.argmax(axis=0), h)
+    depth = ys - crest[None, :]
+    tones = np.zeros((h, w), dtype=np.uint8)
+    tones[inside] = 2
+    tones[inside & (depth < 5)] = 1
+    # The shade of its underside: a thin band along its foot, its upper edge broken up.
+    under = foot - ys
+    tones[inside & (depth >= 5) & ((under < 7) | ((under < 13) & ((xs + ys) % 2 == 0)))] = 3
+    return tones
+
+
+def _fade_foot(a: np.ndarray, rows: int):
+    """Thins a picture out to nothing over its last rows, in an ordered dither."""
+    h, w = a.shape[:2]
+    ys, xs = np.mgrid[0:h, 0:w]
+    left = (h - ys) / float(rows)
+    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
+    a[(left < 1) & (left <= bayer), 3] = 0
+
+
+def backdrop_heaven_clouds() -> Image.Image:
+    """A country of cloud far off: towers of it one behind another, the further the paler,
+    with the sky between them. Repeats sideways; thins out toward the Earth."""
+    width, height = BACKDROP_W, 896
+    canvas = np.zeros((height, width), dtype=np.uint8)
+    r = rng("heaven clouds")
+    palette = np.array([(0, 0, 0)] + list(hexes("b9cfee", "a7c1e8", "9ab5e0", "d0e0f5", "bcd1ef", "abc3e6", "e9f1fb", "d3e2f5", "bfd2ee")), dtype=np.uint8)
+    masses = []
+    for depth in range(3):
+        for _ in range((7, 6, 5)[depth]):
+            masses.append((depth, r.randrange(width), r.randint(170 + depth * 60, height - 40), r.randint(150, 250) + depth * 40, r.randint(90, 170) + depth * 30))
+    for depth, cx, foot, wide, tall in sorted(masses, key=lambda m: (m[0], m[2])):
+        tones = _mass(r, wide, tall)
+        colours = np.array([0, 1 + depth * 3, 2 + depth * 3, 3 + depth * 3], dtype=np.uint8)
+        _stamp(canvas, tones, cx - tones.shape[1] // 2, foot - tones.shape[0], colours)
+    a = np.zeros((height, width, 4), dtype=np.uint8)
+    a[:, :, :3] = palette[canvas]
+    a[:, :, 3] = np.where(canvas > 0, 255, 0)
+    _fade_foot(a, 300)
+    return Image.fromarray(a, "RGBA")
+
+
+def _building(r, kind: str, wide: int, tall: int) -> np.ndarray:
+    """One building of the far city as a patch of tones: 1 lit, 2 its body, 3 a dark opening, 4 gold."""
+    cap = wide // 2 + 6
+    h, w = tall + cap + 8, wide + 4
+    t = np.zeros((h, w), dtype=np.uint8)
+    x0, x1, foot = 2, 2 + wide, h
+    top = foot - tall
+    if kind == "tower":
+        t[top:foot, x0:x1] = 2
+        t[top:foot, x0 : x0 + 2] = 1
+        for y in range(top + 8, foot - 10, 14):
+            t[y : y + 6, (x0 + x1) // 2 - 1 : (x0 + x1) // 2 + 1] = 3
+        for k in range(cap):  # a spire
+            half = max((wide / 2) * (1 - k / cap), 0.6)
+            t[top - 1 - k, int(round((x0 + x1) / 2 - half)) : int(round((x0 + x1) / 2 + half)) + 1] = 4 if k < cap - 3 else 1
+    elif kind == "dome":
+        t[top:foot, x0:x1] = 2
+        t[top:foot, x0 : x0 + 2] = 1
+        t[top : top + 2, x0 - 1 : x1 + 1] = 1
+        for x in range(x0 + 5, x1 - 4, 9):
+            t[top + 8 : foot - 6, x : x + 3] = 3
+            t[top + 7, x + 1] = 3
+        rad = wide / 2 - 2
+        for y in range(int(rad) + 1):
+            half = (rad * rad - y * y) ** 0.5
+            t[top - 1 - y, int(round((x0 + x1) / 2 - half)) : int(round((x0 + x1) / 2 + half)) + 1] = 4
+        t[top - int(rad) - 6 : top - int(rad) - 1, (x0 + x1) // 2] = 1
+    elif kind == "colonnade":
+        t[top : top + 4, x0 - 1 : x1 + 1] = 1
+        for x in range(x0, x1 - 1, 7):
+            t[top + 4 : foot, x : x + 3] = 2
+            t[top + 4 : foot, x] = 1
+        for k in range(wide // 4):  # a low gable
+            t[top - 1 - k, x0 + k * 2 : x1 - k * 2] = 2 if k else 4
+    else:  # an obelisk
+        t[top:foot, x0 + wide // 2 - 2 : x0 + wide // 2 + 2] = 2
+        t[top:foot, x0 + wide // 2 - 2] = 1
+        t[top - 4 : top, x0 + wide // 2 - 1 : x0 + wide // 2 + 1] = 4
+    return t
+
+
+def backdrop_heaven_city() -> Image.Image:
+    """A city far off, on shelves of cloud one over another: domes, spires, colonnades, a
+    thread of water falling from a shelf's edge here and there. Pale: it is a long way off,
+    and paler the higher. Repeats sideways."""
+    width, height = BACKDROP_W, 1216
+    canvas = np.zeros((height, width), dtype=np.uint8)
+    r = rng("heaven city")
+    # Tones per shelf, far to near: cloud lit, body, shade; stone lit, body, dark; gold.
+    ramps = [
+        hexes("d3e1f5", "c0d2ee", "b0c5e8", "cfdcf2", "b6c8e8", "9fb4dc", "e3dcc0"),
+        hexes("dfe9f8", "c9d9f1", "b5c9ea", "d9e3f5", "bccdea", "a0b5dc", "ecdfb4"),
+        hexes("ecf2fb", "d4e1f4", "bccfec", "e6ecf8", "c3d1ec", "a2b6dc", "f3e2a8"),
+    ]
+    palette = np.array([(0, 0, 0)] + [c for ramp in ramps for c in ramp] + [hexes("f2f7fd")[0]], dtype=np.uint8)
+    water = len(palette) - 1
+    shelves = [(k % 3, (k * 250 + r.randint(-60, 60)) % width, 170 + k * 112 + r.randint(-24, 24), r.randint(240, 400)) for k in range(10)]
+    for depth, cx, foot, wide in sorted(shelves, key=lambda s: s[0]):
+        base = 1 + depth * 7
+        # The buildings first, their feet a little down in the cloud, then the cloud over their feet.
+        x = cx - wide // 2 + 34
+        while x < cx + wide // 2 - 44:
+            kind = r.choice(["tower", "dome", "colonnade", "tower", "obelisk", "dome"])
+            bw, bt = {"tower": (r.randint(12, 18), r.randint(70, 140)), "dome": (r.randint(44, 70), r.randint(40, 60)), "colonnade": (r.randint(50, 84), r.randint(32, 44)), "obelisk": (8, r.randint(46, 86))}[kind]
+            piece = _building(r, kind, bw, bt)
+            _stamp(canvas, piece, x, foot - 30 - piece.shape[0], np.array([0, base + 3, base + 4, base + 5, base + 6], dtype=np.uint8))
+            x += bw + r.randint(4, 22)
+        shelf = _mass(r, wide, 44)
+        _stamp(canvas, shelf, cx - shelf.shape[1] // 2, foot - shelf.shape[0], np.array([0, base, base + 1, base + 2], dtype=np.uint8))
+        for _ in range(2):
+            fx, long = cx + r.randint(-wide // 2 + 20, wide // 2 - 20), r.randint(70, 150)
+            for k in range(long):
+                if foot - 6 + k < height and (k < long * 0.6 or k % 2 == 0):
+                    canvas[foot - 6 + k, fx % width] = water
+    a = np.zeros((height, width, 4), dtype=np.uint8)
+    a[:, :, :3] = palette[canvas]
+    a[:, :, 3] = np.where(canvas > 0, 255, 0)
+    _fade_foot(a, 260)
+    return Image.fromarray(a, "RGBA")
+
+
+def backdrop_cirrus() -> Image.Image:
+    """Thin cloud high up: long streaks, their ends thinning out. Repeats sideways."""
+    width, height = BACKDROP_W, 128
+    a = np.zeros((height, width, 4), dtype=np.uint8)
+    r = rng("cirrus")
+    ys, xs = np.mgrid[0:height, 0:width]
+    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
+    for _ in range(16):
+        cx, cy, long, thick = r.randrange(width), r.randint(12, height - 12), r.randint(70, 210), r.uniform(2.5, 7)
+        dx = np.minimum(np.abs(xs - cx), width - np.abs(xs - cx))
+        d = (dx / (long / 2)) ** 2 + ((ys - cy - dx * 0.04) / thick) ** 2
+        solid = (d < 1) & ((1 - d) * 1.6 > bayer)
+        a[solid] = (244, 248, 253, 235)
+    return Image.fromarray(a, "RGBA")
+
+
+def backdrop_glory() -> Image.Image:
+    """A glory: rings and rays of pale gold round a middle, see-through, in an ordered
+    dither. Stood behind what is holiest."""
+    size = 640
+    ys, xs = np.mgrid[0:size, 0:size]
+    dx, dy = xs - size / 2 + 0.5, ys - size / 2 + 0.5
+    d = np.hypot(dx, dy)
+    angle = np.arctan2(dy, dx)
+    rays = (np.cos(angle * 16) > 0.55) | (np.cos(angle * 8 + 0.4) > 0.9)
+    rings = (np.abs(d - 96) < 3) | (np.abs(d - 150) < 2) | (np.abs(d - 214) < 1.5)
+    strength = np.clip(1 - d / (size / 2), 0, 1) * np.where(rays | rings, 1.0, 0.32)
+    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
+    level = strength * 3.2
+    step = np.floor(level) + ((level - np.floor(level)) > bayer)
+    a = np.zeros((size, size, 4), dtype=np.uint8)
+    a[:, :, :3] = (255, 240, 190)
+    a[:, :, 3] = np.clip(step, 0, 4) * 22
+    return Image.fromarray(a, "RGBA")
+
+
 def backdrop_rainbow() -> Image.Image:
     """Half a rainbow's ring, standing on its two feet: seven thin bands, see-through, their
     edges and their feet an ordered dither."""
@@ -494,6 +692,21 @@ def backdrops() -> dict[str, Image.Image]:
             "near", 480, 3, (34, 60), hexes("ffffff", "c6e2b4", "a3bbe2", "869fd0", "eaf4ff"), 0.8, 0.7
         ),
         "backdrop_rays": backdrop_rays(),
+        "backdrop_heaven_clouds": backdrop_heaven_clouds(),
+        "backdrop_heaven_city": backdrop_heaven_city(),
+        "backdrop_cirrus": backdrop_cirrus(),
+        "backdrop_glory": backdrop_glory(),
+        "backdrop_cloudmid": backdrop_cloud_band(
+            "mid",
+            240,
+            [
+                (14, 84, (24, 44), hexes("dde7f6")[0], hexes("c6d6ef")[0]),
+                (13, 116, (20, 36), hexes("eff4fc")[0], hexes("d8e3f5")[0]),
+                (12, 146, (16, 30), hexes("ffffff")[0], hexes("e8effa")[0]),
+            ],
+            255,
+            True,
+        ),
         "backdrop_rainbow": backdrop_rainbow(),
         "backdrop_cloudsea": backdrop_cloud_band(
             "sea",

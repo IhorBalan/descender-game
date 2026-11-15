@@ -2175,6 +2175,26 @@ MonoBehaviour:
     rise: 0
     drift: 0
     tinted: 0
+  - key: backdrop_heaven_clouds
+    kind: 7
+    sprite: {fileID: 21300000, guid: ad24485446f354fd8600e2b65b9905cb, type: 3}
+    scroll: 0.05
+    order: -1003
+    lit: 0
+    scrollUp: 0.3
+    rise: 2
+    drift: 0
+    tinted: 1
+  - key: backdrop_heaven_city
+    kind: 7
+    sprite: {fileID: 21300000, guid: f938331e0575527d86e80f79b79fb06f, type: 3}
+    scroll: 0.1
+    order: -1001
+    lit: 0
+    scrollUp: 0.5
+    rise: 10
+    drift: 0
+    tinted: 1
   - key: backdrop_heaven_far
     kind: 7
     sprite: {fileID: 21300000, guid: fb3507434ddf56da86d988a1adf5a6be, type: 3}
@@ -2194,6 +2214,26 @@ MonoBehaviour:
     scrollUp: 0.4
     rise: 10
     drift: 0
+    tinted: 1
+  - key: backdrop_cirrus
+    kind: 7
+    sprite: {fileID: 21300000, guid: c282ce300481556888f84e52acd5c253, type: 3}
+    scroll: 0.35
+    order: -968
+    lit: 0
+    scrollUp: 1
+    rise: 138
+    drift: 0.2
+    tinted: 1
+  - key: backdrop_cloudmid
+    kind: 7
+    sprite: {fileID: 21300000, guid: a80873b69d8f58339018eac9f002d443, type: 3}
+    scroll: 0.6
+    order: -967
+    lit: 0
+    scrollUp: 1
+    rise: 77
+    drift: 0.08
     tinted: 1
   - key: backdrop_cloudsea
     kind: 7
@@ -2230,6 +2270,16 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 4983b1c013d859b1a531b385616514fe, type: 3}
     scroll: 1
     order: -962
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: backdrop_glory
+    kind: 8
+    sprite: {fileID: 21300000, guid: 29c8e539c44550f695cceb25748c0620, type: 3}
+    scroll: 1
+    order: -963
     lit: 0
     scrollUp: 1
     rise: 0
