@@ -29,6 +29,9 @@ namespace Descender.EditorTools.TilesV2
         public int variants;
         public int[] frames = Array.Empty<int>();
         public string[] slopes = Array.Empty<string>();
+
+        /// <summary>The steep slopes (two cells up for one across) a material that asks for them has besides.</summary>
+        public string[] steep = Array.Empty<string>();
         public MaterialEntry[] materials = Array.Empty<MaterialEntry>();
         public BlendEntry[] blends = Array.Empty<BlendEntry>();
         public LegendEntry[] legend = Array.Empty<LegendEntry>();
@@ -62,6 +65,7 @@ namespace Descender.EditorTools.TilesV2
             public string group;
             public string sheet;
             public bool slopes;
+            public bool steep;
             public bool open;
             public float[] emits = Array.Empty<float>();
 
@@ -269,6 +273,21 @@ namespace Descender.EditorTools.TilesV2
             public float rise;
             public float drift;
             public bool tinted;
+        }
+
+        /// <summary>The slopes a material has, in the order they lie in its sheet: none, the two, or the two and the steep ones.</summary>
+        public string[] SlopesOf(MaterialEntry material)
+        {
+            var kinds = new System.Collections.Generic.List<string>();
+            if (material.slopes)
+            {
+                kinds.AddRange(slopes);
+            }
+            if (material.steep)
+            {
+                kinds.AddRange(steep);
+            }
+            return kinds.ToArray();
         }
 
         public static TilesV2Manifest Load()

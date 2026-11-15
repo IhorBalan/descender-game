@@ -83,11 +83,7 @@ namespace Descender.EditorTools.TilesV2
                 }
                 Finish(tile, rules);
                 count++;
-                if (!material.slopes)
-                {
-                    continue;
-                }
-                foreach (var slope in manifest.slopes)
+                foreach (var slope in manifest.SlopesOf(material))
                 {
                     var slopeTile = LoadOrCreate<TerrainTile>(TilesV2Manifest.SlopePath(material.key, slope));
                     slopeTile.Configure(material.key + "_" + slope, material.group, material.key, true, Color.black);

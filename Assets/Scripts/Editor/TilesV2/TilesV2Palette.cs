@@ -33,11 +33,7 @@ namespace Descender.EditorTools.TilesV2
                     continue;
                 }
                 layout.Add((new Vector3Int(terrain++, 0, 0), TilesV2Manifest.TilePath(material.key)));
-                if (!material.slopes)
-                {
-                    continue;
-                }
-                foreach (var kind in manifest.slopes)
+                foreach (var kind in manifest.SlopesOf(material))
                 {
                     layout.Add((new Vector3Int(slope++, -1, 0), TilesV2Manifest.SlopePath(material.key, kind)));
                 }

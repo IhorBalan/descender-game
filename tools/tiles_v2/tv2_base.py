@@ -122,6 +122,22 @@ BLENDS = [
 ]
 
 SLOPES = ["up_right", "up_left"]  # rising to the right / to the left; solid below the diagonal
+# Steep slopes, two cells up for one across, for a material that asks for them (`steep`): the
+# lower cell and the upper cell of each, rising to the right and to the left.
+STEEP = ["steep_right_low", "steep_right_high", "steep_left_low", "steep_left_high"]
+
+
+def slope_cell(index: int, variant: int) -> tuple[int, int]:
+    """The column and row in a material's sheet of a slope's sprite: the slopes follow the
+    frames, each slope's variants side by side, COLUMNS to a row."""
+    rows_per_variant = (len(FRAMES) + COLUMNS - 1) // COLUMNS
+    i = index * VARIANTS + variant
+    return i % COLUMNS, rows_per_variant * VARIANTS + i // COLUMNS
+
+
+def slopes_of(material: dict) -> list:
+    """The slopes a material's sheet holds, in the order they lie in it."""
+    return (SLOPES if material["slopes"] else []) + (STEEP if material.get("steep") else [])
 
 # --- The world's biomes: Paradise, and the nine circles under the Earth ------------
 # Each adds its ground, its wall and what it is dressed with to the lists above.
@@ -166,6 +182,13 @@ _BIOME_PALETTES = [
     # The roofs of the castles of Paradise, and the cloth of their banners.
     ("azure_tile", "14285e", "23469a 2c5bb8 3a72d2 5590e6 7fb0f4 b4d4fb"),
     ("banner_wall", "1a2f7a", "2648a8 2f5ac4 3b6fdc 5a8cee 86b0f8 c8dcff"),
+    # A tower is round: its stone in three lights, the side toward the sun, its face, the side away.
+    ("tower_lit_wall", "9c9aa8", "e2e0ea e9e8f0 f0eff5 f6f5f9 fbfbfd ffffff"),
+    ("tower_wall", "8c8a9a", "c4c2d0 cfcdd9 d9d7e2 e3e1ea ecebf1 f5f4f8"),
+    ("tower_shade_wall", "6c6a7c", "9e9cb0 a8a6b9 b2b0c2 bcbacb c6c4d4 d0cedd"),
+    # The side of a roof away from the sun, and a roof further back, on the wall behind.
+    ("azure_shade", "0e1c48", "182f72 1f3e8e 2850a8 3a66c0 5480d4 7aa0e6"),
+    ("azure_wall", "16244e", "3a559c 4563ae 5272be 6182cc 7394d8 8aa8e4"),
     # Gold worked thin, for what is hung and set on a building; and marble in deep shadow.
     ("gilt_wall", "8a5e0c", "b88314 d09a1c e6b430 f6cc4c ffe27a fff3b0"),
     ("shadow_wall", "3a3a4c", "55546a 5f5e74 69687e 737288 7d7c92 87869c"),
@@ -225,7 +248,12 @@ MATERIALS += [
     dict(_wall("gilt_wall", "plain"), open=True),
     dict(_wall("banner_wall", "flutes"), open=True),
     # Tiles of blue for a tower's roof: they give a little light of their own, so a roof has no dark heart.
-    dict(_ground("azure_tile", "leaves", True, emits=(0.22, 0.34, 0.60))),
+    dict(_ground("azure_tile", "leaves", True, emits=(0.22, 0.34, 0.60)), steep=True),
+    dict(_ground("azure_shade", "leaves", True, emits=(0.13, 0.21, 0.40)), steep=True),
+    dict(_wall("tower_lit_wall", "bricks"), open=True),
+    dict(_wall("tower_wall", "bricks"), open=True),
+    dict(_wall("tower_shade_wall", "bricks"), open=True),
+    _wall("azure_wall", "leaves"),
     # A recess, a niche, the inside of a dome: marble the sun does not reach.
     _wall("shadow_wall", "bricks"),
     # The inside of a cloud: a wall like any other, it shuts out the sky.
@@ -461,6 +489,16 @@ LEGEND = [
     ("\u00e9", "terrain", "azure_tile", "up_right"),
     ("\u00e8", "terrain", "azure_tile", "up_left"),
     ("\u00e7", "wall", "banner_wall", ""),
+    ("\u00ca", "terrain", "azure_tile", "steep_right_low"),
+    ("\u00ea", "terrain", "azure_tile", "steep_right_high"),
+    ("\u00ce", "terrain", "azure_shade", ""),
+    ("\u00ee", "terrain", "azure_shade", "up_left"),
+    ("\u00cf", "terrain", "azure_shade", "steep_left_low"),
+    ("\u00ef", "terrain", "azure_shade", "steep_left_high"),
+    ("\u00c2", "wall", "tower_lit_wall", ""),
+    ("\u00e2", "wall", "tower_wall", ""),
+    ("\u00e3", "wall", "tower_shade_wall", ""),
+    ("\u00d4", "wall", "azure_wall", ""),
     ("K", "terrain", "gold_brick", ""),
     # Falling water: seen and walked through, neither swum in nor stood on.
     ("|", "liquid", "falls", ""),
@@ -468,6 +506,7 @@ LEGEND = [
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}
 OPEN_WALLS = {m["key"] for m in MATERIALS if m.get("open")}  # walls that do not shut out the sky
+MATERIAL_OF = {m["key"]: m for m in MATERIALS}
 SHUT_WALL_CHARS = {c: key for c, key in WALL_CHARS.items() if key not in OPEN_WALLS}
 LIQUID_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "liquid"}
 PROP_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "prop"}

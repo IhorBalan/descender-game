@@ -469,12 +469,27 @@ def slope_shape(kind: str) -> tuple[np.ndarray, int]:
     """The middle tile of a slope (solid on and below the diagonal) and the mask
     of the neighbours a slope sits among: ground below, the high side solid."""
     ys, xs = np.mgrid[0:TILE, 0:TILE]
+    back = TILE - 1 - xs  # a column counted from the right
     if kind == "up_right":
         center = xs + ys >= TILE - 1
         mask = E | SE | S | SW
-    else:
+    elif kind == "up_left":
         center = xs <= ys
         mask = W | SW | S | SE
+    # Steep: two cells up for one across. The lower cell is cut from its low corner to the
+    # middle of its top, the upper from the middle of its foot to its high corner.
+    elif kind == "steep_right_low":
+        center = 2 * xs + ys >= TILE - 1
+        mask = N | NE | E | SE | S | SW
+    elif kind == "steep_right_high":
+        center = 2 * xs + ys >= 2 * TILE - 1
+        mask = E | SE | S
+    elif kind == "steep_left_low":
+        center = 2 * back + ys >= TILE - 1
+        mask = N | NW | W | SW | S | SE
+    else:
+        center = 2 * back + ys >= 2 * TILE - 1
+        mask = W | SW | S
     return center, mask
 
 
@@ -724,6 +739,7 @@ def ledge_sheet() -> tuple[Image.Image, list]:
 THINGS = [
     "barrier_0", "barrier_1", "seal_bolt", "seal_slam", "relic_0", "relic_1", "crack", "crumble", "blink", "wind",
     "post", "tablet", "shade", "soul", "beacon_0", "beacon_1", "beacon_2", "sanctum",
+    "flag_a_0", "flag_a_1", "flag_a_2", "flag_a_3", "flag_b_0", "flag_b_1", "flag_b_2", "flag_b_3", "bird_0", "bird_1",
 ]  # fmt: skip
 
 
@@ -827,6 +843,29 @@ def thing(name: str) -> np.ndarray:
                 a[y, x] = (*(pale if x < 8 else mid), 235 if y < 12 else 235 - (y - 11) * 40)
         a[5, 6] = a[5, 9] = (*eye, 255)
         a[6, 6] = a[6, 9] = (*eye, 255)
+    elif name.startswith("flag"):
+        # A pennant two cells long, flying to the right of its rod: `a` the half at the rod, `b`
+        # its tail; four frames of a wave that runs along it.
+        deep, mid, lit, trim = hexes("2648a8", "3b6fdc", "86b0f8", "ffe27a")
+        half, frame = name[5], int(name[-1])
+        for x in range(TILE):
+            along = x + (0 if half == "a" else TILE)
+            lift = int(round(2.2 * np.sin((along / 5.0) - frame * np.pi / 2) * along / (2 * TILE)))
+            thick = max(2, 9 - along * 7 // (2 * TILE))  # it narrows to its point
+            for k in range(thick):
+                y = 3 + lift + k
+                if 0 <= y < TILE:
+                    a[y, x] = (*(trim if k in (0, thick - 1) and along < 26 else lit if (along + frame * 2) % 8 < 3 else mid if k % 3 else deep), 255)
+    elif name.startswith("bird"):
+        # A bird far off: two strokes of wing, up and down.
+        white, grey = (255, 255, 255), (214, 224, 240)
+        up = name.endswith("0")
+        for dx in range(1, 6):
+            y = 8 - (dx * 3 // 5 if up else -dx // 3) + (0 if up else 1)
+            a[y, 7 - dx] = a[y, 8 + dx] = (*white, 255)
+            if dx < 5:
+                a[y + 1, 7 - dx] = a[y + 1, 8 + dx] = (*grey, 200)
+        a[8 + (0 if up else 1), 7] = a[8 + (0 if up else 1), 8] = (*white, 255)
     elif name == "soul":
         # One of the blessed: a figure of light, a ring over its head.
         white, gold, warm, eye = (255, 252, 236), (255, 220, 120), (255, 238, 180), (150, 110, 40)

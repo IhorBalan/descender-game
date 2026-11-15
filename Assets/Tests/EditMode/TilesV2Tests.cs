@@ -70,7 +70,7 @@ namespace Descender.Tests
                     Assert.That(rule.m_Sprites, Has.None.Null, material.key);
                     Assert.That(rule.m_ColliderType, Is.EqualTo(expected), material.key);
                 }
-                foreach (var slope in material.slopes ? manifest.slopes : new string[0])
+                foreach (var slope in manifest.SlopesOf(material))
                 {
                     var slopeTile = AssetDatabase.LoadAssetAtPath<TerrainTile>(
                         TilesV2Manifest.SlopePath(material.key, slope)
@@ -815,7 +815,7 @@ namespace Descender.Tests
             var expected = manifest.materials.Length + manifest.liquids.Length;
             foreach (var material in manifest.materials)
             {
-                expected += material.slopes ? manifest.slopes.Length : 0;
+                expected += manifest.SlopesOf(material).Length;
             }
             Assert.That(layout.Count, Is.EqualTo(expected));
             var seen = new HashSet<Vector3Int>();

@@ -69,6 +69,12 @@
     "up_right",
     "up_left"
   ],
+  "steep": [
+    "steep_right_low",
+    "steep_right_high",
+    "steep_left_low",
+    "steep_left_high"
+  ],
   "materials": [
     {
       "key": "dirt",
@@ -76,6 +82,7 @@
       "group": "earth",
       "sheet": "dirt.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -89,6 +96,7 @@
       "group": "earth",
       "sheet": "grass.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -102,6 +110,7 @@
       "group": "earth",
       "sheet": "stone.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -115,6 +124,7 @@
       "group": "walls",
       "sheet": "dirt_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -128,6 +138,7 @@
       "group": "walls",
       "sheet": "stone_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -141,6 +152,7 @@
       "group": "earth",
       "sheet": "sand.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -154,6 +166,7 @@
       "group": "earth",
       "sheet": "clay.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -167,6 +180,7 @@
       "group": "earth",
       "sheet": "copper_ore.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.3,
         0.17,
@@ -180,6 +194,7 @@
       "group": "sky",
       "sheet": "cloud.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.5,
         0.55,
@@ -193,6 +208,7 @@
       "group": "earth",
       "sheet": "marble.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -206,6 +222,7 @@
       "group": "walls",
       "sheet": "marble_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -219,6 +236,7 @@
       "group": "earth",
       "sheet": "ashstone.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -232,6 +250,7 @@
       "group": "walls",
       "sheet": "ash_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -245,6 +264,7 @@
       "group": "earth",
       "sheet": "rose_rock.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -258,6 +278,7 @@
       "group": "walls",
       "sheet": "rose_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -271,6 +292,7 @@
       "group": "earth",
       "sheet": "mud.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -284,6 +306,7 @@
       "group": "walls",
       "sheet": "mud_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -297,6 +320,7 @@
       "group": "earth",
       "sheet": "darkstone.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -310,6 +334,7 @@
       "group": "earth",
       "sheet": "gold_ore.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.36,
         0.28,
@@ -323,6 +348,7 @@
       "group": "walls",
       "sheet": "dark_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -336,6 +362,7 @@
       "group": "earth",
       "sheet": "swamp_rock.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -349,6 +376,7 @@
       "group": "walls",
       "sheet": "swamp_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -362,6 +390,7 @@
       "group": "earth",
       "sheet": "dis_brick.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -375,6 +404,7 @@
       "group": "walls",
       "sheet": "brick_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -388,6 +418,7 @@
       "group": "earth",
       "sheet": "bloodstone.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -401,6 +432,7 @@
       "group": "earth",
       "sheet": "ember_sand.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -414,6 +446,7 @@
       "group": "walls",
       "sheet": "blood_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -427,6 +460,7 @@
       "group": "earth",
       "sheet": "slate.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -440,6 +474,7 @@
       "group": "walls",
       "sheet": "slate_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -453,6 +488,7 @@
       "group": "earth",
       "sheet": "ice.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.1,
         0.16,
@@ -466,6 +502,7 @@
       "group": "earth",
       "sheet": "frost_rock.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -479,6 +516,7 @@
       "group": "walls",
       "sheet": "ice_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -492,6 +530,7 @@
       "group": "walls",
       "sheet": "wood_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -505,6 +544,7 @@
       "group": "walls",
       "sheet": "leaf_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -518,6 +558,7 @@
       "group": "walls",
       "sheet": "birch_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -531,6 +572,7 @@
       "group": "walls",
       "sheet": "blossom_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -544,6 +586,7 @@
       "group": "walls",
       "sheet": "gold_leaf_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -557,6 +600,7 @@
       "group": "walls",
       "sheet": "pillar_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -570,6 +614,7 @@
       "group": "walls",
       "sheet": "glass_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -583,6 +628,7 @@
       "group": "walls",
       "sheet": "rose_glass_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -596,6 +642,7 @@
       "group": "walls",
       "sheet": "gilt_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -609,6 +656,7 @@
       "group": "walls",
       "sheet": "banner_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -622,10 +670,81 @@
       "group": "earth",
       "sheet": "azure_tile.png",
       "slopes": true,
+      "steep": true,
       "emits": [
         0.22,
         0.34,
         0.6
+      ],
+      "open": false
+    },
+    {
+      "key": "azure_shade",
+      "kind": "terrain",
+      "group": "earth",
+      "sheet": "azure_shade.png",
+      "slopes": true,
+      "steep": true,
+      "emits": [
+        0.13,
+        0.21,
+        0.4
+      ],
+      "open": false
+    },
+    {
+      "key": "tower_lit_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "tower_lit_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "tower_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "tower_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "tower_shade_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "tower_shade_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "azure_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "azure_wall.png",
+      "slopes": false,
+      "steep": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
       ],
       "open": false
     },
@@ -635,6 +754,7 @@
       "group": "walls",
       "sheet": "shadow_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -648,6 +768,7 @@
       "group": "walls",
       "sheet": "mist_wall.png",
       "slopes": false,
+      "steep": false,
       "emits": [
         0.0,
         0.0,
@@ -661,6 +782,7 @@
       "group": "earth",
       "sheet": "gold_brick.png",
       "slopes": true,
+      "steep": false,
       "emits": [
         0.42,
         0.33,
@@ -1653,6 +1775,66 @@
       "slope": ""
     },
     {
+      "character": "\u00ca",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "steep_right_low"
+    },
+    {
+      "character": "\u00ea",
+      "layer": "terrain",
+      "key": "azure_tile",
+      "slope": "steep_right_high"
+    },
+    {
+      "character": "\u00ce",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": ""
+    },
+    {
+      "character": "\u00ee",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": "up_left"
+    },
+    {
+      "character": "\u00cf",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": "steep_left_low"
+    },
+    {
+      "character": "\u00ef",
+      "layer": "terrain",
+      "key": "azure_shade",
+      "slope": "steep_left_high"
+    },
+    {
+      "character": "\u00c2",
+      "layer": "wall",
+      "key": "tower_lit_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00e2",
+      "layer": "wall",
+      "key": "tower_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00e3",
+      "layer": "wall",
+      "key": "tower_shade_wall",
+      "slope": ""
+    },
+    {
+      "character": "\u00d4",
+      "layer": "wall",
+      "key": "azure_wall",
+      "slope": ""
+    },
+    {
       "character": "K",
       "layer": "terrain",
       "key": "gold_brick",
@@ -1701,7 +1883,17 @@
       "beacon_0",
       "beacon_1",
       "beacon_2",
-      "sanctum"
+      "sanctum",
+      "flag_a_0",
+      "flag_a_1",
+      "flag_a_2",
+      "flag_a_3",
+      "flag_b_0",
+      "flag_b_1",
+      "flag_b_2",
+      "flag_b_3",
+      "bird_0",
+      "bird_1"
     ]
   },
   "props": [

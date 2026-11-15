@@ -148,7 +148,7 @@ def lay_tiles(canvas: Image.Image, layout: Layout, window: Window, images: dict,
         key, _, slope = name.partition(":")
         v = variant_of(x, layout.height - 1 - row, VARIANTS)
         if slope:
-            cx, cy = SLOPES.index(slope) * VARIANTS + v, rows_per_variant * VARIANTS
+            cx, cy = slope_cell(slopes_of(MATERIAL_OF[key]).index(slope), v)
         else:
             mask = 0
             for bit, dx, dy in BITS:

@@ -48,6 +48,12 @@ texture, not new rules.
   corners and every mix.
 - **3 variants** of each frame, picked by a hash of the cell (not Perlin
   noise), so neighbours differ and repeats do not line up.
+- **Steep slopes**, for a material that asks for them (`steep`: the blue roof
+  tiles): two cells up for one across, so four more tiles, the lower and the
+  upper cell of a slope rising to the right and of one rising to the left
+  (`steep_right_low`, `steep_right_high`, `steep_left_low`,
+  `steep_left_high`). Each has its own collider, cut to its shape. They lie in
+  the sheet after the two slopes.
 - **Slopes** (terrain only): `up_right` and `up_left`, 45 degrees, solid
   below the diagonal. A slope's collider is the clean triangle under its
   diagonal, written into the sheet's `.meta`, not the ragged outline of its
@@ -149,9 +155,12 @@ them the lead; the one cool, the other the warm of a window with a light
 behind it), which lets the light through as a window does; `gilt_wall`, gold
 worked thin (the `plain` texture), for a rod on a roof, a chain, the wings of
 the host; and `banner_wall`, blue cloth. `azure_tile` is a tower's roof: tiles
-of blue with slopes, which give a little light of their own, so a great roof
-has no dark heart. Every plain letter and digit is a legend character already,
-so these two are Latin-1 letters.
+of blue with slopes and steep slopes, which give a little light of their own,
+so a great roof has no dark heart; `azure_shade` is the same roof's side away
+from the sun, and `azure_wall` a roof further back, on the wall behind. A round
+tower's stone comes in three lights, all open walls: `tower_lit_wall` toward
+the sun, `tower_wall` its face, `tower_shade_wall` away from it. Every plain
+letter and digit is a legend character already, so these are Latin-1 letters.
 
 A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
 its own tilemap on the game's Ledge layer with a one-way `PlatformEffector2D`,
@@ -235,7 +244,10 @@ are the legend in the manifest:
 | `w` `l` | wall (second grid) | a tree's trunk and its crown: open walls |
 | `t` `p` `g` `x` | wall (second grid) | Paradise's open walls: a pale trunk, blossom, leaves of gold, a column |
 | `o` `q` `X` `ç` | wall (second grid) | more of them: glass, cool and warm; gilt work; a banner's cloth |
-| `É` `é` `è` | terrain | tiles of blue for a roof, and their slopes |
+| `É` `é` `è` `Ê` `ê` | terrain | tiles of blue for a roof, their slopes, and their steep slope rising to the right (its lower cell, its upper) |
+| `Î` `î` `Ï` `ï` | terrain | the roof's side in shade, its slope up to the left, its steep slope rising to the left |
+| `Â` `â` `ã` | wall (second grid) | a round tower's stone: lit, its face, in shade |
+| `Ô` | wall (second grid) | a roof further back |
 | `c` `z` | wall (second grid) | the inside of a cloud; marble in shadow |
 | `K` | terrain | gold in blocks |
 | `a` `e` `j` `k` | terrain | the slopes of marble and of gold, up to the right and up to the left |
@@ -254,7 +266,8 @@ stands where:
 ```
 
 A mark may also be `secret` (a wall the sword breaks, with a room behind it),
-`platform` (one that gives way or comes and goes), `wind`, `upgrade` (a heart
+`platform` (one that gives way or comes and goes), `wind`, `flag` (a pennant
+that flies), `upgrade` (a heart
 or a draught of the game's), `sign` (a post, a tablet, a shade or a soul that
 says a line), `dark` (a stretch whose air gives no light), `beacon` (a light
 the hero lights by walking up to it), `sanctum` (a door that opens when enough
@@ -457,6 +470,8 @@ physics for a particle system to take gravity from).
 | Embers | rise from every flame | none |
 | Sand | trickles from under 45% of the sand tiles that hang over two or more empty cells (a hash of the cell picks them), and lands on what is below | takes the tile light |
 | Sparks | jump from every run of the surface of a liquid that glows | none |
+| Spray and mist | where falling water ends: drops leap up and out, a mist hangs over them and drifts up | none |
+| Petals | fall from the crowns of blossom and of gold leaf near the view: one system for a whole world, fed by hand (`TilesV2Petals`) | takes the tile light |
 
 ## In Unity
 

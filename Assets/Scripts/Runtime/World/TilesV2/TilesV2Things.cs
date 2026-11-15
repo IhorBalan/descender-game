@@ -41,6 +41,9 @@ namespace Descender.World.TilesV2
         /// <summary>One of the tile set's pictures, its foot in a cell: `@mark picture column row key`.</summary>
         public const string Stood = "picture";
 
+        /// <summary>A pennant flying to the right of a cell: `@mark flag column row`.</summary>
+        public const string Flag = "flag";
+
         /// <summary>The word after a checkpoint's cell that says it stands in an antechamber of the Pit.</summary>
         public const string PitWord = "pit";
         public const int GateOrder = TilesV2World.TerrainOrder + 3;
@@ -73,6 +76,9 @@ namespace Descender.World.TilesV2
 
         /// <summary>The pictures stood in the world (a rainbow).</summary>
         public int Pictures { get; private set; }
+
+        /// <summary>The pennants flying in it.</summary>
+        public int Flags { get; private set; }
 
         /// <summary>The doors the lights open, and how many of them are open.</summary>
         public int Sanctums { get; private set; }
@@ -297,8 +303,29 @@ namespace Descender.World.TilesV2
                         shown.sprite = entry.sprite;
                         shown.sortingOrder = entry.order;
                         shown.sharedMaterial = entry.lit ? set.litMaterial : set.unlitMaterial;
+                        // A rainbow is the sun's, and gone by night; every picture of light breathes a little.
+                        holder
+                            .AddComponent<TilesV2Shimmer>()
+                            .Configure(world, shown, entry.key.Contains("rainbow"), 0.25f);
                         thing.Made = holder;
                         things.Pictures++;
+                        break;
+                    }
+                    case Flag:
+                    {
+                        var holder = new GameObject("Flag");
+                        holder.transform.SetParent(things.transform, false);
+                        holder.transform.position = foot;
+                        var atRod = new Sprite[4];
+                        var tail = new Sprite[4];
+                        for (var i = 0; i < 4; i++)
+                        {
+                            atRod[i] = set.Thing("flag_a_" + i);
+                            tail[i] = set.Thing("flag_b_" + i);
+                        }
+                        holder.AddComponent<TilesV2Flag>().Configure(atRod, tail, set.litMaterial);
+                        thing.Made = holder;
+                        things.Flags++;
                         break;
                     }
                     case Sanctum:

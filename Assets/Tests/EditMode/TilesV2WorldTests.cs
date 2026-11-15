@@ -735,6 +735,97 @@ namespace Descender.Tests
         }
 
         [Test]
+        public void TheSkyOfParadiseMovesAndItsRoofsArePointed()
+        {
+            // A tower's roof rises two cells for one: steep slopes, each a collider cut to its shape.
+            var steep = 0;
+            foreach (var character in new[] { 'Ê', 'ê', 'Ï', 'ï' })
+            {
+                Assert.That(set.TryGlyph(character, out var glyph), Is.True, "no steep slope for " + character);
+                var tile = (TerrainTile)glyph.tile;
+                Assert.That(tile.IsSlope, Is.True, glyph.key);
+                Assert.That(tile.m_DefaultColliderType, Is.EqualTo(Tile.ColliderType.Sprite), glyph.key);
+                for (var row = 0; row < map.Surface; row++)
+                {
+                    for (var column = 0; column < map.Width; column++)
+                    {
+                        steep += map.TerrainAt(column, row) == character ? 1 : 0;
+                    }
+                }
+            }
+            Assert.That(steep, Is.GreaterThan(100), "the towers of Paradise have pointed roofs");
+            // Water falls and ends in spray and mist.
+            var spray = 0;
+            var mist = 0;
+            foreach (var system in world.GetComponentsInChildren<ParticleSystem>())
+            {
+                spray += system.name == "Spray" ? 1 : 0;
+                mist += system.name == "Mist" ? 1 : 0;
+            }
+            Assert.That(spray, Is.GreaterThanOrEqualTo(3), "the lake, the Hollow's pool, the Earth's pond");
+            Assert.That(mist, Is.EqualTo(spray));
+            // Petals fall from the crowns near the view, and from none far from it.
+            var petals = world.GetComponentInChildren<TilesV2Petals>();
+            Assert.That(petals, Is.Not.Null, "no tree of Paradise sheds");
+            Assert.That(petals.Crowns, Is.GreaterThan(200));
+            Assert.That(world.TryView("paradise_garden", out var garden), Is.True);
+            Assert.That(petals.Shed(garden, 3f), Is.GreaterThan(5), "the Garden's trees shed nothing");
+            Assert.That(world.TryView("treachery", out var lake), Is.True);
+            Assert.That(petals.Shed(lake, 3f), Is.EqualTo(0), "petals at the bottom of Hell");
+            // Birds cross the sky in a flock and are gone.
+            var birds = world.GetComponentInChildren<TilesV2Birds>();
+            Assert.That(birds, Is.Not.Null);
+            Assert.That(birds.Flying, Is.EqualTo(0));
+            birds.Release(garden, 6, 1, garden.y + 4f, 5f);
+            Assert.That(birds.Flying, Is.EqualTo(6));
+            birds.Step(garden, 1f);
+            Assert.That(birds.Flying, Is.EqualTo(6), "still crossing");
+            birds.Step(garden, 60f);
+            Assert.That(birds.Flying, Is.EqualTo(0), "they flew out of the view");
+            // Flags fly, and the rainbow is the sun's.
+            Pickups.Checkpoint.Reset();
+            var things = TilesV2Things.Build(
+                world,
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+            );
+            try
+            {
+                var marked = 0;
+                foreach (var mark in map.Marks)
+                {
+                    marked += mark.Kind == TilesV2Things.Flag ? 1 : 0;
+                }
+                Assert.That(things.Flags, Is.EqualTo(marked));
+                Assert.That(things.Flags, Is.GreaterThan(4), "the tallest towers fly pennants");
+                var flag = things.GetComponentInChildren<TilesV2Flag>();
+                var before = flag.Frame;
+                flag.Step(1f / TilesV2Flag.FramesASecond);
+                Assert.That(flag.Frame, Is.Not.EqualTo(before), "the wave runs along the cloth");
+                foreach (var renderer in flag.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    Assert.That(renderer.sprite, Is.Not.Null, "a pennant with no cloth");
+                }
+                TilesV2Shimmer rainbow = null;
+                foreach (var shimmer in things.GetComponentsInChildren<TilesV2Shimmer>())
+                {
+                    rainbow = shimmer.name.Contains("rainbow") ? shimmer : rainbow;
+                }
+                Assert.That(rainbow, Is.Not.Null);
+                rainbow.Apply(12f);
+                Assert.That(rainbow.Strength, Is.GreaterThan(0.5f), "no rainbow at noon");
+                rainbow.Apply(0f);
+                Assert.That(rainbow.Strength, Is.EqualTo(0f), "a rainbow at midnight");
+                Assert.That(rainbow.GetComponent<SpriteRenderer>().color.a, Is.EqualTo(0f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(things.gameObject);
+                Pickups.Checkpoint.Reset();
+            }
+        }
+
+        [Test]
         public void TheChartShowsOnlyWhatHasBeenSeen()
         {
             var chart = new TilesV2Chart(world);

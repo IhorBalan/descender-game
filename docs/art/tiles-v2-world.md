@@ -145,10 +145,11 @@ and three ways out of the middle that are gone in any order.
   open to the hall below, with a ladder of gilt up it to a gallery under the
   roof where a draught lies (the wall walk goes through the tower by a door in
   either side); a turret hung at either corner of its head; four more towers
-  of four heights along the wall walk, each with lit windows, a head under
-  battlements, a steep blue roof and a rod, the tallest with pennants; and a
-  **gatehouse** before either end, two towers and a round arch between them,
-  banners down the towers. Its one door (`sanctum`) is shut until **three
+  of four heights along the wall walk, the tallest flying pennants, with four
+  towers further back between them and a bridge on an arch from tower to
+  tower; galleries along the hall half way up it, reached by ledges at its
+  end walls; and a **gatehouse** before either end, two towers and a round
+  arch between them, banners down the towers. Its one door (`sanctum`) is shut until **three
   lights** (`beacon`) burn. A light is a bowl of gold: the hero lights it by
   walking up to it, for good.
 - **The three lights** are at the ends of three ways, each asking for what the
@@ -195,7 +196,16 @@ and three ways out of the middle that are gone in any order.
   and cloth, gold for what matters, a warm light in the windows. And what a
   thing is, is said by its parts: towers of many heights, battlements,
   banners and gates say castle, where a dome, a bell and a rose window said
-  church (`turret`, `battlement`, `banner`, `emblem`). And size against the hero: a door is more than twice him, a column
+  church (`turret`, `battlement`, `banner`, `emblem`). And a thing has
+  **volume** when its light has a side: a tower is round, so its stone is lit
+  toward the sun, plain on its face and in shade away from it (three stones,
+  `stone`), its head is a cell wider and casts a shadow under itself, its foot
+  is wider too, each window sits under the shade of its own arch; its roof
+  rises two cells for one to a point (steep slopes, `cone`), the half away
+  from the sun darker; and behind the near towers stand towers further back,
+  in stone the wall's tint darkens, under darker roofs (`backtower`), so a
+  castle has a front and a behind, with the far castles of the backdrop behind
+  that. And size against the hero: a door is more than twice him, a column
   eight, the dome thirty.
 - **Heaven is behind all of it**, and little bare sky shows (`heaven` layers
   of the backdrop, far to near): a country of cloud, towers of it one behind
@@ -207,6 +217,14 @@ and three ways out of the middle that are gone in any order.
   gold, rings and rays, stands behind the great tower. All of it takes the
   hour's tint: the seas of cloud are pink at sunset, and the far castles stand
   dark against the stars at night.
+- **The sky moves.** Pennants fly from the tallest towers, a wave running
+  along the cloth (`@mark flag`, `TilesV2Flag`). Petals fall from the trees in
+  blossom and leaves of gold from the golden ones, from whichever crowns are
+  near the view (`TilesV2Petals`). Where falling water ends, in the lake, in
+  the Hollow's pool and in the Earth's pond, spray leaps and a mist hangs
+  (`TilesV2Particles.Spray`). Now and then a flock of white birds crosses the
+  sky far off in a wedge (`TilesV2Birds`). The rainbow is the sun's: it
+  breathes, and it is gone by night (`TilesV2Shimmer`).
 - **Small clouds** drift in the empty sky (`wisp`: stood on, like any cloud).
 
 The model plays Paradise as it plays the rest: every light, relic, upgrade and
@@ -367,6 +385,7 @@ A map marks what of the game stands where, for the scene to build
 @mark beacon 273 123 Deep                  a light of Paradise, and its name
 @mark sanctum 259 58 5 3                   the door the lights open: column, top row, height, the lights it asks for
 @mark picture 297 111 backdrop_rainbow     one of the tile set's pictures, its foot in the cell (a rainbow)
+@mark flag 298 2                           a pennant flying to the right of the cell
 @mark end 297 60
 ```
 
@@ -480,5 +499,6 @@ and their sources are in the session's research file
 - **The hearts, the draughts and the lights of Paradise are not saved**: the
   world has no save of its own, so they are found and lit again on the next
   run.
-- **The falling water makes no spray** where it lands, and the rainbow in the
-  Garden's lake is a picture: it does not come and go with the sun.
+- **The banners that hang on walls do not move** (the pennants on the rods do),
+  and the birds, the petals and the pennants are not in the pictures the editor
+  takes: they are the scene's, and show in play.

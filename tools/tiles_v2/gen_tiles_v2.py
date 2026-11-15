@@ -50,7 +50,8 @@ def sheet_for(material: dict) -> tuple[Image.Image, list]:
     """A material's sheet: the 47 frames in variant blocks of 6 rows, then a row
     of slopes (each slope's variants side by side)."""
     rows_per_variant = (len(FRAMES) + COLUMNS - 1) // COLUMNS
-    slope_rows = 1 if material["slopes"] else 0
+    kinds = slopes_of(material)
+    slope_rows = (len(kinds) * VARIANTS + COLUMNS - 1) // COLUMNS
     rows = rows_per_variant * VARIANTS + slope_rows
     sheet = np.zeros((rows * TILE, COLUMNS * TILE, 4), dtype=np.uint8)
     sprites = []
@@ -60,13 +61,11 @@ def sheet_for(material: dict) -> tuple[Image.Image, list]:
             cy += v * rows_per_variant
             sheet[cy * TILE : (cy + 1) * TILE, cx * TILE : (cx + 1) * TILE] = draw_frame(material, mask, v)
             sprites.append((f"tv2_{material['key']}_f{mask}_v{v}", cx, cy))
-    if material["slopes"]:
-        cy = rows_per_variant * VARIANTS
-        for s, kind in enumerate(SLOPES):
-            for v in range(VARIANTS):
-                cx = s * VARIANTS + v
-                sheet[cy * TILE : (cy + 1) * TILE, cx * TILE : (cx + 1) * TILE] = draw_slope(material, kind, v)
-                sprites.append((f"tv2_{material['key']}_{kind}_v{v}", cx, cy))
+    for s, kind in enumerate(kinds):
+        for v in range(VARIANTS):
+            cx, cy = slope_cell(s, v)
+            sheet[cy * TILE : (cy + 1) * TILE, cx * TILE : (cx + 1) * TILE] = draw_slope(material, kind, v)
+            sprites.append((f"tv2_{material['key']}_{kind}_v{v}", cx, cy))
     return Image.fromarray(sheet, "RGBA"), sprites
 
 
@@ -99,14 +98,21 @@ def sheet_meta(path: str, image: Image.Image, sprites: list, shapes: dict | None
 
 
 def slope_shapes(material: dict) -> dict:
-    """The collider of each slope sprite: the clean triangle under its diagonal, not
+    """The collider of each slope sprite: the clean shape under its diagonal, not
     the ragged outline of its pixels, so a body slides up it and stands on it."""
-    half = TILE // 2
-    corners = {"up_right": (half, half), "up_left": (-half, half)}  # the slope's high corner
+    h = TILE // 2
+    outlines = {
+        "up_right": [(-h, -h), (h, -h), (h, h)],
+        "up_left": [(-h, -h), (h, -h), (-h, h)],
+        "steep_right_low": [(-h, -h), (h, -h), (h, h), (0, h)],
+        "steep_right_high": [(0, -h), (h, -h), (h, h)],
+        "steep_left_low": [(-h, -h), (h, -h), (0, h), (-h, h)],
+        "steep_left_high": [(-h, -h), (0, -h), (-h, h)],
+    }
     shapes = {}
-    for kind in SLOPES if material["slopes"] else []:
+    for kind in slopes_of(material):
         for v in range(VARIANTS):
-            shapes[f"tv2_{material['key']}_{kind}_v{v}"] = [(-half, -half), (half, -half), corners[kind]]
+            shapes[f"tv2_{material['key']}_{kind}_v{v}"] = outlines[kind]
     return shapes
 
 
@@ -137,6 +143,7 @@ def manifest() -> dict:
         "bits": {"N": N, "NE": NE, "E": E, "SE": SE, "S": S, "SW": SW, "W": W, "NW": NW},
         "frames": FRAMES,
         "slopes": SLOPES,
+        "steep": STEEP,
         "materials": [
             {
                 "key": m["key"],
@@ -144,6 +151,7 @@ def manifest() -> dict:
                 "group": m["group"],
                 "sheet": m["key"] + ".png",
                 "slopes": m["slopes"],
+                "steep": bool(m.get("steep", False)),
                 "emits": list(m.get("emits", (0.0, 0.0, 0.0))),
                 "open": bool(m.get("open", False)),
             }

@@ -383,6 +383,46 @@ MonoBehaviour:
     layer: 1
     key: banner_wall
     tile: {fileID: 11400000, guid: 7cafd5599066e57499ca50e58105af10, type: 2}
+  - character: "\xCA"
+    layer: 0
+    key: azure_tile
+    tile: {fileID: 11400000, guid: a70867a9428d4fb4da765d2b33d27926, type: 2}
+  - character: "\xEA"
+    layer: 0
+    key: azure_tile
+    tile: {fileID: 11400000, guid: f82d4fe1af52baf4fb211aa4fcb0dca5, type: 2}
+  - character: "\xCE"
+    layer: 0
+    key: azure_shade
+    tile: {fileID: 11400000, guid: 27c79451fbf001d4e9291b650ac6647e, type: 2}
+  - character: "\xEE"
+    layer: 0
+    key: azure_shade
+    tile: {fileID: 11400000, guid: 81b026bd5436f2e49b0aed72a6ef1c91, type: 2}
+  - character: "\xCF"
+    layer: 0
+    key: azure_shade
+    tile: {fileID: 11400000, guid: e93879a1646cf884e82a35c24195a2a2, type: 2}
+  - character: "\xEF"
+    layer: 0
+    key: azure_shade
+    tile: {fileID: 11400000, guid: c7f635c0278089a438dba7d034b34d87, type: 2}
+  - character: "\xC2"
+    layer: 1
+    key: tower_lit_wall
+    tile: {fileID: 11400000, guid: c530ebc7be2a2aa468106e5d8696eae7, type: 2}
+  - character: "\xE2"
+    layer: 1
+    key: tower_wall
+    tile: {fileID: 11400000, guid: c352be00929d2144da4fc5e06d1876ad, type: 2}
+  - character: "\xE3"
+    layer: 1
+    key: tower_shade_wall
+    tile: {fileID: 11400000, guid: f37660c38e785d544a8331c5904181df, type: 2}
+  - character: "\xD4"
+    layer: 1
+    key: azure_wall
+    tile: {fileID: 11400000, guid: 3fded3ebd49fc554288b424c6549cc0c, type: 2}
   - character: K
     layer: 0
     key: gold_brick
@@ -1851,6 +1891,16 @@ MonoBehaviour:
   - {fileID: 220485206269948922, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 1117358721972427961, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   - {fileID: 3209183503758669476, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 17995051963719248, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 3507529564944648173, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 382819764685491289, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 2305792431902418944, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 2859881015936528825, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 3488433025968856886, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 1628443445667484405, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 3681704814080457833, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 2783588620811862441, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
+  - {fileID: 1076895575200619378, guid: 92ea8cea4f8b52f483669d2000e557db, type: 3}
   regions:
   - key: paradise
     name: Paradise

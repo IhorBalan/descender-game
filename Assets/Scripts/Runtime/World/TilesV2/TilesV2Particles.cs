@@ -73,8 +73,102 @@ namespace Descender.World.TilesV2
                     }
                 }
                 count += Sparks(field, y, root, set.unlitMaterial);
+                count += Spray(field, y, root, set.unlitMaterial);
+            }
+            if (TilesV2Petals.Build(world, root) != null)
+            {
+                count++;
+            }
+            if (world.Map != null && world.Map.Regions.Count > 0)
+            {
+                // Birds cross the sky of a world's first region, well over its surface.
+                var sky = world.transform.position.y + world.Map.Height - world.Map.Surface + SkyOverSurface;
+                TilesV2Birds.Build(root, set.Thing("bird_0"), set.Thing("bird_1"), set.unlitMaterial, sky);
             }
             return count;
+        }
+
+        /// <summary>The liquid that is falling water: spray rises where a fall of it ends.</summary>
+        public const string FallsKey = "falls";
+
+        // How far over a world's surface line the view must be for birds to fly.
+        private const float SkyOverSurface = 34f;
+        private static readonly Color SprayLight = new Color(1f, 1f, 1f, 0.95f);
+        private static readonly Color SprayBlue = new Color(0.78f, 0.9f, 1f, 0.9f);
+
+        /// <summary>Whether a fall of water ends in a cell of the field: falling water with none under it.</summary>
+        public static bool FallEnds(TileField field, int x, int y)
+        {
+            var liquid = field.Liquid[field.Index(x, y)];
+            if (liquid == null || liquid.LiquidKey != FallsKey)
+            {
+                return false;
+            }
+            return y == 0 || field.Liquid[field.Index(x, y - 1)] != liquid;
+        }
+
+        // Spray and mist at the foot of every fall of water in a row of the field; returns how many systems.
+        private static int Spray(TileField field, int y, Transform parent, Material material)
+        {
+            var made = 0;
+            var x = 0;
+            while (x < field.Width)
+            {
+                if (!FallEnds(field, x, y))
+                {
+                    x++;
+                    continue;
+                }
+                var from = x;
+                while (x < field.Width && FallEnds(field, x, y))
+                {
+                    x++;
+                }
+                var width = x - from;
+                var cell = field.CellAt(from, y);
+                var foot = new Vector2(cell.x + width / 2f, cell.y);
+                // Drops thrown up and out from where the water lands.
+                var drops = Make(parent, "Spray", foot, material, 90);
+                var main = drops.main;
+                main.startLifetime = new ParticleSystem.MinMaxCurve(0.5f, 1.1f);
+                main.startSpeed = 0f;
+                main.startColor = new ParticleSystem.MinMaxGradient(SprayLight, SprayBlue);
+                Push(drops, -7f);
+                var emission = drops.emission;
+                emission.rateOverTime = 26f * width;
+                var shape = drops.shape;
+                shape.shapeType = ParticleSystemShapeType.SingleSidedEdge;
+                shape.radius = width / 2f + 0.3f;
+                var leap = drops.velocityOverLifetime;
+                leap.enabled = true;
+                leap.space = ParticleSystemSimulationSpace.World;
+                leap.x = new ParticleSystem.MinMaxCurve(-2.2f, 2.2f);
+                leap.y = new ParticleSystem.MinMaxCurve(1.5f, 4.2f);
+                leap.z = new ParticleSystem.MinMaxCurve(0f, 0f);
+                Fade(drops, Color.white, Color.white, 0f);
+                drops.Play();
+                // And a mist that hangs over it and drifts up.
+                var mist = Make(parent, "Mist", foot + new Vector2(0f, 0.4f), material, 120);
+                main = mist.main;
+                main.startLifetime = new ParticleSystem.MinMaxCurve(2.5f, 4.5f);
+                main.startSpeed = 0f;
+                main.startColor = new Color(1f, 1f, 1f, 0.55f);
+                emission = mist.emission;
+                emission.rateOverTime = 18f * width;
+                shape = mist.shape;
+                shape.shapeType = ParticleSystemShapeType.SingleSidedEdge;
+                shape.radius = width / 2f + 1.6f;
+                var drift = mist.velocityOverLifetime;
+                drift.enabled = true;
+                drift.space = ParticleSystemSimulationSpace.World;
+                drift.x = new ParticleSystem.MinMaxCurve(-0.5f, 0.5f);
+                drift.y = new ParticleSystem.MinMaxCurve(0.15f, 0.7f);
+                drift.z = new ParticleSystem.MinMaxCurve(0f, 0f);
+                Fade(mist, Color.white, Color.white, 0.2f);
+                mist.Play();
+                made += 2;
+            }
+            return made;
         }
 
         /// <summary>

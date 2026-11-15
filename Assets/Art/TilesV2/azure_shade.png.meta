@@ -1,0 +1,4457 @@
+fileFormatVersion: 2
+guid: 8807b00c26b657c2a9d9d532c75a7633
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 1523619791304083462
+    second: tv2_azure_shade_f0_v0
+  - first:
+      213: 1500878172535534177
+    second: tv2_azure_shade_f1_v0
+  - first:
+      213: 2060018824467537420
+    second: tv2_azure_shade_f4_v0
+  - first:
+      213: 1739477995035161514
+    second: tv2_azure_shade_f5_v0
+  - first:
+      213: 2621848449425677970
+    second: tv2_azure_shade_f7_v0
+  - first:
+      213: 261307709947153664
+    second: tv2_azure_shade_f16_v0
+  - first:
+      213: 4550864030608867926
+    second: tv2_azure_shade_f17_v0
+  - first:
+      213: 4210238278759967157
+    second: tv2_azure_shade_f20_v0
+  - first:
+      213: 3364912625245568529
+    second: tv2_azure_shade_f21_v0
+  - first:
+      213: 4107713721698713959
+    second: tv2_azure_shade_f23_v0
+  - first:
+      213: 3828650341493308092
+    second: tv2_azure_shade_f28_v0
+  - first:
+      213: 4155599863114013959
+    second: tv2_azure_shade_f29_v0
+  - first:
+      213: 3808813248071589287
+    second: tv2_azure_shade_f31_v0
+  - first:
+      213: 1851662296837384991
+    second: tv2_azure_shade_f64_v0
+  - first:
+      213: 434085035295762002
+    second: tv2_azure_shade_f65_v0
+  - first:
+      213: 1354479177564995754
+    second: tv2_azure_shade_f68_v0
+  - first:
+      213: 3559950663638190032
+    second: tv2_azure_shade_f69_v0
+  - first:
+      213: 4193608551244417688
+    second: tv2_azure_shade_f71_v0
+  - first:
+      213: 3325634070702080540
+    second: tv2_azure_shade_f80_v0
+  - first:
+      213: 4019457088671124320
+    second: tv2_azure_shade_f81_v0
+  - first:
+      213: 1607626533259690530
+    second: tv2_azure_shade_f84_v0
+  - first:
+      213: 3039876175641312462
+    second: tv2_azure_shade_f85_v0
+  - first:
+      213: 3299297052553376237
+    second: tv2_azure_shade_f87_v0
+  - first:
+      213: 1901201984082397797
+    second: tv2_azure_shade_f92_v0
+  - first:
+      213: 3816129403880997964
+    second: tv2_azure_shade_f93_v0
+  - first:
+      213: 1934591660003138172
+    second: tv2_azure_shade_f95_v0
+  - first:
+      213: 1103462797381112143
+    second: tv2_azure_shade_f112_v0
+  - first:
+      213: 3574192574612341634
+    second: tv2_azure_shade_f113_v0
+  - first:
+      213: 309130964970164543
+    second: tv2_azure_shade_f116_v0
+  - first:
+      213: 2283292040240973315
+    second: tv2_azure_shade_f117_v0
+  - first:
+      213: 3932174142536757636
+    second: tv2_azure_shade_f119_v0
+  - first:
+      213: 2640361417309924210
+    second: tv2_azure_shade_f124_v0
+  - first:
+      213: 2813279829523277574
+    second: tv2_azure_shade_f125_v0
+  - first:
+      213: 1047942837390636205
+    second: tv2_azure_shade_f127_v0
+  - first:
+      213: 915834162139364830
+    second: tv2_azure_shade_f193_v0
+  - first:
+      213: 2128671560608410859
+    second: tv2_azure_shade_f197_v0
+  - first:
+      213: 2755680914860931629
+    second: tv2_azure_shade_f199_v0
+  - first:
+      213: 1936673906057861196
+    second: tv2_azure_shade_f209_v0
+  - first:
+      213: 3862069168953663270
+    second: tv2_azure_shade_f213_v0
+  - first:
+      213: 1789493269680972795
+    second: tv2_azure_shade_f215_v0
+  - first:
+      213: 493521426396071809
+    second: tv2_azure_shade_f221_v0
+  - first:
+      213: 1251960905084675225
+    second: tv2_azure_shade_f223_v0
+  - first:
+      213: 3076231714562526254
+    second: tv2_azure_shade_f241_v0
+  - first:
+      213: 648082029508236469
+    second: tv2_azure_shade_f245_v0
+  - first:
+      213: 367955517081634915
+    second: tv2_azure_shade_f247_v0
+  - first:
+      213: 694236440823737652
+    second: tv2_azure_shade_f253_v0
+  - first:
+      213: 3828194419664076546
+    second: tv2_azure_shade_f255_v0
+  - first:
+      213: 2052885899902435600
+    second: tv2_azure_shade_f0_v1
+  - first:
+      213: 4031193883818347973
+    second: tv2_azure_shade_f1_v1
+  - first:
+      213: 2124070602400685325
+    second: tv2_azure_shade_f4_v1
+  - first:
+      213: 4498346428216358006
+    second: tv2_azure_shade_f5_v1
+  - first:
+      213: 2899676028326023903
+    second: tv2_azure_shade_f7_v1
+  - first:
+      213: 1490964692717640620
+    second: tv2_azure_shade_f16_v1
+  - first:
+      213: 2951067267429966675
+    second: tv2_azure_shade_f17_v1
+  - first:
+      213: 1178960583917964734
+    second: tv2_azure_shade_f20_v1
+  - first:
+      213: 2762020480529215376
+    second: tv2_azure_shade_f21_v1
+  - first:
+      213: 3695068455275378718
+    second: tv2_azure_shade_f23_v1
+  - first:
+      213: 3979942133156194153
+    second: tv2_azure_shade_f28_v1
+  - first:
+      213: 1254838725602944897
+    second: tv2_azure_shade_f29_v1
+  - first:
+      213: 575233384765125464
+    second: tv2_azure_shade_f31_v1
+  - first:
+      213: 322145444925621788
+    second: tv2_azure_shade_f64_v1
+  - first:
+      213: 1056985258361329875
+    second: tv2_azure_shade_f65_v1
+  - first:
+      213: 4102182449651901006
+    second: tv2_azure_shade_f68_v1
+  - first:
+      213: 636394047533156928
+    second: tv2_azure_shade_f69_v1
+  - first:
+      213: 2750840546153569880
+    second: tv2_azure_shade_f71_v1
+  - first:
+      213: 1229442968598161061
+    second: tv2_azure_shade_f80_v1
+  - first:
+      213: 1648252206882890320
+    second: tv2_azure_shade_f81_v1
+  - first:
+      213: 1569410605449091843
+    second: tv2_azure_shade_f84_v1
+  - first:
+      213: 3116752847086797084
+    second: tv2_azure_shade_f85_v1
+  - first:
+      213: 3223600810426444381
+    second: tv2_azure_shade_f87_v1
+  - first:
+      213: 4108932706299071138
+    second: tv2_azure_shade_f92_v1
+  - first:
+      213: 1732724191950081166
+    second: tv2_azure_shade_f93_v1
+  - first:
+      213: 3146704218715519735
+    second: tv2_azure_shade_f95_v1
+  - first:
+      213: 1615686668621595370
+    second: tv2_azure_shade_f112_v1
+  - first:
+      213: 1676053575990987786
+    second: tv2_azure_shade_f113_v1
+  - first:
+      213: 4497077136866528050
+    second: tv2_azure_shade_f116_v1
+  - first:
+      213: 823527136148284110
+    second: tv2_azure_shade_f117_v1
+  - first:
+      213: 1362604696530280365
+    second: tv2_azure_shade_f119_v1
+  - first:
+      213: 3143149734292272796
+    second: tv2_azure_shade_f124_v1
+  - first:
+      213: 3078272941673083668
+    second: tv2_azure_shade_f125_v1
+  - first:
+      213: 2648246725521074509
+    second: tv2_azure_shade_f127_v1
+  - first:
+      213: 2156557227604948535
+    second: tv2_azure_shade_f193_v1
+  - first:
+      213: 430834750659970272
+    second: tv2_azure_shade_f197_v1
+  - first:
+      213: 642920999948274361
+    second: tv2_azure_shade_f199_v1
+  - first:
+      213: 2578071149268657788
+    second: tv2_azure_shade_f209_v1
+  - first:
+      213: 2485624639574850632
+    second: tv2_azure_shade_f213_v1
+  - first:
+      213: 3461840989534174247
+    second: tv2_azure_shade_f215_v1
+  - first:
+      213: 1152377716965588
+    second: tv2_azure_shade_f221_v1
+  - first:
+      213: 4013419830679244535
+    second: tv2_azure_shade_f223_v1
+  - first:
+      213: 3652029367976813349
+    second: tv2_azure_shade_f241_v1
+  - first:
+      213: 93280094045700480
+    second: tv2_azure_shade_f245_v1
+  - first:
+      213: 3901244699251173935
+    second: tv2_azure_shade_f247_v1
+  - first:
+      213: 1667278925962289190
+    second: tv2_azure_shade_f253_v1
+  - first:
+      213: 4551773594636359674
+    second: tv2_azure_shade_f255_v1
+  - first:
+      213: 3935230144414651278
+    second: tv2_azure_shade_f0_v2
+  - first:
+      213: 3895470720041402917
+    second: tv2_azure_shade_f1_v2
+  - first:
+      213: 2057050997928913001
+    second: tv2_azure_shade_f4_v2
+  - first:
+      213: 4458533668114625284
+    second: tv2_azure_shade_f5_v2
+  - first:
+      213: 1560374000088806160
+    second: tv2_azure_shade_f7_v2
+  - first:
+      213: 1132966698894053546
+    second: tv2_azure_shade_f16_v2
+  - first:
+      213: 100887916086023334
+    second: tv2_azure_shade_f17_v2
+  - first:
+      213: 1099751959936093932
+    second: tv2_azure_shade_f20_v2
+  - first:
+      213: 1645322077370003058
+    second: tv2_azure_shade_f21_v2
+  - first:
+      213: 484544894198343373
+    second: tv2_azure_shade_f23_v2
+  - first:
+      213: 84887672340565501
+    second: tv2_azure_shade_f28_v2
+  - first:
+      213: 1951288593697963996
+    second: tv2_azure_shade_f29_v2
+  - first:
+      213: 1223280896046978068
+    second: tv2_azure_shade_f31_v2
+  - first:
+      213: 1504196486747788418
+    second: tv2_azure_shade_f64_v2
+  - first:
+      213: 4464026207410740237
+    second: tv2_azure_shade_f65_v2
+  - first:
+      213: 2131684842832178979
+    second: tv2_azure_shade_f68_v2
+  - first:
+      213: 617967589411822605
+    second: tv2_azure_shade_f69_v2
+  - first:
+      213: 3833474987877613967
+    second: tv2_azure_shade_f71_v2
+  - first:
+      213: 2973657185734081042
+    second: tv2_azure_shade_f80_v2
+  - first:
+      213: 3695020190010898663
+    second: tv2_azure_shade_f81_v2
+  - first:
+      213: 3636198347973011490
+    second: tv2_azure_shade_f84_v2
+  - first:
+      213: 1723859367163832255
+    second: tv2_azure_shade_f85_v2
+  - first:
+      213: 615260667682352610
+    second: tv2_azure_shade_f87_v2
+  - first:
+      213: 1295456637625247241
+    second: tv2_azure_shade_f92_v2
+  - first:
+      213: 587856708922386634
+    second: tv2_azure_shade_f93_v2
+  - first:
+      213: 3902078203717882832
+    second: tv2_azure_shade_f95_v2
+  - first:
+      213: 2517894186022722316
+    second: tv2_azure_shade_f112_v2
+  - first:
+      213: 3805133408665755001
+    second: tv2_azure_shade_f113_v2
+  - first:
+      213: 2427595928184312325
+    second: tv2_azure_shade_f116_v2
+  - first:
+      213: 3494879849253599449
+    second: tv2_azure_shade_f117_v2
+  - first:
+      213: 688685740950658750
+    second: tv2_azure_shade_f119_v2
+  - first:
+      213: 1117661767046792469
+    second: tv2_azure_shade_f124_v2
+  - first:
+      213: 2642046946433231806
+    second: tv2_azure_shade_f125_v2
+  - first:
+      213: 2497872266391982553
+    second: tv2_azure_shade_f127_v2
+  - first:
+      213: 2179119078524107587
+    second: tv2_azure_shade_f193_v2
+  - first:
+      213: 2209736017745592237
+    second: tv2_azure_shade_f197_v2
+  - first:
+      213: 976065749630026029
+    second: tv2_azure_shade_f199_v2
+  - first:
+      213: 1182146821826090571
+    second: tv2_azure_shade_f209_v2
+  - first:
+      213: 1083654667453023963
+    second: tv2_azure_shade_f213_v2
+  - first:
+      213: 3883237247101375148
+    second: tv2_azure_shade_f215_v2
+  - first:
+      213: 470769942039786567
+    second: tv2_azure_shade_f221_v2
+  - first:
+      213: 2761240663640296499
+    second: tv2_azure_shade_f223_v2
+  - first:
+      213: 982175831725941165
+    second: tv2_azure_shade_f241_v2
+  - first:
+      213: 762469697957317060
+    second: tv2_azure_shade_f245_v2
+  - first:
+      213: 12163996255151237
+    second: tv2_azure_shade_f247_v2
+  - first:
+      213: 4564375312918194614
+    second: tv2_azure_shade_f253_v2
+  - first:
+      213: 2110301232437281469
+    second: tv2_azure_shade_f255_v2
+  - first:
+      213: 748758718256091092
+    second: tv2_azure_shade_up_right_v0
+  - first:
+      213: 4010540370686568387
+    second: tv2_azure_shade_up_right_v1
+  - first:
+      213: 2984739694410785239
+    second: tv2_azure_shade_up_right_v2
+  - first:
+      213: 2804766742262492678
+    second: tv2_azure_shade_up_left_v0
+  - first:
+      213: 3656883829353913335
+    second: tv2_azure_shade_up_left_v1
+  - first:
+      213: 1210405159406081392
+    second: tv2_azure_shade_up_left_v2
+  - first:
+      213: 4359209014665013070
+    second: tv2_azure_shade_steep_right_low_v0
+  - first:
+      213: 2904921155282826639
+    second: tv2_azure_shade_steep_right_low_v1
+  - first:
+      213: 1320906983654759760
+    second: tv2_azure_shade_steep_right_low_v2
+  - first:
+      213: 3242083872290167746
+    second: tv2_azure_shade_steep_right_high_v0
+  - first:
+      213: 3349411029205169975
+    second: tv2_azure_shade_steep_right_high_v1
+  - first:
+      213: 3849932454095745778
+    second: tv2_azure_shade_steep_right_high_v2
+  - first:
+      213: 1682753921724299153
+    second: tv2_azure_shade_steep_left_low_v0
+  - first:
+      213: 2285089808434916682
+    second: tv2_azure_shade_steep_left_low_v1
+  - first:
+      213: 1570322777734440460
+    second: tv2_azure_shade_steep_left_low_v2
+  - first:
+      213: 2891980972996281752
+    second: tv2_azure_shade_steep_left_high_v0
+  - first:
+      213: 3693834779271240626
+    second: tv2_azure_shade_steep_left_high_v1
+  - first:
+      213: 4480084964381485849
+    second: tv2_azure_shade_steep_left_high_v2
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 4096
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 9
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 16
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: tv2_azure_shade_f0_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a9f1aa491f152b8a790be5888269517
+      internalID: 1523619791304083462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f1_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1912044108805708ac1a0b19fb6e47f8
+      internalID: 1500878172535534177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f4_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ec9dc239475561e86865bdf0092fda6
+      internalID: 2060018824467537420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f5_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5ae36286d8aa5c9ea61ebb70cb831be5
+      internalID: 1739477995035161514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f7_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 031b98cba55c5fa198ef4b554f764fca
+      internalID: 2621848449425677970
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f16_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a906ad3637a5a6187de7d0c3c4a966d
+      internalID: 261307709947153664
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f17_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ef1d2e8623f54b8997827fbdb003a21
+      internalID: 4550864030608867926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f20_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 320
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 733b9bb5caa150f5bc9e2310f8357666
+      internalID: 4210238278759967157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f21_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31afce5e435a5178958d6120cd2966cf
+      internalID: 3364912625245568529
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f23_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b285dc17a18f586dab2029900cce16ad
+      internalID: 4107713721698713959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f28_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f65bbbd3d255f65b8339deeb72a216f
+      internalID: 3828650341493308092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f29_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42902bc7b6ed5b428698aff7a2c6f1b4
+      internalID: 4155599863114013959
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f31_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27437a00c6ab57abac3ca755a5462630
+      internalID: 3808813248071589287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f64_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 421cdc079f3f5cef9cb7f692f791d4d1
+      internalID: 1851662296837384991
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f65_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 996234e7fc515a7fb0e2f20163f21ef2
+      internalID: 434085035295762002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f68_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 304
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e2c3de3b9f6d5aafa425c8111b3e92e6
+      internalID: 1354479177564995754
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f69_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15a2cd26ef1f5a4694e74c3472931550
+      internalID: 3559950663638190032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f71_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41aa0a30653d50ccbb7066f7d456e532
+      internalID: 4193608551244417688
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f80_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1a4848e38e575f648ff69d1ad3c283b1
+      internalID: 3325634070702080540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f81_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 432f5d337f26501ba7068c31ce8fb208
+      internalID: 4019457088671124320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f84_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c002430810ea5706a2263715ad88d9eb
+      internalID: 1607626533259690530
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f85_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a941769a8a0557682c66c28283c7122
+      internalID: 3039876175641312462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f87_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 103fae27012f5c51991ff4622fb35cfb
+      internalID: 3299297052553376237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f92_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 288
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ebd6d77fab285fef84d8087d8f0259da
+      internalID: 1901201984082397797
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f93_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf8ee1b9e77a593daa2be55abf9bd4b9
+      internalID: 3816129403880997964
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f95_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bdeeda53e6615d7c820ef5518492a4e6
+      internalID: 1934591660003138172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f112_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b206a7549c5a59aba4ee04767b62f551
+      internalID: 1103462797381112143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f113_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a86d00f515d54acbf058384131c03f4
+      internalID: 3574192574612341634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f116_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f4997dce4575474a8a4451827d24c29
+      internalID: 309130964970164543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f117_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bfca89860e275d5cb400c1d9d7710a7a
+      internalID: 2283292040240973315
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f119_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 310ad7bab1ff5ca7b932d880bda8bf41
+      internalID: 3932174142536757636
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f124_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 272
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 01ffd24a0c155de88f688475f3400df5
+      internalID: 2640361417309924210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f125_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1a856afe34c5f00a5ce153daa55d473
+      internalID: 2813279829523277574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f127_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e79f5757cff65a5e98715b02aa42365b
+      internalID: 1047942837390636205
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f193_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 56cac8879e365417a3d472f29d92ee11
+      internalID: 915834162139364830
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f197_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec1f6ea34e785220b04527834ed323f3
+      internalID: 2128671560608410859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f199_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd013c950a05589da5f542e54db77546
+      internalID: 2755680914860931629
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f209_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3e3cd93a833517296062a8d828b4058
+      internalID: 1936673906057861196
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f213_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b1d43484d1fd53429eca819c631d58b6
+      internalID: 3862069168953663270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f215_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 256
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ecab806e3bc95ee9816dabe551173859
+      internalID: 1789493269680972795
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f221_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f8c44152375c5695a623fe77c665cc9d
+      internalID: 493521426396071809
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f223_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c0cc898d526e5b97a8b29954f96cbc7e
+      internalID: 1251960905084675225
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f241_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4274e7582945eeab6634952f8582df1
+      internalID: 3076231714562526254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f245_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a8a1e9682b452eda133f5692f2f3b0a
+      internalID: 648082029508236469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f247_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5613cdd610a855bba9516a59cbd5a722
+      internalID: 367955517081634915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f253_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9653a1eea9b95c5d88105cc63258fdd3
+      internalID: 694236440823737652
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f255_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 240
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4245c3cd3e9456868b6e9c490499c2ae
+      internalID: 3828194419664076546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f0_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4e30d224ca95f079d1b2888cdae84a8
+      internalID: 2052885899902435600
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f1_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ccf1b1a359f56a0a628499d5f3e3e28
+      internalID: 4031193883818347973
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f4_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a75509c53ad570b9614d50f3455460c
+      internalID: 2124070602400685325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f5_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 84da5631a8b65309958e83159202974b
+      internalID: 4498346428216358006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f7_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 829a548e0ad555c9ae8374a4ebb09e5f
+      internalID: 2899676028326023903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f16_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f4385d751c79585ca8bef8fe9b179430
+      internalID: 1490964692717640620
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f17_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4799e789eeb65edd918eb8a01a3cbd13
+      internalID: 2951067267429966675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f20_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 224
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46d8807f3c0f5df2b2b8ef9395f8320c
+      internalID: 1178960583917964734
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f21_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa96df3d413457008c132f72f5c10ecd
+      internalID: 2762020480529215376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f23_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3de5f719be555ea7a2b12808863c4ade
+      internalID: 3695068455275378718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f28_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f49082988e5552139be4f9c3ef1546e3
+      internalID: 3979942133156194153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f29_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8dd5b55197575160a298ba34fa3ba6db
+      internalID: 1254838725602944897
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f31_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e28cd0fd2e5546d803f823321733cbe
+      internalID: 575233384765125464
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f64_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dcf0e6d04d8253899a5901a6ac241007
+      internalID: 322145444925621788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f65_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13aacb0a785a57bebb4aaf35fa0e994f
+      internalID: 1056985258361329875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f68_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 208
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80871caaacf8588a873bc484a6a416da
+      internalID: 4102182449651901006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f69_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 025382a433e0519cb8e047fe2f180a55
+      internalID: 636394047533156928
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f71_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e785046e756b57a0b41362cc163013e1
+      internalID: 2750840546153569880
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f80_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f57677ecc3655fd4bb302a08f21f7a9e
+      internalID: 1229442968598161061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f81_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2725415061235fcbb37513f02021dbbc
+      internalID: 1648252206882890320
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f84_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 163ce6d25b925a76821c3a62e5d6c2b8
+      internalID: 1569410605449091843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f85_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b5f920151e45110a3a3024795a8469e
+      internalID: 3116752847086797084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f87_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c9d28e9b1165200b58dcee77e9c89ae
+      internalID: 3223600810426444381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f92_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 192
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ce30cfed85c5ab4b708f2bb71265c5b
+      internalID: 4108932706299071138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f93_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2552d9b5d941584591fcb3f57b502cf1
+      internalID: 1732724191950081166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f95_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a4cbfa9ccf185249a90746728da26b4c
+      internalID: 3146704218715519735
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f112_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6faf20c86a3f59f088d0605703fb92b1
+      internalID: 1615686668621595370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f113_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3a53c9f055e51f3b7969c1577fa850c
+      internalID: 1676053575990987786
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f116_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc8603dea4da51e2ab107afe44c7227e
+      internalID: 4497077136866528050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f117_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af5b7f0b0f015b3da4383e6a2aa2a9c3
+      internalID: 823527136148284110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f119_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5294590f93175f0c9da76c7f9fe7d183
+      internalID: 1362604696530280365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f124_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 176
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7098071968dd523a928af4c87e68a952
+      internalID: 3143149734292272796
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f125_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4863a5432e9758c0b53bba276d34a17e
+      internalID: 3078272941673083668
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f127_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6cef2f053dec575bacfde0ac4cb411d2
+      internalID: 2648246725521074509
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f193_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32b03463ae775df1979115662a02e453
+      internalID: 2156557227604948535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f197_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81568850c102500a9067c9435ed61df6
+      internalID: 430834750659970272
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f199_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6634a90e78995db0aa2375e0bbb9fa84
+      internalID: 642920999948274361
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f209_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4bed27b078785ab3937ab02f51cd4035
+      internalID: 2578071149268657788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f213_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 788e276073d35260b40dfb404d5f8329
+      internalID: 2485624639574850632
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f215_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 160
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 330b1be29a0d52bc800d9e782bc0c989
+      internalID: 3461840989534174247
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f221_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 35f17253366e5a769eae04ea2ca61db1
+      internalID: 1152377716965588
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f223_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80a594defc0c5ab5af8a9d0616af0e47
+      internalID: 4013419830679244535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f241_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ee114881a90541c99ae8a5e31637278
+      internalID: 3652029367976813349
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f245_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0531111a39ff5cf6a974bc0957ce99b6
+      internalID: 93280094045700480
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f247_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a9441d2c7b853e4b2297c213b92b9bc
+      internalID: 3901244699251173935
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f253_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d5b60af0b62500584a8dbc4f2ec09d0
+      internalID: 1667278925962289190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f255_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 144
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dca5993710a055a0b18b077bd9499c39
+      internalID: 4551773594636359674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f0_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a37b1a36ebd457deafd2b1f8be07699c
+      internalID: 3935230144414651278
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f1_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d31f4a74336a5f6b9c3e45fbc2ca7012
+      internalID: 3895470720041402917
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f4_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a129c9f61b550eabe58783dda551008
+      internalID: 2057050997928913001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f5_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 99a179ecd4f756e1909213ab42fb6143
+      internalID: 4458533668114625284
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f7_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1754e48c39d538198821f06d0ef8a7b
+      internalID: 1560374000088806160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f16_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43074d18d690585697962f092df1c144
+      internalID: 1132966698894053546
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f17_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c89188a29b415af0aa00027fee2c9eb4
+      internalID: 100887916086023334
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f20_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 128
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2658588ee0445f6ead2587970dabdfe1
+      internalID: 1099751959936093932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f21_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 606fea548fbc531199dcbd02578fc65d
+      internalID: 1645322077370003058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f23_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e83f7677454c571ab13c1f6b919cf53f
+      internalID: 484544894198343373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f28_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d3272cc61f35e4ba686e10693607ffb
+      internalID: 84887672340565501
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f29_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5dc0bc2f83da5090aa05b0123fb9b9b1
+      internalID: 1951288593697963996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f31_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 17dccd7c758759cb95d447f5a9724921
+      internalID: 1223280896046978068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f64_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 144e4db043345d11aeec2b56eb2ea84e
+      internalID: 1504196486747788418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f65_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8bea9e045f7c5c5a9778818b31e0d285
+      internalID: 4464026207410740237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f68_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 112
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e39096944098549cbc56dc7e56f1c8ca
+      internalID: 2131684842832178979
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f69_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3ccb5789809586fbaad60b51e821113
+      internalID: 617967589411822605
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f71_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dbcd4ddd09e256f4a94749ca1a48a751
+      internalID: 3833474987877613967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f80_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89627a184935562db6c508c525d5e9dd
+      internalID: 2973657185734081042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f81_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c7e45d1c5b45bd7a7e69eb8db59cb31
+      internalID: 3695020190010898663
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f84_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fdf51a9c5e375ea6b9b8e495a7de6046
+      internalID: 3636198347973011490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f85_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff7105bc20095c34834e511a09b0d9fb
+      internalID: 1723859367163832255
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f87_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1975d2fbfe5b565aa15a5b80615d316f
+      internalID: 615260667682352610
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f92_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 96
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2e437eb90ec55417860e0ea9dcec7dcd
+      internalID: 1295456637625247241
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f93_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9e70c0adb2c589e9aa59434aece68a1
+      internalID: 587856708922386634
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f95_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f32b4e951c5a218c517068ee79b9a4
+      internalID: 3902078203717882832
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f112_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c715964fc139521e84389d01cd68c763
+      internalID: 2517894186022722316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f113_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be13cd675bdc5418be23cee12e626d05
+      internalID: 3805133408665755001
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f116_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f420d50888f053adae2ae3a4ce813649
+      internalID: 2427595928184312325
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f117_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32fa7037af735891b72b82af8caafc1e
+      internalID: 3494879849253599449
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f119_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b36f7669c15c5bddadf3ab2bb53f9232
+      internalID: 688685740950658750
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f124_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 80
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca9da2ecf8cb5a04985bc464731cd2d1
+      internalID: 1117661767046792469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f125_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74e76e9318bb5164a6323861cb27cffe
+      internalID: 2642046946433231806
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f127_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4633659033545d97b5cab6cbdaa33b8d
+      internalID: 2497872266391982553
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f193_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9753f50974775667ae1cf1da9cf1351f
+      internalID: 2179119078524107587
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f197_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b3f02336a7d55f4ba918ea9ed08d783
+      internalID: 2209736017745592237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f199_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1fc2282efb105fad8ec3e9e0429f683a
+      internalID: 976065749630026029
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f209_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05b4bc18123152cba7bfac42e0a0ab8f
+      internalID: 1182146821826090571
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f213_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 843e3c91900e515d9b62260fe9e95aad
+      internalID: 1083654667453023963
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f215_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 64
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52e01c14b09451dbbd5bc2f2940d8fd2
+      internalID: 3883237247101375148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f221_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 62650bc7a93552208feb8ad00649ee02
+      internalID: 470769942039786567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f223_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c8e50ee25f8517e818d378beaf013ca
+      internalID: 2761240663640296499
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f241_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7ed2ab62ff6518e9ff71cce67e7ea1c
+      internalID: 982175831725941165
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f245_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ca20b71ad30c5e4aad0859f75a09900f
+      internalID: 762469697957317060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f247_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc789a3ff3895d379c4a2b7747012794
+      internalID: 12163996255151237
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f253_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 87f4b9299088537cbb6db129692721f1
+      internalID: 4564375312918194614
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_f255_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 48
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4037f0ebdd675956b5dbdb668847e6fa
+      internalID: 2110301232437281469
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_up_right_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: a82fe78c878d5b27b6808fcd8f741c2d
+      internalID: 748758718256091092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_up_right_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50c68ea16cdd51899d07d5cd4ee64bf7
+      internalID: 4010540370686568387
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_up_right_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3173f8f3759d5b73b05816aedc430d2a
+      internalID: 2984739694410785239
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_up_left_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3fb0f069bab3584195527ef669bcdfbc
+      internalID: 2804766742262492678
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_up_left_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9db3a23b89a5d499fcc218d6818c2a6
+      internalID: 3656883829353913335
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_up_left_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: e72cf628d0b855d4855d54db487d1ea7
+      internalID: 1210405159406081392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_right_low_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 0, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab8ea89cef845124b4bdeaee4352222f
+      internalID: 4359209014665013070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_right_low_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 32
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 0, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b3258ad4f8bc5dff935c4d17d0828634
+      internalID: 2904921155282826639
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_right_low_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+        - {x: 0, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c69cb9639db56d8b096513700092a42
+      internalID: 1320906983654759760
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_right_high_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 0, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4efede1b5acd54c793eb0702ba30d3ae
+      internalID: 3242083872290167746
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_right_high_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 0, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 495184d41d1950a3b1b6be3b27c2d74c
+      internalID: 3349411029205169975
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_right_high_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: 0, y: -8}
+        - {x: 8, y: -8}
+        - {x: 8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8eaa2c29bbec53a8954aefda927842f2
+      internalID: 3849932454095745778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_left_low_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 0, y: 8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 700b654892c250dd89beb8c66795500e
+      internalID: 1682753921724299153
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_left_low_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 80
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 0, y: 8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1021f7959285585383fe120fc1eed628
+      internalID: 2285089808434916682
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_left_low_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 8, y: -8}
+        - {x: 0, y: 8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6554d27fd5e85115a7f68a41b8caa96d
+      internalID: 1570322777734440460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_left_high_v0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 16
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 0, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8f3caf3633b55eaa565992b328fe637
+      internalID: 2891980972996281752
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_left_high_v1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 0, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0d15658c2db5a8a926f95d9ce22e937
+      internalID: 3693834779271240626
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_azure_shade_steep_left_high_v2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape:
+      - - {x: -8, y: -8}
+        - {x: 0, y: -8}
+        - {x: -8, y: 8}
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11d618db612c59dc900ea1f384341064
+      internalID: 4480084964381485849
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      tv2_azure_shade_f0_v0: 1523619791304083462
+      tv2_azure_shade_f1_v0: 1500878172535534177
+      tv2_azure_shade_f4_v0: 2060018824467537420
+      tv2_azure_shade_f5_v0: 1739477995035161514
+      tv2_azure_shade_f7_v0: 2621848449425677970
+      tv2_azure_shade_f16_v0: 261307709947153664
+      tv2_azure_shade_f17_v0: 4550864030608867926
+      tv2_azure_shade_f20_v0: 4210238278759967157
+      tv2_azure_shade_f21_v0: 3364912625245568529
+      tv2_azure_shade_f23_v0: 4107713721698713959
+      tv2_azure_shade_f28_v0: 3828650341493308092
+      tv2_azure_shade_f29_v0: 4155599863114013959
+      tv2_azure_shade_f31_v0: 3808813248071589287
+      tv2_azure_shade_f64_v0: 1851662296837384991
+      tv2_azure_shade_f65_v0: 434085035295762002
+      tv2_azure_shade_f68_v0: 1354479177564995754
+      tv2_azure_shade_f69_v0: 3559950663638190032
+      tv2_azure_shade_f71_v0: 4193608551244417688
+      tv2_azure_shade_f80_v0: 3325634070702080540
+      tv2_azure_shade_f81_v0: 4019457088671124320
+      tv2_azure_shade_f84_v0: 1607626533259690530
+      tv2_azure_shade_f85_v0: 3039876175641312462
+      tv2_azure_shade_f87_v0: 3299297052553376237
+      tv2_azure_shade_f92_v0: 1901201984082397797
+      tv2_azure_shade_f93_v0: 3816129403880997964
+      tv2_azure_shade_f95_v0: 1934591660003138172
+      tv2_azure_shade_f112_v0: 1103462797381112143
+      tv2_azure_shade_f113_v0: 3574192574612341634
+      tv2_azure_shade_f116_v0: 309130964970164543
+      tv2_azure_shade_f117_v0: 2283292040240973315
+      tv2_azure_shade_f119_v0: 3932174142536757636
+      tv2_azure_shade_f124_v0: 2640361417309924210
+      tv2_azure_shade_f125_v0: 2813279829523277574
+      tv2_azure_shade_f127_v0: 1047942837390636205
+      tv2_azure_shade_f193_v0: 915834162139364830
+      tv2_azure_shade_f197_v0: 2128671560608410859
+      tv2_azure_shade_f199_v0: 2755680914860931629
+      tv2_azure_shade_f209_v0: 1936673906057861196
+      tv2_azure_shade_f213_v0: 3862069168953663270
+      tv2_azure_shade_f215_v0: 1789493269680972795
+      tv2_azure_shade_f221_v0: 493521426396071809
+      tv2_azure_shade_f223_v0: 1251960905084675225
+      tv2_azure_shade_f241_v0: 3076231714562526254
+      tv2_azure_shade_f245_v0: 648082029508236469
+      tv2_azure_shade_f247_v0: 367955517081634915
+      tv2_azure_shade_f253_v0: 694236440823737652
+      tv2_azure_shade_f255_v0: 3828194419664076546
+      tv2_azure_shade_f0_v1: 2052885899902435600
+      tv2_azure_shade_f1_v1: 4031193883818347973
+      tv2_azure_shade_f4_v1: 2124070602400685325
+      tv2_azure_shade_f5_v1: 4498346428216358006
+      tv2_azure_shade_f7_v1: 2899676028326023903
+      tv2_azure_shade_f16_v1: 1490964692717640620
+      tv2_azure_shade_f17_v1: 2951067267429966675
+      tv2_azure_shade_f20_v1: 1178960583917964734
+      tv2_azure_shade_f21_v1: 2762020480529215376
+      tv2_azure_shade_f23_v1: 3695068455275378718
+      tv2_azure_shade_f28_v1: 3979942133156194153
+      tv2_azure_shade_f29_v1: 1254838725602944897
+      tv2_azure_shade_f31_v1: 575233384765125464
+      tv2_azure_shade_f64_v1: 322145444925621788
+      tv2_azure_shade_f65_v1: 1056985258361329875
+      tv2_azure_shade_f68_v1: 4102182449651901006
+      tv2_azure_shade_f69_v1: 636394047533156928
+      tv2_azure_shade_f71_v1: 2750840546153569880
+      tv2_azure_shade_f80_v1: 1229442968598161061
+      tv2_azure_shade_f81_v1: 1648252206882890320
+      tv2_azure_shade_f84_v1: 1569410605449091843
+      tv2_azure_shade_f85_v1: 3116752847086797084
+      tv2_azure_shade_f87_v1: 3223600810426444381
+      tv2_azure_shade_f92_v1: 4108932706299071138
+      tv2_azure_shade_f93_v1: 1732724191950081166
+      tv2_azure_shade_f95_v1: 3146704218715519735
+      tv2_azure_shade_f112_v1: 1615686668621595370
+      tv2_azure_shade_f113_v1: 1676053575990987786
+      tv2_azure_shade_f116_v1: 4497077136866528050
+      tv2_azure_shade_f117_v1: 823527136148284110
+      tv2_azure_shade_f119_v1: 1362604696530280365
+      tv2_azure_shade_f124_v1: 3143149734292272796
+      tv2_azure_shade_f125_v1: 3078272941673083668
+      tv2_azure_shade_f127_v1: 2648246725521074509
+      tv2_azure_shade_f193_v1: 2156557227604948535
+      tv2_azure_shade_f197_v1: 430834750659970272
+      tv2_azure_shade_f199_v1: 642920999948274361
+      tv2_azure_shade_f209_v1: 2578071149268657788
+      tv2_azure_shade_f213_v1: 2485624639574850632
+      tv2_azure_shade_f215_v1: 3461840989534174247
+      tv2_azure_shade_f221_v1: 1152377716965588
+      tv2_azure_shade_f223_v1: 4013419830679244535
+      tv2_azure_shade_f241_v1: 3652029367976813349
+      tv2_azure_shade_f245_v1: 93280094045700480
+      tv2_azure_shade_f247_v1: 3901244699251173935
+      tv2_azure_shade_f253_v1: 1667278925962289190
+      tv2_azure_shade_f255_v1: 4551773594636359674
+      tv2_azure_shade_f0_v2: 3935230144414651278
+      tv2_azure_shade_f1_v2: 3895470720041402917
+      tv2_azure_shade_f4_v2: 2057050997928913001
+      tv2_azure_shade_f5_v2: 4458533668114625284
+      tv2_azure_shade_f7_v2: 1560374000088806160
+      tv2_azure_shade_f16_v2: 1132966698894053546
+      tv2_azure_shade_f17_v2: 100887916086023334
+      tv2_azure_shade_f20_v2: 1099751959936093932
+      tv2_azure_shade_f21_v2: 1645322077370003058
+      tv2_azure_shade_f23_v2: 484544894198343373
+      tv2_azure_shade_f28_v2: 84887672340565501
+      tv2_azure_shade_f29_v2: 1951288593697963996
+      tv2_azure_shade_f31_v2: 1223280896046978068
+      tv2_azure_shade_f64_v2: 1504196486747788418
+      tv2_azure_shade_f65_v2: 4464026207410740237
+      tv2_azure_shade_f68_v2: 2131684842832178979
+      tv2_azure_shade_f69_v2: 617967589411822605
+      tv2_azure_shade_f71_v2: 3833474987877613967
+      tv2_azure_shade_f80_v2: 2973657185734081042
+      tv2_azure_shade_f81_v2: 3695020190010898663
+      tv2_azure_shade_f84_v2: 3636198347973011490
+      tv2_azure_shade_f85_v2: 1723859367163832255
+      tv2_azure_shade_f87_v2: 615260667682352610
+      tv2_azure_shade_f92_v2: 1295456637625247241
+      tv2_azure_shade_f93_v2: 587856708922386634
+      tv2_azure_shade_f95_v2: 3902078203717882832
+      tv2_azure_shade_f112_v2: 2517894186022722316
+      tv2_azure_shade_f113_v2: 3805133408665755001
+      tv2_azure_shade_f116_v2: 2427595928184312325
+      tv2_azure_shade_f117_v2: 3494879849253599449
+      tv2_azure_shade_f119_v2: 688685740950658750
+      tv2_azure_shade_f124_v2: 1117661767046792469
+      tv2_azure_shade_f125_v2: 2642046946433231806
+      tv2_azure_shade_f127_v2: 2497872266391982553
+      tv2_azure_shade_f193_v2: 2179119078524107587
+      tv2_azure_shade_f197_v2: 2209736017745592237
+      tv2_azure_shade_f199_v2: 976065749630026029
+      tv2_azure_shade_f209_v2: 1182146821826090571
+      tv2_azure_shade_f213_v2: 1083654667453023963
+      tv2_azure_shade_f215_v2: 3883237247101375148
+      tv2_azure_shade_f221_v2: 470769942039786567
+      tv2_azure_shade_f223_v2: 2761240663640296499
+      tv2_azure_shade_f241_v2: 982175831725941165
+      tv2_azure_shade_f245_v2: 762469697957317060
+      tv2_azure_shade_f247_v2: 12163996255151237
+      tv2_azure_shade_f253_v2: 4564375312918194614
+      tv2_azure_shade_f255_v2: 2110301232437281469
+      tv2_azure_shade_up_right_v0: 748758718256091092
+      tv2_azure_shade_up_right_v1: 4010540370686568387
+      tv2_azure_shade_up_right_v2: 2984739694410785239
+      tv2_azure_shade_up_left_v0: 2804766742262492678
+      tv2_azure_shade_up_left_v1: 3656883829353913335
+      tv2_azure_shade_up_left_v2: 1210405159406081392
+      tv2_azure_shade_steep_right_low_v0: 4359209014665013070
+      tv2_azure_shade_steep_right_low_v1: 2904921155282826639
+      tv2_azure_shade_steep_right_low_v2: 1320906983654759760
+      tv2_azure_shade_steep_right_high_v0: 3242083872290167746
+      tv2_azure_shade_steep_right_high_v1: 3349411029205169975
+      tv2_azure_shade_steep_right_high_v2: 3849932454095745778
+      tv2_azure_shade_steep_left_low_v0: 1682753921724299153
+      tv2_azure_shade_steep_left_low_v1: 2285089808434916682
+      tv2_azure_shade_steep_left_low_v2: 1570322777734440460
+      tv2_azure_shade_steep_left_high_v0: 2891980972996281752
+      tv2_azure_shade_steep_left_high_v1: 3693834779271240626
+      tv2_azure_shade_steep_left_high_v2: 4480084964381485849
+    spriteCustomMetadata:
+      entries: []
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

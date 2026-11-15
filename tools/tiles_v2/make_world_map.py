@@ -2111,7 +2111,12 @@ def hollow(world: World, columns, rows, wall: str | None = "m"):
 
 
 ROOF, CLOTH = "\u00c9", "\u00e7"  # tiles of blue for a tower's roof; the cloth of a banner
-SLANT = {"K": ("j", "k"), "M": ("a", "e"), ROOF: ("\u00e9", "\u00e8")}  # what is built, cut on the slant: rising to the right, to the left
+ROOF_SHADE = "\u00ce"  # the side of a roof away from the sun
+STEEP_UP = ("\u00ca", "\u00ea")  # a roof's edge two cells up for one across, rising to the right: its lower cell, its upper
+STEEP_DOWN = ("\u00cf", "\u00ef")  # and falling to the right, in the shade
+LIT, FACE, SHADE = "\u00c2", "\u00e2", "\u00e3"  # a round tower's stone: toward the sun, its face, away from it
+BACK_ROOF = "\u00d4"  # a roof further back, on the wall behind
+SLANT = {"K": ("j", "k"), "M": ("a", "e"), ROOF: ("\u00e9", "\u00e8"), ROOF_SHADE: ("\u00e9", "\u00ee")}  # what is built, cut on the slant: rising to the right, to the left
 WINGS = [
     "X...........X",
     "XX.........XX",
@@ -2166,15 +2171,16 @@ def slant(world: World, x0: int, x1: int, y0: int, y1: int):
 def pitched(world: World, x0: int, x1: int, base: int, char: str = "K") -> int:
     """A roof at 45 degrees over the columns x0 .. x1, its eaves on the row `base`: each row a
     cell narrower at either end, the ends cut on the slant. Returns its top row."""
-    row = base
+    row, middle = base, (x0 + x1) / 2
+    far = ROOF_SHADE if char == ROOF else char  # a roof of blue has a side out of the sun
     while x0 <= x1:
         for x in range(x0, x1 + 1):
-            world.t[row][x] = char
+            world.t[row][x] = char if x <= middle else far
             world.square.add((x, row))
         if world.t[row][x0 - 1] == AIR:
             world.t[row][x0 - 1] = SLANT[char][0]
         if world.t[row][x1 + 1] == AIR:
-            world.t[row][x1 + 1] = SLANT[char][1]
+            world.t[row][x1 + 1] = SLANT[far][1]
         x0, x1, row = x0 + 1, x1 - 1, row - 1
     return row + 1
 
@@ -2199,49 +2205,106 @@ def cupola(world: World, cx: float, base: int, outer: float, inner: float, fill:
 
 
 def finial(world: World, x: int, foot: int, tall: int = 4, flag: bool = False):
-    """A rod of gilt on the top of something, with a pennant flying from it or without."""
+    """A rod of gilt on the top of something, with a pennant flying from it or without (the
+    pennant is the scene's to fly: a mark)."""
     for y in range(foot - tall, foot):
         raise_wall(world, "X", x, y)
     if flag:
-        for dx, dy in ((1, 0), (2, 0), (3, 0), (1, 1), (2, 1)):
-            raise_wall(world, CLOTH, x + dx, foot - tall + dy)
+        world.mark("flag", x + 1, foot - tall)
 
 
-def steeple(world: World, x0: int, x1: int, base: int, char: str = ROOF) -> int:
-    """A steep roof over the columns x0 .. x1, its eaves on the row `base`: a cell narrower
-    at either end every second row. Returns its top row."""
-    row, k = base, 0
-    while x0 <= x1:
-        for x in range(x0, x1 + 1):
-            world.t[row][x] = char
-            world.square.add((x, row))
-        if k % 2:
-            x0, x1 = x0 + 1, x1 - 1
-        row, k = row - 1, k + 1
+def cone(world: World, x0: int, x1: int, base: int) -> int:
+    """A tower's roof: tiles of blue rising two cells for one to a point, the side away from
+    the sun darker, its eaves a cell wider than the tower at either end and cut on the
+    slant. Over an even number of columns x0 .. x1, its eaves on the row `base`. Returns
+    its top row."""
+    middle = (x0 + x1) // 2
+
+    def tile(x, y, char=None):
+        world.t[y][x] = char or (ROOF if x <= middle else ROOF_SHADE)
+        world.square.add((x, y))
+
+    for x in range(x0 - 1, x1 + 2):
+        tile(x, base)
+    tile(x0 - 2, base, SLANT[ROOF][0])
+    tile(x1 + 2, base, SLANT[ROOF_SHADE][1])
+    row, left, right = base - 1, x0, x1
+    while left < right:
+        for k in (0, 1):
+            tile(left, row - k, STEEP_UP[k])
+            tile(right, row - k, STEEP_DOWN[k])
+            for x in range(left + 1, right):
+                tile(x, row - k)
+        left, right, row = left + 1, right - 1, row - 2
     return row + 1
 
 
+def stone(x: int, x0: int, x1: int) -> str:
+    """The stone of a round tower at a column: lit toward the sun (the left), in shade away from it."""
+    wide = x1 - x0 + 1
+    return LIT if x - x0 < max(1, wide // 4) else SHADE if x1 - x < max(1, wide // 3) else FACE
+
+
 def turret(world: World, x0: int, x1: int, foot: int, tall: int, flag: bool = False) -> int:
-    """A tower of a castle, on the wall in front of the wall: a shaft of bright marble
-    with lit windows up it, a wider head under battlements, and on it a steep roof of
-    blue that is stood on, a rod on its point. Returns the roof's top row."""
+    """A round tower of a castle, on the wall in front of the wall: stone lit on the side
+    toward the sun and in shade on the other, a wider foot, lit windows up it each under
+    the shade of its own arch, a head a cell wider with its shadow under it, and on that a
+    roof of blue tiles that is stood on, a rod on its point. An even number of columns.
+    Returns the roof's top row."""
     top = foot - tall
     for y in range(top, foot):
         for x in range(x0, x1 + 1):
-            raise_wall(world, "x", x, y)
+            raise_wall(world, SHADE if y == top else stone(x, x0, x1), x, y)
+    for y in (foot - 1, foot - 2):
+        raise_wall(world, LIT, x0 - 1, y)
+        raise_wall(world, SHADE, x1 + 1, y)
     middle = (x0 + x1) // 2
-    for y in range(top + 3, foot - 3, 7):
-        for dy in range(3):
-            for x in (middle, middle + 1) if (x1 - x0) % 2 else (middle,):
-                world.walls[y + dy][x] = "q"
+    for y in range(top + 4, foot - 4, 7):
+        for x in (middle, middle + 1):
+            world.walls[y - 1][x] = SHADE
+            world.walls[y][x] = world.walls[y + 1][x] = "q"
     for y in (top - 1, top - 2):
         for x in range(x0 - 1, x1 + 2):
-            raise_wall(world, "x", x, y)
-    for x in range(x0 - 1, x1 + 2, 2):
-        raise_wall(world, "x", x, top - 3)
-    peak = steeple(world, x0, x1, top - 3)
+            raise_wall(world, stone(x, x0 - 1, x1 + 1), x, y)
+    peak = cone(world, x0, x1, top - 3)
     finial(world, middle, peak, 3, flag)
     return peak
+
+
+def backtower(world: World, x0: int, x1: int, foot: int, tall: int):
+    """A tower further back: on the wall behind, in stone the wall's tint darkens, under a
+    roof drawn there too, one lit window near its head. It is passed in front of, as the
+    near towers are, and stands behind them."""
+    top = foot - tall
+    for y in range(top, foot):
+        for x in range(x0, x1 + 1):
+            if world.walls[y][x] == AIR:
+                raise_wall(world, "m", x, y)
+    for x in range(x0 - 1, x1 + 2):
+        for y in (top - 1, top - 2):
+            if world.walls[y][x] == AIR:
+                raise_wall(world, "m", x, y)
+    left, right, row, k = x0 - 1, x1 + 1, top - 3, 0
+    while left <= right:
+        for x in range(left, right + 1):
+            if world.walls[row][x] == AIR and world.t[row][x] == AIR:
+                world.walls[row][x] = BACK_ROOF
+        if k % 2:
+            left, right = left + 1, right - 1
+        row, k = row - 1, k + 1
+    middle = (x0 + x1) // 2
+    if world.walls[top + 4][middle] == "m":
+        world.walls[top + 4][middle] = world.walls[top + 5][middle] = "q"
+
+
+def skybridge(world: World, x0: int, x1: int, row: int):
+    """A bridge high between two towers, on the wall in front: a walk under battlements on a
+    round arch."""
+    for x in range(x0, x1 + 1):
+        raise_wall(world, LIT, x, row)
+        raise_wall(world, FACE, x, row + 1)
+    arch(world, x0, x1, row + 2, row + 2 + (x1 - x0 + 1) // 2, SHADE)
+    battlement(world, x0, x1, row - 1)
 
 
 def battlement(world: World, x0: int, x1: int, row: int):
@@ -2488,6 +2551,16 @@ def paradise(world: World):
     # A turret hangs at either corner of the tower's head.
     turret(world, centre - 18, centre - 15, head + 9, 9)
     turret(world, centre + 15, centre + 18, head + 9, 9)
+    # Galleries along the hall, half way up it behind the piers: a stair of ledges at either
+    # end wall, a walk between the piers, and on the east one something worth the climb.
+    for side in (-1, 1):
+        for step, row in enumerate((f - 4, f - 8)):
+            for x in range(centre + side * 36 - (0 if side < 0 else 2), centre + side * 36 + (3 if side < 0 else 1)):
+                world.t[row][x] = ","
+        for x in range(centre + side * 33 - (0 if side < 0 else 15), centre + side * 33 + (16 if side < 0 else 1)):
+            if world.t[f - 12][x] == AIR:
+                world.t[f - 12][x] = ","
+    world.mark("relic", centre + 22, f - 13)
     # Inside the hall. The wall behind: a lit window in every bay, tall and pointed.
     piers = (-35, -26, -17, 16, 25, 34)  # the west column of each pier of the arcade, from the middle
     for off in (-30, -21, 21, 30):
@@ -2530,20 +2603,25 @@ def paradise(world: World):
     # the wings over it, banners down the towers.
     for side in (-1, 1):
         for k in (57, 47):
-            x0 = centre + side * k - (0 if side < 0 else 4)
-            turret(world, x0, x0 + 4, temple, 15, k == 57)
-            banner(world, x0 + 1, temple - 11, 7)
-        gate = centre + side * 50
-        arch(world, gate - 2, gate + 2, temple - 12, temple - 9)
-        for x in range(gate - 2, gate + 3):
-            for y in (temple - 14, temple - 13):
-                raise_wall(world, "x", x, y)
-        battlement(world, gate - 2, gate + 2, temple - 15)
+            x0 = centre + side * k - (0 if side < 0 else 3)
+            turret(world, x0, x0 + 3, temple, 15, k == 57)
+            banner(world, x0 + 1, temple - 9, 6)
+        west = centre + side * 53 - (0 if side < 0 else 5)
+        arch(world, west, west + 5, temple - 12, temple - 9, FACE)
+        for x in range(west, west + 6):
+            raise_wall(world, LIT, x, temple - 14)
+            raise_wall(world, FACE, x, temple - 13)
+        battlement(world, west, west + 5, temple - 15)
     # Towers of every height stand along the wall walk, and battlements between them. Ledges
     # at either end of the house climb to it.
+    # First the towers further back, then the near ones in front of them, then the bridges.
     battlement(world, centre - 41, centre + 41, eaves - 1)
-    for x0, wide, tall, flag in ((-41, 7, 24, True), (-28, 5, 13, False), (23, 5, 16, False), (35, 7, 19, True)):
+    for x0, wide, tall in ((-34, 4, 31), (-22, 6, 22), (17, 4, 27), (29, 4, 24)):
+        backtower(world, centre + x0, centre + x0 + wide - 1, eaves, tall)
+    for x0, wide, tall, flag in ((-42, 8, 24, True), (-29, 6, 13, False), (22, 6, 16, False), (35, 8, 19, True)):
         turret(world, centre + x0, centre + x0 + wide - 1, eaves, tall, flag)
+    skybridge(world, centre - 34, centre - 30, eaves - 9)
+    skybridge(world, centre + 28, centre + 34, eaves - 11)
     for side in (-1, 1):
         for row in range(f - 7, eaves, -LADDER):
             for x in range(centre + side * 43 - (0 if side < 0 else 3), centre + side * 43 + (4 if side < 0 else 1)):
@@ -2704,8 +2782,12 @@ def paradise(world: World):
     world.mark("relic", dome - 3, roof - 1)
     world.put(dome - 5, roof - 1, "J")
     battlement(world, px0, px1, roof - 1)
-    for x0, wide, tall, flag in ((px0 - 1, 7, 25, True), (px0 + 14, 5, 11, False), (px0 + 27, 4, 15, False), (px1 - 31, 4, 9, False), (px1 - 19, 5, 14, False), (px1 - 5, 7, 20, True)):
+    for x0, wide, tall in ((px0 + 8, 4, 19), (px0 + 21, 4, 24), (px1 - 25, 4, 21), (px1 - 12, 4, 15)):
+        backtower(world, x0, x0 + wide - 1, roof, tall)
+    for x0, wide, tall, flag in ((px0 - 1, 8, 25, True), (px0 + 13, 6, 11, False), (px0 + 26, 4, 15, False), (px1 - 31, 4, 9, False), (px1 - 20, 6, 14, False), (px1 - 6, 8, 20, True)):
         turret(world, x0, x0 + wide - 1, roof, tall, flag)
+    skybridge(world, px0 + 7, px0 + 12, roof - 8)
+    skybridge(world, px1 - 14, px1 - 7, roof - 10)
     # A gate before the west door: two columns, a banner on each, the wings over them.
     for x in (px0 - 7, px0 - 3):
         pillar(world, x, house - 9, house, 1)

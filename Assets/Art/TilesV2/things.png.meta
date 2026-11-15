@@ -56,6 +56,36 @@ TextureImporter:
   - first:
       213: 3209183503758669476
     second: tv2_thing_sanctum
+  - first:
+      213: 17995051963719248
+    second: tv2_thing_flag_a_0
+  - first:
+      213: 3507529564944648173
+    second: tv2_thing_flag_a_1
+  - first:
+      213: 382819764685491289
+    second: tv2_thing_flag_a_2
+  - first:
+      213: 2305792431902418944
+    second: tv2_thing_flag_a_3
+  - first:
+      213: 2859881015936528825
+    second: tv2_thing_flag_b_0
+  - first:
+      213: 3488433025968856886
+    second: tv2_thing_flag_b_1
+  - first:
+      213: 1628443445667484405
+    second: tv2_thing_flag_b_2
+  - first:
+      213: 3681704814080457833
+    second: tv2_thing_flag_b_3
+  - first:
+      213: 2783588620811862441
+    second: tv2_thing_bird_0
+  - first:
+      213: 1076895575200619378
+    second: tv2_thing_bird_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -551,6 +581,236 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_a_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 288
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a201eddf81095833b3bae5c1da8e545a
+      internalID: 17995051963719248
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_a_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 304
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c4588cd927aa5394a5caa9519096ed84
+      internalID: 3507529564944648173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_a_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75928be5ea045db09feb2fac56f0352a
+      internalID: 382819764685491289
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_a_3
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 336
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6bc41855d55d528fba80d31219f5b94a
+      internalID: 2305792431902418944
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_b_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4be5cb7ad75555fb3b418cac8b8eba6
+      internalID: 2859881015936528825
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_b_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 368
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7eb2d13f6539595f9cbfb6ceec044a49
+      internalID: 3488433025968856886
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_b_2
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 384
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d82d6821b8757abac29efb896cad645
+      internalID: 1628443445667484405
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_flag_b_3
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 400
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dfb7512c97905b38b27d5a2cf32c63be
+      internalID: 3681704814080457833
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_bird_0
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb01878c7565ea5ae789bd9981fa022
+      internalID: 2783588620811862441
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: tv2_thing_bird_1
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 432
+        y: 0
+        width: 16
+        height: 16
+      alignment: 9
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5223f98752255b32b6663448cf15ac58
+      internalID: 1076895575200619378
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
@@ -581,6 +841,16 @@ TextureImporter:
       tv2_thing_beacon_1: 220485206269948922
       tv2_thing_beacon_2: 1117358721972427961
       tv2_thing_sanctum: 3209183503758669476
+      tv2_thing_flag_a_0: 17995051963719248
+      tv2_thing_flag_a_1: 3507529564944648173
+      tv2_thing_flag_a_2: 382819764685491289
+      tv2_thing_flag_a_3: 2305792431902418944
+      tv2_thing_flag_b_0: 2859881015936528825
+      tv2_thing_flag_b_1: 3488433025968856886
+      tv2_thing_flag_b_2: 1628443445667484405
+      tv2_thing_flag_b_3: 3681704814080457833
+      tv2_thing_bird_0: 2783588620811862441
+      tv2_thing_bird_1: 1076895575200619378
     spriteCustomMetadata:
       entries: []
   mipmapLimitGroupName: 
