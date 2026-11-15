@@ -231,6 +231,26 @@ Earth's surface with nothing.
 | R | back to the last rest |
 | 1 2 3 4, T, P | the hour of the day (it shows on the surface and in Paradise) |
 
+## Looking it over
+
+To check the map without playing it, photograph all of it at every art pixel:
+
+```
+python tools/tiles_v2/photo_world.py              # the world at the day's start
+python tools/tiles_v2/photo_world.py --hour 21    # at night
+python tools/tiles_v2/photo_world.py --pixels 8   # half the size
+python tools/tiles_v2/photo_world.py --sample     # the sample map
+```
+
+It takes about a minute and writes under `Logs/TilesV2/photo/` (or `--out`):
+`world.png`, the whole map in one picture to zoom into (8640 x 12480 px, every
+torch and blade of grass as the game draws them); `regions/`, the same a region
+at a time; and `4k/`, the same cut into 18 sheets of 3840 x 2160 for a viewer
+that will not open the whole. The editor runs hidden and must not have the
+project open; it builds the world as the game does, stands the map's marks in
+it, and photographs it in pieces with the backdrop placed once, so they join
+with no seam. The hero and the motes in the regions' air are left out.
+
 ## Where the rules come from
 
 The layout follows what the makers of the genre have said about it; the notes

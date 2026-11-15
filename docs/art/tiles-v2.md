@@ -474,6 +474,7 @@ no window opens.
 | `make_sample_map.py` | writes the sample map |
 | `make_world_map.py` | writes the world (`docs/art/tiles-v2-world.md`); `--check` plays it through first |
 | `tv2_reach.py` | the model of the hero the world is checked with |
+| `photo_world.py` | photographs a whole map from the Unity editor at every art pixel, for looking it over zoomed in: one picture, one for each region, and 4K sheets |
 
 `gen_tiles_v2.py --map Assets/Art/TilesV2/world_map.txt --preview out.png
 --scale 0.25` lays the whole world out at 4 px a tile; `--view limbo` shows the

@@ -90,6 +90,169 @@ namespace Descender.EditorTools.TilesV2
         public static void Capture(string folder, string scenePath)
         {
             Directory.CreateDirectory(folder);
+            var world = Prepare(scenePath);
+            // A shader still compiling in the background draws as nothing in the first frame
+            // that needs it; compile in line so every capture shows every layer.
+            var async = ShaderUtil.allowAsyncCompilation;
+            ShaderUtil.allowAsyncCompilation = false;
+            try
+            {
+                CaptureViews(world, folder);
+            }
+            finally
+            {
+                ShaderUtil.allowAsyncCompilation = async;
+            }
+        }
+
+        /// <summary>
+        /// Batch entry for tools/tiles_v2/photo_world.py: photographs the whole of a world at
+        /// every art pixel (or fewer: <c>-tilesV2Pixels 8</c>), in pieces a texture can hold,
+        /// with a list of them for the tool to join, and quits. <c>-tilesV2Out</c> is where,
+        /// <c>-tilesV2Scene</c> the scene (the world's by default), <c>-tilesV2Hour</c> the hour.
+        /// </summary>
+        public static void PhotoWorld()
+        {
+            try
+            {
+                TilesV2Builder.Build();
+                if (!File.Exists(TilesV2Sample.DescentPath))
+                {
+                    TilesV2Sample.BuildDescent();
+                }
+                if (!File.Exists(TilesV2Sample.ScenePath))
+                {
+                    TilesV2Sample.Build();
+                }
+                var pixels = int.TryParse(Argument("-tilesV2Pixels"), out var asked) ? Mathf.Clamp(asked, 1, 16) : 16;
+                var hour = float.TryParse(
+                    Argument("-tilesV2Hour"),
+                    System.Globalization.NumberStyles.Float,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    out var at
+                )
+                    ? at
+                    : -1f;
+                Photograph(OutFolder(), Argument("-tilesV2Scene") ?? TilesV2Sample.DescentPath, pixels, hour);
+                EditorApplication.Exit(0);
+            }
+            catch (Exception error)
+            {
+                Debug.LogException(error);
+                EditorApplication.Exit(1);
+            }
+        }
+
+        /// <summary>The side of a piece of a photograph of a whole world, in tiles.</summary>
+        public const int PhotoPiece = 120;
+
+        /// <summary>The list of a photograph's pieces, beside them.</summary>
+        public const string PhotoIndexName = "photo.json";
+
+        /// <summary>
+        /// Photographs the whole world of a scene into `folder`: pieces of <see cref="PhotoPiece"/>
+        /// tiles a side at `pixels` pixels a tile, named <c>piece_row_column.png</c> from the top
+        /// left, and <see cref="PhotoIndexName"/>, which says how they join and where the
+        /// regions are. The backdrop is placed once, for a view of the whole map, so the
+        /// pieces join with no seam. `hour` below zero keeps the scene's own hour.
+        /// </summary>
+        public static int Photograph(string folder, string scenePath, int pixels, float hour)
+        {
+            Directory.CreateDirectory(folder);
+            var world = Prepare(scenePath);
+            if (hour >= 0f)
+            {
+                world.Day.Hour = hour;
+            }
+            var map = world.Map;
+            var area = world.Area;
+            var index = new PhotoIndex
+            {
+                width = map.Width,
+                height = map.Height,
+                pixels = pixels,
+                piece = PhotoPiece,
+                hour = world.Day.Hour,
+            };
+            for (var i = 0; i < map.Regions.Count; i++)
+            {
+                var region = world.Set.RegionOf(map.Regions[i].Key);
+                index.regions.Add(
+                    new PhotoRegion
+                    {
+                        key = map.Regions[i].Key,
+                        name = region != null ? region.name : map.Regions[i].Key,
+                        top = map.Regions[i].Top,
+                        end = map.RegionEnd(i),
+                    }
+                );
+            }
+            var async = ShaderUtil.allowAsyncCompilation;
+            ShaderUtil.allowAsyncCompilation = false;
+            var restore = new List<(SpriteRenderer, Vector2)>();
+            try
+            {
+                // The first render after the scene opens draws the unlit backdrop wrong; throw one away.
+                Render(world, world.Framed(area.center), world.Set.View, null);
+                restore = PlaceBackdrop(world, area.center, area.size);
+                for (var row = 0; row * PhotoPiece < map.Height; row++)
+                {
+                    for (var column = 0; column * PhotoPiece < map.Width; column++)
+                    {
+                        var wide = Mathf.Min(PhotoPiece, map.Width - column * PhotoPiece);
+                        var tall = Mathf.Min(PhotoPiece, map.Height - row * PhotoPiece);
+                        var centre = new Vector2(
+                            area.xMin + column * PhotoPiece + wide / 2f,
+                            area.yMax - row * PhotoPiece - tall / 2f
+                        );
+                        var name = $"piece_{row:00}_{column:00}.png";
+                        Render(world, centre, new Vector2(wide, tall), Path.Combine(folder, name), pixels, false);
+                        index.pieces.Add(name);
+                    }
+                }
+            }
+            finally
+            {
+                foreach (var (picture, size) in restore)
+                {
+                    picture.size = size;
+                }
+                ShaderUtil.allowAsyncCompilation = async;
+            }
+            File.WriteAllText(Path.Combine(folder, PhotoIndexName), JsonUtility.ToJson(index, true));
+            Debug.Log(
+                $"Tiles V2: photographed {map.Width} x {map.Height} tiles in {index.pieces.Count} pieces to {folder}."
+            );
+            return index.pieces.Count;
+        }
+
+        /// <summary>What <see cref="Photograph"/> writes beside its pieces.</summary>
+        [Serializable]
+        public sealed class PhotoIndex
+        {
+            public int width;
+            public int height;
+            public int pixels;
+            public int piece;
+            public float hour;
+            public List<string> pieces = new List<string>();
+            public List<PhotoRegion> regions = new List<PhotoRegion>();
+        }
+
+        /// <summary>A region in a photograph: its rows.</summary>
+        [Serializable]
+        public sealed class PhotoRegion
+        {
+            public string key;
+            public string name;
+            public int top;
+            public int end;
+        }
+
+        // Opens a scene and makes its world ready to be photographed: built, the game's things
+        // standing, the hero out of the picture, the air full, the lights' meshes made.
+        private static TilesV2World Prepare(string scenePath)
+        {
             EditorSceneManager.OpenScene(scenePath);
             var world = UnityEngine.Object.FindAnyObjectByType<TilesV2World>();
             if (world == null)
@@ -116,18 +279,7 @@ namespace Descender.EditorTools.TilesV2
                 system.Simulate(ParticleTime, true, true);
             }
             BuildLightMeshes();
-            // A shader still compiling in the background draws as nothing in the first frame
-            // that needs it; compile in line so every capture shows every layer.
-            var async = ShaderUtil.allowAsyncCompilation;
-            ShaderUtil.allowAsyncCompilation = false;
-            try
-            {
-                CaptureViews(world, folder);
-            }
-            finally
-            {
-                ShaderUtil.allowAsyncCompilation = async;
-            }
+            return world;
         }
 
         private static void CaptureViews(TilesV2World world, string folder)
@@ -161,13 +313,21 @@ namespace Descender.EditorTools.TilesV2
             Render(world, area.center, area.size, Path.Combine(folder, "map.png"), pixels);
         }
 
-        // Renders a view of `size` units centred on `at`, at 16 pixels a unit, to a PNG (to nothing when `file` is null).
-        private static void Render(TilesV2World world, Vector2 at, Vector2 size, string file, float pixels = 16f)
+        // Renders a view of `size` units centred on `at`, at 16 pixels a unit, to a PNG (to nothing when
+        // `file` is null). With `place` false the backdrop stays where it was put: a piece of a larger picture.
+        private static void Render(
+            TilesV2World world,
+            Vector2 at,
+            Vector2 size,
+            string file,
+            float pixels = 16f,
+            bool place = true
+        )
         {
             var width = Mathf.RoundToInt(size.x * pixels);
             var height = Mathf.RoundToInt(size.y * pixels);
             var air = world.GetComponentInChildren<TilesV2Air>();
-            if (air != null && pixels >= 16f)
+            if (air != null && pixels >= 16f && place)
             {
                 // The air of the region this view is in, as full as it gets.
                 air.Follow(at);
@@ -188,7 +348,7 @@ namespace Descender.EditorTools.TilesV2
             {
                 main.enabled = false;
             }
-            var restore = PlaceBackdrop(world, at, size);
+            var restore = place ? PlaceBackdrop(world, at, size) : new List<(SpriteRenderer, Vector2)>();
             var target = new RenderTexture(width, height, 24, RenderTextureFormat.ARGB32)
             {
                 filterMode = FilterMode.Point,
@@ -287,17 +447,20 @@ namespace Descender.EditorTools.TilesV2
             }
         }
 
-        private static string OutFolder()
+        private static string OutFolder() => Argument("-tilesV2Out") ?? Path.GetFullPath("Logs/TilesV2");
+
+        // What follows a word on the editor's command line; null when the word is not there.
+        private static string Argument(string word)
         {
             var args = Environment.GetCommandLineArgs();
             for (var i = 0; i < args.Length - 1; i++)
             {
-                if (args[i] == "-tilesV2Out")
+                if (args[i] == word)
                 {
                     return args[i + 1];
                 }
             }
-            return Path.GetFullPath("Logs/TilesV2");
+            return null;
         }
     }
 }
