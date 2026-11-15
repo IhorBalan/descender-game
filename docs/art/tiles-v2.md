@@ -138,9 +138,16 @@ tilemap of their own (`Foliage`), in front of the other walls and not tinted
 back, so blossom is as bright as it is drawn. Crowns are drawn with the
 `leaves` texture (rows of small rounds), a column with `flutes`.
 
-Paradise also adds `mist_wall` (the inside of a cloud: a wall like any other)
+Paradise also adds `mist_wall` (the inside of a cloud: a wall like any other),
+`shadow_wall` (marble the sun does not reach: a recess, the inside of a dome)
 and `gold_brick`, gold in blocks, which gives a warm light: a roof of it has
-no dark heart and shows from the Earth at night.
+no dark heart and shows from the Earth at night. Marble and gold have slopes,
+so a roof is a line and not a stair. Three more open walls are for what is set
+on a building: `glass_wall` and `rose_glass_wall`, stained glass (the `glass`
+texture: panes in a lattice of lead; a glass's ramp is hues, not shades, the
+first of them the lead), which lets the light through as a window does, and
+`gilt_wall`, gold worked thin (the `plain` texture), for a rod on a spire, a
+chain, a bell, a star.
 
 A **ledge** is a thin platform: a strip 5 px deep at the top of its cell, on
 its own tilemap on the game's Ledge layer with a one-way `PlatformEffector2D`,
@@ -223,8 +230,10 @@ are the legend in the manifest:
 | `m` `h` `r` `u` `n` `y` `b` `v` `f` `i` | wall (second grid) | the regions' walls |
 | `w` `l` | wall (second grid) | a tree's trunk and its crown: open walls |
 | `t` `p` `g` `x` | wall (second grid) | Paradise's open walls: a pale trunk, blossom, leaves of gold, a column |
-| `c` | wall (second grid) | the inside of a cloud |
+| `o` `q` `X` | wall (second grid) | more of them: stained glass, cool and warm; gilt work |
+| `c` `z` | wall (second grid) | the inside of a cloud; marble in shadow |
 | `K` | terrain | gold in blocks |
+| `a` `e` `j` `k` | terrain | the slopes of marble and of gold, up to the right and up to the left |
 | `\|` | liquid | falling water |
 
 A map of several regions also says where each starts and what of the game's

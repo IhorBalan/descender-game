@@ -335,6 +335,38 @@ MonoBehaviour:
     layer: 1
     key: pillar_wall
     tile: {fileID: 11400000, guid: 1b1e39d37e2c6a144af8dcef1cc76b52, type: 2}
+  - character: o
+    layer: 1
+    key: glass_wall
+    tile: {fileID: 11400000, guid: 180ef1f32d9832649b0bbe8a07a02195, type: 2}
+  - character: q
+    layer: 1
+    key: rose_glass_wall
+    tile: {fileID: 11400000, guid: cc2e950e37f864444aa8ddc1b0619646, type: 2}
+  - character: X
+    layer: 1
+    key: gilt_wall
+    tile: {fileID: 11400000, guid: 04ebb7304f2270e4383a9f7803e9c05f, type: 2}
+  - character: z
+    layer: 1
+    key: shadow_wall
+    tile: {fileID: 11400000, guid: db269763afaf3e74185c92597d140da5, type: 2}
+  - character: a
+    layer: 0
+    key: marble
+    tile: {fileID: 11400000, guid: 6da4341cbec7a9c4e8ee327c07933ee4, type: 2}
+  - character: e
+    layer: 0
+    key: marble
+    tile: {fileID: 11400000, guid: 9dbd6b6c7e4365045b4bcc0cba9b0785, type: 2}
+  - character: j
+    layer: 0
+    key: gold_brick
+    tile: {fileID: 11400000, guid: a432d13815bdb7f4eb8c6dff2737f235, type: 2}
+  - character: k
+    layer: 0
+    key: gold_brick
+    tile: {fileID: 11400000, guid: a229e1edbe614fa45836eb7e635bbfc0, type: 2}
   - character: K
     layer: 0
     key: gold_brick

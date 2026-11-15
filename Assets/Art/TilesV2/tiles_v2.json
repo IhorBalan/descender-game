@@ -192,7 +192,7 @@
       "kind": "terrain",
       "group": "earth",
       "sheet": "marble.png",
-      "slopes": false,
+      "slopes": true,
       "emits": [
         0.0,
         0.0,
@@ -565,6 +565,58 @@
       "open": true
     },
     {
+      "key": "glass_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "glass_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "rose_glass_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "rose_glass_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "gilt_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "gilt_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": true
+    },
+    {
+      "key": "shadow_wall",
+      "kind": "wall",
+      "group": "walls",
+      "sheet": "shadow_wall.png",
+      "slopes": false,
+      "emits": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "open": false
+    },
+    {
       "key": "mist_wall",
       "kind": "wall",
       "group": "walls",
@@ -582,7 +634,7 @@
       "kind": "terrain",
       "group": "earth",
       "sheet": "gold_brick.png",
-      "slopes": false,
+      "slopes": true,
       "emits": [
         0.42,
         0.33,
@@ -1501,6 +1553,54 @@
       "layer": "wall",
       "key": "pillar_wall",
       "slope": ""
+    },
+    {
+      "character": "o",
+      "layer": "wall",
+      "key": "glass_wall",
+      "slope": ""
+    },
+    {
+      "character": "q",
+      "layer": "wall",
+      "key": "rose_glass_wall",
+      "slope": ""
+    },
+    {
+      "character": "X",
+      "layer": "wall",
+      "key": "gilt_wall",
+      "slope": ""
+    },
+    {
+      "character": "z",
+      "layer": "wall",
+      "key": "shadow_wall",
+      "slope": ""
+    },
+    {
+      "character": "a",
+      "layer": "terrain",
+      "key": "marble",
+      "slope": "up_right"
+    },
+    {
+      "character": "e",
+      "layer": "terrain",
+      "key": "marble",
+      "slope": "up_left"
+    },
+    {
+      "character": "j",
+      "layer": "terrain",
+      "key": "gold_brick",
+      "slope": "up_right"
+    },
+    {
+      "character": "k",
+      "layer": "terrain",
+      "key": "gold_brick",
+      "slope": "up_left"
     },
     {
       "character": "K",

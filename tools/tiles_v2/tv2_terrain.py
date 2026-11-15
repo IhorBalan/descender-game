@@ -214,7 +214,42 @@ def texture_flutes(seed) -> np.ndarray:
     return t
 
 
+def texture_glass(seed) -> np.ndarray:
+    """Stained glass: panes in a lattice of lead, each pane one of the palette's colours
+    (the ramp of a glass is hues, not shades: 0 is the lead), a glint in some."""
+    r = rng("glass", seed)
+    t = np.zeros((TILE, TILE), dtype=np.int16)
+    for row in range(2):
+        for col in range(2):
+            hue = r.choice([1, 1, 2, 2, 3, 4])
+            x0, y0 = col * 8, row * 8
+            for dy in range(8):
+                for dx in range(8):
+                    # A pane is a diamond in its 8 x 8; what is left between four of them is one more.
+                    inside = abs(dx - 3.5) + abs(dy - 3.5) <= 3.6
+                    edge = abs(abs(dx - 3.5) + abs(dy - 3.5) - 4.1) < 0.6
+                    t[y0 + dy, x0 + dx] = 0 if edge else hue if inside else 5 if (row + col) % 2 else 2
+            if r.random() < 0.5:
+                t[y0 + 2, x0 + 3] = 5
+    return t
+
+
+def texture_plain(seed) -> np.ndarray:
+    """A smooth face with a soft sheen across it: polished metal, deep shadow."""
+    r = rng("plain", seed)
+    t = np.full((TILE, TILE), 3, dtype=np.int16)
+    for y in range(TILE):
+        for x in range(TILE):
+            if (x + y + r.randrange(2)) % 16 in (3, 4):
+                t[y, x] = 4
+            elif (x + y) % 16 in (11, 12):
+                t[y, x] = 2
+    return t
+
+
 TEXTURES = {
+    "glass": texture_glass,
+    "plain": texture_plain,
     "leaves": texture_leaves,
     "flutes": texture_flutes,
     "cloud": texture_cloud,

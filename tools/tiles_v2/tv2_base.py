@@ -160,6 +160,12 @@ _BIOME_PALETTES = [
     ("blossom_wall", "a84a78", "d86a9a e482ae ee9cc0 f6b4d0 fccce0 ffe6f0"),
     ("gold_leaf_wall", "9a6a10", "c88e1c dca62c ecbc40 f8d05c ffe284 fff3b4"),
     ("pillar_wall", "8c8a9a", "b8b6c4 cccad6 dcdae4 eae8f0 f6f5fa ffffff"),
+    # Stained glass: the first colour is the lead, the rest the panes' hues (cool, and warm for a rose).
+    ("glass_wall", "1c1a3a", "24224a 2f6fd8 49b4f0 8a5ce0 ffd45a fff6d0"),
+    ("rose_glass_wall", "3a1228", "4a1830 e0407a ff7aa8 f0a030 ffe070 fff6d0"),
+    # Gold worked thin, for what is hung and set on a building; and marble in deep shadow.
+    ("gilt_wall", "8a5e0c", "b88314 d09a1c e6b430 f6cc4c ffe27a fff3b0"),
+    ("shadow_wall", "3a3a4c", "55546a 5f5e74 69687e 737288 7d7c92 87869c"),
     ("mist_wall", "7f93b8", "a9b9d6 b5c3de c1cde6 cdd7ec d9e1f2 e5ebf7"),
 ]
 for _key, _outline, _ramp in _BIOME_PALETTES:
@@ -177,7 +183,7 @@ def _wall(key, texture):
 MATERIALS += [
     # A cloud is bright all through: it gives a soft light of its own, so its underside is not a shadow.
     _ground("cloud", "cloud", True, group="sky", emits=(0.5, 0.55, 0.65)),
-    _ground("marble", "bricks", False),
+    _ground("marble", "bricks", True),
     _wall("marble_wall", "bricks"),
     _ground("ashstone", "stone", True),
     _wall("ash_wall", "rubble"),
@@ -210,10 +216,16 @@ MATERIALS += [
     dict(_wall("gold_leaf_wall", "leaves"), open=True),
     # A column standing in the open, of bright marble: it shuts out no sky either.
     dict(_wall("pillar_wall", "flutes"), open=True),
+    # Glass lets the light through, as a window does; gilt work hangs in front of the wall.
+    dict(_wall("glass_wall", "glass"), open=True),
+    dict(_wall("rose_glass_wall", "glass"), open=True),
+    dict(_wall("gilt_wall", "plain"), open=True),
+    # A recess, a niche, the inside of a dome: marble the sun does not reach.
+    _wall("shadow_wall", "bricks"),
     # The inside of a cloud: a wall like any other, it shuts out the sky.
     _wall("mist_wall", "cloud"),
     # Gold in blocks, for what Paradise builds its roofs of: it gives a warm light.
-    dict(_ground("gold_brick", "bricks", False, emits=(0.42, 0.33, 0.10)), palette="gold"),
+    dict(_ground("gold_brick", "bricks", True, emits=(0.42, 0.33, 0.10)), palette="gold"),
 ]
 
 
@@ -429,6 +441,15 @@ LEGEND = [
     ("g", "wall", "gold_leaf_wall", ""),
     ("c", "wall", "mist_wall", ""),
     ("x", "wall", "pillar_wall", ""),
+    ("o", "wall", "glass_wall", ""),
+    ("q", "wall", "rose_glass_wall", ""),
+    ("X", "wall", "gilt_wall", ""),
+    ("z", "wall", "shadow_wall", ""),
+    # What Paradise builds with is cut on the slant too: a roof is a line, not a stair.
+    ("a", "terrain", "marble", "up_right"),
+    ("e", "terrain", "marble", "up_left"),
+    ("j", "terrain", "gold_brick", "up_right"),
+    ("k", "terrain", "gold_brick", "up_left"),
     ("K", "terrain", "gold_brick", ""),
     # Falling water: seen and walked through, neither swum in nor stood on.
     ("|", "liquid", "falls", ""),
