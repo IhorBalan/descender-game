@@ -88,6 +88,9 @@ namespace Descender.World.TilesV2
         private int legendFor = -1;
         private bool everything;
         private TilesV2Set.Region region;
+
+        // The name of the part of the level the hero is in, or was last in (a level of named parts).
+        private string zone = "";
         private string title = "";
         private string subtitle = "";
         private float titleLeft;
@@ -501,6 +504,9 @@ namespace Descender.World.TilesV2
         // Where the hero is on the chart, in cells.
         private Vector2 HeroCell() => hero.transform.position - world.transform.position;
 
+        /// <summary>The name of the part of the level the hero is in, or was last in; empty before he has been in any.</summary>
+        public string Zone => zone;
+
         /// <summary>Whether the chart is open.</summary>
         public bool IsChartShown => chartShown;
 
@@ -845,11 +851,6 @@ namespace Descender.World.TilesV2
                 }
             }
         }
-
-        /// <summary>The name of the part of the level the hero is in, or was last in; empty before he has been in any.</summary>
-        public string Zone => zone;
-
-        private string zone = "";
 
         // The name of the part that holds a place (a level marks each of its rooms with its part's name); empty for none.
         private string ZoneAt(Vector2 place)
