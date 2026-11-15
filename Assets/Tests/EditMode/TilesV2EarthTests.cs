@@ -128,9 +128,10 @@ namespace Descender.Tests
                     );
                     for (var k = 0; k < rows; k++)
                     {
+                        // Air all the way up (a miner's lamp may hang from its cap: a lamp is no ground).
                         Assert.That(
-                            map.TerrainAt(mark.Column, mark.Row - k),
-                            Is.EqualTo(TilesV2Map.Air),
+                            Solid(mark.Column, mark.Row - k),
+                            Is.False,
                             "a set of timber is as tall as its tunnel at " + mark.Column
                         );
                     }
@@ -260,6 +261,9 @@ namespace Descender.Tests
                     "rays",
                     "front",
                     "windows",
+                    "sway",
+                    "birds",
+                    "rain",
                 }
             )
             {
@@ -318,6 +322,28 @@ namespace Descender.Tests
                 Assert.That(layer.GetComponent<SpriteRenderer>().sortingOrder, Is.GreaterThan(0));
             }
             Assert.That(fronts, Is.EqualTo(life.Made["front"]));
+            // Reeds and grass sway: each through its own frames.
+            Assert.That(life.Swaying.Count, Is.GreaterThanOrEqualTo(life.Made["sway"]));
+            var reed = life.Swaying[0];
+            life.Sway(0f);
+            var leaning = reed.sprite;
+            var changed = false;
+            for (var t = 0.25f; t < 4f; t += 0.25f)
+            {
+                life.Sway(t);
+                changed |= reed.sprite != leaning;
+            }
+            Assert.That(changed, Is.True, "the reeds sway");
+            // Birds cross the sky far off, and come round again.
+            Assert.That(life.Birds.Count, Is.GreaterThan(0));
+            life.Fly(0f);
+            var from = life.Birds[0].transform.position;
+            life.Fly(5f);
+            Assert.That(life.Birds[0].transform.position.x, Is.Not.EqualTo(from.x), "the birds fly");
+            // It rains now and then, not always.
+            Assert.That(life.Rain, Is.Not.Null);
+            Assert.That(TilesV2Life.RainsAt(10f), Is.True);
+            Assert.That(TilesV2Life.RainsAt(TilesV2Life.RainFor + 10f), Is.False);
         }
 
         // The rows of the Earth's region: its first and the first of the next.

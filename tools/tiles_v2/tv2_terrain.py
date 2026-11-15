@@ -975,7 +975,9 @@ def mine_lamp_frame(frame: int) -> np.ndarray:
     return a
 
 
-PROP_FRAMES = {"torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
+from tv2_earth import campfire_frame, glowshroom_frame  # noqa: E402  (the Earth's props)
+
+PROP_FRAMES = {"campfire": campfire_frame, "glowshroom": glowshroom_frame, "torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
 
 
 def prop_sheet(prop: dict) -> tuple[Image.Image, list]:

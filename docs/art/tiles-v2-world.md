@@ -128,18 +128,23 @@ what they were, and the play-through is the same.
 - **The village** on the hill west of the start: a chapel with no roof, its gable and
   bell still standing, graves by it; a well; a cottage whose roof fell in at one end;
   fences. **By the start** the columns of a temple of the old world stand broken
-  behind the marble stubs, a drum fallen in the grass.
-- **The pond**: a willow on its west bank, and the willow again in the water; reeds
-  at both edges, lilies on the water, darker toward its floor; the falls splash where
+  behind the drums of their columns, one fallen in the grass; a campfire burns by the
+  start, a log by it to sit on. A trodden path runs from the village past the start to
+  the pond and on toward the mill.
+- **The pond**: a willow on its west bank, and the willow again in the water, with the
+  sky's light across it; reeds that sway at both edges, lilies on the water, darker toward its floor; the falls splash where
   they land.
 - **East of the pond**: the mill on its rise, sails broken; fields with haystacks, a
   scarecrow, a cart left where it stopped; a cottage still thatched where someone still
   lives: smoke from its chimney, washing on the line, a kitchen garden, a water butt, a
   lamp in its window at dusk and at night and a lantern by its door. The mill's sails turn.
-  The ruined cottage has its bench and an empty kennel.
+  The ruined cottage has its bench and an empty kennel, and a table on its side inside.
+  The living one's door stands ajar on the fire. A cart, a barrel and a haystack by the
+  well; sheep gone wild in the fields; a cat on the fence; birds far off; now and then a
+  shower of rain over the surface.
 - **The Gate** on the surface is an arch of dark stone over the mouth of the way down,
   pointed, a glow at its foot; two dead trees by it, and between it and the last stair
-  the graves of those who went down before.
+  the graves of those who went down before, a crypt, iron railing, crows on two stones.
 - **The meadows flower**: in patches (where a smooth field of noise says so), the turf
   is `meadow`, warmer than the grass, and wild flowers grow on it in clumps.
 - **Behind the surface** four ridges, each further one paler, bluer and plainer:
@@ -155,7 +160,9 @@ what they were, and the play-through is the same.
   boarded (`timber_wall`) a few columns either side; track along every level stretch of
   six columns or more between the shaft and the crossroads, its ends stopped with
   timber, a cart of copper ore on one run in three or so (one tipped over); crates,
-  sacks and a ladder on wider floors; every other torch is a miner's lamp hung on a nail;
+  sacks and a ladder on wider floors; every other torch is a miner's lamp hung from the
+  cap of the nearest timber; a boat on the mine's pool; mushrooms that glow by the water
+  of its caves;
   rubble where the roof came down, puddles with a drip over them, lumps of copper by the
   road; its copper ore has a green patina and its veins are thicker, and the caves no road
   leads to are lined with copper (warm) instead of crystals (cold); roots hang from a roof

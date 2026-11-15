@@ -11,9 +11,10 @@ namespace Descender.World.TilesV2
     /// day, the splash where falling water meets a pool, drips from a mine's roof (all single
     /// art pixels, as every particle is); a mill's sails that turn; lights that show only at
     /// dusk and at night (a lit window, the glow in the Gate, the lights of the far villages);
-    /// shafts of low sun at dawn and at sunset; and dark shapes close to the eye that pass
-    /// in front of everything a little faster than the world. `dx` and `dy` are art pixels
-    /// from the foot of the mark's cell.
+    /// shafts of low sun at dawn and at sunset; dark shapes close to the eye that pass in
+    /// front of everything a little faster than the world; reeds and grass that sway; birds
+    /// that cross the sky far off; and now and then rain over the surface. `dx` and `dy` are
+    /// art pixels from the foot of the mark's cell.
     /// </summary>
     public sealed class TilesV2Life : MonoBehaviour
     {
@@ -29,8 +30,23 @@ namespace Descender.World.TilesV2
         /// <summary>Frames a second the sails turn by.</summary>
         public const float SailFrames = 2.5f;
 
+        /// <summary>Frames a second what sways in the wind leans by.</summary>
+        public const float SwayFrames = 1.6f;
+
+        /// <summary>Seconds of play between the starts of two showers, and how long one lasts.</summary>
+        public const float RainEvery = 420f;
+
+        public const float RainFor = 100f;
+
+        private const int Flock = 5;
+        private const float FlockSpan = 120f;
+        private const float FlockSpeed = 1.6f;
+
         private const float Pixel = TilesV2Particles.Pixel;
         private const int FrontOrder = 40;
+
+        // The birds fly far off: behind the ridges' nearest wood, in front of the far hills.
+        private const int BirdOrder = -975;
         private const float Drop = 9f;
 
         // Seconds a system is run on for at once out of play, when the hour changes its rate.
@@ -69,6 +85,26 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private Sprite[] sails = Array.Empty<Sprite>();
 
+        [SerializeField, Tooltip("What sways: each shown with its own frames (its picture, then its leans).")]
+        private List<SpriteRenderer> swaying = new List<SpriteRenderer>();
+
+        private readonly List<Sprite[]> swayFrames = new List<Sprite[]>();
+
+        [SerializeField]
+        private List<SpriteRenderer> birds = new List<SpriteRenderer>();
+
+        [SerializeField, Tooltip("Where each bird's flock is anchored, and where in the flock it flies.")]
+        private List<Vector4> birdPlaces = new List<Vector4>();
+
+        [SerializeField]
+        private Sprite[] wings = Array.Empty<Sprite>();
+
+        [SerializeField]
+        private ParticleSystem rain;
+
+        [SerializeField, Tooltip("The heights the rain falls between: the foot and the top of the surface's band.")]
+        private Vector2 rainBand;
+
         private readonly Dictionary<string, int> made = new Dictionary<string, int>();
         private DayNight day;
         private float shownHour = -1f;
@@ -87,6 +123,18 @@ namespace Descender.World.TilesV2
 
         /// <summary>The frames the sails turn through.</summary>
         public IReadOnlyList<Sprite> SailSprites => sails;
+
+        /// <summary>What sways in the wind: reeds, and the shapes close to the eye.</summary>
+        public IReadOnlyList<SpriteRenderer> Swaying => swaying;
+
+        /// <summary>The birds far off.</summary>
+        public IReadOnlyList<SpriteRenderer> Birds => birds;
+
+        /// <summary>The rain over the surface (none if the map asks for none).</summary>
+        public ParticleSystem Rain => rain;
+
+        /// <summary>Whether it rains at a moment of play: a shower of RainFor seconds every RainEvery.</summary>
+        public static bool RainsAt(float seconds) => Mathf.Repeat(seconds, RainEvery) < RainFor;
 
         /// <summary>The hour last shown.</summary>
         public float ShownHour => shownHour;
@@ -221,9 +269,52 @@ namespace Descender.World.TilesV2
 
         private void Update()
         {
-            if (Application.isPlaying)
+            if (!Application.isPlaying)
             {
-                Turn(Time.time);
+                return;
+            }
+            Turn(Time.time);
+            Sway(Time.time);
+            Fly(Time.time);
+            var view = Camera.main;
+            if (rain != null && view != null)
+            {
+                Vector2 at = view.transform.position;
+                rain.transform.position = new Vector3(at.x, at.y + 14f, 0f);
+                var emission = rain.emission;
+                emission.enabled = RainsAt(Time.time) && at.y > rainBand.x && at.y < rainBand.y;
+            }
+        }
+
+        /// <summary>Shows what sways at a moment: each through its frames, each from its own place in the swing.</summary>
+        public void Sway(float seconds)
+        {
+            for (var i = 0; i < swaying.Count && i < swayFrames.Count; i++)
+            {
+                var frames = swayFrames[i];
+                var step = Mathf.FloorToInt(seconds * SwayFrames + i * 1.37f);
+                swaying[i].sprite = frames[(step % frames.Length + frames.Length) % frames.Length];
+            }
+        }
+
+        /// <summary>Puts the birds where they are at a moment: each flock crosses its stretch of sky and comes round again.</summary>
+        public void Fly(float seconds)
+        {
+            for (var i = 0; i < birds.Count; i++)
+            {
+                var place = birdPlaces[i];
+                var along = Mathf.Repeat(seconds * FlockSpeed + place.z, FlockSpan) - FlockSpan / 2f;
+                var bob = Mathf.Sin(seconds * 1.3f + place.w) * 0.25f;
+                var at = new Vector2(place.x + along, place.y + place.w * 0.3f + bob);
+                birds[i].transform.position = new Vector3(
+                    Mathf.Round(at.x * 16f) / 16f,
+                    Mathf.Round(at.y * 16f) / 16f,
+                    0f
+                );
+                if (wings.Length > 0)
+                {
+                    birds[i].sprite = wings[Mathf.FloorToInt(seconds * 4f + place.w * 3f) % wings.Length];
+                }
             }
         }
 
@@ -309,6 +400,45 @@ namespace Descender.World.TilesV2
                     var layer = shown.gameObject.AddComponent<ParallaxLayer>();
                     // It stands where it is marked when the camera is there, and slides past faster than the world.
                     layer.Configure(new Vector2(FrontScroll, 1f), at, at, Vector2.zero, 0f);
+                    Swings(set, key, shown);
+                    return true;
+                }
+                case "sway":
+                {
+                    var sprite = Picture(set, key);
+                    if (sprite == null)
+                    {
+                        return false;
+                    }
+                    var entry = Array.Find(set.backdrops, backdrop => backdrop.key == key);
+                    var shown = Shown("Sway " + key, sprite, at, entry.order, set.litMaterial);
+                    Swings(set, key, shown);
+                    return true;
+                }
+                case "birds":
+                {
+                    if (wings.Length == 0)
+                    {
+                        wings = Frames(set, "earth_bird_");
+                    }
+                    if (wings.Length == 0)
+                    {
+                        return false;
+                    }
+                    for (var i = 0; i < Flock; i++)
+                    {
+                        var bird = Shown("Bird", wings[0], at, BirdOrder, set.unlitMaterial);
+                        birds.Add(bird);
+                        // The flock's anchor, and this bird's place in it (how far along, how high).
+                        birdPlaces.Add(new Vector4(at.x, at.y, i * 1.1f + (i % 2) * 0.4f, i * 0.7f % 2.1f));
+                    }
+                    Fly(0f);
+                    return true;
+                }
+                case "rain":
+                {
+                    rain = Rainfall(world, set.litMaterial);
+                    rainBand = new Vector2(at.y - 20f, at.y + 40f);
                     return true;
                 }
                 case "smoke":
@@ -340,6 +470,40 @@ namespace Descender.World.TilesV2
                 default:
                     return false;
             }
+        }
+
+        // The frames of a picture that sways: itself, its leans one way, and back.
+        private void Swings(TilesV2Set set, string key, SpriteRenderer shown)
+        {
+            var leans = Frames(set, key + "_s");
+            if (leans.Length == 0)
+            {
+                return;
+            }
+            var frames = new List<Sprite> { shown.sprite };
+            frames.AddRange(leans);
+            for (var i = leans.Length - 2; i >= 0; i--)
+            {
+                frames.Add(leans[i]);
+            }
+            swaying.Add(shown);
+            swayFrames.Add(frames.ToArray());
+        }
+
+        // The pictures key0, key1, ... the tile set has (from 1 when the first is the picture itself).
+        private static Sprite[] Frames(TilesV2Set set, string prefix)
+        {
+            var frames = new List<Sprite>();
+            for (var i = prefix.EndsWith("_s") ? 1 : 0; ; i++)
+            {
+                var frame = Picture(set, prefix + i);
+                if (frame == null)
+                {
+                    break;
+                }
+                frames.Add(frame);
+            }
+            return frames.ToArray();
         }
 
         private SpriteRenderer Shown(string name, Sprite sprite, Vector2 at, int order, Material material)
@@ -439,14 +603,14 @@ namespace Descender.World.TilesV2
         // Fireflies: points of light that wander low over the grass, coming and going.
         private ParticleSystem Fireflies(Vector2 at, Material material)
         {
-            var system = System("Fireflies", at, material, 22);
+            var system = System("Fireflies", at, material, 40);
             var main = system.main;
             main.startLifetime = new ParticleSystem.MinMaxCurve(3f, 6f);
             main.startSpeed = 0f;
             main.startColor = new ParticleSystem.MinMaxGradient(Firefly, FireflyGreen);
             main.prewarm = true;
             var emission = system.emission;
-            emission.rateOverTime = 4f;
+            emission.rateOverTime = 8f;
             Box(system, 14f, 3f);
             Wander(system, 0.5f, 0.6f);
             TilesV2Particles.Fade(system, Color.white, Color.white, 0.3f);
@@ -503,6 +667,32 @@ namespace Descender.World.TilesV2
             Push(system, 0f, -Drop);
             TilesV2Particles.Fade(system, Color.white, Color.white, 0f);
             system.Play();
+        }
+
+        // Rain: streaks a pixel wide that fall fast, born over the view and riding with it; it
+        // falls only in a shower and only while the camera is over the surface (Update).
+        private ParticleSystem Rainfall(TilesV2World world, Material material)
+        {
+            var system = System("Rain", Vector2.zero, material, 900);
+            var main = system.main;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(1.1f, 1.5f);
+            main.startSpeed = 0f;
+            main.startColor = new ParticleSystem.MinMaxGradient(
+                new Color(0.75f, 0.84f, 0.95f, 0.75f),
+                new Color(0.6f, 0.72f, 0.88f, 0.55f)
+            );
+            var emission = system.emission;
+            emission.rateOverTime = 520f;
+            emission.enabled = false;
+            Box(system, world.Set.View.x + 8f, 0.5f);
+            Velocity(system, new Vector2(-2.2f, -20f), new Vector2(-1.6f, -16f));
+            var shown = system.GetComponent<ParticleSystemRenderer>();
+            // A drop is a streak of three art pixels: stretched along its fall.
+            shown.renderMode = ParticleSystemRenderMode.Stretch;
+            shown.velocityScale = 0.01f;
+            shown.lengthScale = 2f;
+            system.Play();
+            return system;
         }
 
         // A drop now and then from a mine's roof.

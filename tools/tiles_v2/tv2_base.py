@@ -172,6 +172,8 @@ _BIOME_PALETTES = [
     # The Earth's: a meadow's turf, warmer and more yellow than the grass; the mine's planks.
     ("meadow_grass", "1c3214", "2a4a1c 3e6a26 5a8a2e 7ea83a a8c44a d2dc6a"),
     ("timber_wall", "120c08", "1e150e 251a12 2c1f16 33251a 3a2a1e 423024"),
+    # A path: earth packed by feet, lighter and warmer than the dirt.
+    ("path_dirt", "2e2018", "5a4030 6e4e38 84603f 9a7048 ae8254 c2966a"),
 ]
 for _key, _outline, _ramp in _BIOME_PALETTES:
     PALETTES[_key] = {"outline": hexes(_outline)[0], "ramp": hexes(*_ramp.split())}
@@ -234,6 +236,8 @@ MATERIALS += [
     # The Earth's: a meadow is dirt under a warmer turf, where the wild flowers grow
     # (tv2_decor.py); the old mine's walls are boarded with planks in places.
     {"key": "meadow", "kind": "terrain", "texture": "dirt", "palette": "dirt", "grass": "meadow_grass", "group": "earth", "slopes": True},
+    {"key": "path", "kind": "terrain", "texture": "dirt", "palette": "path_dirt", "group": "earth", "slopes": False},
+    {"key": "column_stone", "kind": "terrain", "texture": "flutes", "palette": "marble", "group": "column", "slopes": False},
     _wall("timber_wall", "planks"),
 ]
 
@@ -469,6 +473,11 @@ LEGEND = [
     ("Ö", "terrain", "meadow", "up_left"),
     ("Ø", "wall", "timber_wall", ""),
     ("ö", "prop", "mine_lamp", ""),
+    ("Å", "prop", "campfire", ""),
+    ("å", "prop", "glowshroom", ""),
+    # A trodden path (packed earth, no turf), and the drums of the old columns by the start.
+    ("ü", "terrain", "path", ""),
+    ("Ü", "terrain", "column_stone", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}
@@ -602,6 +611,9 @@ PROPS = [
     {"key": "lantern", "frames": 3, "colour": (1.0, 0.93, 0.72), "intensity": 1.2, "embers": False},
     # The Earth's: a miner's lamp hung from a nail in the timber, a warmer, smaller light than a torch.
     {"key": "mine_lamp", "frames": 3, "colour": (1.0, 0.78, 0.48), "intensity": 1.5, "embers": False},
+    # A fire by the start, and mushrooms that give a cold light in the damp of the Earth's caves.
+    {"key": "campfire", "frames": 3, "colour": (1.0, 0.62, 0.30), "intensity": 1.8, "embers": True},
+    {"key": "glowshroom", "frames": 3, "colour": (0.35, 1.0, 0.85), "intensity": 1.0, "embers": False},
 ]
 
 

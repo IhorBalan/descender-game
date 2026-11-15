@@ -43,6 +43,9 @@ namespace Descender.World.TilesV2
         private SpriteRenderer picture;
 
         public Vector2 Scroll => scroll;
+
+        /// <summary>The camera position at which the layer sits at its anchor.</summary>
+        public Vector2 CameraAnchor => cameraAnchor;
         public Vector2 Repeat => repeat;
 
         /// <summary>Sets the layer up (the world builder's one entry point).</summary>

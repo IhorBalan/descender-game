@@ -1592,11 +1592,11 @@ def earth(world: World) -> Path:
     start = (POND[0] + POND[1]) // 2 - 28
     world.spawn = (start, surface[start] - 1)
     world.view("earth", start + 2, GROUND_LINE - 4)
-    # Ruins by the start: what is left of a colonnade.
+    # Ruins by the start: what is left of a colonnade, its drums (`column_stone`).
     for dx, tall in ((-14, 3), (-13, 1), (-9, 2), (8, 3), (9, 1), (13, 1)):
         x = start + dx
         for y in range(surface[x] - tall, surface[x]):
-            world.t[y][x] = "M"
+            world.t[y][x] = "Ü"
             world.square.add((x, y))
     # A pond.
     low = surface[POND[0]]
@@ -1613,11 +1613,8 @@ def earth(world: World) -> Path:
     road.hall(16, 9, name="earth_crossroads")
     road.rest()
     # The arch over the mouth, of the City's own brick, on the wall behind: the first sight of what lies under.
-    # Under the sky the arch is a picture (`earth_gateway`, tv2_earth_map.py); its piers go on
-    # down the wall behind, into the ground.
-    for x in (mouth + 4, mouth + 5, mouth - 10, mouth - 11):
-        for y in range(surface[x], surface[x] + 6):
-            world.walls[y][x] = "b"
+    # The arch over it is a picture (`earth_gateway`, stood by tv2_earth_map.py); the tunnel
+    # under it has the Earth's own wall (brick piers there read as steps across the way down).
     world.put(mouth + 3, surface[mouth + 3] - 1, "*")
 
     # West from the crossroads: the old mine, a long way under the meadows, and at its end
