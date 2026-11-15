@@ -87,6 +87,9 @@ namespace Descender.World.TilesV2
         public IReadOnlyList<Tilemap> Liquids => liquidMaps;
         public TileLightMap Light { get; private set; }
         public DayNight Day { get; private set; }
+
+        /// <summary>What moves and what comes with the hour (TilesV2Life): built with the world.</summary>
+        public TilesV2Life Life { get; private set; }
         public Sky Sky { get; private set; }
 
         /// <summary>The holder of the torches.</summary>
@@ -253,6 +256,7 @@ namespace Descender.World.TilesV2
                 TilesV2Particles.Build(this, field, built);
                 TilesV2Zones.Build(this, field, built);
             }
+            Life = TilesV2Life.Build(this, built);
             if (Map.Width * Map.Height >= BigMap)
             {
                 // A world takes a moment to build: say how long, where a player's log keeps it.
@@ -288,6 +292,7 @@ namespace Descender.World.TilesV2
             Ledges = null;
             Light = null;
             Day = null;
+            Life = null;
             Sky = null;
             Torches = null;
         }

@@ -23,6 +23,7 @@ import tv2_earth
 
 AIR = "."
 PICTURE = "picture"
+LIFE = "life"  # TilesV2Life's own marks
 
 
 class Dresser:
@@ -36,6 +37,8 @@ class Dresser:
         self.clear = list(getattr(world, "clear", []))
         self.stood = 0
         self.track_cells: set = set()
+        self.lives: dict[str, int] = {}
+        self.trees: list[tuple[int, int, str]] = []
         self.posts: list[tuple[int, int]] = []
 
     # --- Where things are -----------------------------------------------------------
@@ -97,6 +100,14 @@ class Dresser:
         if span:
             self.taken.append(span)
 
+    def life(self, kind: str, x: int, row: int, key: str = "-", dx: int = 0, dy: int = 0):
+        """A mark for TilesV2Life in cell (x, row): `kind` (smoke, leaves, fireflies, butterflies,
+        splash, drip, sails, glow, rays, front), the picture it shows (or -), and where from the
+        foot of the cell it stands, in art pixels (dx right, dy up)."""
+        assert key == "-" or key in tv2_earth.PICTURE_KEYS, key
+        self.w.mark(LIFE, x, row, kind, key, dx, dy)
+        self.lives[kind] = self.lives.get(kind, 0) + 1
+
     def building(self, key: str, lo: int, hi: int, sag: int = 2, foot: int | None = None) -> tuple[int, int] | None:
         """Builds a picture (on its plinth, which goes down behind the ground) somewhere between lo and hi;
         `foot` is how many columns it stands on (all but the outermost of its width if not
@@ -142,6 +153,7 @@ class Dresser:
         if self.has_mark(x - 1, x + 1, tops[0] - 3, tops[0]):
             return False
         self.stand(key, x, tops[1])
+        self.trees.append((x, tops[1], key))
         return True
 
     def woods(self, lo: int, hi: int, kinds: list[str], gap: tuple[int, int], salt: int):
@@ -168,7 +180,10 @@ class Dresser:
         tops = [self.top(c) for c in range(start - 13, start + 14)]
         self.stand("earth_colonnade", start, self.top(start) or max(v for v in tops if v is not None), (start - 13, start + 13))
         # The village on the hill west of the start.
-        self.building("earth_cottage_ruin", start - 44, start - 15)
+        ruin = self.building("earth_cottage_ruin", start - 44, start - 15)
+        if ruin:
+            self.building("earth_kennel", ruin[0] + 6, ruin[0] + 12, sag=0)
+            self.building("earth_bench", ruin[0] - 12, ruin[0] - 5, sag=0)
         chapel = self.building("earth_chapel", 180, 222)
         self.building("earth_well", 196, start - 16, sag=0)
         for lo, hi, v in ((178, 200, 0), (200, 236, 1), (222, 252, 2)):
@@ -195,10 +210,15 @@ class Dresser:
                     self.stand(f"earth_lilies_{v}", x, water + 1)
         # East of the stair by the pond: the mill on its rise, the fields, a cottage someone
         # still lives in (a lantern by its door), an orchard.
-        self.building("earth_windmill", 336, 358, sag=1, foot=4)
+        mill = self.building("earth_windmill", 336, 358, sag=1, foot=4)
+        if mill:
+            self.life("sails", mill[0], mill[1] - 1, "earth_sails_0", 2, 124)
         home = self.building("earth_cottage", 356, 384)
         if home:
-            self.stand("earth_cottage_glow", home[0], home[1])
+            self.life("glow", home[0], home[1] - 1, "earth_cottage_glow")
+            self.life("smoke", home[0], home[1] - 1, "-", -37, 106)
+            for lo, hi, key in ((home[0] - 14, home[0] - 6, "earth_washing"), (home[0] + 6, home[0] + 13, "earth_barrel"), (home[0] + 7, home[0] + 16, "earth_garden")):
+                self.building(key, lo, hi, sag=0)
             lamp = home[0] + 4
             if self.t[home[1] - 1][lamp] == AIR and self.solid_top(lamp) == home[1]:
                 self.t[home[1] - 1][lamp] = "J"
@@ -207,6 +227,7 @@ class Dresser:
         # The Gate: its arch of dark stone over the mouth of the way down; dead trees by it.
         gate_floor = self.top(mouth + 2) or m.GROUND_LINE
         self.stand("earth_gateway", mouth - 5, gate_floor, (mouth - 14, mouth + 4))
+        self.life("glow", mouth - 5, gate_floor - 1, "earth_gate_glow")
         for x in (mouth - 18, mouth + 11):
             for dx in (0, 1, -1, 2):
                 if self.tree("earth_dead_tree_" + str((x // 3) % 2), x + dx):
@@ -226,19 +247,86 @@ class Dresser:
                 x += 1
         # The woods, last, wherever nothing was built: firs in the west and the east, a mixed
         # wood round the shaft, fewer trees in the village, an orchard by the fields.
-        oaks = [f"earth_oak_{v}" for v in range(tv2_earth.OAKS)]
+        oaks = [f"earth_oak_{v}" for v in range(tv2_earth.OAKS - 1)] * 2 + [f"earth_oak_{tv2_earth.OAKS - 1}"]
+        birches = [f"earth_birch_{v}" for v in range(2)]
+        # The old oak, the landmark of the wood: on the widest level ground there.
+        found = self.site(96, 150, 7, 1)
+        if found:
+            x0, floor = found
+            self.stand("earth_giant_oak", x0 + 3, floor, (x0 - 4, x0 + 10))
+            self.trees.append((x0 + 3, floor, "earth_giant_oak"))
         pines = [f"earth_pine_{v}" for v in range(tv2_earth.PINES)]
         shrubs = [f"earth_shrub_{v}" for v in range(tv2_earth.SHRUBS)]
         apples = [f"earth_apple_{v}" for v in range(tv2_earth.APPLES)]
         self.woods(20, 48, pines + pines + shrubs[:1], (3, 6), 301)
-        self.woods(66, 178, oaks + oaks + pines + pines + shrubs, (3, 7), 302)
-        self.woods(178, start - 12, oaks + apples + shrubs, (8, 13), 303)
+        self.woods(66, 178, oaks + pines + pines + birches + shrubs, (3, 7), 302)
+        self.woods(178, start - 12, oaks + apples + birches + shrubs, (8, 13), 303)
+        # Under the trees of the wood: logs, stumps, toadstools.
+        for x in range(70, 176, 9):
+            kind = ("earth_log", "earth_stump_0", "earth_stump_1", "earth_toadstools")[int(m.hash01(x, 401) * 4)]
+            self.building(kind, x, x + 6, sag=0)
         self.woods(start - 12, start + 14, shrubs, (5, 9), 309)
         self.woods(start + 14, pond0 - 4, oaks[:3] + shrubs, (6, 10), 304)
         self.woods(m.POND[1] + 3, 314, oaks, (6, 9), 305)
         self.woods(336, 380, oaks[:3] + shrubs + apples, (9, 14), 306)
         self.woods(380, 426, apples + apples + shrubs, (4, 7), 307)
         self.woods(m.EAST - 18, m.WIDTH - 4, pines + pines + oaks[3:], (3, 6), 308)
+
+    def lives_of_the_surface(self):
+        """What moves on the surface and what comes with the hour: leaves from the autumn
+        oaks, fireflies by the water and in the woods at night, butterflies over the meadows
+        by day, the splash where the falls land in the pond, shafts of low sun through the
+        trees at dawn and at sunset, and dark shapes close to the eye."""
+        m = self.m
+        for x, ground, key in self.trees:
+            if key.endswith(f"oak_{tv2_earth.OAKS - 1}"):
+                self.life("leaves", x, ground - 1, "-", 0, 96)
+        pond0, pond1 = m.POND
+        for x in (pond0 - 1, 110, 215, 384, 520):
+            top = self.top(x)
+            if top is not None:
+                self.life("fireflies", x, top - 1, "-", 0, 24)
+        for x in range(3, self.width - 3):
+            top = self.top(x)
+            if top is not None and self.t[top][x] == "Ñ" and m.hash01(x, 402) < 0.035:
+                self.life("butterflies", x, top - 1, "-", 0, 16)
+        # The splash: where the falling water meets the pond.
+        for x in range(pond0, pond1):
+            for y in range(m.GROUND_LINE - 16, m.SURFACE_LINE + 4):
+                if self.t[y][x] == "|" and self.t[y + 1][x] == "W":
+                    self.life("splash", x, y + 1, "-", 0, 13)
+                    break
+        # The pond's deep and the willow in it.
+        water = next((y for y in range(m.GROUND_LINE - 10, m.SURFACE_LINE + 6) if self.t[y][pond0 + 4] == "W"), None)
+        if water is not None:
+            self.stand("earth_depth", (pond0 + pond1) // 2 - 1, water + 1)
+            willow = next(((x, g) for x, g, k in self.trees if k == "earth_willow"), None)
+            if willow and self.t[water][willow[0] + 4] == "W":
+                self.stand("earth_reflection", willow[0] + 4, water + 1)
+        for x in (110, 228, 372):
+            top = self.top(x)
+            if top is not None:
+                self.life("rays", x, top - 1, "earth_rays")
+        x, k = 24, 0
+        while x < self.width - 24:
+            top = self.top(x)
+            if top is not None and not self.is_clear(x - 3, x + 3) and self.t[top][x] in self.ground:
+                self.life("front", x, top - 1, f"earth_front_{k % 4}")
+                k += 1
+                x += 28 + int(m.hash01(x, 403) * 26)
+            else:
+                x += 1
+
+    def roots(self):
+        """Roots out of the roof of a cave or tunnel that lies under a tree."""
+        made = 0
+        for x, ground, key in self.trees:
+            for y in range(ground + 2, ground + 14):
+                if self.t[y][x] == AIR and self.t[y - 1][x] in self.ground and self.t[y + 1][x] == AIR:
+                    self.stand(f"earth_roots_{int(self.m.hash01(x, 404) * 3)}", x, y + 1)
+                    made += 1
+                    break
+        return made
 
     # --- The mine --------------------------------------------------------------------
 
@@ -311,6 +399,44 @@ class Dresser:
                         heaps += 1
                         last = x
                         break
+        # Every other torch of the mine is a miner's lamp hung on a nail instead.
+        lamps = 0
+        for y in range(top, bottom):
+            for x in range(60, m.EAST - 20):
+                if self.t[y][x] == "T" and m.hash01(x, y, 405) < 0.5:
+                    self.t[y][x] = "ö"
+                    lamps += 1
+        # Rubble where the roof came down, puddles under a drip, copper by the road.
+        x, last = 64, -99
+        made = {"rubble": 0, "puddle": 0, "nugget": 0}
+        kinds = ["rubble", "puddle", "nugget", "nugget", "puddle"]
+        while x < m.EAST - 24:
+            x += 1
+            if x - last < 13:
+                continue
+            for floor in range(top, bottom):
+                if self.tunnel(x, floor) < 3:
+                    continue
+                cells = [(c, floor) for c in range(x - 1, x + 3)]
+                if any(cell in self.track_cells for cell in cells) or self.has_mark(x - 2, x + 3, floor - 4, floor):
+                    continue
+                if not all(self.tunnel(c, floor) >= 3 and self.t[floor - 1][c] == AIR for c in range(x - 1, x + 3)):
+                    continue
+                kind = kinds[int(m.hash01(x, floor, 406) * len(kinds))]
+                key = {"rubble": f"earth_rubble_{x % 2}", "puddle": "earth_puddle", "nugget": f"earth_nugget_{x % 2}"}[kind]
+                self.stand(key, x, floor)
+                made[kind] += 1
+                if kind == "puddle":
+                    roof = next(y for y in range(floor - 1, 0, -1) if self.t[y][x] in self.ground)
+                    self.life("drip", x, roof + 1, "-", 0, 16)
+                last = x
+                break
+        # The lift's cage, hung in the old shaft under its pithead.
+        shaft = next((mk[1] + 3 for mk in self.w.marks if mk[0] == "sign" and mk[3][1:4] == ["The", "old", "shaft."]), None)
+        if shaft is not None:
+            top_row = next(y for y in range(self.m.GROUND_LINE - 20, bottom) if self.t[y][shaft + 1] == '"')
+            self.stand("earth_cage", shaft + 2, top_row + 5)
+        self.mined = (lamps, made)
         return posts, rails, carts, heaps
 
     def track(self, run: list[int], floor: int) -> int:
@@ -338,6 +464,8 @@ def dress(world, m, log=print):
     dresser.meadows()
     dresser.surface()
     posts, rails, carts, heaps = dresser.mine()
+    dresser.lives_of_the_surface()
+    rooted = dresser.roots()
     start = world.spawn[0]
     world.view("earth_village", start - 50, m.GROUND_LINE - 6)
     world.view("earth_fields", 364, m.GROUND_LINE - 6)
@@ -349,5 +477,9 @@ def dress(world, m, log=print):
         ("earth_fields_dawn", "earth_fields", 6.9),
         ("earth_night", "earth", 22.5),
     ]
-    log(f"  the Earth dressed: {dresser.stood} pictures, {posts} sets of timber, {rails} tiles of track, {carts} carts, {heaps} heaps")
+    lamps, made = dresser.mined
+    log(
+        f"  the Earth dressed: {dresser.stood} pictures, {posts} sets of timber, {rails} tiles of track, {carts} carts, "
+        f"{heaps} heaps, {lamps} hung lamps, {made}, roots under {rooted} trees; life: {dresser.lives}"
+    )
     return dresser

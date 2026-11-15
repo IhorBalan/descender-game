@@ -685,6 +685,7 @@ def backdrops() -> dict[str, Image.Image]:
             caves["backdrop_far_" + region["key"]] = tv2_earth.far_mine(region) if FAR[region["key"]] == "mine" else backdrop_far(region)
     earth = tv2_earth.pictures()
     earth.update({key: paint() for key, _, _, paint in tv2_earth.RIDGES})
+    earth.update({key: paint() for key, paint in tv2_earth.LAYERS.items()})
     return {
         **caves,
         "backdrop_stars": backdrop_stars(),

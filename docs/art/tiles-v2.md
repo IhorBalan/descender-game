@@ -241,6 +241,7 @@ are the legend in the manifest:
 | `\|` | liquid | falling water |
 | `Ñ` `ñ` `Ö` | terrain | the Earth's meadow in flower, and its slopes up to the right and up to the left |
 | `Ø` | wall (second grid) | the boards of the old mine |
+| `ö` | prop | a miner's lamp hung on a nail (the Earth's mine) |
 
 A map of several regions also says where each starts and what of the game's
 stands where:
@@ -393,16 +394,37 @@ solid and none of it shades: it is lit by the tile light as the ground is.
 
 | Order | Pictures |
 |---|---|
-| -287 | behind the decor and the ground, in front of the walls and their shade: trees (4 oaks, one in autumn colours, 3 firs, 2 apple trees, 2 dead trees, a willow), 3 thickets, two cottages (a ruin with its roof fallen in, and one still thatched), a chapel without its roof, a well, a windmill, fences, a cart, haystacks, a scarecrow, 4 kinds of grave, the Gate's arch, the pithead and its winch hut, the colonnade by the start, reeds, a jetty; in the mine, sets of timber for tunnels 3 to 12 rows high, crates, sacks, a ladder |
-| -286 | unlit: the lamp in the window of the cottage that is still lived in, seen at dusk and at night |
-| -99 | in front of the ground they lie on: the mine's track and its carts |
-| 27 | on the water, in front of the hero as the water is: lilies |
+| -287 | behind the decor and the ground, in front of the walls and their shade: trees (4 oaks, one in autumn colours, 3 firs, 2 apple trees, 2 birches, 2 dead trees, a willow, and the old oak, a landmark 15 tiles high), 3 thickets, a log, stumps, toadstools, a washing line, a kitchen garden, a bench, a water butt, a kennel, two cottages (a ruin with its roof fallen in, and one still thatched), a chapel without its roof, a well, a windmill, fences, a cart, haystacks, a scarecrow, 4 kinds of grave, the Gate's arch, the pithead and its winch hut, the colonnade by the start, reeds, a jetty; in the mine, sets of timber for tunnels 3 to 12 rows high, crates, sacks, a ladder, rubble, lumps of copper, the lift's cage in the old shaft, roots hanging from a roof under a tree |
+| -99 | in front of the ground they lie on: the mine's track and its carts, puddles |
+| 27 | on the water, in front of the hero as the water is: lilies, the pond's deep, the willow in it |
 
 How they are drawn (the research notes, `earth-art-research.md` in the session's notes):
 the light from the top left; ramps that shift hue (shadows cool, the lit side warm); a
 crown is a few rounded bundles shaded as balls, each with a dark rim where it lies over
 the one behind and a gap or two where the branches show, never one ball on a stick; the
 props of the background darker and less saturated than the ground the hero walks on.
+
+## Life
+
+What moves and what comes with the hour is made by `TilesV2Life` from the map's `life`
+marks (`@mark life column row kind picture dx dy`, `dx` and `dy` art pixels from the foot
+of the cell), built with the world; the clock tells it the hour (`DayNight.Applied`).
+
+| Kind | What | When |
+|---|---|---|
+| smoke | grey pixels from a chimney, leaning with a light wind | always |
+| leaves | from an autumn crown, falling slowly and rocking | always |
+| fireflies | points of light wandering low (unlit) | their rate goes with the night |
+| butterflies | bright specks over a meadow | with the day |
+| splash | drops thrown up where falling water meets a pool | always |
+| drip | a drop now and then from a mine's roof, over a puddle | always |
+| sails | a mill's sails, four frames of a quarter turn (`SailFrames` a second) | always |
+| glow | an unlit picture shown only at dusk and at night: a lit window, the glow in the Gate | `NightAt`: full from 20:30 to 5:00, none from 7:30 to 18:00 |
+| rays | shafts of low sun, unlit and faint | `DawnAt`: at their most at 7:00 and 18:40 |
+| front | a dark shape close to the eye (tall grass, a bough), drawn in front of the hero (order 40) and moving 1.3 times as fast as the world across (`ParallaxLayer` may scroll up to 2 across) | always |
+
+The lights of the far villages (`backdrop_earth_windows`, a layer of heaven placed exactly
+as the hills are but not tinted) come on with the night as the glows do.
 
 ## Light
 
@@ -425,7 +447,7 @@ runs the same sums for the preview. 1 is full daylight.
    the edge between them (`TilesV2World.AirLight`). The air of a stretch a
    map marks `dark` gives none (`TileLightMap.SetDark`): there the lamps and
    what spreads in from beside it are all the light there is. The lamps are four props
-   (`PROPS`): a torch `(1, 0.72, 0.42) x 1.6`, a brazier `(1, 0.60, 0.32) x 2`,
+   (`PROPS`): a torch `(1, 0.72, 0.42) x 1.6`, a miner's lamp `(1, 0.78, 0.48) x 1.5`, a brazier `(1, 0.60, 0.32) x 2`,
    a crystal `(0.55, 0.82, 1) x 1.3`, a lantern `(1, 0.93, 0.72) x 1.2`. A torch puts `(1, 0.72, 0.42) x 1.6` on its tile, lava `(1.5,
    0.8, 0.3)` on each of its tiles, copper ore `(0.30, 0.17, 0.07)`.
 3. **Spread.** Each tile ends with the brightest of its own light and of each

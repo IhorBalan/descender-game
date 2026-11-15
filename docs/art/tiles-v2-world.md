@@ -120,18 +120,23 @@ what they were, and the play-through is the same.
 
 - **Woods.** Firs at the two ends, by the Pit and past the last stair; a mixed wood of
   oaks, firs and thickets round the old shaft; fewer trees in the village; an orchard
-  of apple trees by the fields. Four oaks (one in autumn colours), three firs, two
-  apple trees, two dead trees and a willow, each tree a picture 6 to 12 tiles high,
+  of apple trees by the fields; the old oak, fifteen tiles high, is the wood's landmark;
+  logs, stumps and toadstools under the trees. Four oaks (one in autumn colours, rare),
+  three firs, two apple trees, two birches, two dead trees and a willow, each tree a picture 6 to 12 tiles high,
   its crown a few bundles lit from the top left, standing on level ground and never on
   a stair of light.
 - **The village** on the hill west of the start: a chapel with no roof, its gable and
   bell still standing, graves by it; a well; a cottage whose roof fell in at one end;
   fences. **By the start** the columns of a temple of the old world stand broken
   behind the marble stubs, a drum fallen in the grass.
-- **The pond**: a willow on its west bank, reeds at both edges, lilies on the water.
+- **The pond**: a willow on its west bank, and the willow again in the water; reeds
+  at both edges, lilies on the water, darker toward its floor; the falls splash where
+  they land.
 - **East of the pond**: the mill on its rise, sails broken; fields with haystacks, a
   scarecrow, a cart left where it stopped; a cottage still thatched where someone still
-  lives, a lamp in its window (seen at dusk and at night) and a lantern by its door.
+  lives: smoke from its chimney, washing on the line, a kitchen garden, a water butt, a
+  lamp in its window at dusk and at night and a lantern by its door. The mill's sails turn.
+  The ruined cottage has its bench and an empty kennel.
 - **The Gate** on the surface is an arch of dark stone over the mouth of the way down,
   pointed, a glow at its foot; two dead trees by it, and between it and the last stair
   the graves of those who went down before.
@@ -139,14 +144,22 @@ what they were, and the play-through is the same.
   is `meadow`, warmer than the grass, and wild flowers grow on it in clumps.
 - **Behind the surface** four ridges, each further one paler, bluer and plainer:
   mountains with snow, hills with a castle, two villages and a tower far off, a wood
-  of round crowns and firs, and the near wood; pollen drifts in the air, seen in the
-  sun and by the lamps.
+  of round crowns and firs, and the near wood; a band of haze at the hills' foot; the far
+  villages' windows light up at night. Pollen drifts in the air; leaves fall from the
+  autumn oaks; butterflies over the meadows by day, fireflies by the water and in the
+  woods at night; shafts of low sun through the trees at dawn and at sunset; dark shapes
+  of grass and boughs pass close to the eye, faster than the world. The Gate glows red at
+  night. A bed of clay lies a few rows under the turf.
 - **The old mine** is timbered: a set of timber (a post, a cap, two knee braces)
   every seven columns or so where a tunnel is 3 to 12 rows high, the roof over it
   boarded (`timber_wall`) a few columns either side; track along every level stretch of
   six columns or more between the shaft and the crossroads, its ends stopped with
   timber, a cart of copper ore on one run in three or so (one tipped over); crates,
-  sacks and a ladder on wider floors; the old shaft has a pithead of timber with its
+  sacks and a ladder on wider floors; every other torch is a miner's lamp hung on a nail;
+  rubble where the roof came down, puddles with a drip over them, lumps of copper by the
+  road; its copper ore has a green patina and its veins are thicker, and the caves no road
+  leads to are lined with copper (warm) instead of crystals (cold); roots hang from a roof
+  under a tree; the lift's cage hangs in the old shaft; the old shaft has a pithead of timber with its
   wheel over it and a winch hut by it. The rock behind its caves is beds of earth in
   long waves, and the old workings stand far off in it: trestles one over another,
   ladders, a head frame with its wheel. **The Gate** in its hall under the ground is an

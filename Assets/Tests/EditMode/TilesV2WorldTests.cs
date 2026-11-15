@@ -199,7 +199,8 @@ namespace Descender.Tests
                 Assert.That(ledge.Piece(true, true), Is.SameAs(ledge.middle));
                 Assert.That(ledge.Piece(true, false), Is.SameAs(ledge.right));
             }
-            Assert.That(set.props.Length, Is.EqualTo(4));
+            // A torch, a brazier, a crystal, a lantern, and the Earth's miner's lamp.
+            Assert.That(set.props.Length, Is.EqualTo(5));
             foreach (var prop in set.props)
             {
                 Assert.That(prop.frames, Is.Not.Empty.And.None.Null, prop.key);
@@ -207,6 +208,7 @@ namespace Descender.Tests
             }
             Assert.That(set.PropOf("torch").embers, Is.True);
             Assert.That(set.PropOf("crystal").embers, Is.False);
+            Assert.That(set.PropOf("mine_lamp").embers, Is.False);
             foreach (
                 var name in new[]
                 {

@@ -193,17 +193,10 @@ namespace Descender.Tests
                 }
                 Assert.That(things.Pictures, Is.EqualTo(marked), "every picture the map marks stands");
                 var lit = 0;
-                var glowing = 0;
                 foreach (var shown in things.GetComponentsInChildren<SpriteRenderer>(true))
                 {
                     if (!shown.gameObject.name.StartsWith("Picture earth_"))
                     {
-                        continue;
-                    }
-                    if (shown.gameObject.name == "Picture earth_cottage_glow")
-                    {
-                        glowing++;
-                        Assert.That(shown.sharedMaterial, Is.EqualTo(set.unlitMaterial), "a lamp in a window is unlit");
                         continue;
                     }
                     lit++;
@@ -214,7 +207,6 @@ namespace Descender.Tests
                     );
                 }
                 Assert.That(lit, Is.GreaterThan(150));
-                Assert.That(glowing, Is.EqualTo(1));
             }
             finally
             {
@@ -247,6 +239,85 @@ namespace Descender.Tests
                 Is.GreaterThan(set.viewWidth),
                 "the far hills are wider than a view, so their castle does not stand in every one"
             );
+        }
+
+        [Test]
+        public void TheEarthLivesWithTheHour()
+        {
+            var life = world.Life;
+            Assert.That(life, Is.Not.Null, "the world makes its life");
+            foreach (
+                var kind in new[]
+                {
+                    "smoke",
+                    "leaves",
+                    "fireflies",
+                    "butterflies",
+                    "splash",
+                    "drip",
+                    "sails",
+                    "glow",
+                    "rays",
+                    "front",
+                    "windows",
+                }
+            )
+            {
+                Assert.That(life.Made.ContainsKey(kind), Is.True, kind + " is made");
+            }
+            // The lights of the night: a lit window, the Gate's glow, the far villages.
+            Assert.That(life.Night.Count, Is.GreaterThanOrEqualTo(3));
+            world.Day.Hour = 22.5f;
+            Assert.That(life.ShownHour, Is.EqualTo(22.5f).Within(1e-3f), "the clock tells the life the hour");
+            foreach (var shown in life.Night)
+            {
+                Assert.That(shown.enabled && shown.color.a > 0.95f, Is.True, shown.name + " shines at night");
+            }
+            foreach (var system in life.Nightly)
+            {
+                Assert.That(TilesV2Life.RateOf(system), Is.GreaterThan(0f), "fireflies at night");
+            }
+            foreach (var system in life.Daily)
+            {
+                Assert.That(TilesV2Life.RateOf(system), Is.EqualTo(0f), "no butterflies at night");
+            }
+            world.Day.Hour = 12f;
+            foreach (var shown in life.Night)
+            {
+                Assert.That(shown.enabled, Is.False, shown.name + " is out at noon");
+            }
+            foreach (var shown in life.Dawn)
+            {
+                Assert.That(shown.enabled, Is.False, "no low sun at noon");
+            }
+            foreach (var system in life.Daily)
+            {
+                Assert.That(TilesV2Life.RateOf(system), Is.GreaterThan(0f), "butterflies by day");
+            }
+            world.Day.Hour = 7f;
+            Assert.That(life.Dawn.Count, Is.GreaterThan(0));
+            foreach (var shown in life.Dawn)
+            {
+                Assert.That(shown.enabled && shown.color.a > 0.9f, Is.True, "the low sun at seven");
+            }
+            Assert.That(TilesV2Life.NightAt(19.25f), Is.InRange(0.3f, 0.7f), "the night comes on at dusk");
+            world.Day.Hour = set.dayStart;
+            // The sails turn: four frames, a new one each 1 / SailFrames seconds.
+            Assert.That(life.SailSprites.Count, Is.EqualTo(4));
+            Assert.That(life.Turning.Count, Is.EqualTo(1));
+            life.Turn(0f);
+            var first = life.Turning[0].sprite;
+            life.Turn(1f / TilesV2Life.SailFrames);
+            Assert.That(life.Turning[0].sprite, Is.Not.EqualTo(first), "the sails turn");
+            // What passes close to the eye moves faster than the world and is drawn in front of the hero.
+            var fronts = 0;
+            foreach (var layer in life.GetComponentsInChildren<ParallaxLayer>())
+            {
+                fronts++;
+                Assert.That(layer.Scroll.x, Is.EqualTo(TilesV2Life.FrontScroll).Within(1e-4f));
+                Assert.That(layer.GetComponent<SpriteRenderer>().sortingOrder, Is.GreaterThan(0));
+            }
+            Assert.That(fronts, Is.EqualTo(life.Made["front"]));
         }
 
         // The rows of the Earth's region: its first and the first of the next.

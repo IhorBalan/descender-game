@@ -15,8 +15,11 @@ namespace Descender.World.TilesV2
     {
         private const float PixelsPerUnit = 16f;
 
+        /// <summary>The most a layer may scroll across: twice the world, for what passes close to the eye.</summary>
+        public const float MostScroll = 2f;
+
         [Tooltip(
-            "The share of the camera's movement the layer scrolls by, across and up: 0 stays on screen, 1 moves with the world."
+            "The share of the camera's movement the layer scrolls by, across and up: 0 stays on screen, 1 moves with the world, over 1 (across only) passes in front of it."
         )]
         [SerializeField]
         private Vector2 scroll;
@@ -51,7 +54,8 @@ namespace Descender.World.TilesV2
             float layerDrift
         )
         {
-            scroll = new Vector2(Mathf.Clamp01(layerScroll.x), Mathf.Clamp01(layerScroll.y));
+            // Across, a layer may move faster than the world (up to twice): what passes close to the eye.
+            scroll = new Vector2(Mathf.Clamp(layerScroll.x, 0f, MostScroll), Mathf.Clamp01(layerScroll.y));
             anchor = layerAnchor;
             cameraAnchor = viewAnchor;
             repeat = layerRepeat;

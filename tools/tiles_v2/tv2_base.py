@@ -468,6 +468,7 @@ LEGEND = [
     ("ñ", "terrain", "meadow", "up_right"),
     ("Ö", "terrain", "meadow", "up_left"),
     ("Ø", "wall", "timber_wall", ""),
+    ("ö", "prop", "mine_lamp", ""),
 ]
 TERRAIN_CHARS = {c: key + (":" + slope if slope else "") for c, layer, key, slope in LEGEND if layer == "terrain"}
 WALL_CHARS = {c: key for c, layer, key, _ in LEGEND if layer == "wall"}
@@ -599,6 +600,8 @@ PROPS = [
     {"key": "brazier", "frames": 3, "colour": (1.0, 0.60, 0.32), "intensity": 2.0, "embers": True},
     {"key": "crystal", "frames": 3, "colour": (0.55, 0.82, 1.0), "intensity": 1.3, "embers": False},
     {"key": "lantern", "frames": 3, "colour": (1.0, 0.93, 0.72), "intensity": 1.2, "embers": False},
+    # The Earth's: a miner's lamp hung from a nail in the timber, a warmer, smaller light than a torch.
+    {"key": "mine_lamp", "frames": 3, "colour": (1.0, 0.78, 0.48), "intensity": 1.5, "embers": False},
 ]
 
 

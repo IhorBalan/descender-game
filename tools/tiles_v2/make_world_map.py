@@ -192,6 +192,9 @@ class World:
             depth = y - self.surface[x]
             if depth <= 0:
                 return "G"
+            # The Earth's: a bed of clay a few rows under the turf, where the field says so.
+            if key == "earth" and 3 <= depth <= 4 and field(55, x, 0, 9.0) > 0.15:
+                return "C"
             return "D" if depth < 6 + int(round(2 * wave(31, x, 7.0))) else "S"
         edge = x + int(round(5 * wave(77, y, 8.0)))
         for x0, x1, y0, y1, char in ZONES.get(key, ()):
@@ -282,7 +285,7 @@ class World:
     def veins(self):
         """Ore and the second grounds, scattered through each region's rock."""
         plans = {
-            "earth": [("O", "S", 200, 9), ("C", "DS", 90, 14)],
+            "earth": [("O", "S", 260, 13), ("C", "DS", 90, 14)],
             "limbo": [("S", "H", 80, 16)],
             "greed": [("$", "N", 480, 8)],
             "treachery": [("I", "Z", 60, 14)],
@@ -1277,6 +1280,12 @@ def pockets(world: World, log=print):
                 for x, y in cells:
                     if y >= low - 1:
                         world.t[y][x] = liquid
+            elif kind == 1 and key == "earth":
+                # The Earth's are lined with copper, which gives a warm light: no crystals there.
+                for x, y in cells:
+                    for nx, ny in ((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1)):
+                        if (nx, ny) not in cells and world.t[ny][nx] in "SDC" and hash01(nx, ny, 96) < 0.6:
+                            world.t[ny][nx] = "O"
             elif kind == 1:
                 floors = sorted((x, y) for x, y in cells if (x, y + 1) not in cells and (x, y - 1) in cells)
                 for x, y in floors[:: max(len(floors) // 2, 1)][:2]:
