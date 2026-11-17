@@ -498,6 +498,9 @@ of the cell), built with the world; the clock tells it the hour (`DayNight.Appli
 | sway | a picture that leans with the wind through its frames (`key`, `key_s1`, `key_s2`, back): the reeds of the pond | always |
 | birds | a flock of five far off (order -975), crossing a stretch of sky and coming round, wings up and down | always |
 | rain | streaks over the view, riding with the camera while it is over the surface | a shower of `RainFor` seconds every `RainEvery` of play |
+| far | a picture far off behind a place, drawn at its own order and passed slower than the world across (`FarScroll`): it stands where it is marked when the camera is there | always |
+| pollen | motes of gold that hang in warm air and wander (unlit) | always |
+| snow | flakes coming down slowly, rocking, over a cold place | always |
 
 The lights of the far villages (`backdrop_earth_windows`, a layer of heaven placed exactly
 as the hills are but not tinted) come on with the night as the glows do.
@@ -516,7 +519,11 @@ lamp, a fruit that gives a cyan light, hung in the air where a tree would bear
 it. A map's `end` mark may say what the end is called and what is said under
 it (`@mark end column row title ... | words ...`). And a map may say its
 own hour, and that its sun does not move: `@hour 17.4 still` (without `still`
-the day starts there and runs).
+the day starts there and runs). A room may have an hour of its own
+(`@mark mood column row width height hour*100`): the playground turns the day
+to it as the hero comes in (`TilesV2Playground.Turn`, over `MoodTime`), a
+capture shows a view in such a room at that hour, and only a change of room
+starts the turn, so an hour set by hand stays while he stays.
 
 ## Light
 

@@ -56,6 +56,12 @@ namespace Descender.World.TilesV2
         public const string Zone = "zone";
 
         /// <summary>
+        /// A room's own hour: while the hero is in it the day stands at that hour, and turns
+        /// to it as he comes in: `@mark mood column row width height hour*100`.
+        /// </summary>
+        public const string Mood = "mood";
+
+        /// <summary>
         /// A stretch where the view draws back (the game's camera zone): `@mark vista column
         /// row width height zoom holdX holdY lookRight lookUp`, the zoom in hundredths, the
         /// looks in tiles.
@@ -131,6 +137,24 @@ namespace Descender.World.TilesV2
         /// <summary>The named parts of the level: where each is, in the world's units, and its name.</summary>
         public IReadOnlyList<(Rect area, string name)> Zones => zones;
 
+        /// <summary>The rooms that have their own hour, and the hour of each.</summary>
+        public IReadOnlyList<(Rect area, float hour)> Moods => moods;
+
+        /// <summary>The hour of the room that holds a place; false where no room has its own.</summary>
+        public bool TryMood(Vector2 place, out float hour)
+        {
+            foreach (var (area, own) in moods)
+            {
+                if (area.Contains(place))
+                {
+                    hour = own;
+                    return true;
+                }
+            }
+            hour = 0f;
+            return false;
+        }
+
         /// <summary>
         /// What the end of the journey is called and what is said under it, when the map says
         /// (`@mark end column row title ... | words ...`); empty when it does not.
@@ -139,6 +163,7 @@ namespace Descender.World.TilesV2
         public string EndWords { get; private set; } = "";
 
         private readonly List<(Rect area, string name)> zones = new List<(Rect area, string name)>();
+        private readonly List<(Rect area, float hour)> moods = new List<(Rect area, float hour)>();
 
         /// <summary>How many relics a region of the map holds, and how many of them are found.</summary>
         public void RelicsIn(int region, out int found, out int held)
@@ -432,6 +457,13 @@ namespace Descender.World.TilesV2
                         var size = new Vector2(Mathf.Max(mark.Number(0, 1), 1), Mathf.Max(mark.Number(1, 1), 1));
                         var name = string.Join(" ", mark.Rest, 3, Mathf.Max(mark.Rest.Length - 3, 0));
                         things.zones.Add((new Rect(corner.x, corner.y - size.y, size.x, size.y), name));
+                        continue;
+                    }
+                    case Mood:
+                    {
+                        var size = new Vector2(Mathf.Max(mark.Number(0, 1), 1), Mathf.Max(mark.Number(1, 1), 1));
+                        var hour = Mathf.Repeat(mark.Number(2, 1200) / 100f, 24f);
+                        things.moods.Add((new Rect(corner.x, corner.y - size.y, size.x, size.y), hour));
                         continue;
                     }
                     case Vista:

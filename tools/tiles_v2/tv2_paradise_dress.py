@@ -27,11 +27,12 @@ ALONG = {
     1: [(["eden_leaf_0", "eden_leaf_1", "eden_leaf_2", "eden_leaf_3"], 13), (["heaven_blossom_0", "heaven_blossom_1", "heaven_blossom_2", "heaven_blossom_3"], 17), (["heaven_flowers_0", "heaven_flowers_1", "heaven_flowers_2", "heaven_flowers_3"], 6)],
     2: [(["eden_teal_tree_0", "eden_teal_tree_1", "eden_teal_tree_2"], 8)],
     3: [(["eden_vine_0", "eden_vine_1", "eden_vine_2"], 13), (["eden_leaf_1", "eden_leaf_3", "earth_shrub_0", "earth_shrub_1"], 10), (["eden_ruin_0", "eden_sword", "eden_ruin_1"], 37)],
-    4: [(["eden_wheat_0", "eden_wheat_1"], 6), (["heaven_gold_0", "heaven_gold_1", "heaven_gold_2", "heaven_gold_3"], 27), (["earth_haystack_0", "earth_fence_0", "earth_haystack_1", "earth_fence_1"], 19), (["eden_sword", "eden_ruin_2", "eden_knight"], 43)],
-    5: [(["heaven_urn", "heaven_hedge_1", "heaven_flowers_0", "heaven_bench", "heaven_hedge_2", "earth_iron_fence_0", "heaven_flowers_2", "eden_ruin_1"], 7), (["heaven_blossom_1", "heaven_gold_2"], 31), (["eden_knight", "eden_buttress_0", "eden_ruin_0", "eden_buttress_1"], 37)],
-    6: [(["eden_gear", "eden_pipe_v_12", "eden_pipe_v_6", "eden_pipe_v_12"], 11), (["eden_ruin_1", "eden_knight", "eden_ruin_2", "eden_sword"], 17)],
-    7: [(["eden_crag_0", "eden_crag_1", "eden_crag_2"], 9), (["eden_sword", "eden_ruin_0", "earth_dead_tree_0", "eden_ruin_2", "eden_sword", "earth_dead_tree_1", "eden_knight"], 13), (["eden_buttress_0", "eden_buttress_1"], 41)],
+    4: [(["eden_wheat_0", "eden_wheat_1", "eden_wheat_2", "eden_wheat_3"], 6), (["heaven_gold_0", "heaven_gold_1", "heaven_gold_2", "heaven_gold_3"], 27), (["earth_haystack_0", "earth_fence_0", "earth_haystack_1", "earth_fence_1"], 19), (["eden_sword", "eden_ruin_2", "eden_knight", "eden_ruin_0", "eden_knight_1"], 43)],
+    5: [(["heaven_urn", "heaven_hedge_1", "heaven_flowers_0", "heaven_bench", "heaven_hedge_2", "earth_iron_fence_0", "heaven_flowers_2", "eden_ruin_1"], 7), (["heaven_blossom_1", "heaven_gold_2"], 31), (["eden_knight", "eden_buttress_0", "eden_ruin_0", "eden_knight_1", "eden_buttress_1", "eden_ruin_2"], 37)],
+    6: [(["eden_gear", "eden_pipe_v_12", "eden_piston", "eden_pipe_v_6", "eden_pipe_v_12", "eden_piston"], 11), (["eden_ruin_1", "eden_knight", "eden_ruin_2", "eden_sword", "eden_knight_1"], 17)],
+    7: [(["eden_crag_0", "eden_crag_1", "eden_crag_2"], 9), (["eden_sword", "eden_ruin_0", "earth_dead_tree_0", "eden_ruin_2", "eden_sword", "earth_dead_tree_1", "eden_knight", "eden_knight_1"], 13), (["eden_buttress_0", "eden_buttress_1"], 41)],
 }
+LAMPS = "JåT*^ÅÝ"  # what stands on a floor and gives light
 SAID = {
     "voice": "Go back. You are not finished. Go back and lie down.",
     "mereth": "Tobiah? He went down to the Low Gate, talking the whole way. Mind the fruit. Every one is counted.",
@@ -48,20 +49,24 @@ SAID = {
 }
 
 
-def floors_of(level, room, m):
-    """The runs of floor a hero can stand on in a room: (row he stands in, first column, last column)."""
+def floors_of(level, room, m, lamps: bool = False):
+    """The runs of floor a hero can stand on in a room: (row he stands in, first column,
+    last column). A storey's floor, or a hill a tile over it. With `lamps`, a lamp that
+    stands on a floor does not end its run."""
     runs = []
+    free = {m.AIR} | (set(LAMPS) if lamps else set())
     for j in room.storeys:
-        y = m.S(j) - 1
-        x = room.x0 + 1
-        while x < room.x1:
-            if level.t[y + 1][x] in m.GROUND and level.t[y][x] == m.AIR:
-                start = x
-                while x < room.x1 and level.t[y + 1][x] in m.GROUND and level.t[y][x] == m.AIR:
+        for y in (m.S(j) - 1, m.S(j) - 2):
+            x = room.x0 + 1
+            while x < room.x1:
+                if level.t[y + 1][x] in m.GROUND and level.t[y][x] in free:
+                    start = x
+                    while x < room.x1 and level.t[y + 1][x] in m.GROUND and level.t[y][x] in free:
+                        x += 1
+                    if y == m.S(j) - 1 or x - start >= 4:
+                        runs.append((y, start, x - 1))
+                else:
                     x += 1
-                runs.append((y, start, x - 1))
-            else:
-                x += 1
     return runs
 
 
@@ -147,14 +152,182 @@ def billows(level, m, d: Dresser):
 
 
 def along(level, m, d: Dresser, room, runs):
-    """What a zone's floors are stood with, each kind at its own distance, none on another."""
+    """What a zone's floors are stood with. What is planted in rows (the orchard's trees,
+    the wheat) stands in rows, with a stretch here and there where most are gone;
+    everything else stands in ones, twos and threes with room between, no two groups
+    alike. And on every long floor one stretch is left bare: somewhere to stop."""
     for n, (keys, apart) in enumerate(ALONG[room.zone]):
         for y, x0, x1 in runs:
-            k = int(m.hash01(room.i0, y, n) * len(keys))
-            for x in range(x0 + 2 + (n * 3) % apart, x1 - 1, apart):
-                if d.clear(x, y, 1):
-                    d.stand(keys[k % len(keys)], x, y)
-                    k += 1
+            rest = x0 + 8 + int(m.hash01(room.i0, y, 91) * max(1, x1 - x0 - 16)) if x1 - x0 >= 30 else -99
+            if n == 0 and rest > 0 and room.zone == 5 and d.clear(rest, y, 2):
+                d.stand("heaven_bench", rest, y)
+                d.busy.add((rest, y))
+            if apart <= 8:
+                xs = [
+                    x
+                    for x in range(x0 + 2 + (n * 3) % apart, x1 - 1, apart)
+                    if abs(x - rest) >= 6 and not (m.hash01(x // (apart * 5), y, 23) < 0.25 and m.hash01(x, y, 29) < 0.75) and d.clear(x, y, 1)
+                ]
+                for x in xs:
+                    pick = keys
+                    if keys[0].startswith("eden_wheat"):  # a row ends in its tally post
+                        pick = keys[:2] if x + apart not in xs else keys[2:]
+                    d.stand(pick[int(m.hash01(x, y, 40 + n) * len(pick))], x, y)
+                continue
+            x = x0 + 2 + int(m.hash01(room.i0, y, n) * apart)
+            while x < x1 - 1:
+                for _ in range(1 + int(m.hash01(x, y, 20 + n) * 2.6)):
+                    if x >= x1 - 1:
+                        break
+                    if abs(x - rest) >= 6 and d.clear(x, y, 1):
+                        d.stand(keys[int(m.hash01(x, y, 40 + n) * len(keys))], x, y, int((m.hash01(x, y, 50) - 0.5) * 12), 0)
+                    x += max(2, int(apart * (0.3 + 0.3 * m.hash01(x, y, 60 + n))))
+                x += max(3, int(apart * (0.7 + 1.5 * m.hash01(x, y, 70 + n))))
+
+
+# What stands far off behind a zone's floors: (picture, tiles wide, tiles high).
+FAR = {
+    1: ("eden_far_hollow", 36, 12),
+    2: ("eden_far_orchard", 36, 10),
+    3: ("eden_far_vines", 30, 26),
+    4: ("eden_far_fields", 44, 9),
+    5: ("eden_far_terraces", 40, 12),
+    7: ("eden_far_cliffs", 40, 17),
+}
+FRONT = {1: 0, 2: 1, 3: 0, 4: 2, 5: 3, 6: 4, 7: 5}
+UNDER = {1: "root", 2: "root", 3: "root", 4: "root", 5: "marble", 6: "pearl", 7: "silver"}
+MOSS = {5: "green", 6: "pale", 7: "frost"}
+# What is in a zone's air: (kind of life, art pixels over the floor), in turn along a floor.
+AIRS = {
+    1: [("butterflies", 16), ("pollen", 40)],
+    2: [("fireflies", 24)],
+    3: [("butterflies", 16), ("pollen", 48)],
+    4: [("pollen", 40), ("butterflies", 16)],
+    5: [("leaves", 96), ("pollen", 48)],
+    6: [("smoke", 64)],
+    7: [("snow", 150)],
+}
+RAYS = {1, 2, 5, 6}  # where the sun is low enough to stand in shafts
+MISTS = {2, 3, 7}
+
+
+def far_fits(level, m, room, x: int, y: int, wide: int, tall: int) -> bool:
+    """Whether a far picture can stand behind a floor: inside its room with room to slide,
+    under its room's top, and with floor under most of it (its foot is cut straight)."""
+    half = wide // 2
+    if x - half - 3 <= room.x0 or x + half + 3 >= room.x1 or y - tall + 3 < room.y0:
+        return False
+    under = sum(level.t[y + 1][c] in m.GROUND or level.t[y + 2][c] in m.GROUND for c in range(x - half, x + half + 1))
+    return under >= 0.82 * (2 * half + 1)
+
+
+def far(level, m, x: int, y: int, key: str):
+    level.mark("life", x, y, "far", key, 0, 0)
+
+
+def depth(level, m, d: Dresser, room, runs):
+    """Far and near, and what is in the air between. Behind a zone's floors, more of the
+    zone going away, passed slower than the world (`life far`); here and there a dark
+    shape close to the eye (`life front`); shafts of low sun where the hour has them,
+    mist where it lies, and the zone's own motes in the air."""
+    if room.kind in ("hidden", "late"):
+        return 0
+    made = 0
+    storeys = {m.S(j) - 1 for j in room.storeys}
+    mains = [run for run in runs if run[0] in storeys]
+    spec = FAR.get(room.zone)
+    if spec and room.name != "crownvine":
+        key, wide, tall = spec
+        for y in sorted(storeys, reverse=True):
+            placed = 0
+            for x in range(room.x0 + wide // 2 + 4 + int(m.hash01(room.i0, y, 3) * 5), room.x1 - wide // 2 - 3, wide + 12):
+                if far_fits(level, m, room, x, y, wide, tall):
+                    far(level, m, x, y, key)
+                    placed += 1
+            made += placed
+            if placed and tall > 12:
+                break  # a tall one is not stood again in the storey over it: it is already there
+    for n, (y, x0, x1) in enumerate(mains):
+        long = x1 - x0 + 1
+        if long >= 30:
+            for x in range(x0 + 12 + int(m.hash01(room.i0, y, 7) * 10), x1 - 11, 41):
+                if x - room.x0 > 12 and room.x1 - x > 12 and d.clear(x, y, 4) and all(level.t[y + 1][c] in m.GROUND for c in range(x - 3, x + 4)):
+                    level.mark("life", x, y, "front", f"eden_front_{FRONT[room.zone]}", 0, 0)
+                    made += 1
+        if room.zone in RAYS and long >= 16:
+            for x in range(x0 + 6 + int(m.hash01(room.i0, y, 11) * 9), x1 - 5, 29):
+                if all(level.t[y - u][x] == m.AIR for u in range(0, 10)):
+                    level.mark("life", x, y, "rays", f"eden_rays_{int(m.hash01(x, y, 13) * 2)}", 0, 0)
+                    made += 1
+        if room.zone in MISTS and y == room.y1 - 2 and long >= 22:
+            for x in range(x0 + 10, x1 - 9, 23):
+                if level.t[y][x] == m.AIR and all(level.t[y + 1][c] in m.GROUND and (level.t[y][c] == m.AIR or level.t[y][c] in LAMPS) for c in range(x - 9, x + 10)):
+                    d.stand("eden_mist", x, y)
+        airs = AIRS[room.zone]
+        if long >= 14:
+            for k, x in enumerate(range(x0 + 7 + int(m.hash01(room.i0, y, 17) * 8), x1 - 5, 37)):
+                kind, up = airs[(k + n) % len(airs)]
+                if kind == "smoke" and not d.clear(x, y, 0):
+                    continue
+                if all(level.t[y - u][x] == m.AIR for u in range(0, min(9, up // 16 + 2))):
+                    level.mark("life", x, y, kind, "-", 0, up)
+                    made += 1
+    if room.roofed and room.zone in (3, 6, 7):
+        for y, x0, x1 in mains:
+            for x in range(x0 + 9 + int(m.hash01(room.i0, y, 19) * 6), x1 - 4, 27):
+                top = y
+                while top > room.y0 and level.t[top - 1][x] == m.AIR:
+                    top -= 1
+                if 4 <= y - top <= 9:
+                    level.mark("life", x, top, "drip", "-", 0, 14)
+                    made += 1
+    if not room.roofed and room.zone in (1, 4, 5) and room.x1 - room.x0 >= 50:
+        level.mark("life", (room.x0 + room.x1) // 2, room.y0 + 5, "birds", "-", 0, 0)
+        made += 1
+    return made
+
+
+def wear(level, m, d: Dresser, room, runs):
+    """What time has done to the floors of cut stone: a crack down from the lip here, and
+    there what has grown over it: moss on the Terraces, pale lichen in the Making-house,
+    rime by the Gate."""
+    tint = MOSS.get(room.zone)
+    if tint is None:
+        return
+    for y, x0, x1 in runs:
+        x = x0 + 2 + int(m.hash01(room.i0, y, 31) * 8)
+        while x < x1 - 2:
+            h = m.hash01(x, y, 33)
+            if h < 0.42:
+                v = int(m.hash01(x, y, 35) * 3)
+                half = (2, 3, 2)[v]
+                if all(level.t[y + 1][c] in m.GROUND and level.t[y][c] == m.AIR for c in range(x - half, x + half + 1)):
+                    d.stand(f"eden_moss_{tint}_{v}", x, y)
+            elif h < 0.66:
+                if all(level.t[y + 1][c] in m.GROUND and level.t[y][c] == m.AIR for c in range(x - 1, x + 2)) and level.t[y + 2][x] in m.GROUND:
+                    d.stand(f"eden_crack_{int(m.hash01(x, y, 37) * 3)}", x, y)
+            x += 5 + int(m.hash01(x, y, 39) * 9)
+
+
+def undersides(level, m, d: Dresser, room):
+    """A floor in the air is not a plank: under it hangs what it is made of: earth and
+    roots in the gardens, a mass of its own stone after."""
+    kind = UNDER[room.zone]
+    for j in range(room.j0, room.j1):
+        y = m.S(j) + 2  # the row under the platform
+        xs = [x for x in sorted(room.cover[j]) if level.t[y - 1][x] in m.GROUND and level.t[y][x] == m.AIR]
+        x = xs[0] if xs else 0
+        while xs and x <= xs[-1]:
+            for v, wide, tall, chance in ((1, 9, 4, 0.3), (0, 6, 3, 0.7), (2, 4, 2, 0.9)):
+                cells = [(c, yy) for c in range(x, x + wide) for yy in range(y, y + tall)]
+                if m.hash01(x, y, 43 + v) < chance and all(c in room.cover[j] and level.t[y - 1][c] in m.GROUND and level.t[yy][c] == m.AIR for c, yy in cells):
+                    d.stand(f"eden_under_{kind}_{v}", x + wide // 2, y)
+                    x += wide - 1  # the next begins where this ends: they join
+                    break
+            else:
+                x += 1
+                continue
+            x += int(m.hash01(x, y, 47) * 4)
 
 
 def hangers(level, m, d: Dresser, room):
@@ -227,6 +400,11 @@ def lantern_tree(level, m, d: Dresser, room):
             fy = m.S(j) - 7 - (abs(dx) // 5) % 2
             if room.x0 < x < room.x1 and level.t[fy][x] == m.AIR:
                 d.lamp(x, fy, "Ý")
+    # Its crown fills the top of the room: a screen of leaves and fruit.
+    for y in (room.y0 + 23, room.y0 + 22, room.y0 + 24, room.y0 + 21, room.y0 + 25):
+        if level.t[y][middle] == m.AIR:
+            d.stand("eden_lantern_crown", middle, y)
+            break
 
 
 def crown_vine(level, m, d: Dresser, room):
@@ -235,6 +413,12 @@ def crown_vine(level, m, d: Dresser, room):
     for y in range(room.y0 + 1, room.y1 - 1):
         for x in range(room.x0 + third, room.x1 - third + 1):
             level.walls[y][x] = "Ù"
+    # A bough out of it over every storey, to the side the floor is on: what the hero climbs is its limbs.
+    for k, j in enumerate(room.storeys):
+        y = m.S(j) - 2
+        for key, x in (("eden_vine_bough_0", room.x1 - third + 8), ("eden_vine_bough_1", room.x0 + third - 8)):
+            if (k + (key[-1] == "1")) % 2 == 0 and room.x0 + 9 < x < room.x1 - 9 and level.t[y][x] == m.AIR and level.t[y + 2][x] in m.GROUND:
+                d.stand(key, x, y)
 
 
 def waterfalls(level, m, d: Dresser, room):
@@ -248,6 +432,7 @@ def waterfalls(level, m, d: Dresser, room):
             if all(level.t[y][fx] == m.AIR and level.t[y][fx + 1] == m.AIR for y in rows) and level.t[m.S(j + 1)][fx] in m.GROUND and not any((fx + e, m.S(j + 1) - 1) in d.busy for e in range(-2, 4)):
                 for y in rows:
                     level.t[y][fx] = level.t[y][fx + 1] = "|"
+                level.mark("life", fx, m.S(j + 1) - 1, "splash", "-", 8, 2)
 
 
 def gateways(level, m, d: Dresser):
@@ -382,6 +567,33 @@ def dress(level, m, log=print):
     for name, key, lift in (("sundial", "eden_sundial", 0), ("wheel", "eden_wheel", 0), ("door", "eden_making_door", 0), ("arena", "eden_low_gate", 0)):
         x, y = centre_floor(level, m, rooms[name])
         d.stand(key, x, y)
+    # The Rising Leaf: one leaf as tall as a tower behind the stair, and another over it.
+    rising = rooms["rising"]
+    x, y = centre_floor(level, m, rising)
+    d.stand("eden_great_leaf", x, y)
+    for j in rising.storeys[1:]:
+        y = m.S(j) - 1
+        spots = [c for c in range(rising.x0 + 14, rising.x1 - 13) if level.t[y][c] == m.AIR and level.t[y + 1][c] in m.GROUND]
+        if y < rising.y1 - 40 and y - 36 > rising.y0 and spots:
+            d.stand("eden_great_leaf", spots[len(spots) // 2], y)
+            break
+    # The Making-house behind its door; and from afar, nearer room by room.
+    x, y = centre_floor(level, m, rooms["door"])
+    d.stand("eden_far_house_2", x, y)
+    walk, arcade = rooms["pipewalk"], rooms["arcade"]
+    far(level, m, arcade.x1 - 14, arcade.y1 - 2, "eden_far_house_0")
+    far(level, m, walk.x0 + 24, walk.y1 - 2, "eden_far_house_0")
+    far(level, m, walk.x1 - 22, walk.y1 - 2, "eden_far_house_1")
+    # The Low Gate from afar: from the Terraces on.
+    far(level, m, arcade.x0 + 30, arcade.y1 - 2, "eden_far_gate_0")
+    far(level, m, rooms["promenade"].x1 - 26, rooms["promenade"].y1 - 2, "eden_far_gate_0")
+    head = rooms["ledgehead"]
+    far(level, m, (head.x0 + head.x1) // 2, head.y1 - 2, "eden_far_gate_1")
+    # The Wheel over the way up the Terraces.
+    for name in ("stairfoot", "firstterrace", "climb"):
+        r = rooms[name]
+        for j in (r.storeys[0], r.storeys[len(r.storeys) // 2]) if len(r.storeys) > 4 else (r.storeys[0],):
+            far(level, m, (r.x0 + r.x1) // 2 + (5 if name == "stairfoot" else 0), m.S(j) - 1, "eden_far_wheel")
     x, y = centre_floor(level, m, rooms["fields"])
     d.stand("earth_well", x + 14, y)
     x, y = centre_floor(level, m, rooms["meadow"])
@@ -395,9 +607,13 @@ def dress(level, m, log=print):
         x, y = centre_floor(level, m, rooms[name])
         d.stand("eden_gathered", x - 14, y)
 
+    alive = 0
     for room in rooms.values():
-        runs = floors_of(level, room, m)
+        runs = floors_of(level, room, m, lamps=True)
+        alive += depth(level, m, d, room, runs)
         along(level, m, d, room, runs)
+        wear(level, m, d, room, runs)
+        undersides(level, m, d, room)
         hangers(level, m, d, room)
     billows(level, m, d)
 
@@ -413,14 +629,18 @@ def dress(level, m, log=print):
         for r in rooms.values():
             if r.zone == zone:
                 level.mark("zone", r.x0, r.y0, r.x1 - r.x0 + 1, r.y1 - r.y0 + 1, zone, *name.split())
+                # And its own hour: the day turns to it as the hero comes in.
+                level.mark("mood", r.x0, r.y0, r.x1 - r.x0 + 1, r.y1 - r.y0 + 1, int(round(m.MOODS[zone] * 100)))
     views = {
         "hollow": ("hollow", 21), "rising": ("rising", 19), "orchard": ("orchard", 18), "lantern": ("lantern", 19), "rows": ("rows", 18),
         "vines": ("vineway", 15), "tangle": ("tangle", 12), "crown": ("crownvine", 0), "fields": ("fields", 9), "sundial": ("sundial", 10),
         "terraces": ("promenade", 2), "wheel": ("wheel", 2), "climb": ("climb", 5), "making": ("pipewalk", 2), "works": ("works", 6),
         "door": ("door", 6), "cliffs": ("cliffs", 10), "gate": ("arena", 8),
+        "leafrun": ("leafrun", 17), "meadow": ("meadow", 9), "arcade": ("arcade", 2), "ledgehead": ("ledgehead", 6), "approach": ("approach", 8),
     }  # fmt: skip
     for name, (room, storey) in views.items():
         r = rooms[room]
         level.view(f"eden_{name}", (r.x0 + r.x1) / 2, m.S(storey) - 8)
-    level.shots += [("eden_orchard_night", "eden_orchard", 22.5), ("eden_terraces_sunset", "eden_terraces", 18.6), ("eden_gate_dusk", "eden_gate", 19.4), ("eden_hollow_dawn", "eden_hollow", 6.6)]
-    log(f"  dressed: {d.count} pictures, {lit} lamps")
+    # Every view is taken at its room's own hour; these are the same places at another.
+    level.shots += [("eden_orchard_night", "eden_orchard", 22.5), ("eden_gate_night", "eden_gate", 23.0), ("eden_fields_noon", "eden_fields", 12.0)]
+    log(f"  dressed: {d.count} pictures, {lit} lamps, {alive} of life")

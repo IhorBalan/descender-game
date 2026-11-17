@@ -91,6 +91,10 @@ namespace Descender.World.TilesV2
 
         // The name of the part of the level the hero is in, or was last in (a level of named parts).
         private string zone = "";
+
+        // The hour of the room the hero is in (below zero: none yet), and the hour the day is turning to.
+        private float mood = -1f;
+        private float turningTo = -1f;
         private string title = "";
         private string subtitle = "";
         private float titleLeft;
@@ -507,6 +511,12 @@ namespace Descender.World.TilesV2
         /// <summary>The name of the part of the level the hero is in, or was last in; empty before he has been in any.</summary>
         public string Zone => zone;
 
+        /// <summary>Seconds the day takes to turn to a room's own hour.</summary>
+        public const float MoodTime = 2.5f;
+
+        /// <summary>The hour of the room the hero is in, where rooms have their own (below zero: none).</summary>
+        public float Mood => mood;
+
         /// <summary>Whether the chart is open.</summary>
         public bool IsChartShown => chartShown;
 
@@ -850,6 +860,45 @@ namespace Descender.World.TilesV2
                     }
                 }
             }
+            Turn(Mathf.Min(Time.unscaledDeltaTime, LongestFrame));
+        }
+
+        /// <summary>
+        /// Turns the day to the hour of the room the hero is in, over MoodTime, where the
+        /// level's rooms have their own hours: at once the first time. Only a change of room
+        /// starts it, so an hour set by hand stays until he goes on.
+        /// </summary>
+        public void Turn(float seconds)
+        {
+            if (things == null || things.Moods.Count == 0 || world == null || world.Day == null || shooting)
+            {
+                return;
+            }
+            if (
+                hero != null
+                && things.TryMood((Vector2)hero.transform.position + Vector2.up, out var own)
+                && !Mathf.Approximately(own, mood)
+            )
+            {
+                turningTo = own;
+                if (mood < 0f)
+                {
+                    world.Day.Hour = own;
+                }
+                mood = own;
+            }
+            if (turningTo < 0f)
+            {
+                return;
+            }
+            var now = world.Day.Hour;
+            var step = Mathf.Max(Mathf.Abs(turningTo - now), 0.5f) * seconds * 3f / MoodTime;
+            world.Day.Hour = Mathf.MoveTowards(now, turningTo, step);
+            if (Mathf.Abs(world.Day.Hour - turningTo) < 0.005f)
+            {
+                world.Day.Hour = turningTo;
+                turningTo = -1f;
+            }
         }
 
         // The name of the part that holds a place (a level marks each of its rooms with its part's name); empty for none.
@@ -1073,7 +1122,8 @@ namespace Descender.World.TilesV2
             var shots = new List<(string place, float hour, string file)>();
             foreach (var name in places)
             {
-                shots.Add((name, world.Set.dayStart, name));
+                // A place is shown at its own hour, where rooms have one.
+                shots.Add((name, -1f, name));
             }
             foreach (var shot in world.Map.Shots)
             {
@@ -1085,7 +1135,10 @@ namespace Descender.World.TilesV2
                 {
                     continue;
                 }
-                world.Day.Hour = hour;
+                world.Day.Hour =
+                    hour >= 0f ? hour
+                    : things != null && things.TryMood(point, out var own) ? own
+                    : world.Set.dayStart;
                 point = world.Framed(point);
                 var eye = Camera.main;
                 if (eye != null)

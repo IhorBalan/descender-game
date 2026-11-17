@@ -42,7 +42,12 @@ LEFT, TOP, RIGHT, BOTTOM = 1, 2, 1, 3  # cells of open sky round the plan
 COL0, ROW0 = 2 - LEFT, -TOP  # the plan's column and row at the map's first tile
 WIDTH, HEIGHT = (120 - COL0 + 1 + RIGHT) * CW, (26 - ROW0 + BOTTOM) * CH
 AIR = "."
-HOUR = 17.4  # the level's hour: the sun low and gold, and it does not move (the design's endless sun)
+# Each zone's own hour: the road through Paradise is a day, from its dawn in the Hollow to
+# its dusk at the Gate, and in no zone does the sun move (the design's endless sun).
+MOODS = {1: 6.8, 2: 6.8, 3: 10.5, 4: 16.8, 5: 17.9, 6: 18.6, 7: 19.4}
+HOUR = MOODS[1]  # the hour the hero wakes at
+# The zones whose floors in the air swell and dip as boughs and banks do (the rest are built: flat).
+WAVY = {1, 3, 4, 7}
 NEED = tv2_reach.BIT
 GROUND = set(TERRAIN_CHARS)
 CLOUD = "Q"
@@ -51,14 +56,17 @@ LEDGE = ","
 # What each zone is built of: its ground (floors and platforms), the wall behind a room
 # that is roofed (none: the sky), and the lamp that stands on its floors.
 STYLE = {
-    1: dict(ground="G", under="D", back="d", lamp="J"),  # lanterns: the one gentle place
-    2: dict(ground="À", under="À", back="Õ", lamp="å"),
-    3: dict(ground="Ä", under="Ä", back="Ù", lamp="T"),
-    4: dict(ground="È", under="È", back="d", lamp="T"),
-    5: dict(ground="M", under="M", back="m", lamp="*"),
-    6: dict(ground="Í", under="Í", back="Ú", lamp="^"),
-    7: dict(ground="Ð", under="Ð", back="Û", lamp="*"),
+    1: dict(ground="G", under="D", back="d", lamp="J", ledge='"', slopes=("/", "\\"), climb="ladder"),  # lanterns: the one gentle place
+    2: dict(ground="À", under="À", back="Õ", lamp="å", ledge='"', slopes=("Á", "Ã"), climb="ladder"),
+    3: dict(ground="Ä", under="Ä", back="Ù", lamp="T", ledge='"', slopes=("Æ", "Ç"), climb="ladder"),
+    4: dict(ground="È", under="È", back="d", lamp="T", ledge='"', slopes=("Ë", "Ì"), climb="islets"),
+    5: dict(ground="M", under="M", back="m", lamp="*", ledge=",", slopes=("a", "e"), climb="stairs"),
+    6: dict(ground="Í", under="Í", back="Ú", lamp="^", ledge="'", slopes=None, climb="ladder"),
+    7: dict(ground="Ð", under="Ð", back="Û", lamp="*", ledge="?", slopes=("Ò", "Ó"), climb="islets"),
 }
+# How a room is climbed, where it is not its zone's way: the Rising Leaf is a stair the hero runs up.
+# (The eyrie keeps its ladders: an islet by its gulf would be a way over the wall that only a glide should cross.)
+CLIMB = {"rising": "stairs", "eyrie": "ladder"}
 # The rooms that are roofed: under a canopy, in a trunk, in the ground, in a house. The rest are under the sky.
 ROOFED = {
     "roots", "h1", "l1",
@@ -319,11 +327,49 @@ def ladder(level: Level, x: int, low: int, high: int, winged: bool, wide: int = 
                 level.t[stand + 1][x + dx] = LEDGE
 
 
+def stair(level: Level, room: Room, edge: int, d: int, up: int, low: int, lower: set) -> bool:
+    """A stair of treads from a storey's floor (surface row `low`) up to the edge of the
+    platform over it (surface row `up`, its end column `edge`), going down away from the
+    platform (`d`: 1 to the east, -1 to the west): a tread two tiles wide for each row,
+    gently where the room is long enough, steeply where it is not. The treads are ledges:
+    he walks up them, and passes under and through them. False where there is no room."""
+    for run in (2, 1):
+        cells = []
+        for k in range(1, low - up):
+            first = edge + d * (run * k - (run - 1))
+            cells += [(first, up + k), (first + d, up + k)]
+        foot = edge + d * (run * (low - up - 1) + 2)
+        fits = all(room.x0 < x < room.x1 and level.t[y][x] == AIR and level.t[y - 1][x] == AIR and level.t[y - 2][x] == AIR for x, y in cells)
+        if fits and foot in lower and foot + d in lower:
+            for x, y in cells:
+                level.t[y][x] = LEDGE
+            return True
+    return False
+
+
+def islets(level: Level, room: Room, edge: int, d: int, up: int, low: int, lower: set) -> bool:
+    """Stepping places from a storey's floor up to the edge of the platform over it: an
+    islet of ground half way, four tiles wide, a jump with the Wings from the floor and
+    another from it to the platform. False where there is no room."""
+    half = low - 6
+    xs = [edge + d * k for k in range(5, 9)]
+    if not all(room.x0 + 1 < x < room.x1 - 1 and x in lower for x in xs):
+        return False
+    if any(level.t[y][x] != AIR for x in xs for y in range(half - 5, half + 3)):
+        return False
+    for x in xs:
+        level.t[half][x] = room.style["ground"]
+        level.t[half + 1][x] = room.style["under"]
+    return True
+
+
 def ways_up(level: Level):
-    """Between a storey and the one over it, a ladder of ledges at either end of every gap
-    of the upper platform that has floor under it: beside the platform's edge, so the top
-    ledge is a step from it."""
+    """Between a storey and the one over it, a way up at either end of every gap of the
+    upper platform that has floor under it, beside the platform's edge: the zone's own
+    way (a stair of treads on the Terraces and up the Rising Leaf, stepping islets in the
+    Fields and on the cliffs), or a ladder of ledges where that does not fit."""
     for room in level.rooms.values():
+        climb = CLIMB.get(room.name, room.style["climb"])
         for j in range(room.j0, room.j1):
             upper = room.cover[j]
             lower = set(room.inner()) if j + 1 == room.j1 else room.cover[j + 1]
@@ -342,15 +388,96 @@ def ways_up(level: Level):
                     continue
                 spots = []
                 if g0 - 1 in upper:
-                    spots.append(g0)
+                    spots.append((g0, 1))
                 if g1 + 1 in upper and (not spots or g1 - 2 > g0 + 2):
-                    spots.append(g1 - 2)
-                for x in spots:
-                    if all(c in lower for c in range(x, x + 3)):
+                    spots.append((g1 - 2, -1))
+                for x, d in spots:
+                    if not all(c in lower for c in range(x, x + 3)):
+                        continue
+                    edge = x - 1 if d > 0 else x + 3  # the platform's end column
+                    built = False
+                    if climb == "stairs":
+                        built = stair(level, room, edge, d, S(j), S(j + 1), lower)
+                    elif climb == "islets" and room.winged:
+                        built = islets(level, room, edge, d, S(j), S(j + 1), lower)
+                    if not built:
                         ladder(level, x, S(j + 1) - 1, S(j) - 1, room.winged)
-                        made += 1
+                    made += 1
             if not made and upper:
                 level.notes.append(f"{room.name}: no way up to its storey in row {j}")
+
+
+def restyle(level: Level):
+    """Every ledge is its zone's own: planks in the gardens, gilt on the Terraces, grating in the Making-house, rime by the Gate."""
+    for y in range(HEIGHT):
+        for x in range(WIDTH):
+            if level.t[y][x] in LEDGE_CHARS and level.room_at[y][x] is not None:
+                level.t[y][x] = level.room_at[y][x].style["ledge"]
+
+
+def shaped(level: Level):
+    """The lowest floor of an open room is not a slab: it rises by a tile in long low
+    hills, cut on the slant at either end, and in the Fields a stream lies across it here
+    and there. In the zones that are grown and not built (`WAVY`) the floors in the air
+    swell the same way, as a bough does. Never by a door, over a way down, where the plan
+    stands something, or at a floor's end where a way up comes: only where nothing else is."""
+    reserved: dict[str, set[int]] = {name: set() for name in level.rooms}
+    for a, b, side, line, along, kind in plan.LINKS:
+        for name in (a, b):
+            room = level.rooms[name]
+            if side == "v":
+                edge = X(line)
+                reserved[name].update(range(edge - 10, edge + 10))
+            else:
+                columns = hole_columns(along)
+                reserved[name].update(range(columns[0] - 10, columns[-1] + 11))
+    taken = {(i, j): room for room in level.rooms.values() for i in range(room.i0, room.i1 + 1) for j in range(room.j0, room.j1 + 1)}
+    for kind, i, j, _ in plan.THINGS:
+        reserved[taken[(i, j)].name].update(range(X(i), X(i) + CW))
+    for room in level.rooms.values():
+        slopes = room.style["slopes"]
+        if room.roofed or room.kind in ("late", "hidden") or slopes is None or room.i1 - room.i0 < 2:
+            continue
+        lowest = room.y1 - 1  # the floor's top row
+        floors = [lowest] + ([S(j) for j in range(room.j0, room.j1)] if room.zone in WAVY else [])
+        for floor in floors:
+            shape(level, room, floor, floor == lowest, reserved[room.name], slopes)
+
+
+def shape(level: Level, room: Room, floor: int, lowest: bool, reserved: set, slopes):
+    """One floor of a room, shaped: `floor` its top row."""
+    if True:
+        free = [
+            x
+            for x in range(room.x0 + 7, room.x1 - 6)
+            if x not in reserved
+            and level.t[floor][x] == room.style["ground"]
+            and level.t[floor + 1][x] in GROUND
+            and all(level.t[y][x] == AIR for y in range(floor - 9, floor))
+        ]
+        runs, start = [], None
+        for x in range(room.x0, room.x1 + 2):
+            if x in free and start is None:
+                start = x
+            elif x not in free and start is not None:
+                if x - start >= (10 if lowest else 12):
+                    runs.append((start, x - 1))
+                start = None
+        for n, (x0, x1) in enumerate(runs):
+            if not lowest:
+                x0, x1 = x0 + 2, x1 - 2  # a floor in the air keeps its ends flat: a way up comes there
+            if lowest and room.zone == 4 and (n + room.i0) % 2 == 1 and x1 - x0 >= 12:
+                # A stream: seven tiles of water a tile deep, to wade or to clear with the Wings.
+                mid = (x0 + x1) // 2
+                for x in range(mid - 3, mid + 4):
+                    level.t[floor][x] = "W"
+                continue
+            a, b = x0 + 2, min(x1 - 2, x0 + 2 + 8 + int(hash01(x0, floor, 3) * 12))
+            for x in range(a, b + 1):
+                level.t[floor - 1][x] = room.style["ground"]
+                level.t[floor][x] = room.style["under"]
+            level.t[floor - 1][a - 1] = slopes[0]
+            level.t[floor - 1][b + 1] = slopes[1]
 
 
 def cut(level: Level, columns, rows):
@@ -667,6 +794,8 @@ def build(log=print) -> Level:
     platforms(level)
     ways_up(level)
     links(level)
+    restyle(level)
+    shaped(level)
     shrines = things(level)
     rewards(level)
     tv2_paradise_dress.dress(level, sys.modules[__name__], log)
