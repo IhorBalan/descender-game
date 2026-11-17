@@ -444,6 +444,234 @@ def glowfruit_frame(frame: int) -> np.ndarray:
     return a
 
 
+# --- An old, great place: what makes the level read as one --------------------------------
+
+STONE = ramp_of("1c1d26 464955 5b5e6b 717482 8a8d9a a8abb6 c8cad2")
+STEEL = ramp_of("14161c 3c424e 5a6270 808a98 aab4c0 d4dce4 f4f8fc")
+FOG = ramp_of("7088b0 a8c0e0 d0e2f6 f2f8ff")
+
+
+def gate_arch(kind: str) -> Image.Image:
+    """The arch a doorway stands in, behind whoever goes through: two piers and a pointed
+    arch of cut stone with a ring of tracery in its head, weathered, a line of old gold
+    under its spring; or (`vine`) two trunks grown together overhead. Eight tiles wide,
+    twelve high, open in the middle."""
+    r = rng("eden gate arch", kind)
+    W, H = 8 * T, 12 * T
+    art = Art(W, H)
+    cx, spring = W / 2, 5 * T
+    if kind == "vine":
+        for side in (-1, 1):
+            for i in range(H - 6):
+                t = i / (H - 6)
+                x = cx + side * (2.6 * T - (t**2.4) * 2.4 * T) + math.sin(i / 13 + side) * 3
+                half = 8 - t * 4
+                for d in range(int(-half), int(half) + 1):
+                    art.put(x + d, H - 1 - i, tone(BARK, 4 - round(d / max(half, 1) * 2) + (1 if (i + d) % 9 else 0)))
+        for n in range(11):
+            a = math.pi * n / 10
+            bundle(art, cx - math.cos(a) * 2.2 * T, 2.2 * T - math.sin(a) * 1.4 * T + r.uniform(-4, 4), r.uniform(10, 15), r.uniform(8, 11), LEAF, r, ("arch", n), gaps=False)
+        art.outline(BARK[0])
+        return art.image()
+    for side in (-1, 1):
+        px = cx + side * 3 * T
+        ashlar(art, px - T, spring, px + T, H, STONE, r, course=8, shift=lambda x, px=px: round_shift((x + 0.5 - px) / T))
+        for x in range(int(px - T - 3), int(px + T + 3)):  # a base, and a capital with old gold under it
+            for y, k in ((H - 6, 6), (H - 5, 4), (H - 1, 2), (spring, 6), (spring + 1, 5), (spring + 2, 2)):
+                art.put(x, y, tone(STONE, k))
+            art.put(x, spring + 3, GOLD[3])
+    for y in range(4, spring + 1):
+        for x in range(4, W - 4):
+            # A pointed arch: two arcs struck from the far springing points.
+            outer = max(math.hypot(x + 0.5 - (cx - 2 * T), y - spring), math.hypot(x + 0.5 - (cx + 2 * T), y - spring))
+            if 4 * T < outer <= 6 * T - 6:
+                ring = outer > 6 * T - 12 or outer < 4 * T + 6
+                art.put(x, y, tone(STONE, (6 if ring else stones(x, y) - 1) + (1 if x < cx else -1)))
+    for dy in range(-13, 14):  # the ring in its head
+        for dx in range(-13, 14):
+            d = math.hypot(dx, dy)
+            if 9 < d <= 13 or (d <= 9 and abs(math.sin(math.atan2(dy, dx) * 3)) < 0.18):
+                art.put(cx + dx, 2.2 * T + dy, tone(STONE, 6 if dx + dy < 0 else 3))
+    art.outline(STONE[0])
+    return art.image()
+
+
+def gothic_window() -> Image.Image:
+    """A window of an old hall: two lancets and a round light over them in a pointed frame
+    of stone, glass in lead with a light behind it, dim and warm."""
+    W, H = 5 * T, 10 * T
+    art = Art(W, H)
+    cx = W / 2
+    for y in range(H):
+        for x in range(W):
+            outer = max(math.hypot(x + 0.5 - (cx - 1.2 * T), y - 4 * T), math.hypot(x + 0.5 - (cx + 1.2 * T), y - 4 * T)) if y < 4 * T else 0
+            inside = (outer < 3.6 * T) if y < 4 * T else abs(x + 0.5 - cx) < 2.3 * T
+            if not inside:
+                continue
+            frame = (outer > 3.6 * T - 6) if y < 4 * T else abs(x + 0.5 - cx) > 2.3 * T - 6
+            mullion = abs(x + 0.5 - cx) < 3 and y > 3 * T
+            rose = math.hypot(x + 0.5 - cx, y - 2.6 * T)
+            if frame or mullion or 13 < rose <= 17 or y > H - 5:
+                art.put(x, y, tone(STONE, 5 if x < cx else 3))
+            else:
+                lead = (x + y) % 6 == 0 or (x - y) % 6 == 0
+                pane = ((x + y) // 6 * 3 + (x - y) // 6 * 5) % 7
+                art.put(x, y, STONE[0] if lead else AMBER[1 + pane % 3] if pane % 3 else GOLD[3])
+    art.outline(STONE[0])
+    return art.image()
+
+
+def buttress(mirrored: bool) -> Image.Image:
+    """A flying buttress: a pier of stone with a pinnacle on it, and an arm of stone flung
+    from it to the wall it holds, an arch under the arm."""
+    r = rng("eden buttress")
+    W, H = 8 * T, 13 * T
+    art = Art(W, H)
+    px = 1.5 * T
+    ashlar(art, px - T, 3 * T, px + T, H, STONE, r, course=8, shift=lambda x: round_shift((x + 0.5 - px) / T))
+    for i in range(3 * T):  # the pinnacle
+        half = max(1, (3 * T - i) / (3 * T) * T * 0.8)
+        for x in range(int(px - half), int(px + half) + 1):
+            art.put(x, 3 * T - 1 - i, tone(STONE, 5 if x < px else 3))
+    for x in range(int(px), W):
+        t = (x - px) / (W - px)
+        top = 4.2 * T + t * 3.6 * T
+        under = top + 14 + math.sin(t * math.pi) * 22
+        for y in range(int(top), int(top) + 9):
+            art.put(x, y, tone(STONE, 6 if y == int(top) else stones(x, y) - 1))
+        for y in range(int(under), int(under) + 5):
+            art.put(x, y, tone(STONE, 4 if y == int(under) else 3))
+    for x in range(int(px - T - 3), int(px + T + 3)):
+        art.put(x, 3 * T, tone(STONE, 6))
+        art.put(x, 3 * T + 1, tone(STONE, 2))
+        art.put(x, H - 5, tone(STONE, 6))
+    art.outline(STONE[0])
+    image = art.image()
+    return image.transpose(Image.FLIP_LEFT_RIGHT) if mirrored else image
+
+
+def ruin(variant: int) -> Image.Image:
+    """What is left of a column: a stump on its base, broken off aslant, and a drum of it lying by; or its capital fallen and half in the ground."""
+    W, H = 5 * T, 5 * T
+    art = Art(W, H)
+    if variant % 2 == 0:
+        cx, tall = 1.6 * T, (3.4, 2.2)[variant // 2 % 2] * T
+        for y in range(int(H - tall), H):
+            cut = (y - (H - tall)) * 0.9
+            for x in range(int(cx - 11), int(cx + 11)):
+                if y < H - tall + 14 and x - (cx - 11) > cut + 2:
+                    continue
+                off = (x + 0.5 - cx) / 11
+                flute = int((off + 1) * 5) % 2
+                art.put(x, y, tone(STONE, 5 + round_shift(off) - flute))
+        for x in range(int(cx - 15), int(cx + 15)):
+            for y, k in ((H - 6, 6), (H - 5, 5), (H - 4, 4), (H - 1, 2)):
+                art.put(x, y, tone(STONE, k))
+        for y in range(H - 20, H - 2):  # a drum fallen by it
+            for x in range(int(3.1 * T), int(4.6 * T)):
+                if math.hypot((x - 3.85 * T) / 12, (y - (H - 11)) / 9) <= 1:
+                    art.put(x, y, tone(STONE, 5 if y < H - 13 else 3 if x > 3.9 * T else 4))
+    else:
+        for y in range(H - 22, H):
+            lean = (y - (H - 22)) * 0.25
+            for x in range(int(T + lean), int(3.8 * T + lean)):
+                leaf = (x + y) % 7 < 2 and y < H - 8
+                art.put(x, y, tone(STONE, 6 if y == H - 22 else 3 if leaf else 5 if x < 2.2 * T else 4))
+        for x in range(int(T - 4), int(4 * T)):
+            art.put(x, H - 1, tone(STONE, 2))
+    art.outline(STONE[0])
+    return art.image()
+
+
+def sword(coiled: bool = False) -> Image.Image:
+    """A sword left standing in the ground; or (`coiled`) the twisted sword a fire is lit round, where the lost rest."""
+    W, H = 2 * T, 4 * T
+    art = Art(W, H)
+    cx = W / 2
+    metal = BRASS if coiled else STEEL
+    tall = 40 if coiled else 46
+    for i in range(tall):
+        y = H - 1 - i
+        wob = round(math.sin(i / 3.5) * 1.6) if coiled else 0
+        half = 1 if coiled or i >= tall - 6 else 2
+        for d in range(-half, half + 1):
+            art.put(cx + wob + d, y, tone(metal, 6 if d < 0 else 4 if d == 0 else 2))
+    hilt = H - 1 - tall
+    for d in range(-7, 8):
+        art.put(cx + d, hilt, tone(metal, 5 if d < 0 else 3))
+        art.put(cx + d, hilt + 1, tone(metal, 2))
+    for i in range(1, 9):
+        art.put(cx, hilt - i, tone(BARK if not coiled else BRASS, 3))
+        art.put(cx - 1, hilt - i, tone(BARK if not coiled else BRASS, 5))
+    for dx, dy in ((-1, -10), (0, -10), (1, -10), (-1, -9), (0, -11)):
+        art.put(cx + dx, hilt + dy, tone(metal, 5))
+    art.outline(metal[0])
+    return art.image()
+
+
+def knight() -> Image.Image:
+    """A statue of one who kept this place: hooded, in a long mantle, both hands on a great
+    sword set point down before him, on a block of stone. Three times the hero's height."""
+    r = rng("eden knight")
+    W, H = 5 * T, 9 * T
+    art = Art(W, H)
+    cx = W / 2
+    ashlar(art, cx - 1.8 * T, H - 1.5 * T, cx + 1.8 * T, H, STONE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (1.8 * T)))
+    top = H - 1.5 * T
+    shoulder = top - 5.4 * T
+    for y in range(int(shoulder), int(top)):
+        t = (y - shoulder) / (top - shoulder)
+        half = 13 + t * 14 + 2 * math.sin(t * 8)
+        for x in range(int(cx - half), int(cx + half)):
+            off = (x + 0.5 - cx) / half
+            fold = math.sin(off * 8 + t * 2)
+            art.put(x, y, tone(STONE, 4 + round_shift(off) + (1 if fold > 0.6 else -1 if fold < -0.5 else 0)))
+    for dy in range(-13, 10):  # the hood
+        for dx in range(-11, 12):
+            if dx * dx + (dy * 0.85) ** 2 <= 121:
+                face = dy > -3 and abs(dx) < 6
+                art.put(cx + dx, shoulder - 6 + dy, STONE[0] if face else tone(STONE, 5 if dx + dy < -4 else 3))
+    for y in range(int(shoulder + 1.6 * T), int(top - 3)):  # the sword
+        for d in (-2, -1, 0, 1):
+            art.put(cx + d, y, tone(STONE, 6 if d < 0 else 3))
+    for d in range(-12, 13):
+        art.put(cx + d, shoulder + 1.6 * T, tone(STONE, 6))
+        art.put(cx + d, shoulder + 1.6 * T + 1, tone(STONE, 2))
+    for x in range(int(cx - 2 * T), int(cx + 2 * T)):
+        art.put(x, int(top), tone(STONE, 6))
+        art.put(x, int(top) + 1, tone(STONE, 2))
+    art.outline(STONE[0])
+    return art.image()
+
+
+def fog(frame: int) -> Image.Image:
+    """The fog that stands in a great door: a veil of pale mist from sill to lintel, threads of it drifting up, frame by frame."""
+    W, H = 4 * T, 8 * T
+    art = Art(W, H)
+    for y in range(H):
+        for x in range(W):
+            off = abs(x + 0.5 - W / 2) / (W / 2)
+            wave = math.sin(x * 0.55 + (y + frame * 5) * 0.21) + math.sin(x * 0.23 - (y + frame * 7) * 0.13 + 1.3)
+            alpha = (1 - off**1.6) * (150 + 45 * wave) * min(1.0, (H - y) / 10 + 0.3) * min(1.0, y / 6 + 0.4)
+            if alpha > 18:
+                art.put(x, y, FOG[3 if wave > 0.9 else 2 if wave > -0.2 else 1], int(min(alpha, 235)))
+    return art.image()
+
+
+def chain(variant: int) -> Image.Image:
+    """A chain hung from a roof, a link at a time, long or short; the long one has a hook."""
+    W, H = T, (5, 8)[variant % 2] * T
+    art = Art(W, H)
+    for i in range(H - (6 if variant % 2 else 0)):
+        link = i % 6
+        for d in ((-2, 2) if link in (1, 2, 3, 4) else (-1, 0, 1)):
+            art.put(8 + d, i, tone(STEEL, 5 if d < 0 else 3))
+    if variant % 2:
+        for dx, dy in ((0, 0), (1, 1), (2, 2), (2, 3), (1, 4), (0, 5), (-1, 5), (-2, 4)):
+            art.put(8 + dx, H - 6 + dy, tone(STEEL, 5))
+    return art.image()
+
+
 # --- What there is, and where its floor line lies ------------------------------------------
 
 LEAVES, IVIES, TEAL_TREES, VINES, CRAGS = 4, 3, 3, 3, 3
@@ -489,6 +717,21 @@ def _plan():
         add(f"eden_crag_{v}", lambda v=v: crag(v), ORDER_TREE - 1, sink=4)
     for rows, wide in ((10, 2), (10, 1)):
         add(f"eden_pillar_{rows}x{wide}", lambda a=(rows, wide): pillar(*a), ORDER_STAND)
+    # What makes it an old, great place: arches to go through, windows, buttresses, what is broken, who kept it.
+    for kind in ("stone", "vine"):
+        add(f"eden_arch_{kind}", lambda kind=kind: gate_arch(kind), ORDER_STAND)
+    add("eden_window", gothic_window, ORDER_WALL + 1)
+    for v in range(2):
+        add(f"eden_buttress_{v}", lambda v=v: buttress(v == 1), ORDER_TREE - 2)
+        hung(f"eden_chain_{v}", lambda v=v: chain(v), ORDER_HUNG)
+    for v in range(3):
+        add(f"eden_ruin_{v}", lambda v=v: ruin(v), ORDER_GARDEN)
+    add("eden_sword", lambda: sword(False), ORDER_GARDEN)
+    add("eden_bonfire", lambda: sword(True), ORDER_STAND)
+    add("eden_knight", knight, ORDER_STAND)
+    add("eden_fog", lambda: fog(0), ORDER_HUNG + 2, lit=False)
+    for frame in range(1, FRAMES):
+        add(f"eden_fog{FRAME}{frame}", lambda frame=frame: fog(frame), ORDER_HUNG + 2, lit=False)
     add("eden_mereth", lambda: figure("mereth"), ORDER_STAND)
     add("eden_ithuriel", lambda: figure("ithuriel"), ORDER_STAND)
     add("eden_gathered", gathered, ORDER_TREE - 2)

@@ -250,7 +250,9 @@ namespace Descender.World.TilesV2
             MakeLights();
             Sky = TilesV2Backdrops.Build(this, built);
             Day = built.gameObject.AddComponent<DayNight>();
-            Day.Configure(set, Light, Sky, hour, dayRuns);
+            // A map may say its own hour, and that its sun does not move.
+            var says = Map != null && Map.Hour >= 0f;
+            Day.Configure(set, Light, Sky, says ? Map.Hour : hour, dayRuns && !(says && Map.Still));
             if (field != null)
             {
                 TilesV2Particles.Build(this, field, built);

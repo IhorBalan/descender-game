@@ -171,6 +171,37 @@ namespace Descender.Tests
         }
 
         [Test]
+        public void ItIsAnOldPlaceAtAnHourThatDoesNotPass()
+        {
+            // The level says its own hour, late and gold, and that its sun does not move.
+            Assert.That(map.Hour, Is.InRange(16.5f, 18.5f));
+            Assert.That(map.Still, Is.True);
+            Assert.That(world.Day.Hour, Is.EqualTo(map.Hour).Within(0.01f), "the world takes the map's hour");
+            Assert.That(world.Day.Running, Is.False, "the sun stands still");
+            // A fire by every shrine, an arch round every doorway, fog in the Warden's door.
+            var shrines = 0;
+            var fires = 0;
+            var arches = 0;
+            var fog = 0;
+            foreach (var mark in map.Marks)
+            {
+                shrines += mark.Kind == TilesV2Things.Checkpoint ? 1 : 0;
+                if (mark.Kind != TilesV2Things.Stood)
+                {
+                    continue;
+                }
+                fires += mark.Word(0) == "eden_bonfire" ? 1 : 0;
+                arches += mark.Word(0).StartsWith("eden_arch") ? 1 : 0;
+                fog += mark.Word(0) == "eden_fog" ? 1 : 0;
+            }
+            Assert.That(fires, Is.EqualTo(shrines), "a fire to rest by at every shrine");
+            Assert.That(arches, Is.GreaterThan(25), "the doorways stand in arches");
+            Assert.That(fog, Is.EqualTo(1), "fog stands in the Warden's door");
+            // The fog is several pictures shown in turn, and nothing stops the hero at it.
+            Assert.That(System.Array.Exists(set.backdrops, backdrop => backdrop.key == "eden_fog_f1"), Is.True);
+        }
+
+        [Test]
         public void TheSkyOfATallLevelIsBehindEveryRoom()
         {
             // The heaven layers go up with the camera by more under a sky higher than the world's.
