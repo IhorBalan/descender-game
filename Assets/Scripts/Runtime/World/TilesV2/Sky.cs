@@ -4,8 +4,9 @@ namespace Descender.World.TilesV2
 {
     /// <summary>
     /// The Tiles V2 sky, pinned to the view (docs/art/tiles-v2.md): two colours that change
-    /// with the hour, drawn as dithered bands on a texture the size of the camera's view in
-    /// art pixels (painted here, so the bands stay pixel art whatever the colours), the
+    /// with the hour, drawn as even bands that meet in a line (no chequer: at the size the
+    /// game is seen at a dither is a screen door) on a texture the size of the camera's
+    /// view in art pixels (painted here, so the bands stay pixel art whatever the colours), the
     /// stars that come out at night, the sun or the moon on its arc across the view, and
     /// the tint of the far backdrop layers (ridges, clouds). DayNight tells it the hour's
     /// values; tools/tiles_v2/tv2_backdrop.py paints the same bands for the preview.
@@ -19,8 +20,6 @@ namespace Descender.World.TilesV2
         private const float ArcWidth = 0.84f;
         private const float ArcBase = -0.12f;
         private const float ArcHeight = 0.5f;
-
-        private static readonly int[] Bayer = { 0, 8, 2, 10, 12, 4, 14, 6, 3, 11, 1, 9, 15, 7, 13, 5 };
 
         [SerializeField]
         private SpriteRenderer gradient;
@@ -38,7 +37,7 @@ namespace Descender.World.TilesV2
         private SpriteRenderer[] tinted = new SpriteRenderer[0];
 
         [SerializeField, Min(2)]
-        private int bands = 7;
+        private int bands = 24;
 
         [SerializeField, Min(8), Tooltip("The sky's size in art pixels: the camera's view.")]
         private int width = 640;
@@ -97,14 +96,11 @@ namespace Descender.World.TilesV2
 
         /// <summary>
         /// Which of the `bands` colours pixel (x, y from the top) of a sky `height` pixels
-        /// tall shows, 0 at the top: the bands meet in an ordered 4 x 4 dither.
+        /// tall shows, 0 at the top: even bands, the same all the way across.
         /// </summary>
         public static int Band(int x, int fromTop, int height, int bands)
         {
-            var t = fromTop / (float)(height - 1) * (bands - 1);
-            var whole = (int)t;
-            var step = (t - whole) * 16f > Bayer[(fromTop % 4) * 4 + x % 4] + 0.5f ? 1 : 0;
-            return Mathf.Min(whole + step, bands - 1);
+            return Mathf.Clamp(fromTop * bands / Mathf.Max(height, 1), 0, bands - 1);
         }
 
         /// <summary>Shows a moment of the day: `along` is how far the sun (or the moon) is on its arc, 0 to 1.</summary>

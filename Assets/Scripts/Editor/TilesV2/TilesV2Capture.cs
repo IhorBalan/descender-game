@@ -343,6 +343,8 @@ namespace Descender.EditorTools.TilesV2
             {
                 world.TryView(pair.Key, out var at);
                 ShowHour(world, things != null && things.TryMood(at, out var own) ? own : start);
+                // And in its room's own look.
+                things?.Look(world.Framed(at));
                 Render(world, world.Framed(at), game, Path.Combine(folder, pair.Key + ".png"));
             }
             foreach (var shot in world.Map.Shots)
@@ -350,10 +352,13 @@ namespace Descender.EditorTools.TilesV2
                 if (world.TryView(shot.View, out var at))
                 {
                     ShowHour(world, shot.Hour);
+                    things?.Look(world.Framed(at));
                     Render(world, world.Framed(at), game, Path.Combine(folder, shot.Name + ".png"));
                 }
             }
             ShowHour(world, start);
+            // The whole map is in no room: it is photographed as it is drawn.
+            things?.LookAway();
             var area = world.Area;
             // The whole map, at as many pixels a tile as a texture can hold.
             var most = Mathf.Max(area.width, area.height);

@@ -21,6 +21,8 @@ import math
 import tv2_paradise_plan as plan
 from tv2_base import *  # noqa: F401,F403
 
+POST_ROWS = 10  # tiles from a floor to the underside of the platform over it: what a garden's post is tall (tv2_eden.POST_ROWS)
+
 IVY = {1: "green", 2: "teal", 3: "green", 4: "green", 5: "green", 6: "pale", 7: "frost"}
 # What stands along a zone's floors, in turn: (keys, tiles between two of them).
 ALONG = {
@@ -358,17 +360,147 @@ def columns(level, m, d: Dresser, room):
                 d.stand("eden_pillar_10x2", x, foot)
             elif room.zone == 6:
                 d.stand("eden_pipe_v_12", x, foot)
-            elif room.zone in (1, 2, 3, 4):
-                char = {1: "t", 2: "w", 3: "l", 4: "w"}[room.zone]
-                for y in range(top, foot + 1):
-                    if not room.roofed or True:
-                        level.walls[y][x] = char
+            elif room.zone in (1, 2, 3, 4) and foot - top + 1 == POST_ROWS:
+                d.stand(f"eden_post_{room.zone - 1}", x, foot)  # the garden's own: a stalk, a trunk, a vine, a post of timber
+
+
+def lay(level, m, key: str, x: int, y: int, dx: int = 0, dy: int = 0):
+    """Marks a picture that lies in or behind the ground at a cell (what is set in a
+    floor, a trunk that goes up behind one, a billow over a floor's foot). A mark is
+    never put in the ground itself: it is put in the first cell over it that is not
+    ground, with the picture let down by as many tiles."""
+    row = y
+    while row > 1 and level.t[row][x] in m.GROUND:
+        row -= 1
+    level.mark("picture", x, row, key, dx, dy - TILE * (y - row))
+
+
+def corbels(level, m, d: Dresser, room):
+    """Under every ledge, what it sits on, in the make of the ledge: nothing is a plank on
+    the air. Hung from the ledge's own cell, under its strip; one for a ledge, whatever its
+    length, in its middle; a stair's treads have one each, so a stair has an underside."""
+    made = 0
+    for y in range(room.y0 + 1, room.y1 - 1):
+        x = room.x0 + 1
+        while x < room.x1:
+            if level.t[y][x] not in LEDGE_CHARS:
+                x += 1
+                continue
+            start = x
+            while x < room.x1 and level.t[y][x] in LEDGE_CHARS:
+                x += 1
+            long, middle = x - start, (start + x - 1) // 2
+            if long < 2 or any(level.t[y + 1][c] in m.GROUND for c in range(start, x)):
+                continue
+            style = LEDGE_CHARS[level.t[y][start]]
+            kind = int(m.hash01(start, y, 61) * 2)
+            level.mark("picture", middle, y, f"eden_corbel_{style}_{kind}", 8 if long % 2 == 0 else 0, -LEDGE_THICK)
+            made += 1
+    d.count += made
+    return made
+
+
+INLAY = {1: "earth", 2: "loam", 3: "vinewood", 4: "tilth", 5: "marble", 6: "pearl", 7: "silver"}
+
+
+def inlays(level, m, d: Dresser, room):
+    """Set in the ground of every floor two tiles thick, every so often, something bigger
+    than a tile and of the zone's own: so a floor is a made or a grown thing all along,
+    not one tile said over. In its lower part, under the turf."""
+    made = 0
+    kind, ground = INLAY[room.zone], set(room.style["ground"] + room.style["under"])
+    for y in range(room.y0 + 1, room.y1):
+        x = room.x0 + 2 + int(m.hash01(room.i0, y, 81) * 6)
+        while x < room.x1 - 6:
+            v = int(m.hash01(x, y, 83) * 3)
+            wide = (4, 3, 5)[v]
+            slab = all(level.t[y][c] in ground and level.t[y + 1][c] in ground and level.t[y - 1][c] not in m.GROUND and level.t[y + 2][c] not in ground for c in range(x - 1, x + wide + 1))
+            if slab:
+                lay(level, m, f"eden_inlay_{kind}_{v}", x + wide // 2, y + 1, 8 if wide % 2 == 0 else 0, 0)
+                made += 1
+                x += wide + 5 + int(m.hash01(x, y, 85) * 8)
+            else:
+                x += 1
+    d.count += made
+    return made
+
+
+def glooms(level, m, d: Dresser, room):
+    """In a roofed room the dark gathers under the roof and under every floor in the
+    air: a veil of it, laid in pieces as wide as what it is under."""
+    if not room.roofed:
+        return 0
+    made = 0
+    for y in range(room.y0 + 1, room.y1 - 2):
+        x = room.x0 + 1
+        while x < room.x1:
+            if not (level.t[y - 1][x] in m.GROUND and level.t[y][x] not in m.GROUND and (y == room.y0 + 1 or level.t[y - 2][x] in m.GROUND)):
+                x += 1
+                continue
+            start = x
+            while x < room.x1 and level.t[y - 1][x] in m.GROUND and level.t[y][x] not in m.GROUND:
+                x += 1
+            at = start
+            while at < x:
+                wide = next(w for w in (8, 4, 2, 1) if at + w <= x)
+                level.mark("picture", at + wide // 2, y, f"eden_gloom_{wide}", -8 if wide > 1 else 0, 0)
+                made += 1
+                at += wide
+    d.count += made
+    return made
+
+
+BRUSH = {1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 7: 5}  # what grows on a zone's floors and bends as the hero goes through it
+# How each zone is seen (`@mark grade`): exposure in hundredths of a stop, contrast, saturation, and the
+# colour it is seen through. Light: a look is a turn of the dial, not a filter over the picture.
+LOOK = {
+    1: (0, 6, 8, (255, 244, 240)),  # the Hollow: the rose of the dawn
+    2: (-5, 12, 14, (228, 246, 255)),  # the orchard: deep and cool, its lights the brighter for it
+    3: (0, 5, 12, (246, 255, 240)),  # the Vines: the green of a morning
+    4: (5, 8, 10, (255, 246, 224)),  # the Fields: gold
+    5: (0, 8, 6, (255, 240, 228)),  # the Terraces: the peach of a low sun on marble
+    6: (0, 10, -8, (240, 236, 255)),  # the Making-house: pearl, and a little of its colour gone
+    7: (-8, 14, -14, (228, 236, 255)),  # the Gate: cold, and hard
+}
+
+
+def brushes(level, m, d: Dresser, room, runs):
+    """Along a zone's floors, in ones and twos, what grows there and bends as the hero goes
+    through it. Not where the game's things stand, nor on a lamp."""
+    kind = BRUSH.get(room.zone)
+    if kind is None or room.kind in ("hidden", "late"):
+        return 0
+    made = 0
+    for y, x0, x1 in runs:
+        x = x0 + 1 + int(m.hash01(room.i0, y, 101) * 5)
+        while x < x1:
+            for k in range(1 + int(m.hash01(x, y, 103) * 1.8)):
+                at = x + k
+                if at < x1 and level.t[y][at] == m.AIR and level.t[y + 1][at] in m.GROUND and (at, y) not in d.busy:
+                    level.mark("life", at, y, "brush", f"eden_brush_{kind}", int((m.hash01(at, y, 105) - 0.5) * 10), 0)
+                    made += 1
+            x += 6 + int(m.hash01(x, y, 107) * 11)
+    return made
+
+
+def seams(level, m, d: Dresser):
+    """Where a room's ground lies on the cloud it is set in, the line between them is not
+    a line: billows of the cloud lap up over the ground's foot all the way along."""
+    made = 0
+    for y in range(2, m.HEIGHT - 2):
+        for x in range(2, m.WIDTH - 2):
+            over = level.t[y - 1][x]
+            if level.t[y][x] == m.CLOUD and over in m.GROUND and over != m.CLOUD and (x + y // 3) % 3 == 0:
+                lay(level, m, f"heaven_puff_{int(m.hash01(x, y, 77) * 5)}", x, y, 0, 5)
+                made += 1
+    d.count += made
+    return made
 
 
 def lamps(level, m, d: Dresser, room, runs):
     made = 0
     for y, x0, x1 in runs:
-        for x in range(x0 + 7, x1 - 3, 19 if room.zone != 2 else 9):
+        for x in range(x0 + 7, x1 - 3, 9 if room.zone == 2 else 15 if room.zone >= 5 else 19):  # closer where the hour is late
             if d.clear(x, y, 0) and level.t[y - 1][x] == m.AIR:
                 made += d.lamp(x, y, room.style["lamp"])
     return made
@@ -388,9 +520,12 @@ def lantern_tree(level, m, d: Dresser, room):
     """The Lantern Tree: a trunk six tiles through from the room's floor to its top, a bough
     out of it over every storey, and fruit that lights the whole of it."""
     middle = (room.x0 + room.x1) // 2
-    for y in range(room.y0 + 1, room.y1 - 1):
-        for x in range(middle - 3, middle + 3):
-            level.walls[y][x] = "w"
+    # The trunk, a storey of it at a time from the floor up (behind the platforms it goes up through), and its foot.
+    foot = room.y1 - 2
+    for y in range(foot, room.y0 + 6, -12):
+        lay(level, m, "eden_lantern_trunk", middle, y, -8, 0)
+        d.count += 1
+    d.stand("eden_lantern_root", middle, foot, -8, 0)
     for k, j in enumerate(room.storeys):
         y = m.S(j) - 5
         if level.t[y][middle + (6 if k % 2 else -7)] == m.AIR:
@@ -410,9 +545,12 @@ def lantern_tree(level, m, d: Dresser, room):
 def crown_vine(level, m, d: Dresser, room):
     """The Crown Vine: its trunk fills the middle third of its room from foot to top, and the climb goes round it."""
     third = (room.x1 - room.x0) // 3
-    for y in range(room.y0 + 1, room.y1 - 1):
-        for x in range(room.x0 + third, room.x1 - third + 1):
-            level.walls[y][x] = "Ù"
+    # Its trunk, a storey of it at a time: a plait of stems, sixteen tiles through; two of them side by side where the room is wide.
+    middle, band = (room.x0 + room.x1) // 2, room.x1 - room.x0 + 1 - 2 * third
+    for y in range(room.y1 - 2, room.y0 + 6, -12):
+        for dx in ((0,) if band <= 18 else (-6, 6)):
+            lay(level, m, "eden_crown_trunk", middle + dx, y)
+            d.count += 1
     # A bough out of it over every storey, to the side the floor is on: what the hero climbs is its limbs.
     for k, j in enumerate(room.storeys):
         y = m.S(j) - 2
@@ -611,11 +749,16 @@ def dress(level, m, log=print):
     for room in rooms.values():
         runs = floors_of(level, room, m, lamps=True)
         alive += depth(level, m, d, room, runs)
+        alive += brushes(level, m, d, room, runs)
         along(level, m, d, room, runs)
         wear(level, m, d, room, runs)
         undersides(level, m, d, room)
         hangers(level, m, d, room)
+        corbels(level, m, d, room)
+        inlays(level, m, d, room)
+        glooms(level, m, d, room)
     billows(level, m, d)
+    seams(level, m, d)
 
     # Where the view draws back: at the landmarks.
     vista(level, rooms["lantern"], m, 1.6, True, 6)
@@ -631,6 +774,9 @@ def dress(level, m, log=print):
                 level.mark("zone", r.x0, r.y0, r.x1 - r.x0 + 1, r.y1 - r.y0 + 1, zone, *name.split())
                 # And its own hour: the day turns to it as the hero comes in.
                 level.mark("mood", r.x0, r.y0, r.x1 - r.x0 + 1, r.y1 - r.y0 + 1, int(round(m.MOODS[zone] * 100)))
+                # And its own look: how the picture is graded while the camera is in it.
+                exposure, contrast, saturation, through = LOOK[zone]
+                level.mark("grade", r.x0, r.y0, r.x1 - r.x0 + 1, r.y1 - r.y0 + 1, exposure, contrast, saturation, *through)
     views = {
         "hollow": ("hollow", 21), "rising": ("rising", 19), "orchard": ("orchard", 18), "lantern": ("lantern", 19), "rows": ("rows", 18),
         "vines": ("vineway", 15), "tangle": ("tangle", 12), "crown": ("crownvine", 0), "fields": ("fields", 9), "sundial": ("sundial", 10),

@@ -6,6 +6,8 @@ using Descender.Pickups;
 using Descender.Save;
 using Descender.Triggers;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
 
 namespace Descender.World.TilesV2
 {
@@ -54,6 +56,15 @@ namespace Descender.World.TilesV2
         /// `@mark zone column row width height number name ...`.
         /// </summary>
         public const string Zone = "zone";
+
+        /// <summary>
+        /// A room's own look (`@mark grade column row width height exposure*100 contrast
+        /// saturation red green blue`): how the picture is graded while the camera is in it.
+        /// </summary>
+        public const string Grade = "grade";
+
+        /// <summary>How far outside a room its look still tells, in tiles: the look turns over a doorway, not at a line.</summary>
+        public const float GradeBlend = 6f;
 
         /// <summary>
         /// A room's own hour: while the hero is in it the day stands at that hour, and turns
@@ -140,6 +151,114 @@ namespace Descender.World.TilesV2
         /// <summary>The rooms that have their own hour, and the hour of each.</summary>
         public IReadOnlyList<(Rect area, float hour)> Moods => moods;
 
+        /// <summary>
+        /// The rooms that have a look of their own: where each is, its exposure, contrast and
+        /// saturation (as URP's Color Adjustments counts them), and the colour it is seen through.
+        /// </summary>
+        public IReadOnlyList<(Rect area, Vector3 look, Color filter)> Grades => grades;
+
+        /// <summary>The volumes the looks are shown by: one for each look, as strong as the camera is near a room that has it.</summary>
+        public IReadOnlyList<Volume> Looks => looks;
+
+        /// <summary>
+        /// Shows the looks as a camera at a place sees them: a look is whole while the camera
+        /// is in one of its rooms and fades over GradeBlend outside it, so going through a
+        /// doorway turns one look into the next.
+        /// </summary>
+        public void Look(Vector2 from)
+        {
+            for (var i = 0; i < looks.Count; i++)
+            {
+                var most = 0f;
+                foreach (var area in lookAreas[i])
+                {
+                    var dx = Mathf.Max(area.xMin - from.x, 0f, from.x - area.xMax);
+                    var dy = Mathf.Max(area.yMin - from.y, 0f, from.y - area.yMax);
+                    most = Mathf.Max(most, 1f - Mathf.Sqrt(dx * dx + dy * dy) / GradeBlend);
+                }
+                looks[i].weight = Mathf.Clamp01(most);
+            }
+        }
+
+        /// <summary>Shows no look at all: the picture as it is drawn (a photograph of the whole map).</summary>
+        public void LookAway()
+        {
+            foreach (var look in looks)
+            {
+                look.weight = 0f;
+            }
+        }
+
+        /// <summary>The look of the room that holds a place; false where no room has its own.</summary>
+        public bool TryGrade(Vector2 place, out Vector3 look, out Color filter)
+        {
+            foreach (var (area, own, through) in grades)
+            {
+                if (area.Contains(place))
+                {
+                    look = own;
+                    filter = through;
+                    return true;
+                }
+            }
+            look = Vector3.zero;
+            filter = Color.white;
+            return false;
+        }
+
+        // A volume for each look the map's rooms have: over the whole view, and as strong as
+        // `Look` makes it for where the camera is. Their profiles are made here, not assets:
+        // a map says its looks in numbers.
+        private void BuildLooks()
+        {
+            var made = new Dictionary<(Vector3, Color), Volume>();
+            foreach (var (area, look, filter) in grades)
+            {
+                if (!made.TryGetValue((look, filter), out var volume))
+                {
+                    var holder = new GameObject("Look " + made.Count);
+                    holder.transform.SetParent(transform, false);
+                    holder.transform.position = Vector3.zero;
+                    volume = holder.AddComponent<Volume>();
+                    volume.isGlobal = true;
+                    volume.weight = 0f;
+                    volume.priority = 1f;
+                    var profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                    profile.name = holder.name;
+                    profile.hideFlags = HideFlags.HideAndDontSave;
+                    var adjust = profile.Add<ColorAdjustments>(true);
+                    adjust.hideFlags = HideFlags.HideAndDontSave;
+                    adjust.postExposure.Override(look.x);
+                    adjust.contrast.Override(look.y);
+                    adjust.saturation.Override(look.z);
+                    adjust.colorFilter.Override(filter);
+                    volume.sharedProfile = profile;
+                    profiles.Add(profile);
+                    looks.Add(volume);
+                    lookAreas.Add(new List<Rect>());
+                    made[(look, filter)] = volume;
+                }
+                lookAreas[looks.IndexOf(volume)].Add(area);
+            }
+        }
+
+        private void OnDestroy()
+        {
+            foreach (var profile in profiles)
+            {
+                if (profile == null)
+                {
+                    continue;
+                }
+                foreach (var part in profile.components)
+                {
+                    DestroyImmediate(part, true);
+                }
+                DestroyImmediate(profile, true);
+            }
+            profiles.Clear();
+        }
+
         /// <summary>The hour of the room that holds a place; false where no room has its own.</summary>
         public bool TryMood(Vector2 place, out float hour)
         {
@@ -164,6 +283,11 @@ namespace Descender.World.TilesV2
 
         private readonly List<(Rect area, string name)> zones = new List<(Rect area, string name)>();
         private readonly List<(Rect area, float hour)> moods = new List<(Rect area, float hour)>();
+        private readonly List<(Rect area, Vector3 look, Color filter)> grades =
+            new List<(Rect area, Vector3 look, Color filter)>();
+        private readonly List<Volume> looks = new List<Volume>();
+        private readonly List<List<Rect>> lookAreas = new List<List<Rect>>();
+        private readonly List<VolumeProfile> profiles = new List<VolumeProfile>();
 
         /// <summary>How many relics a region of the map holds, and how many of them are found.</summary>
         public void RelicsIn(int region, out int found, out int held)
@@ -466,6 +590,23 @@ namespace Descender.World.TilesV2
                         things.moods.Add((new Rect(corner.x, corner.y - size.y, size.x, size.y), hour));
                         continue;
                     }
+                    case Grade:
+                    {
+                        var size = new Vector2(Mathf.Max(mark.Number(0, 1), 1), Mathf.Max(mark.Number(1, 1), 1));
+                        var look = new Vector3(
+                            Mathf.Clamp(mark.Number(2, 0) / 100f, -2f, 2f),
+                            Mathf.Clamp(mark.Number(3, 0), -100f, 100f),
+                            Mathf.Clamp(mark.Number(4, 0), -100f, 100f)
+                        );
+                        var filter = new Color(
+                            Mathf.Clamp01(mark.Number(5, 255) / 255f),
+                            Mathf.Clamp01(mark.Number(6, 255) / 255f),
+                            Mathf.Clamp01(mark.Number(7, 255) / 255f),
+                            1f
+                        );
+                        things.grades.Add((new Rect(corner.x, corner.y - size.y, size.x, size.y), look, filter));
+                        continue;
+                    }
                     case Vista:
                     {
                         // The game's own camera zone, over the stretch the mark names.
@@ -543,6 +684,7 @@ namespace Descender.World.TilesV2
                 }
                 things.all.Add(thing);
             }
+            things.BuildLooks();
             return things;
         }
 

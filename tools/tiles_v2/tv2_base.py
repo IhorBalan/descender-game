@@ -243,10 +243,10 @@ MATERIALS += [
     # which they are drawn are as if they had no wall, for the light and for what grows,
     # and they are drawn in front of the other walls, not tinted back as those are.
     dict(_wall("wood_wall", "clay"), open=True),
-    dict(_wall("leaf_wall", "leaves"), open=True),
+    dict(_wall("leaf_wall", "foliage"), open=True),
     dict(_wall("birch_wall", "clay"), open=True),
-    dict(_wall("blossom_wall", "leaves"), open=True),
-    dict(_wall("gold_leaf_wall", "leaves"), open=True),
+    dict(_wall("blossom_wall", "foliage"), open=True),
+    dict(_wall("gold_leaf_wall", "foliage"), open=True),
     # A column standing in the open, of bright marble: it shuts out no sky either.
     dict(_wall("pillar_wall", "flutes"), open=True),
     # Glass lets the light through, as a window does; gilt work hangs in front of the wall.
@@ -428,7 +428,7 @@ MATERIALS += [
     {"key": "gold_meadow", "kind": "terrain", "texture": "dirt", "palette": "tilth", "grass": "wheat", "group": "earth", "slopes": True},
     _ground("pearl", "ashlar", False),
     _ground("silver", "stone", True),
-    _wall("canopy_wall", "leaves"),
+    _wall("canopy_wall", "foliage"),
     _wall("vine_wall", "clay"),
     _wall("pearl_wall", "ashlar"),
     _wall("silver_wall", "stone"),

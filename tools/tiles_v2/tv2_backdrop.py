@@ -3,8 +3,12 @@
 parallax ridges behind the map and the rock behind the caves. Not a script.
 
 The sky itself is not a picture: it is two colours that change with the hour
-(tv2_base.DAY_KEYS), drawn in seven dithered bands by `sky_image` here and by
-SkyPainter.cs in Unity, the same sums.
+(tv2_base.DAY_KEYS), drawn in clean bands by `sky_image` here and by Sky.cs in
+Unity, the same sums.
+
+Nothing here is dithered: a chequer of two colours is a screen door at the size
+the game is seen at. Bands meet in a line, and what thins out (a cloud's foot,
+a shaft of light) does it in a few steps of see-through.
 """
 from __future__ import annotations
 
@@ -17,7 +21,8 @@ import tv2_eden
 import tv2_heaven
 
 BACKDROP_W, BACKDROP_H = VIEW  # a backdrop picture is the size of the view and repeats sideways
-SKY_BANDS = 7
+SKY_BANDS = 24
+FADE_STEPS = 8  # how many steps of see-through a thinning edge goes down in
 BAYER = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 
 # Back to front. `kind` says how Unity places a layer: sky pieces are pinned to
@@ -85,12 +90,15 @@ def dither_mix(a, b, t, x, y):
     return b if t * 16 > BAYER[y % 4][x % 4] + 0.5 else a
 
 
+def stepped(share, steps: int = FADE_STEPS):
+    """A share 0 .. 1 (a number or an array) in `steps` even steps: how a thinning edge fades."""
+    return np.clip(np.ceil(np.clip(share, 0, 1) * steps) / steps, 0, 1)
+
+
 def sky_band(x: int, y: int, height: int) -> int:
     """Which of the SKY_BANDS colours pixel (x, y) of a sky `height` px tall shows
-    (0 at the top): the bands meet in an ordered dither."""
-    t = y / (height - 1) * (SKY_BANDS - 1)
-    i = int(t)
-    return min(i + (1 if (t - i) * 16 > BAYER[y % 4][x % 4] + 0.5 else 0), SKY_BANDS - 1)
+    (0 at the top): even bands that meet in a line."""
+    return min(y * SKY_BANDS // height, SKY_BANDS - 1)
 
 
 def sky_image(width: int, height: int, top, low) -> Image.Image:
@@ -419,7 +427,7 @@ def backdrop_isles(name: str, height: int, count: int, wide, colours, falls: flo
 
 def backdrop_rays() -> Image.Image:
     """Shafts of light slanting down from the left: bands of pale gold in three strengths,
-    their edges an ordered dither, fading out at the top and the foot. Repeats sideways."""
+    stepped at their edges, fading out at the top and the foot. Repeats sideways."""
     width, height = BACKDROP_W, 1024
     ys, xs = np.mgrid[0:height, 0:width]
     along = (xs + ys * 0.42) % width
@@ -431,11 +439,9 @@ def backdrop_rays() -> Image.Image:
         strength = np.maximum(strength, power * np.clip(1 - away / half, 0, 1))
     fade = np.clip(np.minimum(ys / 220.0, (height - ys) / 300.0), 0, 1)
     level = strength * fade * 3.0
-    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
-    step = np.floor(level) + ((level - np.floor(level)) > bayer)
     a = np.zeros((height, width, 4), dtype=np.uint8)
     a[:, :, :3] = (255, 246, 204)
-    a[:, :, 3] = np.clip(step, 0, 3) * 13
+    a[:, :, 3] = np.round(stepped(level / 3.0, 6) * 39)
     return Image.fromarray(a, "RGBA")
 
 
@@ -443,7 +449,7 @@ def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: b
     """A bank of cloud that repeats sideways: rows of round heads, back to front (`rows`:
     how many heads, the line their middles lie on, their sizes, their colours lit and in
     shade). With `solid_under` it is a sea, filled under the heads and thinning to nothing
-    at its foot in an ordered dither; without, the heads float apart."""
+    at its foot in steps of see-through; without, the heads float apart."""
     im = Image.new("RGBA", (BACKDROP_W, height), (0, 0, 0, 0))
     px = im.load()
     r = rng("cloud band", name)
@@ -467,11 +473,9 @@ def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: b
                 colour = lit if y - crest < 4 and not flat else shade_
                 show = alpha
                 if solid_under:
-                    left = (height - y) / 70.0
-                    if left < 1 and left * 16 <= BAYER[y % 4][x % 4] + 0.5:
-                        continue
-                elif floor - y < 3 and (x + y) % 2:
-                    continue
+                    show = int(round(alpha * float(stepped((height - y) / 70.0))))
+                elif floor - y < 3:
+                    show = alpha * (floor - y) // 4
                 px[x, y] = colour + (show,)
     return im
 
@@ -512,19 +516,17 @@ def _mass(r, wide: int, tall: int, flat_top: int = 0) -> np.ndarray:
     tones = np.zeros((h, w), dtype=np.uint8)
     tones[inside] = 2
     tones[inside & (depth < 5)] = 1
-    # The shade of its underside: a thin band along its foot, its upper edge broken up.
+    # The shade of its underside: a band along its foot, its upper edge a slow wave.
     under = foot - ys
-    tones[inside & (depth >= 5) & ((under < 7) | ((under < 13) & ((xs + ys) % 2 == 0)))] = 3
+    tones[inside & (depth >= 5) & (under < 9 + 3 * np.sin(xs / 9.0))] = 3
     return tones
 
 
 def _fade_foot(a: np.ndarray, rows: int):
-    """Thins a picture out to nothing over its last rows, in an ordered dither."""
+    """Thins a picture out to nothing over its last rows, in steps of see-through."""
     h, w = a.shape[:2]
-    ys, xs = np.mgrid[0:h, 0:w]
-    left = (h - ys) / float(rows)
-    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
-    a[(left < 1) & (left <= bayer), 3] = 0
+    ys, _ = np.mgrid[0:h, 0:w]
+    a[:, :, 3] = np.round(a[:, :, 3] * stepped((h - ys) / float(rows), 12))
 
 
 def backdrop_heaven_clouds() -> Image.Image:
@@ -643,19 +645,20 @@ def backdrop_cirrus() -> Image.Image:
     a = np.zeros((height, width, 4), dtype=np.uint8)
     r = rng("cirrus")
     ys, xs = np.mgrid[0:height, 0:width]
-    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
     for _ in range(16):
         cx, cy, long, thick = r.randrange(width), r.randint(12, height - 12), r.randint(70, 210), r.uniform(2.5, 7)
         dx = np.minimum(np.abs(xs - cx), width - np.abs(xs - cx))
         d = (dx / (long / 2)) ** 2 + ((ys - cy - dx * 0.04) / thick) ** 2
-        solid = (d < 1) & ((1 - d) * 1.6 > bayer)
-        a[solid] = (244, 248, 253, 235)
+        show = np.round(stepped((1 - d) * 1.6, 4) * 235).astype(np.uint8)
+        more = show > a[:, :, 3]
+        a[more] = (244, 248, 253, 0)
+        a[:, :, 3] = np.where(more, show, a[:, :, 3])
     return Image.fromarray(a, "RGBA")
 
 
 def backdrop_glory() -> Image.Image:
-    """A glory: rings and rays of pale gold round a middle, see-through, in an ordered
-    dither. Stood behind what is holiest."""
+    """A glory: rings and rays of pale gold round a middle, see-through, in a few
+    strengths. Stood behind what is holiest."""
     size = 640
     ys, xs = np.mgrid[0:size, 0:size]
     dx, dy = xs - size / 2 + 0.5, ys - size / 2 + 0.5
@@ -664,18 +667,15 @@ def backdrop_glory() -> Image.Image:
     rays = (np.cos(angle * 16) > 0.55) | (np.cos(angle * 8 + 0.4) > 0.9)
     rings = (np.abs(d - 96) < 3) | (np.abs(d - 150) < 2) | (np.abs(d - 214) < 1.5)
     strength = np.clip(1 - d / (size / 2), 0, 1) * np.where(rays | rings, 1.0, 0.32)
-    bayer = (np.array(BAYER)[ys % 4, xs % 4] + 0.5) / 16.0
-    level = strength * 3.2
-    step = np.floor(level) + ((level - np.floor(level)) > bayer)
     a = np.zeros((size, size, 4), dtype=np.uint8)
     a[:, :, :3] = (255, 240, 190)
-    a[:, :, 3] = np.clip(step, 0, 4) * 22
+    a[:, :, 3] = np.round(stepped(strength * 0.8, 8) * 110)
     return Image.fromarray(a, "RGBA")
 
 
 def backdrop_rainbow() -> Image.Image:
     """Half a rainbow's ring, standing on its two feet: seven thin bands, see-through, their
-    edges and their feet an ordered dither."""
+    feet thinning out in steps."""
     width, height = 416, 208
     im = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     px = im.load()
@@ -686,9 +686,8 @@ def backdrop_rainbow() -> Image.Image:
             d = ((x - width / 2 + 0.5) ** 2 + (height - y) ** 2) ** 0.5
             k = (outer - d) / thick
             if 0 <= k < len(bands):
-                fade = min(1.0, (height - y) / 46.0)
-                if fade * 16 > BAYER[y % 4][x % 4] + 0.5:
-                    px[x, y] = bands[int(k)] + (112,)
+                fade = float(stepped((height - y) / 46.0, 6))
+                px[x, y] = bands[int(k)] + (int(round(112 * fade)),)
     return im
 
 

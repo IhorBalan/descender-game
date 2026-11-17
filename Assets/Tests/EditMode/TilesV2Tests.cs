@@ -555,23 +555,31 @@ namespace Descender.Tests
         }
 
         [Test]
-        public void TheSkyIsBandsThatMeetInADither()
+        public void TheSkyIsEvenBandsThatMeetInALine()
         {
-            const int tall = 180;
+            const int tall = 360;
+            const int bands = 24;
             for (var x = 0; x < 8; x++)
             {
-                Assert.That(Sky.Band(x, 0, tall, 7), Is.EqualTo(0));
-                Assert.That(Sky.Band(x, tall - 1, tall, 7), Is.EqualTo(6));
+                Assert.That(Sky.Band(x, 0, tall, bands), Is.EqualTo(0));
+                Assert.That(Sky.Band(x, tall - 1, tall, bands), Is.EqualTo(bands - 1));
             }
-            var mixed = new HashSet<int>();
-            // Half way between the first two bands a row shows both.
-            var row = (tall - 1) / 12;
-            for (var x = 0; x < 8; x++)
+            // No chequer: a row is one band all the way across, a band is never left for
+            // an earlier one going down, and every band is as tall as the others.
+            var rows = new int[bands];
+            var before = 0;
+            for (var y = 0; y < tall; y++)
             {
-                mixed.Add(Sky.Band(x, row, tall, 7));
-                mixed.Add(Sky.Band(x, row + 1, tall, 7));
+                var band = Sky.Band(0, y, tall, bands);
+                for (var x = 1; x < 16; x++)
+                {
+                    Assert.That(Sky.Band(x, y, tall, bands), Is.EqualTo(band), "row " + y + " shows two bands");
+                }
+                Assert.That(band, Is.InRange(before, before + 1), "row " + y);
+                before = band;
+                rows[band]++;
             }
-            Assert.That(mixed, Is.EquivalentTo(new[] { 0, 1 }));
+            Assert.That(rows, Is.All.EqualTo(tall / bands));
         }
 
         [Test]

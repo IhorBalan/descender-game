@@ -99,30 +99,52 @@ namespace Descender.EditorTools.TilesV2
         /// </summary>
         public static Scene BuildParadise() => BuildPlayable(ParadiseMapPath, ParadisePath, true, true);
 
-        /// <summary>The glow's profile, made if it is not there: bloom over a high threshold, soft and wide.</summary>
+        /// <summary>
+        /// The glow's profile, made if it is not there, and given what it has not got: bloom
+        /// over a high threshold, soft and wide; and the corners of the view drawn in a
+        /// little, so the eye is held to the middle of it.
+        /// </summary>
         public static VolumeProfile ParadiseGlow()
         {
             var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(ParadiseGlowPath);
-            if (profile != null)
+            if (profile == null)
             {
-                return profile;
+                profile = ScriptableObject.CreateInstance<VolumeProfile>();
+                AssetDatabase.CreateAsset(profile, ParadiseGlowPath);
             }
-            profile = ScriptableObject.CreateInstance<VolumeProfile>();
-            AssetDatabase.CreateAsset(profile, ParadiseGlowPath);
-            var bloom = profile.Add<Bloom>(true);
-            bloom.threshold.Override(GlowThreshold);
-            bloom.intensity.Override(GlowIntensity);
-            bloom.scatter.Override(GlowScatter);
-            bloom.hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy;
-            AssetDatabase.AddObjectToAsset(bloom, profile);
-            EditorUtility.SetDirty(profile);
-            AssetDatabase.SaveAssets();
+            var changed = false;
+            if (!profile.Has<Bloom>())
+            {
+                var bloom = profile.Add<Bloom>(true);
+                bloom.threshold.Override(GlowThreshold);
+                bloom.intensity.Override(GlowIntensity);
+                bloom.scatter.Override(GlowScatter);
+                bloom.hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy;
+                AssetDatabase.AddObjectToAsset(bloom, profile);
+                changed = true;
+            }
+            if (!profile.Has<Vignette>())
+            {
+                var corners = profile.Add<Vignette>(true);
+                corners.intensity.Override(CornersIntensity);
+                corners.smoothness.Override(CornersSmoothness);
+                corners.hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy;
+                AssetDatabase.AddObjectToAsset(corners, profile);
+                changed = true;
+            }
+            if (changed)
+            {
+                EditorUtility.SetDirty(profile);
+                AssetDatabase.SaveAssets();
+            }
             return profile;
         }
 
         public const float GlowThreshold = 0.95f;
         public const float GlowIntensity = 0.85f;
         public const float GlowScatter = 0.5f;
+        public const float CornersIntensity = 0.2f;
+        public const float CornersSmoothness = 0.45f;
 
         /// <summary>Builds a scene of the standard's that is not there yet (the world's, the Paradise level's).</summary>
         public static void Ensure(string scenePath)

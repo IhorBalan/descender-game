@@ -125,20 +125,45 @@ namespace Descender.World.TilesV2
             return light;
         }
 
-        /// <summary>The light of both halves: the sky's under a daylight colour, or the sources' where they are brighter.</summary>
+        /// <summary>Up to this a light is what it is; over it, it is eased (full daylight is 1).</summary>
+        public const float Knee = 1f;
+
+        /// <summary>How fast a light over the knee is eased: it never gets past Knee + 1 / Ease.</summary>
+        public const float Ease = 4f;
+
+        /// <summary>
+        /// The light of both halves: the sky's under a daylight colour, or the sources' where
+        /// they are brighter; and what of it is over the knee, eased (`Soften`).
+        /// </summary>
         public static void Combine(Color[] sky, Color[] sources, Color daylight, Color[] into)
         {
             for (var i = 0; i < into.Length; i++)
             {
                 var s = sky[i];
                 var o = sources[i];
-                into[i] = new Color(
+                into[i] = Soften(
                     Mathf.Max(s.r * daylight.r, o.r),
                     Mathf.Max(s.g * daylight.g, o.g),
-                    Mathf.Max(s.b * daylight.b, o.b),
-                    1f
+                    Mathf.Max(s.b * daylight.b, o.b)
                 );
             }
+        }
+
+        /// <summary>
+        /// A light with what is over the knee eased toward a ceiling, all three of its parts
+        /// by the same share: so the floor under a lamp is the lamp's own colour, and is not
+        /// burnt out to a flat yellow where its red and its green both ran past white.
+        /// </summary>
+        public static Color Soften(float r, float g, float b)
+        {
+            var most = Mathf.Max(r, Mathf.Max(g, b));
+            if (most <= Knee)
+            {
+                return new Color(r, g, b, 1f);
+            }
+            var over = most - Knee;
+            var scale = (Knee + over / (1f + over * Ease)) / most;
+            return new Color(r * scale, g * scale, b * scale, 1f);
         }
 
         // Takes into `to` what `from` passes on, where that is brighter; says whether it was.

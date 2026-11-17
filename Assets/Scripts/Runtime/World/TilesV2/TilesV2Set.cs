@@ -103,7 +103,7 @@ namespace Descender.World.TilesV2
         public int viewHeight = 360;
 
         [Header("Backdrop")]
-        public int skyBands = 7;
+        public int skyBands = 24;
         public int skyOrder = -1010;
 
         [Tooltip("Units a second the clouds move to the right.")]

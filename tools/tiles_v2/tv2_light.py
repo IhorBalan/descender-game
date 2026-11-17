@@ -79,8 +79,19 @@ def tile_light(solid: np.ndarray, shades: np.ndarray, keep: np.ndarray, emits: n
     return sky, sources
 
 
+KNEE, EASE = 1.0, 4.0  # TileLight.Knee, TileLight.Ease: over the knee a light is eased toward KNEE + 1 / EASE
+
+
+def soften(light: np.ndarray) -> np.ndarray:
+    """A light with what is over the knee eased, its colour kept (TileLight.Soften)."""
+    most = light.max(axis=-1, keepdims=True)
+    over = np.maximum(most - KNEE, 0)
+    scale = np.where(most > KNEE, (KNEE + over / (1 + over * EASE)) / np.maximum(most, 1e-6), 1.0)
+    return (light * scale).astype(np.float32)
+
+
 def combine(sky: np.ndarray, sources: np.ndarray, daylight=(1.0, 1.0, 1.0)) -> np.ndarray:
-    return np.maximum(sky * np.array(daylight, dtype=np.float32), sources)
+    return soften(np.maximum(sky * np.array(daylight, dtype=np.float32), sources))
 
 
 def smooth(light: np.ndarray, size: tuple[int, int]) -> np.ndarray:

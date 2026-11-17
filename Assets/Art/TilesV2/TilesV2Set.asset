@@ -2424,7 +2424,7 @@ MonoBehaviour:
     stars: 1
   viewWidth: 640
   viewHeight: 360
-  skyBands: 7
+  skyBands: 24
   skyOrder: -1010
   cloudDrift: 0.25
   backdrops:
@@ -6643,6 +6643,466 @@ MonoBehaviour:
     sprite: {fileID: 21300000, guid: 70d9e7a386dd513cbcaf7edc41820cd4, type: 3}
     scroll: 1
     order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_post_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 95c6b253efe25c379df40e06ef9eb419, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_post_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 273bd8f07f665663a3d325ebef91dfcb, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_post_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: bab74f5e15615db28f6843e8a51fde8a, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_post_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0e937ebbdf275afbabe9b4b13547f082, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_lantern_trunk
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4473921d38125c7581f3cbffcb46140e, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_lantern_root
+    kind: 8
+    sprite: {fileID: 21300000, guid: 85e25fe1e9895e50a2dfca4d629b23d0, type: 3}
+    scroll: 1
+    order: -288
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_crown_trunk
+    kind: 8
+    sprite: {fileID: 21300000, guid: c3c58b2838ee594f97b166169589b4e1, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_plank_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: daa01154a5355e44b547ca5cf1842c1e, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_plank_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4643fd4492465965bd632e2d5a4c6fef, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_grate_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: d4079f6b3436513e88d9cdcec489dae1, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_grate_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 328e29a2231857aeb457b815950acfb3, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_gilt_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: c789a717c39b5826aecc7b862dc26a27, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_gilt_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: eece8e1b746751fd971400f7471a6c3d, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_rime_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0c3e8e358cee5cf6ba3252a35b2e0b1a, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_corbel_rime_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 489eb2176d5b5476b12e557413cf1d85, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_earth_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: cb280a5402dc5b4caa04f77661ade6fd, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_earth_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 6b7b5b13635453aa988af4af74885a0a, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_earth_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 8af6783b3cb8531085fdb6f91eee3811, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_loam_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 663c899a51e456bb857e7822b437c583, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_loam_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 1d40abfd88d55ce6976decde1e118c78, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_loam_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 762e8e6ef98357518ede7cb16127c225, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_vinewood_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 3d1b791cf23f5e3cb976bdd208ec8625, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_vinewood_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7013e177007d5f0eb9f345dcf51f8b16, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_vinewood_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 25feb3bd665a563281a14c92c582a8a4, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_tilth_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 4aba2bf812e458369a5e0e4bba9ee860, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_tilth_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 516c243110a45786b37e8aa3a01b8a08, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_tilth_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7aad94de83a4576c886338f8da0d97d7, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_marble_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: bbe9958970c056159024a18c39dbf6da, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_marble_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: ebd54b7462eb5d278730584132900220, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_marble_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 2ddeecf1ac9c5f72b367e47b705498cb, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_pearl_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 3ae5b1da5b2255b099639eb7cd52c18c, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_pearl_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 774e6422fe1e5406a5fe31087781b7e0, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_pearl_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: cc66e9a7dac75740b3d9f946659aa505, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_silver_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 7ebddc742a88530bb6dda3fc61cc6c75, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_silver_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 44151b8ddf115448812599faefb9c695, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_inlay_silver_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 661c2ea9e5645dc78a7a60f870565b61, type: 3}
+    scroll: 1
+    order: -99
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gloom_8
+    kind: 8
+    sprite: {fileID: 21300000, guid: b7767d929c9e599ab6b0b51fc8e16ab4, type: 3}
+    scroll: 1
+    order: -285
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gloom_4
+    kind: 8
+    sprite: {fileID: 21300000, guid: 50698253c0775a078629a4b493b903bf, type: 3}
+    scroll: 1
+    order: -285
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gloom_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 845b228b7a7657b29b275161e31bd0f7, type: 3}
+    scroll: 1
+    order: -285
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_gloom_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 2826060b62175d008c30848d8e045837, type: 3}
+    scroll: 1
+    order: -285
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_brush_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: aada726332d85454af1c94b46705b1c2, type: 3}
+    scroll: 1
+    order: 26
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_brush_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0ab726aedaf75d58947facc245db3811, type: 3}
+    scroll: 1
+    order: 26
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_brush_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: fd5ce6b20f7158b289eca4cdf7265449, type: 3}
+    scroll: 1
+    order: 26
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_brush_3
+    kind: 8
+    sprite: {fileID: 21300000, guid: bc3beaa3299453f38dcefa78a9637224, type: 3}
+    scroll: 1
+    order: 26
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_brush_4
+    kind: 8
+    sprite: {fileID: 21300000, guid: a33cdef2c33259f286493ea77a83ec30, type: 3}
+    scroll: 1
+    order: 26
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_brush_5
+    kind: 8
+    sprite: {fileID: 21300000, guid: 215f9e1d0839591494d0a52793974991, type: 3}
+    scroll: 1
+    order: 26
     lit: 1
     scrollUp: 1
     rise: 0
