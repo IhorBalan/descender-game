@@ -42,6 +42,14 @@ namespace Descender.World.TilesV2
         /// <summary>The row the cave backdrop starts at (`@surface`): the map's height when it has none.</summary>
         public int Surface { get; private set; }
 
+        /// <summary>
+        /// The hour the map's day starts at (`@hour 17.8`), below zero when it does not say;
+        /// and whether its day stands still at that hour (`@hour 17.8 still`): a place where
+        /// the sun does not move.
+        /// </summary>
+        public float Hour { get; private set; } = -1f;
+        public bool Still { get; private set; }
+
         /// <summary>The map's named places (`@view name column row`), as (column, row) from the top left.</summary>
         public IReadOnlyDictionary<string, Vector2> Views => views;
 
@@ -119,6 +127,11 @@ namespace Descender.World.TilesV2
                 if (parts.Length == 2 && parts[0] == "surface" && int.TryParse(parts[1], out var surface))
                 {
                     map.Surface = surface;
+                }
+                else if (parts.Length >= 2 && parts[0] == "hour" && TryNumber(parts[1], out var startHour))
+                {
+                    map.Hour = Mathf.Repeat(startHour, 24f);
+                    map.Still = parts.Length > 2 && parts[2] == "still";
                 }
                 else if (
                     parts.Length == 4

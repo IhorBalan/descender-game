@@ -5728,6 +5728,176 @@ MonoBehaviour:
     rise: 0
     drift: 0
     tinted: 0
+  - key: eden_arch_stone
+    kind: 8
+    sprite: {fileID: 21300000, guid: 999789564a4a555299671fc4b1df88af, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_arch_vine
+    kind: 8
+    sprite: {fileID: 21300000, guid: 13e4a52a81af5d5a9c2aecb2e6e99f58, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_window
+    kind: 8
+    sprite: {fileID: 21300000, guid: dba4d9d35aad5e74ae16e45a9bce9eab, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_buttress_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 637cbeb9986b516ba62f9b2eb0ef913f, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_chain_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: afaf3dde00f0587885efe6bf103cd665, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_buttress_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 373338add7f65582bb1bd18bf9e0daff, type: 3}
+    scroll: 1
+    order: -289
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_chain_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: 5fccff0199de5ceeb8a6644833c09466, type: 3}
+    scroll: 1
+    order: -282
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ruin_0
+    kind: 8
+    sprite: {fileID: 21300000, guid: 1f1f3f5b0b55546fab323667caab2c4c, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ruin_1
+    kind: 8
+    sprite: {fileID: 21300000, guid: ec7a81aa6df754e4a2fe4f1f3f51bbf7, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_ruin_2
+    kind: 8
+    sprite: {fileID: 21300000, guid: c5cfcb22b79252aab5cad6d0608fd6cc, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_sword
+    kind: 8
+    sprite: {fileID: 21300000, guid: a75bb58ec58651ef846353d906301de0, type: 3}
+    scroll: 1
+    order: -286
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_bonfire
+    kind: 8
+    sprite: {fileID: 21300000, guid: 0222ccb0544d548da5767770a2b39d5d, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_knight
+    kind: 8
+    sprite: {fileID: 21300000, guid: 05d887a5c95b566195856e1d049337a7, type: 3}
+    scroll: 1
+    order: -283
+    lit: 1
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_fog
+    kind: 8
+    sprite: {fileID: 21300000, guid: b28b3c5c313e57808be30b256332d106, type: 3}
+    scroll: 1
+    order: -280
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_fog_f1
+    kind: 8
+    sprite: {fileID: 21300000, guid: f2343cbfdd82558e9279f79e9ac56f42, type: 3}
+    scroll: 1
+    order: -280
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_fog_f2
+    kind: 8
+    sprite: {fileID: 21300000, guid: 779ed96d936054ae81d047fde78ddf36, type: 3}
+    scroll: 1
+    order: -280
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
+  - key: eden_fog_f3
+    kind: 8
+    sprite: {fileID: 21300000, guid: a26312ae6bf85077847c5277f491497f, type: 3}
+    scroll: 1
+    order: -280
+    lit: 0
+    scrollUp: 1
+    rise: 0
+    drift: 0
+    tinted: 0
   - key: eden_mereth
     kind: 8
     sprite: {fileID: 21300000, guid: 478a7494028a543082b5ec68d03cfbdf, type: 3}

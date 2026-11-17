@@ -26,11 +26,11 @@ IVY = {1: "green", 2: "teal", 3: "green", 4: "green", 5: "green", 6: "pale", 7: 
 ALONG = {
     1: [(["eden_leaf_0", "eden_leaf_1", "eden_leaf_2", "eden_leaf_3"], 13), (["heaven_blossom_0", "heaven_blossom_1", "heaven_blossom_2", "heaven_blossom_3"], 17), (["heaven_flowers_0", "heaven_flowers_1", "heaven_flowers_2", "heaven_flowers_3"], 6)],
     2: [(["eden_teal_tree_0", "eden_teal_tree_1", "eden_teal_tree_2"], 8)],
-    3: [(["eden_vine_0", "eden_vine_1", "eden_vine_2"], 13), (["eden_leaf_1", "eden_leaf_3", "earth_shrub_0", "earth_shrub_1"], 10)],
-    4: [(["eden_wheat_0", "eden_wheat_1"], 6), (["heaven_gold_0", "heaven_gold_1", "heaven_gold_2", "heaven_gold_3"], 27), (["earth_haystack_0", "earth_fence_0", "earth_haystack_1", "earth_fence_1"], 19)],
-    5: [(["heaven_urn", "heaven_hedge_1", "heaven_flowers_0", "heaven_hedge_2", "heaven_flowers_2", "heaven_bench"], 7), (["heaven_blossom_1", "heaven_gold_2"], 31)],
-    6: [(["eden_gear", "eden_pipe_v_12", "eden_pipe_v_6", "eden_pipe_v_12"], 11)],
-    7: [(["eden_crag_0", "eden_crag_1", "eden_crag_2"], 9)],
+    3: [(["eden_vine_0", "eden_vine_1", "eden_vine_2"], 13), (["eden_leaf_1", "eden_leaf_3", "earth_shrub_0", "earth_shrub_1"], 10), (["eden_ruin_0", "eden_sword", "eden_ruin_1"], 37)],
+    4: [(["eden_wheat_0", "eden_wheat_1"], 6), (["heaven_gold_0", "heaven_gold_1", "heaven_gold_2", "heaven_gold_3"], 27), (["earth_haystack_0", "earth_fence_0", "earth_haystack_1", "earth_fence_1"], 19), (["eden_sword", "eden_ruin_2", "eden_knight"], 43)],
+    5: [(["heaven_urn", "heaven_hedge_1", "heaven_flowers_0", "heaven_bench", "heaven_hedge_2", "earth_iron_fence_0", "heaven_flowers_2", "eden_ruin_1"], 7), (["heaven_blossom_1", "heaven_gold_2"], 31), (["eden_knight", "eden_buttress_0", "eden_ruin_0", "eden_buttress_1"], 37)],
+    6: [(["eden_gear", "eden_pipe_v_12", "eden_pipe_v_6", "eden_pipe_v_12"], 11), (["eden_ruin_1", "eden_knight", "eden_ruin_2", "eden_sword"], 17)],
+    7: [(["eden_crag_0", "eden_crag_1", "eden_crag_2"], 9), (["eden_sword", "eden_ruin_0", "earth_dead_tree_0", "eden_ruin_2", "eden_sword", "earth_dead_tree_1", "eden_knight"], 13), (["eden_buttress_0", "eden_buttress_1"], 41)],
 }
 SAID = {
     "voice": "Go back. You are not finished. Go back and lie down.",
@@ -164,7 +164,10 @@ def hangers(level, m, d: Dresser, room):
         for x in range(room.x0 + 2, room.x1 - 1):
             under = level.t[y - 1][x] in m.GROUND and level.t[y][x] == m.AIR and level.t[y + 1][x] == m.AIR
             if under and m.hash01(x, y, 9) < (0.16 if room.zone != 6 else 0.07) and level.t[y - 1][x - 1] in m.GROUND and level.t[y - 1][x + 1] in m.GROUND:
-                d.stand(f"eden_ivy_{tint}_{int(m.hash01(x, y, 3) * 3)}", x, y)
+                if room.zone >= 6 and m.hash01(x, y, 13) < 0.4:
+                    d.stand(f"eden_chain_{int(m.hash01(x, y, 5) * 2)}", x, y)  # chains, where the garden ends
+                else:
+                    d.stand(f"eden_ivy_{tint}_{int(m.hash01(x, y, 3) * 3)}", x, y)
 
 
 def columns(level, m, d: Dresser, room):
@@ -247,6 +250,76 @@ def waterfalls(level, m, d: Dresser, room):
                     level.t[y][fx] = level.t[y][fx + 1] = "|"
 
 
+def gateways(level, m, d: Dresser):
+    """Every doorway stands in an arch: grown, in the garden's first zones; of old cut stone
+    after. The Warden's has fog standing in it. And where two rooms that differ meet at a
+    door, they are let into one another: the ground of each runs a way into the other's,
+    a roofed room's wall thins out into the open one and lets the sky into itself, and
+    each zone's growth stands a little way over the line. So a door is a change that
+    comes on, not a line that is crossed."""
+    rooms = level.rooms
+    for a, b, side, line, along_, kind in plan.LINKS:
+        if side != "v":
+            continue
+        ra, rb = rooms[a], rooms[b]
+        left, right = (ra, rb) if ra.i1 == line - 1 else (rb, ra)
+        c0, c1, s = left.x1, right.x0, m.S(along_)
+        if kind in ("door", "boss", "D", "HL") and level.t[s - 1][c0] == m.AIR:
+            d.stand("eden_arch_vine" if max(left.zone, right.zone) <= 3 else "eden_arch_stone", c0, s - 1, 8, 0)
+        if kind == "boss":
+            d.stand("eden_fog", c0, s - 1, 8, 0)
+        if left.zone == right.zone and left.roofed == right.roofed:
+            continue
+        # The ground of each a way into the other, in runs of two tiles, fewer the further in.
+        for dx in range(1, 12):
+            for room, other, x in ((left, right, c0 - dx), (right, left, c1 + dx)):
+                if left.zone != right.zone and m.hash01(x // 2, along_, 5) < (1 - dx / 12) * 0.55:
+                    for y, char in ((s, other.style["ground"]), (s + 1, other.style["under"])):
+                        if level.t[y][x] in (room.style["ground"], room.style["under"]):
+                            level.t[y][x] = char
+        # The walls behind: a roofed room's thins out into the open one, and is holed by the sky near the door.
+        rows = range(max(left.y0, right.y0) + 1, min(left.y1, right.y1) - 1)
+        # Not tile by tile, which would be a checker: row by row, as far as a slow wave says,
+        # so the edge between the two is one ragged line, like the edge of a wood.
+        for y in rows:
+            wave = 0.5 + 0.5 * math.sin(y * 0.55 + line) * math.cos(y * 0.23 + along_)
+            reach = 2 + int(6 * wave + 2 * m.hash01(y // 2, line, 11))
+            for room, other, step, edge in ((left, right, -1, c0), (right, left, 1, c1)):
+                for dx in range(1, reach + 1):
+                    x = edge + step * dx
+                    if not (room.x0 < x < room.x1):
+                        break
+                    if other.roofed and not room.roofed:
+                        level.walls[y][x] = other.style["back"]
+                    elif room.roofed and not other.roofed and dx <= reach // 3:
+                        level.walls[y][x] = m.AIR
+                    elif room.roofed and other.roofed and room.style["back"] != other.style["back"] and dx <= reach // 2:
+                        level.walls[y][x] = other.style["back"]
+        # Each zone's growth a little way over the line.
+        if left.zone != right.zone:
+            for room, other, x in ((left, right, c0 - 6), (right, left, c1 + 6), (left, right, c0 - 12)):
+                keys = ALONG[other.zone][0][0]
+                if d.clear(x, s - 1, 1) and level.t[s][x] in m.GROUND:
+                    d.stand(keys[int(m.hash01(x, s, 17) * len(keys))], x, s - 1)
+
+
+def old_halls(level, m, d: Dresser, room, runs):
+    """A roofed room of the terraces, the Making-house or the Gate has windows of an old hall down its wall, a light behind each."""
+    if not room.roofed or room.zone < 5:
+        return
+    for y, x0, x1 in runs:
+        for x in range(x0 + 6, x1 - 4, 12):
+            if d.clear(x, y, 2) and all(level.t[y - u][x] == m.AIR for u in range(1, 9)):
+                d.stand("eden_window", x, y)
+
+
+def bonfires(level, m, d: Dresser):
+    """By every shrine a fire burns round a twisted sword: a place to rest, in an old place."""
+    for kind, x, y, _ in list(level.marks):
+        if kind == "checkpoint" and level.t[y][x + 2] == "Å":
+            d.stand("eden_bonfire", x + 2, y)
+
+
 def centre_floor(level, m, room, wide: int = 3):
     """A place in the middle of a room's lowest floor: (column, row he would stand in)."""
     y = room.y1 - 2
@@ -280,7 +353,10 @@ def dress(level, m, log=print):
             waterfalls(level, m, d, room)
         if room.zone == 2:
             orchard_light(level, m, d, room, runs)
+        old_halls(level, m, d, room, runs)
         lit += lamps(level, m, d, room, runs)
+    gateways(level, m, d)
+    bonfires(level, m, d)
 
     # The story's people and things, where the design puts them.
     def floor_of(name, storey=None):

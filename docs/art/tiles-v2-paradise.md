@@ -97,6 +97,44 @@ zone's name (`@mark zone`), and the name is shown when the hero comes into it.
 The view draws back (`@mark vista`) at the Lantern Tree, the Sundial, the
 Wheel, the Making-house's door and the Low Gate.
 
+## Going from room to room
+
+A door is a change that comes on, not a line that is crossed (`gateways`):
+
+- **A doorway is as high as its storey lets it be** (eight tiles), and stands
+  in an arch behind whoever goes through: two trunks grown together overhead
+  in the garden's first three zones, two piers and a pointed arch of old cut
+  stone after.
+- **Where two zones meet at a door, each runs a way into the other**: the
+  ground of each in runs of two tiles, fewer the further in, for a dozen
+  tiles; and one or two of each zone's own growth stand over the line.
+- **Where a roofed room meets an open one**, the roofed room's wall reaches
+  out into the open one and is let into by the sky, row by row as far as a
+  slow wave says, so the edge between them is one ragged line like the edge
+  of a wood, and the light falls off along it instead of at the door. (Tile by
+  tile it was a checker.)
+
+## An old, great place
+
+The level is meant to be read as one place, old and grand and emptied, as well
+as seven gardens:
+
+- **Its hour does not pass.** The map says its own hour (`@hour 17.4 still`):
+  the sun low and gold, and it does not move: the design's "endless sun". The
+  keys that change the hour in the sandbox still do.
+- **A fire by every shrine**, lit round a twisted sword: where one rests.
+- **Fog stands in the Warden's door**, from sill to lintel, drifting. It stops
+  nobody: the arena is still an empty space.
+- **Old stone among the gardens**, more of it the further on: statues of
+  hooded keepers leaning on great swords, flying buttresses, columns broken off
+  aslant with a drum fallen by them, swords left standing in the ground, an
+  iron fence, dead trees by the Gate; windows of an old hall, with a light
+  behind them, down the walls of the roofed rooms from the Terraces on; chains
+  among the ivy where the garden ends.
+- **Fire for light** from the third zone on: torches, braziers. The Hollow
+  keeps its lanterns, the orchard its fruit, the Making-house its cold
+  crystals.
+
 The sky is the world's heaven: its far layers go up with the camera by more
 under a sky higher than the world's (`TilesV2Backdrops.TallestSetSky`), so the
 country of cloud and the far castles are behind every room, high or low.
@@ -117,3 +155,6 @@ country of cloud and the far castles are behind every room, high or low.
   sides, ladders in the gaps. Each zone looks its own, but two rooms of a zone
   are built the same way.
 - **Trees and trunks taller than their room** show over the cloud above it.
+- **The "old place" is a look, not a way of playing.** There are no fights, no
+  souls to lose, no doors that open from one side only but the ones the plan
+  names; the fog is a picture.

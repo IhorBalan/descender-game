@@ -42,6 +42,7 @@ LEFT, TOP, RIGHT, BOTTOM = 1, 2, 1, 3  # cells of open sky round the plan
 COL0, ROW0 = 2 - LEFT, -TOP  # the plan's column and row at the map's first tile
 WIDTH, HEIGHT = (120 - COL0 + 1 + RIGHT) * CW, (26 - ROW0 + BOTTOM) * CH
 AIR = "."
+HOUR = 17.4  # the level's hour: the sun low and gold, and it does not move (the design's endless sun)
 NEED = tv2_reach.BIT
 GROUND = set(TERRAIN_CHARS)
 CLOUD = "Q"
@@ -50,11 +51,11 @@ LEDGE = ","
 # What each zone is built of: its ground (floors and platforms), the wall behind a room
 # that is roofed (none: the sky), and the lamp that stands on its floors.
 STYLE = {
-    1: dict(ground="G", under="D", back="d", lamp="J"),
+    1: dict(ground="G", under="D", back="d", lamp="J"),  # lanterns: the one gentle place
     2: dict(ground="À", under="À", back="Õ", lamp="å"),
-    3: dict(ground="Ä", under="Ä", back="Ù", lamp="J"),
-    4: dict(ground="È", under="È", back="d", lamp="J"),
-    5: dict(ground="M", under="M", back="m", lamp="J"),
+    3: dict(ground="Ä", under="Ä", back="Ù", lamp="T"),
+    4: dict(ground="È", under="È", back="d", lamp="T"),
+    5: dict(ground="M", under="M", back="m", lamp="*"),
     6: dict(ground="Í", under="Í", back="Ú", lamp="^"),
     7: dict(ground="Ð", under="Ð", back="Û", lamp="*"),
 }
@@ -375,8 +376,8 @@ def door(level: Level, left: Room, right: Room, j: int, kind: str):
     s = S(j)
     stand = s - 1
     if kind in ("door", "boss"):
-        tall = 7 if kind == "boss" else 5
-        cut(level, (c0, c1), range(s - tall, s))
+        # As high as a storey lets it be: a gateway, not a hatch.
+        cut(level, (c0, c1), range(s - 8, s))
         if kind == "boss":
             level.say("tablet", c0 - 4, stand, "The Warden keeps this door. No one is at it.")
     elif kind == "W":
@@ -532,7 +533,7 @@ def things(level: Level):
         elif kind == "shrine":
             n += 1
             level.mark("checkpoint", x, y)
-            level.t[y][x + 2] = room.style["lamp"]
+            level.t[y][x + 2] = "Å"  # a fire to rest by
         elif kind == "ability":
             level.mark("ability", x, y - 1, what)
         elif kind == "upgrade":
@@ -675,7 +676,7 @@ def build(log=print) -> Level:
 
 def write(level: Level, path: str):
     level.t[level.spawn[1]][level.spawn[0]] = SPAWN_CHAR
-    lines = [HEADER.rstrip("\n"), f"@surface {HEIGHT - 2}", "@region paradise 0"]
+    lines = [HEADER.rstrip("\n"), f"@surface {HEIGHT - 2}", f"@hour {HOUR:g} still", "@region paradise 0"]
     lines += [f"@view {name} {x:g} {y:g}" for name, x, y in level.views]
     lines += [f"@shot {name} {view} {hour:g}" for name, view, hour in level.shots]
     lines += [f"@mark {kind} {x} {y} {' '.join(rest)}".rstrip() for kind, x, y, rest in level.marks]

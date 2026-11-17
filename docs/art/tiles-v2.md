@@ -514,7 +514,9 @@ by the Low Gate, with slopes); and the walls `canopy_wall`, `vine_wall`,
 legend characters are Latin-1 capitals (`À` to `Û`); `Ý` is the `glowfruit`
 lamp, a fruit that gives a cyan light, hung in the air where a tree would bear
 it. A map's `end` mark may say what the end is called and what is said under
-it (`@mark end column row title ... | words ...`).
+it (`@mark end column row title ... | words ...`). And a map may say its
+own hour, and that its sun does not move: `@hour 17.4 still` (without `still`
+the day starts there and runs).
 
 ## Light
 
