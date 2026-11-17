@@ -40,14 +40,24 @@ def texture_dirt(seed) -> np.ndarray:
     r = rng("dirt", seed)
     t = np.full((TILE, TILE), 3, dtype=np.int16)
     blob(t, r, 2, 2, (1.5, 2.3))
-    for _ in range(4):
-        x, y = r.randrange(TILE), r.randrange(TILE)
-        t[y, x] = 4
-        t[(y + 1) % TILE, x] = 2
-    for _ in range(4):
+    # A stone or two set in it: lit on its top-left, a shade under its foot; no two tiles' in one place.
+    for _ in range(1 + seed % 2):
+        x, y, wide = r.randrange(TILE), r.randrange(TILE), r.choice([2, 3])
+        for dy in range(2):
+            for dx in range(wide):
+                t[(y + dy) % TILE, (x + dx) % TILE] = 4 if dy == 0 and dx < wide - 1 else 3 if dy == 0 else 2
+        for dx in range(wide):
+            t[(y + 2) % TILE, (x + dx + 1) % TILE] = 1
+    # A lighter seam of the earth, lying a little aslant: it runs on into the next tile.
+    lift = r.randrange(TILE)
+    for x in range(TILE):
+        y = (lift + (x * (1 + seed % 2)) // 8) % TILE
+        if t[y, x] == 3 and (x + seed) % 5:
+            t[y, x] = 4
+    for _ in range(3):
         x, y = r.randrange(TILE), r.randrange(TILE)
         if t[y, x] == 3:
-            t[y, x] = 1 if r.random() < 0.5 else 2
+            t[y, x] = 2
     return t
 
 
@@ -222,6 +232,31 @@ def texture_leaves(seed) -> np.ndarray:
     return t
 
 
+def texture_foliage(seed) -> np.ndarray:
+    """Leaves in shade, as a wall behind a place: soft leaf shapes lying over one another
+    in two tones a step apart, a lit edge on one in three; nothing small enough to be a
+    speck. What stands before it is what is looked at."""
+    r = rng("foliage", seed)
+    t = np.full((TILE, TILE), 2, dtype=np.int16)
+    for n in range(6):
+        cx, cy = r.uniform(0, TILE), r.uniform(0, TILE)
+        turn = r.uniform(-0.9, 0.9)
+        rx, ry = r.uniform(3.2, 4.4), r.uniform(1.7, 2.3)
+        tone = r.choice([3, 3, 3, 4]) if n > 1 else 3
+        for y in range(TILE):
+            for x in range(TILE):
+                dx = ((x + 0.5 - cx + TILE / 2) % TILE) - TILE / 2
+                dy = ((y + 0.5 - cy + TILE / 2) % TILE) - TILE / 2
+                along = dx * np.cos(turn) + dy * np.sin(turn)
+                across = -dx * np.sin(turn) + dy * np.cos(turn)
+                d = (along / rx) ** 2 + (across / ry) ** 2
+                if d <= 1:
+                    t[y, x] = tone + (1 if n % 3 == 0 and across < -ry * 0.55 else 0)
+                elif d <= 1.5 and across > 0 and t[y, x] == 2:
+                    t[y, x] = 1  # the dark it lies over
+    return np.clip(t, 0, 5)
+
+
 def texture_flutes(seed) -> np.ndarray:
     """The shaft of a column: round flutes two to a tile, lit on the left."""
     t = np.zeros((TILE, TILE), dtype=np.int16)
@@ -288,6 +323,7 @@ TEXTURES = {
     "glass": texture_glass,
     "plain": texture_plain,
     "leaves": texture_leaves,
+    "foliage": texture_foliage,
     "flutes": texture_flutes,
     "cloud": texture_cloud,
     "ice": texture_ice,
@@ -401,9 +437,9 @@ def grass_over(rgba: np.ndarray, solid: np.ndarray, palette: dict, r: random.Ran
     for dx, dy in [(-1, -1), (0, -1), (1, -1), (-1, 0), (1, 0), (-1, 1), (0, 1), (1, 1)]:
         edge |= ~shift(solid, dx, dy, True)[c, c]
     ramp = palette["ramp"]
-    depth = np.full(TILE, 6)
+    depth = np.full(TILE, 7)
     for x in seam_safe(r, 6, 2, TILE - 3):
-        depth[x] = r.choice([7, 8, 8, 9])
+        depth[x] = r.choice([8, 9, 9, 11])
     out = rgba.copy()
     for y in range(TILE):
         for x in range(TILE):

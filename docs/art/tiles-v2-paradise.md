@@ -231,9 +231,10 @@ none.
 - **The Rising Leaf** is a stair of treads up its room, with a leaf as tall
   as a tower (`eden_great_leaf`) behind it.
 - **The Lantern Tree** has its crown: a screen of teal leaves and fruit across
-  the top of its room (`eden_lantern_crown`).
+  the top of its room (`eden_lantern_crown`), over a trunk that is a picture
+  from the floor up, on its roots.
 - **The Crown Vine** puts a bough out over every storey, to the side the
-  floor is on: what the hero climbs is its limbs.
+  floor is on: what the hero climbs is its limbs, round the plait of its stems.
 - **The Wheel** is seen from below all the way up the Terraces.
 - **The Low Gate** is a ring thirty-two tiles across, a third again what it
   was, sunk three tiles into the ground it is set in, so it fills its arena
@@ -242,6 +243,107 @@ none.
 The sky is the world's heaven: its far layers go up with the camera by more
 under a sky higher than the world's (`TilesV2Backdrops.TallestSetSky`), so the
 country of cloud and the far castles are behind every room, high or low.
+
+## The second pass: nothing flat, nothing bare, nothing said twice
+
+What was looked at, texture by texture, and redone (`tv2_eden.py`,
+`tv2_backdrop.py`, `tv2_terrain.py`, `tv2_paradise_dress.py`):
+
+- **No chequer anywhere in the sky.** The sky's bands met in an ordered
+  dither and its cloud and its castles thinned out in one: at the size the
+  game is seen at that is a screen door. The sky is twenty-four even bands
+  that meet in a line (`Sky.Band`), and what thins out (a cloud's foot, a
+  shaft of light, the glory, the rainbow) does it in steps of see-through
+  (`tv2_backdrop.stepped`).
+- **What is close to the eye has a form.** A front was a black shape. It is
+  three tones of its zone's own colour, with a rim where the light catches it
+  from the upper left and its ribs, veins and facets in the middle tone; and
+  what of it goes under its floor line thins out to nothing (`front`).
+- **Nothing is a bare bar.** A garden's platforms were held up by a column of
+  wall tiles. They stand on a picture of their zone's own, ten tiles tall
+  (`post`, `eden_post_*`): the jointed stalk of a great leaf, a slender trunk
+  that forks under its load, two stems twisted about each other, a post of
+  timber with its braces and a binding of rope. The Lantern Tree's trunk was
+  six columns of wall; it is a picture a storey tall, stood one over another
+  from the floor to the crown (`eden_lantern_trunk`: bark in ridges that
+  wander up it, a knot, a hollow with a fruit alight in it), on its roots
+  (`eden_lantern_root`). The Crown Vine's was a slab of wall; it is a plait of
+  six stems (`eden_crown_trunk`).
+- **Nothing is a plank on the air.** Under every ledge hangs what it sits on,
+  in the make of the ledge (`corbel`, `eden_corbel_*`): braces of timber to a
+  post, or a clod of earth and its roots, in the gardens; a bracket of marble
+  on the Terraces; brackets of iron, a chain and its hook, a pipe's elbow in
+  the Making-house; a shard of rock and its ice by the Gate. A stair's treads
+  have one each, so a stair has an underside.
+- **Bigger than a tile.** Set in the ground of every floor, every so often,
+  is something of the zone's own that is wider than a tile (`inlay`,
+  `eden_inlay_*`): a boulder, roots, a seam of pebbles in the earth; the rings
+  of its growth in the wood of the Vines; a frieze, a rosette, a tally cut in
+  the marble; a plate, a pipe, a dial let into the pearl; a vein of ice in
+  the rock. And the tiles themselves: the earth has a stone or two and a
+  lighter seam in it, the turf is deeper, and the wall of leaves behind a
+  roofed room is soft leaf shapes in two tones a step apart
+  (`texture_foliage`), not a field of specks.
+- **The dark under a roof.** In a roofed room a veil of dark hangs under the
+  roof and under every floor in the air, deepest against what it is under and
+  gone in four tiles (`eden_gloom_*`).
+- **Ground on cloud is not a line.** Where a room's ground lies on the cloud
+  it is set in, billows of the cloud lap up over its foot (`seams`).
+- **Redrawn**, because they were flat shapes among drawn things: the great
+  leaves (lit on the half that faces the dawn, veined, bitten, with dew), the
+  Sundial (rings and hour lines cut in a worn face, a blade for a gnomon),
+  the Wheel (a rim that is a roll of metal, studded; a hub that is an eye),
+  the Low Gate (thirty-six stones round, a sign cut in each, a gem at each
+  quarter, rime on its crown and ice hanging in it, and deep on deep of dark
+  inside), the Making-house from afar (an arcade, pilasters, a roof-walk, a
+  lantern on its dome), the far fields (plot beside plot, hedges, poplars;
+  no edge), the crags (split rock, facet by facet, snow on every shoulder),
+  the keepers' statues (a hood, a mantle in folds, both arms brought to the
+  sword: they were bells), wheat (a close stand with heavy ears), ivy (a
+  leaf to either side all the way down).
+
+## Light, look and what answers the hero
+
+- **A lamp's floor is the lamp's colour.** Light over full daylight is eased
+  toward a ceiling a quarter over it, all three of its parts by the same
+  share (`TileLight.Soften`, `Knee`, `Ease`): the floor under a brazier is
+  orange, not a yellow burnt flat where its red and green both ran past
+  white. Lamps stand closer in the zones whose hour is late.
+- **Each zone has its own look** (`LOOK`, a `@mark grade` on every room): a
+  turn of the dial, not a filter. The Hollow is seen through the rose of the
+  dawn; the orchard deeper and cooler, its lights the brighter for it; the
+  Vines greener; the Fields gold; the Terraces peach; the Making-house with a
+  little of its colour gone; the Gate cold and hard. A look is a global
+  Volume of its own (`TilesV2Things.Looks`, URP's Color Adjustments), as
+  strong as the camera is near a room that has it (`TilesV2Things.Look`), so
+  going through a doorway turns one into the next over `GradeBlend` tiles.
+  The corners of the view are drawn in a little (a vignette in the glow's
+  profile). Captures are taken with the look of the room they show; a
+  photograph of the whole map with none.
+- **What grows bends as he goes through it** (`life brush`, `eden_brush_*`):
+  grass with a flower in it, a fern of the orchard with its tips alight, the
+  fronds under the Vines, wheat that has seeded itself off its row, flowers
+  on tall stalks along a terrace, grass with the frost on it. It is drawn
+  before the hero, knee high to waist high; it leans away from him, the more
+  the faster he goes, and springs back with a swing or two when he has gone
+  by (`TilesV2Life.Bend`).
+
+## Rooms composed round what stands in them
+
+Seven rooms are not laid by the rule (`COMPOSED` in `make_paradise_map.py`):
+each is built round the great thing of its zone, so that is seen whole, with
+its room for a frame. The links the plan asks for are still kept, the ways up
+are still found by `ways_up`, and the model plays them like any other room.
+
+| Room | How it is composed |
+|---|---|
+| The Waking Hollow | a mound in the middle to climb onto, a bough to either side over it |
+| The Lantern Tree | its floors are its boughs: to one side of the trunk and then the other, each a little past it, so the climb goes round it |
+| The Crown Vine | the same, round the plait of its stems |
+| The Sundial | tiers to either side, stepping back as they go up; over the Sundial nothing but, high up, the floor the way on goes by |
+| The Wheel | tiers to either side, and ladders, not stairs, up them; the one floor the plan needs in the middle lies under the hub, so the eye of the Wheel looks out over it |
+| The Making-house's door | a gallery to either side of the door's bay |
+| The Low Gate | tiers to either side of the ring: nothing between the eye and the Gate |
 
 ## What is not there
 
@@ -255,14 +357,19 @@ country of cloud and the far castles are behind every room, high or low.
 - **The size is the wireframe's, not the design document's.** The document
   asks for a 20 minute run across; at 20 x 12 tiles a cell the road here is
   shorter. A bigger cell would lengthen it.
-- **The rooms are laid out by rule**, not by hand: platforms from alternate
-  sides, the zone's way up in the gaps. Each zone is built and climbed its
-  own way, but two rooms of a zone are still built by the same rule.
-- **No colour grade.** Each zone's colour comes from its own hour and its own
-  lamps; the only thing done to the picture after it is drawn is the glow
-  above. The game's post-processing profiles are not used here.
-- **Nothing answers the hero.** Grass and leaves do not bend as he passes
-  (that needs a shader the standard does not have); the sway is the wind's.
+- **Sixty-two of the sixty-nine rooms are still laid out by rule**: platforms
+  from alternate sides, the zone's way up in the gaps. Seven are composed
+  (above); the others of a zone are built the same way as one another.
+- **The looks are light.** A zone's look is contrast, saturation and a colour
+  it is seen through, within a fifth of the dial: no curves, no tone map of
+  its own. The game's post-processing profiles are not used here.
+- **Only the brush answers the hero.** The grass of the tiles themselves, the
+  trees and the ivy do not bend as he passes; the sway of those is the
+  wind's. Water does not show him back.
+- **No relief from the lamps.** The tiles have no normal maps: a lamp lights
+  a floor evenly, it does not pick out its stones.
+- **The cloud under a floor is still cloud**: billows lap its top, but under
+  them it is a plain bank.
 - **The gathered walk in place.** Their line moves; they are small figures far
   off, and none of them is a person one can meet.
 - **Slopes are only the ends of hills.** The model does not stand the hero on

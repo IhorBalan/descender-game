@@ -400,7 +400,7 @@ repeats to stay under the camera, and everything snaps to whole art pixels
 
 | Layer | Scroll across, up | Notes |
 |---|---|---|
-| sky, stars, sun, moon | pinned to the view | `Sky`: seven bands between the hour's two colours, meeting in an ordered 4 x 4 dither, painted on a texture the size of the camera's view; the sun and the moon cross the view on an arc |
+| sky, stars, sun, moon | pinned to the view | `Sky`: twenty-four even bands between the hour's two colours, meeting in a line (no dither: at the size the game is seen at a chequer is a screen door), painted on a texture the size of the camera's view; the sun and the moon cross the view on an arc |
 | clouds | 0.04, 0 | along the top of the view; drift 0.25 units a second |
 | ridges: mountains, hills, mid wood, near wood | 0.1 / 0.17 / 0.25 / 0.45, 1 | stand on the world's horizon, their feet 2 tiles over the surface line (`tv2_earth.py`). Further is paler, bluer and plainer: the mountains (1280 px wide) are the blue of the low sky, snow on the peaks, a band of haze at their foot; the hills (`backdrop_earth_hills`, 1920 px) carry a castle, two villages and a tower, each once; the woods mix round crowns and firs, lit on the left |
 | cave rock | 0.55, 0.55 | a 128 px picture that tiles both ways, each region's own colours (`REGIONS`), shown only in that region's rows under the surface line: a sprite mask over the region, with a custom range so it cuts that region's picture and no other. It takes the tile light, so it is black until something lights the cave. A map that names no regions is all the Earth's |
@@ -501,6 +501,7 @@ of the cell), built with the world; the clock tells it the hour (`DayNight.Appli
 | far | a picture far off behind a place, drawn at its own order and passed slower than the world across (`FarScroll`): it stands where it is marked when the camera is there | always |
 | pollen | motes of gold that hang in warm air and wander (unlit) | always |
 | snow | flakes coming down slowly, rocking, over a cold place | always |
+| brush | a picture that grows on a floor and turns about its foot: it leans away from the hero as he goes through it, the more the faster he goes, and springs back (`TilesV2Life.Bend`, `BrushReach`, `BrushLean`) | always |
 
 The lights of the far villages (`backdrop_earth_windows`, a layer of heaven placed exactly
 as the hills are but not tinted) come on with the night as the glows do.
@@ -523,7 +524,17 @@ the day starts there and runs). A room may have an hour of its own
 (`@mark mood column row width height hour*100`): the playground turns the day
 to it as the hero comes in (`TilesV2Playground.Turn`, over `MoodTime`), a
 capture shows a view in such a room at that hour, and only a change of room
-starts the turn, so an hour set by hand stays while he stays.
+starts the turn, so an hour set by hand stays while he stays. A room may have
+a look of its own too (`@mark grade column row width height exposure*100
+contrast saturation red green blue`, as URP's Color Adjustments counts them):
+each look is a global Volume as strong as the camera is near a room that has
+it (`TilesV2Things.Look`), turning into the next over `GradeBlend` tiles.
+
+**A light over full daylight is eased.** What the two halves of the tile
+light come to is not let run on past white: over `TileLight.Knee` (1) it is
+eased toward a ceiling `1 / Ease` over the knee, all three of its parts by
+the same share (`TileLight.Soften`; `tv2_light.soften` for the preview). A
+lamp's own floor is the lamp's colour.
 
 ## Light
 

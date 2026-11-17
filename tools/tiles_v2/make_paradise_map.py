@@ -66,7 +66,8 @@ STYLE = {
 }
 # How a room is climbed, where it is not its zone's way: the Rising Leaf is a stair the hero runs up.
 # (The eyrie keeps its ladders: an islet by its gulf would be a way over the wall that only a glide should cross.)
-CLIMB = {"rising": "stairs", "eyrie": "ladder"}
+# (And the Low Gate's arena and the Wheel's room: an islet or a stair would cross the great thing there.)
+CLIMB = {"rising": "stairs", "eyrie": "ladder", "arena": "ladder", "wheel": "ladder"}
 # The rooms that are roofed: under a canopy, in a trunk, in the ground, in a house. The rest are under the sky.
 ROOFED = {
     "roots", "h1", "l1",
@@ -77,6 +78,34 @@ ROOFED = {
     "boiler", "shaft", "h6", "works", "l6", "drain",
     "bottom", "h7", "niche",
 }  # fmt: skip
+
+
+# The rooms that are composed, not laid by the rule: each is built round what stands in
+# it, so the great thing of a zone is seen whole, with its room for a frame. For each
+# storey over the lowest, counted from the top (0), the spans of its platform, in the
+# room's own columns. What the plan's links need is still kept, and a way up is still
+# found by `ways_up`; the model plays them like any other room.
+def _round_a_trunk(left, right):
+    """Storey by storey to one side of a trunk and then the other: the climb goes round it."""
+    return lambda k: [left] if k % 2 == 0 else [right]
+
+
+COMPOSED = {
+    # The Waking Hollow: a mound in the middle to climb onto, and a bough to either side over it.
+    "hollow": lambda k: [[(1, 20), (39, 58)], [(14, 45)]][k],
+    # The Lantern Tree and the Crown Vine: the floors are its boughs, one side then the other.
+    # (Each reaches a little past the trunk, behind which it goes: so the next one up has floor under its end.)
+    "lantern": _round_a_trunk((1, 22), (17, 38)),
+    "crownvine": _round_a_trunk((1, 33), (26, 58)),
+    # The Sundial, the Wheel, the Making-house's door, the Low Gate: tiers to either side, stepping
+    # back as they go up, and nothing between the eye and the thing itself.
+    # (High over the Sundial a floor of its own: the way on up to the room above goes by it.)
+    "sundial": lambda k: [[(1, 22), (36, 62), (77, 98)], [(1, 34), (66, 98)]][k],
+    # (The Wheel's middle floors are the plan's: the lower is the wider, so a ladder to the upper has floor under it.)
+    "wheel": lambda k: [[(1, 9), (50, 58)], [(1, 14), (20, 42), (46, 58)]][k],
+    "door": lambda k: [[(1, 27), (52, 78)]][k],
+    "arena": lambda k: [[(1, 11), (48, 58)], [(1, 17), (42, 58)]][k],
+}
 
 
 def X(i: int) -> int:
@@ -271,6 +300,9 @@ def platforms(level: Level):
                 # A long room has a second platform in the far third, and a gap between.
                 far = inner[-count // 4 :] if from_west else inner[: count // 4]
                 cover = set(inner[: count // 2] if from_west else inner[-count // 2 :]) | set(far)
+            spans = COMPOSED[room.name](k) if room.name in COMPOSED else None
+            if spans is not None:  # (None: this storey is left to the rule)
+                cover = {room.x0 + c for a, b in spans for c in range(a, b + 1)}
             cover |= room.keep[j]
             cover -= room.clear[j]
             cover &= set(inner)

@@ -57,6 +57,8 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private PlayerController hero;
 
+        private Rigidbody2D heroBody;
+
         [SerializeField]
         private GameCamera view;
 
@@ -861,6 +863,22 @@ namespace Descender.World.TilesV2
                 }
             }
             Turn(Mathf.Min(Time.unscaledDeltaTime, LongestFrame));
+            // Each room is seen in its own look, from where the camera is.
+            if (things != null && things.Looks.Count > 0 && !shooting)
+            {
+                var view = Camera.main;
+                things.Look(view != null ? (Vector2)view.transform.position : (Vector2)hero.transform.position);
+            }
+            // What grows where he goes bends as he goes through it.
+            if (world.Life != null && world.Life.Brush.Count > 0)
+            {
+                if (heroBody == null)
+                {
+                    heroBody = hero.GetComponent<Rigidbody2D>();
+                }
+                var speed = heroBody != null ? heroBody.linearVelocity.x : 0f;
+                world.Life.Bend(hero.transform.position, speed, Mathf.Min(Time.deltaTime, LongestFrame));
+            }
         }
 
         /// <summary>
@@ -1140,6 +1158,7 @@ namespace Descender.World.TilesV2
                     : things != null && things.TryMood(point, out var own) ? own
                     : world.Set.dayStart;
                 point = world.Framed(point);
+                things?.Look(point);
                 var eye = Camera.main;
                 if (eye != null)
                 {

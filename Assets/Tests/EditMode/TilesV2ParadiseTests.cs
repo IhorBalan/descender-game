@@ -378,6 +378,10 @@ namespace Descender.Tests
             Assert.That(bloom.intensity.overrideState, Is.True);
             Assert.That(bloom.intensity.value, Is.InRange(0.2f, 1f), "soft: it does not wash the picture out");
             Assert.That(bloom.threshold.value, Is.GreaterThan(0.8f), "only what is bright");
+            // And the corners of the view are drawn in a little: the eye is held to its middle.
+            Assert.That(glow.TryGet<Vignette>(out var corners), Is.True);
+            Assert.That(corners.intensity.overrideState, Is.True);
+            Assert.That(corners.intensity.value, Is.InRange(0.05f, 0.3f), "a little: it is not a tunnel");
             var guid = AssetDatabase.AssetPathToGUID(TilesV2Sample.ParadiseGlowPath);
             var text = System.IO.File.ReadAllText(TilesV2Sample.ParadisePath);
             Assert.That(text, Does.Contain("m_Name: " + TilesV2Sample.GlowName));
@@ -387,6 +391,248 @@ namespace Descender.Tests
             {
                 Assert.That(System.IO.File.ReadAllText(other), Does.Not.Contain(guid), other);
             }
+        }
+
+        [Test]
+        public void NothingIsABareBarOrAPlankOnTheAir()
+        {
+            // What is stood where: counted by what its key begins with.
+            var stood = new Dictionary<string, int>();
+            var corbelled = new HashSet<(int column, int row)>();
+            var kinds = new[]
+            {
+                "eden_corbel_",
+                "eden_post_",
+                "eden_lantern_trunk",
+                "eden_lantern_root",
+                "eden_crown_trunk",
+                "eden_inlay_",
+                "eden_gloom_",
+                "heaven_puff_",
+            };
+            foreach (var mark in map.Marks)
+            {
+                if (mark.Kind != TilesV2Things.Stood)
+                {
+                    continue;
+                }
+                var key = mark.Word(0);
+                foreach (var kind in kinds)
+                {
+                    if (key.StartsWith(kind))
+                    {
+                        stood[kind] = stood.TryGetValue(kind, out var n) ? n + 1 : 1;
+                    }
+                }
+                if (key.StartsWith("eden_corbel_"))
+                {
+                    corbelled.Add((mark.Column, mark.Row));
+                    Assert.That(Ledge(mark.Column, mark.Row), Is.True, key + " hangs under no ledge");
+                    var ledge = set.LedgeOf(Glyph(mark.Column, mark.Row).key);
+                    Assert.That(key, Does.Contain(ledge.key), "a ledge sits on what is of its own make");
+                }
+            }
+            // Every ledge of two tiles or more has something under it, hung from its own cell.
+            var ledges = 0;
+            for (var row = 1; row < map.Height - 1; row++)
+            {
+                for (var column = 1; column < map.Width - 1; column++)
+                {
+                    if (!Ledge(column, row) || Ledge(column - 1, row))
+                    {
+                        continue;
+                    }
+                    var end = column;
+                    var held = false;
+                    var open = true;
+                    while (Ledge(end, row))
+                    {
+                        held |= corbelled.Contains((end, row));
+                        open &= !Solid(end, row + 1);
+                        end++;
+                    }
+                    if (end - column >= 2 && open)
+                    {
+                        ledges++;
+                        Assert.That(held, Is.True, "the ledge at " + column + ", " + row + " is a plank on the air");
+                    }
+                }
+            }
+            Assert.That(ledges, Is.GreaterThan(300));
+            // What holds a garden's platforms up is a picture of its own, not a bar of wall; the
+            // two great trunks are pictures a storey tall, stood one over another.
+            Assert.That(stood["eden_post_"], Is.GreaterThan(40));
+            Assert.That(
+                stood["eden_lantern_trunk"],
+                Is.GreaterThanOrEqualTo(8),
+                "the Lantern Tree is as tall as its room"
+            );
+            Assert.That(stood["eden_lantern_root"], Is.EqualTo(1));
+            Assert.That(stood["eden_crown_trunk"], Is.GreaterThanOrEqualTo(12), "the Crown Vine too");
+            // Bigger than a tile in every zone's ground; the dark under the roofs; billows where ground lies on cloud.
+            Assert.That(stood["eden_inlay_"], Is.GreaterThan(200));
+            Assert.That(stood["eden_gloom_"], Is.GreaterThan(100));
+            Assert.That(stood["heaven_puff_"], Is.GreaterThan(500));
+            foreach (var kind in new[] { "earth", "loam", "vinewood", "tilth", "marble", "pearl", "silver" })
+            {
+                Assert.That(
+                    System.Array.Exists(set.backdrops, backdrop => backdrop.key == "eden_inlay_" + kind + "_0"),
+                    Is.True,
+                    kind
+                );
+            }
+        }
+
+        [Test]
+        public void TheGreatThingsAreSeenWholeInRoomsComposedRoundThem()
+        {
+            // Between the eye and the Low Gate, and the Making-house's door, there is no floor:
+            // their rooms' platforms are tiers to either side. (The Wheel's room keeps the floors
+            // the plan needs in its middle, under the hub.)
+            foreach (var view in new[] { "eden_gate", "eden_door" })
+            {
+                Assert.That(map.Views.TryGetValue(view, out var at), Is.True, view);
+                var middle = Mathf.FloorToInt(at.x);
+                var crossed = 0;
+                // (From under the room's roof to over its floor: the two storeys the view shows.)
+                for (var row = Mathf.FloorToInt(at.y) - 10; row < Mathf.FloorToInt(at.y) + 4; row++)
+                {
+                    for (var column = middle - 6; column <= middle + 6; column++)
+                    {
+                        crossed += Solid(column, row) ? 1 : 0;
+                    }
+                }
+                Assert.That(crossed, Is.EqualTo(0), view + ": a floor crosses the great thing of the room");
+            }
+        }
+
+        [Test]
+        public void EveryZoneIsSeenInItsOwnLook()
+        {
+            Pickups.Checkpoint.Reset();
+            var things = TilesV2Things.Build(
+                world,
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.CheckpointPath),
+                AssetDatabase.LoadAssetAtPath<GameObject>(TilesV2Sample.AbilityPath)
+            );
+            try
+            {
+                Assert.That(things.Grades.Count, Is.EqualTo(69), "every room has its look");
+                Assert.That(things.Looks.Count, Is.EqualTo(7), "a look for each zone");
+                foreach (var look in things.Looks)
+                {
+                    Assert.That(look.isGlobal, Is.True);
+                    Assert.That(look.weight, Is.EqualTo(0f), "no look shows until a camera is somewhere");
+                    Assert.That(look.sharedProfile.TryGet<ColorAdjustments>(out var adjust), Is.True);
+                    Assert.That(adjust.contrast.overrideState && adjust.saturation.overrideState, Is.True);
+                    Assert.That(
+                        Mathf.Abs(adjust.contrast.value),
+                        Is.LessThanOrEqualTo(20f),
+                        "a turn of the dial, not a filter"
+                    );
+                    Assert.That(Mathf.Abs(adjust.saturation.value), Is.LessThanOrEqualTo(20f));
+                    Assert.That(Mathf.Abs(adjust.postExposure.value), Is.LessThanOrEqualTo(0.2f));
+                }
+                // In a room, its zone's look is whole and it is the only one.
+                Assert.That(world.TryView("eden_hollow", out var hollow), Is.True);
+                things.Look(hollow);
+                var whole = 0;
+                var total = 0f;
+                foreach (var look in things.Looks)
+                {
+                    whole += Mathf.Approximately(look.weight, 1f) ? 1 : 0;
+                    total += look.weight;
+                }
+                Assert.That(whole, Is.EqualTo(1));
+                Assert.That(total, Is.EqualTo(1f).Within(0.001f), "the Hollow is far from every other zone");
+                Assert.That(things.TryGrade(hollow, out var dawn, out var rose), Is.True);
+                Assert.That(rose.r, Is.GreaterThan(rose.b), "the Hollow is seen through the rose of the dawn");
+                Assert.That(world.TryView("eden_gate", out var gate), Is.True);
+                Assert.That(things.TryGrade(gate, out var dusk, out var cold), Is.True);
+                Assert.That(cold.b, Is.GreaterThan(cold.r), "the Gate through the cold");
+                Assert.That(dusk.z, Is.LessThan(dawn.z), "and with less colour in it");
+                // Outside every room no look shows; a little way out of one, a part of its look.
+                things.Look(new Vector2(-200f, -200f));
+                foreach (var look in things.Looks)
+                {
+                    Assert.That(look.weight, Is.EqualTo(0f));
+                }
+                var area = things.Grades[0].area;
+                things.Look(new Vector2(area.xMin - TilesV2Things.GradeBlend * 0.5f, area.center.y));
+                var most = 0f;
+                foreach (var look in things.Looks)
+                {
+                    most = Mathf.Max(most, look.weight);
+                }
+                Assert.That(most, Is.GreaterThan(0.2f).And.LessThanOrEqualTo(1f));
+                things.Look(hollow);
+                things.LookAway();
+                foreach (var look in things.Looks)
+                {
+                    Assert.That(look.weight, Is.EqualTo(0f), "a photograph of the whole map is in no room");
+                }
+            }
+            finally
+            {
+                Object.DestroyImmediate(things.gameObject);
+                Pickups.Checkpoint.Reset();
+            }
+        }
+
+        [Test]
+        public void WhatGrowsOnTheFloorsBendsAsTheHeroGoesThroughItAndSpringsBack()
+        {
+            var life = world.Life;
+            Assert.That(life.Brush.Count, Is.GreaterThan(300));
+            Assert.That(life.Made.ContainsKey("brush"), Is.True);
+            var stem = life.Brush[0];
+            Vector2 at = stem.position;
+            Assert.That(stem.localRotation, Is.EqualTo(Quaternion.identity));
+            // He comes at it from its left, running: it leans over to the right, away from him.
+            for (var step = 0; step < 40; step++)
+            {
+                life.Bend(at + new Vector2(-0.4f, 0f), 6f, 0.02f);
+            }
+            Assert.That(life.LeanOf(0), Is.LessThan(-8f), "it leans away from him");
+            Assert.That(Mathf.Abs(life.LeanOf(0)), Is.LessThanOrEqualTo(TilesV2Life.BrushLean * 1.5f));
+            Assert.That(stem.localRotation.eulerAngles.z, Is.GreaterThan(300f), "and is turned about its foot");
+            // From its right, to the left.
+            for (var step = 0; step < 80; step++)
+            {
+                life.Bend(at + new Vector2(0.4f, 0f), -6f, 0.02f);
+            }
+            Assert.That(life.LeanOf(0), Is.GreaterThan(8f));
+            // A slow hero bends it less than one who runs.
+            var ran = Mathf.Abs(life.LeanOf(0));
+            for (var step = 0; step < 300; step++)
+            {
+                life.Bend(at + new Vector2(0.4f, 0f), 0f, 0.02f);
+            }
+            Assert.That(Mathf.Abs(life.LeanOf(0)), Is.LessThan(ran));
+            Assert.That(
+                Mathf.Abs(life.LeanOf(0)),
+                Is.GreaterThan(0.5f),
+                "it is still pushed aside while he stands in it"
+            );
+            // He has gone by: it springs back and comes to rest.
+            for (var step = 0; step < 600; step++)
+            {
+                life.Bend(at + new Vector2(30f, 0f), 6f, 0.02f);
+            }
+            Assert.That(Mathf.Abs(life.LeanOf(0)), Is.LessThan(0.5f), "it has come to rest");
+            // One a long way off never stirred.
+            Assert.That(life.LeanOf(life.Brush.Count - 1), Is.EqualTo(0f));
+        }
+
+        private bool Ledge(int column, int row)
+        {
+            return set.TryGlyph(map.TerrainAt(column, row), out var glyph) && glyph.layer == TilesV2Set.Layer.Ledge;
+        }
+
+        private TilesV2Set.Glyph Glyph(int column, int row)
+        {
+            set.TryGlyph(map.TerrainAt(column, row), out var glyph);
+            return glyph;
         }
 
         private bool Solid(int column, int row)

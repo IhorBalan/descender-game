@@ -101,6 +101,12 @@ namespace Descender.World.TilesV2
         [SerializeField]
         private List<SpriteRenderer> far = new List<SpriteRenderer>();
 
+        [SerializeField, Tooltip("What bends as the hero goes through it: grass, a fern, a clump of wheat.")]
+        private List<Transform> brush = new List<Transform>();
+
+        private readonly List<float> leans = new List<float>();
+        private readonly List<float> leanSpeeds = new List<float>();
+
         [SerializeField]
         private List<SpriteRenderer> birds = new List<SpriteRenderer>();
 
@@ -137,6 +143,65 @@ namespace Descender.World.TilesV2
 
         /// <summary>What sways in the wind: reeds, and the shapes close to the eye.</summary>
         public IReadOnlyList<SpriteRenderer> Swaying => swaying;
+
+        /// <summary>What bends as the hero goes through it (`life brush`): each turns about its foot.</summary>
+        public IReadOnlyList<Transform> Brush => brush;
+
+        /// <summary>How near the hero a thing of the brush bends, in tiles to either side of him.</summary>
+        public const float BrushReach = 1.6f;
+
+        /// <summary>The most it leans, in degrees, with the hero right at it and running.</summary>
+        public const float BrushLean = 34f;
+
+        /// <summary>How hard it springs back, and how soon it comes to rest.</summary>
+        public const float BrushSpring = 70f;
+        public const float BrushDamp = 7f;
+
+        /// <summary>
+        /// Bends the brush for a moment of play: what the hero is at leans away from him, the
+        /// more the faster he goes, and springs back when he has gone by, with a swing or two
+        /// before it is still. `hero` is where his feet are, `speed` his speed across.
+        /// </summary>
+        public void Bend(Vector2 hero, float speed, float seconds)
+        {
+            while (leans.Count < brush.Count)
+            {
+                leans.Add(0f);
+                leanSpeeds.Add(0f);
+            }
+            for (var i = 0; i < brush.Count; i++)
+            {
+                var stem = brush[i];
+                if (stem == null)
+                {
+                    continue;
+                }
+                Vector2 at = stem.position;
+                var across = at.x - hero.x;
+                var over = hero.y - at.y;
+                var want = 0f;
+                if (Mathf.Abs(across) < BrushReach && over > -0.6f && over < 2.5f)
+                {
+                    var push = 1f - Mathf.Abs(across) / BrushReach;
+                    var way = Mathf.Abs(across) > 0.05f ? Mathf.Sign(across) : Mathf.Sign(speed);
+                    want = -way * BrushLean * push * Mathf.Clamp01(0.3f + Mathf.Abs(speed) / 6f);
+                }
+                var lean = leans[i];
+                var turning = leanSpeeds[i];
+                if (want == 0f && Mathf.Abs(lean) < 0.02f && Mathf.Abs(turning) < 0.02f)
+                {
+                    continue;
+                }
+                turning += ((want - lean) * BrushSpring - turning * BrushDamp) * seconds;
+                lean = Mathf.Clamp(lean + turning * seconds, -BrushLean * 1.5f, BrushLean * 1.5f);
+                leans[i] = lean;
+                leanSpeeds[i] = turning;
+                stem.localRotation = Quaternion.Euler(0f, 0f, lean);
+            }
+        }
+
+        /// <summary>How far a thing of the brush leans now, in degrees: over zero to the left.</summary>
+        public float LeanOf(int index) => index < leans.Count ? leans[index] : 0f;
 
         /// <summary>What stands far off behind a place.</summary>
         public IReadOnlyList<SpriteRenderer> Far => far;
@@ -430,6 +495,18 @@ namespace Descender.World.TilesV2
                     // It stands where it is marked when the camera is there, and is passed slower than the world.
                     layer.Configure(new Vector2(FarScroll, 1f), at, at, Vector2.zero, 0f);
                     far.Add(shown);
+                    return true;
+                }
+                case "brush":
+                {
+                    var entry = Array.Find(set.backdrops, backdrop => backdrop.key == key);
+                    if (entry == null || entry.sprite == null)
+                    {
+                        return false;
+                    }
+                    var material = entry.lit ? set.litMaterial : set.unlitMaterial;
+                    var shown = Shown("Brush " + key, entry.sprite, at, entry.order, material);
+                    brush.Add(shown.transform);
                     return true;
                 }
                 case "sway":

@@ -135,6 +135,34 @@ namespace Descender.Tests
         }
 
         [Test]
+        public void ALightOverTheKneeIsEasedAndKeepsItsColour()
+        {
+            // Up to full daylight a light is what it is.
+            Assert.That(TileLight.Soften(0.9f, 0.5f, 0.2f), Is.EqualTo(new Color(0.9f, 0.5f, 0.2f, 1f)));
+            Assert.That(TileLight.Soften(1f, 1f, 1f), Is.EqualTo(new Color(1f, 1f, 1f, 1f)));
+            // A brazier's own tile: twice daylight in its red. It is brought down, by the same
+            // share in every part, so its floor is its own orange and not a yellow burnt flat.
+            var lamp = TileLight.Soften(2f, 1.2f, 0.64f);
+            Assert.That(lamp.r, Is.EqualTo(TileLight.Knee + 1f / (1f + TileLight.Ease)).Within(1e-5f));
+            Assert.That(lamp.g / lamp.r, Is.EqualTo(0.6f).Within(1e-5f), "its colour is kept");
+            Assert.That(lamp.b / lamp.r, Is.EqualTo(0.32f).Within(1e-5f));
+            Assert.That(lamp.g, Is.LessThan(1f), "its green does not run past white with its red");
+            // The brighter the light, the brighter it still is, and never past the ceiling.
+            var before = 0f;
+            for (var most = 0.5f; most < 40f; most *= 1.3f)
+            {
+                var eased = TileLight.Soften(most, most * 0.5f, 0f).r;
+                Assert.That(eased, Is.GreaterThan(before), "at " + most);
+                Assert.That(eased, Is.LessThan(TileLight.Knee + 1f / TileLight.Ease));
+                before = eased;
+            }
+            // Combine eases what it mixes.
+            var light = new Color[1];
+            TileLight.Combine(new[] { Color.black }, new[] { new Color(2f, 1.2f, 0.64f) }, Color.white, light);
+            Assert.That(light[0].r, Is.EqualTo(lamp.r).Within(1e-5f));
+        }
+
+        [Test]
         public void TheDaylightChangesWithoutSpreadingAgain()
         {
             var sky = new[] { new Color(1f, 1f, 1f), new Color(0.5f, 0.5f, 0.5f), new Color(0f, 0f, 0f) };
@@ -200,14 +228,27 @@ namespace Descender.Tests
             Assert.That(map.At(new Vector3Int(3, 11, 0)).r, Is.EqualTo(0.91f).Within(1e-4f), "the top tile is bright");
             Assert.That(map.At(new Vector3Int(3, 10, 0)).r, Is.EqualTo(0.91f * 0.56f).Within(1e-4f));
             Assert.That(map.At(new Vector3Int(14, 0, 0)).maxColorComponent, Is.LessThan(0.05f), "deep rock is dark");
-            Assert.That(map.At(new Vector3Int(6, 5, 0)).r, Is.EqualTo(1.5f).Within(1e-4f), "the torch lights its tile");
+            // (Over full daylight a light is eased: TileLight.Soften.)
+            Assert.That(
+                map.At(new Vector3Int(6, 5, 0)).r,
+                Is.EqualTo(TileLight.Soften(1.5f, 0f, 0f).r).Within(1e-4f),
+                "the torch lights its tile"
+            );
+            Assert.That(map.At(new Vector3Int(6, 5, 0)).r, Is.GreaterThan(1.1f), "brighter than the day");
             Assert.That(
                 map.At(new Vector3Int(9, 5, 0)).r,
-                Is.EqualTo(1.5f * Mathf.Pow(0.91f, 3f)).Within(1e-3f),
+                Is.EqualTo(TileLight.Soften(1.5f * Mathf.Pow(0.91f, 3f), 0f, 0f).r).Within(1e-3f),
                 "and its room"
             );
-            Assert.That(map.At(new Vector3Int(18, 5, 0)).r, Is.EqualTo(lava.Emits.r).Within(1e-4f), "lava glows");
-            Assert.That(map.At(new Vector3Int(19, 5, 0)).r, Is.EqualTo(lava.Emits.r * lava.Keeps.r).Within(1e-3f));
+            Assert.That(
+                map.At(new Vector3Int(18, 5, 0)).r,
+                Is.EqualTo(TileLight.Soften(lava.Emits.r, 0f, 0f).r).Within(1e-4f),
+                "lava glows"
+            );
+            Assert.That(
+                map.At(new Vector3Int(19, 5, 0)).r,
+                Is.EqualTo(TileLight.Soften(lava.Emits.r * lava.Keeps.r, 0f, 0f).r).Within(1e-3f)
+            );
             Assert.That(
                 map.At(new Vector3Int(26, 3, 0)).r,
                 Is.EqualTo(ore.Emits.r).Within(1e-4f),
@@ -218,7 +259,7 @@ namespace Descender.Tests
             // Night: the sky's half dims, the torch's does not.
             map.Daylight = new Color(0.2f, 0.2f, 0.4f);
             Assert.That(map.At(new Vector3Int(3, 12, 0)).b, Is.EqualTo(0.4f).Within(1e-4f));
-            Assert.That(map.At(new Vector3Int(6, 5, 0)).r, Is.EqualTo(1.5f).Within(1e-4f));
+            Assert.That(map.At(new Vector3Int(6, 5, 0)).r, Is.EqualTo(TileLight.Soften(1.5f, 0f, 0f).r).Within(1e-4f));
             Assert.That(map.Light[0].a, Is.EqualTo(1f), "the light's texture stays opaque");
         }
 
