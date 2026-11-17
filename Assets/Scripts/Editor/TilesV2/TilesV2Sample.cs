@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
@@ -85,8 +86,43 @@ namespace Descender.EditorTools.TilesV2
         /// </summary>
         public static Scene BuildDescent() => BuildPlayable(WorldMapPath, DescentPath, true);
 
-        /// <summary>Builds and saves the Paradise level's scene: a journey of its own, on its own map.</summary>
-        public static Scene BuildParadise() => BuildPlayable(ParadiseMapPath, ParadisePath, true);
+        /// <summary>The Paradise level's glow: what is bright there blooms a little (a Volume profile of the standard's own).</summary>
+        public const string ParadiseGlowPath = "Assets/Art/TilesV2/TilesV2ParadiseGlow.asset";
+
+        /// <summary>The name of the object that holds the level's glow in its scene.</summary>
+        public const string GlowName = "Glow";
+
+        /// <summary>
+        /// Builds and saves the Paradise level's scene: a journey of its own, on its own
+        /// map, and with a glow: its camera renders post-processing and a global Volume
+        /// blooms what is bright (lamps, fruit, fire, white stone in the sun).
+        /// </summary>
+        public static Scene BuildParadise() => BuildPlayable(ParadiseMapPath, ParadisePath, true, true);
+
+        /// <summary>The glow's profile, made if it is not there: bloom over a high threshold, soft and wide.</summary>
+        public static VolumeProfile ParadiseGlow()
+        {
+            var profile = AssetDatabase.LoadAssetAtPath<VolumeProfile>(ParadiseGlowPath);
+            if (profile != null)
+            {
+                return profile;
+            }
+            profile = ScriptableObject.CreateInstance<VolumeProfile>();
+            AssetDatabase.CreateAsset(profile, ParadiseGlowPath);
+            var bloom = profile.Add<Bloom>(true);
+            bloom.threshold.Override(GlowThreshold);
+            bloom.intensity.Override(GlowIntensity);
+            bloom.scatter.Override(GlowScatter);
+            bloom.hideFlags = HideFlags.HideInInspector | HideFlags.HideInHierarchy;
+            AssetDatabase.AddObjectToAsset(bloom, profile);
+            EditorUtility.SetDirty(profile);
+            AssetDatabase.SaveAssets();
+            return profile;
+        }
+
+        public const float GlowThreshold = 0.95f;
+        public const float GlowIntensity = 0.85f;
+        public const float GlowScatter = 0.5f;
 
         /// <summary>Builds a scene of the standard's that is not there yet (the world's, the Paradise level's).</summary>
         public static void Ensure(string scenePath)
@@ -105,11 +141,20 @@ namespace Descender.EditorTools.TilesV2
             }
         }
 
-        private static Scene BuildPlayable(string mapPath, string scenePath, bool journey)
+        private static Scene BuildPlayable(string mapPath, string scenePath, bool journey, bool glows = false)
         {
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var world = MakeWorld(mapPath, true);
             var camera = MakeCamera(world.Framed(world.Spawn), true, world.Set);
+            if (glows)
+            {
+                // Loaded here, not handed in: a new scene unloads an asset that only a local holds.
+                var glow = ParadiseGlow();
+                camera.GetUniversalAdditionalCameraData().renderPostProcessing = true;
+                var volume = new GameObject(GlowName).AddComponent<Volume>();
+                volume.isGlobal = true;
+                volume.sharedProfile = glow;
+            }
 
             var systems = new GameObject("Systems");
             var router = systems.AddComponent<InputRouter>();

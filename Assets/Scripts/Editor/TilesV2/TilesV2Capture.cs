@@ -337,9 +337,12 @@ namespace Descender.EditorTools.TilesV2
             // The first render after the scene opens draws the unlit backdrop wrong (seen upside
             // down in batch mode); render once and throw it away.
             Render(world, world.Framed(world.Area.center), game, null);
+            // A view in a room that has its own hour is shown at that hour.
+            var things = world.GetComponentInChildren<TilesV2Things>();
             foreach (var pair in world.Map.Views)
             {
                 world.TryView(pair.Key, out var at);
+                ShowHour(world, things != null && things.TryMood(at, out var own) ? own : start);
                 Render(world, world.Framed(at), game, Path.Combine(folder, pair.Key + ".png"));
             }
             foreach (var shot in world.Map.Shots)
@@ -394,6 +397,9 @@ namespace Descender.EditorTools.TilesV2
             camera.backgroundColor = photoSky ?? (main != null ? main.backgroundColor : Color.black);
             if (main != null)
             {
+                // A scene whose own camera renders post-processing (the Paradise level's glow) is captured with it.
+                camera.GetUniversalAdditionalCameraData().renderPostProcessing =
+                    main.GetUniversalAdditionalCameraData().renderPostProcessing;
                 main.enabled = false;
             }
             var restore = place ? PlaceBackdrop(world, at, size) : new List<(SpriteRenderer, Vector2)>();

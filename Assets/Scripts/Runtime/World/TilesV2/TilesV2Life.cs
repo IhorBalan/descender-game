@@ -8,11 +8,13 @@ namespace Descender.World.TilesV2
     /// What moves in a Tiles V2 world and what comes and goes with the hour, from the map's
     /// `life` marks (`@mark life column row kind picture dx dy`; docs/art/tiles-v2.md, "Life"):
     /// smoke from a chimney, leaves falling from a tree, fireflies at night, butterflies by
-    /// day, the splash where falling water meets a pool, drips from a mine's roof (all single
-    /// art pixels, as every particle is); a mill's sails that turn; lights that show only at
+    /// day, the splash where falling water meets a pool, drips from a mine's roof, pollen
+    /// that hangs in warm air, snow that comes down slowly where it is cold (all single art
+    /// pixels, as every particle is); a mill's sails that turn; lights that show only at
     /// dusk and at night (a lit window, the glow in the Gate, the lights of the far villages);
     /// shafts of low sun at dawn and at sunset; dark shapes close to the eye that pass in
-    /// front of everything a little faster than the world; reeds and grass that sway; birds
+    /// front of everything a little faster than the world; what stands far off behind a
+    /// place, and passes slower than the world (`far`); reeds and grass that sway; birds
     /// that cross the sky far off; and now and then rain over the surface. `dx` and `dy` are
     /// art pixels from the foot of the mark's cell.
     /// </summary>
@@ -26,6 +28,9 @@ namespace Descender.World.TilesV2
 
         /// <summary>How much faster than the world the shapes close to the eye move.</summary>
         public const float FrontScroll = 1.3f;
+
+        /// <summary>How much slower than the world what stands far off behind a place moves.</summary>
+        public const float FarScroll = 0.88f;
 
         /// <summary>Frames a second the sails turn by.</summary>
         public const float SailFrames = 2.5f;
@@ -58,6 +63,9 @@ namespace Descender.World.TilesV2
         private static readonly Color LeafGold = new Color(0.96f, 0.74f, 0.26f, 1f);
         private static readonly Color Firefly = new Color(1f, 0.96f, 0.5f, 1f);
         private static readonly Color FireflyGreen = new Color(0.78f, 1f, 0.46f, 1f);
+        private static readonly Color PollenGold = new Color(1f, 0.9f, 0.5f, 0.9f);
+        private static readonly Color PollenPale = new Color(1f, 0.98f, 0.82f, 0.7f);
+        private static readonly Color SnowBlue = new Color(0.82f, 0.9f, 1f, 0.9f);
         private static readonly Color Water = new Color(0.86f, 0.94f, 1f, 0.9f);
         private static readonly Color WaterDeep = new Color(0.62f, 0.8f, 0.95f, 0.8f);
 
@@ -89,6 +97,9 @@ namespace Descender.World.TilesV2
         private List<SpriteRenderer> swaying = new List<SpriteRenderer>();
 
         private readonly List<Sprite[]> swayFrames = new List<Sprite[]>();
+
+        [SerializeField]
+        private List<SpriteRenderer> far = new List<SpriteRenderer>();
 
         [SerializeField]
         private List<SpriteRenderer> birds = new List<SpriteRenderer>();
@@ -126,6 +137,9 @@ namespace Descender.World.TilesV2
 
         /// <summary>What sways in the wind: reeds, and the shapes close to the eye.</summary>
         public IReadOnlyList<SpriteRenderer> Swaying => swaying;
+
+        /// <summary>What stands far off behind a place.</summary>
+        public IReadOnlyList<SpriteRenderer> Far => far;
 
         /// <summary>The birds far off.</summary>
         public IReadOnlyList<SpriteRenderer> Birds => birds;
@@ -403,6 +417,21 @@ namespace Descender.World.TilesV2
                     Swings(set, key, shown);
                     return true;
                 }
+                case "far":
+                {
+                    var entry = Array.Find(set.backdrops, backdrop => backdrop.key == key);
+                    if (entry == null || entry.sprite == null)
+                    {
+                        return false;
+                    }
+                    var material = entry.lit ? set.litMaterial : set.unlitMaterial;
+                    var shown = Shown("Far " + key, entry.sprite, at, entry.order, material);
+                    var layer = shown.gameObject.AddComponent<ParallaxLayer>();
+                    // It stands where it is marked when the camera is there, and is passed slower than the world.
+                    layer.Configure(new Vector2(FarScroll, 1f), at, at, Vector2.zero, 0f);
+                    far.Add(shown);
+                    return true;
+                }
                 case "sway":
                 {
                     var sprite = Picture(set, key);
@@ -463,6 +492,12 @@ namespace Descender.World.TilesV2
                 }
                 case "splash":
                     Splash(at, set.unlitMaterial);
+                    return true;
+                case "pollen":
+                    Pollen(at, set.unlitMaterial);
+                    return true;
+                case "snow":
+                    Snow(at, set.litMaterial);
                     return true;
                 case "drip":
                     Drip(at, set.litMaterial);
@@ -647,6 +682,42 @@ namespace Descender.World.TilesV2
             TilesV2Particles.Fade(system, Color.white, Color.white, 0.15f);
             system.Play();
             return system;
+        }
+
+        // Pollen: motes of gold that hang in warm air, rise a little and wander, catching the light.
+        private void Pollen(Vector2 at, Material material)
+        {
+            var system = System("Pollen", at, material, 40);
+            var main = system.main;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(5f, 9f);
+            main.startSpeed = 0f;
+            main.startColor = new ParticleSystem.MinMaxGradient(PollenGold, PollenPale);
+            main.prewarm = true;
+            var emission = system.emission;
+            emission.rateOverTime = 4.5f;
+            Box(system, 18f, 6f);
+            Velocity(system, new Vector2(-0.08f, 0.04f), new Vector2(0.2f, 0.16f));
+            Wander(system, 0.35f, 0.35f);
+            TilesV2Particles.Fade(system, Color.white, Color.white, 0.35f);
+            system.Play();
+        }
+
+        // Snow: flakes that come down slowly, rocking, from over the view of a cold place.
+        private void Snow(Vector2 at, Material material)
+        {
+            var system = System("Snow", at, material, 90);
+            var main = system.main;
+            main.startLifetime = new ParticleSystem.MinMaxCurve(9f, 13f);
+            main.startSpeed = 0f;
+            main.startColor = new ParticleSystem.MinMaxGradient(Color.white, SnowBlue);
+            main.prewarm = true;
+            var emission = system.emission;
+            emission.rateOverTime = 7f;
+            Box(system, 26f, 1f);
+            Velocity(system, new Vector2(-0.35f, -0.85f), new Vector2(-0.05f, -0.5f));
+            Wander(system, 0.3f, 0.5f);
+            TilesV2Particles.Fade(system, Color.white, Color.white, 0.08f);
+            system.Play();
         }
 
         // Where falling water meets a pool: drops thrown up and out, falling back.
