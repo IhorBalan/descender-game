@@ -224,7 +224,13 @@ in the one light (its shadows turned cool, its lights warm) and gives its
 normal map. Raised so far: the Earth's buildings (cottages, the chapel, the
 windmill and its sails, the crypt, the gateway and the gate's arch, the
 pithead and the winch hut, the colonnade), its posts and rails, the jetty, the
-boat and the mine carts, its animals and its reeds and lilies. Lights, glows,
+boat and the mine carts, its animals and its reeds and lilies; all of
+Paradise's pictures that are things (its towers, roofs, pillars, halls, gate,
+rotunda, angels, bridges, parapets, portals, rooms, garden furniture, fountain,
+swans, flowers and cloud billows); and Eden's (its plants and ivy, wheat,
+boughs, machines, stones and ruins, statues, posts, corbels, inlays, moss and
+cracks). Eden's far views, fog, mist and rays, its glooms, what passes close to
+the eye and its three figures are kept as drawn. Lights, glows,
 reflections, skies and what stands far off are not raised: they have no
 relief.
 
