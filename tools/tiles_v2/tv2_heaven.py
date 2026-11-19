@@ -2084,6 +2084,13 @@ for _key in ("heaven_tower_8x24_s2", "heaven_tower_6x13_s3", "heaven_tower_6x16_
 for _key in ("heaven_tower_8x24_s2", "heaven_tower_6x13_s3", "heaven_tower_6x16_s1", "heaven_tower_8x19_s4", "heaven_tower_4x15", "heaven_tower_4x15_s4", "heaven_tower_4x9_hung", "heaven_tower_8x25_s1", "heaven_tower_6x11", "heaven_tower_4x15_s3", "heaven_tower_4x9", "heaven_tower_6x14_s2", "heaven_tower_8x20_s3", "heaven_hall_west", "heaven_hall_east", "heaven_high_seat", "heaven_gate", "heaven_rotunda", "heaven_bridge_6", "heaven_bridge_7", "heaven_bridge_8", "heaven_bridge_9", "heaven_parapet_27", "heaven_parapet_33", "heaven_span", "heaven_room_lower", "heaven_room_upper", "heaven_room_keep"):
     STYLE[_key] = lambda w, h, k=_key: tv2_style.repainted(FINE[k](), k)
 
+# The statues and columns drawn again: the angels carved anew over their own plans
+# (tv2_style.angel_statue), the pillars turned round over their outlines (tv2_style.turned).
+for _key in ("heaven_angel_0", "heaven_angel_1"):
+    STYLE[_key] = lambda w, h, k=_key: tv2_style.angel_statue(FINE[k](), k, int(k[-1]))
+for _key in ("heaven_pillar_18x2", "heaven_pillar_8x2", "heaven_pillar_12x1"):
+    STYLE[_key] = lambda w, h, k=_key: tv2_style.turned(FINE[k](), k)
+
 FINE = {}
 for _v in range(BLOSSOMS):
     for _frame in range(FRAMES):

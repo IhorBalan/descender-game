@@ -1605,10 +1605,16 @@ def repaint(picture: Image.Image, materials, *, seed="repaint", keep_far: float 
     # The silhouette rounds off a little where it meets the sky.
     edge = np.clip(_distance_inside(solid, 3) / 3, 0, 1)
     s.H = np.where(solid, s.H - (1 - edge) * 1.5, s.H)
+    return _render_matched(s, ramps, keep, lum, a, KEEP)
+
+
+def _render_matched(s: Scene, ramps: dict, keep: np.ndarray, lum: np.ndarray, a: np.ndarray, KEEP: int, **kwargs) -> tuple[Image.Image, Image.Image]:
+    """Renders a scene drawn over a first-style picture, each material as bright overall as
+    the picture had it (its tones shifted by the steps its new light took it off, and lit
+    again), what is kept (`keep`) pasted back as drawn."""
     opts = dict(ao=0.05, ao_radius=3, shadow=0.34, shadow_reach=10, shadow_drop=0.55, gamma=1.2, outline=False, rim=True)
+    opts.update(kwargs)
     out, nm = render(s, ramps, **opts)
-    # Each material as bright overall as the drawing had it: shift its tones by the steps
-    # its new light took it off, and light it again.
     new_lum = np.array(out)[..., :3].astype(float) @ np.array([0.299, 0.587, 0.114]) / 255
     for m, ramp in ramps.items():
         sel = (s.mat == m) & ~keep
@@ -1729,3 +1735,325 @@ def repainted(picture: Image.Image, seed, kinds: dict | None = None) -> tuple[Im
     read from its own colours (`palette_families`; `kinds` names a family's kind by one of its
     colours where the guess would be wrong)."""
     return repaint(picture, palette_families(picture, kinds=kinds), seed=seed, keep_far=18)
+
+
+# --- Turned: columns and pillars drawn round ---------------------------------------------------
+
+
+def turned(picture: Image.Image, seed, *, flutes: float = 4.0, block: float = 0.45) -> tuple[Image.Image, Image.Image]:
+    """Columns and pillars drawn again as turned stone over their own outline: each row of
+    each upright of the drawing becomes a true round section of it, its shaft cut in
+    flutes (`flutes` px apart, at the size it ships), a moulding where the outline steps
+    out or in (a base, a capital, a band), a broken top ragged where the drawing breaks it;
+    a run wider than `block` of the picture (a lintel, a fallen block) is a dressed block,
+    not a round. Lit by the one light into the marble's own ramp, as bright overall as the
+    drawing; its gold and its lights kept as drawn."""
+    a = np.array(picture.convert("RGBA"))
+    h, w = a.shape[:2]
+    families = palette_families(picture)
+    solid = a[..., 3] > 0
+    rgb = a[..., :3].astype(float)
+    lum = rgb @ np.array([0.299, 0.587, 0.114]) / 255
+    colours, owner = [], []
+    for m, (ramp, kind, base) in enumerate(families):
+        for c in _rgb_list(ramp):
+            colours.append(c)
+            owner.append(m)
+    near = np.linalg.norm(rgb[..., None, :] - np.array(colours, dtype=float)[None, None], axis=-1).argmin(-1)
+    fam = np.array(owner)[near]
+    keep = solid & np.isin(fam, [m for m, f in enumerate(families) if f[1] == "keep"])
+    stone = [m for m, f in enumerate(families) if f[1] != "keep"]
+    # One stone for the whole, from all its colours: its range theirs, its base the colour
+    # most of it is.
+    ramp = [c for m in stone for c in _rgb_list(families[m][0])]
+    used = solid & ~keep
+    vals, counts = np.unique(a[used][:, :3], axis=0, return_counts=True)
+    base = "%02x%02x%02x" % tuple(int(v) for v in vals[counts.argmax()]) if len(vals) else families[0][2]
+    ls = [colorsys.rgb_to_hls(*(v / 255 for v in c))[1] for c in ramp]
+    lo_l, hi_l = max(0.03, min(ls) - 0.04), min(0.98, max(ls) + 0.04)
+    lb = colorsys.rgb_to_hls(*(v / 255 for v in hex_rgb(base)))[1]
+    anchor = float(np.clip((lb - lo_l) / max(hi_l - lo_l, 0.05), 0.3, 0.7))
+    sb = colorsys.rgb_to_hls(*(v / 255 for v in hex_rgb(base)))[2]
+    shift = float(np.clip(sb / 0.5, 0.15, 1.0))
+    STONE, KEEP = 0, 1
+    ramps = {STONE: make_ramp(base, 11, cool=0.32 * shift, warm=0.18 * shift, anchor=anchor, low=lo_l, high=hi_l), KEEP: [(0, 0, 0)] * 11}
+    s = Scene(w, h)
+    H = np.full((h, w), -1e9)
+    widths = np.zeros((h, w))
+    for y in range(h):
+        row = solid[y]
+        x = 0
+        while x < w:
+            if not row[x]:
+                x += 1
+                continue
+            x0 = x
+            while x < w and row[x]:
+                x += 1
+            x1 = x  # the run [x0, x1)
+            half = (x1 - x0) / 2
+            cx = (x0 + x1) / 2
+            u = (np.arange(x0, x1) + 0.5 - cx) / half
+            widths[y, x0:x1] = x1 - x0
+            if x1 - x0 > block * w:  # a block: dressed, bevelled at its ends
+                edge = np.minimum(np.arange(x0, x1) + 0.5 - x0, x1 - np.arange(x0, x1) - 0.5)
+                H[y, x0:x1] = 6 + np.clip(edge / 3, 0, 1) * 3
+            else:
+                round_ = np.sqrt(np.clip(1 - u * u, 0, 1)) * half * 0.9
+                H[y, x0:x1] = round_
+    # Flutes on the shaft: where a row is as wide as the rows round it (not a moulding).
+    up, down = np.roll(widths, 1, 0), np.roll(widths, -1, 0)
+    up2, down2 = np.roll(widths, 3, 0), np.roll(widths, -3, 0)
+    shaft = solid & (np.abs(widths - up2) <= 1) & (np.abs(widths - down2) <= 1) & (widths <= block * w)
+    xs = s.xs
+    # The flutes follow the round: their spacing is even round the shaft, so they crowd at its sides.
+    # The angle round the column at each pixel, from its run's middle.
+    run_l = np.zeros((h, w))
+    run_r = np.zeros((h, w))
+    for y in range(h):
+        x = 0
+        while x < w:
+            if not solid[y, x]:
+                x += 1
+                continue
+            x0 = x
+            while x < w and solid[y, x]:
+                x += 1
+            run_l[y, x0:x], run_r[y, x0:x] = x0, x
+    half = np.maximum((run_r - run_l) / 2, 0.5)
+    u = np.clip((xs + 0.5 - (run_l + run_r) / 2) / half, -1, 1)
+    angle = np.arcsin(u)
+    count = np.maximum(np.round(half * np.pi / flutes), 2)
+    flute = 1 - np.abs(np.cos(angle * count))
+    H = np.where(shaft, H - flute * 1.8, H)
+    # A moulding: where the outline steps, a round ring stands out.
+    step = solid & ((np.abs(widths - up) >= 2) | (np.abs(widths - down) >= 2))
+    ring = step | np.roll(step, 1, 0) | np.roll(step, -1, 0)
+    H = np.where(ring & ~shaft, H + 1.2, H)
+    grit = value_noise(w, h, 2.0, (seed, "grit"))
+    H = H + grit * 0.06
+    s.paint(solid & ~keep, H, STONE)
+    s.paint(keep, np.where(keep, H + 0.5, 0), KEEP)
+    return _render_matched(s, ramps, keep, lum, a, KEEP, ao=0.04, ao_radius=2, shadow=0.25, shadow_reach=6)
+
+
+# --- Statues ----------------------------------------------------------------------------------
+
+
+def keeper_statue(width: int, height: int, seed, *, broken=None) -> tuple[Image.Image, Image.Image]:
+    """A keeper in stone on a plinth of two courses of dressed blocks: hooded, a mantle
+    falling from round shoulders over a robe in straight folds that open toward its hem, its
+    forearms out of the mantle to the hands crossed on the pommel of a sword set point down
+    (a ridged blade, a guard with knobs), the face deep in the hood's shadow; moss at its foot
+    and in the lowest folds, the rain's streaks down it. `broken` (points x, y) is the line
+    the statue is snapped off along: above it nothing, along it a fresh rough break.
+    Drawn for a picture 160 by 288; another size is scaled to it."""
+    r = random.Random(f"keeper {seed}")
+    W, H = 160, 288
+    s = Scene(W, H)
+    xs, ys = s.xs, s.ys
+    STONE, PLINTH, MOSS, DARK = 0, 1, 2, 3
+    ramps = {
+        STONE: make_ramp("8a8d9a", 11, cool=0.34, warm=0.16, anchor=0.55, low=0.08, high=0.86),
+        PLINTH: make_ramp("a2a5b0", 10, cool=0.30, warm=0.16, anchor=0.55, low=0.14, high=0.9),
+        MOSS: make_ramp("5a7c34", 9, cool=0.34, warm=0.24, anchor=0.55, low=0.08, high=0.70),
+        DARK: make_ramp("2a2c38", 5, cool=0.2, warm=0.0, anchor=0.7, low=0.03, high=0.2),
+    }
+    cx = 80.0
+    for top, bottom, half in ((248, 268, 58.5), (268, 288, 73)):  # the plinth
+        x = cx - half
+        while x < cx + half:
+            wide = r.randint(18, 30)
+            bx0, bx1 = x, min(x + wide, cx + half)
+            inside = (xs >= bx0) & (xs < bx1) & (ys >= top) & (ys < bottom)
+            edge = np.minimum.reduce([xs - bx0, bx1 - 1 - xs, ys - top, bottom - 1 - ys])
+            s.paint(inside, 4 + np.clip(edge / 2.5, 0, 1) * 4 + value_noise(W, H, 3.0, ("plinth", x)) * 0.4, PLINTH, var=r.choice([-1, 0, 0, 1]))
+            x += wide
+        mould = (ys >= top) & (ys < top + 3) & (np.abs(xs + 0.5 - cx) < half + 2)
+        s.paint(mould, 9 + (top + 3 - ys) * 0.8, PLINTH, force=True)
+    top_y, hem = 78, 250  # the robe: broad shoulders, in at the waist, out to its hem
+    t = np.clip((ys - top_y) / (hem - top_y), 0, 1)
+    half = 33 - 6 * np.sin(np.minimum(t / 0.45, 1) * math.pi / 2) + 12 * np.clip((t - 0.45) / 0.55, 0, 1) ** 1.4
+    half = half * np.minimum(1.0, 0.5 + t * 10)
+    u = (xs + 0.5 - cx) / half
+    fold = np.sin(u * math.pi * (3 + 2 * t) + 0.6) * (0.4 + 2.6 * t)
+    s.paint((np.abs(u) < 1) & (ys >= top_y) & (ys < hem), 10 + np.sqrt(np.clip(1 - u * u, 0, 1)) * half * 0.5 + fold, STONE)
+    mt = np.clip((ys - 80) / 74, 0, 1)  # the mantle, open in front
+    shoulder = np.sqrt(np.clip((ys - 78) / 16, 0, 1))
+    for side in (-1, 1):
+        inner = cx + side * (10 + 8 * mt)
+        outer = cx + side * ((half + 3) * shoulder)
+        lo, hi = np.minimum(inner, outer), np.maximum(inner, outer)
+        mu = (xs + 0.5 - (lo + hi) / 2) / ((hi - lo) / 2 + 0.01)
+        cape = (xs >= lo) & (xs < hi) & (ys >= 78) & (ys < 150 + 10 * np.abs(xs + 0.5 - cx) / 36)
+        s.paint(cape, 18 + np.sqrt(np.clip(1 - mu * mu, 0, 1)) * 8 + np.sin(mu * math.pi * 2.0 + side * 1.3) * 1.8 * mt, STONE)
+    for side in (-1, 1):  # the forearms, a cuff at each wrist
+        s.limb(cx + side * 17, 116, cx + side * 8, 144, 6.5, 5.5, 26, STONE)
+        s.limb(cx + side * 10, 139, cx + side * 8.5, 145, 7, 7, 27, STONE)
+    bt = np.clip((ys - 164) / (246 - 164), 0, 1)  # the sword
+    bw = 9.0 - 6.0 * bt**1.6
+    bu = (xs + 0.5 - cx) / bw
+    s.paint((np.abs(bu) < 1) & (ys >= 164) & (ys < 246), 40 + (1 - np.abs(bu)) * 7, STONE, var=2)
+    s.paint((np.abs(ys - 158) < 4) & (np.abs(xs + 0.5 - cx) < 28), 42 + np.sqrt(np.clip(1 - ((ys - 158) / 4) ** 2, 0, 1)) * 3, STONE, force=True)
+    for kx in (cx - 28, cx + 28):
+        ball(s, kx, 158, 5, 6, 42, 4, STONE)
+    ball(s, cx, 148, 13, 11, 40, 8, STONE)  # the hands over the grip
+    ball(s, cx, 132, 7, 7, 44, 5, STONE)  # the pommel
+    hood = ((xs + 0.5 - cx) / 24) ** 2 + ((ys + 0.5 - 60) / 30) ** 2  # the hood and the face in it
+    peak = (ys < 40) & (np.abs(xs + 0.5 - cx - (ys - 40) * 0.25) < (ys - 26) * 0.5)
+    s.paint((hood <= 1) | peak, 22 + np.sqrt(np.clip(1 - hood, 0, 1)) * 16, STONE)
+    face = ((xs + 0.5 - cx) / 12.5) ** 2 + ((ys + 0.5 - 68) / 17) ** 2
+    s.paint(face <= 1, 22 + np.sqrt(np.clip(1 - face, 0, 1)) * 3, DARK, force=True)
+    s.H = np.where((face > 1) & (face <= 1.5) & (hood <= 1), s.H + 3, s.H)
+    if broken is not None:  # snapped off: nothing above the line, a rough fresh break along it
+        bx, by = zip(*broken)
+        line = np.interp(xs, bx, by) + value_noise(W, H, 2.5, ("break", seed)) * 3
+        figure = s.mat != PLINTH
+        gone = figure & (ys < line)
+        s.mat[gone] = -1
+        s.H[gone] = -1e9
+        fresh = figure & ~gone & (ys < line + 4)
+        s.H = np.where(fresh, s.H + value_noise(W, H, 1.5, ("chips", seed)) * 2.5, s.H)
+        s.var = np.where(fresh, s.var + 1, s.var)
+    damp = value_noise(W, H, 6.0, ("moss", seed))  # wear: moss low down, streaks of rain
+    fine_damp = value_noise(W, H, 2.5, ("moss fine", seed))
+    mossy = (s.mat == STONE) & (ys > 222) & (damp + fine_damp * 0.5 > 0.7 - (ys - 222) / 60)
+    mossy |= (s.mat == PLINTH) & (ys < 254) & (damp + fine_damp * 0.5 > 0.45)
+    s.paint(mossy, s.H + 0.6, MOSS, var=np.where(fine_damp > 0.5, 0, -1), force=True)
+    streak = value_noise(W, H, 4.0, ("streak", seed)) + np.sin(xs * 1.7) * 0.2
+    s.var = np.where((s.mat == STONE) & (streak > 0.62) & (ys > 100), s.var - 1, s.var)
+    picture, normal = render(s, ramps, ao=0.05, ao_radius=5, shadow=0.38, shadow_reach=14, shadow_drop=0.6, lo=0.08, hi=0.95, gamma=1.2)
+    if (width, height) != (W, H):
+        picture, normal = picture.resize((width, height), Image.NEAREST), normal.resize((width, height), Image.NEAREST)
+    return picture, normal
+
+
+def angel_statue(old: Image.Image, seed, variant: int = 0) -> tuple[Image.Image, Image.Image]:
+    """An angel in white marble over the plan of its first-style drawing (`old`, whose wing
+    outline it keeps): a plinth of dressed blocks under a moulded cornice; a robe that falls
+    round from the shoulders in folds that open toward the hem, a gold belt; sleeves from the
+    shoulders to the hands joined at the breast; a veiled head bowed a little, a gold halo
+    over it; and two wings raised over it, each a mass of feathers laid in rows, the small
+    coverts near the shoulder over the long flight feathers that hang along its lower edge,
+    each feather round across with its shaft down it."""
+    a = np.array(old.convert("RGBA"))
+    H_, W_ = a.shape[:2]
+    r = random.Random(f"angel {seed} {variant}")
+    s = Scene(W_, H_)
+    xs, ys = s.xs, s.ys
+    MARBLE, PLINTH, GOLD, SHADE = 0, 1, 2, 3
+    ramps = {
+        MARBLE: make_ramp("d4d2dc", 11, cool=0.30, warm=0.12, anchor=0.6, low=0.30, high=0.98),
+        PLINTH: make_ramp("d0ceda", 10, cool=0.30, warm=0.12, anchor=0.6, low=0.4, high=0.98),
+        GOLD: make_ramp("e0aa2c", 8, cool=0.25, warm=0.2, anchor=0.5, low=0.22, high=0.92),
+        SHADE: make_ramp("6a6880", 5, cool=0.2, warm=0.0, anchor=0.6, low=0.2, high=0.45),
+    }
+    solid = a[..., 3] > 0
+    rows = np.nonzero(solid.any(1))[0]
+    cx = (np.nonzero(solid[rows[-1]])[0].min() + np.nonzero(solid[rows[-1]])[0].max() + 1) / 2
+    # The plinth and its cornice, as the drawing has them.
+    def span(y):
+        x = np.nonzero(solid[min(max(int(y), 0), H_ - 1)])[0]
+        return (x.min(), x.max() + 1) if len(x) else (cx, cx)
+    plinth_top = next(y for y in range(H_ - 1, 0, -1) if span(y)[1] - span(y)[0] > span(H_ - 1)[1] - span(H_ - 1)[0] + 6)
+    cornice_top = plinth_top
+    while span(cornice_top - 1)[1] - span(cornice_top - 1)[0] > span(H_ - 1)[1] - span(H_ - 1)[0] + 6:
+        cornice_top -= 1
+    px0, px1 = span(H_ - 1)
+    y = plinth_top + 1
+    course = 0
+    while y < H_:
+        x = px0 - (course % 2) * 9
+        while x < px1:
+            wide = r.randint(16, 26)
+            bx0, bx1 = max(x, px0), min(x + wide, px1)
+            if bx1 - bx0 > 2:
+                inside = (xs >= bx0) & (xs < bx1) & (ys >= y) & (ys < min(y + 12, H_))
+                edge = np.minimum.reduce([xs - bx0, bx1 - 1 - xs, ys - y, min(y + 12, H_) - 1 - ys])
+                s.paint(inside, 4 + np.clip(edge / 2, 0, 1) * 3, PLINTH, var=r.choice([-1, 0, 0, 1]))
+            x += wide
+        y += 12
+        course += 1
+    c0, c1 = span(cornice_top + 2)
+    corn = (xs >= c0) & (xs < c1) & (ys >= cornice_top) & (ys <= plinth_top)
+    s.paint(corn, 9 + np.sqrt(np.clip(1 - ((ys - (cornice_top + plinth_top) / 2) / max((plinth_top - cornice_top) / 2, 1)) ** 2, 0, 1)) * 3, PLINTH, force=True)
+    # The robe: round, its folds opening toward the hem.
+    shoulder_y, hem_y = 150, cornice_top
+    t = np.clip((ys - shoulder_y) / (hem_y - shoulder_y), 0, 1)
+    halfs = np.array([(span(yy)[1] - span(yy)[0]) / 2 if yy > 290 else 0 for yy in range(H_)])
+    waist = halfs[300] if halfs[300] else 46
+    hem = halfs[hem_y - 4] if halfs[hem_y - 4] else 78
+    profile = np.array([halfs[yy] if halfs[yy] else 0 for yy in range(H_)])  # below the wings, the drawing's own outline
+    profile = np.convolve(np.pad(profile, 6, mode="edge"), np.ones(13) / 13, mode="same")[6:-6]  # smoothed: a pixel's step is no ring
+    half = np.where(ys < 292, 30 + (waist - 30) * np.clip((ys - shoulder_y) / 140, 0, 1), np.maximum(profile[ys.astype(int)], 1))
+    u = (xs + 0.5 - cx) / half
+    fold = np.sin(u * math.pi * (3 + 3 * t) + 0.5) * (0.5 + 3.0 * t)
+    s.paint((np.abs(u) < 1) & (ys >= shoulder_y) & (ys < hem_y), 14 + np.sqrt(np.clip(1 - u * u, 0, 1)) * half * 0.45 + fold, MARBLE)
+    belt = (np.abs(u) < 1.02) & (np.abs(ys - 300) < 2.5)
+    s.paint(belt, 14 + np.sqrt(np.clip(1 - u * u, 0, 1)) * half * 0.45 + 1.5, GOLD, force=True)
+    # The sleeves to the joined hands.
+    for side in (-1, 1):
+        s.limb(cx + side * 26, 166, cx + side * 9, 214, 10, 7, 26, MARBLE)
+        s.limb(cx + side * 12, 205, cx + side * 6, 224, 9, 9, 27, MARBLE)
+    ball(s, cx, 214, 8, 13, 36, 6, MARBLE)  # the hands, palm to palm
+    # The head, a veil over it falling to the shoulders; the halo where the drawing has its gold.
+    ball(s, cx, 132, 16, 19, 28, 13, MARBLE)
+    ball(s, cx, 124, 17, 11, 31, 8, MARBLE)  # the veil over the crown of the head
+    face = ((xs + 0.5 - cx) / 9) ** 2 + ((ys + 0.5 - 138) / 11) ** 2
+    s.H = np.where(face <= 1, s.H - (1 - face) * 2.0, s.H)
+    gold = solid & (a[..., 0] > 190) & (a[..., 2] < 140) & (ys < 150)
+    ring = np.zeros((H_, W_))
+    if gold.any():
+        near = blur(gold.astype(float), 1)
+        ring = near
+    s.paint(gold, 48 + ring * 2, GOLD, force=True)
+    # The wings: a fan of feathers from each shoulder, in bands, each band under the one
+    # nearer the shoulder and its feathers longer; each feather pointing out from the
+    # shoulder, round across, its shaft down it, over the next one along.
+    body = (np.abs(xs + 0.5 - cx) < np.where(ys < 150, 22, 34)) & (ys >= 90)
+    wing = solid & ~body & (ys < 300) & ~gold
+    for side in (-1, 1):
+        mask = wing & ((xs + 0.5 - cx) * side > 0)
+        if not mask.any():
+            continue
+        sx, sy = cx + side * 28, 175.0  # the shoulder the wing grows from
+        wy, wx = np.nonzero(mask)
+        rho = np.hypot(wx - sx, wy - sy)
+        reach = rho.max()
+        band = 0
+        start = 0.0
+        while start < reach:
+            depth = 16 + 14 * (start / reach)  # bands grow longer outward
+            mid = start + depth * 0.55
+            length = depth * 1.45
+            wide = 5.0 + 4.0 * (start / reach)
+            step = wide * 1.3 / max(mid, 1)
+            theta = -math.pi
+            while theta < math.pi:
+                fx, fy = sx + math.cos(theta) * mid, sy + math.sin(theta) * mid
+                ix, iy = int(fx), int(fy)
+                if 0 <= ix < W_ and 0 <= iy < H_ and blur(mask.astype(float), 0)[iy, ix] if False else (0 <= ix < W_ and 0 <= iy < H_ and mask[iy, ix]):
+                    ang = theta + r.uniform(-0.05, 0.05)
+                    ca, sa = math.cos(ang), math.sin(ang)
+                    x0, x1 = max(int(fx - length - 3), 0), min(int(fx + length + 3), W_)
+                    y0, y1 = max(int(fy - length - 3), 0), min(int(fy + length + 3), H_)
+                    px, py = xs[y0:y1, x0:x1] + 0.5 - fx, ys[y0:y1, x0:x1] + 0.5 - fy
+                    along, across = px * ca + py * sa, -px * sa + py * ca
+                    q = (np.maximum(along, 0) / (length * 0.6)) ** 2 + (np.minimum(along, 0) / (length * 0.45)) ** 2 + (across / wide) ** 2
+                    feather = (q <= 1) & mask[y0:y1, x0:x1]
+                    shaft = (np.abs(across) < 0.55) & (along > -length * 0.3)
+                    z = 34 - band * 2.2 + np.sqrt(np.clip(1 - q, 0, 1)) * wide * 0.7 - shaft * 0.6 - np.clip(along / length, 0, 1) * 1.5
+                    s.paint(feather, z, MARBLE, var=-1 if r.random() < 0.15 else 0, at=(y0, x0))
+                theta += step
+            start += depth * 0.62
+            band += 1
+        under = mask & (s.mat < 0)  # what no feather covers: the wing under them
+        s.paint(under, np.full((H_, W_), 8.0), MARBLE, var=-1)
+        # Its leading edge: a rounded band along the wing's top, over the feathers.
+        top = np.where(mask.any(0), mask.argmax(0), H_)
+        below = ys - top[None, :]
+        edge = mask & (below >= 0) & (below < 11)
+        s.paint(edge, 40 + np.sqrt(np.clip(1 - ((below - 5) / 6) ** 2, 0, 1)) * 4, MARBLE, force=True)
+    keep = np.zeros((H_, W_), dtype=bool)
+    s.mat[~solid] = -1  # inside the drawing's outline, always
+    return render(s, ramps, ao=0.05, ao_radius=4, shadow=0.3, shadow_reach=10, shadow_drop=0.6, lo=0.1, hi=0.97, gamma=1.15, outline=False)
