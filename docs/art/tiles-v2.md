@@ -134,6 +134,17 @@ ways:
   petals, round caps and pebbles, spikes that taper to a point, links of
   chain, threads of web. A sprite without a painter there would ship as its
   draft through Scale2x.
+- **The liquids, the ledges and the game's things** are drawn at the size
+  that ships too, in their sheets' places and names
+  (`tv2_liquid.fine_liquid_sheet`, `tv2_terrain.fine_ledge_sheet`,
+  `tv2_terrain.fine_things_sheet`): a surface that is a smooth wave with a
+  line of foam a pixel high (it stands `SURFACE_DROP` draft pixels down, as
+  before), falls in finer streaks; a ledge as thick as before
+  (`LEDGE_THICK` draft pixels, so its collider is the same), its top lit a
+  pixel, its grain, its brackets braced; the veils, seals, slabs, signs,
+  shades, souls, beacons, pennants and relics drawn anew. Only the shading
+  over the ground's edges and the glints on gold, which are flat or a single
+  pixel, still ship as their drafts through Scale2x.
 - **The sky's own layers** are drawn at the size that ships
   (`tv2_backdrop.skies(fine)`, `tv2_backdrop.FINE`, which the generator looks
   in as it does a module's `FINE`): the stars (a star is still one pixel, so

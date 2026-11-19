@@ -1503,5 +1503,305 @@ def fine_prop_sheet(prop: dict) -> tuple[Image.Image, list]:
     return Image.fromarray(sheet, "RGBA"), sprites
 
 
+# --- Ledges and the game's things at the size that ships ----------------------------------
+# The same cells and places as ledge_sheet and things_sheet, each drawn at 32 x 32.
+
+
+def fine_ledge_piece(style: str, piece: str) -> np.ndarray:
+    """One cell of a ledge at the size that ships: a board as thick as the draft's at the
+    top of the cell (its top lit a pixel, its grain, its underside and rim), a bracket
+    under each end it has, braced; a grate's bars with their gaps."""
+    top, board, under, bracket, rim = LEDGE_COLOURS[style]
+    a, put = _fine_cell()
+    ends_left, ends_right = piece in ("single", "left"), piece in ("single", "right")
+    lit = tuple(min(255, int(c * 1.15) + 8) for c in top)
+    for x in range(FINE_TILE):
+        if style == "grate" and x % 8 in (6, 7) and not (ends_left and x < 4) and not (ends_right and x > 27):
+            put(x, 0, rim)
+            put(x, 1, rim)
+            put(x, 6, rim)
+            put(x, 7, rim)
+            continue
+        put(x, 0, lit)
+        put(x, 1, top)
+        grain = (x * 7 + 3) % 11 == 0 or (style == "plank" and (x * 5) % 13 == 0)
+        for y in (2, 3, 4, 5):
+            put(x, y, top if grain and y == 3 else board)
+        put(x, 6, under)
+        put(x, 7, under)
+        put(x, 8, rim)
+        put(x, 9, rim)
+    if style == "plank":
+        for x in (10, 22):  # the joints between the boards
+            for y in range(2, 8):
+                put(x, y, under)
+            put(x + 1, 2, lit)
+    if style == "gilt":
+        for x in range(1, FINE_TILE, 8):
+            put(x, 4, lit)  # a stud of gold
+    if style == "rime":
+        for x in range(0, FINE_TILE, 5):
+            put(x, 0, (255, 255, 255))
+            put(x + 1, 8 + (x % 2), lit)  # an icicle's start
+    for end, x0, step in ((ends_left, 0, 1), (ends_right, FINE_TILE - 1, -1)):
+        if not end:
+            continue
+        for y in range(0, 10):
+            put(x0, y, rim)
+            put(x0 + step, y, rim)
+        for k in range(9):  # a bracket under the end, braced back to the post
+            for w in range(2):
+                put(x0 + step * (2 + k // 2 + w), 10 + k, bracket if w == 0 else rim)
+        for y in range(10, 20):
+            put(x0 + step, y, bracket)
+            put(x0, y, rim)
+    return a
+
+
+def fine_ledge_sheet() -> tuple[Image.Image, list]:
+    """Every ledge at the size that ships: ledge_sheet's rows, pieces and names."""
+    sheet = np.zeros((len(LEDGES) * FINE_TILE, len(LEDGE_PIECES) * FINE_TILE, 4), dtype=np.uint8)
+    sprites = []
+    for row, style in enumerate(LEDGES):
+        for column, piece in enumerate(LEDGE_PIECES):
+            sheet[row * FINE_TILE : (row + 1) * FINE_TILE, column * FINE_TILE : (column + 1) * FINE_TILE] = fine_ledge_piece(style, piece)
+            sprites.append((f"tv2_ledge_{style}_{piece}", column, row))
+    return Image.fromarray(sheet, "RGBA"), sprites
+
+
+def fine_thing(name: str) -> np.ndarray:
+    """A thing of the game at the size that ships (see `thing`)."""
+    S = FINE_TILE
+    a = np.zeros((S, S, 4), dtype=np.uint8)
+    r = rng("fine thing", name)
+
+    def put(x, y, colour, alpha=255):
+        x, y = int(round(x)), int(round(y))
+        if 0 <= x < S and 0 <= y < S:
+            a[y, x] = (*colour[:3], alpha)
+
+    if name.startswith("barrier"):
+        # A veil of light: bright threads that shift between the two frames; tiles up and down.
+        phase = int(name[-1])
+        for x in range(S):
+            strength = (0.55, 0.9, 0.4, 1.0, 0.6, 0.85, 0.45, 0.95)[(x // 2 + 3 * phase) % 8]
+            for y in range(S):
+                wave = 0.75 + 0.25 * np.sin((y / 2 + phase * 4 + x / 2 * 3) * np.pi / 4)
+                if 4 <= x <= 27:
+                    a[y, x] = (255, 244, 190, int(200 * strength * wave))
+        for x in (2, 3, 28, 29):
+            a[:, x] = (255, 255, 235, 235 if x in (3, 28) else 160)
+    elif name == "seal_bolt":
+        dark, mid, rim, rune = hexes("14101f", "241c38", "0a0812", "b9a6ff")
+        a[:, :, :3] = mid
+        a[:, :, 3] = 255
+        for _ in range(60):
+            a[r.randrange(S), r.randrange(S), :3] = dark
+        a[:, 0:2, :3] = rim
+        a[:, 30:32, :3] = rim
+        for y in range(6, 24):  # a rune of light: a ring on a stem, a bar across its foot
+            for x in range(10, 22):
+                d = math.hypot(x + 0.5 - 16, y + 0.5 - 10)
+                if abs(d - 4) < 1.1 and y < 15 or (abs(x + 0.5 - 16) < 1.1 and 14 <= y < 21) or (21 <= y < 23 and 11 <= x < 21):
+                    a[y, x, :3] = rune
+        a[9, 14, :3] = (240, 236, 255)
+    elif name == "seal_slam":
+        ramp = PALETTES["stone"]["ramp"]
+        a[:, :, :3] = ramp[3]
+        a[:, :, 3] = 255
+        a[0, :, :3] = ramp[5]
+        a[1, :, :3] = ramp[4]
+        a[30:32, :, :3] = ramp[1]
+        for _ in range(40):
+            a[r.randrange(S), r.randrange(S), :3] = ramp[2]
+        x = 15.0
+        for y in range(S):  # the crack through it
+            put(x, y, PALETTES["stone"]["outline"])
+            put(x + 1, y, ramp[1])
+            if y % 6 == 2:
+                side = r.choice([-1, 1])
+                for k in range(1, 4):
+                    put(x + side * (k + 1), y + k, ramp[1])
+            x = max(6, min(25, x + r.uniform(-0.7, 0.7)))
+    elif name == "crack":
+        x = 12.0
+        for y in range(S):
+            put(x, y, (0, 0, 0), 120)
+            if y % 8 == 4:
+                for k in range(1, 4):
+                    put(x + r.choice([-1, 1]) * k, y + k, (0, 0, 0), 90)
+            x = max(4, min(27, x + r.uniform(-0.6, 0.6)))
+        for k in range(10):
+            put(18 + k, 18 + k // 2, (0, 0, 0), 100)
+    elif name in ("crumble", "blink"):
+        ramp = PALETTES["stone" if name == "crumble" else "slate"]["ramp"]
+        rim = PALETTES["stone" if name == "crumble" else "slate"]["outline"]
+        for y in range(2, 22):
+            for x in range(S):
+                k = 5 if y < 4 else 2 if y >= 18 else 3 if (x * 5 + y * 3) % 13 else 4
+                a[y, x] = (*ramp[k], 255)
+        a[0:2, :] = (*rim, 255)
+        a[22:24, :] = (*rim, 255)
+        if name == "crumble":
+            for (x0, y0), (x1, y1) in (((8, 4), (14, 14)), ((22, 6), (20, 12)), ((20, 12), (25, 17))):
+                for k in range(21):
+                    t = k / 20
+                    put(x0 + (x1 - x0) * t, y0 + (y1 - y0) * t, rim)
+                    put(x0 + (x1 - x0) * t + 1, y0 + (y1 - y0) * t, ramp[2])
+        else:
+            for y in range(6, 16):
+                for x in range(11, 21):
+                    d = math.hypot(x + 0.5 - 16, y + 0.5 - 11)
+                    if abs(d - 3.6) < 1.0:
+                        a[y, x] = (200, 190, 255, 255)
+            put(15, 10, (240, 236, 255))
+    elif name == "post":
+        wood, lit, rim, ink = hexes("93603d", "c6915e", "2a1810", "452a1c")
+        for y in range(16, 32):
+            for x, c in ((14, lit), (15, lit), (16, wood), (17, wood)):
+                a[y, x] = (*c, 255)
+        for y in range(4, 16):
+            for x in range(4, 28):
+                c = rim if y in (4, 15) or x in (4, 27) else lit if y in (5, 6) else wood
+                if c is wood and (x * 3 + y) % 9 == 0:
+                    c = tuple(int(v * 0.9) for v in wood)  # the board's grain
+                a[y, x] = (*c, 255)
+        for x0, x1, y in ((8, 14, 8), (16, 20, 8), (22, 24, 8), (8, 11, 12), (14, 22, 12)):
+            for x in range(x0, x1):
+                a[y, x] = (*ink, 255)
+                a[y + 1, x] = (*ink, 255)
+    elif name == "tablet":
+        ramp, rim = PALETTES["stone"]["ramp"], PALETTES["stone"]["outline"]
+        for y in range(4, 32):
+            for x in range(8, 24):
+                if y < 7 and math.hypot(x + 0.5 - 16, (y - 7) * 1.4) > 8.2:
+                    continue
+                a[y, x] = (*(ramp[5] if x < 10 else ramp[2] if x > 21 else ramp[4] if y < 6 else ramp[3]), 255)
+        for y in (10, 14, 18, 22):
+            for x in range(12, 20 if y != 22 else 16):
+                a[y, x] = (*rim, 255)
+                a[y + 1, x] = (*ramp[5], 255)
+    elif name == "shade":
+        pale, mid, eye = (214, 224, 240), (170, 184, 210), (40, 44, 70)
+        for y in range(4, 32):
+            t = (y - 4) / 28
+            half = 6 if y < 10 else 8 if y < 24 else 8 - (y - 23) * 0.5
+            if y < 10:
+                half = 4 + 2 * math.sin((y - 4) / 6 * math.pi / 2)
+            for x in range(int(16 - half), int(16 + half)):
+                if y >= 26 and (x + y) % 4 == 0:
+                    continue
+                a[y, x] = (*(pale if x < 16 else mid), int(235 if y < 24 else 235 - (y - 23) * 22))
+        for x, y in ((12, 10), (13, 10), (12, 11), (13, 11), (18, 10), (19, 10), (18, 11), (19, 11)):
+            a[y, x] = (*eye, 255)
+    elif name.startswith("flag"):
+        deep, mid, lit, trim = hexes("2648a8", "3b6fdc", "86b0f8", "ffe27a")
+        half, frame = name[5], int(name[-1])
+        for x in range(S):
+            along = x / 2 + (0 if half == "a" else TILE)
+            lift = 2.2 * np.sin((along / 5.0) - frame * np.pi / 2) * along / (2 * TILE)
+            thick = max(4, int(round((9 - along * 7 / (2 * TILE)) * 2)))  # it narrows to its point
+            y0 = int(round((3 + lift) * 2))
+            for k in range(thick):
+                y = y0 + k
+                if 0 <= y < S:
+                    edge = k in (0, thick - 1) and along < 26
+                    c = trim if edge else lit if (along + frame * 2) % 8 < 3 else mid if k % 6 else deep
+                    a[y, x] = (*c, 255)
+    elif name.startswith("bird"):
+        white, grey = (255, 255, 255), (214, 224, 240)
+        up = name.endswith("0")
+        for dx in range(1, 12):
+            d = dx / 2
+            y = 16 - (d * 3 / 5 if up else -d / 3) * 2 + (0 if up else 2)
+            for x in (15 - dx, 16 + dx):
+                put(x, y, white)
+                if dx < 10:
+                    put(x, y + 1, grey, 200)
+        put(15, 16 + (0 if up else 2), white)
+        put(16, 16 + (0 if up else 2), white)
+    elif name == "soul":
+        white, gold, warm, eye = (255, 252, 236), (255, 220, 120), (255, 238, 180), (150, 110, 40)
+        for y in range(8, 32):
+            half = 3 + 1.5 * min(1.0, (y - 8) / 4) if y < 14 else 8 if y < 26 else 8 - (y - 25) * 0.6
+            for x in range(int(16 - half), int(16 + half)):
+                if y >= 28 and (x + y) % 4 == 0:
+                    continue
+                a[y, x] = (*(white if x < 16 else warm), int(240 if y < 26 else 240 - (y - 25) * 34))
+        for k in range(64):  # a ring of gold over its head
+            ang = k / 64 * 2 * math.pi
+            put(16 + math.cos(ang) * 6, 3.5 + math.sin(ang) * 1.8, gold)
+        for x, y in ((12, 10), (13, 10), (18, 10), (19, 10)):
+            a[y, x] = (*eye, 255)
+    elif name.startswith("beacon"):
+        gold, lit, dark = hexes("dca922", "fff3a8", "8a5e0c")
+        for y in range(22, 32):
+            for x, c in ((14, lit), (15, gold), (16, dark), (17, dark)):
+                a[y, x] = (*c, 255)
+        for x in range(10, 22):
+            a[30, x] = (*(gold if x < 17 else dark), 255)
+            a[31, x] = (*dark, 255)
+        for y in range(18, 23):  # the bowl
+            reach = 10 - (y - 18) * 1.4
+            for x in range(int(16 - reach), int(16 + reach)):
+                a[y, x] = (*(lit if y == 18 else gold if x < 17 else dark), 255)
+        frame = int(name[-1])
+        if frame:
+            tall = 9 if frame == 1 else 11
+            for k in range(tall):
+                t = k / tall
+                half = (1 - t) ** 0.7 * 5 + 0.5
+                sway = (1 if frame == 1 else -1) * t * t * 1.5
+                for x in range(int(16 - half + sway), int(16 + half + sway) + 1):
+                    core = abs(x + 0.5 - 16 - sway) < half * 0.45
+                    put(x, 17 - k, (255, 255, 240) if core and t < 0.6 else (255, 226, 130) if not core else (255, 250, 214))
+    elif name == "sanctum":
+        gold, lit, dark = hexes("dca922", "fff3a8", "8a5e0c")
+        for y in range(S):
+            for x in range(S):
+                a[y, x] = (255, 244, 200, 70 + 30 * ((x + y) % 6 == 0))
+        for x0 in (2, 14, 26):  # the bars, each round: lit, gold, in shade
+            for x, c in ((x0, lit), (x0 + 1, lit), (x0 + 2, gold), (x0 + 3, dark)):
+                a[:, x] = (*c, 255)
+        for y in (0, 16):
+            a[y, :] = (*lit, 255)
+            a[y + 1, :] = (*gold, 255)
+            a[y + 2, :] = (*dark, 255)
+    elif name == "wind":
+        for x in range(6, 26):
+            a[16, x] = (235, 240, 255, 60 + 8 * min(x - 6, 25 - x))
+            if 10 <= x < 22:
+                a[15, x + 2] = (235, 240, 255, 30 + 6 * min(x - 10, 21 - x))
+    else:
+        # A relic: a small gold star that turns its glint.
+        gold, lit, white, rim = hexes("f2c93c", "fde06a", "ffffff", "8a5e0c")
+        for y in range(4, 28):
+            for x in range(4, 28):
+                d = abs(x + 0.5 - 16) + abs(y + 0.5 - 16)
+                star = d <= 9.5 or (abs(x + 0.5 - 16) < 1.5 and abs(y + 0.5 - 16) < 12) or (abs(y + 0.5 - 16) < 1.5 and abs(x + 0.5 - 16) < 12)
+                if star:
+                    a[y, x] = (*(lit if x + y < 31 else gold), 255)
+        solid = a[..., 3] > 0
+        edge = np.zeros_like(solid)
+        for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+            edge |= shift(solid, dx, dy, False)
+        edge &= ~solid
+        a[edge] = (*rim, 255)
+        gx, gy = (12, 12) if name.endswith("0") else (19, 12)
+        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1), (0, 2)):
+            put(gx + dx, gy + dy, white)
+    return a
+
+
+def fine_things_sheet() -> tuple[Image.Image, list]:
+    """The game's things at the size that ships: things_sheet's places and names."""
+    sheet = np.zeros((FINE_TILE, len(THINGS) * FINE_TILE, 4), dtype=np.uint8)
+    sprites = []
+    for i, name in enumerate(THINGS):
+        sheet[:, i * FINE_TILE : (i + 1) * FINE_TILE] = fine_thing(name)
+        sprites.append((f"tv2_thing_{name}", i, 0))
+    return Image.fromarray(sheet, "RGBA"), sprites
+
+
 def torch_sheet() -> tuple[Image.Image, list]:
     return prop_sheet(next(p for p in PROPS if p["key"] == "torch"))
