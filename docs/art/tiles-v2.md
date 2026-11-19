@@ -107,6 +107,18 @@ ways:
   place its draft has in its cell, its flame a tear in three heats that
   leans as it sways. A lamp without a painter there (the campfire, the
   glowshroom, the mine lamp) is its draft through Scale2x.
+- **The sky's own layers** are drawn at the size that ships
+  (`tv2_backdrop.skies(fine)`, `tv2_backdrop.FINE`, which the generator looks
+  in as it does a module's `FINE`): the stars (a star is still one pixel, so
+  they are finer), the sun and the moon (true rounds, round craters), the
+  clouds, the
+  islands far and near (a rim a pixel high, a thread of water a pixel wide),
+  the shafts of light, the seas and banks of cloud, the country of cloud and
+  the castles on it (`_mass`, `_building` take `fine`), the cirrus, the
+  glory and the rainbow; and the rock behind the caves and its ragged top
+  (`cave_rock` takes `fine`: the cracks between the boulders narrower).
+  What stands far off in the caves, the Earth's own cave rock and its hills
+  are still their drafts through Scale2x.
 
 `gen_tiles_v2.py --metas` writes every picture's `.meta` again (rects, pivots
 and collider shapes are in the art's pixels); a picture's GUID is made from its

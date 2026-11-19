@@ -344,7 +344,7 @@ def generate(out: str):
         sprites[name] = image.crop((x, image.height - y - h, x + w, image.height - y))
     for name, draft in tv2_backdrop.backdrops().items():
         # Drawn at the size it ships where a picture has that (a module's FINE); else its draft, doubled.
-        anew = next((module.FINE[name] for module in (tv2_earth, tv2_heaven, tv2_eden) if name in getattr(module, "FINE", {})), None)
+        anew = next((module.FINE[name] for module in (tv2_backdrop, tv2_earth, tv2_heaven, tv2_eden) if name in getattr(module, "FINE", {})), None)
         image = anew() if anew else scale2x(draft)
         assert image.size == (draft.width * DENSITY, draft.height * DENSITY), (name, image.size, draft.size)
         path = os.path.join(out, name + ".png")
