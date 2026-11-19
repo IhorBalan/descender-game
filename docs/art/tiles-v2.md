@@ -72,7 +72,11 @@ ways:
     takes `fine`, and draws the same thing with what the finer pixel can say:
     fibres and a sheath at each joint, the timber's grain and the lay of its
     rope, a moulding on each course, each link of a chain, roots that fork,
-    a leaf that is a leaf).
+    a leaf that is a leaf); and the Lantern Tree's trunk and roots, the
+    Crown Vine's plait, the twisting vines, the boughs and the wheat. A part
+    of such a picture that is still drawn on the draft (a wall of dressed
+    stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
+    sizes the art ships at and no other.
     Each is the draft's size times `DENSITY` exactly, so nothing that stands
     it has to know.
 

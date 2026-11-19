@@ -40,6 +40,17 @@ ROBE = ramp_of("4a4a66 9a98b0 c8c6d8 f0eff6")
 TINTS = {"green": LEAF, "teal": TEAL, "pale": PALE, "frost": FROST}
 
 
+def doubled(a: np.ndarray, fine: int) -> np.ndarray:
+    """A part of a picture that is still drawn on the draft (a wall of dressed stone, a
+    plinth), at the size the picture is being drawn at: itself at 1, through Scale2x at 2.
+    No other size is a size the art ships at."""
+    if fine == 1:
+        return a.copy()
+    if fine == 2:
+        return scale2x_rgba(a)
+    raise ValueError(f"a draft part can be drawn at 1 or 2 times its size, not {fine}")
+
+
 def leaf(variant: int, tall: int | None = None, fine: int = 1) -> Image.Image:
     """A great curled leaf of the Waking Hollow, taller than a house: a stem that rises
     and bends over, a blade either side of it that narrows to a curled tip, lit on the
@@ -161,72 +172,114 @@ def teal_tree(variant: int, sway: int = 0, fine: int = 1) -> Image.Image:
     return tree(variant + 20, TEAL, tall=(150, 176, 132)[variant % 3], sway=sway, fine=fine)
 
 
-def vine_trunk(variant: int) -> Image.Image:
+def vine_trunk(variant: int, fine: int = 1) -> Image.Image:
     """A trunk of the Great Vines: three stems as thick as a man twisted about one another,
-    lit on the left, leaves at the turns, taller than two screens."""
+    lit on the left, leaves at the turns, taller than two screens. `fine` draws it that
+    many times the draft's size: a line of light down each stem, finer grooves, a ring
+    where it has grown a length."""
     r = rng("eden vine", variant)
-    tall = (22, 28, 18)[variant % 3] * T
-    W = 6 * T
+    f = fine
+    tall0 = (22, 28, 18)[variant % 3] * T
+    W0 = 6 * T
+    W, tall = W0 * f, tall0 * f
     art = Art(W, tall)
     for strand in range(3):
         phase = strand * 2.1 + variant
         for y in range(tall):
-            cx = W / 2 + math.sin(y / 23.0 + phase) * 22
-            depth = math.cos(y / 23.0 + phase)  # behind or before the others
-            half = 9 + depth * 2.5
-            for x in range(int(cx - half), int(cx + half)):
-                off = (x + 0.5 - cx) / half
+            yd = y / f
+            mid = (W0 / 2 + math.sin(yd / 23.0 + phase) * 22) * f
+            depth = math.cos(yd / 23.0 + phase)  # behind or before the others
+            half = (9 + depth * 2.5) * f
+            ring = f > 1 and int(yd + strand * 9) % 31 == 0
+            for x in range(int(mid - half), int(mid + half)):
+                off = (x + 0.5 - mid) / half
                 groove = (x * 2 + y // 2) % 9 == 0
                 k = 4 + round_shift(off) + (1 if depth > 0.3 else -1 if depth < -0.4 else 0) - (1 if groove else 0)
+                if f > 1 and -0.5 < off < -0.38 and not groove:
+                    k += 1  # the line of light down it
+                if ring:
+                    k -= 1
                 if depth > -0.2 or not art.has(x, y):
                     art.put(x, y, tone(BARK, k))
-    for _ in range(tall // 26):
-        y = r.randint(20, tall - 20)
-        x = W / 2 + r.choice([-1, 1]) * r.uniform(14, 30)
-        bundle(art, x, y, r.uniform(9, 14), r.uniform(7, 10), LEAF, r, ("vine", variant, y), gaps=False)
-    art.outline(BARK[0])
+    for _ in range(tall0 // 26):
+        y = r.randint(20, tall0 - 20)
+        x = W0 / 2 + r.choice([-1, 1]) * r.uniform(14, 30)
+        bundle(art, x * f, y * f, r.uniform(9, 14) * f, r.uniform(7, 10) * f, LEAF, r, ("vine", variant, y), gaps=False)
+    for _ in range(f):
+        art.outline(BARK[0])
     return art.image()
 
 
-def wheat(variant: int) -> Image.Image:
+def wheat(variant: int, fine: int = 1) -> Image.Image:
     """Wheat, standing in rows that are counted: a close stand of stalks, the ears heavy
     along its top, one a little over the next, a stalk or two that has got above the
-    rest; a tally post at the row's end."""
+    rest; a tally post at the row's end. `fine` draws it that many times the draft's
+    size: stalk by stalk, each ear with its grains to either side and its beard."""
     r = rng("eden wheat", variant)
-    W, H = 6 * T, 2 * T + 6
+    f = fine
+    W0, H0 = 6 * T, 2 * T + 6
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
-    last = W - (8 if variant < 2 else 2)
+    last = (W0 - (8 if variant < 2 else 2)) * f
     swell = (variant - 2) * 3 if variant >= 2 else 0
-    tops = {}
-    for x in range(2, last):
-        tops[x] = H - 24 - swell - (int(3 * math.sin(x * 0.2)) if variant >= 2 else 0) - round(1.5 * math.sin(x * 0.9 + variant))
-        for y in range(tops[x] + 5, H):  # the stand: stalk by stalk, darker toward the ground
-            deep = (y - tops[x]) / 24
+
+    def top_at(x: int) -> int:
+        xd = x / f
+        rise = 24 + swell + (3 * math.sin(xd * 0.2) if variant >= 2 else 0) + 1.5 * math.sin(xd * 0.9 + variant)
+        return int(round((H0 - rise) * f))
+
+    for x in range(2 * f, last):
+        top = top_at(x)
+        for y in range(top + 5 * f, H):  # the stand: stalk by stalk, darker toward the ground
+            deep = (y - top) / (24 * f)
             art.put(x, y, tone(WHEAT, (3 if x % 3 else 2) - (1 if deep > 0.8 else 0) + (1 if x % 3 == 1 and deep < 0.5 else 0)))
-    x = 3
-    while x < last - 2:  # the ears: three wide, grains down them, a dark seam between two
-        top = tops[x] - r.randint(0, 3)
-        for i in range(8):
-            wide = 0 if i == 0 else 1
+    x = 3 * f
+    while x < last - 2 * f:  # the ears: grains down them to either side, a dark seam between two
+        top = top_at(x) - r.randint(0, 3 * f)
+        if f == 1:
+            for i in range(8):
+                wide = 0 if i == 0 else 1
+                for d in range(-wide, wide + 1):
+                    k = 6 if (d < 0 or i < 2) and (i + d) % 2 == 0 else 5 if d <= 0 else 4
+                    art.put(x + d, top + i, tone(WHEAT, k if i < 7 else 3))
+            art.put(x, top - 1, tone(WHEAT, 6))
+            art.put(x + (1 if x % 2 else -1), top - 2, tone(WHEAT, 5))
+            x += 4 if r.random() < 0.8 else 3
+            continue
+        lean = r.choice([-1, 0, 0, 1])
+        for i in range(14):
+            wide = (0, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0)[i]
+            cx = x + (lean * (13 - i)) // 7
             for d in range(-wide, wide + 1):
-                k = 6 if (d < 0 or i < 2) and (i + d) % 2 == 0 else 5 if d <= 0 else 4
-                art.put(x + d, top + i, tone(WHEAT, k if i < 7 else 3))
-        art.put(x, top - 1, tone(WHEAT, 6))
-        art.put(x + (1 if x % 2 else -1), top - 2, tone(WHEAT, 5))
-        x += 4 if r.random() < 0.8 else 3
-    for _ in range(3):  # one that has got above the rest
-        x = r.randint(6, last - 6)
-        top = tops[x] - r.randint(6, 9)
+                grain = (i + abs(d)) % 3  # a grain, the cleft under it, the next
+                k = (6 if d < 0 else 5) if grain == 0 else 5 if grain == 1 and d <= 0 else 4 if grain == 1 else 3
+                art.put(cx + d, top + i, tone(WHEAT, k if i < 13 else 2))
+            if i % 3 == 0 and 0 < i < 12:  # its beard, a hair to either side
+                art.put(cx - wide - 1, top + i - 1, tone(WHEAT, 6))
+                art.put(cx + wide + 1, top + i - 1, tone(WHEAT, 5))
+        for i in range(1, 4):
+            art.put(x + (lean * 13) // 7 + (i // 2) * (1 if x % 2 else -1), top - i, tone(WHEAT, 6))
+        x += r.choice([6, 6, 7, 5])
+    for _ in range(3 * f):  # one that has got above the rest
+        x = r.randint(6 * f, last - 6 * f)
+        base = top_at(x)
+        top = base - r.randint(6, 9) * f
         lean = r.choice([-1, 1])
-        for y in range(top, tops[x] + 2):
-            art.put(x + lean * ((tops[x] - y) // 4), y, tone(WHEAT, 4) if y > top + 5 else tone(WHEAT, 6 if (y - top) % 2 == 0 else 5))
+        for y in range(top, base + 2 * f):
+            art.put(x + lean * ((base - y) // (4 * f)), y, tone(WHEAT, 4) if y > top + 5 * f else tone(WHEAT, 6 if (y - top) % 2 == 0 else 5))
+            if f > 1 and y <= top + 5 * f and (y - top) % 2 == 0:
+                art.put(x + lean * ((base - y) // (4 * f)) + 1, y, tone(WHEAT, 5))
     if variant >= 2:  # the middle of a row: no post
         return art.image()
-    for y in range(H - 22, H):  # the post, and the tally cut in it
-        art.put(W - 5, y, MARBLE[5])
-        art.put(W - 4, y, MARBLE[3])
+    for y in range(H - 22 * f, H):  # the post, and the tally cut in it
+        for d in range(f):
+            art.put(W - 5 * f + d, y, MARBLE[5] if d == 0 or f == 1 else MARBLE[4])
+            art.put(W - 4 * f + d, y, MARBLE[3])
     for n in range(4 + variant):
-        art.put(W - 5, H - 20 + n * 3, MARBLE[1])
+        for d in range(f):
+            art.put(W - 5 * f + d, H - 20 * f + n * 3 * f, MARBLE[1])
+            if f > 1:
+                art.put(W - 5 * f + d, H - 20 * f + n * 3 * f + 1, MARBLE[6])
     return art.image()
 
 
@@ -248,7 +301,7 @@ def sundial(fine: int = 1) -> Image.Image:
         plinth.put(x, H0 - 1.5 * T + 1, MARBLE[3])
     W, H = W0 * f, H0 * f
     art = Art(W, H)
-    art.a = scale2x_rgba(plinth.a) if f == 2 else plinth.a.copy()
+    art.a = doubled(plinth.a, f)
     grain = noise("eden sundial grain", W, H, 2.6 * f)
     stain = noise("eden sundial stain", W, H, 17.0 * f)
     pores = noise("eden sundial pores", W, H, 1.8) if f > 1 else None
@@ -331,7 +384,7 @@ def wheel(fine: int = 1) -> Image.Image:
                 wall.put(x, H0 - 5 - row, GOLD[4])
     W, H = W0 * f, H0 * f
     art = Art(W, H)
-    art.a = scale2x_rgba(wall.a) if f == 2 else wall.a.copy()
+    art.a = doubled(wall.a, f)
     if f > 1:  # the wall's own grain: a stone a shade down here and there, a pixel at a time
         pores = noise("eden wheel wall", W, H, 2.0)
         worn = pores > 0.78
@@ -359,7 +412,7 @@ def wheel(fine: int = 1) -> Image.Image:
     for n in range(30):  # the gathered, walking the rim
         ang = n / 30 * 2 * math.pi
         walker(walkers, cx + math.cos(ang) * (rad + 15), cy + math.sin(ang) * (rad + 15) + 6, MARBLE, SHADOWED[1], step=n % 2)
-    figures = scale2x_rgba(walkers.a) if f == 2 else walkers.a
+    figures = doubled(walkers.a, f)
     shown = figures[..., 3] > 0
     art.a[shown] = figures[shown]
     return art.image()
@@ -630,28 +683,34 @@ def figure(who: str) -> Image.Image:
     return art.image()
 
 
-def bough(mirrored: bool, leaves=None) -> Image.Image:
+def bough(mirrored: bool, leaves=None, fine: int = 1) -> Image.Image:
     """A bough of the Lantern Tree: a limb as thick as a trunk reaching out from it, lesser
-    limbs up from that, leaves of teal in heaps along it."""
+    limbs up from that, leaves of teal in heaps along it. `fine` draws it that many times
+    the draft's size: the bark's furrows along the limb, leaf by leaf in its heaps."""
     r = rng("eden bough")
     leaves = leaves or TEAL
-    W, H = 16 * T, 8 * T
-    art = Art(W, H)
-    for i in range(W - 10):
-        t = i / (W - 10)
-        y = H - 22 - math.sin(t * 2.4) * 34
-        half = 9 - t * 6
+    f = fine
+    W0, H0 = 16 * T, 8 * T
+    art = Art(W0 * f, H0 * f)
+    for i in range((W0 - 10) * f):
+        t = i / ((W0 - 10) * f)
+        y = (H0 - 22 - math.sin(t * 2.4) * 34) * f
+        half = (9 - t * 6) * f
         for d in range(int(-half), int(half) + 1):
-            art.put(i, y + d, tone(BARK, 5 - round(d / max(half, 1) * 2)))
+            k = 5 - round(d / max(half, 1) * 2)
+            if f > 1 and (i + d * 3) % 13 == 0 and abs(d) < half - 1:
+                k -= 1  # a furrow of the bark, along it
+            art.put(i, y + d, tone(BARK, k))
     for n in range(5):
         x = 40 + n * 42
-        y = H - 22 - math.sin(x / (W - 10) * 2.4) * 34
-        branch(art, x, y, x + 14, y - 30, 3, BARK)
+        y = H0 - 22 - math.sin(x / (W0 - 10) * 2.4) * 34
+        branch(art, x * f, y * f, (x + 14) * f, (y - 30) * f, 3 * f, BARK)
     for n in range(9):
         x = 26 + n * 26 + r.uniform(-6, 6)
-        y = H - 40 - math.sin(x / (W - 10) * 2.4) * 34 + r.uniform(-18, 6)
-        bundle(art, x, y, r.uniform(16, 24), r.uniform(12, 17), leaves, r, ("bough", n), gaps=False)
-    art.outline(leaves[0])
+        y = H0 - 40 - math.sin(x / (W0 - 10) * 2.4) * 34 + r.uniform(-18, 6)
+        bundle(art, x * f, y * f, r.uniform(16, 24) * f, r.uniform(12, 17) * f, leaves, r, ("bough", n), gaps=False)
+    for _ in range(f):
+        art.outline(leaves[0])
     image = art.image()
     return image.transpose(Image.FLIP_LEFT_RIGHT) if mirrored else image
 
@@ -1878,7 +1937,7 @@ def post(kind: int, fine: int = 1) -> Image.Image:
             art.put(cx + 6 * f, top + 4 * f + i, tone(WHEAT, 4))
             if f > 1:
                 art.put(cx + 6 * f + 1, top + 4 * f + i, tone(WHEAT, 3 if i % 3 else 5))
-        stone = scale2x_rgba(base.a) if f == 2 else base.a
+        stone = doubled(base.a, f)
         shown = stone[..., 3] > 0
         art.a[shown] = stone[shown]
         outline = WOOD[0]
@@ -1887,102 +1946,125 @@ def post(kind: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def lantern_trunk() -> Image.Image:
+def lantern_trunk(fine: int = 1) -> Image.Image:
     """A length of the Lantern Tree's trunk, a storey of it: six tiles through and never
     straight, bark in ridges that wander up it, a knot, a hollow with one of its fruits
     alight in it, the glow of its sap in a crack here and there. It repeats upward: the
-    tree is as tall as its room."""
+    tree is as tall as its room. `fine` draws it that many times the draft's size: a
+    hairline furrow between two ridges, the rings of a knot, finer moss."""
     r = rng("eden lantern trunk")
-    W, H = 8 * T, 12 * T
+    f = fine
+    W0, H0 = 8 * T, 12 * T
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
-    cx = W / 2
-    knots = [(cx - 22, H * 0.72, 7, 10), (cx + 14, H * 0.2, 5, 7)]
-    hollow = (cx + 6, H * 0.46, 9, 15)
+    cx = W0 / 2
+    knots = [(cx - 22, H0 * 0.72, 7, 10), (cx + 14, H0 * 0.2, 5, 7)]
+    hx, hy, hrx, hry = cx + 6, H0 * 0.46, 9, 15
     for y in range(H):
-        a = 2 * math.pi * y / H
+        yd = y / f
+        a = 2 * math.pi * yd / H0
         left = 3 * T + 5 * math.sin(a + 0.6) + 3 * math.sin(3 * a + 2.0)
         right = 3 * T + 5 * math.sin(a + 3.9) + 3 * math.sin(2 * a + 0.4)
-        for x in range(int(cx - left), int(cx + right)):
-            off = (x + 0.5 - cx) / (left if x < cx else right)
-            wander = 5 * math.sin(a * 2 + x * 0.05) + 3 * math.sin(a * 5 + x * 0.11)
-            ridge = math.sin((x + wander) * 0.42)
+        for x in range(int((cx - left) * f), int((cx + right) * f)):
+            xd = (x + 0.5) / f
+            off = (xd - cx) / (left if xd < cx else right)
+            wander = 5 * math.sin(a * 2 + xd * 0.05) + 3 * math.sin(a * 5 + xd * 0.11)
+            ridge = math.sin((xd + wander) * 0.42)
             k = 4 + round_shift(off) + (1 if ridge > 0.72 else -1 if ridge < -0.5 else 0)
-            sap = ridge < -0.94 and math.sin(a * 3 + x * 0.3) > 0.86
+            if f > 1 and abs(ridge) < 0.5 and math.sin((xd + wander) * 1.26 + 1.0) > 0.93:
+                k -= 1  # a hairline furrow between two ridges
+            sap = ridge < -0.94 and math.sin(a * 3 + xd * 0.3) > 0.86
             for kx, ky, rx, ry in knots:
-                d = math.hypot((x - kx) / rx, (y - ky) / ry)
+                d = math.hypot((xd - kx) / rx, (yd - ky) / ry)
                 if d < 1:
-                    k = 4 + round_shift(off) + (-2 if 0.55 < d < 0.8 or d < 0.25 else 1 if d >= 0.8 else 0)
+                    rings = f > 1 and int(d * 9) % 2 == 0 and d > 0.25
+                    k = 4 + round_shift(off) + (-2 if 0.55 < d < 0.8 or d < 0.25 else 1 if d >= 0.8 else 0) - (1 if rings and not 0.55 < d < 0.8 else 0)
                     sap = False
-            hx, hy, rx, ry = hollow
-            d = math.hypot((x - hx) / rx, (y - hy) / ry)
+            d = math.hypot((xd - hx) / hrx, (yd - hy) / hry)
             if d < 1:
-                colour = LANTERN_BARK[0] if d < 0.82 else LANTERN_BARK[5 if (x - hx) + (y - hy) > 0 else 1]
-                glow = math.hypot(x - hx, y - hy - 7)
+                colour = LANTERN_BARK[0] if d < 0.82 else LANTERN_BARK[5 if (xd - hx) + (yd - hy) > 0 else 1]
+                glow = math.hypot(xd - hx, yd - hy - 7)
                 art.put(x, y, CYAN[3] if glow < 1.6 else CYAN[2] if glow < 3 else CYAN[1] if glow < 4.2 else mix(colour, CYAN[1], 0.25) if glow < 9 and d < 0.82 else colour)
                 continue
             art.put(x, y, CYAN[1] if sap else tone(LANTERN_BARK, k))
-    for _ in range(14):  # moss on the side the light is on
-        x, y = int(cx - r.uniform(20, 44)), r.randint(6, H - 8)
+    for _ in range(14 * f):  # moss on the side the light is on
+        x, y = int((cx - r.uniform(20, 44)) * f), r.randint(6 * f, H - 8 * f)
         for dx in range(r.randint(2, 5)):
             if art.has(x + dx, y) and art.has(x + dx, y + 1):
                 art.put(x + dx, y, tone(TEAL, 5))
                 art.put(x + dx, y + 1, tone(TEAL, 3))
-    art.outline(LANTERN_BARK[0])
+    for _ in range(f):
+        art.outline(LANTERN_BARK[0])
     return art.image()
 
 
-def lantern_root() -> Image.Image:
+def lantern_root(fine: int = 1) -> Image.Image:
     """The Lantern Tree's foot: the trunk spreading into roots as thick as a man that go
-    into the ground one by one."""
-    W, H = 16 * T, 5 * T
+    into the ground one by one. `fine` draws it that many times the draft's size."""
+    f = fine
+    W0, H0 = 16 * T, 5 * T
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
-    cx = W / 2
+    cx = W0 / 2
     for y in range(H):
-        t = y / (H - 1)
+        yd = y / f
+        t = yd / (H0 - 1)
         half = 3 * T + 4 + t**2.3 * 4.6 * T
-        for x in range(int(cx - half), int(cx + half)):
-            off = (x + 0.5 - cx) / half
+        for x in range(int((cx - half) * f), int((cx + half) * f)):
+            xd = (x + 0.5) / f
+            off = (xd - cx) / half
             lane = off * 3 * T * (1 + t * 0.35)  # the bark's ridges fan out with the roots
-            ridge = math.sin(lane * 0.42 + math.sin(y * 0.09) * 1.5)
+            ridge = math.sin(lane * 0.42 + math.sin(yd * 0.09) * 1.5)
             toe = abs(math.sin(off * 7.6))  # between two roots the ground shows, lower down
             if t > 0.62 and toe < (t - 0.62) * 2.2:
                 continue
             k = 4 + round_shift(off * 0.9) + (1 if ridge > 0.72 else -1 if ridge < -0.5 else 0) - (1 if t > 0.62 and toe < (t - 0.62) * 2.2 + 0.2 else 0)
+            if f > 1 and abs(ridge) < 0.5 and math.sin(lane * 1.26 + 1.0) > 0.93:
+                k -= 1
             art.put(x, y, tone(LANTERN_BARK, k))
-    art.outline(LANTERN_BARK[0])
-    art.a[0, :, 3] = np.where(art.a[1, :, 3] > 0, art.a[0, :, 3], 0)
+    for _ in range(f):
+        art.outline(LANTERN_BARK[0])
+    for row in range(f):  # its top is the trunk's: no edge there
+        art.a[row, :, 3] = np.where(art.a[f, :, 3] > 0, art.a[row, :, 3], 0)
     return art.image()
 
 
-def crown_trunk() -> Image.Image:
+def crown_trunk(fine: int = 1) -> Image.Image:
     """A length of the Crown Vine, a storey of it: six stems as thick as a tower plaited
-    about one another, the dark between them, leaves at the turns. It repeats upward."""
+    about one another, the dark between them, leaves at the turns. It repeats upward.
+    `fine` draws it that many times the draft's size: a line of light down each stem,
+    finer grooves."""
     r = rng("eden crown trunk")
-    W, H = 16 * T, 12 * T
+    f = fine
+    W0, H0 = 16 * T, 12 * T
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
     for y in range(H):  # the dark between the stems
         a = 2 * math.pi * y / H
-        half = 44 + 9 * math.sin(2 * a + 1.0)
+        half = (44 + 9 * math.sin(2 * a + 1.0)) * f
         for x in range(int(W / 2 - half), int(W / 2 + half)):
             art.put(x, y, BARK[1] if (x + y // 3) % 7 else BARK[0])
     for strand in range(6):
         phase = strand * math.pi / 3
         for y in range(H):
             a = 2 * math.pi * y / H
-            mid = W / 2 + math.sin(a + phase) * 62 + math.sin(2 * a + phase * 2) * 12
+            mid = W / 2 + (math.sin(a + phase) * 62 + math.sin(2 * a + phase * 2) * 12) * f
             depth = math.cos(a + phase)
-            half = 19 + depth * 5
+            half = (19 + depth * 5) * f
             for x in range(int(mid - half), int(mid + half)):
                 off = (x + 0.5 - mid) / half
                 groove = (x * 2 + y // 2) % 12 == 0
                 k = 4 + round_shift(off) + (1 if depth > 0.3 else -1 if depth < -0.4 else 0) - (1 if groove else 0)
+                if f > 1 and -0.5 < off < -0.42 and not groove:
+                    k += 1  # the line of light down it
                 if depth > -0.2 or not art.has(x, y) or tuple(art.a[y, x, :3]) in (BARK[0], BARK[1]):
                     art.put(x, y, tone(BARK, k))
     for n in range(9):
-        y = r.randint(22, H - 22)
-        x = W / 2 + r.choice([-1, 1]) * r.uniform(40, 96)
-        bundle(art, x, y, r.uniform(12, 18), r.uniform(9, 13), LEAF, r, ("crown trunk", n), gaps=False)
-    art.outline(BARK[0])
+        y = r.randint(22, H0 - 22)
+        x = W0 / 2 + r.choice([-1, 1]) * r.uniform(40, 96)
+        bundle(art, x * f, y * f, r.uniform(12, 18) * f, r.uniform(9, 13) * f, LEAF, r, ("crown trunk", n), gaps=False)
+    for _ in range(f):
+        art.outline(BARK[0])
     return art.image()
 
 
@@ -2515,6 +2597,17 @@ for _v in range(3):
 for _tint in TINTS:
     for _v in range(IVIES):
         FINE[f"eden_ivy_{_tint}_{_v}"] = lambda a=(_tint, _v): ivy(*a, fine=DENSITY)
+# The two great trunks a storey at a time, the vines, the boughs, the wheat.
+FINE["eden_lantern_trunk"] = lambda: lantern_trunk(DENSITY)
+FINE["eden_lantern_root"] = lambda: lantern_root(DENSITY)
+FINE["eden_crown_trunk"] = lambda: crown_trunk(DENSITY)
+for _v in range(VINES):
+    FINE[f"eden_vine_{_v}"] = lambda v=_v: vine_trunk(v, DENSITY)
+for _v in range(2):
+    FINE[f"eden_bough_{_v}"] = lambda v=_v: bough(v == 1, fine=DENSITY)
+    FINE[f"eden_vine_bough_{_v}"] = lambda v=_v: bough(v == 1, LEAF, fine=DENSITY)
+for _v in range(4):
+    FINE[f"eden_wheat_{_v}"] = lambda v=_v: wheat(v, DENSITY)
 for _v in range(TEAL_TREES):
     for _frame in range(FRAMES):
         FINE[f"eden_teal_tree_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: teal_tree(v, s, fine=DENSITY)
