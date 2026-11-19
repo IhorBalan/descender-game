@@ -304,37 +304,47 @@ def backdrop_cave_top(region: dict, fine: int = 1) -> Image.Image:
 FAR_W, FAR_H = 640, 360
 
 
-def backdrop_far(region: dict) -> Image.Image:
+def backdrop_far(region: dict, fine: int = 1) -> Image.Image:
     """What stands far off in a region's caves: shapes a little lighter than the rock
     behind them, standing from the foot of the picture and hanging from its head; it
     repeats both ways. Columns, spires, fangs, heaps, bare trees, towers with lit
-    windows, a viaduct, shards: FAR in tv2_base.py says which."""
+    windows, a viaduct, shards: FAR in tv2_base.py says which. `fine` draws them that many
+    times the draft's size: points that are sharp, edges a pixel finer."""
+    f = fine
     kind = FAR[region["key"]]
     ramp = hexes(*region["cave"].split())
     lit = tuple(min(255, int(c * 1.55) + 10) for c in ramp[4])
     mid = tuple(min(255, int(c * 1.3) + 6) for c in ramp[4])
     dark = tuple(min(255, int(c * 1.08) + 3) for c in ramp[4])
-    a = np.zeros((FAR_H, FAR_W, 4), dtype=np.uint8)
+    FW, FH = FAR_W * f, FAR_H * f
+    a = np.zeros((FH, FW, 4), dtype=np.uint8)
     r = rng("far", region["key"])
 
-    def put(x, y, colour):
-        if 0 <= y < FAR_H:
-            a[y, x % FAR_W] = (*colour, 255)
+    def put(X, Y, colour):
+        """A pixel of the picture, at a place in its own pixels."""
+        if 0 <= Y < FH:
+            a[Y, X % FW] = (*colour, 255)
 
     def block(x0, x1, y0, y1):
-        """A shape's body: lit on its left edge, dark on its right."""
-        for x in range(x0, x1):
+        """A shape's body: lit on its left edge, dark on its right (places in the draft's pixels)."""
+        for X in range(x0 * f, x1 * f):
+            x = X / f
             colour = lit if x - x0 < max(1, (x1 - x0) // 5) else dark if x1 - x <= max(1, (x1 - x0) // 4) else mid
-            for y in range(y0, y1):
-                put(x, y, colour)
+            for Y in range(y0 * f, y1 * f):
+                put(X, Y, colour)
 
     def needle(cx, base, tall, half, up=True):
         """A spike from a base row: standing (up) or hanging."""
-        for i in range(tall):
-            wide = max(0, int(round(half * (1 - i / tall) ** 0.8)))
-            y = base - i if up else base + i
-            for x in range(cx - wide, cx + wide + 1):
-                put(x, y, lit if x < cx - wide * 0.3 else dark if x > cx + wide * 0.4 else mid)
+        for I in range(tall * f):
+            i = I / f
+            if f == 1:
+                wide = max(0, int(round(half * (1 - i / tall) ** 0.8)))
+            else:
+                wide = half * (1 - i / tall) ** 0.8
+            Y = base * f + (f - 1 if up else 0) - I if up else base * f + I
+            for X in range(int(math.floor((cx - wide) * f)) if f > 1 else cx - wide, int(math.ceil((cx + wide) * f)) + 1 if f > 1 else cx + wide + 1):
+                x = X / f
+                put(X, Y, lit if x < cx - wide * 0.3 else dark if x > cx + wide * 0.4 else mid)
 
     x = r.randint(0, 30)
     while x < FAR_W - 20:
@@ -359,10 +369,13 @@ def backdrop_far(region: dict) -> Image.Image:
             x += r.randint(36, 70)
         elif kind == "heaps":
             wide, tall = r.randint(50, 110), r.randint(30, 80)
-            for dx in range(wide):
-                top = int(tall * np.sin(np.pi * (dx + 0.5) / wide) ** 0.7)
-                for y in range(FAR_H - top, FAR_H):
-                    put(x + dx, y, lit if y - (FAR_H - top) < 2 else mid if dx < wide * 0.6 else dark)
+            for DX in range(wide * f):
+                dx = DX / f
+                top = tall * np.sin(np.pi * (dx + 0.5 / f) / wide) ** 0.7
+                top = int(top) if f == 1 else top
+                for Y in range(int((FAR_H - top) * f), FH):
+                    y = Y / f
+                    put(x * f + DX, Y, lit if y - (FAR_H - top) < 2 else mid if dx < wide * 0.6 else dark)
             if r.random() < 0.7:
                 pillar = x + wide + r.randint(6, 20)
                 block(pillar, pillar + r.randint(8, 14), 0, FAR_H)
@@ -372,11 +385,14 @@ def backdrop_far(region: dict) -> Image.Image:
             block(x, x + wide, FAR_H - tall, FAR_H)
             for _ in range(r.randint(3, 6)):
                 at, side, length, slope = r.randint(tall // 3, tall - 8), r.choice([-1, 1]), r.randint(14, 44), r.uniform(0.5, 0.9)
-                for i in range(length):
-                    bx = x + (wide if side > 0 else 0) + side * i
-                    by = FAR_H - at - int(i * slope)
+                for I in range(length * f):
+                    i = I / f
+                    bx = (x + (wide if side > 0 else 0)) * f + side * I
+                    by = (FAR_H - at) * f - (int(i * slope) * f if f == 1 else int(i * slope * f))
                     put(bx, by, mid)
                     put(bx, by + 1, dark)
+                    if f > 1 and i < length * 0.6:
+                        put(bx, by + 2, dark)
             x += r.randint(46, 100)
         elif kind == "towers":
             wide, tall = r.randint(28, 48), r.randint(120, 270)
@@ -387,19 +403,25 @@ def backdrop_far(region: dict) -> Image.Image:
                 for wx in range(x + 6, x + wide - 6, 11):
                     if r.random() < 0.6:
                         for dy in range(5):
-                            put(wx, wy + dy, (255, 150, 60) if r.random() < 0.5 else ramp[0])
-                            put(wx + 1, wy + dy, (230, 110, 40) if r.random() < 0.5 else ramp[0])
+                            left = (255, 150, 60) if r.random() < 0.5 else ramp[0]
+                            right = (230, 110, 40) if r.random() < 0.5 else ramp[0]
+                            for s in range(f):
+                                for u in range(f):
+                                    put(wx * f + s, (wy + dy) * f + u, left)
+                                    put((wx + 1) * f + s, (wy + dy) * f + u, right)
             x += wide + r.randint(36, 90)
         else:  # arches: a viaduct right across
             break
     if kind == "arches":
         deck, span = FAR_H - 150, 80
-        for x in range(FAR_W):
+        for X in range(FW):
+            x = X / f
             along = x % span
-            rise = int(52 * np.sin(np.pi * along / span) ** 0.6) if 8 <= along < span - 8 else 0
-            for y in range(deck, FAR_H):
+            rise = (int(52 * np.sin(np.pi * along / span) ** 0.6) if f == 1 else 52 * np.sin(np.pi * along / span) ** 0.6) if 8 <= along < span - 8 else 0
+            for Y in range(deck * f, FH):
+                y = Y / f
                 if y < deck + 14 or y - deck - 14 >= rise or along < 8 or along >= span - 8:
-                    put(x, y, lit if y < deck + 2 else dark if along >= span - 11 else mid)
+                    put(X, Y, lit if y < deck + 2 else dark if along >= span - 11 else mid)
         for x in range(30, FAR_W, 110):
             needle(x, 0, r.randint(40, 100), r.randint(4, 8), up=False)
     return Image.fromarray(a, "RGBA")
@@ -844,3 +866,7 @@ for _region in REGIONS:  # the rock behind the caves, and its ragged top
         if _region["key"] != "earth":
             FINE["backdrop_cave_" + _region["key"]] = lambda region=_region: backdrop_cave(region, DENSITY)
         FINE["backdrop_cave_top_" + _region["key"]] = lambda region=_region: backdrop_cave_top(region, DENSITY)
+        if _region["key"] == "earth":
+            FINE["backdrop_cave_earth"] = lambda region=_region: tv2_earth.cave_earth(region, DENSITY)
+        far = tv2_earth.far_mine if FAR[_region["key"]] == "mine" else backdrop_far
+        FINE["backdrop_far_" + _region["key"]] = lambda region=_region, paint=far: paint(region, DENSITY)

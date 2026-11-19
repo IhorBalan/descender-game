@@ -1862,46 +1862,63 @@ def ridge_near(fine: int = 1) -> Image.Image:
 # --- Behind the mine ------------------------------------------------------------------
 
 
-def cave_earth(region: dict) -> Image.Image:
+def cave_earth(region: dict, fine: int = 1) -> Image.Image:
     """The rock behind the Earth's caves: beds of earth and stone that lie in long gentle
     waves, of different thickness and shade, with boulders in them; dark, so a wall still
-    reads in front of it; tiles both ways."""
+    reads in front of it; tiles both ways. `fine` draws it that many times the draft's size:
+    the beds' waves smooth, their seams a pixel high, round boulders."""
+    f = fine
     size = 128
     ramp = hexes(*region["cave"].split())
     r = rng("cave earth")
-    t = np.full((size, size), 2, dtype=np.int16)
-    ys, xs = np.mgrid[0:size, 0:size]
+    S = size * f
+    t = np.full((S, S), 2, dtype=np.int16)
+    ys, xs = np.mgrid[0:S, 0:S]
     # The beds: (where it starts in the 128 rows, how thick, its shade); a seam under each.
     beds = [(0, 22, 2), (22, 9, 3), (31, 26, 2), (57, 6, 1), (63, 30, 2), (93, 12, 3), (105, 23, 2)]
-    wob = (3.0 * np.sin(2 * np.pi * xs / size + 0.7) + 1.6 * np.sin(2 * np.pi * xs * 2 / size + 2.1) + 0.8 * np.sin(2 * np.pi * xs * 5 / size + 4.0))
-    yy = (ys + np.round(wob).astype(int)) % size
+    dx_, dy_ = xs / f, ys / f
+    wob = 3.0 * np.sin(2 * np.pi * dx_ / size + 0.7) + 1.6 * np.sin(2 * np.pi * dx_ * 2 / size + 2.1) + 0.8 * np.sin(2 * np.pi * dx_ * 5 / size + 4.0)
+    if f == 1:
+        yy = (ys + np.round(wob).astype(int)) % size
+    else:
+        yy = np.floor((dy_ + wob) * f).astype(int) % S  # the bed's row, in the picture's pixels
     for y0, thick, tone in beds:
-        inside = (yy >= y0) & (yy < y0 + thick)
-        t[inside] = tone
-        t[yy == (y0 + thick - 1) % size] = 1
-        t[(yy == y0) & ((xs * 7 + ys) % 5 != 0)] = min(tone + 1, 4)
+        if f == 1:
+            inside = (yy >= y0) & (yy < y0 + thick)
+            t[inside] = tone
+            t[yy == (y0 + thick - 1) % size] = 1
+            t[(yy == y0) & ((xs * 7 + ys) % 5 != 0)] = min(tone + 1, 4)
+        else:
+            inside = (yy >= y0 * f) & (yy < (y0 + thick) * f)
+            t[inside] = tone
+            t[yy == ((y0 + thick) * f - 1) % S] = 1
+            t[(yy == y0 * f) & ((xs * 7 + ys) % 5 != 0)] = min(tone + 1, 4)
     for _ in range(11):
         cx, cy, rx, ry = r.randrange(size), r.randrange(size), r.randint(4, 10), r.randint(3, 6)
-        for dy in range(-ry, ry + 1):
-            for dx in range(-rx, rx + 1):
+        for DY in range(-ry * f, ry * f + 1):
+            for DX in range(-rx * f, rx * f + 1):
+                dx, dy = DX / f, DY / f
                 d = (dx / rx) ** 2 + (dy / ry) ** 2
                 if d <= 1:
-                    X, Y = (cx + dx) % size, (cy + dy) % size
-                    t[Y, X] = 4 if (dx / rx + dy / ry) < -0.5 and d > 0.35 else 1 if d > 0.8 else 3
+                    X, Y = (cx * f + DX) % S, (cy * f + DY) % S
+                    t[Y, X] = 4 if (dx / rx + dy / ry) < -0.5 and d > 0.35 else 1 if d > (0.8 if f == 1 else 0.88) else 3
     for _ in range(size * size // 60):
         x, y = r.randrange(size), r.randrange(size)
-        t[y, x] = max(1, t[y, x] - 1)
-    rgba = np.zeros((size, size, 4), dtype=np.uint8)
+        t[y * f, x * f] = max(1, t[y * f, x * f] - 1)
+    rgba = np.zeros((S, S, 4), dtype=np.uint8)
     rgba[..., :3] = np.array(ramp, dtype=np.uint8)[np.clip(t, 0, 4)]
     rgba[..., 3] = 255
     return Image.fromarray(rgba, "RGBA")
 
 
-def far_mine(region: dict) -> Image.Image:
+def far_mine(region: dict, fine: int = 1) -> Image.Image:
     """What stands far off in the Earth's caves: the old workings, a little lighter than the
     rock: trestles of timber one over another, ladders between their decks, a wheel on a
-    head frame, ropes; and hanging from the roof, roots and the odd stalactite."""
-    W, H = 640, 360
+    head frame, ropes; and hanging from the roof, roots and the odd stalactite. `fine`
+    draws them that many times the draft's size: the timber's edges, a true wheel."""
+    f = fine
+    W0, H0 = 640, 360
+    W, H = W0 * f, H0 * f
     ramp = hexes(*region["cave"].split())
     lit = tuple(min(255, int(c * 1.7) + 12) for c in ramp[4])
     mid = tuple(min(255, int(c * 1.35) + 7) for c in ramp[4])
@@ -1910,22 +1927,25 @@ def far_mine(region: dict) -> Image.Image:
     r = rng("far mine")
 
     def put(x, y, colour):
+        """A pixel of the picture, at a place in its own pixels."""
         y = int(round(y))
         if 0 <= y < H:
             a[y, int(round(x)) % W] = (*colour, 255)
 
     def beam(x0, y0, x1, y1, colour, width=2):
+        """A beam between two places in the draft's pixels, `width` of them wide."""
+        x0, y0, x1, y1 = x0 * f, y0 * f, x1 * f, y1 * f
         steps = int(max(abs(x1 - x0), abs(y1 - y0)) * 2) + 1
         for i in range(steps + 1):
             t = i / steps
-            for k in range(width):
+            for k in range(width * f):
                 put(x0 + (x1 - x0) * t + (k if abs(y1 - y0) > abs(x1 - x0) else 0), y0 + (y1 - y0) * t + (0 if abs(y1 - y0) > abs(x1 - x0) else k), colour)
 
     x = r.randint(10, 40)
-    while x < W - 120:
+    while x < W0 - 120:
         wide = r.randint(80, 150)
         decks = r.randint(2, 4)
-        foot = H - 1
+        foot = H0 - 1
         deck_h = r.randint(44, 64)
         for d in range(decks):
             y = foot - (d + 1) * deck_h
@@ -1945,16 +1965,21 @@ def far_mine(region: dict) -> Image.Image:
             cx = x + wide // 2
             beam(cx - 16, top, cx, top - 40, mid, 2)
             beam(cx + 16, top, cx, top - 40, mid, 2)
-            for ang in range(0, 360, 6):
-                put(cx + 10 * math.cos(math.radians(ang)), top - 40 + 10 * math.sin(math.radians(ang)), lit)
+            for ang in range(0, 360 * f, 6):
+                a_ = math.radians(ang / f)
+                for k in range(f):
+                    put((cx + 10 * math.cos(a_)) * f + k * math.cos(a_), (top - 40 + 10 * math.sin(a_)) * f + k * math.sin(a_), lit)
             beam(cx + 10, top - 40, cx + 10, foot, dark, 1)
         x += wide + r.randint(60, 120)
     # Roots and drips from the roof.
     for k in range(18):
-        rx = r.randrange(W)
+        rx = r.randrange(W0)
         length = r.randint(14, 70)
-        for y in range(length):
-            put(rx + int(2 * math.sin(y * 0.2 + k)), y, dark if y > length * 0.6 else mid)
+        for Y in range(length * f):
+            y = Y / f
+            sway = int(2 * math.sin(y * 0.2 + k)) if f == 1 else 2 * math.sin(y * 0.2 + k)
+            for s in range(f if y < length * 0.4 else 1):
+                put((rx + sway) * f + s, Y, dark if y > length * 0.6 else mid)
     return Image.fromarray(a, "RGBA")
 
 

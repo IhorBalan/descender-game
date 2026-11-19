@@ -1234,7 +1234,7 @@ def mine_lamp_frame(frame: int) -> np.ndarray:
     return a
 
 
-from tv2_earth import campfire_frame, glowshroom_frame  # noqa: E402  (the Earth's props)
+from tv2_earth import SHROOM, TIMBER, campfire_frame, glowshroom_frame  # noqa: E402  (the Earth's props)
 from tv2_eden import fine_glowfruit, glowfruit_frame  # noqa: E402  (the Paradise level's)
 
 PROP_FRAMES = {"glowfruit": glowfruit_frame, "campfire": campfire_frame, "glowshroom": glowshroom_frame, "torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
@@ -1407,7 +1407,87 @@ def fine_lantern(frame: int) -> np.ndarray:
     return a
 
 
-FINE_PROPS = {"glowfruit": fine_glowfruit, "torch": fine_torch, "brazier": fine_brazier, "crystal": fine_crystal, "lantern": fine_lantern}
+def fine_campfire(frame: int) -> np.ndarray:
+    """A campfire at the size that ships: a ring of round stones, two logs crossed with their
+    bark and cut ends, a flame in three heats that changes its shape each frame."""
+    stones = hexes("3e3a40", "6a6470", "8e8894", "aea8b4")
+    wood, wood_lit, wood_dark, cut = TIMBER[3], TIMBER[4], TIMBER[1], hexes("c8a878")[0]
+    a, put = _fine_cell()
+    for i in range(20):  # the logs, crossed
+        for d in range(3):
+            put(6 + i, 27 - i // 2.5 + d, wood_dark if d == 2 else wood_lit if d == 0 else wood)
+            put(25 - i, 27 - i // 2.5 + d, wood_dark if d == 2 else wood if d == 0 else TIMBER[2])
+    for x, y in ((6, 27), (25, 27)):
+        put(x, y, cut)
+        put(x, y + 1, cut)
+    for cx in (3, 8, 14, 20, 26, 30):  # the ring of stones
+        for dy in range(-2, 2):
+            for dx in range(-2, 3):
+                if dx * dx + (dy + 0.5) ** 2 <= 5:
+                    put(cx + dx, 30 + dy, stones[3] if dx + dy < -1 else stones[2] if dx < 1 else stones[1])
+    for x in range(1, 32):
+        put(x, 31, stones[0])
+    tall, wide, sway = ((16, 6.0, 0.0), (14, 6.5, -2.5), (17, 5.5, 2.5))[frame % 3]
+    _fine_flame(put, 16.0, 25, tall, wide, sway, hexes("ff6a1e", "ffb43a", "fff0a0"), hexes("fffbe0")[0])
+    _fine_flame(put, 11.0 + frame % 2, 25, tall // 2, 3.0, -1.5, hexes("ff6a1e", "ffb43a", "fff0a0"))
+    _fine_flame(put, 21.0 - frame % 2, 25, tall // 2 + 1, 3.0, 1.5, hexes("ff6a1e", "ffb43a", "fff0a0"))
+    return a
+
+
+def fine_glowshroom(frame: int) -> np.ndarray:
+    """Mushrooms that give a cold light in the damp, at the size that ships: three domed caps
+    on pale stems, gills under them, spots on top, the glow swelling and fading."""
+    lift = (0, 1, 2)[frame % 3]
+    a, put = _fine_cell()
+    for cx, tall, half in ((8, 10, 4.5), (18, 16, 6.5), (27, 8, 3.0)):
+        for y in range(31 - tall, 32):  # the stem
+            put(cx - 1, y, SHROOM[2])
+            put(cx, y, SHROOM[1])
+        cap = 31 - tall
+        for dy in range(-int(half) - 1, 2):  # the cap, domed
+            for dx in range(-int(half * 1.2) - 1, int(half * 1.2) + 2):
+                u, v = (dx + 0.5) / (half * 1.25), (dy + 0.5) / half
+                if v <= 0.35 and u * u + v * v <= 1:
+                    k = 4 + lift if u + v < -0.6 else 3 + lift if u < 0.4 else 2 + lift
+                    if v > 0.1:
+                        k = 1 + lift  # its gills, underneath
+                    put(cx + dx, cap + dy, SHROOM[min(k, len(SHROOM) - 1)])
+        put(cx - 2, cap - int(half * 0.6), SHROOM[len(SHROOM) - 1])  # a light spot on it
+        put(cx + 1, cap - int(half * 0.4), SHROOM[len(SHROOM) - 1])
+    return a
+
+
+def fine_mine_lamp(frame: int) -> np.ndarray:
+    """A miner's lamp at the size that ships, hung from a hook at the top of its cell: a hood
+    of iron with its rivets, a glass with the flame in it, a ring under it."""
+    iron, iron_lit, rim = hexes("3a3d46", "7a7f8a", "16161a")
+    glass = hexes("ffd890", "fff0c0", "ffc870")[frame % 3]
+    a, put = _fine_cell()
+    for y in range(0, 6):  # the hook
+        put(16, y, iron)
+        put(17, y, rim)
+    for x in range(13, 20):
+        put(x, 0, iron if 14 < x < 18 else rim)
+    for x in range(10, 22):  # the hood and the base
+        put(x, 6, iron_lit if x < 16 else iron)
+        put(x, 7, iron)
+        put(x, 20, iron_lit if x < 15 else iron)
+        put(x, 21, rim)
+    for x in (12, 16, 20):
+        put(x, 6, (200, 204, 212))  # its rivets
+    for y in range(8, 20):
+        for x in (10, 11, 20, 21):
+            put(x, y, rim if x in (10, 21) else iron)
+        for x in range(12, 20):
+            away = math.hypot(x + 0.5 - 16, (y + 0.5 - 14) * 0.7)
+            put(x, y, (255, 255, 240) if away < 1.6 + (frame % 3 == 1) else glass if away < 3.6 else hexes("ffb850")[0])
+    for x in range(14, 18):  # the ring under it
+        put(x, 22, rim)
+        put(x, 23, iron)
+    return a
+
+
+FINE_PROPS = {"campfire": fine_campfire, "glowshroom": fine_glowshroom, "mine_lamp": fine_mine_lamp, "glowfruit": fine_glowfruit, "torch": fine_torch, "brazier": fine_brazier, "crystal": fine_crystal, "lantern": fine_lantern}
 
 
 def fine_prop_sheet(prop: dict) -> tuple[Image.Image, list]:

@@ -334,8 +334,7 @@ def generate(out: str):
         write(path, image, sheet_meta(path, image, cells, ledge_shapes() if key == "ledge" else None))
         images[key] = image
         keep(image, cells)
-    image, entries = tv2_decor.decor_sheet()
-    image = scale2x(image)
+    image, entries = tv2_decor.fine_decor_sheet()  # each sprite drawn at the size that ships where it has a painter for it
     entries = [(name, x * DENSITY, y * DENSITY, w * DENSITY, h * DENSITY, pivot) for name, x, y, w, h, pivot in entries]
     path = os.path.join(out, "decor.png")
     write(path, image, rect_meta(path, entries))

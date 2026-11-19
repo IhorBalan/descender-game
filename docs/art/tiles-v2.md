@@ -124,10 +124,16 @@ ways:
 
 - **The lamps** are drawn at the size that ships too
   (`tv2_terrain.fine_prop_sheet`, by `FINE_PROPS`): the torch, the brazier,
-  the crystals, the lantern and the glowfruit, each 32 x 32 a frame in the
-  place its draft has in its cell, its flame a tear in three heats that
-  leans as it sways. A lamp without a painter there (the campfire, the
-  glowshroom, the mine lamp) is its draft through Scale2x.
+  the crystals, the lantern, the glowfruit, the campfire, the glowshroom and
+  the mine lamp, each 32 x 32 a frame in the place its draft has in its
+  cell, its flame a tear in three heats that leans as it sways.
+- **The decor** (`tv2_decor.fine_decor_sheet`): every sprite of the sheet is
+  drawn at 32 x 40 by its own painter in `tv2_decor.FINE_DRAWERS` on a
+  `FinePad` (the same cell, floor and ceiling as the draft's `Pad`), in the
+  draft sheet's rows and places: blades that bend smoothly, flowers of five
+  petals, round caps and pebbles, spikes that taper to a point, links of
+  chain, threads of web. A sprite without a painter there would ship as its
+  draft through Scale2x.
 - **The sky's own layers** are drawn at the size that ships
   (`tv2_backdrop.skies(fine)`, `tv2_backdrop.FINE`, which the generator looks
   in as it does a module's `FINE`): the stars (a star is still one pixel, so
@@ -136,10 +142,12 @@ ways:
   islands far and near (a rim a pixel high, a thread of water a pixel wide),
   the shafts of light, the seas and banks of cloud, the country of cloud and
   the castles on it (`_mass`, `_building` take `fine`), the cirrus, the
-  glory and the rainbow; and the rock behind the caves and its ragged top
-  (`cave_rock` takes `fine`: the cracks between the boulders narrower).
-  What stands far off in the caves, the Earth's own cave rock and its hills
-  are still their drafts through Scale2x.
+  glory and the rainbow; the rock behind the caves and its ragged top
+  (`cave_rock` takes `fine`: the cracks between the boulders narrower), the
+  Earth's own cave rock, and what stands far off in every cave
+  (`backdrop_far`, the Earth's `far_mine`). The windows' glow over a
+  castle's picture is taken from the picture as it is drawn at 32
+  (`tv2_heaven.glow` takes `fine`).
 
 `gen_tiles_v2.py --metas` writes every picture's `.meta` again (rects, pivots
 and collider shapes are in the art's pixels); a picture's GUID is made from its
