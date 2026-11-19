@@ -104,8 +104,13 @@ ways:
     from the Garden, the hall's sides and its high seat, the rooms of the
     House (`wall`, `glass_window`, `bay`, `bay_end`, `host_wings` take
     `fine`), the banners, the pennants, the glints, the hall's light and the
-    swans; and the gathered on the Wheel. A
-    part of such a picture that is still drawn on the draft (a wall of dressed
+    swans; from the Earth (`tv2_earth.FINE`) its trees (the oaks, the firs,
+    the apples, the birches, the willow and the old oak on the hill), the
+    dark fronts, the reeds, the mine's timber, track, stores and ore, the
+    mill's sails, the graves, the roots, the lilies, the stumps, the rubble,
+    the crows, the sheep and the birds (a draft pixel that is only a dot is
+    `tv2_earth.dot`, a block with a lit corner); and the gathered on the
+    Wheel. A part of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
     Each is the draft's size times `DENSITY` exactly, so nothing that stands
