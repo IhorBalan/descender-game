@@ -354,16 +354,19 @@ the finer size are the insides of the level's ground and walls, the turf on
 them, its trees and great leaves, and three of its great things: the Low Gate
 (a true round, the grain of its stone, finer ice, more and smaller stars,
 wisps in its dark), the Wheel (its rim, its spokes and its eye) and the
-Sundial. Everything else is its draft through Scale2x, which is the picture
-it was with smoother edges, until it is drawn again.
+Sundial; and what is in every view: the posts under the platforms, what is
+under every ledge, the earth and roots or the stone under every floor in the
+air, and the ivy. Everything else is its draft through Scale2x, which is the
+picture it was with smoother edges, until it is drawn again.
 
 ## What is not there
 
 - **Nobody has played it by hand.** The model says it can be played through;
   how it feels is not known.
-- **Most pictures are not yet drawn at 32.** Posts, corbels, the trunks, the
-  undersides, ivy, the far layers, the sky, the lamps and the people are the
-  draft doubled; so are the Wheel's wall and the figures round it.
+- **Most pictures are not yet drawn at 32.** The two great trunks, the boughs,
+  the vines, wheat, the brush, the inlays, the far layers, the sky, the lamps,
+  the statues and the people are the draft doubled; so are the Wheel's wall
+  and the figures round it.
 - **The hero and the game's own things are 16 to the tile**: his pixels are
   twice the world's. They are the game's art, not the standard's.
 - **On a 1080p screen a pixel of the art is one and a half of the screen's**:
