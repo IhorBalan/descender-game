@@ -360,7 +360,10 @@ air, and the ivy; and the Lantern Tree's trunk and roots, the Crown Vine's
 plait, the twisting vines of zone 3, the boughs and the wheat; the brush
 that bends as the hero goes through it, what is set in the ground of the
 floors, the crags by the Gate, the keepers' statues, and the lamps (the
-torches, braziers, crystals, lanterns and glowfruit). Everything
+torches, braziers, crystals, lanterns and glowfruit); the Making-house's
+pipes, gears, pistons and door and the gathered going in, the arches, the
+window, the buttresses, the ruins, the swords, the people, the chains, the
+fog and the mist, the shafts of sun, the cracks and the moss. Everything
 else is its draft through Scale2x, which is the picture it was with smoother
 edges, until it is drawn again.
 
@@ -369,8 +372,8 @@ edges, until it is drawn again.
 - **Nobody has played it by hand.** The model says it can be played through;
   how it feels is not known.
 - **Some of the level is not yet drawn at 32.** The far layers, the sky, the
-  Making-house's pipes, gears and door, the ruins and the people are the
-  draft doubled; so
+  Lantern Tree's crown and what passes before the eye are the draft
+  doubled; so
   are the Wheel's wall and the figures round it, and what the level borrows
   from the Earth and from the castles of Paradise.
 - **The hero and the game's own things are 16 to the tile**: his pixels are
