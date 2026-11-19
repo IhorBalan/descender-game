@@ -444,6 +444,7 @@ namespace Descender.EditorTools.TilesV2
 
             set.viewWidth = manifest.view.width;
             set.viewHeight = manifest.view.height;
+            set.pixelsPerUnit = manifest.ppu;
             set.skyBands = manifest.sky.bands;
             set.skyOrder = manifest.sky.order;
             set.cloudDrift = manifest.sky.cloudDrift;

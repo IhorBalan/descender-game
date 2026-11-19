@@ -12,8 +12,11 @@ namespace Descender.World.TilesV2
     /// </summary>
     public static class TilesV2Particles
     {
-        /// <summary>One art pixel in units.</summary>
-        public const float Pixel = 1f / 16f;
+        /// <summary>
+        /// A pixel of the draft in units, a sixteenth of a tile: what a mote's size and a mark's
+        /// lengths are counted in (two pixels of the art as it ships).
+        /// </summary>
+        public const float Pixel = TilesV2Set.DraftPixel;
 
         /// <summary>The material whose overhangs trickle.</summary>
         public const string SandKey = "sand";

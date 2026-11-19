@@ -13,7 +13,7 @@ namespace Descender.World.TilesV2
     [RequireComponent(typeof(SpriteRenderer))]
     public sealed class ParallaxLayer : MonoBehaviour
     {
-        private const float PixelsPerUnit = 16f;
+        private const float PixelsPerUnit = TilesV2Set.PixelsPerUnit;
 
         /// <summary>The most a layer may scroll across: twice the world, for what passes close to the eye.</summary>
         public const float MostScroll = 2f;

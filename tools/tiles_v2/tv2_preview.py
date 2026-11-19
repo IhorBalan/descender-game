@@ -27,6 +27,9 @@ import tv2_light
 import tv2_liquid
 from tv2_terrain import BLEND_MASKS, BLEND_SIDES
 
+DRAFT = TILE  # a tile of the draft: what a map's lengths and a picture's sink are counted in
+TILE = PIXELS  # the preview lays out the art that ships: a tile of it is 32 x 32
+
 
 class Layout:
     """The map as grids the rules read: rows run top first."""
@@ -269,14 +272,14 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
         canvas.alpha_composite(
             images["backdrop_" + body],
             (
-                max(int(world_width * (0.08 + 0.84 * along)) - 8 - left, 0),
+                max(int(world_width * (0.08 + 0.84 * along)) - 8 * DENSITY - left, 0),
                 max(int(line * 0.62 - np.sin(np.pi * along) * line * 0.5) - top, 0),
             ),
         )
-        tile_across(canvas, tinted(images["backdrop_clouds"], day["tint"]), 8 - top, left=-left)
+        tile_across(canvas, tinted(images["backdrop_clouds"], day["tint"]), 8 * DENSITY - top, left=-left)
         ridges = sorted((b for b in tv2_backdrop.BACKDROPS if b["kind"] == "ridge"), key=lambda b: b["order"])
         for key in [b["key"] for b in ridges]:
-            tile_across(canvas, tinted(images[key], day["tint"]), line - 2 * TILE - tv2_backdrop.BACKDROP_H - top, left=-left)
+            tile_across(canvas, tinted(images[key], day["tint"]), line - 2 * TILE - tv2_backdrop.BACKDROP_H * DENSITY - top, left=-left)
         # Nothing of the far world shows under the surface line.
         if line - top < height:
             canvas.paste((0, 0, 0, 255), (0, max(line - top, 0), width, height))
@@ -313,8 +316,9 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
         px, py = window.at(x, row)
         if "glint" in rest[0]:
             continue  # a glint comes and goes: the scene's to show
-        aside, up = (int(rest[1]), int(rest[2])) if len(rest) > 2 else (0, 0)
-        at = (px + TILE // 2 - image.width // 2 + aside, py + TILE - image.height + tv2_earth.SINK_OF.get(rest[0], tv2_heaven.SINK_OF.get(rest[0], tv2_eden.SINK_OF.get(rest[0], 0))) - up)
+        aside, up = (int(rest[1]) * DENSITY, int(rest[2]) * DENSITY) if len(rest) > 2 else (0, 0)
+        sink = tv2_earth.SINK_OF.get(rest[0], tv2_heaven.SINK_OF.get(rest[0], tv2_eden.SINK_OF.get(rest[0], 0))) * DENSITY
+        at = (px + TILE // 2 - image.width // 2 + aside, py + TILE - image.height + sink - up)
         if at[0] > width or at[1] > height or at[0] + image.width < 0 or at[1] + image.height < 0:
             continue
         if not entry["lit"] and entry["order"] < -300:
@@ -333,8 +337,8 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
     for x, row, name in decor_of(layout, open_sky):
         if window.has(x, row):
             px, py = window.at(x, row)
-            if py >= tv2_decor.BLEED:
-                world.alpha_composite(sprites[name], (px, py - tv2_decor.BLEED))
+            if py >= tv2_decor.BLEED * DENSITY:
+                world.alpha_composite(sprites[name], (px, py - tv2_decor.BLEED * DENSITY))
     lay_tiles(world, layout, window, images, layout.ground, group)
     lay_blends(world, layout, window, images)
     for image, at in later["track"]:
@@ -361,7 +365,7 @@ def render(art, layout: Layout, window: Window, lighting: Lighting | None, hour:
     for kind, x, row, _ in layout.marked:
         if window.has(x, row) and kind in MARK_COLOURS:
             px, py = window.at(x, row)
-            glowing.paste(MARK_COLOURS[kind], (px + 5, py + 4, px + 11, py + 16))
+            glowing.paste(MARK_COLOURS[kind], (px + 5 * DENSITY, py + 4 * DENSITY, px + 11 * DENSITY, py + 16 * DENSITY))
 
     for image, at in later["water"]:
         paste_clipped(water, image, at)
@@ -423,7 +427,7 @@ def preview(art, path: str, hour: float | None = None, view: str | None = None, 
             cx, cy = layout.views[view]
         else:
             cx, cy = (float(v) for v in view.split(","))
-        wide, tall = VIEW[0] // TILE, -(-VIEW[1] // TILE)
+        wide, tall = SHIP_VIEW[0] // TILE, -(-SHIP_VIEW[1] // TILE)
         left = max(0, min(layout.width - wide, int(round(cx - wide / 2))))
         top = max(0, min(layout.height - tall, int(round(cy - tall / 2))))
         canvas = render(art, layout, Window(layout, left, top, left + wide, top + tall), lighting, hour)

@@ -30,11 +30,42 @@ playground with the hero in it (`playground.png`). Five of them at 1920 x
 
 | Rule | Value |
 |---|---|
-| Tile | 16 x 16 px |
-| Pixels per unit | 16: one tile is one Unity unit and one collision cell |
-| Camera | Pixel Perfect Camera, 640 x 360 (40 x 22.5 tiles), scaled by whole numbers: twice as far back as the game's own 320 x 180, so the world shows and not only the hero. `VIEW` in `tv2_base.py`; the sky and the backdrops are drawn for it and the scenes' cameras take it from the tile set |
+| Tile | 32 x 32 px as it ships (`PIXELS`), drawn on a draft of 16 x 16 (`TILE`): see "Draft and density" below |
+| Pixels per unit | 32: one tile is one Unity unit and one collision cell (`TilesV2Set.PixelsPerUnit`) |
+| Camera | Pixel Perfect Camera, 1280 x 720 (40 x 22.5 tiles): twice as far back as the game's own 320 x 180, so the world shows and not only the hero. `SHIP_VIEW` in `tv2_base.py`; the sky and the backdrops are drawn for it and the scenes' cameras take it from the tile set |
+| Fit to the screen | The view is drawn at its own size and then fitted (`StretchFill`, `RetroAA`). On 720p, 1440p and 4K that is a whole number of times (1, 2, 3): every pixel of the art is a square of the screen's. On 1080p it is one and a half times, which no pixel grid divides: the fit there is a sharp one that keeps the pixels even and does not crawl as the view moves, and the picture is a little softer |
 | Filter | Point, no compression, no mipmaps |
-| Density | One art pixel is one game pixel everywhere: tiles, walls, decor, backdrops, particles. Nothing is scaled, rotated or drawn at another density. |
+| Density | One art pixel is one game pixel everywhere: tiles, walls, decor, backdrops. Two things are not on that grid, and are meant: the brush that bends as the hero goes through it turns about its foot (`life brush`), and a mote of the particles is a draft pixel, two of the art's |
+| Lengths in a map | What a map gives beside a mark (how far aside, how far up) is in draft pixels: sixteenths of a tile (`TilesV2Set.DraftPixel`), whatever the art ships at |
+
+### Draft and density
+
+The art was first drawn at 16 pixels to the tile, and every painter still draws
+on that grid: the draft. It ships twice as fine (`DENSITY` = 2), in one of two
+ways:
+
+- **Through Scale2x** (`tv2_base.scale2x`): twice the size, a step of a
+  staircase turned into a slope, nothing invented. This is what a picture is
+  until someone draws it at the finer size: it looks as the draft did, its
+  edges smoother. Outlines are two pixels of the art, as a doubled one-pixel
+  outline is, and what is drawn anew keeps them at two.
+- **Drawn at the finer size itself**:
+  - the inside of every ground and wall (`tv2_terrain.fine_frame`): a frame
+    keeps the shape its draft gives it (outline, rims, turf, ore, through
+    Scale2x), and its plain inside is laid with `fine_texture`: the draft's
+    texture smoothed, with what a pixel half the size can say put in. Earth
+    gets pebbles and root hairs and a grain; rock, hairline cracks and a
+    glint; dressed stone, a vein, a chip and a line of light under its joint;
+    clay and boards, a grain; leaves, a lit edge; sand and ice, a sparkle;
+  - the pictures a module names in its `FINE` (`tv2_heaven.FINE`,
+    `tv2_eden.FINE`): the trees of Paradise in blossom and in gold, the
+    orchard's teal trees, the great leaves of the Hollow and the Rising Leaf.
+    Each is the draft's size times `DENSITY` exactly, so nothing that stands
+    it has to know.
+
+`gen_tiles_v2.py --metas` writes every picture's `.meta` again (rects, pivots
+and collider shapes are in the art's pixels); a picture's GUID is made from its
+path and stays.
 
 ## Frames
 
@@ -73,7 +104,7 @@ of slopes (each slope's variants side by side).
 - **The art's light comes from the top left.** An edge open to air on top gets
   a highlight row (ramp 5) under its outline and a dithered row under that; a
   left edge a lighter rim; bottom and right edges a shade (ramp 1).
-- **Outline**: a 1 px outline in the material's outline colour wherever the
+- **Outline**: a 1 px outline on the draft (2 px of the art) in the material's outline colour wherever the
   tile meets air (8-neighbour, so inner corners get one too). Outer corners
   are rounded by a morphological opening (2-3 px cut).
 - **Joined edges have no outline.** Tiles of one join group (dirt, grass,

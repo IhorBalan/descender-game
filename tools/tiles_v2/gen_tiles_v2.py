@@ -9,8 +9,10 @@ docs/art/tiles-v2.md; change both together.
     py -I tools/tiles_v2/gen_tiles_v2.py --preview scratch/v2.png  # also lay out the sample map
 
 The standard, in short:
-  * a tile is 16 x 16 px, imported at 16 PPU: one tile is one Unity unit and one
-    collision cell; nothing is scaled, rotated or drawn at another density;
+  * a tile is 32 x 32 px, imported at 32 PPU: one tile is one Unity unit and one
+    collision cell. It is drawn on a draft of 16 x 16 and ships twice as fine: the
+    draft through Scale2x, the inside of the ground and the walls drawn at the
+    finer size itself (tv2_base.DENSITY, tv2_terrain.fine_frame);
   * every terrain has the same 47 frames (the 8-neighbour "blob" set: edges,
     outer corners, inner corners) in 3 variants, plus two slopes; walls have
     the 47 frames too;
@@ -24,7 +26,8 @@ The standard, in short:
 
 Everything is drawn from fixed seeds, so a run reproduces the same pixels. A
 new file under Assets/ gets its .meta (unity_meta); an existing .meta is never
-touched.
+touched, unless `--metas` asks for every picture's to be written again (when the size
+a picture ships at changes: its GUID, made from its path, stays).
 """
 from __future__ import annotations
 
@@ -44,7 +47,9 @@ import tv2_decor
 import tv2_liquid
 import tv2_preview
 import tv2_terrain
-from tv2_terrain import BLEND_MASKS, THINGS, draw_blend, draw_frame, draw_slope, ledge_sheet, prop_sheet, things_sheet
+from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_frame, fine_slope, ledge_sheet, prop_sheet, things_sheet
+
+FRESH_METAS = False  # `--metas`: write every picture's .meta again, not only the missing ones
 
 # --- Sheets and manifest ------------------------------------------------------
 
@@ -56,31 +61,31 @@ def sheet_for(material: dict) -> tuple[Image.Image, list]:
     kinds = slopes_of(material)
     slope_rows = (len(kinds) * VARIANTS + COLUMNS - 1) // COLUMNS
     rows = rows_per_variant * VARIANTS + slope_rows
-    sheet = np.zeros((rows * TILE, COLUMNS * TILE, 4), dtype=np.uint8)
+    sheet = np.zeros((rows * PIXELS, COLUMNS * PIXELS, 4), dtype=np.uint8)
     sprites = []
     for v in range(VARIANTS):
         for i, mask in enumerate(FRAMES):
             cx, cy = frame_cell(i)
             cy += v * rows_per_variant
-            sheet[cy * TILE : (cy + 1) * TILE, cx * TILE : (cx + 1) * TILE] = draw_frame(material, mask, v)
+            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = fine_frame(material, mask, v)
             sprites.append((f"tv2_{material['key']}_f{mask}_v{v}", cx, cy))
     for s, kind in enumerate(kinds):
         for v in range(VARIANTS):
             cx, cy = slope_cell(s, v)
-            sheet[cy * TILE : (cy + 1) * TILE, cx * TILE : (cx + 1) * TILE] = draw_slope(material, kind, v)
+            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = fine_slope(material, kind, v)
             sprites.append((f"tv2_{material['key']}_{kind}_v{v}", cx, cy))
     return Image.fromarray(sheet, "RGBA"), sprites
 
 
 def blend_sheet(blend: dict) -> tuple[Image.Image, list]:
     rows_per_variant = (len(BLEND_MASKS) + COLUMNS - 1) // COLUMNS
-    sheet = np.zeros((rows_per_variant * VARIANTS * TILE, COLUMNS * TILE, 4), dtype=np.uint8)
+    sheet = np.zeros((rows_per_variant * VARIANTS * PIXELS, COLUMNS * PIXELS, 4), dtype=np.uint8)
     sprites = []
     for v in range(VARIANTS):
         for i, sides in enumerate(BLEND_MASKS):
             cx, cy = frame_cell(i)
             cy += v * rows_per_variant
-            sheet[cy * TILE : (cy + 1) * TILE, cx * TILE : (cx + 1) * TILE] = draw_blend(blend, sides, v)
+            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = fine_blend(blend, sides, v)
             sprites.append((f"tv2_{blend['key']}_s{sides}_v{v}", cx, cy))
     return Image.fromarray(sheet, "RGBA"), sprites
 
@@ -90,7 +95,7 @@ def sheet_meta(path: str, image: Image.Image, sprites: list, shapes: dict | None
     gives a sprite its collider outline (points in pixels from its middle) in place
     of the one Unity would trace round its pixels."""
     h = image.size[1]
-    text = rect_meta(path, [(name, cx * TILE, h - (cy + 1) * TILE, TILE, TILE, (0.5, 0.5)) for name, cx, cy in sprites])
+    text = rect_meta(path, [(name, cx * PIXELS, h - (cy + 1) * PIXELS, PIXELS, PIXELS, (0.5, 0.5)) for name, cx, cy in sprites])
     for name, points in (shapes or {}).items():
         start = text.index(f"      name: {name}\n")
         empty = "      physicsShape: []\n"
@@ -103,7 +108,7 @@ def sheet_meta(path: str, image: Image.Image, sprites: list, shapes: dict | None
 def slope_shapes(material: dict) -> dict:
     """The collider of each slope sprite: the clean shape under its diagonal, not
     the ragged outline of its pixels, so a body slides up it and stands on it."""
-    h = TILE // 2
+    h = PIXELS // 2
     outlines = {
         "up_right": [(-h, -h), (h, -h), (h, h)],
         "up_left": [(-h, -h), (h, -h), (-h, h)],
@@ -121,8 +126,8 @@ def slope_shapes(material: dict) -> dict:
 
 def ledge_shapes() -> dict:
     """The collider of each ledge sprite: the strip at the top of its cell that carries."""
-    half = TILE // 2
-    strip = [(-half, half - LEDGE_THICK), (half, half - LEDGE_THICK), (half, half), (-half, half)]
+    half, thick = PIXELS // 2, LEDGE_THICK * DENSITY
+    strip = [(-half, half - thick), (half, half - thick), (half, half), (-half, half)]
     return {f"tv2_ledge_{style}_{piece}": strip for style in LEDGES for piece in LEDGE_PIECES}
 
 
@@ -140,9 +145,10 @@ def backdrop_meta(path: str, pivot=(0.5, 0.0)) -> str:
 
 def manifest() -> dict:
     return {
-        "tile": TILE,
+        "tile": PIXELS,
         "ppu": PPU,
-        "view": {"width": VIEW[0], "height": VIEW[1]},
+        "density": DENSITY,
+        "view": {"width": SHIP_VIEW[0], "height": SHIP_VIEW[1]},
         "variants": VARIANTS,
         "bits": {"N": N, "NE": NE, "E": E, "SE": SE, "S": S, "SW": SW, "W": W, "NW": NW},
         "frames": FRAMES,
@@ -166,7 +172,7 @@ def manifest() -> dict:
             for b in BLENDS
         ],
         "legend": [{"character": c, "layer": layer, "key": key, "slope": slope} for c, layer, key, slope in LEGEND],
-        "ledges": {"sheet": "ledge.png", "thick": LEDGE_THICK, "keys": LEDGES, "pieces": LEDGE_PIECES},
+        "ledges": {"sheet": "ledge.png", "thick": LEDGE_THICK * DENSITY, "keys": LEDGES, "pieces": LEDGE_PIECES},
         "things": {"sheet": "things.png", "names": THINGS},
         "props": [
             {
@@ -284,20 +290,24 @@ def write(path: str, image: Image.Image, meta: str | None):
     image.save(path)
     if unity_meta.inside_assets(path):
         unity_meta.ensure_meta(os.path.dirname(path))  # the folders
-        if meta is not None:
+        if meta is not None and FRESH_METAS:
+            with open(path + ".meta", "w", newline="\n") as handle:
+                handle.write(meta)
+        elif meta is not None:
             unity_meta.write_if_missing(path + ".meta", meta)
         else:
             unity_meta.ensure_meta(path)
 
 
 def generate(out: str):
-    """Draws and writes everything; returns (the sheets by key, the loose sprites by name)."""
+    """Draws and writes everything, at the size it ships; returns (the sheets by key,
+    the loose sprites by name)."""
     images: dict[str, Image.Image] = {}
     sprites: dict[str, Image.Image] = {}
 
     def keep(image: Image.Image, cells: list):
         for name, cx, cy in cells:
-            sprites[name] = image.crop((cx * TILE, cy * TILE, (cx + 1) * TILE, (cy + 1) * TILE))
+            sprites[name] = image.crop((cx * PIXELS, cy * PIXELS, (cx + 1) * PIXELS, (cy + 1) * PIXELS))
 
     for material in MATERIALS:
         image, cells = sheet_for(material)
@@ -314,17 +324,24 @@ def generate(out: str):
     sheets += [(q["key"], tv2_liquid.liquid_sheet(q)) for q in tv2_liquid.LIQUIDS]
     sheets += [("ledge", ledge_sheet()), ("things", things_sheet())]
     for key, (image, cells) in sheets:
+        image = scale2x(image)
         path = os.path.join(out, key + ".png")
         write(path, image, sheet_meta(path, image, cells, ledge_shapes() if key == "ledge" else None))
         images[key] = image
         keep(image, cells)
     image, entries = tv2_decor.decor_sheet()
+    image = scale2x(image)
+    entries = [(name, x * DENSITY, y * DENSITY, w * DENSITY, h * DENSITY, pivot) for name, x, y, w, h, pivot in entries]
     path = os.path.join(out, "decor.png")
     write(path, image, rect_meta(path, entries))
     images["decor"] = image
     for name, x, y, w, h, _ in entries:
         sprites[name] = image.crop((x, image.height - y - h, x + w, image.height - y))
-    for name, image in tv2_backdrop.backdrops().items():
+    for name, draft in tv2_backdrop.backdrops().items():
+        # Drawn at the size it ships where a picture has that (a module's FINE); else its draft, doubled.
+        anew = next((module.FINE[name] for module in (tv2_earth, tv2_heaven, tv2_eden) if name in getattr(module, "FINE", {})), None)
+        image = anew() if anew else scale2x(draft)
+        assert image.size == (draft.width * DENSITY, draft.height * DENSITY), (name, image.size, draft.size)
         path = os.path.join(out, name + ".png")
         stood = next((module for module in (tv2_earth, tv2_heaven, tv2_eden) if name in module.SINK_OF), None)
         write(path, image, backdrop_meta(path, stood.pivot_of(name) if stood else (0.5, 0.0)))
@@ -347,7 +364,10 @@ def main(argv=None):
     parser.add_argument("--scale", type=float, default=3, help="the preview's scale (default 3; below 1 for a big map, 0.25 is 4 px a tile)")
     parser.add_argument("--map", default=SAMPLE_MAP, help="the map the preview lays out (default: the sample map)")
     parser.add_argument("--unlit", action="store_true", help="the preview without the tile light")
+    parser.add_argument("--metas", action="store_true", help="write every picture's .meta again (the size it ships at has changed)")
     args = parser.parse_args(argv)
+    global FRESH_METAS
+    FRESH_METAS = args.metas
     art = generate(args.out)
     if args.preview:
         scale = int(args.scale) if args.scale >= 1 else args.scale

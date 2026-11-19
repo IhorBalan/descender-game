@@ -25,6 +25,7 @@ namespace Descender.EditorTools.TilesV2
 
         public int tile;
         public int ppu;
+        public int density;
         public ViewSection view = new ViewSection();
         public int variants;
         public int[] frames = Array.Empty<int>();

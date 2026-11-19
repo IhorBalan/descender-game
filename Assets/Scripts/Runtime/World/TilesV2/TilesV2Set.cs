@@ -98,9 +98,12 @@ namespace Descender.World.TilesV2
         [Tooltip(
             "The camera's view in art pixels: its reference resolution, and the size the sky and the backdrops are drawn for."
         )]
-        public int viewWidth = 640;
+        public int viewWidth = 1280;
 
-        public int viewHeight = 360;
+        public int viewHeight = 720;
+
+        [Tooltip("Pixels of the art to a unit: a tile is one unit, and this many pixels across.")]
+        public int pixelsPerUnit = PixelsPerUnit;
 
         [Header("Backdrop")]
         public int skyBands = 24;
@@ -117,8 +120,20 @@ namespace Descender.World.TilesV2
         /// <summary>The camera's view in art pixels.</summary>
         public Vector2Int ViewPixels => new Vector2Int(viewWidth, viewHeight);
 
-        /// <summary>The camera's view in units: 16 art pixels a unit.</summary>
-        public Vector2 View => new Vector2(viewWidth, viewHeight) / 16f;
+        /// <summary>
+        /// Pixels of the art to a unit, as the standard ships it: a tile is 32 x 32. The art is
+        /// drawn on a draft of 16 to the tile and ships twice as fine (docs/art/tiles-v2.md).
+        /// </summary>
+        public const int PixelsPerUnit = 32;
+
+        /// <summary>
+        /// A pixel of the draft, in units: a sixteenth of a tile. What a map gives beside a
+        /// mark (how far aside, how far up) is counted in these, whatever the art ships at.
+        /// </summary>
+        public const float DraftPixel = 1f / 16f;
+
+        /// <summary>The camera's view in units.</summary>
+        public Vector2 View => new Vector2(viewWidth, viewHeight) / Mathf.Max(pixelsPerUnit, 1);
 
         /// <summary>The legend's entry for a map character; false for air and anything unknown.</summary>
         public bool TryGlyph(char character, out Glyph glyph)

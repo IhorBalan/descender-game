@@ -120,7 +120,9 @@ namespace Descender.EditorTools.TilesV2
                 {
                     TilesV2Sample.Build();
                 }
-                var pixels = int.TryParse(Argument("-tilesV2Pixels"), out var asked) ? Mathf.Clamp(asked, 1, 16) : 16;
+                var pixels = int.TryParse(Argument("-tilesV2Pixels"), out var asked)
+                    ? Mathf.Clamp(asked, 1, TilesV2Set.PixelsPerUnit)
+                    : TilesV2Set.PixelsPerUnit;
                 var hour = float.TryParse(
                     Argument("-tilesV2Hour"),
                     System.Globalization.NumberStyles.Float,
@@ -363,27 +365,28 @@ namespace Descender.EditorTools.TilesV2
             // The whole map, at as many pixels a tile as a texture can hold.
             var most = Mathf.Max(area.width, area.height);
             var pixels =
-                most * 16f <= WidestPicture ? 16f
+                most * 32f <= WidestPicture ? 32f
+                : most * 16f <= WidestPicture ? 16f
                 : most * 8f <= WidestPicture ? 8f
                 : 4f;
             Render(world, area.center, area.size, Path.Combine(folder, "map.png"), pixels);
         }
 
-        // Renders a view of `size` units centred on `at`, at 16 pixels a unit, to a PNG (to nothing when
+        // Renders a view of `size` units centred on `at`, at the art's own pixels a unit, to a PNG (to nothing when
         // `file` is null). With `place` false the backdrop stays where it was put: a piece of a larger picture.
         private static void Render(
             TilesV2World world,
             Vector2 at,
             Vector2 size,
             string file,
-            float pixels = 16f,
+            float pixels = TilesV2Set.PixelsPerUnit,
             bool place = true
         )
         {
             var width = Mathf.RoundToInt(size.x * pixels);
             var height = Mathf.RoundToInt(size.y * pixels);
             var air = world.GetComponentInChildren<TilesV2Air>();
-            if (air != null && pixels >= 16f && place)
+            if (air != null && pixels >= TilesV2Set.PixelsPerUnit && place)
             {
                 // The air of the region this view is in, as full as it gets.
                 air.Follow(at);

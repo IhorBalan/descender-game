@@ -624,6 +624,31 @@ namespace Descender.Tests
             Assert.That(life.LeanOf(life.Brush.Count - 1), Is.EqualTo(0f));
         }
 
+        [Test]
+        public void TheLevelsPicturesShipAtThirtyTwoPixelsToTheTile()
+        {
+            // A picture drawn at the finer size (a great leaf) and one that is its draft doubled
+            // (a post under a platform) are both at the art's density, and as big in the world
+            // as they were: a leaf of the Hollow is over ten tiles tall, a post ten exactly.
+            var leaf = System.Array.Find(set.backdrops, backdrop => backdrop.key == "eden_leaf_1");
+            var post = System.Array.Find(set.backdrops, backdrop => backdrop.key == "eden_post_0");
+            Assert.That(leaf, Is.Not.Null);
+            Assert.That(post, Is.Not.Null);
+            foreach (var sprite in new[] { leaf.sprite, post.sprite })
+            {
+                Assert.That(sprite.pixelsPerUnit, Is.EqualTo(TilesV2Set.PixelsPerUnit), sprite.name);
+                Assert.That(sprite.texture.filterMode, Is.EqualTo(FilterMode.Point), sprite.name);
+            }
+            Assert.That(post.sprite.rect.height, Is.EqualTo(10 * TilesV2Set.PixelsPerUnit));
+            Assert.That(post.sprite.bounds.size.y, Is.EqualTo(10f).Within(1e-3f));
+            Assert.That(leaf.sprite.rect.size, Is.EqualTo(new Vector2(324f, 404f)), "twice its draft of 162 x 202");
+            Assert.That(leaf.sprite.bounds.size.y, Is.GreaterThan(10f));
+            // The view is as many tiles as it was, at twice the pixels.
+            Assert.That(set.ViewPixels, Is.EqualTo(new Vector2Int(1280, 720)));
+            Assert.That(set.View, Is.EqualTo(new Vector2(40f, 22.5f)));
+            Assert.That(world.Sky.Pixels, Is.EqualTo(set.ViewPixels));
+        }
+
         private bool Ledge(int column, int row)
         {
             return set.TryGlyph(map.TerrainAt(column, row), out var glyph) && glyph.layer == TilesV2Set.Layer.Ledge;

@@ -4,7 +4,7 @@ so it can be looked over zoomed in: every torch, ledge and blade of grass.
 
     python tools/tiles_v2/photo_world.py                    # the world, as it is at the day's start
     python tools/tiles_v2/photo_world.py --hour 21          # at night
-    python tools/tiles_v2/photo_world.py --pixels 8         # half the size (16 is every art pixel)
+    python tools/tiles_v2/photo_world.py --pixels 16        # half the size (32 is every art pixel)
     python tools/tiles_v2/photo_world.py --sample           # the sample map
     python tools/tiles_v2/photo_world.py --paradise         # the Paradise level (to Logs/TilesV2/photo_paradise)
     python tools/tiles_v2/photo_world.py --out D:/pictures  # somewhere else than Logs/TilesV2/photo
@@ -296,7 +296,7 @@ def label(whole: Image.Image, index: dict) -> tuple[Image.Image, list[str]]:
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--out", default=os.path.join(ROOT, "Logs", "TilesV2", "photo"), help="where to write (default: Logs/TilesV2/photo)")
-    parser.add_argument("--pixels", type=int, default=16, choices=range(1, 17), metavar="1..16", help="pixels a tile (default 16: every art pixel)")
+    parser.add_argument("--pixels", type=int, default=32, choices=range(1, 33), metavar="1..32", help="pixels a tile (default 32: every art pixel)")
     parser.add_argument("--hour", type=float, help="the hour of the day, 0 to 24 (default: the scene's own, the day's start)")
     parser.add_argument("--sample", action="store_true", help="the sample map instead of the world")
     parser.add_argument("--paradise", action="store_true", help="the Paradise level instead of the world (to Logs/TilesV2/photo_paradise unless --out says)")
