@@ -98,7 +98,13 @@ ways:
     marble and the fountain, and every round tower of the castles of
     Paradise (the castle's own helpers take `fine`: `ashlar`, its joints a
     pixel wide, `lit_window`, `cone_rows`, `shingles`, `finial`, `banner`;
-    `fine_stones` is in `tv2_heaven` now); and the gathered on the Wheel. A
+    `fine_stones` is in `tv2_heaven` now), and all else that the castles
+    are built of: the great roofs, the bridges, the battlements, the gates
+    standing free and the gatehouse's gate, the Orchard's temple, the bridge
+    from the Garden, the hall's sides and its high seat, the rooms of the
+    House (`wall`, `glass_window`, `bay`, `bay_end`, `host_wings` take
+    `fine`), the banners, the pennants, the glints, the hall's light and the
+    swans; and the gathered on the Wheel. A
     part of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
