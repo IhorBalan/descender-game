@@ -419,179 +419,215 @@ def shrub(variant: int, fine: int = 1) -> Image.Image:
 # --- What people built ------------------------------------------------------------
 
 
-def masonry(art: Art, x0, y0, x1, y1, ramp, r, course: int = 5, dark: bool = False):
-    """Stone in courses, each stone its own shade, the mortar dark, the top of each stone lit."""
+def masonry(art: Art, x0, y0, x1, y1, ramp, r, course: int = 5, dark: bool = False, fine: int = 1):
+    """Stone in courses, each stone its own shade, the mortar dark, the top of each stone lit.
+    The places are in the draft's pixels; `art` is `fine` times the draft's size, and at
+    more than one the same stones have mortar a pixel wide and a pit here and there."""
+    f = fine
     shift_k = -1 if dark else 0
     for row, y in enumerate(range(int(y0), int(y1), course)):
         x = int(x0) - (row % 2) * r.randint(3, 6)
         while x < x1:
             length = r.randint(6, 11)
             tone = r.choice([2, 3, 3, 4]) + shift_k
-            for yy in range(y, min(y + course, int(y1))):
-                for xx in range(max(x, int(x0)), min(x + length, int(x1))):
-                    edge = yy == y + course - 1 or xx == x + length - 1
-                    k = 1 if edge else tone + 1 if yy == y else tone
+            for yy in range(y * f, min(y + course, int(y1)) * f):
+                for xx in range(max(x, int(x0)) * f, min(x + length, int(x1)) * f):
+                    edge = yy == (y + course) * f - 1 or xx == (x + length) * f - 1
+                    k = 1 if edge else tone + 1 if yy == y * f else tone
+                    if f > 1 and not edge and (xx * 11 + yy * 7) % 37 == 0:
+                        k -= 1  # a pit in the stone
                     art.put(xx, yy, ramp[max(min(k, len(ramp) - 1), 1)])
             x += length
 
 
-def roof_tiles(art: Art, pts, ramp, r, rows: int = 4):
+def roof_tiles(art: Art, pts, ramp, r, rows: int = 4, fine: int = 1):
     """A roof's face between its eaves and its ridge, laid as rows of tiles, lit along each row's
-    lower lip. `pts` is a function y -> (x0, x1) of the face at a row."""
+    lower lip. `pts` is a function y -> (x0, x1) of the face at a row, in the draft's pixels;
+    at `fine` over one the face is drawn at that size, its seams and lips a pixel wide."""
+    f = fine
     for y, (x0, x1) in pts:
-        for x in range(int(x0), int(x1)):
-            row = (y // rows) % 2
-            lip = y % rows == rows - 1
-            seam = (x + row * 3) % 6 == 0
-            k = 1 if seam else 4 if lip else 3 if (x * 7 + y) % 9 else 2
-            art.put(x, y, ramp[k])
+        for Y in range(y * f, (y + 1) * f):
+            for X in range(int(x0 * f) if f > 1 else int(x0), int(x1 * f) if f > 1 else int(x1)):
+                row = (Y // (rows * f)) % 2
+                lip = Y % (rows * f) == rows * f - 1
+                seam = (X + row * 3 * f) % (6 * f) == 0
+                k = 1 if seam else 4 if lip else 3 if (X * 7 + Y) % 9 else 2
+                art.put(X, Y, ramp[k])
 
 
-def window(art: Art, x, y, w, h, glow=None, broken=False, r=None):
-    """A window: a deep dark opening (or a lit one), a sill of stone, a cross of timber."""
-    for yy in range(y, y + h):
-        for xx in range(x, x + w):
-            art.put(xx, yy, glow[1] if glow else DARK)
+def window(art: Art, x, y, w, h, glow=None, broken=False, r=None, fine: int = 1):
+    """A window: a deep dark opening (or a lit one), a sill of stone, a cross of timber.
+    The places are in the draft's pixels; at `fine` over one its cross and its sill are a
+    pixel finer and lit along their edge."""
+    f = fine
+    for Y in range(y * f, (y + h) * f):
+        for X in range(x * f, (x + w) * f):
+            art.put(X, Y, glow[1] if glow else DARK)
     if glow:
-        for yy in range(y + 1, y + h - 1):
-            art.put(x + 1, yy, glow[2])
+        for Y in range((y + 1) * f, (y + h - 1) * f):
+            for s in range(f):
+                art.put((x + 1) * f + s, Y, glow[2])
     mid_x, mid_y = x + w // 2, y + h // 2
-    for yy in range(y, y + h):
-        art.put(mid_x, yy, TIMBER[2])
+    for Y in range(y * f, (y + h) * f):
+        for s in range(f):
+            art.put(mid_x * f + s, Y, TIMBER[3] if f > 1 and s == 0 else TIMBER[2])
     if not broken:
-        for xx in range(x, x + w):
-            art.put(xx, mid_y, TIMBER[2])
-    for xx in range(x - 1, x + w + 1):
-        art.put(xx, y + h, STONEWORK[5])
-        art.put(xx, y + h + 1, STONEWORK[2])
+        for X in range(x * f, (x + w) * f):
+            for s in range(f):
+                art.put(X, mid_y * f + s, TIMBER[3] if f > 1 and s == 0 else TIMBER[2])
+    for X in range((x - 1) * f, (x + w + 1) * f):
+        for s in range(f):
+            art.put(X, (y + h) * f + s, STONEWORK[6] if f > 1 and s == 0 else STONEWORK[5])
+            art.put(X, (y + h + 1) * f + s, STONEWORK[2])
     if broken and r:
         for _ in range(3):
-            art.put(x + r.randrange(w), y + r.randrange(h), PLASTER[4])
+            dot(art, x + r.randrange(w), y + r.randrange(h), PLASTER[4], f)
 
 
-def ivy(art: Art, x0, y0, x1, y1, r, amount: float):
-    """Ivy over a wall: clumps of leaves that climb from the ground and thin out upward."""
+def ivy(art: Art, x0, y0, x1, y1, r, amount: float, fine: int = 1):
+    """Ivy over a wall: clumps of leaves that climb from the ground and thin out upward.
+    At `fine` over one each clump is a leaf of a few pixels, lit on its top."""
+    f = fine
     for _ in range(int((x1 - x0) * (y1 - y0) * amount / 4)):
         x = r.randint(int(x0), int(x1) - 1)
         y = int(y1 - (y1 - y0) * r.random() ** 1.8)
-        if art.has(x, y):
+        if art.has(x * f, y * f):
             k = r.choice([2, 3, 3, 4, 5])
-            art.put(x, y, OAK[k])
-            art.put(x + 1, y, OAK[k - 1])
-            art.put(x, y - 1, OAK[min(k + 1, 6)])
+            if f == 1:
+                art.put(x, y, OAK[k])
+                art.put(x + 1, y, OAK[k - 1])
+                art.put(x, y - 1, OAK[min(k + 1, 6)])
+                continue
+            X, Y = x * f, y * f
+            for dx, dy, kk in ((0, 0, k), (1, 0, k), (2, 0, k - 1), (3, 1, k - 1), (0, -1, min(k + 1, 6)), (1, -1, min(k + 1, 6)), (1, 1, k - 1), (2, 1, k - 1)):
+                art.put(X + dx, Y + dy, OAK[kk])
 
 
-def plinth(art: Art, x0, x1, top, r):
+def plinth(art: Art, x0, x1, top, r, fine: int = 1):
     """The stone the house stands on, down into the ground."""
-    masonry(art, x0, top, x1, art.h, STONEWORK, r, course=6, dark=True)
+    masonry(art, x0, top, x1, art.h // fine, STONEWORK, r, course=6, dark=True, fine=fine)
 
 
-def cottage(variant: int) -> Image.Image:
+def cottage(variant: int, fine: int = 1) -> Image.Image:
     """A cottage of stone below and timber and plaster above, under a roof of red tiles,
     a chimney at one end. Variant 0 is a ruin: its roof fell in at the east end (the
     rafters stand bare), its plaster is gone in places, its windows are black, ivy has
-    it. Variant 1 still has a roof of thatch, someone keeps a lamp in its window."""
+    it. Variant 1 still has a roof of thatch, someone keeps a lamp in its window. `fine`
+    draws it that many times the draft's size: mortar and joints a pixel wide, thatch in
+    finer straws."""
     r = rng("cottage", variant)
+    f = fine
     ruin = variant == 0
-    W, wall_h = 150, 54
+    W0, wall_h = 150, 54
     roof_h = 46
-    H = wall_h + roof_h + 22 + 3 * TILE
-    art = Art(W, H)
-    floor = H - 3 * TILE  # the floor line: the plinth goes down under it into the ground
-    x0, x1 = 14, W - 14
-    plinth(art, x0 - 2, x1 + 2, floor, r)
+    H0 = wall_h + roof_h + 22 + 3 * TILE
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - 3 * TILE  # the floor line: the plinth goes down under it into the ground
+    x0, x1 = 14, W0 - 14
+    plinth(art, x0 - 2, x1 + 2, floor, r, fine=f)
     top = floor - wall_h
     # The ground floor of stone, the upper of timber and plaster.
-    masonry(art, x0, floor - 22, x1, floor, STONEWORK, r)
-    for y in range(top, floor - 22):
-        for x in range(x0, x1):
-            k = 4 if x < x0 + 3 else 3 if (x * 13 + y * 7) % 23 else 2
-            art.put(x, y, PLASTER[k])
+    masonry(art, x0, floor - 22, x1, floor, STONEWORK, r, fine=f)
+    for Y in range(top * f, (floor - 22) * f):
+        for X in range(x0 * f, x1 * f):
+            x = X // f
+            k = 4 if x < x0 + 3 else 3 if (X * 13 + Y * 7) % 23 else 2
+            art.put(X, Y, PLASTER[k])
     for x in list(range(x0, x1, 22)) + [x1 - 3]:
-        for y in range(top, floor - 22):
-            for dx in range(3):
-                art.put(x + dx, y, TIMBER[3 if dx == 0 else 2])
+        for Y in range(top * f, (floor - 22) * f):
+            for DX in range(3 * f):
+                art.put(x * f + DX, Y, TIMBER[3 if DX < f and (f == 1 or DX == 0) else 2 if f == 1 or DX < 3 * f - 1 else 1])
     for y in (top, floor - 24):
-        for x in range(x0 - 2, x1 + 2):
-            art.put(x, y, TIMBER[3])
-            art.put(x, y + 1, TIMBER[2])
-            art.put(x, y + 2, TIMBER[1])
+        for X in range((x0 - 2) * f, (x1 + 2) * f):
+            for d, k in enumerate((3, 2, 1)):
+                for s in range(f):
+                    art.put(X, (y + d) * f + s, TIMBER[k + (1 if f > 1 and d == 0 and s == 0 else 0)])
     # Braces in the panels.
     for x in range(x0 + 3, x1 - 22, 44):
-        art.line(x, floor - 26, x + 18, top + 3, TIMBER[2], 2)
+        art.line(x * f, (floor - 26) * f, (x + 18) * f, (top + 3) * f, TIMBER[2], 2 * f)
     # Door and windows.
     door_x = x0 + 52
-    for y in range(floor - 30, floor):
-        for x in range(door_x, door_x + 14):
+    for Y in range((floor - 30) * f, floor * f):
+        for X in range(door_x * f, (door_x + 14) * f):
+            x = X // f
             if ruin:
-                art.put(x, y, DARK)
+                art.put(X, Y, DARK)
             elif x < door_x + 5:
                 # The door stands ajar: the fire inside lights the gap.
-                art.put(x, y, GLOW[1] if x > door_x + 1 else GLOW[2])
+                art.put(X, Y, GLOW[1] if x > door_x + 1 else GLOW[2])
             else:
-                art.put(x, y, TIMBER[2 if (x - door_x) % 4 else 1])
-    for x in range(door_x - 2, door_x + 16):
-        art.put(x, floor - 31, STONEWORK[5])
-        art.put(x, floor - 32, STONEWORK[3])
+                art.put(X, Y, TIMBER[2 if (x - door_x) % 4 or (f > 1 and X % f) else 1])
+    for X in range((door_x - 2) * f, (door_x + 16) * f):
+        for s in range(f):
+            art.put(X, (floor - 31) * f + s, STONEWORK[5])
+            art.put(X, (floor - 32) * f + s, STONEWORK[3])
     if ruin:
         # The door hangs off one hinge, leaning in the opening.
-        art.line(door_x + 2, floor - 1, door_x + 9, floor - 28, TIMBER[3], 4)
+        art.line((door_x + 2) * f, (floor - 1) * f, (door_x + 9) * f, (floor - 28) * f, TIMBER[3], 4 * f)
     glow = GLOW if not ruin else None
-    window(art, x0 + 14, floor - 18, 12, 11, glow=None, broken=ruin, r=r)
-    window(art, x0 + 86, floor - 18, 12, 11, glow=glow, broken=ruin, r=r)
-    window(art, x0 + 30, top + 8, 10, 10, glow=None, broken=ruin, r=r)
-    window(art, x0 + 92, top + 8, 10, 10, glow=None, broken=ruin, r=r)
+    window(art, x0 + 14, floor - 18, 12, 11, glow=None, broken=ruin, r=r, fine=f)
+    window(art, x0 + 86, floor - 18, 12, 11, glow=glow, broken=ruin, r=r, fine=f)
+    window(art, x0 + 30, top + 8, 10, 10, glow=None, broken=ruin, r=r, fine=f)
+    window(art, x0 + 92, top + 8, 10, 10, glow=None, broken=ruin, r=r, fine=f)
     # The roof: a pitched one from eave to eave, the ridge in the middle.
-    ridge_x, ridge_y = W // 2, top - roof_h
+    ridge_x, ridge_y = W0 // 2, top - roof_h
     face = []
     for y in range(ridge_y, top + 4):
         t = (y - ridge_y) / (top + 4 - ridge_y)
-        half = 6 + (W / 2 - 4) * t
+        half = 6 + (W0 / 2 - 4) * t
         face.append((y, (ridge_x - half, ridge_x + half)))
     if ruin:
         # The west half keeps its tiles; the east has fallen, its rafters bare against the sky.
-        roof_tiles(art, [(y, (a, min(b, ridge_x + 6 + (y - ridge_y) * 0.2))) for y, (a, b) in face], ROOF, r)
+        roof_tiles(art, [(y, (a, min(b, ridge_x + 6 + (y - ridge_y) * 0.2))) for y, (a, b) in face], ROOF, r, fine=f)
         for k in range(5):
             x = ridge_x + 10 + k * 13
-            art.line(ridge_x + 2, ridge_y + 2, min(x + 18, W - 4), top + 2 - k * 2 + (6 if k == 4 else 0), TIMBER[2 if k % 2 else 3], 2)
-        for x in range(ridge_x, W - 18, 7):
-            art.put(x, top - 6, TIMBER[1])
+            art.line((ridge_x + 2) * f, (ridge_y + 2) * f, min(x + 18, W0 - 4) * f, (top + 2 - k * 2 + (6 if k == 4 else 0)) * f, TIMBER[2 if k % 2 else 3], 2 * f)
+        for x in range(ridge_x, W0 - 18, 7):
+            dot(art, x, top - 6, TIMBER[1], f)
         # The plaster has come away from the east of the upper floor, showing the dark inside.
-        for y in range(top + 3, floor - 25):
-            for x in range(x0 + 104, x1 - 3):
-                if (x - (x0 + 104)) + (y - top) * 0.6 > 6 + 8 * math.sin(y * 0.3):
-                    art.put(x, y, DARK if (x + y) % 5 else PLASTER[1])
+        for Y in range((top + 3) * f, (floor - 25) * f):
+            y = Y / f
+            for X in range((x0 + 104) * f, (x1 - 3) * f):
+                x = X / f
+                if (x - (x0 + 104)) + (y - top) * 0.6 > 6 + 8 * math.sin((int(y) if f == 1 else y) * 0.3):
+                    art.put(X, Y, DARK if (X + Y) % 5 else PLASTER[1])
         # Inside, through the fallen east end: a table on its side, a chair, a broken pot.
-        art.rect(x0 + 108, floor - 12, x0 + 112, floor - 1, TIMBER[3])
-        art.rect(x0 + 108, floor - 12, x0 + 126, floor - 9, TIMBER[4])
-        art.line(x0 + 112, floor - 9, x0 + 120, floor - 1, TIMBER[2], 2)
-        art.line(x0 + 98, floor - 1, x0 + 102, floor - 10, TIMBER[3], 1)
-        art.line(x0 + 102, floor - 10, x0 + 106, floor - 8, TIMBER[3], 1)
-        art.rect(x0 + 92, floor - 4, x0 + 97, floor - 1, ROOF[2])
-        ivy(art, x0, top, x0 + 70, floor, r, 0.55)
-        ivy(art, x1 - 30, floor - 30, x1, floor, r, 0.4)
+        art.rect((x0 + 108) * f, (floor - 12) * f, (x0 + 112) * f, (floor - 1) * f, TIMBER[3])
+        art.rect((x0 + 108) * f, (floor - 12) * f, (x0 + 126) * f, (floor - 9) * f, TIMBER[4])
+        art.line((x0 + 112) * f, (floor - 9) * f, (x0 + 120) * f, (floor - 1) * f, TIMBER[2], 2 * f)
+        art.line((x0 + 98) * f, (floor - 1) * f, (x0 + 102) * f, (floor - 10) * f, TIMBER[3], f)
+        art.line((x0 + 102) * f, (floor - 10) * f, (x0 + 106) * f, (floor - 8) * f, TIMBER[3], f)
+        art.rect((x0 + 92) * f, (floor - 4) * f, (x0 + 97) * f, (floor - 1) * f, ROOF[2])
+        ivy(art, x0, top, x0 + 70, floor, r, 0.55, fine=f)
+        ivy(art, x1 - 30, floor - 30, x1, floor, r, 0.4, fine=f)
     else:
         for y, (a, b) in face:
-            for x in range(int(a), int(b)):
-                k = 5 if (x - a) < 4 else 2 if b - x < 4 else 4 if (x * 5 + y * 3) % 7 == 0 else 3
-                if (y - ridge_y) % 7 == 6:
-                    k = max(k - 1, 1)
-                art.put(x, y, THATCH[k])
-        for x in range(ridge_x - 8, ridge_x + 9):
-            art.put(x, ridge_y, THATCH[2])
+            for Y in range(y * f, (y + 1) * f):
+                for X in range(int(a) * f if f == 1 else int(a * f), int(b) * f if f == 1 else int(b * f)):
+                    x = X / f
+                    straw = (X * 5 + Y * 3) % 7 == 0 if f == 1 else (X * 5 + Y * 3) % 11 == 0
+                    k = 5 if (x - a) < 4 else 2 if b - x < 4 else 4 if straw else 3
+                    if (y - ridge_y) % 7 == 6 and (f == 1 or Y % f == f - 1):
+                        k = max(k - 1, 1)
+                    art.put(X, Y, THATCH[k])
+        for X in range((ridge_x - 8) * f, (ridge_x + 9) * f):
+            for s in range(f):
+                art.put(X, ridge_y * f + s, THATCH[2])
     # The chimney, at the west end, through the roof.
     cx = x0 + 18
-    masonry(art, cx, ridge_y - 4, cx + 12, top - 10, STONEWORK, r, course=4)
-    for x in range(cx - 1, cx + 13):
-        art.put(x, ridge_y - 5, STONEWORK[5])
-    art.outline(STONEWORK[0])
+    masonry(art, cx, ridge_y - 4, cx + 12, top - 10, STONEWORK, r, course=4, fine=f)
+    for X in range((cx - 1) * f, (cx + 13) * f):
+        for s in range(f):
+            art.put(X, (ridge_y - 5) * f + s, STONEWORK[6] if f > 1 and s == 0 else STONEWORK[5])
+    for _ in range(f):
+        art.outline(STONEWORK[0])
     return art.image()
 
 
-def cottage_glow() -> Image.Image:
-    """The lit window of the cottage that still has a roof, drawn unlit over it: the lamp
-    in it shows at dusk and at night."""
-    base = cottage(1)
+def cottage_glow(fine: int = 1) -> Image.Image:
+    """The light of the kept cottage's door and window by itself, shown unlit over it, so the
+    fire in it shows at dusk and at night. `fine`: over the cottage drawn at that size."""
+    base = cottage(1, fine)
     art = Art(base.width, base.height)
     a = np.array(base)
     lit = (a[..., 0] == GLOW[1][0]) & (a[..., 1] == GLOW[1][1]) & (a[..., 2] == GLOW[1][2])
@@ -600,168 +636,203 @@ def cottage_glow() -> Image.Image:
     return art.image()
 
 
-def chapel(variant: int = 0) -> Image.Image:
+def chapel(variant: int = 0, fine: int = 1) -> Image.Image:
     """A chapel of stone, roofless: its west gable stands with a tall pointed window and a
     bell-cote on top (the bell still in it), its long wall broken down to the sills, a door
-    under a pointed arch; ivy and the sky through all of it."""
+    under a pointed arch; ivy and the sky through all of it. `fine` draws it that many
+    times the draft's size: mortar a pixel wide, true pointed heads, a round bell."""
     r = rng("chapel", variant)
-    W = 170
-    H = 150 + 3 * TILE
-    art = Art(W, H)
-    floor = H - 3 * TILE
-    plinth(art, 8, W - 8, floor, r)
+    f = fine
+    W0 = 170
+    H0 = 150 + 3 * TILE
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - 3 * TILE
+    plinth(art, 8, W0 - 8, floor, r, fine=f)
     # The gable end, west.
     gx0, gx1 = 10, 62
     gtop = floor - 104
-    masonry(art, gx0, gtop, gx1, floor, STONEWORK, r)
+    masonry(art, gx0, gtop, gx1, floor, STONEWORK, r, fine=f)
     for y in range(gtop - 30, gtop):
         t = (y - (gtop - 30)) / 30
         half = 4 + (gx1 - gx0) / 2 * t
-        masonry(art, (gx0 + gx1) / 2 - half, y, (gx0 + gx1) / 2 + half, y + 1, STONEWORK, r, course=5)
+        masonry(art, (gx0 + gx1) / 2 - half, y, (gx0 + gx1) / 2 + half, y + 1, STONEWORK, r, course=5, fine=f)
     # The bell-cote on the gable's top.
     bx = (gx0 + gx1) // 2
-    masonry(art, bx - 9, gtop - 52, bx + 9, gtop - 26, STONEWORK, r)
-    for y in range(gtop - 48, gtop - 32):
-        for x in range(bx - 5, bx + 5):
+    masonry(art, bx - 9, gtop - 52, bx + 9, gtop - 26, STONEWORK, r, fine=f)
+    for Y in range((gtop - 48) * f, (gtop - 32) * f):
+        y = Y / f
+        for X in range((bx - 5) * f, (bx + 5) * f):
+            x = X / f + (0.5 / f - 0.5 if f > 1 else 0)
             if (x - bx) ** 2 / 25 + ((y - (gtop - 44)) / 6) ** 2 <= 1 or y > gtop - 44:
-                art.put(x, y, DARK)
-    for y in range(gtop - 44, gtop - 36):
-        half = 1 + (y - (gtop - 44)) // 2
-        for x in range(bx - half, bx + half + 1):
-            art.put(x, y, COPPER[4] if x < bx else COPPER[2])
-    for y in range(gtop - 62, gtop - 52):
-        half = (y - (gtop - 62)) * 0.9
-        for x in range(int(bx - half), int(bx + half) + 1):
-            art.put(x, y, STONEWORK[5] if x < bx else STONEWORK[3])
-    art.line(bx, gtop - 70, bx, gtop - 62, IRON[3])
-    art.line(bx - 3, gtop - 67, bx + 3, gtop - 67, IRON[3])
+                art.put(X, Y, DARK)
+    for Y in range((gtop - 44) * f, (gtop - 36) * f):
+        y = Y / f
+        half = 1 + (int(y) - (gtop - 44)) // 2 if f == 1 else 1 + (y - (gtop - 44)) / 2
+        for X in range(int((bx - half) * f), int((bx + half + 1) * f)):
+            art.put(X, Y, COPPER[4] if X < bx * f else COPPER[2])
+    for Y in range((gtop - 62) * f, (gtop - 52) * f):
+        half = (Y / f - (gtop - 62)) * 0.9
+        for X in range(int((bx - half) * f), int((bx + half) * f) + (1 if f == 1 else f)):
+            art.put(X, Y, STONEWORK[5] if X < bx * f else STONEWORK[3])
+    art.line(bx * f, (gtop - 70) * f, bx * f, (gtop - 62) * f, IRON[3], f)
+    art.line((bx - 3) * f, (gtop - 67) * f, (bx + 3) * f, (gtop - 67) * f, IRON[3], f)
     # The tall pointed window of the gable, its tracery gone.
     wx = bx
-    for y in range(gtop + 6, floor - 34):
+    for Y in range((gtop + 6) * f, (floor - 34) * f):
+        y = Y / f
         half = 7 if y > gtop + 16 else 7 * math.sqrt(max(0.0, 1 - ((gtop + 16 - y) / 10) ** 2))
-        for x in range(int(wx - half), int(wx + half) + 1):
-            art.put(x, y, DARK)
-    art.line(wx, gtop + 12, wx, floor - 34, STONEWORK[2], 1)
+        for X in range(int((wx - half) * f), int((wx + half) * f) + (1 if f == 1 else f)):
+            art.put(X, Y, DARK)
+    art.line(wx * f, (gtop + 12) * f, wx * f, (floor - 34) * f, STONEWORK[2], 1 if f == 1 else 1.5)
     # The long wall, east of the gable, broken.
-    lx0, lx1 = gx1, W - 10
+    lx0, lx1 = gx1, W0 - 10
     for x in range(lx0, lx1):
         height = 60 - (x - lx0) * 0.35 + 8 * math.sin(x * 0.21) + 5 * math.sin(x * 0.53)
         height = max(height, 10)
-        masonry(art, x, floor - int(height), x + 1, floor, STONEWORK, r)
+        masonry(art, x, floor - int(height), x + 1, floor, STONEWORK, r, fine=f)
     # Its windows (the broken tops of them), and a door under a pointed arch.
     for wx2 in (lx0 + 24, lx0 + 62):
-        for y in range(floor - 44, floor - 14):
+        for Y in range((floor - 44) * f, (floor - 14) * f):
+            y = Y / f
             half = 5 if y > floor - 38 else 5 * math.sqrt(max(0.0, 1 - ((floor - 38 - y) / 6) ** 2))
-            for x in range(int(wx2 - half), int(wx2 + half) + 1):
-                if art.has(x, y):
-                    art.put(x, y, DARK)
+            for X in range(int((wx2 - half) * f), int((wx2 + half) * f) + (1 if f == 1 else f)):
+                if art.has(X, Y):
+                    art.put(X, Y, DARK)
     dx = lx0 + 88
-    for y in range(floor - 30, floor):
+    for Y in range((floor - 30) * f, floor * f):
+        y = Y / f
         half = 7 if y > floor - 22 else 7 * math.sqrt(max(0.0, 1 - ((floor - 22 - y) / 8) ** 2))
-        for x in range(int(dx - half), int(dx + half) + 1):
-            if art.has(x, y):
-                art.put(x, y, DARK)
-    ivy(art, gx0, gtop - 10, gx1, floor, r, 0.35)
-    ivy(art, lx0, floor - 50, lx1, floor, r, 0.5)
-    art.outline(STONEWORK[0])
+        for X in range(int((dx - half) * f), int((dx + half) * f) + (1 if f == 1 else f)):
+            if art.has(X, Y):
+                art.put(X, Y, DARK)
+    ivy(art, gx0, gtop - 10, gx1, floor, r, 0.35, fine=f)
+    ivy(art, lx0, floor - 50, lx1, floor, r, 0.5, fine=f)
+    for _ in range(f):
+        art.outline(STONEWORK[0])
     return art.image()
 
 
-def well() -> Image.Image:
+def well(fine: int = 1) -> Image.Image:
     """A well: a ring of stone, two posts and a little roof, the crank and the rope, the
-    bucket on the rim."""
+    bucket on the rim. `fine` draws it that many times the draft's size."""
     r = rng("well")
-    W, H = 64, 58 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    masonry(art, 12, floor - 16, W - 12, floor + 6, STONEWORK, r, course=4)
-    for x in range(10, W - 10):
-        art.put(x, floor - 17, STONEWORK[6])
-        art.put(x, floor - 16, STONEWORK[4])
-    for px in (16, W - 20):
-        for y in range(floor - 44, floor - 16):
-            for dx in range(4):
-                art.put(px + dx, y, TIMBER[4 if dx == 0 else 2])
-    for y in range(floor - 56, floor - 42):
+    f = fine
+    W0, H0 = 64, 58 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    masonry(art, 12, floor - 16, W0 - 12, floor + 6, STONEWORK, r, course=4, fine=f)
+    for X in range(10 * f, (W0 - 10) * f):
+        for s in range(f):
+            art.put(X, (floor - 17) * f + s, STONEWORK[6] if f > 1 and s == 0 else STONEWORK[6] if f == 1 else STONEWORK[5])
+            art.put(X, (floor - 16) * f + s, STONEWORK[4])
+    for px in (16, W0 - 20):
+        for Y in range((floor - 44) * f, (floor - 16) * f):
+            for DX in range(4 * f):
+                art.put(px * f + DX, Y, TIMBER[4 if DX < f else 2 if DX < 4 * f - 1 or f == 1 else 1])
+    for Y in range((floor - 56) * f, (floor - 42) * f):
+        y = Y / f
         t = (y - (floor - 56)) / 14
         half = 6 + 22 * t
-        for x in range(int(W / 2 - half), int(W / 2 + half)):
-            k = 5 if x < W / 2 - half + 3 else 2 if x > W / 2 + half - 3 else 3
-            art.put(x, y, ROOF[k] if (y % 3) else ROOF[1])
-    for x in range(16, W - 16):
-        art.put(x, floor - 36, TIMBER[3])
-        art.put(x, floor - 35, TIMBER[1])
-    art.line(W - 16, floor - 36, W - 10, floor - 30, IRON[3])
-    for y in range(floor - 35, floor - 24):
-        art.put(W // 2, y, THATCH[4])
-    for y in range(floor - 23, floor - 18):
-        for x in range(W // 2 - 3, W // 2 + 4):
-            art.put(x, y, TIMBER[3] if y != floor - 21 else IRON[3])
-    art.outline(STONEWORK[0])
+        for X in range(int((W0 / 2 - half) * f), int((W0 / 2 + half) * f)):
+            x = X / f
+            k = 5 if x < W0 / 2 - half + 3 else 2 if x > W0 / 2 + half - 3 else 3
+            course = (int(y) % 3) if f == 1 else (Y % (3 * f))
+            art.put(X, Y, ROOF[k] if course else ROOF[1])
+    for X in range(16 * f, (W0 - 16) * f):
+        for s in range(f):
+            art.put(X, (floor - 36) * f + s, TIMBER[3])
+            art.put(X, (floor - 35) * f + s, TIMBER[1])
+    art.line((W0 - 16) * f, (floor - 36) * f, (W0 - 10) * f, (floor - 30) * f, IRON[3], f)
+    for Y in range((floor - 35) * f, (floor - 24) * f):
+        art.put(W0 // 2 * f, Y, THATCH[4])
+        if f > 1:
+            art.put(W0 // 2 * f + 1, Y, THATCH[3])
+    for Y in range((floor - 23) * f, (floor - 18) * f):
+        y = Y // f
+        for X in range((W0 // 2 - 3) * f, (W0 // 2 + 4) * f):
+            art.put(X, Y, TIMBER[3] if y != floor - 21 else IRON[3])
+    for _ in range(f):
+        art.outline(STONEWORK[0])
     return art.image()
 
 
-def windmill(sails: bool = True) -> Image.Image:
+def windmill(sails: bool = True, fine: int = 1) -> Image.Image:
     """A windmill on its hill: a tower of stone that narrows upward, a cap of boards, four
     sails of lattice of which two are broken, a door and a small window. Without `sails` the
-    tower alone: the world's mill turns its own sails (`sails`, TilesV2Life)."""
+    tower alone: the world's mill turns its own sails (`sails`, TilesV2Life). `fine` draws
+    it that many times the draft's size: a tower that narrows smoothly, boards a pixel apart."""
     r = rng("windmill")
-    W, H = 190, 200 + 2 * TILE
-    art = Art(W, H)
-    floor = H - 2 * TILE
-    cx = W // 2
+    f = fine
+    W0, H0 = 190, 200 + 2 * TILE
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - 2 * TILE
+    cx = W0 // 2
     base_half, top_half, tower_h = 26, 17, 118
-    for y in range(floor - tower_h, H):
+    for y in range(floor - tower_h, H0):
         t = min(max((floor - y) / tower_h, 0), 1)
         half = base_half + (top_half - base_half) * t
-        masonry(art, cx - half, y, cx + half, y + 1, PLASTER, r, course=6)
-    for y in range(floor - tower_h, floor):
+        masonry(art, cx - half, y, cx + half, y + 1, PLASTER, r, course=6, fine=f)
+    for Y in range((floor - tower_h) * f, floor * f):
+        y = Y / f
         t = (floor - y) / tower_h
         half = base_half + (top_half - base_half) * t
-        for x in range(int(cx - half), int(cx - half) + 3):
-            art.put(x, y, PLASTER[5])
-        for x in range(int(cx + half) - 5, int(cx + half)):
-            art.put(x, y, PLASTER[1] if x > cx + half - 3 else PLASTER[2])
+        if f == 1:
+            for x in range(int(cx - half), int(cx - half) + 3):
+                art.put(x, Y, PLASTER[5])
+            for x in range(int(cx + half) - 5, int(cx + half)):
+                art.put(x, Y, PLASTER[1] if x > cx + half - 3 else PLASTER[2])
+            continue
+        left, right = int((cx - half) * f), int((cx + half) * f)
+        for X in range(left, left + 3 * f):
+            art.put(X, Y, PLASTER[6] if X == left + 1 and len(PLASTER) > 6 else PLASTER[5])
+        for X in range(right - 5 * f, right):
+            art.put(X, Y, PLASTER[1] if X > (cx + half - 3) * f else PLASTER[2])
     # Door and window.
-    for y in range(floor - 26, floor):
-        for x in range(cx - 7, cx + 6):
-            art.put(x, y, DARK)
-    window(art, cx - 4, floor - 74, 8, 10)
+    for Y in range((floor - 26) * f, floor * f):
+        for X in range((cx - 7) * f, (cx + 6) * f):
+            art.put(X, Y, DARK)
+    window(art, cx - 4, floor - 74, 8, 10, fine=f)
     # The cap.
     cap_y = floor - tower_h
-    for y in range(cap_y - 22, cap_y + 2):
+    for Y in range((cap_y - 22) * f, (cap_y + 2) * f):
+        y = Y / f
         t = (y - (cap_y - 22)) / 24
         half = 6 + (top_half + 4) * math.sqrt(t)
-        for x in range(int(cx - half), int(cx + half)):
+        for X in range(int((cx - half) * f) if f > 1 else int(cx - half), int((cx + half) * f) if f > 1 else int(cx + half)):
+            x = X / f
             k = 4 if x < cx - half * 0.4 else 2 if x > cx + half * 0.5 else 3
-            art.put(x, y, TIMBER[k] if (x % 4) else TIMBER[1])
+            board = (X % 4) if f == 1 else (X % (4 * f))
+            art.put(X, Y, TIMBER[k] if board else TIMBER[1])
     # The sails, from the hub: lattice arms, two of them broken short.
     hub = (cx + 2, cap_y - 6)
+    w1 = 1 if f == 1 else 1.5
     for k, (angle, length, broken) in enumerate(((-0.95, 82, False), (0.62, 80, True), (2.2, 82, False), (3.76, 46, True)) if sails else ()):
         ex, ey = hub[0] + math.cos(angle) * length, hub[1] + math.sin(angle) * length
-        art.line(hub[0], hub[1], ex, ey, TIMBER[2], 3)
+        art.line(hub[0] * f, hub[1] * f, ex * f, ey * f, TIMBER[2], 3 * f)
         nx, ny = -math.sin(angle), math.cos(angle)
         start = 18
         for d in range(start, int(length) - 2, 7):
             px, py = hub[0] + math.cos(angle) * d, hub[1] + math.sin(angle) * d
-            art.line(px, py, px + nx * 14, py + ny * 14, TIMBER[3], 1)
+            art.line(px * f, py * f, (px + nx * 14) * f, (py + ny * 14) * f, TIMBER[3], w1)
         for side in (0.0, 14.0):
             art.line(
-                hub[0] + math.cos(angle) * start + nx * side,
-                hub[1] + math.sin(angle) * start + ny * side,
-                ex + nx * side,
-                ey + ny * side,
+                (hub[0] + math.cos(angle) * start + nx * side) * f,
+                (hub[1] + math.sin(angle) * start + ny * side) * f,
+                (ex + nx * side) * f,
+                (ey + ny * side) * f,
                 TIMBER[3 if side else 4],
-                1,
+                w1,
             )
         if broken:
-            art.line(ex, ey, ex + nx * 9 + math.cos(angle + 1.2) * 8, ey + ny * 9 + math.sin(angle + 1.2) * 8, TIMBER[2], 2)
-    for dx in range(-3, 4):
-        for dy in range(-3, 4):
+            art.line(ex * f, ey * f, (ex + nx * 9 + math.cos(angle + 1.2) * 8) * f, (ey + ny * 9 + math.sin(angle + 1.2) * 8) * f, TIMBER[2], 2 * f)
+    for DX in range(-3 * f, 3 * f + 1):
+        for DY in range(-3 * f, 3 * f + 1):
+            dx, dy = DX / f, DY / f
             if dx * dx + dy * dy <= 9:
-                art.put(hub[0] + dx, hub[1] + dy, IRON[2 if dx + dy > 0 else 4])
-    ivy(art, cx - base_half, floor - 50, cx - 6, floor, r, 0.4)
-    art.outline(TIMBER[0])
+                art.put(hub[0] * f + DX, hub[1] * f + DY, IRON[2 if dx + dy > 0 else 4])
+    ivy(art, cx - base_half, floor - 50, cx - 6, floor, r, 0.4, fine=f)
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
@@ -798,28 +869,41 @@ def fence(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def cart() -> Image.Image:
+def cart(fine: int = 1) -> Image.Image:
     """A farm cart left where it stopped: a box of boards on one wheel, the other wheel off and
-    leaning against it, its shafts down in the grass."""
-    W, H = 72, 34 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for y in range(floor - 26, floor - 12):
-        for x in range(10, 54):
-            art.put(x, y, TIMBER[4 if y == floor - 26 else 1 if (y - floor) % 5 == 0 else 3 if x > 12 else 4])
-    art.line(54, floor - 14, 70, floor - 1, TIMBER[2], 2)
+    leaning against it, its shafts down in the grass. `fine` draws it that many times the
+    draft's size: true wheels, boards a pixel apart."""
+    f = fine
+    W0, H0 = 72, 34 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for Y in range((floor - 26) * f, (floor - 12) * f):
+        y = Y // f
+        for X in range(10 * f, 54 * f):
+            x = X // f
+            seam = (y - floor) % 5 == 0 if f == 1 else (Y - floor * f) % (5 * f) == 0
+            art.put(X, Y, TIMBER[4 if (Y == (floor - 26) * f) else 1 if seam else 3 if x > 12 else 4])
+    art.line(54 * f, (floor - 14) * f, 70 * f, (floor - 1) * f, TIMBER[2], 2 * f)
 
     def wheel(cx, cy, rad):
-        for a in range(0, 360, 4):
-            art.put(cx + math.cos(math.radians(a)) * rad, cy + math.sin(math.radians(a)) * rad, TIMBER[2])
-            art.put(cx + math.cos(math.radians(a)) * (rad - 1), cy + math.sin(math.radians(a)) * (rad - 1), TIMBER[3])
+        if f == 1:
+            for a in range(0, 360, 4):
+                art.put(cx + math.cos(math.radians(a)) * rad, cy + math.sin(math.radians(a)) * rad, TIMBER[2])
+                art.put(cx + math.cos(math.radians(a)) * (rad - 1), cy + math.sin(math.radians(a)) * (rad - 1), TIMBER[3])
+        else:
+            for DY in range(-(rad + 1) * f, (rad + 1) * f):
+                for DX in range(-(rad + 1) * f, (rad + 1) * f):
+                    d = math.hypot((DX + 0.5) / f, (DY + 0.5) / f)
+                    if rad - 1.5 < d <= rad + 0.5:
+                        art.put(cx * f + DX, cy * f + DY, TIMBER[2] if d > rad - 0.5 else TIMBER[3])
         for a in range(0, 180, 45):
-            art.line(cx - math.cos(math.radians(a)) * rad, cy - math.sin(math.radians(a)) * rad, cx + math.cos(math.radians(a)) * rad, cy + math.sin(math.radians(a)) * rad, TIMBER[2])
-        art.put(cx, cy, IRON[3])
+            art.line((cx - math.cos(math.radians(a)) * rad) * f, (cy - math.sin(math.radians(a)) * rad) * f, (cx + math.cos(math.radians(a)) * rad) * f, (cy + math.sin(math.radians(a)) * rad) * f, TIMBER[2], 1 if f == 1 else 1.5)
+        dot(art, cx, cy, IRON[3], f)
 
     wheel(22, floor - 10, 10)
     wheel(46, floor - 9, 9)
-    art.outline(TIMBER[0])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
@@ -850,32 +934,42 @@ def haystack(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def scarecrow() -> Image.Image:
-    """A scarecrow in a field nobody sows: a cross of poles, a sack head, a coat in rags."""
-    W, H = 34, 52 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    art.line(17, floor + 4, 17, floor - 44, TIMBER[3], 2)
-    art.line(3, floor - 34, 31, floor - 36, TIMBER[3], 2)
-    for y in range(floor - 34, floor - 14):
-        for x in range(10, 25):
-            art.put(x, y, ROOF[2] if (x + y) % 7 else ROOF[1])
-    for x in range(3, 10):
-        art.put(x, floor - 33, ROOF[3])
-        art.put(x, floor - 32, ROOF[2])
-    for x in range(25, 31):
-        art.put(x, floor - 35, ROOF[3])
-    for y in range(floor - 46, floor - 35):
-        for x in range(12, 22):
+def scarecrow(fine: int = 1) -> Image.Image:
+    """A scarecrow in a field nobody sows: a cross of poles, a sack head, a coat in rags.
+    `fine` draws it that many times the draft's size: a round sack head, a hat's brim."""
+    f = fine
+    W0, H0 = 34, 52 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    art.line(17 * f, (floor + 4) * f, 17 * f, (floor - 44) * f, TIMBER[3], 2 * f)
+    art.line(3 * f, (floor - 34) * f, 31 * f, (floor - 36) * f, TIMBER[3], 2 * f)
+    for Y in range((floor - 34) * f, (floor - 14) * f):
+        for X in range(10 * f, 25 * f):
+            patch_ = (X + Y) % 7 if f == 1 else (X // f + Y // f) % 7 and (X * 3 + Y) % 11
+            art.put(X, Y, ROOF[2] if patch_ else ROOF[1])
+    for X in range(3 * f, 10 * f):
+        for s in range(f):
+            art.put(X, (floor - 33) * f + s, ROOF[3])
+            art.put(X, (floor - 32) * f + s, ROOF[2])
+    for X in range(25 * f, 31 * f):
+        for s in range(f):
+            art.put(X, (floor - 35) * f + s, ROOF[3])
+    for Y in range((floor - 46) * f, (floor - 35) * f):
+        y = Y / f
+        for X in range(12 * f, 22 * f):
+            x = X / f + (0.5 / f - 0.5 if f > 1 else 0)
             if (x - 17) ** 2 / 25 + ((y - (floor - 40)) / 5.5) ** 2 <= 1:
-                art.put(x, y, THATCH[4] if x < 17 else THATCH[3])
-    for y in range(floor - 50, floor - 45):
-        for x in range(9, 26):
+                art.put(X, Y, THATCH[4] if x < 17 else THATCH[3])
+    for Y in range((floor - 50) * f, (floor - 45) * f):
+        y = Y // f
+        for X in range(9 * f, 26 * f):
+            x = X // f
             if y > floor - 47 or 13 <= x <= 21:
-                art.put(x, y, TIMBER[1])
-    art.put(15, floor - 41, DARK)
-    art.put(19, floor - 41, DARK)
-    art.outline(TIMBER[0])
+                art.put(X, Y, TIMBER[1])
+    dot(art, 15, floor - 41, DARK, f)
+    dot(art, 19, floor - 41, DARK, f)
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
@@ -945,70 +1039,94 @@ def grave(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def gateway() -> Image.Image:
+def gateway(fine: int = 1) -> Image.Image:
     """The Gate on the surface: a great arch of dark stone over the mouth of the way down,
     pointed, its voussoirs picked out, a band of letters nobody reads over the arch, two
-    buttresses, a crack, and the warm glow of what is below inside it."""
+    buttresses, a crack, and the warm glow of what is below inside it. `fine` draws it
+    that many times the draft's size: mortar a pixel wide, a true pointed arch, a finer
+    glow, letters cut a pixel deep."""
     r = rng("gateway")
-    W, H = 18 * TILE, 13 * TILE + 3 * TILE
+    f = fine
+    W0, H0 = 18 * TILE, 13 * TILE + 3 * TILE
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
-    floor = H - 3 * TILE
+    floor = H0 - 3 * TILE
     dark = ramp_of("140f14 241c24 33282f 433640 54464e 66575c 7a6a6c")
-    masonry(art, 0, floor - 150, W, H, dark, r, course=7)
+    masonry(art, 0, floor - 150, W0, H0, dark, r, course=7, fine=f)
     # Cut the outline: buttresses that step in, a gable over the arch.
-    for y in range(0, H):
-        for x in range(W):
+    for Y in range(0, H):
+        y = Y / f
+        for X in range(W):
+            x = X / f
             outside = False
             if y < floor - 150:
                 outside = True
-            elif x < 14 or x >= W - 14:
-                outside = y < floor - 96 + (0 if x < 7 or x >= W - 7 else -24)
+            elif x < 14 or x >= W0 - 14:
+                outside = y < floor - 96 + (0 if x < 7 or x >= W0 - 7 else -24)
             else:
-                peak = floor - 150 + abs(x - W / 2) * 0.32 - 16
+                peak = floor - 150 + abs(x + (0.5 / f - 0.5 if f > 1 else 0) - W0 / 2) * 0.32 - 16
                 outside = y < peak
             if outside:
-                art.a[y, x, 3] = 0
-    for y in range(floor - 166, floor - 150):
-        for x in range(14, W - 14):
-            peak = floor - 150 + abs(x - W / 2) * 0.32 - 16
+                art.a[Y, X, 3] = 0
+    for Y in range((floor - 166) * f, (floor - 150) * f):
+        y = Y / f
+        for X in range(14 * f, (W0 - 14) * f):
+            x = X / f
+            peak = floor - 150 + abs(x + (0.5 / f - 0.5 if f > 1 else 0) - W0 / 2) * 0.32 - 16
             if y >= peak:
-                art.put(x, y, dark[3] if x < W / 2 else dark[2])
+                art.put(X, Y, dark[3] if x < W0 / 2 else dark[2])
     # The opening: a pointed arch, black inside, a red glow at its foot.
-    cx, half, spring = W // 2, 44, floor - 70
-    for y in range(floor - 124, floor):
+    cx, half, spring = W0 // 2, 44, floor - 70
+    for Y in range((floor - 124) * f, floor * f):
+        y = Y / f
         if y >= spring:
             span = half
         else:
             # two arcs that meet at the top
             rise = (spring - y) / (spring - (floor - 124))
-            span = half * math.sqrt(max(0.0, 1 - rise ** 1.6))
-        for x in range(int(cx - span), int(cx + span) + 1):
-            ember_glow(art, x, y, max(0.0, (y - (floor - 56)) / 56))
+            span = half * math.sqrt(max(0.0, 1 - rise**1.6))
+        for X in range(int((cx - span) * f), int((cx + span) * f) + (1 if f == 1 else f)):
+            ember_glow(art, X, Y, max(0.0, (y - (floor - 56)) / 56))
         # The voussoirs round the opening.
         for side in (-1, 1):
-            for w_ in range(6):
-                x = int(cx + side * (span + 1 + w_))
-                if art.has(x, y):
-                    k = 5 if ((y // 6) + w_ // 3) % 2 else 4
-                    art.put(x, y, dark[k if side < 0 else k - 2])
+            for W_ in range(6 * f):
+                w_ = W_ / f
+                X = int((cx + side * (span + 1 + w_)) * f) if f > 1 else int(cx + side * (span + 1 + W_))
+                if art.has(X, Y):
+                    k = 5 if ((int(y) // 6) + int(w_) // 3) % 2 else 4
+                    if f > 1 and int(y) % 6 == 5 and Y % f == f - 1:
+                        k -= 1  # the joint between two voussoirs
+                    art.put(X, Y, dark[k if side < 0 else k - 2])
     # Nothing under its floor line: where the ground was dug for the way down the stone
     # would stand in front of the tunnel as steps; the piers go behind the ground anyway.
-    art.a[floor + 2 :, :, 3] = 0
+    art.a[(floor + 2) * f :, :, 3] = 0
     # A band of letters over the arch.
-    for x in range(cx - 52, cx + 53):
-        art.put(x, floor - 136, dark[6])
-        art.put(x, floor - 129, dark[1])
+    for X in range((cx - 52) * f, (cx + 53) * f):
+        x = X // f
+        for s in range(f):
+            art.put(X, (floor - 136) * f + s, dark[6])
+            art.put(X, (floor - 129) * f + s, dark[1])
         if x % 5 and (x * 7) % 11 > 3:
-            art.put(x, floor - 132 - (x % 2), dark[1])
+            if f == 1:
+                art.put(X, floor - 132 - (x % 2), dark[1])
+            else:
+                art.put(X, (floor - 132 - (x % 2)) * f, dark[1])
+                art.put(X, (floor - 132 - (x % 2)) * f + 1, dark[5])  # the letter's lit lower edge
     # A crack down the east pier.
     x, y = cx + 64, floor - 120
     while y < floor:
-        art.put(x, y, DARK)
-        art.put(x + 1, y, dark[4])
+        if f == 1:
+            art.put(x, y, DARK)
+            art.put(x + 1, y, dark[4])
+        else:
+            for s in range(f):
+                art.put(x * f, y * f + s, DARK)
+                art.put(x * f + 1, y * f + s, dark[4])
         x += r.choice([-1, 0, 0, 1])
         y += 1
-    ivy(art, 0, floor - 90, 40, floor, r, 0.25)
-    art.outline(dark[0])
+    ivy(art, 0, floor - 90, 40, floor, r, 0.25, fine=f)
+    for _ in range(f):
+        art.outline(dark[0])
     return art.image()
 
 
@@ -1023,170 +1141,227 @@ def ember_glow(art: Art, x: int, y: int, t: float):
     art.put(x, y, colour)
 
 
-def gate_arch() -> Image.Image:
+def gate_arch(fine: int = 1) -> Image.Image:
     """The Gate itself, in its hall under the ground: two piers of dark red stone with a
     figure cut in a niche in each, a round arch of voussoirs between them with a keystone
     carved as a face, a band of letters over it; the dark inside, warm at its foot where
-    the fire of what is below shows."""
+    the fire of what is below shows. `fine` draws it that many times the draft's size."""
     r = rng("gate arch")
-    W, H = 15 * TILE, 12 * TILE + SINK
-    art = Art(W, H)
-    floor = H - SINK
+    f = fine
+    W0, H0 = 15 * TILE, 12 * TILE + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
     stone = ramp_of("0e0606 1c0c0a 28110e 341713 42201a 50281f 60302a")
     pier = 3 * TILE
     top = floor - 11 * TILE
-    masonry(art, 0, top + 18, pier, H, stone, r, course=7)
-    masonry(art, W - pier, top + 18, W, H, stone, r, course=7)
-    masonry(art, 0, top, W, top + 30, stone, r, course=6)
+    masonry(art, 0, top + 18, pier, H0, stone, r, course=7, fine=f)
+    masonry(art, W0 - pier, top + 18, W0, H0, stone, r, course=7, fine=f)
+    masonry(art, 0, top, W0, top + 30, stone, r, course=6, fine=f)
     # The opening: a round arch springing from the piers.
-    cx, half = W / 2, (W - 2 * pier) / 2
+    cx, half = W0 / 2, (W0 - 2 * pier) / 2
     spring = top + 30 + half * 0.6
-    for y in range(int(top + 26), floor):
+    for Y in range(int(top + 26) * f, floor * f):
+        y = Y / f
         if y >= spring:
             span = half
         else:
             k = (spring - y) / (half * 0.9)
             span = half * math.sqrt(max(0.0, 1 - k * k))
-        for x in range(int(cx - span), int(cx + span) + 1):
-            ember_glow(art, x, y, max(0.0, (y - (floor - 48)) / 48))
+        for X in range(int((cx - span) * f), int((cx + span) * f) + (1 if f == 1 else f)):
+            ember_glow(art, X, Y, max(0.0, (y - (floor - 48)) / 48))
         # Voussoirs round it.
         if y < spring + 4:
             for side in (-1, 1):
-                for w_ in range(1, 8):
-                    x = int(cx + side * (span + w_))
-                    if 0 <= x < W:
-                        k = 6 if ((y // 5) + (w_ // 4)) % 2 else 5
-                        art.put(x, y, stone[k if side < 0 else k - 2])
+                for W_ in range(f, 8 * f):
+                    w_ = W_ / f
+                    X = int((cx + side * (span + w_)) * f) if f > 1 else int(cx + side * (span + W_))
+                    if 0 <= X < W0 * f:
+                        k = 6 if ((int(y) // 5) + (int(w_) // 4)) % 2 else 5
+                        art.put(X, Y, stone[k if side < 0 else k - 2])
     # The keystone, a face: two dark eyes and a mouth.
     ky = int(top + 24)
-    art.rect(cx - 7, ky - 2, cx + 7, ky + 12, stone[5])
-    art.rect(cx - 7, ky - 2, cx - 5, ky + 12, stone[6])
-    art.rect(cx + 5, ky - 2, cx + 7, ky + 12, stone[2])
+    art.rect((cx - 7) * f, (ky - 2) * f, (cx + 7) * f, (ky + 12) * f, stone[5])
+    art.rect((cx - 7) * f, (ky - 2) * f, (cx - 5) * f, (ky + 12) * f, stone[6])
+    art.rect((cx + 5) * f, (ky - 2) * f, (cx + 7) * f, (ky + 12) * f, stone[2])
     for ex in (cx - 4, cx + 2):
-        art.rect(ex, ky + 3, ex + 2, ky + 5, hexes("ff7a2a")[0])
-    art.rect(cx - 3, ky + 8, cx + 4, ky + 9, DARK)
+        art.rect(ex * f, (ky + 3) * f, (ex + 2) * f, (ky + 5) * f, hexes("ff7a2a")[0])
+        if f > 1:
+            art.put(ex * f, (ky + 3) * f, hexes("ffc080")[0])
+    art.rect((cx - 3) * f, (ky + 8) * f, (cx + 4) * f, (ky + 9) * f, DARK)
     # The band of letters.
-    for x in range(8, W - 8):
-        art.put(x, top + 6, stone[6])
-        art.put(x, top + 13, stone[1])
+    for X in range(8 * f, (W0 - 8) * f):
+        x = X // f
+        for s in range(f):
+            art.put(X, (top + 6) * f + s, stone[6])
+            art.put(X, (top + 13) * f + s, stone[1])
         if x % 4 and (x * 7) % 9 > 2:
-            art.put(x, top + 9 + (x % 2), stone[1])
+            if f == 1:
+                art.put(X, top + 9 + (x % 2), stone[1])
+            else:
+                art.put(X, (top + 9 + (x % 2)) * f, stone[1])
+                art.put(X, (top + 9 + (x % 2)) * f + 1, stone[4])
     # A figure in a niche in each pier: hooded, its hands together.
-    for nx in (pier // 2, W - pier // 2):
+    for nx in (pier // 2, W0 - pier // 2):
         ny = floor - 78
-        for y in range(ny, ny + 52):
-            for x in range(nx - 9, nx + 10):
+        for Y in range(ny * f, (ny + 52) * f):
+            y = Y / f
+            for X in range((nx - 9) * f, (nx + 10) * f):
+                x = X / f + (0.5 / f - 0.5 if f > 1 else 0)
                 if y > ny + 8 or (x - nx) ** 2 + ((y - ny - 8) * 1.1) ** 2 <= 81:
-                    art.put(x, y, stone[1])
-        for y in range(ny + 6, ny + 50):
+                    art.put(X, Y, stone[1])
+        for Y in range((ny + 6) * f, (ny + 50) * f):
+            y = Y / f
             t = (y - ny - 6) / 44
             hw = 4 + 4 * t
-            for x in range(int(nx - hw), int(nx + hw) + 1):
-                art.put(x, y, stone[5] if x < nx - hw * 0.3 else stone[3] if x > nx + hw * 0.4 else stone[4])
-        art.rect(nx - 3, ny + 9, nx + 4, ny + 14, stone[1])
-    art.outline(stone[0])
+            for X in range(int((nx - hw) * f), int((nx + hw) * f) + (1 if f == 1 else f)):
+                x = X / f
+                art.put(X, Y, stone[5] if x < nx - hw * 0.3 else stone[3] if x > nx + hw * 0.4 else stone[4])
+        art.rect((nx - 3) * f, (ny + 9) * f, (nx + 4) * f, (ny + 14) * f, stone[1])
+    for _ in range(f):
+        art.outline(stone[0])
     return art.image()
 
 
-def pithead() -> Image.Image:
+def pithead(fine: int = 1) -> Image.Image:
     """The head of the old shaft: a frame of timber two legs wide over the hole, braced,
-    with the sheave wheel at its top and the rope down into the dark; a hut for the winch."""
+    with the sheave wheel at its top and the rope down into the dark; a hut for the winch.
+    `fine` draws it that many times the draft's size: a true wheel with its spokes, a rope
+    that is laid."""
     r = rng("pithead")
-    W, H = 7 * TILE, 9 * TILE + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    left, right = 10, W - 14
+    f = fine
+    W0, H0 = 7 * TILE, 9 * TILE + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    left, right = 10, W0 - 14
     top = floor - 118
     for x0, x1 in ((left, left + 14), (right, right - 14)):
-        art.line(x0, floor + 6, (left + right) / 2 + (x1 - x0) * 0.1, top + 10, TIMBER[3], 4)
+        art.line(x0 * f, (floor + 6) * f, ((left + right) / 2 + (x1 - x0) * 0.1) * f, (top + 10) * f, TIMBER[3], 4 * f)
     for xa in (left + 4, right - 4):
-        art.line(xa, floor + 6, xa, top + 26, TIMBER[2], 4)
+        art.line(xa * f, (floor + 6) * f, xa * f, (top + 26) * f, TIMBER[2], 4 * f)
     for y in range(top + 30, floor, 26):
-        art.line(left + 4, y, right - 4, y, TIMBER[2], 2)
-        art.line(left + 4, y, right - 4, y + 24, TIMBER[1], 1)
+        art.line((left + 4) * f, y * f, (right - 4) * f, y * f, TIMBER[2], 2 * f)
+        art.line((left + 4) * f, y * f, (right - 4) * f, (y + 24) * f, TIMBER[1], f)
     # The head and the wheel.
-    art.rect(left - 2, top + 20, right + 2, top + 26, TIMBER[3])
-    art.rect(left - 2, top + 20, right + 2, top + 21, TIMBER[5])
+    art.rect((left - 2) * f, (top + 20) * f, (right + 2) * f, (top + 26) * f, TIMBER[3])
+    art.rect((left - 2) * f, (top + 20) * f, (right + 2) * f, (top + 21) * f, TIMBER[5])
     wcx, wcy, rad = (left + right) // 2, top + 10, 15
-    for a in range(0, 360, 2):
-        for k, (rr, colour) in enumerate(((rad, IRON[2]), (rad - 1, IRON[4]), (rad - 2, IRON[3]))):
-            art.put(wcx + math.cos(math.radians(a)) * rr, wcy + math.sin(math.radians(a)) * rr, colour)
+    if f == 1:
+        for a in range(0, 360, 2):
+            for k, (rr, colour) in enumerate(((rad, IRON[2]), (rad - 1, IRON[4]), (rad - 2, IRON[3]))):
+                art.put(wcx + math.cos(math.radians(a)) * rr, wcy + math.sin(math.radians(a)) * rr, colour)
+    else:
+        for DY in range(-(rad + 1) * f, (rad + 1) * f):
+            for DX in range(-(rad + 1) * f, (rad + 1) * f):
+                d = math.hypot((DX + 0.5) / f, (DY + 0.5) / f)
+                if rad - 2.5 < d <= rad + 0.5:
+                    art.put(wcx * f + DX, wcy * f + DY, IRON[2] if d > rad - 0.3 else IRON[4] if d > rad - 1.3 and DX + DY < 0 else IRON[3])
     for a in range(0, 180, 30):
-        art.line(wcx - math.cos(math.radians(a)) * rad, wcy - math.sin(math.radians(a)) * rad, wcx + math.cos(math.radians(a)) * rad, wcy + math.sin(math.radians(a)) * rad, IRON[3])
-    art.rect(wcx - 2, wcy - 2, wcx + 3, wcy + 3, IRON[1])
+        art.line((wcx - math.cos(math.radians(a)) * rad) * f, (wcy - math.sin(math.radians(a)) * rad) * f, (wcx + math.cos(math.radians(a)) * rad) * f, (wcy + math.sin(math.radians(a)) * rad) * f, IRON[3], 1 if f == 1 else 1.5)
+    art.rect((wcx - 2) * f, (wcy - 2) * f, (wcx + 3) * f, (wcy + 3) * f, IRON[1])
     # The rope, down the middle into the shaft.
-    for y in range(wcy, floor + SINK):
-        art.put(wcx + rad - 1, y, THATCH[3] if y % 4 else THATCH[2])
-    art.outline(TIMBER[0])
+    for Y in range(wcy * f, (floor + SINK) * f):
+        y = Y // f
+        if f == 1:
+            art.put(wcx + rad - 1, Y, THATCH[3] if y % 4 else THATCH[2])
+        else:
+            lay = (Y // 2) % 3
+            art.put((wcx + rad - 1) * f, Y, THATCH[3] if lay else THATCH[2])
+            art.put((wcx + rad - 1) * f + 1, Y, THATCH[2] if lay else THATCH[3])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def winch_hut() -> Image.Image:
-    """The hut the winch stood in, of boards, its roof fallen half in."""
+def winch_hut(fine: int = 1) -> Image.Image:
+    """The hut the winch stood in, of boards, its roof fallen half in. `fine` draws it that
+    many times the draft's size: boards a pixel apart, the roof's courses."""
     r = rng("hut")
-    W, H = 4 * TILE, 3 * TILE + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for y in range(floor - 30, floor + 4):
-        for x in range(4, W - 4):
-            art.put(x, y, TIMBER[3 if (x // 5) % 2 else 2] if (x % 5) else TIMBER[1])
-    for y in range(floor - 22, floor - 12):
-        for x in range(12, 22):
-            art.put(x, y, DARK)
-    for y in range(floor - 42, floor - 29):
+    f = fine
+    W0, H0 = 4 * TILE, 3 * TILE + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for Y in range((floor - 30) * f, (floor + 4) * f):
+        for X in range(4 * f, (W0 - 4) * f):
+            x = X // f
+            gap = (x % 5 == 0) if f == 1 else (X % (5 * f) == 0)
+            art.put(X, Y, TIMBER[1] if gap else TIMBER[3 if (x // 5) % 2 else 2])
+    for Y in range((floor - 22) * f, (floor - 12) * f):
+        for X in range(12 * f, 22 * f):
+            art.put(X, Y, DARK)
+    for Y in range((floor - 42) * f, (floor - 29) * f):
+        y = Y / f
         t = (y - (floor - 42)) / 13
-        for x in range(int(W / 2 - 6 - 26 * t), int(W / 2 + 6 + 26 * t)):
-            if x > W / 2 + 4 and (x + y) % 3 == 0:
+        for X in range(int((W0 / 2 - 6 - 26 * t) * f), int((W0 / 2 + 6 + 26 * t) * f)):
+            x = X / f
+            if x > W0 / 2 + 4 and ((X + Y) % 3 == 0 if f == 1 else (X // f + Y // f) % 3 == 0):
                 continue
-            art.put(x, y, ROOF[3 if x < W / 2 else 2])
-    art.outline(TIMBER[0])
+            k = 3 if x < W0 / 2 else 2
+            if f > 1 and Y % (3 * f) == 0:
+                k -= 1
+            art.put(X, Y, ROOF[k])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def colonnade_ruin() -> Image.Image:
+def colonnade_ruin(fine: int = 1) -> Image.Image:
     """Behind the marble stubs by the start: what stood there, a temple of the old world;
     four broken shafts of fluted marble of different heights, a piece of the architrave
     still across two of them, a drum fallen in the grass. Their feet go on down into the
-    ground, wherever it rises under them."""
+    ground, wherever it rises under them. `fine` draws it that many times the draft's
+    size: each flute with a lit edge, a ragged break."""
     r = rng("colonnade")
-    W, H = 26 * TILE, 7 * TILE + 3 * TILE
-    art = Art(W, H)
-    floor = H - 3 * TILE
+    f = fine
+    W0, H0 = 26 * TILE, 7 * TILE + 3 * TILE
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - 3 * TILE
     marble = ramp_of("4a4852 7c7a86 98969f b4b2bb ccc9d1 e2dfe6 f2f0f4")
     shafts = ((24, 88), (112, 46), (288, 100), (384, 64))
     for cx, tall in shafts:
-        for y in range(floor - tall, H):
-            for x in range(cx - 8, cx + 8):
+        for Y in range((floor - tall) * f, H0 * f):
+            for X in range((cx - 8) * f, (cx + 8) * f):
+                x = X // f
                 flute = (x - cx + 8) % 4
                 k = 5 if x < cx - 4 else 2 if x > cx + 4 else 4 if flute == 0 else 3
-                art.put(x, y, marble[k])
-        for x in range(cx - 11, cx + 11):
-            for y in range(floor - 4, floor + 2):
-                art.put(x, y, marble[5 if y == floor - 4 else 3])
+                if f > 1 and flute == 1 and X % f == 0 and cx - 4 <= x <= cx + 4:
+                    k = 4  # the lit edge of a flute
+                art.put(X, Y, marble[k])
+        for X in range((cx - 11) * f, (cx + 11) * f):
+            for Y in range((floor - 4) * f, (floor + 2) * f):
+                art.put(X, Y, marble[5 if Y < (floor - 4) * f + (f if f == 1 else 1) else 3])
         # The broken top, ragged.
         for x in range(cx - 8, cx + 8):
-            for y in range(floor - tall - r.randint(0, 7), floor - tall):
-                art.put(x, y, marble[4 if x < cx else 3])
+            gone = r.randint(0, 7)
+            for Y in range((floor - tall - gone) * f, (floor - tall) * f):
+                for s in range(f):
+                    art.put(x * f + s, Y, marble[4 if x < cx else 3])
+            if f > 1 and gone:
+                art.put(x * f + (x % 2), (floor - tall - gone) * f - 1, marble[4 if x < cx else 3])  # a chip of the break
     # The architrave still across the two tallest... that stand apart: a piece of it on the
     # tallest, broken off over the gap.
     cx, tall = shafts[2]
-    for x in range(cx - 12, cx + 12):
-        for y in range(floor - tall - 6, floor - tall):
-            art.put(x, y, marble[5 if y == floor - tall - 6 else 3])
-    for x in range(cx - 34, cx + 14):
-        for y in range(floor - tall - 17, floor - tall - 6):
-            k = 4 if y < floor - tall - 14 else 3 if (x // 8) % 2 else 2
+    for X in range((cx - 12) * f, (cx + 12) * f):
+        for Y in range((floor - tall - 6) * f, (floor - tall) * f):
+            art.put(X, Y, marble[5 if Y < (floor - tall - 6) * f + (1 if f > 1 else 1) else 3])
+    for X in range((cx - 34) * f, (cx + 14) * f):
+        x = X / f
+        for Y in range((floor - tall - 17) * f, (floor - tall - 6) * f):
+            y = Y / f
+            k = 4 if y < floor - tall - 14 else 3 if (int(x) // 8) % 2 else 2
             if x < cx - 26 and y < floor - tall - 17 + (cx - 26 - x):
                 continue
-            art.put(x, y, marble[k])
+            art.put(X, Y, marble[k])
     # A drum fallen in the grass.
-    for y in range(floor - 15, floor + 2):
-        for x in range(186, 214):
-            art.put(x, y, marble[5 if y < floor - 11 else 3 if y < floor - 3 else 2])
-    for y in range(floor - 15, floor + 2):
-        art.put(213, y, marble[1])
-        art.put(212, y, marble[2])
-    art.outline(marble[0])
+    for Y in range((floor - 15) * f, (floor + 2) * f):
+        y = Y / f
+        for X in range(186 * f, 214 * f):
+            art.put(X, Y, marble[5 if y < floor - 11 else 3 if y < floor - 3 else 2])
+    for Y in range((floor - 15) * f, (floor + 2) * f):
+        for s in range(f):
+            art.put(213 * f + s, Y, marble[1])
+            art.put(212 * f + s, Y, marble[2])
+    for _ in range(f):
+        art.outline(marble[0])
     return art.image()
 
 
@@ -1257,23 +1432,28 @@ def lilies(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def jetty() -> Image.Image:
-    """A landing stage of boards out over the water on two piles, a board missing."""
-    W, H = 4 * TILE, 2 * TILE + SINK
-    art = Art(W, H)
-    deck = H - SINK - 10
-    for x in range(0, W - 4):
+def jetty(fine: int = 1) -> Image.Image:
+    """A landing stage of boards out over the water on two piles, a board missing. `fine`
+    draws it that many times the draft's size: the boards' ends, round piles."""
+    f = fine
+    W0, H0 = 4 * TILE, 2 * TILE + SINK
+    art = Art(W0 * f, H0 * f)
+    deck = H0 - SINK - 10
+    for X in range(0, (W0 - 4) * f):
+        x = X // f
         if 30 <= x < 36:
             continue
-        art.put(x, deck, TIMBER[5])
-        art.put(x, deck + 1, TIMBER[3] if x % 8 else TIMBER[1])
-        art.put(x, deck + 2, TIMBER[2])
-    for px in (20, W - 10):
-        for y in range(deck + 3, H):
-            art.put(px, y, TIMBER[3])
-            art.put(px + 1, y, TIMBER[2])
-            art.put(px + 2, y, TIMBER[1])
-    art.outline(TIMBER[0])
+        for s in range(f):
+            art.put(X, deck * f + s, TIMBER[5])
+            art.put(X, (deck + 1) * f + s, TIMBER[3] if (x % 8 if f == 1 else X % (8 * f)) else TIMBER[1])
+            art.put(X, (deck + 2) * f + s, TIMBER[2])
+    for px in (20, W0 - 10):
+        for Y in range((deck + 3) * f, H0 * f):
+            for d, k in enumerate((3, 2, 1)):
+                for s in range(f):
+                    art.put((px + d) * f + s, Y, TIMBER[k + (1 if f > 1 and d == 0 and s == 0 else 0)])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
@@ -1349,47 +1529,58 @@ def rail(piece: str, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def mine_cart(variant: int) -> Image.Image:
+def mine_cart(variant: int, fine: int = 1) -> Image.Image:
     """An ore cart on the track: an iron tub, ribbed, two wheels; full of copper ore (or
-    tipped over and empty)."""
+    tipped over and empty). `fine` draws it that many times the draft's size: a tub whose
+    sides slope smoothly, round wheels, lumps of ore with a glint."""
     r = rng("minecart", variant)
-    W, H = 2 * TILE, 26 + SINK
-    art = Art(W, H)
-    floor = H - SINK - 3  # on the rail
+    f = fine
+    W0, H0 = 2 * TILE, 26 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK - 3  # on the rail
     tipped = variant == 1
-    if not tipped:
-        for y in range(floor - 18, floor - 4):
-            t = (y - (floor - 18)) / 14
-            inset = int(t * 3)
-            for x in range(2 + inset, W - 2 - inset):
-                k = 4 if x < 5 + inset else 1 if x > W - 6 - inset else 3
-                if (x - 2) % 7 == 0:
-                    k = 2
-                art.put(x, y, IRON[k])
-        for x in range(1, W - 1):
-            art.put(x, floor - 19, IRON[5])
-        for _ in range(16):
-            x, y = r.randint(4, W - 5), r.randint(floor - 24, floor - 19)
-            if y >= floor - 22 + abs(x - W // 2) // 4:
-                art.put(x, y, COPPER[r.randint(2, 5)])
-                art.put(x + 1, y, COPPER[2])
-        for wx in (8, W - 9):
-            for dx in range(-3, 4):
-                for dy in range(-3, 4):
-                    if dx * dx + dy * dy <= 9:
-                        art.put(wx + dx, floor - 2 + dy, IRON[1 if dx * dx + dy * dy > 4 else 3])
-    else:
-        for y in range(floor - 14, floor + 2):
-            for x in range(4, W - 2):
-                if (x - 4) + (floor + 2 - y) * 0.7 < 22:
-                    art.put(x, y, IRON[3 if x < 10 else 2])
-        for dx in range(-3, 4):
-            for dy in range(-3, 4):
+
+    def wheel(wx, wy):
+        for DX in range(-3 * f, 3 * f + 1):
+            for DY in range(-3 * f, 3 * f + 1):
+                dx, dy = DX / f, DY / f
                 if dx * dx + dy * dy <= 9:
-                    art.put(24 + dx, floor - 12 + dy, IRON[1 if dx * dx + dy * dy > 4 else 3])
+                    art.put(wx * f + DX, wy * f + DY, IRON[1 if dx * dx + dy * dy > 4 else 3 if f == 1 or dx * dx + dy * dy > 0.6 else 4])
+
+    if not tipped:
+        for Y in range((floor - 18) * f, (floor - 4) * f):
+            y = Y / f
+            t = (y - (floor - 18)) / 14
+            inset = int(t * 3) if f == 1 else t * 3
+            for X in range(int((2 + inset) * f), int((W0 - 2 - inset) * f)):
+                x = X / f
+                k = 4 if x < 5 + inset else 1 if x > W0 - 6 - inset else 3
+                if (int(x) - 2) % 7 == 0 and (f == 1 or X % f == 0):
+                    k = 2
+                art.put(X, Y, IRON[k])
+        for X in range(f, (W0 - 1) * f):
+            for s in range(f):
+                art.put(X, (floor - 19) * f + s, IRON[5])
+        for _ in range(16):
+            x, y = r.randint(4, W0 - 5), r.randint(floor - 24, floor - 19)
+            if y >= floor - 22 + abs(x - W0 // 2) // 4:
+                colour = COPPER[r.randint(2, 5)]
+                dot(art, x, y, colour, f, COPPER[5] if f > 1 else None)
+                dot(art, x + 1, y, COPPER[2], f)
+        for wx in (8, W0 - 9):
+            wheel(wx, floor - 2)
+    else:
+        for Y in range((floor - 14) * f, (floor + 2) * f):
+            y = Y / f
+            for X in range(4 * f, (W0 - 2) * f):
+                x = X / f
+                if (x - 4) + (floor + 2 - y) * 0.7 < 22:
+                    art.put(X, Y, IRON[3 if x < 10 else 2])
+        wheel(24, floor - 12)
         for _ in range(10):
-            art.put(r.randint(0, 10), floor + r.randint(-1, 1), COPPER[r.randint(2, 5)])
-    art.outline(IRON[0])
+            dot(art, r.randint(0, 10), floor + r.randint(-1, 1), COPPER[r.randint(2, 5)], f)
+    for _ in range(f):
+        art.outline(IRON[0])
     return art.image()
 
 
@@ -1449,20 +1640,24 @@ def crates(variant: int, fine: int = 1) -> Image.Image:
 BACKDROP_W, BACKDROP_H = VIEW
 
 
-def _profile(seed, waves, width=BACKDROP_W):
+def _profile(seed, waves, width=BACKDROP_W, fine: int = 1):
+    """A sum of sines that repeats every `width` draft pixels, asked `fine` times a pixel."""
     r = rng("earth ridge", seed)
-    xs = np.arange(width)
-    total = np.zeros(width)
+    xs = np.arange(width * fine) / fine
+    total = np.zeros(width * fine)
     for k, amp in waves:
         total += amp * np.sin(2 * np.pi * k * xs / width + r.uniform(0, 6.283))
     return total
 
 
-def ridge_mountains(width: int = 1280) -> Image.Image:
-    """The furthest: a range of mountains in the haze, a few great peaks with snow on them,
-    each lit on its face to the left of the ridge that runs down from its top and in the
-    blue of the low sky on the other, and a band of haze along their foot."""
-    a = np.zeros((BACKDROP_H, width, 4), dtype=np.uint8)
+def ridge_mountains(width: int = 1280, fine: int = 1) -> Image.Image:
+    """The mountains far off: peaks of rock with snow on them, each lit on its face to the
+    left of the ridge that runs down from its top and in the blue of the low sky on the
+    other, and a band of haze along their foot. `fine` draws them that many times the
+    draft's size: the gullies a pixel wide, the haze in a finer dither."""
+    f = fine
+    H, W = BACKDROP_H * f, width * f
+    a = np.zeros((H, W, 4), dtype=np.uint8)
     body, shade, lit, deep = hexes("8eaecb", "7d9bc0", "a9c4dc", "7290b6")
     snow, snow_shade = hexes("eef3f8", "c4d2e6")
     r = rng("mountains")
@@ -1470,121 +1665,139 @@ def ridge_mountains(width: int = 1280) -> Image.Image:
     count = width // 92
     for k in range(count):
         peaks.append((width * (k + r.uniform(0.1, 0.9)) / count, r.uniform(120, 245), r.uniform(0.6, 0.95), r.uniform(-0.35, 0.35)))
-    base = 66 + _profile("m base", [(6, 8), (14, 4)], width)
-    rough = _profile("m rough", [(58, 2.0), (94, 1.4), (166, 0.8)], width)
+    base = 66 + _profile("m base", [(6, 8), (14, 4)], width, f)
+    rough = _profile("m rough", [(58, 2.0), (94, 1.4), (166, 0.8)], width, f)
     height = base.copy()
-    owner = np.full(width, -1)
+    owner = np.full(W, -1)
     for i, (px, ph, steep, _) in enumerate(peaks):
-        for x in range(width):
-            d = x - px
+        for X in range(W):
+            d = X / f - px
             d = (d + width / 2) % width - width / 2
             hgt = ph - abs(d) * steep * (1.15 if d > 0 else 1.0)
-            if hgt > height[x]:
-                height[x], owner[x] = hgt, i
+            if hgt > height[X]:
+                height[X], owner[X] = hgt, i
     height += rough
-    top = (BACKDROP_H - np.round(height)).astype(int)
-    edge = noise("snowline", width, 1, 7.0)[0]
-    for x in range(width):
-        for y in range(max(top[x], 0), BACKDROP_H):
+    top = (H - np.round(height * f)).astype(int)
+    edge = noise("snowline", W, 1, 7.0 * f)[0]
+    for X in range(W):
+        x = X / f
+        for Y in range(max(top[X], 0), H):
+            y = Y / f
             colour = body
-            if owner[x] >= 0:
-                px, ph, _, lean = peaks[owner[x]]
+            if owner[X] >= 0:
+                px, ph, _, lean = peaks[owner[X]]
                 peak_y = BACKDROP_H - ph
                 ridge = px + (y - peak_y) * (0.25 + lean) + 3 * math.sin((y - peak_y) * 0.12)
                 d = (x - ridge + width / 2) % width - width / 2
                 colour = lit if d < 0 else shade
-                if d >= 0 and (int(d) + y // 3) % 23 == 0:
+                gully = (int(d) + int(y) // 3) % 23 == 0 if f == 1 else (int(d * f) + int(y) // 3 * f) % (23 * f) == 0
+                if d >= 0 and gully:
                     colour = deep  # a gully down the shaded face
-                if BACKDROP_H - y > 168 + 10 * edge[x] and y - top[x] < 34:
+                if BACKDROP_H - y > 168 + 10 * edge[X] and (Y - top[X]) / f < 34:
                     colour = snow if d < 0 else snow_shade
-            a[y, x, :3] = colour
-            a[y, x, 3] = 255
+            a[Y, X, :3] = colour
+            a[Y, X, 3] = 255
     # Haze along the foot: the mountains fade into the low sky colour, dithered.
     haze = np.array(hexes("b4d0e6")[0], dtype=float)
-    for y in range(BACKDROP_H - 110, BACKDROP_H):
-        t = (y - (BACKDROP_H - 110)) / 110
-        for x in range(width):
-            if a[y, x, 3] and t * 16 > BAYER_4[y % 4][x % 4] + 0.5:
-                a[y, x, :3] = (a[y, x, :3] * 0.45 + haze * 0.55).astype(np.uint8)
+    for Y in range((BACKDROP_H - 110) * f, H):
+        t = (Y / f - (BACKDROP_H - 110)) / 110
+        for X in range(W):
+            if a[Y, X, 3] and t * 16 > BAYER_4[Y % 4][X % 4] + 0.5:
+                a[Y, X, :3] = (a[Y, X, :3] * 0.45 + haze * 0.55).astype(np.uint8)
     return Image.fromarray(a, "RGBA")
 
 
 BAYER_4 = [[0, 8, 2, 10], [12, 4, 14, 6], [3, 11, 1, 9], [15, 7, 13, 5]]
 
 
-def _crowns(a, top, colours, r, x0, x1, base, size, kinds=("round", "pine")):
-    width = a.shape[1]
+def _crowns(a, top, colours, r, x0, x1, base, size, kinds=("round", "pine"), fine: int = 1):
     """A row of tree crowns standing on `base` (a row per column) from x0 to x1, in the given
-    colours (dark, mid, lit): round ones and pointed ones mixed."""
+    colours (dark, mid, lit): round ones and pointed ones mixed. `a`, `top` and `base` are
+    `fine` times the draft's size; x0, x1 and the crowns' sizes are in the draft's pixels."""
+    f = fine
+    width = a.shape[1]
+    height = a.shape[0]
     x = x0
     while x < x1:
         kind = r.choice(kinds)
         rad = r.randint(*size)
-        foot = int(base[x % width])
+        foot = int(base[(x * f) % width])
         if kind == "round":
-            for dx in range(-rad, rad + 1):
-                for dy in range(-rad, rad + 1):
+            for DX in range(-rad * f, rad * f + 1):
+                for DY in range(-rad * f, rad * f + 1):
+                    dx, dy = DX / f, DY / f
                     if dx * dx + dy * dy * 1.2 <= rad * rad:
-                        X, Y = (x + dx) % width, foot - rad + dy
-                        if 0 <= Y < BACKDROP_H:
+                        X, Y = (x * f + DX) % width, foot - rad * f + DY
+                        if 0 <= Y < height:
                             lit = dx + dy < -rad * 0.4
                             dark = dx + dy > rad * 0.5
                             a[Y, X, :3] = colours[2] if lit else colours[0] if dark else colours[1]
                             a[Y, X, 3] = 255
         else:
             tall = int(rad * 3.2)
-            for i in range(tall):
+            for I in range(tall * f):
+                i = I / f
                 half = rad * 0.75 * i / tall
-                for dx in range(-int(half), int(half) + 1):
-                    X, Y = (x + dx) % width, foot - tall + i
-                    if 0 <= Y < BACKDROP_H:
+                for DX in range(-int(half * f), int(half * f) + 1):
+                    dx = DX / f
+                    X, Y = (x * f + DX) % width, foot - tall * f + I
+                    if 0 <= Y < height:
                         a[Y, X, :3] = colours[2] if dx < -half * 0.3 else colours[0] if dx > half * 0.4 else colours[1]
                         a[Y, X, 3] = 255
         x += r.randint(max(rad // 2, 2), rad + 2)
 
 
-def ridge_hills(width: int = 1920) -> Image.Image:
-    """Hills nearer than the mountains, blue-green in the haze, with what is left of the
-    world on them: a castle on a crag, a church tower, a few roofs, clumps of wood."""
-    a = np.zeros((BACKDROP_H, width, 4), dtype=np.uint8)
+def ridge_hills(width: int = 1920, fine: int = 1) -> Image.Image:
+    """The hills between the mountains and the woods, blue with distance, with the old
+    world on them: a castle on a crag, a church tower, a few roofs, clumps of wood. `fine`
+    draws them that many times the draft's size."""
+    f = fine
+    H, W = BACKDROP_H * f, width * f
+    a = np.zeros((H, W, 4), dtype=np.uint8)
     body, shade, lit = hexes("6f9aa6", "5f8a9a", "88b2b8")
     dark_tree, mid_tree, lit_tree = hexes("5a8494", "66919c", "7ea6ae")
     r = rng("hills")
-    height = 92 + _profile("hills", [(6, 16), (15, 9), (33, 4)], width)
-    top = (BACKDROP_H - np.round(height)).astype(int)
-    for x in range(width):
-        rising = height[x] >= height[(x - 1) % width]
-        for y in range(max(top[x], 0), BACKDROP_H):
-            a[y, x, :3] = lit if rising and y - top[x] < 3 else body if y - top[x] > 2 or rising else shade
-            a[y, x, 3] = 255
+    height = 92 + _profile("hills", [(6, 16), (15, 9), (33, 4)], width, f)
+    top = (H - np.round(height * f)).astype(int)
+    for X in range(W):
+        rising = height[X] >= height[(X - 1) % W]
+        for Y in range(max(top[X], 0), H):
+            a[Y, X, :3] = lit if rising and Y - top[X] < 3 * f else body if Y - top[X] > 2 * f + (f - 1) or rising else shade
+            a[Y, X, 3] = 255
     # A castle on the highest hill of the middle third, and woods everywhere else.
-    best = int(np.argmax(height[width // 3 : width // 3 + 300])) + width // 3
-    _crowns(a, top, (dark_tree, mid_tree, lit_tree), r, 0, best - 70, top + 2, (3, 6))
-    _crowns(a, top, (dark_tree, mid_tree, lit_tree), r, best + 70, width, top + 2, (3, 6))
+    draft_height = height[::f]
+    best = int(np.argmax(draft_height[width // 3 : width // 3 + 300])) + width // 3
+    _crowns(a, top, (dark_tree, mid_tree, lit_tree), r, 0, best - 70, top + 2 * f, (3, 6), fine=f)
+    _crowns(a, top, (dark_tree, mid_tree, lit_tree), r, best + 70, width, top + 2 * f, (3, 6), fine=f)
+
     def tower(x, wide, tall, cap="flat"):
-        foot = top[x] + 3
-        for X in range(x, x + wide):
-            for Y in range(foot - tall, foot):
-                a[Y, X % width, :3] = lit if X < x + 2 else shade if X > x + wide - 3 else body
-                a[Y, X % width, 3] = 255
+        foot = top[x * f] + 3 * f
+        for X in range(x * f, (x + wide) * f):
+            for Y in range(foot - tall * f, foot):
+                a[Y, X % W, :3] = lit if X < (x + 2) * f - (f - 1 if f > 1 else 0) else shade if X > (x + wide - 3) * f + (f - 1) else body
+                a[Y, X % W, 3] = 255
         if cap == "flat":
-            for X in range(x, x + wide, 3):
-                for Y in range(foot - tall - 3, foot - tall):
-                    a[Y, X % width, :3] = body
-                    a[Y, X % width, 3] = 255
+            for x_ in range(x, x + wide, 3):
+                for Y in range(foot - (tall + 3) * f, foot - tall * f):
+                    for s in range(f):
+                        a[Y, (x_ * f + s) % W, :3] = body
+                        a[Y, (x_ * f + s) % W, 3] = 255
         else:
-            for i in range(tall // 2):
+            for I in range((tall // 2) * f):
+                i = I / f
                 half = wide / 2 * i / (tall // 2)
-                for X in range(int(x + wide / 2 - half), int(x + wide / 2 + half) + 1):
-                    a[foot - tall - tall // 2 + i, X % width, :3] = shade if X > x + wide / 2 else lit
-                    a[foot - tall - tall // 2 + i, X % width, 3] = 255
+                for X in range(int((x + wide / 2 - half) * f), int((x + wide / 2 + half) * f) + (1 if f == 1 else f)):
+                    a[foot - (tall + tall // 2) * f + I, X % W, :3] = shade if X > (x + wide / 2) * f else lit
+                    a[foot - (tall + tall // 2) * f + I, X % W, 3] = 255
         return foot
+
     tower(best - 22, 44, 22)
     tower(best - 30, 10, 38)
     tower(best + 18, 9, 46, cap="spire")
     tower(best - 4, 12, 30)
     for wx in (best - 12, best + 4, best + 30):
-        a[top[best] - 14 : top[best] - 9, wx % width, :3] = hexes("4c7080")[0]
+        for s in range(f):
+            a[top[best * f] - 14 * f : top[best * f] - 9 * f, (wx * f + s) % W, :3] = hexes("4c7080")[0]
     # A village far off with its church, and another; a lone tower on a hill.
     for church, roofs in ((150, (126, 162, 176)), (1330, (1306, 1344, 1360, 1376))):
         tower(church, 7, 26, cap="spire")
@@ -1593,31 +1806,34 @@ def ridge_hills(width: int = 1920) -> Image.Image:
     tower(1700, 10, 34)
     # A band of haze along their foot, between them and the woods: they stand further off.
     haze = np.array(hexes("a6c6d4")[0], dtype=float)
-    for y in range(BACKDROP_H - 70, BACKDROP_H):
-        t = (y - (BACKDROP_H - 70)) / 70
-        for x in range(width):
-            if a[y, x, 3] and t * 16 > BAYER_4[y % 4][x % 4] + 0.5:
-                a[y, x, :3] = (a[y, x, :3] * 0.5 + haze * 0.5).astype(np.uint8)
+    for Y in range((BACKDROP_H - 70) * f, H):
+        t = (Y / f - (BACKDROP_H - 70)) / 70
+        for X in range(W):
+            if a[Y, X, 3] and t * 16 > BAYER_4[Y % 4][X % 4] + 0.5:
+                a[Y, X, :3] = (a[Y, X, :3] * 0.5 + haze * 0.5).astype(np.uint8)
     return Image.fromarray(a, "RGBA")
 
 
-def ridge_wood(seed: str, base: float, waves, colours, ground, size, density_kinds, width: int = VIEW[0]) -> Image.Image:
-    a = np.zeros((BACKDROP_H, width, 4), dtype=np.uint8)
+def ridge_wood(seed: str, base: float, waves, colours, ground, size, density_kinds, width: int = VIEW[0], fine: int = 1) -> Image.Image:
+    """A band of wood on a ridge that repeats sideways: the ground's line lit where it
+    rises, two rows of crowns on it. `fine` draws it that many times the draft's size."""
+    f = fine
+    H, W = BACKDROP_H * f, width * f
+    a = np.zeros((H, W, 4), dtype=np.uint8)
     r = rng("earth wood", seed)
-    height = base + _profile(seed, waves, width)
-    top = (BACKDROP_H - np.round(height)).astype(int)
-    for x in range(width):
-        rising = height[x] >= height[(x - 1) % width]
-        for y in range(max(top[x], 0), BACKDROP_H):
-            a[y, x, :3] = ground[2] if rising and y - top[x] < 2 else ground[1] if y - top[x] < 4 else ground[0]
-            a[y, x, 3] = 255
-    _crowns(a, top, colours, r, 0, width, top + 3, size, density_kinds)
-    _crowns(a, top, colours, r, 7, width, top + 8, size, density_kinds)
+    height = base + _profile(seed, waves, width, f)
+    top = (H - np.round(height * f)).astype(int)
+    for X in range(W):
+        rising = height[X] >= height[(X - 1) % W]
+        for Y in range(max(top[X], 0), H):
+            a[Y, X, :3] = ground[2] if rising and Y - top[X] < 2 * f else ground[1] if Y - top[X] < 4 * f else ground[0]
+            a[Y, X, 3] = 255
+    _crowns(a, top, colours, r, 0, width, top + 3 * f, size, density_kinds, fine=f)
+    _crowns(a, top, colours, r, 7, width, top + 8 * f, size, density_kinds, fine=f)
     return Image.fromarray(a, "RGBA")
 
 
-def ridge_mid() -> Image.Image:
-    """Rolling hills with woods, greener and nearer, round trees and firs mixed."""
+def ridge_mid(fine: int = 1) -> Image.Image:
     return ridge_wood(
         "mid",
         64,
@@ -1626,11 +1842,11 @@ def ridge_mid() -> Image.Image:
         hexes("4a8670", "56937a", "6eaa86"),
         (5, 10),
         ("round", "round", "pine"),
+        fine=fine,
     )
 
 
-def ridge_near() -> Image.Image:
-    """The edge of the near wood: dark crowns, lit on the left, firs among them."""
+def ridge_near(fine: int = 1) -> Image.Image:
     return ridge_wood(
         "near",
         34,
@@ -1639,6 +1855,7 @@ def ridge_near() -> Image.Image:
         hexes("2a5240", "305c46", "3a6c50"),
         (7, 14),
         ("round", "pine", "round"),
+        fine=fine,
     )
 
 
@@ -1829,26 +2046,41 @@ def giant_oak(fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def log() -> Image.Image:
-    """A fallen trunk, three tiles long, its broken end pale, a fungus on it."""
-    W, H = 3 * TILE + 6, 18 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for x in range(2, W - 4):
-        for y in range(floor - 12, floor + 2):
-            k = 4 if y < floor - 9 else 2 if y > floor - 3 else 3
-            if (x * 5 + y) % 9 == 0:
-                k = 1
-            art.put(x, y, BARK[k])
-    for y in range(floor - 12, floor + 2):
-        for x in range(W - 6, W - 2):
-            art.put(x, y, hexes("c8a878", "a88858")[(x + y) % 2])
+def log(fine: int = 1) -> Image.Image:
+    """A fallen log, its cut end pale, moss along its top, a fungus on its side. `fine`
+    draws it that many times the draft's size: a round body, the rings of its end."""
+    f = fine
+    W0, H0 = 3 * TILE + 6, 18 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for X in range(2 * f, (W0 - 4) * f):
+        for Y in range((floor - 12) * f, (floor + 2) * f):
+            y = Y / f
+            if f == 1:
+                k = 4 if y < floor - 9 else 2 if y > floor - 3 else 3
+                if (X * 5 + Y) % 9 == 0:
+                    k = 1
+            else:
+                round_ = (y - (floor - 5)) / 7  # -1 its top, 1 its underside
+                k = 4 if round_ < -0.55 else 2 if round_ > 0.55 else 3
+                if (X * 5 + Y * 2) % 13 == 0:
+                    k = 1
+            art.put(X, Y, BARK[k])
+    pale, dark = hexes("c8a878", "a88858")
+    for Y in range((floor - 12) * f, (floor + 2) * f):
+        for X in range((W0 - 6) * f, (W0 - 2) * f):
+            if f == 1:
+                art.put(X, Y, (pale, dark)[(X + Y) % 2])
+            else:
+                d = math.hypot((X / f - (W0 - 4)) / 2, (Y / f - (floor - 5)) / 7)
+                art.put(X, Y, dark if (d * 4) % 1 < 0.3 else pale)  # its rings
     for x in (14, 15, 16, 17):
-        art.put(x, floor - 13, hexes("e8d8a0")[0])
-        art.put(x, floor - 14, hexes("c8b880")[0] if x in (15, 16) else hexes("e8d8a0")[0])
+        dot(art, x, floor - 13, hexes("e8d8a0")[0], f)
+        dot(art, x, floor - 14, hexes("c8b880")[0] if x in (15, 16) else hexes("e8d8a0")[0], f)
     for x in range(6, 30, 3):
-        art.put(x, floor - 12, MOSS[x % 2])
-    art.outline(BARK[0])
+        dot(art, x, floor - 12, MOSS[x % 2], f, MOSS[1] if f > 1 else None)
+    for _ in range(f):
+        art.outline(BARK[0])
     return art.image()
 
 
@@ -1889,124 +2121,202 @@ def stump(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def toadstools() -> Image.Image:
-    """A ring of red toadstools at the foot of a tree."""
-    W, H = 2 * TILE, 12 + SINK
-    art = Art(W, H)
-    floor = H - SINK
+def toadstools(fine: int = 1) -> Image.Image:
+    """A ring of red toadstools on white stems, a fleck of light on each cap. `fine` draws
+    them that many times the draft's size: round caps with white spots."""
+    f = fine
+    W0, H0 = 2 * TILE, 12 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    stem, red, lit, edge = hexes("efe4cc", "d23a2a", "f05a40", "f07a5a")
     for cx, tall, half in ((5, 6, 3), (12, 9, 4), (19, 5, 2), (25, 7, 3)):
         for h in range(-2, tall):
-            art.put(cx, floor - h, hexes("efe4cc")[0])
-        for k in range(2):
-            for x in range(cx - half, cx + half + 1):
-                art.put(x, floor - tall - k, hexes("d23a2a", "f05a40")[k] if x > cx - half else hexes("f07a5a")[0])
-        art.put(cx - 1, floor - tall - 1, hexes("ffffff")[0])
-    art.outline(hexes("33201a")[0])
+            dot(art, cx, floor - h, stem, f)
+        if f == 1:
+            for k in range(2):
+                for x in range(cx - half, cx + half + 1):
+                    art.put(x, floor - tall - k, (red, lit)[k] if x > cx - half else edge)
+            art.put(cx - 1, floor - tall - 1, hexes("ffffff")[0])
+            continue
+        for DY in range(-2 * f, 0):  # a cap, domed
+            for DX in range(-half * f, (half + 1) * f):
+                u, v = (DX + 0.5 - f / 2) / ((half + 0.5) * f), (DY + 0.5) / (2 * f)
+                if u * u + v * v <= 1:
+                    art.put(cx * f + DX, (floor - tall + 1) * f + DY, edge if u < -0.6 else lit if v < -0.5 else red)
+        for dx in (-1, 1):
+            art.put((cx + dx) * f, (floor - tall) * f - 1 - (dx > 0), (255, 255, 255))
+    for _ in range(f):
+        art.outline(hexes("33201a")[0])
     return art.image()
 
 
-def washing_line() -> Image.Image:
-    """Two posts and a line between them, washing on it: shirts, a sheet, a sock."""
-    W, H = 5 * TILE, 30 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for px in (3, W - 5):
-        art.rect(px, floor - 28, px + 2, floor + 4, TIMBER[3])
-    sag = lambda x: floor - 26 + int(4 * math.sin(math.pi * (x - 4) / (W - 8)))  # noqa: E731
-    for x in range(4, W - 4):
-        art.put(x, sag(x), THATCH[1])
+def washing_line(fine: int = 1) -> Image.Image:
+    """A washing line between two posts, a few things pegged out on it. `fine` draws it
+    that many times the draft's size: the line a pixel thin, the cloth's folds."""
+    f = fine
+    W0, H0 = 5 * TILE, 30 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for px in (3, W0 - 5):
+        art.rect(px * f, (floor - 28) * f, (px + 2) * f, (floor + 4) * f, TIMBER[3])
+        if f > 1:
+            art.rect(px * f, (floor - 28) * f, px * f + 1, (floor + 4) * f, TIMBER[4])
+    sag = lambda x: floor - 26 + int(4 * math.sin(math.pi * (x - 4) / (W0 - 8)))  # noqa: E731
+    smooth = lambda x: floor - 26 + 4 * math.sin(math.pi * (x - 4) / (W0 - 8))  # noqa: E731
+    for X in range(4 * f, (W0 - 4) * f):
+        if f == 1:
+            art.put(X, sag(X), THATCH[1])
+        else:
+            art.put(X, int(round(smooth(X / f) * f)), THATCH[1])
     for x0, w, h, colour in ((12, 9, 11, "d8d8e0"), (24, 12, 14, "8a4a5a"), (40, 8, 9, "5a7aa8"), (52, 5, 6, "d8c070"), (60, 8, 10, "e0e0e8")):
         c = hexes(colour)[0]
         dark = tuple(int(v * 0.75) for v in c)
-        for x in range(x0, x0 + w):
-            top = sag(x) + 1
-            for y in range(top, top + h):
-                art.put(x, y, dark if x > x0 + w - 3 or y > top + h - 3 else c)
-    art.outline(TIMBER[0])
+        for X in range(x0 * f, (x0 + w) * f):
+            x = X / f
+            top = (sag(int(x)) + 1) * f if f == 1 else int(round((smooth(x) + 1) * f))
+            for Y in range(top, top + h * f):
+                fold = f > 1 and (X - x0 * f) % (3 * f) == 0 and Y > top + f
+                art.put(X, Y, dark if x > x0 + w - 3 or Y >= top + (h - 2) * f or fold else c)
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def garden() -> Image.Image:
-    """A kitchen garden: dark beds in rows behind a low wattle fence, cabbages, beans up
-    their canes, a scarecrow's hat on a stick."""
+def garden(fine: int = 1) -> Image.Image:
+    """A kitchen garden behind a low fence: rows of cabbages, beans climbing their canes,
+    a scarecrow's hat on a stick. `fine` draws it that many times the draft's size: round
+    cabbages with their leaves, the fence's laths a pixel thinner."""
     r = rng("garden")
-    W, H = 5 * TILE, 22 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for x in range(2, W - 2):
-        for y in range(floor - 3, floor + 3):
-            art.put(x, y, BARK[1] if (x // 6) % 2 else BARK[2])
-    for cx in range(6, W - 20, 7):
-        for dx in range(-3, 4):
-            for dy in range(-3, 1):
+    f = fine
+    W0, H0 = 5 * TILE, 22 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for X in range(2 * f, (W0 - 2) * f):
+        x = X // f
+        for Y in range((floor - 3) * f, (floor + 3) * f):
+            art.put(X, Y, BARK[1] if (x // 6) % 2 else BARK[2])
+    for cx in range(6, W0 - 20, 7):
+        for DX in range(-3 * f, 4 * f):
+            for DY in range(-3 * f, f):
+                dx, dy = DX / f, DY / f
                 if dx * dx + dy * dy * 2 <= 9:
-                    art.put(cx + dx, floor - 3 + dy, OAK[5 if dx < 0 and dy < -1 else 4 if dx < 1 else 3])
-    for cx in range(W - 18, W - 4, 4):
-        art.line(cx, floor - 2, cx, floor - 20, TIMBER[4], 1)
+                    k = 5 if dx < 0 and dy < -1 else 4 if dx < 1 else 3
+                    if f > 1 and abs(math.atan2(dy, dx + 0.01) * 3 % 1 - 0.5) < 0.08:
+                        k -= 1  # a cabbage's leaves
+                    art.put(cx * f + DX, (floor - 3) * f + DY, OAK[k])
+    for cx in range(W0 - 18, W0 - 4, 4):
+        art.line(cx * f, (floor - 2) * f, cx * f, (floor - 20) * f, TIMBER[4], 1 if f == 1 else 1.5)
         for y in range(floor - 18, floor - 2, 2):
-            art.put(cx + (1 if (y // 2) % 2 else -1), y, OAK[4 if r.random() < 0.5 else 3])
-    for x in range(1, W - 1):
-        if x % 3 == 0:
-            art.line(x, floor + 2, x, floor - 6, TIMBER[3], 1)
-        art.put(x, floor - 4, TIMBER[2])
-        art.put(x, floor - 2, TIMBER[2])
-    art.outline(TIMBER[0])
+            colour = OAK[4 if r.random() < 0.5 else 3]
+            side = 1 if (y // 2) % 2 else -1
+            if f == 1:
+                art.put(cx + side, y, colour)
+            else:
+                art.put(cx * f + side * 2, y * f, colour)
+                art.put(cx * f + side * 3, y * f + 1, colour)
+                art.put(cx * f + side, y * f + 1, OAK[5])
+    for X in range(f, (W0 - 1) * f):
+        x = X // f
+        if x % 3 == 0 and X % f == 0:
+            art.line(X, (floor + 2) * f, X, (floor - 6) * f, TIMBER[3], 1 if f == 1 else 1.5)
+        for s in range(f):
+            art.put(X, (floor - 4) * f + s, TIMBER[2] if f == 1 or s else TIMBER[3])
+            art.put(X, (floor - 2) * f + s, TIMBER[2] if f == 1 or s else TIMBER[3])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def bench() -> Image.Image:
-    W, H = 2 * TILE + 4, 12 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    art.rect(2, floor - 7, W - 2, floor - 5, TIMBER[4])
-    art.rect(2, floor - 5, W - 2, floor - 4, TIMBER[2])
-    for x in (4, W - 6):
-        art.rect(x, floor - 5, x + 2, floor + 3, TIMBER[2])
-    art.outline(TIMBER[0])
+def bench(fine: int = 1) -> Image.Image:
+    """A plank bench on two legs. `fine` draws it that many times the draft's size: the
+    plank's lit edge and grain."""
+    f = fine
+    W0, H0 = 2 * TILE + 4, 12 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    art.rect(2 * f, (floor - 7) * f, (W0 - 2) * f, (floor - 5) * f, TIMBER[4])
+    art.rect(2 * f, (floor - 5) * f, (W0 - 2) * f, (floor - 4) * f, TIMBER[2])
+    if f > 1:
+        art.rect(2 * f, (floor - 7) * f, (W0 - 2) * f, (floor - 7) * f + 1, TIMBER[5])
+        for X in range(2 * f, (W0 - 2) * f, 7):
+            art.put(X, (floor - 6) * f, TIMBER[3])
+    for x in (4, W0 - 6):
+        art.rect(x * f, (floor - 5) * f, (x + 2) * f, (floor + 3) * f, TIMBER[2])
+        if f > 1:
+            art.rect(x * f, (floor - 5) * f, x * f + 1, (floor + 3) * f, TIMBER[3])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def barrel() -> Image.Image:
-    """A water butt: a barrel under the eaves, hooped in iron, the water in it catching the sky."""
-    W, H = TILE + 4, 20 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for y in range(floor - 18, floor + 2):
-        bulge = 1 if floor - 13 < y < floor - 4 else 0
-        for x in range(3 - bulge, W - 3 + bulge):
-            k = 4 if x < 6 else 2 if x > W - 6 else 3
-            art.put(x, y, IRON[3] if y in (floor - 15, floor - 4) else TIMBER[k])
-    for x in range(4, W - 4):
-        art.put(x, floor - 18, hexes("8ab4d8")[0] if x < 10 else hexes("5a84a8")[0])
-    art.outline(TIMBER[0])
+def barrel(fine: int = 1) -> Image.Image:
+    """A water butt: staves bound with iron, rain standing in it. `fine` draws it that many
+    times the draft's size: a curved belly, the staves' joints."""
+    f = fine
+    W0, H0 = TILE + 4, 20 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for Y in range((floor - 18) * f, (floor + 2) * f):
+        y = Y / f
+        bulge = (1 if floor - 13 < y < floor - 4 else 0) if f == 1 else math.sin(max(0.0, min(1.0, (y - (floor - 18)) / 20)) * math.pi) * 1.2
+        for X in range(int((3 - bulge) * f), int((W0 - 3 + bulge) * f)):
+            x = X / f
+            k = 4 if x < 6 else 2 if x > W0 - 6 else 3
+            hoop = int(y) in (floor - 15, floor - 4) if f == 1 else int(y) in (floor - 15, floor - 4)
+            if f > 1 and not hoop and (X - 3 * f) % (3 * f) == 0:
+                k -= 1  # a joint between the staves
+            art.put(X, Y, IRON[3 if not (f > 1 and Y % f == 0) else 4] if hoop else TIMBER[k])
+    for X in range(4 * f, (W0 - 4) * f):
+        x = X / f
+        for s in range(f):
+            art.put(X, (floor - 18) * f + s, hexes("8ab4d8")[0] if x < 10 else hexes("5a84a8")[0])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def kennel() -> Image.Image:
-    """A dog's kennel, empty, its chain lying out of the door."""
-    W, H = 2 * TILE + 4, 22 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for y in range(floor - 12, floor + 2):
-        for x in range(5, W - 5):
-            art.put(x, y, TIMBER[3 if (x // 4) % 2 else 2])
-    for y in range(floor - 21, floor - 11):
+def kennel(fine: int = 1) -> Image.Image:
+    """A dog's kennel of boards under a roof, its door dark, a chain out of it. `fine` draws
+    it that many times the draft's size: boards a pixel apart, a round door, the chain's links."""
+    f = fine
+    W0, H0 = 2 * TILE + 4, 22 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for Y in range((floor - 12) * f, (floor + 2) * f):
+        for X in range(5 * f, (W0 - 5) * f):
+            x = X // f
+            k = 3 if (x // 4) % 2 else 2
+            if f > 1 and X % (4 * f) == 0:
+                k = 1  # the gap between two boards
+            art.put(X, Y, TIMBER[k])
+    for Y in range((floor - 21) * f, (floor - 11) * f):
+        y = Y / f
         t = (y - (floor - 21)) / 10
-        for x in range(int(W / 2 - 3 - 13 * t), int(W / 2 + 3 + 13 * t)):
-            art.put(x, y, ROOF[4 if x < W / 2 else 2])
-    for y in range(floor - 9, floor + 1):
-        for x in range(13, 21):
+        for X in range(int((W0 / 2 - 3 - 13 * t) * f), int((W0 / 2 + 3 + 13 * t) * f)):
+            k = 4 if X < W0 / 2 * f else 2
+            if f > 1 and Y % (3 * f) == 0:
+                k -= 1  # a course of its shingles
+            art.put(X, Y, ROOF[k])
+    for Y in range((floor - 9) * f, (floor + 1) * f):
+        y = Y / f
+        for X in range(13 * f, 21 * f):
+            x = X / f + (0.5 / f - 0.5 if f > 1 else 0)
             if (x - 17) ** 2 + ((y - (floor - 5)) * 0.8) ** 2 <= 20 or y > floor - 5:
-                art.put(x, y, DARK)
-    for x in range(20, W):
-        art.put(x, floor - 1 + (x % 2), IRON[4])
-    art.outline(TIMBER[0])
+                art.put(X, Y, DARK)
+    for X in range(20 * f, W0 * f):
+        x = X // f
+        if f == 1:
+            art.put(X, floor - 1 + (x % 2), IRON[4])
+        else:
+            art.put(X, (floor - 1) * f + (1 if (X // 3) % 2 else 0) + 1, IRON[4 if X % 3 else 2])
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
-def mill_tower() -> Image.Image:
+def mill_tower(fine: int = 1) -> Image.Image:
     """The windmill without its sails, which turn (the sails are their own picture)."""
-    return windmill(sails=False)
+    return windmill(sails=False, fine=fine)
 
 
 SAIL_FRAMES = 4  # the sails turn a quarter of a circle in this many frames: four arms look the same every quarter
@@ -2079,30 +2389,45 @@ def rubble(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def puddle() -> Image.Image:
-    """A puddle on the mine's floor where the roof drips: a thin sheet of water, a lit edge."""
-    W, H = 3 * TILE, 4 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for x in range(3, W - 3):
-        art.put(x, floor - 1, hexes("6a8aa8")[0] if x < 14 else hexes("4a6a88")[0])
-        art.put(x, floor, hexes("3a5470")[0])
+def puddle(fine: int = 1) -> Image.Image:
+    """A puddle on the track, the sky in it. `fine` draws it that many times the draft's
+    size, its glints a pixel each."""
+    f = fine
+    W0, H0 = 3 * TILE, 4 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    sky, deep, under, glint = hexes("6a8aa8", "4a6a88", "3a5470", "c8e0f0")
+    for X in range(3 * f, (W0 - 3) * f):
+        x = X / f
+        for s in range(f):
+            art.put(X, (floor - 1) * f + s, sky if x < 14 else deep)
+            art.put(X, floor * f + s, under)
     for x in (6, 7, 18, 19, 30):
-        art.put(x, floor - 1, hexes("c8e0f0")[0])
+        if f == 1:
+            art.put(x, floor - 1, glint)
+        else:
+            art.put(x * f + (x % 2), (floor - 1) * f, glint)
     return art.image()
 
 
-def cage() -> Image.Image:
-    """The cage of the lift, hung on its rope in the old shaft, its door open."""
-    W, H = 3 * TILE, 3 * TILE
-    art = Art(W, H)
-    art.line(W // 2, 0, W // 2, 8, THATCH[3], 1)
-    art.rect(6, 8, W - 6, 11, IRON[3])
-    art.rect(6, H - 4, W - 6, H - 1, IRON[2])
-    for x in range(6, W - 6, 5):
-        art.line(x, 11, x, H - 4, IRON[4 if x < 20 else 2], 1)
-    art.line(W - 7, 11, W - 7, H - 4, IRON[1], 1)
-    art.outline(IRON[0])
+def cage(fine: int = 1) -> Image.Image:
+    """A cage of iron hung from the roof on a rope. `fine` draws it that many times the
+    draft's size: bars a pixel wide, each lit on one side."""
+    f = fine
+    W0, H0 = 3 * TILE, 3 * TILE
+    art = Art(W0 * f, H0 * f)
+    art.line(W0 // 2 * f, 0, W0 // 2 * f, 8 * f, THATCH[3], 1 if f == 1 else 1.5)
+    art.rect(6 * f, 8 * f, (W0 - 6) * f, 11 * f, IRON[3])
+    art.rect(6 * f, (H0 - 4) * f, (W0 - 6) * f, (H0 - 1) * f, IRON[2])
+    if f > 1:
+        art.rect(6 * f, 8 * f, (W0 - 6) * f, 8 * f + 1, IRON[5])
+    for x in range(6, W0 - 6, 5):
+        art.line(x * f, 11 * f, x * f, (H0 - 4) * f, IRON[4 if x < 20 else 2], 1)
+        if f > 1:
+            art.line(x * f + 1, 11 * f, x * f + 1, (H0 - 4) * f, IRON[2 if x < 20 else 1], 1)
+    art.line((W0 - 7) * f, 11 * f, (W0 - 7) * f, (H0 - 4) * f, IRON[1], 1)
+    for _ in range(f):
+        art.outline(IRON[0])
     return art.image()
 
 
@@ -2163,43 +2488,49 @@ def nugget(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def reflection() -> Image.Image:
+def reflection(fine: int = 1) -> Image.Image:
     """The willow and the bank in the pond, upside down and broken by the ripples: a dark
-    green shape under the surface, a few lines of light across it."""
-    base = willow(0)
-    a = np.array(base.transpose(Image.FLIP_TOP_BOTTOM))[SINK:, :]
-    h = min(a.shape[0], 3 * TILE)
+    green shape under the surface, a few lines of light across it. `fine`: the willow drawn
+    at that size, rippled a pixel at a time."""
+    f = fine
+    base = willow(0, f)
+    a = np.array(base.transpose(Image.FLIP_TOP_BOTTOM))[SINK * f :, :]
+    h = min(a.shape[0], 3 * TILE * f)
     a = a[:h].copy()
     water = np.array(hexes("1e4a5a")[0], dtype=float)
     out = np.zeros_like(a)
-    for y in range(h):
-        if y % 4 == 3:
+    for Y in range(h):
+        y = Y / f
+        if (Y // f) % 4 == 3:
             continue
-        sway = int(round(1.5 * math.sin(y * 0.9)))
-        row = np.roll(a[y], sway, axis=0)
+        sway = int(round(1.5 * f * math.sin(y * 0.9)))
+        row = np.roll(a[Y], sway, axis=0)
         mask = row[:, 3] > 0
         mixed = (row[:, :3] * 0.55 + water * 0.45).astype(np.uint8)
-        out[y, mask, :3] = mixed[mask]
-        out[y, mask, 3] = int(200 * (1 - y / h))
+        out[Y, mask, :3] = mixed[mask]
+        out[Y, mask, 3] = int(200 * (1 - Y / h))
     return Image.fromarray(out, "RGBA")
 
 
-def depth(width_tiles: int, rows: int) -> Image.Image:
-    """The deep of the pond: darker toward its floor, dithered, laid over the water."""
-    W, H = width_tiles * TILE, rows * TILE
+def depth(width_tiles: int, rows: int, fine: int = 1) -> Image.Image:
+    """The pond's depth: darker the deeper, in an ordered dither. `fine`: the dither at that
+    many times the draft's size, so it is finer."""
+    f = fine
+    W, H = width_tiles * TILE * f, rows * TILE * f
     art = Art(W, H)
     deep = hexes("0c2a3a")[0]
-    for y in range(4, H):
-        t = (y - 4) / (H - 4)
-        for x in range(W):
-            if t * 16 > BAYER_4[y % 4][x % 4] + 0.5:
-                art.put(x, y, deep, int(40 + 110 * t))
+    for Y in range(4 * f, H):
+        t = (Y / f - 4) / (H / f - 4)
+        for X in range(W):
+            if t * 16 > BAYER_4[Y % 4][X % 4] + 0.5:
+                art.put(X, Y, deep, int(40 + 110 * t))
     return art.image()
 
 
-def gate_glow() -> Image.Image:
-    """The glow in the Gate's arch, drawn unlit over it: it shows at dusk and at night."""
-    base = np.array(gateway())
+def gate_glow(fine: int = 1) -> Image.Image:
+    """The glow of what is below in the Gate's opening by itself, shown unlit over it.
+    `fine`: over the Gate drawn at that size, pixel for pixel."""
+    base = np.array(gateway(fine))
     art = Art(base.shape[1], base.shape[0])
     reds = {hexes("2a0e0a")[0], hexes("4a160c")[0]}
     for y in range(base.shape[0]):
@@ -2209,22 +2540,26 @@ def gate_glow() -> Image.Image:
     return art.image()
 
 
-def rays() -> Image.Image:
-    """Shafts of low sun through the trees, drawn unlit and faint: seen at dawn and at
-    sunset (TilesV2Life fades them with the hour)."""
-    W, H = 20 * TILE, 12 * TILE
-    art = Art(W, H)
+def rays(fine: int = 1) -> Image.Image:
+    """Shafts of low sun through the wood's edge, at dawn and at sunset (TilesV2Life fades
+    them with the hour). `fine`: the same shafts at that many times the draft's size, their
+    streaks a pixel apart."""
+    f = fine
+    W0, H0 = 20 * TILE, 12 * TILE
+    art = Art(W0 * f, H0 * f)
     warm = hexes("fff0c0")[0]
     r = rng("rays")
     for k in range(6):
-        x0 = r.randint(20, W - 60)
+        x0 = r.randint(20, W0 - 60)
         wide = r.randint(6, 16)
-        for y in range(H):
+        for Y in range(H0 * f):
+            y = Y / f
             x = x0 + y * 0.45
-            fade = 1 - y / H
-            for dx in range(wide):
-                if (dx + y) % 3:
-                    art.put(int(x + dx), y, warm, int(70 * fade * (1 - abs(dx - wide / 2) / wide)))
+            fade = 1 - y / H0
+            for DX in range(wide * f):
+                dx = DX / f
+                if (int(dx) + int(y)) % 3 if f == 1 else (DX + Y) % 3:
+                    art.put(int(x * f + DX), Y, warm, int(70 * fade * (1 - abs(dx - wide / 2) / wide)))
     return art.image()
 
 
@@ -2274,11 +2609,13 @@ def front(variant: int, sway: int = 0, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def windows() -> Image.Image:
-    """The lights of the far villages and of the castle on the hills, alone, so they can come
+def windows(fine: int = 1) -> Image.Image:
+    """The windows of the far villages and the castle, lit: a layer of its own that comes
     on at night (the hills themselves are tinted dark then): drawn where ridge_hills put their
-    houses, at the hills' own size."""
-    hills = np.array(ridge_hills())
+    houses, at the hills' own size. `fine`: over the hills drawn at that many times the
+    draft's size."""
+    f = fine
+    hills = np.array(ridge_hills(fine=f))
     a = np.zeros_like(hills)
     window = hexes("4c7080")[0]
     lit = hexes("ffd27a")[0]
@@ -2289,14 +2626,18 @@ def windows() -> Image.Image:
                 a[y, x, 3] = 255
     r = rng("windows")
     # A few more, in the roofs of the villages.
+    width = hills.shape[1]
     for church in (150, 1330):
         for _ in range(5):
             x = church + r.randint(-26, 50)
-            col = np.nonzero(hills[:, x % hills.shape[1], 3])[0]
+            col = np.nonzero(hills[:, (x * f) % width, 3])[0]
             if len(col):
-                y = col[0] + r.randint(3, 6)
-                a[y, x % hills.shape[1], :3] = lit
-                a[y, x % hills.shape[1], 3] = 255
+                y = col[0] + r.randint(3, 6) * (f if f > 1 else 1)
+                for s in range(f):
+                    for u in range(f):
+                        if y + u < hills.shape[0]:
+                            a[y + u, (x * f + s) % width, :3] = lit
+                            a[y + u, (x * f + s) % width, 3] = 255
     return Image.fromarray(a, "RGBA")
 
 
@@ -2308,46 +2649,51 @@ WOOL = ramp_of("2a2622 9a948a b8b2a6 d2ccc0 e6e0d4 f6f2ea")
 SHROOM = ramp_of("0c2a26 1a6a5e 2aa08a 54d8bc 9cf6e2 e2fff8")
 
 
-def shine() -> Image.Image:
-    """Light on the pond: broken lines of the sky's colour across the water, brighter near
-    its surface, for the willow's shape to lie under."""
-    W, H = 14 * TILE, 3 * TILE
-    art = Art(W, H)
+def shine(fine: int = 1) -> Image.Image:
+    """Lines of light on the pond's surface, for the willow's shape to lie under. `fine`:
+    each line a pixel high at that many times the draft's size, so they are finer."""
+    f = fine
+    W0, H0 = 14 * TILE, 3 * TILE
+    art = Art(W0 * f, H0 * f)
     r = rng("shine")
-    for y in range(4, H, 3):
-        t = (y - 4) / (H - 4)
+    for y in range(4, H0, 3):
+        t = (y - 4) / (H0 - 4)
         x = r.randint(0, 20)
-        while x < W - 4:
+        while x < W0 - 4:
             length = r.randint(4, 18)
-            for dx in range(length):
-                art.put(x + dx, y, hexes("cfe8f6")[0], int(170 * (1 - t) ** 1.5))
+            for DX in range(length * f):
+                art.put(x * f + DX, y * f, hexes("cfe8f6")[0], int(170 * (1 - t) ** 1.5))
             x += length + r.randint(8, 30)
     return art.image()
 
 
-def crypt() -> Image.Image:
+def crypt(fine: int = 1) -> Image.Image:
     """A family's crypt in the graveyard: a little house of stone with a pitched roof, an
-    iron door, a cross on the gable; lichen on it."""
+    iron door, a cross on the gable; lichen on it. `fine` draws it that many times the
+    draft's size: mortar a pixel wide, the door's iron in a finer lattice."""
     r = rng("crypt")
-    W, H = 3 * TILE + 8, 3 * TILE + 10 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    masonry(art, 4, floor - 34, W - 4, floor + 4, STONEWORK, r, course=5)
-    for y in range(floor - 50, floor - 34):
+    f = fine
+    W0, H0 = 3 * TILE + 8, 3 * TILE + 10 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    masonry(art, 4, floor - 34, W0 - 4, floor + 4, STONEWORK, r, course=5, fine=f)
+    for Y in range((floor - 50) * f, (floor - 34) * f):
+        y = Y / f
         t = (y - (floor - 50)) / 16
-        half = 4 + (W / 2 - 2) * t
-        for x in range(int(W / 2 - half), int(W / 2 + half)):
-            art.put(x, y, STONEWORK[5] if x < W / 2 else STONEWORK[2])
-    art.rect(W // 2 - 1, floor - 60, W // 2 + 1, floor - 49, STONEWORK[5])
-    art.rect(W // 2 - 4, floor - 57, W // 2 + 4, floor - 55, STONEWORK[5])
-    for y in range(floor - 24, floor):
-        for x in range(W // 2 - 6, W // 2 + 6):
-            art.put(x, y, IRONWORK[3] if (x + y) % 4 else IRONWORK[1])
+        half = 4 + (W0 / 2 - 2) * t
+        for X in range(int((W0 / 2 - half) * f), int((W0 / 2 + half) * f)):
+            art.put(X, Y, STONEWORK[5] if X < W0 / 2 * f else STONEWORK[2])
+    art.rect((W0 // 2 - 1) * f, (floor - 60) * f, (W0 // 2 + 1) * f, (floor - 49) * f, STONEWORK[5])
+    art.rect((W0 // 2 - 4) * f, (floor - 57) * f, (W0 // 2 + 4) * f, (floor - 55) * f, STONEWORK[5])
+    for Y in range((floor - 24) * f, floor * f):
+        for X in range((W0 // 2 - 6) * f, (W0 // 2 + 6) * f):
+            art.put(X, Y, IRONWORK[3] if (X + Y) % (4 if f == 1 else 5) else IRONWORK[1])
     for _ in range(14):
-        x, y = r.randint(5, W - 6), r.randint(floor - 34, floor)
-        if art.has(x, y):
-            art.put(x, y, hexes("7a8a4a")[0])
-    art.outline(STONEWORK[0])
+        x, y = r.randint(5, W0 - 6), r.randint(floor - 34, floor)
+        if art.has(x * f, y * f):
+            dot(art, x, y, hexes("7a8a4a")[0], f, hexes("9aaa5a")[0] if f > 1 else None)
+    for _ in range(f):
+        art.outline(STONEWORK[0])
     return art.image()
 
 
@@ -2439,25 +2785,45 @@ def sheep(variant: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def cat() -> Image.Image:
-    """A cat on the fence post by the cottage, its tail hanging."""
-    W, H = TILE, TILE + 6
-    art = Art(W, H)
+def cat(fine: int = 1) -> Image.Image:
+    """A cat sitting on a fence post, its tail hanging down. `fine` draws it that many
+    times the draft's size: a round body, pointed ears, a tail that curls."""
+    f = fine
+    W0, H0 = TILE, TILE + 6
+    art = Art(W0 * f, H0 * f)
     fur = hexes("2a1e16", "5a3a22", "8a5a32", "b07a46")
-    for y in range(6, 14):
-        for x in range(4, 12):
+    for Y in range(6 * f, 14 * f):
+        y = Y / f + (0.5 / f - 0.5 if f > 1 else 0)
+        for X in range(4 * f, 12 * f):
+            x = X / f + (0.5 / f - 0.5 if f > 1 else 0)
             if ((x - 8) / 4) ** 2 + ((y - 10) / 4) ** 2 <= 1:
-                art.put(x, y, fur[2] if x < 8 else fur[1])
-    for y in range(2, 7):
-        for x in range(4, 9):
-            art.put(x, y, fur[3] if x < 6 else fur[2])
-    art.put(4, 1, fur[2])
-    art.put(8, 1, fur[2])
-    art.put(5, 4, hexes("d8e060")[0])
-    art.put(7, 4, hexes("d8e060")[0])
-    for y in range(13, H):
-        art.put(11 + (y // 4) % 2, y, fur[1])
-    art.outline(fur[0])
+                art.put(X, Y, fur[2] if x < 8 else fur[1])
+    for Y in range(2 * f, 7 * f):
+        for X in range(4 * f, 9 * f):
+            x = X / f
+            art.put(X, Y, fur[3] if x < 6 else fur[2])
+    if f == 1:
+        art.put(4, 1, fur[2])
+        art.put(8, 1, fur[2])
+    else:
+        for ex in (4, 8):  # its ears, to a point
+            for dy in range(f + 1):
+                for dx in range(f - dy // 2 if f > 1 else 1):
+                    art.put(ex * f + dx + (dy // 2 if ex == 8 else 0), 2 * f - 1 - dy, fur[2])
+    eye = hexes("d8e060")[0]
+    for ex in (5, 7):
+        dot(art, ex, 4, eye, f)
+        if f > 1:
+            art.put(ex * f + 1, 4 * f + 1, fur[0])  # its pupil
+    for Y in range(13 * f, H0 * f):
+        y = Y / f
+        if f == 1:
+            art.put(11 + (Y // 4) % 2, Y, fur[1])
+        else:
+            art.put(int(round((11.5 + 0.5 * math.sin(y * math.pi / 4)) * f)), Y, fur[1])
+            art.put(int(round((11.5 + 0.5 * math.sin(y * math.pi / 4)) * f)) + 1, Y, fur[1])
+    for _ in range(f):
+        art.outline(fur[0])
     return art.image()
 
 
@@ -2480,18 +2846,26 @@ def bird(frame: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def boat() -> Image.Image:
-    """A rowing boat tied up on the mine's pool, half full of water, an oar in it."""
-    W, H = 3 * TILE, 12
-    art = Art(W, H)
-    for y in range(3, 12):
-        inset = (y - 3) // 2
-        for x in range(2 + inset, W - 2 - inset):
-            art.put(x, y, TIMBER[4 if y == 3 else 3 if y < 7 else 2])
-    for x in range(6, W - 6):
-        art.put(x, 5, hexes("3a5470")[0])
-    art.line(10, 0, 30, 6, TIMBER[4], 1)
-    art.outline(TIMBER[0])
+def boat(fine: int = 1) -> Image.Image:
+    """A rowing boat pulled up on the bank, an oar in it. `fine` draws it that many times
+    the draft's size: a hull that curves, its strakes a pixel apart."""
+    f = fine
+    W0, H0 = 3 * TILE, 12
+    art = Art(W0 * f, H0 * f)
+    for Y in range(3 * f, 12 * f):
+        y = Y / f
+        inset = (int(y) - 3) // 2 if f == 1 else (y - 3) ** 1.3 / 2.4
+        for X in range(int((2 + inset) * f), int((W0 - 2 - inset) * f)):
+            k = 4 if (int(y) == 3 if f == 1 else Y < 3 * f + 1) else 3 if y < 7 else 2
+            if f > 1 and Y % (3 * f) == 0 and Y > 3 * f:
+                k -= 1  # a strake
+            art.put(X, Y, TIMBER[k])
+    for X in range(6 * f, (W0 - 6) * f):
+        for s in range(f):
+            art.put(X, 5 * f + s, hexes("3a5470")[0])
+    art.line(10 * f, 0, 30 * f, 6 * f, TIMBER[4], f)
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
@@ -2714,6 +3088,30 @@ for _v in range(2):
     FINE[f"earth_sheep_{_v}"] = lambda v=_v: sheep(v, DENSITY)
 for _frame in range(BIRD_FRAMES):
     FINE[f"earth_bird_{_frame}"] = lambda s=_frame: bird(s, DENSITY)
+# What a village and its fields are dressed with.
+for _key, _paint in (("log", log), ("toadstools", toadstools), ("washing", washing_line), ("garden", garden), ("bench", bench), ("barrel", barrel), ("kennel", kennel), ("puddle", puddle), ("cage", cage), ("boat", boat)):
+    FINE[f"earth_{_key}"] = lambda p=_paint: p(DENSITY)
+FINE["earth_cat"] = lambda: padded(cat(DENSITY), 14 * DENSITY)
+# The village's houses, its chapel and mill, the Gate above and the Gate below, the mine's head.
+FINE["earth_cottage_ruin"] = lambda: cottage(0, DENSITY)
+FINE["earth_cottage"] = lambda: cottage(1, DENSITY)
+for _key, _paint in (("chapel", chapel), ("well", well), ("windmill", mill_tower), ("cart", cart), ("scarecrow", scarecrow), ("gateway", gateway), ("gate_arch", gate_arch), ("pithead", pithead), ("winch_hut", winch_hut), ("colonnade", colonnade_ruin), ("jetty", jetty), ("crypt", crypt)):
+    FINE[f"earth_{_key}"] = lambda p=_paint: p(fine=DENSITY)
+for _v in range(2):
+    FINE[f"earth_minecart_{_v}"] = lambda v=_v: mine_cart(v, DENSITY)
+# The glow of the kept cottage and of the Gate, over them as they are drawn at 32; the pond.
+FINE["earth_cottage_glow"] = lambda: cottage_glow(DENSITY)
+FINE["earth_gate_glow"] = lambda: gate_glow(DENSITY)
+FINE["earth_reflection"] = lambda: reflection(DENSITY)
+FINE["earth_shine"] = lambda: shine(DENSITY)
+FINE["earth_depth"] = lambda: depth(14, 3, DENSITY)
+FINE["earth_rays"] = lambda: rays(DENSITY)
+# What stands far off behind the surface: the mountains, the hills and their lit windows, the woods.
+FINE["backdrop_far"] = lambda: ridge_mountains(fine=DENSITY)
+FINE["backdrop_earth_hills"] = lambda: ridge_hills(fine=DENSITY)
+FINE["backdrop_earth_windows"] = lambda: windows(DENSITY)
+FINE["backdrop_mid"] = lambda: ridge_mid(DENSITY)
+FINE["backdrop_near"] = lambda: ridge_near(DENSITY)
 for _v in range(SHRUBS):
     FINE[f"earth_shrub_{_v}"] = lambda v=_v: shrub(v, DENSITY)
 for _v in range(DEADS):

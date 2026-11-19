@@ -109,8 +109,14 @@ ways:
     dark fronts, the reeds, the mine's timber, track, stores and ore, the
     mill's sails, the graves, the roots, the lilies, the stumps, the rubble,
     the crows, the sheep and the birds (a draft pixel that is only a dot is
-    `tv2_earth.dot`, a block with a lit corner); and the gathered on the
-    Wheel. A part of such a picture that is still drawn on the draft (a wall of dressed
+    `tv2_earth.dot`, a block with a lit corner), the village's dressing, its
+    cottages, chapel, well and mill, the Gate above and the Gate below, the
+    mine's head and carts, the crypt, the pond's reflection, shine and
+    depth, the wood's light, the glow of the cottage and of the Gate (over
+    them as they are drawn at 32), and the mountains, the hills with their
+    lit windows and the woods far off (`masonry`, `roof_tiles`, `window`,
+    `ivy`, `plinth`, `_crowns`, `_profile` take `fine`); and the gathered on
+    the Wheel. A part of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
     Each is the draft's size times `DENSITY` exactly, so nothing that stands
