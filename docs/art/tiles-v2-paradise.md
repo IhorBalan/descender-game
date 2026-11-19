@@ -357,7 +357,10 @@ wisps in its dark), the Wheel (its rim, its spokes and its eye) and the
 Sundial; and what is in every view: the posts under the platforms, what is
 under every ledge, the earth and roots or the stone under every floor in the
 air, and the ivy; and the Lantern Tree's trunk and roots, the Crown Vine's
-plait, the twisting vines of zone 3, the boughs and the wheat. Everything
+plait, the twisting vines of zone 3, the boughs and the wheat; the brush
+that bends as the hero goes through it, what is set in the ground of the
+floors, the crags by the Gate, the keepers' statues, and the lamps (the
+torches, braziers, crystals, lanterns and glowfruit). Everything
 else is its draft through Scale2x, which is the picture it was with smoother
 edges, until it is drawn again.
 
@@ -365,9 +368,9 @@ edges, until it is drawn again.
 
 - **Nobody has played it by hand.** The model says it can be played through;
   how it feels is not known.
-- **Some of the level is not yet drawn at 32.** The brush, the inlays, the
-  crags, the far layers, the sky, the lamps, the Making-house's pipes, gears
-  and door, the statues, the ruins and the people are the draft doubled; so
+- **Some of the level is not yet drawn at 32.** The far layers, the sky, the
+  Making-house's pipes, gears and door, the ruins and the people are the
+  draft doubled; so
   are the Wheel's wall and the figures round it, and what the level borrows
   from the Earth and from the castles of Paradise.
 - **The hero and the game's own things are 16 to the tile**: his pixels are

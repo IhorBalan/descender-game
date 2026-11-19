@@ -618,29 +618,34 @@ def low_gate(fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def crag(variant: int) -> Image.Image:
+def crag(variant: int, fine: int = 1) -> Image.Image:
     """A spire of the silver cliffs by the Low Gate: split rock, facet by facet, a shoulder
-    where a piece has gone, lit cold on its left, snow on every shoulder."""
+    where a piece has gone, lit cold on its left, snow on every shoulder. `fine` draws it
+    that many times the draft's size: the same facets, with the grain of the rock on
+    each and snow that lies as snow does."""
     r = rng("eden crag", variant)
-    tall = (11, 15, 8)[variant % 3] * T
-    W = 5 * T
+    f = fine
+    tall0 = (11, 15, 8)[variant % 3] * T
+    W0 = 5 * T
+    W, tall = W0 * f, tall0 * f
     art = Art(W, tall)
-    light, crack = facets(W, tall, ("eden crag", variant), 15.0, 2.6)
-    rough = noise(("eden crag edge", variant), W, tall, 13.0)
-    fine = noise(("eden crag grain", variant), W, tall, 2.2)
-    peak = W / 2 + r.uniform(-10, 10)
+    light, crack = facets(W, tall, ("eden crag", variant), 15.0 * f, 2.6)
+    rough = noise(("eden crag edge", variant), W, tall, 13.0 * f)
+    grain = noise(("eden crag grain", variant), W, tall, 2.2 if f == 1 else 3.4)
+    peak = (W0 / 2 + r.uniform(-10, 10)) * f
     shoulders = sorted(r.uniform(0.22, 0.85) for _ in range(3))
     for y in range(tall):
         t = y / tall
-        left = 2 + t**0.8 * (W / 2 - 17) + sum(5 for s in shoulders[::2] if t > s) + rough[y, 3] * 6 * t
-        right = 2 + t**0.8 * (W / 2 - 17) + sum(5 for s in shoulders[1::2] if t > s) + rough[y, W - 4] * 6 * t
+        left = (2 + t**0.8 * (W0 / 2 - 17) + sum(5 for s in shoulders[::2] if t > s) + rough[y, 3 * f] * 6 * t) * f
+        right = (2 + t**0.8 * (W0 / 2 - 17) + sum(5 for s in shoulders[1::2] if t > s) + rough[y, W - 4 * f] * 6 * t) * f
         cx = peak + (W / 2 - peak) * t
         for x in range(max(0, int(cx - left)), min(W, int(cx + right))):
             off = (x + 0.5 - cx) / (left if x < cx else right)
-            k = 4 + round_shift(off) + round(light[y, x] * 1.5 + fine[y, x] * 0.35) - (1 if crack[y, x] and light[y, x] < 0.2 else 0)
+            k = 4 + round_shift(off) + round(light[y, x] * 1.5 + grain[y, x] * (0.35 if f == 1 else 0.42)) - (1 if crack[y, x] and light[y, x] < 0.2 else 0)
             art.put(x, y, tone(SILVER, k))
-    snowed(art, SILVER[6], FROST[5])
-    art.outline(SILVER[0])
+    snowed(art, SILVER[6], FROST[5], deep=3 * f)
+    for _ in range(f):
+        art.outline(SILVER[0])
     return art.image()
 
 
@@ -906,88 +911,109 @@ def sword(coiled: bool = False) -> Image.Image:
 KNIGHT_SHOULDER = 5.0 * T  # how far over its block a keeper's shoulders are
 
 
-def knight() -> Image.Image:
+def knight(fine: int = 1) -> Image.Image:
     """A statue of one who kept this place: hooded, the face in its hood's shadow, a mantle
     that falls in folds from the shoulders to the ground, both arms brought forward to a
     great sword set point down before him, on a block of stone with a step to it. Three
-    times the hero's height, and worn: the rain has streaked it and moss has it by the foot."""
+    times the hero's height, and worn: the rain has streaked it and moss has it by the foot.
+    `fine` draws it that many times the draft's size: rounder, the folds finer, the pits
+    the weather has made in it."""
     r = rng("eden knight")
-    W, H = 5 * T, 9 * T
+    f = fine
+    W0, H0 = 5 * T, 9 * T
+    W, H = W0 * f, H0 * f
+    block = Art(W0, H0)
+    cx0 = W0 / 2
+    top0 = int(H0 - 1.5 * T)
+    ashlar(block, cx0 - 2.2 * T, H0 - 0.6 * T, cx0 + 2.2 * T, H0, STONE, r, shift=lambda x: round_shift((x + 0.5 - cx0) / (2.2 * T)))
+    ashlar(block, cx0 - 1.8 * T, top0, cx0 + 1.8 * T, H0 - 0.6 * T, STONE, r, shift=lambda x: round_shift((x + 0.5 - cx0) / (1.8 * T)))
+    for x in range(int(cx0 - 2.2 * T), int(cx0 + 2.2 * T)):
+        block.put(x, int(H0 - 0.6 * T), tone(STONE, 6))
+    for x in range(int(cx0 - 2 * T), int(cx0 + 2 * T)):
+        block.put(x, top0, tone(STONE, 6))
+        block.put(x, top0 + 1, tone(STONE, 2))
     art = Art(W, H)
-    cx = W / 2
-    grain = noise("eden knight grain", W, H, 2.4)
-    streak = noise("eden knight streak", W * 3, H, 9.0)
-    top = int(H - 1.5 * T)
-    ashlar(art, cx - 2.2 * T, H - 0.6 * T, cx + 2.2 * T, H, STONE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (2.2 * T)))
-    ashlar(art, cx - 1.8 * T, top, cx + 1.8 * T, H - 0.6 * T, STONE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (1.8 * T)))
-    shoulder = int(top - KNIGHT_SHOULDER)
+    art.a = doubled(block.a, f)
+    cx, top = cx0 * f, top0 * f
+    grain = noise("eden knight grain", W, H, 2.4 * f)
+    pits = noise("eden knight pits", W, H, 1.8) if f > 1 else None
+    streak = noise("eden knight streak", W * 3, H, 9.0 * f)
+    shoulder = int(top0 - KNIGHT_SHOULDER) * f
     for y in range(shoulder, top):  # the mantle: broad at the shoulders, in at the waist, out to its hem
         t = (y - shoulder) / (top - shoulder)
         half = 17 - 3 * math.sin(min(t / 0.5, 1) * math.pi / 2) + (5 * ((t - 0.5) / 0.5) ** 1.3 if t > 0.5 else 0)
         half *= min(1.0, 0.55 + t * 9)  # the shoulders are round
-        half += 1.2 * math.sin(t * 9 + 1) * t
+        half = (half + 1.2 * math.sin(t * 9 + 1) * t) * f
         for x in range(int(cx - half), int(cx + half)):
             off = (x + 0.5 - cx) / half
             fold = math.sin(off * (6 + 3 * t) + math.sin(t * 3.1) * 1.4) * min(1.0, 0.3 + t * 1.4)
             k = 4 + round_shift(off) + (1 if fold > 0.55 else -1 if fold < -0.45 else 0) + round(grain[y, x] * 0.5)
+            if f > 1 and abs(fold) < 0.08 and t > 0.25:
+                k -= 1  # the line a fold turns on
             if abs(off) < 0.2 and t > 0.3:
                 k -= 1  # where the mantle parts, the robe under it
-            if streak[y, x * 3] > 0.45:
+            if streak[y, min(x * 3, W * 3 - 1)] > 0.45:
+                k -= 1
+            if f > 1 and pits[y, x] > 0.82:
                 k -= 1
             art.put(x, y, tone(STONE, k))
-    hands = (cx, shoulder + 34)
+    hands = (cx, shoulder + 34 * f)
     for side in (-1, 1):  # the arms, brought forward to the sword
-        sx, sy = cx + side * 13, shoulder + 7
-        for i in range(31):
-            t = i / 30
-            x = sx + (hands[0] + side * 3 - sx) * t**1.6
+        sx, sy = cx + side * 13 * f, shoulder + 7 * f
+        for i in range(31 * f):
+            t = i / (31 * f - 1)
+            x = sx + (hands[0] + side * 3 * f - sx) * t**1.6
             y = sy + (hands[1] - sy) * t
-            for d in range(-3, 4):
-                art.put(x + d, y, tone(STONE, (6 if side < 0 else 4) - (1 if d > 1 else 0) - (1 if d == 3 else 0)))
-            art.put(x + 4 * (1 if side > 0 else -1), y, tone(STONE, 2))
-    for dy in range(-13, 11):  # the hood: a cowl with a peak, the face in its shadow
-        for dx in range(-11, 12):
-            if (dx / 10.5) ** 2 + (dy / 12.5) ** 2 <= 1 or (dy < -8 and abs(dx + 1) < 5 + dy + 13):
-                face = (dx / 5.2) ** 2 + ((dy - 1.5) / 7.2) ** 2 <= 1
-                lip = (dx / 6.6) ** 2 + ((dy - 1.5) / 8.6) ** 2 <= 1
-                k = 1 if face and dy < 5 else 2 if face else 6 if lip and dx < 0 else 3 if lip else 5 if dx + dy < -5 else 4 if dx < 4 else 3
-                art.put(cx + dx, shoulder - 5 + dy, STONE[0] if face and dy < 2 else tone(STONE, k))
-    for dx in range(-15, 16):  # the hood's fall on the shoulders
-        for dy in range(0, 5):
-            if (dx / 15.5) ** 2 + ((dy - 0.5) / 4.6) ** 2 <= 1:
-                art.put(cx + dx, shoulder + 3 + dy, tone(STONE, 5 if dx < -4 else 4 if dx < 6 else 3) if dy < 4 else tone(STONE, 2))
-    for y in range(hands[1] + 4, top - 1):  # the sword: its blade, a fuller down it
-        half = 2.6 - 1.4 * (y - hands[1]) / (top - hands[1])
-        for d in range(-3, 4):
+            for d in range(-3 * f, 3 * f + 1):
+                art.put(x + d, y, tone(STONE, (6 if side < 0 else 4) - (1 if d > f else 0) - (1 if d >= 3 * f - (f - 1) else 0)))
+            for d in range(f):
+                art.put(x + (4 * f + d) * (1 if side > 0 else -1), y, tone(STONE, 2))
+    for dy in range(-13 * f, 10 * f + 1):  # the hood: a cowl with a peak, the face in its shadow
+        for dx in range(-11 * f, 11 * f + 1):
+            u, v = dx / f, dy / f
+            if (u / 10.5) ** 2 + (v / 12.5) ** 2 <= 1 or (v < -8 and abs(u + 1) < 5 + v + 13):
+                face = (u / 5.2) ** 2 + ((v - 1.5) / 7.2) ** 2 <= 1
+                lip = (u / 6.6) ** 2 + ((v - 1.5) / 8.6) ** 2 <= 1
+                k = 1 if face and v < 5 else 2 if face else 6 if lip and u < 0 else 3 if lip else 5 if u + v < -5 else 4 if u < 4 else 3
+                art.put(cx + dx, shoulder - 5 * f + dy, STONE[0] if face and v < 2 else tone(STONE, k))
+    for dx in range(-15 * f, 15 * f + 1):  # the hood's fall on the shoulders
+        for dy in range(0, 5 * f):
+            u, v = dx / f, dy / f
+            if (u / 15.5) ** 2 + ((v - 0.5) / 4.6) ** 2 <= 1:
+                art.put(cx + dx, shoulder + 3 * f + dy, tone(STONE, 5 if u < -4 else 4 if u < 6 else 3) if v < 4 else tone(STONE, 2))
+    for y in range(hands[1] + 4 * f, top - f):  # the sword: its blade, a fuller down it
+        half = (2.6 - 1.4 * (y - hands[1]) / (top - hands[1])) * f
+        for d in range(-3 * f, 3 * f + 1):
             if abs(d) <= half:
-                art.put(cx + d, y, tone(STONE, 2 if d == 0 else 6 if d < 0 else 4))
-    for d in range(-13, 14):  # its guard, a knob at either end
-        for dy in range(3):
-            art.put(cx + d, hands[1] + 4 + dy, tone(STONE, 6 if dy == 0 else 4 if dy == 1 else 2))
+                art.put(cx + d, y, tone(STONE, 2 if abs(d) < f / 2 + 0.5 else 6 if d < 0 else 4))
+    for d in range(-13 * f, 13 * f + 1):  # its guard, a knob at either end
+        for dy in range(3 * f):
+            art.put(cx + d, hands[1] + 4 * f + dy, tone(STONE, 6 if dy < f else 4 if dy < 2 * f else 2))
     for end in (-13, 13):
-        for dy in range(-1, 4):
-            art.put(cx + end, hands[1] + 4 + dy, tone(STONE, 5))
-            art.put(cx + end + (1 if end > 0 else -1), hands[1] + 5 + (dy > 1), tone(STONE, 3))
-    for dy in range(-4, 5):  # the hands, one over the other, on its grip; the pommel over them
-        for dx in range(-5, 6):
-            if (dx / 5.2) ** 2 + (dy / 4.2) ** 2 <= 1:
-                art.put(hands[0] + dx, hands[1] + dy, tone(STONE, 6 if dx + dy < -3 else 5 if dx < 2 else 3))
-    for dy in range(-3, 4):
-        for dx in range(-3, 4):
-            if dx * dx + dy * dy <= 8:
-                art.put(cx + dx, hands[1] - 8 + dy, tone(STONE, 6 if dx + dy < -1 else 4))
-    for x in range(int(cx - 2.2 * T), int(cx + 2.2 * T)):
-        art.put(x, int(H - 0.6 * T), tone(STONE, 6))
-    for x in range(int(cx - 2 * T), int(cx + 2 * T)):
-        art.put(x, top, tone(STONE, 6))
-        art.put(x, top + 1, tone(STONE, 2))
-    for _ in range(30):  # moss, by the foot and in the folds
-        x, y = int(cx + r.uniform(-2.1, 2.1) * T), int(r.uniform(top - 10, H - 1))
+        for dy in range(-f, 4 * f):
+            for d in range(f):
+                art.put(cx + end * f + d * (1 if end > 0 else -1), hands[1] + 4 * f + dy, tone(STONE, 5))
+                art.put(cx + (end + (1 if end > 0 else -1)) * f + d * (1 if end > 0 else -1), hands[1] + 5 * f + min(max(0, dy - f), 2 * f - 1), tone(STONE, 3))
+    for dy in range(-4 * f, 4 * f + 1):  # the hands, one over the other, on its grip; the pommel over them
+        for dx in range(-5 * f, 5 * f + 1):
+            if (dx / (5.2 * f)) ** 2 + (dy / (4.2 * f)) ** 2 <= 1:
+                art.put(hands[0] + dx, hands[1] + dy, tone(STONE, 6 if dx + dy < -3 * f else 5 if dx < 2 * f else 3))
+    if f > 1:  # the fingers of the upper hand
+        for n in range(-3, 4, 2):
+            for dy in range(-2 * f, 0):
+                art.put(hands[0] + n * f, hands[1] + dy, tone(STONE, 3))
+    for dy in range(-3 * f, 3 * f + 1):
+        for dx in range(-3 * f, 3 * f + 1):
+            if dx * dx + dy * dy <= 8 * f * f:
+                art.put(cx + dx, hands[1] - 8 * f + dy, tone(STONE, 6 if dx + dy < -f else 4))
+    for _ in range(30 * f):  # moss, by the foot and in the folds
+        x, y = int(cx + r.uniform(-2.1, 2.1) * T * f), int(r.uniform(top - 10 * f, H - 1))
         if art.has(x, y):
             for dx in range(r.randint(2, 4)):
                 if art.has(x + dx, y):
                     art.put(x + dx, y, tone(LEAF, 2 + (dx % 2)))
-    art.outline(STONE[0])
+    for _ in range(f):
+        art.outline(STONE[0])
     return art.image()
 
 
@@ -1696,25 +1722,28 @@ def gathered(frame: int = 0) -> Image.Image:
     return art.image()
 
 
-def broken_knight() -> Image.Image:
+def broken_knight(fine: int = 1) -> Image.Image:
     """A keeper's statue that has not been kept: the head gone, a crack down it, half its sword."""
-    image = knight().transpose(Image.FLIP_LEFT_RIGHT)
+    f = fine
+    image = knight(f).transpose(Image.FLIP_LEFT_RIGHT)
     a = np.array(image)
     h, w = a.shape[:2]
-    top = int(h - 1.5 * T - KNIGHT_SHOULDER)
-    for y in range(0, top + 6):  # the head, off at the neck, aslant
+    top = int(h - (1.5 * T + KNIGHT_SHOULDER) * f)
+    for y in range(0, top + 6 * f):  # the head, off at the neck, aslant
         for x in range(w):
-            if y < top + 2 + (x - w / 2) * 0.25:
+            if y < top + 2 * f + (x - w / 2) * 0.25:
                 a[y, x, 3] = 0
-    for y in range(top + 6, h - 2 * T):  # the crack
-        x = int(w / 2 + 8 + math.sin(y * 0.4) * 2 + (y - top) * 0.12)
-        if a[y, x, 3]:
-            a[y, x, :3] = STONE[0]
-            if a[y, x + 1, 3]:
-                a[y, x + 1, :3] = STONE[6]
+    for y in range(top + 6 * f, h - 2 * T * f):  # the crack
+        x = int(w / 2 + (8 + math.sin(y / f * 0.4) * 2) * f + (y - top) * 0.12)
+        for d in range(f):
+            if a[y, x + d, 3]:
+                a[y, x + d, :3] = STONE[0]
+        if a[y, x + f, 3]:
+            a[y, x + f, :3] = STONE[6]
     art = Art(w, h)
     art.a = a
-    art.outline(STONE[0])
+    for _ in range(f):
+        art.outline(STONE[0])
     return art.image()
 
 
@@ -2217,132 +2246,185 @@ ROOT = ((150, 124, 86), (120, 96, 64), (84, 64, 44))
 TINTED_STONE = {"earth": (126, 92, 66), "tilth": (150, 120, 70), "loam": (40, 110, 110)}
 
 
-def inlay(kind: str, variant: int) -> Image.Image:
+def inlay(kind: str, variant: int, fine: int = 1) -> Image.Image:
     """Something set in the ground of a floor that is bigger than a tile, so a floor is
     not one tile said over: a boulder, roots, a seam of pebbles in the earth; the rings
     of its growth in the wood of the Vines; a frieze, a rosette, a tally cut in the
-    marble; a plate, a pipe, a dial let into the pearl; a vein of ice in the rock."""
+    marble; a plate, a pipe, a dial let into the pearl; a vein of ice in the rock.
+    `fine` draws it that many times the draft's size, each thing in its own finer hand."""
     r = rng("eden inlay", kind, variant)
-    W, H = (4, 3, 5)[variant % 3] * T, 20
+    f = fine
+    W0, H0 = (4, 3, 5)[variant % 3] * T, 20
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
-    cx, cy = W / 2, H / 2
+    cx, cy = W0 / 2, H0 / 2  # on the draft
+
+    def each():
+        """Every pixel, and the place on the draft it is at."""
+        for Y in range(H):
+            for X in range(W):
+                yield X, Y, (X + 0.5) / f - 0.5, (Y + 0.5) / f - 0.5
+
+    def thirds(d, half, colours):
+        if f == 1:
+            return colours[0] if d < 0 else colours[1] if d == 0 else colours[2]
+        return colours[0] if d < -half / 3 else colours[1] if d <= half / 3 else colours[2]
+
     if kind in TINTED_STONE:
         tint = TINTED_STONE[kind]
         stone = [mix(c, tint, 0.45) if tint else c for c in STONE]
         if variant == 0:  # a boulder the earth lies round
-            light, crack = facets(W, H, ("eden inlay", kind), 9.0, 1.0)
-            for y in range(H):
-                for x in range(W):
-                    d = math.hypot((x + 0.5 - cx) / (W * 0.42), (y + 0.5 - cy - 1) / (H * 0.4))
-                    edge = 1 + 0.12 * math.sin(math.atan2(y - cy, x - cx) * 5 + 1)
-                    if d < edge:
-                        k = 4 - round((x - cx) / W * 2.2 + (y - cy) / H * 2.4) + round(light[y, x] * 0.8) - (1 if crack[y, x] else 0)
-                        art.put(x, y, tone(stone, k))
-            art.outline(stone[0])
+            light, crack = facets(W, H, ("eden inlay", kind), 9.0 * f, 1.0)
+            grain = noise(("eden inlay grain", kind), W, H, 2.0) if f > 1 else None
+            for X, Y, x, y in each():
+                d = math.hypot((x + 0.5 - cx) / (W0 * 0.42), (y + 0.5 - cy - 1) / (H0 * 0.4))
+                edge = 1 + 0.12 * math.sin(math.atan2(y - cy, x - cx) * 5 + 1)
+                if d < edge:
+                    k = 4 - round((x - cx) / W0 * 2.2 + (y - cy) / H0 * 2.4) + round(light[Y, X] * 0.8) - (1 if crack[Y, X] else 0)
+                    if f > 1:
+                        k += round(grain[Y, X] * 0.6)
+                    art.put(X, Y, tone(stone, k))
+            for _ in range(f):
+                art.outline(stone[0])
         elif variant == 1:  # roots, through it
             for n in range(3):
                 y = 5.0 + n * 6 + r.uniform(-1, 1)
                 thick = 2.4 - n * 0.5
-                for x in range(2, W - 2):
+                path = {}
+                for x in range(2, W0 - 2):
                     y += math.sin(x * 0.21 + n * 2) * 0.35 + r.uniform(-0.2, 0.2)
-                    taper = min(1.0, (x - 1) / 9, (W - 2 - x) / 9)
-                    for d in range(int(-thick * taper), int(thick * taper) + 1):
-                        art.put(x, y + d, ROOT[0] if d < 0 else ROOT[1] if d == 0 else ROOT[2])
-                    if x % 11 == 5 + n:
-                        for i in range(1, 5):
-                            art.put(x + i, y + (i if n % 2 else -i) * 0.8, ROOT[1])
+                    path[x] = y
+                for X in range(2 * f, (W0 - 2) * f):
+                    x = X / f
+                    x0 = min(int(x), W0 - 3)
+                    y = path[x0] + (path[min(x0 + 1, W0 - 3)] - path[x0]) * (x - x0)
+                    half = thick * min(1.0, (x - 1) / 9, (W0 - 2 - x) / 9) * f
+                    for d in range(int(-half), int(half) + 1):
+                        art.put(X, y * f + d, thirds(d, half, ROOT))
+                    if X % (11 * f) == (5 + n) * f:
+                        for i in range(1, 5 * f):
+                            art.put(X + i, y * f + (i if n % 2 else -i) * 0.8, ROOT[1])
+                            if f > 1:
+                                art.put(X + i, y * f + (i if n % 2 else -i) * 0.8 + 1, ROOT[2])
         else:  # a seam of pebbles
             x = 3.0
-            while x < W - 6:
+            while x < W0 - 6:
                 wide, y = r.randint(3, 7), cy + math.sin(x * 0.11) * 4 + r.uniform(-2, 2)
-                for dy in range(-2, 3):
-                    for dx in range(wide):
+                for DY in range(-2 * f, 3 * f):
+                    for DX in range(wide * f):
+                        dx, dy = (DX + 0.5) / f - 0.5, (DY + 0.5) / f - 0.5
                         if (dx - wide / 2 + 0.5) ** 2 / (wide / 2) ** 2 + dy * dy / 5.5 <= 1:
-                            art.put(x + dx, y + dy, tone(stone, 5 if dy < 0 and dx < wide - 1 else 4 if dy < 1 else 2))
+                            k = 5 if dy < 0 and dx < wide - 1 else 4 if dy < 1 else 2
+                            if f > 1 and dy < -1 and dx < wide / 3:
+                                k = 6  # the light on it
+                            art.put(x * f + DX, y * f + DY, tone(stone, k))
                 x += wide + r.randint(2, 6)
     elif kind == "vinewood":
         rings = 5 - variant
-        for y in range(H):
-            for x in range(W):
-                d = math.hypot((x + 0.5 - cx) / (W * 0.4), (y + 0.5 - cy) / (H * 0.42))
-                d *= 1 + 0.1 * math.sin(math.atan2(y - cy, x - cx) * 3 + variant)
-                if d < 1:
-                    ring = (d * rings) % 1
-                    art.put(x, y, tone(BARK, 2 if ring < 0.22 else 5 if ring < 0.4 else 4 if d < 0.5 else 3))
+        for X, Y, x, y in each():
+            d = math.hypot((x + 0.5 - cx) / (W0 * 0.4), (y + 0.5 - cy) / (H0 * 0.42))
+            ang = math.atan2(y - cy, x - cx)
+            d *= 1 + 0.1 * math.sin(ang * 3 + variant)
+            if d < 1:
+                ring = (d * rings) % 1
+                k = 2 if ring < 0.22 else 5 if ring < 0.4 else 4 if d < 0.5 else 3
+                if f > 1 and d > 0.3 and abs(math.sin(ang * 2.5 + variant)) < 0.05:
+                    k = 1  # where the wood has checked as it dried
+                art.put(X, Y, tone(BARK, k))
     elif kind == "marble":
         if variant == 0:  # a frieze, in a key pattern
             key = ("#########...", "#.......#...", "#..####.#...", "#..#....#...", "#..######...", "#...........")
-            for x in range(2, W - 2):
+            for X in range(2 * f, (W0 - 2) * f):
                 for row, line in enumerate(key):
-                    for scale in range(2):
-                        y = 4 + row * 2 + scale
-                        if line[(x // 2) % 12] == "#":
-                            art.put(x, y, MARBLE[2])
-                            art.put(x + 1, y + 1, MARBLE[6])
-                for y in (2, H - 4):
-                    art.put(x, y, MARBLE[2])
-                    art.put(x, y + 1, MARBLE[6])
+                    for scale in range(2 * f):
+                        Y = (4 + row * 2) * f + scale
+                        if line[(X // f // 2) % 12] == "#":
+                            art.put(X, Y, MARBLE[2])
+                            art.put(X + 1, Y + 1, MARBLE[6])
+                for y in (2, H0 - 4):
+                    for s in range(f):
+                        art.put(X, y * f + s, MARBLE[2])
+                        art.put(X, y * f + f + s, MARBLE[6])
         elif variant == 1:  # a rosette
-            for y in range(H):
-                for x in range(W):
-                    dx, dy = x + 0.5 - cx, y + 0.5 - cy
-                    d, ang = math.hypot(dx, dy), math.atan2(dy, dx)
-                    petal = 9 * (0.55 + 0.45 * abs(math.cos(ang * 4)))
-                    if d < 2.5:
-                        art.put(x, y, GOLD[5 if dx + dy < 0 else 3])
-                    elif d < petal:
-                        art.put(x, y, MARBLE[6 if dx + dy < -2 else 4 if abs(math.cos(ang * 4)) > 0.3 else 2])
-                    elif d < petal + 1.2:
-                        art.put(x, y, MARBLE[2])
+            for X, Y, x, y in each():
+                dx, dy = x + 0.5 - cx, y + 0.5 - cy
+                d, ang = math.hypot(dx, dy), math.atan2(dy, dx)
+                petal = 9 * (0.55 + 0.45 * abs(math.cos(ang * 4)))
+                if d < 2.5:
+                    art.put(X, Y, GOLD[5 if dx + dy < 0 else 3])
+                elif d < petal:
+                    art.put(X, Y, MARBLE[6 if dx + dy < -2 else 4 if abs(math.cos(ang * 4)) > 0.3 else 2])
+                elif d < petal + 1.2:
+                    art.put(X, Y, MARBLE[2])
         else:  # a tally, cut in rows: fives, and a few over
             for row in range(2):
                 x = 5 + row * 3
-                while x < W - 12:
+                while x < W0 - 12:
                     for stroke in range(4):
-                        for y in range(4 + row * 9, 10 + row * 9):
-                            art.put(x + stroke * 2, y, MARBLE[2])
-                            art.put(x + stroke * 2 + 1, y, MARBLE[6])
-                    for i in range(8):
-                        art.put(x - 1 + i, 9 + row * 9 - i * 0.7, MARBLE[1])
+                        for Y in range((4 + row * 9) * f, (10 + row * 9) * f):
+                            for s in range(f):
+                                art.put((x + stroke * 2) * f + s, Y, MARBLE[2])
+                            art.put((x + stroke * 2) * f + f, Y, MARBLE[6])
+                    for i in range(8 * f):
+                        art.put((x - 1) * f + i, (9 + row * 9) * f - i * 0.7, MARBLE[1])
+                        if f > 1:
+                            art.put((x - 1) * f + i, (9 + row * 9) * f - i * 0.7 + 1, MARBLE[1])
                     x += 13
     elif kind == "pearl":
         if variant == 0:  # a plate let into it, riveted
-            for y in range(3, H - 3):
-                for x in range(3, W - 3):
-                    edge = y in (3, H - 4) or x in (3, W - 4)
-                    art.put(x, y, BRASS[2] if edge else tone(PEARL, 4 + (1 if y < 6 else 0) - (1 if y > H - 7 else 0) + (1 if (x + y * 2) % 23 == 0 else 0)))
-            for x in range(6, W - 5, 9):
-                for y in (5, H - 6):
-                    art.put(x, y, BRASS[6])
-                    art.put(x + 1, y + 1, BRASS[2])
+            for Y in range(3 * f, (H0 - 3) * f):
+                for X in range(3 * f, (W0 - 3) * f):
+                    x, y = X // f, Y // f
+                    edge = y in (3, H0 - 4) or x in (3, W0 - 4)
+                    art.put(X, Y, BRASS[2] if edge else tone(PEARL, 4 + (1 if y < 6 else 0) - (1 if y > H0 - 7 else 0) + (1 if (X + Y * 2) % (23 * f) == 0 else 0)))
+            for x in range(6, W0 - 5, 9):
+                for y in (5, H0 - 6):
+                    if f == 1:
+                        art.put(x, y, BRASS[6])
+                        art.put(x + 1, y + 1, BRASS[2])
+                        continue
+                    for dx, dy, colour in ((0, 0, BRASS[6]), (1, 0, BRASS[6]), (0, 1, BRASS[6]), (1, 1, BRASS[4]), (2, 1, BRASS[2]), (2, 2, BRASS[2]), (1, 2, BRASS[2])):
+                        art.put(x * f + dx, y * f + dy, colour)
         elif variant == 1:  # a pipe, laid in it
-            for x in range(W):
-                for d in range(-4, 5):
-                    flange = x % 21 in (9, 10, 11)
+            for X in range(W):
+                flange = (X // f) % 21 in (9, 10, 11)
+                for row in range(9 * f):
+                    d = row // f - 4
                     if abs(d) < 4 or flange:
-                        art.put(x, cy + d, tone(BRASS, (5 if d < -1 else 4 if d < 2 else 2) + (1 if flange else 0)))
-            art.outline(BRASS[0])
+                        k = (5 if d < -1 else 4 if d < 2 else 2) + (1 if flange else 0)
+                        if f > 1 and row == 2 * f + 1:
+                            k += 1  # the light along it
+                        art.put(X, int(cy - 4) * f + row, tone(BRASS, k))
+            for _ in range(f):
+                art.outline(BRASS[0])
         else:  # a dial
-            for y in range(H):
-                for x in range(W):
-                    dx, dy = x + 0.5 - cx, y + 0.5 - cy
-                    d = math.hypot(dx, dy)
-                    if d < 9.5:
-                        art.put(x, y, BRASS[5 if dx + dy < 0 else 3] if d > 7.5 else PEARL[6] if abs(math.sin(math.atan2(dy, dx) * 6)) > 0.25 or d < 5 else PEARL[2])
-            for i in range(7):
-                art.put(cx + i * 0.6, cy - i * 0.8, (170, 40, 40))
-            art.put(cx, cy, BRASS[1])
-            art.outline(BRASS[0])
+            for X, Y, x, y in each():
+                dx, dy = x + 0.5 - cx, y + 0.5 - cy
+                d = math.hypot(dx, dy)
+                if d < 9.5:
+                    tick = abs(math.sin(math.atan2(dy, dx) * 6)) > (0.25 if f == 1 else 0.16)
+                    art.put(X, Y, BRASS[5 if dx + dy < 0 else 3] if d > 7.5 else PEARL[6] if tick or d < 5 else PEARL[2])
+            for i in range(7 * f):
+                art.put(cx * f + i * 0.6, cy * f - i * 0.8, (170, 40, 40))
+            for dy in range(f):
+                for dx in range(f):
+                    art.put(cx * f + dx, cy * f + dy, BRASS[1])
+            for _ in range(f):
+                art.outline(BRASS[0])
     else:  # a vein of ice in the rock
-        for x in range(2, W - 2):
+        for X in range(2 * f, (W0 - 2) * f):
+            x = X / f
             y = cy + math.sin(x * 0.13 + variant * 2) * 5 + math.sin(x * 0.41) * 1.5
-            thick = 1.2 + 1.8 * math.sin((x - 2) / (W - 4) * math.pi) + 0.6 * math.sin(x * 0.9)
-            for d in range(int(-thick), int(thick) + 1):
-                art.put(x, y + d, FROST[6] if d < 0 else FROST[5] if d == 0 else FROST[4])
-            if x % 9 == 4:
-                art.put(x, y - thick - 1, (255, 255, 255))
-                for i in range(1, 5):  # a splinter off it
-                    art.put(x + i, y + thick + i * (1 if x % 2 else -1) * 0.8, FROST[4])
+            thick = 1.2 + 1.8 * math.sin((x - 2) / (W0 - 4) * math.pi) + 0.6 * math.sin(x * 0.9)
+            half = thick * f
+            for d in range(int(-half), int(half) + 1):
+                art.put(X, y * f + d, thirds(d, half, (FROST[6], FROST[5], FROST[4])))
+            if X % (9 * f) == 4 * f:
+                art.put(X, y * f - half - 1, (255, 255, 255))
+                if f > 1:
+                    art.put(X + 1, y * f - half - 2, (255, 255, 255))
+                for i in range(1, 5 * f):  # a splinter off it
+                    art.put(X + i, y * f + half + i * (1 if (X // f) % 2 else -1) * 0.8, FROST[4])
     return art.image()
 
 
@@ -2368,88 +2450,164 @@ BRUSHES = ("grass", "fern", "frond", "wheat", "bloom", "frost")  # zones 1, 2, 3
 ORDER_BRUSH = 26  # before the hero: he goes through it
 
 
-def brush(kind: int) -> Image.Image:
+def brush(kind: int, fine: int = 1) -> Image.Image:
     """Something that grows on a floor, as high as the hero's knee or his waist, that he
     goes through and that bends as he does: a tuft of long grass with a flower in it; a
     fern of the orchard, its tips alight; the broad fronds under the Vines; a stand of
     wheat that has seeded itself off its row; flowers on tall stalks along a terrace;
-    grass with the frost on it by the Gate. It turns about its foot."""
+    grass with the frost on it by the Gate. It turns about its foot. `fine` draws it that
+    many times the draft's size: more blades and finer, a rib down each, petals on a flower."""
     name = BRUSHES[kind]
     r = rng("eden brush", name)
-    W, H = 2 * T + 8, T + 14
+    f = fine
+    W0, H0 = 2 * T + 8, T + 14
+    W, H = W0 * f, H0 * f
     art = Art(W, H)
-    cx, foot = W / 2, H - 3
+    cx, foot = W / 2, H - 3 * f
     ramp = {"grass": LEAF, "fern": TEAL, "frond": VINE, "wheat": WHEAT, "bloom": LEAF, "frost": FROST}[name]
 
     def blade(x0, tall, lean, wide=1.0, lit=5, dark=3):
+        tall *= f
         for i in range(int(tall)):
             t = i / tall
             x = x0 + lean * t * t * tall * 0.45
-            half = wide * (1 - t) ** 0.7
+            half = wide * f * (1 - t) ** 0.7
             for d in range(int(-half), int(half) + 1):
                 art.put(x + d, foot - i, tone(ramp, lit if d <= 0 else dark))
+            if f > 1 and half >= 1.5:
+                art.put(x, foot - i, tone(ramp, lit + 1))  # its rib, lit
         return x0 + lean * tall * 0.45, foot - tall
 
+    def flower(x, y, petals):
+        dark, mid, lit = petals
+        if f == 1:
+            for dx, dy, colour in ((0, 0, lit), (-1, 0, mid), (1, 0, mid), (0, -1, lit), (0, 1, mid)):
+                art.put(x + dx, y + dy, colour)
+            return
+        for dx, dy, colour in (
+            (0, 0, GOLD[5]), (1, 0, GOLD[4]),
+            (-1, -1, lit), (0, -2, lit), (1, -2, lit), (2, -1, mid),
+            (-2, 0, lit), (-2, 1, mid), (3, 0, mid), (3, 1, dark),
+            (-1, 2, mid), (0, 3, dark), (1, 3, dark), (2, 2, dark),
+        ):  # fmt: skip
+            art.put(x + dx, y + dy, colour)
+
     if name in ("grass", "frost"):
-        for n in range(11):
-            x0 = cx + (n - 5) * 2.2 + r.uniform(-1, 1)
-            tip = blade(x0, r.uniform(9, 23), (n - 5) / 5 * r.uniform(0.6, 1.2), 1.4, 5 if n % 2 else 4, 3 if n % 2 else 2)
+        count = 11 if f == 1 else 17
+        for n in range(count):
+            spread = (n - (count - 1) / 2) / ((count - 1) / 2)
+            x0 = cx + spread * 11 * f + r.uniform(-1, 1)
+            tip = blade(x0, r.uniform(9, 23), spread * r.uniform(0.6, 1.2), 1.4 if f == 1 else 1.1, 5 if n % 2 else 4, 3 if n % 2 else 2)
             if name == "frost" and n % 2:
                 art.put(tip[0], tip[1], (255, 255, 255))
                 art.put(tip[0], tip[1] + 2, FROST[6])
+                if f > 1:
+                    art.put(tip[0] + 1, tip[1] + 1, (255, 255, 255))
         if name == "grass":
-            for fx, fy in ((cx - 6, foot - 19), (cx + 8, foot - 15)):
-                for dx, dy, k in ((0, 0, 2), (-1, 0, 1), (1, 0, 1), (0, -1, 2), (0, 1, 1)):
-                    art.put(fx + dx, fy + dy, ROSE[k])
+            for fx, fy in ((cx - 6 * f, foot - 19 * f), (cx + 8 * f, foot - 15 * f)):
+                flower(fx, fy, ROSE)
     elif name in ("fern", "frond"):
         for n in range(5):  # fronds: a rib that arches over, leaflets down either side of it
             lean = (n - 2) / 2 * 1.3 + r.uniform(-0.15, 0.15)
-            tall = r.uniform(15, 24) - abs(n - 2) * 2
+            tall = (r.uniform(15, 24) - abs(n - 2) * 2) * f
+            every = (2 if name == "fern" else 3) if f == 1 else (3 if name == "fern" else 4)
             for i in range(int(tall)):
                 t = i / tall
                 x, y = cx + lean * t * tall * 0.5, foot - i * (1 - 0.35 * t * abs(lean))
                 art.put(x, y, tone(ramp, 2))
-                if i > 3 and i % (2 if name == "fern" else 3) == 0:
-                    long = (2.5 if name == "fern" else 5.0) * math.sin(min(1.0, t * 1.2) * math.pi) + 1
+                if i > 3 * f and i % every == 0:
+                    long = ((2.5 if name == "fern" else 5.0) * math.sin(min(1.0, t * 1.2) * math.pi) + 1) * f
                     for side in (-1, 1):
                         for d in range(1, int(long) + 1):
                             art.put(x + side * d, y + d * 0.5, tone(ramp, 5 if side < 0 else 4 if d < long - 1 else 3))
-                            if name == "frond":
+                            if name == "frond" or f > 1:
                                 art.put(x + side * d, y + d * 0.5 + 1, tone(ramp, 3))
             if name == "fern":  # its tip, alight
                 art.put(x, y, CYAN[2])
                 art.put(x, y - 1, CYAN[3])
+                if f > 1:
+                    art.put(x + 1, y, CYAN[2])
+                    art.put(x - 1, y, CYAN[1])
     elif name == "wheat":
-        for n in range(9):
-            x0 = cx + (n - 4) * 2.6 + r.uniform(-1, 1)
-            tall = r.uniform(14, 22)
-            lean = (n - 4) / 4 * 0.5 + r.uniform(-0.15, 0.15)
+        count = 9 if f == 1 else 10
+        for n in range(count):
+            spread = (n - (count - 1) / 2) / ((count - 1) / 2)
+            x0 = cx + spread * 10.4 * f + r.uniform(-1, 1)
+            tall = r.uniform(14, 22) * f
+            lean = spread * 0.5 + r.uniform(-0.15, 0.15)
             for i in range(int(tall)):
                 t = i / tall
                 art.put(x0 + lean * t * t * tall * 0.4, foot - i, tone(WHEAT, 3 if n % 2 else 2))
             hx, hy = x0 + lean * tall * 0.4, foot - int(tall)
-            for i in range(8):
-                for d in (-1, 0, 1) if 0 < i < 7 else (0,):
+            long = 8 if f == 1 else 13
+            for i in range(long):
+                wide = 1 if 0 < i < long - 1 else 0
+                if f > 1 and 2 < i < long - 3:
+                    wide = 2
+                for d in range(-wide, wide + 1):
                     art.put(hx + d, hy + i, tone(WHEAT, 6 if (i + d) % 2 == 0 and d <= 0 else 5 if d <= 0 else 4))
+                if f > 1 and i % 3 == 1:
+                    art.put(hx - wide - 1, hy + i - 1, tone(WHEAT, 6))
             art.put(hx + 1, hy - 2, tone(WHEAT, 5))
     else:  # flowers on tall stalks
         petals = ((154, 58, 102), (226, 122, 166), (255, 240, 246)), ((90, 58, 168), (168, 136, 240), (239, 230, 255)), (GOLD[2], GOLD[4], GOLD[6])
         for n in range(6):
-            x0 = cx + (n - 2.5) * 5 + r.uniform(-1.5, 1.5)
-            tall = r.uniform(11, 23)
+            x0 = cx + (n - 2.5) * 5 * f + r.uniform(-1.5, 1.5)
+            tall = r.uniform(11, 23) * f
             lean = (n - 2.5) / 2.5 * 0.5
             for i in range(int(tall)):
                 t = i / tall
                 art.put(x0 + lean * t * t * tall * 0.4, foot - i, tone(LEAF, 3))
-                if i in (6, 13) and n % 2:
-                    for d in range(1, 4):
-                        art.put(x0 + lean * t * t * tall * 0.4 + (d if i == 6 else -d), foot - i - d // 2, tone(LEAF, 5 if d < 3 else 4))
+                if i in (6 * f, 13 * f) and n % 2:
+                    for d in range(1, 4 * f):
+                        art.put(x0 + lean * t * t * tall * 0.4 + (d if i == 6 * f else -d), foot - i - d // 2, tone(LEAF, 5 if d < 3 * f else 4))
+                        if f > 1:
+                            art.put(x0 + lean * t * t * tall * 0.4 + (d if i == 6 * f else -d), foot - i - d // 2 + 1, tone(LEAF, 3))
             hx, hy = x0 + lean * tall * 0.4, foot - int(tall)
             dark, mid, lit = petals[n % 3]
-            for dx, dy, colour in ((0, 0, GOLD[5]), (-1, 0, mid), (1, 0, dark), (0, -1, lit), (0, 1, dark), (-1, -1, lit), (1, -1, mid), (-2, 0, mid), (2, 0, dark), (0, -2, lit)):
-                art.put(hx + dx, hy + dy, colour)
-    art.outline(ramp[0] if name != "wheat" else WHEAT[0])
+            if f == 1:
+                for dx, dy, colour in ((0, 0, GOLD[5]), (-1, 0, mid), (1, 0, dark), (0, -1, lit), (0, 1, dark), (-1, -1, lit), (1, -1, mid), (-2, 0, mid), (2, 0, dark), (0, -2, lit)):
+                    art.put(hx + dx, hy + dy, colour)
+            else:
+                flower(hx, hy, petals[n % 3])
+    for _ in range(f):
+        art.outline(ramp[0] if name != "wheat" else WHEAT[0])
     return art.image()
+
+
+def fine_glowfruit(frame: int) -> np.ndarray:
+    """The fruit that gives the orchard its light, at the size that ships: a round fruit on
+    a stem under two leaves, lit from within, a light on its skin, its glow swelling and
+    fading over the frames."""
+    size = PIXELS
+    a = np.zeros((size, size, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        x, y = int(x), int(y)
+        if 0 <= x < size and 0 <= y < size:
+            a[y, x, :3] = colour
+            a[y, x, 3] = 255
+
+    for y in range(0, 9):
+        put(15, y, TEAL[3])
+        put(16, y, TEAL[2])
+    for side, (lx, ly) in ((-1, (11, 5)), (1, (21, 3))):  # its two leaves
+        for dy in range(-2, 3):
+            for dx in range(-4, 5):
+                if (dx / 4.4) ** 2 + (dy / 2.2) ** 2 <= 1:
+                    put(lx + dx, ly + dy + (dx * side) // 3, TEAL[6] if dy < 0 else TEAL[5] if dy == 0 else TEAL[4])
+    bright = (0, 1, 2)[frame % 3]
+    for dy in range(-10, 11):
+        for dx in range(-10, 11):
+            d = math.hypot(dx + 0.5, dy + 0.5)
+            if d <= 9.4:
+                colour = CYAN[3] if d < 3.6 + bright * 1.6 else CYAN[2] if dx + dy < 5 else CYAN[1]
+                if d > 8.2 and dx + dy > 2:
+                    colour = CYAN[0]  # its skin, in its own shade
+                put(16 + dx, 19 + dy, colour)
+    for dx, dy in ((-4, -5), (-3, -5), (-4, -4)):  # a light on its skin
+        put(16 + dx, 19 + dy, (255, 255, 255))
+    return a
 
 
 # --- What there is, and where its floor line lies ------------------------------------------
@@ -2608,6 +2766,16 @@ for _v in range(2):
     FINE[f"eden_vine_bough_{_v}"] = lambda v=_v: bough(v == 1, LEAF, fine=DENSITY)
 for _v in range(4):
     FINE[f"eden_wheat_{_v}"] = lambda v=_v: wheat(v, DENSITY)
+# What he goes through, what is set in the ground, the crags and the keepers by the Gate.
+for _k in range(len(BRUSHES)):
+    FINE[f"eden_brush_{_k}"] = lambda k=_k: brush(k, DENSITY)
+for _kind in INLAYS:
+    for _v in range(INLAY_KINDS):
+        FINE[f"eden_inlay_{_kind}_{_v}"] = lambda a=(_kind, _v): inlay(*a, fine=DENSITY)
+for _v in range(CRAGS):
+    FINE[f"eden_crag_{_v}"] = lambda v=_v: crag(v, DENSITY)
+FINE["eden_knight"] = lambda: knight(DENSITY)
+FINE["eden_knight_1"] = lambda: broken_knight(DENSITY)
 for _v in range(TEAL_TREES):
     for _frame in range(FRAMES):
         FINE[f"eden_teal_tree_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: teal_tree(v, s, fine=DENSITY)

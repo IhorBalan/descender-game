@@ -47,7 +47,7 @@ import tv2_decor
 import tv2_liquid
 import tv2_preview
 import tv2_terrain
-from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_frame, fine_slope, ledge_sheet, prop_sheet, things_sheet
+from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_frame, fine_prop_sheet, fine_slope, ledge_sheet, things_sheet
 
 FRESH_METAS = False  # `--metas`: write every picture's .meta again, not only the missing ones
 
@@ -319,8 +319,13 @@ def generate(out: str):
         path = os.path.join(out, "blend_" + blend["key"] + ".png")
         write(path, image, sheet_meta(path, image, cells))
         images["blend_" + blend["key"]] = image
-    sheets = [(p["key"], prop_sheet(p)) for p in PROPS]
-    sheets += [("shade", tv2_decor.shade_sheet()), ("glint", tv2_decor.glint_sheet())]
+    for prop in PROPS:  # the lamps: drawn at the size that ships where they have a painter for it
+        image, cells = fine_prop_sheet(prop)
+        path = os.path.join(out, prop["key"] + ".png")
+        write(path, image, sheet_meta(path, image, cells))
+        images[prop["key"]] = image
+        keep(image, cells)
+    sheets = [("shade", tv2_decor.shade_sheet()), ("glint", tv2_decor.glint_sheet())]
     sheets += [(q["key"], tv2_liquid.liquid_sheet(q)) for q in tv2_liquid.LIQUIDS]
     sheets += [("ledge", ledge_sheet()), ("things", things_sheet())]
     for key, (image, cells) in sheets:

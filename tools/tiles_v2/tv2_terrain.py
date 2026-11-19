@@ -4,6 +4,7 @@ slopes, the blend overlays between materials and the wall torch. Not a script.
 """
 from __future__ import annotations
 
+import math
 import random
 
 import numpy as np
@@ -1234,7 +1235,7 @@ def mine_lamp_frame(frame: int) -> np.ndarray:
 
 
 from tv2_earth import campfire_frame, glowshroom_frame  # noqa: E402  (the Earth's props)
-from tv2_eden import glowfruit_frame  # noqa: E402  (the Paradise level's)
+from tv2_eden import fine_glowfruit, glowfruit_frame  # noqa: E402  (the Paradise level's)
 
 PROP_FRAMES = {"glowfruit": glowfruit_frame, "campfire": campfire_frame, "glowshroom": glowshroom_frame, "torch": torch_frame, "brazier": brazier_frame, "crystal": crystal_frame, "lantern": lantern_frame, "mine_lamp": mine_lamp_frame}
 
@@ -1246,6 +1247,178 @@ def prop_sheet(prop: dict) -> tuple[Image.Image, list]:
     sprites = []
     for f in range(count):
         sheet[:, f * TILE : (f + 1) * TILE] = PROP_FRAMES[key](f)
+        sprites.append((f"tv2_{key}_{f}", f, 0))
+    return Image.fromarray(sheet, "RGBA"), sprites
+
+
+# --- The lamps at the size that ships ---------------------------------------------------
+# A lamp is in every view and is what the eye goes to: each is drawn at 32 x 32 itself,
+# in the place its draft has in its cell (a draft pixel is two of these).
+
+FINE_TILE = PIXELS
+
+
+def _fine_cell() -> tuple[np.ndarray, callable]:
+    a = np.zeros((FINE_TILE, FINE_TILE, 4), dtype=np.uint8)
+
+    def put(x, y, colour):
+        x, y = int(x), int(y)
+        if 0 <= x < FINE_TILE and 0 <= y < FINE_TILE:
+            a[y, x, :3] = colour
+            a[y, x, 3] = 255
+
+    return a, put
+
+
+def _fine_flame(put, cx: float, foot: int, tall: int, wide: float, sway: float, colours, tip=None):
+    """A flame: a tear that swells from its foot, narrows to a point and leans as it
+    rises, in three heats."""
+    outer, mid, core = colours
+    for k in range(tall):
+        t = k / tall
+        y = foot - k
+        lean = sway * t * t
+        swell = 0.62 + 0.38 * (t / 0.22) ** 0.7 if t < 0.22 else ((1 - t) / 0.78) ** 0.85
+        half = wide * swell * (0.9 + 0.1 * math.sin(t * 9 + sway))
+        for x in range(int(math.floor(cx + lean - half)), int(math.ceil(cx + lean + half)) + 1):
+            away = abs(x + 0.5 - (cx + lean))
+            if away > half + 0.5:
+                continue
+            colour = outer
+            if away < half - 1.6 and t < 0.8:
+                colour = mid
+            if away < half - 3.2 and t < 0.5:
+                colour = core
+            if tip is not None and away < 1.2 and t < 0.22:
+                colour = tip
+            put(x, y, colour)
+
+
+def fine_torch(frame: int) -> np.ndarray:
+    """A wall torch: a wrapped stick with its grain, and a flame that sways (unlit: it is the light)."""
+    wood, wood_lit, wood_dark, rim = hexes("6b4226", "8f5c34", "4a2c18", "24140a")
+    wrap, wrap_lit = hexes("9a9aa6", "c8c8d2")
+    a, put = _fine_cell()
+    for y in range(16, 30):
+        for x in (12, 13, 18, 19):
+            put(x, y, rim)
+        put(14, y, wood_lit)
+        put(15, y, wood_lit if y % 5 else wood)
+        put(16, y, wood if y < 26 else wood_dark)
+        put(17, y, wood_dark if y % 4 == 1 or y >= 26 else wood)
+    for x in range(14, 18):
+        put(x, 30, rim)
+        put(x, 31, rim)
+    for y in (18, 19, 20):
+        for x in range(12, 20):
+            put(x, y, rim if x in (12, 19) else wrap_lit if y == 18 and x < 16 else wrap)
+    _fine_flame(put, 16.0, 15, (14, 16, 12)[frame % 3], 6.0, (0.0, -3.0, 3.0)[frame % 3], hexes("d8521a", "ff9a2e", "ffe07a"), hexes("fff6d0")[0])
+    return a
+
+
+def fine_brazier(frame: int) -> np.ndarray:
+    """A fire bowl on a stand: the bowl's curve and its lit lip, a bigger flame than a torch's."""
+    iron, iron_lit, rim = hexes("3a3a44", "5c5c68", "16161c")
+    a, put = _fine_cell()
+    for y in range(22, 30):
+        put(14, y, iron_lit)
+        put(15, y, iron_lit if y % 3 else iron)
+        put(16, y, iron)
+        put(17, y, iron)
+    for x in range(10, 22):
+        put(x, 30, iron_lit if 11 <= x <= 20 else rim)
+        put(x, 31, rim)
+    for row, (x0, x1) in enumerate(((4, 27), (4, 27), (5, 26), (6, 25), (8, 23), (10, 21))):
+        for x in range(x0, x1 + 1):
+            edge = x - x0 < 2 or x1 - x < 2 or row == 5
+            put(x, 16 + row, rim if edge else iron_lit if row == 0 or x < 12 else iron)
+    for x in range(10, 24, 4):  # the bowl's rivets
+        put(x, 19, iron_lit)
+    _fine_flame(put, 16.0, 15, (14, 16, 12)[frame % 3], 9.0, (0.0, 3.0, -3.0)[frame % 3], hexes("d8521a", "ff9a2e", "ffe07a"))
+    return a
+
+
+def fine_crystal(frame: int) -> np.ndarray:
+    """A cluster of shards growing from the floor: each a point, a lit face and a dark one
+    with the ridge between them, and a glint that moves from shard to shard."""
+    dark, mid, lit, white, rim = hexes("2f6f9e", "58a8d8", "9adcf6", "f2fdff", "163a5a")
+    a, put = _fine_cell()
+    shards = ((15, 5, 5), (8, 16, 3), (23, 12, 3), (19, 21, 2))
+    for cx, top, half in shards:
+        for y in range(top, FINE_TILE):
+            width = min(half, (y - top) // 2)
+            for x in range(cx - width, cx + width + 1):
+                colour = mid if x == cx else lit if x < cx else dark
+                if x == cx - max(width - 1, 1) and width > 1 and (y - top) % 6 < 4:
+                    colour = white if (y - top) < 8 else lit  # the light along its edge
+                put(x, y, colour)
+    solid = a[..., 3] > 0
+    for _ in range(2):
+        edge = np.zeros_like(solid)
+        for dx, dy in ((1, 0), (-1, 0), (0, -1)):
+            edge |= shift(solid, dx, dy, False)
+        edge &= ~solid
+        a[edge, :3] = rim
+        a[edge, 3] = 255
+        solid = a[..., 3] > 0
+    gx, gy = ((15, 10), (8, 20), (23, 16))[frame % 3]
+    for dx, dy in ((0, 0), (0, 1), (0, 2), (-1, 1), (1, 1)):
+        put(gx + dx, gy + dy, white)
+    return a
+
+
+def fine_lantern(frame: int) -> np.ndarray:
+    """A gilded lamp on a short post: a collar on the post, a roof and a knob on the lamp,
+    and glass that is brightest in its middle and a little brighter every other frame."""
+    gold, gold_lit, gold_dark, rim = hexes("b8860e", "f2c93c", "8a6208", "4a3206")
+    glow = hexes("fff0b0", "fffbe6", "ffe890")[frame % 3]
+    core, edge = hexes("ffffff", "ffd96a")
+    a, put = _fine_cell()
+    for y in range(20, 30):
+        put(14, y, gold_lit)
+        put(15, y, gold_lit if y % 4 else gold)
+        put(16, y, gold)
+        put(17, y, gold_dark)
+    for x in range(13, 19):  # the collar
+        put(x, 24, gold_lit if x < 16 else gold)
+        put(x, 25, gold_dark)
+    for x in range(10, 22):
+        put(x, 30, gold_lit if 11 <= x <= 15 else gold if x <= 20 else rim)
+        put(x, 31, rim)
+        put(x, 18, gold_lit if x < 16 else gold)
+        put(x, 19, gold if x < 16 else gold_dark)
+        put(x, 6, gold_lit if x < 16 else gold)
+        put(x, 7, gold if x < 16 else gold_dark)
+    for y in range(8, 18):
+        for x in (10, 11, 20, 21):
+            put(x, y, rim)
+        for x in range(12, 20):
+            away = math.hypot(x + 0.5 - 16, (y + 0.5 - 13) * 0.8)
+            put(x, y, core if away < 2.0 + (frame % 3 == 1) else glow if away < 4.2 else edge)
+    for x in range(12, 20):  # its roof, and the knob on it
+        put(x, 4, gold_lit if x < 16 else gold)
+        put(x, 5, gold if x < 16 else gold_dark)
+    for x in range(14, 18):
+        put(x, 2, gold_lit if x < 16 else gold)
+        put(x, 3, gold if x < 16 else gold_dark)
+    for x in (15, 16):
+        put(x, 0, rim)
+        put(x, 1, rim)
+    return a
+
+
+FINE_PROPS = {"glowfruit": fine_glowfruit, "torch": fine_torch, "brazier": fine_brazier, "crystal": fine_crystal, "lantern": fine_lantern}
+
+
+def fine_prop_sheet(prop: dict) -> tuple[Image.Image, list]:
+    """A light prop's sheet at the size that ships: its frames side by side, each drawn at
+    that size where the prop has a painter for it (FINE_PROPS), else its draft through Scale2x."""
+    key, count = prop["key"], prop["frames"]
+    paint = FINE_PROPS.get(key)
+    sheet = np.zeros((FINE_TILE, count * FINE_TILE, 4), dtype=np.uint8)
+    sprites = []
+    for f in range(count):
+        sheet[:, f * FINE_TILE : (f + 1) * FINE_TILE] = paint(f) if paint else scale2x_rgba(PROP_FRAMES[key](f))
         sprites.append((f"tv2_{key}_{f}", f, 0))
     return Image.fromarray(sheet, "RGBA"), sprites
 
