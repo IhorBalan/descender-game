@@ -142,3 +142,103 @@ def liquid_sheet(liquid: dict) -> tuple[Image.Image, list]:
             sheet[row * TILE : (row + 1) * TILE, f * TILE : (f + 1) * TILE] = DRAW[liquid["style"]](liquid, part, f)
             sprites.append((f"tv2_{key}_{part}_{f}", f, row))
     return Image.fromarray(sheet, "RGBA"), sprites
+
+
+# --- Liquids at the size that ships --------------------------------------------------
+# The same cells, frames and loop, drawn at DENSITY times the draft's size: the surface a
+# smooth wave with a line of foam a pixel high, glints that are dashes, falls in finer
+# streaks. The surface stands where the draft's does (SURFACE_DROP draft pixels down).
+
+F = DENSITY
+CELL = TILE * F
+
+
+def fine_ripple(x: float, frame: int, swing: float) -> int:
+    """The surface's height (px below the cell's top, at the size that ships) at a column."""
+    phase = 2 * np.pi * (x + frame * CELL / LIQUID_FRAMES) / CELL
+    return SURFACE_DROP * F + int(round(swing * F * np.sin(phase)))
+
+
+def fine_clear_frame(liquid: dict, part: str, frame: int) -> np.ndarray:
+    body, light, foam, glint = liquid["colours"]
+    a = np.zeros((CELL, CELL, 4), dtype=np.uint8)
+    a[:, :] = body
+    for x, y, start in spots(liquid["key"], 5):  # glints that come and go, a dash each
+        if (frame - start) % LIQUID_FRAMES < 3:
+            a[y * F, x * F : x * F + 3] = glint
+            if (frame - start) % LIQUID_FRAMES == 1:
+                a[y * F, x * F + 3] = glint
+    if part == "surface":
+        for x in range(CELL):
+            top = fine_ripple(x, frame, 1.0)
+            a[:top, x] = 0
+            a[top, x] = foam
+            a[top + 1 : top + 3, x] = light
+    return a
+
+
+def fine_thick_frame(liquid: dict, part: str, frame: int) -> np.ndarray:
+    crest, hot, body, deep, crust, vein = liquid["colours"]
+    a = np.zeros((CELL, CELL, 4), dtype=np.uint8)
+    a[:, :] = body
+    r = rng(liquid["key"], "crust")
+    for _ in range(5):  # a dark crust in soft patches, the same in every frame
+        cx, cy, rad = r.randrange(TILE), r.randrange(TILE), r.uniform(1.4, 2.6)
+        for Y in range(CELL):
+            for X in range(CELL):
+                x, y = (X + 0.5) / F - 0.5, (Y + 0.5) / F - 0.5
+                dx, dy = min(abs(x - cx), TILE - abs(x - cx)), min(abs(y - cy), TILE - abs(y - cy))
+                d = dx * dx + dy * dy * 1.8
+                if d < rad * rad:
+                    a[Y, X] = deep if d > rad * rad * 0.45 else crust
+    for x, y, start in spots(liquid["key"], 4):  # hot spots swell and fade, each on its own beat
+        beat = (frame - start) % LIQUID_FRAMES
+        if beat < 4:
+            a[y * F, x * F : x * F + 4] = vein
+            a[y * F + 1, x * F + 1 : x * F + 3] = vein
+            if beat in (1, 2):
+                a[y * F, x * F + 1 : x * F + 3] = hot
+                if y > 0:
+                    a[y * F - 1, x * F + 1 : x * F + 3] = vein
+    if part == "surface":
+        for x in range(CELL):
+            top = fine_ripple(x, frame, 0.7)
+            a[:top, x] = 0
+            a[top, x] = crest
+            a[top + 1 : top + 3, x] = hot
+            a[top + 3 : top + 5, x] = vein if (x // F + frame) % 3 else hot
+    return a
+
+
+def fine_fall_frame(liquid: dict, part: str, frame: int) -> np.ndarray:
+    """Falling water: a see-through sheet with streaks of light and flecks of foam that run
+    down it, a column a pixel wide each, so the loop is seamless and the streaks finer."""
+    body, light, foam, glint = liquid["colours"]
+    a = np.zeros((CELL, CELL, 4), dtype=np.uint8)
+    a[:, :] = body
+    r = rng(liquid["key"], "fine streaks")
+    drop = frame * CELL // LIQUID_FRAMES
+    for x in range(CELL):
+        kind = r.choice(("light", "light", "glint", "body", "body", "body", "foam"))
+        start, length = r.randrange(CELL), r.randint(8, 22)
+        if kind == "body":
+            continue
+        colour = {"light": light, "glint": glint, "foam": foam}[kind]
+        for k in range(length if kind != "foam" else 3):
+            a[(start + k + drop) % CELL, x] = colour
+    return a
+
+
+FINE_DRAW = {"clear": fine_clear_frame, "thick": fine_thick_frame, "fall": fine_fall_frame}
+
+
+def fine_liquid_sheet(liquid: dict) -> tuple[Image.Image, list]:
+    """A liquid's sheet at the size that ships: liquid_sheet's rows, frames and names."""
+    key = liquid["key"]
+    sheet = np.zeros((2 * CELL, LIQUID_FRAMES * CELL, 4), dtype=np.uint8)
+    sprites = []
+    for row, part in enumerate(("surface", "body")):
+        for f in range(LIQUID_FRAMES):
+            sheet[row * CELL : (row + 1) * CELL, f * CELL : (f + 1) * CELL] = FINE_DRAW[liquid["style"]](liquid, part, f)
+            sprites.append((f"tv2_{key}_{part}_{f}", f, row))
+    return Image.fromarray(sheet, "RGBA"), sprites
