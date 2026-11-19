@@ -3933,7 +3933,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: e6fd9896a716540c864b5960ddebf1c3, type: 3}
     nameFileIdTable:
       tv2_ashstone_f0_v0: 2166605368195845374
       tv2_ashstone_f1_v0: 358917599168447604

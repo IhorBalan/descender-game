@@ -3933,7 +3933,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 7d32d18c66d85327adc245361c7f49c7, type: 3}
     nameFileIdTable:
       tv2_gold_brick_f0_v0: 3884328388856973245
       tv2_gold_brick_f1_v0: 2704350097207455503

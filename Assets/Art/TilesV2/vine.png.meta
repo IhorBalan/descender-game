@@ -3933,7 +3933,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 17c2713a08685cd3ac1f9c917980136b, type: 3}
     nameFileIdTable:
       tv2_vine_f0_v0: 2308523083982164329
       tv2_vine_f1_v0: 2449181353349274300

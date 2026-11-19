@@ -3759,7 +3759,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: ddffa99e988c5c03a0d2ce7609df975c, type: 3}
     nameFileIdTable:
       tv2_gold_leaf_wall_f0_v0: 2607937612602381311
       tv2_gold_leaf_wall_f1_v0: 2042184509718193185

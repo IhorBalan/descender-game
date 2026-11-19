@@ -234,6 +234,23 @@ the eye and its three figures are kept as drawn. Lights, glows,
 reflections, skies and what stands far off are not raised: they have no
 relief.
 
+**The ground.** A material's inside is drawn in the second style where its
+kind has a texture for it (`tv2_style.tile_texture`; the rest, glass and the
+plain, as before): a height field on a tile that repeats, lit by the one light
+into the material's own ramp, a face square to the eye on its middle tone and
+a joint or crack on its darkest. Stone breaks into chunks, each tilted its own
+way and bevelled at its cracks (rubble the same, smaller and lower); bricks
+are squares in line and dressed stone long blocks laid half over, both
+bevelled at sunk joints; earth has pebbles standing out of it and root hairs
+sunk in it; sand lies in ripples, clay in wandering strata, boards end at
+different places along their grain; leaves overlap, roof tiles are scales whose
+lips stand over the row under; cloud is soft puffs and ice big facets, both
+lit gently; flutes are columns side by side. The rims, outline, turf and ore
+of a frame are drawn as before, over it. Each material's sheet has its normal
+map beside it (`<key>_n.png`): the inside the texture's own field, the rims a
+little proud of it, a side open to the air rounded off and a side that joins
+the next tile not, so the ground is seamless under a lamp too.
+
 ## Frames
 
 Every material has the same frame set, so a new material is a palette and a

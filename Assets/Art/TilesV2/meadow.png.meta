@@ -3933,7 +3933,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: effc665e3b55518ea8b14aca5cb01334, type: 3}
     nameFileIdTable:
       tv2_meadow_f0_v0: 2832644053375781041
       tv2_meadow_f1_v0: 1744486474168324921

@@ -11,6 +11,7 @@ import numpy as np
 from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
+import tv2_style
 
 # --- Textures: the inside of a material as ramp indices (0..5) -----------------
 
@@ -705,14 +706,29 @@ def fine_texture(name: str, variant: int) -> np.ndarray:
     return np.clip(t, 0, 5)
 
 
+def styled_texture(name: str, variant: int) -> tuple[np.ndarray, np.ndarray]:
+    """A material's inside at the size that ships and its height field: in the second
+    style (tv2_style.tile_texture) where its kind has one, else the first style's, flat."""
+    kind = {"meadow": "dirt"}.get(name, name)
+    if kind in tv2_style.TILE_KINDS:
+        return tv2_style.tile_texture(kind, variant, PIXELS)
+    return fine_texture(name, variant), np.zeros((PIXELS, PIXELS))
+
+
+def _inside(material: dict, flat: np.ndarray) -> np.ndarray:
+    """Where a frame at the size that ships is plain inside (not rim, outline, turf or ore)."""
+    palette = PALETTES[material["palette"]]
+    plain = scale2x_rgba(flat)
+    return np.all(plain[..., :3] == np.array(palette["ramp"][3], dtype=np.uint8), axis=-1) & (plain[..., 3] == 255)
+
+
 def _fine(material: dict, drawn: np.ndarray, flat: np.ndarray, variant: int) -> np.ndarray:
     """A frame at the size that ships, from the frame on the draft and the same frame with
     a flat inside: where the flat one is plain, the texture drawn at the finer size."""
     palette = PALETTES[material["palette"]]
     out = scale2x_rgba(drawn)
-    plain = scale2x_rgba(flat)
-    inside = np.all(plain[..., :3] == np.array(palette["ramp"][3], dtype=np.uint8), axis=-1) & (plain[..., 3] == 255)
-    tex = fine_texture(material["texture"], variant)
+    inside = _inside(material, flat)
+    tex, _ = styled_texture(material["texture"], variant)
     if material["kind"] == "wall":
         tex = np.clip(tex, 0, 4)  # a wall keeps low: no light on it
     out[inside, :3] = np.array(palette["ramp"], dtype=np.uint8)[tex][inside]
@@ -761,6 +777,39 @@ def _fine_turf(out: np.ndarray, grass: dict, seed):
 
 def fine_frame(material: dict, mask: int, variant: int) -> np.ndarray:
     return _fine(material, draw_frame(material, mask, variant), draw_frame(material, mask, variant, flat=True), variant)
+
+
+def frame_normal(material: dict, rgba: np.ndarray, flat: np.ndarray, variant: int) -> np.ndarray:
+    """The normal map of a frame at the size that ships: its inside the texture's own
+    height field, its rims and turf a little proud of it, and its sides open to the air
+    rounded off; a side that joins the next tile is not, so the ground stays seamless."""
+    _, height = styled_texture(material["texture"], variant)
+    inside = _inside(material, flat)
+    solid = rgba[..., 3] > 0
+    H = np.where(inside, height, height.mean() + 0.6) * (0.5 if material["kind"] == "wall" else 1.0)
+    pad = 4
+    Hp = np.pad(H, pad, mode="wrap")
+    sp = np.pad(solid, pad, mode="edge")
+    body = np.clip(tv2_style._distance_inside(sp, 4) / 4, 0, 1)
+    Hp = Hp + np.sqrt(1 - (1 - body) ** 2) * 3.0
+    N = tv2_style.normals(np.where(sp, Hp, 0), sp, clamp=2.0)[pad:-pad, pad:-pad]
+    out = np.zeros((PIXELS, PIXELS, 4), dtype=np.uint8)
+    out[..., 0] = np.round((N[..., 0] * 0.5 + 0.5) * 255)
+    out[..., 1] = np.round((-N[..., 1] * 0.5 + 0.5) * 255)
+    out[..., 2] = np.round((N[..., 2] * 0.5 + 0.5) * 255)
+    out[..., 3] = 255
+    out[~solid] = (128, 128, 255, 255)
+    return out
+
+
+def fine_frame_normal(material: dict, mask: int, variant: int) -> np.ndarray:
+    flat = draw_frame(material, mask, variant, flat=True)
+    return frame_normal(material, _fine(material, draw_frame(material, mask, variant), flat, variant), flat, variant)
+
+
+def fine_slope_normal(material: dict, kind: str, variant: int) -> np.ndarray:
+    flat = draw_slope(material, kind, variant, flat=True)
+    return frame_normal(material, _fine(material, draw_slope(material, kind, variant), flat, variant), flat, variant)
 
 
 def fine_slope(material: dict, kind: str, variant: int) -> np.ndarray:

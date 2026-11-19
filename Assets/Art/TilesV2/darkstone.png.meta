@@ -3933,7 +3933,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: de4272e0db285b138775849c6ba1a723, type: 3}
     nameFileIdTable:
       tv2_darkstone_f0_v0: 514428776124635337
       tv2_darkstone_f1_v0: 1722383560748473084

@@ -1253,3 +1253,201 @@ def relief(picture: Image.Image, *, depth: float = 1.0, round_: int = 6, groove:
     nm[..., 3] = 255
     nm[~solid] = (128, 128, 255, 255)
     return Image.fromarray(res.astype(np.uint8), "RGBA"), Image.fromarray(nm, "RGBA")
+
+
+# --- The ground: textures on a tile that repeats ---------------------------------------------
+
+
+def _wrap_blur(a: np.ndarray, r: int) -> np.ndarray:
+    if r <= 0:
+        return a.astype(np.float64)
+    p = np.pad(a, r, mode="wrap")
+    return blur(p, r)[r:-r, r:-r]
+
+
+def _wrap_normals(H: np.ndarray, clamp: float = 2.5) -> np.ndarray:
+    gx = (np.roll(H, -1, 1) - np.roll(H, 1, 1)) / 2
+    gy = (np.roll(H, -1, 0) - np.roll(H, 1, 0)) / 2
+    gx, gy = np.clip(gx, -clamp, clamp), np.clip(gy, -clamp, clamp)
+    n = np.stack([-gx, -gy, np.ones_like(gx)], axis=-1)
+    return n / np.linalg.norm(n, axis=-1, keepdims=True)
+
+
+def _wrap_noise(size: int, cells: int, seed) -> np.ndarray:
+    r = random.Random(str(("tile noise", seed)))
+    grid = np.array([[r.uniform(-1, 1) for _ in range(cells)] for _ in range(cells)])
+    ys, xs = np.mgrid[0:size, 0:size]
+    fx, fy = xs * cells / size, ys * cells / size
+    ix, iy = fx.astype(int), fy.astype(int)
+    tx, ty = fx - ix, fy - iy
+    tx, ty = tx * tx * (3 - 2 * tx), ty * ty * (3 - 2 * ty)
+    a, b = grid[iy % cells, ix % cells], grid[iy % cells, (ix + 1) % cells]
+    c, d = grid[(iy + 1) % cells, ix % cells], grid[(iy + 1) % cells, (ix + 1) % cells]
+    return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty
+
+
+def _wrap_voronoi(size: int, points) -> tuple[np.ndarray, np.ndarray]:
+    """For each pixel of a tile that repeats: which point is nearest, and how far it lies
+    from the line where the next nearest takes over."""
+    ys, xs = np.mgrid[0:size, 0:size] + 0.5
+    best = np.full((size, size), 1e9)
+    second = np.full((size, size), 1e9)
+    owner = np.zeros((size, size), dtype=int)
+    for i, (px, py, sx, sy) in enumerate(points):
+        dx = np.abs(xs - px)
+        dy = np.abs(ys - py)
+        dx, dy = np.minimum(dx, size - dx), np.minimum(dy, size - dy)
+        d = np.hypot(dx * sx, dy * sy)
+        nearer = d < best
+        second = np.where(nearer, best, np.minimum(second, d))
+        owner = np.where(nearer, i, owner)
+        best = np.minimum(best, d)
+    return owner, second - best
+
+
+def _wrap_dab(H: np.ndarray, cx: float, cy: float, rx: float, ry: float, height: float):
+    """A round bump (or, with a negative height, a dent) on a tile that repeats."""
+    size = H.shape[0]
+    ys, xs = np.mgrid[0:size, 0:size] + 0.5
+    dx = np.abs(xs - cx)
+    dy = np.abs(ys - cy)
+    dx, dy = np.minimum(dx, size - dx), np.minimum(dy, size - dy)
+    q = (dx / rx) ** 2 + (dy / ry) ** 2
+    H += np.sqrt(np.clip(1 - q, 0, 1)) * height
+
+
+TILE_KINDS = ("dirt", "meadow", "stone", "rubble", "bricks", "ashlar", "sand", "clay", "planks", "leaves", "foliage", "cloud", "ice", "flutes")
+
+
+def tile_texture(kind: str, variant: int, size: int = 32) -> tuple[np.ndarray, np.ndarray]:
+    """The inside of a material on a tile that repeats, in the second style: a height field
+    (returned too, for the normal map) lit by the one light into the material's ramp
+    indices 1 .. 5, where a face square to the eye takes 3, a joint or crack 1; hollows a
+    step darker. Stone breaks into chunks each tilted its own way and bevelled at its
+    cracks; bricks and dressed stone are blocks bevelled at their sunk joints; earth has
+    pebbles standing out of it and root hairs sunk in it; sand lies in ripples; clay in
+    strata; boards along their grain; leaves and scales overlap; cloud is soft puffs; ice
+    is big facets; flutes are columns side by side."""
+    r = random.Random(f"tile texture {kind} {variant}")
+    H = np.zeros((size, size))
+    joint = np.zeros((size, size), dtype=bool)
+    ys, xs = np.mgrid[0:size, 0:size] + 0.5
+    noise = _wrap_noise(size, 4, (kind, variant))
+    fine_noise = _wrap_noise(size, 16, (kind, variant, "fine"))
+    if kind in ("dirt", "meadow"):
+        H = noise * 1.0 + fine_noise * 0.2
+        for _ in range(5 + variant % 2):  # pebbles standing out of it
+            _wrap_dab(H, r.uniform(0, size), r.uniform(0, size), r.uniform(1.5, 3.2), r.uniform(1.2, 2.4), r.uniform(2.0, 3.0))
+        for _ in range(2):  # root hairs, sunk
+            x, y = r.uniform(0, size), r.uniform(0, size)
+            for i in range(r.randint(5, 9)):
+                x += r.choice([-1, 0, 0, 1])
+                H[int(y + i) % size, int(x) % size] -= 1.2
+    elif kind in ("stone", "rubble", "ice"):
+        n = {"stone": 6, "rubble": 9, "ice": 4}[kind]
+        pts = [(r.uniform(0, size), r.uniform(0, size), 1.0, r.uniform(1.0, 1.3)) for _ in range(n)]
+        owner, edge = _wrap_voronoi(size, pts)
+        tilt = [(r.uniform(-0.18, 0.18), r.uniform(-0.25, 0.1), r.uniform(0, 1.5)) for _ in range(n)]
+        tx = np.array([t[0] for t in tilt])[owner]
+        ty = np.array([t[1] for t in tilt])[owner]
+        lift = np.array([t[2] for t in tilt])[owner]
+        cx = np.array([p[0] for p in pts])[owner]
+        cy = np.array([p[1] for p in pts])[owner]
+        dx = (xs - cx + size / 2) % size - size / 2
+        dy = (ys - cy + size / 2) % size - size / 2
+        sharp = kind == "ice"
+        bevel = np.clip(edge / (2.0 if sharp else 2.5), 0, 1) ** 0.7
+        H = 2 + (lift + tx * dx + ty * dy + fine_noise * (0.1 if sharp else 0.35)) * bevel * (1.0 if kind != "rubble" else 0.7) + bevel * 1.5
+        joint = edge < (0.4 if sharp else 0.9)
+    elif kind in ("bricks", "ashlar"):
+        course, long_ = 16, (16 if kind == "bricks" else 32)  # bricks square and in line, dressed stone long and laid half over
+        row = (ys // course).astype(int)
+        shift = (row % 2) * (long_ // 2) if kind == "ashlar" else 0
+        col = ((xs + shift) // long_).astype(int)
+        u = (xs + shift) % long_
+        v = ys % course
+        edge = np.minimum.reduce([u, long_ - u, v, course - v])
+        block = (row * 7 + col * 3 + variant) % 5
+        lift = np.array([0.0, 0.4, -0.3, 0.2, -0.1])[block]
+        bevel = np.clip((edge - 0.5) / 2.0, 0, 1) ** 0.8
+        H = 1 + bevel * 2.2 + lift * bevel + fine_noise * 0.25 * bevel
+        joint = edge < 1.0
+        if kind == "ashlar":  # a vein through the stone, sunk a little
+            vein = np.abs(np.sin((xs + noise * 6) * 0.35 + variant) * 5 - (ys % course - course / 2)) < 0.6
+            H -= vein * 0.4
+    elif kind == "sand":
+        H = np.sin((xs + ys * 0.35 + noise * 4) * 2 * math.pi / 8) * 0.9 + fine_noise * 0.5
+    elif kind == "clay":
+        bounds = [0]
+        while bounds[-1] < size:
+            bounds.append(bounds[-1] + r.choice([8, 10, 11]))
+        bounds[-1] = size
+        H = np.zeros((size, size))
+        wave = np.sin(xs * 2 * math.pi / size + variant) * 2.5 + noise * 1.0  # the strata wander
+        yy = (ys + wave) % size
+        for i in range(len(bounds) - 1):
+            y0, y1 = bounds[i], bounds[i + 1]
+            band = (yy >= y0) & (yy < y1)
+            e = np.minimum(yy - y0, y1 - yy)
+            H = np.where(band, 1 + np.clip(e / 2.5, 0, 1) * 1.4 + (i % 2) * 0.3 + fine_noise * 0.25, H)
+            joint |= band & (yy - y0 < 0.7)
+    elif kind == "planks":
+        board, length = 8, 16
+        row = (ys // board).astype(int)
+        u = (xs + (row * 5 + variant * 3) % length) % length  # boards end at different places
+        v = ys % board
+        e = np.minimum.reduce([v, board - v, u + 0.5, length - u])
+        H = 1 + np.clip((e - 0.5) / 1.5, 0, 1) * 1.6 + (np.sin(xs * 0.4 + noise * 4 + row * 2) > 0.85) * -0.4
+        joint = e < 1.0
+        for k in range(size // board):  # a nail at each board's end
+            _wrap_dab(H, (k * 11 + variant * 5) % size + 0.5, k * board + board / 2, 0.9, 0.9, 1.2)
+    elif kind in ("leaves", "foliage"):
+        H = np.zeros((size, size)) - 1
+        if kind == "leaves":  # roof scales in rows, each rounded at its foot, its lip over the row under
+            pitch = 8
+            for row in range(size // pitch):
+                for k in range(size // pitch):
+                    cx = k * pitch + (row % 2) * pitch / 2 + pitch / 2
+                    cy = row * pitch + pitch * 0.75
+                    dx = (xs - cx + size / 2) % size - size / 2
+                    dy = (ys - cy + size / 2) % size - size / 2
+                    q = (dx / (pitch / 2 + 0.3)) ** 2 + (np.maximum(dy, 0) / (pitch / 2)) ** 2
+                    scale = (q < 1) & (dy > -pitch)
+                    h = np.sqrt(np.clip(1 - (dx / (pitch / 2 + 0.3)) ** 2, 0, 1)) * 1.4 + (dy + pitch) / pitch * 2.0
+                    H = np.where(scale & (h > H), h, H)
+        else:
+            for _ in range(int(size * size / 14)):
+                lx, ly = r.uniform(0, size), r.uniform(0, size)
+                ang = r.uniform(0, math.pi)
+                ca, sa = math.cos(ang), math.sin(ang)
+                dx = (xs - lx + size / 2) % size - size / 2
+                dy = (ys - ly + size / 2) % size - size / 2
+                pu, pv = dx * ca + dy * sa, -dx * sa + dy * ca
+                q = (pu / 3.6) ** 2 + (pv / 2.0) ** 2
+                h = r.uniform(0, 2) + np.sqrt(np.clip(1 - q, 0, 1)) * 1.5
+                H = np.where((q < 1) & (h > H), h, H)
+        joint = H < 0
+        H = np.maximum(H, 0)
+    elif kind == "cloud":
+        H = np.zeros((size, size))
+        for _ in range(6):
+            _wrap_dab(H, r.uniform(0, size), r.uniform(0, size), r.uniform(6, 10), r.uniform(5, 8), r.uniform(3, 5))
+        H = _wrap_blur(H, 1)
+    elif kind == "flutes":
+        u = xs % 8
+        H = np.sqrt(np.clip(1 - ((u - 4) / 4) ** 2, 0, 1)) * 2.5
+        joint = (u < 0.8) | (u > 7.2)
+    else:
+        raise KeyError(kind)
+    H = np.where(joint, H.min(), H)
+    N = _wrap_normals(H)
+    d = np.clip(N @ LIGHT, 0, 1)
+    flat = float(LIGHT[2])
+    idx = 3 + (d - flat) / (0.95 - flat) * 2.4
+    idx = np.where(d < flat, 3 - (flat - d) / (flat - 0.15) * 2.0, idx)
+    hollow = _wrap_blur(H, 2) - H > 0.8
+    idx = np.round(idx) - hollow
+    idx = np.where(joint, 1, idx)
+    if kind in ("cloud", "ice"):  # smooth stuff: its light changes gently, and no dark in it
+        idx = np.maximum(3 + np.round((idx - 3) * 0.6), 2)
+    return np.clip(idx, 1, 5).astype(np.int16), H
