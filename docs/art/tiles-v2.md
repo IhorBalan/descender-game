@@ -164,6 +164,47 @@ ways:
 and collider shapes are in the art's pixels); a picture's GUID is made from its
 path and stays.
 
+### The second style
+
+The pictures are being drawn again, batch by batch, in a second style that
+the pixels at 32 can carry (`tools/tiles_v2/tv2_style.py`). A thing is drawn
+as a **height field** with a **material** at each pixel: primitives (round
+limbs, heaps, blocks, facets) are painted with a depth test, so what stands
+further out is in front. Its shade comes from that field:
+
+- **One light**, from the upper left and a little toward the eye, on the
+  field's normals; a face square to the eye sits a little over the middle of
+  its ramp.
+- **Ramps of 9 to 11 tones** per material, made by `make_ramp` round a base
+  colour: the darks turn toward blue-violet and gain a little saturation, the
+  lights toward warm yellow and lose some; a dark is never the base made
+  black, and a light crown (blossom, gold) keeps lighter darks. Tones are
+  stepped, not dithered.
+- **Hollows darker** (ambient occlusion from the field) and **cast shadows**
+  where what stands further out lies between a pixel and the light, so the
+  upper heaps of a crown shade the lower.
+- **A selective outline** a pixel wide: dark where the edge is in shadow,
+  lighter along a lit edge, none on an edge lit against the sky; a cool rim
+  where a shape turned from the light meets the sky.
+- **Its own normal map.** A picture of the second style ships with
+  `<key>_n.png` beside it (linear, a normal map, unfiltered; green up, as
+  Unity's), named in the picture's `.meta` as the sprite's `_NormalMap`
+  secondary texture. The sun is baked into the picture; the lamps of Tiles V2
+  (torches, beacons, relics, the playground's lantern) read normal maps
+  (`ReliefLight.Raise` sets URP's normal map quality, which Light2D shows
+  only to the inspector), so at night a torch lights the faces turned toward
+  it and leaves the others. A picture of the first style has no normal map
+  and is lit flat.
+
+A module names what it draws in the second style in its `STYLE` (key ->
+callable taking the size the picture ships at and returning the picture and
+its normal map); the generator prefers it to `FINE` and writes the picture's
+`.meta` each time. A picture of the second style keeps its draft's canvas and
+floor line exactly. Drawn in it so far: the broad trees (the Earth's oaks and
+apple trees; Paradise's blossom and gold trees and Eden's teal trees, with the
+frames of their stirring crowns: each heap goes round a little in its own
+time, the trunk still).
+
 ## Frames
 
 Every material has the same frame set, so a new material is a palette and a

@@ -483,6 +483,7 @@ namespace Descender.World.TilesV2
                 glow.pointLightOuterRadius = set.torchGlowRadius;
                 glow.falloffIntensity = 0.5f;
                 glow.shadowsEnabled = false;
+                ReliefLight.Raise(glow);
                 var lamp = torch.AddComponent<TorchFlame>();
                 lamp.Configure(prop.frames, glow, set.torchGlow, prop.colour, prop.intensity);
                 lamp.Embers = prop.embers;

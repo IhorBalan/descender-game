@@ -53,6 +53,7 @@ namespace Descender.World.TilesV2
             glow.pointLightOuterRadius = Reach;
             glow.falloffIntensity = 0.5f;
             glow.shadowsEnabled = false;
+            ReliefLight.Raise(glow);
         }
 
         /// <summary>Lights it, once.</summary>

@@ -22,6 +22,7 @@ import numpy as np
 from PIL import Image, ImageFilter
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
+import tv2_style
 from tv2_earth import Art, bundle, branch, lilies, noise, ramp_of, trunk
 
 # --- Colours: outline first, then darkest .. brightest ---------------------------------
@@ -2060,6 +2061,15 @@ def _plan():
 PLAN = _plan()
 # What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
 # its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
+# What is drawn in the second style (tv2_style), by key: given the size it ships at, the
+# picture and its normal map. The generator prefers it to FINE.
+STYLE = {}
+for _kind, _count, _leaves in (("blossom", BLOSSOMS, "dc6c9e"), ("gold", GOLDS, "d8a02a")):
+    for _v in range(_count):
+        for _frame in range(FRAMES):
+            _key = f"heaven_{_kind}_{_v}" + (f"{FRAME}{_frame}" if _frame else "")
+            STYLE[_key] = lambda w, h, k=_key, a=(_kind, _v), c=_leaves, s=_frame: tv2_style.tree(w, h, SINK_OF[k] * DENSITY, ("heaven tree",) + a, c, "c4c4d2", frame=s, pale=True, petals=True, crown=1.15, lean=(0.4, -0.3, 0.2, -0.5)[a[1] % 4])
+
 FINE = {}
 for _v in range(BLOSSOMS):
     for _frame in range(FRAMES):

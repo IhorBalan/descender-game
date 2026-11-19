@@ -24,6 +24,7 @@ import numpy as np
 from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403  (the standard's shared vocabulary)
+import tv2_style
 
 SINK = TILE  # px of a picture stood on the ground that go on down behind the ground (roots, the foot of a post)
 PLINTH = 3 * TILE  # the stone a building stands on, down into the ground: it stands on a slope too
@@ -3070,6 +3071,15 @@ ENTRIES = [_picture(key, order, lit) for key, _, order, lit, _ in PLAN]
 SINK_OF = {key: sink for key, *_, sink in PLAN}
 # What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
 # its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
+# What is drawn in the second style (tv2_style), by key: given the size it ships at, the
+# picture and its normal map. The generator prefers it to FINE.
+STYLE = {}
+for _v in range(OAKS):
+    STYLE[f"earth_oak_{_v}"] = lambda w, h, v=_v: tv2_style.tree(w, h, SINK_OF[f"earth_oak_{v}"] * DENSITY, ("earth oak", v), "c0662a" if v == 3 else "4f8f3a", "6e4a30", lean=(0.3, -0.4, 0.5, -0.2)[v % 4])
+for _v in range(APPLES):
+    STYLE[f"earth_apple_{_v}"] = lambda w, h, v=_v: tv2_style.tree(w, h, SINK_OF[f"earth_apple_{v}"] * DENSITY, ("earth apple", v), "4c8c3a", "6a4630", fruit="c8322c", lean=(-0.3, 0.3)[v % 2])
+
+
 FINE = {}
 # The trees.
 for _v in range(OAKS):
