@@ -210,7 +210,23 @@ giant oak, its roots out over the ground); and what grows low or lies on the
 ground (bushes of small leaves, one with berries; stumps with their rings, one
 with an axe in it; a sawn log; roots hanging from a cave's roof; toadstools;
 rubble with a plank across it; copper nuggets; Paradise's clipped hedge and
-topiary).
+topiary); the Earth's made things, drawn from boards, posts, blocks and
+wheels (fences, railings, crates and sacks, a ladder, a barrel, a bench, a
+kennel, a hanging cage, haystacks, graves, a scarecrow, a cart, a well, a
+washing line, a kitchen garden).
+
+**Relief.** A picture whose layout the game leans on (a building's door, an
+arch to walk through, a post's height) is not drawn again but raised:
+`relief` keeps every shape and colour of its first-style drawing, builds a
+height field from it (its silhouette rounded, each patch of one tone bevelled
+up from the darker lines round it, the lines and joints sunk), lights it again
+in the one light (its shadows turned cool, its lights warm) and gives its
+normal map. Raised so far: the Earth's buildings (cottages, the chapel, the
+windmill and its sails, the crypt, the gateway and the gate's arch, the
+pithead and the winch hut, the colonnade), its posts and rails, the jetty, the
+boat and the mine carts, its animals and its reeds and lilies. Lights, glows,
+reflections, skies and what stands far off are not raised: they have no
+relief.
 
 ## Frames
 

@@ -3100,6 +3100,29 @@ for _v in range(2):
     STYLE[f"earth_rubble_{_v}"] = lambda w, h, v=_v: tv2_style.boulders(w, h, SINK_OF[f"earth_rubble_{v}"] * DENSITY, ("earth rubble", v), "78707a", plank="7d532c", count=5)
     STYLE[f"earth_nugget_{_v}"] = lambda w, h, v=_v: tv2_style.boulders(w, h, SINK_OF[f"earth_nugget_{v}"] * DENSITY, ("earth nugget", v), "c06e34", count=2, glint=True)
 
+for _v in range(3):
+    STYLE[f"earth_fence_{_v}"] = lambda w, h, v=_v: tv2_style.fence(w, h, SINK_OF[f"earth_fence_{v}"] * DENSITY, ("earth fence", v), v)
+for _v in range(2):
+    STYLE[f"earth_iron_fence_{_v}"] = lambda w, h, v=_v: tv2_style.iron_fence(w, h, SINK_OF[f"earth_iron_fence_{v}"] * DENSITY, ("earth iron fence", v))
+for _v in range(3):
+    STYLE[f"earth_crates_{_v}"] = lambda w, h, v=_v: tv2_style.crates(w, h, SINK_OF[f"earth_crates_{v}"] * DENSITY, ("earth crates", v), v)
+STYLE["earth_barrel"] = lambda w, h: tv2_style.barrel(w, h, SINK_OF["earth_barrel"] * DENSITY, "earth barrel")
+STYLE["earth_bench"] = lambda w, h: tv2_style.bench(w, h, SINK_OF["earth_bench"] * DENSITY, "earth bench")
+STYLE["earth_kennel"] = lambda w, h: tv2_style.kennel(w, h, SINK_OF["earth_kennel"] * DENSITY, "earth kennel")
+STYLE["earth_cage"] = lambda w, h: tv2_style.cage(w, h, SINK_OF["earth_cage"] * DENSITY, "earth cage")
+for _v in range(2):
+    STYLE[f"earth_haystack_{_v}"] = lambda w, h, v=_v: tv2_style.haystack(w, h, SINK_OF[f"earth_haystack_{v}"] * DENSITY, ("earth haystack", v))
+for _v in range(4):
+    STYLE[f"earth_grave_{_v}"] = lambda w, h, v=_v: tv2_style.grave(w, h, SINK_OF[f"earth_grave_{v}"] * DENSITY, ("earth grave", v), v)
+STYLE["earth_scarecrow"] = lambda w, h: tv2_style.scarecrow(w, h, SINK_OF["earth_scarecrow"] * DENSITY, "earth scarecrow")
+STYLE["earth_cart"] = lambda w, h: tv2_style.cart(w, h, SINK_OF["earth_cart"] * DENSITY, "earth cart")
+STYLE["earth_well"] = lambda w, h: tv2_style.well(w, h, SINK_OF["earth_well"] * DENSITY, "earth well")
+STYLE["earth_washing"] = lambda w, h: tv2_style.washing(w, h, SINK_OF["earth_washing"] * DENSITY, "earth washing")
+STYLE["earth_garden"] = lambda w, h: tv2_style.garden(w, h, SINK_OF["earth_garden"] * DENSITY, "earth garden")
+# Raised from their drawings in the first style, so what stands where (a door, an arch) stays.
+for _key in ("earth_cottage_ruin", "earth_cottage", "earth_chapel", "earth_windmill", "earth_gateway", "earth_gate_arch", "earth_pithead", "earth_winch_hut", "earth_colonnade", "earth_reeds_0", "earth_reeds_0_s1", "earth_reeds_0_s2", "earth_reeds_1", "earth_reeds_1_s1", "earth_reeds_1_s2", "earth_reeds_2", "earth_reeds_2_s1", "earth_reeds_2_s2", "earth_lilies_0", "earth_lilies_1", "earth_jetty", "earth_post_3", "earth_post_4", "earth_post_5", "earth_post_6", "earth_post_7", "earth_post_8", "earth_post_9", "earth_post_10", "earth_post_11", "earth_post_12", "earth_rail_mid", "earth_rail_end", "earth_rail_start", "earth_minecart_0", "earth_minecart_1", "earth_sails_0", "earth_sails_1", "earth_sails_2", "earth_sails_3", "earth_crypt", "earth_crow_0", "earth_sheep_0", "earth_crow_1", "earth_sheep_1", "earth_cat", "earth_bird_0", "earth_bird_1", "earth_boat"):
+    STYLE[_key] = lambda w, h, k=_key: tv2_style.relief(FINE[k]())
+
 FINE = {}
 # The trees.
 for _v in range(OAKS):
