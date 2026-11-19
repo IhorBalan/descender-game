@@ -66,7 +66,13 @@ ways:
     orchard's teal trees, the great leaves of the Hollow and the Rising Leaf,
     the Low Gate, the Wheel's mural and the Sundial (a painter that works a
     pixel at a time is asked at every half pixel of the draft: a round is a
-    true round, and its stone has a grain).
+    true round, and its stone has a grain); and what holds things up and
+    hangs from them: the posts under a garden's platforms, what is under
+    every ledge, what is under every floor in the air, and ivy (a painter
+    takes `fine`, and draws the same thing with what the finer pixel can say:
+    fibres and a sheath at each joint, the timber's grain and the lay of its
+    rope, a moulding on each course, each link of a chain, roots that fork,
+    a leaf that is a leaf).
     Each is the draft's size times `DENSITY` exactly, so nothing that stands
     it has to know.
 
