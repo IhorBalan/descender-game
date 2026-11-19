@@ -827,22 +827,25 @@ def glint(frame: int, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def glow(image: Image.Image, lamps) -> Image.Image:
+def glow(image: Image.Image, lamps, fine: int = 1) -> Image.Image:
     """The light of a picture's windows by itself, and its halo: shown unlit over the
-    picture as the day goes, so a castle's windows burn at dusk and at night."""
+    picture as the day goes, so a castle's windows burn at dusk and at night. `lamps` are
+    in the draft's pixels; at `fine` over one `image` is that many times the draft's size
+    and the halo spreads as far in the draft's terms."""
+    f = fine
     a = np.array(image.convert("RGBA"))
     out = np.zeros_like(a)
     mask = np.zeros(a.shape[:2], dtype=np.uint8)
     for cx, top, wide, tall in lamps:
-        x0, x1 = max(int(cx - wide / 2) - 2, 0), min(int(cx + wide / 2) + 2, a.shape[1])
-        y0, y1 = max(int(top) - 1, 0), min(int(top + tall) + 1, a.shape[0])
+        x0, x1 = max(int((cx - wide / 2) * f) - 2 * f, 0), min(int((cx + wide / 2) * f) + 2 * f, a.shape[1])
+        y0, y1 = max(int(top * f) - f, 0), min(int((top + tall) * f) + f, a.shape[0])
         part = a[y0:y1, x0:x1]
         light = np.zeros(part.shape[:2], dtype=bool)
         for colour in AMBER[1:]:
             light |= (part[..., :3] == np.array(colour, dtype=np.uint8)).all(axis=-1) & (part[..., 3] > 0)
         out[y0:y1, x0:x1][light] = part[light]
         mask[y0:y1, x0:x1][light] = 255
-    halo = np.array(Image.fromarray(mask).filter(ImageFilter.GaussianBlur(4.5))).astype(float) / 255
+    halo = np.array(Image.fromarray(mask).filter(ImageFilter.GaussianBlur(4.5 * f))).astype(float) / 255
     out[..., 0], out[..., 1], out[..., 2] = np.where(mask > 0, out[..., 0], 255), np.where(mask > 0, out[..., 1], 206), np.where(mask > 0, out[..., 2], 110)
     out[..., 3] = np.where(mask > 0, 255, np.clip(halo * 2.4, 0, 1) * 135).astype(np.uint8)
     return Image.fromarray(out)
@@ -2112,6 +2115,12 @@ for _v in range(2):
     FINE[f"heaven_angel_{_v}"] = lambda v=_v: angel(v, DENSITY)
 for _frame in range(3):
     FINE["heaven_fountain" + (f"{FRAME}{_frame}" if _frame else "")] = lambda s=_frame: fountain(s, DENSITY)
+# The light of every picture's windows, over it as it is drawn at the size that ships; the lilies.
+for _key in [k for k in FINE]:
+    if _key + GLOW in [key for key, *_ in PLAN]:
+        FINE[_key + GLOW] = lambda k=_key: (pictures(), glow(FINE[k](), _LAMPS_OF[k], DENSITY))[1]
+for _v in range(SWANS):
+    FINE[f"heaven_lilies_{_v}"] = lambda v=_v: lilies(v, DENSITY)
 PICTURE_KEYS = [key for key, *_ in PLAN]
 ENTRIES = [
     {"key": key, "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": order, "lit": lit, "tinted": False}

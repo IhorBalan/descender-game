@@ -10,6 +10,8 @@ map always gets the same dressing, in the preview and in Unity
 """
 from __future__ import annotations
 
+import math
+
 import numpy as np
 from PIL import Image
 
@@ -1148,3 +1150,827 @@ DECOR += [
     _rule("field_stone", "floor", ["grass", "meadow"], 0.04, 3, where="sky"),
     _rule("cobweb", "ceiling", ["stone", "dirt", "copper_ore"], 0.05, 2, where="cave"),
 ]
+
+
+# --- Decor at the size that ships -------------------------------------------------
+# Each sprite drawn at DENSITY times the draft's size by its own painter, on a FinePad:
+# the same cell (a tile and its bleed), its floor and its ceiling in the same places.
+# A part without a painter here ships as its draft through Scale2x (fine_decor_sheet).
+
+F = DENSITY
+FLOOR_F = FLOOR * F + F - 1  # the cell's bottom row, at the size that ships
+CEILING_F = CEILING * F  # the cell's top row
+BLEED_F = BLEED * F
+W_F = TILE * F
+
+
+class FinePad:
+    """One decor sprite being drawn at the size that ships."""
+
+    def __init__(self):
+        self.a = np.zeros((DECOR_H * F, W_F, 4), dtype=np.uint8)
+
+    def put(self, x, y, colour, alpha: int = 255):
+        x, y = int(round(x)), int(round(y))
+        if 0 <= x < W_F and 0 <= y < DECOR_H * F:
+            self.a[y, x, :3] = colour
+            self.a[y, x, 3] = alpha
+
+    def up(self, x, height, colour, alpha: int = 255):
+        """A pixel `height` px above the floor's bottom row (negative tucks under)."""
+        self.put(x, FLOOR_F - height, colour, alpha)
+
+    def down(self, x, depth, colour, alpha: int = 255):
+        """A pixel `depth` px below the ceiling's top row (negative tucks over)."""
+        self.put(x, CEILING_F + depth, colour, alpha)
+
+    def has(self, x, y) -> bool:
+        x, y = int(round(x)), int(round(y))
+        return 0 <= x < W_F and 0 <= y < DECOR_H * F and self.a[y, x, 3] > 0
+
+    def outline(self, colour, times: int = F):
+        """An outline as thick as the draft's, round everything drawn so far."""
+        for _ in range(times):
+            solid = self.a[..., 3] > 0
+            edge = np.zeros_like(solid)
+            for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                edge |= shift(solid, dx, dy, False)
+            edge &= ~solid
+            self.a[edge, :3] = colour
+            self.a[edge, 3] = 255
+
+
+def fine_blade(pad: FinePad, r, x: float, height: int, lean: float, tip=None, ramp=None):
+    """One blade of grass from under the floor line up, two pixels at its foot and one at
+    its tip, bending smoothly toward its lean."""
+    ramp = ramp or GRASS["ramp"]
+    for h in range(-BLEED_F, height):
+        t = max(h, 0) / height
+        bx = x + lean * t * t
+        colour = ramp[1] if h < 2 else ramp[2] if h < height * 0.5 else ramp[3]
+        if h >= height - 2:
+            colour = tip or (ramp[5] if r.random() < 0.4 else ramp[4])
+        pad.up(bx, h, colour)
+        if t < 0.55:
+            pad.up(bx + 1, h, ramp[1] if h < 2 else ramp[2])
+
+
+def fine_tuft(variant: int) -> np.ndarray:
+    r = rng("fine tuft", variant)
+    pad = FinePad()
+    x = r.randint(3, 7)
+    while x < W_F - 4:
+        fine_blade(pad, r, x, r.randint(6, 13), r.choice([-2.5, -1.5, 0, 0, 1.5, 2.5]))
+        x += r.choice([2, 3, 3, 4])
+        if r.random() < 0.25:
+            x += 5
+    return pad.a
+
+
+def fine_grass_tall(variant: int) -> np.ndarray:
+    r = rng("fine grass_tall", variant)
+    pad = FinePad()
+    straw, straw_lit = col("d9c873"), col("f0e2a0")
+    x = r.randint(3, 6)
+    while x < W_F - 4:
+        seeded = r.random() < 0.35
+        height = r.randint(14, 23)
+        fine_blade(pad, r, x, height, r.choice([-2.5, -1, 1, 2.5]), straw if seeded else None)
+        if seeded:
+            for h in range(height - 5, height - 1):
+                pad.up(x + (r.choice([-1, 1]) if h == height - 3 else 0) + 2 * ((h / height) ** 2), h, straw_lit if h % 2 else straw)
+        x += r.choice([3, 4, 5])
+    return pad.a
+
+
+def fine_flower(variant: int) -> np.ndarray:
+    r = rng("fine flower", variant)
+    pad = FinePad()
+    ramp = GRASS["ramp"]
+    petal, heart = (col(v) for v in FLOWERS[variant % len(FLOWERS)])
+    shade = tuple(int(c * 0.78) for c in petal)
+    x, height = r.randint(13, 18), r.randint(13, 18)
+    for h in range(-BLEED_F, height):
+        pad.up(x, h, ramp[1] if h < 2 else ramp[2])
+    side = r.choice([-1, 1])
+    for i in range(1, 6):  # a leaf, out and up from the stem
+        pad.up(x + side * i, height // 2 + i // 2, ramp[3] if i < 4 else ramp[4])
+        pad.up(x + side * i, height // 2 + i // 2 - 1, ramp[2])
+    for i in range(1, 4):
+        pad.up(x - side * i, height // 3 + i // 2, ramp[3])
+    top = height + 2
+    for dx, dy, c in ((0, 2, petal), (1, 2, petal), (-1, 1, petal), (2, 1, shade), (-2, 0, petal), (-1, 0, petal), (2, 0, petal), (3, 0, shade),
+                      (-1, -1, petal), (2, -1, shade), (0, -2, shade), (1, -2, shade)):  # fmt: skip
+        pad.up(x + dx, top + dy, c)
+    if variant % 2 == 0:
+        for dx, dy in ((-2, 2), (3, 2), (-2, -1), (3, -1)):
+            pad.up(x + dx, top + dy, shade)
+    for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
+        pad.up(x + dx, top + dy - 1 + 1 if dy else top, heart)
+    fine_blade(pad, r, x - 6, 6, -1)
+    fine_blade(pad, r, x + 6, 8, 1.5)
+    return pad.a
+
+
+def fine_bush(variant: int) -> np.ndarray:
+    r = rng("fine bush", variant)
+    pad = FinePad()
+    ramp = GRASS["ramp"]
+    cx, half, height = 15.5, 10.6, 14
+    for h in range(-BLEED_F, height):
+        for x in range(W_F):
+            t = max(h, 0) / height
+            width = half * (1 - t * t) ** 0.5 + 0.8 * math.sin(x * 0.9 + h * 0.7)
+            if abs(x + 0.5 - cx) <= width:
+                lit = (x - cx) < -width * 0.2 and h > height * 0.35
+                dark = (x - cx) > width * 0.45 or h < 2
+                k = 4 if lit else 1 if dark else 2
+                if (x * 7 + h * 13 + variant * 5) % 9 == 0:
+                    k += 1  # a leaf in the light
+                pad.up(x, h, ramp[min(k, 5)])
+    if variant % 2:
+        for _ in range(4):
+            x, h = r.randint(7, 24), r.randint(3, height - 4)
+            if pad.has(x, FLOOR_F - h):
+                for dx, dy, c in ((0, 0, col("d6323c")), (1, 0, col("b8222c")), (0, 1, col("ff8a8a")), (1, 1, col("d6323c"))):
+                    pad.up(x + dx, h + dy, c)
+    pad.outline(GRASS["outline"])
+    return pad.a
+
+
+def fine_cactus_trunk(pad: FinePad, lo: int, hi: int):
+    """The trunk between two heights above the floor, twelve pixels wide, ribbed."""
+    for h in range(lo, hi):
+        for x in range(10, 22):
+            colour = CACTUS["lit"] if x < 12 else CACTUS["dark"] if x >= 19 else CACTUS["mid"]
+            if x in (14, 17):
+                colour = CACTUS["dark"] if (h // 2) % 2 else CACTUS["mid"]  # its ribs
+            if x == 12 and h % 3 == 0:
+                colour = CACTUS["lit"]
+            pad.up(x, h, colour)
+
+
+def fine_spines(pad: FinePad, x: int, h: int, side: int):
+    pad.up(x, h, CACTUS["spine"])
+    pad.up(x + side, h + 1, CACTUS["spine"])
+
+
+def fine_cactus_base(variant: int) -> np.ndarray:
+    pad = FinePad()
+    fine_cactus_trunk(pad, -BLEED_F, (TILE + BLEED) * F)
+    pad.outline(CACTUS["outline"])
+    for h in (6, 18, 26):
+        fine_spines(pad, 8 if (h // 6 + variant) % 2 else 23, h, -1 if (h // 6 + variant) % 2 else 1)
+    return pad.a
+
+
+def fine_cactus_mid(variant: int) -> np.ndarray:
+    r = rng("fine cactus_mid", variant)
+    pad = FinePad()
+    fine_cactus_trunk(pad, -BLEED_F, (TILE + BLEED) * F)
+    side = -1 if variant % 2 == 0 else 1
+    at = r.randint(4, 8)
+    reach = r.randint(6, 8)
+    x0 = 9 if side < 0 else 22
+    for k in range(reach):  # an arm leaving the trunk sideways and turning up
+        for h in range(at, at + 6):
+            pad.up(x0 + side * k, h, CACTUS["dark"] if h < at + 2 else CACTUS["mid"] if h < at + 5 else CACTUS["lit"])
+    tip = x0 + side * (reach - 1)
+    for h in range(at + 6, at + r.randint(12, 16)):
+        for x in range(tip - 3, tip + 3):
+            pad.up(x, h, CACTUS["lit"] if x < tip - 1 else CACTUS["dark"] if x > tip + 1 else CACTUS["mid"])
+    pad.outline(CACTUS["outline"])
+    for h in (2, 14, 24):
+        fine_spines(pad, 23 if variant % 2 == 0 else 8, h, 1 if variant % 2 == 0 else -1)
+    return pad.a
+
+
+def fine_cactus_top(variant: int) -> np.ndarray:
+    pad = FinePad()
+    top = 20 if variant % 2 == 0 else 16
+    fine_cactus_trunk(pad, -BLEED_F, top)
+    for dy in range(4):  # its round top
+        for x in range(11 + dy, 21 - dy):
+            pad.up(x, top + dy, CACTUS["lit"] if x < 16 else CACTUS["mid"])
+    pad.outline(CACTUS["outline"])
+    if variant % 2:
+        for dx, dh, colour in ((0, 6, "f08ab0"), (1, 6, "f08ab0"), (-2, 4, "e2609a"), (-1, 5, "f08ab0"), (2, 5, "f08ab0"), (3, 4, "e2609a"), (0, 4, "ffd94a"), (1, 4, "ffd94a")):
+            pad.up(16 + dx, top + dh, col(colour))
+    for h in (4, 12):
+        fine_spines(pad, 8 if (h + variant) % 2 else 23, h, -1 if (h + variant) % 2 else 1)
+    return pad.a
+
+
+def fine_dry_bush(variant: int) -> np.ndarray:
+    r = rng("fine dry_bush", variant)
+    pad = FinePad()
+    wood, light = col("7a5a36"), col("a9824e")
+    root = r.randint(13, 18)
+    for h in range(-BLEED_F, 4):
+        pad.up(root, h, wood)
+        pad.up(root + 1, h, wood)
+    for lean in (-1, 0, 1) if variant % 2 == 0 else (-1, 1):
+        x, h = float(root), 4
+        for step in range(r.randint(10, 16)):
+            pad.up(x, h, light if step > 7 else wood)
+            h += 1
+            x += (lean if lean else r.choice([-1, 1])) * r.uniform(0.2, 0.8)
+            if step == 5 and r.random() < 0.8:
+                for k in range(1, 5):
+                    pad.up(x - (lean or 1) * k, h + k // 2, light if k > 2 else wood)
+    return pad.a
+
+
+def fine_bones(variant: int) -> np.ndarray:
+    pad = FinePad()
+    bone, shade_, hole = col("ece8d6"), col("c3bca4"), col("3a352c")
+    for x in range(6, 16):  # a skull
+        for h in range(0, 8):
+            u, v = (x + 0.5 - 11) / 5.2, (h + 0.5 - 4.5) / 4.6
+            if u * u + v * v <= 1 or (h < 2 and abs(x + 0.5 - 11) < 3.5):
+                pad.up(x, h, shade_ if h < 1 or u > 0.55 else bone)
+    for x, h in ((8, 3), (9, 3), (8, 4), (9, 4), (13, 3), (12, 3), (13, 4), (12, 4)):
+        pad.up(x, h, hole)
+    for x in (9, 11, 13):
+        pad.up(x, 0, hole)
+    for k in range(11):  # a bone beside it
+        pad.up(18 + k, 0 if k < 7 else 1, bone if 1 < k < 10 else shade_)
+        pad.up(18 + k, 1 if k < 7 else 2, shade_)
+    for x, h in ((17, 1), (17, 2), (29, 2), (29, 3)):
+        pad.up(x, h, bone)
+    pad.outline(col("5a543f"))
+    return pad.a
+
+
+def fine_mushroom(variant: int) -> np.ndarray:
+    pad = FinePad()
+    stem, stem_dark, rim = col("ebdfc2"), col("c2b392"), col("33201a")
+    caps = [("b4432f", "dd7050", "f4e8d8"), ("8a6a4a", "ab8962", "c9ad84"), ("58b8b0", "9fe4dc", "e4fbf8")]
+    cap, cap_lit, spot = (col(v) for v in caps[variant % 3])
+    plan = [[(15, 8, 6.5)], [(10, 6, 4.5), (21, 10, 6.5)], [(8, 4, 3.0), (17, 8, 5.0), (25, 6, 3.0)]][variant % 3]
+    for cx, height, half in plan:
+        for h in range(-BLEED_F, height):
+            pad.up(cx, h, stem)
+            pad.up(cx + 1, h, stem_dark if half > 3 else stem)
+        for dy in range(0, int(half * 0.9) + 2):  # a domed cap
+            for x in range(int(cx - half - 1), int(cx + half + 3)):
+                u, v = (x + 0.5 - cx - 0.5) / (half + 0.5), (dy + 0.5) / (half * 0.9 + 1)
+                if u * u + v * v <= 1:
+                    pad.up(x, height + dy, cap_lit if u + v < -0.5 else cap)
+        pad.up(cx - half * 0.4, height + half * 0.4, spot)
+        pad.up(cx + half * 0.4, height + half * 0.6, spot)
+    pad.outline(rim)
+    return pad.a
+
+
+def fine_pebble(variant: int, rock: dict = STONE) -> np.ndarray:
+    pad = FinePad()
+    ramp = rock["ramp"]
+    plan = [[(10, 10, 6)], [(4, 6, 4), (16, 10, 6)], [(8, 8, 5), (22, 4, 3)]][variant % 3]
+    for x0, width, height in plan:
+        for h in range(-2, height):
+            for x in range(x0, x0 + width):
+                u, v = (x + 0.5 - x0 - width / 2) / (width / 2), (h + 0.5) / height
+                if u * u + v * v > 1.05:
+                    continue
+                colour = ramp[5] if v > 0.8 and u < 0.3 else ramp[2] if u > 0.55 or h <= 0 else ramp[4] if u < -0.5 else ramp[3]
+                pad.up(x, h, colour)
+    pad.outline(rock["outline"])
+    return pad.a
+
+
+def fine_spike(pad: FinePad, put, cx: float, base: float, height: int, r, rock: dict = STONE):
+    """A stone spike of a height, widest at its root; `put` draws a pixel a distance from
+    the root. A smooth taper to a sharp point, lit on its left."""
+    ramp = rock["ramp"]
+    lean = (r.random() - 0.5) * 0.6
+    for k in range(-BLEED_F, height):
+        t = max(k, 0) / height
+        half = max(base * (1 - t) ** 0.85 / 2, 0.5)
+        for x in range(W_F):
+            off = x + 0.5 - cx - lean * t
+            if abs(off) <= half:
+                colour = ramp[4] if off < -half * 0.35 else ramp[2] if off > half * 0.3 else ramp[3]
+                if k % 5 == 0 and abs(off) < half * 0.3:
+                    colour = ramp[2]  # a ring of its growth
+                put(x, k, colour)
+    put(int(cx), height - 1, ramp[5])
+    put(int(cx), height - 2, ramp[5])
+
+
+def fine_stalagmite(variant: int, rock: dict = STONE) -> np.ndarray:
+    r = rng("fine stalagmite", variant)
+    pad = FinePad()
+    height, base = [(10, 10), (16, 12), (24, 14)][variant % 3]
+    fine_spike(pad, pad.up, 15.5 + r.choice([-2, 0, 2]), base, height, r, rock)
+    if variant % 3:
+        fine_spike(pad, pad.up, 25.5 if variant % 3 == 1 else 6.5, 6, height // 2, r, rock)
+    pad.outline(rock["outline"])
+    return pad.a
+
+
+def fine_stalactite(variant: int, rock: dict = STONE) -> np.ndarray:
+    r = rng("fine stalactite", variant)
+    pad = FinePad()
+    height, base = [(10, 10), (18, 12), (26, 14)][variant % 3]
+    fine_spike(pad, pad.down, 15.5 + r.choice([-2, 0, 2]), base, height, r, rock)
+    if variant % 3:
+        fine_spike(pad, pad.down, 6.5 if variant % 3 == 1 else 25.5, 6, height // 2, r, rock)
+    pad.outline(rock["outline"])
+    return pad.a
+
+
+def fine_root(variant: int) -> np.ndarray:
+    r = rng("fine root", variant)
+    pad = FinePad()
+    ramp = DIRT["ramp"]
+    for start in (r.randint(6, 12), r.randint(18, 24)) if variant % 2 == 0 else (r.randint(10, 20),):
+        x = float(start)
+        length = r.randint(12, 24)
+        for d in range(-BLEED_F, length):
+            pad.down(x, d, ramp[0] if d > length - 5 else ramp[1])
+            if d < length * 0.5:
+                pad.down(x + 1, d, ramp[0])
+            if 2 < d < length - 4 and r.random() < 0.12:
+                side = r.choice([-1, 1])
+                for k in range(1, 5):
+                    pad.down(x + side * k, d + k, ramp[1] if k < 3 else ramp[0])
+            x = max(3, min(W_F - 4, x + r.uniform(-0.45, 0.45)))
+    return pad.a
+
+
+def fine_vine_stem(d: float, variant: int) -> float:
+    """The vine's column at a depth: it sways and is back where it began every tile."""
+    return 15 + 2.4 * np.sin(2 * np.pi * d / W_F + (0.0 if variant % 2 == 0 else np.pi))
+
+
+def fine_vine_leaves(pad: FinePad, variant: int, lo: int, hi: int):
+    ramp = GRASS["ramp"]
+    for d in range(lo, hi):
+        if (d + variant * 2) % 8 == 2:
+            side = -1 if (d // 8 + variant) % 2 == 0 else 1
+            x = fine_vine_stem(d, variant)
+            for k, c in ((1, ramp[3]), (2, ramp[4]), (3, ramp[4]), (4, ramp[5])):
+                pad.down(x + side * k, d + (1 if k > 2 else 0), c)
+                pad.down(x + side * k, d + 1 + (1 if k > 2 else 0), ramp[2])
+
+
+def fine_vine_mid(variant: int) -> np.ndarray:
+    pad = FinePad()
+    ramp = GRASS["ramp"]
+    for d in range(-BLEED_F, (TILE + BLEED) * F):
+        pad.down(fine_vine_stem(d, variant), d, ramp[1] if d % 10 else ramp[2])
+        pad.down(fine_vine_stem(d, variant) + 1, d, ramp[2])
+    fine_vine_leaves(pad, variant, 0, W_F)
+    return pad.a
+
+
+def fine_vine_tip(variant: int) -> np.ndarray:
+    pad = FinePad()
+    ramp = GRASS["ramp"]
+    length = 16 if variant % 2 == 0 else 24
+    for d in range(-BLEED_F, length):
+        pad.down(fine_vine_stem(d, variant), d, ramp[1] if d % 10 else ramp[2])
+        if d < length - 4:
+            pad.down(fine_vine_stem(d, variant) + 1, d, ramp[2])
+    fine_vine_leaves(pad, variant, 0, length - 4)
+    x = fine_vine_stem(length - 1, variant)
+    for dx, dd, k in ((0, 0, 3), (-1, -1, 4), (1, -1, 3), (-2, -2, 4), (2, -2, 3), (0, 1, 4), (0, 2, 5), (1, 1, 3)):
+        pad.down(x + dx, length + dd, ramp[k])
+    return pad.a
+
+
+def fine_cloud_puff(variant: int) -> np.ndarray:
+    pad = FinePad()
+    white, soft, shade_ = col("ffffff"), col("eef3fb"), col("cfdaf0")
+    plan = [[(15, 10, 8)], [(9, 6, 6), (22, 8, 6)], [(7, 4, 4), (17, 8, 8), (27, 4, 4)]][variant % 3]
+    for cx, half, height in plan:
+        for h in range(-BLEED_F, height):
+            v = max(h, 0) / height
+            width = half * (1 - max(v - 0.4, 0) ** 2 * 1.6) ** 0.5 if v > 0.4 else half
+            for x in range(int(cx - width), int(cx + width) + 1):
+                pad.up(x, h, white if h >= height - 4 and x <= cx + 1 else shade_ if x > cx + width - 3 else soft)
+    return pad.a
+
+
+def fine_lily(variant: int) -> np.ndarray:
+    pad = FinePad()
+    stem, stem_dark, petal, petal_shade, heart = col("7fbf75"), col("5a9a50"), col("ffffff"), col("e0e6f0"), col("ffd24a")
+    for cx, height in [[(15, 14)], [(9, 10), (22, 16)]][variant % 2]:
+        for h in range(-BLEED_F, height):
+            pad.up(cx, h, stem)
+            pad.up(cx + 1, h, stem_dark)
+        for k in range(1, 4):
+            pad.up(cx + 1 + k, height // 2 + k // 2, stem)
+        for dx, dy, c in ((-3, 0, petal_shade), (-2, 0, petal), (3, 0, petal_shade), (2, 0, petal), (-2, 1, petal), (3, 1, petal_shade), (-1, 2, petal),
+                          (2, 2, petal), (0, 3, petal), (1, 3, petal), (0, 4, petal), (1, 4, petal_shade), (-2, 2, petal), (3, 2, petal_shade)):  # fmt: skip
+            pad.up(cx + dx, height + dy, c)
+        for dx, dy in ((0, 1), (1, 1), (0, 2), (1, 2)):
+            pad.up(cx + dx, height + dy, heart)
+    return pad.a
+
+
+def fine_grave(variant: int) -> np.ndarray:
+    pad = FinePad()
+    ramp, rim = PALETTES["ashstone"]["ramp"], PALETTES["ashstone"]["outline"]
+    kind = variant % 3
+    if kind == 1:  # a cross
+        for h in range(-BLEED_F, 20):
+            for x, k in ((14, 4), (15, 4), (16, 3), (17, 2)):
+                pad.up(x, h, ramp[k])
+        for x in range(8, 24):
+            for h, k in ((12, 4), (13, 4), (14, 5), (15, 5)):
+                pad.up(x, h, ramp[k if x < 16 else 3])
+    else:
+        top = 18 if kind == 0 else 10
+        for h in range(-BLEED_F, top):
+            for x in range(8, 24):
+                if kind == 0 and h >= top - 6:  # a round head
+                    u, v = (x + 0.5 - 16) / 8, (h - (top - 6)) / 6
+                    if u * u + v * v > 1:
+                        continue
+                if kind == 2 and h >= top - 2 and (x // 2) % 3 == 0:
+                    continue  # its broken top
+                pad.up(x, h, ramp[4] if x < 10 else ramp[2] if x > 21 else ramp[3])
+        if kind == 0:
+            for h in range(6, 13):  # a cross cut in it
+                pad.up(15, h, ramp[1])
+                pad.up(16, h, ramp[1])
+            for x in range(12, 20):
+                pad.up(x, 10, ramp[1])
+                pad.up(x, 9, ramp[5])
+    pad.outline(rim)
+    return pad.a
+
+
+def fine_dead_grass(variant: int) -> np.ndarray:
+    r = rng("fine dead_grass", variant)
+    pad = FinePad()
+    pale = hexes("5e5c68", "7e7c8e", "9896a6", "b5b3c0")
+    x = r.randint(3, 7)
+    while x < W_F - 4:
+        height = r.randint(4, 10)
+        lean = r.choice([-2.0, -1.0, 1.0, 2.0])
+        for h in range(-BLEED_F, height):
+            t = max(h, 0) / height
+            pad.up(x + lean * t * t, h, pale[min(h // 2 + 1, 3) if h >= 0 else 0])
+        x += r.choice([3, 4, 5, 7])
+    return pad.a
+
+
+def fine_bramble(variant: int, stems, dots, name: str) -> np.ndarray:
+    r = rng("fine " + name, variant)
+    pad = FinePad()
+    dark, mid = stems
+    for start in ((6, 18, 26) if variant % 2 else (10, 22)):
+        x, height = float(start), r.randint(10, 18)
+        for h in range(-BLEED_F, height):
+            pad.up(x, h, dark if h < 4 else mid)
+            if h > 3 and r.random() < 0.25:
+                side = r.choice([-1, 1])
+                pad.up(x + side, h, dark)
+                pad.up(x + 2 * side, h + 1, dark)
+                if r.random() < 0.6:
+                    c = dots[r.randrange(len(dots))]
+                    pad.up(x + 3 * side, h + 2, c)
+                    pad.up(x + 3 * side, h + 3, c)
+            x = max(3, min(W_F - 4, x + r.uniform(-0.5, 0.5)))
+        for dx, dy in ((0, 0), (1, 0), (0, 1), (-1, 0)):
+            pad.up(x + dx, height + dy, dots[0])
+    return pad.a
+
+
+def fine_thorn_rose(variant: int) -> np.ndarray:
+    return fine_bramble(variant, hexes("3a1632", "5a2a4e"), hexes("ff7ab8", "ffc0dc", "d8408a"), "thorn_rose")
+
+
+def fine_thorn(variant: int) -> np.ndarray:
+    return fine_bramble(variant, hexes("1a0c0a", "33181a"), hexes("5a2a22", "7a3a2a"), "thorn")
+
+
+def fine_hanging(variant: int, tip: bool, stems, dots, name: str) -> np.ndarray:
+    r = rng("fine " + name, variant, tip)
+    pad = FinePad()
+    dark, mid = stems
+    for start in (10, 20) if variant % 2 else (15,):
+        x = float(start)
+        length = r.randint(14, 24) if tip else (DECOR_H - CEILING) * F
+        for d in range(-BLEED_F, length):
+            pad.down(x, d, mid if d % 6 else dark)
+            pad.down(x + 1, d, dark)
+            if dots and r.random() < 0.12:
+                side = r.choice([-1, 1])
+                c = dots[r.randrange(len(dots))]
+                pad.down(x + 2 * side, d, c)
+                pad.down(x + 2 * side, d + 1, c)
+            x = max(5, min(W_F - 6, x + r.uniform(-0.3, 0.3)))
+        if tip and dots:
+            for dx, dd in ((0, 0), (1, 0), (0, 1), (1, 1)):
+                pad.down(x + dx, length + dd, dots[0])
+    return pad.a
+
+
+def fine_chain_links(variant: int, tip: bool) -> np.ndarray:
+    pad = FinePad()
+    iron, lit, rim = col("4a4a56"), col("8a8a98"), col("15151b")
+    x = 15 if variant % 2 == 0 else 16
+    length = 20 if tip else (DECOR_H - CEILING) * F
+    for d in range(-BLEED_F, length):
+        phase = d % 8
+        if phase < 4:  # a link edge on
+            pad.down(x, d, lit)
+            pad.down(x + 1, d, iron)
+        else:  # a link face on, its hole dark
+            pad.down(x - 2, d, lit)
+            pad.down(x - 1, d, iron if phase in (4, 7) else rim)
+            pad.down(x + 2, d, iron if phase in (4, 7) else rim)
+            pad.down(x + 3, d, iron)
+            if phase in (4, 7):
+                pad.down(x, d, iron)
+                pad.down(x + 1, d, iron)
+    if tip:
+        if variant % 2 == 0:  # a hook
+            for dx, dd in ((0, 0), (0, 1), (0, 2), (1, 3), (2, 4), (3, 4), (4, 4), (5, 3), (6, 2), (6, 1)):
+                pad.down(x + dx - 1, length + dd, lit if dx < 2 else iron)
+        else:  # a weight
+            for dd in range(0, 8):
+                for dx in range(-3, 5):
+                    pad.down(x + dx, length + dd, lit if dx < -1 else iron)
+    pad.outline(rim)
+    return pad.a
+
+
+def fine_reed(variant: int) -> np.ndarray:
+    r = rng("fine reed", variant)
+    pad = FinePad()
+    stalk, pale, head, head_lit = col("56733a"), col("8aa058"), col("4a3020"), col("6a4830")
+    for x in [(8, 18, 24), (12, 22), (6, 14, 20, 26)][variant % 3]:
+        height = r.randint(16, 30)
+        lean = r.uniform(-1.5, 1.5)
+        for h in range(-BLEED_F, height):
+            t = max(h, 0) / height
+            pad.up(x + lean * t * t, h, pale if h > height * 0.6 else stalk)
+        if r.random() < 0.7:
+            for h in range(height - 9, height - 2):
+                t = h / height
+                for d in range(3):
+                    pad.up(x + lean * t * t + d - 1, h, head_lit if d == 0 else head)
+    return pad.a
+
+
+def fine_drip(variant: int) -> np.ndarray:
+    r = rng("fine drip", variant)
+    pad = FinePad()
+    dark, mid, lit = col("4a6a1c"), col("74a030"), col("b8e070")
+    for x in [(10, 22), (15,), (6, 16, 24)][variant % 3]:
+        length = r.randint(8, 22)
+        for d in range(-BLEED_F, length):
+            pad.down(x, d, mid)
+            pad.down(x + 1, d, dark if d < 4 else mid)
+        for dx, dd, c in ((-1, 0, mid), (0, 0, lit), (1, 0, mid), (2, 0, dark), (0, 1, mid), (1, 1, mid), (0, 2, mid)):
+            pad.down(x + dx, length + dd - 1, c)
+    return pad.a
+
+
+def fine_coins(variant: int) -> np.ndarray:
+    r = rng("fine coins", variant)
+    pad = FinePad()
+    ramp = PALETTES["gold"]["ramp"]
+    half, height = [(10, 8), (6, 6), (12, 12)][variant % 3]
+    cx = 15 + r.choice([-2, 0, 2])
+    for h in range(-2, height):
+        width = half * (1 - max(h, 0) / (height + 0.5)) ** 0.8
+        for x in range(int(cx - width), int(cx + width) + 1):
+            coin = (x // 2 + h // 2 * 3) % 4 == 0  # the edge of a coin
+            pad.up(x, h, ramp[4] if coin else ramp[2] if x > cx + width - 3 else ramp[3])
+    for dx, dh in ((-2, height - 2), (half - 4, 2)):
+        pad.up(cx + dx, dh, (255, 255, 255))
+        pad.up(cx + dx + 1, dh, ramp[5])
+        pad.up(cx + dx, dh + 1, ramp[5])
+    pad.outline(PALETTES["gold"]["outline"])
+    return pad.a
+
+
+def fine_dead_tree_part(variant: int, part: str) -> np.ndarray:
+    r = rng("fine dead_tree", variant, part)
+    pad = FinePad()
+    cx = 15
+    top = DECOR_H * F if part != "top" else 18
+    for h in range(-BLEED_F, top - BLEED_F):
+        wide = 4 if part == "base" and h < 6 else 3 if part != "top" or h < top - 10 else 2
+        for x in range(cx - wide + 1, cx + wide):
+            pad.up(x, h, WOOD[3] if x < cx - wide + 2 else WOOD[2] if x <= cx else WOOD[1])
+        if part == "base" and h < 2:
+            for x in (cx - 5, cx - 4, cx + 5, cx + 6):
+                pad.up(x, h, WOOD[1])
+    for side in (-1, 1):
+        if part == "base" or r.random() < 0.25:
+            continue
+        at = r.randint(4, 14)
+        x, h = cx + (-2 if side < 0 else 2), float(at)
+        for k in range(r.randint(6, 11)):
+            x += side
+            h += 0.7 if part != "top" else 1.0
+            pad.up(x, h, WOOD[3] if side < 0 else WOOD[1])
+            if k < 4:
+                pad.up(x, h - 1, WOOD[1])
+            if k == 4 and r.random() < 0.6:
+                for j in range(1, 4):
+                    pad.up(x - side * j * 0.5, h + j, WOOD[1])
+    if part == "top":
+        for k in range(8):
+            pad.up(cx + (k // 2) % 2, top - BLEED_F + k, WOOD[2 if k < 4 else 1])
+    return pad.a
+
+
+def fine_tomb(variant: int) -> np.ndarray:
+    pad = FinePad()
+    ramp, rim = PALETTES["dis_brick"]["ramp"], PALETTES["dis_brick"]["outline"]
+    fire = hexes("d8521a", "ff9a2e", "ffe07a")
+    for h in range(-BLEED_F, 12):
+        for x in range(4, 28):
+            k = 4 if x < 6 else 1 if x > 25 else 5 if h >= 11 else 3 if h >= 9 else 2
+            if (x // 6 + h // 4) % 2 == 0 and h < 9 and (x % 6 == 0 or h % 4 == 0):
+                k = 1  # the joints of its stones
+            pad.up(x, h, ramp[k])
+    for x in range(8, 24):
+        pad.up(x, 10, fire[1] if (x // 2 + variant) % 3 else fire[2])
+        pad.up(x, 9, fire[0])
+    for fx in ((10, 18) if variant % 2 else (12, 20)):
+        for h, half in ((11, 2), (12, 2), (13, 1), (14, 1), (15, 0)):
+            for dx in range(-half, half + 1):
+                pad.up(fx + dx, h, fire[2] if abs(dx) < 1 and h < 13 else fire[1] if h < 14 else fire[0])
+    pad.outline(rim)
+    return pad.a
+
+
+def fine_snow(variant: int) -> np.ndarray:
+    pad = FinePad()
+    white, soft, shade_ = col("ffffff"), col("d8ecf8"), col("a8c8e0")
+    plan = [[(0, 32, 4)], [(2, 18, 6), (18, 14, 4)], [(6, 22, 6)]][variant % 3]
+    for x0, width, height in plan:
+        for x in range(x0, x0 + width):
+            edge = min(x - x0, x0 + width - 1 - x)
+            top = min(height, 1 + edge * 0.6)
+            for h in range(-2, int(math.ceil(top))):
+                pad.up(x, h, white if h >= top - 1 else shade_ if h <= 0 else soft)
+    return pad.a
+
+
+def fine_wildflower(variant: int) -> np.ndarray:
+    r = rng("fine wildflower", variant)
+    pad = FinePad()
+    ramp = MEADOW["ramp"]
+    petal, shade, heart = (col(v) for v in WILDFLOWERS[variant % len(WILDFLOWERS)])
+    x = r.randint(2, 6)
+    while x < W_F - 3:
+        height = r.randint(8, 20)
+        lean = r.uniform(-1.5, 1.5)
+        for h in range(-BLEED_F, height):
+            t = max(h, 0) / height
+            pad.up(x + lean * t * t, h, ramp[1] if h < 4 else ramp[2])
+        if r.random() < 0.5:
+            for k in range(1, 4):
+                pad.up(x + k, height // 2 + k // 2, ramp[3])
+        hx = x + lean
+        big = variant % 2 == 0 and r.random() < 0.6
+        for dx, dy in ((0, 2), (-2, 0), (2, 0), (0, -2), (-1, 1), (1, 1), (-1, -1), (1, -1)) + (((-2, 2), (2, 2), (-2, -2), (2, -2)) if big else ()):
+            pad.up(hx + dx, height + dy, shade if dy < 0 or dx > 0 else petal)
+        pad.up(hx, height, heart)
+        x += r.randint(6, 10)
+    for _ in range(3):
+        fine_blade(pad, r, r.randint(2, W_F - 4), r.randint(4, 8), r.choice([-1.5, 0, 1.5]), ramp=MEADOW["ramp"])
+    return pad.a
+
+
+def fine_fern(variant: int) -> np.ndarray:
+    pad = FinePad()
+    ramp = GRASS["ramp"]
+    root_x = 15 + variant % 2
+    for side, length, rise in ((-1, 14, 14), (1, 14, 16), (-1, 8, 20), (1, 10, 22)):
+        for i in range(length):  # a frond: a rib that arches out, leaflets down it
+            t = i / length
+            x = root_x + side * i
+            h = rise * (1 - t * t)
+            pad.up(x, h, ramp[2])
+            if i % 3 == 1:
+                for k in range(1, 4 - int(t * 2)):
+                    pad.up(x + side * 0.5, h + k, ramp[4] if side < 0 else ramp[3])
+                    pad.up(x, h - k, ramp[3] if side < 0 else ramp[2])
+    for k in range(-BLEED_F, 24):  # the middle frond, straight up
+        pad.up(root_x, k, ramp[2] if k < 20 else ramp[4])
+        if k % 3 == 1 and 4 < k < 20:
+            pad.up(root_x - 1, k + 1, ramp[4])
+            pad.up(root_x + 1, k + 1, ramp[3])
+    return pad.a
+
+
+def fine_field_stone(variant: int) -> np.ndarray:
+    r = rng("fine field_stone", variant)
+    pad = FinePad()
+    ramp = STONE["ramp"]
+    wide, tall, x0 = [(12, 8, 8), (18, 10, 6), (8, 6, 16)][variant % 3]
+    for h in range(-2, tall):
+        for x in range(x0, x0 + wide):
+            u, v = (x + 0.5 - x0 - wide / 2) / (wide / 2), (h + 0.5) / tall
+            if u * u + v * v * 0.8 > 1:
+                continue
+            colour = ramp[5] if v > 0.75 and u < 0 else ramp[4] if u < -0.45 else ramp[1] if u > 0.55 else ramp[3]
+            pad.up(x, h, colour)
+    pad.outline(STONE["outline"])
+    for _ in range(4):
+        fine_blade(pad, r, r.randint(x0 - 2, x0 + wide + 1), r.randint(4, 7), r.choice([-1, 0, 1]))
+    return pad.a
+
+
+def fine_cobweb(variant: int) -> np.ndarray:
+    pad = FinePad()
+    thread = col("b8b4ac")
+    cx = 8 if variant % 2 == 0 else 23
+    ends = [(-8, 18), (-2, 24), (6, 22), (10, 14)] if variant % 2 == 0 else [(8, 18), (2, 24), (-6, 22), (-10, 14)]
+    for ex, ey in ends:
+        steps = max(abs(ex), ey) * 2
+        for i in range(-BLEED_F, steps + 1):
+            t = max(i, 0) / steps
+            pad.put(cx + ex * t, CEILING_F + ey * t, thread, 150)
+    for ring in (8, 16):
+        for (ax, ay), (bx, by) in zip(ends, ends[1:]):  # a ring across two threads, sagging
+            ta, tb = ring / max(ay, 1), ring / max(by, 1)
+            if ta <= 1 and tb <= 1:
+                for k in range(9):
+                    u = k / 8
+                    x = cx + ax * ta * (1 - u) + bx * tb * u
+                    y = CEILING_F + ay * ta * (1 - u) + by * tb * u + math.sin(u * math.pi) * 1.5
+                    pad.put(x, y, thread, 190)
+    return pad.a
+
+
+FINE_DRAWERS = {
+    "cloud_puff": fine_cloud_puff,
+    "lily": fine_lily,
+    "grave": fine_grave,
+    "dead_grass": fine_dead_grass,
+    "thorn_rose": fine_thorn_rose,
+    "thorn": fine_thorn,
+    "rose_vine_mid": lambda v: fine_hanging(v, False, hexes("3a1632", "6a2a56"), hexes("ff7ab8", "ffc0dc"), "rose_vine"),
+    "rose_vine_tip": lambda v: fine_hanging(v, True, hexes("3a1632", "6a2a56"), hexes("ff7ab8", "ffc0dc"), "rose_vine"),
+    "moss_mid": lambda v: fine_hanging(v, False, hexes("1f4a40", "2f6e5c"), hexes("58a088"), "moss"),
+    "moss_tip": lambda v: fine_hanging(v, True, hexes("1f4a40", "2f6e5c"), hexes("58a088"), "moss"),
+    "chain_mid": lambda v: fine_chain_links(v, False),
+    "chain_tip": lambda v: fine_chain_links(v, True),
+    "reed": fine_reed,
+    "drip": fine_drip,
+    "coins": fine_coins,
+    "dead_tree_base": lambda v: fine_dead_tree_part(v, "base"),
+    "dead_tree_mid": lambda v: fine_dead_tree_part(v, "mid"),
+    "dead_tree_top": lambda v: fine_dead_tree_part(v, "top"),
+    "tomb": fine_tomb,
+    "snow": fine_snow,
+    "ice_spike": lambda v: fine_stalagmite(v, PALETTES["ice"]),
+    "icicle": lambda v: fine_stalactite(v, PALETTES["ice"]),
+    **{
+        kind + "_" + name: (lambda v, k=kind, rock=SPIKED[name][0]: {"stalagmite": fine_stalagmite, "stalactite": fine_stalactite, "pebble": fine_pebble}[k](v, PALETTES[rock]))
+        for name in SPIKED
+        for kind in ("stalagmite", "stalactite", "pebble")
+    },
+    "tuft": fine_tuft,
+    "grass_tall": fine_grass_tall,
+    "flower": fine_flower,
+    "bush": fine_bush,
+    "cactus_base": fine_cactus_base,
+    "cactus_mid": fine_cactus_mid,
+    "cactus_top": fine_cactus_top,
+    "dry_bush": fine_dry_bush,
+    "bones": fine_bones,
+    "mushroom": fine_mushroom,
+    "pebble": fine_pebble,
+    "stalagmite": fine_stalagmite,
+    "stalactite": fine_stalactite,
+    "root": fine_root,
+    "vine_mid": fine_vine_mid,
+    "vine_tip": fine_vine_tip,
+    "wildflower": fine_wildflower,
+    "fern": fine_fern,
+    "field_stone": fine_field_stone,
+    "cobweb": fine_cobweb,
+}
+
+
+def fine_decor_sheet() -> tuple[Image.Image, list]:
+    """The decor sheet at the size that ships: decor_sheet's rows and places, each sprite
+    drawn by its FINE_DRAWERS painter, or its draft through Scale2x where it has none. The
+    entries' places are in the draft's pixels, as decor_sheet's are."""
+    image, entries = decor_sheet()
+    draft = np.array(image)
+    sheet = scale2x_rgba(draft)
+    height = draft.shape[0]
+    for name, x, y, w, h, _ in entries:
+        part, _, variant = name[len("tv2_decor_") :].rpartition("_")
+        paint = FINE_DRAWERS.get(part)
+        if paint is None:
+            continue
+        top = height - y - h
+        cell = paint(int(variant))
+        assert cell.shape == (h * F, w * F, 4), (name, cell.shape)
+        sheet[top * F : (top + h) * F, x * F : (x + w) * F] = cell
+    return Image.fromarray(sheet, "RGBA"), entries
