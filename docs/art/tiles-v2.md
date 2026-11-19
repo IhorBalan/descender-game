@@ -73,12 +73,23 @@ ways:
     fibres and a sheath at each joint, the timber's grain and the lay of its
     rope, a moulding on each course, each link of a chain, roots that fork,
     a leaf that is a leaf); and the Lantern Tree's trunk and roots, the
-    Crown Vine's plait, the twisting vines, the boughs and the wheat. A part
+    Crown Vine's plait, the twisting vines, the boughs and the wheat; and
+    what grows on a floor and bends as the hero goes through it (a rib down
+    each blade, petals on a flower), what is set in the ground of a floor,
+    the crags by the Low Gate and the keepers' statues (folds, the pits the
+    weather has made, fingers on the grip). A part
     of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
     Each is the draft's size times `DENSITY` exactly, so nothing that stands
     it has to know.
+
+- **The lamps** are drawn at the size that ships too
+  (`tv2_terrain.fine_prop_sheet`, by `FINE_PROPS`): the torch, the brazier,
+  the crystals, the lantern and the glowfruit, each 32 x 32 a frame in the
+  place its draft has in its cell, its flame a tear in three heats that
+  leans as it sways. A lamp without a painter there (the campfire, the
+  glowshroom, the mine lamp) is its draft through Scale2x.
 
 `gen_tiles_v2.py --metas` writes every picture's `.meta` again (rects, pivots
 and collider shapes are in the art's pixels); a picture's GUID is made from its
