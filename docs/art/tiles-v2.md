@@ -84,7 +84,12 @@ ways:
     swords, Mereth and Ithuriel, the chains (link through link), the fog in
     the door and the mist along a floor, the shafts of sun, the cracks and
     the moss on the stone. Cut stone drawn at 32 has its joints a pixel wide
-    (`tv2_eden.fine_stones`). A part
+    (`tv2_eden.fine_stones`). And what stands far off: the far layers are
+    made of the pictures at 32 (a far tree is the tree as it is drawn at
+    32, made smaller), the far house, the far Gate and the far Wheel are
+    asked at every half pixel, and `tv2_eden.ridge` takes `fine`; the
+    Lantern Tree's crown; and the dark shapes that pass before the eye,
+    their rim two pixels wide. A part
     of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
