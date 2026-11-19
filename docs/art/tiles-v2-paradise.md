@@ -367,7 +367,8 @@ fog and the mist, the shafts of sun, the cracks and the moss; what stands
 far off behind every zone, the Lantern Tree's crown, and the dark shapes
 that pass before the eye; and of what it borrows, the billows under its
 clouds, the garden's flowers, clipped green, benches, urns and columns, and
-the Earth's thickets, dead trees, fences and haystacks; and the sky over it
+the Earth's thickets, dead trees, fences and haystacks, the host in marble
+and the fountain; the gathered walking round the Wheel; and the sky over it
 (`docs/art/tiles-v2.md`). Everything
 else is its draft through Scale2x, which is the picture it was with smoother
 edges, until it is drawn again.
@@ -376,9 +377,9 @@ edges, until it is drawn again.
 
 - **Nobody has played it by hand.** The model says it can be played through;
   how it feels is not known.
-- **Some of the level is not yet drawn at 32.** The Wheel's wall and the
-  figures round it are the draft doubled; so are a few things it borrows
-  once or twice (an angel, a fountain, a well, a cottage).
+- **Some of the level is not yet drawn at 32.** The Wheel's wall is its
+  draft doubled, with a grain laid over it; so are a well and a cottage it
+  borrows once each from the Earth.
 - **The hero and the game's own things are 16 to the tile**: his pixels are
   twice the world's. They are the game's art, not the standard's.
 - **On a 1080p screen a pixel of the art is one and a half of the screen's**:
