@@ -2074,6 +2074,10 @@ STYLE["heaven_hedge_0"] = lambda w, h: tv2_style.topiary(w, h, SINK_OF["heaven_h
 STYLE["heaven_hedge_1"] = lambda w, h: tv2_style.topiary(w, h, SINK_OF["heaven_hedge_1"] * DENSITY, "heaven hedge 1", "43ac5c", "c4c4d2", balls=1)
 STYLE["heaven_hedge_2"] = lambda w, h: tv2_style.topiary(w, h, SINK_OF["heaven_hedge_2"] * DENSITY, "heaven hedge 2", "43ac5c", "c4c4d2", balls=3)
 
+# Raised from their drawings in the first style, so what stands where (a door, a stair) stays.
+for _key in ("heaven_tower_8x24_s2", "heaven_tower_6x13_s3", "heaven_tower_6x16_s1", "heaven_tower_8x19_s4", "heaven_tower_4x15", "heaven_tower_4x15_s4", "heaven_tower_4x9_hung", "heaven_tower_8x25_s1", "heaven_tower_6x11", "heaven_tower_4x15_s3", "heaven_tower_4x9", "heaven_tower_6x14_s2", "heaven_tower_8x20_s3", "heaven_tower_4x31_back", "heaven_tower_6x22_back", "heaven_tower_4x27_back", "heaven_tower_4x24_back", "heaven_tower_4x19_back", "heaven_tower_4x21_back", "heaven_tower_4x15_back", "heaven_roof_29", "heaven_roof_21", "heaven_roof_14", "heaven_pillar_18x2", "heaven_pillar_8x2", "heaven_pillar_12x1", "heaven_hall_west", "heaven_hall_east", "heaven_banner", "heaven_banner_f1", "heaven_banner_f2", "heaven_banner_f3", "heaven_high_seat", "heaven_gate", "heaven_rotunda", "heaven_angel_0", "heaven_angel_1", "heaven_bridge_6", "heaven_bridge_7", "heaven_bridge_8", "heaven_bridge_9", "heaven_parapet_27", "heaven_parapet_33", "heaven_portal_9x9", "heaven_portal_4x6", "heaven_span", "heaven_puff_0", "heaven_puff_1", "heaven_puff_2", "heaven_puff_3", "heaven_puff_4", "heaven_room_lower", "heaven_room_upper", "heaven_room_keep", "heaven_flowers_0", "heaven_flowers_1", "heaven_flowers_2", "heaven_flowers_3", "heaven_bench", "heaven_urn", "heaven_fountain", "heaven_fountain_f1", "heaven_fountain_f2", "heaven_swan_0", "heaven_lilies_0", "heaven_swan_1", "heaven_lilies_1", "heaven_pennant", "heaven_pennant_f1", "heaven_pennant_f2", "heaven_pennant_f3", "heaven_pennant_f4", "heaven_pennant_f5"):
+    STYLE[_key] = lambda w, h, k=_key: tv2_style.relief(FINE[k]())
+
 FINE = {}
 for _v in range(BLOSSOMS):
     for _frame in range(FRAMES):
