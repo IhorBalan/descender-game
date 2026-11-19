@@ -715,7 +715,47 @@ def _fine(material: dict, drawn: np.ndarray, flat: np.ndarray, variant: int) -> 
     if material["kind"] == "wall":
         tex = np.clip(tex, 0, 4)  # a wall keeps low: no light on it
     out[inside, :3] = np.array(palette["ramp"], dtype=np.uint8)[tex][inside]
+    if material.get("grass") and material["kind"] != "wall":
+        _fine_turf(out, PALETTES[material["grass"]], (material["key"], variant))
     return out
+
+
+def _fine_turf(out: np.ndarray, grass: dict, seed):
+    """The turf of a frame at the size that ships: the doubled draft's, with what a finer
+    pixel can say. Along a top that is open to the air a blade stands a pixel over its
+    neighbours here and one sits a pixel under there (never at a tile's seam, so the next
+    tile's top lines up); and in the turf itself single blades are a tone lighter or
+    darker than the grass they stand in."""
+    size = out.shape[0]
+    ramp = [tuple(c) for c in grass["ramp"]]
+    edge = tuple(grass["outline"])
+    deep = 16  # how far down a column is moved with its top: the turf's depth, and a little
+    for x in range(size):
+        column = out[:, x]
+        solid = np.nonzero(column[:, 3])[0]
+        if not len(solid):
+            continue
+        top = int(solid[0])
+        chance = rng("fine turf", seed, x).random()
+        if tuple(column[top, :3]) == edge and 2 <= x < size - 2 and top + 4 < size and tuple(column[top + 4, :3]) in ramp:
+            reach = min(deep, size - top - 1)
+            if chance < 0.22 and top >= 1:
+                column[top - 1 : top - 1 + reach] = column[top : top + reach].copy()
+            elif chance > 0.8:
+                column[top + 1 : top + 1 + reach] = column[top : top + reach].copy()
+                column[top] = 0
+        # Blades in the turf: a column of it a tone up, or down.
+        blade = rng("fine blade", seed, x).random()
+        for y in range(size):
+            if column[y, 3] == 0:
+                continue
+            colour = tuple(column[y, :3])
+            if colour == ramp[3] and blade < 0.22:
+                column[y, :3] = ramp[4]
+            elif colour == ramp[3] and blade > 0.84:
+                column[y, :3] = ramp[2]
+            elif colour == ramp[4] and blade > 0.9:
+                column[y, :3] = ramp[5]
 
 
 def fine_frame(material: dict, mask: int, variant: int) -> np.ndarray:

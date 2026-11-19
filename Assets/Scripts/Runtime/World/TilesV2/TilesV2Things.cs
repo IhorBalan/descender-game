@@ -763,8 +763,8 @@ namespace Descender.World.TilesV2
             holder.transform.SetParent(transform, false);
             holder.transform.position = foot;
             var box = holder.AddComponent<BoxCollider2D>();
-            box.size = new Vector2(wide, 12f / 16f);
-            box.offset = new Vector2(wide / 2f, 1f - 6f / 16f);
+            box.size = new Vector2(wide, 12f * TilesV2Set.DraftPixel);
+            box.offset = new Vector2(wide / 2f, 1f - 6f * TilesV2Set.DraftPixel);
             for (var x = 0; x < wide; x++)
             {
                 Cell(
@@ -821,8 +821,8 @@ namespace Descender.World.TilesV2
             var drift = streaks.velocityOverLifetime;
             drift.enabled = true;
             drift.space = ParticleSystemSimulationSpace.World;
-            drift.x = wind.x / 16f;
-            drift.y = wind.y / 16f;
+            drift.x = wind.x * TilesV2Set.DraftPixel;
+            drift.y = wind.y * TilesV2Set.DraftPixel;
             drift.z = 0f;
             TilesV2Particles.Fade(streaks, Color.white, Color.white, 0.3f);
             streaks.Play();

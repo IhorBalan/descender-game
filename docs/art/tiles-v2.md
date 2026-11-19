@@ -57,9 +57,16 @@ ways:
     gets pebbles and root hairs and a grain; rock, hairline cracks and a
     glint; dressed stone, a vein, a chip and a line of light under its joint;
     clay and boards, a grain; leaves, a lit edge; sand and ice, a sparkle;
+  - the turf of a ground that has one (`_fine_turf`): along a top open to the
+    air a blade stands a pixel over its neighbours here and sits a pixel under
+    there (never at a tile's seam), and in the turf single blades are a tone
+    lighter or darker than the grass they stand in;
   - the pictures a module names in its `FINE` (`tv2_heaven.FINE`,
     `tv2_eden.FINE`): the trees of Paradise in blossom and in gold, the
-    orchard's teal trees, the great leaves of the Hollow and the Rising Leaf.
+    orchard's teal trees, the great leaves of the Hollow and the Rising Leaf,
+    the Low Gate, the Wheel's mural and the Sundial (a painter that works a
+    pixel at a time is asked at every half pixel of the draft: a round is a
+    true round, and its stone has a grain).
     Each is the draft's size times `DENSITY` exactly, so nothing that stands
     it has to know.
 
