@@ -3170,6 +3170,8 @@ for _v in range(3):
 for _v in range(2):
     FINE[f"eden_far_gate_{_v}"] = lambda v=_v: far_gate(v, DENSITY)
 FINE["eden_far_wheel"] = lambda: far_wheel(DENSITY)
+for _rows, _wide in ((10, 2), (10, 1)):
+    FINE[f"eden_pillar_{_rows}x{_wide}"] = lambda a=(_rows, _wide): pillar(*a, fine=DENSITY)
 FINE["eden_lantern_crown"] = lambda: lantern_crown(DENSITY)
 for _k in range(len(FRONTS)):
     FINE[f"eden_front_{_k}"] = lambda k=_k: front(k, fine=DENSITY)
