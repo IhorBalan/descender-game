@@ -22,7 +22,7 @@ from tv2_base import *  # noqa: F401,F403
 from tv2_earth import Art, _seed, branch, bundle, noise, ramp_of, trunk
 from tv2_heaven import (
     AMBER, BIRCH, BLOSSOM, CLOTH, GOLD, MARBLE, ORDER_GARDEN, ORDER_HUNG, ORDER_STAND, ORDER_TREE, ORDER_WALL, SHADOWED,
-    T, VINE, WATER, ashlar, column, finial, host_wings, pillar, round_shift, stones, tone, tree,
+    T, VINE, WATER, ashlar, column, fine_stones, finial, host_wings, pillar, round_shift, stones, tone, tree,
 )  # fmt: skip
 
 LEAF = ramp_of("1c3a14 2c6a22 3e8c2c 5aac38 86c84a b8e06a ecf7a8")
@@ -366,8 +366,9 @@ def wheel(fine: int = 1) -> Image.Image:
     """The Wheel mural of the Terraces, the biggest single image there: on a wall of marble
     in shadow a wheel of gold with twelve spokes, its rim a roll of metal studded all
     round, figures in a line walking round it all one way, a hub like an eye that looks
-    back; a border of gold in a key pattern over and under. `fine` draws the wheel and
-    its eye that many times the draft's size: a true round, spokes with an edge."""
+    back; a border of gold in a key pattern over and under. `fine` draws the wheel, its
+    eye and the figures that many times the draft's size: a true round, spokes with an
+    edge, each figure with a round head and a robe that falls in a curve."""
     r = rng("eden wheel")
     f = fine
     W0, H0 = 44 * T, 30 * T
@@ -408,13 +409,12 @@ def wheel(fine: int = 1) -> Image.Image:
                 art.put(x, y, tone(GOLD, k))
             elif rad < d < rad + 3 and dx + dy > 0:
                 art.put(x, y, SHADOWED[1])  # the shadow the rim throws on the wall
-    walkers = Art(W0, H0)
+    walkers = Art(W, H)
     for n in range(30):  # the gathered, walking the rim
         ang = n / 30 * 2 * math.pi
-        walker(walkers, cx + math.cos(ang) * (rad + 15), cy + math.sin(ang) * (rad + 15) + 6, MARBLE, SHADOWED[1], step=n % 2)
-    figures = doubled(walkers.a, f)
-    shown = figures[..., 3] > 0
-    art.a[shown] = figures[shown]
+        walker(walkers, cx + math.cos(ang) * (rad + 15), cy + math.sin(ang) * (rad + 15) + 6, MARBLE, SHADOWED[1], step=n % 2, fine=f)
+    shown = walkers.a[..., 3] > 0
+    art.a[shown] = walkers.a[shown]
     return art.image()
 
 
@@ -2159,23 +2159,52 @@ def gold_wheel(dx: float, dy: float, rad: float, rim: float, hub: float, spokes:
     return None
 
 
-def walker(art: Art, x: float, y: float, ramp, shadow=None, alpha: int = 255, step: int = 0):
+def walker(art: Art, x: float, y: float, ramp, shadow=None, alpha: int = 255, step: int = 0, fine: int = 1):
     """One of the gathered, small: a head, a robe to the ground, lit on the left; `step`
-    0 or 1 is which foot is forward. (x, y) is where it stands."""
+    0 or 1 is which foot is forward. (x, y) is where it stands, in the draft's pixels;
+    `art` is `fine` times the draft's size, and at more than one the head is round, the
+    robe falls in a curve with a fold down it, and a hand and a foot show."""
     x, y = int(round(x)), int(round(y))
-    if shadow is not None:
-        for i in range(12):
-            for d in range(-2, 3):
-                art.put(x + d + 2, y - 11 + i + 1, shadow, alpha)
-    for dx, dy, k in ((-1, -13, 6), (0, -13, 5), (1, -13, 4), (-1, -12, 6), (0, -12, 5), (1, -12, 4), (0, -11, 3)):
-        art.put(x + dx, y + dy, tone(ramp, k), alpha)
-    for i in range(10):
-        half = 1 + (i + 2) // 4
-        for d in range(-half, half + 1):
-            k = 6 if d == -half else 3 if d == half else 5 if d < 0 else 4
-            art.put(x + d, y - 10 + i, tone(ramp, k - (1 if i == 9 else 0)), alpha)
-    art.put(x - 2 + 3 * step, y, tone(ramp, 3), alpha)
-    art.put(x + (2 if step else -3), y - 6, tone(ramp, 5), alpha)  # a hand, out of the sleeve
+    f = fine
+    if f == 1:
+        if shadow is not None:
+            for i in range(12):
+                for d in range(-2, 3):
+                    art.put(x + d + 2, y - 11 + i + 1, shadow, alpha)
+        for dx, dy, k in ((-1, -13, 6), (0, -13, 5), (1, -13, 4), (-1, -12, 6), (0, -12, 5), (1, -12, 4), (0, -11, 3)):
+            art.put(x + dx, y + dy, tone(ramp, k), alpha)
+        for i in range(10):
+            half = 1 + (i + 2) // 4
+            for d in range(-half, half + 1):
+                k = 6 if d == -half else 3 if d == half else 5 if d < 0 else 4
+                art.put(x + d, y - 10 + i, tone(ramp, k - (1 if i == 9 else 0)), alpha)
+        art.put(x - 2 + 3 * step, y, tone(ramp, 3), alpha)
+        art.put(x + (2 if step else -3), y - 6, tone(ramp, 5), alpha)  # a hand, out of the sleeve
+        return
+    X, Y = x * f + f // 2, y * f
+    if shadow is not None:  # its shadow on the wall, the robe's shape a little to the right
+        for I in range(12 * f):
+            half = (1.4 + I / (12 * f) * 2.2) * f
+            for D in range(int(-half), int(half) + 1):
+                art.put(X + D + 2 * f, Y - 11 * f + I + f, shadow, alpha)
+    for DY in range(-3 * f, 1):  # the head
+        for DX in range(-2 * f, 2 * f):
+            u, v = (DX + 0.5) / (1.8 * f), (DY + 1.5 * f) / (1.7 * f)
+            if u * u + v * v <= 1:
+                k = 6 if u < -0.3 else 5 if u < 0.35 else 4
+                art.put(X + DX, Y - 11 * f + DY, tone(ramp, k), alpha)
+    for I in range(10 * f):  # the robe: narrow at the shoulders, out to its hem
+        t = I / (10 * f)
+        half = (1.7 + 2.3 * t**0.7) * f  # its shoulders, then the fall of it
+        for D in range(int(-half), int(math.ceil(half))):
+            off = (D + 0.5) / half
+            k = 6 if off < -0.7 else 3 if off > 0.7 else 5 if off < 0 else 4
+            if abs(off - 0.15) < 0.12 and t > 0.3:
+                k -= 1  # a fold down it
+            art.put(X + D, Y - 10 * f + I, tone(ramp, k - (1 if I >= 9 * f else 0)), alpha)
+    for s in range(f):  # a foot forward, a hand out of the sleeve
+        art.put(X + (-2 + 3 * step) * f + s, Y, tone(ramp, 3), alpha)
+        art.put(X + (2 if step else -3) * f + s, Y - 6 * f, tone(ramp, 6 if s == 0 else 5), alpha)
 
 
 # --- What holds things up: nothing in Paradise is a bare bar or a plank on the air ---------
@@ -2944,22 +2973,6 @@ def fine_glowfruit(frame: int) -> np.ndarray:
     for dx, dy in ((-4, -5), (-3, -5), (-4, -4)):  # a light on its skin
         put(16 + dx, 19 + dy, (255, 255, 255))
     return a
-
-
-def fine_stones(X: int, Y: int, f: int, light: int = 0) -> int:
-    """`tv2_heaven.stones` at `f` times the draft's size: the same courses and blocks, the
-    joint a pixel wide and the lit edge of each course a pixel high, as cut stone is."""
-    if f == 1:
-        return stones(X, Y, light)
-    course, block = 8 * f, 12 * f
-    joint = Y % course == course - 1 or (X + (Y // course % 2) * 6 * f) % block == block - 1
-    return (3 if joint else 6 if Y % course == 0 else 5) + light
-
-
-def on(art: Art, layer: Art):
-    """Lays what is drawn on `layer` over `art`."""
-    shown = layer.a[..., 3] > 0
-    art.a[shown] = layer.a[shown]
 
 
 # --- What there is, and where its floor line lies ------------------------------------------

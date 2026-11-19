@@ -94,8 +94,12 @@ ways:
     the beds of flowers, the clipped green, the bench, the urn and every
     free-standing column (`tv2_heaven.column` takes `fine`: a lit edge to
     each flute); and from the Earth (`tv2_earth.FINE`) the thickets, the
-    dead trees, the picket and iron fences and the haystacks. A part
-    of such a picture that is still drawn on the draft (a wall of dressed
+    dead trees, the picket and iron fences and the haystacks; the host in
+    marble and the fountain, and every round tower of the castles of
+    Paradise (the castle's own helpers take `fine`: `ashlar`, its joints a
+    pixel wide, `lit_window`, `cone_rows`, `shingles`, `finial`, `banner`;
+    `fine_stones` is in `tv2_heaven` now); and the gathered on the Wheel. A
+    part of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
     Each is the draft's size times `DENSITY` exactly, so nothing that stands

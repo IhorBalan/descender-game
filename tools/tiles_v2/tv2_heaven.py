@@ -135,34 +135,42 @@ def round_shift(off: float) -> int:
     return 1 if off < -0.6 else 0 if off < -0.05 else -1 if off < 0.4 else -2 if off < 0.75 else -3
 
 
-def ashlar(art: Art, x0, y0, x1, y1, ramp, r, course: int = 6, shift=None, flat: int = 0):
+def ashlar(art: Art, x0, y0, x1, y1, ramp, r, course: int = 6, shift=None, flat: int = 0, fine: int = 1):
     """Dressed stone in even courses, each block its own shade, the joint dark, the top of
-    each block lit. `shift(x)` adds to a block's shade at a column (a round tower's light)."""
+    each block lit. `shift(x)` adds to a block's shade at a column (a round tower's light).
+    The places are in the draft's pixels; `art` is `fine` times the draft's size, and at
+    more than one the same blocks have a joint a pixel wide and a pore here and there."""
+    f = fine
     x0, y0, x1, y1 = int(x0), int(y0), int(x1), int(y1)
     for row, y in enumerate(range(y0, y1, course)):
         x = x0 - (row % 2) * 6
         while x < x1:
             length = r.randint(9, 14)
             base = r.choice([4, 5, 5, 5, 6])
-            for yy in range(y, min(y + course, y1)):
-                for xx in range(max(x, x0), min(x + length, x1)):
-                    joint = yy == y + course - 1 or xx == x + length - 1
-                    k = base + flat + (shift(xx) if shift else 0)
-                    k = k - 2 if joint else k + 1 if yy == y else k
+            for yy in range(y * f, min(y + course, y1) * f):
+                for xx in range(max(x, x0) * f, min(x + length, x1) * f):
+                    joint = yy == (y + course) * f - 1 or xx == (x + length) * f - 1
+                    k = base + flat + (shift(xx / f if f > 1 else xx) if shift else 0)
+                    k = k - 2 if joint else k + 1 if yy == y * f else k
+                    if f > 1 and not joint and (xx * 7 + yy * 13) % 31 == 0:
+                        k -= 1  # a pore in the stone
                     art.put(xx, yy, tone(ramp, k))
             x += length
 
 
-def shingles(art: Art, rows, ramp, cx: float, lit_far: int = 0):
+def shingles(art: Art, rows, ramp, cx: float, lit_far: int = 0, fine: int = 1):
     """A roof's face laid in rows of round-footed tiles, the side toward the sun lighter, a
-    bright streak down it, the far side darker. `rows`: (y, x0, x1) of the face at each row."""
+    bright streak down it, the far side darker. `rows`: (y, x0, x1) of the face at each row,
+    in the picture's pixels; `cx` in the draft's. At `fine` over one the tiles are the
+    same size, their seams and lips a pixel wide."""
+    f = fine
     for y, x0, x1 in rows:
         half = max((x1 - x0) / 2, 1)
         for x in range(int(x0), int(x1) + 1):
-            off = (x - cx) / half
-            band = (y // 4) % 2
-            lip = y % 4 == 3
-            seam = (x + band * 3) % 6 == 0
+            off = (x - cx * f) / half
+            band = (y // (4 * f)) % 2
+            lip = y % (4 * f) == 4 * f - 1
+            seam = (x + band * 3 * f) % (6 * f) == 0
             k = 4 + (1 if off < -0.35 else 0 if off < 0.1 else -1 if off < 0.6 else -2) + lit_far
             if -0.5 < off < -0.38:
                 k += 1
@@ -170,67 +178,91 @@ def shingles(art: Art, rows, ramp, cx: float, lit_far: int = 0):
             art.put(x, y, tone(ramp, k))
 
 
-def lit_window(art: Art, cx, top, wide, tall, frame=None, cool: bool = False):
+def lit_window(art: Art, cx, top, wide, tall, frame=None, cool: bool = False, fine: int = 1):
     """A window with a round head and a light behind it (or, `cool`, glass in a lattice of
-    lead), in a frame of stone a pixel proud of the wall, with a sill."""
+    lead), in a frame of stone a pixel proud of the wall, with a sill. The places are in
+    the draft's pixels; `art` is `fine` times the draft's size, and at more than one the
+    head is a true round and the lead and the frame are a pixel wide."""
     frame = frame or MARBLE
+    f = fine
     half = wide / 2
-    if not cool:
+    if not cool and f == 1:
         _LAMPS.append((cx, top, wide, tall))
-    for y in range(int(top), int(top + tall)):
+    for Y in range(int(top * f), int((top + tall) * f)):
+        y = Y / f
         up = top + half - y
         reach = half if up <= 0 else math.sqrt(max(half * half - up * up, 0))
-        for x in range(int(math.floor(cx - reach)), int(math.ceil(cx + reach))):
+        for X in range(int(math.floor((cx - reach) * f)), int(math.ceil((cx + reach) * f))):
             if cool:
-                pane = ((x + y) // 4 + (x - y) // 4) % len(GLASS)
-                lead = (x + y) % 4 == 0 or (x - y) % 4 == 0
-                art.put(x, y, LEAD if lead else GLASS[pane])
+                if f == 1:
+                    pane = ((X + Y) // 4 + (X - Y) // 4) % len(GLASS)
+                    lead = (X + Y) % 4 == 0 or (X - Y) % 4 == 0
+                else:
+                    pane = ((X + Y) // (4 * f) + (X - Y) // (4 * f)) % len(GLASS)
+                    lead = (X + Y) % (4 * f) == 0 or (X - Y) % (4 * f) == 0
+                art.put(X, Y, LEAD if lead else GLASS[pane])
             else:
-                d = abs(x + 0.5 - cx) / max(half, 1)
+                d = abs(X / f + 0.5 / f - cx) / max(half, 1)
                 k = 4 if d < 0.35 else 3 if d < 0.7 else 2
-                art.put(x, y, AMBER[max(k - (1 if y > top + tall * 0.7 else 0), 1)])
-        for side in (-1, 1):
-            art.put(int(cx + side * (reach + 0.5)), y, frame[1])
+                art.put(X, Y, AMBER[max(k - (1 if y > top + tall * 0.7 else 0), 1)])
+        if f == 1:
+            for side in (-1, 1):
+                art.put(int(cx + side * (reach + 0.5)), Y, frame[1])
+        else:
+            art.put(int(math.floor((cx - reach) * f)) - 1, Y, frame[1])
+            art.put(int(math.ceil((cx + reach) * f)), Y, frame[1])
     if not cool and wide >= 8:
-        for y in range(int(top + half * 0.6), int(top + tall)):
-            art.put(int(cx), y, AMBER[0])
-        for x in range(int(cx - half), int(cx + half)):
-            art.put(x, int(top + tall * 0.55), AMBER[0])
-    for x in range(int(cx - half - 2), int(cx + half + 2)):
-        art.put(x, int(top + tall), frame[6])
-        art.put(x, int(top + tall) + 1, frame[2])
+        for Y in range(int((top + half * 0.6) * f), int((top + tall) * f)):
+            art.put(int(cx * f), Y, AMBER[0])
+        for X in range(int((cx - half) * f), int((cx + half) * f)):
+            art.put(X, int(top + tall * 0.55) * f, AMBER[0])
+    for X in range(int((cx - half - 2) * f), int((cx + half + 2) * f)):
+        for s in range(f):
+            art.put(X, int(top + tall) * f + s, frame[6])
+            art.put(X, (int(top + tall) + 1) * f + s, frame[2] if f == 1 or s else frame[4])
 
 
-def finial(art: Art, cx, foot, tall: int = 3 * T):
+def finial(art: Art, cx, foot, tall: int = 3 * T, fine: int = 1):
     """A rod of gold on a roof's point, a ball at its foot."""
-    for y in range(int(foot - tall), int(foot)):
-        art.put(int(cx) - 1, y, GOLD[5])
-        art.put(int(cx), y, GOLD[3])
-    for dy in range(-3, 4):
-        for dx in range(-3, 4):
+    f = fine
+    c = int(cx)
+    for Y in range(int(foot - tall) * f, int(foot) * f):
+        if f == 1:
+            art.put(c - 1, Y, GOLD[5])
+            art.put(c, Y, GOLD[3])
+        else:
+            for s, k in enumerate((6, 5, 4, 2)):
+                art.put((c - 1) * f + s, Y, GOLD[k])
+    for DY in range(-3 * f, 3 * f + 1):
+        for DX in range(-3 * f, 3 * f + 1):
+            dx, dy = DX / f, DY / f
             if dx * dx + dy * dy <= 9:
-                art.put(int(cx) + dx, int(foot) - 2 + dy, GOLD[6] if dx + dy < -2 else GOLD[4] if dx + dy < 2 else GOLD[2])
+                art.put(c * f + DX, (int(foot) - 2) * f + DY, GOLD[6] if dx + dy < -2 else GOLD[4] if dx + dy < 2 else GOLD[2])
 
 
-def cone_rows(cx: float, eaves: float, wide: int):
+def cone_rows(cx: float, eaves: float, wide: int, fine: int = 1):
     """The rows of a tower's roof over a tower `wide` tiles across whose eaves' tiles lie on
-    the row that ends at y = `eaves`: a flared lip, then two up for one across to a point."""
+    the row that ends at y = `eaves`: a flared lip, then two up for one across to a point.
+    The rows are in the pixels of a picture `fine` times the draft's size."""
+    f = fine
     rows = []
     half = wide / 2 * T
-    for i in range(T):  # the eaves: a cell wider at either end, flaring out to its lip
-        y = eaves - 1 - i
-        reach = half + T + (T - i) * 0.9
-        rows.append((int(y), cx - reach, cx + reach - 1))
-    for i in range(wide * T):  # two up for one across
-        y = eaves - T - 1 - i
-        reach = half - i / 2 + 2
-        if reach < 0.5:
+    for I in range(T * f):  # the eaves: a cell wider at either end, flaring out to its lip
+        i = I / f
+        y = eaves * f - 1 - I
+        reach = (half + T + (T - i) * 0.9) * f
+        rows.append((int(y), cx * f - reach, cx * f + reach - 1))
+    for I in range(wide * T * f):  # two up for one across
+        i = I / f
+        y = (eaves - T) * f - 1 - I
+        reach = (half - i / 2 + 2) * f
+        if reach < 0.5 * f:
             break
-        rows.append((int(y), cx - reach, cx + reach - 1))
+        rows.append((int(y), cx * f - reach, cx * f + reach - 1))
     return rows
 
 
-def tower(wide: int, tall: int, back: bool = False, hang: bool = False, style: int = 0) -> Image.Image:
+def tower(wide: int, tall: int, back: bool = False, hang: bool = False, style: int = 0, fine: int = 1) -> Image.Image:
     """A round tower of a castle of Paradise, `wide` tiles across (an even number) and
     `tall` tiles to the foot of its head: dressed marble lit on its left and in shade on
     its right, a wider foot (or, hung on a wall, a foot that narrows to a point), bands
@@ -240,148 +272,209 @@ def tower(wide: int, tall: int, back: bool = False, hang: bool = False, style: i
     its middle, so it stands in the cell left of its middle line. `style` is what else
     it has, so two towers are not one tower twice: 1 a balcony on brackets with a door
     onto it, 2 a round window of gold tracery and gilded bands, 3 a climbing rose up
-    its sunny side and flowers under its windows, 4 a banner down its face."""
+    its sunny side and flowers under its windows, 4 a banner down its face. `fine` draws
+    it that many times the draft's size: joints, lead and seams a pixel wide, true
+    rounds, the rose leaf by leaf."""
     r = rng("heaven tower", wide, tall, back, hang)
+    f = fine
     stone = MARBLE_FAR if back else MARBLE
     blue = AZURE_FAR if back else AZURE
-    W = (wide + 5) * T
+    W0 = (wide + 5) * T
     roof_tiles_tall = wide + 1
-    H = (tall + 2 + roof_tiles_tall + 4) * T
-    art = Art(W, H)
-    cx = W / 2 + T / 2
+    H0 = (tall + 2 + roof_tiles_tall + 4) * T
+    art = Art(W0 * f, H0 * f)
+    cx = W0 / 2 + T / 2
     half = wide * T / 2
-    foot = H
+    foot = H0
     top = foot - tall * T  # the top of the shaft
 
     def shift(x):
         return round_shift((x + 0.5 - cx) / half)
 
-    ashlar(art, cx - half, top, cx + half, foot, stone, r, shift=shift)
+    def at(X):
+        """The draft's column a column of the picture is at."""
+        return X / f if f > 1 else X
+
+    def row(y, x0_, x1_, colour_of):
+        """A draft row from x0_ to x1_, `colour_of(x)` its colour at a draft column."""
+        for X in range(int(x0_) * f, int(x1_) * f):
+            for s in range(f):
+                art.put(X, int(y) * f + s, colour_of(at(X)))
+
+    ashlar(art, cx - half, top, cx + half, foot, stone, r, shift=shift, fine=f)
     if hang:
         # Hung on a wall: its foot narrows to a point in steps of stone.
-        for i in range(2 * T):
-            y = foot - 1 - i
+        for I in range(2 * T * f):
+            i = I / f
+            Y = foot * f - 1 - I
             reach = half * (i / (2 * T)) ** 0.7
-            for x in range(int(cx - half), int(cx + half)):
-                if abs(x + 0.5 - cx) > reach:
-                    art.a[y, x] = 0
+            for X in range(int(cx - half) * f, int(cx + half) * f):
+                if abs(at(X) + 0.5 / f - cx) > reach:
+                    art.a[Y, X] = 0
     else:
         # A wider foot: two courses standing proud, a lit moulding over them.
-        ashlar(art, cx - half - 5, foot - 2 * T, cx + half + 5, foot, stone, r, shift=shift, flat=0)
-        for x in range(int(cx - half - 6), int(cx + half + 6)):
-            art.put(x, foot - 2 * T - 1, tone(stone, 6 + shift(x)))
-            art.put(x, foot - 2 * T, tone(stone, 2 + shift(x)))
+        ashlar(art, cx - half - 5, foot - 2 * T, cx + half + 5, foot, stone, r, shift=shift, flat=0, fine=f)
+        row(foot - 2 * T - 1, cx - half - 6, cx + half + 6, lambda x: tone(stone, 6 + shift(x)))
+        row(foot - 2 * T, cx - half - 6, cx + half + 6, lambda x: tone(stone, 2 + shift(x)))
     # Bands of stone round it.
     for y in range(int(top + 5 * T), int(foot - 3 * T), 7 * T):
-        for x in range(int(cx - half - 1), int(cx + half + 1)):
-            art.put(x, y - 4 * T, tone(stone, 6 + shift(x)))
-            art.put(x, y - 4 * T + 1, tone(stone, 5 + shift(x)))
-            art.put(x, y - 4 * T + 2, tone(stone, 2 + shift(x)))
+        for d, k in enumerate((6, 5, 2)):
+            row(y - 4 * T + d, cx - half - 1, cx + half + 1, lambda x, k=k: tone(stone, k + shift(x)))
     # Windows, where the map's own lit cells are: every seven rows from four under the top.
-    for row in range(4, tall - 4, 7):
-        y = top + row * T - T // 2
+    for wrow in range(4, tall - 4, 7):
+        y = top + wrow * T - T // 2
         if wide >= 6 and not back:
             for dx in (-6, 6):
-                lit_window(art, cx + dx, y, 8, 30, stone)
+                lit_window(art, cx + dx, y, 8, 30, stone, fine=f)
         else:
-            lit_window(art, cx, y, 8 if not back else 6, 28 if not back else 22, stone)
+            lit_window(art, cx, y, 8 if not back else 6, 28 if not back else 22, stone, fine=f)
     if style == 1:
         # A balcony round it between two rows of windows, on brackets, and a door onto it.
         by = int(top + (9 if tall < 21 else 16) * T)
-        lit_window(art, cx, by - 30, 10, 29, stone)
+        lit_window(art, cx, by - 30, 10, 29, stone, fine=f)
         x0 = int(cx - half - 7)
-        for x in range(x0, int(cx + half + 7)):
+        for X in range(x0 * f, int(cx + half + 7) * f):
+            x = at(X)
+            xi = X // f
             sh = round_shift((x + 0.5 - cx) / (half + 7))
             for d, k in enumerate((6, 5, 5, 2)):
-                art.put(x, by + d, tone(stone, k + sh))
-            if (x - x0) % 6 < 3:
+                for s in range(f):
+                    art.put(X, (by + d) * f + s, tone(stone, k + sh))
+            if (xi - x0) % 6 < 3:
                 for d in range(3):
                     if abs(x + 0.5 - cx) < half + 7 - d * 2:
-                        art.put(x, by + 4 + d, tone(stone, 3 + sh))
-            art.put(x, by - 9, tone(stone, 6 + sh))
-            art.put(x, by - 8, tone(stone, 3 + sh))
-            if (x - x0) % 4 == 0:
-                for y in range(by - 7, by):
-                    art.put(x, y, tone(stone, 5 + sh))
+                        for s in range(f):
+                            art.put(X, (by + 4 + d) * f + s, tone(stone, 3 + sh))
+            for s in range(f):
+                art.put(X, (by - 9) * f + s, tone(stone, 6 + sh))
+                art.put(X, (by - 8) * f + s, tone(stone, 3 + sh))
+            if (xi - x0) % 4 == 0 and X % f == 0:
+                for Y in range((by - 7) * f, by * f):
+                    art.put(X, Y, tone(stone, 5 + sh))
+                    if f > 1:
+                        art.put(X + 1, Y, tone(stone, 3 + sh))
     elif style == 2:
         # A round window of gold tracery under its head, and its bands gilded.
         ry, rad = int(top + 2.3 * T), 8 if wide >= 6 else 6
-        _LAMPS.append((cx, ry - rad, 2 * rad, 2 * rad))
-        for dy in range(-rad - 2, rad + 3):
-            for dx in range(-rad - 2, rad + 3):
-                d = math.hypot(dx + 0.5, dy + 0.5)
+        if f == 1:
+            _LAMPS.append((cx, ry - rad, 2 * rad, 2 * rad))
+        for DY in range((-rad - 2) * f, (rad + 3) * f):
+            for DX in range((-rad - 2) * f, (rad + 3) * f):
+                dx, dy = DX / f, DY / f
+                d = math.hypot(dx + 0.5 / f, dy + 0.5 / f)
                 if d > rad + 2:
                     continue
-                spoke = abs(math.sin(math.atan2(dy + 0.5, dx + 0.5) * 4)) < 0.22
+                spoke = abs(math.sin(math.atan2(dy + 0.5 / f, dx + 0.5 / f) * 4)) < (0.22 if f == 1 else 0.14)
                 colour = GOLD[5 if dx + dy < 0 else 3] if d > rad or spoke or d < 2 else AMBER[4 if d < rad * 0.5 else 3 if d < rad * 0.8 else 2]
-                art.put(cx + dx, ry + dy, colour)
+                art.put(cx * f + DX, ry * f + DY, colour)
         for y in range(int(top + 5 * T), int(foot - 3 * T), 7 * T):
-            for x in range(int(cx - half - 1), int(cx + half + 1)):
-                art.put(x, y - 4 * T, GOLD[6 if x < cx - half * 0.3 else 4])
-                art.put(x, y - 4 * T + 1, GOLD[4 if x < cx else 2])
+            row(y - 4 * T, cx - half - 1, cx + half + 1, lambda x: GOLD[6 if x < cx - half * 0.3 else 4])
+            row(y - 4 * T + 1, cx - half - 1, cx + half + 1, lambda x: GOLD[4 if x < cx else 2])
     elif style == 3:
         # A climbing rose up its sunny side, and flowers in a box under every window.
         x = cx - half * 0.55
         for i in range(int((tall - 3) * T)):
             y = foot - 1 - i
             x = min(max(x + r.uniform(-0.5, 0.5), cx - half + 2), cx - 3)
-            art.put(x, y, VINE[1])
-            art.put(x + 1, y, VINE[3])
+            if f == 1:
+                art.put(x, y, VINE[1])
+                art.put(x + 1, y, VINE[3])
+            else:
+                for s in range(f):
+                    art.put(x * f + 1, y * f + s, VINE[1])
+                    art.put(x * f + 2, y * f + s, VINE[3])
             if i % 4 == 0:
                 side = r.choice([-1, 1])
                 for d in (1, 2, 3):
-                    art.put(x + side * d + (side > 0), y - d // 2, VINE[4 if d > 1 else 2])
+                    if f == 1:
+                        art.put(x + side * d + (side > 0), y - d // 2, VINE[4 if d > 1 else 2])
+                    else:
+                        lx, ly = (x + side * d + (side > 0)) * f, (y - d / 2) * f
+                        art.put(lx, ly, VINE[5 if d == 3 else 4 if d > 1 else 2])
+                        art.put(lx + side, ly, VINE[4 if d > 1 else 2])
+                        art.put(lx, ly + 1, VINE[3])
             if i % 11 == 5:
                 bx, by = int(x) + r.randint(-3, 3), y
-                for dx, dy, k in ((0, 0, 6), (-1, 0, 4), (1, 0, 4), (0, -1, 5), (0, 1, 3)):
-                    art.put(bx + dx, by + dy, BLOSSOM[k])
-        for row in range(4, tall - 4, 7):
+                if f == 1:
+                    for dx, dy, k in ((0, 0, 6), (-1, 0, 4), (1, 0, 4), (0, -1, 5), (0, 1, 3)):
+                        art.put(bx + dx, by + dy, BLOSSOM[k])
+                else:
+                    petals = ((0, -2, 5), (1, -2, 5), (-2, -1, 5), (-1, -1, 6), (2, -1, 4), (-2, 0, 4), (-1, 0, 6), (0, 0, 6), (1, 0, 5), (2, 0, 4), (-1, 1, 4), (0, 1, 3), (1, 1, 3), (0, -1, 6), (1, -1, 5))
+                    for dx, dy, k in petals:
+                        art.put(bx * f + dx, by * f + dy, BLOSSOM[k])
+        for wrow in range(4, tall - 4, 7):
             for wx in (cx - 6, cx + 6) if wide >= 6 else (cx,):
-                sill = int(top + row * T - T // 2 + (30 if wide >= 6 else 28)) + 2
+                sill = int(top + wrow * T - T // 2 + (30 if wide >= 6 else 28)) + 2
                 for dx in range(-6, 6):
-                    art.put(wx + dx, sill + 2, MARBLE[3])
-                    art.put(wx + dx, sill + 1, VINE[3 if dx % 2 else 2])
-                    art.put(wx + dx, sill, FLOWERS[(dx // 2) % 3][1 + (dx % 2)] if dx % 3 else VINE[4])
+                    box = (MARBLE[3], VINE[3 if dx % 2 else 2], FLOWERS[(dx // 2) % 3][1 + (dx % 2)] if dx % 3 else VINE[4])
+                    if f == 1:
+                        art.put(wx + dx, sill + 2, box[0])
+                        art.put(wx + dx, sill + 1, box[1])
+                        art.put(wx + dx, sill, box[2])
+                        continue
+                    for s in range(f):
+                        for t in range(f):
+                            X = int((wx + dx) * f) + s
+                            art.put(X, (sill + 2) * f + t, box[0])
+                            art.put(X, (sill + 1) * f + t, box[1])
+                            art.put(X, sill * f + t, box[2] if (s + t) % 2 == 0 or not dx % 3 else box[1])
     elif style == 4:
         # A banner down its face, under the first row of windows.
-        banner(art, cx, top + 6.2 * T, 14 if wide <= 4 else 18, 4 * T, r)
+        banner(art, cx, top + 6.2 * T, 14 if wide <= 4 else 18, 4 * T, r, fine=f)
     # The head: corbels with shadow between them, a walk a cell wider, battlements.
     head_top = top - 2 * T
-    for x in range(int(cx - half - T), int(cx + half + T)):
+    x_left = int(cx - half - T)
+    for X in range(x_left * f, int(cx + half + T) * f):
+        x = at(X)
+        xi = X // f
         off = (x + 0.5 - cx) / (half + T)
         sh = round_shift(off)
-        for y in range(int(head_top), int(top)):
-            k = 4 + sh + (1 if y == head_top else 0)
-            art.put(x, y, tone(stone, k))
+        for Y in range(int(head_top) * f, int(top) * f):
+            k = 4 + sh + (1 if Y == int(head_top) * f else 0)
+            art.put(X, Y, tone(stone, k))
         # Corbels: every eight pixels a bracket, dark between them.
-        for y in range(int(top), int(top) + 6):
-            proud = (x - int(cx - half - T)) % 8 < 4
+        for Y in range(int(top) * f, (int(top) + 6) * f):
+            y = at(Y)
+            proud = (xi - x_left) % 8 < 4
             if proud and abs(x + 0.5 - cx) < half + T - (y - top) * 1.6:
-                art.put(x, y, tone(stone, 3 + sh))
+                lit = 1 if f > 1 and (xi - x_left) % 8 == 0 and X % f == 0 else 0
+                art.put(X, Y, tone(stone, 3 + sh + lit))
             elif abs(x + 0.5 - cx) < half:
-                art.put(x, y, tone(stone, 1))
-    for x in range(int(cx - half - T), int(cx + half + T)):
+                art.put(X, Y, tone(stone, 1))
+    for X in range(x_left * f, int(cx + half + T) * f):
+        xi = X // f
         # Joints and a line of shadow under the walk's lip.
-        if (x - int(cx - half - T)) % 10 == 9:
-            for y in range(int(head_top) + 2, int(top)):
-                art.put(x, y, tone(stone, 2 + round_shift((x + 0.5 - cx) / (half + T))))
-        art.put(x, int(top) - 1, tone(stone, 2))
+        if (xi - x_left) % 10 == 9 and X % f == f - 1:
+            for Y in range((int(head_top) + 2) * f, int(top) * f):
+                art.put(X, Y, tone(stone, 2 + round_shift((at(X) + 0.5 - cx) / (half + T))))
+        for s in range(f):
+            art.put(X, (int(top) - 1) * f + s, tone(stone, 2))
     # The shadow the head casts on the shaft.
-    for y in range(int(top) + 6, int(top) + 12):
-        for x in range(int(cx - half), int(cx + half)):
-            if art.has(x, y) and (x + y) % 2 == 0 or y < top + 9:
-                art.put(x, y, tone(stone, 2 + shift(x)))
+    for Y in range((int(top) + 6) * f, (int(top) + 12) * f):
+        y = at(Y)
+        for X in range(int(cx - half) * f, int(cx + half) * f):
+            x = at(X)
+            if f == 1:
+                if art.has(X, Y) and (X + Y) % 2 == 0 or y < top + 9:
+                    art.put(X, Y, tone(stone, 2 + shift(x)))
+            elif y < top + 9:
+                art.put(X, Y, tone(stone, 2 + shift(x)))
+            elif art.has(X, Y) and y < top + 10.5:
+                art.put(X, Y, tone(stone, 3 + shift(x)))  # its edge, a softer shade than a chequer
     # The roof.
     eaves = head_top
-    rows = cone_rows(cx, eaves, wide)
-    shingles(art, rows, blue, cx)
-    lip = min(rows, key=lambda row: -row[0])
-    for x in range(int(lip[1]), int(lip[2]) + 1):
-        art.put(x, lip[0], GOLD[4] if x < cx else GOLD[2])
-        art.put(x, lip[0] - 1, GOLD[6] if x < cx else GOLD[3])
-    apex = min(row[0] for row in rows)
-    finial(art, cx, apex + 2)
-    art.outline(stone[0] if not back else stone[1])
+    rows = cone_rows(cx, eaves, wide, fine=f)
+    shingles(art, rows, blue, cx, fine=f)
+    lip = min(rows, key=lambda r_: -r_[0])
+    for X in range(int(lip[1]), int(lip[2]) + 1):
+        art.put(X, lip[0], GOLD[4] if X < cx * f else GOLD[2])
+        art.put(X, lip[0] - 1, GOLD[6] if X < cx * f else GOLD[3])
+        if f > 1:
+            art.put(X, lip[0] - 2, GOLD[5] if X < cx * f else GOLD[3])
+    apex = min(r_[0] for r_ in rows) / f
+    finial(art, cx, apex + 2, fine=f)
+    for _ in range(f):
+        art.outline(stone[0] if not back else stone[1])
     return art.image()
 
 
@@ -477,31 +570,39 @@ def pillar(rows: int, wide: int = 2, fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def banner(art: Art, cx, top, wide: int, tall: int, r):
-    """A banner of blue cloth on a rod of gold, the wings of the host on it, its foot cut to two points."""
-    for x in range(int(cx - wide / 2 - 2), int(cx + wide / 2 + 2)):
-        art.put(x, int(top), GOLD[5])
-        art.put(x, int(top) + 1, GOLD[2])
-    for i in range(tall):
-        y = int(top) + 2 + i
-        for x in range(int(cx - wide / 2), int(cx + wide / 2)):
-            off = (x + 0.5 - cx) / (wide / 2)
+def banner(art: Art, cx, top, wide: int, tall: int, r, fine: int = 1):
+    """A banner of blue cloth on a rod of gold, the wings of the host on it, its foot cut to
+    two points. At `fine` over one the folds and the wings are drawn finer."""
+    f = fine
+    for X in range(int(cx - wide / 2 - 2) * f, int(cx + wide / 2 + 2) * f):
+        for s in range(f):
+            art.put(X, int(top) * f + s, GOLD[6] if f > 1 and s == 0 else GOLD[5])
+            art.put(X, (int(top) + 1) * f + s, GOLD[2])
+    for I in range(tall * f):
+        i = I / f
+        Y = (int(top) + 2) * f + I
+        for X in range(int((cx - wide / 2) * f), int((cx + wide / 2) * f)):
+            off = (X / f + 0.5 / f - cx) / (wide / 2)
             notch = i > tall - 7 and abs(off) < (i - (tall - 7)) / 7
             if notch:
                 continue
             fold = math.sin(off * 4.2 + 0.6)
             k = 4 + (1 if fold > 0.5 else -1 if fold < -0.4 else 0)
             edge = abs(off) > 0.82
-            art.put(x, y, GOLD[4] if edge else tone(CLOTH, k))
+            art.put(X, Y, GOLD[4] if edge else tone(CLOTH, k))
     # The wings, in gold.
     wy = int(top) + tall // 3
+    c = int(cx)
     for dx in range(1, wide // 2 - 2):
         for dy in range(max(1, 5 - dx)):
-            art.put(int(cx) - dx, wy - dx // 2 + dy, GOLD[5])
-            art.put(int(cx) + dx - 1, wy - dx // 2 + dy, GOLD[4])
-    for dy in range(-1, 5):
-        art.put(int(cx) - 1, wy + dy, GOLD[6])
-        art.put(int(cx), wy + dy, GOLD[4])
+            for s in range(f):
+                for t in range(f):
+                    art.put((c - dx) * f + s, (wy - dx // 2 + dy) * f + t, GOLD[6] if f > 1 and t == 0 else GOLD[5])
+                    art.put((c + dx - 1) * f + s, (wy - dx // 2 + dy) * f + t, GOLD[4])
+    for DY in range(-f, 5 * f):
+        for s in range(f):
+            art.put((c - 1) * f + s, wy * f + DY, GOLD[6])
+            art.put(c * f + s, wy * f + DY, GOLD[4])
 
 
 def glass_window(art: Art, cx, top, foot, wide: int, r, warm: bool = True):
@@ -952,21 +1053,26 @@ def rotunda() -> Image.Image:
     return art.image()
 
 
-def angel(variant: int = 0) -> Image.Image:
+def angel(variant: int = 0, fine: int = 1) -> Image.Image:
     """One of the host in white marble on a block, seven times the hero's height: a long
     robe in folds, hands on a sword point down before it, a bowed head, great wings
-    raised, a ring of gold over its head. `variant` 1 faces the other way."""
+    raised, a ring of gold over its head. `variant` 1 faces the other way. `fine` draws
+    it that many times the draft's size: each feather's edge a pixel wide, the folds finer,
+    a ring of gold that is a true ring."""
     r = rng("heaven angel")
-    W, H = 12 * T, 17 * T
-    art = Art(W, H)
-    cx = W / 2
+    f = fine
+    W0, H0 = 12 * T, 17 * T
+    art = Art(W0 * f, H0 * f)
+    cx = W0 / 2
     # The block it stands on.
-    block_top = H - 3 * T
-    ashlar(art, cx - 2.6 * T, block_top, cx + 2.6 * T, H, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (2.6 * T)))
-    for x in range(int(cx - 2.9 * T), int(cx + 2.9 * T)):
-        art.put(x, int(block_top), MARBLE[6])
-        art.put(x, int(block_top) + 1, MARBLE[5])
-        art.put(x, int(block_top) + 2, MARBLE[2])
+    block_top = H0 - 3 * T
+    block = Art(W0, H0)
+    ashlar(block, cx - 2.6 * T, block_top, cx + 2.6 * T, H0, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (2.6 * T)))
+    art.a = np.kron(block.a, np.ones((f, f, 1), dtype=np.uint8)) if f > 1 else block.a
+    for X in range(int((cx - 2.9 * T) * f), int((cx + 2.9 * T) * f)):
+        for row, k in enumerate((6, 5, 2)):
+            for s in range(f):
+                art.put(X, (int(block_top) + row) * f + s, MARBLE[k])
     # The wings, behind it: each rises from the shoulder in an arch well over the head and
     # comes down outside it in three ranks of feathers, the longest reaching the knees.
     shoulder = block_top - 8.6 * T
@@ -979,60 +1085,76 @@ def angel(variant: int = 0) -> Image.Image:
                 root_y = shoulder - 6 - math.sin(t * math.pi * 0.62) * 62 * reach + rank * 9
                 length = (34 + math.sin(t * math.pi * 0.85) * 84) * drop
                 lean = 0.08 + t * 0.42  # the outer ones lean out
-                for i in range(int(length)):
+                for I in range(int(length * f)):
+                    i = I / f
                     x = root_x + side * i * lean
                     y = root_y + i
                     width = 6 if i < length - 6 else max(1, int(length - i))
-                    for d in range(width):
-                        k = 6 if d == (0 if side < 0 else width - 1) else 5 if i % 9 else 4
-                        art.put(x + d - width // 2, y, tone(MARBLE, k - shade_k - (1 if side > 0 else 0)))
+                    for D in range(width * f):
+                        d = D / f
+                        if f == 1:
+                            k = 6 if D == (0 if side < 0 else width - 1) else 5 if I % 9 else 4
+                        else:
+                            edge = D == (0 if side < 0 else width * f - 1)
+                            k = 6 if edge else 4 if I % (9 * f) < 1 else 5
+                        art.put((x - width // 2) * f + D, y * f, tone(MARBLE, k - shade_k - (1 if side > 0 else 0)))
         # The wing's arm: the bone the feathers hang from.
-        for a in range(0, 100):
-            t = a / 99
+        for a in range(0, 100 * f):
+            t = a / (100 * f - 1)
             x = cx + side * (9 + t * 58)
             y = shoulder - 6 - math.sin(t * math.pi * 0.62) * 62
-            for d in range(-3, 4):
-                art.put(x, y + d, tone(MARBLE, 6 if d < 0 else 4))
+            for D in range(-3 * f, 4 * f):
+                art.put(x * f, y * f + D, tone(MARBLE, 6 if D < 0 else 4 if f == 1 or D < 3 * f else 3))
     # The robe: a bell of folds from the shoulders to the block.
-    for y in range(int(shoulder), int(block_top)):
+    for Y in range(int(shoulder * f), int(block_top * f)):
+        y = Y / f
         t = (y - shoulder) / (block_top - shoulder)
         half = 15 + t * 22 + 3 * math.sin(t * 9)
-        for x in range(int(cx - half), int(cx + half)):
-            off = (x + 0.5 - cx) / half
+        for X in range(int((cx - half) * f), int((cx + half) * f)):
+            off = (X / f + 0.5 / f - cx) / half
             fold = math.sin(off * 9 + t * 2.5)
             k = 5 + round_shift(off) + (1 if fold > 0.6 else -1 if fold < -0.5 else 0)
-            art.put(x, y, tone(MARBLE, k))
+            if f > 1 and abs(fold) < 0.06:
+                k -= 1  # the line a fold turns on
+            art.put(X, Y, tone(MARBLE, k))
     # Arms down to the hilt, the sword point down.
     hilt = shoulder + 3.4 * T
     for side in (-1, 1):
-        for i in range(int(3.2 * T)):
-            t = i / (3.2 * T)
+        for I in range(int(3.2 * T * f)):
+            t = I / (3.2 * T * f)
             x = cx + side * (15 - t * 13)
-            y = shoulder + 6 + i
-            for d in range(-3, 4):
-                art.put(x + d, y, tone(MARBLE, 6 if d < -1 else 5 if d < 2 else 3))
-    for y in range(int(hilt), int(block_top - 4)):
-        art.put(cx - 1, y, MARBLE[6])
-        art.put(cx, y, MARBLE[4])
-        art.put(cx + 1, y, MARBLE[2])
-    for x in range(int(cx - 9), int(cx + 9)):
-        art.put(x, int(hilt), GOLD[5])
-        art.put(x, int(hilt) + 1, GOLD[3])
+            y = shoulder + 6 + I / f
+            for D in range(-3 * f, 4 * f):
+                d = D / f
+                art.put(x * f + D, y * f, tone(MARBLE, 6 if d < -1 else 5 if d < 2 else 3))
+    for Y in range(int(hilt * f), int((block_top - 4) * f)):
+        for s, k in enumerate((6, 4, 2) if f == 1 else (6, 6, 5, 4, 3, 2)):
+            art.put((cx - 1) * f + s, Y, MARBLE[k])
+    for X in range(int((cx - 9) * f), int((cx + 9) * f)):
+        for s in range(f):
+            art.put(X, int(hilt) * f + s, GOLD[6] if f > 1 and s == 0 else GOLD[5])
+            art.put(X, (int(hilt) + 1) * f + s, GOLD[3])
     # The head, bowed, and its hair; the ring over it.
     head_y = shoulder - 11
-    for dy in range(-10, 11):
-        for dx in range(-9, 10):
+    for DY in range(-10 * f, 11 * f):
+        for DX in range(-9 * f, 10 * f):
+            dx, dy = DX / f, DY / f
             if dx * dx + dy * dy <= 86:
-                art.put(cx + dx, head_y + dy, tone(MARBLE, 6 if dx + dy < -5 else 5 if dx < 4 else 3))
-    for dx in range(-10, 11):
-        for dy in range(-11, -2):
+                art.put(cx * f + DX, head_y * f + DY, tone(MARBLE, 6 if dx + dy < -5 else 5 if dx < 4 else 3))
+    for DX in range(-10 * f, 11 * f):
+        for DY in range(-11 * f, -2 * f):
+            dx, dy = DX / f, DY / f
             if dx * dx + (dy + 2) ** 2 <= 100 and dy < -4 + abs(dx) * 0.3:
-                art.put(cx + dx, head_y + dy, tone(MARBLE, 4 if dx < 2 else 2))
-    for a in range(720):
-        ang = a / 720 * 2 * math.pi
-        for rad, k in ((13, 6), (14, 4)):
-            art.put(cx + math.cos(ang) * rad, head_y - 19 + math.sin(ang) * rad * 0.36, GOLD[k])
-    art.outline(MARBLE[0])
+                k = 4 if dx < 2 else 2
+                if f > 1 and (DX + DY // 2) % 4 == 0:
+                    k -= 1  # a lock of its hair
+                art.put(cx * f + DX, head_y * f + DY, tone(MARBLE, k))
+    for a in range(720 * f):
+        ang = a / (720 * f) * 2 * math.pi
+        for rad, k in ((13, 6), (14, 4)) if f == 1 else ((12.8, 6), (13.4, 6), (14.0, 4), (14.6, 4)):
+            art.put((cx + math.cos(ang) * rad) * f, (head_y - 19 + math.sin(ang) * rad * 0.36) * f, GOLD[k])
+    for _ in range(f):
+        art.outline(MARBLE[0])
     image = art.image()
     return image.transpose(Image.FLIP_LEFT_RIGHT) if variant else image
 
@@ -1062,6 +1184,16 @@ def stones(x: int, y: int, light: int = 0) -> int:
     """The shade of a wall of cut stone at a pixel: courses eight high, a joint under and after each block."""
     joint = y % 8 == 7 or (x + (y // 8 % 2) * 6) % 12 == 11
     return (3 if joint else 6 if y % 8 == 0 else 5) + light
+
+
+def fine_stones(X: int, Y: int, f: int, light: int = 0) -> int:
+    """`tv2_heaven.stones` at `f` times the draft's size: the same courses and blocks, the
+    joint a pixel wide and the lit edge of each course a pixel high, as cut stone is."""
+    if f == 1:
+        return stones(X, Y, light)
+    course, block = 8 * f, 12 * f
+    joint = Y % course == course - 1 or (X + (Y // course % 2) * 6 * f) % block == block - 1
+    return (3 if joint else 6 if Y % course == 0 else 5) + light
 
 
 def portal(apart: int, rows: int, wide: int = 2) -> Image.Image:
@@ -1443,57 +1575,73 @@ def urn(fine: int = 1) -> Image.Image:
     return art.image()
 
 
-def fountain(frame: int) -> Image.Image:
+def fountain(frame: int, fine: int = 1) -> Image.Image:
     """A fountain of marble: a wide basin, a stem, a bowl, a smaller bowl, a jet out of the
     top, and water running over the lip of each bowl into the one under it, which the
-    frames move."""
+    frames move. `fine` draws it that many times the draft's size: bowls that curve, the
+    basin's joints a pixel wide, threads of water a pixel wide."""
     r = rng("heaven fountain")
-    W, H = 8 * T, 6 * T + 8
-    art = Art(W, H)
-    cx = W / 2
+    f = fine
+    W0, H0 = 8 * T, 6 * T + 8
+    art = Art(W0 * f, H0 * f)
+    cx = W0 / 2
 
     def bowl(y, half, deep):
-        for i in range(deep):
+        for I in range(deep * f):
+            i = I / f
             reach = half - (i / deep) ** 2 * half * 0.55
-            for x in range(int(cx - reach), int(cx + reach)):
-                art.put(x, y + i, tone(MARBLE, (6 if i == 0 else 5) + round_shift((x + 0.5 - cx) / reach)))
-        for x in range(int(cx - half + 2), int(cx + half - 2)):
-            art.put(x, y - 1, WATER[3 if (x + frame * 2) % 5 else 4])
+            for X in range(int((cx - reach) * f), int((cx + reach) * f)):
+                art.put(X, y * f + I, tone(MARBLE, (6 if I < f and (f == 1 or I == 0) else 5) + round_shift((X / f + 0.5 / f - cx) / reach)))
+        for X in range(int((cx - half + 2) * f), int((cx + half - 2) * f)):
+            x = X // f
+            for s in range(f):
+                art.put(X, (y - 1) * f + s, WATER[3 if (x + frame * 2) % 5 else 4])
 
     def falls(y0, y1, half):
         for side in (-1, 1):
             for k in range(3):
                 x = int(cx + side * (half - 1 - k * 3))
-                for y in range(int(y0), int(y1)):
+                for Y in range(int(y0) * f, int(y1) * f):
+                    y = Y // f
                     if (y + frame * 3 + k * 2) % 7 < 5:
-                        art.put(x, y, WATER[4 if (y + frame * 3) % 7 < 2 else 3 if k else 2], 235)
+                        colour = WATER[4 if (y + frame * 3) % 7 < 2 else 3 if k else 2]
+                        art.put(x * f, Y, colour, 235)
+                        if f > 1 and k == 0:
+                            art.put(x * f + 1, Y, WATER[2], 200)
 
-    for y in range(int(H - 14), H):  # the basin, of cut stone, with a lip
-        for x in range(int(cx - 60), int(cx + 60)):
-            art.put(x, y, tone(MARBLE, stones(x, y, round_shift((x + 0.5 - cx) / 60))))
-    for x in range(int(cx - 62), int(cx + 62)):
-        art.put(x, H - 16, MARBLE[6])
-        art.put(x, H - 15, GOLD[5] if x % 2 else MARBLE[5])
-        art.put(x, H - 14, MARBLE[3])
-        if abs(x - cx) < 58:
-            art.put(x, H - 17, WATER[3 if (x + frame * 2) % 6 else 4])
-    for y in range(int(H - 74), int(H - 16)):  # the stem
-        half = 5 + (2 if (H - y) % 20 < 4 else 0)
-        for x in range(int(cx - half), int(cx + half)):
-            art.put(x, y, tone(MARBLE, 5 + round_shift((x + 0.5 - cx) / half)))
-    falls(H - 50, H - 17, 34)
-    bowl(H - 52, 36, 9)
-    falls(H - 78, H - 53, 20)
-    bowl(H - 80, 22, 7)
-    for i in range(22):  # the jet, and what falls back from it
-        y = H - 82 - i
+    for Y in range(int(H0 - 14) * f, H0 * f):  # the basin, of cut stone, with a lip
+        for X in range(int(cx - 60) * f, int(cx + 60) * f):
+            art.put(X, Y, tone(MARBLE, fine_stones(X, Y, f, round_shift((X / f + 0.5 / f - cx) / 60)) if f > 1 else stones(X, Y, round_shift((X + 0.5 - cx) / 60))))
+    for X in range(int(cx - 62) * f, int(cx + 62) * f):
+        x = X // f
+        for s in range(f):
+            art.put(X, (H0 - 16) * f + s, MARBLE[6])
+            art.put(X, (H0 - 15) * f + s, GOLD[5] if (x % 2 if f == 1 else s == 0) else MARBLE[5] if f == 1 else GOLD[3])
+            art.put(X, (H0 - 14) * f + s, MARBLE[3])
+            if abs(x - cx) < 58:
+                art.put(X, (H0 - 17) * f + s, WATER[3 if (x + frame * 2) % 6 else 4])
+    for Y in range(int(H0 - 74) * f, int(H0 - 16) * f):  # the stem
+        y = Y // f
+        half = 5 + (2 if (H0 - y) % 20 < 4 else 0)
+        for X in range(int((cx - half) * f), int((cx + half) * f)):
+            art.put(X, Y, tone(MARBLE, 5 + round_shift((X / f + 0.5 / f - cx) / half)))
+    falls(H0 - 50, H0 - 17, 34)
+    bowl(H0 - 52, 36, 9)
+    falls(H0 - 78, H0 - 53, 20)
+    bowl(H0 - 80, 22, 7)
+    for I in range(22 * f):  # the jet, and what falls back from it
+        i = I / f
+        Y = (H0 - 82) * f - I
         spread = (i / 22) ** 2 * 6
         for side in (-1, 0, 1):
-            if (i + frame * 2 + side) % 4:
-                art.put(cx + side * spread, y, WATER[4 if side == 0 else 3], 240)
+            if (int(i) + frame * 2 + side) % 4:
+                art.put((cx + side * spread) * f, Y, WATER[4 if side == 0 else 3], 240)
     for _ in range(10):
-        art.put(cx + r.randint(-58, 58), H - 18 - (frame + r.randint(0, 2)) % 3, WATER[4], 220)
-    art.outline(MARBLE[0])
+        x, y = cx + r.randint(-58, 58), H0 - 18 - (frame + r.randint(0, 2)) % 3
+        for s in range(f):
+            art.put(x * f + s, y * f, WATER[4], 220)
+    for _ in range(f):
+        art.outline(MARBLE[0])
     return art.image()
 
 
@@ -1723,6 +1871,14 @@ FINE["heaven_bench"] = lambda: bench(DENSITY)
 FINE["heaven_urn"] = lambda: urn(DENSITY)
 for _rows, _wide in PILLARS:
     FINE[f"heaven_pillar_{_rows}x{_wide}"] = lambda a=(_rows, _wide): pillar(*a, fine=DENSITY)
+# The castles' towers.
+for _a in TOWERS:
+    FINE[tower_key(*_a)] = lambda a=_a: tower(*a, fine=DENSITY)
+# The host in marble, and the fountain that runs.
+for _v in range(2):
+    FINE[f"heaven_angel_{_v}"] = lambda v=_v: angel(v, DENSITY)
+for _frame in range(3):
+    FINE["heaven_fountain" + (f"{FRAME}{_frame}" if _frame else "")] = lambda s=_frame: fountain(s, DENSITY)
 PICTURE_KEYS = [key for key, *_ in PLAN]
 ENTRIES = [
     {"key": key, "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": order, "lit": lit, "tinted": False}
