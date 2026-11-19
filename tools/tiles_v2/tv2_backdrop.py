@@ -12,6 +12,8 @@ a shaft of light) does it in a few steps of see-through.
 """
 from __future__ import annotations
 
+import math
+
 import numpy as np
 from PIL import Image
 
@@ -115,50 +117,64 @@ def sky_image(width: int, height: int, top, low) -> Image.Image:
     return im
 
 
-def backdrop_clouds() -> Image.Image:
-    """Flat puffs, lit on top, a shade on the underside; the row repeats sideways."""
-    im = Image.new("RGBA", (BACKDROP_W, 160), (0, 0, 0, 0))
+def backdrop_clouds(fine: int = 1) -> Image.Image:
+    """Flat puffs, lit on top, a shade on the underside; the row repeats sideways. `fine`
+    draws them that many times the draft's size, each puff a true round."""
+    f = fine
+    W0 = BACKDROP_W
+    im = Image.new("RGBA", (W0 * f, 160 * f), (0, 0, 0, 0))
     px = im.load()
     r = rng("clouds")
     white, under = hexes("f2f7fb")[0], hexes("c9dcea")[0]
     # A few big banks and some small puffs between them.
     for big in (True, True, True, False, False, False, False, True, False):
-        cx, cy = r.randrange(BACKDROP_W), r.randint(34, 124)
+        cx, cy = r.randrange(W0), r.randint(34, 124)
         w = r.randint(64, 110) if big else r.randint(26, 48)
         size = (9, 17) if big else (5, 9)
         puffs = [(cx + r.randint(-w // 2, w // 2), cy + r.randint(-4, 4), r.randint(*size)) for _ in range(7 if big else 4)]
-        for y in range(cy - 26, cy + 18):
-            for x in range(cx - w, cx + w):
+        for Y in range((cy - 26) * f, (cy + 18) * f):
+            y = Y / f
+            for X in range((cx - w) * f, (cx + w) * f):
+                x = X / f
                 inside = any((x - px0) ** 2 + ((y - py0) * 1.6) ** 2 <= rr * rr for px0, py0, rr in puffs)
-                if inside and 0 <= y < im.height:
-                    px[x % BACKDROP_W, y] = (under if y > cy + (4 if big else 2) else white) + (255,)
+                if inside and 0 <= Y < im.height:
+                    px[X % (W0 * f), Y] = (under if y > cy + (4 if big else 2) else white) + (255,)
     return im
 
 
-def backdrop_stars() -> Image.Image:
-    """A night sky's stars on nothing: single pixels of three brightnesses and a few crosses."""
-    im = Image.new("RGBA", (BACKDROP_W, BACKDROP_H), (0, 0, 0, 0))
+def backdrop_stars(fine: int = 1) -> Image.Image:
+    """A night sky's stars on nothing: single pixels of three brightnesses and a few
+    crosses. `fine` puts them in the same places at that many times the draft's size: a
+    star is a pixel still, so they are finer; a cross has a bright heart."""
+    f = fine
+    im = Image.new("RGBA", (BACKDROP_W * f, BACKDROP_H * f), (0, 0, 0, 0))
     px = im.load()
     r = rng("stars")
     tints = hexes("ffffff", "cfe0ff", "fff0c8")
     for _ in range(520):
         x, y = r.randrange(BACKDROP_W), r.randrange(BACKDROP_H - 60)
-        px[x, y] = r.choice(tints) + (r.choice([110, 160, 220]),)
+        px[x * f, y * f] = r.choice(tints) + (r.choice([110, 160, 220]),)
     for _ in range(30):
         x, y = r.randrange(2, BACKDROP_W - 2), r.randrange(2, BACKDROP_H - 90)
-        px[x, y] = tints[0] + (255,)
+        X, Y = x * f, y * f
+        px[X, Y] = tints[0] + (255,)
         for dx, dy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
-            px[x + dx, y + dy] = tints[1] + (130,)
+            px[X + dx, Y + dy] = tints[1] + (130 if f == 1 else 170,)
+            if f > 1:
+                px[X + dx * 2, Y + dy * 2] = tints[1] + (90,)
     return im
 
 
-def disc(size: int, radius: float, colours, shadow=None) -> Image.Image:
-    """A round body: rings of colour from the rim in, and for the moon a darker side."""
-    im = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+def disc(size: int, radius: float, colours, shadow=None, fine: int = 1) -> Image.Image:
+    """A round body: rings of colour from the rim in, and for the moon a darker side.
+    `fine` draws it that many times the draft's size, its rings true rounds."""
+    f = fine
+    im = Image.new("RGBA", (size * f, size * f), (0, 0, 0, 0))
     px = im.load()
     c = (size - 1) / 2
-    for y in range(size):
-        for x in range(size):
+    for Y in range(size * f):
+        for X in range(size * f):
+            x, y = (X + 0.5) / f - 0.5, (Y + 0.5) / f - 0.5
             d = ((x - c) ** 2 + (y - c) ** 2) ** 0.5
             if d > radius:
                 continue
@@ -166,21 +182,25 @@ def disc(size: int, radius: float, colours, shadow=None) -> Image.Image:
             colour = colours[ring]
             if shadow and ((x - c - radius * 0.55) ** 2 + (y - c + radius * 0.25) ** 2) ** 0.5 < radius * 0.95:
                 colour = shadow
-            px[x, y] = colour + (255,)
+            px[X, Y] = colour + (255,)
     return im
 
 
-def backdrop_sun() -> Image.Image:
-    return disc(32, 13.2, hexes("f6c453", "ffd76e", "ffe9a0", "fff7d6"))
+def backdrop_sun(fine: int = 1) -> Image.Image:
+    return disc(32, 13.2, hexes("f6c453", "ffd76e", "ffe9a0", "fff7d6"), fine=fine)
 
 
-def backdrop_moon() -> Image.Image:
-    im = disc(32, 11.2, hexes("c9d2e4", "e9edf5", "f6f8fc"), shadow=hexes("9aa6c2")[0])
+def backdrop_moon(fine: int = 1) -> Image.Image:
+    f = fine
+    im = disc(32, 11.2, hexes("c9d2e4", "e9edf5", "f6f8fc"), shadow=hexes("9aa6c2")[0], fine=f)
     px = im.load()
-    crater = hexes("b4bfd6")[0] + (255,)
+    crater, rim = hexes("b4bfd6", "dde3ef")
     for x, y in ((10, 12), (12, 20), (8, 16)):
-        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
-            px[x + dx, y + dy] = crater
+        for dx in range(2 * f):
+            for dy in range(2 * f):
+                if f > 1 and (dx, dy) in ((0, 0), (2 * f - 1, 0), (0, 2 * f - 1), (2 * f - 1, 2 * f - 1)):
+                    continue  # a round crater
+                px[x * f + dx, y * f + dy] = (rim if f > 1 and dy == 2 * f - 1 else crater) + (255,)
     return im
 
 
@@ -215,66 +235,69 @@ CAVE_SIZE = 128
 CAVE_TOP_H = 32
 
 
-def cave_rock(width: int, height: int, seed: str, cells: int) -> np.ndarray:
+def cave_rock(width: int, height: int, seed: str, cells: int, fine: int = 1) -> np.ndarray:
     """Big rough boulders with dark cracks between them, as ramp indices; wraps
-    both ways so the picture tiles."""
+    both ways so the picture tiles. `fine` makes it that many times the draft's size:
+    the same boulders, the cracks between them narrower, the grit on them finer."""
+    f = fine
     r = rng("cave", seed)
     points = [(r.uniform(0, width), r.uniform(0, height), r.choice((1, 2, 2, 3))) for _ in range(cells)]
-
-    def wrapped(ax, ay, bx, by):
-        dx, dy = abs(ax - bx), abs(ay - by)
-        return (min(dx, width - dx) ** 2 + min(dy, height - dy) ** 2) ** 0.5
-
-    owner = np.zeros((height, width), dtype=np.int16)
-    crack = np.zeros((height, width), dtype=bool)
-    for y in range(height):
-        for x in range(width):
-            d = sorted((wrapped(x + 0.5, y + 0.5, px0, py0), i) for i, (px0, py0, _) in enumerate(points))
-            owner[y, x] = d[0][1]
-            crack[y, x] = d[1][0] - d[0][0] < 1.5
-    t = np.zeros((height, width), dtype=np.int16)
-    for y in range(height):
-        for x in range(width):
-            if crack[y, x]:
-                continue
-            v = points[owner[y, x]][2]
-            if crack[(y - 2) % height, x] or crack[y, (x - 2) % width]:
-                v += 1
-            elif crack[(y + 2) % height, x] or crack[y, (x + 2) % width]:
-                v -= 1
-            t[y, x] = max(1, min(4, v))
+    W, H = width * f, height * f
+    ys, xs = np.mgrid[0:H, 0:W]
+    xs, ys = (xs + 0.5) / f, (ys + 0.5) / f
+    best = np.full((H, W), 1e9)
+    second = np.full((H, W), 1e9)
+    owner = np.zeros((H, W), dtype=np.int16)
+    for i, (px0, py0, _) in enumerate(points):
+        dx, dy = np.abs(xs - px0), np.abs(ys - py0)
+        d = np.sqrt(np.minimum(dx, width - dx) ** 2 + np.minimum(dy, height - dy) ** 2)
+        nearer = d < best
+        second = np.where(nearer, best, np.minimum(second, d))
+        owner = np.where(nearer, i, owner)
+        best = np.minimum(best, d)
+    crack = second - best < (1.5 if f == 1 else 1.0)
+    shade = np.array([p[2] for p in points], dtype=np.int16)[owner]
+    reach = 2 * f
+    above = np.roll(crack, reach, axis=0) | np.roll(crack, reach, axis=1)  # a crack two draft pixels up or to the left
+    below = np.roll(crack, -reach, axis=0) | np.roll(crack, -reach, axis=1)
+    t = np.where(above, shade + 1, np.where(below, shade - 1, shade))
+    t = np.clip(t, 1, 4).astype(np.int16)
+    t[crack] = 0
     for _ in range(width * height // 90):
         x, y = r.randrange(width), r.randrange(height)
-        if t[y, x] > 1:
-            t[y, x] -= 1
+        X, Y = x * f, y * f
+        if t[Y, X] > 1:
+            t[Y, X] -= 1
     return t
 
 
-def backdrop_cave(region: dict) -> Image.Image:
+def backdrop_cave(region: dict, fine: int = 1) -> Image.Image:
     """The rock behind a region's caves: dark, so a wall in front of it still reads; tiles both ways."""
+    f = fine
     CAVE_RAMP = hexes(*region["cave"].split())
-    t = cave_rock(CAVE_SIZE, CAVE_SIZE, "body " + region["key"], 26)
-    rgba = np.zeros((CAVE_SIZE, CAVE_SIZE, 4), dtype=np.uint8)
+    t = cave_rock(CAVE_SIZE, CAVE_SIZE, "body " + region["key"], 26, f)
+    rgba = np.zeros((CAVE_SIZE * f, CAVE_SIZE * f, 4), dtype=np.uint8)
     rgba[..., :3] = np.array(CAVE_RAMP, dtype=np.uint8)[t]
     rgba[..., 3] = 255
     return Image.fromarray(rgba, "RGBA")
 
 
-def backdrop_cave_top(region: dict) -> Image.Image:
+def backdrop_cave_top(region: dict, fine: int = 1) -> Image.Image:
     """The top of the cave rock, where it meets the sky backdrop in an opening: a
-    ragged edge; repeats sideways."""
+    ragged edge; repeats sideways. `fine` asks the edge at every half pixel."""
+    f = fine
     CAVE_RAMP = hexes(*region["cave"].split())
-    t = cave_rock(CAVE_SIZE, CAVE_TOP_H, "top " + region["key"], 9)
-    xs = np.arange(CAVE_SIZE)
+    t = cave_rock(CAVE_SIZE, CAVE_TOP_H, "top " + region["key"], 9, f)
+    xs = np.arange(CAVE_SIZE * f) / f
     edge = 9 + periodic(xs, [(2, 3.5), (5, 2.0), (11, 1.2)], "cave top", CAVE_SIZE)
-    rgba = np.zeros((CAVE_TOP_H, CAVE_SIZE, 4), dtype=np.uint8)
+    rgba = np.zeros((CAVE_TOP_H * f, CAVE_SIZE * f, 4), dtype=np.uint8)
     rgba[..., :3] = np.array(CAVE_RAMP, dtype=np.uint8)[t]
-    for x in range(CAVE_SIZE):
-        top = int(round(CAVE_TOP_H - 14 - edge[x] * 0.9))
-        rgba[max(top, 0) :, x, 3] = 255
-        if 0 <= top < CAVE_TOP_H:
-            rgba[top, x, :3] = CAVE_RAMP[4]
-    rgba[CAVE_TOP_H - 1, :, :3] = CAVE_RAMP[0]
+    for X in range(CAVE_SIZE * f):
+        top = int(round((CAVE_TOP_H - 14 - edge[X] * 0.9) * f))
+        rgba[max(top, 0) :, X, 3] = 255
+        if 0 <= top < CAVE_TOP_H * f:
+            rgba[top, X, :3] = CAVE_RAMP[4]
+    rgba[CAVE_TOP_H * f - 1, :, :3] = CAVE_RAMP[0]
     return Image.fromarray(rgba, "RGBA")
 
 
@@ -382,11 +405,15 @@ def backdrop_far(region: dict) -> Image.Image:
     return Image.fromarray(a, "RGBA")
 
 
-def backdrop_isles(name: str, height: int, count: int, wide, colours, falls: float, built: float) -> Image.Image:
+def backdrop_isles(name: str, height: int, count: int, wide, colours, falls: float, built: float, fine: int = 1) -> Image.Image:
     """Islands hanging in the sky far off, on nothing: a flat top with a lit rim, a body that
     narrows to a ragged point, on some a row of columns, from some a thread of falling
-    water. `colours`: rim, top, body, under, water. The row repeats sideways."""
-    im = Image.new("RGBA", (BACKDROP_W, height), (0, 0, 0, 0))
+    water. `colours`: rim, top, body, under, water. The row repeats sideways. `fine` draws
+    them that many times the draft's size: a rim a pixel high, a ragged point that is
+    smooth between its jags, a thread of water a pixel wide."""
+    f = fine
+    W = BACKDROP_W * f
+    im = Image.new("RGBA", (W, height * f), (0, 0, 0, 0))
     px = im.load()
     r = rng("isles", name)
     rim, top, body, under, water = colours
@@ -398,40 +425,49 @@ def backdrop_isles(name: str, height: int, count: int, wide, colours, falls: flo
         deep = int(half * r.uniform(0.95, 1.4))
         jag = [r.uniform(0.75, 1.15) for _ in range(half * 2 + 1)]
         foot = cy
-        for dx in range(-half, half + 1):
+        for DX in range(-half * f, half * f + 1):
+            dx = DX / f
+            n = int(math.floor(dx)) + half
+            j = jag[n] if f == 1 or n >= 2 * half else jag[n] + (jag[n + 1] - jag[n]) * (dx - math.floor(dx))
             t = abs(dx) / (half + 0.5)
-            down = max(1, int(deep * (1 - t**1.4) * jag[dx + half]))
-            x = (cx + dx) % BACKDROP_W
+            down = max(1, int(deep * (1 - t**1.4) * j)) * f if f == 1 else max(f, int(deep * f * (1 - t**1.4) * j))
+            x = (cx * f + DX) % W
             for k in range(down):
-                colour = rim if k == 0 else top if k < 3 else under if k > down * 0.62 else body
-                px[x, cy + k] = colour + (255,)
-            if dx == 0:
-                foot = cy + down
+                kd = k / f
+                colour = rim if k == 0 else top if kd < 3 else under if kd > down / f * 0.62 else body
+                px[x, cy * f + k] = colour + (255,)
+            if DX == 0:
+                foot = cy + down / f
         if r.random() < built and half >= 18:
             # A row of columns under a lintel, off the middle.
             first = cx + r.randint(-half // 2, 0)
             for k in range(5):
-                for y in range(cy - 9, cy):
-                    px[(first + k * 4) % BACKDROP_W, y] = body + (255,)
-            for x in range(first - 1, first + 18):
-                px[x % BACKDROP_W, cy - 10] = top + (255,)
+                for Y in range((cy - 9) * f, cy * f):
+                    for s in range(f):
+                        px[((first + k * 4) * f + s) % W, Y] = (top if f > 1 and s == 0 else body) + (255,)
+            for X in range((first - 1) * f, (first + 18) * f):
+                for s in range(f):
+                    px[X % W, (cy - 10) * f + s] = top + (255,)
         if r.random() < falls:
             x = (cx + r.randint(-half // 3, half // 3)) % BACKDROP_W
             long = r.randint(50, 120)
-            for k in range(long):
-                y = foot + k - 2
-                if 0 <= y < height:
-                    px[x, y] = water + (max(0, 220 - 200 * k // long),)
+            for K in range(long * f):
+                k = K // f if f == 1 else K / f
+                y = foot * f + K - 2 * f
+                if 0 <= y < height * f:
+                    px[x * f, int(y)] = water + (max(0, 220 - int(200 * k) // long),)
     return im
 
 
-def backdrop_rays() -> Image.Image:
+def backdrop_rays(fine: int = 1) -> Image.Image:
     """Shafts of light slanting down from the left: bands of pale gold in three strengths,
-    stepped at their edges, fading out at the top and the foot. Repeats sideways."""
+    stepped at their edges, fading out at the top and the foot. Repeats sideways. `fine`
+    asks the same light at every half pixel, so its slant is smooth."""
+    f = fine
     width, height = BACKDROP_W, 1024
-    ys, xs = np.mgrid[0:height, 0:width]
+    ys, xs = np.mgrid[0 : height * f, 0 : width * f] / f
     along = (xs + ys * 0.42) % width
-    strength = np.zeros((height, width))
+    strength = np.zeros(xs.shape)
     r = rng("rays")
     for _ in range(7):
         centre, half, power = r.uniform(0, width), r.uniform(10, 34), r.uniform(0.5, 1.0)
@@ -439,23 +475,27 @@ def backdrop_rays() -> Image.Image:
         strength = np.maximum(strength, power * np.clip(1 - away / half, 0, 1))
     fade = np.clip(np.minimum(ys / 220.0, (height - ys) / 300.0), 0, 1)
     level = strength * fade * 3.0
-    a = np.zeros((height, width, 4), dtype=np.uint8)
+    a = np.zeros((height * f, width * f, 4), dtype=np.uint8)
     a[:, :, :3] = (255, 246, 204)
     a[:, :, 3] = np.round(stepped(level / 3.0, 6) * 39)
     return Image.fromarray(a, "RGBA")
 
 
-def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: bool) -> Image.Image:
+def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: bool, fine: int = 1) -> Image.Image:
     """A bank of cloud that repeats sideways: rows of round heads, back to front (`rows`:
     how many heads, the line their middles lie on, their sizes, their colours lit and in
     shade). With `solid_under` it is a sea, filled under the heads and thinning to nothing
-    at its foot in steps of see-through; without, the heads float apart."""
-    im = Image.new("RGBA", (BACKDROP_W, height), (0, 0, 0, 0))
+    at its foot in steps of see-through; without, the heads float apart. `fine` draws it
+    that many times the draft's size: each head a true round."""
+    f = fine
+    W = BACKDROP_W * f
+    im = Image.new("RGBA", (W, height * f), (0, 0, 0, 0))
     px = im.load()
     r = rng("cloud band", name)
     for count, line, sizes, lit, shade_ in rows:
         heads = [(r.randrange(BACKDROP_W), line + r.randint(-10, 10), r.randint(*sizes)) for _ in range(count)]
-        for x in range(BACKDROP_W):
+        for X in range(W):
+            x = X / f
             crest = None
             for hx, hy, rad in heads:
                 dx = min(abs(x - hx), BACKDROP_W - abs(x - hx))
@@ -467,16 +507,17 @@ def backdrop_cloud_band(name: str, height: int, rows, alpha: int, solid_under: b
                 if not solid_under:
                     continue
                 crest = line + 14  # between two heads the sea lies flat, with no lit rim
-            crest = int(crest)
+            crest = int(crest) if f == 1 else crest
             floor = height if solid_under else int(crest + max(sizes) * 0.55)
-            for y in range(max(crest, 0), min(floor, height)):
+            for Y in range(max(int(math.ceil(crest * f)) if f > 1 else crest, 0), min(floor * f, height * f)):
+                y = Y / f
                 colour = lit if y - crest < 4 and not flat else shade_
                 show = alpha
                 if solid_under:
                     show = int(round(alpha * float(stepped((height - y) / 70.0))))
                 elif floor - y < 3:
-                    show = alpha * (floor - y) // 4
-                px[x, y] = colour + (show,)
+                    show = int(alpha * (floor - y)) // 4
+                px[X, Y] = colour + (show,)
     return im
 
 
@@ -493,14 +534,18 @@ def _stamp(canvas: np.ndarray, mask: np.ndarray, x0: int, y0: int, colours: np.n
     canvas[top:bottom, xs] = block
 
 
-def _mass(r, wide: int, tall: int, flat_top: int = 0) -> np.ndarray:
+def _mass(r, wide: int, tall: int, flat_top: int = 0, fine: int = 1) -> np.ndarray:
     """A heap of cloud as a patch of tones: 1 its lit crown, 2 its body, 3 the shade of
     its underside. Round heads piled highest in the middle on a level foot; with
-    `flat_top` the heap is cut level that many pixels over its foot, to be built on."""
+    `flat_top` the heap is cut level that many pixels over its foot, to be built on.
+    `fine` makes the patch that many times the draft's size, each head a true round."""
+    f = fine
     pad = int(wide * 0.22) + 2
     h, w = tall + pad, wide + 2 * pad
-    ys, xs = np.mgrid[0:h, 0:w]
-    inside = np.zeros((h, w), dtype=bool)
+    ys, xs = np.mgrid[0 : h * f, 0 : w * f]
+    if f > 1:
+        ys, xs = (ys + 0.5) / f - 0.5, (xs + 0.5) / f - 0.5
+    inside = np.zeros(ys.shape, dtype=bool)
     middle, foot = w / 2, h - 1
     for _ in range(max(6, wide // 11)):
         hx = middle + r.uniform(-wide / 2, wide / 2)
@@ -510,10 +555,10 @@ def _mass(r, wide: int, tall: int, flat_top: int = 0) -> np.ndarray:
         inside |= (xs - hx) ** 2 + ((ys - hy) * 1.15) ** 2 <= rad * rad
     inside |= ((xs - middle) / (wide / 2)) ** 2 + ((ys - foot) / (tall * 0.28)) ** 2 <= 1
     if flat_top:
-        inside[: h - flat_top] = False
-    crest = np.where(inside.any(axis=0), inside.argmax(axis=0), h)
-    depth = ys - crest[None, :]
-    tones = np.zeros((h, w), dtype=np.uint8)
+        inside[: (h - flat_top) * f] = False
+    crest = np.where(inside.any(axis=0), inside.argmax(axis=0), h * f)
+    depth = (np.mgrid[0 : h * f, 0 : w * f][0] - crest[None, :]) / f
+    tones = np.zeros(ys.shape, dtype=np.uint8)
     tones[inside] = 2
     tones[inside & (depth < 5)] = 1
     # The shade of its underside: a band along its foot, its upper edge a slow wave.
@@ -529,11 +574,13 @@ def _fade_foot(a: np.ndarray, rows: int):
     a[:, :, 3] = np.round(a[:, :, 3] * stepped((h - ys) / float(rows), 12))
 
 
-def backdrop_heaven_clouds() -> Image.Image:
+def backdrop_heaven_clouds(fine: int = 1) -> Image.Image:
     """A country of cloud far off: towers of it one behind another, the further the paler,
-    with the sky between them. Repeats sideways; thins out toward the Earth."""
+    with the sky between them. Repeats sideways; thins out toward the Earth. `fine` heaps
+    it at that many times the draft's size."""
+    f = fine
     width, height = BACKDROP_W, 1280
-    canvas = np.zeros((height, width), dtype=np.uint8)
+    canvas = np.zeros((height * f, width * f), dtype=np.uint8)
     r = rng("heaven clouds")
     palette = np.array([(0, 0, 0)] + list(hexes("b9cfee", "a7c1e8", "9ab5e0", "d0e0f5", "bcd1ef", "abc3e6", "e9f1fb", "d3e2f5", "bfd2ee")), dtype=np.uint8)
     masses = []
@@ -541,70 +588,86 @@ def backdrop_heaven_clouds() -> Image.Image:
         for _ in range((10, 9, 7)[depth]):
             masses.append((depth, r.randrange(width), r.randint(170 + depth * 60, height - 40), r.randint(150, 250) + depth * 40, r.randint(90, 170) + depth * 30))
     for depth, cx, foot, wide, tall in sorted(masses, key=lambda m: (m[0], m[2])):
-        tones = _mass(r, wide, tall)
+        tones = _mass(r, wide, tall, fine=f)
         colours = np.array([0, 1 + depth * 3, 2 + depth * 3, 3 + depth * 3], dtype=np.uint8)
-        _stamp(canvas, tones, cx - tones.shape[1] // 2, foot - tones.shape[0], colours)
-    a = np.zeros((height, width, 4), dtype=np.uint8)
+        _stamp(canvas, tones, cx * f - tones.shape[1] // 2, foot * f - tones.shape[0], colours)
+    a = np.zeros((height * f, width * f, 4), dtype=np.uint8)
     a[:, :, :3] = palette[canvas]
     a[:, :, 3] = np.where(canvas > 0, 255, 0)
-    _fade_foot(a, 300)
+    _fade_foot(a, 300 * f)
     return Image.fromarray(a, "RGBA")
 
 
-def _building(r, kind: str, wide: int, tall: int) -> np.ndarray:
-    """One building of the far castles as a patch of tones: 1 lit, 2 its body, 3 a dark opening, 4 a roof."""
+def _building(r, kind: str, wide: int, tall: int, fine: int = 1) -> np.ndarray:
+    """One building of the far castles as a patch of tones: 1 lit, 2 its body, 3 a dark
+    opening, 4 a roof. `fine` makes it that many times the draft's size: its lit edge and
+    its openings a pixel finer, its spires and roofs smooth to their points."""
+    f = fine
     cap = wide // 2 + 6
     h, w = tall + 84, wide + 4
-    t = np.zeros((h, w), dtype=np.uint8)
+    t = np.zeros((h * f, w * f), dtype=np.uint8)
+
+    def fill(y0, y1, x0_, x1_, v):
+        t[int(y0 * f) : int(y1 * f), int(x0_ * f) : int(x1_ * f)] = v
+
+    def taper(row0, steps, middle, reach_of, v_of):
+        """A roof up from row0: `steps` draft rows, each as wide as reach_of(k) either side."""
+        for K in range(steps * f):
+            k = K / f
+            reach = reach_of(k)
+            v = v_of(int(k))
+            Y = row0 * f - 1 - K
+            if f == 1:
+                t[Y, int(round(middle - reach)) : int(round(middle + reach)) + 1] = v
+            else:
+                t[Y, int(round((middle - reach) * f)) : int(round((middle + reach) * f)) + f] = v
+
     x0, x1, foot = 2, 2 + wide, h
     top = foot - tall
+    lit = 2 if f == 1 else 1.5
     if kind == "tower":
-        t[top:foot, x0:x1] = 2
-        t[top:foot, x0 : x0 + 2] = 1
+        fill(top, foot, x0, x1, 2)
+        fill(top, foot, x0, x0 + lit, 1)
         for y in range(top + 8, foot - 10, 14):
-            t[y : y + 6, (x0 + x1) // 2 - 1 : (x0 + x1) // 2 + 1] = 3
-        for k in range(cap):  # a spire
-            half = max((wide / 2) * (1 - k / cap), 0.6)
-            t[top - 1 - k, int(round((x0 + x1) / 2 - half)) : int(round((x0 + x1) / 2 + half)) + 1] = 4 if k < cap - 3 else 1
+            fill(y, y + 6, (x0 + x1) // 2 - 1, (x0 + x1) // 2 + 1, 3)
+        taper(top, cap, (x0 + x1) / 2, lambda k: max((wide / 2) * (1 - k / cap), 0.6), lambda k: 4 if k < cap - 3 else 1)
     elif kind == "keep":
         # A great block under battlements, a taller tower with a pointed roof out of its middle.
-        t[top:foot, x0:x1] = 2
-        t[top:foot, x0 : x0 + 2] = 1
+        fill(top, foot, x0, x1, 2)
+        fill(top, foot, x0, x0 + lit, 1)
         for x in range(x0, x1, 6):
-            t[top - 4 : top, x : x + 3] = 2
+            fill(top - 4, top, x, x + 3, 2)
         for x in range(x0 + 5, x1 - 4, 9):
-            t[top + 10 : foot - 6, x : x + 3] = 3
-            t[top + 9, x + 1] = 3
+            fill(top + 10, foot - 6, x, x + 3, 3)
+            fill(top + 9, top + 10, x + 1, x + 2, 3)
         middle, half = (x0 + x1) // 2, wide // 6 + 2
-        t[top - 30 : top, middle - half : middle + half] = 2
-        t[top - 30 : top, middle - half : middle - half + 2] = 1
-        for k in range(half * 2 + 4):
-            reach = max(half * (1 - k / (half * 2 + 4)), 0.6)
-            t[top - 31 - k, int(round(middle - reach)) : int(round(middle + reach)) + 1] = 4
+        fill(top - 30, top, middle - half, middle + half, 2)
+        fill(top - 30, top, middle - half, middle - half + lit, 1)
+        taper(top - 30, half * 2 + 4, middle, lambda k: max(half * (1 - k / (half * 2 + 4)), 0.6), lambda k: 4)
     elif kind == "wall":
         # A curtain wall on round arches, battlements along it.
-        t[top : top + 8, x0 - 1 : x1 + 1] = 2
-        t[top, x0 - 1 : x1 + 1] = 1
+        fill(top, top + 8, x0 - 1, x1 + 1, 2)
+        fill(top, top + 1, x0 - 1, x1 + 1, 1)
         for x in range(x0, x1, 6):
-            t[top - 4 : top, x : x + 3] = 2
+            fill(top - 4, top, x, x + 3, 2)
         for x in range(x0, x1 - 1, 12):
-            t[top + 8 : foot, x : x + 4] = 2
-            t[top + 8 : foot, x] = 1
+            fill(top + 8, foot, x, x + 4, 2)
+            fill(top + 8, foot, x, x + (1 if f == 1 else 0.5), 1)
     else:  # a slender tower
-        t[top:foot, x0 + wide // 2 - 3 : x0 + wide // 2 + 3] = 2
-        t[top:foot, x0 + wide // 2 - 3] = 1
-        for k in range(12):
-            reach = max(3.5 * (1 - k / 12), 0.6)
-            t[top - 1 - k, int(round(x0 + wide / 2 - reach)) : int(round(x0 + wide / 2 + reach)) + 1] = 4
+        fill(top, foot, x0 + wide // 2 - 3, x0 + wide // 2 + 3, 2)
+        fill(top, foot, x0 + wide // 2 - 3, x0 + wide // 2 - 3 + (1 if f == 1 else 0.5), 1)
+        taper(top, 12, x0 + wide / 2, lambda k: max(3.5 * (1 - k / 12), 0.6), lambda k: 4)
     return t
 
 
-def backdrop_heaven_city() -> Image.Image:
+def backdrop_heaven_city(fine: int = 1) -> Image.Image:
     """Castles far off, on banks of cloud one over another: towers under pointed roofs of
     blue, keeps, walls on arches, a thread of water falling from a bank's edge here and
-    there. Pale: they are a long way off. Repeats sideways."""
+    there. Pale: they are a long way off. Repeats sideways. `fine` builds them at that
+    many times the draft's size."""
+    f = fine
     width, height = BACKDROP_W, 1344
-    canvas = np.zeros((height, width), dtype=np.uint8)
+    canvas = np.zeros((height * f, width * f), dtype=np.uint8)
     r = rng("heaven city")
     # Tones per shelf, far to near: cloud lit, body, shade; stone lit, body, dark; gold.
     ramps = [
@@ -622,29 +685,33 @@ def backdrop_heaven_city() -> Image.Image:
         while x < cx + wide // 2 - 44:
             kind = r.choice(["tower", "keep", "wall", "tower", "slender", "keep", "slender"])
             bw, bt = {"tower": (r.randint(12, 18), r.randint(70, 140)), "keep": (r.randint(44, 70), r.randint(44, 64)), "wall": (r.randint(50, 84), r.randint(34, 46)), "slender": (10, r.randint(56, 110))}[kind]
-            piece = _building(r, kind, bw, bt)
-            _stamp(canvas, piece, x, foot - 30 - piece.shape[0], np.array([0, base + 3, base + 4, base + 5, base + 6], dtype=np.uint8))
+            piece = _building(r, kind, bw, bt, fine=f)
+            _stamp(canvas, piece, x * f, (foot - 30) * f - piece.shape[0], np.array([0, base + 3, base + 4, base + 5, base + 6], dtype=np.uint8))
             x += bw + r.randint(4, 22)
-        shelf = _mass(r, wide, 44)
-        _stamp(canvas, shelf, cx - shelf.shape[1] // 2, foot - shelf.shape[0], np.array([0, base, base + 1, base + 2], dtype=np.uint8))
+        shelf = _mass(r, wide, 44, fine=f)
+        _stamp(canvas, shelf, cx * f - shelf.shape[1] // 2, foot * f - shelf.shape[0], np.array([0, base, base + 1, base + 2], dtype=np.uint8))
         for _ in range(2):
             fx, long = cx + r.randint(-wide // 2 + 20, wide // 2 - 20), r.randint(70, 150)
-            for k in range(long):
-                if foot - 6 + k < height and (k < long * 0.6 or k % 2 == 0):
-                    canvas[foot - 6 + k, fx % width] = water
-    a = np.zeros((height, width, 4), dtype=np.uint8)
+            for K in range(long * f):
+                k = K / f
+                Y = (foot - 6) * f + K
+                if Y < height * f and (k < long * 0.6 or int(k) % 2 == 0):
+                    canvas[Y, (fx * f) % (width * f)] = water
+    a = np.zeros((height * f, width * f, 4), dtype=np.uint8)
     a[:, :, :3] = palette[canvas]
     a[:, :, 3] = np.where(canvas > 0, 255, 0)
-    _fade_foot(a, 260)
+    _fade_foot(a, 260 * f)
     return Image.fromarray(a, "RGBA")
 
 
-def backdrop_cirrus() -> Image.Image:
-    """Thin cloud high up: long streaks, their ends thinning out. Repeats sideways."""
+def backdrop_cirrus(fine: int = 1) -> Image.Image:
+    """Thin cloud high up: long streaks, their ends thinning out. Repeats sideways. `fine`
+    asks the same streaks at every half pixel."""
+    f = fine
     width, height = BACKDROP_W, 128
-    a = np.zeros((height, width, 4), dtype=np.uint8)
+    a = np.zeros((height * f, width * f, 4), dtype=np.uint8)
     r = rng("cirrus")
-    ys, xs = np.mgrid[0:height, 0:width]
+    ys, xs = np.mgrid[0 : height * f, 0 : width * f] / f
     for _ in range(16):
         cx, cy, long, thick = r.randrange(width), r.randint(12, height - 12), r.randint(70, 210), r.uniform(2.5, 7)
         dx = np.minimum(np.abs(xs - cx), width - np.abs(xs - cx))
@@ -656,39 +723,89 @@ def backdrop_cirrus() -> Image.Image:
     return Image.fromarray(a, "RGBA")
 
 
-def backdrop_glory() -> Image.Image:
+def backdrop_glory(fine: int = 1) -> Image.Image:
     """A glory: rings and rays of pale gold round a middle, see-through, in a few
-    strengths. Stood behind what is holiest."""
+    strengths. Stood behind what is holiest. `fine` asks it at every half pixel."""
+    f = fine
     size = 640
-    ys, xs = np.mgrid[0:size, 0:size]
+    ys, xs = np.mgrid[0 : size * f, 0 : size * f] / f
     dx, dy = xs - size / 2 + 0.5, ys - size / 2 + 0.5
     d = np.hypot(dx, dy)
     angle = np.arctan2(dy, dx)
     rays = (np.cos(angle * 16) > 0.55) | (np.cos(angle * 8 + 0.4) > 0.9)
     rings = (np.abs(d - 96) < 3) | (np.abs(d - 150) < 2) | (np.abs(d - 214) < 1.5)
     strength = np.clip(1 - d / (size / 2), 0, 1) * np.where(rays | rings, 1.0, 0.32)
-    a = np.zeros((size, size, 4), dtype=np.uint8)
+    a = np.zeros((size * f, size * f, 4), dtype=np.uint8)
     a[:, :, :3] = (255, 240, 190)
     a[:, :, 3] = np.round(stepped(strength * 0.8, 8) * 110)
     return Image.fromarray(a, "RGBA")
 
 
-def backdrop_rainbow() -> Image.Image:
+def backdrop_rainbow(fine: int = 1) -> Image.Image:
     """Half a rainbow's ring, standing on its two feet: seven thin bands, see-through, their
-    feet thinning out in steps."""
+    feet thinning out in steps. `fine` draws its bands as true rounds."""
+    f = fine
     width, height = 416, 208
-    im = Image.new("RGBA", (width, height), (0, 0, 0, 0))
+    im = Image.new("RGBA", (width * f, height * f), (0, 0, 0, 0))
     px = im.load()
     bands = hexes("ff6b6b", "ffa24d", "ffe066", "8ce08a", "66c8f0", "6f8cf0", "b07ce8")
     outer, thick = 204.0, 2.6
-    for y in range(height):
-        for x in range(width):
+    for Y in range(height * f):
+        y = Y / f
+        for X in range(width * f):
+            x = X / f
             d = ((x - width / 2 + 0.5) ** 2 + (height - y) ** 2) ** 0.5
             k = (outer - d) / thick
             if 0 <= k < len(bands):
                 fade = float(stepped((height - y) / 46.0, 6))
-                px[x, y] = bands[int(k)] + (int(round(112 * fade)),)
+                px[X, Y] = bands[int(k)] + (int(round(112 * fade)),)
     return im
+
+
+def skies(fine: int = 1) -> dict:
+    """The sky's own layers, by key, each a painter at `fine` times the draft's size."""
+    f = fine
+    return {
+        "backdrop_stars": lambda: backdrop_stars(f),
+        "backdrop_sun": lambda: backdrop_sun(f),
+        "backdrop_moon": lambda: backdrop_moon(f),
+        "backdrop_clouds": lambda: backdrop_clouds(f),
+        "backdrop_heaven_far": lambda: backdrop_isles("far", 360, 6, (14, 30), hexes("eef5fd", "d4e3f5", "bcd2ee", "a9c3e6", "f4f9ff"), 0.6, 0.4, f),
+        "backdrop_heaven_near": lambda: backdrop_isles("near", 480, 3, (34, 60), hexes("ffffff", "c6e2b4", "a3bbe2", "869fd0", "eaf4ff"), 0.8, 0.7, f),
+        "backdrop_rays": lambda: backdrop_rays(f),
+        "backdrop_heaven_clouds": lambda: backdrop_heaven_clouds(f),
+        "backdrop_heaven_city": lambda: backdrop_heaven_city(f),
+        "backdrop_cirrus": lambda: backdrop_cirrus(f),
+        "backdrop_glory": lambda: backdrop_glory(f),
+        "backdrop_cloudmid": lambda: backdrop_cloud_band(
+            "mid",
+            240,
+            [
+                (14, 84, (24, 44), hexes("dde7f6")[0], hexes("c6d6ef")[0]),
+                (13, 116, (20, 36), hexes("eff4fc")[0], hexes("d8e3f5")[0]),
+                (12, 146, (16, 30), hexes("ffffff")[0], hexes("e8effa")[0]),
+            ],
+            255,
+            True,
+            f,
+        ),
+        "backdrop_rainbow": lambda: backdrop_rainbow(f),
+        "backdrop_cloudsea": lambda: backdrop_cloud_band(
+            "sea",
+            208,
+            [
+                (16, 78, (26, 46), hexes("dbe6f6")[0], hexes("c2d3ee")[0]),
+                (15, 104, (22, 40), hexes("f0f5fc")[0], hexes("d5e1f4")[0]),
+                (14, 132, (18, 34), hexes("ffffff")[0], hexes("e6eefa")[0]),
+            ],
+            255,
+            True,
+            f,
+        ),
+        "backdrop_cloudfront": lambda: backdrop_cloud_band(
+            "front", 192, [(5, 70, (16, 30), hexes("ffffff")[0], hexes("e8effa")[0]), (4, 130, (12, 24), hexes("ffffff")[0], hexes("e8effa")[0])], 120, False, f
+        ),
+    }
 
 
 def backdrops() -> dict[str, Image.Image]:
@@ -705,47 +822,7 @@ def backdrops() -> dict[str, Image.Image]:
     earth.update({key: paint() for key, paint in tv2_earth.LAYERS.items()})
     return {
         **caves,
-        "backdrop_stars": backdrop_stars(),
-        "backdrop_sun": backdrop_sun(),
-        "backdrop_moon": backdrop_moon(),
-        "backdrop_clouds": backdrop_clouds(),
-        "backdrop_heaven_far": backdrop_isles(
-            "far", 360, 6, (14, 30), hexes("eef5fd", "d4e3f5", "bcd2ee", "a9c3e6", "f4f9ff"), 0.6, 0.4
-        ),
-        "backdrop_heaven_near": backdrop_isles(
-            "near", 480, 3, (34, 60), hexes("ffffff", "c6e2b4", "a3bbe2", "869fd0", "eaf4ff"), 0.8, 0.7
-        ),
-        "backdrop_rays": backdrop_rays(),
-        "backdrop_heaven_clouds": backdrop_heaven_clouds(),
-        "backdrop_heaven_city": backdrop_heaven_city(),
-        "backdrop_cirrus": backdrop_cirrus(),
-        "backdrop_glory": backdrop_glory(),
-        "backdrop_cloudmid": backdrop_cloud_band(
-            "mid",
-            240,
-            [
-                (14, 84, (24, 44), hexes("dde7f6")[0], hexes("c6d6ef")[0]),
-                (13, 116, (20, 36), hexes("eff4fc")[0], hexes("d8e3f5")[0]),
-                (12, 146, (16, 30), hexes("ffffff")[0], hexes("e8effa")[0]),
-            ],
-            255,
-            True,
-        ),
-        "backdrop_rainbow": backdrop_rainbow(),
-        "backdrop_cloudsea": backdrop_cloud_band(
-            "sea",
-            208,
-            [
-                (16, 78, (26, 46), hexes("dbe6f6")[0], hexes("c2d3ee")[0]),
-                (15, 104, (22, 40), hexes("f0f5fc")[0], hexes("d5e1f4")[0]),
-                (14, 132, (18, 34), hexes("ffffff")[0], hexes("e6eefa")[0]),
-            ],
-            255,
-            True,
-        ),
-        "backdrop_cloudfront": backdrop_cloud_band(
-            "front", 192, [(5, 70, (16, 30), hexes("ffffff")[0], hexes("e8effa")[0]), (4, 130, (12, 24), hexes("ffffff")[0], hexes("e8effa")[0])], 120, False
-        ),
+        **{key: paint() for key, paint in skies().items()},
         "backdrop_far": backdrop_ridge(
             "far", hexes("7fa3c4")[0], hexes("a3c2dc")[0], 118, [(1, 30), (2, 20), (3, 12), (7, 6), (13, 3), (23, 2)], 1
         ),
@@ -757,3 +834,13 @@ def backdrops() -> dict[str, Image.Image]:
         ),
         **earth,
     }
+
+
+# What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
+# its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
+FINE = skies(DENSITY)
+for _region in REGIONS:  # the rock behind the caves, and its ragged top
+    if _region["cave"]:
+        if _region["key"] != "earth":
+            FINE["backdrop_cave_" + _region["key"]] = lambda region=_region: backdrop_cave(region, DENSITY)
+        FINE["backdrop_cave_top_" + _region["key"]] = lambda region=_region: backdrop_cave_top(region, DENSITY)
