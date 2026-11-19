@@ -2422,8 +2422,9 @@ MonoBehaviour:
     low: {r: 0.0627, g: 0.102, b: 0.2118, a: 1}
     tint: {r: 0.2, g: 0.25, b: 0.44, a: 1}
     stars: 1
-  viewWidth: 640
-  viewHeight: 360
+  viewWidth: 1280
+  viewHeight: 720
+  pixelsPerUnit: 32
   skyBands: 24
   skyOrder: -1010
   cloudDrift: 0.25

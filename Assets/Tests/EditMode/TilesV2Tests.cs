@@ -48,8 +48,27 @@ namespace Descender.Tests
             var frames = TilesV2Masks.AllFrames();
             Assert.That(frames.Count, Is.EqualTo(47));
             Assert.That(manifest.frames, Is.EqualTo(frames.ToArray()), "tiles_v2.json and TilesV2Masks disagree");
-            Assert.That(manifest.tile, Is.EqualTo(16));
-            Assert.That(manifest.ppu, Is.EqualTo(16), "one tile must be one unit");
+            // The art ships at 32 pixels to the tile: drawn on a draft of 16, twice as fine.
+            Assert.That(manifest.tile, Is.EqualTo(32));
+            Assert.That(manifest.ppu, Is.EqualTo(manifest.tile), "one tile must be one unit");
+            Assert.That(manifest.density, Is.EqualTo(2));
+            Assert.That(manifest.ppu, Is.EqualTo(TilesV2Set.PixelsPerUnit));
+            Assert.That(manifest.view.width, Is.EqualTo(1280));
+            Assert.That(manifest.view.height, Is.EqualTo(720), "the view is still 40 x 22.5 tiles");
+            Assert.That(TilesV2Set.DraftPixel * 16f, Is.EqualTo(1f), "a mark's lengths are in sixteenths of a tile");
+            var set = TilesV2Builder.LoadSet();
+            Assert.That(set.pixelsPerUnit, Is.EqualTo(manifest.ppu));
+            Assert.That(set.View, Is.EqualTo(new Vector2(40f, 22.5f)));
+            // A material's frame is a tile of the art across, at its density.
+            var frame =
+                System.Array.Find(
+                    AssetDatabase.LoadAllAssetsAtPath(TilesV2Manifest.Folder + "/grass.png"),
+                    asset => asset is Sprite
+                ) as Sprite;
+            Assert.That(frame, Is.Not.Null);
+            Assert.That(frame.rect.size, Is.EqualTo(new Vector2(32f, 32f)));
+            Assert.That(frame.pixelsPerUnit, Is.EqualTo(32f));
+            Assert.That(frame.bounds.size.x, Is.EqualTo(1f).Within(1e-4f));
         }
 
         [Test]
@@ -468,7 +487,11 @@ namespace Descender.Tests
                 none,
                 none
             );
-            Assert.That(snapped.x * 16f, Is.EqualTo(Mathf.Round(snapped.x * 16f)), "layers sit on whole art pixels");
+            Assert.That(
+                snapped.x * TilesV2Set.PixelsPerUnit,
+                Is.EqualTo(Mathf.Round(snapped.x * TilesV2Set.PixelsPerUnit)).Within(1e-3f),
+                "layers sit on whole art pixels"
+            );
             // A picture that repeats every 20 units never drifts more than half of that from the camera.
             for (var x = -300f; x < 300f; x += 37f)
             {

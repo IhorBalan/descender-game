@@ -14,7 +14,7 @@ namespace Descender.World.TilesV2
     [ExecuteAlways]
     public sealed class Sky : MonoBehaviour
     {
-        private const float PixelsPerUnit = 16f;
+        private const float PixelsPerUnit = TilesV2Set.PixelsPerUnit;
 
         // How far across and up the view the sun and the moon travel, as shares of the view.
         private const float ArcWidth = 0.84f;
@@ -40,10 +40,10 @@ namespace Descender.World.TilesV2
         private int bands = 24;
 
         [SerializeField, Min(8), Tooltip("The sky's size in art pixels: the camera's view.")]
-        private int width = 640;
+        private int width = 1280;
 
         [SerializeField, Min(8)]
-        private int height = 360;
+        private int height = 720;
 
         private Texture2D texture;
         private Sprite sprite;

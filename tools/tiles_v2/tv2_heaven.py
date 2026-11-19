@@ -58,58 +58,72 @@ def tone(ramp, k):
 # --- Trees -----------------------------------------------------------------------------
 
 
-def tree(variant: int, leaves, tall: int | None = None, sway: int = 0) -> Image.Image:
+def tree(variant: int, leaves, tall: int | None = None, sway: int = 0, fine: int = 1) -> Image.Image:
     """A tree of Paradise: a pale trunk that parts into branches well over the hero's head,
     a crown of a few rounded bundles of blossom or of gold leaf, lower on one side, with
     a few petals already let go under it. `sway` is the frame of its stirring: each
-    bundle of its crown goes round a pixel's breadth in its own time, the trunk still."""
+    bundle of its crown goes round a pixel's breadth in its own time, the trunk still.
+    `fine` draws it that many times the draft's size, the same tree with what a finer
+    pixel can say: leaf by leaf in its crown, the marks of its bark, twice the flecks."""
+    f = fine
 
     def swung(k):
         a = sway * 2 * math.pi / FRAMES + k * 1.9
-        return round(1.3 * math.sin(a)), round(0.7 * math.cos(a + 0.8))
+        return round(1.3 * math.sin(a)) * f, round(0.7 * math.cos(a + 0.8)) * f
 
     r = rng("heaven tree", variant, leaves[3])
     tall = tall or r.randint(150, 208)
     wide = int(tall * r.uniform(0.66, 0.82))
-    W, H = wide + 18, tall + T + 4
+    W, H = (wide + 18) * f, (tall + T + 4) * f
     art = Art(W, H)
-    foot_x, foot_y = W // 2 + r.randint(-4, 4), H - T + 6
+    foot_x, foot_y = (wide + 18) // 2 + r.randint(-4, 4), tall + T + 4 - T + 6
     split = int(tall * r.uniform(0.36, 0.46))
-    crown_cy = H - T - tall + int(tall * 0.36)
-    trunk(art, foot_x, foot_y, split + 12, max(9, int(tall * 0.066)) + r.randint(0, 2), 5, BIRCH, r, lean=r.uniform(-0.6, 0.6))
+    crown_cy = tall + 4 - tall + int(tall * 0.36)
+    base = max(9, int(tall * 0.066)) + r.randint(0, 2)
+    trunk(art, foot_x * f, foot_y * f, (split + 12) * f, base * f, 5 * f, BIRCH, r, lean=r.uniform(-0.6, 0.6), roots=f == 1)
+    if f > 1:  # its roots, where it goes into the ground
+        for side in (-1, 1):
+            for k in range(5 * f):
+                for d in range(max(1, 2 * f - k // 2)):
+                    art.put(foot_x * f + side * (base * f // 2 + k), foot_y * f - d - 1 + k // 3, BIRCH[3 if side > 0 else 4])
     # The marks of a pale bark: short dark dashes across the trunk.
-    for i in range(6, split + 6, r.randint(7, 10)):
-        for dx in range(-2, 1):
-            if art.has(foot_x + dx, foot_y - i):
-                art.put(foot_x + dx, foot_y - i, BIRCH[1])
+    step = r.randint(7, 10)
+    for i in range(6 * f, (split + 6) * f, step):
+        reach = r.randint(2, 2 * f + 1) if f > 1 else 3
+        start = r.randint(-2 * f, 0) if f > 1 else -2
+        for dx in range(start, start + reach):
+            if art.has(foot_x * f + dx, foot_y * f - i):
+                art.put(foot_x * f + dx, foot_y * f - i, BIRCH[1])
     bundles = []
     count = r.randint(6, 8)
+    middle = (wide + 18) / 2
     for i in range(count):
         a = -math.pi * (0.1 + 0.8 * i / (count - 1)) + r.uniform(-0.15, 0.15)
         dist = r.uniform(0.45, 0.85)
-        bx = W / 2 + math.cos(a) * wide * 0.36 * dist * 1.25
+        bx = middle + math.cos(a) * wide * 0.36 * dist * 1.25
         by = crown_cy + math.sin(a) * tall * 0.24 * dist + r.uniform(-4, 6)
         bundles.append((bx, by, r.uniform(0.17, 0.25) * wide, r.uniform(0.15, 0.2) * tall))
     side = r.choice([-1, 1])
-    bundles.append((W / 2 + side * wide * 0.33, crown_cy + tall * 0.17, wide * 0.17, tall * 0.12))
-    bundles.append((W / 2 + r.uniform(-6, 6), crown_cy - tall * 0.2, wide * 0.24, tall * 0.17))
+    bundles.append((middle + side * wide * 0.33, crown_cy + tall * 0.17, wide * 0.17, tall * 0.12))
+    bundles.append((middle + r.uniform(-6, 6), crown_cy - tall * 0.2, wide * 0.24, tall * 0.17))
     top_y = foot_y - split - 10
     for k, (bx, by, _, _) in enumerate(bundles):
         dx, dy = swung(k)
-        branch(art, foot_x, top_y + 8, bx + dx, by + 6 + dy, 3 if abs(bx - foot_x) > wide * 0.2 else 4, BIRCH)
+        branch(art, foot_x * f, (top_y + 8) * f, bx * f + dx, (by + 6) * f + dy, (3 if abs(bx - foot_x) > wide * 0.2 else 4) * f, BIRCH)
     for n, (k, (bx, by, rx, ry)) in enumerate(sorted(enumerate(bundles), key=lambda b: -b[1][1])):
         dx, dy = swung(k)
-        bundle(art, bx + dx, by + dy, rx, ry, leaves, r, (variant, n, leaves[3]))
+        bundle(art, bx * f + dx, by * f + dy, rx * f, ry * f, leaves, r, (variant, n, leaves[3]))
     # Brighter flecks: a tree in flower catches the light all over.
-    for _ in range(wide * 2):
-        x, y = r.randint(4, W - 5), r.randint(H - T - tall, H - T - split + 8)
-        if art.has(x, y) and art.has(x, y + 2) and tuple(art.a[y, x, :3]) not in (tuple(BIRCH[k]) for k in range(6)):
+    for _ in range(wide * 2 * f * f):
+        x, y = r.randint(4 * f, W - 5 * f), r.randint((tall + 4 - tall) * f, (tall + 4 - split + 8) * f)
+        if art.has(x, y) and art.has(x, y + 2 * f) and tuple(art.a[y, x, :3]) not in (tuple(BIRCH[k]) for k in range(6)):
             art.put(x, y, leaves[6])
-    art.outline(leaves[0])
+    for _ in range(f):
+        art.outline(leaves[0])
     # Fallen petals on the ground by its foot.
-    for _ in range(14):
-        x = foot_x + r.randint(-wide // 2, wide // 2)
-        art.put(x, foot_y - r.randint(0, 1), leaves[r.choice([4, 5, 6])])
+    for _ in range(14 * f):
+        x = foot_x * f + r.randint(-wide * f // 2, wide * f // 2)
+        art.put(x, foot_y * f - r.randint(0, f), leaves[r.choice([4, 5, 6])])
     return art.image()
 
 
@@ -1609,6 +1623,15 @@ def _plan():
 
 
 PLAN = _plan()
+# What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
+# its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
+FINE = {}
+for _v in range(BLOSSOMS):
+    for _frame in range(FRAMES):
+        FINE[f"heaven_blossom_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: tree(v, BLOSSOM, sway=s, fine=DENSITY)
+for _v in range(GOLDS):
+    for _frame in range(FRAMES):
+        FINE[f"heaven_gold_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: tree(v, GOLDLEAF, sway=s, fine=DENSITY)
 PICTURE_KEYS = [key for key, *_ in PLAN]
 ENTRIES = [
     {"key": key, "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": order, "lit": lit, "tinted": False}

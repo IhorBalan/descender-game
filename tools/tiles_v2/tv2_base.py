@@ -21,12 +21,22 @@ import unity_meta  # noqa: E402
 OUT = os.path.join(unity_meta.ASSETS, "Art", "TilesV2")
 SAMPLE_MAP = os.path.join(OUT, "sample_map.txt")
 
+# The grid everything is first drawn on: a tile of the draft is 16 x 16. The art that
+# ships is DENSITY times as fine: a tile of it is PIXELS (32 x 32), imported at PPU, so a
+# tile is still one Unity unit and one collision cell. What is drawn on the draft goes out
+# through `scale2x` (twice the size, edges kept clean, nothing invented); what is drawn
+# at the finer size itself (the ground's and the walls' insides, `tv2_terrain.fine_*`)
+# goes out as it is. Lengths a map gives beside a mark are in the draft's pixels:
+# sixteenths of a tile.
 TILE = 16
-PPU = 16
-# The camera's view in art pixels: 40 x 22.5 tiles, twice as far back as the game's
+DENSITY = 2
+PIXELS = TILE * DENSITY
+PPU = PIXELS
+# The camera's view on the draft: 40 x 22.5 tiles, twice as far back as the game's
 # own 320 x 180, so more of the world shows. The sky and the backdrops are drawn
-# for it and the Unity cameras take it as their reference resolution.
+# for it; the Unity cameras take SHIP_VIEW (1280 x 720) as their reference resolution.
 VIEW = (640, 360)
+SHIP_VIEW = (VIEW[0] * DENSITY, VIEW[1] * DENSITY)
 VARIANTS = 3
 COLUMNS = 8
 
@@ -347,6 +357,39 @@ FAR_SCROLL = 0.78  # the share of the camera's movement the far shapes scroll by
 
 
 # --- Helpers ------------------------------------------------------------------
+
+
+def scale2x_array(p: np.ndarray, wrap: bool = False) -> np.ndarray:
+    """Scale2x on a grid of whole numbers (colours packed into one, or ramp indices): twice
+    the size, a step of a staircase turned into a slope, nothing invented. With `wrap` the
+    grid is a tile that repeats, and its edges are smoothed as its middle is."""
+    pad = np.pad(p, 1, mode="wrap" if wrap else "edge")
+    up, down, left, right = pad[:-2, 1:-1], pad[2:, 1:-1], pad[1:-1, :-2], pad[1:-1, 2:]
+    out = np.zeros((p.shape[0] * 2, p.shape[1] * 2), dtype=p.dtype)
+    out[0::2, 0::2] = np.where((left == up) & (left != down) & (up != right), up, p)
+    out[0::2, 1::2] = np.where((up == right) & (up != left) & (right != down), right, p)
+    out[1::2, 0::2] = np.where((down == left) & (down != right) & (left != up), left, p)
+    out[1::2, 1::2] = np.where((right == down) & (right != up) & (down != left), down, p)
+    return out
+
+
+def scale2x(image):
+    """A picture of the draft as it ships: DENSITY times the size by Scale2x."""
+    from PIL import Image
+
+    a = np.asarray(image.convert("RGBA")).astype(np.uint32)
+    packed = (a[..., 0] << 24) | (a[..., 1] << 16) | (a[..., 2] << 8) | a[..., 3]
+    out = scale2x_array(packed)
+    rgba = np.stack([(out >> 24) & 255, (out >> 16) & 255, (out >> 8) & 255, out & 255], -1).astype(np.uint8)
+    return Image.fromarray(rgba, "RGBA")
+
+
+def scale2x_rgba(a: np.ndarray) -> np.ndarray:
+    """`scale2x` for a picture held as an array."""
+    a = a.astype(np.uint32)
+    packed = (a[..., 0] << 24) | (a[..., 1] << 16) | (a[..., 2] << 8) | a[..., 3]
+    out = scale2x_array(packed)
+    return np.stack([(out >> 24) & 255, (out >> 16) & 255, (out >> 8) & 255, out & 255], -1).astype(np.uint8)
 
 
 def rng(*parts) -> random.Random:

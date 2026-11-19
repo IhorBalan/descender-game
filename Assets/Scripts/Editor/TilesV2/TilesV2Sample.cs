@@ -234,11 +234,19 @@ namespace Descender.EditorTools.TilesV2
             camera.backgroundColor = new Color(0.02f, 0.02f, 0.04f);
             camera.GetUniversalAdditionalCameraData();
             var pixelPerfect = holder.AddComponent<PixelPerfectCamera>();
-            pixelPerfect.assetsPPU = 16;
+            pixelPerfect.assetsPPU = set.pixelsPerUnit;
             pixelPerfect.refResolutionX = set.viewWidth;
             pixelPerfect.refResolutionY = set.viewHeight;
-            pixelPerfect.cropFrame = PixelPerfectCamera.CropFrame.Windowbox;
+            // The view is drawn at its own size (1280 x 720) and then fitted to the screen. Where
+            // the screen is a whole number of times that (1440p, 4K) every pixel of the art is a
+            // square of the screen's; where it is not (1080p is one and a half times), the fit is
+            // a sharp one that keeps the pixels even and does not crawl as the view moves.
             pixelPerfect.gridSnapping = PixelPerfectCamera.GridSnapping.UpscaleRenderTexture;
+            pixelPerfect.cropFrame = PixelPerfectCamera.CropFrame.StretchFill;
+            // (The filter is not a property of the component: it is set where it is kept.)
+            var fit = new SerializedObject(pixelPerfect);
+            fit.FindProperty("m_FilterMode").enumValueIndex = (int)PixelPerfectCamera.PixelPerfectFilterMode.RetroAA;
+            fit.ApplyModifiedPropertiesWithoutUndo();
             if (game)
             {
                 holder.AddComponent<AudioListener>();

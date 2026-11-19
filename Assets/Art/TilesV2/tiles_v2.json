@@ -1,9 +1,10 @@
 {
-  "tile": 16,
-  "ppu": 16,
+  "tile": 32,
+  "ppu": 32,
+  "density": 2,
   "view": {
-    "width": 640,
-    "height": 360
+    "width": 1280,
+    "height": 720
   },
   "variants": 3,
   "bits": {
@@ -2193,7 +2194,7 @@
   ],
   "ledges": {
     "sheet": "ledge.png",
-    "thick": 5,
+    "thick": 10,
     "keys": [
       "plank",
       "grate",

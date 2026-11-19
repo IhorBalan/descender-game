@@ -386,8 +386,8 @@ namespace Descender.World.TilesV2
                 var bob = Mathf.Sin(seconds * 1.3f + place.w) * 0.25f;
                 var at = new Vector2(place.x + along, place.y + place.w * 0.3f + bob);
                 birds[i].transform.position = new Vector3(
-                    Mathf.Round(at.x * 16f) / 16f,
-                    Mathf.Round(at.y * 16f) / 16f,
+                    Mathf.Round(at.x * TilesV2Set.PixelsPerUnit) / TilesV2Set.PixelsPerUnit,
+                    Mathf.Round(at.y * TilesV2Set.PixelsPerUnit) / TilesV2Set.PixelsPerUnit,
                     0f
                 );
                 if (wings.Length > 0)

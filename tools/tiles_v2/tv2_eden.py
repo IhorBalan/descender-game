@@ -40,30 +40,34 @@ ROBE = ramp_of("4a4a66 9a98b0 c8c6d8 f0eff6")
 TINTS = {"green": LEAF, "teal": TEAL, "pale": PALE, "frost": FROST}
 
 
-def leaf(variant: int, tall: int | None = None) -> Image.Image:
+def leaf(variant: int, tall: int | None = None, fine: int = 1) -> Image.Image:
     """A great curled leaf of the Waking Hollow, taller than a house: a stem that rises
     and bends over, a blade either side of it that narrows to a curled tip, lit on the
     half that faces the dawn, veins running out from its rib, a bite out of its edge here
-    and there, a rim the dawn has turned to rose."""
+    and there, a rim the dawn has turned to rose. `fine` draws it that many times the
+    draft's size: the same leaf, with lesser veins between its veins and a finer rim."""
     r = rng("eden leaf", variant)
-    tall = tall or (150, 190, 120, 220)[variant % 4]
-    W, H = int(tall * 0.75) + 20, tall + 12
-    rib = max(2, tall // 70)
-    apart = max(11, tall // 13)  # between two of its veins
+    f = fine
+    draft = tall or (150, 190, 120, 220)[variant % 4]
+    tall = draft * f
+    W, H = (int(draft * 0.75) + 20) * f, (draft + 12) * f
+    rib = max(2, draft // 70) * f
+    apart = max(11, draft // 13) * f  # between two of its veins
     art = Art(W, H)
-    mottle = noise(("eden leaf", variant, tall), W, H, max(5.0, tall / 26))
+    mottle = noise(("eden leaf", variant, draft), W, H, max(5.0, draft / 26) * f)
+    grain = noise(("eden leaf grain", variant, draft), W, H, 2.4) if f > 1 else None
     side = 1 if variant % 2 == 0 else -1
     x0 = W / 2 - side * W * 0.2
     spine = []
     for i in range(tall):
         t = i / tall
-        bend = side * (t**2.2) * W * 0.42 + math.sin(t * 5 + variant) * 2
+        bend = side * (t**2.2) * W * 0.42 + math.sin(t * 5 + variant) * 2 * f
         droop = (t**3) * tall * 0.16
-        spine.append((x0 + bend, H - 6 - i + droop))
+        spine.append((x0 + bend, H - 6 * f - i + droop))
     bites = [(r.uniform(0.3, 0.85), r.choice([-1, 1]), r.uniform(4, 7) * tall / 150) for _ in range(2 + variant % 3)]
     for i, (sx, sy) in enumerate(spine):
         t = i / tall
-        half = 4 + math.sin(min(t * 1.25, 1) * math.pi) ** 0.8 * W * 0.28 * (1 - 0.3 * t)
+        half = 4 * f + math.sin(min(t * 1.25, 1) * math.pi) ** 0.8 * W * 0.28 * (1 - 0.3 * t)
         for d in range(int(-half), int(half) + 1):
             x, y = sx + d, sy + abs(d) * 0.28
             off = d / max(half, 1)
@@ -77,25 +81,31 @@ def leaf(variant: int, tall: int | None = None) -> Image.Image:
             if abs(d) > rib:
                 run = (i - abs(d) * 1.7) % apart
                 shade += 1 if run < 1 else -1 if run < 2 else 0  # a vein, and the fold beside it
+                if f > 1:  # a lesser vein half way between two, and the leaf's own grain
+                    lesser = (i - abs(d) * 1.7 + apart / 2) % apart
+                    shade += 0.6 if lesser < 1 and abs(off) < 0.7 else 0
+                    shade += grain[yi, xi] * 0.45
             elif lit > 0:
                 shade += 0.5
             colour = tone(LEAF, round(shade))
-            if abs(off) > 0.86 and t > 0.25:
+            if abs(off) > (0.86 if f == 1 else 0.9) and t > 0.25:
                 colour = ROSE[1 if abs(off) > 0.95 else 2]
             art.put(x, y, colour)
-            art.put(x, y + 1, colour)
+            for under in range(1, f + 1):
+                art.put(x, y + under, colour)
     for i, (sx, sy) in enumerate(spine[: int(tall * 0.92)]):
         for d in range(-rib, rib):
             art.put(sx + d, sy, tone(LEAF, 6 if d < 0 else 2))
-    for _ in range(3 + tall // 60):  # dew, where the light finds it
+    for _ in range((3 + draft // 60) * f):  # dew, where the light finds it
         i = r.randint(int(tall * 0.2), int(tall * 0.8))
         sx, sy = spine[i]
-        x, y = int(sx - side * r.uniform(6, tall * 0.12)), int(sy + r.uniform(2, 6))
+        x, y = int(sx - side * r.uniform(6 * f, tall * 0.12)), int(sy + r.uniform(2, 6) * f)
         if art.has(x, y) and art.has(x + 1, y + 1):
             art.put(x, y, (255, 255, 255))
             art.put(x + 1, y, LEAF[6])
             art.put(x, y + 1, LEAF[6])
-    art.outline(LEAF[0])
+    for _ in range(f):
+        art.outline(LEAF[0])
     return art.image()
 
 
@@ -127,9 +137,9 @@ def ivy(tint: str, variant: int) -> Image.Image:
     return art.image()
 
 
-def teal_tree(variant: int, sway: int = 0) -> Image.Image:
+def teal_tree(variant: int, sway: int = 0, fine: int = 1) -> Image.Image:
     """A tree of the orchard under the canopy: the tree of Paradise in leaves of deep teal."""
-    return tree(variant + 20, TEAL, tall=(150, 176, 132)[variant % 3], sway=sway)
+    return tree(variant + 20, TEAL, tall=(150, 176, 132)[variant % 3], sway=sway, fine=fine)
 
 
 def vine_trunk(variant: int) -> Image.Image:
@@ -1469,9 +1479,9 @@ def rays(variant: int) -> Image.Image:
     return art.image()
 
 
-def great_leaf() -> Image.Image:
+def great_leaf(fine: int = 1) -> Image.Image:
     """The Rising Leaf: one leaf as tall as a tower, behind the stair the hero goes up; the stair is its rib."""
-    return leaf(1, tall=560)
+    return leaf(1, tall=560, fine=fine)
 
 
 def lantern_crown() -> Image.Image:
@@ -2332,6 +2342,14 @@ def _plan():
 
 
 PLAN = _plan()
+# What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
+# its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
+FINE = {"eden_great_leaf": lambda: great_leaf(DENSITY)}
+for _v in range(LEAVES):
+    FINE[f"eden_leaf_{_v}"] = lambda v=_v: leaf(v, fine=DENSITY)
+for _v in range(TEAL_TREES):
+    for _frame in range(FRAMES):
+        FINE[f"eden_teal_tree_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: teal_tree(v, s, fine=DENSITY)
 PICTURE_KEYS = [key for key, *_ in PLAN]
 ENTRIES = [
     {"key": key, "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": order, "lit": lit, "tinted": False}

@@ -545,14 +545,16 @@ def patina_over(rgba: np.ndarray, solid: np.ndarray, variant: int) -> np.ndarray
     return out
 
 
-def draw_frame(material: dict, mask: int, variant: int) -> np.ndarray:
+def draw_frame(material: dict, mask: int, variant: int, flat: bool = False) -> np.ndarray:
+    """A frame on the draft. With `flat` its inside is one tone (ramp 3) all through, so
+    what is plain inside can be told from what is rim, turf or ore."""
     r = rng(material["key"], mask, variant)
     solid = neighbourhood(mask)
     wall = material["kind"] == "wall"
     solid = opened(solid) if not wall else solid
     if not wall and material.get("grass"):
         blade_tips(solid, mask, r)
-    tex = TEXTURES[material["texture"]](variant)
+    tex = np.full((TILE, TILE), 3, dtype=np.int16) if flat else TEXTURES[material["texture"]](variant)
     rgba = shade(solid, tex, PALETTES[material["palette"]], wall)
     if material.get("grass"):
         rgba = grass_over(rgba, solid, PALETTES[material["grass"]], r)
@@ -591,17 +593,142 @@ def slope_shape(kind: str) -> tuple[np.ndarray, int]:
     return center, mask
 
 
-def draw_slope(material: dict, kind: str, variant: int) -> np.ndarray:
+def draw_slope(material: dict, kind: str, variant: int, flat: bool = False) -> np.ndarray:
     r = rng(material["key"], kind, variant)
     center, mask = slope_shape(kind)
     solid = opened(neighbourhood(mask, center))
     if material.get("grass"):
         blade_tips(solid, mask, r)
-    tex = TEXTURES[material["texture"]](variant)
+    tex = np.full((TILE, TILE), 3, dtype=np.int16) if flat else TEXTURES[material["texture"]](variant)
     rgba = shade(solid, tex, PALETTES[material["palette"]], False)
     if material.get("grass"):
         rgba = grass_over(rgba, solid, PALETTES[material["grass"]], r)
     return rgba
+
+
+# --- The art that ships: twice as fine as the draft ---------------------------
+# A frame keeps the shape the draft gives it (its outline, its rims, its turf, its ore,
+# through Scale2x), and its plain inside is laid with the material's texture drawn at the
+# finer size: the draft's own, smoothed, with what a pixel half the size can say put in.
+
+
+def _wrapped(t: np.ndarray, dx: int, dy: int) -> np.ndarray:
+    return np.roll(np.roll(t, dy, axis=0), dx, axis=1)
+
+
+def _tile_noise(seed, size: int, cells: int) -> np.ndarray:
+    """Smooth noise -1 .. 1 on a tile that repeats: a grid of `cells` values, wrapped."""
+    r = np.random.default_rng(rng("tile noise", seed).getrandbits(32))
+    grid = r.uniform(-1, 1, (cells, cells))
+    ys, xs = np.mgrid[0:size, 0:size]
+    fx, fy = xs * cells / size, ys * cells / size
+    ix, iy = fx.astype(int), fy.astype(int)
+    tx, ty = fx - ix, fy - iy
+    tx, ty = tx * tx * (3 - 2 * tx), ty * ty * (3 - 2 * ty)
+    a, b = grid[iy % cells, ix % cells], grid[iy % cells, (ix + 1) % cells]
+    c, d = grid[(iy + 1) % cells, ix % cells], grid[(iy + 1) % cells, (ix + 1) % cells]
+    return (a * (1 - tx) + b * tx) * (1 - ty) + (c * (1 - tx) + d * tx) * ty
+
+
+def fine_texture(name: str, variant: int) -> np.ndarray:
+    """A material's inside at the size that ships, as ramp indices on a tile that repeats:
+    the draft's texture through Scale2x, then what the finer pixel can say. Earth gets
+    pebbles, each lit on its top left with its shade under it, and a grain; rock, hairline
+    cracks and a glint on a chunk here and there; dressed stone, a vein, a chip at a
+    block's corner and a line of light under its joint; clay and boards, a grain along
+    them; leaves, a rib; sand and ice, a sparkle. Cloud, glass and the plain are left
+    as they are: they are smooth."""
+    size = PIXELS
+    t = scale2x_array(TEXTURES[name](variant).astype(np.int16), wrap=True).astype(np.int16)
+    r = rng("fine", name, variant)
+    kind = {"rubble": "stone", "bricks": "ashlar", "meadow": "dirt"}.get(name, name)
+    coarse = _tile_noise(("fine coarse", name, variant), size, 4)
+    grain = _tile_noise(("fine grain", name, variant), size, 16)
+
+    def put(x, y, value):
+        t[y % size, x % size] = value
+
+    if kind == "dirt":
+        t[(coarse > 0.45) & (t == 3)] = 4  # a paler patch of it, soft
+        for _ in range(4 + variant % 2):  # pebbles
+            x, y, wide = r.randrange(size), r.randrange(size), r.choice([2, 3, 3, 4])
+            for dx in range(wide):
+                put(x + dx, y, 5 if dx < wide - 1 else 4)
+                put(x + dx, y + 1, 4 if dx == 0 else 2)
+                put(x + dx + 1, y + 2, 1)
+        for _ in range(2):  # a root hair, pale, wandering down
+            x, y = r.randrange(size), r.randrange(size)
+            for i in range(r.randint(4, 8)):
+                x += r.choice([-1, 0, 0, 1])
+                put(x, y + i, 4 if i % 3 else 5)
+        t[(grain > 0.84) & (t == 3)] = 2  # a grain, sparse: earth is not sand
+        t[(grain < -0.88) & (t == 3)] = 4
+    elif kind == "stone":
+        for _ in range(3):  # hairline cracks, aslant
+            x, y, lean = r.randrange(size), r.randrange(size), r.choice([-1, 1])
+            for i in range(r.randint(5, 10)):
+                if t[(y + i) % size, (x + lean * (i // 2)) % size] >= 2:
+                    put(x + lean * (i // 2), y + i, 1)
+                    if t[(y + i) % size, (x + lean * (i // 2) + 1) % size] >= 2:
+                        put(x + lean * (i // 2) + 1, y + i, min(t[(y + i) % size, (x + lean * (i // 2) + 1) % size] + 1, 4))
+        t[(grain > 0.74) & (t >= 2) & (t <= 3)] += 1  # a glint on a chunk
+        t[(grain < -0.8) & (t >= 3)] -= 1
+    elif kind == "ashlar":
+        for _ in range(2):  # a vein through the stone
+            x, y = r.randrange(size), r.randrange(size)
+            for i in range(r.randint(8, 14)):
+                y += r.choice([0, 0, 1, -1])
+                if t[y % size, (x + i) % size] >= 3:
+                    put(x + i, y, t[y % size, (x + i) % size] - 1)
+        dark = t <= 1  # the joints
+        under = _wrapped(dark, 0, 1) & ~dark  # the line of light under a joint
+        t[under & (t < 5) & (grain > -0.5)] += 1
+        for _ in range(3):  # a chip out of a block
+            x, y = r.randrange(size), r.randrange(size)
+            if t[y, x] >= 3:
+                put(x, y, 2)
+                put(x + 1, y, 2)
+                put(x, y + 1, 1)
+    elif kind in ("clay", "planks"):
+        t[(grain > 0.55) & (t == 3) & (np.arange(size)[:, None] % 2 == 0)] = 4  # a grain along it
+        t[(grain < -0.6) & (t == 3) & (np.arange(size)[:, None] % 2 == 1)] = 2
+    elif kind in ("foliage", "leaves"):
+        lit = (t >= 3) & (_wrapped(t, 1, 1) < t)  # the edge of a leaf that the light is on
+        t[lit & (grain > 0.1) & (t < 5)] += 1
+        t[(grain < -0.75) & (t >= 3)] -= 1
+    elif kind == "sand":
+        t[(grain > 0.7) & (t >= 2) & (t < 5)] += 1
+        t[(grain < -0.72) & (t >= 2)] -= 1
+    elif kind == "ice":
+        t[(grain > 0.78) & (t < 5)] += 1
+    return np.clip(t, 0, 5)
+
+
+def _fine(material: dict, drawn: np.ndarray, flat: np.ndarray, variant: int) -> np.ndarray:
+    """A frame at the size that ships, from the frame on the draft and the same frame with
+    a flat inside: where the flat one is plain, the texture drawn at the finer size."""
+    palette = PALETTES[material["palette"]]
+    out = scale2x_rgba(drawn)
+    plain = scale2x_rgba(flat)
+    inside = np.all(plain[..., :3] == np.array(palette["ramp"][3], dtype=np.uint8), axis=-1) & (plain[..., 3] == 255)
+    tex = fine_texture(material["texture"], variant)
+    if material["kind"] == "wall":
+        tex = np.clip(tex, 0, 4)  # a wall keeps low: no light on it
+    out[inside, :3] = np.array(palette["ramp"], dtype=np.uint8)[tex][inside]
+    return out
+
+
+def fine_frame(material: dict, mask: int, variant: int) -> np.ndarray:
+    return _fine(material, draw_frame(material, mask, variant), draw_frame(material, mask, variant, flat=True), variant)
+
+
+def fine_slope(material: dict, kind: str, variant: int) -> np.ndarray:
+    return _fine(material, draw_slope(material, kind, variant), draw_slope(material, kind, variant, flat=True), variant)
+
+
+def fine_blend(blend: dict, sides: int, variant: int) -> np.ndarray:
+    """A blend overlay at the size that ships: the draft's, through Scale2x."""
+    return scale2x_rgba(draw_blend(blend, sides, variant))
 
 
 # --- Blends -------------------------------------------------------------------
