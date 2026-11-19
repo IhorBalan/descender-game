@@ -89,7 +89,12 @@ ways:
     32, made smaller), the far house, the far Gate and the far Wheel are
     asked at every half pixel, and `tv2_eden.ridge` takes `fine`; the
     Lantern Tree's crown; and the dark shapes that pass before the eye,
-    their rim two pixels wide. A part
+    their rim two pixels wide. And what the Paradise level borrows: the
+    billows under every cloud (`heaven_puff_*`, a true round to each lump),
+    the beds of flowers, the clipped green, the bench, the urn and every
+    free-standing column (`tv2_heaven.column` takes `fine`: a lit edge to
+    each flute); and from the Earth (`tv2_earth.FINE`) the thickets, the
+    dead trees, the picket and iron fences and the haystacks. A part
     of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.

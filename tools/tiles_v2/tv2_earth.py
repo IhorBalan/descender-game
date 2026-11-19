@@ -322,18 +322,20 @@ def willow(variant: int) -> Image.Image:
     return art.image()
 
 
-def dead_tree(variant: int) -> Image.Image:
-    """A tree long dead: grey wood, a split trunk, branches that fork and thin out."""
+def dead_tree(variant: int, fine: int = 1) -> Image.Image:
+    """A tree long dead: grey wood, a split trunk, branches that fork and thin out. `fine`
+    draws it that many times the draft's size, its twigs as thin as twigs are."""
     r = rng("deadtree", variant)
+    f = fine
     tall = r.randint(90, 130)
-    W, H = int(tall * 0.8) + 10, tall + SINK + 4
-    art = Art(W, H)
-    cx, foot = W // 2, H - SINK + 6
-    trunk(art, cx, foot, int(tall * 0.55), 9, 5, GREYWOOD, r)
+    W0, H0 = int(tall * 0.8) + 10, tall + SINK + 4
+    art = Art(W0 * f, H0 * f)
+    cx, foot = W0 // 2, H0 - SINK + 6
+    trunk(art, cx * f, foot * f, int(tall * 0.55) * f, 9 * f, 5 * f, GREYWOOD, r)
 
     def grow(x, y, angle, length, width, depth):
         x1, y1 = x + math.cos(angle) * length, y + math.sin(angle) * length
-        branch(art, x, y, x1, y1, width, GREYWOOD)
+        branch(art, x * f, y * f, x1 * f, y1 * f, width * f if f == 1 or width > 1 else 1.5, GREYWOOD)
         if depth > 0:
             for turn in (-0.45, 0.4) if depth > 1 or r.random() < 0.7 else (r.choice([-0.4, 0.4]),):
                 grow(x1, y1, angle + turn + r.uniform(-0.2, 0.2), length * r.uniform(0.6, 0.75), max(width - 1, 1), depth - 1)
@@ -342,27 +344,34 @@ def dead_tree(variant: int) -> Image.Image:
     grow(cx, top + 4, -math.pi / 2 - 0.5, tall * 0.28, 3, 3)
     grow(cx, top + 4, -math.pi / 2 + 0.45, tall * 0.3, 3, 3)
     grow(cx, top + 14, -math.pi / 2 + 1.0, tall * 0.18, 2, 2)
-    art.outline(GREYWOOD[0])
+    for _ in range(f):
+        art.outline(GREYWOOD[0])
     return art.image()
 
 
-def shrub(variant: int) -> Image.Image:
-    """A thicket two or three tiles wide: a few low bundles, a berry or two."""
+def shrub(variant: int, fine: int = 1) -> Image.Image:
+    """A thicket two or three tiles wide: a few low bundles, a berry or two. `fine` draws
+    it that many times the draft's size: leaf by leaf, a light on each berry."""
     r = rng("shrub", variant)
+    f = fine
     wide, tall = r.randint(34, 52), r.randint(22, 30)
-    W, H = wide + 8, tall + SINK
-    art = Art(W, H)
-    ground = H - SINK + 4
+    W0, H0 = wide + 8, tall + SINK
+    art = Art(W0 * f, H0 * f)
+    ground = H0 - SINK + 4
     for k in range(4):
         bx = 4 + wide * (0.2 + 0.6 * k / 3) + r.uniform(-3, 3)
-        bundle(art, bx, ground - tall * r.uniform(0.35, 0.55), wide * 0.22, tall * 0.42, OAK, r, ("shrub", variant, k), gaps=False)
+        bundle(art, bx * f, (ground - tall * r.uniform(0.35, 0.55)) * f, wide * 0.22 * f, tall * 0.42 * f, OAK, r, ("shrub", variant, k), gaps=False)
     if variant % 2:
+        red, lit = hexes("c02a3a", "ff8a8a")
         for _ in range(6):
-            x, y = r.randint(6, W - 6), r.randint(ground - tall + 6, ground - 4)
-            if art.has(x, y):
-                art.put(x, y, hexes("c02a3a")[0])
-    art.a[ground + 2 :, :, 3] = 0
-    art.outline(OAK[0])
+            x, y = r.randint(6, W0 - 6), r.randint(ground - tall + 6, ground - 4)
+            if art.has(x * f, y * f):
+                for dx in range(f):
+                    for dy in range(f):
+                        art.put(x * f + dx, y * f + dy, lit if f > 1 and dx == dy == 0 else red)
+    art.a[(ground + 2) * f :, :, 3] = 0
+    for _ in range(f):
+        art.outline(OAK[0])
     return art.image()
 
 
@@ -715,25 +724,36 @@ def windmill(sails: bool = True) -> Image.Image:
     return art.image()
 
 
-def fence(variant: int) -> Image.Image:
-    """Three tiles of a picket fence: whole, with a gap and a picket fallen, or leaning."""
+def fence(variant: int, fine: int = 1) -> Image.Image:
+    """Three tiles of a picket fence: whole, with a gap and a picket fallen, or leaning.
+    `fine` draws it that many times the draft's size: each picket and rail lit along its
+    edge, a pointed head on each picket."""
     r = rng("fence", variant)
-    W, H = 3 * TILE, 22 + SINK
-    art = Art(W, H)
-    floor = H - SINK
+    f = fine
+    W0, H0 = 3 * TILE, 22 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
     lean = [0.0, 0.0, 0.18][variant % 3]
-    for x in range(1, W - 1, 6):
+    for x in range(1, W0 - 1, 6):
         if variant % 3 == 1 and 18 <= x < 30:
             continue
         tall = r.randint(16, 19)
         dx = lean * tall
-        art.line(x, floor + 4, x + dx, floor - tall, TIMBER[3], 3)
-        art.put(int(x + dx), floor - tall - 1, TIMBER[4])
+        art.line(x * f, (floor + 4) * f, (x + dx) * f, (floor - tall) * f, TIMBER[3], 3 * f)
+        if f > 1:
+            art.line(x * f - 2, (floor + 4) * f, (x + dx) * f - 2, (floor - tall) * f + 2, TIMBER[4], 1)
+            for d in range(-2, 3):  # its head, to a point
+                art.put((x + dx) * f + d, (floor - tall) * f - 1 - (2 - abs(d)), TIMBER[4] if d <= 0 else TIMBER[3])
+        else:
+            art.put(int(x + dx), floor - tall - 1, TIMBER[4])
     for y in (floor - 6, floor - 14):
-        art.line(0, y, W - 1, y - (lean * 6 if lean else 0), TIMBER[2], 2)
+        art.line(0, y * f, W0 * f - 1, (y - (lean * 6 if lean else 0)) * f, TIMBER[2], 2 * f)
+        if f > 1:
+            art.line(0, y * f - 1, W0 * f - 1, (y - (lean * 6 if lean else 0)) * f - 1, TIMBER[3], 1)
     if variant % 3 == 1:
-        art.line(18, floor - 1, 31, floor - 3, TIMBER[2], 2)
-    art.outline(TIMBER[0])
+        art.line(18 * f, (floor - 1) * f, 31 * f, (floor - 3) * f, TIMBER[2], 2 * f)
+    for _ in range(f):
+        art.outline(TIMBER[0])
     return art.image()
 
 
@@ -762,23 +782,30 @@ def cart() -> Image.Image:
     return art.image()
 
 
-def haystack(variant: int) -> Image.Image:
-    """A stack of old hay gone grey-gold, a pole through its top."""
+def haystack(variant: int, fine: int = 1) -> Image.Image:
+    """A stack of old hay gone grey-gold, a pole through its top. `fine` draws it that
+    many times the draft's size: a round profile, the straw in finer strands."""
     r = rng("hay", variant)
-    W, H = 46, 40 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for y in range(floor - 34, floor + 4):
+    f = fine
+    W0, H0 = 46, 40 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for Y in range((floor - 34) * f, (floor + 4) * f):
+        y = Y / f
         t = (y - (floor - 34)) / 38
         half = 6 + 17 * math.sin(min(t * 1.4, 1) * math.pi / 2)
-        for x in range(int(W / 2 - half), int(W / 2 + half)):
-            off = (x - W / 2) / half
+        for X in range(int((W0 / 2 - half) * f), int((W0 / 2 + half) * f)):
+            x = X / f
+            off = (x - W0 / 2) / half
             k = 5 if off < -0.5 else 4 if off < 0 else 3 if off < 0.5 else 2
-            if (x * 3 + y * 5) % 11 == 0:
+            if (X * 3 + Y * 5) % 11 == 0:
                 k = max(k - 1, 1)
-            art.put(x, y, THATCH[k])
-    art.line(W // 2, floor - 42, W // 2, floor - 30, TIMBER[3], 2)
-    art.outline(THATCH[0])
+            if f > 1 and (X * 7 + Y * 2) % 23 == 0:
+                k = min(k + 1, len(THATCH) - 1)  # a strand that catches the light
+            art.put(X, Y, THATCH[k])
+    art.line(W0 // 2 * f, (floor - 42) * f, W0 // 2 * f, (floor - 30) * f, TIMBER[3], 2 * f)
+    for _ in range(f):
+        art.outline(THATCH[0])
     return art.image()
 
 
@@ -2134,19 +2161,35 @@ def crypt() -> Image.Image:
     return art.image()
 
 
-def iron_fence(variant: int) -> Image.Image:
-    """Three tiles of the graveyard's iron railing, spear-headed, one bar bent."""
-    W, H = 3 * TILE, 20 + SINK
-    art = Art(W, H)
-    floor = H - SINK
-    for x in range(2, W - 1, 4):
+def iron_fence(variant: int, fine: int = 1) -> Image.Image:
+    """Three tiles of the graveyard's iron railing, spear-headed, one bar bent. `fine`
+    draws it that many times the draft's size: round bars lit on one side, spear heads
+    with a point, rails with an edge."""
+    f = fine
+    W0, H0 = 3 * TILE, 20 + SINK
+    art = Art(W0 * f, H0 * f)
+    floor = H0 - SINK
+    for x in range(2, W0 - 1, 4):
         bend = 2 if variant and x == 18 else 0
-        art.line(x, floor + 3, x + bend, floor - 16, IRONWORK[3], 1)
-        art.put(x + bend, floor - 17, IRONWORK[5])
-        art.put(x + bend - 1, floor - 16, IRONWORK[4])
-        art.put(x + bend + 1, floor - 16, IRONWORK[4])
+        if f == 1:
+            art.line(x, floor + 3, x + bend, floor - 16, IRONWORK[3], 1)
+            art.put(x + bend, floor - 17, IRONWORK[5])
+            art.put(x + bend - 1, floor - 16, IRONWORK[4])
+            art.put(x + bend + 1, floor - 16, IRONWORK[4])
+            continue
+        art.line(x * f, (floor + 3) * f, (x + bend) * f, (floor - 16) * f, IRONWORK[4], 1)
+        art.line(x * f + 1, (floor + 3) * f, (x + bend) * f + 1, (floor - 16) * f, IRONWORK[2], 1)
+        top = (floor - 16) * f
+        for dy, half in ((-4, 0), (-3, 1), (-2, 2), (-1, 2), (0, 1)):  # the spear head
+            for d in range(-half, half + 2):
+                art.put((x + bend) * f + d, top + dy, IRONWORK[5] if d <= 0 else IRONWORK[3])
     for y in (floor - 13, floor - 3):
-        art.line(0, y, W - 1, y, IRONWORK[2], 1)
+        if f == 1:
+            art.line(0, y, W0 - 1, y, IRONWORK[2], 1)
+            continue
+        for X in range(W0 * f):
+            art.put(X, y * f, IRONWORK[4])
+            art.put(X, y * f + 1, IRONWORK[2])
     return art.image()
 
 
@@ -2420,6 +2463,18 @@ PLAN = _plan()
 PICTURE_KEYS = [key for key, *_ in PLAN]
 ENTRIES = [_picture(key, order, lit) for key, _, order, lit, _ in PLAN]
 SINK_OF = {key: sink for key, *_, sink in PLAN}
+# What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
+# its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
+FINE = {}
+for _v in range(SHRUBS):
+    FINE[f"earth_shrub_{_v}"] = lambda v=_v: shrub(v, DENSITY)
+for _v in range(DEADS):
+    FINE[f"earth_dead_tree_{_v}"] = lambda v=_v: dead_tree(v, DENSITY)
+for _v in range(3):
+    FINE[f"earth_fence_{_v}"] = lambda v=_v: fence(v, DENSITY)
+for _v in range(2):
+    FINE[f"earth_haystack_{_v}"] = lambda v=_v: haystack(v, DENSITY)
+    FINE[f"earth_iron_fence_{_v}"] = lambda v=_v: iron_fence(v, DENSITY)
 _DRAWN: dict[str, Image.Image] = {}
 
 

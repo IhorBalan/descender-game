@@ -429,40 +429,51 @@ def roof_over(wide: int) -> Image.Image:
 # --- The hall --------------------------------------------------------------------------
 
 
-def column(art: Art, cx, top, foot, wide: float, stone=None):
+def column(art: Art, cx, top, foot, wide: float, stone=None, fine: int = 1):
     """A column of bright marble: a fluted shaft lit on its left, a base on a block, a
-    capital of leaves under a slab."""
+    capital of leaves under a slab. Its places are in the draft's pixels; `art` is `fine`
+    times the draft's size, and at more than one each flute has a lit edge, the leaves of
+    the capital curl, and the gold under it has a sheen."""
     stone = stone or MARBLE
+    f = fine
     half = wide / 2
-    for y in range(int(top + 12), int(foot - 10)):
-        for x in range(int(cx - half), int(cx + half)):
-            off = (x + 0.5 - cx) / half
-            flute = int((off + 1) * wide / 2.67) % 3
+    for Y in range(int(top + 12) * f, int(foot - 10) * f):
+        for X in range(int((cx - half) * f), int((cx + half) * f)):
+            off = (X / f + 0.5 / f - cx) / half
+            fluted = (off + 1) * wide / 2.67
+            flute = int(fluted) % 3
             k = 5 + round_shift(off) + (1 if flute == 0 else -1 if flute == 2 else 0)
-            art.put(x, y, tone(stone, k))
+            if f > 1 and flute == 1 and fluted % 1 < 0.18:
+                k += 1  # the lit edge of a flute
+            art.put(X, Y, tone(stone, k))
     for i, (dy, grow, k) in enumerate(((0, 5, 4), (3, 3, 6), (5, 4, 3), (8, 2, 5))):
-        for y in range(int(foot - 10 + dy), int(foot - 10 + dy + (3 if i < 3 else 2))):
-            for x in range(int(cx - half - grow), int(cx + half + grow)):
-                art.put(x, y, tone(stone, k + round_shift((x + 0.5 - cx) / (half + grow))))
+        for Y in range(int(foot - 10 + dy) * f, int(foot - 10 + dy + (3 if i < 3 else 2)) * f):
+            for X in range(int((cx - half - grow) * f), int((cx + half + grow) * f)):
+                lit = 1 if f > 1 and Y == int(foot - 10 + dy) * f and k < 6 else 0
+                art.put(X, Y, tone(stone, k + lit + round_shift((X / f + 0.5 / f - cx) / (half + grow))))
     # The capital: a slab, a bell of leaves under it.
-    for y in range(int(top), int(top + 4)):
-        for x in range(int(cx - half - 6), int(cx + half + 6)):
-            art.put(x, y, tone(stone, (6 if y == top else 5) + round_shift((x + 0.5 - cx) / (half + 6))))
-    for i in range(8):
-        grow = 5 - i * 0.6
-        for x in range(int(cx - half - grow), int(cx + half + grow)):
-            leaf = (x + i // 2) % 4 == 0
-            art.put(x, int(top + 4 + i), tone(stone, (3 if leaf else 5) + round_shift((x + 0.5 - cx) / (half + grow))))
-    for x in range(int(cx - half - 4), int(cx + half + 4)):
-        art.put(x, int(top + 4), GOLD[4])
+    for Y in range(int(top) * f, int(top + 4) * f):
+        for X in range(int((cx - half - 6) * f), int((cx + half + 6) * f)):
+            art.put(X, Y, tone(stone, (6 if Y / f == top else 5) + round_shift((X / f + 0.5 / f - cx) / (half + 6))))
+    for I in range(8 * f):
+        i = I / f
+        grow = 5 - (I // f if f == 1 else i) * 0.6
+        for X in range(int((cx - half - grow) * f), int((cx + half + grow) * f)):
+            leaf = (X + I // 2) % (4 * f) == 0 if f > 1 else (X + I // 2) % 4 == 0
+            art.put(X, int(top + 4) * f + I, tone(stone, (3 if leaf else 5) + round_shift((X / f + 0.5 / f - cx) / (half + grow))))
+    for X in range(int((cx - half - 4) * f), int((cx + half + 4) * f)):
+        for s in range(f):
+            art.put(X, int(top + 4) * f + s, GOLD[5] if f > 1 and s == 0 else GOLD[4])
 
 
-def pillar(rows: int, wide: int = 2) -> Image.Image:
+def pillar(rows: int, wide: int = 2, fine: int = 1) -> Image.Image:
     """A column standing by itself, `rows` tiles high."""
-    W, H = (wide + 2) * T, rows * T
-    art = Art(W, H)
-    column(art, W / 2 + (T / 2 if wide % 2 == 0 else 0), 0, H, wide * T * 0.62)
-    art.outline(MARBLE[0])
+    f = fine
+    W0, H0 = (wide + 2) * T, rows * T
+    art = Art(W0 * f, H0 * f)
+    column(art, W0 / 2 + (T / 2 if wide % 2 == 0 else 0), 0, H0, wide * T * 0.62, fine=f)
+    for _ in range(f):
+        art.outline(MARBLE[0])
     return art.image()
 
 
@@ -1268,106 +1279,167 @@ def chamber(name: str, cols: int, rows: int, windows, wings=None) -> Image.Image
 # --- What grows and stands in a garden --------------------------------------------------------
 
 
-def flowers(variant: int) -> Image.Image:
+def flowers(variant: int, fine: int = 1) -> Image.Image:
     """A bed of flowers, a tile high and three to five long: stems and leaves, and heads of
-    pink, white, gold, blue and violet, no two beds the same."""
+    pink, white, gold, blue and violet, no two beds the same. `fine` draws it that many
+    times the draft's size: leaves that are lit at their tips, thin stems, and each head
+    a flower of five petals round its eye."""
     r = rng("heaven flowers", variant)
+    f = fine
     wide = (4, 3, 5, 4)[variant % 4]
-    W, H = wide * T, T + 6
-    art = Art(W, H)
-    for x in range(2, W - 2):
+    W0, H0 = wide * T, T + 6
+    art = Art(W0 * f, H0 * f)
+
+    def block(x, y, colour, lit=None):
+        for s in range(f):
+            for t in range(f):
+                art.put(x * f + s, y * f + t, lit if lit is not None and s == 0 and t == 0 else colour)
+
+    for x in range(2, W0 - 2):
         tall = r.randint(3, 6)
-        for y in range(H - 2 - tall, H):
+        for y in range(H0 - 2 - tall, H0):
             if r.random() < 0.8:
-                art.put(x, y, VINE[r.choice([2, 3, 3, 4])])
+                k = r.choice([2, 3, 3, 4])
+                block(x, y, VINE[k], VINE[min(k + 1, 6)] if f > 1 and y == H0 - 2 - tall else None)
     for _ in range(wide * 5):
-        x, y = r.randint(3, W - 4), r.randint(3, H - 8)
+        x, y = r.randint(3, W0 - 4), r.randint(3, H0 - 8)
         ramp = FLOWERS[r.randrange(len(FLOWERS)) if variant % 4 else r.choice([0, 0, 1, 2])]
-        for yy in range(y + 2, H - 3):
-            art.put(x, yy, VINE[2])
+        for yy in range((y + 2) * f, (H0 - 3) * f):
+            art.put(x * f, yy, VINE[2])
         if r.random() < 0.6:
-            art.put(x + r.choice([-1, 1]), y + 4, VINE[4])
-        for dx, dy, k in ((0, 0, 3), (-1, 0, 2), (1, 0, 2), (0, -1, 3), (0, 1, 1)):
-            art.put(x + dx, y + dy, ramp[k - 1])
-        art.put(x, y, GOLD[5] if ramp is not FLOWERS[2] else GOLD[2])
+            side = r.choice([-1, 1])
+            if f == 1:
+                art.put(x + side, y + 4, VINE[4])
+            else:
+                for i in range(1, 2 * f + 1):
+                    art.put(x * f + side * i, (y + 4) * f - i // 2, VINE[4] if i < 2 * f else VINE[5])
+        eye = GOLD[5] if ramp is not FLOWERS[2] else GOLD[2]
+        if f == 1:
+            for dx, dy, k in ((0, 0, 3), (-1, 0, 2), (1, 0, 2), (0, -1, 3), (0, 1, 1)):
+                art.put(x + dx, y + dy, ramp[k - 1])
+            art.put(x, y, eye)
+            continue
+        X, Y = x * f, y * f
+        for dx, dy, k in (
+            (0, -2, 3), (1, -2, 3), (-2, -1, 3), (-1, -1, 3), (2, -1, 2), (3, -1, 2),
+            (-2, 0, 2), (-1, 0, 3), (2, 0, 2), (3, 0, 1), (-1, 1, 2), (0, 2, 1), (1, 2, 1), (2, 1, 1),
+        ):  # fmt: skip
+            art.put(X + dx, Y + dy, ramp[k - 1])
+        for dx, dy in ((0, 0), (1, 0), (0, 1), (1, 1)):
+            art.put(X + dx, Y + dy, eye)
     return art.image()
 
 
-def hedge(variant: int) -> Image.Image:
+def hedge(variant: int, fine: int = 1) -> Image.Image:
     """Green that is kept: 0 a low hedge clipped square with blossom in it, 1 a ball on a
-    stem, 2 a tree clipped to three rounds one over another."""
+    stem, 2 a tree clipped to three rounds one over another. `fine` draws it that many
+    times the draft's size: leaf by leaf, and blossom with a lit petal."""
     r = rng("heaven hedge", variant)
+    f = fine
     if variant == 0:
-        W, H = 5 * T, 2 * T
-        art = Art(W, H)
+        W0, H0 = 5 * T, 2 * T
+        art = Art(W0 * f, H0 * f)
         for i in range(5):
-            bundle(art, 12 + i * 14, H - 12 + r.uniform(-1, 1), 11, 11, VINE, r, ("hedge", i), gaps=False)
-        for y in range(H - 3, H):
-            for x in range(6, W - 6):
-                art.put(x, y, VINE[1])
+            bundle(art, (12 + i * 14) * f, (H0 - 12 + r.uniform(-1, 1)) * f, 11 * f, 11 * f, VINE, r, ("hedge", i), gaps=False)
+        for Y in range((H0 - 3) * f, H0 * f):
+            for X in range(6 * f, (W0 - 6) * f):
+                art.put(X, Y, VINE[1])
         for _ in range(12):
-            x, y = r.randint(6, W - 7), r.randint(H - 20, H - 6)
-            if art.has(x, y):
-                art.put(x, y, BLOSSOM[6])
-                art.put(x + 1, y, BLOSSOM[4])
+            x, y = r.randint(6, W0 - 7), r.randint(H0 - 20, H0 - 6)
+            if art.has(x * f, y * f):
+                if f == 1:
+                    art.put(x, y, BLOSSOM[6])
+                    art.put(x + 1, y, BLOSSOM[4])
+                    continue
+                for dx, dy, k in ((0, 0, 6), (1, 0, 6), (2, 0, 5), (0, 1, 5), (1, 1, 4), (2, 1, 4), (1, -1, 5)):
+                    art.put(x * f + dx, y * f + dy, BLOSSOM[k])
     elif variant == 1:
-        W, H = 3 * T, 3 * T + 4
-        art = Art(W, H)
-        trunk(art, W // 2, H - 1, T + 10, 5, 4, BIRCH, r, roots=False)
-        bundle(art, W / 2, H - T - 22, 15, 15, VINE, r, ("ball",), gaps=False)
+        W0, H0 = 3 * T, 3 * T + 4
+        art = Art(W0 * f, H0 * f)
+        trunk(art, (W0 // 2) * f, H0 * f - 1, (T + 10) * f, 5 * f, 4 * f, BIRCH, r, roots=False)
+        bundle(art, W0 / 2 * f, (H0 - T - 22) * f, 15 * f, 15 * f, VINE, r, ("ball",), gaps=False)
     else:
-        W, H = 3 * T, 5 * T
-        art = Art(W, H)
-        trunk(art, W // 2, H - 1, T, 5, 4, BIRCH, r, roots=False)
-        for cy, rad in ((H - T - 10, 17), (H - T - 32, 13), (H - T - 50, 9)):
-            bundle(art, W / 2, cy, rad, rad * 0.8, VINE, r, ("cone", rad), gaps=False)
-    art.outline(VINE[0])
+        W0, H0 = 3 * T, 5 * T
+        art = Art(W0 * f, H0 * f)
+        trunk(art, (W0 // 2) * f, H0 * f - 1, T * f, 5 * f, 4 * f, BIRCH, r, roots=False)
+        for cy, rad in ((H0 - T - 10, 17), (H0 - T - 32, 13), (H0 - T - 50, 9)):
+            bundle(art, W0 / 2 * f, cy * f, rad * f, rad * 0.8 * f, VINE, r, ("cone", rad), gaps=False)
+    for _ in range(f):
+        art.outline(VINE[0])
     return art.image()
 
 
-def bench() -> Image.Image:
-    """A bench of marble: a slab on two legs that curl, a line of gold along its edge."""
-    W, H = 3 * T + 8, T + 2
-    art = Art(W, H)
-    for x in range(2, W - 2):
-        art.put(x, 4, MARBLE[6])
-        art.put(x, 5, GOLD[5])
-        art.put(x, 6, MARBLE[5])
-        art.put(x, 7, MARBLE[4])
-        art.put(x, 8, MARBLE[2])
-    for lx in (9, W - 10):
-        for y in range(9, H):
-            swell = 3 + (2 if y > H - 4 else 1 if y < 12 else 0)
-            for x in range(lx - swell, lx + swell):
-                art.put(x, y, tone(MARBLE, 5 if x < lx - 1 else 4 if x < lx + 1 else 3))
-    art.outline(MARBLE[0])
+def bench(fine: int = 1) -> Image.Image:
+    """A bench of marble: a slab on two legs that curl, a line of gold along its edge.
+    `fine` draws it that many times the draft's size: the slab's moulding, a sheen on the
+    gold, legs that swell in a curve."""
+    f = fine
+    W0, H0 = 3 * T + 8, T + 2
+    art = Art(W0 * f, H0 * f)
+    rows = ((4, MARBLE[6], MARBLE[6]), (5, GOLD[6], GOLD[4]), (6, MARBLE[5], MARBLE[6]), (7, MARBLE[4], MARBLE[4]), (8, MARBLE[2], MARBLE[3]))
+    for X in range(2 * f, (W0 - 2) * f):
+        for y, first, second in rows:
+            for s in range(f):
+                art.put(X, y * f + s, (first if s == 0 else second) if f > 1 else (GOLD[5] if y == 5 else first))
+    for lx in (9, W0 - 10):
+        for Y in range(9 * f, H0 * f):
+            y = Y / f
+            if f == 1:
+                swell = 3 + (2 if y > H0 - 4 else 1 if y < 12 else 0)
+            else:
+                swell = 3 + 2 * max(0.0, (y - (H0 - 5)) / 4) ** 1.5 + 1.0 * max(0.0, (12 - y) / 3)
+            for X in range(int((lx - swell) * f), int((lx + swell) * f)):
+                x = X / f
+                art.put(X, Y, tone(MARBLE, 5 if x < lx - 1 else 4 if x < lx + 1 else 3))
+    for _ in range(f):
+        art.outline(MARBLE[0])
     return art.image()
 
 
-def urn() -> Image.Image:
-    """An urn of marble banded with gold on a block of stone, flowers spilling out of it."""
+def urn(fine: int = 1) -> Image.Image:
+    """An urn of marble banded with gold on a block of stone, flowers spilling out of it.
+    `fine` draws it that many times the draft's size: a smooth belly, bands with a
+    sheen, leaf by leaf in what spills out of it."""
     r = rng("heaven urn")
-    W, H = 2 * T, 3 * T
-    art = Art(W, H)
-    cx = W / 2
-    ashlar(art, cx - 9, H - T, cx + 9, H, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / 9))
-    for x in range(int(cx - 11), int(cx + 11)):
-        art.put(x, H - T, MARBLE[6])
-        art.put(x, H - T + 1, MARBLE[3])
-    for i in range(18):  # the urn: a foot, a belly, a neck, a lip
-        y = H - T - 1 - i
-        half = (4, 3, 3, 5, 7, 8, 9, 9, 9, 8, 7, 6, 5, 4, 4, 5, 7, 8)[i]
-        for x in range(int(cx - half), int(cx + half)):
-            art.put(x, y, GOLD[5 if x < cx else 3] if i in (9, 16) else tone(MARBLE, 5 + round_shift((x + 0.5 - cx) / half)))
+    f = fine
+    W0, H0 = 2 * T, 3 * T
+    block = Art(W0, H0)
+    cx = W0 / 2
+    ashlar(block, cx - 9, H0 - T, cx + 9, H0, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / 9))
+    art = Art(W0 * f, H0 * f)
+    art.a = np.kron(block.a, np.ones((f, f, 1), dtype=np.uint8)) if f > 1 else block.a
+    for X in range(int(cx - 11) * f, int(cx + 11) * f):
+        for s in range(f):
+            art.put(X, (H0 - T) * f + s, MARBLE[6])
+            art.put(X, (H0 - T + 1) * f + s, MARBLE[3])
+    profile = (4, 3, 3, 5, 7, 8, 9, 9, 9, 8, 7, 6, 5, 4, 4, 5, 7, 8)
+    for I in range(18 * f):  # the urn: a foot, a belly, a neck, a lip
+        i = I / f
+        n = int(i)
+        half = profile[n] if f == 1 else profile[n] + (profile[min(n + 1, 17)] - profile[n]) * (i - n)
+        Y = (H0 - T) * f - 1 - I
+        band = n in (9, 16)
+        for X in range(int((cx - half) * f), int((cx + half) * f)):
+            x = X / f
+            if band:
+                colour = GOLD[(6 if f > 1 and I % f == f - 1 and x < cx else 5) if x < cx else 3]
+            else:
+                colour = tone(MARBLE, 5 + round_shift((x + 0.5 / f - cx) / half))
+            art.put(X, Y, colour)
     for k, (dx, dy, rad) in enumerate(((0, -6, 8), (-6, -2, 6), (6, -2, 6))):
-        bundle(art, cx + dx, H - T - 20 + dy, rad, rad, VINE, r, ("urn", k), gaps=False)
+        bundle(art, (cx + dx) * f, (H0 - T - 20 + dy) * f, rad * f, rad * f, VINE, r, ("urn", k), gaps=False)
     for _ in range(16):
-        x, y = int(cx) + r.randint(-11, 11), H - T - 20 + r.randint(-12, 4)
-        if art.has(x, y):
+        x, y = int(cx) + r.randint(-11, 11), H0 - T - 20 + r.randint(-12, 4)
+        if art.has(x * f, y * f):
             ramp = FLOWERS[r.randrange(3)]
-            art.put(x, y, ramp[2])
-            art.put(x + 1, y, ramp[1])
-    art.outline(MARBLE[0])
+            if f == 1:
+                art.put(x, y, ramp[2])
+                art.put(x + 1, y, ramp[1])
+                continue
+            for dx, dy, k in ((0, 0, 2), (1, 0, 2), (2, 0, 1), (0, 1, 1), (1, 1, 1), (1, -1, 2)):
+                art.put(x * f + dx, y * f + dy, ramp[k])
+    for _ in range(f):
+        art.outline(MARBLE[0])
     return art.image()
 
 
@@ -1457,33 +1529,41 @@ def swan(variant: int) -> Image.Image:
 CLOUD = ramp_of("8fa3c8 a9bbdc b9c8e6 cfdaf0 e0e8f6 eef3fb ffffff")
 
 
-def puff(variant: int) -> Image.Image:
+def puff(variant: int, fine: int = 1) -> Image.Image:
     """A billow of cloud for the underside and the ends of an island, whose tiles end in
     steps: a few round lumps side by side, each lit from over it and in its own shade
     under, soft at its rim. It is stood in the cell of air under a cloud's tile and hangs
-    about the line between them, so a row of them is a cloud's own ragged edge."""
+    about the line between them, so a row of them is a cloud's own ragged edge. `fine`
+    draws it that many times the draft's size: each lump a true round, its shade in
+    even bands, its rim thinning in a ring rather than a chequer."""
     r = rng("heaven puff", variant)
+    f = fine
     wide = (4, 5, 6, 3, 5)[variant % 5]
-    W, H = wide * T, 3 * T
-    art = Art(W, H)
+    W0, H0 = wide * T, 3 * T
+    art = Art(W0 * f, H0 * f)
     lumps = []
     count = wide + 1
     for i in range(count):
-        cx = W * (i + 0.5) / count + r.uniform(-3, 3)
+        cx = W0 * (i + 0.5) / count + r.uniform(-3, 3)
         rad = r.uniform(9, 15) * (0.75 if i in (0, count - 1) else 1.0)
-        lumps.append((cx, H * 0.42 + r.uniform(-3, 5), rad))
+        lumps.append((cx, H0 * 0.42 + r.uniform(-3, 5), rad))
     for cx, cy, rad in sorted(lumps, key=lambda lump: lump[2]):
-        for y in range(int(cy - rad), int(cy + rad) + 1):
-            for x in range(int(cx - rad), int(cx + rad) + 1):
+        for Y in range(int(cy - rad) * f, (int(cy + rad) + 1) * f):
+            for X in range(int(cx - rad) * f, (int(cx + rad) + 1) * f):
+                x, y = (X + 0.5) / f - 0.5, (Y + 0.5) / f - 0.5
                 d = math.hypot(x + 0.5 - cx, (y + 0.5 - cy) * 1.15) / rad
                 if d > 1:
                     continue
                 down = (y + 0.5 - cy) / rad  # -1 its top, 1 its underside
                 side = (x + 0.5 - cx) / rad
                 k = 5 - round(max(down, 0) * 2.6 + max(side, 0) * 0.9 + (0.9 if d > 0.86 and down > -0.2 else 0))
-                if d > 0.9 and (x + y) % 2 and down > 0.3:
+                if f == 1 and d > 0.9 and (x + y) % 2 and down > 0.3:
                     continue  # a rim that thins out
-                art.put(x, y, tone(CLOUD, max(k, 2)))
+                if f > 1 and d > 0.95 and down > 0.3:
+                    continue  # a rim that thins out, in a ring
+                if f > 1 and down < -0.55 and side < -0.1 and d < 0.8:
+                    k += 1  # the top of a lump, where the light is
+                art.put(X, Y, tone(CLOUD, max(k, 2)))
     return art.image()
 
 
@@ -1632,6 +1712,17 @@ for _v in range(BLOSSOMS):
 for _v in range(GOLDS):
     for _frame in range(FRAMES):
         FINE[f"heaven_gold_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: tree(v, GOLDLEAF, sway=s, fine=DENSITY)
+# The billows under a cloud, and what a garden is dressed with.
+for _v in range(PUFFS):
+    FINE[f"heaven_puff_{_v}"] = lambda v=_v: puff(v, DENSITY)
+for _v in range(FLOWER_BEDS):
+    FINE[f"heaven_flowers_{_v}"] = lambda v=_v: flowers(v, DENSITY)
+for _v in range(HEDGES):
+    FINE[f"heaven_hedge_{_v}"] = lambda v=_v: hedge(v, DENSITY)
+FINE["heaven_bench"] = lambda: bench(DENSITY)
+FINE["heaven_urn"] = lambda: urn(DENSITY)
+for _rows, _wide in PILLARS:
+    FINE[f"heaven_pillar_{_rows}x{_wide}"] = lambda a=(_rows, _wide): pillar(*a, fine=DENSITY)
 PICTURE_KEYS = [key for key, *_ in PLAN]
 ENTRIES = [
     {"key": key, "kind": "picture", "scroll": 1.0, "scrollUp": 1.0, "rise": 0, "drift": 0.0, "order": order, "lit": lit, "tinted": False}
