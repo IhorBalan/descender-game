@@ -1614,11 +1614,10 @@ def repaint(picture: Image.Image, materials, *, seed="repaint", keep_far: float 
         sel = (s.mat == m) & ~keep
         if m == KEEP or not sel.any():
             continue
-        step = (max(ramp, key=lambda c: sum(c))[0] * 0 + 1) / len(ramp)  # a step of the ramp, about
         lr = [sum(c) / 765 for c in ramp]
         step = max((max(lr) - min(lr)) / (len(ramp) - 1), 0.02)
-        shift = int(np.clip(np.round((lum[sel].mean() - new_lum[sel].mean()) / step), -3, 3))
-        s.var = np.where(sel, s.var + shift, s.var)
+        steps = int(np.clip(np.round((lum[sel].mean() - new_lum[sel].mean()) / step), -3, 3))
+        s.var = np.where(sel, s.var + steps, s.var)
     out, nm = render(s, ramps, **opts)
     o = np.array(out)
     o[keep] = a[keep]
@@ -1723,33 +1722,6 @@ def palette_families(picture: Image.Image, least: int = 6, kinds: dict | None = 
             kind = "keep"  # a small bright thing (a bell, a finial, a sign): as drawn
         out.append((colours, kind, base))
     return out
-
-
-def _bond(w: int, h: int, seed, kind: str):
-    """A bond laid over a whole picture: for stone, courses of dressed blocks of a few lengths,
-    each course's joints off the one under; for tiles, rows of shingles laid half over. Returns
-    (the joints, each piece's number, how far down its piece each pixel lies, 0 .. 1)."""
-    r = random.Random(f"bond {seed} {kind}")
-    seam = np.zeros((h, w), dtype=bool)
-    labels = np.zeros((h, w), dtype=int)
-    rise = np.zeros((h, w))
-    course = 10 if kind == "stone" else 7
-    n = 0
-    for row, y0 in enumerate(range(0, h, course)):
-        y1 = min(y0 + course, h)
-        seam[y1 - 1, :] = True
-        x = -r.randint(0, 20) if kind == "stone" else -(row % 2) * 4
-        while x < w:
-            wide = r.randint(14, 26) if kind == "stone" else 9
-            a, b = max(x, 0), min(x + wide, w)
-            if b > a:
-                n += 1
-                labels[y0:y1, a:b] = n
-                if x + wide < w:
-                    seam[y0:y1, b - 1] = True
-            x += wide
-        rise[y0:y1, :] = (np.arange(y0, y1) - y0)[:, None] / max(course - 1, 1)
-    return seam, labels, rise
 
 
 def repainted(picture: Image.Image, seed, kinds: dict | None = None) -> tuple[Image.Image, Image.Image]:
