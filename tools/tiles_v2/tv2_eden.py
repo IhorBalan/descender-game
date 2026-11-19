@@ -3208,6 +3208,14 @@ for _key in ("eden_leaf_0", "eden_leaf_1", "eden_leaf_2", "eden_leaf_3", "eden_i
 # first-style drawing as the material it is and painted anew in it, every opening kept.
 for _key in ("eden_making_door", "eden_low_gate", "eden_arch_stone", "eden_arch_vine", "eden_window", "eden_buttress_0", "eden_buttress_1", "eden_ruin_0", "eden_ruin_1", "eden_ruin_2"):
     STYLE[_key] = lambda w, h, k=_key: tv2_style.repainted(FINE[k](), k)
+
+# The keeper statues carved anew (tv2_style.keeper_statue), the broken one snapped off along
+# the line its first-style drawing breaks it; the pillars turned round over their outlines.
+KEEPER_BREAK = [(20, 100), (40, 94), (50, 84), (60, 77), (70, 80), (80, 82), (95, 86), (110, 90), (125, 97), (140, 104)]
+STYLE["eden_knight"] = lambda w, h: tv2_style.keeper_statue(w, h, "eden knight")
+STYLE["eden_knight_1"] = lambda w, h: tv2_style.keeper_statue(w, h, "eden knight 1", broken=KEEPER_BREAK)
+for _key in ("eden_pillar_10x2", "eden_pillar_10x1"):
+    STYLE[_key] = lambda w, h, k=_key: tv2_style.turned(FINE[k](), k)
 for _v in range(TEAL_TREES):
     for _frame in range(FRAMES):
         FINE[f"eden_teal_tree_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: teal_tree(v, s, fine=DENSITY)

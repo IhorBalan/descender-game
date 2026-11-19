@@ -3128,6 +3128,9 @@ for _key in ("earth_cottage_ruin", "earth_cottage", "earth_chapel", "earth_windm
 for _key in ("earth_cottage_ruin", "earth_cottage", "earth_chapel", "earth_windmill", "earth_crypt", "earth_gateway", "earth_gate_arch", "earth_winch_hut", "earth_pithead", "earth_jetty"):
     STYLE[_key] = lambda w, h, k=_key: tv2_style.repainted(FINE[k](), k, kinds={"b09e7c": "plaster"} if "cottage" in k else None)
 
+# The ruined colonnade, its columns turned round over their outlines (tv2_style.turned).
+STYLE["earth_colonnade"] = lambda w, h: tv2_style.turned(FINE["earth_colonnade"](), "earth_colonnade")
+
 FINE = {}
 # The trees.
 for _v in range(OAKS):

@@ -257,6 +257,23 @@ bridges, parapets, span and rooms; Eden's doors and gates, arches, window,
 buttresses and ruins. Statues, columns, machines, portals and Paradise's
 separate roofs keep the relief: the repaint would cut them into blocks.
 
+**Statues and columns.** A column or pillar is turned (`turned`): each row of
+each upright of its drawing becomes a true round section, the shaft cut in
+flutes that crowd toward its sides, a moulding where the outline steps (a
+base, a capital, a band), a broken top ragged where the drawing breaks it; a
+run too wide to be a column (a lintel) is a dressed block and a fallen drum a
+drum. Paradise's pillars, Eden's pillars and the Earth's colonnade are drawn
+so, their gold kept. Eden's keeper statues are carved anew
+(`keeper_statue`): hooded, a mantle over a robe in folds, the hands crossed on
+the pommel of a sword set point down, on a plinth of dressed blocks, moss at
+its foot; the broken one snapped off along the line its drawing breaks it.
+Paradise's angels are carved anew over their own plans (`angel_statue`): the
+wings keep their drawing's outline and are filled with a fan of feathers from
+each shoulder in bands (each band under the one nearer the shoulder, the long
+flight feathers along the lower edge, a rounded leading edge along the top),
+the robe follows the drawing's outline in folds, the hands are joined, the
+halo and belt are gold.
+
 **The ground.** A material's inside is drawn in the second style where its
 kind has a texture for it (`tv2_style.tile_texture`; the rest, glass and the
 plain, as before): a height field on a tile that repeats, lit by the one light
