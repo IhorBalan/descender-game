@@ -77,7 +77,14 @@ ways:
     what grows on a floor and bends as the hero goes through it (a rib down
     each blade, petals on a flower), what is set in the ground of a floor,
     the crags by the Low Gate and the keepers' statues (folds, the pits the
-    weather has made, fingers on the grip). A part
+    weather has made, fingers on the grip); and the Making-house (its pipes
+    with a collar at each joint, its gears, pistons and door, and the
+    gathered who go into it, each with a head and a robe that sways), the
+    arches, the window (lead a pixel wide), the buttresses, the ruins, the
+    swords, Mereth and Ithuriel, the chains (link through link), the fog in
+    the door and the mist along a floor, the shafts of sun, the cracks and
+    the moss on the stone. Cut stone drawn at 32 has its joints a pixel wide
+    (`tv2_eden.fine_stones`). A part
     of such a picture that is still drawn on the draft (a wall of dressed
     stone, a plinth) goes in through `tv2_eden.doubled`, which knows the two
     sizes the art ships at and no other.
