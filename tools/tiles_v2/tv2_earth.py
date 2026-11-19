@@ -3123,6 +3123,11 @@ STYLE["earth_garden"] = lambda w, h: tv2_style.garden(w, h, SINK_OF["earth_garde
 for _key in ("earth_cottage_ruin", "earth_cottage", "earth_chapel", "earth_windmill", "earth_gateway", "earth_gate_arch", "earth_pithead", "earth_winch_hut", "earth_colonnade", "earth_reeds_0", "earth_reeds_0_s1", "earth_reeds_0_s2", "earth_reeds_1", "earth_reeds_1_s1", "earth_reeds_1_s2", "earth_reeds_2", "earth_reeds_2_s1", "earth_reeds_2_s2", "earth_lilies_0", "earth_lilies_1", "earth_jetty", "earth_post_3", "earth_post_4", "earth_post_5", "earth_post_6", "earth_post_7", "earth_post_8", "earth_post_9", "earth_post_10", "earth_post_11", "earth_post_12", "earth_rail_mid", "earth_rail_end", "earth_rail_start", "earth_minecart_0", "earth_minecart_1", "earth_sails_0", "earth_sails_1", "earth_sails_2", "earth_sails_3", "earth_crypt", "earth_crow_0", "earth_sheep_0", "earth_crow_1", "earth_sheep_1", "earth_cat", "earth_bird_0", "earth_bird_1", "earth_boat"):
     STYLE[_key] = lambda w, h, k=_key: tv2_style.relief(FINE[k]())
 
+# The buildings drawn again over their own plans (tv2_style.repaint): each region read from the
+# first-style drawing as the material it is and painted anew in it, every opening kept.
+for _key in ("earth_cottage_ruin", "earth_cottage", "earth_chapel", "earth_windmill", "earth_crypt", "earth_gateway", "earth_gate_arch", "earth_winch_hut", "earth_pithead", "earth_jetty"):
+    STYLE[_key] = lambda w, h, k=_key: tv2_style.repainted(FINE[k](), k, kinds={"b09e7c": "plaster"} if "cottage" in k else None)
+
 FINE = {}
 # The trees.
 for _v in range(OAKS):

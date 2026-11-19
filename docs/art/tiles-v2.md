@@ -234,6 +234,29 @@ the eye and its three figures are kept as drawn. Lights, glows,
 reflections, skies and what stands far off are not raised: they have no
 relief.
 
+**Buildings drawn again.** The buildings are then drawn again over their own
+plans (`repaint`): the drawing's colours are read as families (near in hue and
+saturation, greys with greys, each dark to light), each family as a material
+by its colour (grey stone, green ivy, a strong red or blue roof tiles, gold or
+a light kept as drawn, dark brown timber, straw thatch; a building names a
+family where the guess would be wrong, as the cottages' plaster). Each region
+is painted anew in its material: the drawing's own joints (its lines, not its
+dots of texture; a change of tone between blocks counts as a joint) part it
+into blocks, beams and shingles, each with its own lift and tilt, bevelled at
+its edges and keeping the shade the drawing gave it; plaster is smooth, timber
+has a grain, thatch lies in strands, a shingle's lip stands over the row
+under; dither is read as the shade it stands for. The whole is lit by the one
+light into new ramps that keep each family's range (marble stays pale), the
+eaves casting shadows, and each material is kept as bright overall as the
+drawing had it. A dark opening (glass, a doorway, an arch) and every light are
+kept as drawn, so each opening stays where the game has it. Drawn so: the
+Earth's cottages, chapel, windmill, crypt, gateway, gate arch, winch hut,
+pithead and jetty; Paradise's towers (not those far behind, whose haze is the distance), halls,
+high seat, gate, rotunda,
+bridges, parapets, span and rooms; Eden's doors and gates, arches, window,
+buttresses and ruins. Statues, columns, machines, portals and Paradise's
+separate roofs keep the relief: the repaint would cut them into blocks.
+
 **The ground.** A material's inside is drawn in the second style where its
 kind has a texture for it (`tv2_style.tile_texture`; the rest, glass and the
 plain, as before): a height field on a tile that repeats, lit by the one light
