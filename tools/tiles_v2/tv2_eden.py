@@ -211,26 +211,31 @@ def wheat(variant: int) -> Image.Image:
     return art.image()
 
 
-def sundial() -> Image.Image:
+def sundial(fine: int = 1) -> Image.Image:
     """The Sundial of the Tallied Fields: a great disc of stone leaning on its plinth, worn
     and stained, rings and the lines of the hours cut in its face, the hours themselves
     set round its rim in gold, a blade of gold for a gnomon whose shadow lies across it
-    and never moves."""
+    and never moves. `fine` draws it that many times the draft's size: its rim a true
+    round, the grain of its stone, finer moss."""
     r = rng("eden sundial")
-    W, H = 14 * T, 10 * T
-    art = Art(W, H)
-    cx, cy, rad = W / 2, H - 5.2 * T, 4.6 * T
-    grain = noise("eden sundial grain", W, H, 2.6)
-    stain = noise("eden sundial stain", W, H, 17.0)
-    ashlar(art, cx - 5.4 * T, H - 0.6 * T, cx + 5.4 * T, H, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (5.4 * T)))
-    ashlar(art, cx - 5 * T, H - 1.5 * T, cx + 5 * T, H - 0.6 * T, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (5 * T)))
+    f = fine
+    W0, H0 = 14 * T, 10 * T
+    plinth = Art(W0, H0)
+    cx, cy, rad = W0 / 2, H0 - 5.2 * T, 4.6 * T
+    ashlar(plinth, cx - 5.4 * T, H0 - 0.6 * T, cx + 5.4 * T, H0, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (5.4 * T)))
+    ashlar(plinth, cx - 5 * T, H0 - 1.5 * T, cx + 5 * T, H0 - 0.6 * T, MARBLE, r, shift=lambda x: round_shift((x + 0.5 - cx) / (5 * T)))
     for x in range(int(cx - 5.3 * T), int(cx + 5.3 * T)):
-        art.put(x, H - 1.5 * T, MARBLE[6])
-        art.put(x, H - 1.5 * T + 1, MARBLE[3])
-    tip = (cx - rad * 0.08, cy - rad * 0.86)  # where the gnomon's point is
-    for y in range(int(cy - rad), int(cy + rad)):
-        for x in range(int(cx - rad), int(cx + rad)):
-            dx, dy = x + 0.5 - cx, (y + 0.5 - cy) * 1.06
+        plinth.put(x, H0 - 1.5 * T, MARBLE[6])
+        plinth.put(x, H0 - 1.5 * T + 1, MARBLE[3])
+    W, H = W0 * f, H0 * f
+    art = Art(W, H)
+    art.a = scale2x_rgba(plinth.a) if f == 2 else plinth.a.copy()
+    grain = noise("eden sundial grain", W, H, 2.6 * f)
+    stain = noise("eden sundial stain", W, H, 17.0 * f)
+    pores = noise("eden sundial pores", W, H, 1.8) if f > 1 else None
+    for y in range(int((cy - rad) * f), int((cy + rad) * f)):
+        for x in range(int((cx - rad) * f), int((cx + rad) * f)):
+            dx, dy = (x + 0.5) / f - cx, ((y + 0.5) / f - cy) * 1.06
             d = math.hypot(dx, dy)
             if d > rad:
                 continue
@@ -244,8 +249,12 @@ def sundial() -> Image.Image:
                 if abs(hour - 0.5) > 0.42:
                     art.put(x, y, GOLD[5 if light > 0 else 4] if d < rad - 5 else GOLD[3])
                     continue
+                if f > 1 and abs(hour - 0.5) < 0.012 and rad - 9.5 < d < rad - 6:
+                    k -= 1  # the half hour, a fine cut between two of gold
             else:
                 k = 5 + round(light * 0.9 * d / rad + grain[y, x] * 0.3) - (1 if stain[y, x] > 0.36 else 0)
+                if f > 1 and pores[y, x] > 0.8:
+                    k -= 1  # the stone's own pores
                 for ring in (0.36, 0.64, 0.84):  # rings cut in its face: dark in the cut, lit on its far lip
                     cut = d - rad * ring
                     k += -2 if 0 <= cut < 1.2 else 1 if 1.2 <= cut < 2.2 else 0
@@ -256,51 +265,62 @@ def sundial() -> Image.Image:
                 if 0 < along < rad * 0.82 and across < 1.5 + along * 0.05:
                     k -= 2
             art.put(x, y, tone(MARBLE, k))
-    for _ in range(26):  # moss, low on it where the rain runs
+    for _ in range(26 * f):  # moss, low on it where the rain runs
         ang = r.uniform(0.15, math.pi - 0.15)
         d = rad - r.uniform(0.5, 7)
-        x, y = int(cx + math.cos(ang) * d), int(cy + math.sin(ang) * d / 1.06)
-        for dx, dy in ((0, 0), (1, 0), (0, 1), (-1, 0)):
-            if art.has(x + dx, y + dy):
-                art.put(x + dx, y + dy, tone(LEAF, 3 + (dx == 0 and dy == 0)))
-    steps = int(rad * 0.86)
+        x, y = int((cx + math.cos(ang) * d) * f), int((cy + math.sin(ang) * d / 1.06) * f)
+        for ox, oy in ((0, 0), (1, 0), (0, 1), (-1, 0)):
+            if art.has(x + ox, y + oy):
+                art.put(x + ox, y + oy, tone(LEAF, 3 + (ox == 0 and oy == 0)))
+    tip = (cx - rad * 0.08, cy - rad * 0.86)  # where the gnomon's point is
+    steps = int(rad * 0.86 * f)
     for i in range(steps):  # the gnomon: a blade, broad at its foot, lit on its left
         t = i / steps
-        gx, gy = cx + (tip[0] - cx) * t, cy + (tip[1] - cy) * t
-        half = 3.2 * (1 - t) + 0.6
+        gx, gy = (cx + (tip[0] - cx) * t) * f, (cy + (tip[1] - cy) * t) * f
+        half = (3.2 * (1 - t) + 0.6) * f
         for d in range(int(-half - 1), int(half + 2)):
             if abs(d) <= half:
                 art.put(gx + d, gy, GOLD[6 if d < -half * 0.3 else 5 if d < half * 0.4 else 3])
-    for dy in range(-5, 6):
-        for dx in range(-5, 6):
-            if dx * dx + dy * dy <= 25:
-                art.put(cx + dx, cy + dy, GOLD[6] if dx + dy < -3 else GOLD[4] if dx + dy < 3 else GOLD[2])
-    art.outline(MARBLE[0])
+    for oy in range(-5 * f, 5 * f + 1):
+        for ox in range(-5 * f, 5 * f + 1):
+            if ox * ox + oy * oy <= 25 * f * f:
+                art.put(cx * f + ox, cy * f + oy, GOLD[6] if ox + oy < -3 * f else GOLD[4] if ox + oy < 3 * f else GOLD[2])
+    for _ in range(f):
+        art.outline(MARBLE[0])
     return art.image()
 
 
-def wheel() -> Image.Image:
+def wheel(fine: int = 1) -> Image.Image:
     """The Wheel mural of the Terraces, the biggest single image there: on a wall of marble
     in shadow a wheel of gold with twelve spokes, its rim a roll of metal studded all
     round, figures in a line walking round it all one way, a hub like an eye that looks
-    back; a border of gold in a key pattern over and under."""
+    back; a border of gold in a key pattern over and under. `fine` draws the wheel and
+    its eye that many times the draft's size: a true round, spokes with an edge."""
     r = rng("eden wheel")
-    W, H = 44 * T, 30 * T
-    art = Art(W, H)
-    ashlar(art, 0, 0, W, H, SHADOWED, r, course=8, shift=lambda x: 0)
+    f = fine
+    W0, H0 = 44 * T, 30 * T
+    wall = Art(W0, H0)
+    ashlar(wall, 0, 0, W0, H0, SHADOWED, r, course=8, shift=lambda x: 0)
     key = ("#########...", "#.......#...", "#..####.#...", "#..#....#...", "#..######...", "#...........")
-    for x in range(W):
+    for x in range(W0):
         for y in (1, 2, 11, 12):
-            art.put(x, y, GOLD[5 if y in (1, 11) else 3])
-            art.put(x, H - 1 - y, GOLD[5 if y in (2, 12) else 3])
+            wall.put(x, y, GOLD[5 if y in (1, 11) else 3])
+            wall.put(x, H0 - 1 - y, GOLD[5 if y in (2, 12) else 3])
         for row, line in enumerate(key):
             if line[x % 12] == "#":
-                art.put(x, 4 + row, GOLD[4])
-                art.put(x, H - 5 - row, GOLD[4])
-    cx, cy, rad = W / 2, H / 2, 12.5 * T
-    for y in range(int(cy - rad - 2), int(cy + rad + 2)):
-        for x in range(int(cx - rad - 2), int(cx + rad + 2)):
-            dx, dy = x + 0.5 - cx, y + 0.5 - cy
+                wall.put(x, 4 + row, GOLD[4])
+                wall.put(x, H0 - 5 - row, GOLD[4])
+    W, H = W0 * f, H0 * f
+    art = Art(W, H)
+    art.a = scale2x_rgba(wall.a) if f == 2 else wall.a.copy()
+    if f > 1:  # the wall's own grain: a stone a shade down here and there, a pixel at a time
+        pores = noise("eden wheel wall", W, H, 2.0)
+        worn = pores > 0.78
+        art.a[worn, :3] = (art.a[worn, :3].astype(np.float32) * 0.9).astype(np.uint8)
+    cx, cy, rad = W0 / 2, H0 / 2, 12.5 * T
+    for y in range(int((cy - rad - 3) * f), int((cy + rad + 4) * f)):
+        for x in range(int((cx - rad - 3) * f), int((cx + rad + 4) * f)):
+            dx, dy = (x + 0.5) / f - cx, (y + 0.5) / f - cy
             d = math.hypot(dx, dy)
             if d <= 21:  # the eye: an iris of blue, rayed, a pupil, a light in it
                 ang = math.atan2(dy, dx)
@@ -316,9 +336,13 @@ def wheel() -> Image.Image:
                 art.put(x, y, tone(GOLD, k))
             elif rad < d < rad + 3 and dx + dy > 0:
                 art.put(x, y, SHADOWED[1])  # the shadow the rim throws on the wall
+    walkers = Art(W0, H0)
     for n in range(30):  # the gathered, walking the rim
         ang = n / 30 * 2 * math.pi
-        walker(art, cx + math.cos(ang) * (rad + 15), cy + math.sin(ang) * (rad + 15) + 6, MARBLE, SHADOWED[1], step=n % 2)
+        walker(walkers, cx + math.cos(ang) * (rad + 15), cy + math.sin(ang) * (rad + 15) + 6, MARBLE, SHADOWED[1], step=n % 2)
+    figures = scale2x_rgba(walkers.a) if f == 2 else walkers.a
+    shown = figures[..., 3] > 0
+    art.a[shown] = figures[shown]
     return art.image()
 
 
@@ -410,23 +434,27 @@ GLYPHS = (
 )
 
 
-def low_gate() -> Image.Image:
+def low_gate(fine: int = 1) -> Image.Image:
     """The Low Gate: a vast ring of silver stone set in the cliff, thirty-six stones round,
     a sign cut in each, a roll of stone along its outer edge and its inner, a cold gem set
     at each quarter; rime on it and ice hanging from its crown; and in it the dark that is
-    under Paradise: deep on deep of it, cloud lit from nowhere, a few cold stars."""
+    under Paradise: deep on deep of it, cloud lit from nowhere, a few cold stars. `fine`
+    draws it that many times the draft's size: a true round, the grain of its stone, finer
+    ice, more and smaller stars, and wisps in the dark."""
     r = rng("eden low gate")
-    W = H = 32 * T
+    f = fine
+    W = H = 32 * T * f
     art = Art(W, H)
-    cx = cy = W / 2
+    c = 16.0 * T  # its middle, on the draft
     rad, rim, count = 15 * T, 40, 36
     inner = rad - rim
-    grain = noise("eden low gate grain", W, H, 2.8)
-    stain = noise("eden low gate stain", W, H, 24.0)
-    cloud = noise("eden low gate deep", W, H, 44.0)
-    wisp = noise("eden low gate wisp", W, H, 13.0)
+    grain = noise("eden low gate grain", W, H, 2.8 * f)
+    stain = noise("eden low gate stain", W, H, 24.0 * f)
+    cloud = noise("eden low gate deep", W, H, 44.0 * f)
+    wisp = noise("eden low gate wisp", W, H, 13.0 * f)
+    pores = noise("eden low gate pores", W, H, 2.0) if f > 1 else None
+    veil = noise("eden low gate veil", W, H, 5.0) if f > 1 else None
     shades = [r.choice([-1, 0, 0, 0, 1]) for _ in range(count)]
-    gems = [(cx + math.cos(q * math.pi / 2) * (rad - 20), cy + math.sin(q * math.pi / 2) * (rad - 20)) for q in range(4)]
 
     def carved(n: int, arc: float, band: float) -> bool:
         gx, gy = int(math.floor(arc / 2 + 2.5)), int(math.floor((band - 20) / 2 + 3.5))
@@ -434,7 +462,7 @@ def low_gate() -> Image.Image:
 
     for y in range(H):
         for x in range(W):
-            dx, dy = x + 0.5 - cx, y + 0.5 - cy
+            dx, dy = (x + 0.5) / f - c, (y + 0.5) / f - c
             d = math.hypot(dx, dy)
             if d > rad:
                 continue
@@ -450,6 +478,8 @@ def low_gate() -> Image.Image:
                     k = 4 - round(light * 2.4) + (1 if band > rim - 2 else 0)
                 else:
                     k = 4 + round(light * 1.3 + grain[y, x] * 0.7) + shades[n] + (1 if quarter else 0) - (1 if stain[y, x] > 0.32 else 0)
+                    if f > 1 and pores[y, x] > 0.8:
+                        k -= 1
                     arc = (frac - 0.5) * 2 * math.pi * d / count
                     if frac < 0.03 or frac > 0.97:
                         k -= 3  # the joint between two stones
@@ -466,7 +496,7 @@ def low_gate() -> Image.Image:
                 art.put(x, y, tone(SILVER, k))
                 continue
             deep = d / inner
-            v = cloud[y, x] + 0.45 * wisp[y, x]
+            v = cloud[y, x] + 0.45 * wisp[y, x] + (0.18 * veil[y, x] if f > 1 else 0)
             red, green, blue = 8 + 18 * deep, 10 + 28 * deep, 26 + 58 * deep
             if v > 0.25:
                 red, green, blue = red + 12, green + 8, blue + 26
@@ -475,39 +505,44 @@ def low_gate() -> Image.Image:
             for ring in (0.3, 0.52, 0.72, 0.88):  # deep on deep: the rings of a way down
                 if abs(deep - ring) < 0.007:
                     red, green, blue = red + 8, green + 12, blue + 22
-            glow = stepped_alpha((d - (inner - 18)) / 18.0, 3)
+            glow = stepped_alpha((d - (inner - 18)) / 18.0, 3 * f)
             red, green, blue = red + 10 * glow, green + 34 * glow, blue + 54 * glow
             art.put(x, y, (min(int(red), 255), min(int(green), 255), min(int(blue), 255)))
-    for _ in range(120):
+    for _ in range(120 * f * f):
         ang, d = r.uniform(0, 6.28), r.uniform(0, inner - 10) * r.uniform(0.3, 1.0)
-        x, y = cx + math.cos(ang) * d, cy + math.sin(ang) * d
+        x, y = (c + math.cos(ang) * d) * f, (c + math.sin(ang) * d) * f
         bright = r.random()
         art.put(x, y, (200, 220, 255) if bright < 0.7 else (255, 255, 255))
         if bright > 0.93:
             for ox, oy in ((1, 0), (-1, 0), (0, 1), (0, -1)):
                 art.put(x + ox, y + oy, (120, 150, 220))
-    for gx, gy in gems:  # a gem at each quarter, cold, in a setting
-        for oy in range(-8, 9):
-            for ox in range(-8, 9):
-                d = math.hypot(ox, oy)
+    for q in range(4):  # a gem at each quarter, cold, in a setting
+        gx, gy = (c + math.cos(q * math.pi / 2) * (rad - 20)) * f, (c + math.sin(q * math.pi / 2) * (rad - 20)) * f
+        for oy in range(-8 * f, 8 * f + 1):
+            for ox in range(-8 * f, 8 * f + 1):
+                d = math.hypot(ox, oy) / f
                 if d <= 7.5:
-                    colour = SILVER[1] if d > 6 else CYAN[1] if d > 4.4 or ox + oy > 3 else CYAN[2] if d > 2 else CYAN[3]
+                    lit = (ox + oy) / f
+                    colour = SILVER[1] if d > 6 else CYAN[1] if d > 4.4 or lit > 3 else CYAN[2] if d > 2 else CYAN[3]
+                    if f > 1 and math.hypot(ox / f + 2.2, oy / f + 2.2) < 0.9:
+                        colour = (255, 255, 255)  # the light in it
                     art.put(gx + ox, gy + oy, colour)
-    for x in range(int(cx - rad * 0.8), int(cx + rad * 0.8)):  # rime along its crown
-        out = cy - math.sqrt(rad * rad - (x + 0.5 - cx) ** 2)
-        thick = 2 + int(2.5 * (0.5 + 0.5 * math.sin(x * 0.31)) + (x % 7 == 0))
+    for x in range(int((c - rad * 0.8) * f), int((c + rad * 0.8) * f)):  # rime along its crown
+        out = (c - math.sqrt(rad * rad - ((x + 0.5) / f - c) ** 2)) * f
+        thick = int((2 + 2.5 * (0.5 + 0.5 * math.sin(x * 0.31 / f)) + (x % 7 == 0)) * f + (x % 3 == 0) * (f - 1))
         for i in range(thick):
-            art.put(x, out + i, SILVER[6] if i < thick - 1 else FROST[5])
-    x = cx - inner * 0.82
-    while x < cx + inner * 0.82:  # ice hanging in it
-        top = cy - math.sqrt(inner * inner - (x - cx) ** 2)
-        long = r.randint(4, 22)
+            art.put(x, out + i, SILVER[6] if i < thick - f else FROST[5])
+    x = (c - inner * 0.82) * f
+    while x < (c + inner * 0.82) * f:  # ice hanging in it
+        top = (c - math.sqrt(inner * inner - (x / f - c) ** 2)) * f
+        long = r.randint(4, 22) * f
         for i in range(long):
-            art.put(x, top + i, FROST[6] if i < long * 0.6 else FROST[5])
-            if i < long * 0.4:
-                art.put(x + 1, top + i, FROST[5])
-        x += r.randint(3, 13)
-    art.outline(SILVER[0])
+            wide = 1 + (f - 1) * (i < long * 0.5) + (f - 1) * (i < long * 0.2)
+            for d in range(wide):
+                art.put(x + d, top + i, FROST[6] if i < long * 0.6 and d == 0 else FROST[5])
+        x += r.randint(3, 13) * (f if f == 1 else 1.4)
+    for _ in range(f):
+        art.outline(SILVER[0])
     return art.image()
 
 
@@ -2344,7 +2379,12 @@ def _plan():
 PLAN = _plan()
 # What is drawn at the size that ships itself (tv2_base.DENSITY), by key; the rest ships as
 # its draft through Scale2x. A picture here is the draft's size times DENSITY exactly.
-FINE = {"eden_great_leaf": lambda: great_leaf(DENSITY)}
+FINE = {
+    "eden_great_leaf": lambda: great_leaf(DENSITY),
+    "eden_low_gate": lambda: low_gate(DENSITY),
+    "eden_wheel": lambda: wheel(DENSITY),
+    "eden_sundial": lambda: sundial(DENSITY),
+}
 for _v in range(LEAVES):
     FINE[f"eden_leaf_{_v}"] = lambda v=_v: leaf(v, fine=DENSITY)
 for _v in range(TEAL_TREES):

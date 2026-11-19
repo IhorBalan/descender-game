@@ -350,18 +350,20 @@ are still found by `ways_up`, and the model plays them like any other room.
 The level ships at 32 pixels to the tile, as the whole standard does
 (`docs/art/tiles-v2.md`, "Draft and density"): a view is 1280 x 720 and still
 40 x 22.5 tiles, so every room and every view is composed as it was. Drawn at
-the finer size are the insides of the level's ground and walls and its trees
-and great leaves; everything else is its draft through Scale2x, which is the
-picture it was with smoother edges, until it is drawn again.
+the finer size are the insides of the level's ground and walls, the turf on
+them, its trees and great leaves, and three of its great things: the Low Gate
+(a true round, the grain of its stone, finer ice, more and smaller stars,
+wisps in its dark), the Wheel (its rim, its spokes and its eye) and the
+Sundial. Everything else is its draft through Scale2x, which is the picture
+it was with smoother edges, until it is drawn again.
 
 ## What is not there
 
 - **Nobody has played it by hand.** The model says it can be played through;
   how it feels is not known.
 - **Most pictures are not yet drawn at 32.** Posts, corbels, the trunks, the
-  undersides, ivy, the Low Gate, the Wheel, the Sundial, the far layers, the
-  sky, the lamps and the people are the draft doubled. So is the turf of the
-  ground: only the inside of a tile is finer.
+  undersides, ivy, the far layers, the sky, the lamps and the people are the
+  draft doubled; so are the Wheel's wall and the figures round it.
 - **The hero and the game's own things are 16 to the tile**: his pixels are
   twice the world's. They are the game's art, not the standard's.
 - **On a 1080p screen a pixel of the art is one and a half of the screen's**:

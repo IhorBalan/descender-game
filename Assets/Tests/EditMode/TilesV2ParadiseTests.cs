@@ -643,6 +643,14 @@ namespace Descender.Tests
             Assert.That(post.sprite.bounds.size.y, Is.EqualTo(10f).Within(1e-3f));
             Assert.That(leaf.sprite.rect.size, Is.EqualTo(new Vector2(324f, 404f)), "twice its draft of 162 x 202");
             Assert.That(leaf.sprite.bounds.size.y, Is.GreaterThan(10f));
+            // The great things are drawn at the finer size too, and are as great as they were:
+            // the Low Gate thirty-two tiles across, the Wheel's mural forty-four by thirty.
+            var gate = System.Array.Find(set.backdrops, backdrop => backdrop.key == "eden_low_gate");
+            var wheel = System.Array.Find(set.backdrops, backdrop => backdrop.key == "eden_wheel");
+            Assert.That(gate.sprite.rect.size, Is.EqualTo(new Vector2(1024f, 1024f)));
+            Assert.That(gate.sprite.bounds.size.x, Is.EqualTo(32f).Within(1e-3f));
+            Assert.That(wheel.sprite.rect.size, Is.EqualTo(new Vector2(1408f, 960f)));
+            Assert.That(wheel.sprite.bounds.size, Is.EqualTo(new Vector3(44f, 30f, wheel.sprite.bounds.size.z)));
             // The view is as many tiles as it was, at twice the pixels.
             Assert.That(set.ViewPixels, Is.EqualTo(new Vector2Int(1280, 720)));
             Assert.That(set.View, Is.EqualTo(new Vector2(40f, 22.5f)));

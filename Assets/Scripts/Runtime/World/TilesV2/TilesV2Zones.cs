@@ -13,10 +13,10 @@ namespace Descender.World.TilesV2
     public static class TilesV2Zones
     {
         // The liquid stands this far under the top of its top cell (the generator's SURFACE_DROP).
-        private const float SurfaceDrop = 3f / 16f;
+        private const float SurfaceDrop = 3f * TilesV2Set.DraftPixel;
 
         // A hazard starts a little under the surface and inside its sides, so the brim is safe.
-        private const float HazardInset = 2f / 16f;
+        private const float HazardInset = 2f * TilesV2Set.DraftPixel;
 
         /// <summary>Builds the areas under `parent`; returns how many.</summary>
         public static int Build(TilesV2World world, TileField field, Transform parent)
