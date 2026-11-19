@@ -56,6 +56,7 @@ namespace Descender.World.TilesV2
             light.pointLightOuterRadius = last ? 6f : 3f;
             light.falloffIntensity = 0.5f;
             light.shadowsEnabled = false;
+            ReliefLight.Raise(light);
             time = Mathf.Repeat(transform.position.x * 0.37f, 1f) * 6f;
             Bob();
         }

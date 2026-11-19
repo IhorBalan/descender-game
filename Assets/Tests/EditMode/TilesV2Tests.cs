@@ -714,6 +714,11 @@ namespace Descender.Tests
                 foreach (var flame in flames)
                 {
                     Assert.That(flame.Glow, Is.Not.Null);
+                    Assert.That(
+                        flame.Glow.normalMapQuality,
+                        Is.EqualTo(Light2D.NormalMapQuality.Accurate),
+                        "a torch lights the relief of the second style"
+                    );
                     Assert.That(flame.FrameCount, Is.EqualTo(3));
                     Assert.That(
                         flame.GetComponentsInChildren<ParticleSystem>().Length,

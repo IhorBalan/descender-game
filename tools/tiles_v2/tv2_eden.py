@@ -19,6 +19,7 @@ import numpy as np
 from PIL import Image
 
 from tv2_base import *  # noqa: F401,F403
+import tv2_style
 from tv2_earth import Art, _seed, branch, bundle, noise, ramp_of, trunk
 from tv2_heaven import (
     AMBER, BIRCH, BLOSSOM, CLOTH, GOLD, MARBLE, ORDER_GARDEN, ORDER_HUNG, ORDER_STAND, ORDER_TREE, ORDER_WALL, SHADOWED,
@@ -3191,6 +3192,13 @@ for _k in range(len(FRONTS)):
     if _k < 3:
         for _s, _lean in ((1, 2), (2, 4)):
             FINE[f"eden_front_{_k}_s{_s}"] = lambda a=(_k, _lean): front(*a, fine=DENSITY)
+# What is drawn in the second style (tv2_style), by key: given the size it ships at, the
+# picture and its normal map. The generator prefers it to FINE.
+STYLE = {}
+for _v in range(TEAL_TREES):
+    for _frame in range(FRAMES):
+        _key = f"eden_teal_tree_{_v}" + (f"{FRAME}{_frame}" if _frame else "")
+        STYLE[_key] = lambda w, h, k=_key, v=_v, s=_frame: tv2_style.tree(w, h, SINK_OF[k] * DENSITY, ("eden teal", v), "1c8c84", "b4c6be", frame=s, pale=True, petals=True, crown=1.1, lean=(-0.3, 0.4, 0.2)[v % 3])
 for _v in range(TEAL_TREES):
     for _frame in range(FRAMES):
         FINE[f"eden_teal_tree_{_v}" + (f"{FRAME}{_frame}" if _frame else "")] = lambda v=_v, s=_frame: teal_tree(v, s, fine=DENSITY)

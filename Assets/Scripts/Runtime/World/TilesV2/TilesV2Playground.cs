@@ -1092,6 +1092,7 @@ namespace Descender.World.TilesV2
             light.pointLightOuterRadius = 5f;
             light.falloffIntensity = 0.6f;
             light.shadowsEnabled = false;
+            ReliefLight.Raise(light);
             return light;
         }
 

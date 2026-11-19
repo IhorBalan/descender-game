@@ -136,11 +136,38 @@ def rect_meta(path: str, entries: list) -> str:
     return unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, sprites=entries)
 
 
-def backdrop_meta(path: str, pivot=(0.5, 0.0)) -> str:
+def backdrop_meta(path: str, pivot=(0.5, 0.0), normal: str | None = None) -> str:
     # Full Rect, so the sprite can be drawn tiled. A picture of the Earth's has its pivot on its
-    # floor line (tv2_earth.pivot_of), the rest the bottom middle.
-    text = unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, pivot=pivot)
+    # floor line (tv2_earth.pivot_of), the rest the bottom middle. A picture in the second style
+    # names its normal map as the sprite's _NormalMap, which the lamps' light reads.
+    secondary = [("_NormalMap", unity_meta.guid_for(unity_meta.rel(normal)))] if normal else None
+    text = unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, pivot=pivot, secondary=secondary)
     return text.replace("spriteMeshType: 1", "spriteMeshType: 0").replace("wrapU: 1", "wrapU: 0")
+
+
+NORMAL_SUFFIX = "_n"  # a picture's normal map is beside it, its name and this
+
+
+def name_normal(path: str, normal: str):
+    """Names a picture's normal map as its sprite's _NormalMap in the .meta it already has, so
+    what Unity keeps there (its sprite's ids) stays."""
+    meta = path + ".meta"
+    if not unity_meta.inside_assets(path) or not os.path.exists(meta):
+        return
+    with open(meta, encoding="utf-8") as handle:
+        text = handle.read()
+    entry = f"    - name: _NormalMap\n      texture: {{fileID: 2800000, guid: {unity_meta.guid_for(unity_meta.rel(normal))}, type: 3}}\n"
+    if entry in text:
+        return
+    empty = "    secondaryTextures: []\n"
+    assert empty in text, meta
+    with open(meta, "w", newline="\n") as handle:
+        handle.write(text.replace(empty, "    secondaryTextures:\n" + entry))
+
+
+def normal_meta(path: str) -> str:
+    """The .meta of a picture's normal map: linear, a normal map, unfiltered like the picture."""
+    return unity_meta.texture_meta(unity_meta.guid_for(unity_meta.rel(path)), ppu=PPU, point_filter=True, normal_map=True)
 
 
 def manifest() -> dict:
@@ -286,6 +313,7 @@ def manifest() -> dict:
 
 
 def write(path: str, image: Image.Image, meta: str | None):
+    """Writes a picture, and its .meta where it is missing (with `--metas`, every time)."""
     os.makedirs(os.path.dirname(path), exist_ok=True)
     image.save(path)
     if unity_meta.inside_assets(path):
@@ -350,12 +378,23 @@ def generate(out: str):
         sprites[name] = image.crop((x, image.height - y - h, x + w, image.height - y))
     for name, draft in tv2_backdrop.backdrops().items():
         # Drawn at the size it ships where a picture has that (a module's FINE); else its draft, doubled.
-        anew = next((module.FINE[name] for module in (tv2_backdrop, tv2_earth, tv2_heaven, tv2_eden) if name in getattr(module, "FINE", {})), None)
-        image = anew() if anew else scale2x(draft)
+        # A picture in the second style (a module's STYLE) comes with its normal map.
+        modules = (tv2_backdrop, tv2_earth, tv2_heaven, tv2_eden)
+        styled = next((module.STYLE[name] for module in modules if name in getattr(module, "STYLE", {})), None)
+        anew = next((module.FINE[name] for module in modules if name in getattr(module, "FINE", {})), None)
+        image, normal = styled(draft.width * DENSITY, draft.height * DENSITY) if styled else (anew() if anew else scale2x(draft), None)
         assert image.size == (draft.width * DENSITY, draft.height * DENSITY), (name, image.size, draft.size)
         path = os.path.join(out, name + ".png")
         stood = next((module for module in (tv2_earth, tv2_heaven, tv2_eden) if name in module.SINK_OF), None)
-        write(path, image, backdrop_meta(path, stood.pivot_of(name) if stood else (0.5, 0.0)))
+        pivot = stood.pivot_of(name) if stood else (0.5, 0.0)
+        if normal is not None:
+            assert normal.size == image.size, (name, normal.size, image.size)
+            relief = os.path.join(out, name + NORMAL_SUFFIX + ".png")
+            write(relief, normal, normal_meta(relief))
+            write(path, image, backdrop_meta(path, pivot, relief))
+            name_normal(path, relief)
+        else:
+            write(path, image, backdrop_meta(path, pivot))
         images[name] = image
     path = os.path.join(out, "tiles_v2.json")
     with open(path, "w", newline="\n") as handle:
