@@ -1451,3 +1451,281 @@ def tile_texture(kind: str, variant: int, size: int = 32) -> tuple[np.ndarray, n
     if kind in ("cloud", "ice"):  # smooth stuff: its light changes gently, and no dark in it
         idx = np.maximum(3 + np.round((idx - 3) * 0.6), 2)
     return np.clip(idx, 1, 5).astype(np.int16), H
+
+
+# --- Repaint: a building drawn again over its own plan ----------------------------------------
+
+# What a region of a building is made of, and how it stands: its height over the wall's face
+# (what is further out shades what is under it), and how its surface is shaped.
+REPAINT_KINDS = {
+    "stone": dict(z=3.0, bevel=2.2, blocks=True, rough=0.15),
+    "tiles": dict(z=9.0, bevel=1.4, blocks=True, rough=0.2, lip=0.35),
+    "plaster": dict(z=2.0, bevel=1.5, blocks=False, rough=0.35),
+    "timber": dict(z=4.5, bevel=2.6, blocks=True, rough=0.2, grain=True),
+    "thatch": dict(z=9.0, bevel=2.0, blocks=False, rough=0.3, strands=True),
+    "iron": dict(z=5.0, bevel=1.2, blocks=True, rough=0.05),
+    "metal": dict(z=5.0, bevel=1.5, blocks=True, rough=0.05),
+    "leaf": dict(z=8.0, bevel=1.0, blocks=False, rough=1.0),
+    "cloth": dict(z=5.0, bevel=1.5, blocks=False, rough=0.15, folds=True),
+}
+
+
+def _rgb_list(ramp) -> list[tuple[int, int, int]]:
+    return [tuple(int(c) for c in colour[:3]) for colour in ramp]
+
+
+def repaint(picture: Image.Image, materials, *, seed="repaint", keep_far: float = 30.0) -> tuple[Image.Image, Image.Image]:
+    """A building drawn again in the second style over its own plan: each pixel of its
+    first-style drawing is read as the material whose colours it is nearest (`materials`:
+    (old ramp, kind, base colour of its new ramp)); a joint or seam (that material's darkest
+    tones) parts it into pieces (blocks, beams, shingles), each with its own lift and tilt,
+    bevelled at its edges and shaped on its face as its kind is (stone pitted, timber in
+    grain, thatch in strands, tiles with a lip over the row under, ivy in leaves); then the
+    whole is lit by the one light into each material's new ramp, the eaves and what stands
+    out casting shadows. What is no material's colour (a window's glass, a glow, a bell) is
+    kept as drawn, set back a little. Every shape stays where the drawing has it."""
+    a = np.array(picture.convert("RGBA"))
+    h, w = a.shape[:2]
+    rgb = a[..., :3].astype(float)
+    solid = a[..., 3] > 0
+    # Read each pixel as the nearest colour of the materials' old ramps.
+    colours, owner, tone = [], [], []
+    for m, (ramp, kind, base) in enumerate(materials):
+        if kind == "keep":
+            continue
+        cols = _rgb_list(ramp)
+        for i, c in enumerate(cols):
+            colours.append(c)
+            owner.append(m)
+            tone.append(i / max(len(cols) - 1, 1))
+    colours = np.array(colours, dtype=float)
+    owner, tone = np.array(owner), np.array(tone)
+    d = np.linalg.norm(rgb[..., None, :] - colours[None, None, :, :], axis=-1)
+    near = d.argmin(-1)
+    far = d.min(-1) > keep_far
+    mat = np.where(solid & ~far, owner[near], -1)
+    t = tone[near]
+    # A dark opening (a window's glass, a doorway, an arch) is kept as drawn: dark and at
+    # least three pixels thick, where a joint is one or two.
+    lum = rgb @ np.array([0.299, 0.587, 0.114]) / 255
+    dark = solid & (lum < 0.17)
+    opening = _distance_inside(dark, 2) >= 2
+    for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1), (1, 1), (-1, -1), (1, -1), (-1, 1)):
+        opening = opening | (np.roll(np.roll(opening, dy, 0), dx, 1) & dark)
+    far = far | opening
+    mat = np.where(far, -1, mat)
+    keep = solid & far
+    # Dither (a checker of two tones) is a shade, not a pattern: read it as its mean.
+    def checker(v, axis):
+        d0, d1 = v - np.roll(v, 1, axis), v - np.roll(v, -1, axis)
+        return (d0 * d1 > 0) & (np.abs(d0) > 0.03)
+    dither = checker(lum, 0) & checker(lum, 1) & solid
+    if dither.any():
+        smooth = blur(np.where(solid, lum, lum[solid].mean()), 1)
+        grown = dither | np.roll(dither, 1, 0) | np.roll(dither, -1, 0) | np.roll(dither, 1, 1) | np.roll(dither, -1, 1)
+        lum = np.where(grown & solid, smooth, lum)
+    filled = np.where(solid, lum, lum[solid].mean() if solid.any() else 0)
+    local = lum - blur(filled, 2)
+    broad_lum = blur(filled, 6)
+    s = Scene(w, h)
+    xs, ys = s.xs, s.ys
+    rough = value_noise(w, h, 2.0, (seed, "rough"))
+    broad = value_noise(w, h, 7.0, (seed, "broad"))
+    r = random.Random(f"repaint {seed}")
+    ramps = {}
+    for m, (ramp, kind, base) in enumerate(materials):
+        sel = mat == m
+        if kind == "keep" or not sel.any():
+            continue
+        k = REPAINT_KINDS[kind]
+        n = 10
+        # The new ramp keeps the family's own range, darkest to lightest: marble stays pale.
+        ls = [colorsys.rgb_to_hls(*(v / 255 for v in c))[1] for c in _rgb_list(ramp)]
+        lb = colorsys.rgb_to_hls(*(v / 255 for v in hex_rgb(base)))[1]
+        lo_l, hi_l = max(0.03, min(ls) - 0.04), min(0.98, max(ls) + 0.04)
+        anchor = float(np.clip((lb - lo_l) / max(hi_l - lo_l, 0.05), 0.3, 0.7))
+        sb = colorsys.rgb_to_hls(*(v / 255 for v in hex_rgb(base)))[2]
+        shift = float(np.clip(sb / 0.5, 0.15, 1.0))  # a weak colour turns only a little, or beige goes pink
+        ramps[m] = make_ramp(base, n, cool=0.32 * shift, warm=(0.2 if kind != "leaf" else 0.28) * shift, anchor=anchor, low=lo_l, high=hi_l)
+        if kind in ("stone", "tiles"):  # the drawing's own joints, its lines only: a dot of texture is no joint
+            seam = sel & (local < -0.022)
+            # Where two blocks meet with no dark line between, a change of tone parts them.
+            step = (np.abs(lum - np.roll(lum, -1, 1)) > 0.022) | (np.abs(lum - np.roll(lum, -1, 0)) > 0.022)
+            seam = seam | (sel & step & np.roll(sel, -1, 1) & np.roll(sel, -1, 0))
+            pieces = _label(seam)
+            sizes = np.bincount(pieces.ravel())
+            seam = seam & (sizes[pieces] >= 4)
+            labels, rise = None, (_distance_down(sel & ~seam) / 7.0 if kind == "tiles" else None)
+        elif k["blocks"]:  # beams and plates: parted where the drawing parts them
+            seam = sel & (local < -0.07)
+            labels, rise = None, None
+        else:
+            seam, labels, rise = np.zeros_like(sel), None, None
+        body = sel & ~seam
+        dist = _distance_inside(body, 4)
+        bevel = np.clip(dist / max(k["bevel"], 0.5), 0, 1) ** 0.7
+        H = k["z"] + bevel * k["bevel"] + rough * k["rough"]
+        var = np.zeros((h, w), dtype=int)
+        if k["blocks"]:
+            if labels is None:
+                labels = _label(body)
+            count = labels.max() + 1
+            lift = np.array([r.uniform(-0.5, 0.6) for _ in range(count)])
+            tx = np.array([r.uniform(-0.08, 0.08) for _ in range(count)])
+            ty = np.array([r.uniform(-0.1, 0.04) for _ in range(count)])
+            # Each piece the shade the drawing gave it, a step or two either way.
+            sums = np.bincount(labels.ravel(), weights=np.where(body, lum, 0).ravel(), minlength=count)
+            nums = np.maximum(np.bincount(labels.ravel(), weights=body.ravel().astype(float), minlength=count), 1)
+            fam = lum[body].mean() if body.any() else 0
+            per_step = max((hi_l - lo_l) / (n - 1), 0.02)  # a step of the new ramp, in lightness
+            tone = np.clip(np.round((sums / nums - fam) / per_step * 0.8), -6, 4).astype(int)
+            H = H + lift[labels] * bevel + (tx[labels] * (xs % 16 - 8) + ty[labels] * (ys % 16 - 8)) * bevel
+            var = tone[labels] if kind in ("stone", "tiles") else var
+            if rise is not None and k.get("lip"):  # a shingle stands out more at its foot, over the one under
+                H = H + np.clip(rise, 0, 1) * k["lip"] * 5
+        if k.get("grain"):
+            H = H + (np.sin(ys * 1.6 + broad * 4) > 0.75) * -0.5 + (np.sin(xs * 1.6 + broad * 4) > 0.8) * -0.3
+        if k.get("strands"):
+            H = H + np.sin(xs * 1.4 + broad * 3 + ys * 0.15) * 0.6
+        if k.get("folds"):
+            H = H + np.sin(xs * 0.5 + broad * 2) * 1.2
+        if kind == "leaf":
+            H = H + value_noise(w, h, 1.6, (seed, "leaf")) * 1.4
+        # The drawing's broad light and shade across a shape (a round tower lit on one side)
+        # carries over, a step or two.
+        family = lum[sel].mean()
+        spread = max(float(np.ptp(lum[sel])), 0.08)
+        if kind not in ("stone", "tiles"):
+            var = var + np.clip(np.round((broad_lum - family) / spread * 3), -2, 2).astype(int)
+        s.paint(body, H, m, var=var)
+        s.paint(seam, np.full((h, w), k["z"] - 0.5), m, var=-3)
+    KEEP = len(materials)
+    s.paint(keep, np.full((h, w), 1.0), KEEP)
+    ramps[KEEP] = [(0, 0, 0)] * 10
+    # The silhouette rounds off a little where it meets the sky.
+    edge = np.clip(_distance_inside(solid, 3) / 3, 0, 1)
+    s.H = np.where(solid, s.H - (1 - edge) * 1.5, s.H)
+    opts = dict(ao=0.05, ao_radius=3, shadow=0.34, shadow_reach=10, shadow_drop=0.55, gamma=1.2, outline=False, rim=True)
+    out, nm = render(s, ramps, **opts)
+    # Each material as bright overall as the drawing had it: shift its tones by the steps
+    # its new light took it off, and light it again.
+    new_lum = np.array(out)[..., :3].astype(float) @ np.array([0.299, 0.587, 0.114]) / 255
+    for m, ramp in ramps.items():
+        sel = (s.mat == m) & ~keep
+        if m == KEEP or not sel.any():
+            continue
+        lr = [sum(c) / 765 for c in ramp]
+        step = max((max(lr) - min(lr)) / (len(ramp) - 1), 0.02)
+        steps = int(np.clip(np.round((lum[sel].mean() - new_lum[sel].mean()) / step), -3, 3))
+        s.var = np.where(sel, s.var + steps, s.var)
+    out, nm = render(s, ramps, **opts)
+    o = np.array(out)
+    o[keep] = a[keep]
+    return Image.fromarray(o, "RGBA"), nm
+
+
+def _label(mask: np.ndarray) -> np.ndarray:
+    """The 4-connected pieces of `mask`, numbered from 1 (0 where it is not)."""
+    labels = np.zeros(mask.shape, dtype=int)
+    h, w = mask.shape
+    count = 0
+    ys, xs = np.nonzero(mask)
+    for y0, x0 in zip(ys, xs):
+        if labels[y0, x0]:
+            continue
+        count += 1
+        stack = [(y0, x0)]
+        labels[y0, x0] = count
+        while stack:
+            y, x = stack.pop()
+            for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                yy, xx = y + dy, x + dx
+                if 0 <= yy < h and 0 <= xx < w and mask[yy, xx] and not labels[yy, xx]:
+                    labels[yy, xx] = count
+                    stack.append((yy, xx))
+    return labels
+
+
+def _distance_down(mask: np.ndarray) -> np.ndarray:
+    """How far each pixel of `mask` lies below the top of its run in its column."""
+    out = np.zeros(mask.shape)
+    run = np.zeros(mask.shape[1])
+    for y in range(mask.shape[0]):
+        run = np.where(mask[y], run + 1, 0)
+        out[y] = run
+    return out
+
+
+def guess_kind(h: float, l: float, s: float) -> str:
+    """What a family of colours most likely is, from its middle colour (hue, lightness,
+    saturation): grey is stone, green ivy, a strong red or blue roof tiles, gold metal, a dark
+    brown timber, a straw yellow thatch, a pale warm colour dressed stone."""
+    if s > 0.85 and l > 0.5 or s > 0.6 and l > 0.8:
+        return "keep"  # a light: a lit window, a glow, fire
+    if s < 0.14:
+        return "stone"
+    if 0.18 < h < 0.47 and s > 0.2:
+        return "leaf"
+    if s > 0.62 and 0.08 < h < 0.18:
+        return "metal"
+    if (h < 0.045 or h > 0.93) and s > 0.3 and l > 0.3:
+        return "tiles"
+    if 0.5 < h < 0.75 and s > 0.35:
+        return "tiles"
+    if 0.03 <= h < 0.17:
+        if l < 0.3:
+            return "timber"
+        if s > 0.42 and l < 0.55:
+            return "thatch"
+    return "stone"
+
+
+def palette_families(picture: Image.Image, least: int = 6, kinds: dict | None = None):
+    """The families of colours a drawing is made of: its colours (used on at least `least`
+    pixels) joined where they are near in hue and saturation (greys with greys), each family
+    sorted dark to light. Returns [(colours, kind, base colour)]."""
+    a = np.array(picture.convert("RGBA"))
+    px = a[a[..., 3] > 0][:, :3]
+    if not len(px):
+        return []
+    cols, counts = np.unique(px, axis=0, return_counts=True)
+    cols = [tuple(int(v) for v in c) for c, n in zip(cols, counts) if n >= least]
+    hls = [colorsys.rgb_to_hls(*(v / 255 for v in c)) for c in cols]
+    parent = list(range(len(cols)))
+
+    def find(i):
+        while parent[i] != i:
+            parent[i] = parent[parent[i]]
+            i = parent[i]
+        return i
+
+    for i in range(len(cols)):
+        hi, li, si = hls[i]
+        for j in range(i + 1, len(cols)):
+            hj, lj, sj = hls[j]
+            grey_i, grey_j = si < 0.14 or li < 0.08, sj < 0.14 or lj < 0.08
+            dh = min(abs(hi - hj), 1 - abs(hi - hj))
+            if (grey_i and grey_j and abs(li - lj) < 0.2) or (not grey_i and not grey_j and dh < 0.016 and abs(si - sj) < 0.16 and abs(li - lj) < 0.22):
+                parent[find(i)] = find(j)
+    groups = {}
+    for i in range(len(cols)):
+        groups.setdefault(find(i), []).append(i)
+    out = []
+    for members in groups.values():
+        members.sort(key=lambda i: hls[i][1])
+        colours = [cols[i] for i in members]
+        mid = members[len(members) // 2]
+        h, l, s = hls[mid]
+        base = "%02x%02x%02x" % cols[mid]
+        kind = next((k for anchor, k in (kinds or {}).items() if hex_rgb(anchor) in colours), None) or guess_kind(h, l, s)
+        if len(colours) <= 2 and s > 0.4 and kind in ("stone", "metal", "tiles"):
+            kind = "keep"  # a small bright thing (a bell, a finial, a sign): as drawn
+        out.append((colours, kind, base))
+    return out
+
+
+def repainted(picture: Image.Image, seed, kinds: dict | None = None) -> tuple[Image.Image, Image.Image]:
+    """A building of the first style drawn again over its own plan (`repaint`), its materials
+    read from its own colours (`palette_families`; `kinds` names a family's kind by one of its
+    colours where the guess would be wrong)."""
+    return repaint(picture, palette_families(picture, kinds=kinds), seed=seed, keep_far=18)
