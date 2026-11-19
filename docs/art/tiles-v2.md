@@ -203,7 +203,14 @@ its normal map); the generator prefers it to `FINE` and writes the picture's
 floor line exactly. Drawn in it so far: the broad trees (the Earth's oaks and
 apple trees; Paradise's blossom and gold trees and Eden's teal trees, with the
 frames of their stirring crowns: each heap goes round a little in its own
-time, the trunk still).
+time, the trunk still); the rest of the Earth's trees (firs in tiers of
+drooping boughs, each hem shading the tier under it; birches; a weeping willow
+whose strands fall nearly to the ground; dead trees forking into twigs; the
+giant oak, its roots out over the ground); and what grows low or lies on the
+ground (bushes of small leaves, one with berries; stumps with their rings, one
+with an axe in it; a sawn log; roots hanging from a cave's roof; toadstools;
+rubble with a plank across it; copper nuggets; Paradise's clipped hedge and
+topiary).
 
 ## Frames
 

@@ -472,3 +472,784 @@ def bare_tree(width: int, height: int, sink: int, seed, wood) -> tuple[Image.Ima
     grow(cx, fork_y + 2, -math.pi / 2 + r.uniform(0.35, 0.55), (fork_y - 8) * 0.36, trunk_r * 0.7, 4, 2.5)
     grow(cx, fork_y + (foot_y - fork_y) * 0.3, -math.pi / 2 + r.choice([-1, 1]) * 1.0, (fork_y - 8) * 0.24, trunk_r * 0.4, 3, 1)
     return render(s, ramps, ao=0.04, ao_radius=3, shadow=0.25, shadow_reach=6, shadow_drop=0.6, gamma=1.2)
+
+
+# --- What grows low, and wood and stone on the ground ------------------------------------------
+
+
+def _rings(s: Scene, cx: float, cy: float, rx: float, ry: float, base: float, mat: int, tilt: float = 1.4, step: float = 2.2):
+    """The cut face of wood seen a little from above: an ellipse that faces up, in rings."""
+    q = ((s.xs + 0.5 - cx) / rx) ** 2 + ((s.ys + 0.5 - cy) / ry) ** 2
+    d = np.sqrt(q) * rx
+    ring = (np.sin(d / step * math.pi) > 0.55) & (q < 0.85)
+    s.paint(q <= 1, base + (s.ys + 0.5 - cy) * tilt, mat, var=np.where(ring, -1, np.where(q < 0.04, -1, 1)), force=True)
+
+
+def bush(width: int, height: int, sink: int, seed, leaves, *, berries=None) -> tuple[Image.Image, Image.Image]:
+    """A bush on its floor line: heaps of small leaves side by side, a few higher at the
+    back; `berries` (a colour) dots it with berries."""
+    r = random.Random(f"style bush {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    LEAF, BERRY = 0, 1
+    lightness = colorsys.rgb_to_hls(*(c / 255 for c in hex_rgb(leaves)))[1]
+    ramps = {LEAF: make_ramp(leaves, 10, cool=0.4, warm=0.3, low=0.06 + 0.4 * max(0.0, lightness - 0.4), high=0.85)}
+    if berries is not None:
+        ramps[BERRY] = make_ramp(berries, 7, cool=0.3, warm=0.25, low=0.15, high=0.92)
+    foot_y = H - sink
+    tall = foot_y - 2
+    hr = min(W * 0.2, tall * 0.42)
+    n = max(2, int(round((W - 4) / (hr * 1.5))))
+    leaf = max(2.4, hr * 0.13)
+    heaps = []
+    for i in range(n):  # the back row, higher
+        x = 4 + hr + (W - 8 - 2 * hr) * (i + 0.5) / n + r.uniform(-2, 2)
+        heaps.append((x, foot_y - tall + hr * 0.95 + r.uniform(0, 3), hr * r.uniform(0.75, 0.9), 1.0))
+    for i in range(n + 1):  # the front row, on the ground
+        x = 3 + hr * 0.9 + (W - 6 - 1.8 * hr) * i / max(n, 1) + r.uniform(-2, 2)
+        heaps.append((min(max(x, hr), W - hr), foot_y - hr * 0.78, hr * r.uniform(0.85, 1.0), 4.0))
+    for hx, hy, rr, hz in heaps:
+        leafy_heap(s, r, hx, hy, rr, hz, leaf, LEAF)
+    if berries is not None:
+        br = max(1.6, hr * 0.08)
+        for _ in range(int(W * 0.15)):
+            hx, hy, rr, hz = heaps[r.randrange(len(heaps))]
+            a, d = r.uniform(0, 2 * math.pi), rr * 0.8 * math.sqrt(r.random())
+            bx, by = hx + math.cos(a) * d, hy + math.sin(a) * d * 0.8
+            q = ((s.xs + 0.5 - bx) / br) ** 2 + ((s.ys + 0.5 - by) / br) ** 2
+            s.paint(q <= 1, hz + rr + np.sqrt(np.clip(1 - q, 0, 1)) * br, BERRY, force=True)
+    s.mat[foot_y + 1 :, :] = -1  # nothing under the ground
+    return render(s, ramps, ao=0.04, ao_radius=3, shadow=0.3, shadow_reach=6, shadow_drop=0.7, gamma=1.3)
+
+
+def stump(width: int, height: int, sink: int, seed, bark, *, axe: bool = False) -> tuple[Image.Image, Image.Image]:
+    """A stump: a short round trunk in furrows, flaring into roots, cut flat on top with its
+    rings showing; `axe` leaves an axe stuck in its top."""
+    r = random.Random(f"style stump {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    BARK, WOOD, IRON = 0, 1, 2
+    ramps = {
+        BARK: make_ramp(bark, 9, cool=0.3, warm=0.18, low=0.08, high=0.75),
+        WOOD: make_ramp("b88a54", 8, cool=0.25, warm=0.2, low=0.2, high=0.85),
+        IRON: make_ramp("6a6e78", 7, cool=0.2, warm=0.1, low=0.08, high=0.9),
+    }
+    foot_y = H - sink
+    cx = W / 2
+    rad = W * 0.34
+    top = foot_y - (foot_y - 2) * 0.62
+    grain = value_noise(W, H, 3.0, ("stump", seed))
+    flare = np.clip((s.ys - (foot_y - rad * 0.8)) / (rad * 0.8), 0, 1) ** 2
+    rr = rad * (1 + 0.3 * flare)
+    u = (s.xs + 0.5 - cx) / rr
+    furrow = np.abs(np.sin(u * math.pi * 2.2 + grain))
+    s.paint((np.abs(u) < 1) & (s.ys >= top) & (s.ys < foot_y + 2), np.sqrt(np.clip(1 - u * u, 0, 1)) * rr - (1 - furrow) * 1.2, BARK, var=np.where(grain > 0.5, 1, 0))
+    _rings(s, cx, top, rad, rad * 0.32, rad + 2, WOOD)
+    if axe:  # its head bitten into the top, its haft up and out to one side
+        hx = cx + rad * 0.2
+        s.limb(hx, top - 1, hx + rad * 0.9, top - rad * 1.5, 1.6, 1.4, rad + 8, WOOD)
+        blade = (np.abs(s.xs + 0.5 - (hx - 1)) < rad * 0.35) & (s.ys >= top - rad * 0.45) & (s.ys < top + 1)
+        s.paint(blade, rad + 7 + (s.xs - hx) * -0.2, IRON, force=True)
+    s.mat[foot_y + 2 :, :] = -1
+    return render(s, ramps, ao=0.05, ao_radius=2, shadow=0.3, shadow_reach=5, shadow_drop=0.6, gamma=1.2)
+
+
+def log(width: int, height: int, sink: int, seed, bark) -> tuple[Image.Image, Image.Image]:
+    """A felled log lying along the ground: round, its bark in long furrows, its near end
+    sawn with the rings showing, a shoot of green out of its top."""
+    r = random.Random(f"style log {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    BARK, WOOD, LEAF = 0, 1, 2
+    ramps = {
+        BARK: make_ramp(bark, 9, cool=0.3, warm=0.18, low=0.08, high=0.75),
+        WOOD: make_ramp("c09060", 8, cool=0.25, warm=0.2, low=0.2, high=0.85),
+        LEAF: make_ramp("5a9a3a", 7, cool=0.4, warm=0.3, low=0.1, high=0.85),
+    }
+    foot_y = H - sink
+    rad = min((foot_y - 4) * 0.5, H * 0.4)
+    cy = foot_y - rad
+    x0, x1 = 4 + rad * 0.3, W - 4 - rad * 0.3
+    grain = value_noise(W, H, 5.0, ("log", seed))
+    v = (s.ys + 0.5 - cy) / rad
+    furrow = np.abs(np.sin(v * math.pi * 2.6 + grain * 1.2))
+    body = (np.abs(v) < 1) & (s.xs >= x0) & (s.xs < x1)
+    s.paint(body, np.sqrt(np.clip(1 - v * v, 0, 1)) * rad - (1 - furrow) * 1.4, BARK, var=np.where(grain > 0.55, 1, 0))
+    # The sawn end: the rings on a face turned to the eye and a little to the right.
+    q = ((s.xs + 0.5 - x1) / (rad * 0.36)) ** 2 + v**2
+    d = np.sqrt(q)
+    s.paint(q <= 1, rad + 1 + (s.xs - x1) * 0.6, WOOD, var=np.where(np.sin(d * rad / 2.2 * math.pi) > 0.55, -1, 1), force=True)
+    # A shoot.
+    sx = x0 + (x1 - x0) * r.uniform(0.25, 0.45)
+    s.limb(sx, cy - rad * 0.9, sx - 2, cy - rad * 1.5, 1.0, 0.8, rad + 2, LEAF)
+    for side in (-1, 1):
+        lx, ly = sx - 2 + side * 3, cy - rad * 1.5
+        q = ((s.xs + 0.5 - lx) / 3.0) ** 2 + ((s.ys + 0.5 - ly) / 1.8) ** 2
+        s.paint(q <= 1, rad + 3 + np.sqrt(np.clip(1 - q, 0, 1)), LEAF)
+    s.mat[foot_y + 1 :, :] = -1
+    return render(s, ramps, ao=0.05, ao_radius=2, shadow=0.3, shadow_reach=5, shadow_drop=0.6, gamma=1.2)
+
+
+def hanging_roots(width: int, height: int, seed, bark, *, count: int = 4) -> tuple[Image.Image, Image.Image]:
+    """Roots hanging out of a cave's roof: strands down from the top edge, thick at the top
+    and thin to their tips, wandering a little, with rootlets off them."""
+    r = random.Random(f"style roots {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    ROOT = 0
+    ramps = {ROOT: make_ramp(bark, 8, cool=0.3, warm=0.18, low=0.08, high=0.72)}
+    for i in range(count):
+        x = W * (i + 0.5) / count + r.uniform(-W * 0.08, W * 0.08)
+        length = H * r.uniform(0.45, 0.95)
+        thick = r.uniform(1.6, 3.2)
+        y, steps = 0.0, max(4, int(length / 6))
+        phase = r.uniform(0, 6)
+        for k in range(steps):
+            y1 = length * (k + 1) / steps
+            x1 = x + math.sin(y1 / 13 + phase) * 1.5 + r.uniform(-0.8, 0.8)
+            t0, t1 = k / steps, (k + 1) / steps
+            s.limb(x, y, x1, y1, max(0.6, thick * (1 - t0 * 0.8)), max(0.6, thick * (1 - t1 * 0.8)), 1 + i * 0.3, ROOT)
+            if r.random() < 0.18 and t1 < 0.8:
+                side = r.choice([-1, 1])
+                s.limb(x1, y1, x1 + side * r.uniform(4, 9), y1 + r.uniform(5, 12), max(0.6, thick * 0.4), 0.6, 0.5, ROOT)
+            x, y = x1, y1
+    return render(s, ramps, ao=0.03, ao_radius=2, shadow=0.2, shadow_reach=4, shadow_drop=0.6, gamma=1.2)
+
+
+def toadstools(width: int, height: int, sink: int, seed, cap="c43a2c") -> tuple[Image.Image, Image.Image]:
+    """A few toadstools: pale stems, round caps with white flecks, each with a gill shadow."""
+    r = random.Random(f"style toadstools {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    STEM, CAP, FLECK = 0, 1, 2
+    ramps = {STEM: make_ramp("e2d6bc", 7, cool=0.3, warm=0.12, low=0.25, high=0.95), CAP: make_ramp(cap, 9, cool=0.32, warm=0.22, low=0.1, high=0.82), FLECK: make_ramp("f4f0e6", 5, cool=0.2, warm=0.05, low=0.5, high=0.98)}
+    foot_y = H - sink
+    n = 3
+    for i in range(n):
+        x = W * (i + 0.6) / (n + 0.4) + r.uniform(-2, 2)
+        tall = (foot_y - 3) * r.uniform(0.55, 1.0)
+        cr = max(4.0, W * r.uniform(0.11, 0.15))
+        top = foot_y - tall + cr * 0.5
+        s.limb(x, foot_y, x, top + cr * 0.3, cr * 0.32, cr * 0.26, 2 + i, STEM)
+        q = ((s.xs + 0.5 - x) / cr) ** 2 + ((s.ys + 0.5 - top) / (cr * 0.7)) ** 2
+        cap_mask = (q <= 1) & (s.ys < top + cr * 0.25)
+        s.paint(cap_mask, 4 + i + np.sqrt(np.clip(1 - q, 0, 1)) * cr * 0.9, CAP, force=True)
+        for _ in range(4):
+            fx, fy = x + r.uniform(-0.6, 0.6) * cr, top - r.uniform(0.1, 0.55) * cr
+            fq = ((s.xs + 0.5 - fx) / 1.3) ** 2 + ((s.ys + 0.5 - fy) / 1.1) ** 2
+            s.paint((fq <= 1) & cap_mask, s.H + 0.4, FLECK, force=True)
+    s.mat[foot_y + 1 :, :] = -1
+    return render(s, ramps, ao=0.04, ao_radius=2, shadow=0.3, shadow_reach=4, shadow_drop=0.6, gamma=1.2)
+
+
+def boulders(width: int, height: int, sink: int, seed, stone, *, plank=None, count: int = 4, glint: bool = False) -> tuple[Image.Image, Image.Image]:
+    """Stones heaped on the ground, each a lump broken into a few faces, the big ones at the
+    back; `plank` (a colour) lays a broken plank across them; `glint` lets the lumps shine
+    (ore)."""
+    r = random.Random(f"style boulders {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    STONE, WOOD = 0, 1
+    ramps = {STONE: make_ramp(stone, 10, cool=0.32, warm=0.16 if not glint else 0.3, low=0.08, high=0.86 if not glint else 0.97)}
+    if plank is not None:
+        ramps[WOOD] = make_ramp(plank, 8, cool=0.28, warm=0.2, low=0.1, high=0.8)
+    foot_y = H - sink
+    tall = foot_y - 2
+    order = list(range(count))
+    r.shuffle(order)  # where along the heap each stone lies, the big ones not all at one end
+    for i in range(count):
+        big = 1.0 - 0.4 * i / max(count - 1, 1)
+        rx = min(W / (count + 0.6), tall * 0.75) * big * r.uniform(0.85, 1.0)
+        ry = min(tall * 0.5, rx * 0.8)
+        cx = 2 + rx + (W - 4 - 2 * rx) * (order[i] + 0.5) / count + r.uniform(-2, 2)
+        cy = foot_y - ry * 0.85
+        facets = value_noise(W, H, max(3.0, rx * 0.5), ("facets", seed, i))
+        q = ((s.xs + 0.5 - cx) / rx) ** 2 + ((s.ys + 0.5 - cy) / ry) ** 2
+        flat = np.round(facets * 3) / 3  # a few planes, not a smooth round
+        s.paint(q <= 1, i * 3 + np.sqrt(np.clip(1 - q, 0, 1)) * ry * 0.9 + flat * ry * 0.25, STONE, var=np.where(facets > 0.5, 1, 0))
+    if plank is not None:
+        x0, y0 = W * 0.18, foot_y - tall * 0.25
+        x1, y1 = W * 0.7, foot_y - tall * 0.95
+        vx, vy = x1 - x0, y1 - y0
+        L = math.hypot(vx, vy)
+        along = ((s.xs - x0) * vx + (s.ys - y0) * vy) / L
+        across = (-(s.xs - x0) * vy + (s.ys - y0) * vx) / L
+        board = (along >= 0) & (along <= L) & (np.abs(across) < 2.6)
+        s.paint(board, 3 * count + 4 - np.abs(across) * 0.3, WOOD, var=np.where(np.sin(along * 0.9) > 0.8, -1, 0), force=True)
+    s.mat[foot_y + 1 :, :] = -1
+    return render(s, ramps, ao=0.05, ao_radius=3, shadow=0.35, shadow_reach=6, shadow_drop=0.6, gamma=1.2)
+
+
+def topiary(width: int, height: int, sink: int, seed, leaves, bark, *, balls: int = 1, box: bool = False, flowers=None) -> tuple[Image.Image, Image.Image]:
+    """A clipped garden shape of small leaves: a box hedge (`box`), or `balls` balls one over
+    another on a pale stem; `flowers` (a colour) dots it with blossom."""
+    r = random.Random(f"style topiary {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    LEAF, BARK, FLOWER = 0, 1, 2
+    ramps = {LEAF: make_ramp(leaves, 10, cool=0.4, warm=0.3, low=0.07, high=0.86), BARK: make_ramp(bark, 8, cool=0.3, warm=0.1, anchor=0.6, low=0.2, high=0.95)}
+    if flowers is not None:
+        ramps[FLOWER] = make_ramp(flowers, 6, cool=0.25, warm=0.2, low=0.35, high=0.96)
+    foot_y = H - sink
+    leaf = 2.6
+    if box:
+        top, x0, x1 = 3, 3, W - 3
+        rr = (foot_y - top) * 0.5
+        # A box with rounded shoulders: its face stands out evenly, its top and sides round off.
+        ex = np.clip(np.minimum(s.xs + 0.5 - x0, x1 - s.xs - 0.5) / rr, 0, 1)
+        ey = np.clip((s.ys + 0.5 - top) / rr, 0, 1)
+        inside = (s.xs >= x0) & (s.xs < x1) & (s.ys >= top) & (s.ys <= foot_y)
+        shape = np.sqrt(np.clip(1 - (1 - np.minimum(ex, ey)) ** 2, 0, 1)) * rr
+        s.paint(inside, shape, LEAF, var=-1)
+        for _ in range(int((x1 - x0) * (foot_y - top) / (leaf * leaf * 0.9))):
+            lx, ly = r.uniform(x0, x1), r.uniform(top, foot_y)
+            ang = r.uniform(0, math.pi)
+            ca, sa = math.cos(ang), math.sin(ang)
+            a0, a1 = max(int(lx - 5), 0), min(int(lx + 6), W)
+            b0, b1 = max(int(ly - 5), 0), min(int(ly + 6), H)
+            px, py = s.xs[b0:b1, a0:a1] + 0.5 - lx, s.ys[b0:b1, a0:a1] + 0.5 - ly
+            pu, pv = px * ca + py * sa, -px * sa + py * ca
+            q = (pu / (leaf * 1.3)) ** 2 + (pv / (leaf * 0.75)) ** 2
+            base = s.H[b0:b1, a0:a1]
+            ok = (q <= 1) & (s.mat[b0:b1, a0:a1] == LEAF)
+            s.paint(ok, np.where(ok, base + np.sqrt(np.clip(1 - q, 0, 1)) * 1.2, 0), LEAF, var=r.choice([-1, 0, 0, 1]), at=(b0, a0), force=True)
+        heaps = [((x0 + x1) / 2, (top + foot_y) / 2, (x1 - x0) / 2, 0.0)]
+    else:
+        stem_top = 4
+        rad = min(W * 0.4, (foot_y - stem_top) / (balls * 2.0 + 0.6))
+        s.limb(W / 2, foot_y + 1, W / 2, stem_top + rad, max(2.0, rad * 0.14), max(1.6, rad * 0.1), 0, BARK)
+        heaps = []
+        for i in range(balls):
+            cy = stem_top + rad * (1 + 2.1 * i) * (0.85 if balls > 1 else 1.0)
+            rr = rad * (0.8 + 0.2 * i / max(balls - 1, 1)) if balls > 1 else rad
+            heaps.append((W / 2, cy, rr, 3.0 + i))
+        for hx, hy, rr, hz in heaps:
+            leafy_heap(s, r, hx, hy, rr, hz, leaf, LEAF)
+    if flowers is not None:
+        for _ in range(int(W * 0.25)):
+            hx, hy, rr, hz = heaps[r.randrange(len(heaps))]
+            fx, fy = hx + r.uniform(-0.85, 0.85) * rr, hy + r.uniform(-0.75, 0.75) * rr * (0.8 if not box else 1.6)
+            q = ((s.xs + 0.5 - fx) / 1.6) ** 2 + ((s.ys + 0.5 - fy) / 1.4) ** 2
+            s.paint((q <= 1) & (s.mat == LEAF), s.H + 0.8, FLOWER, force=True)
+    s.mat[foot_y + 1 :, :] = -1
+    return render(s, ramps, ao=0.04, ao_radius=3, shadow=0.3, shadow_reach=6, shadow_drop=0.7, gamma=1.3)
+
+
+# --- Made things: boards, blocks, iron ------------------------------------------------------
+
+
+def board(s: Scene, x0, y0, x1, y1, z, mat: int, *, bevel: float = 1.6, grain=None, var=0, force: bool = False):
+    """A board or block from (x0, y0) to (x1, y1): its face `z` out, its edges bevelled
+    `bevel` px; `grain` (a noise field) runs along its long side in streaks."""
+    xs, ys = s.xs, s.ys
+    inside = (xs >= x0) & (xs < x1) & (ys >= y0) & (ys < y1)
+    edge = np.minimum.reduce([xs + 0.5 - x0, x1 - xs - 0.5, ys + 0.5 - y0, y1 - ys - 0.5])
+    height = z + np.clip(edge / max(bevel, 0.1), 0, 1) ** 0.8 * bevel
+    v = np.broadcast_to(np.asarray(var), xs.shape).copy() if not np.isscalar(var) else np.full(xs.shape, var)
+    if grain is not None:
+        along_x = (x1 - x0) >= (y1 - y0)
+        streak = np.sin((ys if along_x else xs) * 1.7 + grain * 3.0)
+        height = height - (streak > 0.7) * 0.5
+        v = v + np.where(streak > 0.7, -1, np.where(grain > 0.6, 1, 0))
+    s.paint(inside, height, mat, var=v, force=force)
+
+
+def post(s: Scene, x, y0, y1, r, z, mat: int, var=0):
+    """An upright round post from y0 down to y1."""
+    u = (s.xs + 0.5 - x) / r
+    s.paint((np.abs(u) < 1) & (s.ys >= y0) & (s.ys < y1), z + np.sqrt(np.clip(1 - u * u, 0, 1)) * r, mat, var=var)
+
+
+def ball(s: Scene, cx, cy, rx, ry, z, depth, mat: int, var=0, force: bool = False):
+    q = ((s.xs + 0.5 - cx) / rx) ** 2 + ((s.ys + 0.5 - cy) / ry) ** 2
+    s.paint(q <= 1, z + np.sqrt(np.clip(1 - q, 0, 1)) * depth, mat, var=var, force=force)
+
+
+def nail(s: Scene, x, y, z, mat: int, r: float = 1.0):
+    ball(s, x, y, r, r, z, r, mat, force=True)
+
+
+def _made(W, H, ramps_spec):
+    s = Scene(W, H)
+    ramps = {}
+    for i, (base, n, kw) in enumerate(ramps_spec):
+        ramps[i] = make_ramp(base, n, **kw)
+    return s, ramps
+
+
+WOODEN = ("8a5a34", 9, dict(cool=0.28, warm=0.2, low=0.08, high=0.8))
+GREYWOOD_ = ("7a7064", 9, dict(cool=0.3, warm=0.14, low=0.08, high=0.8))
+IRON_ = ("5a5e68", 8, dict(cool=0.22, warm=0.1, low=0.05, high=0.88))
+STONE_ = ("8a8890", 10, dict(cool=0.32, warm=0.14, low=0.08, high=0.88))
+STRAW = ("c8a040", 9, dict(cool=0.3, warm=0.25, low=0.1, high=0.92))
+ROOFRED = ("a8442c", 9, dict(cool=0.3, warm=0.22, low=0.08, high=0.82))
+
+
+def _finish(s, ramps, foot_y, **kw):
+    s.mat[foot_y + 1 :, :] = -1
+    opts = dict(ao=0.05, ao_radius=3, shadow=0.32, shadow_reach=6, shadow_drop=0.6, gamma=1.2)
+    opts.update(kw)
+    return render(s, ramps, **opts)
+
+
+def fence(width: int, height: int, sink: int, seed, kind: int) -> tuple[Image.Image, Image.Image]:
+    """A length of wooden fence: pickets on two rails (0), a gap with a fallen rail (1), or
+    pickets leaning over (2); each picket a board with a point, grain and a nail at each rail."""
+    r = random.Random(f"style fence {seed}")
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, IRON_])
+    WOOD, IRON = 0, 1
+    foot_y = H - sink
+    grain = value_noise(W, H, 4.0, ("fence", seed))
+    top = foot_y - (foot_y - 4) * 0.95
+    rails = (top + (foot_y - top) * 0.28, foot_y - (foot_y - top) * 0.28)
+    for ry in rails:  # the rails, behind the pickets
+        board(s, 1, ry - 3, W - 1, ry + 3, 1, WOOD, grain=grain, var=-1)
+    n = 9
+    pitch = (W - 2) / n
+    for i in range(n):
+        if kind == 1 and 3 <= i <= 5:
+            continue
+        x0 = 1 + i * pitch + 1
+        x1 = x0 + pitch - 4.5  # a gap between pickets, the rails behind it
+        lean = (i - 4) * 2.2 if kind == 2 else 0.0
+        tall = top + r.uniform(-2, 3)
+        for y in range(int(tall), foot_y + 1):
+            t = (foot_y - y) / max(foot_y - tall, 1)
+            dx = lean * t
+            point = max(0.0, (y - tall) / ((x1 - x0) * 0.5))  # the cut point at its top
+            half = (x1 - x0) / 2 * min(1.0, point)
+            mid = (x0 + x1) / 2 + dx
+            row = slice(y, y + 1)
+            xs = s.xs[row]
+            inside = np.abs(xs + 0.5 - mid) < half
+            edge = half - np.abs(xs + 0.5 - mid)
+            s.paint(inside, 4 + np.clip(edge / 1.5, 0, 1) * 1.5 - (np.sin(xs * 2.1 + grain[row] * 3) > 0.75) * 0.5, WOOD, var=np.where(grain[row] > 0.55, 1, 0), at=(y, 0))
+        for ry in rails:
+            nail(s, (x0 + x1) / 2 + lean * (foot_y - ry) / max(foot_y - tall, 1), ry, 6, IRON, 0.9)
+    if kind == 1:  # the rail that fell, across the gap
+        gx0, gx1 = 1 + 3 * pitch, 1 + 6 * pitch
+        vx, vy = gx1 - gx0, -(foot_y - rails[1]) * 0.6
+        L = math.hypot(vx, vy)
+        along = ((s.xs - gx0) * vx + (s.ys - (foot_y - 2)) * vy) / L
+        across = (-(s.xs - gx0) * vy + (s.ys - (foot_y - 2)) * vx) / L
+        s.paint((along >= 0) & (along <= L) & (np.abs(across) < 3), 5 - np.abs(across) * 0.4, WOOD)
+    return _finish(s, ramps, foot_y)
+
+
+def iron_fence(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """Railings of wrought iron: round bars topped with spear points, on two flat rails."""
+    W, H = width, height
+    s, ramps = _made(W, H, [IRON_])
+    IRON = 0
+    foot_y = H - sink
+    top = 6
+    for ry in (top + 10, foot_y - 8):
+        board(s, 1, ry - 1.5, W - 1, ry + 1.5, 2, IRON, bevel=1.0)
+    n = 12
+    for i in range(n):
+        x = 1 + (W - 2) * (i + 0.5) / n
+        post(s, x, top + 3, foot_y + 1, 1.2, 3, IRON)
+        tip = (s.ys >= top - 3) & (s.ys < top + 4) & (np.abs(s.xs + 0.5 - x) < (s.ys - (top - 3)) * 0.45)
+        s.paint(tip, 4 - np.abs(s.xs + 0.5 - x) * 0.5, IRON)
+    return _finish(s, ramps, foot_y, rim=False)
+
+
+def crates(width: int, height: int, sink: int, seed, kind: int) -> tuple[Image.Image, Image.Image]:
+    """What is left by a store: crates stacked with a barrel (0), sacks with a pick against
+    them (1), or a ladder leant on nothing (2)."""
+    r = random.Random(f"style crates {seed}")
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, IRON_, ("b89a62", 9, dict(cool=0.3, warm=0.22, low=0.12, high=0.9))])
+    WOOD, IRON, SACK = 0, 1, 2
+    foot_y = H - sink
+    grain = value_noise(W, H, 4.0, ("crates", seed))
+    if kind == 0:
+        for x0, y1, size in ((4, foot_y, 30), (34, foot_y, 26), (8, foot_y - 30, 24)):
+            board(s, x0, y1 - size, x0 + size, y1, 3, WOOD, bevel=2.2, grain=grain)
+            for k in (0.33, 0.66):  # its boards
+                yy = y1 - size * k
+                s.H[int(yy), int(x0 + 2) : int(x0 + size - 2)] -= 1.5
+            s.limb(x0 + 3, y1 - 3, x0 + size - 3, y1 - size + 3, 1.6, 1.6, 5.5, WOOD)  # the brace
+        cx, rx = 72, 10
+        u = (s.xs + 0.5 - cx) / (rx * (1 + 0.12 * np.sin(np.clip((s.ys - (foot_y - 34)) / 34, 0, 1) * math.pi)))
+        s.paint((np.abs(u) < 1) & (s.ys >= foot_y - 34) & (s.ys < foot_y), 2 + np.sqrt(np.clip(1 - u * u, 0, 1)) * rx - (np.sin(u * 9) > 0.8) * 0.6, WOOD, var=np.where(grain > 0.5, 1, 0))
+        for hy in (foot_y - 28, foot_y - 6):
+            s.paint((np.abs(u) < 1.02) & (np.abs(s.ys + 0.5 - hy) < 1.6), 3 + np.sqrt(np.clip(1 - u * u, 0, 1)) * rx * 1.05, IRON, force=True)
+    elif kind == 1:
+        for cx, cy, rx, ry in ((22, foot_y - 9, 15, 10), (46, foot_y - 9, 14, 10), (34, foot_y - 24, 13, 10)):
+            ball(s, cx, cy, rx, ry, 2, ry * 0.9, SACK, var=np.where(value_noise(W, H, 2.0, ("sack", cx)) > 0.5, 1, 0))
+            s.limb(cx - 3, cy - ry + 1, cx + 3, cy - ry + 1, 1.5, 1.5, 2 + ry, SACK)  # its tie
+        s.limb(68, foot_y, 80, foot_y - 38, 1.6, 1.6, 4, WOOD)  # the pick's haft
+        s.limb(70, foot_y - 42, 90, foot_y - 32, 2.0, 1.0, 6, IRON)
+    else:
+        x0, x1 = 30, 62
+        for side in (0, 1):
+            bx = x0 + side * 16
+            s.limb(bx, foot_y, bx + 22, 6, 1.8, 1.6, 3, WOOD)
+        for k in range(1, 8):
+            t = k / 8
+            y = foot_y - (foot_y - 6) * t
+            s.limb(x0 + 22 * t, y, x0 + 16 + 22 * t, y, 1.4, 1.4, 4.5, WOOD)
+    return _finish(s, ramps, foot_y)
+
+
+def barrel(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A barrel: staves bellied out, iron hoops, its lid just showing."""
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, IRON_])
+    WOOD, IRON = 0, 1
+    foot_y = H - sink
+    top = 6
+    t = np.clip((s.ys - top) / (foot_y - top), 0, 1)
+    rx = (W / 2 - 3) * (0.86 + 0.14 * np.sin(t * math.pi))
+    u = (s.xs + 0.5 - W / 2) / rx
+    body = (np.abs(u) < 1) & (s.ys >= top) & (s.ys < foot_y)
+    stave = np.abs(np.sin(np.arcsin(np.clip(u, -1, 1)) * 4.0))
+    s.paint(body, np.sqrt(np.clip(1 - u * u, 0, 1)) * rx - (stave < 0.15) * 1.0, WOOD, var=np.where(stave < 0.15, -1, 0))
+    for hy in (top + 5, top + (foot_y - top) * 0.36, foot_y - (foot_y - top) * 0.36, foot_y - 5):
+        s.paint(body & (np.abs(s.ys + 0.5 - hy) < 1.7), np.sqrt(np.clip(1 - u * u, 0, 1)) * rx + 1, IRON, force=True)
+    ball(s, W / 2, top + 1, W / 2 - 5, 3, 10, 2, WOOD, var=-1, force=True)
+    return _finish(s, ramps, foot_y)
+
+
+def bench(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A plank bench on two splayed legs."""
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN])
+    WOOD = 0
+    foot_y = H - sink
+    grain = value_noise(W, H, 5.0, ("bench", seed))
+    seat = foot_y - (foot_y - 4) * 0.7
+    board(s, 2, seat, W - 2, seat + 6, 5, WOOD, bevel=2.0, grain=grain)
+    for x in (12, W - 12):
+        for side in (-1, 1):
+            s.limb(x, seat + 5, x + side * 5, foot_y, 2.4, 2.2, 3, WOOD)
+    return _finish(s, ramps, foot_y)
+
+
+def kennel(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A dog's kennel: plank walls, a round door, a pitched roof of red boards, a chain out."""
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, ROOFRED, IRON_, ("1a1418", 4, dict(cool=0.1, warm=0.0, low=0.02, high=0.12))])
+    WOOD, ROOF, IRON, DARK = 0, 1, 2, 3
+    foot_y = H - sink
+    grain = value_noise(W, H, 4.0, ("kennel", seed))
+    eave = foot_y - (foot_y - 4) * 0.55
+    for i, x0 in enumerate(range(8, W - 8, 8)):
+        board(s, x0, eave, min(x0 + 8, W - 8), foot_y, 3, WOOD, bevel=1.2, grain=grain)
+    door = ((s.xs + 0.5 - W / 2) / 8) ** 2 + ((s.ys + 0.5 - (foot_y - 9)) / 11) ** 2
+    s.paint((door <= 1) & (s.ys < foot_y), 0.5, DARK, force=True)
+    peak = 4
+    for side in (-1, 1):
+        x_from, x_to = W / 2, W / 2 + side * (W / 2 - 1)
+        vx, vy = x_to - x_from, eave + 3 - peak
+        L = math.hypot(vx, vy)
+        along = ((s.xs - x_from) * vx + (s.ys - peak) * vy) / L
+        across = (-(s.xs - x_from) * vy + (s.ys - peak) * vx) / L * side
+        slab = (along >= 0) & (along <= L) & (across > -9) & (across < 0.5)
+        s.paint(slab, 8 + (across + 9) * 0.5 - (np.sin(along * 1.1) > 0.85) * 0.8, ROOF, var=np.where(np.sin(along * 1.1) > 0.85, -1, 0))
+    for k in range(6):
+        nail(s, W - 10 + k * 1.6, foot_y - 3 + (k % 2), 4, IRON, 1.0)
+    return _finish(s, ramps, foot_y)
+
+
+def cage(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """An iron cage that hangs: a ring at top and bottom, round bars between, a hook above."""
+    W, H = width, height
+    s, ramps = _made(W, H, [IRON_, ("1a1c24", 4, dict(cool=0.1, warm=0.0, low=0.03, high=0.12))])
+    IRON, DARK = 0, 1
+    foot_y = H - max(sink, 2)
+    top = 14
+    board(s, 6, top, W - 6, top + 5, 4, IRON, bevel=1.5)
+    board(s, 6, foot_y - 6, W - 6, foot_y, 4, IRON, bevel=1.5)
+    for i in range(9):
+        x = 8 + (W - 16) * i / 8
+        post(s, x, top + 5, foot_y - 6, 1.6, 3, IRON)
+    s.limb(W / 2, 2, W / 2, top, 1.5, 1.5, 5, IRON)
+    ball(s, W / 2, 4, 4, 3, 4, 2, IRON)
+    return _finish(s, ramps, foot_y, outline=True)
+
+
+def haystack(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A haystack: a tall dome of straw laid in strands that run down it, a pole through its
+    top, the straw ragged at its foot."""
+    r = random.Random(f"style hay {seed}")
+    W, H = width, height
+    s, ramps = _made(W, H, [STRAW, WOODEN])
+    HAY, WOOD = 0, 1
+    foot_y = H - sink
+    top = 10
+    t = np.clip((s.ys - top) / (foot_y - top), 0, 1)
+    rx = (W / 2 - 2) * np.sqrt(np.clip(t * 1.25, 0, 1)) ** 0.9
+    u = (s.xs + 0.5 - W / 2) / np.maximum(rx, 0.5)
+    strand = np.sin(u * 14 + value_noise(W, H, 3.0, ("hay", seed)) * 2.5)
+    body = (np.abs(u) < 1) & (s.ys >= top) & (s.ys < foot_y + 1)
+    s.paint(body, np.sqrt(np.clip(1 - u * u, 0, 1)) * rx * 0.7 + strand * 0.6 + (1 - t) * 6, HAY, var=np.where(strand > 0.8, 1, np.where(strand < -0.85, -1, 0)))
+    for band in (0.45, 0.75):  # where the straw is tied round
+        by = top + (foot_y - top) * band
+        s.H = np.where(body & (np.abs(s.ys + 0.5 - by) < 1.2), s.H - 1.5, s.H)
+    s.limb(W / 2, top - 8, W / 2, top + 6, 1.6, 1.6, 10, WOOD)
+    for _ in range(int(W * 0.6)):  # ragged straw at its foot
+        x = r.uniform(W * 0.05, W * 0.95)
+        s.limb(x, foot_y, x + r.uniform(-3, 3), foot_y - r.uniform(2, 6), 0.7, 0.6, 3, HAY, var=1)
+    return _finish(s, ramps, foot_y, ao_radius=4)
+
+
+def grave(width: int, height: int, sink: int, seed, kind: int) -> tuple[Image.Image, Image.Image]:
+    """A grave marker of grey stone: a rounded headstone with a carved line (0), a cross (1),
+    a slab leant over (2), a low flat slab (3); lichen in patches."""
+    W, H = width, height
+    s, ramps = _made(W, H, [STONE_, ("7a9a4a", 7, dict(cool=0.3, warm=0.25, low=0.15, high=0.75))])
+    STONE, LICHEN = 0, 1
+    foot_y = H - sink
+    grit = value_noise(W, H, 2.0, ("grave grit", seed))
+    if kind == 0:
+        top = foot_y - (foot_y - 4) * 0.62
+        x0, x1 = 8, W - 8
+        q = ((s.xs + 0.5 - W / 2) / ((x1 - x0) / 2)) ** 2 + ((s.ys + 0.5 - (top + 8)) / 9) ** 2
+        shape = ((s.xs >= x0) & (s.xs < x1) & (s.ys >= top + 8) & (s.ys < foot_y)) | ((q <= 1) & (s.ys < top + 8))
+        edge = np.minimum(np.minimum(s.xs + 0.5 - x0, x1 - s.xs - 0.5), np.where(s.ys < top + 8, (1 - np.sqrt(np.clip(q, 0, 1))) * 9, 9))
+        s.paint(shape, 3 + np.clip(edge / 2, 0, 1) * 2 + grit * 0.3, STONE)
+        for ly in (top + 14, top + 19):
+            s.H = np.where(shape & (np.abs(s.ys + 0.5 - ly) < 0.8) & (np.abs(s.xs + 0.5 - W / 2) < 8), s.H - 1.5, s.H)
+    elif kind == 1:
+        cx, top = W / 2, foot_y - (foot_y - 4) * 0.85
+        board(s, cx - 3.5, top, cx + 3.5, foot_y, 3, STONE, bevel=1.6)
+        board(s, cx - 13, top + 10, cx + 13, top + 17, 3.2, STONE, bevel=1.6)
+    elif kind == 2:
+        x0, y0, x1, y1 = 10, foot_y, 32, foot_y - 40
+        vx, vy = x1 - x0, y1 - y0
+        L = math.hypot(vx, vy)
+        along = ((s.xs - x0) * vx + (s.ys - y0) * vy) / L
+        across = (-(s.xs - x0) * vy + (s.ys - y0) * vx) / L
+        slab = (along >= 0) & (along <= L) & (np.abs(across) < 6)
+        s.paint(slab, 3 + np.clip((6 - np.abs(across)) / 1.6, 0, 1) * 1.6 + grit * 0.3, STONE)
+    else:
+        board(s, 4, foot_y - 12, W - 4, foot_y, 3, STONE, bevel=2.0)
+    lichen = (value_noise(W, H, 3.0, ("lichen", seed)) > 0.55) & (s.mat == STONE)
+    s.paint(lichen, s.H + 0.3, LICHEN, force=True)
+    return _finish(s, ramps, foot_y)
+
+
+def scarecrow(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A scarecrow on a pole: a sack head under a hat, a coat on a crossbar, straw at its
+    cuffs and hem."""
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, ("8a3a2c", 9, dict(cool=0.32, warm=0.2, low=0.08, high=0.75)), ("c8a868", 8, dict(cool=0.3, warm=0.2, low=0.15, high=0.9)), STRAW, ("3a2a20", 7, dict(cool=0.2, warm=0.15, low=0.05, high=0.45))])
+    WOOD, COAT, SACK, HAY, HAT = 0, 1, 2, 3, 4
+    foot_y = H - sink
+    cx = W / 2
+    post(s, cx, 20, foot_y, 2.4, 1, WOOD)
+    arm_y = 40
+    s.limb(4, arm_y, W - 4, arm_y, 2.2, 2.2, 3, WOOD)
+    t = np.clip((s.ys - arm_y + 4) / 50, 0, 1)
+    half = 10 + 6 * t
+    u = (s.xs + 0.5 - cx) / half
+    coat = (np.abs(u) < 1) & (s.ys >= arm_y - 4) & (s.ys < arm_y + 50)
+    s.paint(coat, 5 + np.sqrt(np.clip(1 - u * u, 0, 1)) * half * 0.4 + np.sin(u * 7) * 0.6, COAT)
+    for side in (-1, 1):
+        s.limb(cx + side * 8, arm_y, cx + side * 26, arm_y + 2, 4.5, 3.5, 6, COAT)
+        for k in range(4):
+            s.limb(cx + side * 27, arm_y + 2, cx + side * (30 + k), arm_y + 6 + k * 2, 0.8, 0.6, 7, HAY)
+    for k in range(9):
+        x = cx - 14 + k * 3.5
+        s.limb(x, arm_y + 48, x + (k - 4) * 0.4, arm_y + 56, 0.9, 0.7, 6, HAY)
+    ball(s, cx, 28, 8, 9, 6, 7, SACK)
+    board(s, cx - 13, 16, cx + 13, 19, 12, HAT, bevel=1.0)
+    board(s, cx - 7, 6, cx + 7, 17, 12, HAT, bevel=2.0)
+    return _finish(s, ramps, foot_y)
+
+
+def wheel(s: Scene, cx, cy, rad, z, mat: int, iron: int, spokes: int = 8):
+    d = np.hypot(s.xs + 0.5 - cx, s.ys + 0.5 - cy)
+    rim = (d < rad) & (d > rad - 3)
+    s.paint(rim, z + 2 + np.clip(1.5 - np.abs(d - (rad - 1.5)), 0, 1.5), mat)
+    s.paint((d < rad + 0.5) & (d > rad - 1.2), z + 3.5, iron, force=True)
+    for k in range(spokes):
+        a = k * math.pi * 2 / spokes
+        s.limb(cx, cy, cx + math.cos(a) * (rad - 2), cy + math.sin(a) * (rad - 2), 1.3, 1.1, z + 1, mat)
+    ball(s, cx, cy, 3.2, 3.2, z + 2, 2.5, iron)
+
+
+def cart(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A farm cart: a box of boards on two spoked wheels, its shafts down to the ground."""
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, IRON_])
+    WOOD, IRON = 0, 1
+    foot_y = H - sink
+    grain = value_noise(W, H, 5.0, ("cart", seed))
+    rad = (foot_y - 4) * 0.3
+    bed = foot_y - rad * 2 - 2
+    for k in range(3):
+        board(s, 6, bed - 22 + k * 8, W * 0.72, bed - 14 + k * 8, 3, WOOD, bevel=1.4, grain=grain)
+    for x in (8, W * 0.36, W * 0.70):
+        board(s, x - 2, bed - 25, x + 2, bed + 2, 5, WOOD, bevel=1.2)
+    s.limb(W * 0.68, bed - 2, W - 4, foot_y - 1, 2.0, 1.8, 2, WOOD)
+    for cx in (W * 0.18, W * 0.54):
+        wheel(s, cx, foot_y - rad, rad, 6, WOOD, IRON)
+    return _finish(s, ramps, foot_y)
+
+
+def well(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A village well: a round wall of dressed stone, two posts carrying a pitched roof of red
+    tiles, a winch between them with its rope and bucket, a crank at one side."""
+    r = random.Random(f"style well {seed}")
+    W, H = width, height
+    s, ramps = _made(W, H, [STONE_, WOODEN, ROOFRED, IRON_])
+    STONE, WOOD, ROOF, IRON = 0, 1, 2, 3
+    foot_y = H - sink
+    wall_top = foot_y - (foot_y - 4) * 0.36
+    x0, x1 = 14, W - 14
+    course = 8
+    y = wall_top
+    row = 0
+    while y < foot_y:
+        x = x0 - (row % 2) * 7
+        while x < x1:
+            wide = r.randint(12, 18)
+            bx0, bx1 = max(x, x0), min(x + wide, x1)
+            if bx1 - bx0 > 2:
+                u = (bx0 + bx1) / 2 - W / 2
+                board(s, bx0, y, bx1, min(y + course, foot_y), 4 + (1 - (u / (W / 2)) ** 2) * 3, STONE, bevel=1.8, var=r.choice([-1, 0, 0, 1]))
+            x += wide
+        y += course
+        row += 1
+    board(s, x0 - 3, wall_top - 4, x1 + 3, wall_top + 1, 9, STONE, bevel=1.8)
+    grain = value_noise(W, H, 5.0, ("well", seed))
+    eave = 28
+    for px in (x0 + 4, x1 - 4):
+        board(s, px - 3, eave, px + 3, wall_top - 3, 6, WOOD, bevel=1.4, grain=grain)
+    s.limb(x0 + 4, eave + 14, x1 - 4, eave + 14, 3, 3, 8, WOOD)
+    s.limb(W / 2 + 2, eave + 16, W / 2 + 2, wall_top - 14, 0.8, 0.8, 9, WOOD)
+    board(s, W / 2 - 4, wall_top - 16, W / 2 + 8, wall_top - 6, 10, WOOD, bevel=1.5)
+    peak = 4
+    s.limb(x1 - 2, eave + 14, x1 + 6, eave + 20, 1.2, 1.2, 9, IRON)
+    gable = (s.ys >= peak + 6) & (s.ys < eave + 2) & (np.abs(s.xs + 0.5 - W / 2) < (s.ys - peak) * (W / 2 - 1) / (eave + 4 - peak) - 4)
+    s.paint(gable, 5 - (np.sin(s.xs * 0.8) > 0.85) * 0.6, WOOD, var=np.where(np.sin(s.xs * 0.8) > 0.85, -1, 0))
+    peak = 4
+    for side in (-1, 1):
+        x_from, x_to = W / 2, W / 2 + side * (W / 2 - 1)
+        vx, vy = x_to - x_from, eave + 4 - peak
+        L = math.hypot(vx, vy)
+        along = ((s.xs - x_from) * vx + (s.ys - peak) * vy) / L
+        across = (-(s.xs - x_from) * vy + (s.ys - peak) * vx) / L * side
+        tiles = np.sin(along * 0.75) > 0.8
+        slab = (along >= 0) & (along <= L) & (across > -13) & (across < 0.5)
+        s.paint(slab, 12 + (across + 13) * 0.5 - tiles * 0.8, ROOF, var=np.where(tiles, -1, 0))
+    return _finish(s, ramps, foot_y, ao_radius=4)
+
+
+def washing(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A washing line between two posts: a rope that sags, cloths of a few colours hung on it
+    with their folds."""
+    r = random.Random(f"style washing {seed}")
+    W, H = width, height
+    colours = ["e8e2d4", "9a3a4a", "4a6a9a", "d8c060", "e8e2d4"]
+    s, ramps = _made(W, H, [WOODEN, ("c8b898", 6, dict(cool=0.2, warm=0.1, low=0.25, high=0.8))] + [(c, 8, dict(cool=0.3, warm=0.18, low=0.15, high=0.95)) for c in colours])
+    WOOD, ROPE = 0, 1
+    foot_y = H - sink
+    top = 10
+    for x in (6, W - 6):
+        post(s, x, top, foot_y, 2.2, 2, WOOD)
+    sag = lambda x: top + 4 + 10 * math.sin(math.pi * (x - 6) / (W - 12))
+    for x in range(6, W - 6):
+        s.paint(np.ones((1, 1), dtype=bool), 4, ROPE, at=(int(sag(x)), x))
+    x = 18
+    k = 0
+    while x < W - 26:
+        wide, long_ = r.randint(12, 20), r.randint(14, 30)
+        y0 = sag(x + wide / 2)
+        u = (s.xs + 0.5 - x) / wide
+        cloth = (u >= 0) & (u < 1) & (s.ys >= y0) & (s.ys < y0 + long_ * (1 - 0.15 * np.abs(np.sin(u * 3.0))))
+        s.paint(cloth, 5 + np.sin(u * math.pi * r.choice([2, 3])) * 1.5, 2 + k % len(colours))
+        x += wide + r.randint(3, 8)
+        k += 1
+    return _finish(s, ramps, foot_y)
+
+
+def garden(width: int, height: int, sink: int, seed) -> tuple[Image.Image, Image.Image]:
+    """A kitchen garden: a bed of dark earth in a plank edging, rows of leafy greens on it and
+    a stake of beans at one end."""
+    r = random.Random(f"style garden {seed}")
+    W, H = width, height
+    s, ramps = _made(W, H, [WOODEN, ("4a3424", 8, dict(cool=0.3, warm=0.2, low=0.05, high=0.5)), ("5aa040", 9, dict(cool=0.4, warm=0.3, low=0.08, high=0.88))])
+    WOOD, SOIL, LEAF = 0, 1, 2
+    foot_y = H - sink
+    bed = foot_y - 10
+    board(s, 2, bed, W - 2, foot_y, 2, WOOD, bevel=1.4, grain=value_noise(W, H, 5.0, ("garden", seed)))
+    board(s, 4, bed - 3, W - 4, bed + 1, 1, SOIL, bevel=1.5)
+    for i in range(int((W - 30) / 13)):
+        cx = 12 + i * 13
+        for _ in range(5):
+            a = r.uniform(-2.6, -0.5)
+            lx, ly = cx + math.cos(a) * 5, bed - 3 + math.sin(a) * 7
+            ball(s, lx, ly, 3, 4.5, 3, 2.5, LEAF, var=r.choice([-1, 0, 1]))
+    sx = W - 14
+    s.limb(sx, foot_y - 4, sx, 6, 1.3, 1.1, 3, WOOD)
+    for k in range(10):
+        y = 10 + k * (bed - 14) / 10
+        ball(s, sx + (3 if k % 2 else -3), y, 2.6, 3.2, 4, 2, LEAF, var=r.choice([-1, 0, 1]))
+    return _finish(s, ramps, foot_y)
+
+
+# --- Relief: a drawing of the first style raised into the second -----------------------------
+
+
+def _distance_inside(mask: np.ndarray, cap: int) -> np.ndarray:
+    """How many px each pixel of `mask` lies from its edge (4-neighbour steps), up to `cap`."""
+    d = np.zeros(mask.shape)
+    cur = mask.copy()
+    for k in range(1, cap + 1):
+        shrunk = cur & np.roll(cur, 1, 0) & np.roll(cur, -1, 0) & np.roll(cur, 1, 1) & np.roll(cur, -1, 1)
+        shrunk[0, :] = shrunk[-1, :] = False
+        shrunk[:, 0] = shrunk[:, -1] = False
+        d += cur
+        cur = shrunk
+        if not cur.any():
+            break
+    return d
+
+
+def relief(picture: Image.Image, *, depth: float = 1.0, round_: int = 6, groove: float = 3.0, strength: float = 0.55) -> tuple[Image.Image, Image.Image]:
+    """A picture drawn in the first style, raised into the second: its shapes and colours
+    stay where they are, but it gets a height field (its silhouette rounded `round_` px in,
+    each patch of one tone bevelled where it meets a darker line, the dark lines and joints
+    sunk `groove`), is lit again by the one light on that field (`strength` of the change),
+    its shadows turned cool and its lights warm, and gives its normal map."""
+    a = np.array(picture.convert("RGBA")).astype(float)
+    rgb, alpha = a[..., :3], a[..., 3]
+    solid = alpha > 0
+    lum = (rgb @ np.array([0.299, 0.587, 0.114])) / 255
+    local = lum - blur(lum, 2)
+    # A joint or line is a pixel darker than what is round it: sink it; a stone is bevelled up
+    # from its joints.
+    joint = solid & (local < -0.035)
+    face = solid & ~joint
+    bevel = np.clip(_distance_inside(face, 3) / 3, 0, 1) ** 0.7
+    body = np.clip(_distance_inside(solid, round_) / round_, 0, 1)
+    body = np.sqrt(1 - (1 - body) ** 2)
+    H = (body * round_ * 0.8 + bevel * groove * 0.6 - joint * groove * 0.4 + local * 6) * depth
+    N = normals(np.where(solid, H, 0), solid, clamp=2.0)
+    d = np.clip(N @ LIGHT, 0, 1)
+    flat = float(LIGHT[2])  # how a face square to the eye is lit: the old drawing's own light
+    change = (d - flat) * strength
+    # Hollows: darker where the field is lower than round it.
+    Hf = np.where(solid, H, H[solid].min() if solid.any() else 0)
+    change -= np.clip((blur(Hf, 3) - Hf) * 0.04, 0, 0.25)
+    out = rgb.copy()
+    lit = change > 0
+    warm = np.array([255, 236, 190], dtype=float)
+    cool = np.array([40, 44, 92], dtype=float)
+    k = np.clip(change, -1, 1)[..., None]
+    out = np.where(lit[..., None], out + (warm - out) * k * 0.9, out + (cool - out) * (-k) * 0.9)
+    res = np.zeros_like(a)
+    res[..., :3] = np.clip(np.round(out), 0, 255)
+    res[..., 3] = alpha
+    nm = np.zeros(a.shape, dtype=np.uint8)
+    nm[..., 0] = np.round((N[..., 0] * 0.5 + 0.5) * 255)
+    nm[..., 1] = np.round((-N[..., 1] * 0.5 + 0.5) * 255)
+    nm[..., 2] = np.round((N[..., 2] * 0.5 + 0.5) * 255)
+    nm[..., 3] = 255
+    nm[~solid] = (128, 128, 255, 255)
+    return Image.fromarray(res.astype(np.uint8), "RGBA"), Image.fromarray(nm, "RGBA")

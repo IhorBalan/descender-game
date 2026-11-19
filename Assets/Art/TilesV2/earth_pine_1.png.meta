@@ -133,7 +133,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: eca9751d70ed5f2db4b063a4f2b702c0, type: 3}
     spriteCustomMetadata:
       entries: []
     nameFileIdTable: {}
