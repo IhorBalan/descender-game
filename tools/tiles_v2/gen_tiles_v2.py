@@ -47,16 +47,16 @@ import tv2_decor
 import tv2_liquid
 import tv2_preview
 import tv2_terrain
-from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_frame, fine_ledge_sheet, fine_prop_sheet, fine_slope, fine_things_sheet
+from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_frame, fine_frame_normal, fine_ledge_sheet, fine_prop_sheet, fine_slope, fine_slope_normal, fine_things_sheet
 
 FRESH_METAS = False  # `--metas`: write every picture's .meta again, not only the missing ones
 
 # --- Sheets and manifest ------------------------------------------------------
 
 
-def sheet_for(material: dict) -> tuple[Image.Image, list]:
+def sheet_for(material: dict, normals: bool = False) -> tuple[Image.Image, list]:
     """A material's sheet: the 47 frames in variant blocks of 6 rows, then a row
-    of slopes (each slope's variants side by side)."""
+    of slopes (each slope's variants side by side). With `normals`, its normal map instead."""
     rows_per_variant = (len(FRAMES) + COLUMNS - 1) // COLUMNS
     kinds = slopes_of(material)
     slope_rows = (len(kinds) * VARIANTS + COLUMNS - 1) // COLUMNS
@@ -67,12 +67,12 @@ def sheet_for(material: dict) -> tuple[Image.Image, list]:
         for i, mask in enumerate(FRAMES):
             cx, cy = frame_cell(i)
             cy += v * rows_per_variant
-            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = fine_frame(material, mask, v)
+            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = (fine_frame_normal if normals else fine_frame)(material, mask, v)
             sprites.append((f"tv2_{material['key']}_f{mask}_v{v}", cx, cy))
     for s, kind in enumerate(kinds):
         for v in range(VARIANTS):
             cx, cy = slope_cell(s, v)
-            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = fine_slope(material, kind, v)
+            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = (fine_slope_normal if normals else fine_slope)(material, kind, v)
             sprites.append((f"tv2_{material['key']}_{kind}_v{v}", cx, cy))
     return Image.fromarray(sheet, "RGBA"), sprites
 
@@ -341,6 +341,9 @@ def generate(out: str):
         image, cells = sheet_for(material)
         path = os.path.join(out, material["key"] + ".png")
         write(path, image, sheet_meta(path, image, cells, slope_shapes(material)))
+        relief = os.path.join(out, material["key"] + NORMAL_SUFFIX + ".png")  # its normal map, the second style's
+        write(relief, sheet_for(material, normals=True)[0], normal_meta(relief))
+        name_normal(path, relief)
         images[material["key"]] = image
     for blend in BLENDS:
         image, cells = blend_sheet(blend)

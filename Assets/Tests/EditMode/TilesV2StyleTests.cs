@@ -49,6 +49,29 @@ namespace Descender.Tests
             Assert.That(importer.filterMode, Is.EqualTo(FilterMode.Point));
         }
 
+        // The ground: every frame and slope on a material's sheet reads the sheet's normal map.
+        [TestCase("stone")]
+        [TestCase("grass")]
+        [TestCase("marble_wall")]
+        public void AMaterialSheetCarriesItsNormalMap(string key)
+        {
+            var sprites = 0;
+            foreach (var asset in AssetDatabase.LoadAllAssetsAtPath(Folder + key + ".png"))
+            {
+                if (asset is not Sprite sprite)
+                {
+                    continue;
+                }
+                sprites++;
+                var secondary = new SecondarySpriteTexture[sprite.GetSecondaryTextureCount()];
+                sprite.GetSecondaryTextures(secondary);
+                Assert.That(secondary.Length, Is.EqualTo(1), sprite.name);
+                Assert.That(secondary[0].name, Is.EqualTo("_NormalMap"));
+                Assert.That(AssetDatabase.GetAssetPath(secondary[0].texture), Is.EqualTo(Folder + key + "_n.png"));
+            }
+            Assert.That(sprites, Is.GreaterThanOrEqualTo(47 * 3), "every frame of every variant");
+        }
+
         // A shaft of light is a light, not a thing: it has no relief and stays as it is drawn.
         [Test]
         public void APictureOfTheFirstStyleHasNoNormalMap()

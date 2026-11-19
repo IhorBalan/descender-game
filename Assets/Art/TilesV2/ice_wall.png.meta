@@ -3759,7 +3759,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 3aa588de73135adf9e11983b9eb2fb5e, type: 3}
     nameFileIdTable:
       tv2_ice_wall_f0_v0: 1228114165003266797
       tv2_ice_wall_f1_v0: 989159241200421351

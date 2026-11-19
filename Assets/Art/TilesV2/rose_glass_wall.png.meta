@@ -3759,7 +3759,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: a64f46fd3c925f92852b108f5a8049d8, type: 3}
     nameFileIdTable:
       tv2_rose_glass_wall_f0_v0: 1696879726157729639
       tv2_rose_glass_wall_f1_v0: 2428904424209851645

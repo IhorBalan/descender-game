@@ -3933,7 +3933,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 2c2359623a0159ddab4d2378a726cc3e, type: 3}
     nameFileIdTable:
       tv2_bloodstone_f0_v0: 3554389279186575428
       tv2_bloodstone_f1_v0: 103912402218880193
