@@ -15,8 +15,8 @@ namespace Descender.Tests
     {
         private const string Folder = "Assets/Art/TilesV2/";
 
-        // A few pictures of the second style: a tree of the Earth's, a stirring one of
-        // Paradise's (a frame of it too) and one of Eden's.
+        // A few pictures of the second style: trees of the Earth's, a stirring one of
+        // Paradise's (a frame of it too), one of Eden's, and a topiary.
         private static readonly string[] Styled =
         {
             "earth_oak_0",
@@ -24,6 +24,9 @@ namespace Descender.Tests
             "heaven_blossom_0",
             "heaven_gold_2_f2",
             "eden_teal_tree_1",
+            "earth_pine_0",
+            "earth_giant_oak",
+            "heaven_hedge_2",
         };
 
         [TestCaseSource(nameof(Styled))]
@@ -46,10 +49,11 @@ namespace Descender.Tests
             Assert.That(importer.filterMode, Is.EqualTo(FilterMode.Point));
         }
 
+        // A shaft of light is a light, not a thing: it has no relief and stays as it is drawn.
         [Test]
         public void APictureOfTheFirstStyleHasNoNormalMap()
         {
-            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Folder + "earth_pine_0.png");
+            var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Folder + "earth_rays.png");
             Assert.That(sprite, Is.Not.Null);
             Assert.That(sprite.GetSecondaryTextureCount(), Is.EqualTo(0));
         }

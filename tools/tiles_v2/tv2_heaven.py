@@ -2070,6 +2070,10 @@ for _kind, _count, _leaves in (("blossom", BLOSSOMS, "dc6c9e"), ("gold", GOLDS, 
             _key = f"heaven_{_kind}_{_v}" + (f"{FRAME}{_frame}" if _frame else "")
             STYLE[_key] = lambda w, h, k=_key, a=(_kind, _v), c=_leaves, s=_frame: tv2_style.tree(w, h, SINK_OF[k] * DENSITY, ("heaven tree",) + a, c, "c4c4d2", frame=s, pale=True, petals=True, crown=1.15, lean=(0.4, -0.3, 0.2, -0.5)[a[1] % 4])
 
+STYLE["heaven_hedge_0"] = lambda w, h: tv2_style.topiary(w, h, SINK_OF["heaven_hedge_0"] * DENSITY, "heaven hedge 0", "43ac5c", "c4c4d2", box=True, flowers="f29cc0")
+STYLE["heaven_hedge_1"] = lambda w, h: tv2_style.topiary(w, h, SINK_OF["heaven_hedge_1"] * DENSITY, "heaven hedge 1", "43ac5c", "c4c4d2", balls=1)
+STYLE["heaven_hedge_2"] = lambda w, h: tv2_style.topiary(w, h, SINK_OF["heaven_hedge_2"] * DENSITY, "heaven hedge 2", "43ac5c", "c4c4d2", balls=3)
+
 FINE = {}
 for _v in range(BLOSSOMS):
     for _frame in range(FRAMES):

@@ -3079,6 +3079,26 @@ for _v in range(OAKS):
 for _v in range(APPLES):
     STYLE[f"earth_apple_{_v}"] = lambda w, h, v=_v: tv2_style.tree(w, h, SINK_OF[f"earth_apple_{v}"] * DENSITY, ("earth apple", v), "4c8c3a", "6a4630", fruit="c8322c", lean=(-0.3, 0.3)[v % 2])
 
+for _v in range(PINES):
+    STYLE[f"earth_pine_{_v}"] = lambda w, h, v=_v: tv2_style.pine(w, h, SINK_OF[f"earth_pine_{v}"] * DENSITY, ("earth pine", v), "245e40", "5a3e2a")
+for _v in range(2):
+    STYLE[f"earth_birch_{_v}"] = lambda w, h, v=_v: tv2_style.tree(w, h, SINK_OF[f"earth_birch_{v}"] * DENSITY, ("earth birch", v), "78a83e", "dcdad2", pale=True, crown=0.62, spread=0.36, girth=0.7, lean=(1.2, -1.0)[v])
+STYLE["earth_willow"] = lambda w, h: tv2_style.willow(w, h, SINK_OF["earth_willow"] * DENSITY, "earth willow", "5c9a40", "6a4a30")
+for _v in range(DEADS):
+    STYLE[f"earth_dead_tree_{_v}"] = lambda w, h, v=_v: tv2_style.bare_tree(w, h, SINK_OF[f"earth_dead_tree_{v}"] * DENSITY, ("earth dead tree", v), "6a625a")
+STYLE["earth_giant_oak"] = lambda w, h: tv2_style.tree(w, h, SINK_OF["earth_giant_oak"] * DENSITY, "earth giant oak", "448434", "6a4a2e", crown=0.95, spread=0.44, girth=1.25, roots=True, lean=0.2, leaf=6.0)
+
+for _v in range(SHRUBS):
+    STYLE[f"earth_shrub_{_v}"] = lambda w, h, v=_v: tv2_style.bush(w, h, SINK_OF[f"earth_shrub_{v}"] * DENSITY, ("earth shrub", v), "4c8a38", berries="b8323a" if v == 1 else None)
+for _v in range(2):
+    STYLE[f"earth_stump_{_v}"] = lambda w, h, v=_v: tv2_style.stump(w, h, SINK_OF[f"earth_stump_{v}"] * DENSITY, ("earth stump", v), "6a4a30", axe=v == 1)
+STYLE["earth_log"] = lambda w, h: tv2_style.log(w, h, SINK_OF["earth_log"] * DENSITY, "earth log", "6a4a30")
+for _v in range(3):
+    STYLE[f"earth_roots_{_v}"] = lambda w, h, v=_v: tv2_style.hanging_roots(w, h, ("earth roots", v), "5a3e28", count=3 + v)
+STYLE["earth_toadstools"] = lambda w, h: tv2_style.toadstools(w, h, SINK_OF["earth_toadstools"] * DENSITY, "earth toadstools")
+for _v in range(2):
+    STYLE[f"earth_rubble_{_v}"] = lambda w, h, v=_v: tv2_style.boulders(w, h, SINK_OF[f"earth_rubble_{v}"] * DENSITY, ("earth rubble", v), "78707a", plank="7d532c", count=5)
+    STYLE[f"earth_nugget_{_v}"] = lambda w, h, v=_v: tv2_style.boulders(w, h, SINK_OF[f"earth_nugget_{v}"] * DENSITY, ("earth nugget", v), "c06e34", count=2, glint=True)
 
 FINE = {}
 # The trees.
