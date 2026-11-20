@@ -69,6 +69,10 @@ How the parts sit on the bones:
   tabard sway each step.
 - The sword is carried low behind at a steady angle.
 - The runner has the knight's lengths, set by `RunBody.Knight`.
+- The sheet draws him short in the body for his legs. The tool draws the
+  torso 80 sheet pixels (0.2 units) longer from under the chest plate down to
+  the belt; the plate, belt and tassets keep their shapes. The spine is longer
+  by the same amount, so the shoulders, head and cloak ride up with it.
 
 With the knight worn, the bones overlay starts hidden. K takes the knight off
 and puts him back on.

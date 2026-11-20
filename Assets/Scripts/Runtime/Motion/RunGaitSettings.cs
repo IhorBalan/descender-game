@@ -152,7 +152,8 @@ namespace Descender.Motion
                 ankleHeight = 0.19f,
                 foot = 0.46f,
                 pelvisHalfWidth = 0.08f,
-                spine = 0.47f,
+                // The sheet's 0.47, and the 0.2 parts.py draws his torso longer by.
+                spine = 0.67f,
                 shoulderHalfWidth = 0.1f,
                 shoulderForward = -0.09f,
                 neck = 0.24f,
