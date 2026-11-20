@@ -105,11 +105,15 @@ namespace Descender.World.TilesV2
 
         private readonly List<string> places = new List<string>();
         private int place = -1;
-        private bool helpShown = true;
+
+        // The keys are folded away at the start: only a small hint in the corner (F1 opens them).
+        private bool helpShown;
         private bool shooting;
         private string note = "";
         private float noteLeft;
         private GUIStyle style;
+        private const int HintSize = 7;
+        private const int HelpSize = 9;
         private Light2D lantern;
         private string shown = "";
         private int shownMinute = -1;
@@ -391,7 +395,7 @@ namespace Descender.World.TilesV2
                                 ? "\nM: the chart (+ - closer, arrows round, C back)   E at a rest by the Pit: travel   F3: every ability / none   F4: the whole chart   cast L   heal H"
                                 : ""
                         )
-                    : clock;
+                    : $"{clock}   F1: keys";
                 if (things != null && things.Relics > 0)
                 {
                     shown += $"   relics {things.RelicsFound}/{things.Relics}";
@@ -407,11 +411,15 @@ namespace Descender.World.TilesV2
                 }
             }
             var text = shown;
-            var area = new Rect(6f, 4f, Screen.width / scale - 12f, 110f);
-            GUI.color = new Color(0f, 0f, 0f, 0.7f);
+            // Small: a hint in the corner when folded, a little larger (still small) when open.
+            style.fontSize = helpShown ? HelpSize : HintSize;
+            var fade = helpShown ? 1f : 0.7f;
+            var area = new Rect(4f, 2f, Screen.width / scale - 8f, 110f);
+            GUI.color = new Color(0f, 0f, 0f, 0.7f * fade);
             GUI.Label(new Rect(area.x + 1f, area.y + 1f, area.width, area.height), text, style);
-            GUI.color = Color.white;
+            GUI.color = new Color(1f, 1f, 1f, fade);
             GUI.Label(area, text, style);
+            GUI.color = Color.white;
             DrawTitle(scale);
             DrawChart(scale);
             DrawTravel(scale);
