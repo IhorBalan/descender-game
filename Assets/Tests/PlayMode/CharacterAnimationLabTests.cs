@@ -1,0 +1,125 @@
+using System.Collections;
+using Descender.EditorTools.Motion;
+using Descender.Motion;
+using NUnit.Framework;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.TestTools;
+
+namespace Descender.Tests.PlayMode
+{
+    /// <summary>
+    /// The CharacterAnimationLab scene played: it loads on its own with the runner, its
+    /// overlay and the lab; the runner has its whole skeleton of bones; played frame by
+    /// frame at 60 a second it travels at its running speed, its bones keep their lengths,
+    /// a foot on the ground stays where it came down and the overlay marks each contact;
+    /// and the overlay can be hidden. The scene is loaded by its path, which only the
+    /// editor can do, and unloaded again.
+    /// </summary>
+    public class CharacterAnimationLabTests
+    {
+        private static readonly string[] BoneNames =
+        {
+            "Hips",
+            "Spine",
+            "Chest",
+            "Neck",
+            "Head",
+            "Shoulder.L",
+            "UpperArm.L",
+            "LowerArm.L",
+            "Hand.L",
+            "Shoulder.R",
+            "UpperArm.R",
+            "LowerArm.R",
+            "Hand.R",
+            "Thigh.L",
+            "Shin.L",
+            "Foot.L",
+            "Thigh.R",
+            "Shin.R",
+            "Foot.R",
+        };
+
+        private int frameRateBefore;
+
+        [SetUp]
+        public void SetUp() => frameRateBefore = Application.targetFrameRate;
+
+        [UnityTearDown]
+        public IEnumerator TearDown()
+        {
+            Application.targetFrameRate = frameRateBefore;
+            var scene = SceneManager.GetSceneByPath(CharacterAnimationLabScene.ScenePath);
+            if (scene.IsValid() && scene.isLoaded)
+            {
+                yield return SceneManager.UnloadSceneAsync(scene);
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator TheRunnerRunsWithoutSlidingAndTheOverlayFollows()
+        {
+#if UNITY_EDITOR
+            yield return UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                CharacterAnimationLabScene.ScenePath,
+                new LoadSceneParameters(LoadSceneMode.Additive)
+            );
+#endif
+            yield return null;
+            var lab = Object.FindAnyObjectByType<CharacterAnimationLab>();
+            Assert.That(lab, Is.Not.Null, "the lab scene did not load");
+            var runner = lab.Skeleton;
+            var overlay = lab.Overlay;
+            Assert.That(runner, Is.Not.Null);
+            Assert.That(overlay, Is.Not.Null);
+            foreach (var name in BoneNames)
+            {
+                Assert.That(runner.Bone(name), Is.Not.Null, name);
+            }
+            Assert.That(runner.Bones.Count, Is.EqualTo(BoneNames.Length));
+            Assert.That(runner.Bone("Shin.L").parent, Is.EqualTo(runner.Bone("Thigh.L")), "the bones are a hierarchy");
+
+            // Played by hand, a sixtieth of a second a frame.
+            runner.Paused = true;
+            var start = runner.transform.position.x;
+            var settings = runner.Settings;
+            var body = runner.Body;
+            float? planted = null;
+            var checkedFrames = 0;
+            for (var frame = 0; frame < 120; frame++)
+            {
+                runner.Advance(CharacterAnimationLab.Step);
+                yield return null;
+                var thigh = Vector3.Distance(runner.Bone("Thigh.R").position, runner.Bone("Shin.R").position);
+                var shin = Vector3.Distance(runner.Bone("Shin.R").position, runner.Bone("Foot.R").position);
+                Assert.That(thigh, Is.EqualTo(body.thigh).Within(1e-3f));
+                Assert.That(shin, Is.EqualTo(body.shin).Within(1e-3f));
+                var leg = runner.Pose.rightLeg;
+                if (leg.contact)
+                {
+                    var toes = runner.World(leg.tip).x;
+                    planted ??= toes;
+                    Assert.That(toes, Is.EqualTo(planted.Value).Within(1e-3f), $"frame {frame}: the right foot slid");
+                    checkedFrames++;
+                }
+                else
+                {
+                    planted = null;
+                }
+            }
+            Assert.That(checkedFrames, Is.GreaterThan(20));
+            Assert.That(
+                runner.transform.position.x - start,
+                Is.EqualTo(settings.runningSpeed * 2f).Within(0.01f),
+                "two seconds at the running speed"
+            );
+            Assert.That(overlay.Contacts, Is.GreaterThanOrEqualTo(4), "the overlay marked the contacts");
+
+            overlay.Visible = false;
+            yield return null;
+            Assert.That(overlay.Visible, Is.False);
+            overlay.Visible = true;
+        }
+    }
+}
