@@ -233,6 +233,40 @@ namespace Descender.Tests.EditMode
         }
 
         [Test]
+        public void TheWholeBodyLeansAndTheLimbsStretchOut()
+        {
+            var settings = Settings();
+            var body = new RunBody();
+            // The feet fall behind the hips on average: the body's axis leans forward, more with more lean.
+            float MeanFoot()
+            {
+                var sum = 0f;
+                for (var i = 0; i < Samples; i++)
+                {
+                    var pose = At(i / (float)Samples, settings, body);
+                    sum += pose.leftLeg.end.x + pose.rightLeg.end.x;
+                }
+                return sum / (2f * Samples);
+            }
+            var leaning = MeanFoot();
+            Assert.That(leaning, Is.LessThan(-0.05f));
+            settings.bodyLean = 0f;
+            Assert.That(MeanFoot(), Is.GreaterThan(leaning + 0.05f));
+            settings.bodyLean = 8f;
+            // The leg pushing off and the leg trailing in the flight are straight; the arm swung back is nearly so.
+            var pushOff = At(RunGaitSettings.Duty - 0.002f, settings, body).rightLeg;
+            Assert.That(Vector2.Distance(pushOff.root, pushOff.end), Is.GreaterThan(body.Leg * 0.97f), "push-off");
+            var trailing = At(RunGait.PhaseOf(RunKey.FlightRight), settings, body).rightLeg;
+            Assert.That(Vector2.Distance(trailing.root, trailing.end), Is.GreaterThan(body.Leg * 0.97f), "flight");
+            var back = At(RunGait.PhaseOf(RunKey.ContactRight), settings, body).rightArm;
+            Assert.That(
+                Vector2.Distance(back.root, back.end),
+                Is.GreaterThan((body.upperArm + body.forearm) * 0.9f),
+                "arm back"
+            );
+        }
+
+        [Test]
         public void AFootMovesOnWithoutAJumpWhereItLandsAndLeaves()
         {
             var settings = Settings();
