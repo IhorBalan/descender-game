@@ -733,7 +733,8 @@ and `TilesV2Things` shows them in turn (`TilesV2Frames`: 9 frames a second for
 a pennant and a glint, 7 for a fountain, 4 for a banner; a glint shows its
 frames once and is gone for a few seconds). A tree whose crown moves
 (`TilesV2Things.Crowned`: `heaven_blossom_N`, `heaven_gold_N`,
-`eden_teal_tree_N`) is not turned through its frames: it is drawn with the
+`eden_teal_tree_N`, and the Earth's `earth_oak_N`, `earth_giant_oak` and
+`earth_apple_N`) is not turned through any frames it has: it is drawn with the
 crown material (`TilesV2Set.crownMaterial`, the shader
 `Assets/Art/TilesV2/Shaders/TilesV2Crown.shader`), which bends its picture every
 frame, smoothly, so it moves at the screen's rate (60, 120 a second). The trunk

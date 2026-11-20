@@ -194,6 +194,7 @@ namespace Descender.Tests
                 }
                 Assert.That(things.Pictures, Is.EqualTo(marked), "every picture the map marks stands");
                 var lit = 0;
+                var crowned = 0;
                 foreach (var shown in things.GetComponentsInChildren<SpriteRenderer>(true))
                 {
                     if (!shown.gameObject.name.StartsWith("Picture earth_"))
@@ -201,13 +202,19 @@ namespace Descender.Tests
                         continue;
                     }
                     lit++;
+                    // An oak or an apple tree takes the tile light in the crown material, which is lit
+                    // too and moves its crown in the wind.
+                    var crown = TilesV2Things.Crowned(shown.gameObject.name.Substring("Picture ".Length));
+                    crowned += crown ? 1 : 0;
                     Assert.That(
                         shown.sharedMaterial,
-                        Is.EqualTo(set.litMaterial),
+                        Is.EqualTo(crown ? set.crownMaterial : set.litMaterial),
                         shown.name + " takes the tile light"
                     );
                 }
                 Assert.That(lit, Is.GreaterThan(150));
+                Assert.That(crowned, Is.GreaterThan(3), "the oaks and the apple trees move in the wind");
+                Assert.That(set.crownMaterial.shader.name, Is.EqualTo("Descender/Tiles V2/Crown Lit"));
             }
             finally
             {
