@@ -968,23 +968,35 @@ namespace Descender.Tests
             {
                 // What stirs: a tree's crown, a banner, a pennant, a fountain; and a glint, which comes and goes.
                 Assert.That(things.Moving, Is.GreaterThan(40));
-                TilesV2Frames tree = null;
                 TilesV2Frames glint = null;
                 var banners = 0;
                 foreach (var frames in things.GetComponentsInChildren<TilesV2Frames>())
                 {
                     Assert.That(frames.Count, Is.GreaterThan(1), frames.name);
-                    tree = frames.name.Contains("heaven_blossom") ? frames : tree;
+                    Assert.That(TilesV2Things.Crowned(frames.name.Replace("Picture ", "")), Is.False, frames.name);
                     glint = frames.name.Contains("heaven_glint") ? frames : glint;
                     banners += frames.name.Contains("heaven_banner") ? 1 : 0;
                 }
                 Assert.That(banners, Is.EqualTo(6), "a banner on every column of the hall");
-                Assert.That(tree, Is.Not.Null, "no tree stirs");
-                Assert.That(tree.Count, Is.EqualTo(4));
-                var before = tree.Frame;
-                tree.Step(1f / TilesV2Things.FramesASecond("heaven_blossom_0"));
-                Assert.That(tree.Frame, Is.Not.EqualTo(before), "the crown stirs");
-                Assert.That(tree.Resting, Is.False);
+                // A tree's crown moves in the wind in its shader, every frame, not through frames.
+                var crownMaterial = world.Set.crownMaterial;
+                Assert.That(crownMaterial, Is.Not.Null);
+                Assert.That(crownMaterial.shader.name, Is.EqualTo("Descender/Tiles V2/Crown Lit"));
+                var crowns = 0;
+                var blossoms = 0;
+                foreach (var tree in things.GetComponentsInChildren<SpriteRenderer>())
+                {
+                    if (!TilesV2Things.Crowned(tree.name.Replace("Picture ", "")))
+                    {
+                        continue;
+                    }
+                    crowns++;
+                    blossoms += tree.name.Contains("heaven_blossom") ? 1 : 0;
+                    Assert.That(tree.sharedMaterial, Is.SameAs(crownMaterial), tree.name);
+                    Assert.That(tree.GetComponent<TilesV2Frames>(), Is.Null, tree.name);
+                }
+                Assert.That(blossoms, Is.GreaterThan(0), "no tree in blossom moves");
+                Assert.That(things.Crowns, Is.EqualTo(crowns));
                 Assert.That(glint, Is.Not.Null, "nothing glints");
                 var shown = 0;
                 var gone = 0;
