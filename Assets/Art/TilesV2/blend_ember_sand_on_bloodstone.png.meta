@@ -1263,7 +1263,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 160913d7505650d8b4956ce0076cc6fb, type: 3}
     nameFileIdTable:
       tv2_ember_sand_on_bloodstone_s1_v0: 3543035726814481468
       tv2_ember_sand_on_bloodstone_s2_v0: 724071509591407792

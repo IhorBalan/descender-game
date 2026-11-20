@@ -817,8 +817,18 @@ def fine_slope(material: dict, kind: str, variant: int) -> np.ndarray:
 
 
 def fine_blend(blend: dict, sides: int, variant: int) -> np.ndarray:
-    """A blend overlay at the size that ships: the draft's, through Scale2x."""
-    return scale2x_rgba(draw_blend(blend, sides, variant))
+    """A blend overlay at the size that ships: the draft's shape (its reach and its ragged,
+    shaded front) doubled, its body the material's inside in the second style, so it matches
+    the ground it reaches from (styled_texture)."""
+    cover = np.repeat(np.repeat(blend_cover(blend, sides, variant), DENSITY, 0), DENSITY, 1)
+    ramp = np.array(PALETTES[blend["palette"]]["ramp"], dtype=np.uint8)
+    tex, _ = styled_texture(blend["texture"], variant + 7)
+    rgba = np.zeros((PIXELS, PIXELS, 4), dtype=np.uint8)
+    body = cover == 1
+    rgba[body, :3] = ramp[np.clip(tex[body], 1, 5)]
+    rgba[cover == 2, :3] = ramp[1]
+    rgba[cover > 0, 3] = 255
+    return rgba
 
 
 # --- Blends -------------------------------------------------------------------
@@ -827,12 +837,42 @@ BLEND_SIDES = [(1, N), (2, E), (4, S), (8, W)]  # overlay bit, neighbour side
 BLEND_MASKS = list(range(1, 16))
 
 
+def fine_blend_normal(blend: dict, sides: int, variant: int) -> np.ndarray:
+    """A blend overlay's normal map: its body the texture's own height field (the same as
+    the ground it reaches from), its ragged front rounded down onto the tile it covers."""
+    cover = np.repeat(np.repeat(blend_cover(blend, sides, variant), DENSITY, 0), DENSITY, 1)
+    _, height = styled_texture(blend["texture"], variant + 7)
+    solid = cover > 0
+    body = np.clip(tv2_style._distance_inside(np.pad(solid, 4, mode="edge"), 3)[4:-4, 4:-4] / 3, 0, 1)
+    H = np.where(solid, height + np.sqrt(1 - (1 - body) ** 2) * 2.0, 0)
+    N = tv2_style.normals(H, solid, clamp=2.0)
+    out = np.zeros((PIXELS, PIXELS, 4), dtype=np.uint8)
+    out[..., 0] = np.round((N[..., 0] * 0.5 + 0.5) * 255)
+    out[..., 1] = np.round((-N[..., 1] * 0.5 + 0.5) * 255)
+    out[..., 2] = np.round((N[..., 2] * 0.5 + 0.5) * 255)
+    out[..., 3] = 255
+    out[~solid] = (128, 128, 255, 255)
+    return out
+
+
 def draw_blend(blend: dict, sides: int, variant: int) -> np.ndarray:
     """The `from` material reaching a few pixels over each side of the `onto`
     tile that touches it, with a ragged, shaded front and a few loose clumps."""
-    r = rng(blend["key"], sides, variant)
     palette = PALETTES[blend["palette"]]
     tex = TEXTURES[blend["texture"]](variant + 7)
+    cover = blend_cover(blend, sides, variant)
+    rgba = np.zeros((TILE, TILE, 4), dtype=np.uint8)
+    ramp = np.array(palette["ramp"], dtype=np.uint8)
+    body = cover == 1
+    rgba[body, :3] = ramp[np.clip(tex[body], 1, 5)]
+    rgba[cover == 2, :3] = ramp[1]
+    rgba[cover > 0, 3] = 255
+    return rgba
+
+
+def blend_cover(blend: dict, sides: int, variant: int) -> np.ndarray:
+    """Where a blend covers the tile on the draft: 0 not, 1 its body, 2 its front."""
+    r = rng(blend["key"], sides, variant)
     cover = np.zeros((TILE, TILE), dtype=np.int16)  # 0 none, 1 body, 2 front
     for bit, side in BLEND_SIDES:
         if not sides & bit:
@@ -848,13 +888,7 @@ def draw_blend(blend: dict, sides: int, variant: int) -> np.ndarray:
             along, d = r.randint(2, TILE - 3), r.randint(6, 8)
             x, y = {N: (along, d), S: (along, TILE - 1 - d), W: (d, along), E: (TILE - 1 - d, along)}[side]
             cover[y, x] = max(cover[y, x], 2)
-    rgba = np.zeros((TILE, TILE, 4), dtype=np.uint8)
-    ramp = np.array(palette["ramp"], dtype=np.uint8)
-    body = cover == 1
-    rgba[body, :3] = ramp[np.clip(tex[body], 1, 5)]
-    rgba[cover == 2, :3] = ramp[1]
-    rgba[cover > 0, 3] = 255
-    return rgba
+    return cover
 
 
 # --- Props --------------------------------------------------------------------

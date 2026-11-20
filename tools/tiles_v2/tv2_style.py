@@ -1498,6 +1498,8 @@ def repaint(picture: Image.Image, materials, *, seed="repaint", keep_far: float 
             colours.append(c)
             owner.append(m)
             tone.append(i / max(len(cols) - 1, 1))
+    if not colours:  # nothing but lights: raised, not repainted
+        return relief(picture)
     colours = np.array(colours, dtype=float)
     owner, tone = np.array(owner), np.array(tone)
     d = np.linalg.norm(rgb[..., None, :] - colours[None, None, :, :], axis=-1)

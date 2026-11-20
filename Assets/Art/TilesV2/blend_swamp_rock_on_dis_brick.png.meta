@@ -1263,7 +1263,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: 42287dabfa875784ae7a8f6660081d71, type: 3}
     nameFileIdTable:
       tv2_swamp_rock_on_dis_brick_s1_v0: 525122109995648445
       tv2_swamp_rock_on_dis_brick_s2_v0: 3479389836814068626
