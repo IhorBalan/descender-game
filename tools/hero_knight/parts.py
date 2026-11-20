@@ -52,7 +52,9 @@ def up_from(point):
 
 PARTS = {
     "cloak": dict(box=(795, 0, 1222, 640), joint=(1170, 157), along=up_from((1170, 157)), bone="Neck", rigid=True, order=-12, sway=3.0),
-    "torso": dict(box=(366, 30, 662, 566), joint=(505, 330), along=up_from((505, 330)), bone="Hips", rigid=True, order=4),
+    # The sheet draws him short in the body for his legs: the rows from under the chest
+    # plate down to the belt are drawn LENGTHEN pixels longer (RunBody.Knight's spine).
+    "torso": dict(box=(366, 30, 662, 566), joint=(505, 330), along=up_from((505, 330)), bone="Hips", rigid=True, order=4, lengthen=(150, 268, 80)),
     "tabard": dict(box=(668, 52, 792, 582), joint=(665, 120), along=up_from((665, 120)), bone="Hips", rigid=True, order=5, sway=5.0),
     "head": dict(box=(12, 78, 356, 360), joint=(255, 268), along=up_from((255, 268)), bone="Head", rigid=True, order=9),
     "pauldron": dict(box=(40, 550, 334, 792), joint=(200, 690), along=(100, 690), bone="Shoulder", rigid=True, order=12),
@@ -175,6 +177,20 @@ def cut(rgba: np.ndarray, box) -> tuple[Image.Image, int, int]:
     return Image.fromarray(part), int(left), int(top)
 
 
+def lengthened(image: Image.Image, top: int, rows) -> Image.Image:
+    """A part with the sheet's rows y0..y1 drawn `extra` pixels longer, what is above and
+    below them unchanged (the chest plate and the belt keep their shapes)."""
+    y0, y1, extra = rows
+    a, b = y0 - top, y1 - top
+    w, h = image.size
+    band = image.crop((0, a, w, b)).resize((w, b - a + extra), Image.LANCZOS)
+    out = Image.new("RGBA", (w, h + extra))
+    out.paste(image.crop((0, 0, w, a)), (0, 0))
+    out.paste(band, (0, a))
+    out.paste(image.crop((0, b, w, h)), (0, b + extra))
+    return out
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     parser.add_argument("--out", default=OUT, help="where to write the parts (default: Assets/Art/Sprites/hero/parts)")
@@ -189,11 +205,15 @@ def main() -> None:
         if part.get("moved"):
             part = dict(part, joint=(part["joint"][0], part["joint"][1] + sleeve_shift), along=(part["along"][0], part["along"][1] + sleeve_shift))
         image, left, top = cut(rgba, part["box"])
+        rows = part.get("lengthen")
+        if rows:
+            image = lengthened(image, top, rows)
         height = image.height
 
         def local(point):
             # In the part's own pixels, Unity's way: from its bottom left.
-            return [round(point[0] - left, 2), round(height - (point[1] - top), 2)]
+            y = point[1] + (rows[2] if rows and point[1] >= rows[1] else 0)
+            return [round(point[0] - left, 2), round(height - (y - top), 2)]
 
         path = os.path.join(args.out, name + ".png")
         image.save(path, optimize=True)
