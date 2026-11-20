@@ -28,7 +28,7 @@ namespace Descender.Motion
         public const int KeyCount = 8;
 
         /// <summary>How far the heel turns up about the toes by the push-off, in degrees.</summary>
-        public const float HeelLift = 50f;
+        public const float HeelLift = 35f;
 
         /// <summary>From where in the stance (0 .. 1) the heel starts to lift.</summary>
         public const float HeelLiftStart = 0.55f;
@@ -49,16 +49,16 @@ namespace Descender.Motion
         // The right upper arm's swing, in units of the arm swing (forward positive): against the right leg.
         private static readonly float[] RightArmSwing = { -1f, -0.7f, 0f, 0.75f, 1f, 0.7f, 0f, -0.75f };
 
-        // The right elbow's bend in degrees: most bent as the arm comes forward.
-        private static readonly float[] RightElbow = { 72f, 80f, 95f, 106f, 110f, 100f, 88f, 76f };
+        // The right elbow's bend in degrees: nearly open as the arm swings back, most bent as it comes forward.
+        private static readonly float[] RightElbow = { 32f, 48f, 80f, 100f, 108f, 92f, 62f, 40f };
 
         // The swinging foot's key points at phases 3/8 .. 7/8 of its own leg: the ankle's place
         // relative to the hips' ground point, in leg lengths (x) and leg lengths over the ankle's
         // standing height (y), and the foot's angle in degrees (toes down positive).
         private static readonly float[] SwingPhase = { 0.375f, 0.5f, 0.625f, 0.75f, 0.875f };
-        private static readonly float[] SwingX = { -0.62f, -0.5f, -0.15f, 0.22f, 0.5f };
-        private static readonly float[] SwingY = { 0.36f, 0.6f, 0.66f, 0.48f, 0.2f };
-        private static readonly float[] SwingAngle = { 60f, 75f, 45f, 10f, -15f };
+        private static readonly float[] SwingX = { -0.84f, -0.62f, -0.2f, 0.25f, 0.64f };
+        private static readonly float[] SwingY = { 0.24f, 0.55f, 0.64f, 0.46f, 0.14f };
+        private static readonly float[] SwingAngle = { 65f, 80f, 45f, 5f, -18f };
 
         // The swing curve's knots: lift-off, the five keys, touchdown.
         private static readonly float[] knotT = new float[7];
@@ -80,12 +80,16 @@ namespace Descender.Motion
         {
             var leg = body.Leg;
             var reach = leg * Reach;
-            var half = settings.StanceLength * 0.5f;
-            var atContact = Mathf.Sqrt(Mathf.Max(reach * reach - half * half, 0f)) + body.ankleHeight;
+            // From the leg's own hip joint, turned forward or back with the pelvis at that moment.
+            var turn = settings.counterRotation * body.pelvisHalfWidth;
+            var contact = StanceAnkle(0f, settings, body, out _);
+            var contactX = contact.x - Channel(RightHipForward, 0f, settings.smoothing) * turn;
+            var atContact = Mathf.Sqrt(Mathf.Max(reach * reach - contactX * contactX, 0f)) + contact.y;
             var toeOff = StanceAnkle(1f, settings, body, out _);
+            var toeOffX = toeOff.x - Channel(RightHipForward, RunGaitSettings.Duty, settings.smoothing) * turn;
             var rise =
                 Mathf.Max(0f, Channel(Bounce, RunGaitSettings.Duty, settings.smoothing)) * settings.verticalBounce;
-            var atToeOff = Mathf.Sqrt(Mathf.Max(reach * reach - toeOff.x * toeOff.x, 0f)) + toeOff.y - rise;
+            var atToeOff = Mathf.Sqrt(Mathf.Max(reach * reach - toeOffX * toeOffX, 0f)) + toeOff.y - rise;
             return Mathf.Max(leg * 0.35f, Mathf.Min(leg * 0.94f, Mathf.Min(atContact, atToeOff)));
         }
 
@@ -151,6 +155,13 @@ namespace Descender.Motion
             return new Vector2(v.x * cos - v.y * sin, v.x * sin + v.y * cos);
         }
 
+        /// <summary>
+        /// How far behind the hips the feet fall, so the whole body leans forward over them by
+        /// the body lean (a leg's length times its tangent): the run's axis tilts, not only the torso.
+        /// </summary>
+        public static float Behind(RunGaitSettings settings, RunBody body) =>
+            body.Leg * Mathf.Tan(settings.bodyLean * Mathf.Deg2Rad);
+
         private static float Wrap(float phase) => phase - Mathf.Floor(phase);
 
         /// <summary>Up, leant forward (toward +x) by degrees.</summary>
@@ -185,7 +196,7 @@ namespace Descender.Motion
         private static Vector2 StanceAnkle(float through, RunGaitSettings settings, RunBody body, out float footAngle)
         {
             var length = settings.StanceLength;
-            var toes = new Vector2(length * 0.5f - through * length + body.foot, 0f);
+            var toes = new Vector2(length * 0.5f - through * length + body.foot - Behind(settings, body), 0f);
             var lift = Mathf.Clamp01((through - HeelLiftStart) / (1f - HeelLiftStart));
             footAngle = HeelLift * lift * lift * (3f - 2f * lift);
             return toes + Rotate(new Vector2(-body.foot, body.ankleHeight), -footAngle);
@@ -203,12 +214,12 @@ namespace Descender.Motion
             for (var i = 0; i < SwingPhase.Length; i++)
             {
                 knotT[i + 1] = SwingPhase[i];
-                knotX[i + 1] = SwingX[i] * leg;
+                knotX[i + 1] = SwingX[i] * leg - Behind(settings, body);
                 knotY[i + 1] = body.ankleHeight + SwingY[i] * leg;
                 knotA[i + 1] = SwingAngle[i];
             }
             knotT[6] = 1f;
-            knotX[6] = settings.StanceLength * 0.5f;
+            knotX[6] = settings.StanceLength * 0.5f - Behind(settings, body);
             knotY[6] = body.ankleHeight;
             knotA[6] = 0f;
             // At push-off the foot leaves going back as fast as it went on the ground; at
