@@ -25,6 +25,9 @@ namespace Descender.EditorTools.Motion
         public const string ScenePath = "Assets/Scenes/Sandbox/CharacterAnimationLab.unity";
         public const string OutputPath = "Build/CharacterAnimationLab64/CharacterAnimationLab.exe";
 
+        /// <summary>A cool mid grey behind the runner: dark armour and pale hair both read on it.</summary>
+        public static readonly Color Backdrop = new Color(0.36f, 0.4f, 0.47f);
+
         /// <summary>The knight's parts and their joints (tools/hero_knight/parts.py writes them).</summary>
         public const string PartsFolder = "Assets/Art/Sprites/hero/parts";
 
@@ -58,6 +61,7 @@ namespace Descender.EditorTools.Motion
                         steady = (bool?)part["steady"] ?? false,
                         worldAngle = (float?)part["worldAngle"] ?? 0f,
                         follow = (float?)part["follow"] ?? 0f,
+                        scale = (float?)part["scale"] ?? 1f,
                     }
                 );
             }
@@ -72,9 +76,9 @@ namespace Descender.EditorTools.Motion
             holder.transform.position = new Vector3(0.6f, 1.3f, -10f);
             var camera = holder.AddComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 1.9f;
+            camera.orthographicSize = 2.0f;
             camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = new Color(0.09f, 0.1f, 0.14f);
+            camera.backgroundColor = Backdrop;
             camera.GetUniversalAdditionalCameraData();
 
             var lab = new GameObject("CharacterAnimationLab").AddComponent<CharacterAnimationLab>();
@@ -101,18 +105,18 @@ namespace Descender.EditorTools.Motion
         [MenuItem("Descender/Lab/Picture the run's key poses")]
         public static void Picture()
         {
-            const int Cell = 320;
+            const int Cell = 420;
             const int Rows = 2;
             const int Columns = 16;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var holder = new GameObject("Camera");
             var camera = holder.AddComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 1.6f;
+            camera.orthographicSize = 1.75f;
             camera.clearFlags = CameraClearFlags.SolidColor;
-            camera.backgroundColor = new Color(0.09f, 0.1f, 0.14f);
+            camera.backgroundColor = Backdrop;
             camera.GetUniversalAdditionalCameraData();
-            holder.transform.position = new Vector3(0.1f, 1.3f, -10f);
+            holder.transform.position = new Vector3(0.1f, 1.4f, -10f);
             var runner = new GameObject("Runner").AddComponent<RunSkeleton>();
             runner.SetBody(RunBody.Knight());
             var skin = runner.gameObject.AddComponent<RunKnightSkin>();

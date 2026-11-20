@@ -58,6 +58,8 @@ namespace Descender.Motion
             if (overlay != null && skeleton != null)
             {
                 overlay.Bind(skeleton);
+                // With the knight worn he is what is seen first; Tab brings the bones back.
+                overlay.Visible = skin == null;
             }
             ground = Fx.Shapes.Block(transform, "Ground", new Vector2(64f * 16f, 16f), Vector2.zero, Earth).transform;
             for (var i = 0; i < Ticks; i++)

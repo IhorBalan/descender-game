@@ -50,7 +50,7 @@ namespace Descender.Motion
         private static readonly float[] RightArmSwing = { -1f, -0.7f, 0f, 0.75f, 1f, 0.7f, 0f, -0.75f };
 
         // The right elbow's bend in degrees: nearly open as the arm swings back, most bent as it comes forward.
-        private static readonly float[] RightElbow = { 32f, 48f, 75f, 88f, 92f, 82f, 58f, 40f };
+        private static readonly float[] RightElbow = { 32f, 46f, 66f, 76f, 80f, 72f, 52f, 38f };
 
         // The swinging foot's key points at phases 3/8 .. 7/8 of its own leg: the ankle's place
         // relative to the hips' ground point, in leg lengths (x) and leg lengths over the ankle's
@@ -90,7 +90,7 @@ namespace Descender.Motion
             var rise =
                 Mathf.Max(0f, Channel(Bounce, RunGaitSettings.Duty, settings.smoothing)) * settings.verticalBounce;
             var atToeOff = Mathf.Sqrt(Mathf.Max(reach * reach - toeOffX * toeOffX, 0f)) + toeOff.y - rise;
-            return Mathf.Max(leg * 0.35f, Mathf.Min(leg * 0.94f, Mathf.Min(atContact, atToeOff)));
+            return Mathf.Max(leg * 0.35f, Mathf.Min(leg * 0.94f + body.ankleHeight, Mathf.Min(atContact, atToeOff)));
         }
 
         /// <summary>Fills `pose` with the body at `phase` (0 .. 1, wrapped) of the cycle.</summary>
@@ -112,12 +112,15 @@ namespace Descender.Motion
             // Hips and shoulders turned against each other.
             var turn = Channel(RightHipForward, phase, smooth) * settings.counterRotation;
             var hipOffset = new Vector2(turn * body.pelvisHalfWidth, 0f);
+            // The shoulders sit `shoulderForward` off the spine's line, square to it.
+            var square = new Vector2(Mathf.Cos(pose.lean * Mathf.Deg2Rad), -Mathf.Sin(pose.lean * Mathf.Deg2Rad));
+            var shoulders = pose.chest + square * body.shoulderForward;
             var shoulderOffset = new Vector2(turn * body.shoulderHalfWidth, 0f);
 
             Leg(phase, pose.hips + hipOffset, settings, body, ref pose.rightLeg);
             Leg(phase + 0.5f, pose.hips - hipOffset, settings, body, ref pose.leftLeg);
-            Arm(phase, pose.chest - shoulderOffset, pose.lean, settings, body, ref pose.rightArm);
-            Arm(phase + 0.5f, pose.chest + shoulderOffset, pose.lean, settings, body, ref pose.leftArm);
+            Arm(phase, shoulders - shoulderOffset, pose.lean, settings, body, ref pose.rightArm);
+            Arm(phase + 0.5f, shoulders + shoulderOffset, pose.lean, settings, body, ref pose.leftArm);
         }
 
         /// <summary>

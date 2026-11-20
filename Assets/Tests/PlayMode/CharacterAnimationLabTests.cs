@@ -128,7 +128,18 @@ namespace Descender.Tests.PlayMode
             // The knight is worn: every part on its bones, limbs on both sides, the shapes hidden; K takes him off.
             var skin = lab.Skin;
             Assert.That(skin, Is.Not.Null, "the knight's parts");
-            Assert.That(skin.Count, Is.EqualTo(15), "five parts on one bone each and five limbs on both sides");
+            Assert.That(skin.Count, Is.EqualTo(17), "five parts on one bone each and six limb parts on both sides");
+            Assert.That(overlay.Visible, Is.False, "with the knight worn the bones start hidden");
+            Assert.That(
+                skin.WornOn("pauldron", "Shoulder.L").sortingOrder,
+                Is.GreaterThan(skin.WornOn("sleeve", "UpperArm.L").sortingOrder),
+                "the pauldron over the sleeve"
+            );
+            Assert.That(
+                skin.WornOn("thigh", "Thigh.L").sortingOrder,
+                Is.LessThan(skin.WornOn("torso", "Hips").sortingOrder),
+                "the thigh under the tassets"
+            );
             Assert.That(runner.ShapesShown, Is.False);
             foreach (var bone in new[] { "Thigh.L", "Thigh.R" })
             {

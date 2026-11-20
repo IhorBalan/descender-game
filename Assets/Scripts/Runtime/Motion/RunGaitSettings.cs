@@ -121,6 +121,9 @@ namespace Descender.Motion
         [Min(0f)]
         public float shoulderHalfWidth = 0.13f;
 
+        [Tooltip("How far the shoulder joints sit forward of the spine's line (back when negative).")]
+        public float shoulderForward;
+
         [Min(0f)]
         public float neck = 0.12f;
 
@@ -138,24 +141,25 @@ namespace Descender.Motion
         public float hand = 0.08f;
 
         /// <summary>
-        /// The crowned knight's lengths, measured on his standing frame (125 of its pixels a
+        /// The crowned knight's lengths, measured on his parts sheet (400 of its pixels a
         /// unit; tools/hero_knight/parts.py cuts the parts that wear them).
         /// </summary>
         public static RunBody Knight() =>
             new RunBody
             {
-                thigh = 0.6f,
-                shin = 0.41f,
-                ankleHeight = 0.2f,
-                foot = 0.24f,
-                pelvisHalfWidth = 0.1f,
-                spine = 0.77f,
-                shoulderHalfWidth = 0.14f,
-                neck = 0.06f,
+                thigh = 0.61f,
+                shin = 0.61f,
+                ankleHeight = 0.19f,
+                foot = 0.46f,
+                pelvisHalfWidth = 0.08f,
+                spine = 0.47f,
+                shoulderHalfWidth = 0.1f,
+                shoulderForward = -0.09f,
+                neck = 0.24f,
                 head = 0.2f,
-                upperArm = 0.4f,
-                forearm = 0.48f,
-                hand = 0.06f,
+                upperArm = 0.6f,
+                forearm = 0.41f,
+                hand = 0.1f,
             };
 
         /// <summary>The whole leg, hip to ankle.</summary>

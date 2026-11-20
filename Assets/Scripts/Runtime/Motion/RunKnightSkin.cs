@@ -35,6 +35,10 @@ namespace Descender.Motion
         )]
         public bool steady;
 
+        [Tooltip("The size it is worn at against the rest (a rigid part only).")]
+        [Min(0.01f)]
+        public float scale = 1f;
+
         public float worldAngle;
 
         [Tooltip("For a steady part, how much of its bone's turning it still follows (0 none, 1 all).")]
@@ -54,7 +58,7 @@ namespace Descender.Motion
     public sealed class RunKnightSkin : MonoBehaviour
     {
         /// <summary>How dark the far side's parts are.</summary>
-        public const float FarShade = 0.6f;
+        public const float FarShade = 0.55f;
 
         /// <summary>How far behind the near parts the far side's are drawn.</summary>
         public const int FarBehind = 14;
@@ -183,11 +187,15 @@ namespace Descender.Motion
             art.transform.SetParent(fit, false);
             var along = part.end - part.joint;
             art.transform.localRotation = Quaternion.Euler(0f, 0f, -Mathf.Atan2(along.y, along.x) * Mathf.Rad2Deg);
+            if (part.rigid)
+            {
+                art.transform.localScale = new Vector3(part.scale, part.scale, 1f);
+            }
             var renderer = art.AddComponent<SpriteRenderer>();
             renderer.sprite = part.sprite;
             renderer.sharedMaterial = Fx.Shapes.Unlit;
             renderer.sortingOrder = order;
-            renderer.color = far ? new Color(FarShade, FarShade, FarShade) : Color.white;
+            renderer.color = far ? new Color(FarShade, FarShade, FarShade * 1.08f) : Color.white;
             worn.Add(
                 new Worn(
                     part,
