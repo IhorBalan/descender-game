@@ -106,6 +106,11 @@ namespace Descender.World.TilesV2
 
         private readonly List<float> leans = new List<float>();
         private readonly List<float> leanSpeeds = new List<float>();
+        private readonly List<SpriteRenderer> brushShown = new List<SpriteRenderer>();
+        private MaterialPropertyBlock pushBlock;
+
+        /// <summary>The brush material's property a renderer's push is told by: -1 .. 1, over zero to the right.</summary>
+        public static readonly int PushId = Shader.PropertyToID("_Push");
 
         [SerializeField]
         private List<SpriteRenderer> birds = new List<SpriteRenderer>();
@@ -144,7 +149,10 @@ namespace Descender.World.TilesV2
         /// <summary>What sways in the wind: reeds, and the shapes close to the eye.</summary>
         public IReadOnlyList<SpriteRenderer> Swaying => swaying;
 
-        /// <summary>What bends as the hero goes through it (`life brush`): each turns about its foot.</summary>
+        /// <summary>
+        /// What bends as the hero goes through it (`life brush`): drawn with the brush material,
+        /// its picture bends from its foot in the wind and with his push; else it turns about its foot.
+        /// </summary>
         public IReadOnlyList<Transform> Brush => brush;
 
         /// <summary>How near the hero a thing of the brush bends, in tiles to either side of him.</summary>
@@ -168,7 +176,10 @@ namespace Descender.World.TilesV2
             {
                 leans.Add(0f);
                 leanSpeeds.Add(0f);
+                var stem = brush[brushShown.Count];
+                brushShown.Add(stem != null ? stem.GetComponent<SpriteRenderer>() : null);
             }
+            pushBlock ??= new MaterialPropertyBlock();
             for (var i = 0; i < brush.Count; i++)
             {
                 var stem = brush[i];
@@ -196,8 +207,37 @@ namespace Descender.World.TilesV2
                 lean = Mathf.Clamp(lean + turning * seconds, -BrushLean * 1.5f, BrushLean * 1.5f);
                 leans[i] = lean;
                 leanSpeeds[i] = turning;
-                stem.localRotation = Quaternion.Euler(0f, 0f, lean);
+                Lean(i, lean);
             }
+        }
+
+        // Tells a thing of the brush how far it leans: the brush material bends its picture
+        // from its foot (over zero there is to the right, as a lean over zero is to the left);
+        // drawn with another, it turns about its foot instead.
+        private void Lean(int index, float lean)
+        {
+            var shown = brushShown[index];
+            if (shown != null && shown.sharedMaterial != null && shown.sharedMaterial.HasFloat(PushId))
+            {
+                shown.GetPropertyBlock(pushBlock);
+                pushBlock.SetFloat(PushId, -lean / BrushLean);
+                shown.SetPropertyBlock(pushBlock);
+                return;
+            }
+            brush[index].localRotation = Quaternion.Euler(0f, 0f, lean);
+        }
+
+        /// <summary>How far a thing of the brush is pushed now, as its material is told: -1 .. 1, over zero to the right.</summary>
+        public float PushOf(int index)
+        {
+            var shown = index < brushShown.Count ? brushShown[index] : null;
+            if (shown == null || !shown.HasPropertyBlock())
+            {
+                return 0f;
+            }
+            pushBlock ??= new MaterialPropertyBlock();
+            shown.GetPropertyBlock(pushBlock);
+            return pushBlock.GetFloat(PushId);
         }
 
         /// <summary>How far a thing of the brush leans now, in degrees: over zero to the left.</summary>
@@ -504,7 +544,10 @@ namespace Descender.World.TilesV2
                     {
                         return false;
                     }
-                    var material = entry.lit ? set.litMaterial : set.unlitMaterial;
+                    var material =
+                        !entry.lit ? set.unlitMaterial
+                        : set.brushMaterial != null ? set.brushMaterial
+                        : set.litMaterial;
                     var shown = Shown("Brush " + key, entry.sprite, at, entry.order, material);
                     brush.Add(shown.transform);
                     return true;

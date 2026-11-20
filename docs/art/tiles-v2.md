@@ -35,7 +35,7 @@ playground with the hero in it (`playground.png`). Five of them at 1920 x
 | Camera | Pixel Perfect Camera, 1280 x 720 (40 x 22.5 tiles): twice as far back as the game's own 320 x 180, so the world shows and not only the hero. `SHIP_VIEW` in `tv2_base.py`; the sky and the backdrops are drawn for it and the scenes' cameras take it from the tile set |
 | Fit to the screen | The view is drawn at its own size and then fitted (`StretchFill`, `RetroAA`). On 720p, 1440p and 4K that is a whole number of times (1, 2, 3): every pixel of the art is a square of the screen's. On 1080p it is one and a half times, which no pixel grid divides: the fit there is a sharp one that keeps the pixels even and does not crawl as the view moves, and the picture is a little softer |
 | Filter | Point, no compression, no mipmaps |
-| Density | One art pixel is one game pixel everywhere: tiles, walls, decor, backdrops. Two things are not on that grid, and are meant: the brush that bends as the hero goes through it turns about its foot (`life brush`), and a mote of the particles is a draft pixel, two of the art's |
+| Density | One art pixel is one game pixel everywhere: tiles, walls, decor, backdrops. Two things are not on that grid, and are meant: a mote of the particles is a draft pixel, two of the art's; and the light. The brush that bends (`life brush`) stays on it: its shader moves whole texels |
 | Lengths in a map | What a map gives beside a mark (how far aside, how far up) is in draft pixels: sixteenths of a tile (`TilesV2Set.DraftPixel`), whatever the art ships at |
 
 ### Draft and density
@@ -766,7 +766,7 @@ of the cell), built with the world; the clock tells it the hour (`DayNight.Appli
 | far | a picture far off behind a place, drawn at its own order and passed slower than the world across (`FarScroll`): it stands where it is marked when the camera is there | always |
 | pollen | motes of gold that hang in warm air and wander (unlit) | always |
 | snow | flakes coming down slowly, rocking, over a cold place | always |
-| brush | a picture that grows on a floor and turns about its foot: it leans away from the hero as he goes through it, the more the faster he goes, and springs back (`TilesV2Life.Bend`, `BrushReach`, `BrushLean`) | always |
+| brush | a picture that grows on a floor and bends from its foot, drawn with the brush material (`TilesV2Set.brushMaterial`, the shader `Assets/Art/TilesV2/Shaders/TilesV2Brush.shader`): it leans in a wind that runs across the world in swells and gusts, each blade stirring on its own, and away from the hero as he goes through it, the more the faster he goes, springing back after (`TilesV2Life.Bend` tells each renderer its `_Push`; `BrushReach`, `BrushLean`). Its foot stays put and the higher a part of it the further it leans, a far-leaning tip sinking a little; the bend moves whole texels, and the normal map bends with it. Its pictures have `BRUSH_ROOM` empty on either side (tv2_eden), as much as the shader can lean it, so a blade is never cut off. Eden's are drawn in the second style blade by blade (`styled_brush`), all but the wheat, which is raised from its drawing | always |
 
 The lights of the far villages (`backdrop_earth_windows`, a layer of heaven placed exactly
 as the hills are but not tinted) come on with the night as the glows do.

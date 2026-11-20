@@ -232,6 +232,7 @@ namespace Descender.EditorTools.TilesV2
             var set = LoadOrCreate<TilesV2Set>(TilesV2Manifest.SetPath);
             set.litMaterial = AssetDatabase.LoadAssetAtPath<Material>(LitMaterialPath);
             set.unlitMaterial = AssetDatabase.LoadAssetAtPath<Material>(UnlitMaterialPath);
+            set.brushMaterial = BrushMaterial();
 
             var legend = new List<TilesV2Set.Glyph>();
             foreach (var entry in manifest.legend)
@@ -534,6 +535,36 @@ namespace Descender.EditorTools.TilesV2
             tile.color = Color.white;
             tile.colliderType = Tile.ColliderType.None;
             EditorUtility.SetDirty(tile);
+        }
+
+        /// <summary>The shader what grows on the floors bends with, and its material.</summary>
+        public const string BrushShaderPath = TilesV2Manifest.Folder + "/Shaders/TilesV2Brush.shader";
+        public const string BrushMaterialPath = TilesV2Manifest.Folder + "/TilesV2Brush.mat";
+
+        /// <summary>The picture of the brush the material is sized from (all of them are one size).</summary>
+        public const string BrushPicturePath = TilesV2Manifest.Folder + "/eden_brush_0.png";
+
+        // The brush's material, made once and filled again: its shader, and the size and foot
+        // of the pictures it bends, read from the first of them.
+        private static Material BrushMaterial()
+        {
+            var shader = Load<Shader>(BrushShaderPath);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(BrushMaterialPath);
+            if (material == null)
+            {
+                material = new Material(shader);
+                AssetDatabase.CreateAsset(material, BrushMaterialPath);
+            }
+            material.shader = shader;
+            var picture = AssetDatabase.LoadAssetAtPath<Sprite>(BrushPicturePath);
+            if (picture != null)
+            {
+                var rect = picture.rect;
+                material.SetVector("_Size", new Vector4(rect.width, rect.height, 0f, 0f));
+                material.SetFloat("_Foot", picture.pivot.y / rect.height);
+            }
+            EditorUtility.SetDirty(material);
+            return material;
         }
 
         private static T LoadOrCreate<T>(string path)

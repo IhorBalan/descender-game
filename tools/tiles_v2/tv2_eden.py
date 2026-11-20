@@ -2814,6 +2814,7 @@ def gloom(wide: int) -> Image.Image:
 
 BRUSHES = ("grass", "fern", "frond", "wheat", "bloom", "frost")  # zones 1, 2, 3, 4, 5 and 7
 ORDER_BRUSH = 26  # before the hero: he goes through it
+BRUSH_ROOM = 7  # on either side of a brush's drawing, the room its shader bends it into
 
 
 def brush(kind: int, fine: int = 1) -> Image.Image:
@@ -2821,12 +2822,13 @@ def brush(kind: int, fine: int = 1) -> Image.Image:
     goes through and that bends as he does: a tuft of long grass with a flower in it; a
     fern of the orchard, its tips alight; the broad fronds under the Vines; a stand of
     wheat that has seeded itself off its row; flowers on tall stalks along a terrace;
-    grass with the frost on it by the Gate. It turns about its foot. `fine` draws it that
-    many times the draft's size: more blades and finer, a rib down each, petals on a flower."""
+    grass with the frost on it by the Gate. It is drawn in the middle of a picture with
+    BRUSH_ROOM on either side, where the brush shader bends it. `fine` draws it that many
+    times the draft's size: more blades and finer, a rib down each, petals on a flower."""
     name = BRUSHES[kind]
     r = rng("eden brush", name)
     f = fine
-    W0, H0 = 2 * T + 8, T + 14
+    W0, H0 = 2 * T + 8 + 2 * BRUSH_ROOM, T + 14
     W, H = W0 * f, H0 * f
     art = Art(W, H)
     cx, foot = W / 2, H - 3 * f
@@ -3201,7 +3203,7 @@ for _v in range(TEAL_TREES):
         STYLE[_key] = lambda w, h, k=_key, v=_v, s=_frame: tv2_style.tree(w, h, SINK_OF[k] * DENSITY, ("eden teal", v), "1c8c84", "b4c6be", frame=s, pale=True, petals=True, crown=1.1, lean=(-0.3, 0.4, 0.2)[v % 3])
 
 # Raised from their drawings in the first style, so what stands where (a door, a ledge) stays.
-for _key in ("eden_leaf_0", "eden_leaf_1", "eden_leaf_2", "eden_leaf_3", "eden_ivy_green_0", "eden_ivy_green_1", "eden_ivy_green_2", "eden_ivy_teal_0", "eden_ivy_teal_1", "eden_ivy_teal_2", "eden_ivy_pale_0", "eden_ivy_pale_1", "eden_ivy_pale_2", "eden_ivy_frost_0", "eden_ivy_frost_1", "eden_ivy_frost_2", "eden_vine_0", "eden_vine_1", "eden_vine_2", "eden_wheat_0", "eden_wheat_1", "eden_wheat_2", "eden_wheat_3", "eden_bough_0", "eden_vine_bough_0", "eden_bough_1", "eden_vine_bough_1", "eden_sundial", "eden_wheel", "eden_pipe_h_6", "eden_pipe_v_6", "eden_pipe_h_12", "eden_pipe_v_12", "eden_gear", "eden_gear_f1", "eden_gear_f2", "eden_making_door", "eden_low_gate", "eden_crag_0", "eden_crag_1", "eden_crag_2", "eden_pillar_10x2", "eden_pillar_10x1", "eden_arch_stone", "eden_arch_vine", "eden_window", "eden_buttress_0", "eden_chain_0", "eden_buttress_1", "eden_chain_1", "eden_ruin_0", "eden_ruin_1", "eden_ruin_2", "eden_sword", "eden_bonfire", "eden_knight", "eden_crack_0", "eden_moss_green_0", "eden_moss_pale_0", "eden_moss_frost_0", "eden_under_root_0", "eden_under_marble_0", "eden_under_pearl_0", "eden_under_silver_0", "eden_crack_1", "eden_moss_green_1", "eden_moss_pale_1", "eden_moss_frost_1", "eden_under_root_1", "eden_under_marble_1", "eden_under_pearl_1", "eden_under_silver_1", "eden_crack_2", "eden_moss_green_2", "eden_moss_pale_2", "eden_moss_frost_2", "eden_under_root_2", "eden_under_marble_2", "eden_under_pearl_2", "eden_under_silver_2", "eden_great_leaf", "eden_lantern_crown", "eden_piston", "eden_piston_f1", "eden_piston_f2", "eden_piston_f3", "eden_knight_1", "eden_post_0", "eden_post_1", "eden_post_2", "eden_post_3", "eden_lantern_trunk", "eden_lantern_root", "eden_crown_trunk", "eden_corbel_plank_0", "eden_corbel_plank_1", "eden_corbel_grate_0", "eden_corbel_grate_1", "eden_corbel_gilt_0", "eden_corbel_gilt_1", "eden_corbel_rime_0", "eden_corbel_rime_1", "eden_inlay_earth_0", "eden_inlay_earth_1", "eden_inlay_earth_2", "eden_inlay_loam_0", "eden_inlay_loam_1", "eden_inlay_loam_2", "eden_inlay_vinewood_0", "eden_inlay_vinewood_1", "eden_inlay_vinewood_2", "eden_inlay_tilth_0", "eden_inlay_tilth_1", "eden_inlay_tilth_2", "eden_inlay_marble_0", "eden_inlay_marble_1", "eden_inlay_marble_2", "eden_inlay_pearl_0", "eden_inlay_pearl_1", "eden_inlay_pearl_2", "eden_inlay_silver_0", "eden_inlay_silver_1", "eden_inlay_silver_2", "eden_brush_0", "eden_brush_1", "eden_brush_2", "eden_brush_3", "eden_brush_4", "eden_brush_5"):
+for _key in ("eden_leaf_0", "eden_leaf_1", "eden_leaf_2", "eden_leaf_3", "eden_ivy_green_0", "eden_ivy_green_1", "eden_ivy_green_2", "eden_ivy_teal_0", "eden_ivy_teal_1", "eden_ivy_teal_2", "eden_ivy_pale_0", "eden_ivy_pale_1", "eden_ivy_pale_2", "eden_ivy_frost_0", "eden_ivy_frost_1", "eden_ivy_frost_2", "eden_vine_0", "eden_vine_1", "eden_vine_2", "eden_wheat_0", "eden_wheat_1", "eden_wheat_2", "eden_wheat_3", "eden_bough_0", "eden_vine_bough_0", "eden_bough_1", "eden_vine_bough_1", "eden_sundial", "eden_wheel", "eden_pipe_h_6", "eden_pipe_v_6", "eden_pipe_h_12", "eden_pipe_v_12", "eden_gear", "eden_gear_f1", "eden_gear_f2", "eden_making_door", "eden_low_gate", "eden_crag_0", "eden_crag_1", "eden_crag_2", "eden_pillar_10x2", "eden_pillar_10x1", "eden_arch_stone", "eden_arch_vine", "eden_window", "eden_buttress_0", "eden_chain_0", "eden_buttress_1", "eden_chain_1", "eden_ruin_0", "eden_ruin_1", "eden_ruin_2", "eden_sword", "eden_bonfire", "eden_knight", "eden_crack_0", "eden_moss_green_0", "eden_moss_pale_0", "eden_moss_frost_0", "eden_under_root_0", "eden_under_marble_0", "eden_under_pearl_0", "eden_under_silver_0", "eden_crack_1", "eden_moss_green_1", "eden_moss_pale_1", "eden_moss_frost_1", "eden_under_root_1", "eden_under_marble_1", "eden_under_pearl_1", "eden_under_silver_1", "eden_crack_2", "eden_moss_green_2", "eden_moss_pale_2", "eden_moss_frost_2", "eden_under_root_2", "eden_under_marble_2", "eden_under_pearl_2", "eden_under_silver_2", "eden_great_leaf", "eden_lantern_crown", "eden_piston", "eden_piston_f1", "eden_piston_f2", "eden_piston_f3", "eden_knight_1", "eden_post_0", "eden_post_1", "eden_post_2", "eden_post_3", "eden_lantern_trunk", "eden_lantern_root", "eden_crown_trunk", "eden_corbel_plank_0", "eden_corbel_plank_1", "eden_corbel_grate_0", "eden_corbel_grate_1", "eden_corbel_gilt_0", "eden_corbel_gilt_1", "eden_corbel_rime_0", "eden_corbel_rime_1", "eden_inlay_earth_0", "eden_inlay_earth_1", "eden_inlay_earth_2", "eden_inlay_loam_0", "eden_inlay_loam_1", "eden_inlay_loam_2", "eden_inlay_vinewood_0", "eden_inlay_vinewood_1", "eden_inlay_vinewood_2", "eden_inlay_tilth_0", "eden_inlay_tilth_1", "eden_inlay_tilth_2", "eden_inlay_marble_0", "eden_inlay_marble_1", "eden_inlay_marble_2", "eden_inlay_pearl_0", "eden_inlay_pearl_1", "eden_inlay_pearl_2", "eden_inlay_silver_0", "eden_inlay_silver_1", "eden_inlay_silver_2"):
     STYLE[_key] = lambda w, h, k=_key: tv2_style.relief(FINE[k]())
 
 # The buildings drawn again over their own plans (tv2_style.repaint): each region read from the
@@ -3226,6 +3228,151 @@ ENTRIES = [
 ]
 _DRAWN: dict[str, Image.Image] = {}
 
+
+
+# What bends as the hero goes through it, in the second style: blade by blade, each a tapered
+# ribbon that curves over as it rises, rounded across with its rib proud, darker at its root;
+# the back of a clump in shade and the front lit, the blades of two or three greens. Drawn in
+# the middle of a picture wide enough that the brush shader can bend it without cutting it.
+BRUSH_STYLE = {
+    "grass": (("74b840", 10, dict(low=0.12, high=0.95)), ("a4cc4a", 10, dict(low=0.14, high=0.97)), ("52a052", 10, dict(low=0.1, high=0.92))),
+    "frost": (("8ea8c8", 10, dict(cool=0.2, warm=0.1, low=0.14, high=0.97)), ("b4c8e0", 10, dict(cool=0.2, warm=0.1, low=0.16, high=0.98)), ("7088b0", 10, dict(cool=0.2, warm=0.1, low=0.12, high=0.95))),
+    "fern": (("1c8c84", 10, {}), ("34a890", 10, {}), ("146e6c", 10, {})),
+    "frond": (("4e9a3a", 10, {}), ("6aae44", 10, {}), ("3a7e3c", 10, {})),
+    "bloom": (("4e9a38", 10, {}), ("6aae44", 10, {}), ("3a8040", 10, {})),
+}
+
+
+def _brush_blade(s, x0, foot, tall, lean, wide, z, mat, var, droop=0.35):
+    """A blade from its root at (x0, foot): it rises `tall`, its tip `lean` times its height
+    over to one side, and arches down a little as it goes over; `wide` at its root."""
+    steps = max(6, int(tall / 2.5))
+    pts = []
+    for i in range(steps + 1):
+        t = i / steps
+        x = x0 + lean * tall * t * t
+        y = foot - tall * (t - droop * abs(lean) * t * t)
+        pts.append((x, y, max(0.45, wide * (1 - t) ** 0.75)))
+    for (xa, ya, ra), (xb, yb, rb) in zip(pts, pts[1:]):
+        s.limb(xa, ya, xb, yb, ra, rb, z, mat, var)
+    return pts[-1][:2]
+
+
+def _brush_flower(s, x, y, rad, z, mat, heart):
+    """A flower head facing out: petals round a heart, a little proud of the blades."""
+    for k in range(5):
+        a = k / 5 * 2 * math.pi - math.pi / 2
+        s.limb(x, y, x + math.cos(a) * rad, y + math.sin(a) * rad * 0.85, rad * 0.55, rad * 0.45, z, mat)
+    s.limb(x, y, x + 0.1, y, rad * 0.45, rad * 0.45, z + rad * 0.6, heart)
+
+
+def styled_brush(kind: int, width: int, height: int, narrow: float = 1.0):
+    name = BRUSHES[kind]
+    r = rng("eden brush style", name)
+    W, H = width, height
+    s = tv2_style.Scene(W, H)
+    ramps = {i: tv2_style.make_ramp(base, n, **kw) for i, (base, n, kw) in enumerate(BRUSH_STYLE[name])}
+    PETAL, HEART, TIP = 3, 4, 5
+    foot = H - 3 * DENSITY
+    cx = W / 2
+    half = ((2 * T + 8) * DENSITY / 2 - 3) * narrow  # the clump's half width: as wide as the draft's drawing
+    top = foot - 3  # as high as it may reach, under the picture's top
+    if name in ("grass", "frost"):
+        count = 58
+        tips = []
+        for n in range(count):
+            back = n < count * 0.4
+            u = math.copysign(r.random() ** 0.8, r.uniform(-1, 1))
+            x0 = cx + u * half * 0.5 + r.uniform(-2, 2)
+            tall = r.uniform(0.35, 1.0) ** 0.7 * top * (1 - 0.35 * abs(u)) * (0.9 if back else 1.0)
+            lean = (u * r.uniform(0.35, 0.85) + r.uniform(-0.12, 0.12)) * narrow
+            z = (0 if back else 4) + r.uniform(0, 3)
+            var = (-2 if back else 0) + r.choice((-1, 0, 0, 1))
+            tips.append(_brush_blade(s, x0, foot, tall, lean, r.uniform(1.3, 1.9), z, r.choice((0, 0, 1, 2)), var, droop=0.3))
+        if name == "grass":
+            ramps[PETAL] = tv2_style.make_ramp("e27aa6", 8, cool=0.3, warm=0.25, low=0.18, high=0.95)
+            ramps[HEART] = tv2_style.make_ramp("e8c040", 6, low=0.3, high=0.95)
+            for fx, fy in ((cx - 13, foot - top * 0.68), (cx + 16, foot - top * 0.55), (cx + 2, foot - top * 0.8)):
+                s.limb(fx, foot, fx + (fx - cx) * 0.05, fy, 0.7, 0.5, 6, 0, 1)  # its stem
+                _brush_flower(s, fx + (fx - cx) * 0.05, fy, 2.6, 9, PETAL, HEART)
+        else:
+            ramps[TIP] = tv2_style.make_ramp("e8f2fc", 5, cool=0.2, warm=0.0, low=0.6, high=1.0)
+            for (tx, ty) in tips[1::2]:
+                s.limb(tx, ty, tx, ty + 2.5, 0.9, 0.6, 12, TIP)
+    elif name in ("fern", "frond"):
+        fronds = 7 if name == "fern" else 5
+        if name == "fern":
+            ramps[TIP] = [tv2_style.hex_rgb(c) for c in ("2ab4c8", "5ad4e0", "8cf0f4", "c8fcfc", "e8ffff")]
+        for n in range(fronds):
+            u = (n - (fronds - 1) / 2) / ((fronds - 1) / 2)
+            back = n % 2 == 0
+            tall = top * (r.uniform(0.75, 1.0) - 0.25 * abs(u))
+            lean = u * 1.05 + r.uniform(-0.1, 0.1)
+            z = (0 if back else 4) + r.uniform(0, 2)
+            var = -2 if back else 0
+            steps = 14
+            prev = None
+            for i in range(steps + 1):
+                t = i / steps
+                x = cx + lean * tall * t * 0.55
+                y = foot - tall * (t - 0.45 * abs(lean) * t * t)
+                if prev:
+                    s.limb(prev[0], prev[1], x, y, 1.0, 0.7, z + 1, 0, var)
+                prev = (x, y)
+                if 0.15 < t < 0.97:
+                    long = ((5.0 if name == "fern" else 9.0) * math.sin(min(1.0, t * 1.15) * math.pi) + 1.5)
+                    for side in (-1, 1):
+                        ex = x + side * long * 0.9
+                        ey = y + long * (0.55 if name == "fern" else 0.35) - side * lean * 1.5
+                        s.limb(x, y, ex, ey, 1.4 if name == "fern" else 2.2, 0.5, z, 1 if side < 0 else 2, var + (1 if side < 0 else 0))
+            if name == "fern":
+                s.limb(prev[0], prev[1], prev[0] + 0.1, prev[1], 1.6, 1.6, z + 3, TIP)
+    else:  # flowers on tall stalks
+        palettes = ("e27aa6", "a888f0", "e8c040")
+        for p, base in enumerate(palettes):
+            ramps[3 + p] = tv2_style.make_ramp(base, 8, cool=0.3, warm=0.25, low=0.2, high=0.95)
+        ramps[6] = tv2_style.make_ramp("f6e070", 5, low=0.4, high=0.98)
+        for n in range(9):
+            u = (n - 4) / 4 + r.uniform(-0.08, 0.08)
+            back = n % 2 == 0
+            x0 = cx + u * half * 0.6
+            tall = top * r.uniform(0.55, 0.95)
+            lean = u * 0.4 * narrow
+            z = (0 if back else 4) + r.uniform(0, 2)
+            var = -2 if back else 0
+            tx, ty = _brush_blade(s, x0, foot, tall, lean, 0.9, z, 0, var, droop=0.15)
+            for k in range(2):  # leaves off the stalk
+                t = 0.3 + 0.25 * k
+                lx = x0 + lean * tall * t * t
+                ly = foot - tall * t
+                side = 1 if (n + k) % 2 else -1
+                _brush_blade(s, lx, ly, tall * 0.28, side * 1.3 * narrow, 1.6, z - 0.5, 1, var, droop=0.6)
+            _brush_flower(s, tx, ty, 2.8, z + 4, 3 + n % 3, 6)
+    s.mat[foot + 1 :, :] = -1  # nothing under the ground
+    up = np.clip((foot - s.ys) / max(top, 1), 0, 1)
+    root = np.where(s.solid, (1 - up) ** 2.2 * 0.32, 0)  # darker toward its root, in the clump's shade
+    return tv2_style.render(s, ramps, ao=0.05, ao_radius=3, shadow=0.22, shadow_reach=5, shadow_drop=0.7, gamma=1.0, extra_shadow=root)
+
+
+
+
+
+def roomy_brush(kind: int, width: int, height: int):
+    """A brush in the second style kept clear of the BRUSH_ROOM on either side: drawn
+    narrower, a little at a time, while a blade of it reaches in there."""
+    room = BRUSH_ROOM * DENSITY
+    narrow = 1.0
+    while True:
+        picture, normal = styled_brush(kind, width, height, narrow)
+        alpha = np.asarray(picture)[..., 3]
+        if not (alpha[:, :room].any() or alpha[:, width - room :].any()) or narrow < 0.5:
+            return picture, normal
+        narrow *= 0.94
+
+
+for _k in range(len(BRUSHES)):
+    # The wheat reads better as it was drawn (its ears full and upright), so it is raised.
+    STYLE[f"eden_brush_{_k}"] = (lambda w, h, k=_k: tv2_style.relief(FINE[f"eden_brush_{k}"]())) if BRUSHES[_k] == "wheat" else (lambda w, h, k=_k: roomy_brush(k, w, h))
 
 def pictures() -> dict[str, Image.Image]:
     """Every picture of the level, drawn (once), by key."""

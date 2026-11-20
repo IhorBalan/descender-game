@@ -595,7 +595,15 @@ namespace Descender.Tests
             }
             Assert.That(life.LeanOf(0), Is.LessThan(-8f), "it leans away from him");
             Assert.That(Mathf.Abs(life.LeanOf(0)), Is.LessThanOrEqualTo(TilesV2Life.BrushLean * 1.5f));
-            Assert.That(stem.localRotation.eulerAngles.z, Is.GreaterThan(300f), "and is turned about its foot");
+            // It bends from its foot: its foot stays where it grows, and its picture is told
+            // how far it is pushed over (to the right, over zero), as far as it leans.
+            Assert.That(
+                stem.GetComponent<SpriteRenderer>().sharedMaterial,
+                Is.SameAs(TilesV2Builder.LoadSet().brushMaterial)
+            );
+            Assert.That(stem.localRotation, Is.EqualTo(Quaternion.identity), "its foot stays");
+            Assert.That(life.PushOf(0), Is.EqualTo(-life.LeanOf(0) / TilesV2Life.BrushLean).Within(1e-5f));
+            Assert.That(life.PushOf(0), Is.GreaterThan(8f / TilesV2Life.BrushLean), "pushed over to the right");
             // From its right, to the left.
             for (var step = 0; step < 80; step++)
             {
