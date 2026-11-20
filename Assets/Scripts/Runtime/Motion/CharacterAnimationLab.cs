@@ -8,12 +8,21 @@ namespace Descender.Motion
     /// CharacterAnimationLab.unity, made by Descender &gt; Lab &gt; Character animation lab):
     /// a ground with a mark every unit, a camera that keeps the <see cref="RunSkeleton"/>
     /// in view, the <see cref="RunDebugOverlay"/> and the keys to look closer. Tab shows or
-    /// hides the overlay, K takes the knight's parts (<see cref="RunKnightSkin"/>) off and on, Space pauses, the right arrow steps one sixtieth of a second while
-    /// paused, 1, 2 and 3 play at full, a quarter and a tenth speed. It runs at 60 frames a
+    /// hides the overlay, K goes from the painted run (<see cref="RunFrames"/>) to the knight's
+    /// parts on the bones (<see cref="RunKnightSkin"/>) to the bare bones and back, Space
+    /// pauses, the right arrow steps one sixtieth of a second while paused, 1, 2 and 3 play at full, a quarter and a tenth speed. It runs at 60 frames a
     /// second. Nothing of the game is in the scene or touched by it.
     /// </summary>
     public sealed class CharacterAnimationLab : MonoBehaviour
     {
+        /// <summary>What the runner looks like: K goes from one to the next.</summary>
+        public enum Look
+        {
+            Painted,
+            Parts,
+            Bones,
+        }
+
         public const float Step = 1f / 60f;
         private const int Ticks = 48;
 
@@ -30,6 +39,9 @@ namespace Descender.Motion
         private RunKnightSkin skin;
 
         [SerializeField]
+        private RunFrames painted;
+
+        [SerializeField]
         private new Camera camera;
 
         [SerializeField]
@@ -37,20 +49,61 @@ namespace Descender.Motion
         private Vector2 cameraOffset = new Vector2(0.6f, 1.3f);
 
         private Transform ground;
+        private Look look;
         private readonly Transform[] ticks = new Transform[Ticks];
 
         public RunSkeleton Skeleton => skeleton;
         public RunDebugOverlay Overlay => overlay;
         public RunKnightSkin Skin => skin;
+        public RunFrames Painted => painted;
+
+        /// <summary>What the runner looks like now.</summary>
+        public Look Current => look;
 
         /// <summary>Fills in what the scene is made of (the editor's scene maker and tests).</summary>
-        public void Configure(RunSkeleton runner, RunDebugOverlay debug, Camera view, RunKnightSkin knight = null)
+        public void Configure(
+            RunSkeleton runner,
+            RunDebugOverlay debug,
+            Camera view,
+            RunKnightSkin knight = null,
+            RunFrames run = null
+        )
         {
             skeleton = runner;
             overlay = debug;
             camera = view;
             skin = knight;
+            painted = run;
         }
+
+        /// <summary>Shows the runner one way: the painted run, the knight's parts or the bones.</summary>
+        public void Show(Look next)
+        {
+            look = next;
+            if (look == Look.Painted && painted == null)
+            {
+                look = Look.Parts;
+            }
+            if (look == Look.Parts && skin == null)
+            {
+                look = Look.Bones;
+            }
+            if (painted != null)
+            {
+                painted.Shown = look == Look.Painted;
+            }
+            if (skin != null)
+            {
+                skin.Shown = look == Look.Parts;
+            }
+            if (skeleton != null)
+            {
+                skeleton.ShapesShown = look == Look.Bones;
+            }
+        }
+
+        /// <summary>The next look after this one, round again after the bones.</summary>
+        public void ShowNext() => Show(look == Look.Bones ? Look.Painted : look + 1);
 
         private void Awake()
         {
@@ -58,8 +111,8 @@ namespace Descender.Motion
             if (overlay != null && skeleton != null)
             {
                 overlay.Bind(skeleton);
-                // With the knight worn he is what is seen first; Tab brings the bones back.
-                overlay.Visible = skin == null;
+                // With the knight on he is what is seen first; Tab brings the bones back.
+                overlay.Visible = skin == null && painted == null;
             }
             ground = Fx.Shapes.Block(transform, "Ground", new Vector2(64f * 16f, 16f), Vector2.zero, Earth).transform;
             for (var i = 0; i < Ticks; i++)
@@ -81,9 +134,9 @@ namespace Descender.Motion
             {
                 overlay.Visible = !overlay.Visible;
             }
-            if (keyboard.kKey.wasPressedThisFrame && skin != null)
+            if (keyboard.kKey.wasPressedThisFrame)
             {
-                skin.Shown = !skin.Shown;
+                ShowNext();
             }
             if (keyboard.spaceKey.wasPressedThisFrame)
             {
@@ -106,6 +159,8 @@ namespace Descender.Motion
                 skeleton.TimeScale = 0.1f;
             }
         }
+
+        private void Start() => Show(Look.Painted);
 
         private void LateUpdate()
         {

@@ -318,6 +318,21 @@ namespace Descender.Tests.EditMode
             Assert.That(Vector2.Distance(middle, end), Is.EqualTo(0.5f).Within(1e-4f));
         }
 
+        [Test]
+        public void ThePaintedRunShowsTheKeyPoseNearestThePhase()
+        {
+            Assert.That(RunFrames.FrameAt(0f, 8), Is.EqualTo(0), "the right leg's contact");
+            Assert.That(RunFrames.FrameAt(0.06f, 8), Is.EqualTo(0), "still nearest the contact");
+            Assert.That(RunFrames.FrameAt(0.07f, 8), Is.EqualTo(1), "nearer the down");
+            Assert.That(RunFrames.FrameAt(0.5f, 8), Is.EqualTo(4), "the left leg's contact");
+            Assert.That(RunFrames.FrameAt(0.95f, 8), Is.EqualTo(0), "round to the contact again");
+            Assert.That(RunFrames.FrameAt(1.25f, 8), Is.EqualTo(2), "a phase past a whole cycle");
+            for (var key = 0; key < RunGait.KeyCount; key++)
+            {
+                Assert.That(RunFrames.FrameAt(key / (float)RunGait.KeyCount, 8), Is.EqualTo(key), $"key {key}");
+            }
+        }
+
         private static float Difference(RunPose a, RunPose b)
         {
             var sum = 0f;

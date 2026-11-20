@@ -133,7 +133,7 @@ namespace Descender.Motion
                 };
                 GUI.Label(
                     new Rect(12, 8, 640, 24),
-                    "Tab: bones and numbers   K: knight on/off   Space: pause   1 / 2 / 3: speed",
+                    "Tab: bones and numbers   K: painted / parts / bones   Space: pause   1 / 2 / 3: speed",
                     hint
                 );
                 return;

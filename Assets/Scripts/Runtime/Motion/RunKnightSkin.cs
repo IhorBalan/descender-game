@@ -146,7 +146,15 @@ namespace Descender.Motion
                     Hang(part, part.bone + ".R", part.order - FarBehind, true);
                 }
             }
-            Shown = shown;
+            // Shown, but a hidden knight leaves the shapes as they are (the painted run may be up).
+            foreach (var part in worn)
+            {
+                part.Renderer.enabled = shown;
+            }
+            if (shown && skeleton != null)
+            {
+                skeleton.ShapesShown = false;
+            }
         }
 
         /// <summary>Stretches each limb to its bone and swings what hangs; called every frame.</summary>
