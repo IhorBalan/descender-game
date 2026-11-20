@@ -54,7 +54,7 @@ PARTS = {
     "cloak": dict(box=(795, 0, 1222, 640), joint=(1170, 157), along=up_from((1170, 157)), bone="Neck", rigid=True, order=-12, sway=3.0),
     # The sheet draws him short in the body for his legs: the rows from under the chest
     # plate down to the belt are drawn LENGTHEN pixels longer (RunBody.Knight's spine).
-    "torso": dict(box=(366, 30, 662, 566), joint=(505, 330), along=up_from((505, 330)), bone="Hips", rigid=True, order=4, lengthen=(150, 268, 80)),
+    "torso": dict(box=(366, 30, 662, 566), joint=(505, 330), along=up_from((505, 330)), bone="Hips", rigid=True, order=4, lengthen=(130, 268, 120)),
     "tabard": dict(box=(668, 52, 792, 582), joint=(665, 120), along=up_from((665, 120)), bone="Hips", rigid=True, order=5, sway=5.0),
     "head": dict(box=(12, 78, 356, 360), joint=(255, 268), along=up_from((255, 268)), bone="Head", rigid=True, order=9),
     "pauldron": dict(box=(40, 550, 334, 792), joint=(200, 690), along=(100, 690), bone="Shoulder", rigid=True, order=12),
