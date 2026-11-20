@@ -276,7 +276,8 @@ def texture_meta_for(path: str) -> str:
         spec = sprite_spec().get(character, {})
         for anim_name, anim in spec.get("animations", {}).items():
             if anim["file"] == name:
-                return texture_meta(guid, ppu=PPU_LEVEL, point_filter=True, sprites=strip_sprites(character, anim_name, anim, spec, size))
+                # A character drawn finer than the level pixel names its own (the hero: 32).
+                return texture_meta(guid, ppu=int(spec.get("ppu", PPU_LEVEL)), point_filter=True, sprites=strip_sprites(character, anim_name, anim, spec, size))
         if name in STANDALONE_FRAMES:
             frames = STANDALONE_FRAMES[name]
             frame_w = size[0] // frames
