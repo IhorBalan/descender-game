@@ -203,7 +203,13 @@ its normal map); the generator prefers it to `FINE` and writes the picture's
 floor line exactly. Drawn in it so far: the broad trees (the Earth's oaks and
 apple trees; Paradise's blossom and gold trees and Eden's teal trees, with the
 frames of their stirring crowns: each heap goes round a little in its own
-time, the trunk still); the rest of the Earth's trees (firs in tiers of
+time, the trunk still. Paradise's trees in blossom are cherries
+(`sakura`): a short dark trunk banded across its bark, on roots, parting into
+limbs that fork in elbows out to twigs under a crown like an umbrella; on them
+clouds of small pale pink flowers of five petals, some before the branches and
+some behind and a step darker, the crown's underside darker than its top, the
+sky and the branches seen between them; petals in the air and on the ground.
+Its branches go round in the frames, more toward their tips); the rest of the Earth's trees (firs in tiers of
 drooping boughs, each hem shading the tier under it; birches; a weeping willow
 whose strands fall nearly to the ground; dead trees forking into twigs; the
 giant oak, its roots out over the ground); and what grows low or lies on the
