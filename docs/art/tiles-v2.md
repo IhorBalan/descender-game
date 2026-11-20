@@ -289,7 +289,11 @@ lit gently; flutes are columns side by side. The rims, outline, turf and ore
 of a frame are drawn as before, over it. Each material's sheet has its normal
 map beside it (`<key>_n.png`): the inside the texture's own field, the rims a
 little proud of it, a side open to the air rounded off and a side that joins
-the next tile not, so the ground is seamless under a lamp too.
+the next tile not, so the ground is seamless under a lamp too. A blend (one material
+reaching over the edge of the next) keeps its draft's shape, its reach and its
+ragged front, doubled, and fills its body with the same texture of the second
+style as the ground it reaches from; its sheet has a normal map too, the
+texture's own field, its front rounded down onto the tile it covers.
 
 ## Frames
 

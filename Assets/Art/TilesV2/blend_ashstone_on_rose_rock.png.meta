@@ -1263,7 +1263,9 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-    secondaryTextures: []
+    secondaryTextures:
+    - name: _NormalMap
+      texture: {fileID: 2800000, guid: a89822b24e4a5a4aa148510ddaaa96c7, type: 3}
     nameFileIdTable:
       tv2_ashstone_on_rose_rock_s1_v0: 3582565154556819065
       tv2_ashstone_on_rose_rock_s2_v0: 427184638300405441

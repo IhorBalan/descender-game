@@ -47,7 +47,7 @@ import tv2_decor
 import tv2_liquid
 import tv2_preview
 import tv2_terrain
-from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_frame, fine_frame_normal, fine_ledge_sheet, fine_prop_sheet, fine_slope, fine_slope_normal, fine_things_sheet
+from tv2_terrain import BLEND_MASKS, THINGS, fine_blend, fine_blend_normal, fine_frame, fine_frame_normal, fine_ledge_sheet, fine_prop_sheet, fine_slope, fine_slope_normal, fine_things_sheet
 
 FRESH_METAS = False  # `--metas`: write every picture's .meta again, not only the missing ones
 
@@ -77,7 +77,8 @@ def sheet_for(material: dict, normals: bool = False) -> tuple[Image.Image, list]
     return Image.fromarray(sheet, "RGBA"), sprites
 
 
-def blend_sheet(blend: dict) -> tuple[Image.Image, list]:
+def blend_sheet(blend: dict, normals: bool = False) -> tuple[Image.Image, list]:
+    """A blend's sheet: its 15 overlays in each variant. With `normals`, its normal map instead."""
     rows_per_variant = (len(BLEND_MASKS) + COLUMNS - 1) // COLUMNS
     sheet = np.zeros((rows_per_variant * VARIANTS * PIXELS, COLUMNS * PIXELS, 4), dtype=np.uint8)
     sprites = []
@@ -85,7 +86,7 @@ def blend_sheet(blend: dict) -> tuple[Image.Image, list]:
         for i, sides in enumerate(BLEND_MASKS):
             cx, cy = frame_cell(i)
             cy += v * rows_per_variant
-            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = fine_blend(blend, sides, v)
+            sheet[cy * PIXELS : (cy + 1) * PIXELS, cx * PIXELS : (cx + 1) * PIXELS] = (fine_blend_normal if normals else fine_blend)(blend, sides, v)
             sprites.append((f"tv2_{blend['key']}_s{sides}_v{v}", cx, cy))
     return Image.fromarray(sheet, "RGBA"), sprites
 
@@ -349,6 +350,9 @@ def generate(out: str):
         image, cells = blend_sheet(blend)
         path = os.path.join(out, "blend_" + blend["key"] + ".png")
         write(path, image, sheet_meta(path, image, cells))
+        relief = os.path.join(out, "blend_" + blend["key"] + NORMAL_SUFFIX + ".png")  # its normal map, the ground's
+        write(relief, blend_sheet(blend, normals=True)[0], normal_meta(relief))
+        name_normal(path, relief)
         images["blend_" + blend["key"]] = image
     for prop in PROPS:  # the lamps: drawn at the size that ships where they have a painter for it
         image, cells = fine_prop_sheet(prop)
