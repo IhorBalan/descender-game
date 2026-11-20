@@ -137,6 +137,34 @@ namespace Descender.Tests
             }
         }
 
+        // A tree's crown moves in its own shader, smoothly: the set draws it with the crown
+        // material, whose quad grows by more than the most the shader moves the picture, so a
+        // leaning crown is never cut off; and a texel is as many world units as the pictures'.
+        [Test]
+        public void ACrownMovesInItsShaderWithRoomToLean()
+        {
+            var material = TilesV2Builder.LoadSet().crownMaterial;
+            Assert.That(material, Is.Not.Null);
+            Assert.That(material.shader.name, Is.EqualTo("Descender/Tiles V2/Crown Lit"));
+            Assert.That(material.shader.isSupported, Is.True);
+            var reach = material.GetFloat("_Sway") + material.GetFloat("_Gust") + material.GetFloat("_Rustle");
+            Assert.That(reach, Is.GreaterThan(1f), "the crown hardly moves");
+            Assert.That(material.GetFloat("_Room"), Is.GreaterThan(reach + 1f));
+            Assert.That(material.GetFloat("_Snap"), Is.EqualTo(0f), "it moves smoothly, not a texel at a time");
+            foreach (var key in new[] { "heaven_blossom_0", "heaven_gold_0", "eden_teal_tree_0" })
+            {
+                Assert.That(TilesV2Things.Crowned(key), Is.True, key);
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Folder + key + ".png");
+                Assert.That(sprite, Is.Not.Null, key);
+                Assert.That(material.GetFloat("_TexelUnits"), Is.EqualTo(1f / sprite.pixelsPerUnit).Within(1e-6f));
+                var importer = (TextureImporter)AssetImporter.GetAtPath(Folder + key + ".png");
+                var settings = new TextureImporterSettings();
+                importer.ReadTextureSettings(settings);
+                Assert.That(settings.spriteMeshType, Is.EqualTo(SpriteMeshType.FullRect), key);
+            }
+            Assert.That(TilesV2Things.Crowned("heaven_banner"), Is.False);
+        }
+
         [Test]
         public void ALampReadsTheReliefOfWhatItLights()
         {

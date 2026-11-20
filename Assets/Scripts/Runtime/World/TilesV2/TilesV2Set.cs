@@ -27,6 +27,9 @@ namespace Descender.World.TilesV2
         )]
         public Material brushMaterial;
 
+        [Tooltip("A tree whose crown moves in the wind draws with: lit, its picture bent every frame.")]
+        public Material crownMaterial;
+
         [Header("Map legend")]
         public Glyph[] legend = new Glyph[0];
 

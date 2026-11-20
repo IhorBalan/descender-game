@@ -123,6 +123,9 @@ namespace Descender.World.TilesV2
 
         /// <summary>The pictures that are several shown in turn, the ones whose windows burn by night, and the vistas.</summary>
         public int Moving { get; private set; }
+
+        /// <summary>The trees among the moving pictures whose crowns move in the wind in their shader.</summary>
+        public int Crowns { get; private set; }
         public int Glowing { get; private set; }
         public int Vistas { get; private set; }
 
@@ -329,6 +332,13 @@ namespace Descender.World.TilesV2
             return key.Contains("banner") ? 4f : 3f;
         }
 
+        /// <summary>
+        /// Whether a picture is a tree whose crown moves in the wind in the crown shader: Paradise's
+        /// trees in blossom and of gold, and Eden's teal trees.
+        /// </summary>
+        public static bool Crowned(string key) =>
+            key.StartsWith("heaven_blossom_") || key.StartsWith("heaven_gold_") || key.StartsWith("eden_teal_tree_");
+
         /// <summary>How long a moving picture is gone between two showings: a glint comes and goes, the rest never rest.</summary>
         public static float RestOf(string key) => key.Contains("glint") ? 3.5f : 0f;
 
@@ -525,7 +535,13 @@ namespace Descender.World.TilesV2
                         var shown = holder.AddComponent<SpriteRenderer>();
                         shown.sprite = entry.sprite;
                         shown.sortingOrder = entry.order;
-                        shown.sharedMaterial = entry.lit ? set.litMaterial : set.unlitMaterial;
+                        // A tree's crown moves in the wind in its shader, every frame: it is not turned
+                        // through its frames as well, which would only step it.
+                        var crowned = entry.lit && set.crownMaterial != null && Crowned(entry.key);
+                        shown.sharedMaterial =
+                            !entry.lit ? set.unlitMaterial
+                            : crowned ? set.crownMaterial
+                            : set.litMaterial;
                         // A picture of light is not always the same: a rainbow and the light in a hall's air are
                         // the sun's and gone by night, and they and a glory breathe a little.
                         var sun = entry.key.Contains("rainbow") || entry.key.Contains("_rays");
@@ -534,8 +550,13 @@ namespace Descender.World.TilesV2
                             holder.AddComponent<TilesV2Shimmer>().Configure(world, shown, sun, 0.25f);
                         }
                         // A picture with further frames in the set is those shown in turn.
-                        var frames = FramesOf(pictures, entry);
-                        if (frames.Length > 1)
+                        var frames = crowned ? new[] { entry.sprite } : FramesOf(pictures, entry);
+                        if (crowned)
+                        {
+                            things.Moving++;
+                            things.Crowns++;
+                        }
+                        else if (frames.Length > 1)
                         {
                             holder
                                 .AddComponent<TilesV2Frames>()

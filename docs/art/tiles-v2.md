@@ -717,7 +717,7 @@ chance:
 | Order | Pictures |
 |---|---|
 | -289 | towers further back (`heaven_tower_WxT_back`): in front of the walls, behind everything else of a castle |
-| -287 | trees: 4 in blossom, 4 with leaves of gold (`heaven_blossom_N`, `heaven_gold_N`), their roots a tile under their floor line, each in four frames of its crown stirring |
+| -287 | trees: 4 in blossom, 4 with leaves of gold (`heaven_blossom_N`, `heaven_gold_N`), their roots a tile under their floor line, its crown moving in the wind in the crown shader (see Companions) |
 | -286 | what a garden is dressed with: a fountain in three frames of its water, beds of flowers, clipped hedges, a bench, an urn |
 | -284 | the wall at the back of a room, over the walls and the open walls the map lays there (which still let the light in where their glass is): either side of the citadel's hall (`heaven_hall_west`, `_east`: a tile of wall, two bays of the arcade and its end), the wall behind the high seat (`heaven_high_seat`, 25 x 41 tiles, its floor line two tiles up, on the steps of gold), the House's two halls and its keep (`heaven_room_lower`, `_upper`, `_keep`; an opening in a picture is a window the sky shows through) |
 | -282, -281 | a banner hung on a column, in four frames of its sway (`heaven_banner`); the light of a hall's windows in its air (`heaven_rays_west`, `_east`: unlit, the sun's) |
@@ -730,8 +730,18 @@ chance:
 **Companions.** A picture may have others in the set that go with it, named
 after it, which no map stands: `key_f1`, `key_f2` ... are its further frames,
 and `TilesV2Things` shows them in turn (`TilesV2Frames`: 9 frames a second for
-a pennant and a glint, 7 for a fountain, 4 for a banner, 3 for a tree; a glint
-shows its frames once and is gone for a few seconds); `key_glow` is the light
+a pennant and a glint, 7 for a fountain, 4 for a banner; a glint shows its
+frames once and is gone for a few seconds). A tree whose crown moves
+(`TilesV2Things.Crowned`: `heaven_blossom_N`, `heaven_gold_N`,
+`eden_teal_tree_N`) is not turned through its frames: it is drawn with the
+crown material (`TilesV2Set.crownMaterial`, the shader
+`Assets/Art/TilesV2/Shaders/TilesV2Crown.shader`), which bends its picture every
+frame, smoothly, so it moves at the screen's rate (60, 120 a second). The trunk
+stands to `_Rest` of its height; above it the tree leans in slow swells and now
+and then a gust that run across the world (`_Sway`, `_Gust`, `_Speed`), and the
+crown rustles part by part (`_Rustle`); the normal map bends with it. The quad
+grows `_Room` texels on either side and at the top, so a crown is never cut
+off, and `_Snap` 1 brings back whole-texel steps. `key_glow` is the light
 of its windows by itself with a halo (`glow`, from the windows the painter
 remembers as it draws them), shown unlit one order over the picture by a
 `TilesV2Shimmer` that is the night's: nothing at noon, whole at night.

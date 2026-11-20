@@ -233,6 +233,7 @@ namespace Descender.EditorTools.TilesV2
             set.litMaterial = AssetDatabase.LoadAssetAtPath<Material>(LitMaterialPath);
             set.unlitMaterial = AssetDatabase.LoadAssetAtPath<Material>(UnlitMaterialPath);
             set.brushMaterial = BrushMaterial();
+            set.crownMaterial = CrownMaterial();
 
             var legend = new List<TilesV2Set.Glyph>();
             foreach (var entry in manifest.legend)
@@ -563,6 +564,27 @@ namespace Descender.EditorTools.TilesV2
                 material.SetVector("_Size", new Vector4(rect.width, rect.height, 0f, 0f));
                 material.SetFloat("_Foot", picture.pivot.y / rect.height);
             }
+            EditorUtility.SetDirty(material);
+            return material;
+        }
+
+        /// <summary>The shader a tree's crown moves in the wind with, and its material.</summary>
+        public const string CrownShaderPath = TilesV2Manifest.Folder + "/Shaders/TilesV2Crown.shader";
+        public const string CrownMaterialPath = TilesV2Manifest.Folder + "/TilesV2Crown.mat";
+
+        // The crown's material, made once and filled again: its shader, and how many world
+        // units a texel of the set's pictures is (the shader reads each picture's size itself).
+        private static Material CrownMaterial()
+        {
+            var shader = Load<Shader>(CrownShaderPath);
+            var material = AssetDatabase.LoadAssetAtPath<Material>(CrownMaterialPath);
+            if (material == null)
+            {
+                material = new Material(shader);
+                AssetDatabase.CreateAsset(material, CrownMaterialPath);
+            }
+            material.shader = shader;
+            material.SetFloat("_TexelUnits", 1f / TilesV2Set.PixelsPerUnit);
             EditorUtility.SetDirty(material);
             return material;
         }
