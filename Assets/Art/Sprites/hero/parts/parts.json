@@ -1,0 +1,215 @@
+{
+  "ppu": 125,
+  "parts": {
+    "cloak": {
+      "joint": [
+        122,
+        227
+      ],
+      "end": [
+        130,
+        323
+      ],
+      "bone": "Chest",
+      "rigid": true,
+      "order": -4,
+      "sway": 4.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        120,
+        253
+      ]
+    },
+    "torso": {
+      "joint": [
+        28,
+        18
+      ],
+      "end": [
+        36,
+        114
+      ],
+      "bone": "Hips",
+      "rigid": true,
+      "order": 5,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        59,
+        128
+      ]
+    },
+    "tabard": {
+      "joint": [
+        14,
+        123
+      ],
+      "end": [
+        22,
+        219
+      ],
+      "bone": "Hips",
+      "rigid": true,
+      "order": 6,
+      "sway": 6.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        30,
+        125
+      ]
+    },
+    "head": {
+      "joint": [
+        141,
+        58
+      ],
+      "end": [
+        145,
+        116
+      ],
+      "bone": "Head",
+      "rigid": true,
+      "order": 8,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        157,
+        121
+      ]
+    },
+    "upperarm": {
+      "joint": [
+        39,
+        61
+      ],
+      "end": [
+        34,
+        11
+      ],
+      "bone": "UpperArm",
+      "rigid": false,
+      "order": 9,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        74,
+        81
+      ]
+    },
+    "forearm": {
+      "joint": [
+        30,
+        83
+      ],
+      "end": [
+        31,
+        19
+      ],
+      "bone": "LowerArm",
+      "rigid": false,
+      "order": 10,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        60,
+        91
+      ]
+    },
+    "thigh": {
+      "joint": [
+        34,
+        99
+      ],
+      "end": [
+        31,
+        25
+      ],
+      "bone": "Thigh",
+      "rigid": false,
+      "order": 7,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        69,
+        105
+      ]
+    },
+    "shin": {
+      "joint": [
+        27,
+        45
+      ],
+      "end": [
+        25,
+        5
+      ],
+      "bone": "Shin",
+      "rigid": false,
+      "order": 7,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        55,
+        49
+      ]
+    },
+    "foot": {
+      "joint": [
+        30,
+        26
+      ],
+      "end": [
+        64,
+        6
+      ],
+      "bone": "Foot",
+      "rigid": false,
+      "order": 7,
+      "sway": 0.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        59,
+        42
+      ]
+    },
+    "sword": {
+      "joint": [
+        16,
+        116
+      ],
+      "end": [
+        116,
+        2
+      ],
+      "bone": "Hand.R",
+      "rigid": true,
+      "order": -1,
+      "sway": 0.0,
+      "steady": true,
+      "worldAngle": -150.0,
+      "follow": 0.25,
+      "size": [
+        116,
+        133
+      ]
+    }
+  }
+}

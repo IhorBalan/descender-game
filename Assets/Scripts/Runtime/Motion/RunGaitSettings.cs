@@ -137,6 +137,27 @@ namespace Descender.Motion
         [Min(0f)]
         public float hand = 0.08f;
 
+        /// <summary>
+        /// The crowned knight's lengths, measured on his standing frame (125 of its pixels a
+        /// unit; tools/hero_knight/parts.py cuts the parts that wear them).
+        /// </summary>
+        public static RunBody Knight() =>
+            new RunBody
+            {
+                thigh = 0.6f,
+                shin = 0.41f,
+                ankleHeight = 0.2f,
+                foot = 0.24f,
+                pelvisHalfWidth = 0.1f,
+                spine = 0.77f,
+                shoulderHalfWidth = 0.14f,
+                neck = 0.06f,
+                head = 0.2f,
+                upperArm = 0.4f,
+                forearm = 0.48f,
+                hand = 0.06f,
+            };
+
         /// <summary>The whole leg, hip to ankle.</summary>
         public float Leg => thigh + shin;
     }

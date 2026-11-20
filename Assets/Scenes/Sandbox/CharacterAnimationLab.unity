@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &902736056
+--- !u!1 &465729376
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,77 +127,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 902736058}
-  - component: {fileID: 902736057}
-  m_Layer: 0
-  m_Name: Runner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &902736057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902736056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 73fee12f00cb5164d8b932c1a835800f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunSkeleton
-  settings:
-    derived: 0
-    runningSpeed: 5.5
-    strideLength: 4
-    cycleDuration: 0.72727275
-    bodyLean: 8
-    torsoLean: 18
-    verticalBounce: 0.06
-    armSwing: 50
-    smoothing: 1
-    counterRotation: 0.6
-  body:
-    thigh: 0.52
-    shin: 0.5
-    ankleHeight: 0.08
-    foot: 0.26
-    pelvisHalfWidth: 0.1
-    spine: 0.62
-    shoulderHalfWidth: 0.13
-    neck: 0.12
-    head: 0.16
-    upperArm: 0.36
-    forearm: 0.31
-    hand: 0.08
-  startPhase: 0
---- !u!4 &902736058
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 902736056}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1119236226}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1119236224
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1119236226}
-  - component: {fileID: 1119236225}
+  - component: {fileID: 465729378}
+  - component: {fileID: 465729377}
   m_Layer: 0
   m_Name: CharacterAnimationLab
   m_TagString: Untagged
@@ -205,40 +136,41 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1119236225
+--- !u!114 &465729377
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119236224}
+  m_GameObject: {fileID: 465729376}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0919718c75a01424ab636df30677bb2b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.CharacterAnimationLab
-  skeleton: {fileID: 902736057}
-  overlay: {fileID: 1618100970}
-  camera: {fileID: 1440985411}
+  skeleton: {fileID: 1984502554}
+  overlay: {fileID: 1744483443}
+  skin: {fileID: 1984502552}
+  camera: {fileID: 1073706643}
   cameraOffset: {x: 0.6, y: 1.3}
---- !u!4 &1119236226
+--- !u!4 &465729378
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1119236224}
+  m_GameObject: {fileID: 465729376}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 902736058}
-  - {fileID: 1618100971}
+  - {fileID: 1984502553}
+  - {fileID: 1744483444}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1440985410
+--- !u!1 &1073706642
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,9 +178,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1440985413}
-  - component: {fileID: 1440985411}
-  - component: {fileID: 1440985412}
+  - component: {fileID: 1073706645}
+  - component: {fileID: 1073706643}
+  - component: {fileID: 1073706644}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -256,13 +188,13 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!20 &1440985411
+--- !u!20 &1073706643
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440985410}
+  m_GameObject: {fileID: 1073706642}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
@@ -307,13 +239,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1440985412
+--- !u!114 &1073706644
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440985410}
+  m_GameObject: {fileID: 1073706642}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -351,13 +283,13 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!4 &1440985413
+--- !u!4 &1073706645
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1440985410}
+  m_GameObject: {fileID: 1073706642}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6, y: 1.3, z: -10}
@@ -366,7 +298,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1618100969
+--- !u!1 &1744483442
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -374,8 +306,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1618100971}
-  - component: {fileID: 1618100970}
+  - component: {fileID: 1744483444}
+  - component: {fileID: 1744483443}
   m_Layer: 0
   m_Name: Debug Overlay
   m_TagString: Untagged
@@ -383,37 +315,231 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1618100970
+--- !u!114 &1744483443
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618100969}
+  m_GameObject: {fileID: 1744483442}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9799d87cf3d9a28499b6760c54c35ad9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunDebugOverlay
-  skeleton: {fileID: 902736057}
---- !u!4 &1618100971
+  skeleton: {fileID: 1984502554}
+--- !u!4 &1744483444
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1618100969}
+  m_GameObject: {fileID: 1744483442}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1119236226}
+  m_Father: {fileID: 465729378}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1984502551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1984502553}
+  - component: {fileID: 1984502554}
+  - component: {fileID: 1984502552}
+  m_Layer: 0
+  m_Name: Runner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1984502552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984502551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b9706471cc44e34c8116800ef6dc29d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunKnightSkin
+  skeleton: {fileID: 1984502554}
+  parts:
+  - name: cloak
+    sprite: {fileID: 21300000, guid: 91d27cbd9f805913b62ef6179dadf832, type: 3}
+    bone: Chest
+    joint: {x: 122, y: 227}
+    end: {x: 130, y: 323}
+    rigid: 1
+    order: -4
+    sway: 4
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: torso
+    sprite: {fileID: 21300000, guid: 5f327e73de3050b583fc6b2c1b957270, type: 3}
+    bone: Hips
+    joint: {x: 28, y: 18}
+    end: {x: 36, y: 114}
+    rigid: 1
+    order: 5
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: tabard
+    sprite: {fileID: 21300000, guid: 281f003106f151ff89fa742910c06435, type: 3}
+    bone: Hips
+    joint: {x: 14, y: 123}
+    end: {x: 22, y: 219}
+    rigid: 1
+    order: 6
+    sway: 6
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: head
+    sprite: {fileID: 21300000, guid: a19e8494bb0354508705e2e5e62bb427, type: 3}
+    bone: Head
+    joint: {x: 141, y: 58}
+    end: {x: 145, y: 116}
+    rigid: 1
+    order: 8
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: upperarm
+    sprite: {fileID: 21300000, guid: bd5a745cdf055e8aaa5851fe7e648ae6, type: 3}
+    bone: UpperArm
+    joint: {x: 39, y: 61}
+    end: {x: 34, y: 11}
+    rigid: 0
+    order: 9
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: forearm
+    sprite: {fileID: 21300000, guid: 36d5ca6cae83539f9c51b8076256b551, type: 3}
+    bone: LowerArm
+    joint: {x: 30, y: 83}
+    end: {x: 31, y: 19}
+    rigid: 0
+    order: 10
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: thigh
+    sprite: {fileID: 21300000, guid: 4e375697e0e05081a8672514f7676405, type: 3}
+    bone: Thigh
+    joint: {x: 34, y: 99}
+    end: {x: 31, y: 25}
+    rigid: 0
+    order: 7
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: shin
+    sprite: {fileID: 21300000, guid: 7660867ff60557ca84e98ee3f5b8a3fb, type: 3}
+    bone: Shin
+    joint: {x: 27, y: 45}
+    end: {x: 25, y: 5}
+    rigid: 0
+    order: 7
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: foot
+    sprite: {fileID: 21300000, guid: ac3e2a529f275e1788c16421a78d4571, type: 3}
+    bone: Foot
+    joint: {x: 30, y: 26}
+    end: {x: 64, y: 6}
+    rigid: 0
+    order: 7
+    sway: 0
+    steady: 0
+    worldAngle: 0
+    follow: 0
+  - name: sword
+    sprite: {fileID: 21300000, guid: 93822864c91e522998793eef2109d67d, type: 3}
+    bone: Hand.R
+    joint: {x: 16, y: 116}
+    end: {x: 116, y: 2}
+    rigid: 1
+    order: -1
+    sway: 0
+    steady: 1
+    worldAngle: -150
+    follow: 0.25
+--- !u!4 &1984502553
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984502551}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 465729378}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1984502554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1984502551}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73fee12f00cb5164d8b932c1a835800f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunSkeleton
+  settings:
+    derived: 0
+    runningSpeed: 5.5
+    strideLength: 4
+    cycleDuration: 0.72727275
+    bodyLean: 8
+    torsoLean: 18
+    verticalBounce: 0.06
+    armSwing: 50
+    smoothing: 1
+    counterRotation: 0.6
+  body:
+    thigh: 0.6
+    shin: 0.41
+    ankleHeight: 0.2
+    foot: 0.24
+    pelvisHalfWidth: 0.1
+    spine: 0.77
+    shoulderHalfWidth: 0.14
+    neck: 0.06
+    head: 0.2
+    upperArm: 0.4
+    forearm: 0.48
+    hand: 0.06
+  startPhase: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1440985413}
-  - {fileID: 1119236226}
+  - {fileID: 1073706645}
+  - {fileID: 465729378}

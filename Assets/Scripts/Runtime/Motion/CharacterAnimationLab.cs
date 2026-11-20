@@ -8,7 +8,7 @@ namespace Descender.Motion
     /// CharacterAnimationLab.unity, made by Descender &gt; Lab &gt; Character animation lab):
     /// a ground with a mark every unit, a camera that keeps the <see cref="RunSkeleton"/>
     /// in view, the <see cref="RunDebugOverlay"/> and the keys to look closer. Tab shows or
-    /// hides the overlay, Space pauses, the right arrow steps one sixtieth of a second while
+    /// hides the overlay, K takes the knight's parts (<see cref="RunKnightSkin"/>) off and on, Space pauses, the right arrow steps one sixtieth of a second while
     /// paused, 1, 2 and 3 play at full, a quarter and a tenth speed. It runs at 60 frames a
     /// second. Nothing of the game is in the scene or touched by it.
     /// </summary>
@@ -27,6 +27,9 @@ namespace Descender.Motion
         private RunDebugOverlay overlay;
 
         [SerializeField]
+        private RunKnightSkin skin;
+
+        [SerializeField]
         private new Camera camera;
 
         [SerializeField]
@@ -38,13 +41,15 @@ namespace Descender.Motion
 
         public RunSkeleton Skeleton => skeleton;
         public RunDebugOverlay Overlay => overlay;
+        public RunKnightSkin Skin => skin;
 
         /// <summary>Fills in what the scene is made of (the editor's scene maker and tests).</summary>
-        public void Configure(RunSkeleton runner, RunDebugOverlay debug, Camera view)
+        public void Configure(RunSkeleton runner, RunDebugOverlay debug, Camera view, RunKnightSkin knight = null)
         {
             skeleton = runner;
             overlay = debug;
             camera = view;
+            skin = knight;
         }
 
         private void Awake()
@@ -73,6 +78,10 @@ namespace Descender.Motion
             if (keyboard.tabKey.wasPressedThisFrame && overlay != null)
             {
                 overlay.Visible = !overlay.Visible;
+            }
+            if (keyboard.kKey.wasPressedThisFrame && skin != null)
+            {
+                skin.Shown = !skin.Shown;
             }
             if (keyboard.spaceKey.wasPressedThisFrame)
             {
