@@ -334,10 +334,16 @@ namespace Descender.World.TilesV2
 
         /// <summary>
         /// Whether a picture is a tree whose crown moves in the wind in the crown shader: Paradise's
-        /// trees in blossom and of gold, and Eden's teal trees.
+        /// trees in blossom and of gold, Eden's teal trees, and the Earth's oaks (the giant one too)
+        /// and apple trees.
         /// </summary>
         public static bool Crowned(string key) =>
-            key.StartsWith("heaven_blossom_") || key.StartsWith("heaven_gold_") || key.StartsWith("eden_teal_tree_");
+            key.StartsWith("heaven_blossom_")
+            || key.StartsWith("heaven_gold_")
+            || key.StartsWith("eden_teal_tree_")
+            || key.StartsWith("earth_oak_")
+            || key == "earth_giant_oak"
+            || key.StartsWith("earth_apple_");
 
         /// <summary>How long a moving picture is gone between two showings: a glint comes and goes, the rest never rest.</summary>
         public static float RestOf(string key) => key.Contains("glint") ? 3.5f : 0f;

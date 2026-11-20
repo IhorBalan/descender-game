@@ -151,7 +151,17 @@ namespace Descender.Tests
             Assert.That(reach, Is.GreaterThan(1f), "the crown hardly moves");
             Assert.That(material.GetFloat("_Room"), Is.GreaterThan(reach + 1f));
             Assert.That(material.GetFloat("_Snap"), Is.EqualTo(0f), "it moves smoothly, not a texel at a time");
-            foreach (var key in new[] { "heaven_blossom_0", "heaven_gold_0", "eden_teal_tree_0" })
+            foreach (
+                var key in new[]
+                {
+                    "heaven_blossom_0",
+                    "heaven_gold_0",
+                    "eden_teal_tree_0",
+                    "earth_oak_0",
+                    "earth_giant_oak",
+                    "earth_apple_1",
+                }
+            )
             {
                 Assert.That(TilesV2Things.Crowned(key), Is.True, key);
                 var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Folder + key + ".png");
@@ -163,6 +173,7 @@ namespace Descender.Tests
                 Assert.That(settings.spriteMeshType, Is.EqualTo(SpriteMeshType.FullRect), key);
             }
             Assert.That(TilesV2Things.Crowned("heaven_banner"), Is.False);
+            Assert.That(TilesV2Things.Crowned("earth_pine_0"), Is.False, "a pine is stiff");
         }
 
         [Test]
