@@ -80,12 +80,16 @@ namespace Descender.Motion
         {
             var leg = body.Leg;
             var reach = leg * Reach;
-            var half = settings.StanceLength * 0.5f;
-            var atContact = Mathf.Sqrt(Mathf.Max(reach * reach - half * half, 0f)) + body.ankleHeight;
+            // From the leg's own hip joint, turned forward or back with the pelvis at that moment.
+            var turn = settings.counterRotation * body.pelvisHalfWidth;
+            var contact = StanceAnkle(0f, settings, body, out _);
+            var contactX = contact.x - Channel(RightHipForward, 0f, settings.smoothing) * turn;
+            var atContact = Mathf.Sqrt(Mathf.Max(reach * reach - contactX * contactX, 0f)) + contact.y;
             var toeOff = StanceAnkle(1f, settings, body, out _);
+            var toeOffX = toeOff.x - Channel(RightHipForward, RunGaitSettings.Duty, settings.smoothing) * turn;
             var rise =
                 Mathf.Max(0f, Channel(Bounce, RunGaitSettings.Duty, settings.smoothing)) * settings.verticalBounce;
-            var atToeOff = Mathf.Sqrt(Mathf.Max(reach * reach - toeOff.x * toeOff.x, 0f)) + toeOff.y - rise;
+            var atToeOff = Mathf.Sqrt(Mathf.Max(reach * reach - toeOffX * toeOffX, 0f)) + toeOff.y - rise;
             return Mathf.Max(leg * 0.35f, Mathf.Min(leg * 0.94f, Mathf.Min(atContact, atToeOff)));
         }
 
