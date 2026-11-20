@@ -156,7 +156,7 @@ namespace Descender.Tests.PlayMode
             var skin = lab.Skin;
             Assert.That(skin, Is.Not.Null, "the knight's parts");
             Assert.That(skin.Count, Is.EqualTo(17), "five parts on one bone each and six limb parts on both sides");
-            Assert.That(overlay.Visible, Is.False, "with the knight worn the bones start hidden");
+            Assert.That(overlay.Visible, Is.False, "with the knight on the bones start hidden");
             Assert.That(
                 skin.WornOn("pauldron", "Shoulder.L").sortingOrder,
                 Is.GreaterThan(skin.WornOn("sleeve", "UpperArm.L").sortingOrder),
@@ -185,9 +185,42 @@ namespace Descender.Tests.PlayMode
             );
             Assert.That(skin.WornOn("sword", "Hand.R"), Is.Not.Null, "the sword is in his far hand");
             Assert.That(skin.WornOn("head", "Head"), Is.Not.Null);
-            skin.Shown = false;
+
+            // The painted run is up first, a frame for each key pose, standing on the runner's root.
+            var painted = lab.Painted;
+            Assert.That(painted, Is.Not.Null, "the painted run");
+            Assert.That(painted.Count, Is.EqualTo(RunGait.KeyCount));
+            Assert.That(lab.Current, Is.EqualTo(CharacterAnimationLab.Look.Painted));
+            Assert.That(painted.View.enabled, Is.True, "the painted run shows");
+            Assert.That(skin.WornOn("head", "Head").enabled, Is.False, "the parts are hidden under it");
+            Assert.That(runner.ShapesShown, Is.False, "and so are the shapes");
+            Assert.That(
+                Vector3.Distance(painted.View.transform.position, runner.transform.position),
+                Is.LessThan(1e-4f),
+                "it stands on the runner's root"
+            );
+            for (var key = 0; key < RunGait.KeyCount; key++)
+            {
+                runner.ShowAt(key / (float)RunGait.KeyCount);
+                painted.Show();
+                Assert.That(painted.Frame, Is.EqualTo(key), $"key pose {key}");
+                Assert.That(painted.View.sprite, Is.Not.Null);
+            }
+
+            // K: the parts on the bones, then the bare bones, then the painted run again.
+            lab.ShowNext();
+            Assert.That(lab.Current, Is.EqualTo(CharacterAnimationLab.Look.Parts));
+            Assert.That(painted.View.enabled, Is.False);
+            Assert.That(skin.WornOn("head", "Head").enabled, Is.True);
+            Assert.That(runner.ShapesShown, Is.False);
+            lab.ShowNext();
+            Assert.That(lab.Current, Is.EqualTo(CharacterAnimationLab.Look.Bones));
+            Assert.That(skin.WornOn("head", "Head").enabled, Is.False);
             Assert.That(runner.ShapesShown, Is.True, "without the knight the shapes show");
-            skin.Shown = true;
+            lab.ShowNext();
+            Assert.That(lab.Current, Is.EqualTo(CharacterAnimationLab.Look.Painted));
+            Assert.That(painted.View.enabled, Is.True);
+            Assert.That(runner.ShapesShown, Is.False);
 
             overlay.Visible = false;
             yield return null;

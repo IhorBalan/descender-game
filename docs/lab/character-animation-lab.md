@@ -40,9 +40,34 @@ changed by it. `Descender > Lab > Character animation lab` makes it again.
   - in the top left: the phase, the nearest key pose, which feet are down,
     and the speed, stride, cycle and lean.
 
-## The knight
+## The painted run
 
-The runner wears the crowned knight (`RunKnightSkin`), from the owner's parts
+What the lab shows first is the crowned knight's run as eight painted frames
+(`RunFrames`), one for each key pose, from `tools/hero_knight/source/run_sheet.png`.
+ChatGPT's image generation drew that sheet from the knight and the lab's eight key
+poses. Each frame is shown for the eighth of the cycle about its key, on the
+runner's root, so it travels at the runner's speed.
+
+`tools/hero_knight/run_frames.py` cuts the sheet into
+`Assets/Art/Sprites/hero/run/knight_run_<n>.png`:
+
+- It finds the eight figures and puts each on one canvas, its face at the same
+  place and the ground on the bottom row.
+- It takes away the grey patches the background tool left between the legs,
+  and makes the old background's light rim round the figure faint.
+- It moves each frame forward or back so the planted heel goes back evenly.
+  The drawn frames do not place it so, and the moves are at most 30 sheet
+  pixels.
+- At PPU 148 a cycle is 4 units, the lab's stride, so the feet keep to the
+  ground at the lab's speed.
+
+The sheet's two halves draw the same leg in front: the image tool would not
+swap them, however it was asked. Both legs are drawn alike, so the cycle reads
+as a run.
+
+## The knight from parts
+
+K shows the crowned knight (`RunKnightSkin`), from the owner's parts
 sheet `tools/hero_knight/source/parts_sheet.webp`. That sheet shows the knight
 drawn apart, every part whole, at one scale, in side view.
 
@@ -74,8 +99,8 @@ How the parts sit on the bones:
   the belt; the plate, belt and tassets keep their shapes. The spine is longer
   by the same amount, so the shoulders, head and cloak ride up with it.
 
-With the knight worn, the bones overlay starts hidden. K takes the knight off
-and puts him back on.
+With the knight on, the bones overlay starts hidden. K goes from the painted
+run to the parts, then to the bare bones, then back.
 
 ## Settings (Runner, in the inspector, also while playing)
 
@@ -99,7 +124,7 @@ and puts him back on.
    with `Descender > Lab > Character animation lab`, and press Play.
 2. Keys:
    - Tab shows or hides the overlay (the bones, contacts and numbers).
-   - K takes the knight off and puts him back on.
+   - K goes from the painted run to the knight's parts to the bare bones.
    - Space pauses.
    - The right arrow steps one sixtieth of a second while paused.
    - 1, 2 and 3 play at full, a quarter and a tenth speed.
@@ -107,7 +132,8 @@ and puts him back on.
 4. Select `CharacterAnimationLab/Runner` and change the numbers while it
    runs.
 5. `Descender > Lab > Picture the run's key poses` writes the eight key
-   poses and sixteen moments of the cycle to
+   poses, sixteen moments of the cycle, and the painted run at the same
+   sixteen moments to
    `Logs/CharacterAnimationLab/run.png`.
 6. `Descender > Lab > Build character animation lab` makes a Windows player
    of the scene alone at `Build/CharacterAnimationLab64/`.
@@ -125,4 +151,6 @@ The tests are `RunGaitTests` (EditMode) and `CharacterAnimationLabTests`
   against the legs;
 - a foot has no jump where it lands or leaves the ground;
 - speed, stride and cycle stay tied together;
+- the painted run shows the frame of the key pose nearest the phase, and K
+  goes through the three looks;
 - the scene plays.

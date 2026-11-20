@@ -31,6 +31,25 @@ namespace Descender.EditorTools.Motion
         /// <summary>The knight's parts and their joints (tools/hero_knight/parts.py writes them).</summary>
         public const string PartsFolder = "Assets/Art/Sprites/hero/parts";
 
+        /// <summary>The knight's painted run (tools/hero_knight/run_frames.py writes it).</summary>
+        public const string RunFolder = "Assets/Art/Sprites/hero/run";
+
+        /// <summary>The painted run's frames, in order, as <see cref="RunFrames"/> plays them.</summary>
+        public static Sprite[] RunFrameSprites()
+        {
+            var spec = JObject.Parse(File.ReadAllText(RunFolder + "/run.json"));
+            var count = (int)spec["frames"];
+            var list = new Sprite[count];
+            for (var i = 0; i < count; i++)
+            {
+                var path = $"{RunFolder}/knight_run_{i}.png";
+                list[i] =
+                    AssetDatabase.LoadAssetAtPath<Sprite>(path)
+                    ?? throw new FileNotFoundException($"The knight's run frame {i} is missing.", path);
+            }
+            return list;
+        }
+
         /// <summary>The knight's parts as <see cref="RunKnightSkin"/> wears them, read from parts.json.</summary>
         public static List<RunPart> KnightParts()
         {
@@ -87,10 +106,12 @@ namespace Descender.EditorTools.Motion
             runner.SetBody(RunBody.Knight());
             var skin = runner.gameObject.AddComponent<RunKnightSkin>();
             skin.Configure(runner, KnightParts());
+            var painted = runner.gameObject.AddComponent<RunFrames>();
+            painted.Configure(runner, RunFrameSprites());
             var overlay = new GameObject("Debug Overlay").AddComponent<RunDebugOverlay>();
             overlay.transform.SetParent(lab.transform, false);
             overlay.Bind(runner);
-            lab.Configure(runner, overlay, camera, skin);
+            lab.Configure(runner, overlay, camera, skin, painted);
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -100,13 +121,14 @@ namespace Descender.EditorTools.Motion
 
         /// <summary>
         /// Descender &gt; Lab &gt; Picture the run's key poses: the eight key poses side by side,
-        /// and under them sixteen moments of the cycle, to Logs/CharacterAnimationLab/run.png.
+        /// under them sixteen moments of the cycle, and under those the painted run at the
+        /// same sixteen moments, to Logs/CharacterAnimationLab/run.png.
         /// </summary>
         [MenuItem("Descender/Lab/Picture the run's key poses")]
         public static void Picture()
         {
             const int Cell = 420;
-            const int Rows = 2;
+            const int Rows = 3;
             const int Columns = 16;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var holder = new GameObject("Camera");
@@ -121,6 +143,8 @@ namespace Descender.EditorTools.Motion
             runner.SetBody(RunBody.Knight());
             var skin = runner.gameObject.AddComponent<RunKnightSkin>();
             skin.Configure(runner, KnightParts());
+            var painted = runner.gameObject.AddComponent<RunFrames>();
+            painted.Configure(runner, RunFrameSprites());
             var ground = Fx.Shapes.Block(
                 null,
                 "Ground",
@@ -139,6 +163,11 @@ namespace Descender.EditorTools.Motion
                     runner.ShowAt(i / (float)count);
                     skin.Dress();
                     skin.Fit();
+                    var paint = row == 2;
+                    skin.Shown = !paint;
+                    runner.ShapesShown = false;
+                    painted.Shown = paint;
+                    painted.Show();
                     camera.Render();
                     camera.Render(); // the first picture of a new scene comes out before its textures
                     RenderTexture.active = target;
