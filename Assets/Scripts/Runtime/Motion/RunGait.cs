@@ -28,7 +28,7 @@ namespace Descender.Motion
         public const int KeyCount = 8;
 
         /// <summary>How far the heel turns up about the toes by the push-off, in degrees.</summary>
-        public const float HeelLift = 50f;
+        public const float HeelLift = 35f;
 
         /// <summary>From where in the stance (0 .. 1) the heel starts to lift.</summary>
         public const float HeelLiftStart = 0.55f;

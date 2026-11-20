@@ -33,11 +33,11 @@ namespace Descender.Motion
 
         [Tooltip("Units a second the body travels.")]
         [Range(1f, 14f)]
-        public float runningSpeed = 5f;
+        public float runningSpeed = 5.5f;
 
         [Tooltip("Units travelled in one whole cycle (a step of each leg).")]
         [Range(1f, 6f)]
-        public float strideLength = 3.6f;
+        public float strideLength = 4f;
 
         [Tooltip("Seconds for one whole cycle (a step of each leg).")]
         [Range(0.3f, 1.6f)]
