@@ -96,6 +96,10 @@ namespace Descender.Tests.PlayMode
             var body = runner.Body;
             float? planted = null;
             var checkedFrames = 0;
+            float shoulderLow = float.MaxValue,
+                shoulderHigh = float.MinValue;
+            float armLow = float.MaxValue,
+                armHigh = float.MinValue;
             for (var frame = 0; frame < 120; frame++)
             {
                 runner.Advance(CharacterAnimationLab.Step);
@@ -104,6 +108,23 @@ namespace Descender.Tests.PlayMode
                 var shin = Vector3.Distance(runner.Bone("Shin.R").position, runner.Bone("Foot.R").position);
                 Assert.That(thigh, Is.EqualTo(body.thigh).Within(1e-3f));
                 Assert.That(shin, Is.EqualTo(body.shin).Within(1e-3f));
+                // The shoulder (the pauldron's bone) sits on the arm's joint and keeps to the torso,
+                // turning only with a share of the arm's swing.
+                var shoulder = runner.Bone("Shoulder.L");
+                var upperArm = runner.Bone("UpperArm.L");
+                Assert.That(
+                    Vector3.Distance(shoulder.position, upperArm.position),
+                    Is.LessThan(1e-3f),
+                    $"frame {frame}: the shoulder off the arm's joint"
+                );
+                var spine = runner.Pose.chest - runner.Pose.hips;
+                var spineAngle = Mathf.Atan2(spine.y, spine.x) * Mathf.Rad2Deg;
+                var toShoulder = Mathf.DeltaAngle(spineAngle, shoulder.eulerAngles.z);
+                var toArm = Mathf.DeltaAngle(spineAngle + 180f, upperArm.eulerAngles.z); // from hanging down the spine
+                shoulderLow = Mathf.Min(shoulderLow, toShoulder);
+                shoulderHigh = Mathf.Max(shoulderHigh, toShoulder);
+                armLow = Mathf.Min(armLow, toArm);
+                armHigh = Mathf.Max(armHigh, toArm);
                 var leg = runner.Pose.rightLeg;
                 if (leg.contact)
                 {
@@ -118,6 +139,12 @@ namespace Descender.Tests.PlayMode
                 }
             }
             Assert.That(checkedFrames, Is.GreaterThan(20));
+            Assert.That(
+                shoulderHigh - shoulderLow,
+                Is.EqualTo((armHigh - armLow) * RunSkeleton.ShoulderFollow).Within(1f),
+                "the shoulder turns with the torso and a share of the arm's swing, no more"
+            );
+            Assert.That(shoulderHigh - shoulderLow, Is.GreaterThan(5f), "the shoulder follows the arm a little");
             Assert.That(
                 runner.transform.position.x - start,
                 Is.EqualTo(settings.runningSpeed * 2f).Within(0.01f),
