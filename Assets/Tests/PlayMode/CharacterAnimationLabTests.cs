@@ -12,6 +12,7 @@ namespace Descender.Tests.PlayMode
     /// The CharacterAnimationLab scene played: it loads on its own with the runner, its
     /// overlay and the lab; the runner has its whole skeleton of bones; played frame by
     /// frame at 60 a second it travels at its running speed, its bones keep their lengths,
+    /// it wears the knight's parts (taken off with K),
     /// a foot on the ground stays where it came down and the overlay marks each contact;
     /// and the overlay can be hidden. The scene is loaded by its path, which only the
     /// editor can do, and unloaded again.
@@ -123,6 +124,32 @@ namespace Descender.Tests.PlayMode
                 "two seconds at the running speed"
             );
             Assert.That(overlay.Contacts, Is.GreaterThanOrEqualTo(4), "the overlay marked the contacts");
+
+            // The knight is worn: every part on its bones, limbs on both sides, the shapes hidden; K takes him off.
+            var skin = lab.Skin;
+            Assert.That(skin, Is.Not.Null, "the knight's parts");
+            Assert.That(skin.Count, Is.EqualTo(15), "five parts on one bone each and five limbs on both sides");
+            Assert.That(runner.ShapesShown, Is.False);
+            foreach (var bone in new[] { "Thigh.L", "Thigh.R" })
+            {
+                var thighPart = skin.WornOn("thigh", bone);
+                Assert.That(thighPart, Is.Not.Null, bone);
+                Assert.That(
+                    Vector3.Distance(thighPart.transform.position, runner.Bone(bone).position),
+                    Is.LessThan(1e-3f),
+                    "it hangs from the hip"
+                );
+            }
+            Assert.That(
+                skin.WornOn("thigh", "Thigh.R").sortingOrder,
+                Is.LessThan(skin.WornOn("thigh", "Thigh.L").sortingOrder),
+                "the far leg is behind"
+            );
+            Assert.That(skin.WornOn("sword", "Hand.R"), Is.Not.Null, "the sword is in his far hand");
+            Assert.That(skin.WornOn("head", "Head"), Is.Not.Null);
+            skin.Shown = false;
+            Assert.That(runner.ShapesShown, Is.True, "without the knight the shapes show");
+            skin.Shown = true;
 
             overlay.Visible = false;
             yield return null;

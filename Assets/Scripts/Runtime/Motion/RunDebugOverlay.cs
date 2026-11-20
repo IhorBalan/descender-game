@@ -136,7 +136,7 @@ namespace Descender.Motion
                 + $"Left foot: {(pose.leftLeg.contact ? "<color=#5f5>ground</color>" : "air")}    Right foot: {(pose.rightLeg.contact ? "<color=#5f5>ground</color>" : "air")}\n"
                 + $"Speed {run.runningSpeed:0.00} u/s   Stride {run.strideLength:0.00} u   Cycle {run.cycleDuration:0.000} s   Lean {pose.lean:0.0}°\n"
                 + $"Time x{skeleton.TimeScale:0.##}{(skeleton.Paused ? "   PAUSED" : "")}\n"
-                + "Tab overlay   Space pause   → step (paused)   1 / 2 / 3: speed x1 / x0.25 / x0.1";
+                + "Tab overlay   K knight   Space pause   → step (paused)   1 / 2 / 3: speed x1 / x0.25 / x0.1";
             GUI.Box(new Rect(10, 10, 640, 104), text, style);
         }
 

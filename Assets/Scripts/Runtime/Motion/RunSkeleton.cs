@@ -51,6 +51,8 @@ namespace Descender.Motion
         private readonly List<Transform> bones = new List<Transform>(24);
         private readonly Dictionary<string, Transform> byName = new Dictionary<string, Transform>(24);
         private readonly Dictionary<Transform, Piece> pieces = new Dictionary<Transform, Piece>(24);
+        private readonly Dictionary<Transform, float> lengths = new Dictionary<Transform, float>(24);
+        private bool shapesShown = true;
         private float phase;
         private float travelled;
         private Vector3 start;
@@ -79,6 +81,26 @@ namespace Descender.Motion
 
         /// <summary>A bone by name ("Thigh.L", "Head" ...), or null.</summary>
         public Transform Bone(string name) => byName.TryGetValue(name, out var bone) ? bone : null;
+
+        /// <summary>Gives it a body's lengths before it is built (the editor's scene maker).</summary>
+        public void SetBody(RunBody value) => body = value;
+
+        /// <summary>How long a bone is this frame: from its joint to the next.</summary>
+        public float LengthOf(Transform bone) => lengths.TryGetValue(bone, out var length) ? length : 0f;
+
+        /// <summary>Whether the placeholder shapes are drawn (off when something wears the skeleton).</summary>
+        public bool ShapesShown
+        {
+            get => shapesShown;
+            set
+            {
+                shapesShown = value;
+                foreach (var piece in pieces.Values)
+                {
+                    piece.Renderer.enabled = value;
+                }
+            }
+        }
 
         /// <summary>A point of the pose (relative to the root) in the world.</summary>
         public Vector3 World(Vector2 local) => transform.position + (Vector3)local;
@@ -178,6 +200,7 @@ namespace Descender.Motion
                 World(from),
                 Quaternion.Euler(0f, 0f, Mathf.Atan2(along.y, along.x) * Mathf.Rad2Deg)
             );
+            lengths[bone] = along.magnitude;
             if (pieces.TryGetValue(bone, out var piece) && piece.Stretch)
             {
                 piece.Renderer.transform.localScale = new Vector3(
@@ -241,6 +264,7 @@ namespace Descender.Motion
             renderer.sharedMaterial = Fx.Shapes.Unlit;
             renderer.color = color;
             renderer.sortingOrder = order;
+            renderer.enabled = shapesShown;
             if (round)
             {
                 // A disc (the head, the pelvis) sits a radius along the bone, not stretched.

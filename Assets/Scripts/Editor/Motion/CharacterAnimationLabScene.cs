@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.IO;
 using Descender.Motion;
+using Newtonsoft.Json.Linq;
 using UnityEditor;
 using UnityEditor.Build.Reporting;
 using UnityEditor.SceneManagement;
@@ -23,6 +25,45 @@ namespace Descender.EditorTools.Motion
         public const string ScenePath = "Assets/Scenes/Sandbox/CharacterAnimationLab.unity";
         public const string OutputPath = "Build/CharacterAnimationLab64/CharacterAnimationLab.exe";
 
+        /// <summary>The knight's parts and their joints (tools/hero_knight/parts.py writes them).</summary>
+        public const string PartsFolder = "Assets/Art/Sprites/hero/parts";
+
+        /// <summary>The knight's parts as <see cref="RunKnightSkin"/> wears them, read from parts.json.</summary>
+        public static List<RunPart> KnightParts()
+        {
+            var list = new List<RunPart>();
+            var spec = JObject.Parse(File.ReadAllText(PartsFolder + "/parts.json"));
+            foreach (var entry in (JObject)spec["parts"])
+            {
+                var part = (JObject)entry.Value;
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>($"{PartsFolder}/{entry.Key}.png");
+                if (sprite == null)
+                {
+                    throw new FileNotFoundException(
+                        $"The knight's {entry.Key} is missing.",
+                        $"{PartsFolder}/{entry.Key}.png"
+                    );
+                }
+                list.Add(
+                    new RunPart
+                    {
+                        name = entry.Key,
+                        sprite = sprite,
+                        bone = (string)part["bone"],
+                        joint = new Vector2((float)part["joint"][0], (float)part["joint"][1]),
+                        end = new Vector2((float)part["end"][0], (float)part["end"][1]),
+                        rigid = (bool)part["rigid"],
+                        order = (int)part["order"],
+                        sway = (float)part["sway"],
+                        steady = (bool?)part["steady"] ?? false,
+                        worldAngle = (float?)part["worldAngle"] ?? 0f,
+                        follow = (float?)part["follow"] ?? 0f,
+                    }
+                );
+            }
+            return list;
+        }
+
         [MenuItem("Descender/Lab/Character animation lab")]
         public static void Create()
         {
@@ -39,10 +80,13 @@ namespace Descender.EditorTools.Motion
             var lab = new GameObject("CharacterAnimationLab").AddComponent<CharacterAnimationLab>();
             var runner = new GameObject("Runner").AddComponent<RunSkeleton>();
             runner.transform.SetParent(lab.transform, false);
+            runner.SetBody(RunBody.Knight());
+            var skin = runner.gameObject.AddComponent<RunKnightSkin>();
+            skin.Configure(runner, KnightParts());
             var overlay = new GameObject("Debug Overlay").AddComponent<RunDebugOverlay>();
             overlay.transform.SetParent(lab.transform, false);
             overlay.Bind(runner);
-            lab.Configure(runner, overlay, camera);
+            lab.Configure(runner, overlay, camera, skin);
 
             Directory.CreateDirectory(Path.GetDirectoryName(ScenePath));
             EditorSceneManager.SaveScene(scene, ScenePath);
@@ -57,19 +101,22 @@ namespace Descender.EditorTools.Motion
         [MenuItem("Descender/Lab/Picture the run's key poses")]
         public static void Picture()
         {
-            const int Cell = 240;
+            const int Cell = 320;
             const int Rows = 2;
             const int Columns = 16;
             var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
             var holder = new GameObject("Camera");
             var camera = holder.AddComponent<Camera>();
             camera.orthographic = true;
-            camera.orthographicSize = 1.45f;
+            camera.orthographicSize = 1.6f;
             camera.clearFlags = CameraClearFlags.SolidColor;
             camera.backgroundColor = new Color(0.09f, 0.1f, 0.14f);
             camera.GetUniversalAdditionalCameraData();
             holder.transform.position = new Vector3(0.1f, 1.3f, -10f);
             var runner = new GameObject("Runner").AddComponent<RunSkeleton>();
+            runner.SetBody(RunBody.Knight());
+            var skin = runner.gameObject.AddComponent<RunKnightSkin>();
+            skin.Configure(runner, KnightParts());
             var ground = Fx.Shapes.Block(
                 null,
                 "Ground",
@@ -86,7 +133,10 @@ namespace Descender.EditorTools.Motion
                 for (var i = 0; i < count; i++)
                 {
                     runner.ShowAt(i / (float)count);
+                    skin.Dress();
+                    skin.Fit();
                     camera.Render();
+                    camera.Render(); // the first picture of a new scene comes out before its textures
                     RenderTexture.active = target;
                     sheet.ReadPixels(
                         new Rect(0, 0, Cell, Cell),

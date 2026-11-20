@@ -50,7 +50,7 @@ namespace Descender.Motion
         private static readonly float[] RightArmSwing = { -1f, -0.7f, 0f, 0.75f, 1f, 0.7f, 0f, -0.75f };
 
         // The right elbow's bend in degrees: nearly open as the arm swings back, most bent as it comes forward.
-        private static readonly float[] RightElbow = { 32f, 48f, 80f, 100f, 108f, 92f, 62f, 40f };
+        private static readonly float[] RightElbow = { 32f, 48f, 75f, 88f, 92f, 82f, 58f, 40f };
 
         // The swinging foot's key points at phases 3/8 .. 7/8 of its own leg: the ankle's place
         // relative to the hips' ground point, in leg lengths (x) and leg lengths over the ankle's
