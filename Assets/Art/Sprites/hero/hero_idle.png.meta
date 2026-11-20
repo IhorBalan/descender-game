@@ -20,6 +20,24 @@ TextureImporter:
   - first:
       213: 884486761802159073
     second: hero_idle_5
+  - first:
+      213: 1108987721569611751
+    second: hero_idle_6
+  - first:
+      213: 665398231730980597
+    second: hero_idle_7
+  - first:
+      213: 1138656875096312257
+    second: hero_idle_8
+  - first:
+      213: 941186872215337180
+    second: hero_idle_9
+  - first:
+      213: 1153966639285564900
+    second: hero_idle_10
+  - first:
+      213: 3165438668769859425
+    second: hero_idle_11
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -66,7 +84,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 9
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 16
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -108,10 +126,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 64
-        height: 48
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.5, y: 0.0833333}
+      pivot: {x: 0.5, y: 0.0416667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -129,12 +147,12 @@ TextureImporter:
       originalName: 
       rect:
         serializedVersion: 2
-        x: 64
+        x: 96
         y: 0
-        width: 64
-        height: 48
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.5, y: 0.0833333}
+      pivot: {x: 0.5, y: 0.0416667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -152,12 +170,12 @@ TextureImporter:
       originalName: 
       rect:
         serializedVersion: 2
-        x: 128
+        x: 192
         y: 0
-        width: 64
-        height: 48
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.5, y: 0.0833333}
+      pivot: {x: 0.5, y: 0.0416667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -175,12 +193,12 @@ TextureImporter:
       originalName: 
       rect:
         serializedVersion: 2
-        x: 192
+        x: 288
         y: 0
-        width: 64
-        height: 48
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.5, y: 0.0833333}
+      pivot: {x: 0.5, y: 0.0416667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -198,12 +216,12 @@ TextureImporter:
       originalName: 
       rect:
         serializedVersion: 2
-        x: 256
+        x: 384
         y: 0
-        width: 64
-        height: 48
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.5, y: 0.0833333}
+      pivot: {x: 0.5, y: 0.0416667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -221,12 +239,12 @@ TextureImporter:
       originalName: 
       rect:
         serializedVersion: 2
-        x: 320
+        x: 480
         y: 0
-        width: 64
-        height: 48
+        width: 96
+        height: 96
       alignment: 9
-      pivot: {x: 0.5, y: 0.0833333}
+      pivot: {x: 0.5, y: 0.0416667}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -235,6 +253,144 @@ TextureImporter:
       bones: []
       spriteID: a001c501a7775de5abd7741e4152cb63
       internalID: 884486761802159073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hero_idle_6
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 576
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0416667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94f7237b89185d06add9d9c81ef30f9e
+      internalID: 1108987721569611751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hero_idle_7
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 672
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0416667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0a206a5f91335e329cd000655293cb92
+      internalID: 665398231730980597
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hero_idle_8
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 768
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0416667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44d7c532fdf15143ae58d4d908b06fd2
+      internalID: 1138656875096312257
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hero_idle_9
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 864
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0416667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2298faedd66553388be14a4649346f82
+      internalID: 941186872215337180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hero_idle_10
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 960
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0416667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 732090e533e65b17a8d257db07bfc07f
+      internalID: 1153966639285564900
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: hero_idle_11
+      originalName: 
+      rect:
+        serializedVersion: 2
+        x: 1056
+        y: 0
+        width: 96
+        height: 96
+      alignment: 9
+      pivot: {x: 0.5, y: 0.0416667}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 322752c1fca45e1d85dde913a9fdaf86
+      internalID: 3165438668769859425
       vertices: []
       indices: 
       edges: []
@@ -257,6 +413,12 @@ TextureImporter:
       hero_idle_3: 1083099472812612743
       hero_idle_4: 2667461178577044715
       hero_idle_5: 884486761802159073
+      hero_idle_6: 1108987721569611751
+      hero_idle_7: 665398231730980597
+      hero_idle_8: 1138656875096312257
+      hero_idle_9: 941186872215337180
+      hero_idle_10: 1153966639285564900
+      hero_idle_11: 3165438668769859425
     spriteCustomMetadata:
       entries: []
   mipmapLimitGroupName: 

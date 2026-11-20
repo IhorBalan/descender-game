@@ -1,19 +1,20 @@
 {
   "hero": {
     "frame_size": [
-      64,
-      48
+      96,
+      96
     ],
     "origin": [
-      32,
-      44
+      48,
+      92
     ],
     "anchor": "feet",
+    "ppu": 32,
     "animations": {
       "idle": {
         "file": "hero_idle.png",
-        "frames": 6,
-        "fps": 6,
+        "frames": 12,
+        "fps": 8,
         "loop": true
       },
       "run": {

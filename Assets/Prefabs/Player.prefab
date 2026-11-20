@@ -142,7 +142,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strips:
   - name: idle
-    fps: 6.0
+    fps: 8.0
     loop: 1
     frames:
     - {fileID: 1174600183966540252, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
@@ -151,6 +151,12 @@ MonoBehaviour:
     - {fileID: 1083099472812612743, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
     - {fileID: 2667461178577044715, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
     - {fileID: 884486761802159073, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - {fileID: 1108987721569611751, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - {fileID: 665398231730980597, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - {fileID: 1138656875096312257, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - {fileID: 941186872215337180, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - {fileID: 1153966639285564900, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
+    - {fileID: 3165438668769859425, guid: a8adb433d1d15dc3acc833eb898fdbfb, type: 3}
   - name: run
     fps: 12.0
     loop: 1
