@@ -358,6 +358,153 @@ def tree_scene(width: int, height: int, sink: int, seed, leaves, bark, *, frame:
     return s, ramps, unit
 
 
+SAKURA_PINK = ["5e3048", "84435f", "a85a7c", "c87497", "de90ae", "eba9c1", "f4c1d3", "fad6e2", "fde8ef", "fff6f9"]
+SAKURA_BARK = ["241a1e", "35262a", "463236", "583f40", "6a4c4a", "7c5a55", "8e6a62", "a27d72"]
+
+
+def sakura(width: int, height: int, sink: int, seed, *, frame: int | None = None, lean: float = 0.0) -> tuple[Image.Image, Image.Image]:
+    """A cherry in flower on its floor line (`sink` px over the picture's foot): a dark trunk
+    with bands across its bark that parts into a few limbs, each forking out wide and up
+    into branches and twigs under a crown like an umbrella; on them clouds of small pale
+    pink flowers, five petals each, some clouds before the branches and some behind (those
+    a step darker), the sky and the branches seen between them; petals let go in the air
+    and lying by its foot. `frame` is the frame of its stirring: the branches go round a
+    little, more toward their tips, the trunk still. `lean` leans it."""
+    r = random.Random(f"style sakura {seed}")
+    W, H = width, height
+    s = Scene(W, H)
+    xs, ys = s.xs, s.ys
+    BARK, FLOWER = 0, 1
+    ramps = {BARK: [hex_rgb(c) for c in SAKURA_BARK], FLOWER: [hex_rgb(c) for c in SAKURA_PINK]}
+    foot_y = H - sink
+    foot_x = W / 2 + r.uniform(-0.03, 0.03) * W
+    top = 3
+    rad0 = max(6.0, W * 0.04)
+    fork_y = foot_y - (foot_y - top) * r.uniform(0.2, 0.25)  # a short trunk: the flowers come down to the eye
+    flower_r = max(2.6, W * 0.0125)
+    # The crown's envelope: an umbrella, wider than it is high, its foot over the fork.
+    crown_top = top + W * 0.09  # room over the highest twigs for their flowers
+    ery = (fork_y - crown_top) * 0.47
+    ex0, ey0 = W / 2 + lean * W * 0.03, crown_top + ery
+    erx = W * 0.43
+
+    def inside(x, y, k=0.84):
+        e = math.hypot((x - ex0) / erx, (y - ey0) / ery)
+        return (x, y) if e <= k else (ex0 + (x - ex0) * k / e, ey0 + (y - ey0) * k / e)
+
+    def swung(k, depth):
+        if frame is None or depth <= 0:
+            return 0.0, 0.0
+        a = frame * 2 * math.pi / FRAMES + k * 1.9
+        g = min(1.0, depth / 3)
+        return round(1.3 * math.sin(a) * g) * 2.0, round(0.7 * math.cos(a + 0.8) * g) * 2.0
+
+    # The trunk: a column that bends a little, much wider at its foot, and roots.
+    fork_x = foot_x + lean * rad0 * 1.4
+    bend = r.uniform(-1, 1) * rad0 * 0.5
+    prev, steps = (foot_x, foot_y + sink * 0.25), 8
+    for i in range(1, steps + 1):
+        t = i / steps
+        x = foot_x + (fork_x - foot_x) * t + bend * math.sin(t * math.pi)
+        y = foot_y + sink * 0.25 + (fork_y - foot_y - sink * 0.25) * t
+        wide = lambda t: rad0 * (0.8 + 0.55 * max(0.0, 1 - t / 0.16) ** 2)  # noqa: E731
+        s.limb(prev[0], prev[1], x, y, wide((i - 1) / steps), wide(t), 4, BARK)
+        prev = (x, y)
+    for side, reach, z in ((-1, 2.3, 0.5), (1, 2.1, 0.5), (-0.45, 1.4, 0.9), (0.5, 1.3, 0.9)):
+        x0, y0 = foot_x + side * rad0 * 0.4, foot_y - rad0 * 1.1
+        mx, my = foot_x + side * rad0 * (0.4 + reach) * 0.55, foot_y - rad0 * 0.3
+        s.limb(x0, y0, mx, my, rad0 * 0.55, rad0 * 0.4, rad0 * z, BARK)
+        s.limb(mx, my, foot_x + side * rad0 * reach, foot_y + 2, rad0 * 0.4, rad0 * 0.12, rad0 * z, BARK)
+
+    # The limbs, forking down to twigs: (x0, y0, x1, y1, r0, r1, depth, limb).
+    pieces, tips = [], []
+
+    def grow(x, y, tx, ty, rad, depth, limb):
+        tx, ty = inside(tx, ty)
+        mx = (x + tx) / 2 + r.uniform(-1, 1) * rad0 * 0.8  # a cherry's branches go in elbows
+        my = (y + ty) / 2 + r.uniform(-0.5, 1) * rad0 * 0.8
+        end = rad * 0.6
+        pieces.append((x, y, mx, my, rad, (rad + end) / 2, depth, limb))
+        pieces.append((mx, my, tx, ty, (rad + end) / 2, end, depth, limb))
+        tips.append((tx, ty, depth, limb))
+        if depth >= 2:
+            tips.append((mx, my, depth, limb))
+        if depth >= 3:
+            return
+        ang = math.atan2(ty - y, tx - x)
+        length = math.hypot(tx - x, ty - y) * r.uniform(0.55, 0.7)
+        for side in (-1, 1):
+            a = ang + side * r.uniform(0.45, 0.8)
+            a += (-math.pi / 2 - a) * 0.08  # a little up, as a cherry's twigs go
+            grow(tx, ty, tx + math.cos(a) * length, ty + math.sin(a) * length, end, depth + 1, limb)
+
+    count = r.choice([4, 5])
+    for i in range(count):
+        a = math.pi * (1.05 + 0.9 * i / (count - 1)) + r.uniform(-0.08, 0.08)
+        d = r.uniform(0.45, 0.6)
+        grow(fork_x, fork_y, ex0 + math.cos(a) * erx * d, ey0 + math.sin(a) * ery * d * 0.6 + ery * 0.45, rad0 * 0.62, 0, i)
+    for x0, y0, x1, y1, r0, r1, depth, limb in pieces:
+        d0, d1 = swung(limb, depth), swung(limb, depth + 1)
+        s.limb(x0 + d0[0], y0 + d0[1], x1 + d1[0], y1 + d1[1], r0, r1, 4 + depth * 0.5, BARK)
+
+    # Cherry bark: smooth and dark, short bands across it (its lenticels), a light lip over each.
+    grain = value_noise(W, H, 7.0, ("sakura bark", seed))
+    bark_px = s.mat == BARK
+    for _ in range(int((foot_y - fork_y) / 3.5)):
+        y = int(r.uniform(fork_y - rad0, foot_y - 2))
+        x0 = foot_x + bend * 0.5 + r.uniform(-0.9, 0.3) * rad0
+        run = r.uniform(0.4, 1.1) * rad0
+        band = bark_px & (np.abs(ys - y) < 0.6) & (xs >= x0) & (xs < x0 + run)
+        s.var[band] = -2
+        s.var[np.roll(band, -1, 0) & bark_px & ~band] = 1
+    s.var[bark_px & (grain > 0.55)] += 1
+
+    # The flowers: clouds over the twigs, a few along the branches.
+    clouds = []
+    for x, y, depth, limb in tips:
+        R = W * r.uniform(0.065, 0.09) * (1.0 if depth >= 2 else 1.15)
+        back = r.random() < (0.5 if depth <= 1 else 0.25)
+        clouds.append((x + r.uniform(-0.3, 0.3) * R, y - R * r.uniform(0.2, 0.5), R, back, depth, limb))
+    clouds.sort(key=lambda c: c[3], reverse=True)  # the back ones first
+    for cx, cy, R, back, depth, limb in clouds:
+        dx, dy = swung(limb, depth + 1)
+        cx, cy = cx + dx, cy + dy
+        base = (1.0 if back else 8.0) + depth * 0.5
+        low = 1 if cy > ey0 + ery * 0.15 else 0  # the crown's underside, out of the sun
+        for _ in range(int(R * R / (flower_r * flower_r * 0.9))):
+            a, d = r.uniform(0, 2 * math.pi), R * math.sqrt(r.random())
+            fx, fy = cx + math.cos(a) * d * 1.2, cy + math.sin(a) * d * 0.8
+            dome = math.sqrt(max(0.0, 1 - (d / R) ** 2)) * R * 0.9
+            fr = flower_r * r.uniform(0.85, 1.2)
+            turn = r.uniform(0, 2 * math.pi)
+            var = r.choice([0, 0, 0, 1]) - (2 if back else 0) - low
+            x0, x1 = max(int(fx - fr * 1.2), 0), min(int(fx + fr * 1.2) + 2, W)
+            y0, y1 = max(int(fy - fr * 1.2), 0), min(int(fy + fr * 1.2) + 2, H)
+            if x1 <= x0 or y1 <= y0:
+                continue
+            px, py = xs[y0:y1, x0:x1] + 0.5 - fx, ys[y0:y1, x0:x1] + 0.5 - fy
+            rho, th = np.hypot(px, py), np.arctan2(py, px)
+            edge = fr * (0.78 + 0.22 * np.cos(5 * (th - turn)))  # five petals
+            hh = base + dome + np.sqrt(np.clip(1 - (rho / np.maximum(edge, 1e-6)) ** 2, 0, 1)) * fr * 0.45
+            heart = (rho < fr * 0.28) & (r.random() < 0.5)
+            s.paint(rho < edge, hh, FLOWER, var=np.where(heart, var - 2, var), at=(y0, x0))
+
+    # Petals let go: in the air under the crown, and lying on the ground by its foot.
+    phase = 0 if frame is None else frame
+    for _ in range(int(W * 0.07)):
+        px = r.uniform(ex0 - erx, ex0 + erx)
+        py = r.uniform(ey0 + ery * 0.6, foot_y - 6)
+        x, y = int(px + math.sin(phase * math.pi / 2 + px * 0.1) * 2.0), int(py + math.cos(phase * math.pi / 2 + px * 0.13) * 1.5)
+        if 0 <= x < W - 2 and 0 <= y < foot_y - 2 and s.mat[y, x] < 0:
+            s.paint(np.ones((1, 2), dtype=bool), 40, FLOWER, var=r.choice([4, 5]), at=(y, x))
+    for _ in range(int(W * 0.14)):
+        x = int(foot_x + r.uniform(-1, 1) * W * 0.42)
+        y = int(foot_y - r.randint(0, 2))
+        if 0 <= x < W - 2 and 0 <= y < H:
+            s.paint(np.ones((1, 2), dtype=bool), 0.5, FLOWER, var=r.choice([1, 2, 3]), at=(y, x))
+    return render(s, ramps, ao=0.03, ao_radius=max(3, int(W * 0.015)), shadow=0.35, shadow_reach=max(6, int(W * 0.03)), shadow_drop=0.7, lo=0.12, gamma=1.1)
+
+
 def pine(width: int, height: int, sink: int, seed, needles, bark) -> tuple[Image.Image, Image.Image]:
     """A fir on its floor line: tiers of drooping boughs, narrow at the top and broad at the
     foot, each tier a skirt round the trunk whose needles run out and down in short strokes,
