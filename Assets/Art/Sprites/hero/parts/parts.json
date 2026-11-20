@@ -1,214 +1,246 @@
 {
-  "ppu": 125,
+  "ppu": 400,
   "parts": {
     "cloak": {
       "joint": [
-        122,
-        227
+        367,
+        483
       ],
       "end": [
-        130,
-        323
+        367,
+        583
       ],
-      "bone": "Chest",
+      "bone": "Neck",
       "rigid": true,
-      "order": -4,
-      "sway": 4.0,
+      "order": -12,
+      "sway": 3.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        120,
-        253
+        419,
+        629
       ]
     },
     "torso": {
       "joint": [
-        28,
-        18
+        134,
+        236
       ],
       "end": [
-        36,
-        114
+        134,
+        336
       ],
       "bone": "Hips",
       "rigid": true,
-      "order": 5,
+      "order": 4,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        59,
-        128
+        278,
+        535
       ]
     },
     "tabard": {
       "joint": [
-        14,
-        123
+        -9,
+        446
       ],
       "end": [
-        22,
-        219
+        -9,
+        546
       ],
       "bone": "Hips",
       "rigid": true,
-      "order": 6,
-      "sway": 6.0,
+      "order": 5,
+      "sway": 5.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        30,
-        125
+        115,
+        503
       ]
     },
     "head": {
       "joint": [
-        141,
-        58
+        232,
+        92
       ],
       "end": [
-        145,
-        116
+        232,
+        192
       ],
       "bone": "Head",
       "rigid": true,
-      "order": 8,
+      "order": 9,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        157,
-        121
+        317,
+        281
       ]
     },
-    "upperarm": {
+    "pauldron": {
       "joint": [
-        39,
-        61
+        155,
+        97
       ],
       "end": [
-        34,
-        11
+        55,
+        97
+      ],
+      "bone": "Shoulder",
+      "rigid": true,
+      "order": 12,
+      "sway": 0.0,
+      "scale": 1.0,
+      "steady": false,
+      "worldAngle": 0.0,
+      "follow": 0.0,
+      "size": [
+        289,
+        237
+      ]
+    },
+    "sleeve": {
+      "joint": [
+        119,
+        261
+      ],
+      "end": [
+        99,
+        31
       ],
       "bone": "UpperArm",
       "rigid": false,
-      "order": 9,
+      "order": 10,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        74,
-        81
+        205,
+        329
       ]
     },
     "forearm": {
       "joint": [
-        30,
-        83
+        77,
+        263
       ],
       "end": [
-        31,
-        19
+        97,
+        98
       ],
       "bone": "LowerArm",
       "rigid": false,
-      "order": 10,
+      "order": 11,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        60,
-        91
+        180,
+        290
       ]
     },
     "thigh": {
       "joint": [
-        34,
-        99
+        88,
+        293
       ],
       "end": [
-        31,
-        25
+        72,
+        48
       ],
       "bone": "Thigh",
       "rigid": false,
-      "order": 7,
+      "order": 3,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        69,
-        105
+        178,
+        321
       ]
     },
     "shin": {
       "joint": [
-        27,
-        45
+        80,
+        290
       ],
       "end": [
-        25,
-        5
+        70,
+        45
       ],
       "bone": "Shin",
       "rigid": false,
       "order": 7,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        55,
-        49
+        160,
+        344
       ]
     },
     "foot": {
       "joint": [
-        30,
-        26
+        54,
+        93
       ],
       "end": [
-        64,
-        6
+        239,
+        18
       ],
       "bone": "Foot",
       "rigid": false,
       "order": 7,
       "sway": 0.0,
+      "scale": 1.0,
       "steady": false,
       "worldAngle": 0.0,
       "follow": 0.0,
       "size": [
-        59,
-        42
+        260,
+        167
       ]
     },
     "sword": {
       "joint": [
-        16,
-        116
+        126,
+        136
       ],
       "end": [
-        116,
-        2
+        1021,
+        138
       ],
       "bone": "Hand.R",
       "rigid": true,
-      "order": -1,
+      "order": -5,
       "sway": 0.0,
+      "scale": 0.5,
       "steady": true,
       "worldAngle": -150.0,
       "follow": 0.25,
       "size": [
-        116,
-        133
+        1044,
+        269
       ]
     }
   }

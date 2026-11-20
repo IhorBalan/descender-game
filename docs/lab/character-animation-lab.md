@@ -40,6 +40,39 @@ changed by it. `Descender > Lab > Character animation lab` makes it again.
   - in the top left: the phase, the nearest key pose, which feet are down,
     and the speed, stride, cycle and lean.
 
+## The knight
+
+The runner wears the crowned knight (`RunKnightSkin`), from the owner's parts
+sheet `tools/hero_knight/source/parts_sheet.webp`. That sheet shows the knight
+drawn apart, every part whole, at one scale, in side view.
+
+`tools/hero_knight/parts.py` cuts the sheet into 11 parts in
+`Assets/Art/Sprites/hero/parts/`. Each part's pivot is at its joint, and
+`parts.json` records how each part is worn. The parts are:
+
+- the cloak, worn on the neck;
+- the torso with its tassets, on the hips;
+- the tabard and the head with its hair;
+- the pauldron, on the shoulder;
+- the sleeve, forearm, thigh, shin and foot;
+- the greatsword, in the far hand.
+
+The upper arm is cut in two. The pauldron turns with the shoulders, and the
+sleeve swings under it. The tool carries the sleeve up under the pauldron in a
+disc about the shoulder joint, so the cut never shows as the arm swings.
+
+How the parts sit on the bones:
+
+- Limbs are stretched along their bones. They are worn on both sides: the far
+  side darker and behind, the thighs under the torso's tassets.
+- The torso, head, cloak and tabard turn with their bones, and the cloak and
+  tabard sway each step.
+- The sword is carried low behind at a steady angle.
+- The runner has the knight's lengths, set by `RunBody.Knight`.
+
+With the knight worn, the bones overlay starts hidden. K takes the knight off
+and puts him back on.
+
 ## Settings (Runner, in the inspector, also while playing)
 
 | Field | What it does |
@@ -61,7 +94,8 @@ changed by it. `Descender > Lab > Character animation lab` makes it again.
 1. Open `Assets/Scenes/Sandbox/CharacterAnimationLab.unity`, or make it
    with `Descender > Lab > Character animation lab`, and press Play.
 2. Keys:
-   - Tab shows or hides the overlay.
+   - Tab shows or hides the overlay (the bones, contacts and numbers).
+   - K takes the knight off and puts him back on.
    - Space pauses.
    - The right arrow steps one sixtieth of a second while paused.
    - 1, 2 and 3 play at full, a quarter and a tenth speed.

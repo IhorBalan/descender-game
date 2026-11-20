@@ -39,6 +39,7 @@ namespace Descender.Motion
         private LineRenderer leftArm;
         private LineRenderer rightArm;
         private GUIStyle style;
+        private GUIStyle hint;
         private int nextPrint;
         private bool visible = true;
 
@@ -119,8 +120,22 @@ namespace Descender.Motion
 
         private void OnGUI()
         {
-            if (!visible || skeleton == null)
+            if (skeleton == null)
             {
+                return;
+            }
+            if (!visible)
+            {
+                hint ??= new GUIStyle(GUI.skin.label)
+                {
+                    fontSize = 14,
+                    normal = { textColor = new Color(1f, 1f, 1f, 0.6f) },
+                };
+                GUI.Label(
+                    new Rect(12, 8, 640, 24),
+                    "Tab: bones and numbers   K: knight on/off   Space: pause   1 / 2 / 3: speed",
+                    hint
+                );
                 return;
             }
             style ??= new GUIStyle(GUI.skin.box)

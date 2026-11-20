@@ -119,7 +119,7 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &465729376
+--- !u!1 &254903305
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -127,50 +127,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 465729378}
-  - component: {fileID: 465729377}
+  - component: {fileID: 254903307}
+  - component: {fileID: 254903306}
   m_Layer: 0
-  m_Name: CharacterAnimationLab
+  m_Name: Debug Overlay
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &465729377
+--- !u!114 &254903306
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465729376}
+  m_GameObject: {fileID: 254903305}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0919718c75a01424ab636df30677bb2b, type: 3}
+  m_Script: {fileID: 11500000, guid: 9799d87cf3d9a28499b6760c54c35ad9, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.CharacterAnimationLab
-  skeleton: {fileID: 1984502554}
-  overlay: {fileID: 1744483443}
-  skin: {fileID: 1984502552}
-  camera: {fileID: 1073706643}
-  cameraOffset: {x: 0.6, y: 1.3}
---- !u!4 &465729378
+  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunDebugOverlay
+  skeleton: {fileID: 993051494}
+--- !u!4 &254903307
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 465729376}
+  m_GameObject: {fileID: 254903305}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 1984502553}
-  - {fileID: 1744483444}
-  m_Father: {fileID: 0}
+  m_Children: []
+  m_Father: {fileID: 1086660346}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1073706642
+--- !u!1 &452747324
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,9 +172,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1073706645}
-  - component: {fileID: 1073706643}
-  - component: {fileID: 1073706644}
+  - component: {fileID: 452747327}
+  - component: {fileID: 452747325}
+  - component: {fileID: 452747326}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -188,17 +182,17 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!20 &1073706643
+--- !u!20 &452747325
 Camera:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073706642}
+  m_GameObject: {fileID: 452747324}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.09, g: 0.1, b: 0.14, a: 1}
+  m_BackGroundColor: {r: 0.36, g: 0.4, b: 0.47, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -223,7 +217,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 1.9
+  orthographic size: 2
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -239,13 +233,13 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!114 &1073706644
+--- !u!114 &452747326
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073706642}
+  m_GameObject: {fileID: 452747324}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
@@ -283,13 +277,13 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!4 &1073706645
+--- !u!4 &452747327
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1073706642}
+  m_GameObject: {fileID: 452747324}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.6, y: 1.3, z: -10}
@@ -298,7 +292,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1744483442
+--- !u!1 &993051491
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -306,54 +300,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1744483444}
-  - component: {fileID: 1744483443}
-  m_Layer: 0
-  m_Name: Debug Overlay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1744483443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744483442}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9799d87cf3d9a28499b6760c54c35ad9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunDebugOverlay
-  skeleton: {fileID: 1984502554}
---- !u!4 &1744483444
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1744483442}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 465729378}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1984502551
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1984502553}
-  - component: {fileID: 1984502554}
-  - component: {fileID: 1984502552}
+  - component: {fileID: 993051493}
+  - component: {fileID: 993051494}
+  - component: {fileID: 993051492}
   m_Layer: 0
   m_Name: Runner
   m_TagString: Untagged
@@ -361,152 +310,174 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1984502552
+--- !u!114 &993051492
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984502551}
+  m_GameObject: {fileID: 993051491}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b9706471cc44e34c8116800ef6dc29d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.RunKnightSkin
-  skeleton: {fileID: 1984502554}
+  skeleton: {fileID: 993051494}
   parts:
   - name: cloak
     sprite: {fileID: 21300000, guid: 91d27cbd9f805913b62ef6179dadf832, type: 3}
-    bone: Chest
-    joint: {x: 122, y: 227}
-    end: {x: 130, y: 323}
+    bone: Neck
+    joint: {x: 367, y: 483}
+    end: {x: 367, y: 583}
     rigid: 1
-    order: -4
-    sway: 4
+    order: -12
+    sway: 3
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: torso
     sprite: {fileID: 21300000, guid: 5f327e73de3050b583fc6b2c1b957270, type: 3}
     bone: Hips
-    joint: {x: 28, y: 18}
-    end: {x: 36, y: 114}
+    joint: {x: 134, y: 236}
+    end: {x: 134, y: 336}
     rigid: 1
-    order: 5
+    order: 4
     sway: 0
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: tabard
     sprite: {fileID: 21300000, guid: 281f003106f151ff89fa742910c06435, type: 3}
     bone: Hips
-    joint: {x: 14, y: 123}
-    end: {x: 22, y: 219}
+    joint: {x: -9, y: 446}
+    end: {x: -9, y: 546}
     rigid: 1
-    order: 6
-    sway: 6
+    order: 5
+    sway: 5
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: head
     sprite: {fileID: 21300000, guid: a19e8494bb0354508705e2e5e62bb427, type: 3}
     bone: Head
-    joint: {x: 141, y: 58}
-    end: {x: 145, y: 116}
+    joint: {x: 232, y: 92}
+    end: {x: 232, y: 192}
     rigid: 1
-    order: 8
-    sway: 0
-    steady: 0
-    worldAngle: 0
-    follow: 0
-  - name: upperarm
-    sprite: {fileID: 21300000, guid: bd5a745cdf055e8aaa5851fe7e648ae6, type: 3}
-    bone: UpperArm
-    joint: {x: 39, y: 61}
-    end: {x: 34, y: 11}
-    rigid: 0
     order: 9
     sway: 0
     steady: 0
+    scale: 1
+    worldAngle: 0
+    follow: 0
+  - name: pauldron
+    sprite: {fileID: 21300000, guid: bc205d168ce25587b8472e947d99ce5a, type: 3}
+    bone: Shoulder
+    joint: {x: 155, y: 97}
+    end: {x: 55, y: 97}
+    rigid: 1
+    order: 12
+    sway: 0
+    steady: 0
+    scale: 1
+    worldAngle: 0
+    follow: 0
+  - name: sleeve
+    sprite: {fileID: 21300000, guid: 5a10c89765575e748facfcd673380649, type: 3}
+    bone: UpperArm
+    joint: {x: 119, y: 261}
+    end: {x: 99, y: 31}
+    rigid: 0
+    order: 10
+    sway: 0
+    steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: forearm
     sprite: {fileID: 21300000, guid: 36d5ca6cae83539f9c51b8076256b551, type: 3}
     bone: LowerArm
-    joint: {x: 30, y: 83}
-    end: {x: 31, y: 19}
+    joint: {x: 77, y: 263}
+    end: {x: 97, y: 98}
     rigid: 0
-    order: 10
+    order: 11
     sway: 0
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: thigh
     sprite: {fileID: 21300000, guid: 4e375697e0e05081a8672514f7676405, type: 3}
     bone: Thigh
-    joint: {x: 34, y: 99}
-    end: {x: 31, y: 25}
+    joint: {x: 88, y: 293}
+    end: {x: 72, y: 48}
     rigid: 0
-    order: 7
+    order: 3
     sway: 0
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: shin
     sprite: {fileID: 21300000, guid: 7660867ff60557ca84e98ee3f5b8a3fb, type: 3}
     bone: Shin
-    joint: {x: 27, y: 45}
-    end: {x: 25, y: 5}
+    joint: {x: 80, y: 290}
+    end: {x: 70, y: 45}
     rigid: 0
     order: 7
     sway: 0
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: foot
     sprite: {fileID: 21300000, guid: ac3e2a529f275e1788c16421a78d4571, type: 3}
     bone: Foot
-    joint: {x: 30, y: 26}
-    end: {x: 64, y: 6}
+    joint: {x: 54, y: 93}
+    end: {x: 239, y: 18}
     rigid: 0
     order: 7
     sway: 0
     steady: 0
+    scale: 1
     worldAngle: 0
     follow: 0
   - name: sword
     sprite: {fileID: 21300000, guid: 93822864c91e522998793eef2109d67d, type: 3}
     bone: Hand.R
-    joint: {x: 16, y: 116}
-    end: {x: 116, y: 2}
+    joint: {x: 126, y: 136}
+    end: {x: 1021, y: 138}
     rigid: 1
-    order: -1
+    order: -5
     sway: 0
     steady: 1
+    scale: 0.5
     worldAngle: -150
     follow: 0.25
---- !u!4 &1984502553
+--- !u!4 &993051493
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984502551}
+  m_GameObject: {fileID: 993051491}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 465729378}
+  m_Father: {fileID: 1086660346}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1984502554
+--- !u!114 &993051494
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1984502551}
+  m_GameObject: {fileID: 993051491}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 73fee12f00cb5164d8b932c1a835800f, type: 3}
@@ -524,22 +495,74 @@ MonoBehaviour:
     smoothing: 1
     counterRotation: 0.6
   body:
-    thigh: 0.6
-    shin: 0.41
-    ankleHeight: 0.2
-    foot: 0.24
-    pelvisHalfWidth: 0.1
-    spine: 0.77
-    shoulderHalfWidth: 0.14
-    neck: 0.06
+    thigh: 0.61
+    shin: 0.61
+    ankleHeight: 0.19
+    foot: 0.46
+    pelvisHalfWidth: 0.08
+    spine: 0.47
+    shoulderHalfWidth: 0.1
+    shoulderForward: -0.09
+    neck: 0.24
     head: 0.2
-    upperArm: 0.4
-    forearm: 0.48
-    hand: 0.06
+    upperArm: 0.6
+    forearm: 0.41
+    hand: 0.1
   startPhase: 0
+--- !u!1 &1086660344
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1086660346}
+  - component: {fileID: 1086660345}
+  m_Layer: 0
+  m_Name: CharacterAnimationLab
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1086660345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086660344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0919718c75a01424ab636df30677bb2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Descender.Runtime::Descender.Motion.CharacterAnimationLab
+  skeleton: {fileID: 993051494}
+  overlay: {fileID: 254903306}
+  skin: {fileID: 993051492}
+  camera: {fileID: 452747325}
+  cameraOffset: {x: 0.6, y: 1.3}
+--- !u!4 &1086660346
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1086660344}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 993051493}
+  - {fileID: 254903307}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1073706645}
-  - {fileID: 465729378}
+  - {fileID: 452747327}
+  - {fileID: 1086660346}
