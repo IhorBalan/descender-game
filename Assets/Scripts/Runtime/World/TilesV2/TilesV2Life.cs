@@ -176,8 +176,11 @@ namespace Descender.World.TilesV2
             {
                 leans.Add(0f);
                 leanSpeeds.Add(0f);
+                // Its renderer if its material bends it (asked once), else none: it turns.
                 var stem = brush[brushShown.Count];
-                brushShown.Add(stem != null ? stem.GetComponent<SpriteRenderer>() : null);
+                var shown = stem != null ? stem.GetComponent<SpriteRenderer>() : null;
+                var bends = shown != null && shown.sharedMaterial != null && shown.sharedMaterial.HasFloat(PushId);
+                brushShown.Add(bends ? shown : null);
             }
             pushBlock ??= new MaterialPropertyBlock();
             for (var i = 0; i < brush.Count; i++)
@@ -217,9 +220,10 @@ namespace Descender.World.TilesV2
         private void Lean(int index, float lean)
         {
             var shown = brushShown[index];
-            if (shown != null && shown.sharedMaterial != null && shown.sharedMaterial.HasFloat(PushId))
+            if (shown != null)
             {
-                shown.GetPropertyBlock(pushBlock);
+                // The block holds its push alone, so it is set afresh rather than read back.
+                pushBlock.Clear();
                 pushBlock.SetFloat(PushId, -lean / BrushLean);
                 shown.SetPropertyBlock(pushBlock);
                 return;
