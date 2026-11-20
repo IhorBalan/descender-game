@@ -21,6 +21,9 @@ namespace Descender.Motion
         /// <summary>How far the root may travel before it and everything with it are moved back, so numbers stay small.</summary>
         public const float RecentreDistance = 1000f;
 
+        /// <summary>The share of the upper arm's swing the shoulder (and its pauldron) turns with.</summary>
+        public const float ShoulderFollow = 0.3f;
+
         // Each side's bone names, built once so posing allocates nothing: [0] the left (near), [1] the right.
         private static readonly string[] Shoulder = { "Shoulder.L", "Shoulder.R" };
         private static readonly string[] UpperArm = { "UpperArm.L", "UpperArm.R" };
@@ -170,15 +173,24 @@ namespace Descender.Motion
             Place("Chest", spine, pose.chest);
             Place("Neck", pose.chest, pose.neck);
             Place("Head", pose.neck, pose.head + (pose.head - pose.neck));
-            PlaceArm(0, pose.chest, pose.leftArm);
-            PlaceArm(1, pose.chest, pose.rightArm);
+            PlaceArm(0, pose.leftArm);
+            PlaceArm(1, pose.rightArm);
             PlaceLeg(0, pose.leftLeg);
             PlaceLeg(1, pose.rightLeg);
         }
 
-        private void PlaceArm(int side, Vector2 chest, RunLimb arm)
+        /// <summary>
+        /// The shoulder: on the arm's joint, square to the spine and pointing back, turned
+        /// with the torso and a share (<see cref="ShoulderFollow"/>) of the upper arm's swing,
+        /// as a pauldron strapped to the arm is. Not from the chest to the joint: that short
+        /// line spins as the shoulders turn, and what is worn on it would spin with it.
+        /// </summary>
+        private void PlaceArm(int side, RunLimb arm)
         {
-            Place(Shoulder[side], chest, arm.root);
+            var spine = (pose.chest - pose.hips).normalized;
+            var swing = Vector2.SignedAngle(-spine, arm.middle - arm.root);
+            var back = RunGait.Rotate(spine, 90f + swing * ShoulderFollow);
+            Place(Shoulder[side], arm.root, arm.root + back * Vector2.Distance(pose.chest, arm.root));
             Place(UpperArm[side], arm.root, arm.middle);
             Place(LowerArm[side], arm.middle, arm.end);
             Place(Hand[side], arm.end, arm.tip);
