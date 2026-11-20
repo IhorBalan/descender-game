@@ -22,6 +22,11 @@ namespace Descender.World.TilesV2
         [Tooltip("What gives light or stands outside it draws with: flames, lava, glints, the far backdrop.")]
         public Material unlitMaterial;
 
+        [Tooltip(
+            "What grows on the floors and bends draws with: lit, its picture bent by the wind and the hero's push."
+        )]
+        public Material brushMaterial;
+
         [Header("Map legend")]
         public Glyph[] legend = new Glyph[0];
 

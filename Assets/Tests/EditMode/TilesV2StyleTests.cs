@@ -1,3 +1,5 @@
+using System.IO;
+using Descender.EditorTools.TilesV2;
 using Descender.World.TilesV2;
 using NUnit.Framework;
 using UnityEditor;
@@ -81,6 +83,58 @@ namespace Descender.Tests
             var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(Folder + "earth_rays.png");
             Assert.That(sprite, Is.Not.Null);
             Assert.That(sprite.GetSecondaryTextureCount(), Is.EqualTo(0));
+        }
+
+        // What grows on the floors bends in its own shader: the set draws it with the brush
+        // material, sized from its pictures, and each picture has room on either side for the
+        // most the shader can lean it, so a bent blade is never cut off.
+        [Test]
+        public void TheBrushBendsInItsShaderWithRoomOnEitherSide()
+        {
+            var material = TilesV2Builder.LoadSet().brushMaterial;
+            Assert.That(material, Is.Not.Null);
+            Assert.That(material.shader.name, Is.EqualTo("Descender/Tiles V2/Brush Lit"));
+            Assert.That(material.shader.isSupported, Is.True);
+            var reach =
+                material.GetFloat("_Wind")
+                + material.GetFloat("_Gust")
+                + material.GetFloat("_Flutter")
+                + material.GetFloat("_PushReach");
+            var room = Mathf.CeilToInt(reach);
+            for (var kind = 0; kind < 6; kind++)
+            {
+                var path = Folder + "eden_brush_" + kind + ".png";
+                var sprite = AssetDatabase.LoadAssetAtPath<Sprite>(path);
+                Assert.That(sprite, Is.Not.Null, path);
+                Assert.That(material.GetVector("_Size").x, Is.EqualTo(sprite.rect.width), path);
+                Assert.That(material.GetVector("_Size").y, Is.EqualTo(sprite.rect.height), path);
+                Assert.That(material.GetFloat("_Foot"), Is.EqualTo(sprite.pivot.y / sprite.rect.height).Within(1e-4f));
+                var picture = new Texture2D(2, 2);
+                try
+                {
+                    Assert.That(picture.LoadImage(File.ReadAllBytes(path)), Is.True);
+                    for (var y = 0; y < picture.height; y++)
+                    {
+                        for (var x = 0; x < room; x++)
+                        {
+                            Assert.That(
+                                picture.GetPixel(x, y).a,
+                                Is.EqualTo(0f),
+                                $"{path}: room on the left at {x}, {y}"
+                            );
+                            Assert.That(
+                                picture.GetPixel(picture.width - 1 - x, y).a,
+                                Is.EqualTo(0f),
+                                $"{path}: room on the right at {x}, {y}"
+                            );
+                        }
+                    }
+                }
+                finally
+                {
+                    Object.DestroyImmediate(picture);
+                }
+            }
         }
 
         [Test]
