@@ -112,6 +112,7 @@ namespace Descender.World.TilesV2
         private string note = "";
         private float noteLeft;
         private GUIStyle style;
+        private const int TextSize = 13;
         private const int HintSize = 7;
         private const int HelpSize = 9;
         private Light2D lantern;
@@ -365,7 +366,7 @@ namespace Descender.World.TilesV2
             }
             if (style == null)
             {
-                style = new GUIStyle(GUI.skin.label) { fontSize = 13, richText = false };
+                style = new GUIStyle(GUI.skin.label) { fontSize = TextSize, richText = false };
                 style.normal.textColor = Color.white;
             }
             var scale = Mathf.Max(1f, Mathf.Floor(Screen.height / 360f));
@@ -420,6 +421,8 @@ namespace Descender.World.TilesV2
             GUI.color = new Color(1f, 1f, 1f, fade);
             GUI.Label(area, text, style);
             GUI.color = Color.white;
+            // The chart's legend and the travel panel share the style, at its own size.
+            style.fontSize = TextSize;
             DrawTitle(scale);
             DrawChart(scale);
             DrawTravel(scale);
