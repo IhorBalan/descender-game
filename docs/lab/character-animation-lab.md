@@ -26,7 +26,8 @@ changed by it. `Descender > Lab > Character animation lab` makes it again.
     forward, so thigh and shin keep their lengths.
   - The hips are set as high as the feet on the ground can be reached from.
     They rise and fall over each step, lowest at "down".
-  - The torso leans forward, and the hips and shoulders turn against each
+  - The whole body leans forward from the feet (they fall behind the hips),
+    the torso leans further from the hips, and the hips and shoulders turn against each
     other. The arms swing against the legs with bent elbows.
   - Between key poses the channels ease along a Catmull-Rom curve.
   - Phase and travel come from the same time each frame, so the speed of
@@ -47,7 +48,8 @@ changed by it. `Descender > Lab > Character animation lab` makes it again.
 | Running speed | units a second the body travels |
 | Stride length | units covered in a whole cycle, a step of each leg |
 | Cycle duration | seconds for a whole cycle |
-| Torso lean | degrees forward |
+| Body lean | degrees the whole body leans forward from the feet |
+| Torso lean | degrees the torso leans forward from the hips |
 | Vertical bounce | units the hips rise and fall |
 | Arm swing | degrees each upper arm swings |
 | Smoothing | 0: straight from key to key; 1: eased through them |

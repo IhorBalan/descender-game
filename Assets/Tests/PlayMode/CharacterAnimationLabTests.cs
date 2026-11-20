@@ -80,6 +80,14 @@ namespace Descender.Tests.PlayMode
             Assert.That(runner.Bones.Count, Is.EqualTo(BoneNames.Length));
             Assert.That(runner.Bone("Shin.L").parent, Is.EqualTo(runner.Bone("Thigh.L")), "the bones are a hierarchy");
 
+            // The scene's runner plays the run as tuned in code (the scene is made again when it changes).
+            var tuned = new RunGaitSettings();
+            tuned.Resolve();
+            Assert.That(runner.Settings.torsoLean, Is.EqualTo(tuned.torsoLean), "torso lean");
+            Assert.That(runner.Settings.bodyLean, Is.EqualTo(tuned.bodyLean), "body lean");
+            Assert.That(runner.Settings.armSwing, Is.EqualTo(tuned.armSwing), "arm swing");
+            Assert.That(runner.Settings.strideLength, Is.EqualTo(tuned.strideLength).Within(1e-4f), "stride");
+
             // Played by hand, a sixtieth of a second a frame.
             runner.Paused = true;
             var start = runner.transform.position.x;

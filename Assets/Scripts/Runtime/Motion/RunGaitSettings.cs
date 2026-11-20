@@ -33,19 +33,23 @@ namespace Descender.Motion
 
         [Tooltip("Units a second the body travels.")]
         [Range(1f, 14f)]
-        public float runningSpeed = 5f;
+        public float runningSpeed = 5.5f;
 
         [Tooltip("Units travelled in one whole cycle (a step of each leg).")]
         [Range(1f, 6f)]
-        public float strideLength = 3.6f;
+        public float strideLength = 4f;
 
         [Tooltip("Seconds for one whole cycle (a step of each leg).")]
         [Range(0.3f, 1.6f)]
         public float cycleDuration = 0.72f;
 
-        [Tooltip("Degrees the torso leans forward.")]
-        [Range(0f, 30f)]
-        public float torsoLean = 11f;
+        [Tooltip("Degrees the whole body leans forward from the feet: the feet fall that much behind the hips.")]
+        [Range(0f, 20f)]
+        public float bodyLean = 8f;
+
+        [Tooltip("Degrees the torso leans forward from the hips.")]
+        [Range(0f, 35f)]
+        public float torsoLean = 18f;
 
         [Tooltip("Units the hips rise and fall over a step.")]
         [Range(0f, 0.2f)]
@@ -53,7 +57,7 @@ namespace Descender.Motion
 
         [Tooltip("Degrees each upper arm swings forward and back from hanging.")]
         [Range(0f, 70f)]
-        public float armSwing = 42f;
+        public float armSwing = 50f;
 
         [Tooltip("0 goes straight from key pose to key pose; 1 eases through them on a curve.")]
         [Range(0f, 1f)]
