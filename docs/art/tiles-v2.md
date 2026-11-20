@@ -203,14 +203,7 @@ its normal map); the generator prefers it to `FINE` and writes the picture's
 floor line exactly. Drawn in it so far: the broad trees (the Earth's oaks and
 apple trees; Paradise's blossom and gold trees and Eden's teal trees, with the
 frames of their stirring crowns: each heap goes round a little in its own
-time, the trunk still. A broad tree's crown is leaves you can count
-(`leaf_cluster`): each heap a dark heart under pointed leaves folded along the
-midrib, so one half of a leaf takes the light and the other does not, the
-outer leaves standing past the heart so the crown's edge is leaves; small gaps
-between the heaps show the sky and the limbs and twigs behind, the same gaps in
-every frame. Its trunk stands on short roots out from its flare; a pale bark
-has dark marks of many lengths across it, thin ridged layers, and a foot dark
-and fissured); the rest of the Earth's trees (firs in tiers of
+time, the trunk still); the rest of the Earth's trees (firs in tiers of
 drooping boughs, each hem shading the tier under it; birches; a weeping willow
 whose strands fall nearly to the ground; dead trees forking into twigs; the
 giant oak, its roots out over the ground); and what grows low or lies on the

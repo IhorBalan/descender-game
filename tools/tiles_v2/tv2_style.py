@@ -232,39 +232,6 @@ def leafy_heap(s: Scene, r: random.Random, hx: float, hy: float, hr: float, hz: 
         s.paint(shape <= 1, hz + np.sqrt(hd) * hr * 0.9 + np.sqrt(np.clip(1 - shape, 0, 1)) * 1.6, LEAF, var=var, at=(y0, x0))
 
 
-def leaf_cluster(s: Scene, r: random.Random, hx: float, hy: float, hr: float, hz: float, leaf: float, mat: int):
-    """A cluster of a tree's crown at (hx, hy), `hr` across, standing `hz` out: a dark heart,
-    then leaves you can count, each pointed at both ends and folded along its midrib (so one
-    half takes the light and the other does not), turned out from the middle and a little
-    down, the outer ones standing past the heart so the cluster's edge is leaves."""
-    xs, ys, W, H = s.xs, s.ys, s.w, s.h
-    core = ((xs + 0.5 - hx) / (hr * 0.86)) ** 2 + ((ys + 0.5 - hy) / (hr * 0.7)) ** 2
-    hd = np.clip(1 - ((xs + 0.5 - hx) / (hr * 1.12)) ** 2 - ((ys + 0.5 - hy) / (hr * 0.9)) ** 2, 0, 1)
-    s.paint(core <= 1, hz + np.sqrt(hd) * hr * 0.85 - 1.5, mat, var=-2)
-    for _ in range(int(hr * hr / (leaf * leaf * 0.42))):
-        a, d = r.uniform(0, 2 * math.pi), hr * math.sqrt(r.uniform(0.02, 1.0))
-        lx, ly = hx + math.cos(a) * d * 1.1, hy + math.sin(a) * d * 0.88
-        rl = leaf * r.uniform(0.8, 1.2)
-        out = math.atan2(ly - hy, lx - hx)
-        ang = _toward(out / (2 * math.pi), 0.25, 0.22) * 2 * math.pi + r.uniform(-0.55, 0.55)  # out, and a little down
-        tilt = r.uniform(-1.0, 1.0)
-        var = r.choice([-1, 0, 0, 0, 1])
-        L = rl * 1.45
-        ca, sa = math.cos(ang), math.sin(ang)
-        x0, x1 = max(int(lx - L - 2), 0), min(int(lx + L + 3), W)
-        y0, y1 = max(int(ly - L - 2), 0), min(int(ly + L + 3), H)
-        if x1 <= x0 or y1 <= y0:
-            continue
-        sx, sy = xs[y0:y1, x0:x1], ys[y0:y1, x0:x1]
-        du, dv = sx + 0.5 - lx, sy + 0.5 - ly
-        pu, pv = (du * ca + dv * sa) / L, -du * sa + dv * ca
-        half = rl * 0.6 * np.clip(1 - pu * pu, 0, 1) ** 0.75
-        shape = (np.abs(pu) < 1) & (np.abs(pv) < half)
-        fold = 1 - np.abs(pv) / np.maximum(half, 1e-6)
-        hd = np.clip(1 - ((sx + 0.5 - hx) / (hr * 1.12)) ** 2 - ((sy + 0.5 - hy) / (hr * 0.9)) ** 2, 0, 1)
-        s.paint(shape, hz + np.sqrt(hd) * hr * 0.85 + 1.2 + fold * 1.6 + tilt * pu * 1.3, mat, var=var, at=(y0, x0))
-
-
 def tree(*args, **kwargs) -> tuple[Image.Image, Image.Image]:
     """A broad tree (tree_scene), baked in the one light: the picture and its normal map."""
     s, ramps, unit = tree_scene(*args, **kwargs)
@@ -324,20 +291,10 @@ def tree_scene(width: int, height: int, sink: int, seed, leaves, bark, *, frame:
     rad = rad0 * (1 - 0.4 * t) + rad0 * 0.9 * flare
     u = (xs + 0.5 - cx) / rad
     inside = (np.abs(u) < 1) & (ys < foot_y + sink * 0.45) & (ys >= top_y)  # into the ground a little
-    if pale:  # a birch's bark: smooth and banded, dark marks across it, rough and dark at its foot
-        marks = np.zeros(xs.shape, dtype=bool)
-        y = top_y + r.uniform(2, 6)
-        while y < foot_y:
-            u0, reach = r.uniform(-0.75, 0.45), r.uniform(0.12, 0.5)
-            thick = r.choice([0.8, 1.2, 1.6, 2.2])
-            bend = r.uniform(-0.25, 0.25) * rad0
-            marks |= (np.abs(u - u0) < reach) & (np.abs(ys - y - bend * (u - u0) ** 2) < thick * (1 - (np.abs(u - u0) / reach) ** 2) + 0.35)
-            y += r.uniform(3.5, 9.0) * max(1.0, rad0 / 9)
-        bands = 0.5 + 0.5 * np.sin(ys * 0.9 + grain * 3.0)  # the bark's thin layers, a ridge to each
-        rough = (foot_y - ys) < rad0 * (1.1 + 0.9 * grain)  # the foot: dark, fissured
-        fissure = rough & (np.abs(np.sin(u * math.pi * 2.2 + grain * 2.5)) < 0.45)
-        relief = np.where(marks, -rad0 * 0.14, bands * rad0 * 0.03) - np.where(fissure, rad0 * 0.16, 0.0)
-        var = np.where(marks | fissure, -5, np.where(rough, -3, np.where(grain > 0.55, 1, 0)))
+    if pale:  # a birch's bark: smooth, with short dark marks across it
+        marks = (np.sin(ys * 0.55 + grain * 2.0) > 0.86) & (np.abs(u + 0.3 * np.sin(ys * 0.13)) < 0.55)
+        relief = np.where(marks, -rad0 * 0.12, 0.0)
+        var = np.where(marks, -5, np.where(grain > 0.55, 1, 0))
     else:
         furrow = np.abs(np.sin(u * math.pi * 2.4 + grain * 1.1))
         relief = -(1 - furrow) * rad0 * 0.17
@@ -358,57 +315,24 @@ def tree_scene(width: int, height: int, sink: int, seed, leaves, bark, *, frame:
         drop = 0.75 if side == low_side else 0.5
         heaps.append((middle + side * crown_rx * r.uniform(0.62, 0.78), crown_cy + crown_ry * drop, unit * r.uniform(0.24, 0.3), unit * 0.3))
     heaps.append((middle + r.uniform(-0.1, 0.1) * crown_rx, crown_cy + crown_ry * 0.58, unit * 0.32, unit * 0.2))
-    # The limbs: from the trunk's top out to under the heaps, a branch off each, and twigs on
-    # into the heap's heart: they show where the crown opens.
-    limbs = []
+    # The limbs: from the trunk's top out to under the heaps, a branch off each.
     for k, (hx, hy, hr, _) in enumerate(heaps):
         if k == 0 or (hy < crown_cy - crown_ry * 0.2 and abs(hx - middle) < crown_rx * 0.3):
             continue
         dx, dy = swung(k)
         x0, y0 = top_x, top_y + 6 + r.uniform(0, rad0)
         x1, y1 = hx + dx, hy + dy + hr * 0.45
-        limbs.append((x0, y0, x1, y1, rad0 * 0.6, rad0 * 0.25, 2))
+        s.limb(x0, y0, x1, y1, rad0 * 0.6, rad0 * 0.25, 2, BARK)
         mx, my = (x0 + x1) / 2, (y0 + y1) / 2
         bx, by = mx + (x1 - x0) * 0.25, my - unit * 0.2
         if any(((bx - qx) / qr) ** 2 + ((by - qy) / (qr * 0.8)) ** 2 < 0.8 for qx, qy, qr, _ in heaps):  # a branch off it, hidden in the leaves at its tip
-            limbs.append((mx, my, bx, by, rad0 * 0.25, rad0 * 0.14, 1))
-        for _ in range(2):
-            a = r.uniform(-math.pi * 0.95, -math.pi * 0.05)
-            limbs.append((x1, y1, x1 + math.cos(a) * hr * 0.7, y1 + math.sin(a) * hr * 0.55, rad0 * 0.22, rad0 * 0.08, 1))
-    for limb in limbs:
-        s.limb(*limb, BARK)
-    # The leaves: on each heap a dark heart, then leaves you can count, folded, the edge all leaves.
-    leaf = min(max(3.0, unit * 0.06), leaf or 1e9)
+            s.limb(mx, my, bx, by, rad0 * 0.25, rad0 * 0.14, 1, BARK)
+    # The leaves: on each heap a heart under them, then single leaves, low bumps on its round.
+    leaf = min(max(3.0, unit * 0.075), leaf or 1e9)
     for k, (hx, hy, hr, hz) in enumerate(heaps):
         dx, dy = swung(k)
-        leaf_cluster(s, r, hx + dx, hy + dy, hr, hz, leaf, LEAF)
-    # Where the crown opens: small gaps between its heaps where the sky shows, the twigs
-    # and limbs behind seen through them. Each is held to a heap and goes with it, and is
-    # cut only where the heaps would close round it on every side.
-    cores = [(hx, hy, hr * 0.86, hr * 0.7) for hx, hy, hr, _ in heaps]
-
-    def closed(px, py):
-        return any(((px - qx) / qrx) ** 2 + ((py - qy) / qry) ** 2 < 1 for qx, qy, qrx, qry in cores)
-
-    opened, gaps = 0, 6 + int(unit * 0.06)
-    for _ in range(40):  # as many tries every frame, so a frame's gaps are the others' gaps
-        k = r.randrange(1, len(heaps))
-        hx, hy, hr, _ = heaps[k]
-        a = r.uniform(0, 2 * math.pi)
-        px, py = hx + math.cos(a) * hr * r.uniform(0.75, 1.0), hy + math.sin(a) * hr * 0.8 * r.uniform(0.75, 1.0)
-        size = leaf * r.uniform(0.8, 1.4)
-        parts = [(r.uniform(-0.8, 0.8) * size, r.uniform(-0.6, 0.6) * size, size * r.uniform(0.5, 0.9)) for _ in range(3)]
-        if opened >= gaps or not all(closed(px + math.cos(t) * size * 2.0, py + math.sin(t) * size * 2.0) for t in np.linspace(0, 2 * math.pi, 10, endpoint=False)):
-            continue
-        opened += 1
-        dx, dy = swung(k)
-        hole = np.zeros(xs.shape, dtype=bool)
-        for ox, oy, rr in parts:
-            hole |= ((xs + 0.5 - px - dx - ox) / rr) ** 2 + ((ys + 0.5 - py - dy - oy) / (rr * 0.8)) ** 2 < 1
-        hole &= s.mat == LEAF
-        s.H[hole], s.mat[hole], s.var[hole] = -1e9, -1, 0
-    for limb in limbs:  # what was behind: only what the gaps opened takes it
-        s.limb(*limb, BARK)
+        hx, hy = hx + dx, hy + dy
+        leafy_heap(s, r, hx, hy, hr, hz, leaf, LEAF)
     if fruit is not None:
         fr = max(2.4, unit * 0.05)
         for _ in range(int(unit * 0.3)):
@@ -425,12 +349,6 @@ def tree_scene(width: int, height: int, sink: int, seed, leaves, bark, *, frame:
             py = int(foot_y - r.randint(0, 2))
             if 0 <= px < W - 2 and 0 <= py < H:
                 s.paint(np.ones((1, 2), dtype=bool), 0.5, LEAF, var=r.choice([0, 1, 2]), at=(py, px))
-    if not roots:  # the foot gripping the ground: short roots out from the flare, one toward the eye
-        for side, reach, z in ((-1, 2.6, 0.3), (1, 2.3, 0.3), (r.choice([-1, 1]), 1.3, 0.7)):
-            x0, y0 = foot_x + side * rad0 * 0.55, foot_y - rad0 * 1.5
-            mx, my = foot_x + side * rad0 * (0.5 + reach) / 2 * 1.1, foot_y - rad0 * 0.35
-            s.limb(x0, y0, mx, my, rad0 * 0.55, rad0 * 0.36, rad0 * z, BARK, var=-2 if pale else 0)
-            s.limb(mx, my, foot_x + side * rad0 * reach, foot_y + 2, rad0 * 0.36, rad0 * 0.12, rad0 * z, BARK, var=-2 if pale else 0)
     if roots:  # roots like walls, out over the ground from its foot
         for side in (-1, 1):
             for k in range(3):
