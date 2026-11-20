@@ -25,7 +25,12 @@ Strips in `Assets/Art/Sprites/<character>/<anim>.png` are described by
 `sprites.json` (one entry per character: frame size, animations with
 file, fps, loop). `unity_meta.py` slices them as `Sprite Mode:
 Multiple` with sprites named `<file>_<index>`, pivot bottom-centre for
-characters (feet on the ground; Godot used `offset` for the same). Props
+characters (feet on the ground; Godot used `offset` for the same). An entry
+may name its own `ppu` when the character is drawn finer than the level
+pixel: the hero, the crowned knight exported by `tools/hero_knight/export.py`
+from the owner's frames in `tools/hero_knight/source/`, is 96 x 96 frames at
+32 (the Tiles V2 pixel), about 2.5 tiles tall. Until his other moves are
+drawn, every other strip holds his first standing frame. Props
 pivot top-left (Godot `centered = false`). UI pivots centre.
 
 ## Strips and the SpriteAnimator
